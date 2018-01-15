@@ -3,3 +3,99 @@ Trendiamo Stylings
 This file holds all custom stylings in order to change the theme design
 to our likings. No changes were made to the theme.scss.liquid file!
 ==============================================================================*/
+
+.site-header {
+  position: fixed;
+  top: 0;
+  background-color: white;
+  border: none;
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.site-header.logo--center {
+  padding-top: 0;
+}
+
+.js-drawer-open-top .drawer--top {
+  z-index: 9999;
+}
+
+/*============================================================================
+                                 GRID ITEMS
+==============================================================================*/
+
+.grid-view-item__image-wrapper .grid-view-item__image {
+  border-radius: 6px;
+}
+
+.grid-view-item__title {
+  text-align: center;
+}
+
+.grid-view-item__vendor {
+  text-align: center;
+}
+
+.grid-view-item__meta {
+  text-align: center;
+}
+
+.product-price__price {
+  font-weight: 500;
+}
+
+/*============================================================================
+                                UI ELEMETNS
+==============================================================================*/
+
+.btn {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+/*============================================================================
+                               MISCELLANEOUS
+==============================================================================*/
+
+.top-hr--invisible{
+    display: none;
+}
+
+.hr--invisible {
+  margin: 20px 0px;
+}
+
+/*============================================================================
+******************************+ MOBILE ONLY ***********************************
+==============================================================================*/
+
+@media only screen and (max-width: 749px) {
+
+  .logo-align--center .site-header__logo {
+    float: right;
+    margin: 0px -32px 0px 0px;
+  }
+
+  .top-hr--invisible{
+    display: block;
+    height: 60px;
+  }
+
+  /*==========================================================================
+                             MOBILE PRODUCT PAGE
+  ============================================================================*/
+
+  .product-single__photo-wrapper {
+    width: 100vw;
+    margin-left: -22px;
+    border-radius: 10px;
+  }
+
+  .feature-row__image {
+    border-radius: 10px;
+  }
+
+}

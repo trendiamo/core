@@ -14,7 +14,7 @@ assets/match-media.min.js:
 assets/password.js:
   development: 2018-01-15T06:07:38-05:00   d826da9cb223a44d53a0c34f457e92dc
 assets/theme-custom.scss.liquid:
-  development: 2018-01-15T09:01:44-05:00   6263c9178d88f3dc007e434c846dd0c4
+  development: 2018-01-15T11:36:07-05:00   b6323f3e073e33544363e6b85ba2eb9b
 assets/theme.js:
   development: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
@@ -22,13 +22,13 @@ assets/theme.scss.liquid:
 assets/vendor.js:
   development: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
 config/settings_schema.json:
-  development: 2018-01-15T06:07:42-05:00   ae0f922c59d79f7c5d2c957de7231f47
+  development: 2018-01-15T10:10:57-05:00   fd464795164f71e1ec7317f2f2e10dbd
 layout/gift_card.liquid:
   development: 2018-01-15T06:07:38-05:00   876374b0950e11992ce087d1d2bad3c8
 layout/password.liquid:
   development: 2018-01-15T06:07:39-05:00   6351674ea67c53e01643a5bea02f7d0a
 layout/theme.liquid:
-  development: 2018-01-15T08:58:52-05:00   99ce6eeccb7fcb75628b4ce7eb74cc16
+  development: 2018-01-15T11:22:53-05:00   a01d03199580a1ea157f30817efd6bbd
 locales/de.json:
   development: 2018-01-15T06:07:39-05:00   b7cd7749b0a0d9df967227ee73bcbb7f
 locales/en.default.json:
@@ -70,7 +70,7 @@ sections/featured-product.liquid:
 sections/footer.liquid:
   development: 2018-01-15T06:07:36-05:00   9e24748f787b126295adce20ecf4ddb0
 sections/header.liquid:
-  development: 2018-01-15T06:07:36-05:00   92c1e153c4e6c0827ab7a59aecb65b93
+  development: 2018-01-15T11:06:11-05:00   c570f1d9636ab2137569173797b82d55
 sections/hero.liquid:
   development: 2018-01-15T06:07:36-05:00   d45cf37312b64d6e7511bdba56256758
 sections/image-bar.liquid:

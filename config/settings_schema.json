@@ -126,6 +126,11 @@
         "default": "Google_Work+Sans_600_sans",
         "options": [
           {
+            "value": "'Quicksand', sans-serif;",
+            "label": "Quicksand",
+            "group": "My added fonts"
+          },
+          {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
             "label": "Avant Garde",
             "group": "Sans-serif"
@@ -406,6 +411,11 @@
         "label": "Font",
         "default": "Google_Work+Sans_400_sans",
         "options": [
+          {
+            "value": "'Quicksand', sans-serif;",
+            "label": "Quicksand",
+            "group": "My added fonts"
+          },
           {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
             "label": "Avant Garde",
