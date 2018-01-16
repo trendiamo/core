@@ -1,0 +1,19 @@
+<!-- /snippets/feed-item-header.liquid -->
+<!-- This is the header with the influencer information for the feed -->
+<div class="product-influencer__header-m">
+  {% for image in product.images %}
+    {% if image.alt contains "_profilepic_"%}
+      <img class="product-influnecer__header-m__profilepic" src="{{ image.src | img_url: 'compact' }}">
+    {% endif %}
+  {% endfor %}
+  <div class="product-influencer__header-m__title">
+    {{ product.title }}
+  </div>
+  {% for tag in product.tags %}
+    {% if tag contains "influencer:" %}
+      <div class="product-influencer__header-m__name">
+        {{ tag | remove: "influencer:" }}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

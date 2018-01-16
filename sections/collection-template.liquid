@@ -1,3 +1,11 @@
+{% if collection %}
+  <div class="btn-back-wrapper-absolute-m">
+    <a href="javascript:history.go(-1)" class="btn-back">
+      {% include 'icon-back' %}
+    </a>
+  </div>
+{% endif %}
+
 {% case section.settings.grid %}
   {% when '2' %}
     {%- assign max_height = 530 -%}
@@ -154,6 +162,7 @@
       <div class="grid grid--uniform{% if collection.products_count > 0 %} grid--view-items{% endif %}">
         {% for product in collection.products %}
           <div class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+            {% include 'feed-item-header' %}
             {% include 'product-card-grid', max_height: max_height %}
           </div>
         {% else %}

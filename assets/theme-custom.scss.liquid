@@ -23,7 +23,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
 }
 
 /*============================================================================
-                                 GRID ITEMS
+                        GRID ITEMS & PRODUCT HEADR
 ==============================================================================*/
 
 .product-influencer__header {
@@ -37,10 +37,6 @@ to our likings. No changes were made to the theme.scss.liquid file!
   text-transform: uppercase;
 }
 
-.product-influencer__header-m {
-  display: none;
-}
-
 .product-influencer__header__title {
   float: left;
   padding: 8px 0px 0px 10px;
@@ -51,6 +47,10 @@ to our likings. No changes were made to the theme.scss.liquid file!
   width: 64px;
   height: 64px;
   border-radius: 100px;
+}
+
+.product-influencer__header-m {
+  display: none;
 }
 
 .grid-view-item__title {
@@ -148,7 +148,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
   }
 
   /*==========================================================================
-                               FEED COLLECTION
+  *************************** FEED COLLECTION *********************************
   ============================================================================*/
 
   .grid--view-items {
@@ -164,7 +164,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
   }
 
   /*==========================================================================
-                             MOBILE PRODUCT PAGE
+  ********************* MOBILE PRODUCT PAGE & HEADER **************************
   ============================================================================*/
 
   .product-single__photo-wrapper {
@@ -186,12 +186,29 @@ to our likings. No changes were made to the theme.scss.liquid file!
     background-color: white;
     border-radius: 20px 20px 0px 0px;
     box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
-    line-height: 60px;
-    font-weight: 500;
-    text-transform: uppercase;
   }
 
   .product-influencer__header-m__title {
+    height: 30%;
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 62px;
+    padding-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .product-influencer__header-m__name {
+    font-weight: 500;
+    height: 30%;
+    padding-left: 62px;
+    padding-top: 10px;
+    color: #888888;
+  }
+
+  .product-influencer__header-m__heading {
+    line-height: 60px;
+    font-weight: 500;
+    text-transform: uppercase;
     text-align: center;
   }
 
@@ -204,9 +221,9 @@ to our likings. No changes were made to the theme.scss.liquid file!
     border-radius: 100px;
   }
 
-  /*============================================================================
-                                CART & CHECKOUT
-  ==============================================================================*/
+  /*==========================================================================
+  ****************************** CART & CHECKOUT ******************************
+  ============================================================================*/
 
   .site-header__cart-count {
     top: 14px;
