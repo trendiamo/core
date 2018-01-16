@@ -27,6 +27,20 @@
   <div class="grid grid--uniform grid--view-items">
     {% for product in collection.products limit: product_limit %}
       <div class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+        <div class="product-influencer__header-m">
+          {% for image in product.images %}
+            {% if image.alt contains "_profilepic_"%}
+              <img class="product-influnecer__header-m__profilepic" src="{{ image.src | img_url: 'compact' }}">
+            {% endif %}
+          {% endfor %}
+          {% for tag in product.tags %}
+            {% if tag contains "influencer:" %}
+              <div class="product-influencer__header-m__title">
+                Presented by {{ tag | remove: "influencer:" }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
         {% include 'product-card-grid', max_height: max_height %}
       </div>
     {% else %}

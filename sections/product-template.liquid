@@ -237,7 +237,7 @@
 
 {% if collection %}
   <div class="text-center return-link-wrapper desktop-only">
-    <a href="{{ collection.url }}" class="btn btn--secondary btn--has-icon-before return-link">
+    <a href="javascript:history.go(-1)" class="btn btn--secondary btn--has-icon-before return-link">
       {% include 'icon-back' %}
       {{ 'products.product.back_to_collection' | t: title: collection.title }}
     </a>
@@ -246,7 +246,7 @@
 
 {% if collection %}
   <div class="btn-back-wrapper-absolute-m">
-    <a href="{{ collection.url }}" class="btn-back">
+    <a href="javascript:history.go(-1)" class="btn-back">
       {% include 'icon-back' %}
     </a>
   </div>
