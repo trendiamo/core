@@ -1,3 +1,4 @@
+
 <div class="product-template__container page-width" itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true">
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
@@ -10,6 +11,21 @@
   {%- assign product_image_zoom_size = '1024x1024' -%}
   {%- assign product_image_scale = '2' -%}
   {%- assign enable_zoom = section.settings.enable_zoom -%}
+
+  <div class="product-influencer__header-m">
+    {% for image in product.images %}
+      {% if image.alt contains "_profilepic_"%}
+        <img class="product-influnecer__header-m__profilepic" src="{{ image.src | img_url: 'compact' }}">
+      {% endif %}
+    {% endfor %}
+    {% for tag in product.tags %}
+      {% if tag contains "influencer:" %}
+        <div class="product-influencer__header-m__title">
+          Presented by {{ tag | remove: "influencer:" }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
 
   {% case section.settings.image_size %}
     {% when 'small' %}
@@ -39,6 +55,7 @@
     <div class="grid__item product-single__photos {{ product_image_width }}{% if section.settings.image_size == 'full' %} product-single__photos--full{% endif %}">
       {%- assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
       {% for image in product.images %}
+      {% unless image.alt contains "_profilepic_"%}
         {% capture img_id %}FeaturedImage-{{ section.id }}-{{ image.id }}{% endcapture %}
         {% capture img_class %}product-featured-img{% endcapture %}
         {% capture zoom_img_id %}FeaturedImageZoom-{{ section.id }}-{{ image.id }}{% endcapture %}
@@ -59,6 +76,7 @@
                  alt="{{ image.alt | escape }}">
           </div>
         </div>
+        {% endunless %}
       {% endfor %}
 
       <noscript>
@@ -80,6 +98,7 @@
           {% endif %}
           <ul class="grid grid--uniform product-single__thumbnails product-single__thumbnails-{{ section.id }}">
             {% for image in product.images %}
+            {% unless image.alt contains "_profilepic_"%}
               <li class="grid__item {{ product_thumbnail_width }} product-single__thumbnails-item js">
                 <a href="{{ image.src | img_url: product_image_zoom_size, scale: product_image_scale }}"
                    class="text-link product-single__thumbnail product-single__thumbnail--{{ section.id }}"
@@ -88,6 +107,7 @@
                      <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '110x110', scale: 2 }}" alt="{{ image.alt | escape }}">
                 </a>
               </li>
+            {% endunless %}
             {% endfor %}
           </ul>
           {% if enable_thumbnail_slides == true %}
@@ -102,6 +122,21 @@
 
     <div class="grid__item {{ product_description_width }}">
       <div class="product-single__meta">
+
+        <div class="product-influencer__header">
+          {% for image in product.images %}
+            {% if image.alt contains "_profilepic_"%}
+              <img class="product-influnecer__header__profilepic" src="{{ image.src | img_url: 'compact' }}">
+            {% endif %}
+          {% endfor %}
+          {% for tag in product.tags %}
+            {% if tag contains "influencer:" %}
+              <div class="product-influencer__header__title">
+                Presented by <br> <b>{{ tag | remove: "influencer:" }}</b>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
 
         <h1 itemprop="name" class="product-single__title">{{ product.title }}</h1>
 
@@ -201,10 +236,18 @@
 </div>
 
 {% if collection %}
-  <div class="text-center return-link-wrapper">
+  <div class="text-center return-link-wrapper desktop-only">
     <a href="{{ collection.url }}" class="btn btn--secondary btn--has-icon-before return-link">
-      {% include 'icon-arrow-left' %}
+      {% include 'icon-back' %}
       {{ 'products.product.back_to_collection' | t: title: collection.title }}
+    </a>
+  </div>
+{% endif %}
+
+{% if collection %}
+  <div class="btn-back-wrapper-absolute-m">
+    <a href="{{ collection.url }}" class="btn-back">
+      {% include 'icon-back' %}
     </a>
   </div>
 {% endif %}

@@ -14,7 +14,7 @@ assets/match-media.min.js:
 assets/password.js:
   development: 2018-01-15T06:07:38-05:00   d826da9cb223a44d53a0c34f457e92dc
 assets/theme-custom.scss.liquid:
-  development: 2018-01-15T11:36:07-05:00   b6323f3e073e33544363e6b85ba2eb9b
+  development: 2018-01-16T05:56:19-05:00   e3c73a55872f217903f010768aa467a7
 assets/theme.js:
   development: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
@@ -90,7 +90,7 @@ sections/password-footer.liquid:
 sections/password-header.liquid:
   development: 2018-01-15T06:07:37-05:00   96c731183fa1c3f2f87ca66501494897
 sections/product-template.liquid:
-  development: 2018-01-15T06:07:37-05:00   97835930141d94b232abc785d21a7881
+  development: 2018-01-16T05:52:31-05:00   e16a129fd5ba7ff6a1927b0937a24840
 sections/quotes.liquid:
   development: 2018-01-15T06:07:37-05:00   b234ffff9a061befe87a0d69a121af1c
 sections/rich-text.liquid:
@@ -115,6 +115,8 @@ snippets/icon-arrow-left.liquid:
   development: 2018-01-15T06:07:39-05:00   5abf8c4c69967103f685014dcc88a6e7
 snippets/icon-arrow-right.liquid:
   development: 2018-01-15T06:07:39-05:00   45f24673c43655e9275d1ba99d814374
+snippets/icon-back.liquid:
+  development: 2018-01-16T05:42:17-05:00   d558961d8e4718f867714f8ba1d877a8
 snippets/icon-bitcoin.liquid:
   development: 2018-01-15T06:07:39-05:00   d8cb31e0401818c1cb852348b6f27420
 snippets/icon-cart.liquid:

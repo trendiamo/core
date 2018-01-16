@@ -10,7 +10,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
   background-color: white;
   border: none;
   border-radius: 0px 0px 20px 20px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
   z-index: 999;
 }
 
@@ -26,8 +26,31 @@ to our likings. No changes were made to the theme.scss.liquid file!
                                  GRID ITEMS
 ==============================================================================*/
 
-.grid-view-item__image-wrapper .grid-view-item__image {
-  border-radius: 6px;
+.product-influencer__header {
+  position: relative;
+  width: 100vw;
+  height: 64px;
+  margin-bottom: 20px;
+  background-color: white;
+  border-radius: 20px 20px 0px 0px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.product-influencer__header-m {
+  display: none;
+}
+
+.product-influencer__header__title {
+  float: left;
+  padding: 8px 0px 0px 10px;
+}
+
+.product-influnecer__header__profilepic {
+  float: left;
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
 }
 
 .grid-view-item__title {
@@ -56,6 +79,22 @@ to our likings. No changes were made to the theme.scss.liquid file!
   letter-spacing: normal;
 }
 
+.btn-back-wrapper-absolute-m {
+  display: none;
+  position: fixed;
+  top: 18px;
+  left: 16px;
+  z-index: 1000;
+}
+
+.btn-back {
+
+}
+
+.btn--has-icon-before .icon {
+  margin-top: -4px;
+}
+
 /*============================================================================
                                MISCELLANEOUS
 ==============================================================================*/
@@ -69,10 +108,22 @@ to our likings. No changes were made to the theme.scss.liquid file!
 }
 
 /*============================================================================
+                              CART & CHECKOUT
+==============================================================================*/
+
+.cart__image {
+  border-radius: 10px;
+}
+
+/*============================================================================
 ******************************+ MOBILE ONLY ***********************************
 ==============================================================================*/
 
 @media only screen and (max-width: 749px) {
+
+  .desktop-only {
+    display: none;
+  }
 
   .logo-align--center .site-header__logo {
     float: right;
@@ -84,6 +135,41 @@ to our likings. No changes were made to the theme.scss.liquid file!
     height: 60px;
   }
 
+  .product-influencer__header {
+    display: none;
+  }
+
+  .product-influencer__header-m {
+    display: block;
+    position: relative;
+    width: 100vw;
+    height: 60px;
+    margin-left: -22px;
+    background-color: white;
+    border-radius: 20px 20px 0px 0px;
+    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
+    line-height: 60px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .product-influencer__header-m__title {
+    text-align: center;
+  }
+
+  .product-influnecer__header-m__profilepic {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 42px;
+    height: 42px;
+    border-radius: 100px;
+  }
+
+  .btn-back-wrapper-absolute-m {
+    display: block;
+  }
+
   /*==========================================================================
                              MOBILE PRODUCT PAGE
   ============================================================================*/
@@ -91,10 +177,6 @@ to our likings. No changes were made to the theme.scss.liquid file!
   .product-single__photo-wrapper {
     width: 100vw;
     margin-left: -22px;
-    border-radius: 10px;
-  }
-
-  .feature-row__image {
     border-radius: 10px;
   }
 
