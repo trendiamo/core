@@ -1,0 +1,10 @@
+<!-- /snippets/back-button.liquid -->
+<!-- This is the back button that always redirects to the page that was visited before -->
+{% unless template == 'index' %}
+  <div class="btn-back-wrapper-absolute-m">
+    <!-- This is the mobile back button -->
+    <a href="javascript:history.go(-1)" class="btn-back">
+      {% include 'icon-back' %}
+    </a>
+  </div>
+{% endunless %}

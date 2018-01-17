@@ -50,11 +50,11 @@ sections/article-template.liquid:
 sections/blog-template.liquid:
   development: 2018-01-15T06:07:36-05:00   5757170836346c1082ffba4ef408857e
 sections/cart-template.liquid:
-  development: 2018-01-16T06:10:38-05:00   38b93e7485075f10dddc0dae876631b2
+  development: 2018-01-17T07:23:42-05:00   f07185af88ed866aaf60d6567f794269
 sections/collection-list.liquid:
   development: 2018-01-15T06:07:36-05:00   a55d61b95ff71917adad276c41ee1dc0
 sections/collection-template.liquid:
-  development: 2018-01-16T12:15:47-05:00   a028e40f3c8a830fe3f167516d15b5c7
+  development: 2018-01-17T07:21:44-05:00   fe72ab5278d7d8d020d01325546244c7
 sections/collection.liquid:
   development: 2018-01-16T12:14:36-05:00   e0bd2c587e0e350c5052da94b2f54d10
 sections/custom-content.liquid:
@@ -70,7 +70,7 @@ sections/featured-product.liquid:
 sections/footer.liquid:
   development: 2018-01-15T06:07:36-05:00   9e24748f787b126295adce20ecf4ddb0
 sections/header.liquid:
-  development: 2018-01-15T11:06:11-05:00   c570f1d9636ab2137569173797b82d55
+  development: 2018-01-17T07:21:01-05:00   bfdbe4144c7cdd8170c62b91748370c9
 sections/hero.liquid:
   development: 2018-01-15T06:07:36-05:00   d45cf37312b64d6e7511bdba56256758
 sections/image-bar.liquid:
@@ -90,13 +90,15 @@ sections/password-footer.liquid:
 sections/password-header.liquid:
   development: 2018-01-15T06:07:37-05:00   96c731183fa1c3f2f87ca66501494897
 sections/product-template.liquid:
-  development: 2018-01-16T10:49:39-05:00   a78967853e1d725cc4e5da0aa8c39788
+  development: 2018-01-17T07:18:47-05:00   00c8e81dca7c1f499aba21d1b9de83cd
 sections/quotes.liquid:
   development: 2018-01-15T06:07:37-05:00   b234ffff9a061befe87a0d69a121af1c
 sections/rich-text.liquid:
   development: 2018-01-15T06:07:37-05:00   d25fb0e1575242ba565b129eff3dd1b8
 sections/slideshow.liquid:
   development: 2018-01-15T06:07:37-05:00   b45e3880ca33f6ac6de7c2b5eb9dd40b
+snippets/back-button.liquid:
+  development: 2018-01-17T07:33:11-05:00   a975f33ff8e5d214e4e9c4550b279d08
 snippets/bgset.liquid:
   development: 2018-01-15T06:07:39-05:00   85889bbc39b57621f32fad66317366fc
 snippets/collection-grid-item.liquid:
@@ -252,7 +254,7 @@ templates/customers/login.liquid:
 templates/customers/order.liquid:
   development: 2018-01-15T06:07:41-05:00   e6fc7179a5a3904781b3847d8ef8c0f7
 templates/customers/register.liquid:
-  development: 2018-01-15T06:07:41-05:00   fcf72eba28fe5737b6be507228b2f5fc
+  development: 2018-01-17T07:33:56-05:00   fcf72eba28fe5737b6be507228b2f5fc
 templates/customers/reset_password.liquid:
   development: 2018-01-15T06:07:41-05:00   e80703307e36b8b5dd428463bace82cc
 templates/gift_card.liquid:

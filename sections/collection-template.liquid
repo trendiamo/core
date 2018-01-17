@@ -1,10 +1,4 @@
-{% if collection %}
-  <div class="btn-back-wrapper-absolute-m">
-    <a href="javascript:history.go(-1)" class="btn-back">
-      {% include 'icon-back' %}
-    </a>
-  </div>
-{% endif %}
+{% include 'back-button' %}
 
 {% case section.settings.grid %}
   {% when '2' %}
