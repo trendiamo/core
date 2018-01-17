@@ -54,9 +54,9 @@ sections/cart-template.liquid:
 sections/collection-list.liquid:
   development: 2018-01-15T06:07:36-05:00   a55d61b95ff71917adad276c41ee1dc0
 sections/collection-template.liquid:
-  development: 2018-01-16T10:35:59-05:00   825f503baf0468dfa4eacc216935a491
+  development: 2018-01-16T12:15:47-05:00   a028e40f3c8a830fe3f167516d15b5c7
 sections/collection.liquid:
-  development: 2018-01-16T10:49:20-05:00   2263be2f35b74768f43800a2b0363cfb
+  development: 2018-01-16T12:14:36-05:00   e0bd2c587e0e350c5052da94b2f54d10
 sections/custom-content.liquid:
   development: 2018-01-15T06:07:36-05:00   9abed1c1562136145fb81ea24137c7ac
 sections/feature-columns.liquid:
@@ -101,6 +101,8 @@ snippets/bgset.liquid:
   development: 2018-01-15T06:07:39-05:00   85889bbc39b57621f32fad66317366fc
 snippets/collection-grid-item.liquid:
   development: 2018-01-15T06:07:39-05:00   209c8abd3531c95e503636cc520dd9ca
+snippets/collection-item-header.liquid:
+  development: 2018-01-16T12:21:11-05:00   574939b7f9eeb7980cc8cc758d2d28ac
 snippets/comment.liquid:
   development: 2018-01-15T06:07:39-05:00   50406c82467014e1bbe15a62685b2536
 snippets/feed-item-header.liquid:
