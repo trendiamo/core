@@ -14,7 +14,7 @@ assets/match-media.min.js:
 assets/password.js:
   development: 2018-01-15T06:07:38-05:00   d826da9cb223a44d53a0c34f457e92dc
 assets/theme-custom.scss.liquid:
-  development: 2018-01-16T11:54:31-05:00   4f6857a56a980e66ae86f4f8f964e9f1
+  development: 2018-01-22T07:51:18-05:00   dcebf01b80b2a884bb915a34525f712f
 assets/theme.js:
   development: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
@@ -30,9 +30,9 @@ layout/password.liquid:
 layout/theme.liquid:
   development: 2018-01-15T11:22:53-05:00   a01d03199580a1ea157f30817efd6bbd
 locales/de.json:
-  development: 2018-01-15T06:07:39-05:00   b7cd7749b0a0d9df967227ee73bcbb7f
+  development: 2018-01-22T09:51:34-05:00   62f178d1e0a8f21f92910486e0c47812
 locales/en.default.json:
-  development: 2018-01-15T06:07:39-05:00   386f615a2292d94a5ccba5f0ece2be73
+  development: 2018-01-22T09:50:54-05:00   e819be61e0d52ade9eead501107431c7
 locales/es.json:
   development: 2018-01-15T06:07:39-05:00   1f7faec878ecdbd841a874f20548c252
 locales/fr.json:
@@ -254,7 +254,7 @@ templates/customers/login.liquid:
 templates/customers/order.liquid:
   development: 2018-01-15T06:07:41-05:00   e6fc7179a5a3904781b3847d8ef8c0f7
 templates/customers/register.liquid:
-  development: 2018-01-17T07:33:56-05:00   fcf72eba28fe5737b6be507228b2f5fc
+  development: 2018-01-22T09:48:01-05:00   97da1f46c0d1abfdc4ad8ac03b8867d1
 templates/customers/reset_password.liquid:
   development: 2018-01-15T06:07:41-05:00   e80703307e36b8b5dd428463bace82cc
 templates/gift_card.liquid:

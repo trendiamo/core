@@ -15,6 +15,9 @@
           <label for="LastName">{{ 'customer.register.last_name' | t }}</label>
           <input type="text" name="customer[last_name]" id="LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
 
+          <label for="Username">{{ 'customer.register.username' | t }}</label>
+          <input type="text" name="customer[username]" id="Username" {% if form.username %}value="{{ form.username }}"{% endif %}>
+
           <label for="Email">{{ 'customer.register.email' | t }}</label>
           <input type="email" name="customer[email]" id="Email" class="{% if form.errors contains 'email' %} input--error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
 

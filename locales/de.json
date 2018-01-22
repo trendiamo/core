@@ -256,6 +256,7 @@
       "title": "Account erstellen",
       "first_name": "Vorname",
       "last_name": "Nachname",
+      "username": "Benutzername",
       "email": "E-Mail",
       "password": "Passwort",
       "submit": "Erstellen"
