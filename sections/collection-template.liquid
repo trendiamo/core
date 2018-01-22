@@ -79,7 +79,9 @@
                     {% endif %}
                   {% endif %}
                   {% for tag in collection.all_tags %}
+                  {% unless tag contains "influencer:" %}
                     <option value="/collections/{% if collection.handle != blank %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handleize }}"{% if current_tags contains tag %} selected="selected"{% endif %}>{{ tag }}</option>
+                  {% endunless %}
                   {% endfor %}
                 </select>
               </div>
