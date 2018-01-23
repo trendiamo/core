@@ -17,3 +17,20 @@
     {% endif %}
   {% endfor %}
 </div>
+<div class="product-influencer__header">
+  {% for image in product.images %}
+    {% if image.alt contains "_profilepic_"%}
+      <img class="product-influnecer__header__profilepic" src="{{ image.src | img_url: 'compact' }}">
+    {% endif %}
+  {% endfor %}
+  <div class="product-influencer__header__title">
+    {{ product.title }}
+  </div>
+  {% for tag in product.tags %}
+    {% if tag contains "influencer:" %}
+      <div class="product-influencer__header__name">
+        {{ tag | remove: "influencer:" }}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

@@ -69,6 +69,11 @@ to our likings. No changes were made to the theme.scss.liquid file!
   font-weight: 500;
 }
 
+.feed-item {
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
+}
+
 /*============================================================================
                                 UI ELEMETNS
 ==============================================================================*/
@@ -77,6 +82,12 @@ to our likings. No changes were made to the theme.scss.liquid file!
   font-size: 16px;
   font-weight: 700;
   letter-spacing: normal;
+  border-radius: 6px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.13);
+}
+
+.btn--secondary {
+  border: none;
 }
 
 .btn-back-wrapper-absolute-m {
@@ -99,6 +110,24 @@ to our likings. No changes were made to the theme.scss.liquid file!
   border: none;
 }
 
+.btn-negative {
+  padding:4px 10px 4px 10px;
+  border-radius: 6px;
+  color: #FF2253;
+  font-weight: 500;
+  background-color: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.13);
+}
+
+#customer_logout_link {
+  padding:4px 10px 4px 10px;
+  border-radius: 6px;
+  color: #FF2253;
+  font-weight: 500;
+  background-color: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.13);
+}
+
 /*============================================================================
                                MISCELLANEOUS
 ==============================================================================*/
@@ -116,15 +145,20 @@ to our likings. No changes were made to the theme.scss.liquid file!
 ==============================================================================*/
 
 .site-header__cart-count {
-  top: 4px;
+  top: 12px;
 }
 
 .logo--center .site-header__cart-count {
   right: -4px;
+  left: 18px;
 }
 
 .cart__image {
   border-radius: 10px;
+}
+
+.cart__meta-text {
+  font-style: normal;
 }
 
 /*============================================================================

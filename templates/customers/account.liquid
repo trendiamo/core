@@ -1,7 +1,9 @@
 <div class="page-width">
   <div class="section-header text-center">
     <h1>{{ 'customer.account.title' | t }}</h1>
-    {{ 'layout.customer.log_out' | t | customer_logout_link }}
+    <div class="btn-logout">
+      {{ 'layout.customer.log_out' | t | customer_logout_link }}
+    </div>
   </div>
 
   <div class="grid">
