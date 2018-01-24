@@ -1,0 +1,2 @@
+class Pdp < ApplicationRecord
+end
