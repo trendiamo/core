@@ -28,9 +28,8 @@ to our likings. No changes were made to the theme.scss.liquid file!
 
 .product-influencer__header {
   position: relative;
-  width: 100vw;
+  width: auto;
   height: 64px;
-  margin-bottom: 20px;
   background-color: white;
   border-radius: 20px 20px 0px 0px;
   font-weight: 500;
@@ -39,18 +38,32 @@ to our likings. No changes were made to the theme.scss.liquid file!
 
 .product-influencer__header__title {
   float: left;
-  padding: 8px 0px 0px 10px;
+  padding: 8px 0px 0px 8px;
+}
+
+.product-influencer__header__name {
+  font-weight: 500;
+  height: 30%;
+  padding-left: 62px;
+  padding-top: 10px;
+  color: #888888;
 }
 
 .product-influnecer__header__profilepic {
   float: left;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
+  margin-top: 8px;
+  margin-left: 8px;
   border-radius: 100px;
 }
 
 .product-influencer__header-m {
   display: none;
+}
+
+.grid--view-items {
+  overflow: visible;
 }
 
 .grid-view-item__title {
@@ -70,7 +83,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
 }
 
 .feed-item {
-  border-radius: 0px 0px 20px 20px;
+  border-radius: 20px;
   box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
 }
 
@@ -145,12 +158,12 @@ to our likings. No changes were made to the theme.scss.liquid file!
 ==============================================================================*/
 
 .site-header__cart-count {
-  top: 12px;
+  top: 6px;
 }
 
 .logo--center .site-header__cart-count {
   right: -4px;
-  left: 18px;
+  left: 12px;
 }
 
 .cart__image {
@@ -159,6 +172,41 @@ to our likings. No changes were made to the theme.scss.liquid file!
 
 .cart__meta-text {
   font-style: normal;
+}
+
+/*============================================================================
+############################### DESKTOP ONLY ##################################
+==============================================================================*/
+
+@media only screen and (min-width: 750px) {
+
+  .main-content {
+    padding-top: 0;
+  }
+
+  .section-header {
+    margin-bottom: 35px;
+  }
+
+  .filters-toolbar-wrapper {
+    margin-bottom: 10px;
+  }
+
+  .grid-view-item__image-wrapper {
+    max-width: initial !important;
+    max-height: initial !important;
+    margin: 0 auto 12px;
+  }
+
+  .grid-view-item__image-wrapper .grid-view-item__image {
+    max-width: initial !important;
+    max-height: initial !important;
+  }
+
+  .grid-view-item__meta {
+    padding-bottom: 10px;
+  }
+
 }
 
 /*============================================================================
@@ -200,7 +248,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
 
   .feed-item {
     margin-left: -22px;
-    border-radius: 0px 0px 20px 20px;
+    border-radius: 20px;
     box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
     padding-bottom: 10px;
   }
@@ -228,10 +276,8 @@ to our likings. No changes were made to the theme.scss.liquid file!
     position: relative;
     width: 100vw;
     height: 60px;
-    margin-left: -22px;
     background-color: white;
     border-radius: 20px 20px 0px 0px;
-    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
   }
 
   .product-influencer__header-m__title {
@@ -270,6 +316,15 @@ to our likings. No changes were made to the theme.scss.liquid file!
   /*==========================================================================
   ****************************** CART & CHECKOUT ******************************
   ============================================================================*/
+
+  .site-header__cart-count {
+    top: 12px;
+  }
+
+  .logo--center .site-header__cart-count {
+    right: -4px;
+    left: 18px;
+  }
 
   .site-header__cart-count {
     top: 14px;

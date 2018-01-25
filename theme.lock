@@ -14,7 +14,7 @@ assets/match-media.min.js:
 assets/password.js:
   development: 2018-01-15T06:07:38-05:00   d826da9cb223a44d53a0c34f457e92dc
 assets/theme-custom.scss.liquid:
-  development: 2018-01-23T06:16:06-05:00   09715b7fb848b8fd89ec0a0cf8fe79f2
+  development: 2018-01-25T08:44:57-05:00   420e977fce8aa735487820ed81499d1b
 assets/theme.js:
   development: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
@@ -54,9 +54,9 @@ sections/cart-template.liquid:
 sections/collection-list.liquid:
   development: 2018-01-15T06:07:36-05:00   a55d61b95ff71917adad276c41ee1dc0
 sections/collection-template.liquid:
-  development: 2018-01-22T12:39:21-05:00   62145a283e7978f997b57a7889dc49d8
+  development: 2018-01-24T08:22:03-05:00   5db23d82043d7bbb007473cea4a318f9
 sections/collection.liquid:
-  development: 2018-01-23T06:17:48-05:00   e0bd2c587e0e350c5052da94b2f54d10
+  development: 2018-01-24T10:14:36-05:00   4faf5528ba654da3a4254dc866c7d947
 sections/custom-content.liquid:
   development: 2018-01-15T06:07:36-05:00   9abed1c1562136145fb81ea24137c7ac
 sections/feature-columns.liquid:
@@ -218,7 +218,7 @@ snippets/no-blocks.liquid:
 snippets/pagination.liquid:
   development: 2018-01-15T06:07:41-05:00   21eb22fbf93da5d96f2d111ce4784463
 snippets/product-card-grid.liquid:
-  development: 2018-01-16T08:52:22-05:00   0e9b181ef7a3ce984e1c9a5e3fb30dbb
+  development: 2018-01-24T08:22:09-05:00   5c9d4a3842ea9f73c0a4682c611580cb
 snippets/product-card-list.liquid:
   development: 2018-01-15T06:07:41-05:00   701fa6db04bd9c70283028cc4274fc2f
 snippets/product-page-header.liquid:

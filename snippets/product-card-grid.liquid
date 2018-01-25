@@ -1,4 +1,5 @@
 <div class="grid-view-item{% unless product.available %} product-price--sold-out grid-view-item--sold-out{% endunless %} feed-item">
+  {% include 'feed-item-header' %}
   <a class="grid-view-item__link grid-view-item__image-container" href="{{ product.url | within: collection }}">
     {% capture img_id %}ProductCardImage-{{ section.id }}-{{ product.id }}{% endcapture %}
     {% capture wrapper_id %}ProductCardImageWrapper-{{ section.id }}-{{ product.id }}{% endcapture %}
