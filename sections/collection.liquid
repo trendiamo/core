@@ -1,10 +1,4 @@
 <div class="page-width">
-  {% if section.settings.title != blank %}
-    <div class="section-header text-center">
-      <h2>{{ section.settings.title | escape }}</h2>
-    </div>
-  {% endif %}
-
   {%- assign collection = collections[section.settings.collection] -%}
 
   {% case section.settings.grid %}
@@ -40,9 +34,6 @@
                 {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
               </div>
               <div class="h4 grid-view-item__title">{{ 'homepage.onboarding.product_title' | t }}</div>
-              <div class="grid-view-item__meta">
-                {% include 'product-price' %}
-              </div>
             </a>
           </div>
         </div>

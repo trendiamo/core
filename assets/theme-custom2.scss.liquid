@@ -1,0 +1,194 @@
+@mixin prefix($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}: $value;
+    } @else if $prefix == moz {
+      -moz-#{$property}: $value;
+    } @else if $prefix == ms {
+      -ms-#{$property}: $value;
+    } @else if $prefix == o {
+      -o-#{$property}: $value;
+    } @else if $prefix == spec {
+      #{$property}: $value;
+    } @else  {
+      @warn 'Unrecognized prefix: #{$prefix}';
+    }
+  }
+}
+
+/*============================================================================
+  Flexbox prefix mixins from Bourbon
+    https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/css3/_flex-box.scss
+==============================================================================*/
+@mixin display-flexbox() {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%; // necessary for ie10
+}
+
+@mixin flex-wrap($value: nowrap) {
+  @include prefix(flex-wrap, $value, webkit moz ms spec);
+}
+
+@mixin flex-direction($value) {
+  @include prefix(flex-direction, $value, webkit moz ms spec);
+}
+
+@mixin align-items($value: stretch) {
+  $alt-value: $value;
+
+  @if $value == 'flex-start' {
+    $alt-value: start;
+  } @else if $value == 'flex-end' {
+    $alt-value: end;
+  }
+
+  // sass-lint:disable no-misspelled-properties
+  -ms-flex-align: $alt-value;
+  @include prefix(align-items, $value, webkit moz ms o spec);
+}
+
+@mixin flex($value) {
+  @include prefix(flex, $value, webkit moz ms spec);
+}
+
+@mixin flex-basis($width: auto) {
+  // sass-lint:disable no-misspelled-properties
+  -ms-flex-preferred-size: $width;
+  @include prefix(flex-basis, $width, webkit moz spec);
+}
+
+@mixin align-self($align: auto) {
+  // sass-lint:disable no-misspelled-properties
+  -ms-flex-item-align: $align;
+  @include prefix(align-self, $align, webkit spec);
+}
+
+@mixin align-content($align: center) {
+  @include prefix(align-content, $align, webkit ms spec);
+}
+
+@mixin justify-content($justify: flex-start) {
+  @include prefix(justify-content, $justify, webkit ms spec);
+}
+
+.grid-view-item {
+  position: relative;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  padding-top: 8px;
+  box-shadow: 0 -1px 8px rgba(0,0,0,0.15);
+  border-radius: 10px;
+}
+
+.grid-view-item__link {
+  &:hover, &:focus {
+    opacity: 1;
+  }
+}
+
+.grid-view-item__title {
+  font-size: 0.98rem;
+  margin-top: 4px;
+  margin-bottom: -4px;
+}
+
+.grid-view-item__vendor {
+  text-transform: none;
+  font-weight: 600;
+}
+
+.round-img {
+  border-radius: 50%;
+}
+
+.grid-view-item__image-wrapper {
+  margin-bottom: 0;
+}
+
+.card-item-info {
+  @include display-flexbox();
+  @include justify-content(space-between);
+  @include align-items(center);
+  position: absolute;
+  bottom: 20px;
+  padding-left: 5%;
+  padding-right: 5%;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+a.card-item-action {
+  color: white;
+}
+
+.card-item-likes {
+  flex-basis: 80%;
+  font-size: 1rem;
+}
+
+.card-item-action {
+  margin-left: 1.25rem;
+  margin-top: -7px;
+  zoom: 1.5;
+}
+
+.manager {
+  position: relative;
+  width: 10%;
+}
+
+.target {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding-top: 7px;
+}
+
+.popper {
+  z-index: 1;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  min-width: 200px;
+  font-size: 85%;
+  margin-top: 5px;
+
+  li {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.popper__arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 5px;
+
+  border-color: white;
+
+  border-width: 0 5px 5px 5px;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  top: -5px;
+  left: calc(50% - 5px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.is-success {
+  color: #7bcf7d;
+}
+
+.ReactModal__Overlay {
+  z-index: 1000;
+}

@@ -1,38 +1,30 @@
-<div class="grid-view-item{% unless product.available %} product-price--sold-out grid-view-item--sold-out{% endunless %} feed-item">
-  {% include 'feed-item-header' %}
-  <a class="grid-view-item__link grid-view-item__image-container" href="{{ product.url | within: collection }}">
-    {% capture img_id %}ProductCardImage-{{ section.id }}-{{ product.id }}{% endcapture %}
-    {% capture wrapper_id %}ProductCardImageWrapper-{{ section.id }}-{{ product.id }}{% endcapture %}
-    {%- assign img_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+{% capture img_id %}ProductCardImage-{{ section.id }}-{{ product.id }}{% endcapture %}
+{% capture wrapper_id %}ProductCardImageWrapper-{{ section.id }}-{{ product.id }}{% endcapture %}
+{% capture profile_image %}""{% endcapture %}
+{% for image in product.images %}
+  {% if image.alt contains "_profilepic_" %}
+    {% capture profile_image %}{{ image.src | img_url: '80x80' | json }}{% endcapture %}
+  {% endif %}
+{% endfor %}
+{%- assign img_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+{% capture json_product %}{
+  "available": {{ product.available | json }},
+  "featured_image": {{ product.featured_image | json }},
+  "featured_image_alt": {{ product.featured_image.alt | escape | json }},
+  "featured_image_aspect_ratio": {{ product.featured_image.aspect_ratio | json }},
+  "featured_image_padding_top": {{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100 | json }},
+  "featured_image_url": {{ product.featured_image | img_url: '300x300' | json }},
+  "id": {{ product.id | json }},
+  "img_url": {{ img_url | json }},
+  "profile_img_url": {{ profile_image }},
+  "title": {{ product.title | json }},
+  "url": {{ product.url | within: collection | json }},
+  "variant_id": {{ product.variants.first.id | json }},
+  "vendor": {{ product.vendor | json }},
+  "wrapper_id": {{ wrapper_id | json }}
+}{% endcapture %}
 
-    {% unless product.featured_image == blank %}
-      {% include 'image-style' with image: product.featured_image, width: max_height, height: max_height, small_style: true, wrapper_id: wrapper_id, img_id: img_id %}
-    {% endunless %}
-
-    <div id="{{ wrapper_id }}" class="grid-view-item__image-wrapper js">
-      <div style="padding-top:{% unless product.featured_image == blank %}{{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100}}%{% else %}100%{% endunless %};">
-        <img id="{{ img_id }}"
-             class="grid-view-item__image lazyload"
-             src="{{ product.featured_image | img_url: '300x300' }}"
-             data-src="{{ img_url }}"
-             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-             data-aspectratio="{{ product.featured_image.aspect_ratio }}"
-             data-sizes="auto"
-             alt="{{ product.featured_image.alt | escape }}">
-      </div>
-    </div>
-
-    <noscript>
-      {% capture image_size %}{{ max_height }}x{{ max_height }}{% endcapture %}
-      <img class="grid-view-item__image" src="{{ product.featured_image.src | img_url: image_size, scale: 2 }}" alt="{{ product.featured_image.alt }}" style="max-width: {{ max_height | times: product.featured_image.aspect_ratio }}px;">
-    </noscript>
-
-    <div class="h4 grid-view-item__title">{{ product.title }}</div>
-    {% if section.settings.show_vendor %}
-      <div class="grid-view-item__vendor">{{ product.vendor }}</div>
-    {% endif %}
-    <div class="grid-view-item__meta">
-      {% include 'product-price' %}
-    </div>
-  </a>
-</div>
+{% unless product.featured_image == blank %}
+  {% include 'image-style' with image: product.featured_image, width: max_height, height: max_height, small_style: true, wrapper_id: wrapper_id, img_id: img_id %}
+{% endunless %}
+<template class="product-info">{{ json_product }}</template>
