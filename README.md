@@ -18,8 +18,7 @@ bin/rails s
 ## Run with remote access
 
 ```sh
-ngrok http -subdomain=dhtrendiamo 3000
-open http://0ba38612.ngrok.io
+ngrok http 3000
 ```
 
 ## Deploy

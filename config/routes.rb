@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post "/influencers/sign_in", to: "influencers/sessions#create"
       delete "/influencers/sign_out", to: "influencers/sessions#destroy"
     end
+    get "/consumers/multipass", to: "consumers#multipass"
     resources :pdps
     resources :likes, only: %i[create show destroy]
     resources :products, only: %i[show]
