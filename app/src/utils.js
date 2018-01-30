@@ -41,13 +41,13 @@ export const createLike = async (consumerId, productId) => {
   const params = {
     like: {
       consumerRef: consumerId,
-      productRef: productId
-    }
+      productRef: productId,
+    },
   }
   const response = await fetch(LIKES_URL, {
-    method: 'POST',
     body: JSON.stringify(params),
-    headers: new Headers({ 'Content-Type': 'application/json' })
+    headers: new Headers({ 'Content-Type': 'application/json' }),
+    method: 'POST',
   })
   const json = await response.json()
   return { ...json, ok: response.ok }

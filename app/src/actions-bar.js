@@ -24,11 +24,11 @@ export default compose(
   withState('isLiked', 'setIsLiked', false),
   withState('likeId', 'setLikeId', null),
   withHandlers({
+    decrement: ({ setLikesCount }) => () => setLikesCount(n => n - 1),
     increment: ({ setLikesCount }) => () => setLikesCount(n => n + 1),
-    decrement: ({ setLikesCount }) => () => setLikesCount(n => n - 1)
   }),
   withHandlers({
-    onBuyClicked: ({ product }) => event => {
+    onBuyClicked: ({ product }) => () => {
       addToCart(product.variant_id)
     },
     onHeartClicked: ({
@@ -40,8 +40,8 @@ export default compose(
       openModal,
       product,
       setIsLiked,
-      setLikeId
-    }) => event => {
+      setLikeId,
+    }) => () => {
       if (!consumerId) {
         openModal()
         return
@@ -58,7 +58,7 @@ export default compose(
         })
         increment()
       }
-    }
+    },
   }),
   lifecycle({
     componentDidMount() {
@@ -71,10 +71,10 @@ export default compose(
           setLikeId(response.id)
         }
       })
-    }
+    },
   }),
   withProps(({ likesCount, product }) => ({
     likesCountSet: likesCount !== undefined,
-    productAvailable: product.available
+    productAvailable: product.available,
   }))
 )(ActionsBar)

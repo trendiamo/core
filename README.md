@@ -19,3 +19,10 @@ API_ENDPOINT=trendiamo-backend.herokuapp.com yarn webpack --watch
 ```
 
 Note: if `theme watch` shows `409 Conflict` errors, then do a `theme download path/to/file` first.
+
+## Code checks
+
+```sh
+cd app
+yarn eslint src
+```

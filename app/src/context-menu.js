@@ -1,7 +1,7 @@
 import IconEllipsisV from './icon-ellipsis-v'
 import React from 'react'
 import ShareProduct from './share-product'
-import { Manager, Target, Popper, Arrow } from 'react-popper'
+import { Arrow, Manager, Popper, Target } from 'react-popper'
 import { compose, withHandlers, withState } from 'recompose'
 
 const ContextMenu = ({ handleMenuClick, isOpen, product }) => (
@@ -10,7 +10,7 @@ const ContextMenu = ({ handleMenuClick, isOpen, product }) => (
       <IconEllipsisV />
     </Target>
     {isOpen && (
-      <Popper placement="bottom" className="popper">
+      <Popper className="popper" placement="bottom">
         <ul>
           <li>
             <ShareProduct product={product} />
@@ -27,12 +27,12 @@ export default compose(
   withHandlers({
     close: ({ setIsOpen }) => () => setIsOpen(false),
     open: ({ setIsOpen }) => () => setIsOpen(true),
-    toggle: ({ isOpen, setIsOpen }) => () => setIsOpen(!isOpen)
+    toggle: ({ isOpen, setIsOpen }) => () => setIsOpen(!isOpen),
   }),
   withHandlers({
     handleMenuClick: ({ toggle }) => event => {
       event.preventDefault()
       toggle()
-    }
+    },
   })
 )(ContextMenu)

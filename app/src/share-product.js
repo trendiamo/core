@@ -21,6 +21,6 @@ export default compose(
       event.preventDefault()
       copy(url)
       setHasShared(true)
-    }
+    },
   })
 )(ShareProduct)

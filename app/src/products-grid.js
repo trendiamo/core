@@ -1,6 +1,6 @@
-import React from 'react'
-import ProductCard from './product-card'
 import Modal from 'react-modal'
+import ProductCard from './product-card'
+import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 
 const ProductsGrid = ({ appElement, closeModal, consumerId, isModalOpen, openModal, products }) => {
@@ -11,9 +11,9 @@ const ProductsGrid = ({ appElement, closeModal, consumerId, isModalOpen, openMod
       ))}
       <Modal
         appElement={appElement}
+        contentLabel="Authorization Modal"
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        contentLabel="Authorization Modal"
       >
         <h1>{'Create account'}</h1>
         <p>{'You need to create an account or login first.'}</p>
@@ -29,6 +29,6 @@ export default compose(
   withState('isModalOpen', 'setIsModalOpen', false),
   withHandlers({
     closeModal: ({ setIsModalOpen }) => () => setIsModalOpen(false),
-    openModal: ({ setIsModalOpen }) => () => setIsModalOpen(true)
+    openModal: ({ setIsModalOpen }) => () => setIsModalOpen(true),
   })
 )(ProductsGrid)
