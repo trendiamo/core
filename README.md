@@ -23,7 +23,9 @@ ngrok http 3000
 
 ## Deploy
 
-TODO
+```sh
+git push heroku master
+```
 
 ## curl
 
