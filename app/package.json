@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
-  "main": "feed.js",
+  "main": "src/index.js",
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
     "react": "^16.2.0",

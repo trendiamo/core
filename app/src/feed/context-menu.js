@@ -1,4 +1,4 @@
-import IconEllipsisV from './icon-ellipsis-v'
+import IconEllipsisV from 'icons/icon-ellipsis-v'
 import React from 'react'
 import ShareProduct from './share-product'
 import { Arrow, Manager, Popper, Target } from 'react-popper'

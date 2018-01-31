@@ -3,11 +3,11 @@ import ProductCard from './product-card'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 
-const ProductsGrid = ({ appElement, closeModal, consumerId, isModalOpen, openModal, products }) => {
+const ProductsGrid = ({ appElement, closeModal, metadata, isModalOpen, openModal, products }) => {
   return (
     <div>
       {products.map(product => (
-        <ProductCard consumerId={consumerId} key={product.id} openModal={openModal} product={product} />
+        <ProductCard key={product.id} metadata={metadata} openModal={openModal} product={product} />
       ))}
       <Modal
         appElement={appElement}

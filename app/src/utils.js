@@ -1,69 +1,28 @@
+export const $ = document.querySelector.bind(document)
+export const $$ = (selector, callback) => Array.prototype.map.call(document.querySelectorAll(selector), callback)
+
+export const getMetadata = () => $('.metadata').dataset
+
 const domain = process.env.API_ENDPOINT
-const baseUrl = `https://${domain}/api/v1`
-const LIKES_URL = `${baseUrl}/likes`
-const PRODUCTS_URL = `${baseUrl}/products`
+export const baseApiUrl = `https://${domain}/api/v1`
 
-const post = (path, params, method = 'post') => {
-  const form = document.createElement('form')
-  form.setAttribute('method', method)
-  form.setAttribute('action', path)
-
-  for (const key in params) {
-    if (params.hasOwnProperty(key)) {
-      const hiddenField = document.createElement('input')
-      hiddenField.setAttribute('type', 'hidden')
-      hiddenField.setAttribute('name', key)
-      hiddenField.setAttribute('value', params[key])
-
-      form.appendChild(hiddenField)
-    }
-  }
-
-  document.body.appendChild(form)
-  form.submit()
-}
-
-export const fetchLikesCount = async productId => {
-  const url = `${PRODUCTS_URL}/${productId}`
-  const response = await fetch(url)
-  const json = await response.json()
-  return json.likesCount
-}
-
-export const fetchLike = async (consumerId, productId) => {
-  const url = `${LIKES_URL}/id?consumer_ref=${consumerId}&product_ref=${productId}`
-  const response = await fetch(url)
-  const json = await response.json()
-  return json
-}
-
-export const createLike = async (consumerId, productId) => {
-  const params = {
-    like: {
-      consumerRef: consumerId,
-      productRef: productId,
-    },
-  }
-  const response = await fetch(LIKES_URL, {
-    body: JSON.stringify(params),
-    headers: new Headers({ 'Content-Type': 'application/json' }),
-    method: 'POST',
+const authHeaders = () => {
+  const consumerEmail = document.querySelector('.metadata').dataset.consumerEmail
+  const consumerToken = localStorage.getItem('consumerToken')
+  return new Headers({
+    'Content-Type': 'application/json',
+    'X-CONSUMER-EMAIL': consumerEmail,
+    'X-CONSUMER-TOKEN': consumerToken,
   })
-  const json = await response.json()
-  return { ...json, ok: response.ok }
 }
 
-export const removeLike = async likeId => {
-  const url = `${LIKES_URL}/${likeId}`
-  const response = await fetch(url, { method: 'DELETE' })
-  if (response.ok) {
-    return response
-  } else {
-    const json = await response.json()
-    return json
+export const authFetch = async (url, options) => {
+  const response = await fetch(url, { ...options, headers: authHeaders() })
+  if (response.status === 401) {
+    setTimeout(() => {
+      alert('Please login again')
+      window.location = '/account/login'
+    }, 1)
   }
-}
-
-export const addToCart = variantId => {
-  post('/cart/add', { id: variantId, return_to: 'back' })
+  return response
 }

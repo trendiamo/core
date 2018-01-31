@@ -2,7 +2,7 @@ import ActionsBar from './actions-bar'
 import ContextMenu from './context-menu'
 import React from 'react'
 
-const ProductCard = ({ consumerId, openModal, product }) => {
+const ProductCard = ({ metadata, openModal, product }) => {
   return (
     <div className={`grid-view-item${product.available ? '' : ' product-price--sold-out grid-view-item--sold-out'}`}>
       <a className="grid-view-item__link grid-view-item__image-container" href={product.url}>
@@ -31,7 +31,7 @@ const ProductCard = ({ consumerId, openModal, product }) => {
           </div>
         </div>
       </a>
-      <ActionsBar consumerId={consumerId} openModal={openModal} product={product} />
+      <ActionsBar metadata={metadata} openModal={openModal} product={product} />
     </div>
   )
 }
