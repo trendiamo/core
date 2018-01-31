@@ -1,11 +1,20 @@
 class ConsumersController < ApplicationController
-  def multipass
-    @consumer = Consumer.first
-    consumer_attributes = @consumer.attributes.slice("email", "created_at", "first_name", "last_name")
+  before_action :authenticate_consumer!
 
-    customer_info = consumer_attributes.merge(remote_ip: request.remote_ip)
-    token = ShopifyMultipass.new(ENV["SHOPIFY_MULTIPASS_KEY"]).generate_token(customer_info)
+  def update
+    @consumer = current_consumer
+    @consumer.attributes = permitted_attributes(@consumer)
+    authorize @consumer
+    if @consumer.save
+      render json: @consumer
+    else
+      render json: @consumer.errors, status: :unprocessable_entity
+    end
+  end
 
-    redirect_to "https://#{ENV["SHOPIFY_STORE"]}/account/login/multipass/#{token}"
+  private
+
+  def pundit_user
+    current_consumer
   end
 end

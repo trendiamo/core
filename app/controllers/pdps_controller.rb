@@ -39,9 +39,7 @@ class PdpsController < ApplicationController
     @pdp.destroy
   end
 
-  # private
-  #
-  # def pdp_params
-  #   params.require(:pdp).permit(:title, :description, :start_at, :end_at)
-  # end
+  def pundit_user
+    current_influencer
+  end
 end

@@ -1,13 +1,8 @@
-# require "openssl"
-# require "base64"
-# require "time"
-# require "json"
-
 class ShopifyMultipass
   def initialize(multipass_secret)
     key_material = OpenSSL::Digest.new("sha256").digest(multipass_secret)
     @encryption_key = key_material[0, 16]
-    @signature_key  = key_material[16, 16]
+    @signature_key = key_material[16, 16]
   end
 
   def generate_token(customer_data_hash)

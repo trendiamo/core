@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129155246) do
+ActiveRecord::Schema.define(version: 20180131132127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "consumer_auth_tokens", force: :cascade do |t|
+    t.string "body"
+    t.bigint "consumer_id"
+    t.datetime "last_used_at"
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body"], name: "index_consumer_auth_tokens_on_body"
+    t.index ["consumer_id"], name: "index_consumer_auth_tokens_on_consumer_id"
+  end
 
   create_table "consumers", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -30,6 +42,7 @@ ActiveRecord::Schema.define(version: 20180129155246) do
     t.string "last_name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "customer_ref"
     t.index ["email"], name: "index_consumers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_consumers_on_reset_password_token", unique: true
   end
@@ -80,5 +93,6 @@ ActiveRecord::Schema.define(version: 20180129155246) do
     t.index ["influencer_id"], name: "index_pdps_on_influencer_id"
   end
 
+  add_foreign_key "consumer_auth_tokens", "consumers"
   add_foreign_key "influencer_auth_tokens", "influencers"
 end
