@@ -22637,13 +22637,7 @@ var ProductCard = function ProductCard(_ref) {
           _react2.default.createElement(
             'div',
             { style: { marginLeft: '10px', marginRight: '10px' } },
-            _react2.default.createElement('img', {
-              className: 'round-img',
-              height: '40',
-              src: product.profile_img_url,
-              style: { objectFit: 'contain' },
-              width: '40'
-            })
+            _react2.default.createElement('img', { className: 'round-img', height: '40', src: product.profile_img_url, width: '40' })
           ),
           _react2.default.createElement(
             'div',

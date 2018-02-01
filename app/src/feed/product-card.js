@@ -9,13 +9,7 @@ const ProductCard = ({ metadata, openModal, product }) => {
         <a className="grid-view-item__link grid-view-item__image-container" href={product.url}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ marginLeft: '10px', marginRight: '10px' }}>
-              <img
-                className="round-img"
-                height="40"
-                src={product.profile_img_url}
-                style={{ objectFit: 'contain' }}
-                width="40"
-              />
+              <img className="round-img" height="40" src={product.profile_img_url} width="40" />
             </div>
             <div>
               <div className="h4 grid-view-item__title">{product.title}</div>
