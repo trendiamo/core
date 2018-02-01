@@ -3678,7 +3678,7 @@ var ProductsGrid = function ProductsGrid(_ref) {
       products = _ref.products;
 
   return _react2.default.createElement(
-    'div',
+    _react2.default.Fragment,
     null,
     products.map(function (product) {
       return _react2.default.createElement(_productCard2.default, { key: product.id, metadata: metadata, openModal: openModal, product: product });
@@ -22624,54 +22624,64 @@ var ProductCard = function ProductCard(_ref) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'grid-view-item' + (product.available ? '' : ' product-price--sold-out grid-view-item--sold-out') },
+    { className: 'grid__item medium-up--one-third' },
     _react2.default.createElement(
-      'a',
-      { className: 'grid-view-item__link grid-view-item__image-container', href: product.url },
+      'div',
+      { className: 'grid-view-item' + (product.available ? '' : ' product-price--sold-out grid-view-item--sold-out') },
       _react2.default.createElement(
-        'div',
-        { style: { display: 'flex' } },
+        'a',
+        { className: 'grid-view-item__link grid-view-item__image-container', href: product.url },
         _react2.default.createElement(
           'div',
-          { style: { marginLeft: '10px', marginRight: '10px' } },
-          _react2.default.createElement('img', { className: 'round-img', height: '40', src: product.profile_img_url, width: '40' })
-        ),
-        _react2.default.createElement(
-          'div',
-          { style: { width: '80%' } },
+          { style: { display: 'flex', justifyContent: 'space-between' } },
           _react2.default.createElement(
             'div',
-            { className: 'h4 grid-view-item__title' },
-            product.title
+            { style: { marginLeft: '10px', marginRight: '10px' } },
+            _react2.default.createElement('img', {
+              className: 'round-img',
+              height: '40',
+              src: product.profile_img_url,
+              style: { objectFit: 'contain' },
+              width: '40'
+            })
           ),
           _react2.default.createElement(
             'div',
-            { className: 'grid-view-item__vendor' },
-            product.vendor
-          )
+            null,
+            _react2.default.createElement(
+              'div',
+              { className: 'h4 grid-view-item__title' },
+              product.title
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'grid-view-item__vendor' },
+              product.vendor
+            )
+          ),
+          _react2.default.createElement(_contextMenu2.default, { product: product })
         ),
-        _react2.default.createElement(_contextMenu2.default, { product: product })
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'grid-view-item__image-wrapper js', id: product.wrapper_id },
         _react2.default.createElement(
           'div',
-          { style: { paddingTop: product.featured_image ? product.featured_image_padding_top + '%' : '100%' } },
-          _react2.default.createElement('img', {
-            alt: product.featured_image_alt,
-            className: 'grid-view-item__image lazyload',
-            'data-aspectratio': product.featured_image_aspect_ratio,
-            'data-sizes': 'auto',
-            'data-src': product.img_url,
-            'data-widths': '[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]',
-            id: product.img_id,
-            src: product.featured_image
-          })
+          { className: 'grid-view-item__image-wrapper js', id: product.wrapper_id },
+          _react2.default.createElement(
+            'div',
+            { style: { paddingTop: product.featured_image ? product.featured_image_padding_top + '%' : '100%' } },
+            _react2.default.createElement('img', {
+              alt: product.featured_image_alt,
+              className: 'grid-view-item__image lazyload',
+              'data-aspectratio': product.featured_image_aspect_ratio,
+              'data-sizes': 'auto',
+              'data-src': product.img_url,
+              'data-widths': '[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]',
+              id: product.img_id,
+              src: product.featured_image
+            })
+          )
         )
-      )
-    ),
-    _react2.default.createElement(_actionsBar2.default, { metadata: metadata, openModal: openModal, product: product })
+      ),
+      _react2.default.createElement(_actionsBar2.default, { metadata: metadata, openModal: openModal, product: product })
+    )
   );
 };
 
@@ -25725,6 +25735,7 @@ Popper.defaultProps = {
   modifiers: {}
 };
 exports.default = Popper;
+
 
 /***/ }),
 /* 155 */

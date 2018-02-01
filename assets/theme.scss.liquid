@@ -5812,3 +5812,9 @@ $toolbar-height-small: 46px;
   font-size: em(floor($font-size-base * 0.88));
 }
 
+// trendiamo mod
+@include media-query($small) {
+  #shopify-section-featured-collections .grid__item {
+    padding-left: 0;
+  }
+}

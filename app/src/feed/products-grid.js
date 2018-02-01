@@ -5,7 +5,7 @@ import { compose, withHandlers, withState } from 'recompose'
 
 const ProductsGrid = ({ appElement, closeModal, metadata, isModalOpen, openModal, products }) => {
   return (
-    <div>
+    <React.Fragment>
       {products.map(product => (
         <ProductCard key={product.id} metadata={metadata} openModal={openModal} product={product} />
       ))}
@@ -21,7 +21,7 @@ const ProductsGrid = ({ appElement, closeModal, metadata, isModalOpen, openModal
           {'Close'}
         </button>
       </Modal>
-    </div>
+    </React.Fragment>
   )
 }
 
