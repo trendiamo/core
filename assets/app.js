@@ -576,7 +576,7 @@ var domain = 'trendiamo-backend.herokuapp.com';
 var baseApiUrl = exports.baseApiUrl = 'https://' + domain + '/api/v1';
 
 var authHeaders = function authHeaders() {
-  var consumerEmail = document.querySelector('.metadata').dataset.consumerEmail;
+  var consumerEmail = $('.metadata').dataset.consumerEmail;
   var consumerToken = localStorage.getItem('consumerToken');
   return new Headers({
     'Content-Type': 'application/json',
@@ -584,6 +584,8 @@ var authHeaders = function authHeaders() {
     'X-CONSUMER-TOKEN': consumerToken
   });
 };
+
+var isRedirectingToLogin = false;
 
 var authFetch = exports.authFetch = function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(url, options) {
@@ -598,7 +600,8 @@ var authFetch = exports.authFetch = function () {
           case 2:
             response = _context.sent;
 
-            if (response.status === 401) {
+            if (response.status === 401 && !isRedirectingToLogin) {
+              isRedirectingToLogin = true;
               setTimeout(function () {
                 alert('Please login again');
                 window.location = '/account/login';
@@ -2480,21 +2483,22 @@ var apiRequest = function () {
 
 var errorMessages = function errorMessages(json) {
   if (json.error) {
-    return '<li>Invalid login credentials.</li>';
+    return '<ul><li>Invalid login credentials.</li></ul>';
   } else {
     if ((0, _typeof3.default)(json.errors) === 'object') {
-      return json.errors.map(function (error) {
+      var listItems = json.errors.map(function (error) {
         return '<li>' + error + '</li>';
       });
+      return '<ul>' + listItems + '</ul>';
     } else {
-      return '<li>Cannot create account.</li>';
+      return '<ul><li>Cannot create account.</li></ul>';
     }
   }
 };
 
 var apiSaga = exports.apiSaga = function () {
   var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(url, body) {
-    var json;
+    var json, errors;
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -2506,7 +2510,13 @@ var apiSaga = exports.apiSaga = function () {
             json = _context2.sent;
 
             if (json.error || json.errors) {
-              document.querySelector('h1').insertAdjacentHTML('afterend', '<div class="errors"><ul>' + errorMessages(json) + '</ul></div>');
+              errors = (0, _utils.$)('.errors');
+
+              if (errors) {
+                errors.innerHTML = errorMessages(json);
+              } else {
+                (0, _utils.$)('h1').insertAdjacentHTML('afterend', '<div class="errors">' + errorMessages(json) + '</div>');
+              }
             } else {
               localStorage.setItem('consumerToken', json.authenticationToken);
               window.location = '/account/login/multipass/' + json.shopifyToken;

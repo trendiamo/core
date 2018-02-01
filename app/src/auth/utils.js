@@ -1,4 +1,4 @@
-import { authFetch, baseApiUrl } from 'utils'
+import { $, authFetch, baseApiUrl } from 'utils'
 
 const SIGNUP_URL = `${baseApiUrl}/consumers/sign_up`
 const SIGNIN_URL = `${baseApiUrl}/consumers/sign_in`
@@ -17,12 +17,13 @@ const apiRequest = async (url, body) => {
 
 const errorMessages = json => {
   if (json.error) {
-    return '<li>Invalid login credentials.</li>'
+    return '<ul><li>Invalid login credentials.</li></ul>'
   } else {
     if (typeof json.errors === 'object') {
-      return json.errors.map(error => `<li>${error}</li>`)
+      const listItems = json.errors.map(error => `<li>${error}</li>`)
+      return `<ul>${listItems}</ul>`
     } else {
-      return '<li>Cannot create account.</li>'
+      return '<ul><li>Cannot create account.</li></ul>'
     }
   }
 }
@@ -30,9 +31,12 @@ const errorMessages = json => {
 export const apiSaga = async (url, body) => {
   const json = await apiRequest(url, body)
   if (json.error || json.errors) {
-    document
-      .querySelector('h1')
-      .insertAdjacentHTML('afterend', `<div class="errors"><ul>${errorMessages(json)}</ul></div>`)
+    const errors = $('.errors')
+    if (errors) {
+      errors.innerHTML = errorMessages(json)
+    } else {
+      $('h1').insertAdjacentHTML('afterend', `<div class="errors">${errorMessages(json)}</div>`)
+    }
   } else {
     localStorage.setItem('consumerToken', json.authenticationToken)
     window.location = `/account/login/multipass/${json.shopifyToken}`
