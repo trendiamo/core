@@ -1,11 +1,12 @@
+/* eslint-disable */
 var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './src/feed.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, '../assets'),
-    filename: 'feed.js'
+    filename: 'app.js',
   },
   module: {
     loaders: [
@@ -14,11 +15,14 @@ module.exports = {
         loader: 'babel-loader',
         include: [path.resolve(__dirname, './src')],
         query: {
-          presets: ['env', 'react', 'stage-2']
-        }
-      }
-    ]
+          presets: ['env', 'react', 'stage-2'],
+        },
+      },
+    ],
   },
   plugins: [new webpack.EnvironmentPlugin(['API_ENDPOINT'])],
-  watch: true
+  resolve: {
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+  },
+  watch: true,
 }

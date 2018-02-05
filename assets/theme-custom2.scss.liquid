@@ -75,12 +75,12 @@
 
 .grid-view-item {
   position: relative;
-  overflow: hidden;
+  overflow: auto; /* this is here so that popper-js to be rendered inside */
   margin-top: 8px;
   margin-bottom: 6px;
   padding-top: 8px;
-  box-shadow: 0 -1px 8px rgba(0,0,0,0.15);
-  border-radius: 10px;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
+  border-radius: 20px;
 }
 
 .grid-view-item__link {
@@ -102,7 +102,12 @@
 
 .round-img {
   border-radius: 50%;
+<<<<<<< HEAD
   max-width: initial;
+=======
+  object-fit: contain;
+  background-color: lightgray;
+>>>>>>> 16c3581845fc27d7511896cba0d5eab8f0fcfa17
 }
 
 .grid-view-item__image-wrapper {
@@ -139,7 +144,7 @@ a.card-item-action {
 
 .manager {
   position: relative;
-  width: 10%;
+  width: 40px;
 }
 
 .target {

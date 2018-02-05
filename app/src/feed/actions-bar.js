@@ -1,6 +1,6 @@
-import IconCart from './icon-cart'
-import IconHeart from './icon-heart'
-import IconHeartS from './icon-hearts'
+import IconCart from 'icons/icon-cart'
+import IconHeart from 'icons/icon-heart'
+import IconHeartS from 'icons/icon-hearts'
 import React from 'react'
 import { addToCart, createLike, fetchLike, fetchLikesCount, removeLike } from './utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
@@ -32,7 +32,7 @@ export default compose(
       addToCart(product.variant_id)
     },
     onHeartClicked: ({
-      consumerId,
+      metadata,
       decrement,
       increment,
       isLiked,
@@ -42,6 +42,7 @@ export default compose(
       setIsLiked,
       setLikeId,
     }) => () => {
+      const { consumerId } = metadata
       if (!consumerId) {
         openModal()
         return
@@ -62,7 +63,8 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { consumerId, product, setIsLiked, setLikeId, setLikesCount } = this.props
+      const { metadata, product, setIsLiked, setLikeId, setLikesCount } = this.props
+      const { consumerId } = metadata
       fetchLikesCount(product.id).then(likesCount => setLikesCount(likesCount))
       if (!consumerId) return
       fetchLike(consumerId, product.id).then(response => {
