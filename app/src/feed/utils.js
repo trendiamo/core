@@ -30,17 +30,17 @@ export const fetchLikesCount = async productId => {
   return json.likesCount
 }
 
-export const fetchLike = async (consumerId, productId) => {
-  const url = `${LIKES_URL}/id?consumer_ref=${consumerId}&product_ref=${productId}`
+export const fetchLike = async (customerRef, productId) => {
+  const url = `${LIKES_URL}/id?customer_ref=${customerRef}&product_ref=${productId}`
   const response = await authFetch(url)
   const json = await response.json()
   return json
 }
 
-export const createLike = async (consumerId, productId) => {
+export const createLike = async (customerRef, productId) => {
   const params = {
     like: {
-      consumerRef: consumerId,
+      customerRef,
       productRef: productId,
     },
   }

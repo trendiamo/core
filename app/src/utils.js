@@ -5,21 +5,27 @@ export const getMetadata = () => $('.metadata').dataset
 
 const domain = process.env.API_ENDPOINT
 export const baseApiUrl = `https://${domain}/api/v1`
+export const gqlApiUrl = `https://${domain}/graphql`
 
-const authHeaders = () => {
-  const consumerEmail = $('.metadata').dataset.consumerEmail
-  const consumerToken = localStorage.getItem('consumerToken')
-  return new Headers({
-    'Content-Type': 'application/json',
-    'X-CONSUMER-EMAIL': consumerEmail,
-    'X-CONSUMER-TOKEN': consumerToken,
-  })
+export const authHeaders = () => {
+  const userEmail = $('.metadata').dataset.userEmail
+  const authToken = localStorage.getItem('authToken')
+  return {
+    'X-USER-EMAIL': userEmail,
+    'X-USER-TOKEN': authToken,
+  }
 }
 
 let isRedirectingToLogin = false
 
 export const authFetch = async (url, options) => {
-  const response = await fetch(url, { ...options, headers: authHeaders() })
+  const response = await fetch(url, {
+    ...options,
+    headers: new Headers({
+      ...authHeaders(),
+      'Content-Type': 'application/json',
+    }),
+  })
   if (response.status === 401 && !isRedirectingToLogin) {
     isRedirectingToLogin = true
     setTimeout(() => {

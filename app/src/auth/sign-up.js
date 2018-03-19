@@ -7,7 +7,8 @@ const handleFormSubmit = event => {
   const lastName = $('#LastName').value
   const email = $('#Email').value
   const password = $('#CreatePassword').value
-  apiSignUp({ consumer: { email, firstName, lastName, password } })
+  const username = $('#Username').value
+  apiSignUp({ user: { email, firstName, lastName, password, username } })
 }
 
 export default () => $('#create_customer').addEventListener('submit', handleFormSubmit)

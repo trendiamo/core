@@ -42,8 +42,8 @@ export default compose(
       setIsLiked,
       setLikeId,
     }) => () => {
-      const { consumerId } = metadata
-      if (!consumerId) {
+      const { customerRef } = metadata
+      if (!customerRef) {
         openModal()
         return
       }
@@ -52,7 +52,7 @@ export default compose(
         removeLike(likeId)
         decrement()
       } else {
-        createLike(consumerId, product.id).then(response => {
+        createLike(customerRef, product.id).then(response => {
           if (response.ok) {
             setLikeId(response.id)
           }
@@ -64,10 +64,10 @@ export default compose(
   lifecycle({
     componentDidMount() {
       const { metadata, product, setIsLiked, setLikeId, setLikesCount } = this.props
-      const { consumerId } = metadata
+      const { customerRef } = metadata
       fetchLikesCount(product.id).then(likesCount => setLikesCount(likesCount))
-      if (!consumerId) return
-      fetchLike(consumerId, product.id).then(response => {
+      if (!customerRef) return
+      fetchLike(customerRef, product.id).then(response => {
         if (response.status !== 404) {
           setIsLiked(true)
           setLikeId(response.id)

@@ -9,8 +9,11 @@
 
           {{ form.errors | default_errors }}
 
+          <label for="Username">{{ 'customer.register.username' | t }}</label>
+          <input type="text" name="customer[username]" id="Username" required {% if form.username %}value="{{ form.username }}"{% endif %} autofocus>
+
           <label for="FirstName">{{ 'customer.register.first_name' | t }}</label>
-          <input type="text" name="customer[first_name]" id="FirstName" required {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autofocus>
+          <input type="text" name="customer[first_name]" id="FirstName" required {% if form.first_name %}value="{{ form.first_name }}"{% endif %}>
 
           <label for="LastName">{{ 'customer.register.last_name' | t }}</label>
           <input type="text" name="customer[last_name]" id="LastName" required {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>

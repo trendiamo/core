@@ -1,4 +1,5 @@
 import feed from 'feed'
+import product from 'product'
 import { account, signIn, signUp } from 'auth'
 
 const app = () => {
@@ -12,6 +13,9 @@ const app = () => {
     case '/':
     case '/collections/frontpage':
       return feed()
+  }
+  if (/\/collections\/frontpage\/products\/.+/.test(location.pathname)) {
+    return product()
   }
 }
 
