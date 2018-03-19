@@ -1,8 +1,8 @@
 class LikesController < ApplicationController
-  before_action :authenticate_consumer!
+  before_action :authenticate_user!
 
   def show
-    @like = Like.find_by!(consumer_ref: params[:consumer_ref], product_ref: params[:product_ref])
+    @like = Like.find_by!(customer_ref: params[:customer_ref], product_ref: params[:product_ref])
     authorize @like
     render json: @like
   end
@@ -21,11 +21,5 @@ class LikesController < ApplicationController
     @like = Like.find(params[:id])
     authorize @like
     @like.destroy
-  end
-
-  private
-
-  def pundit_user
-    current_consumer
   end
 end

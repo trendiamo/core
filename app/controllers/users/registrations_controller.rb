@@ -1,4 +1,4 @@
-module Consumers
+module Users
   class RegistrationsController < Devise::RegistrationsController
     include MultipassAuth
     before_action :configure_permitted_parameters
@@ -15,7 +15,7 @@ module Consumers
           sign_up(resource_name, resource)
           # respond_with resource, location: after_sign_up_path_for(resource)
           token = Tiddle.create_and_return_token(resource, request)
-          render json: { authentication_token: token, consumer: resource, shopify_token: shopify_token(resource) }
+          render json: { authentication_token: token, user: resource, shopify_token: shopify_token(resource) }
         else
           # set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
           expire_data_after_sign_in!
@@ -26,14 +26,14 @@ module Consumers
         clean_up_passwords resource
         set_minimum_password_length
         # respond_with resource
-        render json: { errors: resource.errors.full_messages, consumer: resource }
+        render json: { errors: resource.errors.full_messages, user: resource }
       end
     end
 
     private
 
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name])
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[username first_name last_name])
     end
   end
 end

@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  # before_action :authenticate_consumer!
+  # before_action :authenticate_user!
 
   def show
     likes_count = Like.where(product_ref: params[:id]).count

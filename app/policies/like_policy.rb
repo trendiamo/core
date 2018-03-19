@@ -26,6 +26,6 @@ class LikePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[consumer_ref product_ref]
+    %i[customer_ref product_ref]
   end
 end
