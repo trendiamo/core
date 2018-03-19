@@ -7,12 +7,12 @@ class JsonCamelCase
   end
 
   def call(env)
-    if env['CONTENT_TYPE'] =~ /application\/json/
+    if env['CONTENT_TYPE'] =~ /application\/json/ && env["PATH_INFO"] != "/graphql"
       underscore_params(env)
     end
 
     @app.call(env).tap do |_status, headers, response|
-      next unless headers['Content-Type'] =~ /application\/json/
+      next unless headers['Content-Type'] =~ /application\/json/ && env["PATH_INFO"] != "/graphql"
       response.each do |body|
         begin
           new_response = JSON.parse(body)
@@ -30,6 +30,8 @@ class JsonCamelCase
       end
     end
   end
+
+  private
 
   def underscore_params(env)
     if defined?(Rails) && Rails::VERSION::MAJOR >= 5

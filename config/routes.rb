@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post "/graphql", to: "graphql#execute"
   scope "/api/v1", defaults: { format: "json" } do
     devise_for :users, only: []
     devise_scope :user do
@@ -10,5 +11,6 @@ Rails.application.routes.draw do
     resources :users, only: :update
     resources :likes, only: %i[create show destroy]
     resources :products, only: %i[show]
+    resources :comments, only: %i[index create]
   end
 end

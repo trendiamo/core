@@ -12,6 +12,7 @@ gem "rails", "~> 5.1.4"
 
 gem "brakeman"
 gem "devise"
+gem "graphql"
 gem "pundit"
 gem "rack-cors"
 gem "rubocop"

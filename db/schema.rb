@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180131132127) do
+ActiveRecord::Schema.define(version: 20180319121047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,44 @@ ActiveRecord::Schema.define(version: 20180131132127) do
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_user_auth_tokens_on_body"
     t.index ["user_id"], name: "index_user_auth_tokens_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "product_ref", null: false
+    t.text "content", null: false
+    t.boolean "pinned", default: false, null: false
+    t.integer "upvotes_count", default: 0, null: false
+    t.integer "inappropriate_flags_count", default: 0, null: false
+    t.datetime "removed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "inappropriate_flags", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_inappropriate_flags_on_comment_id"
+    t.index ["user_id"], name: "index_inappropriate_flags_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.string "customer_ref"
+    t.string "product_ref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "upvotes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_upvotes_on_comment_id"
+    t.index ["user_id"], name: "index_upvotes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,12 +86,10 @@ ActiveRecord::Schema.define(version: 20180131132127) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "likes", force: :cascade do |t|
-    t.string "customer_ref"
-    t.string "product_ref"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   add_foreign_key "auth_tokens", "users"
+  add_foreign_key "comments", "users"
+  add_foreign_key "inappropriate_flags", "comments"
+  add_foreign_key "inappropriate_flags", "users"
+  add_foreign_key "upvotes", "comments"
+  add_foreign_key "upvotes", "users"
 end
