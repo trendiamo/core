@@ -1,11 +1,10 @@
 import IconEllipsisV from 'icons/icon-ellipsis-v'
 import React from 'react'
-import ShareProduct from './share-product'
 import { Arrow, Manager, Popper, Target } from 'react-popper'
 import { compose, withHandlers, withState } from 'recompose'
 
-const ContextMenu = ({ handleMenuClick, isOpen, product }) => (
-  <Manager style={{ minWidth: '36px', position: 'relative' }}>
+const ContextMenu = ({ close, handleMenuClick, isOpen, onFlag }) => (
+  <Manager style={{ minWidth: '20px', position: 'relative' }}>
     <Target className="target" onClick={handleMenuClick}>
       <IconEllipsisV />
     </Target>
@@ -13,7 +12,7 @@ const ContextMenu = ({ handleMenuClick, isOpen, product }) => (
       <Popper className="popper" placement="bottom">
         <ul>
           <li>
-            <ShareProduct product={product} />
+            <span onClick={onFlag(close)}>{'Flag as inappropriate'}</span>
           </li>
         </ul>
         <Arrow className="popper__arrow" />

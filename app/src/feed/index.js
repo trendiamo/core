@@ -1,11 +1,21 @@
+import { ApolloProvider } from 'react-apollo'
+import AuthModalProvider from 'auth/auth-modal-provider'
+import client from 'graphql/client'
 import ProductsGrid from './products-grid'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { $, $$, getMetadata } from 'utils'
+import { $, $$ } from 'utils'
 
 export default () => {
   const appElement = $('.grid.grid--uniform.grid--view-items')
-  const products = $$('.product-info', info => JSON.parse(info.content.textContent))
+  const shopifyProducts = $$('.product-info', info => JSON.parse(info.content.textContent))
 
-  ReactDOM.render(<ProductsGrid appElement={appElement} metadata={getMetadata()} products={products} />, appElement)
+  ReactDOM.render(
+    <ApolloProvider client={client}>
+      <AuthModalProvider appElement={appElement}>
+        <ProductsGrid shopifyProducts={shopifyProducts} />
+      </AuthModalProvider>
+    </ApolloProvider>,
+    appElement
+  )
 }

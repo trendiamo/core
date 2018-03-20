@@ -7,7 +7,7 @@ import { branch, compose, renderNothing, withProps } from 'recompose'
 
 const Comments = ({ comments, data, productId }) => (
   <div>
-    <ul>{comments.map(comment => <Comment comment={comment} key={comment.id} />)}</ul>
+    <ul>{comments.map(comment => <Comment comment={comment} commentsData={data} key={comment.id} />)}</ul>
     <AddComment commentsData={data} productId={productId} />
   </div>
 )
@@ -19,9 +19,13 @@ export default compose(
         comments(productRef: $productRef) {
           id
           content
+          upvotesCount
           createdAt
           user {
             username
+          }
+          upvotes(currentUser: true) {
+            id
           }
         }
       }

@@ -1,34 +1,33 @@
-import Modal from 'react-modal'
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 import ProductCard from './product-card'
 import React from 'react'
-import { compose, withHandlers, withState } from 'recompose'
+import { branch, compose, renderNothing, withProps } from 'recompose'
 
-const ProductsGrid = ({ appElement, closeModal, metadata, isModalOpen, openModal, products }) => {
-  return (
-    <React.Fragment>
-      {products.map(product => (
-        <ProductCard key={product.id} metadata={metadata} openModal={openModal} product={product} />
-      ))}
-      <Modal
-        appElement={appElement}
-        contentLabel="Authorization Modal"
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-      >
-        <h1>{'Create account'}</h1>
-        <p>{'You need to create an account or login first.'}</p>
-        <button className="btn" onClick={closeModal} type="button">
-          {'Close'}
-        </button>
-      </Modal>
-    </React.Fragment>
-  )
-}
+const ProductsGrid = ({ data, products }) =>
+  products.map(product => <ProductCard key={product.id} product={product} productsData={data} />)
 
 export default compose(
-  withState('isModalOpen', 'setIsModalOpen', false),
-  withHandlers({
-    closeModal: ({ setIsModalOpen }) => () => setIsModalOpen(false),
-    openModal: ({ setIsModalOpen }) => () => setIsModalOpen(true),
-  })
+  graphql(
+    gql`
+      query($productRefs: [String]!) {
+        products(productRefs: $productRefs) {
+          productRef
+          likesCount
+          likes(currentUser: true) {
+            id
+          }
+        }
+      }
+    `,
+    {
+      options: ({ shopifyProducts }) => ({
+        variables: { productRefs: shopifyProducts.map(e => String(e.id)) },
+      }),
+    }
+  ),
+  branch(({ data }) => data && (data.loading || data.error), renderNothing),
+  withProps(({ data, shopifyProducts }) => ({
+    products: data.products.map(e => ({ ...e, ...shopifyProducts.find(x => String(x.id) === e.productRef) })),
+  }))
 )(ProductsGrid)

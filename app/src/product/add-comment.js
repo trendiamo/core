@@ -1,7 +1,8 @@
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import PropTypes from 'prop-types'
 import React from 'react'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, getContext, withHandlers, withState } from 'recompose'
 
 const AddComment = ({ isSubmitting, content, onChange, onSubmit }) => (
   <form onSubmit={onSubmit}>
@@ -9,6 +10,7 @@ const AddComment = ({ isSubmitting, content, onChange, onSubmit }) => (
       disabled={isSubmitting}
       onChange={onChange}
       placeholder="Add a comment..."
+      required
       style={{ marginTop: '0.5rem', width: '100%' }}
       type="text"
       value={content}
@@ -23,9 +25,13 @@ export default compose(
         addComment(comment: $comment) {
           id
           content
+          upvotesCount
           createdAt
           user {
             username
+          }
+          upvotes(currentUser: true) {
+            id
           }
         }
       }
@@ -33,12 +39,24 @@ export default compose(
   ),
   withState('content', 'setContent', ''),
   withState('isSubmitting', 'setIsSubmitting', false),
+  getContext({
+    checkLoginModal: PropTypes.func,
+  }),
   withHandlers({
     onChange: ({ setContent }) => event => {
       setContent(event.target.value)
     },
-    onSubmit: ({ content, commentsData, mutate, productId, setContent, setIsSubmitting }) => async event => {
+    onSubmit: ({
+      content,
+      commentsData,
+      checkLoginModal,
+      mutate,
+      productId,
+      setContent,
+      setIsSubmitting,
+    }) => async event => {
       event.preventDefault()
+      if (checkLoginModal()) return
       setIsSubmitting(true)
       const comment = { content, productRef: String(productId) }
       const { data } = await mutate({ variables: { comment } })

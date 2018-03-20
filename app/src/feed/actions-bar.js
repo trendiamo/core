@@ -1,9 +1,12 @@
+import { addToCart } from './utils'
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 import IconCart from 'icons/icon-cart'
 import IconHeart from 'icons/icon-heart'
 import IconHeartS from 'icons/icon-hearts'
+import PropTypes from 'prop-types'
 import React from 'react'
-import { addToCart, createLike, fetchLike, fetchLikesCount, removeLike } from './utils'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { compose, getContext, withHandlers, withProps } from 'recompose'
 
 const ActionsBar = ({ isLiked, likesCount, likesCountSet, onBuyClicked, onHeartClicked, productAvailable }) => (
   <div className="card-item-info">
@@ -20,63 +23,42 @@ const ActionsBar = ({ isLiked, likesCount, likesCountSet, onBuyClicked, onHeartC
 )
 
 export default compose(
-  withState('likesCount', 'setLikesCount', 0),
-  withState('isLiked', 'setIsLiked', false),
-  withState('likeId', 'setLikeId', null),
-  withHandlers({
-    decrement: ({ setLikesCount }) => () => setLikesCount(n => n - 1),
-    increment: ({ setLikesCount }) => () => setLikesCount(n => n + 1),
+  graphql(
+    gql`
+      mutation($productRef: String!) {
+        toggleLike(productRef: $productRef) {
+          likesCount
+          likes(currentUser: true) {
+            id
+          }
+        }
+      }
+    `
+  ),
+  withProps(({ product }) => ({
+    isLiked: product.likes.length > 0,
+    likeId: product.likes.length > 0 && product.likes[0].id,
+    likesCount: product.likesCount,
+    likesCountSet: product.likesCount !== undefined,
+    productAvailable: product.available,
+  })),
+  getContext({
+    checkLoginModal: PropTypes.func,
   }),
   withHandlers({
     onBuyClicked: ({ product }) => () => {
       addToCart(product.variant_id)
     },
-    onHeartClicked: ({
-      metadata,
-      decrement,
-      increment,
-      isLiked,
-      likeId,
-      openModal,
-      product,
-      setIsLiked,
-      setLikeId,
-    }) => () => {
-      const { customerRef } = metadata
-      if (!customerRef) {
-        openModal()
-        return
-      }
-      setIsLiked(!isLiked)
-      if (isLiked) {
-        removeLike(likeId)
-        decrement()
-      } else {
-        createLike(customerRef, product.id).then(response => {
-          if (response.ok) {
-            setLikeId(response.id)
-          }
-        })
-        increment()
-      }
+    onHeartClicked: ({ checkLoginModal, mutate, product, productsData }) => async () => {
+      if (checkLoginModal()) return
+      const { productRef } = product
+      const { data } = await mutate({ variables: { productRef } })
+      productsData.updateQuery(previousProductsData => ({
+        ...previousProductsData,
+        products: previousProductsData.products.map(
+          e => (e.productRef === productRef ? { ...e, ...data.toggleLike } : e)
+        ),
+      }))
     },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { metadata, product, setIsLiked, setLikeId, setLikesCount } = this.props
-      const { customerRef } = metadata
-      fetchLikesCount(product.id).then(likesCount => setLikesCount(likesCount))
-      if (!customerRef) return
-      fetchLike(customerRef, product.id).then(response => {
-        if (response.status !== 404) {
-          setIsLiked(true)
-          setLikeId(response.id)
-        }
-      })
-    },
-  }),
-  withProps(({ likesCount, product }) => ({
-    likesCountSet: likesCount !== undefined,
-    productAvailable: product.available,
-  }))
+  })
 )(ActionsBar)
