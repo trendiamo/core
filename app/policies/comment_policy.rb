@@ -5,6 +5,11 @@ class CommentPolicy < ApplicationPolicy
     end
   end
 
+  def permitted_attributes
+    %i[content product_ref]
+  end
+
+  # REST actions:
   def index?
     user
   end
@@ -13,7 +18,16 @@ class CommentPolicy < ApplicationPolicy
     user
   end
 
-  def permitted_attributes
-    %i[text]
+  # graphql queries:
+  def add_comment?
+    user
+  end
+
+  def toggle_upvote?
+    user
+  end
+
+  def flag?
+    user
   end
 end
