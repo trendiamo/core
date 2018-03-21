@@ -1,3 +1,4 @@
+import { authGql } from 'utils'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
@@ -46,27 +47,20 @@ export default compose(
     onChange: ({ setContent }) => event => {
       setContent(event.target.value)
     },
-    onSubmit: ({
-      content,
-      commentsData,
-      checkLoginModal,
-      mutate,
-      productId,
-      setContent,
-      setIsSubmitting,
-    }) => async event => {
-      event.preventDefault()
-      if (checkLoginModal()) return
-      setIsSubmitting(true)
-      const comment = { content, productRef: String(productId) }
-      const { data } = await mutate({ variables: { comment } })
-      const newComment = data.addComment
-      setContent('')
-      setIsSubmitting(false)
-      commentsData.updateQuery(previousCommentsData => ({
-        ...previousCommentsData,
-        comments: [...previousCommentsData.comments, newComment],
-      }))
-    },
+    onSubmit: ({ content, commentsData, checkLoginModal, mutate, productId, setContent, setIsSubmitting }) => event =>
+      authGql(async () => {
+        event.preventDefault()
+        if (checkLoginModal()) return
+        setIsSubmitting(true)
+        const comment = { content, productRef: String(productId) }
+        const { data } = await mutate({ variables: { comment } })
+        const newComment = data.addComment
+        setContent('')
+        setIsSubmitting(false)
+        commentsData.updateQuery(previousCommentsData => ({
+          ...previousCommentsData,
+          comments: [...previousCommentsData.comments, newComment],
+        }))
+      }),
   })
 )(AddComment)

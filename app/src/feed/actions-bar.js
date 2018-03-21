@@ -1,4 +1,5 @@
 import { addToCart } from './utils'
+import { authGql } from 'utils'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import IconCart from 'icons/icon-cart'
@@ -49,16 +50,17 @@ export default compose(
     onBuyClicked: ({ product }) => () => {
       addToCart(product.variant_id)
     },
-    onHeartClicked: ({ checkLoginModal, mutate, product, productsData }) => async () => {
-      if (checkLoginModal()) return
-      const { productRef } = product
-      const { data } = await mutate({ variables: { productRef } })
-      productsData.updateQuery(previousProductsData => ({
-        ...previousProductsData,
-        products: previousProductsData.products.map(
-          e => (e.productRef === productRef ? { ...e, ...data.toggleLike } : e)
-        ),
-      }))
-    },
+    onHeartClicked: ({ checkLoginModal, mutate, product, productsData }) => () =>
+      authGql(async () => {
+        if (checkLoginModal()) return
+        const { productRef } = product
+        const { data } = await mutate({ variables: { productRef } })
+        productsData.updateQuery(previousProductsData => ({
+          ...previousProductsData,
+          products: previousProductsData.products.map(
+            e => (e.productRef === productRef ? { ...e, ...data.toggleLike } : e)
+          ),
+        }))
+      }),
   })
 )(ActionsBar)

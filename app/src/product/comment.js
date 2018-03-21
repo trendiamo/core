@@ -1,3 +1,4 @@
+import { authGql } from 'utils'
 import ContextMenu from './context-menu'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
@@ -50,21 +51,23 @@ export default compose(
     checkLoginModal: PropTypes.func,
   }),
   withHandlers({
-    onFlag: ({ flag, comment, checkLoginModal }) => close => async () => {
-      if (checkLoginModal()) return
-      const commentId = comment.id
-      await flag({ variables: { commentId } })
-      close()
-    },
-    onUpvote: ({ toggleUpvote, comment, commentsData, checkLoginModal }) => async () => {
-      if (checkLoginModal()) return
-      const commentId = comment.id
-      const { data } = await toggleUpvote({ variables: { commentId } })
-      commentsData.updateQuery(previousCommentsData => ({
-        ...previousCommentsData,
-        comments: previousCommentsData.comments.map(e => (e.id === commentId ? { ...e, ...data.toggleUpvote } : e)),
-      }))
-    },
+    onFlag: ({ flag, comment, checkLoginModal }) => close =>
+      authGql(async () => {
+        if (checkLoginModal()) return
+        const commentId = comment.id
+        await flag({ variables: { commentId } })
+        close()
+      }),
+    onUpvote: ({ toggleUpvote, comment, commentsData, checkLoginModal }) => () =>
+      authGql(async () => {
+        if (checkLoginModal()) return
+        const commentId = comment.id
+        const { data } = await toggleUpvote({ variables: { commentId } })
+        commentsData.updateQuery(previousCommentsData => ({
+          ...previousCommentsData,
+          comments: previousCommentsData.comments.map(e => (e.id === commentId ? { ...e, ...data.toggleUpvote } : e)),
+        }))
+      }),
   }),
   withProps(({ comment }) => ({
     content: comment.content,
