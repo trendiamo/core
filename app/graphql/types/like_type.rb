@@ -6,6 +6,6 @@ Types::LikeType = GraphQL::ObjectType.define do
     resolve ->(obj, _args, _ctx) { obj.user }
   end
   field :product, Types::ProductType do
-    resolve ->(obj, _args, _ctx) { OpenStruct.new(product_ref: obj.product_ref) }
+    resolve ->(obj, _args, _ctx) { obj.product }
   end
 end

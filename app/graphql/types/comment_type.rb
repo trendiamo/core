@@ -2,15 +2,18 @@ Types::CommentType = GraphQL::ObjectType.define do
   name "Comment"
 
   field :id, !types.ID
+  field :user, !Types::UserType
+  field :product, !Types::ProductType
   field :content, !types.String
+  field :pinned, !types.Boolean
+  field :isFromProductOwner, !types.Boolean do
+    resolve ->(obj, _args, _ctx) { obj.user_id == obj.product.user_id }
+  end
   field :createdAt, !types.String do
     resolve ->(obj, _args, _ctx) { obj.created_at.iso8601 }
   end
   field :upvotesCount, !types.Int do
     resolve ->(obj, _args, _ctx) { obj.upvotes_count }
-  end
-  field :user, !Types::UserType do
-    resolve ->(obj, _args, _ctx) { obj.user }
   end
   field :upvotes, !types[Types::UpvoteType] do
     argument :currentUser, types.Boolean

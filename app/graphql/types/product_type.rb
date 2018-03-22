@@ -1,20 +1,21 @@
 Types::ProductType = GraphQL::ObjectType.define do
   name "Product"
 
-  # field :id, !types.ID
+  field :id, !types.ID
+  field :user, !Types::UserType
   field :productRef, !types.String do
     resolve ->(obj, _args, _ctx) { obj.product_ref }
   end
   field :likesCount, !types.Int do
-    resolve ->(obj, _args, _ctx) { Like.where(product_ref: obj.product_ref).count }
+    resolve ->(obj, _args, _ctx) { obj.likes_count }
   end
   field :likes, !types[Types::LikeType] do
     argument :currentUser, types.Boolean
     resolve ->(obj, args, ctx) do
       if args[:currentUser]
-        Like.where(product_ref: obj.product_ref, customer_ref: ctx[:current_user]&.customer_ref)
+        obj.likes.where(user: ctx[:current_user])
       else
-        Like.where(product_ref: obj.product_ref)
+        obj.likes
       end
     end
   end

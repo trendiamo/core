@@ -1,4 +1,4 @@
 class Like < ApplicationRecord
-  validates :customer_ref, presence: true
-  validates :product_ref, presence: true
+  belongs_to :user
+  belongs_to :product, counter_cache: true
 end

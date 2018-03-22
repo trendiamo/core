@@ -1,24 +1,8 @@
 class CommentPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
-  end
-
   def permitted_attributes
-    %i[content product_ref]
+    %i[content product_id]
   end
 
-  # REST actions:
-  def index?
-    user
-  end
-
-  def create?
-    user
-  end
-
-  # graphql queries:
   def add_comment?
     user
   end
@@ -29,5 +13,13 @@ class CommentPolicy < ApplicationPolicy
 
   def flag?
     user
+  end
+
+  def toggle_pin_comment?
+    user.id == record.product.user_id
+  end
+
+  def remove_comment?
+    user.id == record.product.user_id
   end
 end

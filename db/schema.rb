@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319121047) do
+ActiveRecord::Schema.define(version: 20180322112149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20180319121047) do
 
   create_table "comments", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "product_ref", null: false
     t.text "content", null: false
     t.boolean "pinned", default: false, null: false
     t.integer "upvotes_count", default: 0, null: false
@@ -37,6 +36,8 @@ ActiveRecord::Schema.define(version: 20180319121047) do
     t.datetime "removed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "product_id", null: false
+    t.index ["product_id"], name: "index_comments_on_product_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -50,10 +51,21 @@ ActiveRecord::Schema.define(version: 20180319121047) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.string "customer_ref"
-    t.string "product_ref"
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_likes_on_product_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "product_ref", null: false
+    t.integer "likes_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "upvotes", force: :cascade do |t|
@@ -90,6 +102,9 @@ ActiveRecord::Schema.define(version: 20180319121047) do
   add_foreign_key "comments", "users"
   add_foreign_key "inappropriate_flags", "comments"
   add_foreign_key "inappropriate_flags", "users"
+  add_foreign_key "likes", "products"
+  add_foreign_key "likes", "users"
+  add_foreign_key "products", "users"
   add_foreign_key "upvotes", "comments"
   add_foreign_key "upvotes", "users"
 end

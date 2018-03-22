@@ -1,4 +1,4 @@
 TrendiamoSchema = GraphQL::Schema.define do
-  mutation(Types::MutationType)
-  query(Types::QueryType)
+  mutation(Main::MutationType)
+  query(Main::QueryType)
 end

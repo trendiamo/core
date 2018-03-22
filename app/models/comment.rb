@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :user
+  belongs_to :product
   has_many :upvotes, dependent: :destroy
   has_many :inappropriate_flags, dependent: :destroy
 
