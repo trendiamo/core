@@ -169,17 +169,20 @@ a.card-item-action {
   border-style: solid;
   position: absolute;
   margin: 5px;
-
-  border-color: white;
-
+  border-color: transparent;
+  border-bottom-color: white;
   border-width: 0 5px 5px 5px;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  border-top-color: transparent;
   top: -5px;
   left: calc(50% - 5px);
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.gray-popper {
+  background-color: burlywood;
+  .popper__arrow {
+    border-bottom-color: burlywood;
+  }
 }
 
 .is-success {

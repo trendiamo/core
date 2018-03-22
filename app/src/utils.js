@@ -8,11 +8,11 @@ export const baseApiUrl = `https://${domain}/api/v1`
 export const gqlApiUrl = `https://${domain}/graphql`
 
 export const isLoggedIn = () => {
-  return $('.metadata').dataset.userEmail && localStorage.getItem('authToken')
+  return getMetadata().userEmail && localStorage.getItem('authToken')
 }
 
 export const authHeaders = () => {
-  const userEmail = $('.metadata').dataset.userEmail
+  const userEmail = getMetadata().userEmail
   const authToken = localStorage.getItem('authToken')
   return {
     'X-USER-EMAIL': userEmail,

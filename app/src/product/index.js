@@ -2,18 +2,18 @@ import { $ } from 'utils'
 import { ApolloProvider } from 'react-apollo'
 import AuthModalProvider from 'auth/auth-modal-provider'
 import client from 'graphql/client'
-import Comments from './comments'
+import Product from './product'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
 export default () => {
   const appElement = $('.comments')
-  const product = JSON.parse($('#ProductJson-product-template').text)
+  const productRef = String(JSON.parse($('#ProductJson-product-template').text).id)
 
   ReactDOM.render(
     <ApolloProvider client={client}>
       <AuthModalProvider appElement={appElement}>
-        <Comments productId={product.id} />
+        <Product productRef={productRef} />
       </AuthModalProvider>
     </ApolloProvider>,
     appElement

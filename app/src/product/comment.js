@@ -7,14 +7,34 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { compose, getContext, withHandlers, withProps } from 'recompose'
 
-const Comment = ({ content, createdAt, onFlag, onUpvote, upvoted, upvotesCount, username }) => (
+const Comment = ({
+  comment,
+  commentsData,
+  pinned,
+  product,
+  content,
+  createdAt,
+  fromProductOwner,
+  onUpvote,
+  upvoted,
+  upvotesCount,
+  username,
+}) => (
   <li>
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        paddingLeft: '0.2rem',
+        ...(fromProductOwner ? { backgroundColor: '#def' } : {}),
+        ...(pinned ? { borderLeftColor: '#bcd', borderLeftStyle: 'solid', borderLeftWidth: '2px' } : {}),
+      }}
+    >
       <div>
-        <b style={{ marginRight: '0.3rem' }}>{username}</b>
+        <b style={{ marginRight: '0.3rem', ...(fromProductOwner ? { color: '#46c' } : {}) }}>{username}</b>
         <span>{content}</span>
       </div>
-      <ContextMenu onFlag={onFlag} />
+      <ContextMenu comment={comment} commentsData={commentsData} product={product} />
     </div>
     <div>
       <span>{createdAt}</span>
@@ -37,27 +57,10 @@ export default compose(
     `,
     { name: 'toggleUpvote' }
   ),
-  graphql(
-    gql`
-      mutation($commentId: ID!) {
-        flag(commentId: $commentId) {
-          id
-        }
-      }
-    `,
-    { name: 'flag' }
-  ),
   getContext({
     checkLoginModal: PropTypes.func,
   }),
   withHandlers({
-    onFlag: ({ flag, comment, checkLoginModal }) => close =>
-      authGql(async () => {
-        if (checkLoginModal()) return
-        const commentId = comment.id
-        await flag({ variables: { commentId } })
-        close()
-      }),
     onUpvote: ({ toggleUpvote, comment, commentsData, checkLoginModal }) => () =>
       authGql(async () => {
         if (checkLoginModal()) return
@@ -72,6 +75,8 @@ export default compose(
   withProps(({ comment }) => ({
     content: comment.content,
     createdAt: moment(comment.createdAt).fromNow(),
+    fromProductOwner: comment.isFromProductOwner,
+    pinned: comment.pinned,
     upvoted: comment.upvotes.length > 0,
     upvotesCount: comment.upvotesCount,
     username: comment.user.username,

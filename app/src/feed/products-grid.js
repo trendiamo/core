@@ -12,6 +12,7 @@ export default compose(
     gql`
       query($productRefs: [String]!) {
         products(productRefs: $productRefs) {
+          id
           productRef
           likesCount
           likes(currentUser: true) {
@@ -28,6 +29,6 @@ export default compose(
   ),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data, shopifyProducts }) => ({
-    products: data.products.map(e => ({ ...e, ...shopifyProducts.find(x => String(x.id) === e.productRef) })),
+    products: data.products.map(e => ({ ...shopifyProducts.find(x => String(x.id) === e.productRef), ...e })),
   }))
 )(ProductsGrid)

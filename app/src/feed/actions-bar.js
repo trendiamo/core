@@ -26,8 +26,8 @@ const ActionsBar = ({ isLiked, likesCount, likesCountSet, onBuyClicked, onHeartC
 export default compose(
   graphql(
     gql`
-      mutation($productRef: String!) {
-        toggleLike(productRef: $productRef) {
+      mutation($productId: String!) {
+        toggleLike(productId: $productId) {
           likesCount
           likes(currentUser: true) {
             id
@@ -53,13 +53,11 @@ export default compose(
     onHeartClicked: ({ checkLoginModal, mutate, product, productsData }) => () =>
       authGql(async () => {
         if (checkLoginModal()) return
-        const { productRef } = product
-        const { data } = await mutate({ variables: { productRef } })
+        const { id: productId } = product
+        const { data } = await mutate({ variables: { productId: productId } })
         productsData.updateQuery(previousProductsData => ({
           ...previousProductsData,
-          products: previousProductsData.products.map(
-            e => (e.productRef === productRef ? { ...e, ...data.toggleLike } : e)
-          ),
+          products: previousProductsData.products.map(e => (e.id === productId ? { ...e, ...data.toggleLike } : e)),
         }))
       }),
   })

@@ -5,22 +5,26 @@ import { graphql } from 'react-apollo'
 import React from 'react'
 import { branch, compose, renderNothing, withProps } from 'recompose'
 
-const Comments = ({ comments, data, productId }) => (
+const Comments = ({ comments, data, product }) => (
   <div>
-    <ul>{comments.map(comment => <Comment comment={comment} commentsData={data} key={comment.id} />)}</ul>
-    <AddComment commentsData={data} productId={productId} />
+    <ul>
+      {comments.map(comment => <Comment comment={comment} commentsData={data} key={comment.id} product={product} />)}
+    </ul>
+    <AddComment commentsData={data} productId={product.id} />
   </div>
 )
 
 export default compose(
   graphql(
     gql`
-      query($productRef: String!) {
-        comments(productRef: $productRef) {
+      query($productId: ID!) {
+        comments(productId: $productId) {
           id
           content
+          pinned
           upvotesCount
           createdAt
+          isFromProductOwner
           user {
             username
           }
@@ -31,8 +35,8 @@ export default compose(
       }
     `,
     {
-      options: ({ productId }) => ({
-        variables: { productRef: String(productId) },
+      options: ({ product }) => ({
+        variables: { productId: product.id },
       }),
     }
   ),
