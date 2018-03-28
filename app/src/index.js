@@ -1,4 +1,5 @@
 import feed from 'feed'
+import homepage from 'homepage'
 import product from 'product'
 import { account, signIn, signUp } from 'auth'
 
@@ -11,6 +12,7 @@ const app = () => {
     case '/account/register':
       return signUp()
     case '/':
+      return homepage()
     case '/collections/frontpage':
       return feed()
   }

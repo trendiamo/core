@@ -1,3 +1,83 @@
+html,
+body {
+  min-height: 100vh;
+}
+
+body.template-index {
+  background: linear-gradient(160deg, #9de6de, #9de6de 6%, #b1c1e8 88%, #b1c1e8);
+}
+
+.template-index {
+  .top-hr--invisible {
+    height: 0;
+  }
+
+  #PageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+  }
+
+  .page-width {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .callout {
+    color: white;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 24%;
+    margin-top: 30%;
+  }
+
+  main {
+    form {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    input {
+      border-radius: 10px;
+      padding: 12px;
+      padding-top: 14px;
+      width: 100%;
+      padding-bottom: 14px;
+      font-weight: 500;
+
+      &::placeholder {
+        color: #aaa;
+      }
+    }
+
+    button {
+      background-color: #36d4bc;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+      margin-left: 0.5rem;
+      font-size: 19px;
+    }
+
+    input, button {
+      box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.12);
+    }
+  }
+
+  .site-footer {
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
 @mixin prefix($property, $value, $prefixes) {
   @each $prefix in $prefixes {
     @if $prefix == webkit {

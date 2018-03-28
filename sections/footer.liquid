@@ -1,3 +1,9 @@
+{% if template == 'index' %}
+<footer class="site-footer" role="contentinfo">
+  <div>This is the Beta version.</div>
+  <div>Later you will find your personal shopping feed here.</div>
+</footer>
+{% else %}
 {%- assign social_icons = false -%}
 
 {% if
@@ -188,6 +194,7 @@
     {% endif %}
   </div>
 </footer>
+{% endif %}
 
 {% schema %}
   {

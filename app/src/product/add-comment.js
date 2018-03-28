@@ -52,7 +52,7 @@ export default compose(
         event.preventDefault()
         if (checkLoginModal()) return
         setIsSubmitting(true)
-        const comment = { content, productId, }
+        const comment = { content, productId }
         const { data } = await mutate({ variables: { comment } })
         const newComment = data.addComment
         setContent('')
