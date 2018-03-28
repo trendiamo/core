@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 import { $, $$ } from 'utils'
 
 export default () => {
-  const appElement = $('.grid.grid--uniform.grid--view-items')
+  const appElement = $('#Collection')
   const shopifyProducts = $$('.product-info', info => JSON.parse(info.content.textContent))
 
   ReactDOM.render(

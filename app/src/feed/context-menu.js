@@ -5,7 +5,7 @@ import { Arrow, Manager, Popper, Target } from 'react-popper'
 import { compose, withHandlers, withState } from 'recompose'
 
 const ContextMenu = ({ handleMenuClick, isOpen, product }) => (
-  <Manager style={{ minWidth: '36px', position: 'relative' }}>
+  <Manager>
     <Target className="target" onClick={handleMenuClick}>
       <IconEllipsisV />
     </Target>

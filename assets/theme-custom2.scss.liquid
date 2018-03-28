@@ -156,11 +156,19 @@ body.template-index {
 .grid-view-item {
   position: relative;
   overflow: auto; /* this is here so that popper-js to be rendered inside */
-  margin-top: 8px;
-  margin-bottom: 6px;
-  padding-top: 8px;
+  margin-bottom: 40px;
   box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
   border-radius: 20px;
+}
+
+.grid-view-item__image-wrapper::after {
+  content: " ";
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  box-shadow: inset 0 -160px 160px -160px #000000;
 }
 
 .grid-view-item__link {
@@ -170,9 +178,7 @@ body.template-index {
 }
 
 .grid-view-item__title {
-  font-size: 0.98rem;
-  margin-top: 4px;
-  margin-bottom: -4px;
+  font-size: 14px;
 }
 
 .grid-view-item__vendor {
@@ -195,7 +201,7 @@ body.template-index {
   @include justify-content(space-between);
   @include align-items(center);
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   padding-left: 5%;
   padding-right: 5%;
   color: white;
@@ -210,19 +216,32 @@ a.card-item-action {
 .card-item-likes {
   flex-basis: 80%;
   font-size: 1rem;
+  margin-left: 0.5rem;
 }
 
 .card-item-action {
-  margin-left: 1.25rem;
   margin-top: -7px;
   zoom: 1.5;
 }
 
 .target {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  padding-top: 7px;
+  color: #888;
+  height: 50px;
+  width: 50px;
+  position: relative;
+
+  svg {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+  }
+}
+
+.price {
+  font-size: 12px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  font-weight: 500;
 }
 
 .popper {

@@ -9,14 +9,15 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { compose, getContext, withHandlers, withProps } from 'recompose'
 
-const ActionsBar = ({ isLiked, likesCount, likesCountSet, onBuyClicked, onHeartClicked, productAvailable }) => (
+const ActionsBar = ({ isLiked, likesCount, likesCountSet, onBuyClicked, onHeartClicked, price, productAvailable }) => (
   <div className="card-item-info">
-    <div className="card-item-likes">{likesCountSet && `${likesCount} Likes`}</div>
     <a className="card-item-action like" onClick={onHeartClicked} style={{ color: isLiked ? 'red' : 'white' }}>
       {isLiked ? <IconHeartS /> : <IconHeart />}
     </a>
+    <div className="card-item-likes">{likesCountSet && `${likesCount} Likes`}</div>
     {productAvailable && (
       <a className="card-item-action buy" onClick={onBuyClicked}>
+        <span className="price">{price}</span>
         <IconCart />
       </a>
     )}
@@ -41,6 +42,7 @@ export default compose(
     likeId: product.likes.length > 0 && product.likes[0].id,
     likesCount: product.likesCount,
     likesCountSet: product.likesCount !== undefined,
+    price: product.price_string,
     productAvailable: product.available,
   })),
   getContext({

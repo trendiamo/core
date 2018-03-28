@@ -13,10 +13,10 @@ const app = () => {
       return signUp()
     case '/':
       return homepage()
-    case '/collections/frontpage':
-      return feed()
   }
-  if (/\/collections\/frontpage\/products\/.+/.test(location.pathname)) {
+  if (/\/collections\/.+/.test(location.pathname)) {
+    return feed()
+  } else if (/\/collections\/.*\/products\/.+/.test(location.pathname)) {
     return product()
   }
 }

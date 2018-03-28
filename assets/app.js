@@ -24002,10 +24002,10 @@ var app = function app() {
       return (0, _auth.signUp)();
     case '/':
       return (0, _homepage2.default)();
-    case '/collections/frontpage':
-      return (0, _feed2.default)();
   }
-  if (/\/collections\/frontpage\/products\/.+/.test(location.pathname)) {
+  if (/\/collections\/.+/.test(location.pathname)) {
+    return (0, _feed2.default)();
+  } else if (/\/collections\/.*\/products\/.+/.test(location.pathname)) {
     return (0, _product2.default)();
   }
 };
@@ -24050,7 +24050,7 @@ var _utils = __webpack_require__(4);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function () {
-  var appElement = (0, _utils.$)('.grid.grid--uniform.grid--view-items');
+  var appElement = (0, _utils.$)('#Collection');
   var shopifyProducts = (0, _utils.$$)('.product-info', function (info) {
     return JSON.parse(info.content.textContent);
   });
@@ -52889,64 +52889,53 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// <div style={{ marginLeft: '10px', marginRight: '10px' }}>
+//   <img className="round-img" height="40" src={product.profile_img_url} width="40" />
+// </div>
+// <div>
+//   <div className="h4 grid-view-item__title">{product.title}</div>
+//   <div className="grid-view-item__vendor">{product.vendor}</div>
+// </div>
 var ProductCard = function ProductCard(_ref) {
   var product = _ref.product,
       productsData = _ref.productsData;
 
   return _react2.default.createElement(
     'div',
-    { className: 'grid__item medium-up--one-third' },
+    { className: 'grid-view-item' + (product.available ? '' : ' product-price--sold-out grid-view-item--sold-out') },
     _react2.default.createElement(
-      'div',
-      { className: 'grid-view-item' + (product.available ? '' : ' product-price--sold-out grid-view-item--sold-out') },
+      'a',
+      { className: 'grid-view-item__link grid-view-item__image-container', href: product.url },
       _react2.default.createElement(
-        'a',
-        { className: 'grid-view-item__link grid-view-item__image-container', href: product.url },
+        'div',
+        { style: { display: 'flex', justifyContent: 'space-between', height: '50px', marginLeft: '1rem', alignItems: 'center' } },
         _react2.default.createElement(
           'div',
-          { style: { display: 'flex', justifyContent: 'space-between' } },
-          _react2.default.createElement(
-            'div',
-            { style: { marginLeft: '10px', marginRight: '10px' } },
-            _react2.default.createElement('img', { className: 'round-img', height: '40', src: product.profile_img_url, width: '40' })
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'div',
-              { className: 'h4 grid-view-item__title' },
-              product.title
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'grid-view-item__vendor' },
-              product.vendor
-            )
-          ),
-          _react2.default.createElement(_contextMenu2.default, { product: product })
+          { className: 'h4 grid-view-item__title' },
+          product.title
         ),
+        _react2.default.createElement(_contextMenu2.default, { product: product })
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'grid-view-item__image-wrapper js', id: product.wrapper_id },
         _react2.default.createElement(
           'div',
-          { className: 'grid-view-item__image-wrapper js', id: product.wrapper_id },
-          _react2.default.createElement(
-            'div',
-            { style: { paddingTop: product.featured_image ? product.featured_image_padding_top + '%' : '100%' } },
-            _react2.default.createElement('img', {
-              alt: product.featured_image_alt,
-              className: 'grid-view-item__image lazyload',
-              'data-aspectratio': product.featured_image_aspect_ratio,
-              'data-sizes': 'auto',
-              'data-src': product.img_url,
-              'data-widths': '[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]',
-              id: product.img_id,
-              src: product.featured_image
-            })
-          )
+          { style: { paddingTop: product.featured_image ? product.featured_image_padding_top + '%' : '100%' } },
+          _react2.default.createElement('img', {
+            alt: product.featured_image_alt,
+            className: 'grid-view-item__image lazyload',
+            'data-aspectratio': product.featured_image_aspect_ratio,
+            'data-sizes': 'auto',
+            'data-src': product.img_url,
+            'data-widths': '[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]',
+            id: product.img_id,
+            src: product.featured_image
+          })
         )
-      ),
-      _react2.default.createElement(_actionsBar2.default, { product: product, productsData: productsData })
-    )
+      )
+    ),
+    _react2.default.createElement(_actionsBar2.default, { product: product, productsData: productsData })
   );
 };
 
@@ -53021,23 +53010,29 @@ var ActionsBar = function ActionsBar(_ref) {
       likesCountSet = _ref.likesCountSet,
       onBuyClicked = _ref.onBuyClicked,
       onHeartClicked = _ref.onHeartClicked,
+      price = _ref.price,
       productAvailable = _ref.productAvailable;
   return _react2.default.createElement(
     'div',
     { className: 'card-item-info' },
     _react2.default.createElement(
-      'div',
-      { className: 'card-item-likes' },
-      likesCountSet && likesCount + ' Likes'
-    ),
-    _react2.default.createElement(
       'a',
       { className: 'card-item-action like', onClick: onHeartClicked, style: { color: isLiked ? 'red' : 'white' } },
       isLiked ? _react2.default.createElement(_iconHearts2.default, null) : _react2.default.createElement(_iconHeart2.default, null)
     ),
+    _react2.default.createElement(
+      'div',
+      { className: 'card-item-likes' },
+      likesCountSet && likesCount + ' Likes'
+    ),
     productAvailable && _react2.default.createElement(
       'a',
       { className: 'card-item-action buy', onClick: onBuyClicked },
+      _react2.default.createElement(
+        'span',
+        { className: 'price' },
+        price
+      ),
       _react2.default.createElement(_iconCart2.default, null)
     )
   );
@@ -53050,6 +53045,7 @@ exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphql
     likeId: product.likes.length > 0 && product.likes[0].id,
     likesCount: product.likesCount,
     likesCountSet: product.likesCount !== undefined,
+    price: product.price_string,
     productAvailable: product.available
   };
 }), (0, _recompose.getContext)({
@@ -53261,7 +53257,7 @@ var ContextMenu = function ContextMenu(_ref) {
       product = _ref.product;
   return _react2.default.createElement(
     _reactPopper.Manager,
-    { style: { minWidth: '36px', position: 'relative' } },
+    null,
     _react2.default.createElement(
       _reactPopper.Target,
       { className: 'target', onClick: handleMenuClick },
