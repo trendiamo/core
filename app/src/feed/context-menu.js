@@ -12,6 +12,10 @@ const StyledTarget = styled(Target)`
   width: 50px;
   padding-top: 12px;
   padding-left: 12px;
+
+  @media (max-width: 560px) {
+    display: none;
+  }
 `
 
 const ContextMenu = ({ handleMenuClick, isOpen, product }) => (

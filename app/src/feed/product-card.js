@@ -17,6 +17,10 @@ const ProductCardHeader = styled.div`
   height: 50px;
   justify-content: space-between;
   margin-left: 1rem;
+
+  @media (max-width: 560px) {
+    height: 0;
+  }
 `
 
 const ProductCardTitle = styled.div`
@@ -25,6 +29,13 @@ const ProductCardTitle = styled.div`
   font-weight: 700;
   overflow-wrap: break-word;
   word-wrap: break-word;
+
+  @media (max-width: 560px) {
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    z-index: 1;
+  }
 `
 
 const ProductCardContainerLink = styled.a`
@@ -52,7 +63,6 @@ const ProductCardImageWrapper = styled.div`
   }
 }
 `
-
 // .grid-view-item__vendor {
 //   text-transform: none;
 //   font-weight: 600;

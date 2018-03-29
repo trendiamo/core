@@ -6,11 +6,17 @@ import { branch, compose, renderNothing, withProps } from 'recompose'
 import styled, { css } from 'styled-components'
 
 const StyledDiv = styled.div`
-  ${({ type }) => type === 'grid' && css`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-  `}
+  ${({ type }) =>
+    type === 'grid' &&
+    css`
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
+
+      @media (min-width: 920px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    `};
 `
 
 const Products = ({ data, products }) => (
