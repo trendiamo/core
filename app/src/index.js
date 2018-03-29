@@ -14,10 +14,10 @@ const app = () => {
     case '/':
       return homepage()
   }
-  if (/\/collections\/.+/.test(location.pathname)) {
-    return feed()
-  } else if (/\/collections\/.*\/products\/.+/.test(location.pathname)) {
+  if (/\/collections\/.*\/products\/.+/.test(location.pathname)) {
     return product()
+  } else if (/\/collections\/.+/.test(location.pathname)) {
+    return feed()
   }
 }
 

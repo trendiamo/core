@@ -2,7 +2,7 @@
 {% paginate collection.products by limit %}
 
 <div data-section-id="{{ section.id }}" data-section-type="collection-template">
-  <div id="Collection">
+  <div id="Collection" class="page-width">
     {% for product in collection.products %}
       {% include 'product-card-grid', max_height: max_height %}
     {% else %}

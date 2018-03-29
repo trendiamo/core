@@ -3,9 +3,21 @@ import { graphql } from 'react-apollo'
 import ProductCard from './product-card'
 import React from 'react'
 import { branch, compose, renderNothing, withProps } from 'recompose'
+import styled, { css } from 'styled-components'
 
-const ProductsGrid = ({ data, products }) =>
-  products.map(product => <ProductCard key={product.id} product={product} productsData={data} />)
+const StyledDiv = styled.div`
+  ${({ type }) => type === 'grid' && css`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  `}
+`
+
+const Products = ({ data, products }) => (
+  <StyledDiv type="grid">
+    {products.map(product => <ProductCard key={product.id} product={product} productsData={data} />)}
+  </StyledDiv>
+)
 
 export default compose(
   graphql(
@@ -31,4 +43,4 @@ export default compose(
   withProps(({ data, shopifyProducts }) => ({
     products: data.products.map(e => ({ ...shopifyProducts.find(x => String(x.id) === e.productRef), ...e })),
   }))
-)(ProductsGrid)
+)(Products)

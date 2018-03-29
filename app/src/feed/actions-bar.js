@@ -7,21 +7,65 @@ import IconHeart from 'icons/icon-heart'
 import IconHeartS from 'icons/icon-hearts'
 import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
 import { compose, getContext, withHandlers, withProps } from 'recompose'
 
+const CardItemInfo = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 10px;
+  padding-left: 5%;
+  padding-right: 5%;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+`
+
+const CardItemLikes = styled.div`
+  flex-basis: 80%;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+`
+
+const CardItemAction = styled.a`
+  color: white;
+  margin-top: -7px;
+  zoom: 1.5;
+`
+
+const Price = styled.span`
+  font-size: 12px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  font-weight: 500;
+`
+
+const Heart = ({ isLiked }) =>
+  isLiked ? (
+    <div style={{ color: 'red' }}>
+      <IconHeartS />
+    </div>
+  ) : (
+    <IconHeart />
+  )
+
 const ActionsBar = ({ isLiked, likesCount, likesCountSet, onBuyClicked, onHeartClicked, price, productAvailable }) => (
-  <div className="card-item-info">
-    <a className="card-item-action like" onClick={onHeartClicked} style={{ color: isLiked ? 'red' : 'white' }}>
-      {isLiked ? <IconHeartS /> : <IconHeart />}
-    </a>
-    <div className="card-item-likes">{likesCountSet && `${likesCount} Likes`}</div>
+  <CardItemInfo>
+    <CardItemAction onClick={onHeartClicked}>
+      <Heart isLiked={isLiked} />
+    </CardItemAction>
+    <CardItemLikes>{likesCountSet && `${likesCount} Likes`}</CardItemLikes>
     {productAvailable && (
-      <a className="card-item-action buy" onClick={onBuyClicked}>
-        <span className="price">{price}</span>
+      <CardItemAction onClick={onBuyClicked}>
+        <Price>{price}</Price>
         <IconCart />
-      </a>
+      </CardItemAction>
     )}
-  </div>
+  </CardItemInfo>
 )
 
 export default compose(

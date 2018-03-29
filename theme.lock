@@ -2,11 +2,13 @@
 assets/ajax-loader.gif:
   development: 2018-01-15T06:07:37-05:00   deca8b0ecd6974227d157b6d7068995d
 assets/app.js:
-  development: 2018-03-28T08:56:03-04:00   15ada7a2c759a458b5ecf41711c6ac45
+  development: 2018-03-29T05:54:06-04:00   1318a621737d02de48e0b9d19fb7b5fd
 assets/gift-card.js:
   development: 2018-01-15T06:07:37-05:00   c73df2ee57cc9eb577f7a1858063495d
 assets/gift-card.scss.liquid:
-  development: 2018-01-15T06:07:37-05:00   647ae860a3a785081fa97f55b66cea83
+  development: 2018-03-29T05:56:09-04:00   f61fb55a0d90c5ea1137434da8a83e27
+assets/homepage.scss.liquid:
+  development: 2018-03-29T05:40:50-04:00   22f4868fc06d61eff2965933f6963a5c
 assets/ico-select.svg.liquid:
   development: 2018-01-15T06:07:38-05:00   28de0c672609528b7c55f6f47810784b
 assets/lazysizes.js:
@@ -17,12 +19,10 @@ assets/password.js:
   development: 2018-01-15T06:07:38-05:00   d826da9cb223a44d53a0c34f457e92dc
 assets/theme-custom.scss.liquid:
   development: 2018-01-29T13:20:06-05:00   420e977fce8aa735487820ed81499d1b
-assets/theme-custom2.scss.liquid:
-  development: 2018-03-28T09:00:19-04:00   cd826f7bb02d5c1d0399b209f00d6813
 assets/theme.js:
   development: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
-  development: 2018-02-01T06:24:16-05:00   5e935d9833fd89c8cf417a829eea7708
+  development: 2018-03-29T05:56:04-04:00   a5a2385965b2614af6f3ffe1befe8e06
 assets/vendor.js:
   development: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
 config/settings_schema.json:
@@ -32,7 +32,7 @@ layout/gift_card.liquid:
 layout/password.liquid:
   development: 2018-01-15T06:07:39-05:00   6351674ea67c53e01643a5bea02f7d0a
 layout/theme.liquid:
-  development: 2018-03-19T07:31:47-04:00   7e289918524aaf6915d91f543b127cb2
+  development: 2018-03-29T05:41:03-04:00   fa332562a97066f8942a8bf8c033212a
 locales/de.json:
   development: 2018-01-22T09:51:34-05:00   62f178d1e0a8f21f92910486e0c47812
 locales/en.default.json:
@@ -58,7 +58,7 @@ sections/cart-template.liquid:
 sections/collection-list.liquid:
   development: 2018-01-15T06:07:36-05:00   a55d61b95ff71917adad276c41ee1dc0
 sections/collection-template.liquid:
-  development: 2018-03-28T08:09:00-04:00   b9429d9646cba1cf22678285b870414b
+  development: 2018-03-29T05:56:50-04:00   2886fb86712b8a2d91c075839608d86e
 sections/collection.liquid:
   development: 2018-01-30T07:04:19-05:00   2dc1c17e59834407da6d0b1263c5cbcc
 sections/custom-content.liquid:

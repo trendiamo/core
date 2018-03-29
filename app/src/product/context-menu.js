@@ -3,7 +3,8 @@ import { graphql } from 'react-apollo'
 import IconEllipsisV from 'icons/icon-ellipsis-v'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Arrow, Manager, Popper, Target } from 'react-popper'
+import StyledPopper from 'components/styled-popper'
+import { Arrow, Manager, Target } from 'react-popper'
 import { authGql, getMetadata } from 'utils'
 import { compose, getContext, withHandlers, withProps, withState } from 'recompose'
 
@@ -28,7 +29,7 @@ const ContextMenu = ({ handleMenuClick, isOpen, currentUserIsProductOwner, onFla
       <IconEllipsisV />
     </Target>
     {isOpen && (
-      <Popper className="popper gray-popper" placement="bottom">
+      <StyledPopper gray placement="bottom">
         <ul>
           <li>
             <span onClick={onFlag}>{'Flag as inappropriate'}</span>
@@ -45,7 +46,7 @@ const ContextMenu = ({ handleMenuClick, isOpen, currentUserIsProductOwner, onFla
           )}
         </ul>
         <Arrow className="popper__arrow" />
-      </Popper>
+      </StyledPopper>
     )}
   </Manager>
 )
