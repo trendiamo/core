@@ -1,5 +1,6 @@
 import { addToCart } from './utils'
 import { authGql } from 'utils'
+import { getMaxWidthForCompleteCard } from './utils'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import IconCart from 'icons/icon-cart'
@@ -7,8 +8,8 @@ import IconHeart from 'icons/icon-heart'
 import IconHeartS from 'icons/icon-hearts'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import { compose, getContext, withHandlers, withProps } from 'recompose'
+import styled, { css } from 'styled-components'
 
 const CardItemInfo = styled.div`
   display: flex;
@@ -16,20 +17,19 @@ const CardItemInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  bottom: 10px;
-  padding-left: 5%;
-  padding-right: 5%;
+  bottom: 0;
+  padding-left: 20px;
+  padding-right: 20px;
   color: white;
   font-size: 1.8rem;
   font-weight: 600;
-  
-  @media (max-width: 560px) {
+
+  @media (max-width: ${({ viewType }) => getMaxWidthForCompleteCard(viewType)}px) {
     display: none;
   }
 `
 
-const CardItemLikes = styled.div`
-  flex-basis: 80%;
+const CardItemLikes = styled.span`
   font-size: 1rem;
   margin-left: 0.5rem;
 }
@@ -37,8 +37,6 @@ const CardItemLikes = styled.div`
 
 const CardItemAction = styled.a`
   color: white;
-  margin-top: -7px;
-  zoom: 1.5;
 `
 
 const Price = styled.span`
@@ -48,21 +46,33 @@ const Price = styled.span`
   font-weight: 500;
 `
 
-const Heart = ({ isLiked }) =>
-  isLiked ? (
-    <div style={{ color: 'red' }}>
-      <IconHeartS />
-    </div>
-  ) : (
-    <IconHeart />
-  )
+const HeartContainer = styled.span`
+  zoom: 1.5;
+  vertical-align: middle;
+  ${({ isLiked }) =>
+    isLiked &&
+    css`
+      color: red;
+    `};
+`
 
-const ActionsBar = ({ isLiked, likesCount, likesCountSet, onBuyClicked, onHeartClicked, price, productAvailable }) => (
-  <CardItemInfo>
-    <CardItemAction onClick={onHeartClicked}>
-      <Heart isLiked={isLiked} />
+const Heart = ({ isLiked }) => <HeartContainer>{isLiked ? <IconHeartS /> : <IconHeart />}</HeartContainer>
+
+const ActionsBar = ({
+  isLiked,
+  likesCount,
+  likesCountSet,
+  onBuyClicked,
+  onHeartClicked,
+  price,
+  productAvailable,
+  viewType,
+}) => (
+  <CardItemInfo viewType={viewType}>
+    <CardItemAction>
+      <Heart isLiked={isLiked} onClick={onHeartClicked} />
+      <CardItemLikes>{likesCountSet && `${likesCount} Likes`}</CardItemLikes>
     </CardItemAction>
-    <CardItemLikes>{likesCountSet && `${likesCount} Likes`}</CardItemLikes>
     {productAvailable && (
       <CardItemAction onClick={onBuyClicked}>
         <Price>{price}</Price>

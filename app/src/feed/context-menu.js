@@ -1,3 +1,4 @@
+import { getMaxWidthForCompleteCard } from './utils'
 import IconEllipsisV from 'icons/icon-ellipsis-v'
 import React from 'react'
 import ShareProduct from './share-product'
@@ -6,23 +7,27 @@ import StyledPopper from 'components/styled-popper'
 import { Arrow, Manager, Target } from 'react-popper'
 import { compose, withHandlers, withState } from 'recompose'
 
-const StyledTarget = styled(Target)`
-  color: #888;
-  height: 50px;
-  width: 50px;
-  padding-top: 12px;
-  padding-left: 12px;
+const TargetContainer = styled.div`
+  & > div {
+    color: #888;
+    height: 50px;
+    width: 50px;
+    padding-top: 12px;
+    padding-left: 12px;
+  }
 
-  @media (max-width: 560px) {
+  @media (max-width: ${({ viewType }) => getMaxWidthForCompleteCard(viewType)}px) {
     display: none;
   }
 `
 
-const ContextMenu = ({ handleMenuClick, isOpen, product }) => (
+const ContextMenu = ({ handleMenuClick, isOpen, product, viewType }) => (
   <Manager>
-    <StyledTarget onClick={handleMenuClick}>
-      <IconEllipsisV />
-    </StyledTarget>
+    <TargetContainer viewType={viewType}>
+      <Target onClick={handleMenuClick}>
+        <IconEllipsisV />
+      </Target>
+    </TargetContainer>
     {isOpen && (
       <StyledPopper placement="bottom">
         <ul>

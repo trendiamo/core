@@ -21,3 +21,5 @@ const post = (path, params, method = 'post') => {
 export const addToCart = variantId => {
   post('/cart/add', { id: variantId, return_to: 'back' })
 }
+
+export const getMaxWidthForCompleteCard = viewType => (viewType === 'grid' ? 560 : 300)

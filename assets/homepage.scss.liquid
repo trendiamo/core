@@ -7,6 +7,13 @@ body.template-index {
   background: linear-gradient(160deg, #9de6de, #9de6de 6%, #b1c1e8 88%, #b1c1e8);
 }
 
+@media only screen and (max-width: 749px) {
+  body.template-index .page-width {
+    padding-left: 55px;
+    padding-right: 55px;
+  }
+}
+
 .template-index {
   .top-hr--invisible {
     height: 0;
@@ -16,7 +23,7 @@ body.template-index {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
+    min-height: 100vh;
   }
 
   .page-width {
@@ -29,8 +36,8 @@ body.template-index {
     color: white;
     font-size: 22px;
     font-weight: 500;
-    margin-bottom: 24%;
-    margin-top: 30%;
+    margin-bottom: 20vh;
+    margin-top: 30vh;
   }
 
   main {
@@ -72,6 +79,7 @@ body.template-index {
   }
 
   .site-footer {
+    text-align: center;
     color: white;
     font-size: 13px;
     font-weight: 500;

@@ -26,8 +26,10 @@ export default compose(
         addComment(comment: $comment) {
           id
           content
+          pinned
           upvotesCount
           createdAt
+          isFromProductOwner
           user {
             username
           }

@@ -1,5 +1,6 @@
 import ActionsBar from './actions-bar'
 import ContextMenu from './context-menu'
+import { getMaxWidthForCompleteCard } from './utils'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -18,7 +19,7 @@ const ProductCardHeader = styled.div`
   justify-content: space-between;
   margin-left: 1rem;
 
-  @media (max-width: 560px) {
+  @media (max-width: ${({ viewType }) => getMaxWidthForCompleteCard(viewType)}px) {
     height: 0;
   }
 `
@@ -30,7 +31,7 @@ const ProductCardTitle = styled.div`
   overflow-wrap: break-word;
   word-wrap: break-word;
 
-  @media (max-width: 560px) {
+  @media (max-width: ${({ viewType }) => getMaxWidthForCompleteCard(viewType)}px) {
     color: white;
     position: absolute;
     bottom: 10px;
@@ -83,13 +84,13 @@ const ProductCardImageWrapper = styled.div`
 //   <div className="h4 grid-view-item__title">{product.title}</div>
 //   <div className="grid-view-item__vendor">{product.vendor}</div>
 // </div>
-const ProductCard = ({ product, productsData }) => {
+const ProductCard = ({ product, productsData, viewType }) => {
   return (
     <ProductCardContainer>
       <ProductCardContainerLink href={product.url}>
-        <ProductCardHeader>
-          <ProductCardTitle>{product.title}</ProductCardTitle>
-          <ContextMenu product={product} />
+        <ProductCardHeader viewType={viewType}>
+          <ProductCardTitle viewType={viewType}>{product.title}</ProductCardTitle>
+          <ContextMenu product={product} viewType={viewType} />
         </ProductCardHeader>
         <ProductCardImageWrapper id={product.wrapper_id}>
           <img
@@ -104,7 +105,7 @@ const ProductCard = ({ product, productsData }) => {
           />
         </ProductCardImageWrapper>
       </ProductCardContainerLink>
-      <ActionsBar product={product} productsData={productsData} />
+      <ActionsBar product={product} productsData={productsData} viewType={viewType} />
     </ProductCardContainer>
   )
 }

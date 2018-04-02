@@ -4824,7 +4824,7 @@ var getMetadata = exports.getMetadata = function getMetadata() {
   return $('.metadata').dataset;
 };
 
-var domain = 'trendiamo-dsgh.ngrok.io';
+var domain = 'trendiamo-backend.herokuapp.com';
 var baseApiUrl = exports.baseApiUrl = 'https://' + domain + '/api/v1';
 var gqlApiUrl = exports.gqlApiUrl = 'https://' + domain + '/graphql';
 
@@ -52724,7 +52724,8 @@ var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
 
 var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  ', ';\n'], ['\n  ', ';\n']),
     _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n      display: grid;\n      grid-template-columns: repeat(2, 1fr);\n      grid-gap: 10px;\n\n      @media (min-width: 920px) {\n        grid-template-columns: repeat(3, 1fr);\n      }\n    '], ['\n      display: grid;\n      grid-template-columns: repeat(2, 1fr);\n      grid-gap: 10px;\n\n      @media (min-width: 920px) {\n        grid-template-columns: repeat(3, 1fr);\n      }\n    ']),
-    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n      query($productRefs: [String]!) {\n        products(productRefs: $productRefs) {\n          id\n          productRef\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    '], ['\n      query($productRefs: [String]!) {\n        products(productRefs: $productRefs) {\n          id\n          productRef\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    ']);
+    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n  margin: 0 auto;\n  display: block;\n'], ['\n  margin: 0 auto;\n  display: block;\n']),
+    _templateObject4 = (0, _taggedTemplateLiteral3.default)(['\n      query($productRefs: [String]!) {\n        products(productRefs: $productRefs) {\n          id\n          productRef\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    '], ['\n      query($productRefs: [String]!) {\n        products(productRefs: $productRefs) {\n          id\n          productRef\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    ']);
 
 var _graphqlTag = __webpack_require__(24);
 
@@ -52749,23 +52750,45 @@ var _styledComponents2 = _interopRequireDefault(_styledComponents);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var StyledDiv = _styledComponents2.default.div(_templateObject, function (_ref) {
-  var type = _ref.type;
-  return type === 'grid' && (0, _styledComponents.css)(_templateObject2);
+  var viewType = _ref.viewType;
+  return viewType === 'grid' && (0, _styledComponents.css)(_templateObject2);
 });
+
+var StyledSelect = _styledComponents2.default.select(_templateObject3);
 
 var Products = function Products(_ref2) {
   var data = _ref2.data,
-      products = _ref2.products;
+      products = _ref2.products,
+      onViewTypeChange = _ref2.onViewTypeChange,
+      viewType = _ref2.viewType;
   return _react2.default.createElement(
-    StyledDiv,
-    { type: 'grid' },
-    products.map(function (product) {
-      return _react2.default.createElement(_productCard2.default, { key: product.id, product: product, productsData: data });
-    })
+    _react2.default.Fragment,
+    null,
+    _react2.default.createElement(
+      StyledSelect,
+      { onChange: onViewTypeChange, value: viewType },
+      _react2.default.createElement(
+        'option',
+        { value: 'grid' },
+        'Grid'
+      ),
+      _react2.default.createElement(
+        'option',
+        { value: 'list' },
+        'List'
+      )
+    ),
+    _react2.default.createElement(
+      StyledDiv,
+      { viewType: viewType },
+      products.map(function (product) {
+        return _react2.default.createElement(_productCard2.default, { key: product.id, product: product, productsData: data, viewType: viewType });
+      })
+    )
   );
 };
 
-exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphqlTag2.default)(_templateObject3), {
+exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphqlTag2.default)(_templateObject4), {
   options: function options(_ref3) {
     var shopifyProducts = _ref3.shopifyProducts;
     return {
@@ -52777,7 +52800,7 @@ exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphql
 }), (0, _recompose.branch)(function (_ref4) {
   var data = _ref4.data;
   return data && (data.loading || data.error);
-}, _recompose.renderNothing), (0, _recompose.withProps)(function (_ref5) {
+}, _recompose.renderNothing), (0, _recompose.withState)('viewType', 'setViewType', 'grid'), (0, _recompose.withProps)(function (_ref5) {
   var data = _ref5.data,
       shopifyProducts = _ref5.shopifyProducts;
   return {
@@ -52787,6 +52810,13 @@ exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphql
       }), e);
     })
   };
+}), (0, _recompose.withHandlers)({
+  onViewTypeChange: function onViewTypeChange(_ref6) {
+    var setViewType = _ref6.setViewType;
+    return function (event) {
+      return setViewType(event.target.value);
+    };
+  }
 }))(Products);
 
 /***/ }),
@@ -55207,8 +55237,8 @@ var _taggedTemplateLiteral2 = __webpack_require__(11);
 var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
 
 var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  position: relative;\n  overflow: auto;\n  margin-top: 40px; /* so that the shadow shows */\n  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);\n  border-radius: 20px;\n'], ['\n  position: relative;\n  overflow: auto;\n  margin-top: 40px; /* so that the shadow shows */\n  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);\n  border-radius: 20px;\n']),
-    _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n  align-items: center;\n  display: flex;\n  height: 50px;\n  justify-content: space-between;\n  margin-left: 1rem;\n\n  @media (max-width: 560px) {\n    height: 0;\n  }\n'], ['\n  align-items: center;\n  display: flex;\n  height: 50px;\n  justify-content: space-between;\n  margin-left: 1rem;\n\n  @media (max-width: 560px) {\n    height: 0;\n  }\n']),
-    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n  font-size: 14px;\n  color: #3d4246;\n  font-weight: 700;\n  overflow-wrap: break-word;\n  word-wrap: break-word;\n\n  @media (max-width: 560px) {\n    color: white;\n    position: absolute;\n    bottom: 10px;\n    z-index: 1;\n  }\n'], ['\n  font-size: 14px;\n  color: #3d4246;\n  font-weight: 700;\n  overflow-wrap: break-word;\n  word-wrap: break-word;\n\n  @media (max-width: 560px) {\n    color: white;\n    position: absolute;\n    bottom: 10px;\n    z-index: 1;\n  }\n']),
+    _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n  align-items: center;\n  display: flex;\n  height: 50px;\n  justify-content: space-between;\n  margin-left: 1rem;\n\n  @media (max-width: ', 'px) {\n    height: 0;\n  }\n'], ['\n  align-items: center;\n  display: flex;\n  height: 50px;\n  justify-content: space-between;\n  margin-left: 1rem;\n\n  @media (max-width: ', 'px) {\n    height: 0;\n  }\n']),
+    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n  font-size: 14px;\n  color: #3d4246;\n  font-weight: 700;\n  overflow-wrap: break-word;\n  word-wrap: break-word;\n\n  @media (max-width: ', 'px) {\n    color: white;\n    position: absolute;\n    bottom: 10px;\n    z-index: 1;\n  }\n'], ['\n  font-size: 14px;\n  color: #3d4246;\n  font-weight: 700;\n  overflow-wrap: break-word;\n  word-wrap: break-word;\n\n  @media (max-width: ', 'px) {\n    color: white;\n    position: absolute;\n    bottom: 10px;\n    z-index: 1;\n  }\n']),
     _templateObject4 = (0, _taggedTemplateLiteral3.default)(['\n  text-decoration: none;\n  touch-action: manipulation;\n  &:hover,\n  &:focus {\n    opacity: 1;\n  }\n'], ['\n  text-decoration: none;\n  touch-action: manipulation;\n  &:hover,\n  &:focus {\n    opacity: 1;\n  }\n']),
     _templateObject5 = (0, _taggedTemplateLiteral3.default)(['\n  margin-bottom: 0;\n  position: relative;\n  width: 100%;\n\n  &::after {\n    content: " ";\n    display: block;\n    height: 100%;\n    position: absolute;\n    top: 0;\n    width: 100%;\n    box-shadow: inset 0 -160px 160px -160px #000000;\n  }\n}\n'], ['\n  margin-bottom: 0;\n  position: relative;\n  width: 100%;\n\n  &::after {\n    content: " ";\n    display: block;\n    height: 100%;\n    position: absolute;\n    top: 0;\n    width: 100%;\n    box-shadow: inset 0 -160px 160px -160px #000000;\n  }\n}\n']);
 
@@ -55219,6 +55249,8 @@ var _actionsBar2 = _interopRequireDefault(_actionsBar);
 var _contextMenu = __webpack_require__(376);
 
 var _contextMenu2 = _interopRequireDefault(_contextMenu);
+
+var _utils = __webpack_require__(363);
 
 var _react = __webpack_require__(1);
 
@@ -55232,9 +55264,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ProductCardContainer = _styledComponents2.default.div(_templateObject);
 
-var ProductCardHeader = _styledComponents2.default.div(_templateObject2);
+var ProductCardHeader = _styledComponents2.default.div(_templateObject2, function (_ref) {
+  var viewType = _ref.viewType;
+  return (0, _utils.getMaxWidthForCompleteCard)(viewType);
+});
 
-var ProductCardTitle = _styledComponents2.default.div(_templateObject3);
+var ProductCardTitle = _styledComponents2.default.div(_templateObject3, function (_ref2) {
+  var viewType = _ref2.viewType;
+  return (0, _utils.getMaxWidthForCompleteCard)(viewType);
+});
 
 var ProductCardContainerLink = _styledComponents2.default.a(_templateObject4);
 
@@ -55259,9 +55297,10 @@ var ProductCardImageWrapper = _styledComponents2.default.div(_templateObject5);
 //   <div className="h4 grid-view-item__title">{product.title}</div>
 //   <div className="grid-view-item__vendor">{product.vendor}</div>
 // </div>
-var ProductCard = function ProductCard(_ref) {
-  var product = _ref.product,
-      productsData = _ref.productsData;
+var ProductCard = function ProductCard(_ref3) {
+  var product = _ref3.product,
+      productsData = _ref3.productsData,
+      viewType = _ref3.viewType;
 
   return _react2.default.createElement(
     ProductCardContainer,
@@ -55271,13 +55310,13 @@ var ProductCard = function ProductCard(_ref) {
       { href: product.url },
       _react2.default.createElement(
         ProductCardHeader,
-        null,
+        { viewType: viewType },
         _react2.default.createElement(
           ProductCardTitle,
-          null,
+          { viewType: viewType },
           product.title
         ),
-        _react2.default.createElement(_contextMenu2.default, { product: product })
+        _react2.default.createElement(_contextMenu2.default, { product: product, viewType: viewType })
       ),
       _react2.default.createElement(
         ProductCardImageWrapper,
@@ -55294,7 +55333,7 @@ var ProductCard = function ProductCard(_ref) {
         })
       )
     ),
-    _react2.default.createElement(_actionsBar2.default, { product: product, productsData: productsData })
+    _react2.default.createElement(_actionsBar2.default, { product: product, productsData: productsData, viewType: viewType })
   );
 };
 
@@ -55327,11 +55366,13 @@ var _taggedTemplateLiteral2 = __webpack_require__(11);
 
 var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
 
-var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  align-items: center;\n  position: absolute;\n  bottom: 10px;\n  padding-left: 5%;\n  padding-right: 5%;\n  color: white;\n  font-size: 1.8rem;\n  font-weight: 600;\n  \n  @media (max-width: 560px) {\n    display: none;\n  }\n'], ['\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  align-items: center;\n  position: absolute;\n  bottom: 10px;\n  padding-left: 5%;\n  padding-right: 5%;\n  color: white;\n  font-size: 1.8rem;\n  font-weight: 600;\n  \n  @media (max-width: 560px) {\n    display: none;\n  }\n']),
-    _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n  flex-basis: 80%;\n  font-size: 1rem;\n  margin-left: 0.5rem;\n}\n'], ['\n  flex-basis: 80%;\n  font-size: 1rem;\n  margin-left: 0.5rem;\n}\n']),
-    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n  color: white;\n  margin-top: -7px;\n  zoom: 1.5;\n'], ['\n  color: white;\n  margin-top: -7px;\n  zoom: 1.5;\n']),
+var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  align-items: center;\n  position: absolute;\n  bottom: 0;\n  padding-left: 20px;\n  padding-right: 20px;\n  color: white;\n  font-size: 1.8rem;\n  font-weight: 600;\n\n  @media (max-width: ', 'px) {\n    display: none;\n  }\n'], ['\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  align-items: center;\n  position: absolute;\n  bottom: 0;\n  padding-left: 20px;\n  padding-right: 20px;\n  color: white;\n  font-size: 1.8rem;\n  font-weight: 600;\n\n  @media (max-width: ', 'px) {\n    display: none;\n  }\n']),
+    _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n  font-size: 1rem;\n  margin-left: 0.5rem;\n}\n'], ['\n  font-size: 1rem;\n  margin-left: 0.5rem;\n}\n']),
+    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n  color: white;\n'], ['\n  color: white;\n']),
     _templateObject4 = (0, _taggedTemplateLiteral3.default)(['\n  font-size: 12px;\n  margin-right: 0.5rem;\n  vertical-align: middle;\n  font-weight: 500;\n'], ['\n  font-size: 12px;\n  margin-right: 0.5rem;\n  vertical-align: middle;\n  font-weight: 500;\n']),
-    _templateObject5 = (0, _taggedTemplateLiteral3.default)(['\n      mutation($productId: String!) {\n        toggleLike(productId: $productId) {\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    '], ['\n      mutation($productId: String!) {\n        toggleLike(productId: $productId) {\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    ']);
+    _templateObject5 = (0, _taggedTemplateLiteral3.default)(['\n  zoom: 1.5;\n  vertical-align: middle;\n  ', ';\n'], ['\n  zoom: 1.5;\n  vertical-align: middle;\n  ', ';\n']),
+    _templateObject6 = (0, _taggedTemplateLiteral3.default)(['\n      color: red;\n    '], ['\n      color: red;\n    ']),
+    _templateObject7 = (0, _taggedTemplateLiteral3.default)(['\n      mutation($productId: String!) {\n        toggleLike(productId: $productId) {\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    '], ['\n      mutation($productId: String!) {\n        toggleLike(productId: $productId) {\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    ']);
 
 var _utils = __webpack_require__(363);
 
@@ -55363,51 +55404,60 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _recompose = __webpack_require__(13);
+
 var _styledComponents = __webpack_require__(30);
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-var _recompose = __webpack_require__(13);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CardItemInfo = _styledComponents2.default.div(_templateObject);
+var CardItemInfo = _styledComponents2.default.div(_templateObject, function (_ref) {
+  var viewType = _ref.viewType;
+  return (0, _utils.getMaxWidthForCompleteCard)(viewType);
+});
 
-var CardItemLikes = _styledComponents2.default.div(_templateObject2);
+var CardItemLikes = _styledComponents2.default.span(_templateObject2);
 
 var CardItemAction = _styledComponents2.default.a(_templateObject3);
 
 var Price = _styledComponents2.default.span(_templateObject4);
 
-var Heart = function Heart(_ref) {
-  var isLiked = _ref.isLiked;
-  return isLiked ? _react2.default.createElement(
-    'div',
-    { style: { color: 'red' } },
-    _react2.default.createElement(_iconHearts2.default, null)
-  ) : _react2.default.createElement(_iconHeart2.default, null);
+var HeartContainer = _styledComponents2.default.span(_templateObject5, function (_ref2) {
+  var isLiked = _ref2.isLiked;
+  return isLiked && (0, _styledComponents.css)(_templateObject6);
+});
+
+var Heart = function Heart(_ref3) {
+  var isLiked = _ref3.isLiked;
+  return _react2.default.createElement(
+    HeartContainer,
+    null,
+    isLiked ? _react2.default.createElement(_iconHearts2.default, null) : _react2.default.createElement(_iconHeart2.default, null)
+  );
 };
 
-var ActionsBar = function ActionsBar(_ref2) {
-  var isLiked = _ref2.isLiked,
-      likesCount = _ref2.likesCount,
-      likesCountSet = _ref2.likesCountSet,
-      onBuyClicked = _ref2.onBuyClicked,
-      onHeartClicked = _ref2.onHeartClicked,
-      price = _ref2.price,
-      productAvailable = _ref2.productAvailable;
+var ActionsBar = function ActionsBar(_ref4) {
+  var isLiked = _ref4.isLiked,
+      likesCount = _ref4.likesCount,
+      likesCountSet = _ref4.likesCountSet,
+      onBuyClicked = _ref4.onBuyClicked,
+      onHeartClicked = _ref4.onHeartClicked,
+      price = _ref4.price,
+      productAvailable = _ref4.productAvailable,
+      viewType = _ref4.viewType;
   return _react2.default.createElement(
     CardItemInfo,
-    null,
+    { viewType: viewType },
     _react2.default.createElement(
       CardItemAction,
-      { onClick: onHeartClicked },
-      _react2.default.createElement(Heart, { isLiked: isLiked })
-    ),
-    _react2.default.createElement(
-      CardItemLikes,
       null,
-      likesCountSet && likesCount + ' Likes'
+      _react2.default.createElement(Heart, { isLiked: isLiked, onClick: onHeartClicked }),
+      _react2.default.createElement(
+        CardItemLikes,
+        null,
+        likesCountSet && likesCount + ' Likes'
+      )
     ),
     productAvailable && _react2.default.createElement(
       CardItemAction,
@@ -55422,8 +55472,8 @@ var ActionsBar = function ActionsBar(_ref2) {
   );
 };
 
-exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphqlTag2.default)(_templateObject5)), (0, _recompose.withProps)(function (_ref3) {
-  var product = _ref3.product;
+exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphqlTag2.default)(_templateObject7)), (0, _recompose.withProps)(function (_ref5) {
+  var product = _ref5.product;
   return {
     isLiked: product.likes.length > 0,
     likeId: product.likes.length > 0 && product.likes[0].id,
@@ -55435,20 +55485,20 @@ exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphql
 }), (0, _recompose.getContext)({
   checkLoginModal: _propTypes2.default.func
 }), (0, _recompose.withHandlers)({
-  onBuyClicked: function onBuyClicked(_ref4) {
-    var product = _ref4.product;
+  onBuyClicked: function onBuyClicked(_ref6) {
+    var product = _ref6.product;
     return function () {
       (0, _utils.addToCart)(product.variant_id);
     };
   },
-  onHeartClicked: function onHeartClicked(_ref5) {
-    var checkLoginModal = _ref5.checkLoginModal,
-        mutate = _ref5.mutate,
-        product = _ref5.product,
-        productsData = _ref5.productsData;
+  onHeartClicked: function onHeartClicked(_ref7) {
+    var checkLoginModal = _ref7.checkLoginModal,
+        mutate = _ref7.mutate,
+        product = _ref7.product,
+        productsData = _ref7.productsData;
     return function () {
       return (0, _utils2.authGql)((0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-        var productId, _ref7, data;
+        var productId, _ref9, data;
 
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
@@ -55467,8 +55517,8 @@ exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphql
                 return mutate({ variables: { productId: productId } });
 
               case 5:
-                _ref7 = _context.sent;
-                data = _ref7.data;
+                _ref9 = _context.sent;
+                data = _ref9.data;
 
                 productsData.updateQuery(function (previousProductsData) {
                   return (0, _extends3.default)({}, previousProductsData, {
@@ -55523,6 +55573,10 @@ var post = function post(path, params) {
 
 var addToCart = exports.addToCart = function addToCart(variantId) {
   post('/cart/add', { id: variantId, return_to: 'back' });
+};
+
+var getMaxWidthForCompleteCard = exports.getMaxWidthForCompleteCard = function getMaxWidthForCompleteCard(viewType) {
+  return viewType === 'grid' ? 560 : 300;
 };
 
 /***/ }),
@@ -58142,7 +58196,9 @@ var _taggedTemplateLiteral2 = __webpack_require__(11);
 
 var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
 
-var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  color: #888;\n  height: 50px;\n  width: 50px;\n  padding-top: 12px;\n  padding-left: 12px;\n\n  @media (max-width: 560px) {\n    display: none;\n  }\n'], ['\n  color: #888;\n  height: 50px;\n  width: 50px;\n  padding-top: 12px;\n  padding-left: 12px;\n\n  @media (max-width: 560px) {\n    display: none;\n  }\n']);
+var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  & > div {\n    color: #888;\n    height: 50px;\n    width: 50px;\n    padding-top: 12px;\n    padding-left: 12px;\n  }\n\n  @media (max-width: ', 'px) {\n    display: none;\n  }\n'], ['\n  & > div {\n    color: #888;\n    height: 50px;\n    width: 50px;\n    padding-top: 12px;\n    padding-left: 12px;\n  }\n\n  @media (max-width: ', 'px) {\n    display: none;\n  }\n']);
+
+var _utils = __webpack_require__(363);
 
 var _iconEllipsisV = __webpack_require__(125);
 
@@ -58170,19 +58226,27 @@ var _recompose = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var StyledTarget = (0, _styledComponents2.default)(_reactPopper.Target)(_templateObject);
+var TargetContainer = _styledComponents2.default.div(_templateObject, function (_ref) {
+  var viewType = _ref.viewType;
+  return (0, _utils.getMaxWidthForCompleteCard)(viewType);
+});
 
-var ContextMenu = function ContextMenu(_ref) {
-  var handleMenuClick = _ref.handleMenuClick,
-      isOpen = _ref.isOpen,
-      product = _ref.product;
+var ContextMenu = function ContextMenu(_ref2) {
+  var handleMenuClick = _ref2.handleMenuClick,
+      isOpen = _ref2.isOpen,
+      product = _ref2.product,
+      viewType = _ref2.viewType;
   return _react2.default.createElement(
     _reactPopper.Manager,
     null,
     _react2.default.createElement(
-      StyledTarget,
-      { onClick: handleMenuClick },
-      _react2.default.createElement(_iconEllipsisV2.default, null)
+      TargetContainer,
+      { viewType: viewType },
+      _react2.default.createElement(
+        _reactPopper.Target,
+        { onClick: handleMenuClick },
+        _react2.default.createElement(_iconEllipsisV2.default, null)
+      )
     ),
     isOpen && _react2.default.createElement(
       _styledPopper2.default,
@@ -58202,28 +58266,28 @@ var ContextMenu = function ContextMenu(_ref) {
 };
 
 exports.default = (0, _recompose.compose)((0, _recompose.withState)('isOpen', 'setIsOpen', false), (0, _recompose.withHandlers)({
-  close: function close(_ref2) {
-    var setIsOpen = _ref2.setIsOpen;
+  close: function close(_ref3) {
+    var setIsOpen = _ref3.setIsOpen;
     return function () {
       return setIsOpen(false);
     };
   },
-  open: function open(_ref3) {
-    var setIsOpen = _ref3.setIsOpen;
+  open: function open(_ref4) {
+    var setIsOpen = _ref4.setIsOpen;
     return function () {
       return setIsOpen(true);
     };
   },
-  toggle: function toggle(_ref4) {
-    var isOpen = _ref4.isOpen,
-        setIsOpen = _ref4.setIsOpen;
+  toggle: function toggle(_ref5) {
+    var isOpen = _ref5.isOpen,
+        setIsOpen = _ref5.setIsOpen;
     return function () {
       return setIsOpen(!isOpen);
     };
   }
 }), (0, _recompose.withHandlers)({
-  handleMenuClick: function handleMenuClick(_ref5) {
-    var toggle = _ref5.toggle;
+  handleMenuClick: function handleMenuClick(_ref6) {
+    var toggle = _ref6.toggle;
     return function (event) {
       event.preventDefault();
       toggle();
@@ -61617,7 +61681,7 @@ var _taggedTemplateLiteral2 = __webpack_require__(11);
 
 var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
 
-var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n      mutation($comment: CommentInputType!) {\n        addComment(comment: $comment) {\n          id\n          content\n          upvotesCount\n          createdAt\n          user {\n            username\n          }\n          upvotes(currentUser: true) {\n            id\n          }\n        }\n      }\n    '], ['\n      mutation($comment: CommentInputType!) {\n        addComment(comment: $comment) {\n          id\n          content\n          upvotesCount\n          createdAt\n          user {\n            username\n          }\n          upvotes(currentUser: true) {\n            id\n          }\n        }\n      }\n    ']);
+var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n      mutation($comment: CommentInputType!) {\n        addComment(comment: $comment) {\n          id\n          content\n          pinned\n          upvotesCount\n          createdAt\n          isFromProductOwner\n          user {\n            username\n          }\n          upvotes(currentUser: true) {\n            id\n          }\n        }\n      }\n    '], ['\n      mutation($comment: CommentInputType!) {\n        addComment(comment: $comment) {\n          id\n          content\n          pinned\n          upvotesCount\n          createdAt\n          isFromProductOwner\n          user {\n            username\n          }\n          upvotes(currentUser: true) {\n            id\n          }\n        }\n      }\n    ']);
 
 var _utils = __webpack_require__(4);
 
