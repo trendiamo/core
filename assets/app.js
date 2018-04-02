@@ -52724,8 +52724,7 @@ var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
 
 var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  ', ';\n'], ['\n  ', ';\n']),
     _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n      display: grid;\n      grid-template-columns: repeat(2, 1fr);\n      grid-gap: 10px;\n\n      @media (min-width: 920px) {\n        grid-template-columns: repeat(3, 1fr);\n      }\n    '], ['\n      display: grid;\n      grid-template-columns: repeat(2, 1fr);\n      grid-gap: 10px;\n\n      @media (min-width: 920px) {\n        grid-template-columns: repeat(3, 1fr);\n      }\n    ']),
-    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n  margin: 0 auto;\n  display: block;\n'], ['\n  margin: 0 auto;\n  display: block;\n']),
-    _templateObject4 = (0, _taggedTemplateLiteral3.default)(['\n      query($productRefs: [String]!) {\n        products(productRefs: $productRefs) {\n          id\n          productRef\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    '], ['\n      query($productRefs: [String]!) {\n        products(productRefs: $productRefs) {\n          id\n          productRef\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    ']);
+    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n      query($productRefs: [String]!) {\n        products(productRefs: $productRefs) {\n          id\n          productRef\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    '], ['\n      query($productRefs: [String]!) {\n        products(productRefs: $productRefs) {\n          id\n          productRef\n          likesCount\n          likes(currentUser: true) {\n            id\n          }\n        }\n      }\n    ']);
 
 var _graphqlTag = __webpack_require__(24);
 
@@ -52741,6 +52740,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _viewTypeSelector = __webpack_require__(416);
+
+var _viewTypeSelector2 = _interopRequireDefault(_viewTypeSelector);
+
 var _recompose = __webpack_require__(13);
 
 var _styledComponents = __webpack_require__(30);
@@ -52754,30 +52757,15 @@ var StyledDiv = _styledComponents2.default.div(_templateObject, function (_ref) 
   return viewType === 'grid' && (0, _styledComponents.css)(_templateObject2);
 });
 
-var StyledSelect = _styledComponents2.default.select(_templateObject3);
-
 var Products = function Products(_ref2) {
   var data = _ref2.data,
       products = _ref2.products,
-      onViewTypeChange = _ref2.onViewTypeChange,
+      setViewType = _ref2.setViewType,
       viewType = _ref2.viewType;
   return _react2.default.createElement(
     _react2.default.Fragment,
     null,
-    _react2.default.createElement(
-      StyledSelect,
-      { onChange: onViewTypeChange, value: viewType },
-      _react2.default.createElement(
-        'option',
-        { value: 'grid' },
-        'Grid'
-      ),
-      _react2.default.createElement(
-        'option',
-        { value: 'list' },
-        'List'
-      )
-    ),
+    _react2.default.createElement(_viewTypeSelector2.default, { onViewTypeChange: setViewType, viewType: viewType }),
     _react2.default.createElement(
       StyledDiv,
       { viewType: viewType },
@@ -52788,7 +52776,7 @@ var Products = function Products(_ref2) {
   );
 };
 
-exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphqlTag2.default)(_templateObject4), {
+exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphqlTag2.default)(_templateObject3), {
   options: function options(_ref3) {
     var shopifyProducts = _ref3.shopifyProducts;
     return {
@@ -52810,13 +52798,6 @@ exports.default = (0, _recompose.compose)((0, _reactApollo.graphql)((0, _graphql
       }), e);
     })
   };
-}), (0, _recompose.withHandlers)({
-  onViewTypeChange: function onViewTypeChange(_ref6) {
-    var setViewType = _ref6.setViewType;
-    return function (event) {
-      return setViewType(event.target.value);
-    };
-  }
 }))(Products);
 
 /***/ }),
@@ -63158,6 +63139,141 @@ var handleFormSubmit = function handleFormSubmit(event) {
 exports.default = function () {
   return (0, _utils.$)('#create_customer').addEventListener('submit', handleFormSubmit);
 };
+
+/***/ }),
+/* 416 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _taggedTemplateLiteral2 = __webpack_require__(11);
+
+var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
+
+var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n'], ['\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n']),
+    _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n  cursor: pointer;\n  margin-left: 1rem;\n  ', ';\n'], ['\n  cursor: pointer;\n  margin-left: 1rem;\n  ', ';\n']),
+    _templateObject3 = (0, _taggedTemplateLiteral3.default)(['\n      svg {\n        color: #5da494;\n      }\n    '], ['\n      svg {\n        color: #5da494;\n      }\n    ']);
+
+var _iconBtnGrid = __webpack_require__(417);
+
+var _iconBtnGrid2 = _interopRequireDefault(_iconBtnGrid);
+
+var _iconBtnList = __webpack_require__(418);
+
+var _iconBtnList2 = _interopRequireDefault(_iconBtnList);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _recompose = __webpack_require__(13);
+
+var _styledComponents = __webpack_require__(30);
+
+var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StyledDiv = _styledComponents2.default.div(_templateObject);
+
+var IconContainer = _styledComponents2.default.div(_templateObject2, function (_ref) {
+  var active = _ref.active;
+  return active && (0, _styledComponents.css)(_templateObject3);
+});
+
+var ViewTypeSelector = function ViewTypeSelector(_ref2) {
+  var onGridClick = _ref2.onGridClick,
+      onListClick = _ref2.onListClick,
+      viewType = _ref2.viewType;
+  return _react2.default.createElement(
+    StyledDiv,
+    null,
+    _react2.default.createElement(
+      IconContainer,
+      { active: viewType === 'grid', onClick: onGridClick },
+      _react2.default.createElement(_iconBtnGrid2.default, null)
+    ),
+    _react2.default.createElement(
+      IconContainer,
+      { active: viewType === 'list', onClick: onListClick },
+      _react2.default.createElement(_iconBtnList2.default, null)
+    )
+  );
+};
+
+exports.default = (0, _recompose.compose)((0, _recompose.withHandlers)({
+  onGridClick: function onGridClick(_ref3) {
+    var onViewTypeChange = _ref3.onViewTypeChange;
+    return function () {
+      return onViewTypeChange('grid');
+    };
+  },
+  onListClick: function onListClick(_ref4) {
+    var onViewTypeChange = _ref4.onViewTypeChange;
+    return function () {
+      return onViewTypeChange('list');
+    };
+  }
+}))(ViewTypeSelector);
+
+/***/ }),
+/* 417 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconBtnGrid = function IconBtnGrid() {
+  return _react2.default.createElement(
+    "svg",
+    { className: "icon icon-btn-grid", viewBox: "0 0 22 22" },
+    _react2.default.createElement("path", { d: "M7.643.043h-5.1c-1.4 0-2.5 1.1-2.5 2.5v5.1c0 1.4 1.1 2.5 2.5 2.5h5.1c1.4 0 2.5-1.1 2.5-2.5v-5.1c0-1.4-1.1-2.5-2.5-2.5zm.8 7.6c0 .5-.4.8-.8.8h-5.1c-.5 0-.8-.4-.8-.8v-5.1c0-.5.4-.8.8-.8h5.1c.5 0 .8.4.8.8v5.1zM19.402.043h-5c-1.4 0-2.6 1.2-2.6 2.6v5c0 1.4 1.2 2.6 2.6 2.6h5c1.4 0 2.6-1.2 2.6-2.6v-5c0-1.5-1.2-2.6-2.6-2.6zm.9 7.5c0 .5-.4.9-.9.9h-5c-.5 0-.9-.4-.9-.9v-5c0-.5.4-.9.9-.9h5c.5 0 .9.4.9.9v5zM7.643 11.902h-5.1c-1.4 0-2.5 1.1-2.5 2.5v5.1c0 1.4 1.1 2.5 2.5 2.5h5.1c1.4 0 2.5-1.1 2.5-2.5v-5.1c0-1.4-1.1-2.5-2.5-2.5zm.8 7.6c0 .5-.4.8-.8.8h-5.1c-.5 0-.8-.4-.8-.8v-5.1c0-.5.4-.8.8-.8h5.1c.5 0 .8.4.8.8v5.1zM19.402 11.902h-5c-1.4 0-2.6 1.2-2.6 2.6v5c0 1.4 1.2 2.6 2.6 2.6h5c1.4 0 2.6-1.2 2.6-2.6v-5c0-1.5-1.2-2.6-2.6-2.6zm.9 7.5c0 .5-.4.9-.9.9h-5c-.5 0-.9-.4-.9-.9v-5c0-.5.4-.9.9-.9h5c.5 0 .9.4.9.9v5z" })
+  );
+};
+
+exports.default = IconBtnGrid;
+
+/***/ }),
+/* 418 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconBtnList = function IconBtnList() {
+  return _react2.default.createElement(
+    "svg",
+    { className: "icon icon-btn-list", viewBox: "0 0 20 20" },
+    _react2.default.createElement("path", { d: "M18 8H2C.9 8 0 7.1 0 6V2C0 .9.9 0 2 0h16c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2zM2 2v4h16V2H2zM18 20H2c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2zM2 14v4h16v-4H2z" })
+  );
+};
+
+exports.default = IconBtnList;
 
 /***/ })
 /******/ ]);

@@ -2,7 +2,8 @@ import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import ProductCard from './product-card'
 import React from 'react'
-import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import ViewTypeSelector from './view-type-selector'
+import { branch, compose, renderNothing, withProps, withState } from 'recompose'
 import styled, { css } from 'styled-components'
 
 const StyledDiv = styled.div`
@@ -19,17 +20,9 @@ const StyledDiv = styled.div`
     `};
 `
 
-const StyledSelect = styled.select`
-  margin: 0 auto;
-  display: block;
-`
-
-const Products = ({ data, products, onViewTypeChange, viewType }) => (
+const Products = ({ data, products, setViewType, viewType }) => (
   <React.Fragment>
-    <StyledSelect onChange={onViewTypeChange} value={viewType}>
-      <option value="grid">{'Grid'}</option>
-      <option value="list">{'List'}</option>
-    </StyledSelect>
+    <ViewTypeSelector onViewTypeChange={setViewType} viewType={viewType} />
     <StyledDiv viewType={viewType}>
       {products.map(product => (
         <ProductCard key={product.id} product={product} productsData={data} viewType={viewType} />
@@ -62,8 +55,5 @@ export default compose(
   withState('viewType', 'setViewType', 'grid'),
   withProps(({ data, shopifyProducts }) => ({
     products: data.products.map(e => ({ ...shopifyProducts.find(x => String(x.id) === e.productRef), ...e })),
-  })),
-  withHandlers({
-    onViewTypeChange: ({ setViewType }) => event => setViewType(event.target.value),
-  })
+  }))
 )(Products)
