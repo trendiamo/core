@@ -71,8 +71,8 @@ const ActionsBar = ({
   viewType,
 }) => (
   <CardItemInfo viewType={viewType}>
-    <CardItemAction>
-      <Heart isLiked={isLiked} onClick={onHeartClicked} />
+    <CardItemAction onClick={onHeartClicked}>
+      <Heart isLiked={isLiked} />
       <CardItemLikes>{likesCountSet && `${likesCount} Likes`}</CardItemLikes>
     </CardItemAction>
     {productAvailable && (
@@ -112,16 +112,12 @@ export default compose(
     onBuyClicked: ({ product }) => () => {
       addToCart(product.variants[0].id)
     },
-    onHeartClicked: ({ checkLoginModal, mutate, product, productsData }) => () =>
+    onHeartClicked: ({ checkLoginModal, mutate, product, onToggleLike }) => () =>
       authGql(async () => {
         if (checkLoginModal()) return
         const { id: productId } = product
         const { data } = await mutate({ variables: { productId: productId } })
-        productsData &&
-          productsData.updateQuery(previousProductsData => ({
-            ...previousProductsData,
-            products: previousProductsData.products.map(e => (e.id === productId ? { ...e, ...data.toggleLike } : e)),
-          }))
+        onToggleLike(data)
       }),
   })
 )(ActionsBar)

@@ -22,7 +22,7 @@ export default compose(
   withProps(({ product }) => {
     const { location: loc } = window
     const port = loc.port ? `:${loc.port}` : ''
-    const url = `${loc.protocol}//${loc.hostname}${port}${product.url}`
+    const url = product.url ? `${loc.protocol}//${loc.hostname}${port}${product.url}` : loc.href
     return { url }
   }),
   withHandlers({

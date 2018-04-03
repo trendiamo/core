@@ -2,7 +2,7 @@
 assets/ajax-loader.gif:
   development: 2018-01-15T06:07:37-05:00   deca8b0ecd6974227d157b6d7068995d
 assets/app.js:
-  development: 2018-04-02T11:42:54-04:00   c2fd834ca00ba6e5e7c16507a2a05dc1
+  development: 2018-04-03T08:26:55-04:00   d59d3f952e6942373c6b6f600685062e
 assets/gift-card.js:
   development: 2018-01-15T06:07:37-05:00   c73df2ee57cc9eb577f7a1858063495d
 assets/gift-card.scss.liquid:
@@ -18,11 +18,11 @@ assets/match-media.min.js:
 assets/password.js:
   development: 2018-01-15T06:07:38-05:00   d826da9cb223a44d53a0c34f457e92dc
 assets/theme-custom.scss.liquid:
-  development: 2018-01-29T13:20:06-05:00   420e977fce8aa735487820ed81499d1b
+  development: 2018-04-03T08:24:38-04:00   ac2fc99bd9370c9fda83cc5131eb25e7
 assets/theme.js:
   development: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
-  development: 2018-03-29T05:56:04-04:00   a5a2385965b2614af6f3ffe1befe8e06
+  development: 2018-04-03T05:59:14-04:00   b741dce0543e68844828a735405fc5fa
 assets/vendor.js:
   development: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
 config/settings_schema.json:
@@ -94,7 +94,7 @@ sections/password-footer.liquid:
 sections/password-header.liquid:
   development: 2018-01-15T06:07:37-05:00   96c731183fa1c3f2f87ca66501494897
 sections/product-template.liquid:
-  development: 2018-03-19T08:35:44-04:00   f3bacd685c61ab46ccbbdaaaae0d2b15
+  development: 2018-04-03T08:17:21-04:00   9f2bfdc46b2e05537e1b15bb22220900
 sections/quotes.liquid:
   development: 2018-01-15T06:07:37-05:00   b234ffff9a061befe87a0d69a121af1c
 sections/rich-text.liquid:
@@ -112,7 +112,7 @@ snippets/collection-item-header.liquid:
 snippets/comment.liquid:
   development: 2018-01-15T06:07:39-05:00   50406c82467014e1bbe15a62685b2536
 snippets/feed-item-header.liquid:
-  development: 2018-01-23T06:06:56-05:00   55613ba587eaee55822ba1a17d789337
+  development: 2018-04-03T08:06:50-04:00   bebab1eca9c01585d7793bb6ef6de4fa
 snippets/google-fonts.liquid:
   development: 2018-01-15T06:07:39-05:00   377ddc183ac7882100f47299bb8e0467
 snippets/icon-amazon_payments.liquid:
@@ -226,7 +226,7 @@ snippets/product-card-grid.liquid:
 snippets/product-card-list.liquid:
   development: 2018-01-15T06:07:41-05:00   701fa6db04bd9c70283028cc4274fc2f
 snippets/product-page-header.liquid:
-  development: 2018-01-16T11:35:14-05:00   3959a3dfb57a5dfef2e6436938f0f5af
+  development: 2018-04-03T08:06:50-04:00   2c6d16d12bd3e38841ebe03374f6a354
 snippets/product-price.liquid:
   development: 2018-01-15T06:07:41-05:00   6f6d1b55d488d08b5af74f762fa0a528
 snippets/search-form.liquid:

@@ -2,6 +2,7 @@ import ActionsBar from './actions-bar'
 import ContextMenu from './context-menu'
 import { getMaxWidthForCompleteCard } from './utils'
 import React from 'react'
+import { compose, withHandlers } from 'recompose'
 import styled, { css } from 'styled-components'
 
 const ProductCardContainer = styled.div`
@@ -68,27 +69,8 @@ const ProductCardImageWrapper = styled.div`
   }
 }
 `
-// .grid-view-item__vendor {
-//   text-transform: none;
-//   font-weight: 600;
-// }
 
-// .round-img {
-//   border-radius: 50%;
-//   object-fit: contain;
-//   background-color: lightgray;
-// }
-
-// "grid-view-item__image-wrapper js"
-// div style={{ paddingTop: product.featured_image ? `${product.featured_image_padding_top}%` : '100%' }}
-// <div style={{ marginLeft: '10px', marginRight: '10px' }}>
-//   <img className="round-img" height="40" src={product.profile_img_url} width="40" />
-// </div>
-// <div>
-//   <div className="h4 grid-view-item__title">{product.title}</div>
-//   <div className="grid-view-item__vendor">{product.vendor}</div>
-// </div>
-const ProductCard = ({ product, productsData, viewType }) => {
+const ProductCard = ({ product, onToggleLike, viewType }) => {
   return (
     <ProductCardContainer viewType={viewType}>
       <ProductCardContainerLink href={product.url}>
@@ -109,9 +91,20 @@ const ProductCard = ({ product, productsData, viewType }) => {
           />
         </ProductCardImageWrapper>
       </ProductCardContainerLink>
-      <ActionsBar product={product} productsData={productsData} viewType={viewType} />
+      <ActionsBar onToggleLike={onToggleLike} product={product} viewType={viewType} />
     </ProductCardContainer>
   )
 }
 
-export default ProductCard
+export default compose(
+  withHandlers({
+    onToggleLike: ({ product, productsData }) => data => {
+      if (!productsData) return
+      const { id: productId } = product
+      productsData.updateQuery(previousProductsData => ({
+        ...previousProductsData,
+        products: previousProductsData.products.map(e => (e.id === productId ? { ...e, ...data.toggleLike } : e)),
+      }))
+    },
+  })
+)(ProductCard)

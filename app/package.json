@@ -35,9 +35,12 @@
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^7.6.1",
     "prettier": "1.10.2",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-merge": "^4.1.2"
   },
   "scripts": {
+    "watch": "webpack --watch",
+    "watchp": "webpack --config webpack.prod.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

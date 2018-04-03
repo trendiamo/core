@@ -7,13 +7,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 export default () => {
-  const appElement = $('.comments')
-  const productRef = String(JSON.parse($('#ProductJson-product-template').text).id)
+  const appElement = $('.product')
+  const product = JSON.parse($('#ProductJson-product-template').text)
 
   ReactDOM.render(
     <ApolloProvider client={client}>
       <AuthModalProvider appElement={appElement}>
-        <Product productRef={productRef} />
+        <Product productRef={String(product.id)} />
       </AuthModalProvider>
     </ApolloProvider>,
     appElement
