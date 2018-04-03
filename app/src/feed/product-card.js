@@ -2,14 +2,18 @@ import ActionsBar from './actions-bar'
 import ContextMenu from './context-menu'
 import { getMaxWidthForCompleteCard } from './utils'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const ProductCardContainer = styled.div`
   position: relative;
   overflow: auto;
-  margin-top: 40px; /* so that the shadow shows */
   box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
   border-radius: 20px;
+  ${({ viewType }) =>
+    viewType === 'list' &&
+    css`
+      margin-bottom: 30px;
+    `};
 `
 
 const ProductCardHeader = styled.div`
@@ -86,7 +90,7 @@ const ProductCardImageWrapper = styled.div`
 // </div>
 const ProductCard = ({ product, productsData, viewType }) => {
   return (
-    <ProductCardContainer>
+    <ProductCardContainer viewType={viewType}>
       <ProductCardContainerLink href={product.url}>
         <ProductCardHeader viewType={viewType}>
           <ProductCardTitle viewType={viewType}>{product.title}</ProductCardTitle>

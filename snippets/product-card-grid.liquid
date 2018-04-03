@@ -21,7 +21,6 @@
   "profile_img_url": {{ profile_image }},
   "title": {{ product.title | json }},
   "url": {{ product.url | within: collection | json }},
-  "variant_id": {{ product.variants.first.id | json }},
   "vendor": {{ product.vendor | json }},
   "wrapper_id": {{ wrapper_id | json }}
 }{% endcapture %}
@@ -30,3 +29,4 @@
   {% include 'image-style' with image: product.featured_image, width: max_height, height: max_height, small_style: true, wrapper_id: wrapper_id, img_id: img_id %}
 {% endunless %}
 <template class="product-info">{{ json_product }}</template>
+<!-- <template class="product-info">{{ product | json }}</template> no url in this one -->

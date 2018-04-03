@@ -56,7 +56,9 @@ const HeartContainer = styled.span`
     `};
 `
 
-const Heart = ({ isLiked }) => <HeartContainer>{isLiked ? <IconHeartS /> : <IconHeart />}</HeartContainer>
+const Heart = ({ isLiked }) => (
+  <HeartContainer isLiked={isLiked}>{isLiked ? <IconHeartS /> : <IconHeart />}</HeartContainer>
+)
 
 const ActionsBar = ({
   isLiked,
@@ -100,7 +102,7 @@ export default compose(
     likeId: product.likes.length > 0 && product.likes[0].id,
     likesCount: product.likesCount,
     likesCountSet: product.likesCount !== undefined,
-    price: product.price_string,
+    price: (product.price / 100.0).toLocaleString('de-DE', { currency: 'EUR', style: 'currency' }),
     productAvailable: product.available,
   })),
   getContext({
@@ -108,17 +110,18 @@ export default compose(
   }),
   withHandlers({
     onBuyClicked: ({ product }) => () => {
-      addToCart(product.variant_id)
+      addToCart(product.variants[0].id)
     },
     onHeartClicked: ({ checkLoginModal, mutate, product, productsData }) => () =>
       authGql(async () => {
         if (checkLoginModal()) return
         const { id: productId } = product
         const { data } = await mutate({ variables: { productId: productId } })
-        productsData.updateQuery(previousProductsData => ({
-          ...previousProductsData,
-          products: previousProductsData.products.map(e => (e.id === productId ? { ...e, ...data.toggleLike } : e)),
-        }))
+        productsData &&
+          productsData.updateQuery(previousProductsData => ({
+            ...previousProductsData,
+            products: previousProductsData.products.map(e => (e.id === productId ? { ...e, ...data.toggleLike } : e)),
+          }))
       }),
   })
 )(ActionsBar)

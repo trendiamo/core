@@ -7,6 +7,7 @@ import { branch, compose, renderNothing, withProps, withState } from 'recompose'
 import styled, { css } from 'styled-components'
 
 const StyledDiv = styled.div`
+  margin-top: 20px;
   ${({ viewType }) =>
     viewType === 'grid' &&
     css`

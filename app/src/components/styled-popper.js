@@ -1,7 +1,9 @@
+import omit from 'lodash.omit'
 import { Popper } from 'react-popper'
+import React from 'react'
 import styled, { css } from 'styled-components'
 
-const StyledPopper = styled(Popper)`
+const StyledPopper = styled(props => <Popper {...omit(props, 'gray')} />)`
   z-index: 1;
   background-color: white;
   padding: 1rem;
