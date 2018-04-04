@@ -9,11 +9,12 @@ import ReactDOM from 'react-dom'
 export default () => {
   const appElement = $('.product')
   const product = JSON.parse($('#ProductJson-product-template').text)
+  const collection = JSON.parse($('.collection-info').content.textContent)
 
   ReactDOM.render(
     <ApolloProvider client={client}>
       <AuthModalProvider appElement={appElement}>
-        <Product productRef={String(product.id)} />
+        <Product collection={collection} productRef={String(product.id)} />
       </AuthModalProvider>
     </ApolloProvider>,
     appElement

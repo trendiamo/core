@@ -1,6 +1,5 @@
 <div class="product"></div>
 
-{% if true %}
 <div class="product-template__container page-width" itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true">
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
@@ -206,6 +205,8 @@
           {{ product.description }}
         </div>
 
+        <div class="callout"></div>
+
         <div class="comments"></div>
 
         {% if section.settings.show_share_buttons %}
@@ -216,7 +217,6 @@
   </div>
 
 </div>
-{% endif %}
 
 {% if collection %}
   <div class="text-center return-link-wrapper desktop-only">
@@ -225,6 +225,7 @@
       {{ 'products.product.back_to_collection' | t: title: collection.title }}
     </a>
   </div>
+  <template class="collection-info">{{ collection | json }}</template>
 {% endif %}
 
 {% unless product == empty %}

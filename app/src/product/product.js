@@ -1,5 +1,6 @@
 import { $ } from 'utils'
 import ActionsBar from 'feed/actions-bar'
+import Callout from './callout'
 import Comments from './comments'
 import ContextMenu from 'feed/context-menu'
 import gql from 'graphql-tag'
@@ -10,13 +11,16 @@ import { branch, compose, renderNothing, withHandlers, withProps } from 'recompo
 
 const Portal = ({ children, domNode }) => ReactDOM.createPortal(children, domNode)
 
-const Product = ({ product, onToggleLike }) => (
+const Product = ({ collection, product, onToggleLike }) => (
   <React.Fragment>
     <Portal domNode={$('.context-menu')}>
       <ContextMenu product={product} viewType="list" />
     </Portal>
     <Portal domNode={$('.actions-bar')}>
       <ActionsBar onToggleLike={onToggleLike} product={product} viewType="list" />
+    </Portal>
+    <Portal domNode={$('.callout')}>
+      <Callout collection={collection} />
     </Portal>
     <Portal domNode={$('.comments')}>
       <Comments product={product} />
@@ -27,7 +31,7 @@ const Product = ({ product, onToggleLike }) => (
 export default compose(
   graphql(
     gql`
-      query($productRefs: [String]!) {
+      query($handle: String!, $productRefs: [String]!) {
         products(productRefs: $productRefs) {
           id
           likesCount
@@ -38,16 +42,22 @@ export default compose(
             email
           }
         }
+        collection(handle: $handle) {
+          handle
+          title
+          profile_pic_url
+        }
       }
     `,
     {
-      options: ({ productRef }) => ({
-        variables: { productRefs: [productRef] },
+      options: ({ collection, productRef }) => ({
+        variables: { handle: collection.handle, productRefs: [productRef] },
       }),
     }
   ),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
+    collection: data.collection,
     product: data.products[0],
   })),
   withHandlers({
