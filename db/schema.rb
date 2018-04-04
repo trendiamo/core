@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322112149) do
+ActiveRecord::Schema.define(version: 20180404093703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 20180322112149) do
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_user_auth_tokens_on_body"
     t.index ["user_id"], name: "index_user_auth_tokens_on_user_id"
+  end
+
+  create_table "collections", force: :cascade do |t|
+    t.string "handle", null: false
+    t.string "title", null: false
+    t.string "type", null: false
+    t.string "profile_pic_url", null: false
+    t.string "cover_pic_url", null: false
+    t.text "description", null: false
   end
 
   create_table "comments", force: :cascade do |t|

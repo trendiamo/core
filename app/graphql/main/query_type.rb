@@ -17,4 +17,12 @@ Main::QueryType = GraphQL::ObjectType.define do
       Comment.where(product_id: args[:productId], removed_at: nil).order(order)
     }
   end
+
+  field :collection, !Types::CollectionType do
+    description "Obtain a collection"
+    argument :handle, !types.String
+    resolve ->(_obj, args, _ctx) {
+      Collection.find_by(handle: args[:handle])
+    }
+  end
 end
