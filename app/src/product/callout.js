@@ -10,6 +10,7 @@ const StyledA = styled.a`
 
 const ProfilePic = styled.img`
   height: 60px;
+  width: 60px;
   object-fit: cover;
   border-radius: 50%;
   margin-right: 0.6rem;

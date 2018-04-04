@@ -2,7 +2,7 @@ import ActionsBar from './actions-bar'
 import ContextMenu from './context-menu'
 import { getMaxWidthForCompleteCard } from './utils'
 import React from 'react'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import styled, { css } from 'styled-components'
 
 const ProductCardContainer = styled.div`
@@ -70,12 +70,12 @@ const ProductCardImageWrapper = styled.div`
 }
 `
 
-const ProductCard = ({ product, onToggleLike, viewType }) => {
+const ProductCard = ({ href, product, onToggleLike, title, viewType }) => {
   return (
     <ProductCardContainer viewType={viewType}>
-      <ProductCardContainerLink href={product.url}>
+      <ProductCardContainerLink href={href}>
         <ProductCardHeader viewType={viewType}>
-          <ProductCardTitle viewType={viewType}>{product.title}</ProductCardTitle>
+          <ProductCardTitle viewType={viewType}>{title}</ProductCardTitle>
           <ContextMenu product={product} viewType={viewType} />
         </ProductCardHeader>
         <ProductCardImageWrapper id={product.wrapper_id}>
@@ -106,5 +106,12 @@ export default compose(
         products: previousProductsData.products.map(e => (e.id === productId ? { ...e, ...data.toggleLike } : e)),
       }))
     },
-  })
+  }),
+  withProps(({ product, viewType }) => ({
+    href:
+      viewType === 'people'
+        ? product.url.replace(/\/collections\/([^/]+)\//, `/collections/${product.user.username}/`)
+        : product.url,
+    title: viewType === 'people' ? product.user.username : product.title,
+  }))
 )(ProductCard)
