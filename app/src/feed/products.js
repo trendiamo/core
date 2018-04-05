@@ -25,7 +25,7 @@ const StyledDiv = styled.div`
 const Products = ({ collection, data, isBrand, products, setViewType, viewType }) => (
   <React.Fragment>
     <Cover collection={collection} />
-    <ViewTypeSelector onViewTypeChange={setViewType} viewType={viewType} showPeople={isBrand} />
+    <ViewTypeSelector onViewTypeChange={setViewType} showPeople={isBrand} viewType={viewType} />
     <StyledDiv viewType={viewType}>
       {products.map(product => (
         <ProductCard key={product.id} product={product} productsData={data} viewType={viewType} />
