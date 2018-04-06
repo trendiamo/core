@@ -1,6 +1,6 @@
 module MultipassAuth
   def shopify_token(user)
-    ShopifyMultipass.new(ENV["SHOPIFY_MULTIPASS_KEY"]).generate_token(customer_info(user))
+    Shopify::Multipass.new(ENV["SHOPIFY_MULTIPASS_KEY"]).generate_token(customer_info(user))
   end
 
   def customer_info(user)

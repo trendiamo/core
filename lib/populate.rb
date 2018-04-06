@@ -5,6 +5,15 @@ users_attrs = [
 ]
 User.create!(users_attrs)
 
+products_attrs = [
+  { product_ref: "1006456242219", user: User.find_by(username: "dantheman") },
+  { product_ref: "784541843499", user: User.find_by(username: "mariedahmen") },
+  { product_ref: "784538304555", user: User.find_by(username: "mariedahmen") },
+  { product_ref: "784512516139", user: User.find_by(username: "mariedahmen") },
+  { product_ref: "783379071019", user: User.find_by(username: "mariedahmen") },
+]
+Product.create!(products_attrs)
+
 # rubocop:disable Metrics/LineLength
 collections_attrs = [
   {
@@ -34,3 +43,19 @@ collections_attrs = [
 ]
 # rubocop:enable Metrics/LineLength
 Collection.create!(collections_attrs)
+
+# rubocop:disable Metrics/LineLength
+comments_attrs = [
+  { user: User.find_by(username: "dsgh"), product: Product.find_by(product_ref: "1006456242219"), content: "Oldest comment here." },
+  { user: User.find_by(username: "dsgh"), product: Product.find_by(product_ref: "1006456242219"), content: "Pinned comment", pinned: true },
+  { user: User.find_by(username: "dsgh"), product: Product.find_by(product_ref: "1006456242219"), content: "Upvoted comment" },
+  { user: User.find_by(username: "mariedahmen"), product: Product.find_by(product_ref: "1006456242219"), content: "Recent comment" },
+  { user: User.find_by(username: "dantheman"), product: Product.find_by(product_ref: "1006456242219"), content: "Hey guys, it's me ya boy. This product is lit" },
+]
+# rubocop:enable Metrics/LineLength
+Comment.create!(comments_attrs)
+
+upvotes_attrs = [
+  { user: User.find_by(username: "dantheman"), comment: Comment.find_by(content: "Upvoted comment") },
+]
+Upvote.create!(upvotes_attrs)

@@ -16,6 +16,7 @@ gem "graphql"
 gem "pundit"
 gem "rack-cors"
 gem "rubocop"
+gem "shopify_api"
 gem "tiddle"
 # gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 
