@@ -1,4 +1,4 @@
-class Bubble::CollectionsController < ApplicationController
+class Bubble::CollectionsController < BubbleController
   def create
     @create_collection = Bubble::CreateCollection.new(collection_params)
     if @create_collection.perform
