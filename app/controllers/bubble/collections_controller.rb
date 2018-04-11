@@ -11,6 +11,6 @@ class Bubble::CollectionsController < BubbleController
   private
 
   def collection_params
-    params.require(:collection).permit(:handle, :title, :profile_pic_url, :cover_pic_url, :description)
+    params.require(:collection).permit(:handle, :title, :type, :profile_pic_url, :cover_pic_url, :description)
   end
 end

@@ -36,18 +36,28 @@ module Bubble
       @shopify_collection.save
     end
 
+    def for_brand?
+      collection_params[:type] == "brand"
+    end
+
     def backend_collection_attrs
-      collection_params.merge(type: "influencer")
+      collection_params.reverse_merge(type: "influencer")
     end
 
     def shopify_collection_attrs
       {
         handle: collection_params[:handle],
         title: collection_params[:title],
-        rules: [
-          { column: "tag", relation: "equals", condition: "influencer: #{collection_params[:handle]}" },
-        ],
+        rules: [rule],
       }
+    end
+
+    def rule
+      if for_brand?
+        { column: "vendor", relation: "equals", condition: collection_params[:handle] }
+      else
+        { column: "tag", relation: "equals", condition: "influencer: #{collection_params[:handle]}" }
+      end
     end
   end
 end
