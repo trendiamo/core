@@ -1,8 +1,8 @@
 import { $, authFetch, baseApiUrl } from 'utils'
 
-const SIGNUP_URL = `${baseApiUrl}/consumers/sign_up`
-const SIGNIN_URL = `${baseApiUrl}/consumers/sign_in`
-const UPDATE_ME_URL = `${baseApiUrl}/consumers/me`
+const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
+const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
+const UPDATE_ME_URL = `${baseApiUrl}/users/me`
 
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {
@@ -38,7 +38,7 @@ export const apiSaga = async (url, body) => {
       $('h1').insertAdjacentHTML('afterend', `<div class="errors">${errorMessages(json)}</div>`)
     }
   } else {
-    localStorage.setItem('consumerToken', json.authenticationToken)
+    localStorage.setItem('authToken', json.authenticationToken)
     window.location = `/account/login/multipass/${json.shopifyToken}`
   }
 }
@@ -48,6 +48,6 @@ export const apiSignIn = body => apiSaga(SIGNIN_URL, body)
 
 export const updateMe = async params =>
   authFetch(UPDATE_ME_URL, {
-    body: JSON.stringify({ consumer: params }),
+    body: JSON.stringify({ user: params }),
     method: 'PATCH',
   })

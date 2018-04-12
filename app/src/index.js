@@ -1,4 +1,6 @@
 import feed from 'feed'
+import homepage from 'homepage'
+import product from 'product'
 import { account, signIn, signUp } from 'auth'
 
 const app = () => {
@@ -10,8 +12,12 @@ const app = () => {
     case '/account/register':
       return signUp()
     case '/':
-    case '/collections/frontpage':
-      return feed()
+      return homepage()
+  }
+  if (/\/collections\/.*\/products\/.+/.test(location.pathname)) {
+    return product()
+  } else if (/\/collections\/.+/.test(location.pathname)) {
+    return feed()
   }
 }
 

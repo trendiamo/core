@@ -201,6 +201,7 @@
     "login": {
       "title": "Login",
       "email": "Email",
+      "email_or_username": "Email or Username",
       "password": "Password",
       "forgot_password": "Forgot your password?",
       "sign_in": "Sign In",
@@ -254,6 +255,7 @@
     },
     "register": {
       "title": "Create Account",
+      "username": "Username",
       "first_name": "First Name",
       "last_name": "Last Name",
       "username": "Username",

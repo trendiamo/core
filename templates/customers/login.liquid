@@ -13,8 +13,8 @@
 
           {{ form.errors | default_errors }}
 
-          <label for="CustomerEmail">{{ 'customer.login.email' | t }}</label>
-          <input type="email" name="customer[email]" id="CustomerEmail" required class="{% if form.errors contains 'email' %} input--error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
+          <label for="CustomerEmail">{{ 'customer.login.email_or_username' | t }}</label>
+          <input type="text" name="customer[email]" id="CustomerEmail" required class="{% if form.errors contains 'login' %} input--error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
 
           {% if form.password_needed %}
             <label for="CustomerPassword">{{ 'customer.login.password' | t }}</label>
@@ -56,7 +56,7 @@
             {% endif %}
 
             <label for="RecoverEmail">{{ 'customer.recover_password.email' | t }}</label>
-            <input type="email" value="" name="email" id="RecoverEmail" class="input-full"autocorrect="off" autocapitalize="off">
+            <input type="email" value="" name="email" id="RecoverEmail" class="input-full" autocorrect="off" autocapitalize="off">
 
             <div class="text-center">
               <p>

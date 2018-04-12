@@ -3,7 +3,7 @@
 <div class="product-influencer__header-m">
   {% for image in product.images %}
     {% if image.alt contains "_profilepic_"%}
-      <img class="product-influnecer__header-m__profilepic" src="{{ image.src | img_url: 'compact' }}">
+      <img class="product-influencer__header-m__profilepic" src="{{ image.src | img_url: 'compact' }}">
     {% endif %}
   {% endfor %}
   <div class="product-influencer__header-m__title">
@@ -20,7 +20,7 @@
 <div class="product-influencer__header">
   {% for image in product.images %}
     {% if image.alt contains "_profilepic_"%}
-      <img class="product-influnecer__header__profilepic" src="{{ image.src | img_url: 'compact' }}">
+      <img class="product-influencer__header__profilepic" src="{{ image.src | img_url: 'compact' }}">
     {% endif %}
   {% endfor %}
   <div class="product-influencer__header__title">

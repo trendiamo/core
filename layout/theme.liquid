@@ -34,7 +34,7 @@
 
   {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
   {{ 'theme-custom.scss.css' | asset_url | stylesheet_tag }}
-  {{ 'theme-custom2.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'homepage.scss.css' | asset_url | stylesheet_tag }}
   {% include 'google-fonts' %}
 
   <script>
@@ -80,8 +80,6 @@
 
 <body class="template-{{ template | split: '.' | first }}">
 
-  <div class="top-hr--invisible"></div>
-
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
   <div id="SearchDrawer" class="search-bar drawer drawer--top">
@@ -115,7 +113,8 @@
     {% section 'footer' %}
 
   </div>
-  <div class="metadata" data-consumer-id="{{ customer.id }}" data-consumer-email="{{ customer.email }}"></div>
+  <div class="metadata" data-customer-ref="{{ customer.id }}" data-user-email="{{ customer.email }}"></div>
   <script src="{{ 'app.js' | asset_url }}"></script>
+  <script type="text/javascript" id="cookiebanner" src="https://cdn.jsdelivr.net/gh/dobarkod/cookie-banner@1.2.1/dist/cookiebanner.min.js"></script>
 </body>
 </html>

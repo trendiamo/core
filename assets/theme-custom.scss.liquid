@@ -22,6 +22,16 @@ to our likings. No changes were made to the theme.scss.liquid file!
   z-index: 9999;
 }
 
+.site-header__icons-wrapper {
+  padding-right: 20px;
+}
+
+.template-collection {
+  .main-content {
+    padding-top: 48px;
+  }
+}
+
 /*============================================================================
                         GRID ITEMS & PRODUCT HEADR
 ==============================================================================*/
@@ -49,7 +59,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
   color: #888888;
 }
 
-.product-influnecer__header__profilepic {
+.product-influencer__header__profilepic {
   float: left;
   width: 48px;
   height: 48px;
@@ -145,12 +155,12 @@ to our likings. No changes were made to the theme.scss.liquid file!
                                MISCELLANEOUS
 ==============================================================================*/
 
-.top-hr--invisible{
-    display: none;
-}
-
 .hr--invisible {
   margin: 20px 0px;
+}
+
+.ReactModal__Overlay {
+  z-index: 1000;
 }
 
 /*============================================================================
@@ -174,15 +184,80 @@ to our likings. No changes were made to the theme.scss.liquid file!
   font-style: normal;
 }
 
+// product show page
+
+.product-single {
+  position: relative;
+  overflow: auto;
+  max-width: 580px;
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-header-left {
+  align-items: center;
+  display: flex;
+  margin-left: 1rem;
+}
+
+.product-single__title {
+  margin-top: 30px;
+}
+
+.product-single__vendor {
+  letter-spacing: inherit;
+  font-weight: 500;
+}
+
+.product-single__description {
+  color: inherit;
+}
+
+.product-influencer__header-m__heading {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.product-header-vendor {
+  text-transform: uppercase;
+  color: #999;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.product-influencer__header-m__profilepic {
+  height: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+  background-color: lightgray;
+}
+
+.product-single__photo-wrapper {
+  margin: 0;
+
+  &::after {
+    content: " ";
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    box-shadow: inset 0 -160px 160px -160px #000000;
+  }
+}
+
+.product-price__price {
+  color: #3d4246;
+}
+
 /*============================================================================
 ############################### DESKTOP ONLY ##################################
 ==============================================================================*/
 
 @media only screen and (min-width: 750px) {
-
-  .main-content {
-    padding-top: 0;
-  }
 
   .section-header {
     margin-bottom: 35px;
@@ -206,7 +281,6 @@ to our likings. No changes were made to the theme.scss.liquid file!
   .grid-view-item__meta {
     padding-bottom: 10px;
   }
-
 }
 
 /*============================================================================
@@ -222,11 +296,6 @@ to our likings. No changes were made to the theme.scss.liquid file!
   .logo-align--center .site-header__logo {
     float: right;
     margin: 0px -32px 0px 0px;
-  }
-
-  .top-hr--invisible{
-    display: block;
-    height: 60px;
   }
 
   .btn-back-wrapper-absolute-m {
@@ -267,7 +336,6 @@ to our likings. No changes were made to the theme.scss.liquid file!
 
   .product-single__photo-wrapper {
     width: 100vw;
-    margin-left: -22px;
     border-radius: 10px;
   }
 
@@ -301,20 +369,8 @@ to our likings. No changes were made to the theme.scss.liquid file!
     color: #888888;
   }
 
-  .product-influencer__header-m__heading {
-    line-height: 60px;
-    font-weight: 500;
-    text-transform: uppercase;
-    text-align: center;
-  }
-
-  .product-influnecer__header-m__profilepic {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 42px;
-    height: 42px;
-    border-radius: 100px;
+  .product-header-info {
+    margin-left: 0.75rem;
   }
 
   /*==========================================================================
@@ -337,5 +393,4 @@ to our likings. No changes were made to the theme.scss.liquid file!
   .logo--center .site-header__cart-count {
     right: -4px;
   }
-
 }

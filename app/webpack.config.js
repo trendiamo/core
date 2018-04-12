@@ -1,6 +1,6 @@
 /* eslint-disable */
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/index.js',
@@ -20,7 +20,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [new webpack.EnvironmentPlugin(['API_ENDPOINT'])],
+  plugins: [
+    new webpack.EnvironmentPlugin(['API_ENDPOINT']),
+  ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },

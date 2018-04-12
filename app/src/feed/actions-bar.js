@@ -1,82 +1,123 @@
+import { addToCart } from './utils'
+import { authGql } from 'utils'
+import { getMaxWidthForCompleteCard } from './utils'
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 import IconCart from 'icons/icon-cart'
 import IconHeart from 'icons/icon-heart'
 import IconHeartS from 'icons/icon-hearts'
+import PropTypes from 'prop-types'
 import React from 'react'
-import { addToCart, createLike, fetchLike, fetchLikesCount, removeLike } from './utils'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { compose, getContext, withHandlers, withProps } from 'recompose'
+import styled, { css } from 'styled-components'
 
-const ActionsBar = ({ isLiked, likesCount, likesCountSet, onBuyClicked, onHeartClicked, productAvailable }) => (
-  <div className="card-item-info">
-    <div className="card-item-likes">{likesCountSet && `${likesCount} Likes`}</div>
-    <a className="card-item-action like" onClick={onHeartClicked} style={{ color: isLiked ? 'red' : 'white' }}>
-      {isLiked ? <IconHeartS /> : <IconHeart />}
-    </a>
+const CardItemInfo = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+
+  @media (max-width: ${({ viewType }) => getMaxWidthForCompleteCard(viewType)}px) {
+    display: none;
+  }
+`
+
+const CardItemLikes = styled.span`
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+`
+
+const CardItemAction = styled.a`
+  color: white;
+`
+
+const Price = styled.span`
+  font-size: 12px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  font-weight: 500;
+`
+
+const HeartContainer = styled.span`
+  zoom: 1.5;
+  vertical-align: middle;
+  ${({ isLiked }) =>
+    isLiked &&
+    css`
+      color: red;
+    `};
+`
+
+const Heart = ({ isLiked }) => (
+  <HeartContainer isLiked={isLiked}>{isLiked ? <IconHeartS /> : <IconHeart />}</HeartContainer>
+)
+
+const ActionsBar = ({
+  isLiked,
+  likesCount,
+  likesCountSet,
+  onBuyClicked,
+  onHeartClicked,
+  price,
+  productAvailable,
+  viewType,
+}) => (
+  <CardItemInfo viewType={viewType}>
+    <CardItemAction onClick={onHeartClicked}>
+      <Heart isLiked={isLiked} />
+      <CardItemLikes>{likesCountSet && `${likesCount} Likes`}</CardItemLikes>
+    </CardItemAction>
     {productAvailable && (
-      <a className="card-item-action buy" onClick={onBuyClicked}>
+      <CardItemAction onClick={onBuyClicked}>
+        <Price>{price}</Price>
         <IconCart />
-      </a>
+      </CardItemAction>
     )}
-  </div>
+  </CardItemInfo>
 )
 
 export default compose(
-  withState('likesCount', 'setLikesCount', 0),
-  withState('isLiked', 'setIsLiked', false),
-  withState('likeId', 'setLikeId', null),
-  withHandlers({
-    decrement: ({ setLikesCount }) => () => setLikesCount(n => n - 1),
-    increment: ({ setLikesCount }) => () => setLikesCount(n => n + 1),
+  graphql(
+    gql`
+      mutation($productId: String!) {
+        toggleLike(productId: $productId) {
+          likesCount
+          likes(currentUser: true) {
+            id
+          }
+        }
+      }
+    `
+  ),
+  withProps(({ product }) => ({
+    isLiked: product.likes.length > 0,
+    likeId: product.likes.length > 0 && product.likes[0].id,
+    likesCount: product.likesCount,
+    likesCountSet: product.likesCount !== undefined,
+    price: (product.price / 100.0).toLocaleString('de-DE', { currency: 'EUR', style: 'currency' }),
+    productAvailable: product.available,
+  })),
+  getContext({
+    checkLoginModal: PropTypes.func,
   }),
   withHandlers({
     onBuyClicked: ({ product }) => () => {
-      addToCart(product.variant_id)
+      addToCart(product.variants[0].id)
     },
-    onHeartClicked: ({
-      metadata,
-      decrement,
-      increment,
-      isLiked,
-      likeId,
-      openModal,
-      product,
-      setIsLiked,
-      setLikeId,
-    }) => () => {
-      const { consumerId } = metadata
-      if (!consumerId) {
-        openModal()
-        return
-      }
-      setIsLiked(!isLiked)
-      if (isLiked) {
-        removeLike(likeId)
-        decrement()
-      } else {
-        createLike(consumerId, product.id).then(response => {
-          if (response.ok) {
-            setLikeId(response.id)
-          }
-        })
-        increment()
-      }
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { metadata, product, setIsLiked, setLikeId, setLikesCount } = this.props
-      const { consumerId } = metadata
-      fetchLikesCount(product.id).then(likesCount => setLikesCount(likesCount))
-      if (!consumerId) return
-      fetchLike(consumerId, product.id).then(response => {
-        if (response.status !== 404) {
-          setIsLiked(true)
-          setLikeId(response.id)
-        }
-      })
-    },
-  }),
-  withProps(({ likesCount, product }) => ({
-    likesCountSet: likesCount !== undefined,
-    productAvailable: product.available,
-  }))
+    onHeartClicked: ({ checkLoginModal, mutate, product, onToggleLike }) => () =>
+      authGql(async () => {
+        if (checkLoginModal()) return
+        const { id: productId } = product
+        const { data } = await mutate({ variables: { productId: productId } })
+        onToggleLike(data)
+      }),
+  })
 )(ActionsBar)
