@@ -1,5 +1,3 @@
-import { addToCart } from './utils'
-import { authGql } from 'utils'
 import { getMaxWidthForCompleteCard } from './utils'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
@@ -8,6 +6,7 @@ import IconHeart from 'icons/icon-heart'
 import IconHeartS from 'icons/icon-hearts'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { addToCart, authGql, formatMoney } from 'utils'
 import { compose, getContext, withHandlers, withProps } from 'recompose'
 import styled, { css } from 'styled-components'
 
@@ -102,7 +101,7 @@ export default compose(
     likeId: product.likes.length > 0 && product.likes[0].id,
     likesCount: product.likesCount,
     likesCountSet: product.likesCount !== undefined,
-    price: (product.price / 100.0).toLocaleString('de-DE', { currency: 'EUR', style: 'currency' }),
+    price: formatMoney(product.price),
     productAvailable: product.available,
   })),
   getContext({

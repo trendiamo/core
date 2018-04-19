@@ -1,30 +1,49 @@
 import React from 'react'
+import styled from 'styled-components'
+import { addToCart, formatMoney } from 'utils'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const Offers = ({ onChoice, product, available }) => (
-  <form action="/cart/add" className="product-form" encType="multipart/form-data" method="post">
-    {product.options.map((option, i) => (
-      <div className="product-form__item" key={option}>
-        <label htmlFor={`SingleOptionSelector-${i}`}>{option}</label>
-        <select
-          className="product-form__input"
-          id={`SingleOptionSelector-${i}`}
-          onChange={event => onChoice(event.target.value, i)}
+const StyledDiv = styled.div`
+  margin: 0 -5px -10px;
+`
+
+const Offers = ({ onChoice, onSubmit, price, product, available }) => (
+  <React.Fragment>
+    <p aria-hidden="true" className="product-single__price">
+      <span className="product-price__price">
+        <span>{price}</span>
+      </span>
+    </p>
+    <StyledDiv>
+      {product.options.map((option, i) => (
+        <div className="product-form__item" key={option}>
+          <label htmlFor={`SingleOptionSelector-${i}`}>{option}</label>
+          <select
+            className="product-form__input"
+            id={`SingleOptionSelector-${i}`}
+            onChange={event => onChoice(event.target.value, i)}
+          >
+            {[...new Set(product.variants.map(e => e[`option${i + 1}`]))].map(o => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
+          </select>
+        </div>
+      ))}
+      <div className="product-form__item product-form__item--submit">
+        <button
+          className="btn product-form__cart-submit"
+          disabled={!available}
+          name="add"
+          onClick={onSubmit}
+          type="button"
         >
-          {[...new Set(product.variants.map(e => e[`option${i + 1}`]))].map(o => (
-            <option key={o} value={o}>
-              {o}
-            </option>
-          ))}
-        </select>
+          <span id="AddToCartText">{available ? 'Add to cart' : 'Unavailable'}</span>
+        </button>
       </div>
-    ))}
-    <div className="product-form__item product-form__item--submit">
-      <button className="btn product-form__cart-submit" disabled={!available} name="add" type="submit">
-        <span id="AddToCartText">{available ? 'Add to cart' : 'Unavailable'}</span>
-      </button>
-    </div>
-  </form>
+    </StyledDiv>
+  </React.Fragment>
 )
 
 const findVariant = (variants, choices) =>
@@ -34,10 +53,15 @@ const findVariant = (variants, choices) =>
 
 export default compose(
   withState('choices', 'setChoices', {}),
+  withProps(({ choices, product }) => ({
+    variant: findVariant(product.variants, choices),
+  })),
   withHandlers({
     onChoice: ({ choices, setChoices }) => (value, i) => setChoices({ ...choices, [i]: value }),
+    onSubmit: ({ variant }) => () => variant && addToCart(variant.id),
   }),
-  withProps(({ choices, product }) => ({
-    available: (findVariant(product.variants, choices) || {}).available,
+  withProps(({ variant }) => ({
+    available: (variant || {}).available,
+    price: formatMoney((variant || {}).price),
   }))
 )(Offers)
