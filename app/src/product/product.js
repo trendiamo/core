@@ -5,6 +5,7 @@ import Comments from './comments'
 import ContextMenu from 'feed/context-menu'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import Offers from './offers'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
@@ -18,6 +19,9 @@ const Product = ({ collection, product, onToggleLike }) => (
     </Portal>
     <Portal domNode={$('.actions-bar')}>
       <ActionsBar onToggleLike={onToggleLike} product={product} viewType="list" />
+    </Portal>
+    <Portal domNode={$('.offers')}>
+      <Offers product={product} />
     </Portal>
     <Portal domNode={$('.callout')}>
       <Callout collection={collection} />
@@ -50,15 +54,15 @@ export default compose(
       }
     `,
     {
-      options: ({ collection, productRef }) => ({
-        variables: { handle: collection.handle, productRefs: [productRef] },
+      options: ({ collection, shopifyProduct }) => ({
+        variables: { handle: collection.handle, productRefs: [String(shopifyProduct.id)] },
       }),
     }
   ),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
-  withProps(({ data }) => ({
+  withProps(({ data, shopifyProduct }) => ({
     collection: data.collection,
-    product: data.products[0],
+    product: { ...shopifyProduct, ...data.products[0] },
   })),
   withHandlers({
     onToggleLike: ({ data, product }) => newData => {

@@ -14,7 +14,7 @@ export default () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
       <AuthModalProvider appElement={appElement}>
-        <Product collection={collection} productRef={String(product.id)} />
+        <Product collection={collection} shopifyProduct={product} />
       </AuthModalProvider>
     </ApolloProvider>,
     appElement
