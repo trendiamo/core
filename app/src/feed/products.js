@@ -8,7 +8,7 @@ import { branch, compose, renderNothing, withProps, withState } from 'recompose'
 import styled, { css } from 'styled-components'
 
 const StyledDiv = styled.div`
-  margin-top: 20px;
+  margin-top: 2rem;
   ${({ viewType }) =>
     viewType === 'list' ||
     css`

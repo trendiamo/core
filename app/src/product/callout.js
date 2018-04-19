@@ -5,7 +5,6 @@ const StyledA = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 2rem;
 `
 
 const ProfilePic = styled.img`

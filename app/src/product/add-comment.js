@@ -3,16 +3,21 @@ import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
 import { compose, getContext, withHandlers, withState } from 'recompose'
+
+const StyledInput = styled.input`
+  margin-top: 0.5rem;
+  width: 100%;
+`
 
 const AddComment = ({ isSubmitting, content, onChange, onSubmit }) => (
   <form onSubmit={onSubmit}>
-    <input
+    <StyledInput
       disabled={isSubmitting}
       onChange={onChange}
       placeholder="Add a comment..."
       required
-      style={{ marginTop: '0.5rem', width: '100%' }}
       type="text"
       value={content}
     />

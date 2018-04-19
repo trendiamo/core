@@ -16,7 +16,7 @@ const CardItemInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  bottom: 0;
+  bottom: 8px;
   padding-left: 20px;
   padding-right: 20px;
   color: white;
@@ -36,17 +36,19 @@ const CardItemLikes = styled.span`
 
 const CardItemAction = styled.a`
   color: white;
+  svg {
+    zoom: 1.5;
+  }
 `
 
 const Price = styled.span`
-  font-size: 12px;
+  font-size: 1rem;
   margin-right: 0.5rem;
   vertical-align: middle;
   font-weight: 500;
 `
 
 const HeartContainer = styled.span`
-  zoom: 1.5;
   vertical-align: middle;
   ${({ isLiked }) =>
     isLiked &&

@@ -9,7 +9,7 @@ import { compose, withHandlers, withState } from 'recompose'
 
 const TargetContainer = styled.div`
   & > div {
-    color: #888;
+    color: #c5c5c5;
     height: 50px;
     width: 50px;
     padding-top: 12px;

@@ -362,7 +362,7 @@ $color-pinterest: #cb2027;
 /*================ Sizing Variables ================*/
 $width-site: 1200px;
 $gutter-site: 55px;
-$gutter-site-mobile: 0;
+$gutter-site-mobile: 1rem;
 $section-spacing: 55px;
 $section-spacing-small: 35px;
 $border-radius: 2px;
@@ -2351,6 +2351,14 @@ textarea {
   @include media-query($small) {
     padding-left: $gutter-site-mobile;
     padding-right: $gutter-site-mobile;
+  }
+}
+
+#Collection,
+.product-template__container {
+  @include media-query($small) {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

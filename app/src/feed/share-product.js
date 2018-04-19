@@ -13,7 +13,7 @@ const StyledSpan = styled.span`
 
 const ShareProduct = ({ hasShared, handleClick }) => (
   <StyledSpan onClick={handleClick} success={hasShared}>
-    {hasShared ? 'Link copied' : 'Share'}
+    {hasShared ? 'Link copied to clipboard' : 'Share'}
   </StyledSpan>
 )
 

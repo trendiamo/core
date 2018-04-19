@@ -24,12 +24,12 @@ const sortPinned = commentId => (a, b) => {
 }
 
 const ContextMenu = ({ handleMenuClick, isOpen, currentUserIsProductOwner, onFlag, onPin, onRemove }) => (
-  <Manager style={{ minWidth: '20px', position: 'relative' }}>
-    <Target className="target" onClick={handleMenuClick}>
+  <Manager style={{ minWidth: '30px', position: 'relative' }}>
+    <Target className="target" onClick={handleMenuClick} style={{ textAlign: 'center' }}>
       <IconEllipsisV />
     </Target>
     {isOpen && (
-      <StyledPopper gray placement="bottom">
+      <StyledPopper placement="bottom">
         <ul>
           <li>
             <span onClick={onFlag}>{'Flag as inappropriate'}</span>

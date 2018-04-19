@@ -19,12 +19,13 @@ const CoverPic = styled.div`
 const ProfilePic = styled.img`
   height: 80px;
   width: 80px;
-  border-radius: 10px;
+  border-radius: 50%;
   object-fit: cover;
   margin-right: 0.7rem;
 `
 
 const AbsoluteDiv = styled.div`
+  align-items: flex-end;
   position: absolute;
   bottom: 0;
   padding: 120px 14px 14px 14px;
@@ -37,7 +38,7 @@ const TitleAndDescription = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
+  width: calc(100% - 90px);
 `
 
 const Title = styled.div`
@@ -50,7 +51,6 @@ const Title = styled.div`
 
 const Description = styled.div`
   font-size: 14px;
-  white-space: pre;
 `
 
 const Cover = ({ collection }) => (

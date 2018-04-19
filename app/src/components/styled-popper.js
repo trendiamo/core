@@ -1,11 +1,10 @@
-import omit from 'lodash.omit'
 import { Popper } from 'react-popper'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-const StyledPopper = styled(props => <Popper {...omit(props, 'gray')} />)`
+const StyledPopper = styled(props => <Popper {...props} />)`
   z-index: 1;
-  background-color: white;
+  background-color: whitesmoke;
   padding: 1rem;
   border-radius: 1rem;
   min-width: 200px;
@@ -19,7 +18,7 @@ const StyledPopper = styled(props => <Popper {...omit(props, 'gray')} />)`
     position: absolute;
     margin: 5px;
     border-color: transparent;
-    border-bottom-color: white;
+    border-bottom-color: whitesmoke;
     border-width: 0 5px 5px 5px;
     top: -5px;
     left: calc(50% - 5px);
@@ -34,14 +33,6 @@ const StyledPopper = styled(props => <Popper {...omit(props, 'gray')} />)`
       margin-bottom: 0;
     }
   }
-  ${({ gray }) =>
-    gray &&
-    css`
-      background-color: burlywood;
-      .popper__arrow {
-        border-bottom-color: burlywood;
-      }
-    `};
 `
 
 export default StyledPopper

@@ -6,6 +6,46 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { compose, getContext, withHandlers, withProps } from 'recompose'
+import styled, { css } from 'styled-components'
+
+const StyledLi = styled.li`
+  padding: 0 5px;
+  margin-bottom: 0.5rem;
+  border-radius: 0 6px 6px 0;
+  border-left-style: solid;
+  border-left-width: 5px;
+  border-left-color: transparent;
+  ${({ pinned }) =>
+    pinned &&
+    css`
+      border-left-color: #def;
+    `};
+  ${({ fromProductOwner }) =>
+    fromProductOwner &&
+    css`
+      background-color: #def;
+      border-left-color: #46c;
+      padding: 5px;
+    `};
+`
+
+const NameAndText = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledB = styled.b`
+  margin-right: 0.3rem;
+  ${({ fromProductOwner }) =>
+    fromProductOwner &&
+    css`
+      color: #46c;
+    `};
+`
+
+const StyledDiv = styled.div`
+  font-size: 13px;
+`
 
 const Comment = ({
   comment,
@@ -20,27 +60,19 @@ const Comment = ({
   upvotesCount,
   username,
 }) => (
-  <li>
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        paddingLeft: '0.2rem',
-        ...(fromProductOwner ? { backgroundColor: '#def' } : {}),
-        ...(pinned ? { borderLeftColor: '#bcd', borderLeftStyle: 'solid', borderLeftWidth: '2px' } : {}),
-      }}
-    >
+  <StyledLi fromProductOwner={fromProductOwner} pinned={pinned}>
+    <NameAndText>
       <div>
-        <b style={{ marginRight: '0.3rem', ...(fromProductOwner ? { color: '#46c' } : {}) }}>{username}</b>
+        <StyledB fromProductOwner={fromProductOwner}>{username}</StyledB>
         <span>{content}</span>
       </div>
       <ContextMenu comment={comment} commentsData={commentsData} product={product} />
-    </div>
-    <div>
+    </NameAndText>
+    <StyledDiv>
       <span>{createdAt}</span>
-      <span onClick={onUpvote}>{` ${upvoted ? '▲' : '▵'} ${upvotesCount}`}</span>
-    </div>
-  </li>
+      <span onClick={onUpvote}>{` ${upvoted ? '♥' : '♡'} ${upvotesCount}`}</span>
+    </StyledDiv>
+  </StyledLi>
 )
 
 export default compose(

@@ -9,7 +9,7 @@ const ProductCardContainer = styled.div`
   position: relative;
   overflow: auto;
   box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
-  border-radius: 20px;
+  border-radius: ${({ viewType }) => (viewType === 'list' ? '20px' : '10px')};
   ${({ viewType }) =>
     viewType === 'list' &&
     css`

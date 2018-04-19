@@ -2,8 +2,8 @@ import IconBtnGrid from 'icons/icon-btn-grid'
 import IconBtnList from 'icons/icon-btn-list'
 import IconBtnPeople from 'icons/icon-btn-people'
 import React from 'react'
+import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
-import styled, { css } from 'styled-components'
 
 const StyledDiv = styled.div`
   display: flex;
@@ -13,14 +13,11 @@ const StyledDiv = styled.div`
 
 const IconContainer = styled.div`
   cursor: pointer;
-  margin-left: 1rem;
-  ${({ active }) =>
-    active &&
-    css`
-      svg {
-        color: #5da494;
-      }
-    `};
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  svg {
+    color: ${({ active }) => (active ? '#36d4bc' : '#d5d5d5')};
+  }
 `
 
 const ViewTypeSelector = ({ onGridClick, onListClick, onPeopleClick, viewType, showPeople }) => (
