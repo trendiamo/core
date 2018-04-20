@@ -2,7 +2,7 @@ Types::ProductType = GraphQL::ObjectType.define do
   name "Product"
 
   field :id, !types.ID
-  field :user, !Types::UserType
+  field :user, Types::UserType
   field :productRef, !types.String do
     resolve ->(obj, _args, _ctx) { obj.product_ref }
   end
