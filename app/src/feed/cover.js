@@ -55,9 +55,9 @@ const Description = styled.div`
 
 const Cover = ({ collection }) => (
   <StyledDiv>
-    <CoverPic backgroundImageUrl={collection.cover_pic_url} />
+    <CoverPic backgroundImageUrl={collection.coverPicUrl} />
     <AbsoluteDiv>
-      <ProfilePic src={collection.profile_pic_url} />
+      <ProfilePic src={collection.profilePicUrl} />
       <TitleAndDescription>
         <Title>{collection.title}</Title>
         <Description>{collection.description}</Description>

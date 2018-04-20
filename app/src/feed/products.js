@@ -34,6 +34,16 @@ const Products = ({ collection, data, isBrand, products, setViewType, viewType }
   </React.Fragment>
 )
 
+const filterProducts = ({ isBrand, products, shopifyProducts, viewType }) => {
+  const filteredProducts = products.map(e => ({ ...shopifyProducts.find(x => String(x.id) === e.productRef), ...e }))
+  if (!isBrand) return filteredProducts
+  if (viewType === 'people') {
+    return filteredProducts.filter(e => e.user)
+  } else {
+    return filteredProducts.filter(e => !e.user)
+  }
+}
+
 export default compose(
   graphql(
     gql`
@@ -52,8 +62,8 @@ export default compose(
         collection(handle: $handle) {
           title
           description
-          profile_pic_url
-          cover_pic_url
+          profilePicUrl
+          coverPicUrl
         }
       }
     `,
@@ -65,11 +75,13 @@ export default compose(
   ),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withState('viewType', 'setViewType', 'grid'),
-  withProps(({ data, shopifyCollection, shopifyProducts }) => ({
+  withProps(({ data, shopifyCollection }) => ({
     collection: { ...shopifyCollection, ...data.collection },
-    products: data.products.map(e => ({ ...shopifyProducts.find(x => String(x.id) === e.productRef), ...e })),
   })),
   withProps(({ collection }) => ({
     isBrand: collection.rules[0].column === 'vendor',
+  })),
+  withProps(({ data, isBrand, shopifyProducts, viewType }) => ({
+    products: filterProducts({ isBrand, products: data.products, shopifyProducts, viewType }),
   }))
 )(Products)

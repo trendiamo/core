@@ -22,7 +22,7 @@ const Title = styled.div`
 
 const Callout = ({ collection }) => (
   <StyledA href={`/collections/${collection.handle}`}>
-    <ProfilePic src={collection.profile_pic_url} />
+    <ProfilePic src={collection.profilePicUrl} />
     <Title>{collection.title}</Title>
   </StyledA>
 )

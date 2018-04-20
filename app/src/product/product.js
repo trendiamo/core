@@ -49,7 +49,7 @@ export default compose(
         collection(handle: $handle) {
           handle
           title
-          profile_pic_url
+          profilePicUrl
         }
       }
     `,
