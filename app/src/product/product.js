@@ -5,6 +5,7 @@ import Comments from './comments'
 import ContextMenu from 'feed/context-menu'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import Media from './media'
 import Offers from './offers'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -22,6 +23,9 @@ const Product = ({ collection, product, onToggleLike }) => (
     </Portal>
     <Portal domNode={$('.offers')}>
       <Offers product={product} />
+    </Portal>
+    <Portal domNode={$('.media')}>
+      <Media product={product} />
     </Portal>
     <Portal domNode={$('.callout')}>
       <Callout collection={collection} />
@@ -45,6 +49,7 @@ export default compose(
           user {
             email
           }
+          mediaItems
         }
         collection(handle: $handle) {
           handle
