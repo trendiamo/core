@@ -6,6 +6,9 @@ Types::ProductType = GraphQL::ObjectType.define do
   field :productRef, !types.String do
     resolve ->(obj, _args, _ctx) { obj.product_ref }
   end
+  field :mediaItems, types[types.String] do
+    resolve ->(obj, _args, _ctx) { obj.media_items }
+  end
   field :likesCount, !types.Int do
     resolve ->(obj, _args, _ctx) { obj.likes_count }
   end
