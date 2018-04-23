@@ -7,7 +7,7 @@ const StyledDiv = styled.div`
   margin: 0 -5px -10px;
 `
 
-const Offers = ({ onChoice, onSubmit, price, product, available }) => (
+const Offers = ({ onChoice, onSubmit, options, price, product, available }) => (
   <React.Fragment>
     <p aria-hidden="true" className="product-single__price">
       <span className="product-price__price">
@@ -15,7 +15,7 @@ const Offers = ({ onChoice, onSubmit, price, product, available }) => (
       </span>
     </p>
     <StyledDiv>
-      {product.options.map((option, i) => (
+      {options.map((option, i) => (
         <div className="product-form__item" key={option}>
           <label htmlFor={`SingleOptionSelector-${i}`}>{option}</label>
           <select
@@ -60,8 +60,9 @@ export default compose(
     onChoice: ({ choices, setChoices }) => (value, i) => setChoices({ ...choices, [i]: value }),
     onSubmit: ({ variant }) => () => variant && addToCart(variant.id),
   }),
-  withProps(({ variant }) => ({
+  withProps(({ product, variant }) => ({
     available: (variant || {}).available,
+    options: product.options.length === 1 && product.variants[0].title === 'Default Title' ? [] : product.options,
     price: formatMoney((variant || {}).price),
   }))
 )(Offers)
