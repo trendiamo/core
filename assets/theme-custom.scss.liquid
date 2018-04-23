@@ -28,7 +28,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
 
 .template-collection {
   .main-content {
-    padding-top: 48px;
+    padding-top: 0;
   }
 }
 
@@ -214,10 +214,6 @@ to our likings. No changes were made to the theme.scss.liquid file!
   margin-left: 1rem;
 }
 
-.product-single__title {
-  margin-top: 30px;
-}
-
 .product-single__vendor {
   letter-spacing: inherit;
   font-weight: 500;
@@ -241,13 +237,16 @@ to our likings. No changes were made to the theme.scss.liquid file!
 
 .product-influencer__header-m__profilepic {
   height: 40px;
+  width: 40px;
   border-radius: 50%;
-  object-fit: contain;
+  object-fit: cover;
   background-color: lightgray;
+  margin-right: 0.5rem;
 }
 
 .product-single__photo-wrapper {
   margin: 0;
+  position: relative;
 
   &::after {
     content: " ";
@@ -299,6 +298,10 @@ to our likings. No changes were made to the theme.scss.liquid file!
 ==============================================================================*/
 
 @media only screen and (max-width: 749px) {
+
+  .product-single__title {
+    margin-top: 30px;
+  }
 
   .desktop-only {
     display: none;

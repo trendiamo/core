@@ -360,7 +360,7 @@ $color-twitter: #00aced;
 $color-pinterest: #cb2027;
 
 /*================ Sizing Variables ================*/
-$width-site: 1200px;
+$width-site: 980px;
 $gutter-site: 55px;
 $gutter-site-mobile: 1rem;
 $section-spacing: 55px;
@@ -1212,10 +1212,6 @@ html {
 .main-content {
   display: block;
   padding-top: 80px;
-
-  @include media-query($medium-up) {
-    padding-top: $section-spacing;
-  }
 }
 
 .section-header {
@@ -2241,15 +2237,11 @@ textarea {
   position: relative;
   padding: 0;
   text-align: center;
-  margin: 25px 0;
+  margin: 25px 0 0 0;
 
   a {
     padding: 3px 10px;
   }
-}
-
-.site-nav--centered {
-  padding-bottom: $gutter-site-mobile;
 }
 
 /*================ Site Nav Links ================*/

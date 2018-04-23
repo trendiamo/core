@@ -18,13 +18,13 @@ assets/match-media.min.js:
 assets/password.js:
   development: 2018-01-15T06:07:38-05:00   d826da9cb223a44d53a0c34f457e92dc
 assets/theme-custom.scss.liquid:
-  development: 2018-04-19T18:51:52-04:00   bdc6fd5f68db1fe0d46267f5d8ce8250
+  development: 2018-04-23T18:09:10-04:00   056d90563f945a8ddcb5c2741e42995c
 assets/theme-custom2.scss.liquid:
-  development: 2018-04-19T18:34:02-04:00   769be8cbfa4bec418414ee4b29bec4a3
+  development: 2018-04-23T17:42:43-04:00   0de3be28376f1254eb4bfc3831cbd675
 assets/theme.js:
   development: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
-  development: 2018-04-19T18:47:01-04:00   ed481a161e7e9236fffac0a971cdf6db
+  development: 2018-04-23T17:58:30-04:00   0ee13b127690e527a406badedc8bb8a4
 assets/vendor.js:
   development: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
 config/settings_schema.json:
@@ -96,7 +96,7 @@ sections/password-footer.liquid:
 sections/password-header.liquid:
   development: 2018-01-15T06:07:37-05:00   96c731183fa1c3f2f87ca66501494897
 sections/product-template.liquid:
-  development: 2018-04-19T05:29:07-04:00   796768867fbac071baefc6f22f1670eb
+  development: 2018-04-23T18:05:30-04:00   ed7cb6d5dab2ccbb9a85bb44dbff0106
 sections/quotes.liquid:
   development: 2018-01-15T06:07:37-05:00   b234ffff9a061befe87a0d69a121af1c
 sections/rich-text.liquid:
