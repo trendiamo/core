@@ -7,6 +7,7 @@ import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import Media from './media'
 import Offers from './offers'
+import Pictures from './pictures'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
@@ -20,6 +21,9 @@ const Product = ({ collection, product, onToggleLike }) => (
     </Portal>
     <Portal domNode={$('.actions-bar')}>
       <ActionsBar onToggleLike={onToggleLike} product={product} viewType="list" />
+    </Portal>
+    <Portal domNode={$('.pictures')}>
+      <Pictures product={product} />
     </Portal>
     <Portal domNode={$('.offers')}>
       <Offers product={product} />
