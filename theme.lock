@@ -24,7 +24,7 @@ assets/theme-custom2.scss.liquid:
 assets/theme.js:
   development: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
-  development: 2018-04-23T17:58:30-04:00   0ee13b127690e527a406badedc8bb8a4
+  development: 2018-04-26T09:52:46-04:00   5067c8c193b95b6c4005771afe50bfe7
 assets/vendor.js:
   development: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
 config/settings_schema.json:
