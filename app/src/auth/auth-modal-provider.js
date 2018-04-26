@@ -4,6 +4,25 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { compose, withContext, withHandlers, withState } from 'recompose'
 
+const customStyles = {
+  content: {
+    border: 0,
+    borderRadius: '20px',
+    bottom: 'auto',
+    left: '50%',
+    marginRight: '-50%',
+    maxWidth: '86%',
+    padding: '2rem',
+    right: 'auto',
+    textAlign: 'center',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+  },
+}
+
 const AuthModalProvider = ({ appElement, children, isAuthModalOpen, closeAuthModal }) => (
   <React.Fragment>
     {children}
@@ -12,6 +31,7 @@ const AuthModalProvider = ({ appElement, children, isAuthModalOpen, closeAuthMod
       contentLabel="Authorization Modal"
       isOpen={isAuthModalOpen}
       onRequestClose={closeAuthModal}
+      style={customStyles}
     >
       <h1>{'Account erstellen'}</h1>
       <p>{'Du brauchst einen Account oder musst dich einloggen.'}</p>

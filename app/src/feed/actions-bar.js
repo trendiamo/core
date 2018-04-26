@@ -68,7 +68,7 @@ const ActionsBar = ({
   onBuyClicked,
   onHeartClicked,
   price,
-  productAvailable,
+  showAddToCart,
   viewType,
 }) => (
   <CardItemInfo viewType={viewType}>
@@ -76,7 +76,7 @@ const ActionsBar = ({
       <Heart isLiked={isLiked} />
       <CardItemLikes>{likesCountSet && `${likesCount} Likes`}</CardItemLikes>
     </CardItemAction>
-    {productAvailable && (
+    {showAddToCart && (
       <CardItemAction onClick={onBuyClicked}>
         <Price>{price}</Price>
         <IconCart />
@@ -98,13 +98,13 @@ export default compose(
       }
     `
   ),
-  withProps(({ product }) => ({
+  withProps(({ product, showAddToCart }) => ({
     isLiked: product.likes.length > 0,
     likeId: product.likes.length > 0 && product.likes[0].id,
     likesCount: product.likesCount,
     likesCountSet: product.likesCount !== undefined,
     price: formatMoney(product.price),
-    productAvailable: product.available,
+    showAddToCart: showAddToCart === undefined ? product.available : showAddToCart,
   })),
   getContext({
     checkLoginModal: PropTypes.func,

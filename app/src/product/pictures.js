@@ -50,7 +50,7 @@ const Pictures = ({ images, onToggleLike, product, selectedImage, setSelectedIma
     <div className="product-single__photos">
       <ImageContainer className="product-single__photo-wrapper" url={selectedImage} />
       <div className="actions-bar">
-        <ActionsBar onToggleLike={onToggleLike} product={product} viewType="list" />
+        <ActionsBar onToggleLike={onToggleLike} product={product} showAddToCart={false} viewType="list" />
       </div>
     </div>
     <Thumbnails>

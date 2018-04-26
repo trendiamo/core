@@ -114,7 +114,7 @@
       {% endif %}
     {% endif %}
   </ul>
-</nav>
+  </nav>
 
   {% if section.settings.message %}
     {% if section.settings.home_page_only == false or template.name == 'index' %}
@@ -161,9 +161,6 @@
     <div class="grid grid--no-gutters grid--table">
       {% if section.settings.align_logo == 'center' %}
         <div class="grid__item small--hide medium-up--one-third">
-          <div class="site-header__search">
-            {% include 'search-form' %}
-          </div>
         </div>
       {% endif %}
 
@@ -223,15 +220,7 @@
       <div class="grid__item small--one-half {% if section.settings.align_logo == 'left' %}medium-up--one-quarter{% else %}medium-up--one-third{% endif %} text-right site-header__icons{% if shop.customer_accounts_enabled %} site-header__icons--plus{% endif %}">
         <div class="site-header__icons-wrapper">
           {% if section.settings.align_logo == 'left' %}
-            <div class="site-header__search small--hide">
-              {% include 'search-form' %}
-            </div>
           {% endif %}
-
-          <button type="button" class="btn--link site-header__search-toggle js-drawer-open-top medium-up--hide">
-            {% include 'icon-search' %}
-            <span class="icon__fallback-text">{{ 'layout.navigation.search' | t }}</span>
-          </button>
 
           {% if shop.customer_accounts_enabled %}
             {% if customer %}
