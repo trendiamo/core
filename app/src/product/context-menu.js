@@ -32,15 +32,15 @@ const ContextMenu = ({ handleMenuClick, isOpen, currentUserIsProductOwner, onFla
       <StyledPopper placement="bottom">
         <ul>
           <li>
-            <span onClick={onFlag}>{'Flag as inappropriate'}</span>
+            <span onClick={onFlag}>{'Als unangemessen melden'}</span>
           </li>
           {currentUserIsProductOwner && (
             <React.Fragment>
               <li>
-                <span onClick={onPin}>{'Toggle pinned'}</span>
+                <span onClick={onPin}>{'Anpinnen'}</span>
               </li>
               <li>
-                <span onClick={onRemove}>{'Remove'}</span>
+                <span onClick={onRemove}>{'Entfernen'}</span>
               </li>
             </React.Fragment>
           )}

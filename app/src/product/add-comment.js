@@ -16,7 +16,7 @@ const AddComment = ({ isSubmitting, content, onChange, onSubmit }) => (
     <StyledInput
       disabled={isSubmitting}
       onChange={onChange}
-      placeholder="Add a comment..."
+      placeholder="Schreibe einen Kommentar..."
       required
       type="text"
       value={content}

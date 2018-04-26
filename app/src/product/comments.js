@@ -19,7 +19,7 @@ const H2 = styled.h2`
 
 const Comments = ({ comments, data, product }) => (
   <React.Fragment>
-    <H2>{'Comments'}</H2>
+    <H2>{'Kommentare'}</H2>
     <Ul>
       {comments.map(comment => <Comment comment={comment} commentsData={data} key={comment.id} product={product} />)}
     </Ul>

@@ -39,7 +39,7 @@ const Offers = ({ onChoice, onSubmit, options, price, product, available }) => (
           onClick={onSubmit}
           type="button"
         >
-          <span id="AddToCartText">{available ? 'Add to cart' : 'Unavailable'}</span>
+          <span id="AddToCartText">{available ? 'Zum Warenkorb' : 'Unavailable'}</span>
         </button>
       </div>
     </StyledDiv>

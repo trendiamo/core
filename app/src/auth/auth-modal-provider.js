@@ -13,10 +13,10 @@ const AuthModalProvider = ({ appElement, children, isAuthModalOpen, closeAuthMod
       isOpen={isAuthModalOpen}
       onRequestClose={closeAuthModal}
     >
-      <h1>{'Create account'}</h1>
-      <p>{'You need to create an account or login first.'}</p>
+      <h1>{'Account erstellen'}</h1>
+      <p>{'Du brauchst einen Account oder musst dich einloggen.'}</p>
       <button className="btn" onClick={closeAuthModal} type="button">
-        {'Close'}
+        {'Schließen'}
       </button>
     </Modal>
   </React.Fragment>
