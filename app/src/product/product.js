@@ -1,5 +1,4 @@
 import { $ } from 'utils'
-import ActionsBar from 'feed/actions-bar'
 import Callout from './callout'
 import Comments from './comments'
 import ContextMenu from 'feed/context-menu'
@@ -14,30 +13,60 @@ import { branch, compose, renderNothing, withHandlers, withProps } from 'recompo
 
 const Portal = ({ children, domNode }) => ReactDOM.createPortal(children, domNode)
 
-const Product = ({ collection, product, onToggleLike }) => (
-  <React.Fragment>
-    <Portal domNode={$('.context-menu')}>
-      <ContextMenu product={product} viewType="list" />
-    </Portal>
-    <Portal domNode={$('.actions-bar')}>
-      <ActionsBar onToggleLike={onToggleLike} product={product} viewType="list" />
-    </Portal>
-    <Portal domNode={$('.pictures')}>
-      <Pictures product={product} />
-    </Portal>
-    <Portal domNode={$('.offers')}>
-      <Offers product={product} />
-    </Portal>
-    <Portal domNode={$('.media')}>
-      <Media product={product} />
-    </Portal>
-    <Portal domNode={$('.callout')}>
-      <Callout collection={collection} />
-    </Portal>
-    <Portal domNode={$('.comments')}>
-      <Comments product={product} />
-    </Portal>
-  </React.Fragment>
+const Product = ({ collection, profilePicUrl, product, onToggleLike }) => (
+  <Portal domNode={$('.product')}>
+    <div className="product-template__container page-width" itemScope itemType="http://schema.org/Product">
+      <meta content={product.title} itemProp="name" />
+      <meta content={window.location.href} itemProp="url" />
+      <meta content={product.featured_image} itemProp="image" />
+      <div className="grid">
+        <div className="grid__item medium-up--one-third">
+          <div className="product-single">
+            <div className="product-header">
+              <div className="product-header-left">
+                <img className="product-influencer__header-m__profilepic" src={profilePicUrl} />
+                <div className="product-header-info">
+                  <div className="product-influencer__header-m__heading">{product.title}</div>
+                  <div className="product-header-vendor">{product.vendor}</div>
+                </div>
+              </div>
+              <div className="context-menu">
+                <ContextMenu product={product} viewType="list" />
+              </div>
+            </div>
+            <Pictures onToggleLike={onToggleLike} product={product} />
+          </div>
+        </div>
+        <div className="grid__item medium-up--two-thirds">
+          <div style={{ margin: '0 1.5rem' }}>
+            <div className="product-single__meta">
+              <h1 className="product-single__title" itemProp="name">
+                {product.title}
+              </h1>
+              <p className="product-single__vendor" itemProp="brand">
+                {product.vendor}
+              </p>
+              <Offers product={product} />
+              {/* eslint-disable react/no-danger */}
+              <div
+                className="product-single__description rte"
+                dangerouslySetInnerHTML={{ __html: product.description }}
+                itemProp="description"
+              />
+              {/* eslint-enable react/no-danger */}
+              <Media product={product} />
+              <div className="callout">
+                <Callout collection={collection} />
+              </div>
+              <div className="comments">
+                <Comments product={product} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Portal>
 )
 
 export default compose(
@@ -52,6 +81,7 @@ export default compose(
           }
           user {
             email
+            profilePicUrl
           }
           mediaItems
         }
@@ -72,6 +102,9 @@ export default compose(
   withProps(({ data, shopifyProduct }) => ({
     collection: data.collection,
     product: { ...shopifyProduct, ...data.products[0] },
+  })),
+  withProps(({ collection, product }) => ({
+    profilePicUrl: (product.user || {}).profilePicUrl || collection.profilePicUrl,
   })),
   withHandlers({
     onToggleLike: ({ data, product }) => newData => {
