@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins ENV["SHOPIFY_STORE"]
+    origins ENV["CORS_ORIGIN"]
 
     resource '*',
       headers: :any,
