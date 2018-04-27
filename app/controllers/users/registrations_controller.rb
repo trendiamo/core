@@ -1,6 +1,5 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
-    include MultipassAuth
     before_action :configure_permitted_parameters
 
     # create method copied from Devise::RegistrationsController, changed the success case response
@@ -15,7 +14,7 @@ module Users
           sign_up(resource_name, resource)
           # respond_with resource, location: after_sign_up_path_for(resource)
           token = Tiddle.create_and_return_token(resource, request)
-          render json: { authentication_token: token, user: resource, shopify_token: shopify_token(resource) }
+          render json: { authentication_token: token, user: resource }
         else
           # set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
           expire_data_after_sign_in!

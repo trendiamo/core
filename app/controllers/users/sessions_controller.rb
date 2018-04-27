@@ -1,11 +1,9 @@
 module Users
   class SessionsController < Devise::SessionsController
-    include MultipassAuth
-
     def create
       user = warden.authenticate!(auth_options)
       token = Tiddle.create_and_return_token(user, request)
-      render json: { authentication_token: token, shopify_token: shopify_token(user) }
+      render json: { authentication_token: token, user: user }
     end
 
     def destroy
