@@ -34,5 +34,5 @@ cd app
 API_ENDPOINT=trendiamo-prod.herokuapp.com yarn webpack --config webpack.prod.js
 cd ..
 theme upload -e production
-git checkout assets/app.js
+git checkout assets/app.js theme.lock
 ```
