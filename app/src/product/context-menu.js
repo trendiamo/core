@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import StyledPopper from 'components/styled-popper'
 import { Arrow, Manager, Target } from 'react-popper'
-import { authGql, getMetadata } from 'utils'
+import { authGql, isCurrentUser } from 'utils'
 import { compose, getContext, withHandlers, withProps, withState } from 'recompose'
 
 const sortPinned = commentId => (a, b) => {
@@ -131,6 +131,6 @@ export default compose(
       }),
   }),
   withProps(({ product }) => ({
-    currentUserIsProductOwner: product.user.email === getMetadata().userEmail,
+    currentUserIsProductOwner: isCurrentUser(product.user),
   }))
 )(ContextMenu)

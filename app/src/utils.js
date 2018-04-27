@@ -1,49 +1,40 @@
 export const $ = document.querySelector.bind(document)
 export const $$ = (selector, callback) => Array.prototype.map.call(document.querySelectorAll(selector), callback)
 
-export const getMetadata = () => $('.metadata').dataset
-
 const domain = process.env.API_ENDPOINT
 export const baseApiUrl = `https://${domain}/api/v1`
 export const gqlApiUrl = `https://${domain}/graphql`
 
 export const isLoggedIn = () => {
-  return getMetadata().userEmail && localStorage.getItem('authToken')
+  return localStorage.getItem('authEmail') && localStorage.getItem('authToken')
 }
 
-export const authHeaders = () => {
-  const userEmail = getMetadata().userEmail
-  const authToken = localStorage.getItem('authToken')
-  return {
-    'X-USER-EMAIL': userEmail,
-    'X-USER-TOKEN': authToken,
-  }
+export const authHeaders = () => ({
+  'X-USER-EMAIL': localStorage.getItem('authEmail'),
+  'X-USER-TOKEN': localStorage.getItem('authToken'),
+})
+
+export const authSuccess = (authToken, authEmail) => {
+  localStorage.setItem('authToken', authToken)
+  localStorage.setItem('authEmail', authEmail)
 }
+
+export const removeAuth = () => {
+  localStorage.removeItem('authToken')
+  localStorage.removeItem('authEmail')
+}
+
+export const isCurrentUser = user => user.email === localStorage.getItem('authEmail')
 
 let isRedirectingToLogin = false
 
 const handleAuthLost = () => {
   if (isRedirectingToLogin) return
   isRedirectingToLogin = true
-  localStorage.removeItem('authToken')
+  removeAuth()
   setTimeout(() => {
     alert('Please login again')
-    window.location = '/account/login'
   }, 1)
-}
-
-export const authFetch = async (url, options) => {
-  const response = await fetch(url, {
-    ...options,
-    headers: new Headers({
-      ...authHeaders(),
-      'Content-Type': 'application/json',
-    }),
-  })
-  if (response.status === 401) {
-    handleAuthLost()
-  }
-  return response
 }
 
 export const authGql = async action => {

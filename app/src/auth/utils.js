@@ -1,8 +1,7 @@
-import { $, authFetch, baseApiUrl } from 'utils'
+import { $, authSuccess, baseApiUrl } from 'utils'
 
 const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
 const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
-const UPDATE_ME_URL = `${baseApiUrl}/users/me`
 
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {
@@ -21,7 +20,7 @@ const errorMessages = json => {
   } else {
     if (typeof json.errors === 'object') {
       const listItems = json.errors.map(error => `<li>${error}</li>`)
-      return `<ul>${listItems}</ul>`
+      return `<ul>${listItems.join('')}</ul>`
     } else {
       return '<ul><li>Kann keinen Account erstellen.</li></ul>'
     }
@@ -35,19 +34,12 @@ export const apiSaga = async (url, body) => {
     if (errors) {
       errors.innerHTML = errorMessages(json)
     } else {
-      $('h1').insertAdjacentHTML('afterend', `<div class="errors">${errorMessages(json)}</div>`)
+      $('.ReactModal__Content h1').insertAdjacentHTML('afterend', `<div class="errors">${errorMessages(json)}</div>`)
     }
   } else {
-    localStorage.setItem('authToken', json.authenticationToken)
-    window.location = `/account/login/multipass/${json.shopifyToken}`
+    authSuccess(json.authenticationToken, json.user.email)
   }
 }
 
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
 export const apiSignIn = body => apiSaga(SIGNIN_URL, body)
-
-export const updateMe = async params =>
-  authFetch(UPDATE_ME_URL, {
-    body: JSON.stringify({ user: params }),
-    method: 'PATCH',
-  })
