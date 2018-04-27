@@ -20,7 +20,7 @@ const Product = ({ collection, profilePicUrl, product, onToggleLike }) => (
       <meta content={window.location.href} itemProp="url" />
       <meta content={product.featured_image} itemProp="image" />
       <div className="grid">
-        <div className="grid__item medium-up--three-eighths">
+        <div className="grid__item medium-up--one-half">
           <div className="product-single">
             <div className="product-header">
               <div className="product-header-left">
@@ -37,7 +37,7 @@ const Product = ({ collection, profilePicUrl, product, onToggleLike }) => (
             <Pictures onToggleLike={onToggleLike} product={product} />
           </div>
         </div>
-        <div className="grid__item medium-up--five-eighths">
+        <div className="grid__item medium-up--one-half">
           <div style={{ margin: '0 1.5rem' }}>
             <div className="product-single__meta">
               <h1 className="product-single__title" itemProp="name">

@@ -26,3 +26,13 @@ Note: if `theme watch` shows `409 Conflict` errors, then do a `theme download pa
 cd app
 yarn eslint src
 ```
+
+# Deploy
+
+```sh
+cd app
+API_ENDPOINT=trendiamo-prod.herokuapp.com yarn webpack --config webpack.prod.js
+cd ..
+theme upload -e production
+git checkout assets/app.js
+```
