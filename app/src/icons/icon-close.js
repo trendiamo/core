@@ -1,10 +1,11 @@
 import React from 'react'
 
-const IconClose = ({ className }) => (
+const IconClose = ({ className, onClick }) => (
   <svg
     aria-hidden="true"
     className={`${className} icon icon-close`}
     focusable="false"
+    onClick={onClick}
     role="presentation"
     viewBox="0 0 384 512"
   >
