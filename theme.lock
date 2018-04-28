@@ -82,7 +82,7 @@ sections/blog-template.liquid:
   production: 2018-04-25T12:36:00+02:00   5757170836346c1082ffba4ef408857e
 sections/cart-template.liquid:
   development: 2018-01-22T11:15:11-05:00   adab4b0ec2528b18d2c5adb2d80e4922
-  production: 2018-04-25T12:36:00+02:00   adab4b0ec2528b18d2c5adb2d80e4922
+  production: 2018-04-28T18:58:18+02:00   1ab1da175a344692e5051465bd9690df
 sections/collection-list.liquid:
   development: 2018-01-15T06:07:36-05:00   a55d61b95ff71917adad276c41ee1dc0
   production: 2018-04-25T12:36:00+02:00   a55d61b95ff71917adad276c41ee1dc0
