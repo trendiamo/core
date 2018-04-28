@@ -13,6 +13,7 @@ const CoverPic = styled.div`
   height: 240px;
   background-image: url(${({ backgroundImageUrl }) => backgroundImageUrl});
   background-size: cover;
+  background-position: center;
   box-shadow: inset 0 -66px 40px -40px #fff;
 `
 

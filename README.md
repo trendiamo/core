@@ -31,8 +31,7 @@ yarn eslint src
 
 ```sh
 cd app
-API_ENDPOINT=trendiamo-prod.herokuapp.com yarn webpack --config webpack.prod.js
+API_ENDPOINT=trendiamo-prod.herokuapp.com yarn webpack -p --config webpack.prod.js
 cd ..
-theme upload -e production
-git checkout assets/app.js theme.lock
+theme upload -f -e production
 ```

@@ -10,4 +10,5 @@ module.exports = merge(config, {
     }),
     new webpack.optimize.UglifyJsPlugin(),
   ],
+  watch: false,
 })

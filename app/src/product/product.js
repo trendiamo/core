@@ -75,6 +75,7 @@ export default compose(
       query($handle: String!, $productRefs: [String]!) {
         products(productRefs: $productRefs) {
           id
+          productRef
           likesCount
           likes(currentUser: true) {
             id

@@ -86,7 +86,7 @@ const ActionsBar = ({
 )
 
 const likesCountFromJson = product => {
-  switch (product.id) {
+  switch (product.productRef) {
     case '600001904698':
       return 478
     case '600001839162':

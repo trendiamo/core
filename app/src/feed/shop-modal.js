@@ -25,7 +25,7 @@ const customStyles = {
 }
 
 const Background = styled.div`
-  background-image: url(//placeimg.com/640/480/any);
+  background-image: url(//cdn.shopify.com/s/files/1/0024/7522/9242/files/popup.jpg);
   background-position: top;
   background-size: cover;
   height: 175px;
@@ -75,7 +75,7 @@ const ShopModal = ({ appElement, closeModal, isModalOpen }) => (
     style={customStyles}
   >
     <Background />
-    <Logo src="//placeimg.com/160/160/any" />
+    <Logo src="https://cdn.shopify.com/s/files/1/0024/7522/9242/files/alexv_logo_240x240.png" />
     <StyledIconClose onClick={closeModal} />
     <Content>
       <h1>{'Offizieller Merchandise von AlexV'}</h1>
