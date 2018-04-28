@@ -10,10 +10,14 @@ const ProductCardContainer = styled.div`
   overflow: auto;
   box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
   border-radius: ${({ viewType }) => (viewType === 'list' ? '20px' : '10px')};
+  margin-bottom: 30px;
   ${({ viewType }) =>
-    viewType === 'list' &&
+    viewType === 'list' ||
     css`
-      margin-bottom: 30px;
+      width: 42%;
+      max-width: 280px;
+      margin-left: 10px;
+      margin-right: 10px;
     `};
 `
 

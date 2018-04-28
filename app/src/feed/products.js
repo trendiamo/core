@@ -12,13 +12,12 @@ const StyledDiv = styled.div`
   ${({ viewType }) =>
     viewType === 'list' ||
     css`
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 10px;
-
-      @media (min-width: 920px) {
-        grid-template-columns: repeat(3, 1fr);
-      }
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      margin-left: -10px;
+      margin-right: -10px;
     `};
 `
 
