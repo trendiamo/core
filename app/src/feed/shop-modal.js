@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import IconClose from 'icons/icon-close'
 import Modal from 'react-modal'
 import React from 'react'
 import styled from 'styled-components'
@@ -56,17 +57,13 @@ const Content = styled.div`
   }
 `
 
-const CloseIcon = styled.div`
-  font-size: 54px;
+const StyledIconClose = styled(IconClose)`
   position: absolute;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
-  top: 0;
-  right: 0;
   color: #8e8e8e;
-  line-height: 22px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 8px;
+}
 `
 
 const ShopModal = ({ appElement, closeModal, isModalOpen }) => (
@@ -79,9 +76,10 @@ const ShopModal = ({ appElement, closeModal, isModalOpen }) => (
   >
     <Background />
     <Logo src="//placeimg.com/160/160/any" />
-    <CloseIcon onClick={closeModal}>{'⨯'}</CloseIcon>
+    <StyledIconClose onClick={closeModal} />
     <Content>
       <h1>{'Offizieller Merchandise von AlexV'}</h1>
+      <p>{'Streng limitiert auf 150 Teile'}</p>
       <p>{'Shop-Eröffnung 28.04.2018'}</p>
       <button className="btn" onClick={closeModal} type="button">
         {'Jetzt Shoppen'}

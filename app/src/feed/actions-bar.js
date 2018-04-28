@@ -85,6 +85,17 @@ const ActionsBar = ({
   </CardItemInfo>
 )
 
+const likesCountFromJson = product => {
+  switch (product.id) {
+    case '600001904698':
+      return 478
+    case '600001839162':
+      return 672
+    default:
+      return 0
+  }
+}
+
 export default compose(
   graphql(
     gql`
@@ -101,7 +112,7 @@ export default compose(
   withProps(({ product, showAddToCart }) => ({
     isLiked: product.likes.length > 0,
     likeId: product.likes.length > 0 && product.likes[0].id,
-    likesCount: product.likesCount,
+    likesCount: product.likesCount + likesCountFromJson(product),
     likesCountSet: product.likesCount !== undefined,
     price: formatMoney(product.price),
     showAddToCart: showAddToCart === undefined ? product.available : showAddToCart,
