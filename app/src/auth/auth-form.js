@@ -44,17 +44,17 @@ const AuthForm = ({
   <div>
     {isLoggedIn ? (
       <div className="text-center">
-        <h1>{'Your Account'}</h1>
-        <p>{`You are logged in as ${email}`}</p>
+        <h1>{'Dein Account'}</h1>
+        <p>{`Du bist eingeloggt als ${email}`}</p>
         <button className="btn" onClick={logout} type="button">
-          {'Logout'}
+          {'Ausloggen'}
         </button>
       </div>
     ) : view === 'login' ? (
       <React.Fragment>
         <h1 className="text-center">{'Login'}</h1>
         <form acceptCharset="UTF-8" onSubmit={loginSubmit}>
-          <label htmlFor="CustomerEmail">{'Email or Username'}</label>
+          <label htmlFor="CustomerEmail">{'Email oder Nutzername'}</label>
           <StyledInput
             autoCapitalize="off"
             autoCorrect="off"
@@ -65,14 +65,14 @@ const AuthForm = ({
             type="text"
             value={loginForm.email}
           />
-          <label htmlFor="CustomerPassword">{'Password'}</label>
+          <label htmlFor="CustomerPassword">{'Passwort'}</label>
           <StyledInput name="password" onChange={setLoginValue} required type="password" value={loginForm.password} />
           <StyledDiv>
             {/* <p><a>Forgot your password?</a></p> */}
-            <StyledButton className="btn" type="submit" value="Sign In" />
+            <StyledButton className="btn" type="submit" value="Anmelden" />
             <p>
               <LinkButton onClick={showRegister} type="button">
-                {'Create account'}
+                {'Account erstellen'}
               </LinkButton>
             </p>
           </StyledDiv>
@@ -80,9 +80,9 @@ const AuthForm = ({
       </React.Fragment>
     ) : (
       <React.Fragment>
-        <h1 className="text-center">{'Create Account'}</h1>
+        <h1 className="text-center">{'Account erstellen'}</h1>
         <form acceptCharset="UTF-8" onSubmit={registerSubmit}>
-          <label htmlFor="Username">{'Username'}</label>
+          <label htmlFor="Username">{'Nutzername'}</label>
           <StyledInput
             autofocus
             name="username"
@@ -91,7 +91,7 @@ const AuthForm = ({
             type="text"
             value={registerForm.username}
           />
-          <label htmlFor="FirstName">{'First Name'}</label>
+          <label htmlFor="FirstName">{'Name'}</label>
           <StyledInput
             name="firstName"
             onChange={setRegisterValue}
@@ -99,7 +99,7 @@ const AuthForm = ({
             type="text"
             value={registerForm.firstName}
           />
-          <label htmlFor="LastName">{'Last Name'}</label>
+          <label htmlFor="LastName">{'Nachname'}</label>
           <StyledInput name="lastName" onChange={setRegisterValue} required type="text" value={registerForm.lastName} />
           <label htmlFor="Email">{'Email'}</label>
           <StyledInput
@@ -111,7 +111,7 @@ const AuthForm = ({
             type="email"
             value={registerForm.email}
           />
-          <label htmlFor="CustomerPassword">{'Password'}</label>
+          <label htmlFor="CustomerPassword">{'Passwort'}</label>
           <StyledInput
             name="password"
             onChange={setRegisterValue}
@@ -121,11 +121,11 @@ const AuthForm = ({
           />
           <StyledDiv>
             {/* <p><a>Forgot your password?</a></p> */}
-            <StyledButton className="btn" type="submit" value="Create" />
+            <StyledButton className="btn" type="submit" value="Registrieren" />
             <p>
-              {'Already have an account? '}
+              {'Du hast schon einen Account? '}
               <LinkButton onClick={showLogin} type="button">
-                {'login'}
+                {'Login'}
               </LinkButton>
             </p>
           </StyledDiv>
