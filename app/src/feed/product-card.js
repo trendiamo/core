@@ -1,7 +1,8 @@
 import ActionsBar from './actions-bar'
-import ContextMenu from './context-menu'
+import ContextMenu from 'components/context-menu'
 import { getMaxWidthForCompleteCard } from './utils'
 import React from 'react'
+import ShareProduct from './share-product'
 import { compose, withHandlers, withProps } from 'recompose'
 import styled, { css } from 'styled-components'
 
@@ -33,12 +34,22 @@ const ProductCardHeader = styled.div`
   }
 `
 
-const ProductCardTitle = styled.div`
+const ProductCardTitle = styled.a`
   font-size: 14px;
   color: #3d4246;
   font-weight: 700;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  flex-basis: 100%;
+
+  display: block;
+  text-decoration: none;
+  touch-action: manipulation;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
 
   @media (max-width: ${({ viewType }) => getMaxWidthForCompleteCard(viewType)}px) {
     color: white;
@@ -48,19 +59,26 @@ const ProductCardTitle = styled.div`
   }
 `
 
-const ProductCardContainerLink = styled.a`
+const StyledContextMenu = styled(ContextMenu)`
+  margin-right: 1rem;
+  @media (max-width: ${({ viewType }) => getMaxWidthForCompleteCard(viewType)}px) {
+    display: none;
+  }
+`
+
+const ProductCardImageWrapper = styled.a`
+  margin-bottom: 0;
+  position: relative;
+  width: 100%;
+
+  display: block;
   text-decoration: none;
   touch-action: manipulation;
+
   &:hover,
   &:focus {
     opacity: 1;
   }
-`
-
-const ProductCardImageWrapper = styled.div`
-  margin-bottom: 0;
-  position: relative;
-  width: 100%;
 
   &::after {
     content: " ";
@@ -77,24 +95,28 @@ const ProductCardImageWrapper = styled.div`
 const ProductCard = ({ href, product, onToggleLike, title, viewType }) => {
   return (
     <ProductCardContainer viewType={viewType}>
-      <ProductCardContainerLink href={href}>
-        <ProductCardHeader viewType={viewType}>
-          <ProductCardTitle viewType={viewType}>{title}</ProductCardTitle>
-          <ContextMenu product={product} viewType={viewType} />
-        </ProductCardHeader>
-        <ProductCardImageWrapper id={product.wrapper_id}>
-          <img
-            alt={product.featured_image_alt}
-            className="grid-view-item__image lazyload"
-            data-aspectratio={product.featured_image_aspect_ratio}
-            data-sizes="auto"
-            data-src={product.img_url}
-            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-            id={product.img_id}
-            src={product.featured_image}
-          />
-        </ProductCardImageWrapper>
-      </ProductCardContainerLink>
+      <ProductCardHeader viewType={viewType}>
+        <ProductCardTitle href={href} viewType={viewType}>
+          {title}
+        </ProductCardTitle>
+        <StyledContextMenu viewType={viewType}>
+          <ul>
+            <ShareProduct product={product} />
+          </ul>
+        </StyledContextMenu>
+      </ProductCardHeader>
+      <ProductCardImageWrapper href={href} id={product.wrapper_id}>
+        <img
+          alt={product.featured_image_alt}
+          className="grid-view-item__image lazyload"
+          data-aspectratio={product.featured_image_aspect_ratio}
+          data-sizes="auto"
+          data-src={product.img_url}
+          data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+          id={product.img_id}
+          src={product.featured_image}
+        />
+      </ProductCardImageWrapper>
       <ActionsBar onToggleLike={onToggleLike} product={product} viewType={viewType} />
     </ProductCardContainer>
   )

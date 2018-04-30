@@ -1,5 +1,6 @@
 import { authGql } from 'utils'
-import ContextMenu from './context-menu'
+import ContextMenu from 'components/context-menu'
+import ContextMenuOps from './context-menu-ops'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import moment from 'moment'
@@ -66,7 +67,9 @@ const Comment = ({
         <StyledB fromProductOwner={fromProductOwner}>{username}</StyledB>
         <span>{content}</span>
       </div>
-      <ContextMenu comment={comment} commentsData={commentsData} product={product} />
+      <ContextMenu>
+        <ContextMenuOps comment={comment} commentsData={commentsData} product={product} />
+      </ContextMenu>
     </NameAndText>
     <StyledDiv>
       <span>{createdAt}</span>

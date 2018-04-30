@@ -1,7 +1,7 @@
 import { $ } from 'utils'
 import Callout from './callout'
 import Comments from './comments'
-import ContextMenu from 'feed/context-menu'
+import ContextMenu from 'components/context-menu'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import Media from './media'
@@ -9,9 +9,15 @@ import Offers from './offers'
 import Pictures from './pictures'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import ShareProduct from 'feed/share-product'
+import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 
 const Portal = ({ children, domNode }) => ReactDOM.createPortal(children, domNode)
+
+const StyledContextMenu = styled(ContextMenu)`
+  margin-right: 0.5rem;
+`
 
 const Product = ({ collection, profilePicUrl, product, onToggleLike }) => (
   <Portal domNode={$('.product')}>
@@ -31,7 +37,11 @@ const Product = ({ collection, profilePicUrl, product, onToggleLike }) => (
                 </div>
               </div>
               <div className="context-menu">
-                <ContextMenu product={product} viewType="list" />
+                <StyledContextMenu product={product}>
+                  <ul>
+                    <ShareProduct product={product} />
+                  </ul>
+                </StyledContextMenu>
               </div>
             </div>
             <Pictures onToggleLike={onToggleLike} product={product} />

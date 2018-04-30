@@ -1,10 +1,7 @@
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import IconEllipsisV from 'icons/icon-ellipsis-v'
 import PropTypes from 'prop-types'
 import React from 'react'
-import StyledPopper from 'components/styled-popper'
-import { Arrow, Manager, Target } from 'react-popper'
 import { authGql, isCurrentUser } from 'utils'
 import { compose, getContext, withHandlers, withProps, withState } from 'recompose'
 
@@ -23,32 +20,16 @@ const sortPinned = commentId => (a, b) => {
   }
 }
 
-const ContextMenu = ({ handleMenuClick, isOpen, currentUserIsProductOwner, onFlag, onPin, onRemove }) => (
-  <Manager style={{ minWidth: '30px', position: 'relative' }}>
-    <Target className="target" onClick={handleMenuClick} style={{ textAlign: 'center' }}>
-      <IconEllipsisV />
-    </Target>
-    {isOpen && (
-      <StyledPopper placement="bottom">
-        <ul>
-          <li>
-            <span onClick={onFlag}>{'Als unangemessen melden'}</span>
-          </li>
-          {currentUserIsProductOwner && (
-            <React.Fragment>
-              <li>
-                <span onClick={onPin}>{'Anpinnen'}</span>
-              </li>
-              <li>
-                <span onClick={onRemove}>{'Entfernen'}</span>
-              </li>
-            </React.Fragment>
-          )}
-        </ul>
-        <Arrow className="popper__arrow" />
-      </StyledPopper>
+const ContextMenuOps = ({ currentUserIsProductOwner, onFlag, onPin, onRemove }) => (
+  <ul>
+    <li onClick={onFlag}>{'Als unangemessen melden'}</li>
+    {currentUserIsProductOwner && (
+      <React.Fragment>
+        <li onClick={onPin}>{'Anpinnen'}</li>
+        <li onClick={onRemove}>{'Entfernen'}</li>
+      </React.Fragment>
     )}
-  </Manager>
+  </ul>
 )
 
 export default compose(
@@ -133,4 +114,4 @@ export default compose(
   withProps(({ product }) => ({
     currentUserIsProductOwner: isCurrentUser(product.user),
   }))
-)(ContextMenu)
+)(ContextMenuOps)

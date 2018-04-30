@@ -3,7 +3,7 @@ import React from 'react'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import styled, { css } from 'styled-components'
 
-const StyledSpan = styled.span`
+const StyledLi = styled.li`
   ${({ success }) =>
     success &&
     css`
@@ -12,9 +12,9 @@ const StyledSpan = styled.span`
 `
 
 const ShareProduct = ({ hasShared, handleClick }) => (
-  <StyledSpan onClick={handleClick} success={hasShared}>
+  <StyledLi onClick={handleClick} success={hasShared}>
     {hasShared ? 'Link wurde kopiert!' : 'Teilen'}
-  </StyledSpan>
+  </StyledLi>
 )
 
 export default compose(
