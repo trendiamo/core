@@ -1,27 +1,14 @@
 import Cookies from 'js-cookie'
 import IconClose from 'icons/icon-close'
-import Modal from 'react-modal'
 import React from 'react'
 import styled from 'styled-components'
+import StyledModal from 'components/styled-modal'
 import { compose, withHandlers, withState } from 'recompose'
 
-const customStyles = {
-  content: {
-    border: 0,
-    borderRadius: '20px',
-    bottom: 'auto',
-    left: '50%',
-    marginRight: '-50%',
-    maxWidth: '86%',
-    padding: 0,
-    right: 'auto',
-    textAlign: 'center',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-  },
+const modalContentStyle = {
+  maxWidth: '424px', // pixel-adjusted to workaround https://bugs.chromium.org/p/chromium/issues/detail?id=483381
+  padding: '0 0 1px 0', // pixel-adjusted to workaround https://bugs.chromium.org/p/chromium/issues/detail?id=483381
+  textAlign: 'center',
 }
 
 const Background = styled.div`
@@ -67,12 +54,12 @@ const StyledIconClose = styled(IconClose)`
 `
 
 const ShopModal = ({ appElement, closeModal, isModalOpen }) => (
-  <Modal
+  <StyledModal
     appElement={appElement}
     contentLabel="Shop Modal"
+    contentStyle={modalContentStyle}
     isOpen={isModalOpen}
     onRequestClose={closeModal}
-    style={customStyles}
   >
     <Background />
     <Logo src="https://cdn.shopify.com/s/files/1/0024/7522/9242/files/alexv_logo_240x240.png" />
@@ -85,7 +72,7 @@ const ShopModal = ({ appElement, closeModal, isModalOpen }) => (
         {'Jetzt Shoppen'}
       </button>
     </Content>
-  </Modal>
+  </StyledModal>
 )
 
 export default compose(

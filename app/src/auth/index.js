@@ -1,5 +1,6 @@
 import { $ } from 'utils'
-import AuthModal from './auth-modal'
+import AuthMenuItem from './auth-menu-item'
+import AuthModalProvider from './auth-modal-provider'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -8,5 +9,10 @@ export default () => {
   target.classList.add('site-header__account')
   $('.site-header__icons-wrapper').prepend(target)
 
-  ReactDOM.render(<AuthModal appElement={target} />, target)
+  ReactDOM.render(
+    <AuthModalProvider appElement={target}>
+      <AuthMenuItem />
+    </AuthModalProvider>,
+    target
+  )
 }

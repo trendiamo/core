@@ -1,62 +1,77 @@
+import Account from './account'
 import { isLoggedIn } from 'utils'
-import Modal from 'react-modal'
+import Login from './login'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { compose, withContext, withHandlers, withState } from 'recompose'
+import Register from './register'
+import RequireAuth from './require-auth'
+import StyledModal from 'components/styled-modal'
+import { compose, withContext, withHandlers, withProps, withState } from 'recompose'
 
-const customStyles = {
-  content: {
-    border: 0,
-    borderRadius: '20px',
-    bottom: 'auto',
-    left: '50%',
-    marginRight: '-50%',
-    maxWidth: '86%',
-    padding: '2rem',
-    right: 'auto',
-    textAlign: 'center',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-  },
+const modalContentStyle = {
+  padding: '2rem',
 }
 
-const AuthModalProvider = ({ appElement, children, isAuthModalOpen, closeAuthModal }) => (
+const AuthModalProvider = ({
+  appElement,
+  children,
+  email,
+  isAuthModalOpen,
+  isLoggedIn,
+  closeAuthModal,
+  setView,
+  view,
+}) => (
   <React.Fragment>
     {children}
-    <Modal
+    <StyledModal
       appElement={appElement}
       contentLabel="Authorization Modal"
+      contentStyle={modalContentStyle}
       isOpen={isAuthModalOpen}
       onRequestClose={closeAuthModal}
-      style={customStyles}
     >
-      <h1>{'Account erstellen'}</h1>
-      <p>{'Du brauchst einen Account oder musst dich einloggen.'}</p>
-      <button className="btn" onClick={closeAuthModal} type="button">
-        {'Schließen'}
-      </button>
-    </Modal>
+      {isLoggedIn ? (
+        <Account closeAuthModal={closeAuthModal} email={email} />
+      ) : view === 'login' ? (
+        <Login closeAuthModal={closeAuthModal} setView={setView} />
+      ) : view === 'register' ? (
+        <Register closeAuthModal={closeAuthModal} setView={setView} />
+      ) : (
+        <RequireAuth closeAuthModal={closeAuthModal} setView={setView} />
+      )}
+    </StyledModal>
   </React.Fragment>
 )
 
 export default compose(
   withState('isAuthModalOpen', 'setIsAuthModalOpen', false),
+  withState('view', 'setView'),
+  withProps(() => ({
+    email: localStorage.getItem('authEmail'),
+    isLoggedIn: isLoggedIn(),
+  })),
   withHandlers({
-    checkLoginModal: ({ setIsAuthModalOpen }) => () => {
-      if (!isLoggedIn()) {
+    checkLoginModal: ({ isLoggedIn, setIsAuthModalOpen }) => () => {
+      if (!isLoggedIn) {
         setIsAuthModalOpen(true)
         return true
       }
     },
-    closeAuthModal: ({ setIsAuthModalOpen }) => () => setIsAuthModalOpen(false),
+    closeAuthModal: ({ setIsAuthModalOpen, setView }) => () => {
+      setView(undefined)
+      setIsAuthModalOpen(false)
+    },
+    openAuthModal: ({ setIsAuthModalOpen, setView }) => () => {
+      setView('login')
+      setIsAuthModalOpen(true)
+    },
   }),
   withContext(
     {
       checkLoginModal: PropTypes.func,
+      openAuthModal: PropTypes.func,
     },
-    ({ checkLoginModal }) => ({ checkLoginModal })
+    ({ checkLoginModal, openAuthModal }) => ({ checkLoginModal, openAuthModal })
   )
 )(AuthModalProvider)
