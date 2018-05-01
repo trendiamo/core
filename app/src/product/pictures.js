@@ -1,5 +1,6 @@
 import ActionsBar from 'feed/actions-bar'
 import React from 'react'
+import ReactSwipe from 'react-swipe'
 import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
@@ -10,6 +11,15 @@ const ImageContainer = styled.div`
   background-color: gray;
   background-size: cover;
   background-position: bottom center;
+  &::after {
+    content: ' ';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    box-shadow: inset 0 -160px 160px -160px #000000;
+  }
 `
 
 const Thumbnails = styled.div`
@@ -37,33 +47,55 @@ const ThumbnailImage = compose(
     isSelected: image === selectedImage,
   })),
   withHandlers({
-    setImage: ({ image, setImage }) => () => setImage(image),
+    onSlideTo: ({ index, onSlideTo }) => () => onSlideTo(index),
   })
-)(({ isSelected, image, setImage }) => (
+)(({ isSelected, image, onSlideTo }) => (
   <div>
-    <ThumbnailImg alt="thumbnail" isSelected={isSelected} onClick={setImage} src={image} />
+    <ThumbnailImg alt="thumbnail" isSelected={isSelected} onClick={onSlideTo} src={image} />
   </div>
 ))
 
-const Pictures = ({ images, onToggleLike, product, selectedImage, setSelectedImage }) => (
-  <div>
-    <div className="product-single__photos">
-      <ImageContainer className="product-single__photo-wrapper" url={selectedImage} />
-      <div className="actions-bar">
-        <ActionsBar onToggleLike={onToggleLike} product={product} showAddToCart={false} viewType="list" />
-      </div>
-    </div>
+const StyledDiv = styled.div`
+  position: relative;
+`
+
+const Pictures = ({ handleSwipe, images, onSlideTo, onToggleLike, product, selectedImage, setReactSwipeRef }) => (
+  <React.Fragment>
+    <StyledDiv>
+      <ReactSwipe ref={setReactSwipeRef} swipeOptions={{ callback: handleSwipe, continuous: false }}>
+        {images.map(image => (
+          <div key={image}>
+            <ImageContainer url={image} />
+          </div>
+        ))}
+      </ReactSwipe>
+      <ActionsBar onToggleLike={onToggleLike} product={product} showAddToCart={false} viewType="list" />
+    </StyledDiv>
     <Thumbnails>
-      {images.map(image => (
-        <ThumbnailImage image={image} key={image} selectedImage={selectedImage} setImage={setSelectedImage} />
+      {images.map((image, index) => (
+        <ThumbnailImage image={image} index={index} key={image} onSlideTo={onSlideTo} selectedImage={selectedImage} />
       ))}
     </Thumbnails>
-  </div>
+  </React.Fragment>
 )
 
 export default compose(
   withState('selectedImage', 'setSelectedImage', ({ product }) => product.featured_image),
   withProps(({ product }) => ({
     images: product.images,
-  }))
+  })),
+  withHandlers({
+    handleSwipe: ({ images, setSelectedImage }) => index => setSelectedImage(images[index]),
+  }),
+  withHandlers(() => {
+    let reactSwipeRef
+    return {
+      onSlideTo: () => index => {
+        reactSwipeRef.slide(index)
+      },
+      setReactSwipeRef: () => ref => {
+        reactSwipeRef = ref
+      },
+    }
+  })
 )(Pictures)
