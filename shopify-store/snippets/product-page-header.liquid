@@ -1,0 +1,23 @@
+<!-- /snippets/product-page-header.liquid -->
+<!-- This is the header with the influencer information for the PDP -->
+<div class="product-header-left">
+  {% for image in product.images %}
+    {% if image.alt contains "_profilepic_"%}
+      <img class="product-influencer__header-m__profilepic" src="{{ image.src | img_url: 'compact' }}">
+    {% endif %}
+  {% endfor %}
+  <div class="product-header-info">
+    <div class="product-influencer__header-m__heading">
+      {{ product.title }}
+    </div>
+    <div class="product-header-vendor">
+      {{ product.vendor }}
+    </div>
+  </div>
+</div>
+<div class="context-menu"></div>
+<!-- {% for tag in product.tags %}
+  {% if tag contains "influencer:" %}
+    {{ tag | remove: "influencer:" }}
+  {% endif %}
+{% endfor %} -->

@@ -1,0 +1,32 @@
+{% capture img_id %}ProductCardImage-{{ section.id }}-{{ product.id }}{% endcapture %}
+{% capture wrapper_id %}ProductCardImageWrapper-{{ section.id }}-{{ product.id }}{% endcapture %}
+{% capture profile_image %}""{% endcapture %}
+{% for image in product.images %}
+  {% if image.alt contains "_profilepic_" %}
+    {% capture profile_image %}{{ image.src | img_url: '80x80' | json }}{% endcapture %}
+  {% endif %}
+{% endfor %}
+{%- assign img_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+{% capture json_product %}{
+  "available": {{ product.available | json }},
+  "featured_image": {{ product.featured_image | json }},
+  "featured_image_alt": {{ product.featured_image.alt | escape | json }},
+  "featured_image_aspect_ratio": {{ product.featured_image.aspect_ratio | json }},
+  "featured_image_padding_top": {{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100 | json }},
+  "featured_image_url": {{ product.featured_image | img_url: '300x300' | json }},
+  "id": {{ product.id | json }},
+  "img_url": {{ img_url | json }},
+  "price": {{ product.price | json }},
+  "price_string": {{ product.price | money | json }},
+  "profile_img_url": {{ profile_image }},
+  "title": {{ product.title | json }},
+  "url": {{ product.url | within: collection | json }},
+  "vendor": {{ product.vendor | json }},
+  "wrapper_id": {{ wrapper_id | json }}
+}{% endcapture %}
+
+{% unless product.featured_image == blank %}
+  {% include 'image-style' with image: product.featured_image, width: max_height, height: max_height, small_style: true, wrapper_id: wrapper_id, img_id: img_id %}
+{% endunless %}
+<template class="product-info">{{ json_product }}</template>
+<!-- <template class="product-info">{{ product | json }}</template> no url in this one -->

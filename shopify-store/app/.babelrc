@@ -1,0 +1,12 @@
+{
+  "presets": ["env", "react"],
+  "plugins": [
+    "transform-runtime",
+    [
+      "transform-inline-environment-variables",
+      {
+        "include": ["NODE_ENV"]
+      }
+    ]
+  ]
+}

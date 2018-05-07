@@ -1,0 +1,4 @@
+config.yml
+app/node_modules
+assets/app.js
+*.ds_store

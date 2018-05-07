@@ -1,0 +1,419 @@
+/*============================================================================
+Trendiamo Stylings
+This file holds all custom stylings in order to change the theme design
+to our likings. No changes were made to the theme.scss.liquid file!
+==============================================================================*/
+
+.site-header {
+  position: fixed;
+  top: 0;
+  background-color: white;
+  border: none;
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
+  z-index: 999;
+}
+
+.site-header.logo--center {
+  padding-top: 0;
+}
+
+.js-drawer-open-top .drawer--top {
+  z-index: 9999;
+}
+
+.site-header__icons-wrapper {
+  padding-right: 20px;
+}
+
+.template-collection {
+  .main-content {
+    padding-top: 0;
+  }
+}
+
+.cookiebanner {
+  padding-top: 0.8rem !important;
+  padding-bottom: 0.8rem !important;
+}
+
+/*============================================================================
+                        GRID ITEMS & PRODUCT HEADR
+==============================================================================*/
+
+.product-influencer__header {
+  position: relative;
+  width: auto;
+  height: 64px;
+  background-color: white;
+  border-radius: 20px 20px 0px 0px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.product-influencer__header__title {
+  float: left;
+  padding: 8px 0px 0px 8px;
+}
+
+.product-influencer__header__name {
+  font-weight: 500;
+  height: 30%;
+  padding-left: 62px;
+  padding-top: 10px;
+  color: #888888;
+}
+
+.product-influencer__header__profilepic {
+  float: left;
+  width: 48px;
+  height: 48px;
+  margin-top: 8px;
+  margin-left: 8px;
+  border-radius: 100px;
+}
+
+.product-influencer__header-m {
+  display: none;
+}
+
+.grid--view-items {
+  overflow: visible;
+}
+
+.grid-view-item__title {
+  text-align: center;
+}
+
+.grid-view-item__vendor {
+  text-align: center;
+}
+
+.grid-view-item__meta {
+  text-align: center;
+}
+
+.product-price__price {
+  font-weight: 500;
+}
+
+.feed-item {
+  border-radius: 20px;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
+}
+
+/*============================================================================
+                                UI ELEMETNS
+==============================================================================*/
+
+.btn {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: normal;
+  border-radius: 6px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.13);
+}
+
+.btn--secondary {
+  border: none;
+}
+
+.btn-back-wrapper-absolute-m {
+  display: none;
+  position: fixed;
+  top: 18px;
+  left: 16px;
+  z-index: 1000;
+}
+
+.btn-back {
+
+}
+
+.btn--has-icon-before .icon {
+  margin-top: -4px;
+}
+
+.filters-toolbar-wrapper {
+  border: none;
+}
+
+.btn-negative {
+  padding:4px 10px 4px 10px;
+  border-radius: 6px;
+  color: #FF2253;
+  font-weight: 500;
+  background-color: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.13);
+}
+
+#customer_logout_link {
+  padding:4px 10px 4px 10px;
+  border-radius: 6px;
+  color: #FF2253;
+  font-weight: 500;
+  background-color: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.13);
+}
+
+/*============================================================================
+                               MISCELLANEOUS
+==============================================================================*/
+
+.hr--invisible {
+  margin: 20px 0px;
+}
+
+.ReactModal__Overlay {
+  z-index: 1000;
+}
+
+.product-single__meta .callout {
+  background: whitesmoke;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/*============================================================================
+                              CART & CHECKOUT
+==============================================================================*/
+
+.site-header__cart-count {
+  top: 6px;
+}
+
+.logo--center .site-header__cart-count {
+  right: -4px;
+  left: 12px;
+}
+
+.cart__image {
+  border-radius: 10px;
+}
+
+.cart__meta-text {
+  font-style: normal;
+}
+
+// product show page
+
+.product-single {
+  position: relative;
+  max-width: 580px;
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.product-header-left {
+  align-items: center;
+  display: flex;
+  margin-left: 1rem;
+  flex-basis: 100%;
+}
+
+.product-single__vendor {
+  letter-spacing: inherit;
+  font-weight: 500;
+}
+
+.product-single__description {
+  color: inherit;
+}
+
+.product-influencer__header-m__heading {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.product-header-vendor {
+  text-transform: uppercase;
+  color: #999;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.product-influencer__header-m__profilepic {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: lightgray;
+  margin-right: 0.5rem;
+}
+
+.product-single__photo-wrapper {
+  margin: 0;
+  position: relative;
+
+  &::after {
+    content: " ";
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    box-shadow: inset 0 -160px 160px -160px #000000;
+  }
+}
+
+.product-price__price {
+  color: #3d4246;
+}
+
+/*============================================================================
+############################### DESKTOP ONLY ##################################
+==============================================================================*/
+
+@media only screen and (min-width: 750px) {
+
+  .section-header {
+    margin-bottom: 35px;
+  }
+
+  .filters-toolbar-wrapper {
+    margin-bottom: 10px;
+  }
+
+  .grid-view-item__image-wrapper {
+    max-width: initial !important;
+    max-height: initial !important;
+    margin: 0 auto 12px;
+  }
+
+  .grid-view-item__image-wrapper .grid-view-item__image {
+    max-width: initial !important;
+    max-height: initial !important;
+  }
+
+  .grid-view-item__meta {
+    padding-bottom: 10px;
+  }
+}
+
+/*============================================================================
+******************************* MOBILE ONLY ***********************************
+==============================================================================*/
+
+@media only screen and (max-width: 749px) {
+
+  .product-single__meta .callout {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+  }
+
+  .product-single__title {
+    margin-top: 30px;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .logo-align--center .site-header__logo {
+    float: right;
+    margin: 0px -32px 0px 0px;
+  }
+
+  .btn-back-wrapper-absolute-m {
+    display: block;
+  }
+
+  /*==========================================================================
+  *************************** FEED COLLECTION *********************************
+  ============================================================================*/
+
+  .section-header {
+    margin-bottom: 30;
+  }
+
+  .grid--view-items {
+    width: 100vw;
+    overflow: visible;
+  }
+
+  .grid-view-item__image {
+    height: 100%;
+  }
+
+  .feed-item {
+    margin-left: -22px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.13);
+    padding-bottom: 10px;
+  }
+
+  .filters-toolbar__product-count {
+    font-style: normal;
+  }
+
+  /*==========================================================================
+  ********************* MOBILE PRODUCT PAGE & HEADER **************************
+  ============================================================================*/
+
+  .product-single__photo-wrapper {
+    width: 100vw;
+  }
+
+  .product-influencer__header {
+    display: none;
+  }
+
+  .product-influencer__header-m {
+    display: block;
+    position: relative;
+    width: 100vw;
+    height: 60px;
+    background-color: white;
+    border-radius: 20px 20px 0px 0px;
+  }
+
+  .product-influencer__header-m__title {
+    height: 30%;
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 62px;
+    padding-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .product-influencer__header-m__name {
+    font-weight: 500;
+    height: 30%;
+    padding-left: 62px;
+    padding-top: 10px;
+    color: #888888;
+  }
+
+  .product-header-info {
+    margin-left: 0.75rem;
+  }
+
+  /*==========================================================================
+  ****************************** CART & CHECKOUT ******************************
+  ============================================================================*/
+
+  .site-header__cart-count {
+    top: 12px;
+  }
+
+  .logo--center .site-header__cart-count {
+    right: -4px;
+    left: 21px;
+  }
+
+  .site-header__cart-count {
+    top: 14px;
+  }
+
+  .logo--center .site-header__cart-count {
+    right: -4px;
+  }
+}

@@ -1,0 +1,69 @@
+{%- assign limit = 16 -%}
+{% paginate collection.products by limit %}
+
+<div data-section-id="{{ section.id }}" data-section-type="collection-template">
+  <div id="Collection" class="page-width">
+    {% for product in collection.products %}
+      {% include 'product-card-grid', max_height: max_height %}
+    {% else %}
+      {% comment %}
+      Add default products to help with onboarding for collections/all only.
+
+      The onboarding styles and products are only loaded if the
+      store has no products.
+      {% endcomment %}
+      {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+        {% for i in (1..limit) %}
+          <div class="grid-view-item">
+            <a href="#" class="grid-view-item__link">
+              <div class="grid-view-item__image">
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <div class="h4 grid-view-item__title">{{ 'homepage.onboarding.product_title' | t }}</div>
+              <div class="grid-view-item__meta">
+                <span class="product-price__price">$19.99</span>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        {%- assign is_empty_collection = true -%}
+      {% endif %}
+    {% endfor %}
+
+    {% if is_empty_collection %}
+      <div class="grid__item small--text-center">
+        <p class="text-center">{{ 'collections.general.no_matches' | t }}</p>
+      </div>
+    {% endif %}
+
+    <!-- {% if paginate.pages > 1 %}
+      {% include 'pagination' %}
+    {% endif %} -->
+  </div>
+</div>
+
+{% endpaginate %}
+
+<template class="collection-info">{{ collection | json }}</template>
+
+{% schema %}
+  {
+    "name": "Collection pages",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_collection_image",
+        "label": "Show collection image",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendors",
+        "default": false
+      }
+    ]
+  }
+{% endschema %}
