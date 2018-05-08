@@ -2,8 +2,14 @@
 
 ## Setup
 
+Create a Shopify account, then follow the setup guide here:
+https://shopify.github.io/themekit/#use-a-new-theme
+
+You'll need to create your `.env` file, pointing to your Shopify instance. Ask a team member about this.
+
 ```sh
 bundle
+pg_ctl -D /usr/local/var/postgres start
 bin/rails db:create
 bin/rails db:schema:load
 ```
@@ -12,13 +18,8 @@ bin/rails db:schema:load
 
 ```sh
 pg_ctl -D /usr/local/var/postgres start
+ngrok http 3000 # If you want to allow remote access
 bin/rails s
-```
-
-## Run with remote access
-
-```sh
-ngrok http 3000
 ```
 
 ## Code checks
@@ -27,31 +28,12 @@ ngrok http 3000
 bin/rubocop
 ```
 
-
 ## Deploy
 
 ```sh
 git push heroku master
 ```
 
-## curl
+## Interact with APIs
 
-### users
-
-```sh
-# sign in
-curl -H "Content-Type: application/json" -d '{"user": {"email": "dh@trendiamo.com", "password": "dh@trendiamo.com"}}' http://localhost:3000/api/v1/users/sign_in
-TOKEN=UyubomDYBQCs1av-Swqu
-
-# update me
-curl -H "Content-Type: application/json" -H "X-USER-EMAIL: dh@trendiamo.com" -H "X-USER-TOKEN: $TOKEN" -X PATCH -d '{ "user": { "customer_ref": "0xdeadbeeef" } }' http://localhost:3000/api/v1/users/me
-
-# create a Like
-curl -H "Content-Type: application/json" -H "X-USER-EMAIL: dh@trendiamo.com" -H "X-USER-TOKEN: $TOKEN" -d '{"like": {"userRef": "123456789", "productRef": "987654321"}}' http://localhost:3000/api/v1/likes
-
-# destroy a Like
-curl -H "Content-Type: application/json" -H "X-USER-EMAIL: dh@trendiamo.com" -H "X-USER-TOKEN: $TOKEN" -X DELETE http://localhost:3000/api/v1/likes/3
-
-# retrieve a Product
-curl -H "Content-Type: application/json" http://localhost:3000/api/v1/products/1
-```
+The signup and signin requests are REST, the rest is graphql.

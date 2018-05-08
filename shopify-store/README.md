@@ -5,17 +5,16 @@
 ```sh
 brew tap shopify/shopify
 brew install themekit
-vi config.yml # ask the team about contents of this file
-cd app
-yarn
+theme configure --password=<API_PASSWORD> --store=<YOUR-STORE>.myshopify.com --themeid=<YOUR-THEME-ID>
+API_ENDPOINT=<BACKEND-URL> pushd app; yarn watchp; popd
+theme replace -f
 ```
 
 ## Develop
 
 ```sh
+API_ENDPOINT=<BACKEND-URL> pushd app; yarn watchp; popd
 theme watch
-cd app
-API_ENDPOINT=trendiamo-backend.herokuapp.com yarn webpack --watch
 ```
 
 Note: if `theme watch` shows `409 Conflict` errors, then do a `theme download path/to/file` first.
@@ -23,8 +22,7 @@ Note: if `theme watch` shows `409 Conflict` errors, then do a `theme download pa
 ## Code checks
 
 ```sh
-cd app
-yarn eslint src
+pushd app; yarn eslint src; popd
 ```
 
 # Deploy
