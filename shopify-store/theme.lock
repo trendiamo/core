@@ -3,8 +3,7 @@ assets/ajax-loader.gif:
   development: 2018-01-15T06:07:37-05:00   deca8b0ecd6974227d157b6d7068995d
   production: 2018-04-25T12:36:01+02:00   deca8b0ecd6974227d157b6d7068995d
 assets/app.js:
-  development: 2018-05-01T07:00:04-04:00   69e4d92b9728fd33e224c35e83a0dc72
-  production: 2018-05-01T13:03:12+02:00   88e6ebc0e5959fbbf4491d61fdbff670
+  development: 2018-05-07T12:47:29-04:00   2818b2958bce27c4bb86314c71024d8c
 assets/gift-card.js:
   development: 2018-01-15T06:07:37-05:00   c73df2ee57cc9eb577f7a1858063495d
   production: 2018-04-25T12:36:02+02:00   c73df2ee57cc9eb577f7a1858063495d

@@ -36,6 +36,12 @@ const CardItemLikes = styled.span`
 
 const CardItemAction = styled.a`
   color: white;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+
   svg {
     zoom: 1.5;
   }
