@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180426111642) do
+ActiveRecord::Schema.define(version: 20180509121715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(version: 20180426111642) do
     t.bigint "product_id", null: false
     t.index ["product_id"], name: "index_comments_on_product_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "fenced_shops", force: :cascade do |t|
+    t.string "domain_name"
+    t.string "logo_pic_url"
+    t.string "cover_pic_url"
+    t.string "title"
+    t.string "text"
+    t.string "cta_text"
+    t.string "favicon_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "inappropriate_flags", force: :cascade do |t|
