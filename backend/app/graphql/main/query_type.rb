@@ -25,4 +25,12 @@ Main::QueryType = GraphQL::ObjectType.define do
       Collection.find_by(handle: args[:handle])
     }
   end
+
+  field :fencedShop, !Types::FencedShopType do
+    description "Obtain a fenced shop"
+    argument :domainName, !types.String
+    resolve ->(_obj, args, _ctx) {
+      FencedShop.find_by(domain_name: args[:domainName])
+    }
+  end
 end
