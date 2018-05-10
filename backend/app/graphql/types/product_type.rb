@@ -22,4 +22,9 @@ Types::ProductType = GraphQL::ObjectType.define do
       end
     end
   end
+  field :shopifyProduct, Types::ShopifyProductType do
+    resolve ->(obj, _args, _ctx) do
+      ShopifyAPI::Product.find(obj.product_ref)
+    end
+  end
 end
