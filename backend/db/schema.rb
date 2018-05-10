@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509121715) do
+ActiveRecord::Schema.define(version: 20180510224027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 20180509121715) do
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_user_auth_tokens_on_body"
     t.index ["user_id"], name: "index_user_auth_tokens_on_user_id"
+  end
+
+  create_table "collection_modals", force: :cascade do |t|
+    t.bigint "collection_id", null: false
+    t.string "logo_pic_url", null: false
+    t.string "cover_pic_url", null: false
+    t.string "title", null: false
+    t.string "text", null: false
+    t.string "cta_text", null: false
+    t.index ["collection_id"], name: "index_collection_modals_on_collection_id"
   end
 
   create_table "collections", force: :cascade do |t|
@@ -50,16 +60,13 @@ ActiveRecord::Schema.define(version: 20180509121715) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "fenced_shops", force: :cascade do |t|
-    t.string "domain_name"
-    t.string "logo_pic_url"
-    t.string "cover_pic_url"
-    t.string "title"
-    t.string "text"
-    t.string "cta_text"
+  create_table "fenced_collections", force: :cascade do |t|
+    t.bigint "collection_id", null: false
+    t.string "domain_name", null: false
     t.string "favicon_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["collection_id"], name: "index_fenced_collections_on_collection_id"
   end
 
   create_table "inappropriate_flags", force: :cascade do |t|
@@ -122,7 +129,9 @@ ActiveRecord::Schema.define(version: 20180509121715) do
   end
 
   add_foreign_key "auth_tokens", "users"
+  add_foreign_key "collection_modals", "collections"
   add_foreign_key "comments", "users"
+  add_foreign_key "fenced_collections", "collections"
   add_foreign_key "inappropriate_flags", "comments"
   add_foreign_key "inappropriate_flags", "users"
   add_foreign_key "likes", "products"

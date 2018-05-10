@@ -12,4 +12,14 @@ Types::CollectionType = GraphQL::ObjectType.define do
     resolve ->(obj, _args, _ctx) { obj.cover_pic_url }
   end
   field :description, !types.String
+  field :fencedCollection, Types::FencedCollectionType do
+    resolve ->(obj, _args, _ctx) do
+      obj.fenced_collection
+    end
+  end
+  field :collectionModal, Types::CollectionModalType do
+    resolve ->(obj, _args, _ctx) do
+      obj.collection_modal
+    end
+  end
 end

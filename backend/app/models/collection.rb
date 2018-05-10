@@ -1,5 +1,8 @@
 class Collection < ApplicationRecord
-  self.inheritance_column = nil
+  self.inheritance_column = nil # because we're using type, but it's for our own purposes
+
+  has_one :collection_modal
+  has_one :fenced_collection
 
   validates :handle, presence: true, uniqueness: true
   validates :title, presence: true
