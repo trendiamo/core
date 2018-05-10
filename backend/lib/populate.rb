@@ -57,3 +57,19 @@ upvotes_attrs = [
   { user: User.find_by(username: "dantheman"), comment: Comment.find_by(content: "Upvoted comment") },
 ]
 Upvote.create!(upvotes_attrs)
+
+collection_modal_attrs = {
+  collection: Collection.find_by(handle: "dantheman"),
+  logo_pic_url: "//cdn.shopify.com/s/files/1/0024/7522/9242/files/alexv_logo_240x240.png",
+  cover_pic_url: "//cdn.shopify.com/s/files/1/0024/7522/9242/files/popup.jpg",
+  title: "Offizieller Merchandise von AlexV",
+  text: "<p>Streng limitiert auf 150 Teile</p><p>Shop-Eröffnung 28.04.2018</p>",
+  cta_text: "Jetzt Shoppen",
+}
+CollectionModal.create!(collection_modal_attrs)
+
+fenced_collection_attrs = {
+  collection: Collection.find_by(handle: "dantheman"),
+  domain_name: "dantheman.shop",
+}
+FencedCollection.create!(fenced_collection_attrs)

@@ -19,7 +19,8 @@ Rails.application.routes.draw do
     namespace :bubble do
       resources :users, only: :create
       resources :collections, only: :create
-      resources :fenced_shops, only: :create
+      resources :fenced_collections, only: :create
+      resources :collection_modals, only: :create
     end
   end
 end
