@@ -1,3 +1,4 @@
+import CollectionModal from './collection-modal'
 import Cover from './cover'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
@@ -21,7 +22,7 @@ const StyledDiv = styled.div`
     `};
 `
 
-const Products = ({ collection, data, isBrand, products, setViewType, viewType }) => (
+const Collection = ({ appElement, collection, data, isBrand, products, setViewType, viewType }) => (
   <React.Fragment>
     <Cover collection={collection} />
     <ViewTypeSelector onViewTypeChange={setViewType} showPeople={isBrand} viewType={viewType} />
@@ -30,6 +31,7 @@ const Products = ({ collection, data, isBrand, products, setViewType, viewType }
         <ProductCard key={product.id} product={product} productsData={data} viewType={viewType} />
       ))}
     </StyledDiv>
+    <CollectionModal appElement={appElement} collectionModal={collection.collectionModal} />
   </React.Fragment>
 )
 
@@ -63,6 +65,13 @@ export default compose(
           description
           profilePicUrl
           coverPicUrl
+          collectionModal {
+            logoPicUrl
+            coverPicUrl
+            title
+            text
+            ctaText
+          }
         }
       }
     `,
@@ -83,4 +92,4 @@ export default compose(
   withProps(({ data, isBrand, shopifyProducts, viewType }) => ({
     products: filterProducts({ isBrand, products: data.products, shopifyProducts, viewType }),
   }))
-)(Products)
+)(Collection)

@@ -1,10 +1,12 @@
 import auth from 'auth'
-import feed from 'feed'
+import checkFence from 'fenced-collection'
+import collection from 'collection'
 import homepage from 'homepage'
 import product from 'product'
 
-const app = () => {
+const app = async () => {
   auth()
+  await checkFence()
   switch (location.pathname) {
     case '/':
       return homepage()
@@ -12,7 +14,7 @@ const app = () => {
   if (/\/collections\/.*\/products\/.+/.test(location.pathname)) {
     return product()
   } else if (/\/collections\/.+/.test(location.pathname)) {
-    return feed()
+    return collection()
   }
 }
 

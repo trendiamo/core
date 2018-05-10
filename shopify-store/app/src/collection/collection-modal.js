@@ -3,7 +3,7 @@ import IconClose from 'icons/icon-close'
 import React from 'react'
 import styled from 'styled-components'
 import StyledModal from 'components/styled-modal'
-import { compose, withHandlers, withState } from 'recompose'
+import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
 
 const modalContentStyle = {
   maxWidth: '424px', // pixel-adjusted to workaround https://bugs.chromium.org/p/chromium/issues/detail?id=483381
@@ -12,7 +12,7 @@ const modalContentStyle = {
 }
 
 const Background = styled.div`
-  background-image: url(//cdn.shopify.com/s/files/1/0024/7522/9242/files/popup.jpg);
+  background-image: url(${({ url }) => url});
   background-position: top;
   background-size: cover;
   height: 175px;
@@ -38,6 +38,7 @@ const Content = styled.div`
     font-size: 18px;
     font-weight: 500;
     color: #3d4246;
+    margin-bottom: 0.6rem;
   }
   button {
     width: 100%;
@@ -53,7 +54,7 @@ const StyledIconClose = styled(IconClose)`
 }
 `
 
-const ShopModal = ({ appElement, closeModal, isModalOpen }) => (
+const CollectionModal = ({ appElement, closeModal, collectionModal, isModalOpen }) => (
   <StyledModal
     appElement={appElement}
     contentLabel="Shop Modal"
@@ -61,26 +62,28 @@ const ShopModal = ({ appElement, closeModal, isModalOpen }) => (
     isOpen={isModalOpen}
     onRequestClose={closeModal}
   >
-    <Background />
-    <Logo src="https://cdn.shopify.com/s/files/1/0024/7522/9242/files/alexv_logo_240x240.png" />
+    <Background url={collectionModal.coverPicUrl} />
+    <Logo src={collectionModal.logoPicUrl} />
     <StyledIconClose onClick={closeModal} />
     <Content>
-      <h1>{'Offizieller Merchandise von AlexV'}</h1>
-      <p>{'Streng limitiert auf 150 Teile'}</p>
-      <p>{'Shop-Eröffnung 28.04.2018'}</p>
+      <h1>{collectionModal.title}</h1>
+      {/* eslint-disable react/no-danger */}
+      <div dangerouslySetInnerHTML={{ __html: collectionModal.text }} />
+      {/* eslint-enable react/no-danger */}
       <button className="btn" onClick={closeModal} type="button">
-        {'Jetzt Shoppen'}
+        {collectionModal.ctaText}
       </button>
     </Content>
   </StyledModal>
 )
 
 export default compose(
-  withState('isModalOpen', 'setIsModalOpen', () => !Cookies.get('isShopModalClosed')),
+  branch(({ collectionModal }) => !collectionModal, renderNothing),
+  withState('isModalOpen', 'setIsModalOpen', () => !Cookies.get('isCollectionModalClosed')),
   withHandlers({
     closeModal: ({ setIsModalOpen }) => () => {
-      Cookies.set('isShopModalClosed', true)
+      Cookies.set('isCollectionModalClosed', true)
       setIsModalOpen(false)
     },
   })
-)(ShopModal)
+)(CollectionModal)

@@ -1,4 +1,4 @@
-import ActionsBar from 'feed/actions-bar'
+import ActionsBar from 'collection/actions-bar'
 import React from 'react'
 import ReactSwipe from 'react-swipe'
 import styled from 'styled-components'

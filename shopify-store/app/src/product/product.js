@@ -9,7 +9,7 @@ import Offers from './offers'
 import Pictures from './pictures'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ShareProduct from 'feed/share-product'
+import ShareProduct from 'collection/share-product'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 

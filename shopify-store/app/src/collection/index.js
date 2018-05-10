@@ -1,10 +1,9 @@
 import { ApolloProvider } from 'react-apollo'
 import AuthModalProvider from 'auth/auth-modal-provider'
 import client from 'graphql/client'
-import Products from './products'
+import Collection from './collection'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ShopModal from './shop-modal'
 import { $, $$ } from 'utils'
 
 export default () => {
@@ -15,8 +14,7 @@ export default () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
       <AuthModalProvider appElement={appElement}>
-        <Products shopifyCollection={shopifyCollection} shopifyProducts={shopifyProducts} />
-        <ShopModal appElement={appElement} />
+        <Collection appElement={appElement} shopifyCollection={shopifyCollection} shopifyProducts={shopifyProducts} />
       </AuthModalProvider>
     </ApolloProvider>,
     appElement
