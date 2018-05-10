@@ -6,6 +6,9 @@ Types::ProductType = GraphQL::ObjectType.define do
   field :productRef, !types.String do
     resolve ->(obj, _args, _ctx) { obj.product_ref }
   end
+  field :MasterProductRef, !types.String do
+    resolve ->(obj, _args, _ctx) { obj.master_product_ref }
+  end
   field :mediaItems, types[types.String] do
     resolve ->(obj, _args, _ctx) { obj.media_items }
   end
