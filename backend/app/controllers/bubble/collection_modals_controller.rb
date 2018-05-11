@@ -1,4 +1,4 @@
-class Bubble::CollectionsModalsController < BubbleController
+class Bubble::CollectionModalsController < BubbleController
   def create
     @collection_modal = CollectionModal.new(collection_modal_params)
     if @collection_modal.save
