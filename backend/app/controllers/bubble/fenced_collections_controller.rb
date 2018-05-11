@@ -11,6 +11,6 @@ class Bubble::FencedCollectionsController < BubbleController
   private
 
   def fenced_collection_params
-    params.require(:fenced_collection).permit(:domain_name, :favicon_url)
+    params.require(:fenced_collection).permit(:collection_id, :domain_name, :favicon_url)
   end
 end
