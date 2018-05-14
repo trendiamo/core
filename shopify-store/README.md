@@ -27,9 +27,16 @@ pushd app; yarn eslint src; popd
 
 # Deploy
 
+staging:
+
 ```sh
-cd app
-API_ENDPOINT=trendiamo-prod.herokuapp.com yarn webpack -p --config webpack.prod.js
-cd ..
+pushd app; API_ENDPOINT=trendiamo-stgn.herokuapp.com yarn webpack -p --config webpack.prod.js; popd
+theme upload -e staging # -f if necessary
+```
+
+production:
+
+```sh
+pushd app; API_ENDPOINT=trendiamo-prod.herokuapp.com yarn webpack -p --config webpack.prod.js; popd
 theme upload -e production # -f if necessary
 ```

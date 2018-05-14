@@ -10,11 +10,6 @@ Rails.application.routes.draw do
         delete "/users/sign_out", to: "users/sessions#destroy"
       end
     end
-    namespace :api do
-      namespace :v1 do
-        resources :users, only: :update
-      end
-    end
 
     namespace :bubble do
       resources :users, only: :create
