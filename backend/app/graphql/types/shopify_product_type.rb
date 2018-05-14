@@ -2,7 +2,7 @@ Types::ShopifyProductType = GraphQL::ObjectType.define do
   name "ShopifyProductType"
 
   field :id, !types.ID
-  field :title, types.String
+  field :title, !types.String
   field :vendor, types.String
   field :tags, types.String
   field :description, types.String do
