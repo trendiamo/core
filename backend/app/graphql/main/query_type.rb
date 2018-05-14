@@ -4,7 +4,8 @@ Main::QueryType = GraphQL::ObjectType.define do
   field :products, !types[Types::ProductType] do
     description "List products"
     argument :productRefs, !types[types.String]
-    resolve ->(_obj, args, _ctx) {
+    resolve ->(_obj, args, ctx) {
+      ctx[:shopify_products] = ShopifyAPI::Product.where(ids: args[:productRefs] * ",") unless ctx[:headers]["INCLUDE-SHOPIFY"].nil?
       Product.where(product_ref: args[:productRefs])
     }
   end
