@@ -23,8 +23,8 @@ Types::ProductType = GraphQL::ObjectType.define do
     end
   end
   field :shopifyProduct, Types::ShopifyProductType do
-    resolve ->(obj, _args, _ctx) do
-      ShopifyAPI::Product.find(obj.product_ref)
+    resolve ->(obj, _args, ctx) do
+      ctx[:shopify_products].select { |s| s.id.to_s == obj.product_ref }[0] unless ctx[:headers]["INCLUDE-SHOPIFY"].nil?
     end
   end
 end
