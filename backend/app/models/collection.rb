@@ -4,6 +4,9 @@ class Collection < ApplicationRecord
   has_one :collection_modal, dependent: :destroy
   has_one :fenced_collection, dependent: :destroy
 
+  accepts_nested_attributes_for :collection_modal
+  accepts_nested_attributes_for :fenced_collection
+
   validates :handle, presence: true, uniqueness: true, format: { with: /[a-zA-Z-]+/ }
   validates :title, presence: true
   validates :type, inclusion: { in: %w[brand influencer] }
