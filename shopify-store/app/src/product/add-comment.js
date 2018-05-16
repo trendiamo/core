@@ -1,10 +1,9 @@
 import { authGql } from 'utils'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { compose, getContext, withHandlers, withState } from 'recompose'
+import { compose, withHandlers, withState } from 'recompose'
 
 const StyledInput = styled.input`
   margin-top: 0.5rem;
@@ -47,17 +46,13 @@ export default compose(
   ),
   withState('content', 'setContent', ''),
   withState('isSubmitting', 'setIsSubmitting', false),
-  getContext({
-    checkLoginModal: PropTypes.func,
-  }),
   withHandlers({
     onChange: ({ setContent }) => event => {
       setContent(event.target.value)
     },
-    onSubmit: ({ content, commentsData, checkLoginModal, mutate, productId, setContent, setIsSubmitting }) => event =>
+    onSubmit: ({ content, commentsData, mutate, productId, setContent, setIsSubmitting }) => event =>
       authGql(async () => {
         event.preventDefault()
-        if (checkLoginModal()) return
         setIsSubmitting(true)
         const comment = { content, productId }
         const { data } = await mutate({ variables: { comment } })

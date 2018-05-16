@@ -1,5 +1,5 @@
 class ProductPolicy < ApplicationPolicy
   def toggle_like?
-    user
+    true
   end
 end

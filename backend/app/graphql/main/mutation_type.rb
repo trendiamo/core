@@ -3,16 +3,23 @@ Main::MutationType = GraphQL::ObjectType.define do
 
   field :toggleLike, Types::ProductType do
     argument :productId, !types.String
+    argument :remove, !types.Boolean
     resolve Resolver.new ->(obj, args, ctx) {
       use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
 
       @product = Product.find(args[:productId])
       authorize(@product)
-      like = @product.likes.find_by(user: current_user)
-      if like
-        like.destroy!
+      if current_user
+        like = @product.likes.find_by(user: current_user)
+        if like
+          like.destroy!
+        else
+          @product.likes.create!(user: current_user)
+        end
+      elsif args[:remove]
+        @product.decrement!(:anonymous_likes_count)
       else
-        @product.likes.create!(user: current_user)
+        @product.increment!(:anonymous_likes_count)
       end
       @product
     }
@@ -45,16 +52,23 @@ Main::MutationType = GraphQL::ObjectType.define do
 
   field :toggleUpvote, Types::CommentType do
     argument :commentId, !types.ID
+    argument :remove, !types.Boolean
     resolve Resolver.new ->(obj, args, ctx) {
       use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
 
       @comment = Comment.find(args[:commentId])
       authorize(@comment)
-      upvote = Upvote.find_by(comment: @comment, user: ctx[:current_user])
-      if upvote
-        upvote.destroy!
+      if current_user
+        upvote = Upvote.find_by(comment: @comment, user: ctx[:current_user])
+        if upvote
+          upvote.destroy!
+        else
+          Upvote.create!(comment: @comment, user: ctx[:current_user])
+        end
+      elsif args[:remove]
+        @comment.decrement!(:anonymous_upvotes_count)
       else
-        Upvote.create!(comment: @comment, user: ctx[:current_user])
+        @comment.increment!(:anonymous_upvotes_count)
       end
       @comment.reload
     }
@@ -67,8 +81,8 @@ Main::MutationType = GraphQL::ObjectType.define do
 
       @comment = Comment.find(args[:commentId])
       authorize(@comment)
-      inappropriate_flag = InappropriateFlag.find_by(comment: @comment, user: ctx[:current_user])
-      InappropriateFlag.create!(comment: @comment, user: ctx[:current_user]) unless inappropriate_flag
+      return if ctx[:current_user] && InappropriateFlag.find_by(comment: @comment, user: ctx[:current_user])
+      InappropriateFlag.create!(comment: @comment, user: ctx[:current_user])
       @comment.reload
     }
   end

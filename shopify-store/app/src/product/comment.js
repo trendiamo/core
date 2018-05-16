@@ -1,12 +1,12 @@
 import { authGql } from 'utils'
 import ContextMenu from 'components/context-menu'
 import ContextMenuOps from './context-menu-ops'
+import Cookies from 'js-cookie'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import moment from 'moment'
-import PropTypes from 'prop-types'
 import React from 'react'
-import { compose, getContext, withHandlers, withProps } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import styled, { css } from 'styled-components'
 
 const StyledLi = styled.li`
@@ -57,7 +57,7 @@ const Comment = ({
   createdAt,
   fromProductOwner,
   onUpvote,
-  upvoted,
+  isUpvoted,
   upvotesCount,
   username,
 }) => (
@@ -73,7 +73,7 @@ const Comment = ({
     </NameAndText>
     <StyledDiv>
       <span>{createdAt}</span>
-      <span onClick={onUpvote}>{` ${upvoted ? '♥' : '♡'} ${upvotesCount}`}</span>
+      <span onClick={onUpvote}>{` ${isUpvoted ? '♥' : '♡'} ${upvotesCount}`}</span>
     </StyledDiv>
   </StyledLi>
 )
@@ -81,8 +81,8 @@ const Comment = ({
 export default compose(
   graphql(
     gql`
-      mutation($commentId: ID!) {
-        toggleUpvote(commentId: $commentId) {
+      mutation($commentId: ID!, $remove: Boolean!) {
+        toggleUpvote(commentId: $commentId, remove: $remove) {
           upvotesCount
           upvotes(currentUser: true) {
             id
@@ -92,28 +92,32 @@ export default compose(
     `,
     { name: 'toggleUpvote' }
   ),
-  getContext({
-    checkLoginModal: PropTypes.func,
-  }),
+  withState('isUpvoted', 'setIsUpvoted', ({ comment }) => (Cookies.getJSON('upvotes') || {})[comment.id] || false),
   withHandlers({
-    onUpvote: ({ toggleUpvote, comment, commentsData, checkLoginModal }) => () =>
+    setIsUpvoted: ({ comment, setIsUpvoted }) => isUpvoted => {
+      Cookies.set('upvotes', { ...Cookies.getJSON('upvotes'), [comment.id]: isUpvoted })
+      setIsUpvoted(isUpvoted)
+    },
+  }),
+  withProps(({ comment, isUpvoted }) => ({
+    content: comment.content,
+    createdAt: moment(comment.createdAt).fromNow(),
+    fromProductOwner: comment.isFromProductOwner,
+    isUpvoted: comment.upvotes.length > 0 || isUpvoted,
+    pinned: comment.pinned,
+    upvotesCount: comment.upvotesCount,
+    username: comment.user ? comment.user.username : 'Anonymous',
+  })),
+  withHandlers({
+    onUpvote: ({ comment, commentsData, isUpvoted, setIsUpvoted, toggleUpvote }) => () =>
       authGql(async () => {
-        if (checkLoginModal()) return
-        const commentId = comment.id
-        const { data } = await toggleUpvote({ variables: { commentId } })
+        const { id: commentId } = comment
+        const { data } = await toggleUpvote({ variables: { commentId, remove: isUpvoted } })
+        setIsUpvoted(!isUpvoted)
         commentsData.updateQuery(previousCommentsData => ({
           ...previousCommentsData,
           comments: previousCommentsData.comments.map(e => (e.id === commentId ? { ...e, ...data.toggleUpvote } : e)),
         }))
       }),
-  }),
-  withProps(({ comment }) => ({
-    content: comment.content,
-    createdAt: moment(comment.createdAt).fromNow(),
-    fromProductOwner: comment.isFromProductOwner,
-    pinned: comment.pinned,
-    upvoted: comment.upvotes.length > 0,
-    upvotesCount: comment.upvotesCount,
-    username: comment.user.username,
-  }))
+  })
 )(Comment)
