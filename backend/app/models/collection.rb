@@ -4,8 +4,8 @@ class Collection < ApplicationRecord
   has_one :collection_modal, dependent: :destroy
   has_one :fenced_collection, dependent: :destroy
 
-  accepts_nested_attributes_for :collection_modal
-  accepts_nested_attributes_for :fenced_collection
+  accepts_nested_attributes_for :collection_modal, allow_destroy: true
+  accepts_nested_attributes_for :fenced_collection, allow_destroy: true
 
   validates :handle, presence: true, uniqueness: true, format: { with: /[a-zA-Z-]+/ }
   validates :title, presence: true

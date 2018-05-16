@@ -53,8 +53,8 @@ class Bubble::CollectionsController < BubbleController
   end
 
   def collection_params
-    fenced_collection_attributes = %i[id domain_name favicon_url]
-    collection_modal_attributes = %i[id logo_pic_url cover_pic_url title text cta_text]
+    fenced_collection_attributes = %i[id domain_name favicon_url _destroy]
+    collection_modal_attributes = %i[id logo_pic_url cover_pic_url title text cta_text _destroy]
     params.require(:collection).permit(:handle, :title, :type, :profile_pic_url, :cover_pic_url, :description,
                                        fenced_collection_attributes: fenced_collection_attributes,
                                        collection_modal_attributes: collection_modal_attributes)
