@@ -2,7 +2,7 @@ Types::CommentType = GraphQL::ObjectType.define do
   name "Comment"
 
   field :id, !types.ID
-  field :user, !Types::UserType
+  field :user, Types::UserType
   field :product, !Types::ProductType
   field :content, !types.String
   field :pinned, !types.Boolean

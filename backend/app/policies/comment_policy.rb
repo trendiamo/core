@@ -4,15 +4,15 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def add_comment?
-    user
+    true
   end
 
   def toggle_upvote?
-    user
+    true
   end
 
   def flag?
-    user
+    true
   end
 
   def toggle_pin_comment?

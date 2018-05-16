@@ -1,14 +1,16 @@
+import Cookies from 'js-cookie'
 import { getMaxWidthForCompleteCard } from './utils'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import IconCart from 'icons/icon-cart'
 import IconHeart from 'icons/icon-heart'
 import IconHeartS from 'icons/icon-hearts'
-import PropTypes from 'prop-types'
 import React from 'react'
 import { addToCart, authGql, formatMoney } from 'utils'
-import { compose, getContext, withHandlers, withProps } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import styled, { css } from 'styled-components'
+
+window.Cookies = Cookies
 
 const CardItemInfo = styled.div`
   display: flex;
@@ -67,20 +69,11 @@ const Heart = ({ isLiked }) => (
   <HeartContainer isLiked={isLiked}>{isLiked ? <IconHeartS /> : <IconHeart />}</HeartContainer>
 )
 
-const ActionsBar = ({
-  isLiked,
-  likesCount,
-  likesCountSet,
-  onBuyClicked,
-  onHeartClicked,
-  price,
-  showAddToCart,
-  viewType,
-}) => (
+const ActionsBar = ({ isLiked, likesCount, onBuyClicked, onHeartClicked, price, showAddToCart, viewType }) => (
   <CardItemInfo viewType={viewType}>
     <CardItemAction onClick={onHeartClicked}>
       <Heart isLiked={isLiked} />
-      <CardItemLikes>{likesCountSet && `${likesCount} Likes`}</CardItemLikes>
+      <CardItemLikes>{`${likesCount} Likes`}</CardItemLikes>
     </CardItemAction>
     {showAddToCart && (
       <CardItemAction onClick={onBuyClicked}>
@@ -91,22 +84,11 @@ const ActionsBar = ({
   </CardItemInfo>
 )
 
-const likesCountFromJson = product => {
-  switch (product.productRef) {
-    case '600001904698':
-      return 478
-    case '600001839162':
-      return 672
-    default:
-      return 0
-  }
-}
-
 export default compose(
   graphql(
     gql`
-      mutation($productId: String!) {
-        toggleLike(productId: $productId) {
+      mutation($productId: String!, $remove: Boolean!) {
+        toggleLike(productId: $productId, remove: $remove) {
           likesCount
           likes(currentUser: true) {
             id
@@ -115,26 +97,28 @@ export default compose(
       }
     `
   ),
-  withProps(({ product, showAddToCart }) => ({
-    isLiked: product.likes.length > 0,
-    likeId: product.likes.length > 0 && product.likes[0].id,
-    likesCount: product.likesCount + likesCountFromJson(product),
-    likesCountSet: product.likesCount !== undefined,
+  withState('isLiked', 'setIsLiked', ({ product }) => (Cookies.getJSON('likes') || {})[product.id] || false),
+  withHandlers({
+    setIsLiked: ({ product, setIsLiked }) => isLiked => {
+      Cookies.set('likes', { ...Cookies.getJSON('likes'), [product.id]: isLiked })
+      setIsLiked(isLiked)
+    },
+  }),
+  withProps(({ isLiked, product, showAddToCart }) => ({
+    isLiked: product.likes.length > 0 || isLiked,
+    likesCount: product.likesCount,
     price: formatMoney(product.price),
     showAddToCart: showAddToCart === undefined ? product.available : showAddToCart,
   })),
-  getContext({
-    checkLoginModal: PropTypes.func,
-  }),
   withHandlers({
     onBuyClicked: ({ product }) => () => {
       addToCart(product.variants[0].id)
     },
-    onHeartClicked: ({ checkLoginModal, mutate, product, onToggleLike }) => () =>
+    onHeartClicked: ({ isLiked, mutate, product, onToggleLike, setIsLiked }) => () =>
       authGql(async () => {
-        if (checkLoginModal()) return
         const { id: productId } = product
-        const { data } = await mutate({ variables: { productId: productId } })
+        const { data } = await mutate({ variables: { productId, remove: isLiked } })
+        setIsLiked(!isLiked)
         onToggleLike(data)
       }),
   })

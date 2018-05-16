@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :product
   has_many :upvotes, dependent: :destroy
   has_many :inappropriate_flags, dependent: :destroy
@@ -8,4 +8,8 @@ class Comment < ApplicationRecord
   validates :pinned, inclusion: { in: [true, false] }
   validates :upvotes_count, presence: true
   validates :inappropriate_flags_count, presence: true
+
+  def upvotes_count
+    read_attribute(:upvotes_count) + [anonymous_upvotes_count, 0].max
+  end
 end
