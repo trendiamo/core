@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :collection do
-    # handle Faker::App.name
     sequence(:handle) { Faker::App.name }
     title "This is the title"
     type "influencer"

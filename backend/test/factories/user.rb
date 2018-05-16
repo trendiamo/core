@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user, aliases: [:owner, :buyer] do
+  factory :user, aliases: %i[owner buyer] do
     sequence(:first_name) { Faker::Name.first_name }
     sequence(:last_name) { Faker::Name.last_name }
     sequence(:username) { Faker::Internet.user_name(:last_name) }
