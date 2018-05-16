@@ -5,6 +5,7 @@ AllCops:
     - "**/Gemfile"
     - "**/*.rake"
     - "**/*.gemspec"
+    - "**/*.rb"
   Exclude:
     - bin/**/*
     - config.ru
