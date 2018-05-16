@@ -14,12 +14,12 @@ class BubbleController < ApplicationController
   end
 
   # Bubble API Connector makes it so we receive empty params as a string: "null". Fix that here:
-  def fix_null_values(h)
-    h.each_pair do |k, v|
-      if v.is_a?(Hash)
+  def fix_null_values(hash)
+    hash.each_pair do |k, v|
+      if v.is_a?(Hash) || v.is_a?(ActionController::Parameters)
         fix_null_values(v)
-      elsif h[k] == "null"
-        h[k] = nil
+      elsif hash[k] == "null"
+        hash[k] = nil
       end
     end
   end
