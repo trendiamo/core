@@ -37,6 +37,6 @@ theme upload -e staging # -f if necessary
 production:
 
 ```sh
-pushd app; API_ENDPOINT=trendiamo-prod.herokuapp.com yarn webpack -p --config webpack.prod.js; popd
+pushd app; API_ENDPOINT=trendiamo-production.herokuapp.com yarn webpack -p --config webpack.prod.js; popd
 theme upload -e production # -f if necessary
 ```
