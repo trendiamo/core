@@ -9,7 +9,7 @@ class Bubble::CollectionsController < BubbleController
   end
 
   def index
-    collections = Collection.select(:id, :handle, :description).all.map(&:attributes)
+    collections = Collection.select(:id, :handle, :description, :profile_pic_url).all.map(&:attributes)
     add_fence_info(collections)
     add_modal_info(collections)
     render json: collections
