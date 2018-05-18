@@ -4,7 +4,6 @@ import Comments from './comments'
 import ContextMenu from 'components/context-menu'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import Media from './media'
 import Offers from './offers'
 import Pictures from './pictures'
 import React from 'react'
@@ -64,7 +63,6 @@ const Product = ({ collection, profilePicUrl, product, onToggleLike }) => (
                 itemProp="description"
               />
               {/* eslint-enable react/no-danger */}
-              <Media product={product} />
               <div className="callout">
                 <Callout collection={collection} />
               </div>

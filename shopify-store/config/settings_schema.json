@@ -3,133 +3,216 @@
     "name": "theme_info",
     "theme_name": "Debut",
     "theme_author": "Shopify",
-    "theme_version": "2.0.0",
+    "theme_version": "3.1.1",
     "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/using-themes\/themes-by-shopify\/debut",
     "theme_support_url": "https:\/\/support.shopify.com\/"
   },
   {
-    "name": "Colors",
+    "name": {
+      "en": "Colors",
+      "de": "Farben",
+      "fr": "Couleurs"
+    },
     "settings": [
       {
         "type": "header",
-        "content": "Text and buttons"
+        "content": {
+          "en": "Text and buttons",
+          "de": "Text und Buttons",
+          "fr": "Texte et boutons"
+        }
       },
       {
         "type": "color",
         "id": "color_text",
-        "label": "Headings and links",
+        "label": {
+          "en": "Headings and links",
+          "de": "Titel und Links",
+          "fr": "En-têtes et liens"
+        },
         "default": "#3d4246"
       },
       {
         "type": "color",
         "id": "color_body_text",
-        "label": "Body text",
-        "default": "#788188"
+        "label": {
+          "en": "Body text",
+          "de": "Body-Text",
+          "fr": "Corps du texte"
+        },
+        "default": "#69727b"
       },
       {
         "type": "color",
         "id": "color_sale_text",
-        "label": "Sale text",
-        "default": "#7796A8"
+        "label": {
+          "en": "Sale text",
+          "de": "Verkaufstext",
+          "fr": "Texte de vente"
+        },
+        "default": "#557B97"
       },
       {
         "type": "color",
         "id": "color_borders",
-        "label": "Borders and lines",
+        "label": {
+          "en": "Borders and lines",
+          "de": "Rahmen und Linien",
+          "fr": "Bordures et lignes"
+        },
         "default": "#e8e9eb"
       },
       {
         "type": "color",
         "id": "color_button",
-        "label": "Buttons",
-        "default": "#7796A8"
+        "label": {
+          "en": "Buttons",
+          "de": "Buttons",
+          "fr": "Boutons"
+        },
+        "default": "#557B97"
       },
       {
         "type": "color",
         "id": "color_button_text",
-        "label": "Button text",
+        "label": {
+          "en": "Button text",
+          "de": "Button-Text",
+          "fr": "Texte des boutons"
+        },
         "default": "#fff"
       },
       {
         "type": "color",
         "id": "color_small_button",
-        "label": "Small buttons",
+        "label": {
+          "en": "Small buttons",
+          "de": "Kleine Buttons",
+          "fr": "Petits boutons"
+        },
         "default": "#fff"
       },
       {
         "type": "color",
         "id": "color_small_button_text",
-        "label": "Small button text",
+        "label": {
+          "en": "Small button text",
+          "de": "Text auf kleinen Buttons",
+          "fr": "Texte des petits boutons"
+        },
         "default": "#3d4246"
       },
       {
         "type": "color",
         "id": "color_text_field",
-        "label": "Text fields",
+        "label": {
+          "en": "Text fields",
+          "de": "Textfeld",
+          "fr": "Couleur de fond des champs de texte"
+        },
         "default": "#fff"
       },
       {
         "type": "color",
         "id": "color_text_field_text",
-        "label": "Text field text",
+        "label": {
+          "en": "Text field text",
+          "de": "Text auf Textfeld",
+          "fr": "Couleur du texte des champs de texte"
+        },
         "default": "#000"
       },
       {
         "type": "header",
-        "content": "Image overlays"
+        "content": {
+          "en": "Image overlays",
+          "de": "Text auf Fotos",
+          "fr": "Superposition d'image"
+        }
       },
       {
         "type": "color",
         "id": "color_image_overlay_text",
-        "label": "Text",
+        "label": {
+          "en": "Text",
+          "de": "Textfarbe",
+          "fr": "Couleur du texte"
+        },
         "default": "#fff"
       },
       {
         "type": "color",
         "id": "color_image_overlay",
-        "label": "Background",
+        "label": {
+          "en": "Background",
+          "de": "Schriftfarbe",
+          "fr": "Couleur de fond"
+        },
         "default": "#3d4246"
       },
       {
         "type": "range",
         "id": "image_overlay_opacity",
-        "label": "Opacity",
+        "label": {
+          "en": "Opacity",
+          "de": "Opazität",
+          "fr": "Opacité"
+        },
         "min": 0,
         "max": 100,
         "step": 1,
-        "unit": "%",
+        "unit": {
+          "en": "%",
+          "de": "%",
+          "fr": " %"
+        },
         "default": 25
       },
       {
         "type": "header",
-        "content": "Background"
+        "content": {
+          "en": "Background",
+          "de": "Schriftfarbe",
+          "fr": "Arrière-plan"
+        }
       },
       {
         "type": "color",
         "id": "color_body_bg",
-        "label": "Background",
+        "label": {
+          "en": "Background",
+          "de": "Schriftfarbe",
+          "fr": "Couleur de fond"
+        },
         "default": "#fff"
       }
     ]
   },
   {
-    "name": "Typography",
+    "name": {
+      "en": "Typography",
+      "de": "Typographie",
+      "fr": "Typographie"
+    },
     "settings": [
       {
         "type": "header",
-        "content": "Headings and buttons"
+        "content": {
+          "en": "Headings and buttons",
+          "de": "Titel und Buttons",
+          "fr": "En-têtes et boutons"
+        }
       },
       {
         "type": "select",
         "id": "type_header_family",
-        "label": "Font",
+        "label": {
+          "en": "Font",
+          "de": "Schriftart",
+          "fr": "Police"
+        },
         "default": "Google_Work+Sans_600_sans",
         "options": [
-          {
-            "value": "'Quicksand', sans-serif;",
-            "label": "Quicksand",
-            "group": "My added fonts"
-          },
           {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
             "label": "Avant Garde",
@@ -358,64 +441,41 @@
         ]
       },
       {
-        "type": "select",
+        "type": "range",
         "id": "type_header_base_size",
-        "label": "Heading base size",
-        "default": "26px",
-        "options": [
-          {
-            "value": "20px",
-            "label": "20px"
-          },
-          {
-            "value": "22px",
-            "label": "22px"
-          },
-          {
-            "value": "24px",
-            "label": "24px"
-          },
-          {
-            "value": "26px",
-            "label": "26px"
-          },
-          {
-            "value": "28px",
-            "label": "28px"
-          },
-          {
-            "value": "30px",
-            "label": "30px"
-          },
-          {
-            "value": "32px",
-            "label": "32px"
-          },
-          {
-            "value": "34px",
-            "label": "34px"
-          },
-          {
-            "value": "36px",
-            "label": "36px"
-          }
-        ]
+        "label": {
+          "en": "Heading base size",
+          "de": "Titelgröße",
+          "fr": "Dimensions de base de l'en-tête"
+        },
+        "default": 26,
+        "min": 20,
+        "max": 36,
+        "step": 1,
+        "unit": {
+          "en": "px",
+          "de": "px",
+          "fr": " px"
+        }
       },
       {
         "type": "header",
-        "content": "Body text"
+        "content": {
+          "en": "Body text",
+          "de": "Body-Text",
+          "fr": "Corps du texte"
+        }
       },
       {
         "type": "select",
         "id": "type_base_family",
-        "label": "Font",
+        "label": {
+          "en": "Font",
+          "de": "Schriftart",
+          "fr": "Police"
+        },
         "default": "Google_Work+Sans_400_sans",
         "options": [
-          {
-            "value": "'Quicksand', sans-serif;",
-            "label": "Quicksand",
-            "group": "My added fonts"
-          },
           {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
             "label": "Avant Garde",
@@ -639,149 +699,243 @@
         ]
       },
       {
-        "type": "select",
+        "type": "range",
         "id": "type_base_size",
-        "label": "Base size",
-        "default": "16px",
-        "options": [
-          {
-            "value": "13px",
-            "label": "13px"
-          },
-          {
-            "value": "14px",
-            "label": "14px"
-          },
-          {
-            "value": "15px",
-            "label": "15px"
-          },
-          {
-            "value": "16px",
-            "label": "16px"
-          },
-          {
-            "value": "17px",
-            "label": "17px"
-          },
-          {
-            "value": "18px",
-            "label": "18px"
-          },
-          {
-            "value": "19px",
-            "label": "19px"
-          },
-          {
-            "value": "20px",
-            "label": "20px"
-          }
-        ]
+        "label": {
+          "en": "Base size",
+          "de": "Größe",
+          "fr": "Dimensions de base"
+        },
+        "default": 16,
+        "min": 14,
+        "max": 20,
+        "step": 1,
+        "unit": {
+          "en": "px",
+          "de": "px",
+          "fr": " px"
+        }
       },
       {
         "type": "checkbox",
         "id": "type_bold_product_titles",
-        "label": "Bold product titles"
+        "label": {
+          "en": "Bold product titles",
+          "de": "Produkttitel in fett",
+          "fr": "Titres de produits en gras"
+        }
       }
     ]
   },
   {
-    "name": "Social media",
+    "name": {
+      "en": "Social media",
+      "de": "Social Media",
+      "fr": "Médias sociaux"
+    },
     "settings": [
       {
         "type": "header",
-        "content": "Social sharing image"
+        "content": {
+          "en": "Social sharing image",
+          "de": "Social-Media-Button",
+          "fr": "Image de partage social"
+        }
       },
       {
         "type": "image_picker",
         "id": "share_image",
-        "label": "Image",
-        "info": "Shown when sharing a link on social media. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/showing-social-media-thumbnail-images\/) about image thumbnails."
+        "label": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        },
+        "info": {
+          "en": "Shown when sharing a link on social media. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/showing-social-media-thumbnail-images\/) about image thumbnails.",
+          "de": "Wird gezeigt, wenn ein Link sozial geteilt wird. [Mehr erfahren](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/showing-social-media-thumbnail-images\/)",
+          "fr": "Affichée lors du partage d'un lien sur les réseaux sociaux. [En savoir plus](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/showing-social-media-thumbnail-images\/)."
+        }
       },
       {
         "type": "header",
-        "content": "Social sharing options"
+        "content": {
+          "en": "Social sharing options",
+          "de": "Teilen auf Social Media",
+          "fr": "Options de partage sur les médias sociaux"
+        }
       },
       {
         "type": "checkbox",
         "id": "share_facebook",
-        "label": "Share on Facebook",
+        "label": {
+          "en": "Share on Facebook",
+          "de": "Teilen auf Facebook",
+          "fr": "Partager sur Facebook"
+        },
         "default": true
       },
       {
         "type": "checkbox",
         "id": "share_twitter",
-        "label": "Tweet on Twitter",
+        "label": {
+          "en": "Tweet on Twitter",
+          "de": "Tweet auf Twitter",
+          "fr": "Tweeter sur Twitter"
+        },
         "default": true
       },
       {
         "type": "checkbox",
         "id": "share_pinterest",
-        "label": "Pin on Pinterest",
+        "label": {
+          "en": "Pin on Pinterest",
+          "de": "Pin auf Pinterest",
+          "fr": "Épingler sur Pinterest"
+        },
         "default": true
       },
       {
         "type": "header",
-        "content": "Social accounts"
+        "content": {
+          "en": "Social accounts",
+          "de": "Social Media",
+          "fr": "Médias sociaux"
+        }
       },
       {
         "type": "text",
         "id": "social_twitter_link",
-        "label": "Twitter",
-        "info": "https:\/\/twitter.com\/shopify"
+        "label": {
+          "en": "Twitter",
+          "de": "Twitter",
+          "fr": "Twitter"
+        },
+        "info": {
+          "en": "https:\/\/twitter.com\/shopify",
+          "de": "https:\/\/twitter.com\/shopify",
+          "fr": "https:\/\/twitter.com\/shopify"
+        }
       },
       {
         "type": "text",
         "id": "social_facebook_link",
-        "label": "Facebook",
-        "info": "https:\/\/facebook.com\/shopify"
+        "label": {
+          "en": "Facebook",
+          "de": "Facebook",
+          "fr": "Facebook"
+        },
+        "info": {
+          "en": "https:\/\/facebook.com\/shopify",
+          "de": "https:\/\/facebook.com\/shopify",
+          "fr": "https:\/\/facebook.com\/shopify"
+        }
       },
       {
         "type": "text",
         "id": "social_pinterest_link",
-        "label": "Pinterest",
-        "info": "https:\/\/pinterest.com\/shopify"
+        "label": {
+          "en": "Pinterest",
+          "de": "Pinterest",
+          "fr": "Pinterest"
+        },
+        "info": {
+          "en": "https:\/\/pinterest.com\/shopify",
+          "de": "https:\/\/pinterest.com\/shopify",
+          "fr": "https:\/\/pinterest.com\/shopify"
+        }
       },
       {
         "type": "text",
         "id": "social_instagram_link",
-        "label": "Instagram",
-        "info": "http:\/\/instagram.com\/shopify"
+        "label": {
+          "en": "Instagram",
+          "de": "Instagram",
+          "fr": "Instagram"
+        },
+        "info": {
+          "en": "http:\/\/instagram.com\/shopify",
+          "de": "http:\/\/instagram.com\/shopify",
+          "fr": "http:\/\/instagram.com\/shopify"
+        }
       },
       {
         "type": "text",
         "id": "social_tumblr_link",
-        "label": "Tumblr",
-        "info": "http:\/\/shopify.tumblr.com"
+        "label": {
+          "en": "Tumblr",
+          "de": "Tumblr",
+          "fr": "Tumblr"
+        },
+        "info": {
+          "en": "http:\/\/shopify.tumblr.com",
+          "de": "http:\/\/shopify.tumblr.com",
+          "fr": "http:\/\/shopify.tumblr.com"
+        }
       },
       {
         "type": "text",
         "id": "social_snapchat_link",
-        "label": "Snapchat",
-        "info": "https:\/\/www.snapchat.com\/add\/shopify"
+        "label": {
+          "en": "Snapchat",
+          "de": "Snapchat",
+          "fr": "Snapchat"
+        },
+        "info": {
+          "en": "https:\/\/www.snapchat.com\/add\/shopify",
+          "de": "https:\/\/www.snapchat.com\/add\/shopify",
+          "fr": "https:\/\/www.snapchat.com\/add\/shopify"
+        }
       },
       {
         "type": "text",
         "id": "social_youtube_link",
-        "label": "YouTube",
-        "info": "https:\/\/www.youtube.com\/shopify"
+        "label": {
+          "en": "YouTube",
+          "de": "YouTube",
+          "fr": "YouTube"
+        },
+        "info": {
+          "en": "https:\/\/www.youtube.com\/shopify",
+          "de": "https:\/\/www.youtube.com\/shopify",
+          "fr": "https:\/\/www.youtube.com\/shopify"
+        }
       },
       {
         "type": "text",
         "id": "social_vimeo_link",
-        "label": "Vimeo",
-        "info": "https:\/\/vimeo.com\/shopify"
+        "label": {
+          "en": "Vimeo",
+          "de": "Vimeo",
+          "fr": "Vimeo"
+        },
+        "info": {
+          "en": "https:\/\/vimeo.com\/shopify",
+          "de": "https:\/\/vimeo.com\/shopify",
+          "fr": "https:\/\/vimeo.com\/shopify"
+        }
       }
     ]
   },
   {
-    "name": "Favicon",
+    "name": {
+      "en": "Favicon",
+      "de": "Favicon",
+      "fr": "Favicon"
+    },
     "settings": [
       {
         "type": "image_picker",
         "id": "favicon",
-        "label": "Favicon image",
-        "info": "Will be scaled down to 32 x 32px"
+        "label": {
+          "en": "Favicon image",
+          "de": "Favicon-Foto",
+          "fr": "Image favicon"
+        },
+        "info": {
+          "en": "Will be scaled down to 32 x 32px",
+          "de": "Wird in der Größe 32 x 32 px angezeigt",
+          "fr": "L'image sera réduite à 32 x 32 px"
+        }
       }
     ]
   }

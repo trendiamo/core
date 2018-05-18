@@ -1,4 +1,5 @@
 import ActionsBar from 'collection/actions-bar'
+import Media from './media'
 import React from 'react'
 import ReactSwipe from 'react-swipe'
 import styled from 'styled-components'
@@ -24,9 +25,15 @@ const ImageContainer = styled.div`
 
 const Thumbnails = styled.div`
   margin-top: 1rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 560px) {
+    display: none;
+  }
+
   div {
     width: 80px;
     height: 80px;
@@ -76,6 +83,7 @@ const Pictures = ({ handleSwipe, images, onSlideTo, onToggleLike, product, selec
         <ThumbnailImage image={image} index={index} key={image} onSlideTo={onSlideTo} selectedImage={selectedImage} />
       ))}
     </Thumbnails>
+    <Media product={product} />
   </React.Fragment>
 )
 
