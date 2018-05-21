@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180515105908) do
+ActiveRecord::Schema.define(version: 20180516084119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20180515105908) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "media_items"
+    t.string "external_product_url"
     t.integer "anonymous_likes_count", default: 0, null: false
     t.index ["user_id"], name: "index_products_on_user_id"
   end
