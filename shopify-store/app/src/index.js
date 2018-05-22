@@ -13,9 +13,10 @@ const app = async () => {
   }
   if (/\/collections\/.*\/products\/.+/.test(location.pathname)) {
     return product()
-  } else if (/\/collections\/.+/.test(location.pathname)) {
-    return collection()
   }
+  //  else if (/\/collections\/.+/.test(location.pathname)) {
+  //   return collection()
+  // }
 }
 
 app()
