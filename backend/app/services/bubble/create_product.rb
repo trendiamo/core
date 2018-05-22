@@ -11,29 +11,30 @@ module Bubble
       # create_product && add_shopify_product
       add_shopify_product && create_product
     end
-  #
-  #   def as_json(_arg)
-  #     {
-  #       backend_collection: @backend_collection&.as_json,
-  #       shopify_collection: @shopify_collection&.as_json,
-  #     }
-  #   end
-  #
-  #   def errors
-  #     {
-  #       backend_collection: @backend_collection&.errors,
-  #       shopify_collection: @shopify_collection&.errors,
-  #     }
-  #   end
-  #
-  #   private
-  #
+  
+    def as_json(_arg)
+      {
+        backend_product: @backend_product&.as_json,
+        shopify_product: @shopify_product&.as_json,
+      }
+    end
+
+    def errors
+      {
+        backend_product: @backend_product&.errors,
+        shopify_product: @shopify_product&.errors,
+      }
+    end
+
+    private
+
     def create_product
-      @backend_product = Product.new(product_ref: @shopify_product.id, media_items: @product_params.media_items)
+      @backend_product = Product.new(product_ref: @shopify_product.id, media_items: @product_params[:media_items])
       @backend_product.save
     end
   #
     def add_shopify_product
+      byebug
       @shopify_product = ShopifyAPI::Product.new(product_params)
       @shopify_product.save
     end

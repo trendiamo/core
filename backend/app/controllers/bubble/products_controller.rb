@@ -22,7 +22,9 @@ class Bubble::ProductsController < BubbleController
 
   def product_params
     params.require(:product).permit(:title, :body_html, :handle, :vendor, :product_type, :tags, :published_scope,
-                                    :template_suffix, :metafields_global_title_tag,
-                                    :metafields_global_description_tag, :images, :options, :variants, :media_items)
+                                    :template_suffix, :metafields_global_title_tag, :variants,
+                                    :metafields_global_description_tag, :media_items,
+                                    images: %i[id src position width height],
+                                    options: %i[Size Color Material])
   end
 end
