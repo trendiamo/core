@@ -25,6 +25,6 @@ class Bubble::ProductsController < BubbleController
                                     :template_suffix, :metafields_global_title_tag, :variants,
                                     :metafields_global_description_tag, :media_items,
                                     images: %i[id src position width height],
-                                    options: %i[Size Color Material])
+                                    options: %i[name position values])
   end
 end
