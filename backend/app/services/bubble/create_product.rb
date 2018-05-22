@@ -3,13 +3,14 @@ module Bubble
 
 
     attr_reader :product_params
-  #   def initialize(collection_params)
-  #     @collection_params = collection_params
-  #   end
+    def initialize(product_params)
+      @product_params = product_params
+    end
   #
-  #   def perform
-  #     create_collection && add_shopify_collection
-  #   end
+    def perform
+      # create_product && add_shopify_product
+      add_shopify_product && create_product
+    end
   #
   #   def as_json(_arg)
   #     {
@@ -27,23 +28,23 @@ module Bubble
   #
   #   private
   #
-  #   def create_collection
-  #     @backend_collection = Collection.new(backend_collection_attrs)
-  #     @backend_collection.save
-  #   end
+    def create_product
+      @backend_product = Product.new(product_ref: @shopify_product.id, media_items: @product_params.media_items)
+      @backend_product.save
+    end
   #
-  #   def add_shopify_collection
-  #     @shopify_collection = ShopifyAPI::SmartCollection.new(shopify_collection_attrs)
-  #     @shopify_collection.save
-  #   end
+    def add_shopify_product
+      @shopify_product = ShopifyAPI::Product.new(product_params)
+      @shopify_product.save
+    end
   #
   #   def for_brand?
   #     collection_params[:type] == "brand"
   #   end
   #
-  #   def backend_collection_attrs
-  #     collection_params.reverse_merge(type: "influencer")
-  #   end
+    # def backend_collection_attrs
+    #   params.require(:product).permit(:title,
+    # end
   #
   #   def shopify_collection_attrs
   #     {
@@ -60,9 +61,9 @@ module Bubble
   #       { column: "tag", relation: "equals", condition: "influencer: #{collection_params[:handle]}" }
   #     end
   #   end
-  # 
   #
   #
   #
-  # end
+  #
+  end
 end

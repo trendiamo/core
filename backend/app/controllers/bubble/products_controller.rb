@@ -1,30 +1,28 @@
 class Bubble::ProductsController < BubbleController
   def index
-    # @collection = Collection.find(params[:collection_id])
-    # byebug
-    # @shopify_collection = ShopifyAPI::SmartCollection.find(@collection.handle)
-    # byebug
-    # products = Product.select(:id, :user_id, :product_ref, :likes_count, :media_items, :anonymous_likes_count).all.map(&:attributes)
-    # byebug
-    # render json: params[:collection_id]
+    collection = Collection.find(params[:collection_id])
+    shopify_products = ShopifyAPI::Product.where("tags": "influencer: #{collection.handle}").map(&:attributes)
+    render json: shopify_products
   end
   def show
-    @product = Product.find(params[:id])
-    render json: @product
+
   end
   def create
-    # @create_collection = Bubble::CreateCollection.new(collection_params)
-    # if @create_collection.perform
-    #   render json: @create_collection, status: :created
-    # else
-    #   render json: { errors: @create_collection.errors }, status: :unprocessable_entity
-    # end
+    # @create_product = ShopifyAPI::Product.new(collection_params)
+    @create_product = Bubble::CreateProduct.new(product_params)
+    if @create_product.perform
+      render json: @create_product, status: :created
+    else
+      render json: { errors: @create_collection.errors }, status: :unprocessable_entity
+    end
   end
 
 
   private
 
   def product_params
-    params.require(:product).permit(:handle, :title, :type, :profile_pic_url, :cover_pic_url, :description)
+    params.require(:product).permit(:title, :body_html, :handle, :vendor, :product_type, :tags, :published_scope,
+                                    :template_suffix, :metafields_global_title_tag,
+                                    :metafields_global_description_tag, :images, :options, :variants, :media_items)
   end
 end
