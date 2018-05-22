@@ -5,7 +5,7 @@ assets/ajax-loader.gif:
   staging: 2018-01-15T06:07:37-05:00   deca8b0ecd6974227d157b6d7068995d
 assets/app.js:
   development: 2018-05-18T12:37:46-04:00   d14789af87ec8e0be9eca365c9443117
-  production: 2018-05-18T18:44:32+02:00   d2050c7b43991e0838d891701b54fc93
+  production: 2018-05-22T19:05:03+02:00   8b6899916b590b56621675dc6b415d97
   staging: 2018-05-11T10:38:23-04:00   f8cc8ca48053d84046ec87b950115011
 assets/gift-card.js:
   development: 2018-01-15T06:07:37-05:00   c73df2ee57cc9eb577f7a1858063495d
@@ -53,7 +53,7 @@ assets/vendor.js:
   staging: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
 config/settings_schema.json:
   development: 2018-01-15T10:10:57-05:00   fd464795164f71e1ec7317f2f2e10dbd
-  production: 2018-05-14T20:42:08+02:00   5a26c4dd60ef1d72f72a575ec50d0c2e
+  production: 2018-05-22T17:14:56+02:00   9e64b346d32ecbc6d11909be2db0daa7
   staging: 2018-01-15T10:10:57-05:00   fd464795164f71e1ec7317f2f2e10dbd
 layout/gift_card.liquid:
   development: 2018-01-15T06:07:38-05:00   876374b0950e11992ce087d1d2bad3c8
@@ -149,7 +149,7 @@ sections/footer.liquid:
   staging: 2018-04-27T10:28:05-04:00   00914513b2bc40824e65ddf257e4d259
 sections/header.liquid:
   development: 2018-04-26T18:15:01-04:00   2d573e1e49bea69121d7adae479ddc84
-  production: 2018-05-17T12:57:45+02:00   2d573e1e49bea69121d7adae479ddc84
+  production: 2018-05-22T17:14:57+02:00   fa5baa535cb99eb77146fa1f512722ec
   staging: 2018-04-26T18:15:01-04:00   2d573e1e49bea69121d7adae479ddc84
 sections/hero.liquid:
   development: 2018-01-15T06:07:36-05:00   d45cf37312b64d6e7511bdba56256758
@@ -203,6 +203,8 @@ sections/slideshow.liquid:
   development: 2018-01-15T06:07:37-05:00   b45e3880ca33f6ac6de7c2b5eb9dd40b
   production: 2018-05-17T12:58:01+02:00   b45e3880ca33f6ac6de7c2b5eb9dd40b
   staging: 2018-01-15T06:07:37-05:00   b45e3880ca33f6ac6de7c2b5eb9dd40b
+snippets/arrow-down.liquid:
+  production: 2018-05-22T17:14:57+02:00   138bdd2b7e0d88983401008c10b7c69a
 snippets/back-button.liquid:
   development: 2018-01-22T10:43:18-05:00   a975f33ff8e5d214e4e9c4550b279d08
   production: 2018-05-17T12:57:35+02:00   a975f33ff8e5d214e4e9c4550b279d08
