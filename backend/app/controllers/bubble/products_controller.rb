@@ -13,18 +13,33 @@ class Bubble::ProductsController < BubbleController
     if @create_product.perform
       render json: @create_product, status: :created
     else
-      render json: { errors: @create_collection.errors }, status: :unprocessable_entity
+      render json: { errors: @create_product.errors }, status: :unprocessable_entity
     end
   end
 
+  def update
+    @backend_product = Product.find(params[:id])
+    @shopify_product = ShopifyAPI::Product.find(@backend_product.product_ref)
+    product_params.each do |key,value|
+      @shopify_product.attributes[key] = value
+    end
+    if @shopify_product.save
+      render json: @shopify_product
+    else
+      render json: { errors: @shopify_product.errors }, status: :unprocessable_entity
+    end
+  end
 
   private
 
   def product_params
     params.require(:product).permit(:title, :body_html, :handle, :vendor, :product_type, :tags, :published_scope,
-                                    :template_suffix, :metafields_global_title_tag, :variants,
+                                    :template_suffix, :metafields_global_title_tag,
                                     :metafields_global_description_tag, :media_items,
                                     images: %i[id src position width height],
-                                    options: %i[name position values])
+                                    options: %i[name position values],
+                                    variants: %i[barcode compare_at_price fulfillment_service grams inventory_management
+                                    inventory_policy metafields old_inventory_quantity option1 option2 option3 position price requires_shipping sku taxable
+                                    tax_code title weight weight_unit inventory_quantity])
   end
 end
