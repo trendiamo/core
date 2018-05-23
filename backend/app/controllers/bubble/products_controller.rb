@@ -30,6 +30,13 @@ class Bubble::ProductsController < BubbleController
     end
   end
 
+  def destroy
+    @backend_product = Product.find(params[:id])
+    ShopifyAPI::Product.delete(@backend_product.product_ref)
+    @backend_product.destroy
+    render json: { ok: true }
+  end
+
   private
 
   def product_params
