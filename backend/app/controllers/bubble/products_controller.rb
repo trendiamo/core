@@ -4,9 +4,10 @@ class Bubble::ProductsController < BubbleController
     shopify_products = ShopifyAPI::Product.where("tags": "influencer: #{collection.handle}").map(&:attributes)
     render json: shopify_products
   end
-  def show
 
+  def show
   end
+
   def create
     # @create_product = ShopifyAPI::Product.new(collection_params)
     @create_product = Bubble::CreateProduct.new(product_params)
@@ -20,7 +21,7 @@ class Bubble::ProductsController < BubbleController
   def update
     @backend_product = Product.find(params[:id])
     @shopify_product = ShopifyAPI::Product.find(@backend_product.product_ref)
-    product_params.each do |key,value|
+    product_params.each do |key, value|
       @shopify_product.attributes[key] = value
     end
     if @shopify_product.save
@@ -46,7 +47,8 @@ class Bubble::ProductsController < BubbleController
                                     images: %i[id src position width height],
                                     options: %i[name position values],
                                     variants: %i[barcode compare_at_price fulfillment_service grams inventory_management
-                                    inventory_policy metafields old_inventory_quantity option1 option2 option3 position price requires_shipping sku taxable
-                                    tax_code title weight weight_unit inventory_quantity])
+                                                 inventory_policy metafields old_inventory_quantity option1 option2
+                                                 option3 position price requires_shipping sku taxable
+                                                 tax_code title weight weight_unit inventory_quantity])
   end
 end
