@@ -2,6 +2,10 @@ class Bubble::ProductsController < BubbleController
   def index
     collection = Collection.find(params[:collection_id])
     shopify_products = ShopifyAPI::Product.where("tags": "influencer: #{collection.handle}").map(&:attributes)
+    shopify_products.each do |shopify_product|
+      backend_product = Product.find_by(product_ref: shopify_product[:id].to_s)
+      shopify_product[:backend_id] = backend_product[:id]
+    end
     render json: shopify_products
   end
 
