@@ -214,6 +214,11 @@
         "default": "Google_Work+Sans_600_sans",
         "options": [
           {
+            "value": "'Yantramanav', sans-serif;",
+            "label": "Yantramanav",
+            "group": "My added fonts"
+          },
+          {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
             "label": "Avant Garde",
             "group": "Sans-serif"
@@ -476,6 +481,11 @@
         },
         "default": "Google_Work+Sans_400_sans",
         "options": [
+          {
+            "value": "'Yantramanav', sans-serif;",
+            "label": "Yantramanav",
+            "group": "My added fonts"
+          },
           {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
             "label": "Avant Garde",

@@ -47,7 +47,7 @@ assets/theme.js:
   staging: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
   development: 2018-04-30T04:58:00-04:00   d8d755674161083b68f539a092ea1bd3
-  production: 2018-05-26T14:01:49+02:00   99a011ed1ed6a26559540dede07eb3e0
+  production: 2018-05-26T15:15:11+02:00   3c185c85ba37a30d122bcc8ecf23f554
   staging: 2018-04-30T04:58:00-04:00   d8d755674161083b68f539a092ea1bd3
 assets/vendor.js:
   development: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
@@ -55,7 +55,7 @@ assets/vendor.js:
   staging: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
 config/settings_schema.json:
   development: 2018-01-15T10:10:57-05:00   fd464795164f71e1ec7317f2f2e10dbd
-  production: 2018-05-22T17:14:56+02:00   9e64b346d32ecbc6d11909be2db0daa7
+  production: 2018-05-26T14:16:11+02:00   3da55d3d24e75677c92acfc39610508e
   staging: 2018-01-15T10:10:57-05:00   fd464795164f71e1ec7317f2f2e10dbd
 layout/gift_card.liquid:
   development: 2018-01-15T06:07:38-05:00   876374b0950e11992ce087d1d2bad3c8
@@ -67,7 +67,7 @@ layout/password.liquid:
   staging: 2018-01-15T06:07:39-05:00   6351674ea67c53e01643a5bea02f7d0a
 layout/theme.liquid:
   development: 2018-04-28T07:39:54-04:00   55be17acc7185ecc8168eabbb3108659
-  production: 2018-05-26T14:01:49+02:00   7246cc69afc73fee11fc2266577d40a1
+  production: 2018-05-26T15:15:11+02:00   cb792018862da7b48fcc6fc691201817
   staging: 2018-04-28T07:39:54-04:00   55be17acc7185ecc8168eabbb3108659
 locales/de.json:
   development: 2018-01-22T09:51:34-05:00   62f178d1e0a8f21f92910486e0c47812
@@ -319,6 +319,8 @@ snippets/icon-forbrugsforeningen.liquid:
   development: 2018-01-15T06:07:40-05:00   ff962a94f23046340766c215b0f14a52
   production: 2018-05-14T20:42:05+02:00   ff962a94f23046340766c215b0f14a52
   staging: 2018-01-15T06:07:40-05:00   ff962a94f23046340766c215b0f14a52
+snippets/icon-google_pay.liquid:
+  production: 2018-05-14T20:42:05+02:00   b66e7e8ec5851e74bcbd8fda45ef1a5a
 snippets/icon-hamburger.liquid:
   development: 2018-01-15T06:07:40-05:00   559577e06ff14924311cfe2642e8b765
   production: 2018-05-14T20:42:05+02:00   559577e06ff14924311cfe2642e8b765
@@ -335,6 +337,8 @@ snippets/icon-jcb.liquid:
   development: 2018-01-15T06:07:40-05:00   275259ce80a1b368d0e5afcf7d6bb6f3
   production: 2018-05-14T20:42:05+02:00   275259ce80a1b368d0e5afcf7d6bb6f3
   staging: 2018-01-15T06:07:40-05:00   275259ce80a1b368d0e5afcf7d6bb6f3
+snippets/icon-klarna.liquid:
+  production: 2018-05-14T20:42:05+02:00   9faa80c27e5612a01f9f0f9fc3ad3d6f
 snippets/icon-laser.liquid:
   development: 2018-01-15T06:07:40-05:00   bd1a0ecfe958b6a6e84bf80e0669a6da
   production: 2018-05-14T20:42:05+02:00   bd1a0ecfe958b6a6e84bf80e0669a6da
@@ -407,6 +411,8 @@ snippets/icon-shopify-logo.liquid:
   development: 2018-01-15T06:07:40-05:00   3f0b70f9e01be5b25507d25a732ecde7
   production: 2018-05-14T20:42:06+02:00   3f0b70f9e01be5b25507d25a732ecde7
   staging: 2018-01-15T06:07:40-05:00   3f0b70f9e01be5b25507d25a732ecde7
+snippets/icon-shopify_pay.liquid:
+  production: 2018-05-14T20:42:06+02:00   0af2d9a3a7f1b14dfc11f8e4b9746c2d
 snippets/icon-snapchat.liquid:
   development: 2018-01-15T06:07:40-05:00   9ed6937e3232c9034976be2b8ed9f673
   production: 2018-05-14T20:42:06+02:00   9ed6937e3232c9034976be2b8ed9f673
