@@ -22,11 +22,11 @@ const sortPinned = commentId => (a, b) => {
 
 const ContextMenuOps = ({ currentUserIsProductOwner, onFlag, onPin, onRemove }) => (
   <ul>
-    <li onClick={onFlag}>{'Als unangemessen melden'}</li>
+    <li onClick={onFlag}>{'Mark as inappropriate'}</li>
     {currentUserIsProductOwner && (
       <React.Fragment>
-        <li onClick={onPin}>{'Anpinnen'}</li>
-        <li onClick={onRemove}>{'Entfernen'}</li>
+        <li onClick={onPin}>{'Pin'}</li>
+        <li onClick={onRemove}>{'Remove'}</li>
       </React.Fragment>
     )}
   </ul>
@@ -79,8 +79,9 @@ export default compose(
     checkLoginModal: PropTypes.func,
   }),
   withHandlers({
-    onFlag: ({ close, flag, comment }) => () =>
+    onFlag: ({ close, flag, comment, checkLoginModal }) => () =>
       authGql(async () => {
+        if (checkLoginModal()) return
         const commentId = comment.id
         await flag({ variables: { commentId } })
         close()

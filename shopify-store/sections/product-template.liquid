@@ -1,12 +1,82 @@
 <div class="product"></div>
+<div id="stage">
+  <div id="img-1" class="one-six-tile">
+    <img class="one-six-tile-img" src="{{ product.images[0] | img_url: '1000x' }}" />
+  </div>
+  <div id="img-2" class="one-six-tile">
+    <img class="one-six-tile-img" src="{{ product.images[1] | img_url: '1000x' }}" />
+  </div>
+  <div id="img-3" class="one-six-tile">
+    <img class="one-six-tile-img" src="{{ product.images[2] | img_url: '1000x' }}" />
+  </div>
+  <div id="img-4" class="one-six-tile">
+    <img class="one-six-tile-img" src="{{ product.images[3] | img_url: '1000x' }}" />
+  </div>
+  <div id="img-5" class="one-six-tile">
+    <img class="one-six-tile-img" src="{{ product.images[4] | img_url: '1000x' }}" />
+  </div>
+  <div id="img-6" class="one-six-tile">
+    <img class="one-six-tile-img" src="{{ product.images[5] | img_url: '1000x' }}" />
+  </div>
+  <div id="overlay" class="stage-dark-overlay">
+    <img id="detail-1" class="one-six-tile-img-detail" src="{{ product.images[0] | img_url: '1000x' }}" />
+    <img id="detail-2" class="one-six-tile-img-detail" src="{{ product.images[1] | img_url: '1000x' }}" />
+    <img id="detail-3" class="one-six-tile-img-detail" src="{{ product.images[2] | img_url: '1000x' }}" />
+    <img id="detail-4" class="one-six-tile-img-detail" src="{{ product.images[3] | img_url: '1000x' }}" />
+    <img id="detail-5" class="one-six-tile-img-detail" src="{{ product.images[4] | img_url: '1000x' }}" />
+    <img id="detail-6" class="one-six-tile-img-detail" src="{{ product.images[5] | img_url: '1000x' }}" />
+  </div>
+</div>
+
+<script src="{{ 'jquery.js' | asset_url }}"></script>
+<script>
+  $( document ).ready(function() {
+    $( "#img-1" ).click(function() {
+      showOverlay();
+      $("#detail-1").css('display', 'block');
+    });
+    $( "#img-2" ).click(function() {
+      showOverlay();
+      $("#detail-2").css('display', 'block');
+    });
+    $( "#img-3" ).click(function() {
+      showOverlay();
+      $("#detail-3").css('display', 'block');
+    });
+    $( "#img-4" ).click(function() {
+      showOverlay();
+      $("#detail-4").css('display', 'block');
+    });
+    $( "#img-5" ).click(function() {
+      showOverlay();
+      $("#detail-5").css('display', 'block');
+    });
+    $( "#img-6" ).click(function() {
+      showOverlay();
+      $("#detail-6").css('display', 'block');
+    });
+
+    $( "#overlay" ).click(function() {
+      hideOverlay();
+      $("#detail-1").css('display', 'none');
+      $("#detail-2").css('display', 'none');
+      $("#detail-3").css('display', 'none');
+      $("#detail-4").css('display', 'none');
+      $("#detail-5").css('display', 'none');
+      $("#detail-6").css('display', 'none');
+    });
+
+    function showOverlay() {
+      $("#overlay").css('display', 'block');
+    }
+
+    function hideOverlay() {
+      $("#overlay").css('display', 'none');
+    }
+  });
+</script>
 
 {% if collection %}
-  <div class="text-center return-link-wrapper desktop-only">
-    <a href="javascript:history.go(-1)" class="btn btn--secondary btn--has-icon-before return-link">
-      {% include 'icon-back' %}
-      {{ 'products.product.back_to_collection' | t: title: collection.title }}
-    </a>
-  </div>
   <template class="collection-info">{{ collection | json }}</template>
 {% endif %}
 

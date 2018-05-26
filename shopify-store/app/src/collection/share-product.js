@@ -13,7 +13,7 @@ const StyledLi = styled.li`
 
 const ShareProduct = ({ hasShared, handleClick }) => (
   <StyledLi onClick={handleClick} success={hasShared}>
-    {hasShared ? 'Link wurde kopiert!' : 'Teilen'}
+    {hasShared ? 'Link copied!' : 'Share link'}
   </StyledLi>
 )
 

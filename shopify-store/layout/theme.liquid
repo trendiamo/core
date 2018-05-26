@@ -73,7 +73,7 @@
 
   {{ content_for_header }}
 
-  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Yantramanav:400,500,700" rel="stylesheet">
 
 </head>
 
@@ -109,7 +109,9 @@
       {{ content_for_layout }}
     </main>
 
-    {% section 'footer' %}
+    {% if template != 'product' %}
+      {% section 'footer' %}
+    {% endif %}
 
   </div>
   <div class="metadata" data-customer-ref="{{ customer.id }}" data-user-email="{{ customer.email }}"></div>

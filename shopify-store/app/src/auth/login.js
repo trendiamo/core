@@ -13,7 +13,7 @@ const Login = ({ loginForm, loginSubmit, showRegister, setLoginValue }) => (
   <React.Fragment>
     <h1 className="text-center">{'Login'}</h1>
     <form acceptCharset="UTF-8" onSubmit={loginSubmit}>
-      <label htmlFor="CustomerEmail">{'Email oder Nutzername'}</label>
+      <label htmlFor="CustomerEmail">{'Email or Username'}</label>
       <StyledInput
         autoCapitalize="off"
         autoCorrect="off"
@@ -24,14 +24,14 @@ const Login = ({ loginForm, loginSubmit, showRegister, setLoginValue }) => (
         type="text"
         value={loginForm.email}
       />
-      <label htmlFor="CustomerPassword">{'Passwort'}</label>
+      <label htmlFor="CustomerPassword">{'Password'}</label>
       <StyledInput name="password" onChange={setLoginValue} required type="password" value={loginForm.password} />
       <StyledDiv>
         {/* <p><a>Forgot your password?</a></p> */}
-        <StyledButton className="btn" type="submit" value="Anmelden" />
+        <StyledButton className="btn" type="submit" value="Login" />
         <p>
           <LinkButton onClick={showRegister} type="button">
-            {'Account erstellen'}
+            {'Create Account'}
           </LinkButton>
         </p>
       </StyledDiv>

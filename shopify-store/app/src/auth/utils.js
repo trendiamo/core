@@ -16,13 +16,13 @@ const apiRequest = async (url, body) => {
 
 const errorMessages = json => {
   if (json.error) {
-    return '<ul><li>Ungültige Anmeldedaten.</li></ul>'
+    return '<ul><li>Invalid Credentials</li></ul>'
   } else {
     if (typeof json.errors === 'object') {
       const listItems = json.errors.map(error => `<li>${error}</li>`)
       return `<ul>${listItems.join('')}</ul>`
     } else {
-      return '<ul><li>Kann keinen Account erstellen.</li></ul>'
+      return '<ul><li>Can not create account</li></ul>'
     }
   }
 }

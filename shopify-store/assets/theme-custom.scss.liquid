@@ -323,7 +323,7 @@ to our likings. No changes were made to the theme.scss.liquid file!
   }
 
   .btn-back-wrapper-absolute-m {
-    display: block;
+    display: none;
   }
 
   /*==========================================================================
@@ -417,3 +417,49 @@ to our likings. No changes were made to the theme.scss.liquid file!
     right: -4px;
   }
 }
+
+/* DANIEL'S QUICK AND DIRTY WAY OF DOING THINGS VOLUME 2 */
+
+.btn {
+  border-radius: 0;
+}
+
+.product-header {
+  position: relative;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.product-header-left {
+  margin-left: 0;
+}
+
+.product-influencer__header-m__profilepic {
+  width: 80px;
+  height: 80px;
+  margin-right: 1rem;
+  border-radius: 1000px;
+}
+
+.product-influencer__header-m__heading {
+  font-size: 20px;
+}
+
+.product-single__description {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .product-influencer__header-m__profilepic {
+    margin-left: 1rem;
+    margin-right: 0;
+  }
+
+
+}
+
+/* END OF THE NIGHTMARE */

@@ -17,7 +17,7 @@
           {% for item in cart.items %}
             <tr class="cart__row border-bottom line{{ forloop.index }} cart-flex{% if forloop.first %} border-top{% endif %}">
               <td class="cart__image-wrapper cart-flex-item">
-                <a href="{{ item.url | within: collections.all }}">
+                <a href="{{ item.url }}">
                   <img class="cart__image" src="{{ item | img_url: '95x95', scale: 2 }}" alt="{{ item.title | escape }}">
                 </a>
               </td>
@@ -131,7 +131,6 @@
               </div>
             {% endif %}
             <div class="cart__shipping">{{ 'cart.general.shipping_at_checkout' | t }}</div>
-            <a href="collections/all" class="btn btn--secondary cart__update cart__continue--large small--hide" >{{ 'cart.general.continue_shopping' | t }}</a>
             <input type="submit" name="update" class="btn btn--secondary cart__update cart__update--large small--hide" value="{{ 'cart.general.update' | t }}">
             <input type="submit" name="checkout" class="btn btn--small-wide" value="{{ 'cart.general.checkout' | t }}">
             {% comment %}
@@ -150,7 +149,7 @@
       <div class="cookie-message">
         <p>{{ 'cart.general.cookies_required' | t }}</p>
       </div>
-      <a href="/" class="btn btn--has-icon-after cart__continue-btn">{{ 'general.404.link' | t }}</a>
+      <a href="javascript:history.back()" class="btn btn--has-icon-after cart__continue-btn">{{ 'general.404.link' | t }}</a>
     </div>
   {% endif %}
 </div>

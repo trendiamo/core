@@ -8,10 +8,10 @@ const StyledDiv = styled.div`
 `
 const Account = ({ email, logout }) => (
   <StyledDiv>
-    <h1>{'Dein Account'}</h1>
-    <p>{`Du bist eingeloggt als ${email}`}</p>
+    <h1>{'Your Account'}</h1>
+    <p>{`You are logged in as ${email}`}</p>
     <button className="btn" onClick={logout} type="button">
-      {'Ausloggen'}
+      {'Log out'}
     </button>
   </StyledDiv>
 )

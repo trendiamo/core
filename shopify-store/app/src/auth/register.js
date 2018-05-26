@@ -11,9 +11,9 @@ const StyledDiv = styled.div`
 
 const Register = ({ registerForm, registerSubmit, showLogin, setRegisterValue }) => (
   <React.Fragment>
-    <h1 className="text-center">{'Account erstellen'}</h1>
+    <h1 className="text-center">{'Create Account'}</h1>
     <form acceptCharset="UTF-8" onSubmit={registerSubmit}>
-      <label htmlFor="Username">{'Nutzername'}</label>
+      <label htmlFor="Username">{'Username'}</label>
       <StyledInput
         autofocus
         name="username"
@@ -24,7 +24,7 @@ const Register = ({ registerForm, registerSubmit, showLogin, setRegisterValue })
       />
       <label htmlFor="FirstName">{'Name'}</label>
       <StyledInput name="firstName" onChange={setRegisterValue} required type="text" value={registerForm.firstName} />
-      <label htmlFor="LastName">{'Nachname'}</label>
+      <label htmlFor="LastName">{'Last Name'}</label>
       <StyledInput name="lastName" onChange={setRegisterValue} required type="text" value={registerForm.lastName} />
       <label htmlFor="Email">{'Email'}</label>
       <StyledInput
@@ -36,13 +36,13 @@ const Register = ({ registerForm, registerSubmit, showLogin, setRegisterValue })
         type="email"
         value={registerForm.email}
       />
-      <label htmlFor="CustomerPassword">{'Passwort'}</label>
+      <label htmlFor="CustomerPassword">{'Password'}</label>
       <StyledInput name="password" onChange={setRegisterValue} required type="password" value={registerForm.password} />
       <StyledDiv>
         {/* <p><a>Forgot your password?</a></p> */}
-        <StyledButton className="btn" type="submit" value="Registrieren" />
+        <StyledButton className="btn" type="submit" value="Sign Up" />
         <p>
-          {'Du hast schon einen Account? '}
+          {'Already have an account? '}
           <LinkButton onClick={showLogin} type="button">
             {'Login'}
           </LinkButton>

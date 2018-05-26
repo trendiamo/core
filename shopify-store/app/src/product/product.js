@@ -4,11 +4,12 @@ import Comments from './comments'
 import ContextMenu from 'components/context-menu'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import Media from './media'
 import Offers from './offers'
 import Pictures from './pictures'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ShareProduct from 'collection/share-product'
+import ShareProduct from 'feed/share-product'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 
@@ -25,7 +26,7 @@ const Product = ({ collection, profilePicUrl, product, onToggleLike }) => (
       <meta content={window.location.href} itemProp="url" />
       <meta content={product.featured_image} itemProp="image" />
       <div className="grid">
-        <div className="grid__item medium-up--one-half">
+        <div id="stage-m" className="grid__item medium-up--one-half">
           <div className="product-single">
             <div className="product-header">
               <div className="product-header-left">
@@ -44,30 +45,58 @@ const Product = ({ collection, profilePicUrl, product, onToggleLike }) => (
               </div>
             </div>
             <Pictures onToggleLike={onToggleLike} product={product} />
+            <div class="side-bar-section-border-m"></div>
           </div>
         </div>
-        <div className="grid__item medium-up--one-half">
-          <div style={{ margin: '0 1.5rem' }}>
+        <div id="side-bar" className="grid__item medium-up--one-half">
+          <div style={{ margin: '0 2.5rem' }}>
             <div className="product-single__meta">
+              <div id="product-header-desktop" className="product-header">
+                <div className="product-header-left">
+                  <img className="product-influencer__header-m__profilepic" src={profilePicUrl} />
+                  <div className="product-header-info">
+                    <div className="product-influencer__header-m__heading">{product.title}</div>
+                    <div className="product-header-vendor">{product.vendor}</div>
+                  </div>
+                </div>
+                <div className="context-menu">
+                  <StyledContextMenu product={product}>
+                    <ul>
+                      <ShareProduct product={product} />
+                    </ul>
+                  </StyledContextMenu>
+                </div>
+                <div class="side-bar-section-border"></div>
+              </div>
               <h1 className="product-single__title" itemProp="name">
                 {product.title}
               </h1>
               <p className="product-single__vendor" itemProp="brand">
                 {product.vendor}
               </p>
-              <Offers product={product} />
-              {/* eslint-disable react/no-danger */}
               <div
                 className="product-single__description rte"
-                dangerouslySetInnerHTML={{ __html: product.description }}
+                dangerouslySetInnerHTML={{ __html: product.description+'<div class="side-bar-section-border"></div>' }}
                 itemProp="description"
-              />
+              ></div>
+              {/* eslint-disable react/no-danger */}
+              <Offers product={product} />
               {/* eslint-enable react/no-danger */}
-              <div className="callout">
-                <Callout collection={collection} />
-              </div>
               <div className="comments">
                 <Comments product={product} />
+                <div class="side-bar-section-border-top"></div>
+                <div class="side-bar-section-border"></div>
+              </div>
+              <div className="product-footer">
+                <ul className="product-footer-list">
+                  <li className="product-footer-list-item">Terms & Conditions</li>
+                  <li className="product-footer-list-item">Imprint</li>
+                  <li className="product-footer-list-item">Privacy & Cookies</li>
+                  <li className="product-footer-list-item">Contact Us</li>
+                </ul>
+                <div className="product-footer-copyright">
+                  © 2018 store.nondimension.com - All Rights Reserved
+                </div>
               </div>
             </div>
           </div>

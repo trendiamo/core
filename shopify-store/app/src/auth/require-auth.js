@@ -13,15 +13,15 @@ export const StyledButton = styled.button`
 
 const RequireAuth = ({ closeAuthModal, showRegister }) => (
   <StyledDiv>
-    <h1>{'Account erstellen'}</h1>
-    <p>{'Du brauchst einen Account oder musst dich einloggen.'}</p>
+    <h1>{'Create Account'}</h1>
+    <p>{'You need an Account for that'}</p>
     <div>
       <StyledButton className="btn" onClick={showRegister} type="button">
-        {'Registrieren'}
+        {'Signup'}
       </StyledButton>
     </div>
     <LinkButton onClick={closeAuthModal} type="button">
-      {'Schließen'}
+      {'Close'}
     </LinkButton>
   </StyledDiv>
 )
