@@ -79,9 +79,8 @@ export default compose(
     checkLoginModal: PropTypes.func,
   }),
   withHandlers({
-    onFlag: ({ close, flag, comment, checkLoginModal }) => () =>
+    onFlag: ({ close, flag, comment }) => () =>
       authGql(async () => {
-        if (checkLoginModal()) return
         const commentId = comment.id
         await flag({ variables: { commentId } })
         close()
