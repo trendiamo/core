@@ -5,7 +5,7 @@ assets/ajax-loader.gif:
   staging: 2018-01-15T06:07:37-05:00   deca8b0ecd6974227d157b6d7068995d
 assets/app.js:
   development: 2018-05-18T12:37:46-04:00   d14789af87ec8e0be9eca365c9443117
-  production: 2018-05-22T19:05:03+02:00   8b6899916b590b56621675dc6b415d97
+  production: 2018-05-26T14:01:52+02:00   30867b7e1a92b23192e60ff7d9406c30
   staging: 2018-05-11T10:38:23-04:00   f8cc8ca48053d84046ec87b950115011
 assets/gift-card.js:
   development: 2018-01-15T06:07:37-05:00   c73df2ee57cc9eb577f7a1858063495d
@@ -19,6 +19,8 @@ assets/ico-select.svg.liquid:
   development: 2018-01-15T06:07:38-05:00   28de0c672609528b7c55f6f47810784b
   production: 2018-05-14T20:42:03+02:00   28de0c672609528b7c55f6f47810784b
   staging: 2018-01-15T06:07:38-05:00   28de0c672609528b7c55f6f47810784b
+assets/jquery.js:
+  production: 2018-05-26T14:01:50+02:00   a09e13ee94d51c524b7e2a728c7d4039
 assets/lazysizes.js:
   development: 2018-01-15T06:07:38-05:00   a27b15d827d7a26f9fa58fb6b4f9d4b6
   production: 2018-05-14T20:42:03+02:00   a27b15d827d7a26f9fa58fb6b4f9d4b6
@@ -33,7 +35,7 @@ assets/password.js:
   staging: 2018-01-15T06:07:38-05:00   d826da9cb223a44d53a0c34f457e92dc
 assets/theme-custom.scss.liquid:
   development: 2018-05-01T06:03:45-04:00   893ff1d41850a9b4c8cd5a325fa089bb
-  production: 2018-05-17T12:57:34+02:00   893ff1d41850a9b4c8cd5a325fa089bb
+  production: 2018-05-26T14:01:50+02:00   fc4f27542c86edc4bc43ca4398361a08
   staging: 2018-05-01T06:03:45-04:00   893ff1d41850a9b4c8cd5a325fa089bb
 assets/theme-custom2.scss.liquid:
   development: 2018-04-28T08:03:32-04:00   0de3be28376f1254eb4bfc3831cbd675
@@ -45,7 +47,7 @@ assets/theme.js:
   staging: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
   development: 2018-04-30T04:58:00-04:00   d8d755674161083b68f539a092ea1bd3
-  production: 2018-05-17T12:58:18+02:00   d8d755674161083b68f539a092ea1bd3
+  production: 2018-05-26T14:01:49+02:00   99a011ed1ed6a26559540dede07eb3e0
   staging: 2018-04-30T04:58:00-04:00   d8d755674161083b68f539a092ea1bd3
 assets/vendor.js:
   development: 2018-01-15T06:07:38-05:00   cb7c4217c9b6feb844647b361accfe6c
@@ -65,7 +67,7 @@ layout/password.liquid:
   staging: 2018-01-15T06:07:39-05:00   6351674ea67c53e01643a5bea02f7d0a
 layout/theme.liquid:
   development: 2018-04-28T07:39:54-04:00   55be17acc7185ecc8168eabbb3108659
-  production: 2018-05-17T12:58:35+02:00   55be17acc7185ecc8168eabbb3108659
+  production: 2018-05-26T14:01:49+02:00   7246cc69afc73fee11fc2266577d40a1
   staging: 2018-04-28T07:39:54-04:00   55be17acc7185ecc8168eabbb3108659
 locales/de.json:
   development: 2018-01-22T09:51:34-05:00   62f178d1e0a8f21f92910486e0c47812
@@ -109,7 +111,7 @@ sections/blog-template.liquid:
   staging: 2018-01-15T06:07:36-05:00   5757170836346c1082ffba4ef408857e
 sections/cart-template.liquid:
   development: 2018-01-22T11:15:11-05:00   adab4b0ec2528b18d2c5adb2d80e4922
-  production: 2018-05-17T12:57:38+02:00   1ab1da175a344692e5051465bd9690df
+  production: 2018-05-26T14:01:50+02:00   dfec7bb148ff56561c950ee1e0c4e461
   staging: 2018-05-11T10:37:21-04:00   1ab1da175a344692e5051465bd9690df
 sections/collection-list.liquid:
   development: 2018-01-15T06:07:36-05:00   a55d61b95ff71917adad276c41ee1dc0
@@ -145,11 +147,11 @@ sections/featured-product.liquid:
   staging: 2018-01-15T06:07:36-05:00   9c2cd13b0e7e12c4468426c6119eb30e
 sections/footer.liquid:
   development: 2018-04-27T10:28:05-04:00   00914513b2bc40824e65ddf257e4d259
-  production: 2018-05-17T12:57:36+02:00   00914513b2bc40824e65ddf257e4d259
+  production: 2018-05-26T14:01:51+02:00   d9b03e34213360517f2fd11b7241e652
   staging: 2018-04-27T10:28:05-04:00   00914513b2bc40824e65ddf257e4d259
 sections/header.liquid:
   development: 2018-04-26T18:15:01-04:00   2d573e1e49bea69121d7adae479ddc84
-  production: 2018-05-22T17:14:57+02:00   fa5baa535cb99eb77146fa1f512722ec
+  production: 2018-05-26T14:01:52+02:00   e03ceb4fa280f5c19e27176138e644b3
   staging: 2018-04-26T18:15:01-04:00   2d573e1e49bea69121d7adae479ddc84
 sections/hero.liquid:
   development: 2018-01-15T06:07:36-05:00   d45cf37312b64d6e7511bdba56256758
@@ -189,7 +191,7 @@ sections/password-header.liquid:
   staging: 2018-01-15T06:07:37-05:00   96c731183fa1c3f2f87ca66501494897
 sections/product-template.liquid:
   development: 2018-04-26T07:06:13-04:00   f37264576ef4f99df644ae31202c2907
-  production: 2018-05-17T12:57:33+02:00   f37264576ef4f99df644ae31202c2907
+  production: 2018-05-26T14:01:51+02:00   a0778ed225f939af7d8be9e6d6e93a6d
   staging: 2018-04-26T07:06:13-04:00   f37264576ef4f99df644ae31202c2907
 sections/quotes.liquid:
   development: 2018-01-15T06:07:37-05:00   b234ffff9a061befe87a0d69a121af1c
