@@ -13,7 +13,9 @@ Rails.application.routes.draw do
 
     namespace :bubble do
       resources :users, only: :create
-      resources :collections, only: %i[create index show update destroy]
+      resources :collections, only: %i[create index show update destroy] do
+        resources :products, only: %i[create index show update destroy]
+      end
     end
   end
 end
