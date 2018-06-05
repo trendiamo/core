@@ -7,6 +7,10 @@ const Container = styled.div`
   min-height: 100vh;
 `
 
+const Description = styled.p`
+  color: #222;
+`
+
 const Sidebar = styled.div`
   width: 100vw;
   height: 100vh;
@@ -28,18 +32,15 @@ const StyledFooter = styled.footer`
   margin: 55px 0 0 0;
 `
 
-const StyledUl = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+const Cols = styled.div`
   margin: 0 0 1rem 0;
-  padding: 0;
-`
-
-const StyledLi = styled.li`
-  display: block;
-  margin: 0 1rem 0.5rem 1rem;
+  @media (min-width: 1250px) {
+    display: flex;
+    justify-content: space-between;
+  }
+  a {
+    display: block;
+  }
 `
 
 const StyledP = styled.p`
@@ -50,20 +51,16 @@ const StyledP = styled.p`
 
 const Footer = () => (
   <StyledFooter role="contentinfo">
-    <StyledUl>
-      <StyledLi>
+    <Cols>
+      <div>
         <Link to="/legal/terms">{'Terms & Conditions'}</Link>
-      </StyledLi>
-      <StyledLi>
-        <Link to="/legal/imprint">{'Imprint'}</Link>
-      </StyledLi>
-      <StyledLi>
         <Link to="/legal/privacy">{'Privacy & Cookies'}</Link>
-      </StyledLi>
-      <StyledLi>
+      </div>
+      <div>
+        <Link to="/legal/imprint">{'Imprint'}</Link>
         <a href="mailto:hello@trendiamo.com">{'Contact Us'}</a>
-      </StyledLi>
-    </StyledUl>
+      </div>
+    </Cols>
     <StyledP>
       {'© 2018, '}
       <Link to="/">{'store.nondimension.com'}</Link>
@@ -72,4 +69,4 @@ const Footer = () => (
   </StyledFooter>
 )
 
-export { Container, Footer, Sidebar, SidebarContent }
+export { Container, Description, Footer, Sidebar, SidebarContent }

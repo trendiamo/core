@@ -27,6 +27,12 @@ const Button = styled.button.attrs({
   }
 `
 
+const SmallButton = Button.extend`
+  width: auto;
+  padding: 2px 4px;
+  font-size: 12px;
+`
+
 const DisabledButton = Button.extend.attrs({
   disabled: 'disabled',
 })`
@@ -40,4 +46,4 @@ const DisabledButton = Button.extend.attrs({
   }
 `
 
-export { Button, DisabledButton }
+export { Button, DisabledButton, SmallButton }

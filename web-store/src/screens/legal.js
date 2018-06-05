@@ -1,18 +1,31 @@
+import { Button } from '../shared/buttons'
 import ColorLink from '../shared/color-link'
 import css from '../shared/style'
 import Helmet from 'react-helmet'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import styled from 'styled-components'
 
 const StyledDiv = styled.div`
-  margin: 0 auto;
+  margin: 0 2rem;
   max-width: 600px;
   min-height: 100vh;
+
+  @media (min-width: 632px) {
+    margin: 0 auto;
+  }
+`
+
+const StyledLink = styled(Link)`
+  color: white;
 `
 
 const Legal = () => (
   <StyledDiv>
     <Helmet style={[{ cssText: css }]} />
+    <Button>
+      <StyledLink to="/">{'‹ Back'}</StyledLink>
+    </Button>
     <h1>{'Legal text'}</h1>
     <p>
       {

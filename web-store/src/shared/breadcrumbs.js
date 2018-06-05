@@ -1,21 +1,28 @@
 import IconBreadcrumb from '../icons/breadcrumb'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import { SmallButton } from './buttons'
 import styled from 'styled-components'
 
 const StyledDiv = styled.div`
   display: flex;
   align-items: baseline;
-  margin-bottom: 1rem;
+  margin-top: -16px;
+  font-size: 12px;
 `
 
-const StyledLink = styled(Link)`
+const StyledLink1 = styled(Link)`
+  color: white;
+`
+
+const StyledLink2 = styled(Link)`
+  margin-left: 8px;
   text-transform: uppercase;
   color: #999;
 `
 
 const StyledIcon = styled(IconBreadcrumb)`
-  height: 11px;
+  height: 8px;
   fill: #b8b8b8;
   margin: 0 6px;
 `
@@ -27,7 +34,10 @@ const Title = styled.div`
 
 const Breadcrumbs = ({ title }) => (
   <StyledDiv>
-    <StyledLink to="/">{'All products'}</StyledLink>
+    <SmallButton>
+      <StyledLink1 to="/">{'‹ Back'}</StyledLink1>
+    </SmallButton>
+    <StyledLink2 to="/">{'All products'}</StyledLink2>
     <StyledIcon />
     <Title>{title}</Title>
   </StyledDiv>

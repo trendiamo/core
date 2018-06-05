@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { PictureContainer, PicturesContainer, StyledPicture } from './common'
 import withHotkeys, { escapeKey } from '../recompose/with-hotkeys'
 
@@ -14,9 +14,23 @@ const Overlay = styled.div`
   text-align: center;
 `
 
-const MainPicture = styled.img`
+const StyledMainPicture = styled.img`
   height: 100%;
+  transition: opacity 0.25s ease;
+  opacity: ${({ isMounted }) => (isMounted ? 1 : 0)};
 `
+
+const MainPicture = compose(
+  withState('isMounted', 'setIsMounted', false),
+  lifecycle({
+    componentDidMount() {
+      setTimeout(() => this.props.setIsMounted(true), 1)
+    },
+    componentWillUnmount() {
+      this.props.setIsMounted(false)
+    },
+  })
+)(({ alt, isMounted, src }) => <StyledMainPicture alt={alt} isMounted={isMounted} src={src} />)
 
 const Picture = compose(
   withProps(({ product, image }) => ({
