@@ -1,4 +1,4 @@
-import IconBreadcrumb from '../icons/breadcrumb'
+import IconBreadcrumb from 'icons/breadcrumb'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import { SmallButton } from './buttons'

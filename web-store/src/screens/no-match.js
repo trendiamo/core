@@ -1,5 +1,5 @@
-import ColorLink from '../shared/color-link'
-import css from '../shared/style'
+import ColorLink from 'shared/color-link'
+import css from 'shared/style'
 import Helmet from 'react-helmet'
 import React from 'react'
 import styled from 'styled-components'

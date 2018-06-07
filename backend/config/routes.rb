@@ -9,6 +9,8 @@ Rails.application.routes.draw do
         post "/users/sign_in", to: "users/sessions#create"
         delete "/users/sign_out", to: "users/sessions#destroy"
       end
+      post :stripe, to: 'stripe#webhook'
+      resources :payments, only: :create
     end
 
     namespace :bubble do

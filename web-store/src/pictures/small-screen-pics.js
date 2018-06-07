@@ -34,18 +34,19 @@ const Thumbnails = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
   overflow-y: hidden;
   overflow-x: scroll;
 
   div {
-    width: 80px;
     height: 80px;
     text-align: center;
   }
 `
 
 const ThumbnailImg = styled.img`
-  border: 2px solid ${({ isSelected }) => (isSelected ? '#555' : 'transparent')};
+  border: ${({ isSelected }) => (isSelected ? '2px solid #555' : 0)};
   height: 100%;
   object-fit: cover;
 `
@@ -59,7 +60,7 @@ const ThumbnailImage = compose(
   })
 )(({ isSelected, image, onSlideTo }) => (
   <div>
-    <ThumbnailImg alt="thumbnail" isSelected={isSelected} onClick={onSlideTo} src={image} />
+    <ThumbnailImg alt="thumbnail" className="lazyload" isSelected={isSelected} onClick={onSlideTo} src={image} />
   </div>
 ))
 

@@ -12,14 +12,16 @@ const Button = styled.button.attrs({
   font-weight: 700;
   letter-spacing: normal;
   line-height: 1.4;
-  width: 100%;
   white-space: normal;
-  padding: 10px 5px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   user-select: none;
   vertical-align: middle;
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
+  max-width: ${({ fullWidth }) => (fullWidth ? 'none' : '140px')};
+  padding: ${({ fullWidth }) => (fullWidth ? '10px 5px' : '10px 32px')};
+  margin: ${({ center }) => (center ? '0 auto' : 'initial')};
 
   &:hover,
   &:focus {

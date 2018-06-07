@@ -1,6 +1,6 @@
-import IconMastercard from '../icons/mastercard'
-import IconPaypal from '../icons/paypal'
-import IconVisa from '../icons/visa'
+import IconMastercard from 'icons/mastercard'
+import IconPaypal from 'icons/paypal'
+import IconVisa from 'icons/visa'
 import React from 'react'
 import styled from 'styled-components'
 

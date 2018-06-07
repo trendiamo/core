@@ -1,16 +1,18 @@
-import Breadcrumbs from '../shared/breadcrumbs'
+import Breadcrumbs from 'shared/breadcrumbs'
+import { DisabledButton } from 'shared/buttons'
 import Helmet from 'react-helmet'
-import Hidden from '../shared/hidden'
-import Hr from '../shared/hr'
-import PaymentIcons from '../shared/payment-icons'
-import products from '../products.json'
+import Hidden from 'shared/hidden'
+import Hr from 'shared/hr'
+import OrderConfirmedModal from './order-confirmed-modal'
+import PaymentIcons from './payment-icons'
+import PaypalButton from './paypal-button'
+import products from 'products.json'
 import React from 'react'
-import SellerInfo from '../shared/seller-info'
+import SellerInfo from 'shared/seller-info'
 import styled from 'styled-components'
-import { Button, DisabledButton } from '../shared/buttons'
-import { compose, withProps } from 'recompose'
-import { Container, Description, Footer, Sidebar, SidebarContent } from '../shared/shell'
-import { LargeScreenPics, SmallScreenPics } from '../pictures'
+import { compose, withHandlers, withProps, withState } from 'recompose'
+import { Container, Description, Footer, Sidebar, SidebarContent } from 'shared/shell'
+import { LargeScreenPics, SmallScreenPics } from 'pictures'
 
 const Price = styled.div`
   text-align: center;
@@ -33,7 +35,7 @@ const SubHeader = styled.p`
   color: #6a6a6a;
 `
 
-const Pdp = ({ priceString, priceStringSchema, product }) => (
+const Pdp = ({ closeModal, handlePaypalSuccess, orderConfirmationInfo, priceString, priceStringSchema, product }) => (
   <Container>
     <Helmet>
       <title>{product.name}</title>
@@ -69,7 +71,12 @@ const Pdp = ({ priceString, priceStringSchema, product }) => (
             </span>
           </Hidden>
           <Price>{priceString}</Price>
-          {product.available ? <Button>{'Buy now'}</Button> : <DisabledButton>{'Not available'}</DisabledButton>}
+          {product.available ? (
+            // <Button>{'Buy now'}</Button>
+            <PaypalButton handleSuccess={handlePaypalSuccess} price={product.price} />
+          ) : (
+            <DisabledButton>{'Not available'}</DisabledButton>
+          )}
         </div>
         <Hr />
         <PaymentIcons />
@@ -77,6 +84,7 @@ const Pdp = ({ priceString, priceStringSchema, product }) => (
       <Footer />
     </Sidebar>
     <LargeScreenPics product={product} />
+    <OrderConfirmedModal closeModal={closeModal} orderConfirmationInfo={orderConfirmationInfo} />
   </Container>
 )
 
@@ -84,6 +92,18 @@ export default compose(
   withProps(({ match }) => ({
     product: products[match.params.id],
   })),
+  withState('orderConfirmationInfo', 'setOrderConfirmationInfo', null),
+  withHandlers({
+    closeModal: ({ setOrderConfirmationInfo }) => () => {
+      setOrderConfirmationInfo(null)
+    },
+    handlePaypalSuccess: ({ product, setOrderConfirmationInfo }) => info => {
+      setOrderConfirmationInfo({
+        ...info,
+        product,
+      })
+    },
+  }),
   withProps(({ product }) => ({
     priceString: product.price.toLocaleString('de-DE', { currency: 'EUR', style: 'currency' }),
     priceStringSchema: product.price.toLocaleString('en-US', { minimumFractionDigits: 2 }),

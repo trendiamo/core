@@ -1,12 +1,12 @@
 import chunk from 'lodash.chunk'
-import Hr from '../shared/hr'
+import Hr from 'shared/hr'
 import { Link } from 'react-router-dom'
-import { NavPics } from '../pictures'
-import products from '../products.json'
+import { NavPics } from 'pictures'
+import products from 'products.json'
 import React from 'react'
-import SellerInfo from '../shared/seller-info'
+import SellerInfo from 'shared/seller-info'
 import styled from 'styled-components'
-import { Container, Description, Footer, Sidebar, SidebarContent } from '../shared/shell'
+import { Container, Description, Footer, Sidebar, SidebarContent } from 'shared/shell'
 
 const StyledLink = styled(Link)`
   display: block;

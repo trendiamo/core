@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { PictureContainer, PicturesContainer, StyledPicture } from './common'
-import withHotkeys, { escapeKey } from '../recompose/with-hotkeys'
+import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const Overlay = styled.div`
   position: absolute;

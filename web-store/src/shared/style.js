@@ -19,4 +19,7 @@ a, button, [role="button"], input, label, select, textarea {
 *, *::before, *::after {
   box-sizing: border-box;
 }
+.xcomponent-outlet > iframe.xcomponent-component-frame {
+  z-index: 0 !important;
+}
 `

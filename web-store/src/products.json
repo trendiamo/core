@@ -6,7 +6,7 @@
     "description":
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "available": true,
-    "price": 0.0,
+    "price": 1179.0,
     "featuredImage": "//picsum.photos/1000/1300?image=0",
     "images": [
       "//picsum.photos/1000/1300?image=0",
@@ -24,7 +24,7 @@
     "description":
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "available": true,
-    "price": 0.0,
+    "price": 34.0,
     "featuredImage": "//picsum.photos/1000/1300?image=11",
     "images": [
       "//picsum.photos/1000/1300?image=10",
@@ -42,7 +42,7 @@
     "description":
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "available": true,
-    "price": 0.0,
+    "price": 28.0,
     "featuredImage": "//picsum.photos/1000/1300?image=22",
     "images": [
       "//picsum.photos/1000/1300?image=20",
@@ -60,7 +60,7 @@
     "description":
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "available": true,
-    "price": 0.0,
+    "price": 7.5,
     "featuredImage": "//picsum.photos/1000/1300?image=33",
     "images": [
       "//picsum.photos/1000/1300?image=30",
@@ -78,7 +78,7 @@
     "description":
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "available": true,
-    "price": 0.0,
+    "price": 31.9,
     "featuredImage": "//picsum.photos/1000/1300?image=44",
     "images": [
       "//picsum.photos/1000/1300?image=40",
@@ -96,7 +96,7 @@
     "description":
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "available": true,
-    "price": 0.0,
+    "price": 1.85,
     "featuredImage": "//picsum.photos/1000/1300?image=55",
     "images": [
       "//picsum.photos/1000/1300?image=50",

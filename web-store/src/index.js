@@ -1,10 +1,18 @@
-import App from './app'
+import App from 'app'
+import countries from 'i18n-iso-countries'
+import countriesEn from 'i18n-iso-countries/langs/en.json'
+import lazySizes from 'lazysizes'
 import React from 'react'
-import { render } from './react-snapshot'
 import WebFont from 'webfontloader'
-import 'lazysizes'
+import { isSnapshot, render } from 'ext/react-snapshot'
 // import registerServiceWorker from './registerServiceWorker';
 
-WebFont.load({ google: { families: ['Yantramanav:400,500,700'] } })
+countries.registerLocale(countriesEn)
+
+if (!isSnapshot) {
+  WebFont.load({ google: { families: ['Yantramanav:400,500,700'] } })
+  lazySizes.init()
+}
+
 render(<App />, document.getElementById('root'))
 // registerServiceWorker();

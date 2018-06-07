@@ -12,6 +12,11 @@ yarn
 yarn start
 ```
 
+## Do a paypal sandbox payment
+
+Username: admin+buyer@trendiamo.com
+Password: testmctest1
+
 ## Code checks
 
 ```
