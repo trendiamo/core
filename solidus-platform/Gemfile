@@ -32,6 +32,11 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'solidus_api'
+gem 'solidus_backend'
+gem 'solidus_core'
+gem 'solidus_sample'
+gem 'solidus_auth_devise'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
