@@ -16,6 +16,6 @@ class Resolvers::SignInUser < GraphQL::Function
     return unless user.valid_password?(args[:password])
     token = Tiddle.create_and_return_token(user, ctx[:request])
     ctx[current_user: user]
-    OpenStruct.new({ user: user, authentication_token: token })
+    OpenStruct.new(user: user, authentication_token: token)
   end
 end
