@@ -4,7 +4,4 @@ Spree::User.class_eval do
        :recoverable, :trackable, :validatable,
        :token_authenticatable
 
-  puts "hello"
 end
-
-puts "hello2"
