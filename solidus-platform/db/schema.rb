@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611162939) do
+ActiveRecord::Schema.define(version: 20180619145411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentication_tokens", force: :cascade do |t|
+    t.string "body"
+    t.bigint "user_id"
+    t.datetime "last_used_at"
+    t.integer "expires_in"
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body"], name: "index_authentication_tokens_on_body"
+    t.index ["user_id"], name: "index_authentication_tokens_on_user_id"
+  end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
@@ -1165,6 +1178,7 @@ ActiveRecord::Schema.define(version: 20180611162939) do
     t.datetime "updated_at", precision: 6
   end
 
+  add_foreign_key "authentication_tokens", "spree_users", column: "user_id"
   add_foreign_key "spree_promotion_code_batches", "spree_promotions", column: "promotion_id"
   add_foreign_key "spree_promotion_codes", "spree_promotion_code_batches", column: "promotion_code_batch_id"
   add_foreign_key "spree_tax_rate_tax_categories", "spree_tax_categories", column: "tax_category_id"

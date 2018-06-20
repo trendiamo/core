@@ -1,0 +1,2 @@
+class AuthenticationToken < ApplicationRecord
+end

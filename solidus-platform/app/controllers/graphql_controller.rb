@@ -1,12 +1,12 @@
 class GraphqlController < ApplicationController
-  # before_action :authenticate_user!
+  # before_action :authenticate_spree_user!
   skip_before_action :verify_authenticity_token
 
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    context = { current_user: current_spree_user, headers: request.headers }
+    context = { current_user: current_spree_user, headers: request.headers, request: request }
     result = TrendiamoSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   end
