@@ -11,4 +11,10 @@ Types::ProductType = GraphQL::ObjectType.define do
       obj.variants.all
     }
   end
+
+  connection :optionTypes, Types::OptionType.connection_type do
+    resolve ->(obj, _args, _ctx) {
+      obj.option_types.all
+    }
+  end
 end

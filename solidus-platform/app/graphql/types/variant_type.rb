@@ -10,4 +10,10 @@ Types::VariantType = GraphQL::ObjectType.define do
       obj.prices.all
     }
   end
+
+  connection :optionValues, Types::OptionValueType.connection_type do
+    resolve ->(obj, _args, _ctx) {
+      obj.option_values.all
+    }
+  end
 end
