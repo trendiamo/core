@@ -2,13 +2,12 @@ Types::OptionType = GraphQL::ObjectType.define do
   name "OptionType"
 
   field :id,   types.ID
-  field :presentation,  types.String
+  field :presentation, types.String
   field :name, types.String
   field :position, types.Int
-
-  connection :optionValues, Types::OptionValueType.connection_type do
+  field :optionValues, types[Types::OptionValueType] do
     resolve ->(obj, _args, _ctx) {
-      obj.option_values.all
+      obj.option_values
     }
   end
 end

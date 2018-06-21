@@ -5,10 +5,12 @@ Types::OptionValueType = GraphQL::ObjectType.define do
   field :presentation, types.String
   field :name, types.String
   field :position, types.Int
-  field :option_type_id, types.ID
-  connection :optionTypes, Types::OptionType.connection_type do
+  field :optionTypeId, types.ID do
+    resolve ->(obj, _args, _ctx) { obj.option_type_id }
+  end
+  field :optionTypes, Types::OptionType do
     resolve ->(obj, _args, _ctx) {
-      obj.option_types.all
+      obj.option_type
     }
   end
 end

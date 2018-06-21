@@ -6,15 +6,15 @@ Types::ProductType = GraphQL::ObjectType.define do
   field :description, types.String
   field :slug,        types.String
 
-  connection :variants, Types::VariantType.connection_type do
+  field :variants, types[Types::VariantType] do
     resolve ->(obj, _args, _ctx) {
       obj.variants.all
     }
   end
 
-  connection :optionTypes, Types::OptionType.connection_type do
+  field :optionTypes, types[Types::OptionType] do
     resolve ->(obj, _args, _ctx) {
-      obj.option_types.all
+      obj.option_types
     }
   end
 end

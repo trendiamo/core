@@ -5,15 +5,15 @@ Types::VariantType = GraphQL::ObjectType.define do
   field :sku,  types.String
   field :name, types.String
 
-  connection :prices, Types::PriceType.connection_type do
+  field :price, Types::PriceType do
     resolve ->(obj, _args, _ctx) {
-      obj.prices.all
+      obj.prices.first
     }
   end
 
-  connection :optionValues, Types::OptionValueType.connection_type do
+  field :optionValues, types[Types::OptionValueType] do
     resolve ->(obj, _args, _ctx) {
-      obj.option_values.all
+      obj.option_values
     }
   end
 end
