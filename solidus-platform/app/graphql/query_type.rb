@@ -19,4 +19,13 @@ QueryType = GraphQL::ObjectType.define do
       end
     }
   end
+
+  field :taxonomies, types[Types::TaxonomyType] do
+    name          "taxonomies"
+    description   "List of taxonomies"
+
+    resolve ->(_obj, _args, _ctx) {
+      Spree::Taxonomy.all
+    }
+  end
 end
