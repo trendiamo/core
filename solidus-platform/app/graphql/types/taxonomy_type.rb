@@ -1,19 +1,17 @@
 Types::TaxonomyType = GraphQL::ObjectType.define do
   name "Taxonomy"
 
-  field :id,   types.ID
-  field :position,  types.Int
+  field :id, types.ID
+  field :position, types.Int
   field :name, types.String
 
-  # field :price, Types::PriceType do
-  #   resolve ->(obj, _args, _ctx) {
-  #     obj.prices.first
-  #   }
-  # end
+  connection :taxons, Types::TaxonType.connection_type do
+    name          "taxons"
+    description   "List of taxons"
 
-  # field :optionValues, types[Types::OptionValueType] do
-  #   resolve ->(obj, _args, _ctx) {
-  #     obj.option_values
-  #   }
-  # end
+    argument :ids, types[types.ID]
+    resolve ->(obj, _args, _ctx) {
+      obj.taxons
+    }
+  end
 end
