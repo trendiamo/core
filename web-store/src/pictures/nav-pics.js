@@ -26,10 +26,10 @@ const Name = styled.div`
   font-size: 18px;
 `
 
-const NavPics = ({ products }) => (
+const NavPics = ({ taxon, products }) => (
   <PicturesContainer>
     {Object.values(products).map(product => (
-      <PictureLink key={product.id} to={`/products/${product.id}`}>
+      <PictureLink key={product.id} to={`/collections/${taxon.permalink}/products/${product.slug}`}>
         <StyledPicture alt="" className="lazyload" data-src={product.featuredImage} />
         <Name>{product.name}</Name>
       </PictureLink>

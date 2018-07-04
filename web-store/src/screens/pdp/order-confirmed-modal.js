@@ -3,8 +3,8 @@ import countries from 'i18n-iso-countries'
 import IconSuccess from 'icons/success'
 import React from 'react'
 import styled from 'styled-components'
-import StyledModal from 'shared/styled-modal'
 import { branch, compose, renderNothing, withProps } from 'recompose'
+import { Modal, ModalContent } from 'shared/modal'
 
 const H2 = styled.h2`
   text-transform: uppercase;
@@ -85,67 +85,64 @@ const MessageContainer = styled.div`
 `
 
 const OrderConfirmedModal = ({ country, closeModal, product, priceString, isModalOpen, shippingAddress }) => (
-  <StyledModal
-    appElement={document.body}
-    contentLabel="Order Confirmed Modal"
-    isOpen={isModalOpen}
-    onRequestClose={closeModal}
-  >
-    <H2>{'Thank you !'}</H2>
-    <PaymentSuccessful>
-      <IconContainer>
-        <IconSuccess />
-      </IconContainer>
-      <MessageContainer>
-        <ImportantLabel>{'Payment Successful'}</ImportantLabel>
-        <GrayLabel>{'Thank you for your purchase.'}</GrayLabel>
-      </MessageContainer>
-    </PaymentSuccessful>
-    <BillShipInfo>
-      <ImportantLabel>{'Billing & Shipping address'}</ImportantLabel>
-      <div>{`${shippingAddress.recipientName}`}</div>
-      <div>{shippingAddress.line1}</div>
-      <div>{`${shippingAddress.postalCode} ${shippingAddress.city}`}</div>
-      <div>{country}</div>
-    </BillShipInfo>
-    <OrderSummary>
-      <ImportantLabel>{'Your Order Summary'}</ImportantLabel>
-      <Table>
-        <tbody>
-          <tr>
-            <td>
-              <img alt="" height="48" src={product.featuredImage} width="48" />
-            </td>
-            <td>
-              <ImportantLabel>{product.name}</ImportantLabel>
-              <GrayLabel>{product.vendor}</GrayLabel>
-            </td>
-            <PriceTd>
-              <ImportantLabel>{priceString}</ImportantLabel>
-            </PriceTd>
-          </tr>
-          <tr>
-            <td />
-            <td>
-              <ImportantLabel>{'Shipping Costs'}</ImportantLabel>
-              <GrayLabel>{'Included'}</GrayLabel>
-            </td>
-            <PriceTd>
-              <ImportantLabel>{'+ 0,00€'}</ImportantLabel>
-            </PriceTd>
-          </tr>
-        </tbody>
-      </Table>
-    </OrderSummary>
-    <Total>
-      <ImportantLabel>{`TOTAL ${priceString}`}</ImportantLabel>
-      <GrayLabel>{'incl. Taxes'}</GrayLabel>
-    </Total>
-    <Center>{'You will receive your invoice as an email'}</Center>
-    <Button center onClick={closeModal}>
-      {'Okey'}
-    </Button>
-  </StyledModal>
+  <Modal contentLabel="Order Confirmed Modal" isOpen={isModalOpen} onRequestClose={closeModal}>
+    <ModalContent>
+      <H2>{'Thank you !'}</H2>
+      <PaymentSuccessful>
+        <IconContainer>
+          <IconSuccess />
+        </IconContainer>
+        <MessageContainer>
+          <ImportantLabel>{'Payment Successful'}</ImportantLabel>
+          <GrayLabel>{'Thank you for your purchase.'}</GrayLabel>
+        </MessageContainer>
+      </PaymentSuccessful>
+      <BillShipInfo>
+        <ImportantLabel>{'Billing & Shipping address'}</ImportantLabel>
+        <div>{`${shippingAddress.recipientName}`}</div>
+        <div>{shippingAddress.line1}</div>
+        <div>{`${shippingAddress.postalCode} ${shippingAddress.city}`}</div>
+        <div>{country}</div>
+      </BillShipInfo>
+      <OrderSummary>
+        <ImportantLabel>{'Your Order Summary'}</ImportantLabel>
+        <Table>
+          <tbody>
+            <tr>
+              <td>
+                <img alt="" height="48" src={product.featuredImage} width="48" />
+              </td>
+              <td>
+                <ImportantLabel>{product.name}</ImportantLabel>
+                <GrayLabel>{product.vendor}</GrayLabel>
+              </td>
+              <PriceTd>
+                <ImportantLabel>{priceString}</ImportantLabel>
+              </PriceTd>
+            </tr>
+            <tr>
+              <td />
+              <td>
+                <ImportantLabel>{'Shipping Costs'}</ImportantLabel>
+                <GrayLabel>{'Included'}</GrayLabel>
+              </td>
+              <PriceTd>
+                <ImportantLabel>{'+ 0,00€'}</ImportantLabel>
+              </PriceTd>
+            </tr>
+          </tbody>
+        </Table>
+      </OrderSummary>
+      <Total>
+        <ImportantLabel>{`TOTAL ${priceString}`}</ImportantLabel>
+        <GrayLabel>{'incl. Taxes'}</GrayLabel>
+      </Total>
+      <Center>{'You will receive your invoice as an email'}</Center>
+      <Button center onClick={closeModal}>
+        {'Okey'}
+      </Button>
+    </ModalContent>
+  </Modal>
 )
 
 export default compose(

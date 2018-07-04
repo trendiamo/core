@@ -1,55 +1,88 @@
-import chunk from 'lodash.chunk'
+import AppContext from 'app/app-context'
+import Breadcrumbs from 'shared/breadcrumbs'
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 import Hr from 'shared/hr'
-import { Link } from 'react-router-dom'
 import { NavPics } from 'pictures'
-import products from 'products.json'
 import React from 'react'
 import SellerInfo from 'shared/seller-info'
-import styled from 'styled-components'
-import { Container, Description, Footer, Sidebar, SidebarContent } from 'shared/shell'
+import Video from 'shared/video'
+import withConsumerProps from 'ext/recompose/with-consumer-props'
+import { withRouter } from 'react-router'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
+import { Container, Description, Footer, MainContent, Sidebar, SidebarContent, Topbar } from 'shared/shell'
 
-const StyledLink = styled(Link)`
-  display: block;
-  font-weight: 500;
-`
-
-const Cols = styled.div`
-  @media (min-width: 1250px) {
-    display: flex;
-    justify-content: space-between;
-  }
-`
-
-const Plp = () => (
-  <Container>
-    <Sidebar>
-      <SidebarContent>
-        <SellerInfo />
-        <Hr />
-        <h1>{'Gilmour Niggemann'}</h1>
-        <Description>
-          {
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-          }
-        </Description>
-        <Hr />
-        <Cols>
-          {chunk(Object.values(products), 3).map(col => (
-            <div key={col[0].id}>
-              {col.map(e => (
-                <StyledLink key={e.id} to={`/products/${e.id}`}>
-                  {`${e.name} ›`}
-                </StyledLink>
-              ))}
-            </div>
-          ))}
-        </Cols>
-        <Hr />
-      </SidebarContent>
-      <Footer />
-    </Sidebar>
-    <NavPics products={products} />
-  </Container>
+const Plp = ({ goBack, products, taxon }) => (
+  <React.Fragment>
+    <Topbar />
+    <Container>
+      <Sidebar>
+        <SidebarContent>
+          <SellerInfo taxon={taxon} />
+          <Hr />
+          <Breadcrumbs goBack={goBack} items={[{ path: '/', text: 'home' }, { text: taxon.name }]} />
+          <Description>{taxon.description}</Description>
+          <Hr />
+        </SidebarContent>
+        <Footer />
+      </Sidebar>
+      <MainContent>
+        <Video videoId="zLc8-F-siNA" />
+        <NavPics products={products} taxon={taxon} />
+      </MainContent>
+      <Footer main />
+    </Container>
+  </React.Fragment>
 )
 
-export default Plp
+export default compose(
+  graphql(
+    gql`
+      query($permalink: String!) {
+        taxon(permalink: $permalink) {
+          permalink
+          name
+          description
+          iconUrl
+          products {
+            edges {
+              node {
+                id
+                name
+                slug
+                featuredImage
+                priceInCents
+              }
+            }
+          }
+        }
+      }
+    `,
+    {
+      options: ({ match }) => ({
+        variables: { permalink: `collections/${match.params.slug}` },
+      }),
+    }
+  ),
+  branch(({ data }) => data && (data.loading || data.error), renderNothing),
+  withProps(({ data }) => ({
+    products: data.taxon.products.edges.map(e => e.node),
+    taxon: data.taxon,
+  })),
+  withConsumerProps(AppContext.Consumer, ({ setProducts, setTaxons, taxons }) => ({ setProducts, setTaxons, taxons })),
+  withRouter,
+  withHandlers({
+    goBack: ({ history }) => history.goBack,
+  }),
+  lifecycle({
+    componentWillMount() {
+      const { products, setProducts, setTaxons, taxon, taxons } = this.props
+      const productsHash = products.reduce((a, e) => {
+        a[e.slug] = e
+        return a
+      }, {})
+      setProducts(productsHash)
+      setTaxons({ ...taxons, [taxon.permalink]: taxon })
+    },
+  })
+)(Plp)

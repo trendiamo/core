@@ -12,7 +12,7 @@ const StyledIframe = styled.iframe`
 const Home = () => (
   <React.Fragment>
     <Helmet style={[{ cssText: 'body{margin:0}' }]} />
-    <StyledIframe src="https://trendiamo.com/" />
+    <StyledIframe src="https://quickpages.co/p/trnd-test" />
   </React.Fragment>
 )
 

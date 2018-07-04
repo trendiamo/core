@@ -3,36 +3,34 @@ import styled from 'styled-components'
 const Button = styled.button.attrs({
   type: 'button',
 })`
-  background-color: #000;
-  border: 1px solid transparent;
+  background-color: ${({ outline }) => (outline ? '#fff' : '#7189cf')};
+  border: 2px solid ${({ outline }) => (outline ? '#7189cf' : 'transparent')};
+  color: ${({ outline }) => (outline ? '#7189cf' : '#fff')};
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
+  max-width: ${({ fullWidth }) => (fullWidth ? 'none' : '140px')};
+  padding: ${({ fullWidth, medium, small }) =>
+    small ? '2px 4px' : medium ? '5px 8px' : fullWidth ? '10px 5px' : '10px 32px'};
+  margin: ${({ center }) => (center ? '0 auto' : 'initial')};
+  font-size: ${({ small }) => (small ? '12px' : 'inherit')};
+  line-height: ${({ small, medium }) => (small || medium ? '15px' : '1.4')};
+  letter-spacing: ${({ small }) => (small ? 'normal' : '1.12px')};
+  border-radius: 2px
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.13);
-  color: #fff;
   cursor: pointer;
   display: block;
   font-weight: 700;
-  letter-spacing: normal;
-  line-height: 1.4;
   white-space: normal;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   user-select: none;
   vertical-align: middle;
-  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
-  max-width: ${({ fullWidth }) => (fullWidth ? 'none' : '140px')};
-  padding: ${({ fullWidth }) => (fullWidth ? '10px 5px' : '10px 32px')};
-  margin: ${({ center }) => (center ? '0 auto' : 'initial')};
 
   &:hover,
   &:focus {
-    background-color: #666;
+    opacity: 0.8;
+    outline: none;
   }
-`
-
-const SmallButton = Button.extend`
-  width: auto;
-  padding: 2px 4px;
-  font-size: 12px;
 `
 
 const DisabledButton = Button.extend.attrs({
@@ -48,4 +46,4 @@ const DisabledButton = Button.extend.attrs({
   }
 `
 
-export { Button, DisabledButton, SmallButton }
+export { Button, DisabledButton }

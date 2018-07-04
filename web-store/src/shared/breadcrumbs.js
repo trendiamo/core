@@ -1,7 +1,7 @@
+import { Button } from './buttons'
 import IconBreadcrumb from 'icons/breadcrumb'
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { SmallButton } from './buttons'
 import styled from 'styled-components'
 
 const StyledDiv = styled.div`
@@ -11,11 +11,7 @@ const StyledDiv = styled.div`
   font-size: 12px;
 `
 
-const StyledLink1 = styled(Link)`
-  color: white;
-`
-
-const StyledLink2 = styled(Link)`
+const StyledLink = styled(Link)`
   margin-left: 8px;
   text-transform: uppercase;
   color: #999;
@@ -32,14 +28,23 @@ const Title = styled.div`
   color: #666;
 `
 
-const Breadcrumbs = ({ title }) => (
+const Breadcrumbs = ({ goBack, items }) => (
   <StyledDiv>
-    <SmallButton>
-      <StyledLink1 to="/">{'‹ Back'}</StyledLink1>
-    </SmallButton>
-    <StyledLink2 to="/">{'All products'}</StyledLink2>
-    <StyledIcon />
-    <Title>{title}</Title>
+    <Button onClick={goBack} outline small>
+      {'Back'}
+    </Button>
+
+    {items.map(
+      item =>
+        item.path ? (
+          <React.Fragment key={item.path}>
+            <StyledLink to={item.path}>{item.text}</StyledLink>
+            <StyledIcon />
+          </React.Fragment>
+        ) : (
+          <Title key={item.text}>{item.text}</Title>
+        )
+    )}
   </StyledDiv>
 )
 
