@@ -158,7 +158,7 @@ task import_products: :environment do
     Spree::Image.destroy_all
   end
 
-  # destroy
+  destroy
   products = ShopifyAPI::Product.all
   new_products_array = []
   products.each do |product|
