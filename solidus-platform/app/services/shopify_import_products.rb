@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class ShopifyImport
+class ShopifyImportProducts
   def initialize
   end
 

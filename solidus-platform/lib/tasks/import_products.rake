@@ -1,3 +1,3 @@
 task import_products: :environment do
-  ShopifyImport.new.perform
+  ShopifyImportProducts.new.perform
 end
