@@ -6,9 +6,9 @@
   {% endif %}
 
   {% if section.blocks.size > 0 %}
-    <div class="logo-bar{% if section.settings.title_enable %} logo-bar--large{% endif %}">
+    <ul class="logo-bar{% if section.settings.title_enable %} logo-bar--large{% endif %}">
       {% for block in section.blocks %}
-        <div class="logo-bar__item{% if section.settings.title_enable %} logo-bar__item--large{% endif %}" {{ block.shopify_attributes }}>
+        <li class="logo-bar__item{% if section.settings.title_enable %} logo-bar__item--large{% endif %}" {{ block.shopify_attributes }}>
           {% if block.settings.link != blank %}
             <a href="{{ block.settings.link }}" class="logo-bar__link">
           {% endif %}
@@ -20,9 +20,9 @@
           {% if block.settings.link != blank %}
             </a>
           {% endif %}
-        </div>
+        </li>
       {% endfor %}
-    </div>
+    </ul>
   {% endif %}
 
   {% if section.blocks.size == 0 %}
@@ -32,40 +32,76 @@
 
 {% schema %}
   {
-    "name": "Logo list",
+    "name": {
+      "en": "Logo list",
+      "de": "Logo-Liste",
+      "fr": "Liste des logos"
+    },
     "class": "index-section",
     "max_blocks": 20,
     "settings": [
       {
         "type": "text",
         "id": "title",
-        "label": "Heading",
-        "default": "Logo list"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Logo list",
+          "de": "Logo-Liste",
+          "fr": "Liste de logos"
+        }
       }
     ],
     "blocks": [
       {
         "type": "logo_image",
-        "name": "Logo",
+        "name": {
+          "en": "Logo",
+          "de": "Logo",
+          "fr": "Logo"
+        },
         "settings": [
           {
             "type": "image_picker",
             "id": "image",
-            "label": "Image"
+            "label": {
+              "en": "Image",
+              "de": "Foto",
+              "fr": "Image"
+            }
           },
           {
             "type": "url",
             "id": "link",
-            "label": "Link",
-            "info": "Optional"
+            "label": {
+              "en": "Link",
+              "de": "Link",
+              "fr": "Lien"
+            },
+            "info": {
+              "en": "Optional",
+              "de": "Optional",
+              "fr": "Facultatif"
+            }
           }
         ]
       }
     ],
     "presets": [
       {
-        "name": "Logo list",
-        "category": "Image",
+        "name": {
+          "en": "Logo list",
+          "de": "Logo-Liste",
+          "fr": "Liste de logos"
+        },
+        "category": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        },
         "blocks": [
           {
             "type": "logo_image"

@@ -2,7 +2,12 @@
   "general": {
     "accessibility": {
       "skip_to_content": "Ir directamente al contenido",
-      "close_modal": "Cerrar (esc)"
+      "close_modal": "Cerrar (esc)",
+      "link_messages": {
+        "new_window": "Abre en una nueva ventana.",
+        "external": "Abre sitio externo.",
+        "new_window_and_external": "Abre sitio externo externo en una nueva ventana."
+      }
     },
     "meta": {
       "tags": "Etiquetado \"{{ tags }}\"",
@@ -14,8 +19,8 @@
       "link": "Continuar la compra"
     },
     "pagination": {
-      "previous": "Anterior",
-      "next": "Siguiente",
+      "previous": "Pagina anterior",
+      "next": "Siguiente página",
       "current_page": "Página {{ current }} de {{ total }}"
     },
     "password_page": {
@@ -41,7 +46,7 @@
       }
     },
     "search": {
-      "no_results_html": "Su búsqueda de \"{{ terms }}\" no tuvo resultados.",
+      "no_results_html": "Intente con un término de búsqueda diferente o regrese a la <a href=\"\/\">página de inicio<\/a>.",
       "results_with_count": {
         "one": "{{ count }} resultado para \"{{ terms }}\"",
         "other": "{{ count }} resultados para \"{{ terms }}\""
@@ -49,7 +54,11 @@
       "title": "Buscar nuestro sitio",
       "placeholder": "Buscar",
       "submit": "Buscar",
-      "close": "Cerrar (esc)"
+      "close": "Cerrar (esc)",
+      "heading": {
+        "one": "Resultado de búsqueda",
+        "other": "Resultados de la búsqueda"
+      }
     },
     "newsletter_form": {
       "newsletter_email": "Join our mailing list",
@@ -71,21 +80,29 @@
       "play_video": "Reproduce el video",
       "close_video": "Cerca de vídeo"
     },
+    "featured_product": {
+      "title": "Producto destacado",
+      "gallery_thumbnail_alt": "Cargar imagen en el visor de la galería, {{ imageAlt }}"
+    },
     "map": {
       "address_error": "No se puede encontrar esa dirección",
       "address_no_results": "No results for that address",
       "address_query_limit_html": "Se ha excedido el límite de uso de la API de Google . Considere la posibilidad de actualizar a un <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Plan Premium<\/a>.",
-      "auth_error_html": "Hubo un problema de autenticación con su cuenta de Google Maps."
+      "auth_error_html": "Hubo un problema de autenticación con su cuenta de Google Maps.",
+      "section_heading": "Ubicación"
     }
   },
   "blogs": {
     "article": {
       "view_all": "Ver todo",
+      "view_all_blogs": "Ver todo los artículos",
       "all_topics": "Todos los temas",
       "by_author": "por {{ author }}",
       "posted_in": "Publicado en",
       "read_more": "Leer más",
-      "back_to_blog": "Volver a {{ title }}"
+      "read_more_title": "Leer más: {{ title }}",
+      "back_to_blog": "Volver a {{ title }}",
+      "tags": "Etiquetas"
     },
     "comments": {
       "title": "Dejar un comentario",
@@ -105,7 +122,7 @@
   "cart": {
     "general": {
       "title": "Carrito de compra",
-      "note": "Instrucciones especiales para el vendedor",
+      "note": "Agregue una nota a su pedido",
       "remove": "Quitar",
       "subtotal": "Subtotal",
       "savings": "Está ahorrando",
@@ -128,6 +145,7 @@
   "collections": {
     "general": {
       "view_all": "Ver todo",
+      "view_all_label": "Ver todos los productos de la colección {{ collection_name }}",
       "no_matches": "Lo sentimos, no hay productos que coincidan con su búsqueda.",
       "items_with_count": {
         "one": "{{ count }} artículo",
@@ -275,9 +293,9 @@
   "layout": {
     "navigation": {
       "search": "Buscar",
-      "toggle": "expandir\/colapsar",
       "expand": "expandir",
-      "collapse": "contraer"
+      "collapse": "contraer",
+      "menu": "Menú"
     },
     "cart": {
       "title": "Carrito",
@@ -302,15 +320,18 @@
       "sold_out": "Agotado",
       "unavailable": "No disponible",
       "on_sale": "Oferta",
+      "sale_price": "Precio de oferta",
       "quantity": "Cantidad",
       "add_to_cart": "Agregar al carrito",
-      "back_to_collection": "Volver a {{ title }}"
+      "back_to_collection": "Volver a {{ title }}",
+      "vendor": "Vendedor"
     }
   },
   "gift_cards": {
     "issued": {
       "title_html": "¡Aquí está su tarjeta de regalo de {{ value }} para {{ shop }}!",
       "subtext": "¡Aquí está su tarjeta de regalo!",
+      "gift_card_code": "código de tarjeta de regalo",
       "disabled": "Inhabilitada",
       "expired": "Expiró en {{ expiry }}",
       "active": "Expira en {{ expiry }}",
@@ -318,7 +339,8 @@
       "shop_link": "Empezar a comprar",
       "print": "Imprima esta tarjeta regalo",
       "remaining_html": "{{ balance }} restante",
-      "add_to_apple_wallet": "Añadir a Apple Wallet"
+      "add_to_apple_wallet": "Añadir a Apple Wallet",
+      "qr_image_alt": "Código QR - escanear para canjear la tarjeta de regalo"
     }
   },
   "date_formats": {

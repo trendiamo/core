@@ -78,28 +78,52 @@
 
 {% schema %}
   {
-    "name": "Text columns with images",
+    "name": {
+      "en": "Text columns with images",
+      "de": "Textspalten mit Fotos",
+      "fr": "Colonnes avec images"
+    },
     "class": "index-section",
     "settings": [
       {
         "type": "text",
         "id": "title",
-        "label": "Heading",
-        "default": "Text columns with images"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Text columns with images",
+          "de": "Textspalten mit Fotos",
+          "fr": "Colonnes de texte avec images"
+        }
       },
       {
         "type": "select",
         "id": "align_text",
-        "label": "Text alignment",
+        "label": {
+          "en": "Text alignment",
+          "de": "Textausrichtung",
+          "fr": "Alignement du texte"
+        },
         "default": "left",
         "options": [
           {
             "value": "left",
-            "label": "Left"
+            "label": {
+              "en": "Left",
+              "de": "Links",
+              "fr": "Gauche"
+            }
           },
           {
             "value": "center",
-            "label": "Centered"
+            "label": {
+              "en": "Centered",
+              "de": "Mittig",
+              "fr": "Centré"
+            }
           }
         ]
       }
@@ -107,48 +131,92 @@
     "blocks": [
       {
         "type": "text_block",
-        "name": "Column",
+        "name": {
+          "en": "Column",
+          "de": "Spalte",
+          "fr": "Colonne"
+        },
         "settings": [
           {
             "type": "checkbox",
             "id": "enable_image",
-            "label": "Show image",
+            "label": {
+              "en": "Show image",
+              "de": "Foto anzeigen",
+              "fr": "Afficher l'image"
+            },
             "default": true
           },
           {
             "type": "image_picker",
             "id": "image",
-            "label": "Image"
+            "label": {
+              "en": "Image",
+              "de": "Foto",
+              "fr": "Image"
+            }
           },
           {
             "type": "text",
             "id": "title",
-            "label": "Heading",
-            "default": "Add a title or tagline"
+            "label": {
+              "en": "Heading",
+              "de": "Titel",
+              "fr": "En-tête"
+            },
+            "default": {
+              "en": "Add a title or tagline",
+              "de": "Titel oder Text hinzufügen",
+              "fr": "Ajouter un titre ou un slogan"
+            }
           },
           {
             "type": "richtext",
             "id": "text",
-            "label": "Text",
-            "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+            "label": {
+              "en": "Text",
+              "de": "Text",
+              "fr": "Texte"
+            },
+            "default": {
+              "en": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>",
+              "de": "<p>Blogposts, Produkte oder Promotions mit Ihren Kunden teilen. Nutzen Sie diesen Text, um Produkte zu beschreiben, Details zu Verfügbarkeit und Stil mitzuteilen oder als Ort, wo Reviews oder FAQs stehen.</p>",
+              "fr": "<p>Partagez des articles de blog, des produits ou des promotions avec vos clients. Utilisez ce texte pour décrire vos produits, partager des détails sur leur disponibilité ou leur style, ou encore pour afficher des FAQ et avis récents.</p>"
+            }
           },
           {
             "type": "text",
             "id": "button_label",
-            "label": "Button label"
+            "label": {
+              "en": "Button label",
+              "de": "Button-Name",
+              "fr": "Texte du bouton"
+            }
           },
           {
             "type": "url",
             "id": "button_link",
-            "label": "Button link"
+            "label": {
+              "en": "Button link",
+              "de": "Button-Link",
+              "fr": "Lien du bouton"
+            }
           }
         ]
       }
     ],
     "presets": [
       {
-        "name": "Text columns with images",
-        "category": "Text",
+        "name": {
+          "en": "Text columns with images",
+          "de": "Textspalten mit Fotos",
+          "fr": "Colonnes de texte avec images"
+        },
+        "category": {
+          "en": "Text",
+          "de": "Text",
+          "fr": "Texte"
+        },
         "blocks": [
           {
             "type": "text_block"

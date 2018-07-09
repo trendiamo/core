@@ -30,7 +30,7 @@ $grid-breakpoint-has-push: ($small, $medium-up);
 
 // Text colors
 $color-text: {{ settings.color_text }};
-$color-text-shadow: rgba(0, 0, 0, 0.1);
+$color-text-shadow: rgba(0,0,0,0.4);
 $color-body-text: {{ settings.color_body_text }};
 $color-sale-text: {{ settings.color_sale_text }};
 $color-small-button: {{ settings.color_small_button }};
@@ -42,6 +42,12 @@ $color-navigation-text: {{ settings.color_text }};
 // Button colors
 $color-btn-primary: {{ settings.color_button }};
 $color-btn-primary-text: {{ settings.color_button_text }};
+
+// Hover and focus states
+$color-text-focus: adaptiveColor({{ settings.color_text }}, {{ settings.color_text | color_brightness }});
+$color-overlay-text-focus: adaptiveColor({{ settings.color_image_overlay_text }}, {{ settings.color_image_overlay_text | color_brightness }});
+$color-btn-primary-focus: adaptiveColor({{ settings.color_button }}, {{ settings.color_button | color_brightness }});
+$color-small-button-focus: adaptiveColor({{ settings.color_small_button }}, {{ settings.color_small_button | color_brightness }});
 
 // Link buttons and secondary cta
 $color-link: $color-body-text;
@@ -61,6 +67,7 @@ $opacity-image-overlay: {{ settings.image_overlay_opacity | divided_by: 100.00 }
 
 // Border colors
 $color-border: {{ settings.color_borders }};
+$color-border-form: transparentize($color-text, 0.15);
 
 // Helper colors for form error states
 $color-disabled: #f4f4f4;
@@ -88,7 +95,7 @@ $color-pinterest: #cb2027;
 /*================ Sizing Variables ================*/
 $width-site: 1200px;
 $gutter-site: 55px;
-$gutter-site-mobile: 0;
+$gutter-site-mobile: 22px;
 $section-spacing: 55px;
 $section-spacing-small: 35px;
 $border-radius: 2px;
@@ -105,10 +112,6 @@ $svg-select-icon: #{'{{ "ico-select.svg" | asset_url }}'};
 
 /*================ Drawers ================*/
 $transition-drawer: all 0.45s cubic-bezier(0.29, 0.63, 0.44, 1);
-
-/*================ Hero ================*/
-$color-background-hero-button: #fff;
-$color-text-hero-button: #000;
 
 /*================ Hero Slider ================*/
 $color-slideshow-arrows: #000;
@@ -141,13 +144,13 @@ $font-weight-bold: 700;
 
 $font-stack-header: {{ header_family }};
 $font-weight-header: {{ header_weight }};
-$font-size-header: {{ settings.type_header_base_size }};
+$font-size-header: {{ settings.type_header_base_size }}px;
 $font-bold-titles: {{ settings.type_bold_product_titles }};
 
 $font-stack-body: {{ base_family }};
-$font-size-base: {{ settings.type_base_size }}; // Henseforth known as 1em
+$font-size-base: {{ settings.type_base_size }}px; // Henceforth known as 1em
 
-$font-stack-cart-notification: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+$font-stack-cart-notification: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $font-size-mobile-input: 16px; // min 16px to prevent zooming
 
@@ -160,6 +163,7 @@ $color-giftcard-small-text: #b3b3b3;
 $color-giftcard-shadow: rgba(0, 0, 0, 0.1);
 $color-giftcard-print-bg: #fff;
 $color-giftcard-print: #000;
+$color-giftcard-bg: #e95e61;
 
 /*================ Z-index ================*/
 $z-index-giftcard-image: 2;
@@ -223,7 +227,7 @@ $z-index-giftcard-code: 5;
 }
 
 .giftcard-wrapper {
-  max-width: 488px;
+  max-width: 31rem;
   margin: 0 auto;
 }
 
@@ -239,6 +243,8 @@ $z-index-giftcard-code: 5;
 .giftcard__wrap {
   position: relative;
   margin: ($gutter-site / 2) ($gutter-site / 2) $gutter-site;
+  background-color: $color-giftcard-bg;
+  border-radius: 10px;
 
   img {
     position: relative;
@@ -272,11 +278,12 @@ $z-index-giftcard-code: 5;
 
 /*================ Gift card code ================*/
 .giftcard__code {
-  position: absolute;
-  bottom: 20px;
+  position: relative;
   text-align: center;
-  width: 100%;
+  width: 90%;
   z-index: $z-index-giftcard-code;
+  margin: -70px auto 0px auto;
+  padding: 0 0 18px 0;
 }
 
 .giftcard__code--medium {
@@ -293,7 +300,6 @@ $z-index-giftcard-code: 5;
   background-color: $color-giftcard-light;
   padding: 0.5em;
   border-radius: 4px;
-  max-width: 450px;
   -webkit-box-shadow: 0 0 0 1px $color-giftcard-shadow;
   box-shadow: 0 0 0 1px $color-giftcard-shadow;
 }
@@ -302,11 +308,13 @@ $z-index-giftcard-code: 5;
   font-weight: 400;
   font-size: 1.875em;
   text-transform: uppercase;
-  border: 1px dashed $color-border;
+  border: 1px dashed $color-border-form;
   padding: 0.4em 0.5em;
   display: inline-block;
   vertical-align: baseline;
   line-height: 1;
+  text-align: center;
+  width: 100%;
 
   &.disabled {
     color: $color-giftcard-disabled;
@@ -389,6 +397,14 @@ $z-index-giftcard-code: 5;
   }
 }
 
+.giftcard-action-list {
+  text-align: center;
+}
+
+.giftcard-action-list__item {
+  margin: 0 0 ($section-spacing-small / 1.8);
+}
+
 /*================ QR code (print only) ================*/
 .giftcard__qr-code {
   img {
@@ -454,5 +470,8 @@ $z-index-giftcard-code: 5;
 
   .print-link {
     display: none;
+  }
+  .giftcard__code {
+    margin-top: -90px;
   }
 }

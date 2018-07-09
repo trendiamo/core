@@ -17,7 +17,7 @@
           {% for item in cart.items %}
             <tr class="cart__row border-bottom line{{ forloop.index }} cart-flex{% if forloop.first %} border-top{% endif %}">
               <td class="cart__image-wrapper cart-flex-item">
-                <a href="{{ item.url }}">
+                <a href="{{ item.url | within: collections.all }}">
                   <img class="cart__image" src="{{ item | img_url: '95x95', scale: 2 }}" alt="{{ item.title | escape }}">
                 </a>
               </td>
@@ -131,13 +131,12 @@
               </div>
             {% endif %}
             <div class="cart__shipping">{{ 'cart.general.shipping_at_checkout' | t }}</div>
+            <a href="collections/all" class="btn btn--secondary cart__update cart__continue--large small--hide" >{{ 'cart.general.continue_shopping' | t }}</a>
             <input type="submit" name="update" class="btn btn--secondary cart__update cart__update--large small--hide" value="{{ 'cart.general.update' | t }}">
             <input type="submit" name="checkout" class="btn btn--small-wide" value="{{ 'cart.general.checkout' | t }}">
-            {% comment %}
             {% if additional_checkout_buttons %}
               <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
             {% endif %}
-            {% endcomment %}
           </div>
         </div>
       </footer>
@@ -149,19 +148,27 @@
       <div class="cookie-message">
         <p>{{ 'cart.general.cookies_required' | t }}</p>
       </div>
-      <a href="javascript:history.back()" class="btn btn--has-icon-after cart__continue-btn">{{ 'general.404.link' | t }}</a>
+      <a href="/" class="btn btn--has-icon-after cart__continue-btn">{{ 'general.404.link' | t }}{% include 'icon-arrow-right' %}</a>
     </div>
   {% endif %}
 </div>
 
 {% schema %}
   {
-    "name": "Cart page",
+    "name": {
+      "en": "Cart page",
+      "de": "Warenkorb-Seite",
+      "fr": "Page du panier"
+    },
     "settings": [
       {
         "type": "checkbox",
         "id": "cart_notes_enable",
-        "label": "Enable cart notes",
+        "label": {
+          "en": "Enable cart notes",
+          "de": "Warenkorb-Notifikationen erlauben",
+          "fr": "Activer les notes de panier"
+        },
         "default": false
       }
     ]

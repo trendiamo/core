@@ -2,7 +2,12 @@
   "general": {
     "accessibility": {
       "skip_to_content": "コンテンツにスキップする",
-      "close_modal": "閉じる(esc)"
+      "close_modal": "閉じる(esc)",
+      "link_messages": {
+        "new_window": "新しいウィンドウで開く",
+        "external": "外部のウェブサイトに移動します。",
+        "new_window_and_external": "外部のウェブサイトを新しいウィンドウで開く"
+      }
     },
     "meta": {
       "tags": "タグ \"{{ tags }}\"",
@@ -14,8 +19,8 @@
       "link": "買い物を続ける"
     },
     "pagination": {
-      "previous": "前",
-      "next": "次",
+      "previous": "前のページ",
+      "next": "次のページ",
       "current_page": "ページ： {{ current }} \/ {{ total }}"
     },
     "password_page": {
@@ -49,7 +54,11 @@
       "title": "サイトを検索する",
       "placeholder": "検索する",
       "submit": "送信",
-      "close": "検索を閉じる"
+      "close": "検索を閉じる",
+      "heading": {
+        "one": "検索結果",
+        "other": "の検索結果"
+      }
     },
     "newsletter_form": {
       "newsletter_email": "メールマガジンに登録しましょう",
@@ -71,21 +80,29 @@
       "play_video": "動画を再生する",
       "close_video": "動画を閉じる"
     },
+    "featured_product": {
+      "title": "おすすめ商品",
+      "gallery_thumbnail_alt": "画像をギャラリービューアに読み込む, {{ imageAlt }}"
+    },
     "map": {
       "address_error": "住所を調べる際にエラーが発生しました",
       "address_no_results": "その住所は見つかりませんでした",
       "address_query_limit_html": "Google APIの使用量の制限を超えました。<a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">プレミアムプラン<\/a>へのアップグレードをご検討ください。",
-      "auth_error_html": "あなたのGoogle Mapsのアカウント認証で問題が発生しました。"
+      "auth_error_html": "あなたのGoogle Mapsのアカウント認証で問題が発生しました。",
+      "section_heading": "アクセス"
     }
   },
   "blogs": {
     "article": {
       "view_all": "すべてを見る",
+      "view_all_blogs": "すべての記事を見る",
       "all_topics": "すべてのトピック",
       "by_author": "by {{ author }}",
       "posted_in": "カテゴリー : ",
       "read_more": "続きを読む",
-      "back_to_blog": "{{ title }}に戻る"
+      "read_more_title": "続きを読む: {{ title }}",
+      "back_to_blog": "{{ title }}に戻る",
+      "tags": "タグ"
     },
     "comments": {
       "title": "コメントを残す",
@@ -128,6 +145,7 @@
   "collections": {
     "general": {
       "view_all": "すべてを見る",
+      "view_all_label": "{{ collection_name }}コレクションの全製品を見る",
       "no_matches": "申し訳ございません。検索に一致する商品が見つかりませんでした。",
       "items_with_count": {
         "one": "{{ count }}個の商品",
@@ -275,9 +293,9 @@
   "layout": {
     "navigation": {
       "search": "検索",
-      "toggle": "拡大\/縮小",
       "expand": "拡大",
-      "collapse": "縮小"
+      "collapse": "縮小",
+      "menu": "メニュー"
     },
     "cart": {
       "title": "カート",
@@ -302,15 +320,18 @@
       "sold_out": "売り切れ",
       "unavailable": "お取り扱いできません",
       "on_sale": "販売中",
+      "sale_price": "セール価格",
       "quantity": "個数",
       "add_to_cart": "カートに追加する",
-      "back_to_collection": "{{ title }}に戻る"
+      "back_to_collection": "{{ title }}に戻る",
+      "vendor": "ベンダー"
     }
   },
   "gift_cards": {
     "issued": {
       "title_html": "{{ shop }}で利用可能な{{ value }}のギフトカードです！",
       "subtext": "あなたのギフトカード",
+      "gift_card_code": "ギフトカードコード",
       "disabled": "無効",
       "expired": "{{ expiry }}で有効期限が切れました",
       "active": "{{ expiry }}で有効期限が切れます",
@@ -318,7 +339,8 @@
       "shop_link": "買い物を始める",
       "print": "このギフトカードを印刷する",
       "remaining_html": "残り{{ balance }}使用可能です",
-      "add_to_apple_wallet": "Apple Walletに追加する"
+      "add_to_apple_wallet": "Apple Walletに追加する",
+      "qr_image_alt": "QRコード - スキャンしてギフトカードを利用する"
     }
   },
   "date_formats": {

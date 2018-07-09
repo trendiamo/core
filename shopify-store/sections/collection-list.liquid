@@ -17,14 +17,14 @@
   {% endcase %}
 
   <div class="collection-grid">
-    <div class="grid grid--uniform">
+    <ul class="grid grid--uniform">
       {% for block in section.blocks limit: section.blocks.size %}
-        <div class="grid__item {{ grid_item_width }}" {{ block.shopify_attributes }}>
+        <li class="grid__item {{ grid_item_width }}" {{ block.shopify_attributes }}>
           {%- assign collection = collections[block.settings.collection] -%}
           {% include 'collection-grid-item' %}
-        </div>
+        </li>
       {% endfor %}
-    </div>
+    </ul>
   </div>
 
   {% if section.blocks.size == 0 %}
@@ -34,20 +34,36 @@
 
 {% schema %}
   {
-    "name": "Collection list",
+    "name": {
+      "en": "Collection list",
+      "de": "Kategorien-Liste",
+      "fr": "Liste des collections"
+    },
     "class": "index-section",
     "max_blocks": 12,
     "settings": [
       {
         "type": "text",
         "id": "title",
-        "label": "Heading",
-        "default": "Collection list"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Collection list",
+          "de": "Kategorien-Liste",
+          "fr": "Page de liste des collections"
+        }
       },
       {
         "type": "range",
         "id": "grid",
-        "label": "Collections per row",
+        "label": {
+          "en": "Collections per row",
+          "de": "Kategorien per Reihe",
+          "fr": "Collections par rangée"
+        },
         "min": 2,
         "max": 5,
         "step": 1,
@@ -57,10 +73,18 @@
     "blocks": [
       {
         "type": "featured_collection",
-        "name": "Collection",
+        "name": {
+          "en": "Collection",
+          "de": "Kategorie",
+          "fr": "Collection"
+        },
         "settings": [
           {
-            "label": "Collection",
+            "label": {
+              "en": "Collection",
+              "de": "Kategorie",
+              "fr": "Collection"
+            },
             "id": "collection",
             "type": "collection"
           }
@@ -69,8 +93,16 @@
     ],
     "presets": [
       {
-        "name": "Collection list",
-        "category": "Collection",
+        "name": {
+          "en": "Collection list",
+          "de": "Kategorien-Liste",
+          "fr": "Page de liste des collections"
+        },
+        "category": {
+          "en": "Collection",
+          "de": "Kategorie",
+          "fr": "Collection"
+        },
         "blocks": [
           {
             "type": "featured_collection"

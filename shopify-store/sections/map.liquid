@@ -33,6 +33,7 @@
   <div class="page-width map-section__wrapper">
     <div class="map-section__content-wrapper">
       <div class="map-section__content">
+        <h2 class="visually-hidden visually-hidden--static">{{ 'sections.map.section_heading' | t }}</h2>
         {% if section.settings.heading != blank %}
           <h3 class="h4">{{ section.settings.heading | escape }}</h3>
         {% endif %}
@@ -43,6 +44,8 @@
               <a href="https://maps.google.com?daddr={{ section.settings.map_address | escape }}"
                  class="btn btn--secondary btn--small map_section__directions-btn"
                  target="_blank"
+                 rel="noopener"
+                 aria-describedby="a11y-new-window-external-message"
               >
                 {% if section.settings.show_pin %}{% include 'icon-pin' %}{% endif %}
                 <span>{{ section.settings.button_text | escape }}</span>
@@ -83,100 +86,208 @@
 
 {% schema %}
   {
-    "name": "Map",
+    "name": {
+      "en": "Map",
+      "de": "Karte",
+      "fr": "Carte"
+    },
     "class": "index-section index-section--flush-medium-up",
     "settings": [
       {
         "type": "header",
-        "content": "Text"
+        "content": {
+          "en": "Text",
+          "de": "Text",
+          "fr": "Texte"
+        }
       },
       {
         "id": "heading",
         "type": "text",
-        "label": "Heading",
-        "default": "Our store"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Our store",
+          "de": "Unser Laden",
+          "fr": "Notre boutique"
+        }
       },
       {
         "id": "address",
         "type": "richtext",
-        "label": "Address and hours",
-        "default": "<p>123 Fake St.<br>Toronto, Canada</p><p>Mon - Fri, 10am - 9pm<br>Saturday, 11am - 9pm<br>Sunday, 11am - 5pm</p>"
+        "label": {
+          "en": "Address and hours",
+          "de": "Adresse und Öffnungszeiten",
+          "fr": "Adresse et heures d'ouverture"
+        },
+        "default": {
+          "en": "<p>123 Fake St.<br>Toronto, Canada</p><p>Mon - Fri, 10am - 9pm<br>Saturday, 11am - 9pm<br>Sunday, 11am - 5pm</p>",
+          "de": "<p>Musterstraße 123<br>12345 Musterstadt</p><p>Mo - Fr, 10 - 21 Uhr<br>Samstag, 11 - 21 Uhr<br>Sonntag, Ruhetag</p>",
+          "fr": "<p>123 5e Avenue<br>Toronto, Canada</p><p>Lundi au vendredi, 10 h 00 à 21 h 00<br>Samedi, 11 h 00 à 21 h 00<br>Dimanche, fermé"
+        }
       },
       {
         "id": "map_address",
         "type": "text",
-        "label": "Map address",
-        "info": "Google Maps will find the exact location",
-        "default": "80 Spadina Ave, Toronto"
+        "label": {
+          "en": "Map address",
+          "de": "Adresse",
+          "fr": "Adresse de la carte"
+        },
+        "info": {
+          "en": "Google Maps will find the exact location",
+          "de": "Google Maps findet die richtige Adresse",
+          "fr": "Google Maps trouvera l'adresse exacte"
+        },
+        "default": {
+          "en": "301 Front St W, Toronto",
+          "de": "4141 Pierre-de Coubertin Ave, Montreal",
+          "fr": "Arsenalo g. 5, Vilnius"
+        }
       },
       {
         "id": "button_text",
         "type": "text",
-        "label": "Map link label",
-        "default": "Get directions"
+        "label": {
+          "en": "Map link label",
+          "de": "Link auf der Karte",
+          "fr": "Texte du lien de la carte"
+        },
+        "default": {
+          "en": "Get directions",
+          "de": "Wegbeschreibung bekommen",
+          "fr": "Obtenir un itinéraire"
+        }
       },
       {
         "id": "show_pin",
         "type": "checkbox",
-        "label": "Show pin",
+        "label": {
+          "en": "Show pin",
+          "de": "Pin anzeigen",
+          "fr": "Afficher l'épingle"
+        },
         "default": true
       },
       {
         "type": "header",
-        "content": "Background"
+        "content": {
+          "en": "Background",
+          "de": "Hintergrund",
+          "fr": "Arrière-plan"
+        }
       },
       {
         "id": "api_key",
         "type": "text",
-        "label": "Google Maps API key",
-        "info": "You’ll need to [register a Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map"
+        "label": {
+          "en": "Google Maps API key",
+          "de": "Google Maps API Key",
+          "fr": "Clé d'API Google Maps"
+        },
+        "info": {
+          "en": "You’ll need to [register a Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map",
+          "de": "Sie müssen [einen Google Maps API Key registrieren](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) zum Anzeigen der Karte",
+          "fr": "Vous devez obtenir une [clé d'API pour Google Maps](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key)"
+        }
       },
       {
         "type": "image_picker",
         "id": "background_image",
-        "label": "Image",
-        "info": "Displayed if the map isn’t loaded"
+        "label": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        },
+        "info": {
+          "en": "Displayed if the map isn’t loaded",
+          "de": "Anzeigen, wenn Karte nicht lädt",
+          "fr": "Affichée si la carte ne charge pas"
+        }
       },
       {
         "type": "select",
         "id": "background_image_position",
-        "label": "Image position",
+        "label": {
+          "en": "Image position",
+          "de": "Foto-Position",
+          "fr": "Position de l'image"
+        },
         "default": "center center",
         "options": [
           {
-            "label": "Top left",
+            "label": {
+              "en": "Top left",
+              "de": "Oben links",
+              "fr": "En haut à gauche"
+            },
             "value": "top left"
           },
           {
-            "label": "Top center",
+            "label": {
+              "en": "Top center",
+              "de": "Oben Mitte",
+              "fr": "En haut au centre"
+            },
             "value": "top center"
           },
           {
-            "label": "Top right",
+            "label": {
+              "en": "Top right",
+              "de": "Oben rechts",
+              "fr": "En haut à droite"
+            },
             "value": "top right"
           },
           {
-            "label": "Middle left",
+            "label": {
+              "en": "Middle left",
+              "de": "Mitte links",
+              "fr": "Au milieu à gauche"
+            },
             "value": "center left"
           },
           {
-            "label": "Middle center",
+            "label": {
+              "en": "Middle center",
+              "de": "Mitte mittig",
+              "fr": "Centrée au milieu"
+            },
             "value": "center center"
           },
           {
-            "label": "Middle right",
+            "label": {
+              "en": "Middle right",
+              "de": "Mitte rechts",
+              "fr": "Au milieu à droite"
+            },
             "value": "center right"
           },
           {
-            "label": "Bottom left",
+            "label": {
+              "en": "Bottom left",
+              "de": "Unten links",
+              "fr": "En bas à gauche"
+            },
             "value": "bottom left"
           },
           {
-            "label": "Bottom center",
+            "label": {
+              "en": "Bottom center",
+              "de": "Unten mittig",
+              "fr": "En bas au centre"
+            },
             "value": "bottom center"
           },
           {
-            "label": "Bottom right",
+            "label": {
+              "en": "Bottom right",
+              "de": "Unten rechts",
+              "fr": "En bas à droite"
+            },
             "value": "bottom right"
           }
         ]
@@ -184,8 +295,16 @@
     ],
     "presets": [
       {
-        "name": "Map",
-        "category": "Store information"
+        "name": {
+          "en": "Map",
+          "de": "Karte",
+          "fr": "Carte"
+        },
+        "category": {
+          "en": "Store information",
+          "de": "Laden-Info",
+          "fr": "Renseignements sur votre boutique"
+        }
       }
     ]
   }

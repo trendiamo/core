@@ -59,34 +59,62 @@
 
 {% schema %}
   {
-    "name": "Gallery",
+    "name": {
+      "en": "Gallery",
+      "de": "Galerie",
+      "fr": "Galerie"
+    },
     "class": "index-section index-section--flush",
     "max_blocks": 4,
     "settings": [
       {
         "type": "select",
         "id": "section_height",
-        "label": "Section height",
+        "label": {
+          "en": "Section height",
+          "de": "Bereichs-Höhe",
+          "fr": "Hauteur de la section"
+        },
         "default": "medium",
         "options": [
           {
-            "label": "Extra Small",
+            "label": {
+              "en": "Extra Small",
+              "de": "Extra klein",
+              "fr": "Très petite"
+            },
             "value": "x-small"
           },
           {
-            "label": "Small",
+            "label": {
+              "en": "Small",
+              "de": "Klein",
+              "fr": "Petite"
+            },
             "value": "small"
           },
           {
-            "label": "Medium",
+            "label": {
+              "en": "Medium",
+              "de": "Mittel",
+              "fr": "Moyenne"
+            },
             "value": "medium"
           },
           {
-            "label": "Large",
+            "label": {
+              "en": "Large",
+              "de": "Groß",
+              "fr": "Grande"
+            },
             "value": "large"
           },
           {
-            "label": "Extra Large",
+            "label": {
+              "en": "Extra Large",
+              "de": "Extra groß",
+              "fr": "Très grande"
+            },
             "value": "x-large"
           }
         ]
@@ -95,51 +123,95 @@
     "blocks": [
       {
         "type": "image",
-        "name": "Image",
+        "name": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        },
         "settings": [
           {
             "type": "image_picker",
             "id": "image",
-            "label": "Image"
+            "label": {
+              "en": "Image",
+              "de": "Foto",
+              "fr": "Image"
+            }
           },
           {
             "type": "select",
             "id": "alignment",
-            "label": "Image alignment",
+            "label": {
+              "en": "Image alignment",
+              "de": "Fotoausrichtung",
+              "fr": "Alignement de l'image"
+            },
             "default": "center",
             "options": [
               {
                 "value": "top",
-                "label": "Top"
+                "label": {
+                  "en": "Top",
+                  "de": "Oben",
+                  "fr": "Haut"
+                }
               },
               {
                 "value": "center",
-                "label": "Middle"
+                "label": {
+                  "en": "Middle",
+                  "de": "Mitte",
+                  "fr": "Milieu"
+                }
               },
               {
                 "value": "bottom",
-                "label": "Bottom"
+                "label": {
+                  "en": "Bottom",
+                  "de": "Unten",
+                  "fr": "Bas"
+                }
               }
             ]
           },
           {
             "type": "url",
             "id": "link",
-            "label": "Link",
-            "info": "Optional"
+            "label": {
+              "en": "Link",
+              "de": "Link",
+              "fr": "Lien"
+            },
+            "info": {
+              "en": "Optional",
+              "de": "Optional",
+              "fr": "Facultatif"
+            }
           },
           {
             "type": "text",
             "id": "cta_label",
-            "label": "Caption"
+            "label": {
+              "en": "Caption",
+              "de": "Unterschrift",
+              "fr": "Légende"
+            }
           }
         ]
       }
     ],
     "presets": [
       {
-        "name": "Gallery",
-        "category": "Image",
+        "name": {
+          "en": "Gallery",
+          "de": "Galerie",
+          "fr": "Galerie"
+        },
+        "category": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        },
         "blocks": [
           {
             "type": "image"

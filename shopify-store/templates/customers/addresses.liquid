@@ -53,7 +53,7 @@
 
             <div class="grid__item medium-up--one-half">
               <label for="AddressCountryNew">{{ 'customer.addresses.country' | t }}</label>
-              <select id="AddressCountryNew" name="address[country]" data-default="{{ form.country }}">{{ country_option_tags }}</select>
+              <select id="AddressCountryNew" name="address[country]" data-default="{{ form.country }}">{{ all_country_option_tags }}</select>
             </div>
           </div>
 
@@ -72,7 +72,7 @@
           <label for="address_default_address_new">{{ 'customer.addresses.set_default' | t }}</label>
 
           <div><input type="submit" class="btn" value="{{ 'customer.addresses.add' | t }}"></div>
-          <div><button type="button" class="text-link address-new-toggle btn-negative">{{ 'customer.addresses.cancel' | t }}</button></div>
+          <div><button type="button" class="text-link address-new-toggle">{{ 'customer.addresses.cancel' | t }}</button></div>
 
         {% endform %}
         <hr>
@@ -129,7 +129,7 @@
               </div>
               <div class="grid__item medium-up--one-half">
                 <label for="AddressCountry_{{ form.id }}">{{ 'customer.addresses.country' | t }}</label>
-                <select id="AddressCountry_{{ form.id }}" class="address-country-option" data-form-id="{{ form.id }}" name="address[country]" data-default="{{ form.country }}">{{ country_option_tags }}</select>
+                <select id="AddressCountry_{{ form.id }}" class="address-country-option" data-form-id="{{ form.id }}" name="address[country]" data-default="{{ form.country }}">{{ all_country_option_tags }}</select>
               </div>
             </div>
 
@@ -155,7 +155,7 @@
               <label for="address_default_address_{{ form.id }}">{{ 'customer.addresses.set_default' | t }}</label>
 
               <div><input type="submit" class="btn" value="{{ 'customer.addresses.update' | t }}"></div>
-              <div><button type="button" class="text-link address-edit-toggle btn-negative" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</button></div>
+              <div><button type="button" class="text-link address-edit-toggle" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</button></div>
             </div>
 
           {% endform %}

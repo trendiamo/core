@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/trendiamo-test.myshopify.com/collections/edit-field/33161
+{% endcomment %}
+{% if collection.metafields.custom_fields["business_location"] != blank %}
+  <div class="custom-field custom-field__business-location custom-field__type--text">
+    <h3 class="custom-field--title">Business Location</h3>
+    <div class="custom-field--value">
+      {{ collection.metafields.custom_fields["business_location"] }}
+    </div>
+  </div>
+{% endif %}

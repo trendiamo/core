@@ -1,0 +1,560 @@
+{
+  "current": {
+    "color_text": "#333333",
+    "color_body_text": "#333333",
+    "color_sale_text": "#e31e5b",
+    "color_borders": "#e8e9eb",
+    "color_button": "#36d4bc",
+    "color_button_text": "#ffffff",
+    "color_small_button": "#6a8ad4",
+    "color_small_button_text": "#ffffff",
+    "color_text_field": "#fff",
+    "color_text_field_text": "#000",
+    "color_image_overlay_text": "#fff",
+    "color_image_overlay": "#3d4246",
+    "image_overlay_opacity": 25,
+    "color_body_bg": "#fff",
+    "type_header_font": "quicksand_n7",
+    "type_header_base_size": 24,
+    "type_base_font": "roboto_n4",
+    "type_base_size": 16,
+    "type_bold_product_titles": true,
+    "share_image": "",
+    "share_facebook": true,
+    "share_twitter": true,
+    "share_pinterest": true,
+    "social_twitter_link": "",
+    "social_facebook_link": "",
+    "social_pinterest_link": "",
+    "social_instagram_link": "",
+    "social_tumblr_link": "",
+    "social_snapchat_link": "",
+    "social_youtube_link": "",
+    "social_vimeo_link": "",
+    "favicon": "shopify://shop_images/rounded.png",
+    "checkout_header_image": "",
+    "checkout_logo_image": "shopify://shop_images/logo.png",
+    "checkout_logo_position": "center",
+    "checkout_logo_size": "small",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font":
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_body_font":
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#6a8ad4",
+    "checkout_button_color": "#36d4bc",
+    "checkout_error_color": "#e32c2b",
+    "type_header_family": "'Quicksand', Quicksand, sans-serif",
+    "type_base_family": "Google_Roboto_400_sans",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "align_logo": "left",
+          "logo": "shopify://shop_images/logo_beta.png",
+          "logo_max_width": 160,
+          "main_linklist": "",
+          "message": false,
+          "home_page_only": true,
+          "message_text": "",
+          "message_link": "",
+          "color_bg": "#36d4bc",
+          "color_text": "#fff",
+          "announcement": "Get 10% discount on your first purchase using the promo code \"welcometotrendiamo\" 🛍"
+        }
+      },
+      "hero": {
+        "type": "hero",
+        "settings": {
+          "image": "shopify://shop_images/Untitled_design_10.png",
+          "alignment": "center",
+          "title": "WELCOME TO TRENDIAMO",
+          "text": "<p>Discover unique Portuguese&nbsp;fashion brands</p>",
+          "hero_size": "small",
+          "text_size": "large",
+          "button_label": "Shop for the Summer",
+          "button_link": "shopify://collections/summer-collection"
+        }
+      },
+      "slideshow": {
+        "type": "slideshow",
+        "blocks": {
+          "slideshow-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/Untitled_design_7.png",
+              "alignment": "center",
+              "title": "REFER A BRAND",
+              "subheading": "Get 20% off their products on trendiamo.com",
+              "link": "https://refer.trendiamo.com"
+            }
+          },
+          "slideshow-1": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/Untitled_design_9.png",
+              "alignment": "center",
+              "title": "REFER & EARN",
+              "subheading": "Get 20% cashback for every friend you refer",
+              "link": "https://invite.trendiamo.com"
+            }
+          },
+          "1530300608943": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/Untitled_design_1.png",
+              "alignment": "top",
+              "title": "About Trendiamo",
+              "subheading": "Learn about who we are and our vision",
+              "link": "shopify://pages/about-us"
+            }
+          }
+        },
+        "block_order": ["slideshow-0", "slideshow-1", "1530300608943"],
+        "settings": {
+          "autoplay": true,
+          "autoplay_speed": 7,
+          "slideshow_height": "small",
+          "text_size": "medium"
+        }
+      },
+      "featured-collections": {
+        "type": "collection",
+        "settings": {
+          "title": "OUR TOP PICKS FOR THIS SUMMER",
+          "collection": "summer-collection",
+          "grid": 5,
+          "rows": 5,
+          "show_vendor": true,
+          "show_view_all": true
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer_linklist": "footer",
+          "footer_linklist_two": "",
+          "footer_newsletter_enable": false,
+          "show_payment_icons": false
+        }
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "settings": {
+          "cart_notes_enable": false
+        }
+      },
+      "trendiamo-sidebar": {
+        "type": "trendiamo-sidebar",
+        "settings": {
+          "home_link": "https://trendiamo.com",
+          "charts_link": "https://trendiamo.com/collections/conscious-must-haves",
+          "new_link": "https://trendiamo.com/collections/summer-collection",
+          "button1_text": "Refer & Earn",
+          "button1_link": "https://invite.trendiamo.com/",
+          "button2_text": "Refer a brand",
+          "button2_link": "https://refer.trendiamo.com/"
+        }
+      },
+      "collection-template": {
+        "type": "collection-template",
+        "settings": {
+          "layout": "grid",
+          "grid": 5,
+          "rows": 8,
+          "show_collection_image": true,
+          "show_vendor": true,
+          "sort_enable": true,
+          "tags_enable": true
+        }
+      },
+      "product-template": {
+        "type": "product-template",
+        "settings": {
+          "image_size": "medium",
+          "show_quantity_selector": true,
+          "show_variant_labels": true,
+          "show_vendor": true,
+          "enable_zoom": false,
+          "enable_payment_button": true,
+          "show_share_buttons": false
+        }
+      },
+      "1529343330256": {
+        "type": "rich-text",
+        "disabled": true,
+        "settings": {
+          "full_width": false,
+          "section_title": "Become a promoter!",
+          "text":
+            "<p>Trendiamo is a new way of doing business we like to call&nbsp;<strong>collaborative commerce.</strong>&nbsp;Join our cause by clicking on the \"Refer &amp; Earn\" button on the left-side navigation bar.</p>",
+          "text_size": "medium"
+        }
+      },
+      "brand-profile": {
+        "type": "brand-profile",
+        "settings": {
+          "layout": "grid",
+          "grid": 4,
+          "rows": 2,
+          "show_collection_image": true,
+          "show_vendor": true,
+          "sort_enable": false,
+          "tags_enable": false
+        }
+      },
+      "page-about": {
+        "type": "page-about",
+        "settings": {
+          "image": "shopify://shop_images/Untitled_design_1.png",
+          "videoURL": "https://www.youtube.com/embed/ryhMUHPS8Kk",
+          "videoTitle": "About Us",
+          "videoText":
+            "Trendiamo is a new way of doing business we like to call collaborative commerce. A place we don’t create for you, but with you. Where we consider ourselves an enabler and connecter between people and products. Here, we want to make sure everyone can get involved and receive their share for their work - independent of follower bases or company sizes. \n\nWe are in a very early stage of creating a decentralised marketplace. So check out the first brands we have onboarded that are run by young, passionate entrepreneurs whose story and quality products we aim to help promote and sell.\n\nCome on in, have a look around and jump on board of this new and teamed-up way of doing business!",
+          "shop": "wolfgang"
+        }
+      },
+      "1530118359285": {
+        "type": "collection",
+        "settings": {
+          "title": "ANYONE CAN SELL: CHECK WOLFGANG'S PICKS",
+          "collection": "wolfgang",
+          "grid": 5,
+          "rows": 1,
+          "show_vendor": true,
+          "show_view_all": true
+        }
+      },
+      "1530113670330": {
+        "type": "custom-content",
+        "blocks": {
+          "1530113676615": {
+            "type": "video",
+            "settings": {
+              "video_url": "https://youtu.be/-N182t6jHPU",
+              "width": "50%",
+              "alignment": "top-middle"
+            }
+          },
+          "1530113670330-0": {
+            "type": "text",
+            "settings": {
+              "title": "A Word from our CEO",
+              "text":
+                "<p></p>\n<p>You can earn through recommending your favorite products on trendiamo.&nbsp;</p>\n<p>Click <a href=\"https://invite.trendiamo.com/\" title=\"https://invite.trendiamo.com/\">Refer &amp; Earn</a> and learn how to promote with trendiamo.&nbsp;</p>",
+              "width": "50%",
+              "alignment": "center",
+              "align_text": "left"
+            }
+          }
+        },
+        "block_order": ["1530113676615", "1530113670330-0"],
+        "settings": {
+          "title": ""
+        }
+      }
+    },
+    "content_for_index": [
+      "hero",
+      "1530113670330",
+      "1529343330256",
+      "featured-collections",
+      "slideshow",
+      "1530118359285"
+    ]
+  },
+  "presets": {
+    "Default": {
+      "color_text": "#3d4246",
+      "color_body_text": "#69727b",
+      "color_sale_text": "#557B97",
+      "color_borders": "#e8e9eb",
+      "color_button": "#557B97",
+      "color_button_text": "#fff",
+      "color_small_button": "#fff",
+      "color_small_button_text": "#3d4246",
+      "color_text_field": "#fff",
+      "color_text_field_text": "#000",
+      "color_image_overlay_text": "#fff",
+      "color_image_overlay": "#3d4246",
+      "image_overlay_opacity": 25,
+      "color_body_bg": "#fff",
+      "type_header_family": "Google_Work+Sans_600_sans",
+      "type_header_base_size": 26,
+      "type_base_family": "Google_Work+Sans_400_sans",
+      "type_base_size": 16,
+      "type_bold_product_titles": false,
+      "share_facebook": true,
+      "share_twitter": true,
+      "share_pinterest": true,
+      "sections": {
+        "header": {
+          "type": "header",
+          "settings": {}
+        },
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "text_size": "large"
+          }
+        },
+        "slideshow": {
+          "type": "slideshow",
+          "blocks": {
+            "slideshow-0": {
+              "type": "image",
+              "settings": {}
+            },
+            "slideshow-1": {
+              "type": "image",
+              "settings": {}
+            }
+          },
+          "block_order": ["slideshow-0", "slideshow-1"],
+          "settings": {}
+        },
+        "featured-collections": {
+          "type": "collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "feature-row": {
+          "type": "feature-row",
+          "settings": {}
+        },
+        "footer": {
+          "type": "footer",
+          "settings": {
+            "footer_linklist_two": ""
+          }
+        }
+      },
+      "content_for_index": ["hero", "featured-collections", "feature-row", "slideshow"]
+    },
+    "Light": {
+      "color_text": "#162950",
+      "color_body_text": "#6d6d6d",
+      "color_sale_text": "#DA2F0C",
+      "color_borders": "#e4e4e4",
+      "color_button": "#DA2F0C",
+      "color_button_text": "#ffffff",
+      "color_small_button": "#eaeaea",
+      "color_small_button_text": "#162950",
+      "color_text_field": "#ffffff",
+      "color_text_field_text": "#162950",
+      "color_image_overlay_text": "#ffffff",
+      "color_image_overlay": "#3d3d3d",
+      "image_overlay_opacity": 30,
+      "color_body_bg": "#f8f8f8",
+      "type_header_family": "Google_Muli_600_sans",
+      "type_header_base_size": 26,
+      "type_base_family": "Google_Muli_600_sans",
+      "type_base_size": 18,
+      "type_bold_product_titles": true,
+      "share_facebook": true,
+      "share_twitter": true,
+      "share_pinterest": true,
+      "social_twitter_link": "",
+      "social_facebook_link": "",
+      "social_pinterest_link": "",
+      "social_instagram_link": "",
+      "social_tumblr_link": "",
+      "social_snapchat_link": "",
+      "social_youtube_link": "",
+      "social_vimeo_link": "",
+      "favicon": "",
+      "checkout_header_image": "",
+      "checkout_logo_image": "",
+      "checkout_logo_position": "left",
+      "checkout_logo_size": "small",
+      "checkout_body_background_image": "",
+      "checkout_body_background_color": "#ffffff",
+      "checkout_input_background_color_mode": "white",
+      "checkout_sidebar_background_image": "",
+      "checkout_sidebar_background_color": "#e8f3f6",
+      "checkout_heading_font": "Roboto",
+      "checkout_body_font": "Source Sans Pro",
+      "checkout_accent_color": "#1990c6",
+      "checkout_button_color": "#23314e",
+      "checkout_error_color": "#ff6d6d",
+      "sections": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "align_logo": "left",
+            "logo": "",
+            "logo_max_width": 135,
+            "main_linklist": "main-menu",
+            "message": true,
+            "color_bg": "#162950",
+            "color_text": "#ffffff"
+          }
+        },
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "alignment": "center",
+            "hero_size": "x-large",
+            "text_size": "large"
+          }
+        },
+        "slideshow": {
+          "type": "slideshow",
+          "blocks": {
+            "slideshow-0": {
+              "type": "image",
+              "settings": {
+                "image": "",
+                "alignment": "center"
+              }
+            },
+            "1492095993817": {
+              "type": "image",
+              "settings": {
+                "image": "",
+                "alignment": "center"
+              }
+            }
+          },
+          "block_order": ["slideshow-0", "1492095993817"],
+          "settings": {
+            "autoplay": true,
+            "autoplay_speed": 6,
+            "slideshow_height": "medium",
+            "text_size": "medium"
+          }
+        },
+        "featured-collections": {
+          "type": "collection",
+          "settings": {
+            "grid": 3,
+            "rows": 1,
+            "show_vendor": true,
+            "show_view_all": true
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "settings": {
+            "footer_linklist": "main-menu",
+            "footer_linklist_two": "footer",
+            "footer_newsletter_enable": true,
+            "show_payment_icons": true
+          }
+        },
+        "product-template": {
+          "type": "product-template",
+          "settings": {
+            "image_size": "medium",
+            "show_quantity_selector": false,
+            "show_variant_labels": true,
+            "show_vendor": false,
+            "enable_zoom": true,
+            "show_share_buttons": true
+          }
+        },
+        "collection-template": {
+          "type": "collection-template",
+          "settings": {
+            "layout": "grid",
+            "grid": 2,
+            "rows": 2,
+            "show_collection_image": true,
+            "show_vendor": false,
+            "sort_enable": true,
+            "tags_enable": true
+          }
+        },
+        "1492033809691": {
+          "type": "map",
+          "settings": {}
+        },
+        "1492033877875": {
+          "type": "quotes",
+          "blocks": {
+            "1492033877875-0": {
+              "type": "quote",
+              "settings": {}
+            }
+          },
+          "block_order": ["1492033877875-0"],
+          "settings": {}
+        },
+        "1492033924902": {
+          "type": "custom-content",
+          "blocks": {
+            "1492033924902-0": {
+              "type": "text",
+              "settings": {
+                "width": "100%",
+                "alignment": "center",
+                "align_text": "center"
+              }
+            }
+          },
+          "block_order": ["1492033924902-0"],
+          "settings": {
+            "title": ""
+          }
+        },
+        "1492096252560": {
+          "type": "collection-list",
+          "blocks": {
+            "1492096252560-0": {
+              "type": "featured_collection",
+              "settings": {}
+            },
+            "1492096252560-1": {
+              "type": "featured_collection",
+              "settings": {}
+            },
+            "1492096252560-2": {
+              "type": "featured_collection",
+              "settings": {}
+            }
+          },
+          "block_order": ["1492096252560-0", "1492096252560-1", "1492096252560-2"],
+          "settings": {
+            "grid": 3
+          }
+        },
+        "blog-template": {
+          "type": "blog-template",
+          "settings": {
+            "layout": "grid",
+            "blog_show_author": true,
+            "blog_show_date": false
+          }
+        },
+        "article-template": {
+          "type": "article-template",
+          "settings": {
+            "blog_show_author": true,
+            "blog_show_date": true,
+            "show_share_buttons": true
+          }
+        },
+        "cart-template": {
+          "type": "cart-template",
+          "settings": {
+            "cart_notes_enable": false
+          }
+        }
+      },
+      "content_for_index": [
+        "hero",
+        "featured-collections",
+        "slideshow",
+        "1492033924902",
+        "1492096252560",
+        "1492033877875",
+        "1492033809691"
+      ]
+    }
+  }
+}

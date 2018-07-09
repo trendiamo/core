@@ -29,7 +29,7 @@
   {%- assign number_of_comments = article.comments_count -%}
 {% endif %}
 
-<article class="page-width" itemscope itemtype="http://schema.org/Article">
+<article class="page-width">
   <div class="grid">
     <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
       {% section 'article-template' %}
@@ -53,7 +53,7 @@
             <div id="comments">
 
               {% if new_comment %}
-                <p class="note form-success">
+                <p class="form-message form-message--success">
                   {% if blog.moderated? %}
                     {{ 'blogs.comments.success_moderated' | t }}
                   {% else %}
@@ -101,7 +101,11 @@
 
             <h2 class="h3">{{ 'blogs.comments.title' | t }}</h2>
 
-            {{ form.errors | default_errors }}
+            {%- if form.errors -%}
+              <div class="form-message form-message--error">
+                {{ form.errors | default_errors }}
+              </div>
+            {%- endif -%}
 
             <div class="grid">
 
@@ -140,3 +144,44 @@
     {{ 'blogs.article.back_to_blog' | t: title: blog.title }}
   </a>
 </div>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": "{{ article.content | strip_html }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ page.url }}"
+  },
+  "headline": "{{ article.title }}",
+  {% if article.excerpt != blank %}
+    "description": "{{ article.excerpt | strip_html }}",
+  {% endif %}
+  {% if article.image %}
+    {% assign image_size = article.image.width | append: 'x' %}
+    "image": [
+      "https:{{ article | img_url: image_size }}"
+    ],
+  {% endif %}
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "dateCreated": "{{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.author }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    {% if settings.share_image %}
+      {% assign image_size = settings.share_image.width | append: 'x' %}
+      "logo": {
+        "@type": "ImageObject",
+        "height": "{{ settings.share_image.height }}",
+        "url": "https:{{ settings.share_image | img_url: image_size }}",
+        "width": "{{ settings.share_image.width }}"
+      },
+    {% endif %}
+    "name": "{{ shop.name }}"
+  }
+}
+</script>

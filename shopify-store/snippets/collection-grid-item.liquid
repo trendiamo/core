@@ -10,32 +10,33 @@
   <a href="{% if collection.products == empty %}#{% else %}{{ collection.url }}{% endif %}" class="collection-grid-item__link">
     {% unless collection_image == blank %}
       <div class="collection-grid-item__overlay box ratio-container lazyload js"
-         data-bgset="{% include 'bgset', image: collection_image %}"
-         data-sizes="auto"
-         data-parent-fit="cover"
-         style="background-image: url('{{ collection_image | img_url: '300x300' }}')">
+        data-bgset="{% include 'bgset', image: collection_image %}"
+        data-sizes="auto"
+        data-parent-fit="cover"
+        style="background-image: url('{{ collection_image | img_url: '300x300' }}')">
       </div>
-     <noscript>
-       <div class="collection-grid-item__overlay" style="background-image: url('{{ collection_image | img_url: '1024x1024' }}')"></div>
-     </noscript>
-   {% else %}
-     {% if collection == empty %}
+      <noscript>
+        <div class="collection-grid-item__overlay" style="background-image: url('{{ collection_image | img_url: '1024x1024' }}')"></div>
+      </noscript>
+    {% else %}
+      {% if collection == empty %}
         <div class="collection-grid-item__overlay">
           {% capture current %}{% cycle 1, 2, 3 %}{% endcapture %}
           {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
         </div>
       {% else %}
-         <div class="collection-grid-item__overlay" style="background-image: url('{{ collection_image | img_url: '1024x1024' }}')"></div>
+        <div class="collection-grid-item__overlay" style="background-image: url('{{ collection_image | img_url: '1024x1024' }}')"></div>
       {% endif %}
-   {% endunless %}
+    {% endunless %}
+
     <div class="collection-grid-item__title-wrapper">
-      <h3 class="collection-grid-item__title">
+      <div class="collection-grid-item__title h3">
         {% if collection.title == blank %}
           {{ 'homepage.onboarding.collection_title' | t }}
         {% else %}
           {{ collection.title }}
         {% endif %}
-      </h3>
+      </div>
     </div>
   </a>
 </div>

@@ -13,7 +13,7 @@
             <blockquote class="quotes-slider__text text-center">
               <span class="quote-icon">{% include 'icon-quote' %}</span>
               {% if block.settings.quote != blank %}
-                <div class="rte-setting">{{ block.settings.quote }}</div>
+                <div class="rte-setting rte">{{ block.settings.quote }}</div>
               {% endif %}
               {% if block.settings.author != blank %}
                 <cite>{{ block.settings.author | escape }}</cite>
@@ -32,41 +32,81 @@
 
 {% schema %}
   {
-    "name": "Testimonials",
+    "name": {
+      "en": "Testimonials",
+      "de": "Testimonials",
+      "fr": "Témoignages"
+    },
     "class": "index-section",
     "max_blocks": 9,
     "settings": [
       {
         "type": "text",
         "id": "title",
-        "label": "Heading",
-        "default": "Testimonials"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Testimonials",
+          "de": "Testimonials",
+          "fr": "Témoignages"
+        }
       }
     ],
     "blocks": [
       {
         "type": "quote",
-        "name": "Testimonial",
+        "name": {
+          "en": "Testimonial",
+          "de": "Testimonial",
+          "fr": "Témoignages"
+        },
         "settings": [
           {
             "type": "richtext",
             "id": "quote",
-            "label": "Text",
-            "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+            "label": {
+              "en": "Text",
+              "de": "Text",
+              "fr": "Texte"
+            },
+            "default": {
+              "en": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+              "de": "<p>Kunden-Reviews und Testimonials, die Kundenzufriedenheit beweisen.</p>",
+              "fr": "<p>Ajoutez des avis et témoignages pour mettre en avant vos clients satisfaits.</p>"
+            }
           },
           {
             "type": "text",
             "id": "author",
-            "label": "Author",
-            "default": "Author's name"
+            "label": {
+              "en": "Author",
+              "de": "Autor",
+              "fr": "Auteur"
+            },
+            "default": {
+              "en": "Author's name",
+              "de": "Name des Autors",
+              "fr": "Nom de l'auteur"
+            }
           }
         ]
       }
     ],
     "presets": [
       {
-        "name": "Testimonials",
-        "category": "Text",
+        "name": {
+          "en": "Testimonials",
+          "de": "Testimonials",
+          "fr": "Témoignages"
+        },
+        "category": {
+          "en": "Text",
+          "de": "Text",
+          "fr": "Texte"
+        },
         "blocks": [
           {
             "type": "quote"

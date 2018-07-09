@@ -38,7 +38,7 @@
         <h2 class="h3">{{ section.settings.title | escape }}</h2>
       {% endif %}
       {% if section.settings.text != blank %}
-        <div class="rte-setting featured-row__subtext">{{ section.settings.text }}</div>
+        <div class="rte rte-setting featured-row__subtext">{{ section.settings.text }}</div>
       {% endif %}
       {% if section.settings.button_label != blank and section.settings.button_link != blank %}
         <a href="{{ section.settings.button_link }}" class="btn">
@@ -55,57 +55,109 @@
 
 {% schema %}
   {
-    "name": "Image with text",
+    "name": {
+      "en": "Image with text",
+      "de": "Foto mit Text",
+      "fr": "Image avec du texte"
+    },
     "class": "index-section",
     "settings": [
       {
         "type": "image_picker",
         "id": "image",
-        "label": "Image"
+        "label": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        }
       },
       {
         "type": "select",
         "id": "layout",
-        "label": "Image alignment",
+        "label": {
+          "en": "Image alignment",
+          "de": "Fotoausrichtung",
+          "fr": "Alignement de l'image"
+        },
         "default": "left",
         "options": [
           {
             "value": "left",
-            "label": "Left"
+            "label": {
+              "en": "Left",
+              "de": "Links",
+              "fr": "Gauche"
+            }
           },
           {
             "value": "right",
-            "label": "Right"
+            "label": {
+              "en": "Right",
+              "de": "Rechts",
+              "fr": "Droite"
+            }
           }
         ]
       },
       {
         "type": "text",
         "id": "title",
-        "label": "Heading",
-        "default": "Image with text"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Image with text",
+          "de": "Foto mit Text",
+          "fr": "Image avec du texte"
+        }
       },
       {
         "type": "richtext",
         "id": "text",
-        "label": "Text",
-        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        "label": {
+          "en": "Text",
+          "de": "Text",
+          "fr": "Texte"
+        },
+        "default": {
+          "en": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+          "de": "<p>Kombinieren Sie große Schrift mit einem Foto, um einen Fokus auf Ihr ausgewähltes Produkt, die Kategorie oder einen Blogpost zu legen. Dazu Details zur Verfügbarkeit, Stil oder ein Review.</p>",
+          "fr": "<p>Ajoutez une image à un long texte pour mettre l'accent sur un produit de votre choix, une collection, ou un article de blog. Ajoutez des détails sur la disponibilité, le style, ou mettez un commentaire client en avant.</p>"
+        }
       },
       {
         "type": "text",
         "id": "button_label",
-        "label": "Button label"
+        "label": {
+          "en": "Button label",
+          "de": "Button-Etikett",
+          "fr": "Texte du bouton"
+        }
       },
       {
         "type": "url",
         "id": "button_link",
-        "label": "Button link"
+        "label": {
+          "en": "Button link",
+          "de": "Button-Link",
+          "fr": "Lien du bouton"
+        }
       }
     ],
     "presets": [
       {
-        "name": "Image with text",
-        "category": "Image"
+        "name": {
+          "en": "Image with text",
+          "de": "Foto mit Text",
+          "fr": "Image avec texte"
+        },
+        "category": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        }
       }
     ]
   }
