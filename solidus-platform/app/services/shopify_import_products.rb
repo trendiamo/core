@@ -1,26 +1,44 @@
 require 'open-uri'
+OpenURI::Buffer.send :remove_const, 'StringMax'
+OpenURI::Buffer.const_set 'StringMax', 0
 
 class ShopifyImportProducts
   def initialize
   end
 
   def perform
-    destroy
     products = ShopifyAPI::Product.all
     new_products_array = []
     products.each do |product|
       new_products_array << extract_product_information(product)
     end
     new_products_array.each do |product_hash|
+      if product_hash["taxons"] == "Trendiamo"
+        byebug
+      end
       spree_product = Spree::Product.find_by(slug: product_hash["slug"])
-      if spree_product
-        update_product(product_hash, spree_product)
-      else
-        create_product(product_hash)
+      if product_hash["taxons"] != "Trendiamo"
+        if spree_product
+          update_product(product_hash, spree_product)
+        else
+          create_product(product_hash)
+        end
       end
     end
   end
 
+  def destroy
+    Spree::Product.destroy_all
+    Spree::Taxonomy.destroy_all
+    Spree::Taxon.destroy_all
+    Spree::OptionType.destroy_all
+    Spree::OptionValue.destroy_all
+    Spree::Variant.destroy_all
+    Spree::OptionValuesVariant.destroy_all
+    Spree::Price.destroy_all
+    Spree::Image.destroy_all
+  end
+  
   private
 
   def extract_product_information(product)
@@ -167,17 +185,5 @@ class ShopifyImportProducts
     product_hash["images"].each_with_index do |image_hash, index|
       attach_paperclip_image(spree_product, spree_product.slug + "-#{index}", "jpeg", image_hash)
     end
-  end
-
-  def destroy
-    Spree::Product.destroy_all
-    Spree::Taxonomy.destroy_all
-    Spree::Taxon.destroy_all
-    Spree::OptionType.destroy_all
-    Spree::OptionValue.destroy_all
-    Spree::Variant.destroy_all
-    Spree::OptionValuesVariant.destroy_all
-    Spree::Price.destroy_all
-    Spree::Image.destroy_all
   end
 end

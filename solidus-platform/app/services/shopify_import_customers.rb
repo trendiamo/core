@@ -28,8 +28,8 @@ class ShopifyImportCustomers
 
   def import_address(address_hash, phone)
     spree_customer_country = Spree::Country.find_by(name: address_hash["country"].capitalize)
-    spree_customer_state = Spree::State.find_by(name: address_hash["province"])
-    address_hash["phone"] = phone if address_hash["phone"].empty?
+    spree_customer_state = Spree::State.where("name like ?", "%#{address_hash["province"]}%").first
+    address_hash["phone"] = phone if address_hash["phone"].nil?
     Spree::Address.create!(firstname: address_hash["first_name"], lastname: address_hash["last_name"], address1: address_hash["address1"], address2: address_hash["address2"], city: address_hash["city"], state: spree_customer_state, state_name: address_hash["province"], country: spree_customer_country, zipcode: address_hash["zip"], phone: address_hash["phone"], company: address_hash["company"])
   end
 
