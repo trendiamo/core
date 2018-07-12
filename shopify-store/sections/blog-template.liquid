@@ -204,34 +204,58 @@
 
 {% schema %}
   {
-    "name": "Blog pages",
+    "name": {
+      "en": "Blog pages",
+      "de": "Blogseiten",
+      "fr": "Pages du blog"
+    },
     "settings": [
       {
         "type": "select",
         "id": "layout",
-        "label": "Layout",
+        "label": {
+          "en": "Layout",
+          "de": "Layout",
+          "fr": "Mise en page"
+        },
         "default": "list",
         "options": [
           {
             "value": "grid",
-            "label": "Grid"
+            "label": {
+              "en": "Grid",
+              "de": "Raster",
+              "fr": "Grille"
+            }
           },
           {
             "value": "list",
-            "label": "List"
+            "label": {
+              "en": "List",
+              "de": "Liste",
+              "fr": "Liste"
+            }
           }
         ]
       },
       {
         "type": "checkbox",
         "id": "blog_show_author",
-        "label": "Show author",
+        "label": {
+          "en": "Show author",
+          "de": "Autor anzeigen",
+          "fr": "Afficher l'auteur"
+        },
         "default": true
       },
       {
         "type": "checkbox",
         "id": "blog_show_date",
-        "label": "Show date",
+        "label": {
+          "en": "Show date",
+          "de": "Datum anzeigen",
+          "fr": "Afficher la date"
+        },
         "default": true
       }
     ]

@@ -1,0 +1,433 @@
+{% case section.settings.grid %}
+  {% when 2 %}
+    {%- assign max_height = 530 -%}
+  {% when 3 %}
+    {%- assign max_height = 345 -%}
+  {% when 4 %}
+    {%- assign max_height = 250 -%}
+  {% when 5 %}
+    {%- assign max_height = 195 -%}
+{% endcase %}
+
+{% if section.settings.layout == 'grid' %}
+  {%- assign limit = section.settings.grid | times: section.settings.rows -%}
+{% else %}
+  {%- assign limit = 16 -%}
+{% endif %}
+
+{% assign header_img_active = 0 %}
+
+{% for product in collection.products %}
+  {% if product.title == collection.title %}
+    {% for tag in product.tags %}
+      {% if tag contains 'setting:header_pic_true' %}
+        {% assign header_img_active = 1 %}
+      {% endif %}
+    {% endfor %}
+    {% for image in product.images %}
+      {% if image.alt contains '_headerpic_' %}
+        {% assign header_img_url = image | img_url: 'x300' %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+{% paginate collection.products by limit %}
+<div class="pdp-sidebar-container">
+<div id="pdp-sidebar" class="grid__item {{ product_description_width }}">
+  <div class="pdp-sidebar-sidebar">
+    <div class="pdp-sidebar-header">
+      <a href="{{ collection.url }}"><img class="pdp-sidebar-profilepic" src="{{ collection.image | img_url: 'compact' }}"></a>
+      <div class="pdp-sidebar-content">
+        <div class="pdp-sidebar-title"><a href="{{ collection.url }}">{{ collection.title }}</a></div>
+        {% if collection.metafields.custom_fields["about_active"] != blank and collection.metafields.custom_fields["about_active"] == 1 %}
+          <div id="btn-about-me" class="btn--small btn--secondary">about me</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="trendiamo-breadcrumbs">
+      <a class="btn btn--tertiary" href="javascript:history.back()">Back</a>
+      <a class="breadcrumb-link" href="/">Home</a>
+      {% include "icon-chevron-right" %}
+      <div class="breadcrumb-link">{{ collection.title }}</div>
+    </div>
+
+    <div class="product-single__meta">
+      <h1 class="product-single__title">{{ product.title }}</h1>
+
+      <div class="product-single__description rte">
+        {{ collection.description }}
+      </div>
+    </div>
+  </div>
+  <div class="pdp-sidebar-footer">
+    {% for link in linklists.footer.links %}
+    <a class="pdp-sidebar-footer-link" href="{{ link.url }}">{{ link.title }}</a>
+    {% endfor %}
+    <div class="pdp-sidebar-footer-copyright">
+      © 2018 Trendiamo Unipessoal Lda.
+    </div>
+  </div>
+</div>
+</div>
+<div id="collection-stage" data-section-id="{{ section.id }}" data-section-type="collection-template">
+  {% if collection.metafields.custom_fields["about_video_active"] != blank %}
+    {% if collection.metafields.custom_fields["about_video_active"] == 1 %}
+      {% if collection.metafields.custom_fields["about_video_url"] != blank %}
+        <div id="header-video2" class="about-section-header-video"></div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if collection.metafields.custom_fields["about_active"] != blank and collection.metafields.custom_fields["about_active"] == 1 %}
+  <div id="about-section" class="about-section">
+    {% if collection.metafields.custom_fields["about_video_active"] != blank %}
+      {% if collection.metafields.custom_fields["about_video_active"] == 1 %}
+        {% if collection.metafields.custom_fields["about_video_url"] != blank %}
+          <div id="header-video" class="about-section-header-video"></div>
+        {% endif %}
+      {% else %}
+        {% if collection.metafields.custom_fields["about_image_url"] != blank %}
+          <div class="about-section-header-img" style="background-image: url('{{ collection.metafields.custom_fields['about_image_url'] }}');"></div>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+    <div class="about-section-content">
+      {% if collection.metafields.custom_fields["about_title"] != blank %}
+        <div class="about-section-content-title">{{ collection.metafields.custom_fields["about_title"] }}</div>
+      {% endif %}
+      {% if collection.metafields.custom_fields["about_text"] != blank %}
+        <div class="about-section-content-text">{{ collection.metafields.custom_fields["about_text"] }}</div>
+      {% endif %}
+      <div id="btn-about-close" class="btn btn--tertiary">close</div>
+    </div>
+  </div>
+  {% endif %}
+  <header class="collection-header">
+
+    {% if section.settings.show_collection_image and collection.image and header_img_active != 0 %}
+      <div class="collection-hero">
+        <div class="collection-hero__image ratio-container lazyload js"
+             data-bgset="{% include 'bgset', image: {{ header_img_url }} %}"
+             data-sizes="auto"
+             data-parent-fit="cover"
+             style="background-image: url('{{ header_img_url }}');"></div>
+        <noscript>
+          <div class="collection-hero__image" style="background-image: url('{{ header_img_url }}');"></div>
+        </noscript>
+      </div>
+    {% endif %}
+  </header>
+  <div class="page-width" id="Collection">
+    {% if section.settings.layout == 'grid' %}
+      {% case section.settings.grid %}
+      {% when 2 %}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+      {% when 3 %}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+      {% when 4 %}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+      {% when 5 %}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+      {% endcase %}
+
+      <div class="grid grid--uniform{% if collection.products_count > 0 %} grid--view-items{% endif %}">
+        {% for product in collection.products %}
+          {% unless product.title == collection.title %}
+          <div class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+            {% include 'product-card-grid', max_height: max_height %}
+          </div>
+          {% endunless %}
+        {% else %}
+          {% comment %}
+          Add default products to help with onboarding for collections/all only.
+
+          The onboarding styles and products are only loaded if the
+          store has no products.
+          {% endcomment %}
+          {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+            <div class="grid__item">
+              <div class="grid grid--uniform">
+                {% for i in (1..limit) %}
+                  <div class="grid__item {{ grid_item_width }}">
+                    <div class="grid-view-item">
+                      <a href="#" class="grid-view-item__link">
+                        <div class="grid-view-item__image">
+                          {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                          {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                        <div class="h4 grid-view-item__title">{{ 'homepage.onboarding.product_title' | t }}</div>
+                        <div class="grid-view-item__meta">
+                          <span class="product-price__price">$19.99</span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            {%- assign is_empty_collection = true -%}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <ul class="list-view-items">
+        {% for product in collection.products %}
+        {% unless product.title == collection.title %}
+          <li class="list-view-item">
+            <a href="{{ product.url | within: collection }}" class="list-view-item__link">
+              {% include 'product-card-list', product: product %}
+            </a>
+          </li>
+        {% endunless %}
+        {% else %}
+
+          {% comment %}
+          Add default products to help with onboarding for collections/all only.
+
+          The onboarding styles and products are only loaded if the
+          store has no products.
+          {% endcomment %}
+          {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0%}
+            {% for i in (1..4) %}
+              <li class="list-view-item">
+                <a href="#" class="list-view-item__link">
+                  <div class="list-view-item__image-column">
+                    <div class="list-view-item__image-wrapper">
+                      <div class="list-view-item__image">
+                        {%- assign placeholder = 'placeholder-product-' | append: i -%}
+                        {% include placeholder %}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-view-item__title-column">
+                    <div class="list-view-item__title">{{ 'homepage.onboarding.product_title' | t }}</div>
+                  </div>
+
+                  <div class="list-view-item__price-column">
+                    <span class="product-price__price">$19.99</span>
+                  </div>
+                </a>
+              </li>
+            {% endfor %}
+          {% else %}
+            {%- assign is_empty_collection = true -%}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if is_empty_collection %}
+      <div class="grid__item small--text-center">
+        <p class="text-center">{{ 'collections.general.no_matches' | t }}</p>
+      </div>
+    {% endif %}
+
+    {% if paginate.pages > 1 %}
+      {% include 'pagination' %}
+    {% endif %}
+  </div>
+</div>
+<div class="pdp-footer">
+  {% for link in linklists.footer.links %}
+  <a class="pdp-sidebar-footer-link" href="{{ link.url }}">{{ link.title }}</a>
+  {% endfor %}
+  <div class="pdp-sidebar-footer-copyright">
+    © 2018 Trendiamo Unipessoal Lda.
+  </div>
+</div>
+
+{% unless header_img_active == 1 %}
+<script>
+  $('#shopify-section-brand-profile').css('margin-top', '0');
+  $('#MainContent-Index').css('padding-top', '0');
+</script>
+{% endunless %}
+
+<script>
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var videoID = '{{ collection.metafields.custom_fields["about_video_url"] }}';
+  var player;
+  var player2;
+
+  function onYouTubeIframeAPIReady() {
+    if ($('#header-video').length) {
+      player = new YT.Player('header-video', {
+        height: '300',
+        width: '640',
+        videoId: videoID,
+        events: {
+          'onStateChange': function(event) {
+            $('#header-video').css('height', event.data == YT.PlayerState.PLAYING ? '100%' : '300px');
+          }
+        }
+      });
+    }
+    if ($('#header-video2').length) {
+      player2 = new YT.Player('header-video2', {
+        height: '300',
+        width: '640',
+        videoId: videoID,
+        events: {
+          'onStateChange': function(event) {
+            if (YT.PlayerState.PLAYING) {
+              $('html, body').animate({
+                scrollTop: $('#header-video2').offset().top - 50
+              }, 800);
+            }
+            $('#header-video2').css('height', event.data == YT.PlayerState.PLAYING ? 'calc(100vh - 50px)' : '300px');
+          }
+        }
+      });
+    }
+    $(window).trigger('hashchange');
+  }
+
+  $(document).ready(function() {
+    var about = false;
+
+    $(window).bind('hashchange', function() {
+      var hash = location.hash.replace('#', '');
+      about = (hash === 'about');
+      if (about) {
+        if (player2 && player2.pauseVideo) player2.pauseVideo();
+        $('#header-video2').hide();
+        if ($(window).width() <= 900) {
+          $('#about-section').insertAfter('.pdp-sidebar-header');
+          $('#about-section').show(250);
+        } else {
+          $('#about-section').show();
+        }
+      } else {
+        if (player && player.pauseVideo) player.pauseVideo();
+        $('#header-video2').show();
+        $('#about-section').hide();
+        $('#about-section').prependTo('#collection-stage');
+      }
+    });
+
+    $(window).trigger('hashchange');
+
+    $('#btn-about-me').click(function() {
+      location.hash = about ? '' : 'about';
+    });
+
+    $('#btn-about-close').click(function () {
+      location.hash = about ? '' : 'about';
+    })
+  });
+</script>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": {
+      "en": "Collection pages",
+      "de": "Kategorie-Seiten",
+      "fr": "Pages de collections"
+    },
+    "settings": [
+      {
+        "type": "select",
+        "id": "layout",
+        "label": {
+          "en": "Layout",
+          "de": "Layout",
+          "fr": "Mise en page"
+        },
+        "default": "grid",
+        "options": [
+          {
+            "value": "grid",
+            "label": {
+              "en": "Grid",
+              "de": "Raster",
+              "fr": "Grille"
+            }
+          },
+          {
+            "value": "list",
+            "label": {
+              "en": "List",
+              "de": "Liste",
+              "fr": "Liste"
+            }
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": {
+          "en": "Products per row (grid only)",
+          "de": "Produkte per Reihe (nur Raster)",
+          "fr": "Produits par rangée (grille uniquement)"
+        },
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "rows",
+        "label": {
+          "en": "Rows per page (grid only)",
+          "de": "Reihen per Seite (nur Raster)",
+          "fr": "Rangées par page (grille uniquement)"
+        },
+        "default": 2,
+        "min": 2,
+        "max": 8,
+        "step": 1
+      },
+      {
+        "type": "checkbox",
+        "id": "show_collection_image",
+        "label": {
+          "en": "Show collection image",
+          "de": "Kategorie-Foto anzeigen",
+          "fr": "Afficher l'image de la collection"
+        },
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": {
+          "en": "Show product vendors",
+          "de": "Produkt-Lieferanten anzeigen",
+          "fr": "Afficher les vendeurs"
+        },
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "sort_enable",
+        "label": {
+          "en": "Enable sorting",
+          "de": "Sortieren erlauben",
+          "fr": "Activer le tri"
+        },
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "tags_enable",
+        "label": {
+          "en": "Enable tag filtering",
+          "de": "Tag-Filtern erlauben",
+          "fr": "Activer le filtrage par balises"
+        },
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

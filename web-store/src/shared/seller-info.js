@@ -19,16 +19,15 @@ const SellerName = styled.div`
   font-weight: bold;
 `
 
-const SellerInfo = () => (
+const SellerInfo = ({ taxon }) => (
   <SellerInfoContainer>
-    <Link to="/">
-      <SellerPic alt="Gilmour Niggemann" height="80" src="https://placeimg.com/100/100/people" width="80" />
+    <Link to={`/collections/${taxon.permalink}`}>
+      <SellerPic alt="" height="80" src={taxon.iconUrl} width="80" />
     </Link>
     <div>
-      <Link to="/">
-        <SellerName>{'Gilmour Niggemann'}</SellerName>
+      <Link to={`/collections/${taxon.permalink}`}>
+        <SellerName>{taxon.name}</SellerName>
       </Link>
-      <div>{'Some text about myself.'}</div>
     </div>
   </SellerInfoContainer>
 )

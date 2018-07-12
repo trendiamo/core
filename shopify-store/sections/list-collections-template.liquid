@@ -2,24 +2,24 @@
   <header class="section-header text-center">
     <h1>{{ page_title }}</h1>
   </header>
-  
+
   {%- assign blocks = section.blocks | sort: 'collection.all_products_count' -%}
-  
+
   {% case section.settings.grid %}
-    {% when '2' %}
+    {% when 2 %}
       {%- assign grid_item_width = 'medium-up--one-half' -%}
       {%- assign image_size = '530x' -%}
-    {% when '3' %}
+    {% when 3 %}
       {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
       {%- assign image_size = '350x' -%}
-    {% when '4' %}
+    {% when 4 %}
       {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
       {%- assign image_size = '250x' -%}
-    {% when '5' %}
+    {% when 5 %}
       {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
       {%- assign image_size = '225x' -%}
   {% endcase %}
-  
+
   <div class="grid grid--uniform">
     {% if section.settings.display_type == 'all' %}
       {% case section.settings.sort %}
@@ -54,93 +54,142 @@
 
 {% schema %}
   {
-    "name": "Collections list page",
+    "name": {
+      "en": "Collections list page",
+      "de": "Kategorien-Liste Seite",
+      "fr": "Liste des collections"
+    },
     "settings": [
       {
         "type": "paragraph",
-        "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+        "content": {
+          "en": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections.",
+          "de": "Alle kategorien sind automatisch gelistet. Zum Ändern der Liste wählen Sie 'Ausgewählt' und fügen Sie Kategorien hinzu.",
+          "fr": "Toutes vos collections sont listées par défaut. Pour personaliser votre liste, cliquez sur « Sélection » et ajoutez des collections."
+        }
       },
       {
         "type": "radio",
         "id": "display_type",
-        "label": "Select collections to show",
+        "label": {
+          "en": "Select collections to show",
+          "de": "Collections auswählen, die angezeigt werden sollen",
+          "fr": "Sélectionner les collections à afficher"
+        },
         "default": "all",
         "options": [
           {
             "value": "all",
-            "label": "All"
+            "label": {
+              "en": "All",
+              "de": "Alle",
+              "fr": "Toutes"
+            }
           },
           {
             "value": "selected",
-            "label": "Selected"
+            "label": {
+              "en": "Selected",
+              "de": "Ausgewählt",
+              "fr": "Sélection"
+            }
           }
         ]
       },
       {
         "type": "select",
         "id": "sort",
-        "label": "Sort collections by:",
-        "info": "Sorting only applies when 'All' is selected",
+        "label": {
+          "en": "Sort collections by:",
+          "de": "Kategorien sortieren nach:",
+          "fr": "Trier les collections par: "
+        },
+        "info": {
+          "en": "Sorting only applies when 'All' is selected",
+          "de": "Sortieren funktioniert nur, wenn 'Alle' ausgewählt ist",
+          "fr": "Le tri ne s'applique que lorsque “Toutes“ est sélectionné"
+        },
         "default": "alphabetical",
         "options": [
           {
             "value": "products_high",
-            "label": "Product count, high to low"
+            "label": {
+              "en": "Product count, high to low",
+              "de": "Produktanzahl, hoch zu niedrig",
+              "fr": "Nombre de produits, ordre décroissant"
+            }
           },
           {
             "value": "products_low",
-            "label": "Product count, low to high"
+            "label": {
+              "en": "Product count, low to high",
+              "de": "Produktanzahl, niedrig zu hoch",
+              "fr": "Nombre de produits, ordre croissant"
+            }
           },
           {
             "value": "alphabetical",
-            "label": "Alphabetically, A-Z"
+            "label": {
+              "en": "Alphabetically, A-Z",
+              "de": "Alphabetisch, A-Z",
+              "fr": "Alphabétique, A-Z"
+            }
           },
           {
             "value": "alphabetical_reversed",
-            "label": "Alphabetically, Z-A"
+            "label": {
+              "en": "Alphabetically, Z-A",
+              "de": "Alphabetisch, Z-A",
+              "fr": "Alphabétique, Z-A"
+            }
           },
           {
             "value": "date",
-            "label": "Date, old to new"
+            "label": {
+              "en": "Date, old to new",
+              "de": "Datum, alt zu neu",
+              "fr": "Date, anciennes à récentes"
+            }
           },
           {
             "value": "date_reversed",
-            "label": "Date, new to old"
+            "label": {
+              "en": "Date, new to old",
+              "de": "Datum, neu zu alt",
+              "fr": "Date, récentes à anciennes"
+            }
           }
         ]
       },
       {
-        "type": "select",
+        "type": "range",
         "id": "grid",
-        "label": "Collections per row",
-        "default": "3",
-        "options": [
-          {
-            "value": "2",
-            "label": "2"
-          },
-          {
-            "value": "3",
-            "label": "3"
-          },
-          {
-            "value": "4",
-            "label": "4"
-          },
-          {
-            "value": "5",
-            "label": "5"
-          }
-        ]
+        "label": {
+          "en": "Collections per row",
+          "de": "Kategorien per Reihe",
+          "fr": "Collections par rangée"
+        },
+        "default": 3,
+        "min": 2,
+        "max": 5,
+        "step": 1
       }
     ],
     "blocks": [
       {
         "type": "collection",
-        "name": "Collection",
+        "name": {
+          "en": "Collection",
+          "de": "Kategorie",
+          "fr": "Collection"
+        },
         "settings": [
           {
-            "label": "Collection",
+            "label": {
+              "en": "Collection",
+              "de": "Kategorie",
+              "fr": "Collection"
+            },
             "id": "collection",
             "type": "collection"
           }

@@ -1,0 +1,106 @@
+{% if section.settings.shop != blank %}
+  {% assign shop_img_url = collections[section.settings.shop].image | img_url: 'x400' %}
+  {% assign shop_url = collections[section.settings.shop].url %}
+{% endif %}
+
+
+<div class="about-hero"
+     {% if section.settings.image %}
+     data-bgset="{% include 'bgset', image: section.settings.image %}"
+     data-sizes="auto"
+     data-parent-fit="cover"
+     style="background-image: url('{{ section.settings.image | img_url: 'x400' }});"
+     {% endif %}>
+</div>
+
+<div class="custom-page-wrapper">
+  <div class="custom-page-container">
+    <div class="custom-page-inner">
+      <div class="custom-page-video-container">
+        <iframe class="custom-page-video" src="{{ section.settings.videoURL }}" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="custom-page-inner">
+      <h2>{{ section.settings.videoTitle }}</h2>
+      <p>{{ section.settings.videoText }}</p>
+    </div>
+  </div>
+  <div class="custom-page-content">
+    <div class="custom-page-content-content">
+      {{ page.content }}
+    </div>
+    <h2>Our Shops</h2>
+    <div class="custom-page-container">
+      <a href="{{ shop_url }}">
+        <div class="custom-page-inner">
+          <img class="custom-page-image" src="{{ collections[section.settings.shop].image | img_url: '220x220', crop: 'center' }}">
+          {{ section.settings.shop }}'s Shop
+        </div>
+      </a>
+      <!-- <a href="{{ shop_url }}">
+        <div class="custom-page-inner">
+          <img class="custom-page-image" src="{{ collections[section.settings.shop].image | img_url: '220x220', crop: 'center' }}">
+          {{ section.settings.shop }}'s Shop
+        </div>
+      </a>
+      <a href="{{ shop_url }}">
+        <div class="custom-page-inner">
+          <img class="custom-page-image" src="{{ collections[section.settings.shop].image | img_url: '220x220', crop: 'center' }}">
+          {{ section.settings.shop }}'s Shop
+        </div>
+      </a> -->
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": {
+      "en": "About Us Content",
+      "de": "About Us Inhalt"
+    },
+    "class": "index-section index-section--flush",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": {
+          "en": "Hero Image",
+          "de": "Hero Foto"
+        }
+      },
+      {
+        "type": "text",
+        "id": "videoURL",
+        "label": {
+          "en": "Video URL",
+          "de": "Video URL"
+        }
+      },
+      {
+        "type": "text",
+        "id": "videoTitle",
+        "label": {
+          "en": "Video Title",
+          "de": "Video Titel"
+        }
+      },
+      {
+        "type": "textarea",
+        "id": "videoText",
+        "label": {
+          "en": "Video Text",
+          "de": "Video Text"
+        }
+      },
+      {
+        "type": "collection",
+        "id": "shop",
+        "label": {
+          "en": "Our Shops",
+          "de": "Our Shops"
+        }
+      }
+    ]
+  }
+{% endschema %}

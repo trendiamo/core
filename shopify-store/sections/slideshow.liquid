@@ -13,7 +13,7 @@
         </span>
       </button>
 
-      <div class="slideshow slideshow--{{ section.settings.slideshow_height }}" id="Slideshow-{{ section.id }}" data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.autoplay_speed }}">
+      <div class="slideshow slideshow--{{ section.settings.slideshow_height }}" id="Slideshow-{{ section.id }}" data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.autoplay_speed | times: 1000 }}">
         {% for block in section.blocks %}
           {%- assign is_background_video = false -%}
           {% if block.type == 'video' %}
@@ -116,46 +116,74 @@
 
 {% schema %}
   {
-    "name": "Slideshow",
+    "name": {
+      "en": "Slideshow",
+      "de": "Slideshow",
+      "fr": "Diaporama"
+    },
     "class": "index-section index-section--flush",
     "max_blocks": 4,
     "settings": [
       {
         "type": "checkbox",
         "id": "autoplay",
-        "label": "Auto-rotate slides",
+        "label": {
+          "en": "Auto-rotate slides",
+          "de": "Auto-rotieren der Slides",
+          "fr": "Rotation automatique des diapositives"
+        },
         "default": true
       },
       {
-        "type": "select",
+        "type": "range",
         "id": "autoplay_speed",
-        "label": "Change slides every",
-        "options": [
-          { "value": "5000", "label": "5 seconds" },
-          { "value": "6000", "label": "6 seconds" },
-          { "value": "7000", "label": "7 seconds" },
-          { "value": "8000", "label": "8 seconds" },
-          { "value": "9000", "label": "9 seconds" },
-          { "value": "10000", "label": "10 seconds" }
-        ],
-        "default": "7000"
+        "label": {
+          "en": "Change slides every",
+          "de": "Slides überall ändern",
+          "fr": "Changer de diapositive toutes les"
+        },
+        "max": 10,
+        "min": 5,
+        "step": 1,
+        "unit": {
+          "en": "sec",
+          "de": "sek",
+          "fr": "sec"
+        },
+        "default": 7
       },
       {
         "type": "select",
         "id": "slideshow_height",
-        "label": "Section height",
+        "label": {
+          "en": "Section height",
+          "de": "Höhe des Bereichs",
+          "fr": "Taille de la section"
+        },
         "default": "small",
         "options": [
           {
-            "label": "Small",
+            "label": {
+              "en": "Small",
+              "de": "Klein",
+              "fr": "Petite"
+            },
             "value": "small"
           },
           {
-            "label": "Medium",
+            "label": {
+              "en": "Medium",
+              "de": "Mittel",
+              "fr": "Moyenne"
+            },
             "value": "medium"
           },
           {
-            "label": "Large",
+            "label": {
+              "en": "Large",
+              "de": "Groß",
+              "fr": "Grande"
+            },
             "value": "large"
           }
         ]
@@ -163,15 +191,27 @@
       {
         "type": "select",
         "id": "text_size",
-        "label": "Text size",
+        "label": {
+          "en": "Text size",
+          "de": "Textgröße",
+          "fr": "Taille du texte"
+        },
         "default": "medium",
         "options": [
           {
-            "label": "Medium",
+            "label": {
+              "en": "Medium",
+              "de": "Mittel",
+              "fr": "Moyenne"
+            },
             "value": "medium"
           },
           {
-            "label": "Large",
+            "label": {
+              "en": "Large",
+              "de": "Groß",
+              "fr": "Grande"
+            },
             "value": "large"
           }
         ]
@@ -180,109 +220,209 @@
     "blocks": [
       {
         "type": "image",
-        "name": "Image slide",
+        "name": {
+          "en": "Image slide",
+          "de": "Foto-Slide",
+          "fr": "Diapositive (image)"
+        },
         "settings": [
           {
             "type": "image_picker",
             "id": "image",
-            "label": "Image"
+            "label": {
+              "en": "Image",
+              "de": "Foto",
+              "fr": "Image"
+            }
           },
           {
             "type": "select",
             "id": "alignment",
-            "label": "Image alignment",
+            "label": {
+              "en": "Image alignment",
+              "de": "Fotoausrichtung",
+              "fr": "Alignement de l'image"
+            },
             "default": "top",
             "options": [
               {
                 "value": "top",
-                "label": "Top"
+                "label": {
+                  "en": "Top",
+                  "de": "Oben",
+                  "fr": "Haut"
+                }
               },
               {
                 "value": "center",
-                "label": "Middle"
+                "label": {
+                  "en": "Middle",
+                  "de": "Mitte",
+                  "fr": "Milieu"
+                }
               },
               {
                 "value": "bottom",
-                "label": "Bottom"
+                "label": {
+                  "en": "Bottom",
+                  "de": "Unten",
+                  "fr": "Bas"
+                }
               }
             ]
           },
           {
             "type": "text",
             "id": "title",
-            "label": "Heading",
-            "default": "Image slide"
+            "label": {
+              "en": "Heading",
+              "de": "Titel",
+              "fr": "En-tête"
+            },
+            "default": {
+              "en": "Image slide",
+              "de": "Foto-Slide",
+              "fr": "Diapositive (image)"
+            }
           },
           {
             "type": "text",
             "id": "subheading",
-            "label": "Subheading",
-            "default": "Tell your brand's story through video and images"
+            "label": {
+              "en": "Subheading",
+              "de": "Untertitel",
+              "fr": "Sous-titre"
+            },
+            "default": {
+              "en": "Tell your brand's story through video and images",
+              "de": "Erzählen Sie Ihre Geschichte mit Videos und Fotos",
+              "fr": "Racontez votre histoire avec des vidéos et des images"
+            }
           },
           {
             "type": "url",
             "id": "link",
-            "label": "Slide link"
+            "label": {
+              "en": "Slide link",
+              "de": "Slide-Link",
+              "fr": "Lien de la diapositive"
+            }
           }
         ]
       },
       {
         "type": "video",
-        "name": "Video slide",
+        "name": {
+          "en": "Video slide",
+          "de": "Video-Slide",
+          "fr": "Diapositive (vidéo)"
+        },
         "settings": [
           {
             "type": "video_url",
             "id": "video_url",
-            "label": "Video link",
+            "label": {
+              "en": "Video link",
+              "de": "Video-Link",
+              "fr": "Lien de la vidéo"
+            },
             "accept": ["youtube"],
             "default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
           },
           {
             "type": "select",
             "id": "video_type",
-            "label": "Style",
+            "label": {
+              "en": "Style",
+              "de": "Stil",
+              "fr": "Style"
+            },
             "options": [
               {
                 "value": "chrome",
-                "label": "Image with play button"
+                "label": {
+                  "en": "Image with play button",
+                  "de": "Foto mit Play Button",
+                  "fr": "Image avec bouton de lecture"
+                }
               },
               {
                 "value": "background-chrome",
-                "label": "Background video with play button"
+                "label": {
+                  "en": "Background video with play button",
+                  "de": "Hintergrund-Video mit Play Button",
+                  "fr": "Vidéo d'arrière-plan avec bouton de lecture"
+                }
               },
               {
                 "value": "background",
-                "label": "Background video"
+                "label": {
+                  "en": "Background video",
+                  "de": "Hintergrund-Video",
+                  "fr": "Vidéo d'arrière-plan"
+                }
               }
             ]
           },
           {
             "type": "image_picker",
             "id": "image",
-            "label": "Image",
-            "info": "Fallback when autoplaying video is not supported on mobile devices"
+            "label": {
+              "en": "Image",
+              "de": "Foto",
+              "fr": "Image"
+            },
+            "info": {
+              "en": "Fallback when autoplaying video is not supported on mobile devices",
+              "de": "Ersatz, falls Video nicht automatisch auf Mobilgeräten abspielt",
+              "fr": "Image affichée lorsque la vidéo n'est pas supportée sur les appareils mobiles"
+            }
           },
           {
             "type": "text",
             "id": "title",
-            "label": "Heading",
-            "default": "Video slide"
+            "label": {
+              "en": "Heading",
+              "de": "Titel",
+              "fr": "En-tête"
+            },
+            "default": {
+              "en": "Video slide",
+              "de": "Video-Slide",
+              "fr": "Diapositive (vidéo)"
+            }
           },
           {
             "type": "text",
             "id": "subheading",
-            "label": "Subheading",
-            "default": "Tell your brand's story through video and images"
+            "label": {
+              "en": "Subheading",
+              "de": "Untertitel",
+              "fr": "Sous-titre"
+            },
+            "default": {
+              "en": "Tell your brand's story through video and images",
+              "de": "Erzählen Sie Ihre Geschichte mit Videos und Fotos",
+              "fr": "Racontez votre histoire avec des vidéos et des images"
+            }
           }
         ]
       }
     ],
     "presets": [{
-      "name": "Slideshow",
-      "category": "Image",
+      "name": {
+        "en": "Slideshow",
+        "de": "Slideshow",
+        "fr": "Diaporama"
+      },
+      "category": {
+        "en": "Image",
+        "de": "Foto",
+        "fr": "Image"
+      },
       "settings": {
         "autoplay": true,
-        "autoplay_speed": "5000"
+        "autoplay_speed": 5
       },
       "blocks": [
         {

@@ -13,32 +13,43 @@
 
 {%- assign money_price = price | money -%}
 
-{% if compare_at_price > price %}
-  {% if price_varies %}
-    <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-    <s class="product-price__price">{{ compare_at_price | money }}</s>
-    <span class="product-price__price product-price__sale">
-      {{ money_price }}
-      <span class="product-price__sale-label">{{ 'products.product.on_sale' | t }}</span>
-    </span>
-  {% else %}
-    <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-    <s class="product-price__price">{{ compare_at_price | money }}</s>
-    <span class="product-price__price product-price__sale">
-      {{ money_price }}
-      <span class="product-price__sale-label">{{ 'products.product.on_sale' | t }}</span>
-    </span>
-  {% endif %}
-{% else %}
+  {% if compare_at_price > price %}
 
-  {% if price_varies %}
-    <span class="product-price__price">{{ money_price }}</span>
-  {% else %}
-    <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-    <span class="product-price__price">{{ money_price }}</span>
-  {% endif %}
-{% endif %}
+    {% if available %}
+      <dt>
+        <span class="visually-hidden visually-hidden--inline">{{ 'products.product.regular_price' | t }}</span>
+      </dt>
+      <dd>
+        <s class="product-price__price">{{ compare_at_price | money }}</s>
+      </dd>
+      <dt>
+        <span class="visually-hidden visually-hidden--inline">{{ 'products.product.sale_price' | t }}</span>
+      </dt>
+      <dd>
+        <span class="product-price__price product-price__sale">
+          {{ money_price }}
+          <span class="product-price__sale-label" aria-hidden="true">{{ 'products.product.on_sale' | t }}</span>
+        </span>
+      </dd>
+    {% else %}
+      <dt>
+        <span class="product-price__sold-out">{{ 'products.product.sold_out' | t }}</span>
+      </dt>
+    {% endif %}
 
-{% unless available %}
-  <span class="product-price__sold-out">{{ 'products.product.sold_out' | t }}</span>
-{% endunless %}
+  {% else %}
+
+    {% if available %}
+      <dt>
+        <span class="visually-hidden visually-hidden--inline">{{ 'products.product.regular_price' | t }}</span>
+      </dt>
+      <dd>
+        <span class="product-price__price">{{ money_price }}</span>
+      </dd>
+    {% else %}
+      <dt>
+        <span class="product-price__sold-out">{{ 'products.product.sold_out' | t }}</span>
+      </dt>
+    {% endif %}
+
+  {% endif %}

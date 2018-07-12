@@ -42,7 +42,7 @@
       {%- assign enable_zoom = false -%}
   {% endcase %}
 
-  <div class="grid product-single">
+  <div class="grid product-single{% if section.settings.enable_payment_button %} product-single--{{ section.settings.image_size }}-image{% endif %}">
     <div class="grid__item product-single__photos {{ product_image_width }}{% if section.settings.image_size == 'full' %} product-single__photos--full{% endif %}">
       {% unless section_onboarding %}
         {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
@@ -64,6 +64,7 @@
                   data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
                   data-aspectratio="{{ image.aspect_ratio }}"
                   data-sizes="auto"
+                  tabindex="-1"
                   alt="{{ image.alt | escape }}">
             </div>
           </div>
@@ -99,7 +100,7 @@
                    class="text-link product-single__thumbnail product-single__thumbnail--{{ section.id }}"
                    data-thumbnail-id="{{ image.id }}"
                    {% if enable_zoom %}data-zoom="{{ image.src | img_url: product_image_zoom_size, scale: product_image_scale }}"{% endif %}>
-                     <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '110x110', scale: 2 }}" alt="{{ image.alt | escape }}">
+                     <img class="product-single__thumbnail-image" src="{{ image.src | img_url: '110x110', scale: 2 }}" alt="{{ 'sections.featured_product.gallery_thumbnail_alt' | t: imageAlt: image.alt | escape }}">
                 </a>
               </li>
             {% endfor %}
@@ -127,14 +128,14 @@
           {%- assign price_varies = false -%}
           {%- assign available = true -%}
         {% endunless %}
-
-        <h1 itemprop="name" class="product-single__title">
+        <h2 class="visually-hidden">{{ 'sections.featured_product.title' | t }}</h2>
+        <h3 itemprop="name" class="h1 product-single__title">
           {% unless product == empty %}
             {{ product.title }}
           {% else %}
             {{ 'homepage.onboarding.product_title' | t }}
           {% endunless %}
-        </h1>
+        </h3>
 
         {% if section.settings.show_vendor %}
           <p itemprop="brand" class="product-single__vendor">{{ product.vendor }}</p>
@@ -145,7 +146,7 @@
 
           <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
 
-          <p class="product-single__price product-single__price-{{ section.id }}{% unless current_variant.available %} product-price--sold-out{% endunless %}">
+          <p class="product-single__price product-single__price-{{ section.id }}">
             {% if compare_at_price > price %}
                 <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
                 <s id="ComparePrice-{{ section.id }}">{{ compare_at_price | money }}</s>
@@ -169,56 +170,79 @@
             {% endif %}
           </p>
 
-          <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form product-form-{{ section.id }}{% unless section.settings.show_variant_labels %} product-form--hide-variant-labels{% endunless %}" data-section="{{ section.id }}">
-            {% unless section_onboarding %}
-              {% unless product.options.size == 1 and product.variants[0].title == 'Default Title' %}
-                {% for option in product.options_with_values %}
-                  <div class="selector-wrapper js product-form__item">
-                    <label {% if option.name == 'default' %}class="label--hidden" {% endif %}for="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}">
-                      {{ option.name }}
-                    </label>
-                    <select class="single-option-selector single-option-selector-{{ section.id }} product-form__input" id="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
-                      {% for value in option.values %}
-                        <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                {% endfor %}
-              {% endunless %}
-
-              <select name="id" id="ProductSelect-{{ section.id }}" data-section="{{ section.id }}" class="product-form__variants no-js">
-                {% for variant in product.variants %}
-                  {% if variant.available %}
-                    <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">
-                      {{ variant.title }}
-                    </option>
-                  {% else %}
-                    <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
-                  {% endif %}
-                {% endfor %}
-              </select>
-            {% endunless %}
-            {% if section.settings.show_quantity_selector %}
-              <div class="product-form__item product-form__item--quantity">
-                <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
-                <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" class="product-form__input" pattern="[0-9]*">
-              </div>
-            {% endif %}
-
-            <div class="product-form__item product-form__item--submit">
-              <button type="submit" name="add" id="AddToCart-{{ section.id }}" {% unless current_variant.available %}disabled="disabled"{% endunless %} class="btn product-form__cart-submit{% if product.options.size == 1 and product.variants[0].title == 'Default Title' %} product-form__cart-submit--small{% endif %}">
+          {% if section_onboarding %}
+            <div class="product-form__item product-form__item--submit{% if product.has_only_default_variant %} product-form__item--no-variants{% endif %}">
+              <button type="submit" name="add" id="AddToCart-{{ section.id }}" disabled class="btn product-form__cart-submit">
                 <span id="AddToCartText-{{ section.id }}">
-                  {% unless current_variant.available %}
                     {{ 'products.product.sold_out' | t }}
-                  {% else %}
-                    {{ 'products.product.add_to_cart' | t }}
-                  {% endunless %}
                 </span>
               </button>
             </div>
-          </form>
+          {% else %}
+            {% capture "form_classes" -%}
+              product-form product-form-{{ section.id }}{% unless section.settings.show_variant_labels %} product-form--hide-variant-labels{% endunless %}{% if section.settings.enable_payment_button and product.has_only_default_variant%} product-form--payment-button-no-variants{% endif %}
+            {%- endcapture %}
+            {% form 'product', product, class:form_classes %}
+              {% unless section_onboarding %}
+                {% unless product.has_only_default_variant %}
+                  {% for option in product.options_with_values %}
+                    <div class="selector-wrapper js product-form__item">
+                      <label {% if option.name == 'default' %}class="label--hidden" {% endif %}for="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}">
+                        {{ option.name }}
+                      </label>
+                      <select class="single-option-selector single-option-selector-{{ section.id }} product-form__input" id="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
+                        {% for value in option.values %}
+                          <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  {% endfor %}
+                {% endunless %}
 
+                <select name="id" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js">
+                  {% for variant in product.variants %}
+                    {% if variant.available %}
+                      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">
+                        {{ variant.title }}
+                      </option>
+                    {% else %}
+                      <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              {% endunless %}
+              {% if section.settings.show_quantity_selector %}
+                <div class="product-form__item product-form__item--quantity">
+                  <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+                  <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" class="product-form__input" pattern="[0-9]*">
+                </div>
+              {% endif %}
+
+              <div class="product-form__item product-form__item--submit{% if section.settings.enable_payment_button %} product-form__item--payment-button{% endif %}{% if product.has_only_default_variant %} product-form__item--no-variants{% endif %}">
+                <button type="submit" name="add" id="AddToCart-{{ section.id }}" {% unless current_variant.available %}disabled="disabled"{% endunless %} class="btn product-form__cart-submit{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}">
+                  <span id="AddToCartText-{{ section.id }}">
+                    {% unless current_variant.available %}
+                      {{ 'products.product.sold_out' | t }}
+                    {% else %}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {% endunless %}
+                  </span>
+                </button>
+                {% if section.settings.enable_payment_button %}
+                  {{ form | payment_button }}
+                {% endif %}
+              </div>
+            {% endform %}
+          {% endif %}
         </div>
+
+        {%- comment -%}
+          Live region for announcing updated price and availability to screen readers
+        {%- endcomment -%}
+        <p class="visually-hidden" data-product-status
+          aria-live="polite"
+          role="status"
+        ></p>
 
         <div class="product-single__description rte" itemprop="description">
           {% unless product == empty %}
@@ -244,34 +268,62 @@
 
 {% schema %}
   {
-    "name": "Featured product",
+    "name": {
+      "en": "Featured product",
+      "de": "Featured Produkt",
+      "fr": "Produit vedette"
+    },
     "class": "index-section index-section--featured-product",
     "settings": [
       {
         "type": "product",
         "id": "featured_product",
-        "label": "Product"
+        "label": {
+          "en": "Product",
+          "de": "Produkte",
+          "fr": "Produit"
+        }
       },
       {
         "type": "select",
         "id": "image_size",
-        "label": "Image size",
+        "label": {
+          "en": "Image size",
+          "de": "Foto-Größe",
+          "fr": "Taille de l'image"
+        },
         "options": [
           {
             "value": "small",
-            "label": "Small"
+            "label": {
+              "en": "Small",
+              "de": "Klein",
+              "fr": "Petite"
+            }
           },
           {
             "value": "medium",
-            "label": "Medium"
+            "label": {
+              "en": "Medium",
+              "de": "Mittel",
+              "fr": "Moyenne"
+            }
           },
           {
             "value": "large",
-            "label": "Large"
+            "label": {
+              "en": "Large",
+              "de": "Groß",
+              "fr": "Grande"
+            }
           },
           {
             "value": "full",
-            "label": "Extra large"
+            "label": {
+              "en": "Extra large",
+              "de": "Extra groß",
+              "fr": "Très grande"
+            }
           }
         ],
         "default": "medium"
@@ -279,38 +331,81 @@
       {
         "type": "checkbox",
         "id": "show_quantity_selector",
-        "label": "Show quantity selector",
+        "label": {
+          "en": "Show quantity selector",
+          "de": "Quantitäts-Auswahl anzeigen",
+          "fr": "Afficher le sélecteur de quantité"
+        },
         "default": false
       },
       {
         "type": "checkbox",
         "id": "show_variant_labels",
-        "label": "Show variant labels",
+        "label": {
+          "en": "Show variant labels",
+          "de": "Verschiedene Etiketten anzeigen",
+          "fr": "Afficher le nom des variantes"
+        },
         "default": true
       },
       {
         "type": "checkbox",
         "id": "show_vendor",
-        "label": "Show vendor",
+        "label": {
+          "en": "Show vendor",
+          "de": "Lieferant anzeigen",
+          "fr": "Afficher le nom du vendeur"
+        },
         "default": false
       },
       {
         "type": "checkbox",
         "id": "enable_zoom",
-        "label": "Enable image zoom",
+        "label": {
+          "en": "Enable image zoom",
+          "de": "Foto-Zoom zulassen",
+          "fr": "Activer le zoom d'image"
+        },
         "default": true
       },
       {
         "type": "checkbox",
+        "id": "enable_payment_button",
+        "label": {
+          "en": "Show dynamic checkout button",
+          "de": "Dynamischen Checkout Button anzeigen",
+          "fr": "Afficher le bouton de passage à la caisse dynamique"
+        },
+        "info": {
+          "en": "Lets customers check out directly using a familiar payment method. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+          "de": "Lässt Kunden direkt bezahlen mit bekannten Bezahlmethoden. [Mehr erfahren](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+          "fr": "Permettez à vos clients de passer à la caisse en choisissant un moyen de paiement qui leur est familier. [En savoir plus](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+        },
+        "default": false
+      },
+      {
+        "type": "checkbox",
         "id": "show_share_buttons",
-        "label": "Show social sharing buttons",
+        "label": {
+          "en": "Show social sharing buttons",
+          "de": "Buttons für Social Media anzeigen",
+          "fr": "Afficher les options de partage sur les médias sociaux"
+        },
         "default": true
       }
     ],
     "presets": [
       {
-        "name": "Featured product",
-        "category": "Product"
+        "name": {
+          "en": "Featured product",
+          "de": "Featured Produkt",
+          "fr": "Produit vedette"
+        },
+        "category": {
+          "en": "Product",
+          "de": "Produkte",
+          "fr": "Produit"
+        }
       }
     ]
   }

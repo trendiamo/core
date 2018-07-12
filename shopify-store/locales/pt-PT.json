@@ -2,7 +2,12 @@
   "general": {
     "accessibility": {
       "skip_to_content": "Pular para o Conteúdo",
-      "close_modal": "Encerrar (Esc)"
+      "close_modal": "Encerrar (Esc)",
+      "link_messages": {
+        "new_window": "Abrirá numa nova janela.",
+        "external": "Abrirá uma página externa.",
+        "new_window_and_external": "Abrirá uma página externa numa nova janela."
+      }
     },
     "meta": {
       "tags": "Etiquetado como \"{{ tags }}\"",
@@ -14,8 +19,8 @@
       "link": "Continue comprando"
     },
     "pagination": {
-      "previous": "Anterior",
-      "next": "Seguinte",
+      "previous": "Página anterior",
+      "next": "Próxima página",
       "current_page": "Página {{ current }} de {{ total }}"
     },
     "password_page": {
@@ -41,7 +46,7 @@
       }
     },
     "search": {
-      "no_results_html": "A sua pesquisa por \"{{ terms }}\" não produziu resultados.",
+      "no_results_html": "Por favor, tente um termo de pesquisa diferente ou volte para a <a href=\"\/\">página inicial<\/a>.",
       "results_with_count": {
         "one": "{{ count }} resultado para \"{{ terms }}\"",
         "other": "{{ count }} resultados para \"{{ terms }}\""
@@ -49,7 +54,11 @@
       "title": "Pesquisar nosso site",
       "placeholder": "Pesquisar",
       "submit": "Pesquisar",
-      "close": "Encerrar (esc)"
+      "close": "Encerrar (esc)",
+      "heading": {
+        "one": "Resultado da pesquisa",
+        "other": "Procurar Resultados"
+      }
     },
     "newsletter_form": {
       "newsletter_email": "Join our mailing list",
@@ -71,21 +80,29 @@
       "play_video": "reprodução de vídeo",
       "close_video": "Fechar vídeo"
     },
+    "featured_product": {
+      "title": "Produto em destaque",
+      "gallery_thumbnail_alt": "Carregar imagem no visualizador da galeria, {{ imageAlt }}"
+    },
     "map": {
       "address_error": "Não é possível localizar o endereço",
       "address_no_results": "Nenhum resultado para este endereço",
       "address_query_limit_html": "Você excedeu a cota de uso da API do Google. Considere a atualização para um <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Plano Premium<\/a>.",
-      "auth_error_html": "Houve um problema autenticação de sua conta do Google Maps."
+      "auth_error_html": "Houve um problema autenticação de sua conta do Google Maps.",
+      "section_heading": "Localização"
     }
   },
   "blogs": {
     "article": {
       "view_all": "Ver todo",
+      "view_all_blogs": "Ver todos os artigos",
       "all_topics": "Todos os tópicos",
       "by_author": "por {{ author }}",
       "posted_in": "Postado em",
       "read_more": "Ler mais",
-      "back_to_blog": "Regressar a {{ title }}"
+      "read_more_title": "Ler mais: {{ title }}",
+      "back_to_blog": "Regressar a {{ title }}",
+      "tags": "Tag"
     },
     "comments": {
       "title": "Deixe um comentário",
@@ -128,6 +145,7 @@
   "collections": {
     "general": {
       "view_all": "Ver todo",
+      "view_all_label": "Ver todos os produtos da coleção {{ collection_name }}",
       "no_matches": "Lamentamos, mas nenhum produto corresponde à sua pesquisa.",
       "items_with_count": {
         "one": "{{ count }} item",
@@ -275,9 +293,9 @@
   "layout": {
     "navigation": {
       "search": "Pesquisar",
-      "toggle": "expandir\/esconder",
       "expand": "mais",
-      "collapse": "menos"
+      "collapse": "menos",
+      "menu": "Menu"
     },
     "cart": {
       "title": "Carrinho de Compras",
@@ -302,15 +320,18 @@
       "sold_out": "Esgotado",
       "unavailable": "Indisponível",
       "on_sale": "Promoção",
+      "sale_price": "Preço de saldo",
       "quantity": "Quantidade",
       "add_to_cart": "Adicionar ao Carrinho de Compras",
-      "back_to_collection": "Regressar a {{ title }}"
+      "back_to_collection": "Regressar a {{ title }}",
+      "vendor": "Fornecedor"
     }
   },
   "gift_cards": {
     "issued": {
       "title_html": "Aqui está o seu cartão-presente de {{ value }} para {{ shop }}!",
       "subtext": "Aqui está o seu cartão-presente!",
+      "gift_card_code": "código do cartão de presente",
       "disabled": "Inválido",
       "expired": "Expirou em {{ expiry }}",
       "active": "Expira em {{ expiry }}",
@@ -318,7 +339,8 @@
       "shop_link": "Começar a fazer compras",
       "print": "Imprimir este cartão presente",
       "remaining_html": "{{ balance }} restante",
-      "add_to_apple_wallet": "Adicionar ao Apple Wallet"
+      "add_to_apple_wallet": "Adicionar ao Apple Wallet",
+      "qr_image_alt": "QR code - digitalizar para resgatar cartão de presente"
     }
   },
   "date_formats": {

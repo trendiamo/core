@@ -37,9 +37,14 @@
       </div>
 
       {%- assign code_size = gift_card.code | format_code | size -%}
-      <div class="giftcard__code{% if code_size <= 25 %} giftcard__code--large{% elsif code_size > 25 and code_size <= 30 %} giftcard__code--medium{% else %} giftcard__code--small{% endif %}" onclick="selectText('GiftCardDigits');">
+      <div class="giftcard__code">
         <div class="giftcard__code__inner">
-          <strong class="giftcard__code__text {% if gift_card.expired or gift_card.enabled != true %} disabled{% endif %}" id="GiftCardDigits">{{ gift_card.code | format_code }}</strong>
+          <input type="text"
+            class="giftcard__code__text{% if gift_card.expired or gift_card.enabled != true %} disabled{% endif %}"
+            id="GiftCardDigits"
+            value="{{ gift_card.code | format_code }}"
+            aria-label="{{ 'gift_cards.issued.gift_card_code' | t }}"
+            readonly />
         </div>
       </div>
     </div>
@@ -49,26 +54,30 @@
     </p>
 
     <div id="QrCode" class="giftcard__qr-code" data-identifier="{{ gift_card.qr_identifier }}"></div>
-
-    <div class="text-center">
-      <p>
-        <a href="{{ shop.url }}" class="btn" target="_blank">
-          {{ 'gift_cards.issued.shop_link' | t }}
-          {% include 'icon-arrow-right' %}
+    
+    <ul class="giftcard-action-list text-center">
+      <li class="giftcard-action-list__item">
+        <a href="{{ shop.url }}"
+          class="btn"
+          target="_blank"
+          rel="noopener"
+          aria-describedby="a11y-new-window-message">
+            {{ 'gift_cards.issued.shop_link' | t }}
+            {% include 'icon-arrow-right' %}
         </a>
-      </p>
-      <p>
+      </li>
+      <li>
         <button type="button" class="btn btn--secondary print-link" onclick="window.print();">
           {{ 'gift_cards.issued.print' | t }}
         </button>
-      </p>
+      </li>
       {% if gift_card.pass_url %}
-        <p>
+        <li>
           <a class="giftcard__apple-wallet" href="{{ gift_card.pass_url }}">
             <img class="giftcard__apple-wallet-image" src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}">
           </a>
-        </p>
+        </li>
       {% endif %}
-    </div>
+    </ul>
   </main>
 </div>

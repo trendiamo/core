@@ -2,7 +2,7 @@
   <div class="grid">
 
     <div class="grid__item medium-up--one-half medium-up--push-one-quarter">
-      <div class="note form-success hide" id="ResetSuccess">
+      <div class="form-message form-message--success hide" id="ResetSuccess">
         {{ 'customer.recover_password.success' | t }}
       </div>
 
@@ -11,14 +11,18 @@
 
           <h1 class="text-center">{{ 'customer.login.title' | t }}</h1>
 
-          {{ form.errors | default_errors }}
+          {%- if form.errors -%}
+            <div class="form-message form-message--error">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
 
-          <label for="CustomerEmail">{{ 'customer.login.email_or_username' | t }}</label>
-          <input type="text" name="customer[email]" id="CustomerEmail" required class="{% if form.errors contains 'login' %} input--error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
+          <label for="CustomerEmail">{{ 'customer.login.email' | t }}</label>
+          <input type="email" name="customer[email]" id="CustomerEmail" class="{% if form.errors contains 'email' %} input--error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
 
           {% if form.password_needed %}
             <label for="CustomerPassword">{{ 'customer.login.password' | t }}</label>
-            <input type="password" value="" name="customer[password]" required id="CustomerPassword" class="{% if form.errors contains 'password' %} input--error{% endif %}">
+            <input type="password" value="" name="customer[password]" id="CustomerPassword" class="{% if form.errors contains 'password' %} input--error{% endif %}">
           {% endif %}
 
           <div class="text-center">
@@ -46,7 +50,11 @@
         <div class="form-vertical">
           {% form 'recover_customer_password' %}
 
-            {{ form.errors | default_errors }}
+            {%- if form.errors -%}
+              <div class="form-message form-message--error">
+                {{ form.errors | default_errors }}
+              </div>
+            {%- endif -%}
 
             {% comment %}
               Add a hidden span to indicate the form was submitted succesfully.
@@ -56,7 +64,7 @@
             {% endif %}
 
             <label for="RecoverEmail">{{ 'customer.recover_password.email' | t }}</label>
-            <input type="email" value="" name="email" id="RecoverEmail" class="input-full" autocorrect="off" autocapitalize="off">
+            <input type="email" value="" name="email" id="RecoverEmail" class="input-full"autocorrect="off" autocapitalize="off">
 
             <div class="text-center">
               <p>

@@ -33,70 +33,134 @@
 
 {% schema %}
   {
-    "name": "Image with text overlay",
+    "name": {
+      "en": "Image with text overlay",
+      "de": "Foto mit überlegtem Text",
+      "fr": "Image avec texte"
+    },
     "class": "index-section index-section--flush",
     "settings": [
       {
         "type": "image_picker",
         "id": "image",
-        "label": "Image"
+        "label": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        }
       },
       {
         "type": "select",
         "id": "alignment",
-        "label": "Image alignment",
+        "label": {
+          "en": "Image alignment",
+          "de": "Fotoausrichtung",
+          "fr": "Alignement de l'image"
+        },
         "default": "center",
         "options": [
           {
             "value": "top",
-            "label": "Top"
+            "label": {
+              "en": "Top",
+              "de": "Oben",
+              "fr": "Haut"
+            }
           },
           {
             "value": "center",
-            "label": "Middle"
+            "label": {
+              "en": "Middle",
+              "de": "Mitte",
+              "fr": "Milieu"
+            }
           },
           {
             "value": "bottom",
-            "label": "Bottom"
+            "label": {
+              "en": "Bottom",
+              "de": "Unten",
+              "fr": "Bas"
+            }
           }
         ]
       },
       {
         "type": "text",
         "id": "title",
-        "label": "Heading",
-        "default": "Image with text overlay"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Image with text overlay",
+          "de": "Foto mit überlegtem Text",
+          "fr": "Image avec superposition de texte"
+        }
       },
       {
         "type": "richtext",
         "id": "text",
-        "label": "Text",
-        "default": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+        "label": {
+          "en": "Text",
+          "de": "Text",
+          "fr": "Texte"
+        },
+        "default": {
+          "en": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>",
+          "de": "<p>Nutzen Sie überlegten Text, um Kunden über Ihre Marke zu informieren. Wählen Sie Fotos und Text aus, die zu Ihrer Marke passen.</p>",
+          "fr": "<p>Utilisez la superposition de texte pour donner un aperçu de votre marque à vos clients. Utilisez une image et du texte qui se rapportent au style et à l'histoire de votre marque.</p>"
+        }
       },
       {
         "type": "select",
         "id": "hero_size",
-        "label": "Section height",
+        "label": {
+          "en": "Section height",
+          "de": "Bereichs-Höhe",
+          "fr": "Hauteur de la section"
+        },
         "default": "medium",
         "options": [
           {
-            "label": "Extra Small",
+            "label": {
+              "en": "Extra Small",
+              "de": "Extra klein",
+              "fr": "Très petite"
+            },
             "value": "x-small"
           },
           {
-            "label": "Small",
+            "label": {
+              "en": "Small",
+              "de": "Klein",
+              "fr": "Petite"
+            },
             "value": "small"
           },
           {
-            "label": "Medium",
+            "label": {
+              "en": "Medium",
+              "de": "Mitte",
+              "fr": "Moyenne"
+            },
             "value": "medium"
           },
           {
-            "label": "Large",
+            "label": {
+              "en": "Large",
+              "de": "Groß",
+              "fr": "Grande"
+            },
             "value": "large"
           },
           {
-            "label": "Extra Large",
+            "label": {
+              "en": "Extra Large",
+              "de": "Extra groß",
+              "fr": "Très grande"
+            },
             "value": "x-large"
           }
         ]
@@ -104,15 +168,27 @@
       {
         "type": "select",
         "id": "text_size",
-        "label": "Text size",
+        "label": {
+          "en": "Text size",
+          "de": "Textgröße",
+          "fr": "Taille du texte"
+        },
         "default": "medium",
         "options": [
           {
-            "label": "Medium",
+            "label": {
+              "en": "Medium",
+              "de": "Mitte",
+              "fr": "Moyenne"
+            },
             "value": "medium"
           },
           {
-            "label": "Large",
+            "label": {
+              "en": "Large",
+              "de": "Groß",
+              "fr": "Grande"
+            },
             "value": "large"
           }
         ]
@@ -120,18 +196,34 @@
       {
         "type": "text",
         "id": "button_label",
-        "label": "Button label"
+        "label": {
+          "en": "Button label",
+          "de": "Button-Etikett",
+          "fr": "Texte du bouton"
+        }
       },
       {
         "type": "url",
         "id": "button_link",
-        "label": "Button link"
+        "label": {
+          "en": "Button link",
+          "de": "Button-Etikett",
+          "fr": "Lien du bouton"
+        }
       }
     ],
     "presets": [
       {
-        "name": "Image with text overlay",
-        "category": "Image"
+        "name": {
+          "en": "Image with text overlay",
+          "de": "Foto mit überlegtem Text",
+          "fr": "Image avec superposition de texte"
+        },
+        "category": {
+          "en": "Image",
+          "de": "Foto",
+          "fr": "Image"
+        }
       }
     ]
   }

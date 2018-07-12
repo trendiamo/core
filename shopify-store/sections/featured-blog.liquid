@@ -8,39 +8,41 @@
   {%- assign blog = blogs[section.settings.blog] -%}
 
   {% unless blog.articles_count == 0 %}
-    <div class="grid grid--uniform grid--blog">
+    <ul class="grid grid--uniform grid--blog">
       {% for article in blog.articles limit: section.settings.post_limit %}
-        <div class="grid__item medium-up--one-third">
-          {% if article.image %}
-            {% capture img_id %}ArticleImage-{{ article.image.id }}{% endcapture %}
-            {% capture img_wrapper_id %}ArticleImageWrapper-{{ article.image.id }}{% endcapture %}
-            {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <li class="grid__item medium-up--one-third">
+          <a href="{{ article.url }}" class="article__link">
+            {% if article.image %}
+              {% capture img_id %}ArticleImage-{{ article.image.id }}{% endcapture %}
+              {% capture img_wrapper_id %}ArticleImageWrapper-{{ article.image.id }}{% endcapture %}
+              {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
-            {% include 'image-style' with image: article.image, small_style: true, width: 345, height: 345, wrapper_id: img_wrapper_id, img_id: img_id %}
-            <div id="{{ img_wrapper_id }}" class="article__grid-image-wrapper js">
-              <a href="{{ article.url }}" class="article__grid-image-container" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100}}%;">
-                <img id="{{ img_id }}"
-                     class="article__grid-image lazyload"
-                     src="{{ article.image | img_url: '300x300' }}"
-                     data-src="{{ img_url }}"
-                     data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-                     data-aspectratio="{{ article.image.aspect_ratio }}"
-                     data-sizes="auto"
-                     alt="{{ article.image.alt | escape }}">
-              </a>
-            </div>
-            <noscript>
-              <a href="{{ article.url }}" class="article__grid-image-wrapper">
-                {{ article | img_url: '345x345', scale: 2 | img_tag: article.title, 'article__grid-image' }}
-              </a>
-            </noscript>
-          {% endif %}
+              {% include 'image-style' with image: article.image, small_style: true, width: 345, height: 345, wrapper_id: img_wrapper_id, img_id: img_id %}
+              <div id="{{ img_wrapper_id }}" class="article__grid-image-wrapper js">
+                <div class="article__grid-image-container" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100}}%;">
+                  <img id="{{ img_id }}"
+                      class="article__grid-image lazyload"
+                      src="{{ article.image | img_url: '300x300' }}"
+                      data-src="{{ img_url }}"
+                      data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                      data-aspectratio="{{ article.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="">
+                </div>
+              </div>
+              <noscript>
+                <div class="article__grid-image-wrapper">
+                  {{ article | img_url: '345x345', scale: 2 | img_tag: article.title, 'article__grid-image' }}
+                </div>
+              </noscript>
+            {% endif %}
+
+            <h3 class="article__title{% if article.image %} article__title--has-image{% endif %}">
+              {{ article.title }}
+            </h3>
+          </a>
 
           <div class="article__grid-meta{% if article.image %} article__grid-meta--has-image{% endif %}">
-            <h2 class="h3 article__title">
-              <a href="{{ article.url }}">{{ article.title }}</a>
-            </h2>
-
             {% if section.settings.blog_show_author %}
               <span class="article__author">{{ 'blogs.article.by_author' | t: author: article.author }}</span>
             {% endif %}
@@ -61,15 +63,19 @@
 
             {% if article.tags.size > 0 %}
               <div class="article__tags rte">
-                {% for tag in article.tags %}
-                  <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article__grid-tag">{{ tag }}</a>
-                {% endfor %}
+                <ul class="list--inline" aria-label="{{ 'blogs.article.tags' | t }}">
+                  {% for tag in article.tags %}
+                    <li>
+                      <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article__grid-tag">{{ tag }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
               </div>
             {% endif %}
 
             <ul class="list--inline article__meta-buttons">
               <li>
-                <a href="{{ article.url }}" class="btn btn--secondary btn--small">
+                <a href="{{ article.url }}" class="btn btn--secondary btn--small" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
                   {{ 'blogs.article.read_more' | t }}
                 </a>
               </li>
@@ -83,17 +89,17 @@
               {% endif %}
             </ul>
           </div>
-        </div>
+        </li>
       {% endfor %}
-    </div>
+    </ul>
   {% else %}
     <div class="grid grid--uniform grid--blog">
       {% for i in (1..section.settings.post_limit) %}
         <div class="grid__item medium-up--one-third">
           <div class="article__grid-meta">
-            <h2 class="h3 article__title">
+            <h3 class="article__title">
               <a href="#">{{ 'homepage.onboarding.blog_title' | t }}</a>
-            </h2>
+            </h3>
 
             {% if section.settings.blog_show_author %}
               <span class="article__author">{{ 'homepage.onboarding.blog_author' | t }}</span>
@@ -117,9 +123,9 @@
   {% endunless %}
 
   {% if section.settings.show_view_all %}
-    <hr class="hr--invisible"></hr>
+    <hr class="hr--invisible" aria-hidden="true"></hr>
     <div class="text-center">
-      <a href="{{ blog.url }}" class="btn">
+      <a href="{{ blog.url }}" class="btn" aria-label="{{ 'blogs.article.view_all_blogs' | t }}">
         {{ 'blogs.article.view_all' | t }}
       </a>
     </div>
@@ -128,24 +134,44 @@
 
 {% schema %}
   {
-    "name": "Blog posts",
+    "name": {
+      "en": "Blog posts",
+      "de": "Blogposts",
+      "fr": "Articles de blog"
+    },
     "class": "index-section",
     "settings": [
       {
         "type": "text",
         "id": "title",
-        "label": "Heading",
-        "default": "Blog posts"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Blog posts",
+          "de": "Blogposts",
+          "fr": "Articles de blog"
+        }
       },
       {
         "id": "blog",
         "type": "blog",
-        "label": "Blog"
+        "label": {
+          "en": "Blog",
+          "de": "Blog",
+          "fr": "Blog"
+        }
       },
       {
         "type": "range",
         "id": "post_limit",
-        "label": "Posts",
+        "label": {
+          "en": "Posts",
+          "de": "Posts",
+          "fr": "Articles"
+        },
         "min": 3,
         "max": 12,
         "step": 3,
@@ -154,26 +180,46 @@
       {
         "type": "checkbox",
         "id": "blog_show_author",
-        "label": "Show author",
+        "label": {
+          "en": "Show author",
+          "de": "Autor anzeigen",
+          "fr": "Afficher l'auteur"
+        },
         "default": false
       },
       {
         "type": "checkbox",
         "id": "blog_show_date",
-        "label": "Show date",
+        "label": {
+          "en": "Show date",
+          "de": "Datum anzeigen",
+          "fr": "Afficher la date"
+        },
         "default": true
       },
       {
         "type": "checkbox",
         "id": "show_view_all",
-        "label": "Show 'View all' button",
+        "label": {
+          "en": "Show 'View all' button",
+          "de": "'Alle anzeigen' Button anzeigen",
+          "fr": "Afficher le bouton “Voir tout”"
+        },
         "default": false
       }
     ],
     "presets": [
       {
-        "name": "Blog posts",
-        "category": "Blog",
+        "name": {
+          "en": "Blog posts",
+          "de": "Blogposts",
+          "fr": "Articles de blog"
+        },
+        "category": {
+          "en": "Blog",
+          "de": "Blog",
+          "fr": "Blog"
+        },
         "settings": {
           "blog": "News",
           "post_limit": 3

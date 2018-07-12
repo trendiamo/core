@@ -11,7 +11,7 @@
   {% endif %}
 </div>
 
-<div class="rte" itemprop="articleBody">
+<div class="rte">
   {{ article.content }}
 </div>
 
@@ -21,24 +21,40 @@
 
 {% schema %}
   {
-    "name": "Posts",
+    "name": {
+      "en": "Posts",
+      "de": "Posts",
+      "fr": "Articles"
+    },
     "settings": [
       {
         "type": "checkbox",
         "id": "blog_show_author",
-        "label": "Show author",
+        "label": {
+          "en": "Show author",
+          "de": "Autor anzeigen",
+          "fr": "Afficher l'auteur"
+        },
         "default": true
       },
       {
         "type": "checkbox",
         "id": "blog_show_date",
-        "label": "Show date",
+        "label": {
+          "en": "Show date",
+          "de": "Datum anzeigen",
+          "fr": "Afficher la date"
+        },
         "default": true
       },
       {
         "type": "checkbox",
         "id": "show_share_buttons",
-        "label": "Show social sharing buttons",
+        "label": {
+          "en": "Show social sharing buttons",
+          "de": "Buttons für Social Media anzeigen",
+          "fr": "Afficher les boutons de partage sur les médias sociaux"
+        },
         "default": true
       }
     ]

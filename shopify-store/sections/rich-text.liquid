@@ -15,42 +15,82 @@
 
 {% schema %}
   {
-    "name": "Rich text",
+    "name": {
+      "en": "Rich text",
+      "de": "Rich text",
+      "fr": "Texte enrichi"
+    },
     "class": "index-section",
     "settings": [
       {
         "type": "checkbox",
         "id": "full_width",
-        "label": "Wide display"
+        "label": {
+          "en": "Wide display",
+          "de": "Breitbild-Display",
+          "fr": "Affichage large"
+        }
       },
       {
         "type": "text",
         "id": "section_title",
-        "label": "Heading",
-        "default": "Talk about your brand"
+        "label": {
+          "en": "Heading",
+          "de": "Titel",
+          "fr": "En-tête"
+        },
+        "default": {
+          "en": "Talk about your brand",
+          "de": "Reden Sie über Ihre Marke",
+          "fr": "Parlez de votre marque"
+        }
       },
       {
         "type": "richtext",
         "id": "text",
-        "label": "Text",
-        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+        "label": {
+          "en": "Text",
+          "de": "Text",
+          "fr": "Texte"
+        },
+        "default": {
+          "en": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+          "de": "<p>Nutzen Sie diesen Text, um Infos über Ihre Marke mitzuteilen. Beschreiben Sie ein Produkt, kündigen Sie etwas an oder heißen Sie Kunden willkommen.</p>",
+          "fr": "<p>Utilisez ce texte pour partager des informations sur votre marque. Décrivez un produit, partagez des annonces, ou souhaitez la bienvenue à vos clients.</p>"
+        }
       },
       {
         "type": "select",
         "id": "text_size",
-        "label": "Size",
+        "label": {
+          "en": "Size",
+          "de": "Größe",
+          "fr": "Taille"
+        },
         "default": "medium",
         "options": [
           {
-            "label": "Small",
+            "label": {
+              "en": "Small",
+              "de": "Klein",
+              "fr": "Petite"
+            },
             "value": "small"
           },
           {
-            "label": "Medium",
+            "label": {
+              "en": "Medium",
+              "de": "Mittel",
+              "fr": "Moyenne"
+            },
             "value": "medium"
           },
           {
-            "label": "Large",
+            "label": {
+              "en": "Large",
+              "de": "Groß",
+              "fr": "Grande"
+            },
             "value": "large"
           }
         ]
@@ -58,8 +98,16 @@
     ],
     "presets": [
       {
-        "name": "Rich text",
-        "category": "Text"
+        "name": {
+          "en": "Rich text",
+          "de": "Rich text",
+          "fr": "Texte enrichi"
+        },
+        "category": {
+          "en": "Text",
+          "de": "Text",
+          "fr": "Texte"
+        }
       }
     ]
   }
