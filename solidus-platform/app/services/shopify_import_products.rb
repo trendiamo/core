@@ -1,10 +1,9 @@
-require 'open-uri'
-OpenURI::Buffer.send :remove_const, 'StringMax'
-OpenURI::Buffer.const_set 'StringMax', 0
+require "open-uri"
+OpenURI::Buffer.send :remove_const, "StringMax"
+OpenURI::Buffer.const_set "StringMax", 0
 
 class ShopifyImportProducts
-  def initialize
-  end
+  def initialize; end
 
   def perform
     products = ShopifyAPI::Product.all
@@ -13,16 +12,9 @@ class ShopifyImportProducts
       new_products_array << extract_product_information(product)
     end
     new_products_array.each do |product_hash|
-      if product_hash["taxons"] == "Trendiamo"
-        byebug
-      end
       spree_product = Spree::Product.find_by(slug: product_hash["slug"])
       if product_hash["taxons"] != "Trendiamo"
-        if spree_product
-          update_product(product_hash, spree_product)
-        else
-          create_product(product_hash)
-        end
+        spree_product ? update_product(product_hash, spree_product) : create_product(product_hash)
       end
     end
   end
@@ -38,13 +30,11 @@ class ShopifyImportProducts
     Spree::Price.destroy_all
     Spree::Image.destroy_all
   end
-  
+
   private
 
   def extract_product_information(product)
-    keys = %w[name sku description slug variants meta_description meta_keywords meta_title price
-              option_types taxons stock height width depth images]
-    new_product_hash = Hash[keys.each_with_object(nil).to_a]
+    new_product_hash = {}
     new_product_hash["name"] = product.attributes["title"]
     new_product_hash["description"] = product.attributes["body_html"]
     new_product_hash["slug"] = product.attributes["handle"].to_s
@@ -58,42 +48,64 @@ class ShopifyImportProducts
 
   def import_taxonomy
     spree_taxonomy = Spree::Taxonomy.find_by(name: "Collection")
-    unless spree_taxonomy
-      spree_taxonomy = Spree::Taxonomy.create!(name: "Collection")
-    end
-    spree_taxonomy
+    return unless spree_taxonomy.nil?
+    Spree::Taxonomy.create!(name: "Collection")
   end
 
   def import_taxon(product_hash, spree_taxonomy)
-    spree_taxon = Spree::Taxon.find_by(name: product_hash["taxons"])
     parent_taxon = Spree::Taxon.find_by(name: "Collection")
-    unless spree_taxon
-      spree_taxon = Spree::Taxon.create!(name: product_hash["taxons"], taxonomy: spree_taxonomy, parent: parent_taxon)
-    end
-    spree_taxon
+    params = { taxon: {
+      name: product_hash["taxons"],
+      taxonomy: spree_taxonomy,
+      parent: parent_taxon,
+    }, }
+    spree_taxon = Spree::Taxon.find_by(name: product_hash["taxons"])
+    return unless spree_taxon.nil?
+    Spree::Taxon.create!(params[:taxon])
   end
 
   def import_option_type(option_type_hash)
     spree_product_option_type = Spree::OptionType.find_by(name: option_type_hash["name"].capitalize)
-    unless spree_product_option_type
-      spree_product_option_type = Spree::OptionType.create!(name: option_type_hash["name"].capitalize, presentation: option_type_hash["name"].capitalize)
-    end
+    params = { option_type: {
+      name: option_type_hash["name"].capitalize,
+      presentation: option_type_hash["name"].capitalize,
+    }, }
+    spree_product_option_type ||= Spree::OptionType.create!(params[:option_type])
     option_type_hash["values"].each do |option_value|
       spree_option_value = Spree::OptionValue.find_by(name: option_value)
-      unless spree_option_value
-        spree_option_value = Spree::OptionValue.create!(name: option_value, presentation: option_value, option_type: spree_product_option_type)
-      end
+      params = { option_value: {
+        name: option_value,
+        presentation: option_value,
+        option_type: spree_product_option_type,
+      }, }
+      spree_option_value ||= Spree::OptionValue.create!(params[:option_value])
       spree_product_option_type.option_values << spree_option_value
     end
     spree_product_option_type
   end
 
   def import_variant(product_hash_variant, spree_product)
-    spree_product_variant = Spree::Variant.create!(product: spree_product, sku: product_hash_variant["sku"], weight: product_hash_variant["weight"], position: product_hash_variant["position"], cost_currency: "EUR")
-    Spree::Price.create!(variant: spree_product_variant, amount: product_hash_variant["price"], currency: "EUR")
+    params = { variant: {
+      product: spree_product,
+      sku: product_hash_variant["sku"],
+      weight: product_hash_variant["weight"],
+      position: product_hash_variant["position"],
+      cost_currency: "EUR",
+    }, }
+    spree_product_variant = Spree::Variant.create!(params[:variant])
+    params = { price: {
+      variant: spree_product_variant,
+      amount: product_hash_variant["price"],
+      currency: "EUR",
+    }, }
+    Spree::Price.create!(params[:price])
     spree_product_variant.stock_items.first.update_column(:count_on_hand, product_hash_variant["inventory_quantity"])
-    spree_option_value = Spree::OptionValue.find_by(name: product_hash_variant['title'])
-    Spree::OptionValuesVariant.create!(variant: spree_product_variant, option_value: spree_option_value)
+    spree_option_value = Spree::OptionValue.find_by(name: product_hash_variant["title"])
+    params = { option_value_variant: {
+      variant: spree_product_variant,
+      option_value: spree_option_value,
+    }, }
+    Spree::OptionValuesVariant.create!(params[:option_value_variant])
   end
 
   def picture_from_url(url)
@@ -114,19 +126,29 @@ class ShopifyImportProducts
   end
 
   def attach_paperclip_image(product, name, type, image_hash)
-    if product.images.where(attachment_file_name: file_name(name, type)).none?
-      new_image = File.open(image(image_hash["src"], type))
-      product.images << Spree::Image.create!(attachment: new_image, attachment_file_name: file_name(name, type), position: image_hash['position'])
-      File.delete(new_image)
-    end
+    return unless product.images.where(attachment_file_name: file_name(name, type)).none?
+    new_image = File.open(image(image_hash["src"], type))
+    params = { image: {
+      attachment: new_image,
+      attachment_file_name: file_name(name, type),
+      position: image_hash["position"],
+    }, }
+    product.images << Spree::Image.create!(params[:image])
+    File.delete(new_image)
   end
 
   def update_variant(product_hash_variant, spree_variant)
-    spree_variant.update(weight: product_hash_variant["weight"], position: product_hash_variant["position"], cost_currency: "EUR")
+    params = { variant: {
+      weight: product_hash_variant["weight"],
+      position: product_hash_variant["position"],
+      cost_currency: "EUR",
+    }, }
+    spree_variant.update(params[:variant])
     spree_variant.price = product_hash_variant["price"]
     spree_variant.stock_items.first.update_column(:count_on_hand, product_hash_variant["inventory_quantity"])
     spree_option_value = Spree::OptionValue.find_by(name: product_hash_variant["title"])
-    Spree::OptionValuesVariant.create!(variant: spree_variant, option_value: spree_option_value) unless spree_option_value
+    return unless spree_option_value.nil?
+    Spree::OptionValuesVariant.create!(variant: spree_variant, option_value: spree_option_value)
   end
 
   def create_product(product_hash)
