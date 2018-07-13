@@ -130,7 +130,7 @@ class ShopifyImportOrders
 
   def get_adjustment_total(order_hash)
     total = 0.0
-    return unless order_hash["adjustments"]
+    return total unless order_hash["adjustments"]
     order_hash["adjustments"].each do |adjustment|
       next unless adjustment["refund_line_items"].map(&:attributes).empty?
       adjustment["refund_line_items"].map(&:attributes).each do |adjustment_item|

@@ -48,20 +48,18 @@ class ShopifyImportProducts
 
   def import_taxonomy
     spree_taxonomy = Spree::Taxonomy.find_by(name: "Collection")
-    return unless spree_taxonomy.nil?
-    Spree::Taxonomy.create!(name: "Collection")
+    return spree_taxonomy unless spree_taxonomy.nil?
+    spree_taxonomy = Spree::Taxonomy.create!(name: "Collection")
+    spree_taxonomy
   end
 
   def import_taxon(product_hash, spree_taxonomy)
     parent_taxon = Spree::Taxon.find_by(name: "Collection")
-    params = { taxon: {
-      name: product_hash["taxons"],
-      taxonomy: spree_taxonomy,
-      parent: parent_taxon,
-    }, }
     spree_taxon = Spree::Taxon.find_by(name: product_hash["taxons"])
-    return unless spree_taxon.nil?
-    Spree::Taxon.create!(params[:taxon])
+    return spree_taxon unless spree_taxon.nil?
+    spree_taxon = Spree::Taxon.create!(name: product_hash["taxons"], taxonomy: spree_taxonomy)
+    spree_taxon.parent = parent_taxon
+    spree_taxon
   end
 
   def import_option_type(option_type_hash)
