@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180614122926) do
+ActiveRecord::Schema.define(version: 20180712153041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -377,6 +377,24 @@ ActiveRecord::Schema.define(version: 20180614122926) do
     t.string "country_iso", limit: 2
     t.index ["country_iso"], name: "index_spree_prices_on_country_iso"
     t.index ["variant_id", "currency"], name: "index_spree_prices_on_variant_id_and_currency"
+  end
+
+  create_table "spree_product_imports", id: :serial, force: :cascade do |t|
+    t.string "data_file_file_name"
+    t.string "data_file_content_type"
+    t.integer "data_file_file_size"
+    t.datetime "data_file_updated_at"
+    t.string "state"
+    t.text "product_ids"
+    t.datetime "completed_at"
+    t.datetime "failed_at"
+    t.text "error_message"
+    t.integer "created_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "separatorChar"
+    t.string "encoding_csv"
+    t.string "quoteChar"
   end
 
   create_table "spree_product_option_types", id: :serial, force: :cascade do |t|
@@ -986,6 +1004,23 @@ ActiveRecord::Schema.define(version: 20180614122926) do
     t.datetime "expires_at"
     t.index ["deleted_at"], name: "index_spree_tax_rates_on_deleted_at"
     t.index ["zone_id"], name: "index_spree_tax_rates_on_zone_id"
+  end
+
+  create_table "spree_taxon_contents", force: :cascade do |t|
+    t.bigint "taxon_id", null: false
+    t.boolean "about_active"
+    t.string "about_title"
+    t.boolean "about_video_active"
+    t.string "about_video_url"
+    t.string "about_image_url"
+    t.text "about_text"
+    t.string "legal_business_name"
+    t.string "business_location"
+    t.boolean "produce_on_demand"
+    t.string "shipping_timeframe"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["taxon_id"], name: "index_spree_taxon_contents_on_taxon_id"
   end
 
   create_table "spree_taxonomies", id: :serial, force: :cascade do |t|
