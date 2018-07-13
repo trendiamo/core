@@ -106,12 +106,7 @@
   </noscript>
 
 </head>
-{%- if template == 'index' or template == 'collection' or template == 'page.about' or template == 'page.contact' -%}
-  {%- assign useSidebar = true %}
-{%- else -%}
-  {%- assign useSidebar = false %}
-{%- endif -%}
-<body class="template-{{ template | split: '.' | first }}{% if useSidebar == true %} use-sidebar{% endif %}">
+<body class="template-{{ template | split: '.' | first }} spec-template-{{ template | handleize }}">
 
   <!-- Load Facebook SDK for JavaScript -->
   <div id="fb-root"></div>
@@ -154,9 +149,16 @@
 
   {% section 'header' %}
 
-  {% section 'trendiamo-sidebar' %}
+  <div class="page-container" id="PageContainer">
+    <main class="main-content" id="MainContent{% if template == 'product' or template == 'product.brand-product' or template == 'product.seller-product' or template == 'product.seller-product-special' %}{% else %}-Index{% endif %}" role="main">
+      {%- if template == 'index' or template == 'collection' or template == 'page.about' or template == 'page.contact' -%}
+        {% section 'message' %}
+      {%- endif -%}
+      {{ content_for_layout }}
+    </main>
+  </div>
 
-  <div class="page-container" id="PageContainer"><main class="main-content" id="MainContent{% if template == 'product' or template == 'product.brand-product' or template == 'product.seller-product' or template == 'product.seller-product-special' %}{% else %}-Index{% endif %}" role="main">{{ content_for_layout }}</main></div>
+  {% section 'footer' %}
 
   <div class="modal-backdrop-container" id="newsletter-modal" style="display:none;">
     <div class="modal-backdrop">

@@ -1,9 +1,9 @@
 /* ================ SLATE ================ */
-window.theme = window.theme || {};
+window.theme = window.theme || {}
 
 theme.Sections = function Sections() {
-  this.constructors = {};
-  this.instances = [];
+  this.constructors = {}
+  this.instances = []
 
   $(document)
     .on('shopify:section:load', this._onSectionLoad.bind(this))
@@ -11,107 +11,107 @@ theme.Sections = function Sections() {
     .on('shopify:section:select', this._onSelect.bind(this))
     .on('shopify:section:deselect', this._onDeselect.bind(this))
     .on('shopify:block:select', this._onBlockSelect.bind(this))
-    .on('shopify:block:deselect', this._onBlockDeselect.bind(this));
-};
+    .on('shopify:block:deselect', this._onBlockDeselect.bind(this))
+}
 
 theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
   _createInstance: function(container, constructor) {
-    var $container = $(container);
-    var id = $container.attr('data-section-id');
-    var type = $container.attr('data-section-type');
+    var $container = $(container)
+    var id = $container.attr('data-section-id')
+    var type = $container.attr('data-section-type')
 
-    constructor = constructor || this.constructors[type];
+    constructor = constructor || this.constructors[type]
 
     if (_.isUndefined(constructor)) {
-      return;
+      return
     }
 
     var instance = _.assignIn(new constructor(container), {
       id: id,
       type: type,
       container: container
-    });
+    })
 
-    this.instances.push(instance);
+    this.instances.push(instance)
   },
 
   _onSectionLoad: function(evt) {
-    var container = $('[data-section-id]', evt.target)[0];
+    var container = $('[data-section-id]', evt.target)[0]
     if (container) {
-      this._createInstance(container);
+      this._createInstance(container)
     }
   },
 
   _onSectionUnload: function(evt) {
     this.instances = _.filter(this.instances, function(instance) {
-      var isEventInstance = instance.id === evt.detail.sectionId;
+      var isEventInstance = instance.id === evt.detail.sectionId
 
       if (isEventInstance) {
         if (_.isFunction(instance.onUnload)) {
-          instance.onUnload(evt);
+          instance.onUnload(evt)
         }
       }
 
-      return !isEventInstance;
-    });
+      return !isEventInstance
+    })
   },
 
   _onSelect: function(evt) {
     // eslint-disable-next-line no-shadow
     var instance = _.find(this.instances, function(instance) {
-      return instance.id === evt.detail.sectionId;
-    });
+      return instance.id === evt.detail.sectionId
+    })
 
     if (!_.isUndefined(instance) && _.isFunction(instance.onSelect)) {
-      instance.onSelect(evt);
+      instance.onSelect(evt)
     }
   },
 
   _onDeselect: function(evt) {
     // eslint-disable-next-line no-shadow
     var instance = _.find(this.instances, function(instance) {
-      return instance.id === evt.detail.sectionId;
-    });
+      return instance.id === evt.detail.sectionId
+    })
 
     if (!_.isUndefined(instance) && _.isFunction(instance.onDeselect)) {
-      instance.onDeselect(evt);
+      instance.onDeselect(evt)
     }
   },
 
   _onBlockSelect: function(evt) {
     // eslint-disable-next-line no-shadow
     var instance = _.find(this.instances, function(instance) {
-      return instance.id === evt.detail.sectionId;
-    });
+      return instance.id === evt.detail.sectionId
+    })
 
     if (!_.isUndefined(instance) && _.isFunction(instance.onBlockSelect)) {
-      instance.onBlockSelect(evt);
+      instance.onBlockSelect(evt)
     }
   },
 
   _onBlockDeselect: function(evt) {
     // eslint-disable-next-line no-shadow
     var instance = _.find(this.instances, function(instance) {
-      return instance.id === evt.detail.sectionId;
-    });
+      return instance.id === evt.detail.sectionId
+    })
 
     if (!_.isUndefined(instance) && _.isFunction(instance.onBlockDeselect)) {
-      instance.onBlockDeselect(evt);
+      instance.onBlockDeselect(evt)
     }
   },
 
   register: function(type, constructor) {
-    this.constructors[type] = constructor;
+    this.constructors[type] = constructor
 
     $('[data-section-type=' + type + ']').each(
       function(index, container) {
-        this._createInstance(container, constructor);
+        this._createInstance(container, constructor)
       }.bind(this)
-    );
+    )
   }
-});
+})
 
-window.slate = window.slate || {};
+window.slate = window.slate || {}
 
 /**
  * Slate utilities
@@ -126,9 +126,9 @@ slate.utils = {
   keyboardKeys: {
     TAB: 9
   }
-};
+}
 
-window.slate = window.slate || {};
+window.slate = window.slate || {}
 
 /**
  * iFrames
@@ -147,9 +147,7 @@ slate.rte = {
    * @param {string} options.tableWrapperClass - table wrapper class name
    */
   wrapTable: function(options) {
-    options.$tables.wrap(
-      '<div class="' + options.tableWrapperClass + '"></div>'
-    );
+    options.$tables.wrap('<div class="' + options.tableWrapperClass + '"></div>')
   },
 
   /**
@@ -162,18 +160,18 @@ slate.rte = {
   wrapIframe: function(options) {
     options.$iframes.each(function() {
       // Add wrapper to make video responsive
-      $(this).wrap('<div class="' + options.iframeWrapperClass + '"></div>');
+      $(this).wrap('<div class="' + options.iframeWrapperClass + '"></div>')
 
       // Re-set the src attribute on each iframe after page load
       // for Chrome's "incorrect iFrame content on 'back'" bug.
       // https://code.google.com/p/chromium/issues/detail?id=395791
       // Need to specifically target video and admin bar
-      this.src = this.src;
-    });
+      this.src = this.src
+    })
   }
-};
+}
 
-window.slate = window.slate || {};
+window.slate = window.slate || {}
 
 /**
  * A11y Helpers
@@ -194,20 +192,20 @@ slate.a11y = {
    * @param {JQuery} $element - The element to be acted upon
    */
   pageLinkFocus: function($element) {
-    var focusClass = 'js-focus-hidden';
+    var focusClass = 'js-focus-hidden'
 
     $element
       .first()
       .attr('tabIndex', '-1')
       .focus()
       .addClass(focusClass)
-      .one('blur', callback);
+      .one('blur', callback)
 
     function callback() {
       $element
         .first()
         .removeClass(focusClass)
-        .removeAttr('tabindex');
+        .removeAttr('tabindex')
     }
   },
 
@@ -215,11 +213,11 @@ slate.a11y = {
    * If there's a hash in the url, focus the appropriate element
    */
   focusHash: function() {
-    var hash = window.location.hash;
+    var hash = window.location.hash
 
     // is there a hash in the url? is it an element on the page?
     if (hash && document.getElementById(hash.slice(1))) {
-      this.pageLinkFocus($(hash));
+      this.pageLinkFocus($(hash))
     }
   },
 
@@ -230,9 +228,9 @@ slate.a11y = {
     $('a[href*=#]').on(
       'click',
       function(evt) {
-        this.pageLinkFocus($(evt.currentTarget.hash));
+        this.pageLinkFocus($(evt.currentTarget.hash))
       }.bind(this)
-    );
+    )
   },
 
   /**
@@ -246,66 +244,60 @@ slate.a11y = {
   trapFocus: function(options) {
     var eventsName = {
       focusin: options.namespace ? 'focusin.' + options.namespace : 'focusin',
-      focusout: options.namespace
-        ? 'focusout.' + options.namespace
-        : 'focusout',
-      keydown: options.namespace
-        ? 'keydown.' + options.namespace
-        : 'keydown.handleFocus'
-    };
+      focusout: options.namespace ? 'focusout.' + options.namespace : 'focusout',
+      keydown: options.namespace ? 'keydown.' + options.namespace : 'keydown.handleFocus'
+    }
 
     /**
      * Get every possible visible focusable element
      */
     var $focusableElements = options.$container.find(
-      $(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex^="-"])'
-      ).filter(':visible')
-    );
-    var firstFocusable = $focusableElements[0];
-    var lastFocusable = $focusableElements[$focusableElements.length - 1];
+      $('button, [href], input, select, textarea, [tabindex]:not([tabindex^="-"])').filter(':visible')
+    )
+    var firstFocusable = $focusableElements[0]
+    var lastFocusable = $focusableElements[$focusableElements.length - 1]
 
     if (!options.$elementToFocus) {
-      options.$elementToFocus = options.$container;
+      options.$elementToFocus = options.$container
     }
 
     function _manageFocus(evt) {
-      if (evt.keyCode !== slate.utils.keyboardKeys.TAB) return;
+      if (evt.keyCode !== slate.utils.keyboardKeys.TAB) return
 
       /**
        * On the last focusable element and tab forward,
        * focus the first element.
        */
       if (evt.target === lastFocusable && !evt.shiftKey) {
-        evt.preventDefault();
-        firstFocusable.focus();
+        evt.preventDefault()
+        firstFocusable.focus()
       }
       /**
        * On the first focusable element and tab backward,
        * focus the last element.
        */
       if (evt.target === firstFocusable && evt.shiftKey) {
-        evt.preventDefault();
-        lastFocusable.focus();
+        evt.preventDefault()
+        lastFocusable.focus()
       }
     }
 
-    options.$container.attr('tabindex', '-1');
-    options.$elementToFocus.focus();
+    options.$container.attr('tabindex', '-1')
+    options.$elementToFocus.focus()
 
-    $(document).off('focusin');
+    $(document).off('focusin')
 
     $(document).on(eventsName.focusout, function() {
-      $(document).off(eventsName.keydown);
-    });
+      $(document).off(eventsName.keydown)
+    })
 
     $(document).on(eventsName.focusin, function(evt) {
-      if (evt.target !== lastFocusable && evt.target !== firstFocusable) return;
+      if (evt.target !== lastFocusable && evt.target !== firstFocusable) return
 
       $(document).on(eventsName.keydown, function(evt) {
-        _manageFocus(evt);
-      });
-    });
+        _manageFocus(evt)
+      })
+    })
   },
 
   /**
@@ -316,15 +308,13 @@ slate.a11y = {
    * @param {string} options.namespace - Namespace used for new focus event handler
    */
   removeTrapFocus: function(options) {
-    var eventName = options.namespace
-      ? 'focusin.' + options.namespace
-      : 'focusin';
+    var eventName = options.namespace ? 'focusin.' + options.namespace : 'focusin'
 
     if (options.$container && options.$container.length) {
-      options.$container.removeAttr('tabindex');
+      options.$container.removeAttr('tabindex')
     }
 
-    $(document).off(eventName);
+    $(document).off(eventName)
   },
 
   /**
@@ -335,21 +325,21 @@ slate.a11y = {
    * @param {jQuery} options.$links - Specific links to be targeted
    */
   accessibleLinks: function(options) {
-    var body = document.querySelector('body');
+    var body = document.querySelector('body')
 
     var idSelectors = {
       newWindow: 'a11y-new-window-message',
       external: 'a11y-external-message',
       newWindowExternal: 'a11y-new-window-external-message'
-    };
+    }
 
     if (options.$links === undefined || !options.$links.jquery) {
-      options.$links = $('a:not([aria-describedby])');
+      options.$links = $('a:not([aria-describedby])')
     }
 
     function generateHTML(customMessages) {
       if (typeof customMessages !== 'object') {
-        customMessages = {};
+        customMessages = {}
       }
 
       var messages = $.extend(
@@ -359,52 +349,51 @@ slate.a11y = {
           newWindowExternal: 'Opens external website in a new window.'
         },
         customMessages
-      );
+      )
 
-      var container = document.createElement('ul');
-      var htmlMessages = '';
+      var container = document.createElement('ul')
+      var htmlMessages = ''
 
       for (var message in messages) {
-        htmlMessages +=
-          '<li id=' + idSelectors[message] + '>' + messages[message] + '</li>';
+        htmlMessages += '<li id=' + idSelectors[message] + '>' + messages[message] + '</li>'
       }
 
-      container.setAttribute('hidden', true);
-      container.innerHTML = htmlMessages;
+      container.setAttribute('hidden', true)
+      container.innerHTML = htmlMessages
 
-      body.appendChild(container);
+      body.appendChild(container)
     }
 
     function _externalSite($link) {
-      var hostname = window.location.hostname;
+      var hostname = window.location.hostname
 
-      return $link[0].hostname !== hostname;
+      return $link[0].hostname !== hostname
     }
 
     $.each(options.$links, function() {
-      var $link = $(this);
-      var target = $link.attr('target');
-      var rel = $link.attr('rel');
-      var isExternal = _externalSite($link);
-      var isTargetBlank = target === '_blank';
+      var $link = $(this)
+      var target = $link.attr('target')
+      var rel = $link.attr('rel')
+      var isExternal = _externalSite($link)
+      var isTargetBlank = target === '_blank'
 
       if (isExternal) {
-        $link.attr('aria-describedby', idSelectors.external);
+        $link.attr('aria-describedby', idSelectors.external)
       }
       if (isTargetBlank) {
         if (rel === undefined || rel.indexOf('noopener') === -1) {
-          $link.attr('rel', 'noopener');
+          $link.attr('rel', 'noopener')
         }
-        $link.attr('aria-describedby', idSelectors.newWindow);
+        $link.attr('aria-describedby', idSelectors.newWindow)
       }
       if (isExternal && isTargetBlank) {
-        $link.attr('aria-describedby', idSelectors.newWindowExternal);
+        $link.attr('aria-describedby', idSelectors.newWindowExternal)
       }
-    });
+    })
 
-    generateHTML(options.messages);
+    generateHTML(options.messages)
   }
-};
+}
 
 /**
  * Image Helper Functions
@@ -423,12 +412,12 @@ theme.Images = (function() {
 
   function preload(images, size) {
     if (typeof images === 'string') {
-      images = [images];
+      images = [images]
     }
 
     for (var i = 0; i < images.length; i++) {
-      var image = images[i];
-      this.loadImage(this.getSizedImageUrl(image, size));
+      var image = images[i]
+      this.loadImage(this.getSizedImageUrl(image, size))
     }
   }
 
@@ -437,7 +426,7 @@ theme.Images = (function() {
    * @param {string} path - An image url
    */
   function loadImage(path) {
-    new Image().src = path;
+    new Image().src = path
   }
 
   /**
@@ -447,13 +436,13 @@ theme.Images = (function() {
    * @param callback
    */
   function switchImage(image, element, callback) {
-    var size = this.imageSize(element.src);
-    var imageUrl = this.getSizedImageUrl(image.src, size);
+    var size = this.imageSize(element.src)
+    var imageUrl = this.getSizedImageUrl(image.src, size)
 
     if (callback) {
-      callback(imageUrl, image, element); // eslint-disable-line callback-return
+      callback(imageUrl, image, element) // eslint-disable-line callback-return
     } else {
-      element.src = imageUrl;
+      element.src = imageUrl
     }
   }
 
@@ -465,18 +454,16 @@ theme.Images = (function() {
    * @returns {null}
    */
   function imageSize(src) {
-    var match = src.match(
-      /.+_((?:pico|icon|thumb|small|compact|medium|large|grande)|\d{1,4}x\d{0,4}|x\d{1,4})[_\\.@]/
-    );
+    var match = src.match(/.+_((?:pico|icon|thumb|small|compact|medium|large|grande)|\d{1,4}x\d{0,4}|x\d{1,4})[_\\.@]/)
 
     if (match !== null) {
       if (match[2] !== undefined) {
-        return match[1] + match[2];
+        return match[1] + match[2]
       } else {
-        return match[1];
+        return match[1]
       }
     } else {
-      return null;
+      return null
     }
   }
 
@@ -490,29 +477,27 @@ theme.Images = (function() {
    */
   function getSizedImageUrl(src, size) {
     if (size === null) {
-      return src;
+      return src
     }
 
     if (size === 'master') {
-      return this.removeProtocol(src);
+      return this.removeProtocol(src)
     }
 
-    var match = src.match(
-      /\.(jpg|jpeg|gif|png|bmp|bitmap|tiff|tif)(\?v=\d+)?$/i
-    );
+    var match = src.match(/\.(jpg|jpeg|gif|png|bmp|bitmap|tiff|tif)(\?v=\d+)?$/i)
 
     if (match !== null) {
-      var prefix = src.split(match[0]);
-      var suffix = match[0];
+      var prefix = src.split(match[0])
+      var suffix = match[0]
 
-      return this.removeProtocol(prefix[0] + '_' + size + suffix);
+      return this.removeProtocol(prefix[0] + '_' + size + suffix)
     }
 
-    return null;
+    return null
   }
 
   function removeProtocol(path) {
-    return path.replace(/http(s)?:/, '');
+    return path.replace(/http(s)?:/, '')
   }
 
   return {
@@ -522,8 +507,8 @@ theme.Images = (function() {
     imageSize: imageSize,
     getSizedImageUrl: getSizedImageUrl,
     removeProtocol: removeProtocol
-  };
-})();
+  }
+})()
 
 /**
  * Currency Helpers
@@ -539,64 +524,61 @@ theme.Images = (function() {
  */
 
 theme.Currency = (function() {
-  var moneyFormat = '${{amount}}'; // eslint-disable-line camelcase
+  var moneyFormat = '${{amount}}' // eslint-disable-line camelcase
 
   function formatMoney(cents, format) {
     if (typeof cents === 'string') {
-      cents = cents.replace('.', '');
+      cents = cents.replace('.', '')
     }
-    var value = '';
-    var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
-    var formatString = format || moneyFormat;
+    var value = ''
+    var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/
+    var formatString = format || moneyFormat
 
     function formatWithDelimiters(number, precision, thousands, decimal) {
-      thousands = thousands || ',';
-      decimal = decimal || '.';
+      thousands = thousands || ','
+      decimal = decimal || '.'
 
       if (isNaN(number) || number === null) {
-        return 0;
+        return 0
       }
 
-      number = (number / 100.0).toFixed(precision);
+      number = (number / 100.0).toFixed(precision)
 
-      var parts = number.split('.');
-      var dollarsAmount = parts[0].replace(
-        /(\d)(?=(\d\d\d)+(?!\d))/g,
-        '$1' + thousands
-      );
-      var centsAmount = parts[1] ? decimal + parts[1] : '';
+      var parts = number.split('.')
+      var dollarsAmount = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands)
+      var centsAmount = parts[1] ? decimal + parts[1] : ''
 
-      return dollarsAmount + centsAmount;
+      return dollarsAmount + centsAmount
     }
 
     switch (formatString.match(placeholderRegex)[1]) {
       case 'amount':
-        value = formatWithDelimiters(cents, 2);
-        break;
+        value = formatWithDelimiters(cents, 2)
+        break
       case 'amount_no_decimals':
-        value = formatWithDelimiters(cents, 0);
-        break;
+        value = formatWithDelimiters(cents, 0)
+        break
       case 'amount_with_comma_separator':
-        value = formatWithDelimiters(cents, 2, '.', ',');
-        break;
+        value = formatWithDelimiters(cents, 2, '.', ',')
+        break
       case 'amount_no_decimals_with_comma_separator':
-        value = formatWithDelimiters(cents, 0, '.', ',');
-        break;
+        value = formatWithDelimiters(cents, 0, '.', ',')
+        break
       case 'amount_no_decimals_with_space_separator':
-        value = formatWithDelimiters(cents, 0, ' ');
-        break;
+        value = formatWithDelimiters(cents, 0, ' ')
+        break
       case 'amount_with_apostrophe_separator':
-        value = formatWithDelimiters(cents, 2, "'");
-        break;
+        value = formatWithDelimiters(cents, 2, "'")
+        break
     }
 
-    return formatString.replace(placeholderRegex, value);
+    return formatString.replace(placeholderRegex, value)
   }
 
   return {
     formatMoney: formatMoney
-  };
-})();
+  }
+})()
 
 /**
  * Variant Selection scripts
@@ -616,17 +598,14 @@ slate.Variants = (function() {
    * @param {object} options - Settings from `product.js`
    */
   function Variants(options) {
-    this.$container = options.$container;
-    this.product = options.product;
-    this.singleOptionSelector = options.singleOptionSelector;
-    this.originalSelectorId = options.originalSelectorId;
-    this.enableHistoryState = options.enableHistoryState;
-    this.currentVariant = this._getVariantFromOptions();
+    this.$container = options.$container
+    this.product = options.product
+    this.singleOptionSelector = options.singleOptionSelector
+    this.originalSelectorId = options.originalSelectorId
+    this.enableHistoryState = options.enableHistoryState
+    this.currentVariant = this._getVariantFromOptions()
 
-    $(this.singleOptionSelector, this.$container).on(
-      'change',
-      this._onSelectChange.bind(this)
-    );
+    $(this.singleOptionSelector, this.$container).on('change', this._onSelectChange.bind(this))
   }
 
   Variants.prototype = _.assignIn({}, Variants.prototype, {
@@ -637,35 +616,32 @@ slate.Variants = (function() {
      * @return {array} options - Values of currently selected variants
      */
     _getCurrentOptions: function() {
-      var currentOptions = _.map(
-        $(this.singleOptionSelector, this.$container),
-        function(element) {
-          var $element = $(element);
-          var type = $element.attr('type');
-          var currentOption = {};
+      var currentOptions = _.map($(this.singleOptionSelector, this.$container), function(element) {
+        var $element = $(element)
+        var type = $element.attr('type')
+        var currentOption = {}
 
-          if (type === 'radio' || type === 'checkbox') {
-            if ($element[0].checked) {
-              currentOption.value = $element.val();
-              currentOption.index = $element.data('index');
+        if (type === 'radio' || type === 'checkbox') {
+          if ($element[0].checked) {
+            currentOption.value = $element.val()
+            currentOption.index = $element.data('index')
 
-              return currentOption;
-            } else {
-              return false;
-            }
+            return currentOption
           } else {
-            currentOption.value = $element.val();
-            currentOption.index = $element.data('index');
-
-            return currentOption;
+            return false
           }
+        } else {
+          currentOption.value = $element.val()
+          currentOption.index = $element.data('index')
+
+          return currentOption
         }
-      );
+      })
 
       // remove any unchecked input values if using radio buttons or checkboxes
-      currentOptions = _.compact(currentOptions);
+      currentOptions = _.compact(currentOptions)
 
-      return currentOptions;
+      return currentOptions
     },
 
     /**
@@ -675,41 +651,41 @@ slate.Variants = (function() {
      * @return {object || undefined} found - Variant object from product.variants
      */
     _getVariantFromOptions: function() {
-      var selectedValues = this._getCurrentOptions();
-      var variants = this.product.variants;
+      var selectedValues = this._getCurrentOptions()
+      var variants = this.product.variants
 
       var found = _.find(variants, function(variant) {
         return selectedValues.every(function(values) {
-          return _.isEqual(variant[values.index], values.value);
-        });
-      });
+          return _.isEqual(variant[values.index], values.value)
+        })
+      })
 
-      return found;
+      return found
     },
 
     /**
      * Event handler for when a variant input changes.
      */
     _onSelectChange: function() {
-      var variant = this._getVariantFromOptions();
+      var variant = this._getVariantFromOptions()
 
       this.$container.trigger({
         type: 'variantChange',
         variant: variant
-      });
+      })
 
       if (!variant) {
-        return;
+        return
       }
 
-      this._updateMasterSelect(variant);
-      this._updateImages(variant);
-      this._updatePrice(variant);
-      this._updateSKU(variant);
-      this.currentVariant = variant;
+      this._updateMasterSelect(variant)
+      this._updateImages(variant)
+      this._updatePrice(variant)
+      this._updateSKU(variant)
+      this.currentVariant = variant
 
       if (this.enableHistoryState) {
-        this._updateHistoryState(variant);
+        this._updateHistoryState(variant)
       }
     },
 
@@ -720,20 +696,17 @@ slate.Variants = (function() {
      * @return {event}  variantImageChange
      */
     _updateImages: function(variant) {
-      var variantImage = variant.featured_image || {};
-      var currentVariantImage = this.currentVariant.featured_image || {};
+      var variantImage = variant.featured_image || {}
+      var currentVariantImage = this.currentVariant.featured_image || {}
 
-      if (
-        !variant.featured_image ||
-        variantImage.src === currentVariantImage.src
-      ) {
-        return;
+      if (!variant.featured_image || variantImage.src === currentVariantImage.src) {
+        return
       }
 
       this.$container.trigger({
         type: 'variantImageChange',
         variant: variant
-      });
+      })
     },
 
     /**
@@ -747,13 +720,13 @@ slate.Variants = (function() {
         variant.price === this.currentVariant.price &&
         variant.compare_at_price === this.currentVariant.compare_at_price
       ) {
-        return;
+        return
       }
 
       this.$container.trigger({
         type: 'variantPriceChange',
         variant: variant
-      });
+      })
     },
 
     /**
@@ -764,13 +737,13 @@ slate.Variants = (function() {
      */
     _updateSKU: function(variant) {
       if (variant.sku === this.currentVariant.sku) {
-        return;
+        return
       }
 
       this.$container.trigger({
         type: 'variantSKUChange',
         variant: variant
-      });
+      })
     },
 
     /**
@@ -781,17 +754,12 @@ slate.Variants = (function() {
      */
     _updateHistoryState: function(variant) {
       if (!history.replaceState || !variant) {
-        return;
+        return
       }
 
       var newurl =
-        window.location.protocol +
-        '//' +
-        window.location.host +
-        window.location.pathname +
-        '?variant=' +
-        variant.id;
-      window.history.replaceState({ path: newurl }, '', newurl);
+        window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + variant.id
+      window.history.replaceState({ path: newurl }, '', newurl)
     },
 
     /**
@@ -800,13 +768,12 @@ slate.Variants = (function() {
      * @param  {variant} variant - Currently selected variant
      */
     _updateMasterSelect: function(variant) {
-      $(this.originalSelectorId, this.$container).val(variant.id);
+      $(this.originalSelectorId, this.$container).val(variant.id)
     }
-  });
+  })
 
-  return Variants;
-})();
-
+  return Variants
+})()
 
 /* ================ GLOBAL ================ */
 /*============================================================================
@@ -819,126 +786,116 @@ theme.Drawers = (function() {
       open: '.js-drawer-open-' + position,
       openClass: 'js-drawer-open',
       dirOpenClass: 'js-drawer-open-' + position
-    };
+    }
 
     this.nodes = {
       $parent: $('html').add('body'),
       $page: $('#PageContainer')
-    };
-
-    this.config = $.extend(defaults, options);
-    this.position = position;
-
-    this.$drawer = $('#' + id);
-
-    if (!this.$drawer.length) {
-      return false;
     }
 
-    this.drawerIsOpen = false;
-    this.init();
+    this.config = $.extend(defaults, options)
+    this.position = position
+
+    this.$drawer = $('#' + id)
+
+    if (!this.$drawer.length) {
+      return false
+    }
+
+    this.drawerIsOpen = false
+    this.init()
   }
 
   Drawer.prototype.init = function() {
-    $(this.config.open).on('click', $.proxy(this.open, this));
-    this.$drawer.on('click', this.config.close, $.proxy(this.close, this));
-  };
+    $(this.config.open).on('click', $.proxy(this.open, this))
+    this.$drawer.on('click', this.config.close, $.proxy(this.close, this))
+  }
 
   Drawer.prototype.open = function(evt) {
     // Keep track if drawer was opened from a click, or called by another function
-    var externalCall = false;
+    var externalCall = false
 
     // Prevent following href if link is clicked
     if (evt) {
-      evt.preventDefault();
+      evt.preventDefault()
     } else {
-      externalCall = true;
+      externalCall = true
     }
 
     // Without this, the drawer opens, the click event bubbles up to nodes.$page
     // which closes the drawer.
     if (evt && evt.stopPropagation) {
-      evt.stopPropagation();
+      evt.stopPropagation()
       // save the source of the click, we'll focus to this on close
-      this.$activeSource = $(evt.currentTarget);
+      this.$activeSource = $(evt.currentTarget)
     }
 
     if (this.drawerIsOpen && !externalCall) {
-      return this.close();
+      return this.close()
     }
 
     // Add is-transitioning class to moved elements on open so drawer can have
     // transition for close animation
-    this.$drawer.prepareTransition();
+    this.$drawer.prepareTransition()
 
-    this.nodes.$parent.addClass(
-      this.config.openClass + ' ' + this.config.dirOpenClass
-    );
-    this.drawerIsOpen = true;
+    this.nodes.$parent.addClass(this.config.openClass + ' ' + this.config.dirOpenClass)
+    this.drawerIsOpen = true
 
     // Set focus on drawer
     slate.a11y.trapFocus({
       $container: this.$drawer,
       namespace: 'drawer_focus'
-    });
+    })
 
     // Run function when draw opens if set
-    if (
-      this.config.onDrawerOpen &&
-      typeof this.config.onDrawerOpen === 'function'
-    ) {
+    if (this.config.onDrawerOpen && typeof this.config.onDrawerOpen === 'function') {
       if (!externalCall) {
-        this.config.onDrawerOpen();
+        this.config.onDrawerOpen()
       }
     }
 
     if (this.$activeSource && this.$activeSource.attr('aria-expanded')) {
-      this.$activeSource.attr('aria-expanded', 'true');
+      this.$activeSource.attr('aria-expanded', 'true')
     }
 
-    this.bindEvents();
+    this.bindEvents()
 
-    return this;
-  };
+    return this
+  }
 
   Drawer.prototype.close = function() {
     if (!this.drawerIsOpen) {
       // don't close a closed drawer
-      return;
+      return
     }
 
     // deselect any focused form elements
-    $(document.activeElement).trigger('blur');
+    $(document.activeElement).trigger('blur')
 
     // Ensure closing transition is applied to moved elements, like the nav
-    this.$drawer.prepareTransition();
+    this.$drawer.prepareTransition()
 
-    this.nodes.$parent.removeClass(
-      this.config.dirOpenClass + ' ' + this.config.openClass
-    );
+    this.nodes.$parent.removeClass(this.config.dirOpenClass + ' ' + this.config.openClass)
 
     if (this.$activeSource && this.$activeSource.attr('aria-expanded')) {
-      this.$activeSource.attr('aria-expanded', 'false');
+      this.$activeSource.attr('aria-expanded', 'false')
     }
 
-    this.drawerIsOpen = false;
+    this.drawerIsOpen = false
 
     // Remove focus on drawer
     slate.a11y.removeTrapFocus({
       $container: this.$drawer,
       namespace: 'drawer_focus'
-    });
+    })
 
-    this.unbindEvents();
+    this.unbindEvents()
 
     // Run function when draw closes if set
-    if (
-      this.config.onDrawerClose &&
-      typeof this.config.onDrawerClose === 'function'
-    ) {
-      this.config.onDrawerClose();
+    if (this.config.onDrawerClose && typeof this.config.onDrawerClose === 'function') {
+      this.config.onDrawerClose()
     }
-  };
+  }
 
   Drawer.prototype.bindEvents = function() {
     this.nodes.$parent.on(
@@ -946,39 +903,38 @@ theme.Drawers = (function() {
       $.proxy(function(evt) {
         // close on 'esc' keypress
         if (evt.keyCode === 27) {
-          this.close();
-          return false;
+          this.close()
+          return false
         } else {
-          return true;
+          return true
         }
       }, this)
-    );
+    )
 
     // Lock scrolling on mobile
     this.nodes.$page.on('touchmove.drawer', function() {
-      return false;
-    });
+      return false
+    })
 
     this.nodes.$page.on(
       'click.drawer',
       $.proxy(function() {
-        this.close();
-        return false;
+        this.close()
+        return false
       }, this)
-    );
-  };
+    )
+  }
 
   Drawer.prototype.unbindEvents = function() {
-    this.nodes.$page.off('.drawer');
-    this.nodes.$parent.off('.drawer');
-  };
+    this.nodes.$page.off('.drawer')
+    this.nodes.$parent.off('.drawer')
+  }
 
-  return Drawer;
-})();
-
+  return Drawer
+})()
 
 /* ================ MODULES ================ */
-window.theme = window.theme || {};
+window.theme = window.theme || {}
 
 theme.Header = (function() {
   var selectors = {
@@ -989,49 +945,46 @@ theme.Header = (function() {
     siteNavActiveDropdown: '.site-nav--active-dropdown',
     siteNavLinkMain: '.site-nav__link--main',
     siteNavChildLink: '.site-nav__link--last'
-  };
+  }
 
   var config = {
     activeClass: 'site-nav--active-dropdown',
     childLinkClass: 'site-nav__child-link'
-  };
+  }
 
-  var cache = {};
+  var cache = {}
 
   function init() {
-    cacheSelectors();
+    cacheSelectors()
 
     cache.$parents.on('click.siteNav', function() {
-      var $el = $(this);
+      var $el = $(this)
 
-      $el.hasClass(config.activeClass) ? hideDropdown($el) : showDropdown($el);
-    });
+      $el.hasClass(config.activeClass) ? hideDropdown($el) : showDropdown($el)
+    })
 
     // check when we're leaving a dropdown and close the active dropdown
     $(selectors.siteNavChildLink).on('focusout.siteNav', function() {
       setTimeout(function() {
-        if (
-          $(document.activeElement).hasClass(config.childLinkClass) ||
-          !cache.$activeDropdown.length
-        ) {
-          return;
+        if ($(document.activeElement).hasClass(config.childLinkClass) || !cache.$activeDropdown.length) {
+          return
         }
 
-        hideDropdown(cache.$activeDropdown);
-      });
-    });
+        hideDropdown(cache.$activeDropdown)
+      })
+    })
 
     // close dropdowns when on top level nav
     cache.$topLevel.on('focus.siteNav', function() {
       if (cache.$activeDropdown.length) {
-        hideDropdown(cache.$activeDropdown);
+        hideDropdown(cache.$activeDropdown)
       }
-    });
+    })
 
     cache.$subMenuLinks.on('click.siteNav', function(evt) {
       // Prevent click on body from firing instead of link
-      evt.stopImmediatePropagation();
-    });
+      evt.stopImmediatePropagation()
+    })
   }
 
   function cacheSelectors() {
@@ -1041,63 +994,63 @@ theme.Header = (function() {
       $parents: $(selectors.navigation).find(selectors.siteNavHasDropdown),
       $subMenuLinks: $(selectors.siteNavChildLinks),
       $activeDropdown: $(selectors.siteNavActiveDropdown)
-    };
+    }
   }
 
   function showDropdown($el) {
-    $el.addClass(config.activeClass);
+    $el.addClass(config.activeClass)
 
     // close open dropdowns
     if (cache.$activeDropdown.length) {
-      hideDropdown(cache.$activeDropdown);
+      hideDropdown(cache.$activeDropdown)
     }
 
-    cache.$activeDropdown = $el;
+    cache.$activeDropdown = $el
 
     // set expanded on open dropdown
-    $el.find(selectors.siteNavLinkMain).attr('aria-expanded', 'true');
+    $el.find(selectors.siteNavLinkMain).attr('aria-expanded', 'true')
 
     setTimeout(function() {
       $(window).on('keyup.siteNav', function(evt) {
         if (evt.keyCode === 27) {
-          hideDropdown($el);
+          hideDropdown($el)
         }
-      });
+      })
 
       $(selectors.body).on('click.siteNav', function() {
-        hideDropdown($el);
-      });
-    }, 250);
+        hideDropdown($el)
+      })
+    }, 250)
   }
 
   function hideDropdown($el) {
     // remove aria on open dropdown
-    $el.find(selectors.siteNavLinkMain).attr('aria-expanded', 'false');
-    $el.removeClass(config.activeClass);
+    $el.find(selectors.siteNavLinkMain).attr('aria-expanded', 'false')
+    $el.removeClass(config.activeClass)
 
     // reset active dropdown
-    cache.$activeDropdown = $(selectors.siteNavActiveDropdown);
+    cache.$activeDropdown = $(selectors.siteNavActiveDropdown)
 
-    $(selectors.body).off('click.siteNav');
-    $(window).off('keyup.siteNav');
+    $(selectors.body).off('click.siteNav')
+    $(window).off('keyup.siteNav')
   }
 
   function unload() {
-    $(window).off('.siteNav');
-    cache.$parents.off('.siteNav');
-    cache.$subMenuLinks.off('.siteNav');
-    cache.$topLevel.off('.siteNav');
-    $(selectors.siteNavChildLink).off('.siteNav');
-    $(selectors.body).off('.siteNav');
+    $(window).off('.siteNav')
+    cache.$parents.off('.siteNav')
+    cache.$subMenuLinks.off('.siteNav')
+    cache.$topLevel.off('.siteNav')
+    $(selectors.siteNavChildLink).off('.siteNav')
+    $(selectors.body).off('.siteNav')
   }
 
   return {
     init: init,
     unload: unload
-  };
-})();
+  }
+})()
 
-window.theme = window.theme || {};
+window.theme = window.theme || {}
 
 theme.MobileNav = (function() {
   var classes = {
@@ -1113,34 +1066,34 @@ theme.MobileNav = (function() {
     subNavShowing: 'sub-nav--is-open',
     thirdNavShowing: 'third-nav--is-open',
     subNavToggleBtn: 'js-toggle-submenu'
-  };
-  var cache = {};
-  var isTransitioning;
-  var $activeSubNav;
-  var $activeTrigger;
-  var menuLevel = 1;
+  }
+  var cache = {}
+  var isTransitioning
+  var $activeSubNav
+  var $activeTrigger
+  var menuLevel = 1
   // Breakpoints from src/stylesheets/global/variables.scss.liquid
-  var mediaQuerySmall = 'screen and (max-width: 749px)';
+  var mediaQuerySmall = 'screen and (max-width: 749px)'
 
   function init() {
-    cacheSelectors();
+    cacheSelectors()
 
-    cache.$mobileNavToggle.on('click', toggleMobileNav);
-    cache.$subNavToggleBtn.on('click.subNav', toggleSubNav);
+    cache.$mobileNavToggle.on('click', toggleMobileNav)
+    cache.$subNavToggleBtn.on('click.subNav', toggleSubNav)
 
     // Close mobile nav when unmatching mobile breakpoint
     enquire.register(mediaQuerySmall, {
       unmatch: function() {
-        closeMobileNav();
+        closeMobileNav()
       }
-    });
+    })
   }
 
   function toggleMobileNav() {
     if (cache.$mobileNavToggle.hasClass(classes.mobileNavCloseIcon)) {
-      closeMobileNav();
+      closeMobileNav()
     } else {
-      openMobileNav();
+      openMobileNav()
     }
   }
 
@@ -1153,55 +1106,54 @@ theme.MobileNav = (function() {
       $mobileNav: $('#MobileNav'),
       $sectionHeader: $('#shopify-section-header'),
       $subNavToggleBtn: $('.' + classes.subNavToggleBtn)
-    };
+    }
   }
 
   function openMobileNav() {
-    var translateHeaderHeight = cache.$siteHeader.outerHeight();
+    var translateHeaderHeight = cache.$siteHeader.outerHeight()
 
-    cache.$mobileNavContainer.prepareTransition().addClass(classes.navOpen);
+    cache.$mobileNavContainer.prepareTransition().addClass(classes.navOpen)
 
     cache.$mobileNavContainer.css({
       transform: 'translateY(' + translateHeaderHeight + 'px)'
-    });
+    })
 
     cache.$pageContainer.css({
-      transform:
-        'translate3d(0, ' + cache.$mobileNavContainer[0].scrollHeight + 'px, 0)'
-    });
+      transform: 'translate3d(0, ' + cache.$mobileNavContainer[0].scrollHeight + 'px, 0)'
+    })
 
     slate.a11y.trapFocus({
       $container: cache.$sectionHeader,
       $elementToFocus: cache.$mobileNavToggle,
       namespace: 'navFocus'
-    });
+    })
 
     cache.$mobileNavToggle
       .addClass(classes.mobileNavCloseIcon)
       .removeClass(classes.mobileNavOpenIcon)
-      .attr('aria-expanded', true);
+      .attr('aria-expanded', true)
 
     // close on escape
     $(window).on('keyup.mobileNav', function(evt) {
       if (evt.which === 27) {
-        closeMobileNav();
+        closeMobileNav()
       }
-    });
+    })
   }
 
   function closeMobileNav() {
-    cache.$mobileNavContainer.prepareTransition().removeClass(classes.navOpen);
+    cache.$mobileNavContainer.prepareTransition().removeClass(classes.navOpen)
 
     cache.$mobileNavContainer.css({
       transform: 'translateY(-100%)'
-    });
+    })
 
-    cache.$pageContainer.removeAttr('style');
+    cache.$pageContainer.removeAttr('style')
 
     slate.a11y.trapFocus({
       $container: $('html'),
       $elementToFocus: $('body')
-    });
+    })
 
     cache.$mobileNavContainer.one(
       'TransitionEnd.navToggle webkitTransitionEnd.navToggle transitionend.navToggle oTransitionEnd.navToggle',
@@ -1209,87 +1161,80 @@ theme.MobileNav = (function() {
         slate.a11y.removeTrapFocus({
           $container: cache.$mobileNav,
           namespace: 'navFocus'
-        });
+        })
       }
-    );
+    )
 
     cache.$mobileNavToggle
       .addClass(classes.mobileNavOpenIcon)
       .removeClass(classes.mobileNavCloseIcon)
       .attr('aria-expanded', false)
-      .focus();
+      .focus()
 
-    $(window).off('keyup.mobileNav');
+    $(window).off('keyup.mobileNav')
 
-    scrollTo(0, 0);
+    scrollTo(0, 0)
   }
 
   function toggleSubNav(evt) {
     if (isTransitioning) {
-      return;
+      return
     }
 
-    var $toggleBtn = $(evt.currentTarget);
-    var isReturn = $toggleBtn.hasClass(classes.return);
-    isTransitioning = true;
+    var $toggleBtn = $(evt.currentTarget)
+    var isReturn = $toggleBtn.hasClass(classes.return)
+    isTransitioning = true
 
     if (isReturn) {
       // Close all subnavs by removing active class on buttons
-      $(
-        '.' + classes.subNavToggleBtn + '[data-level="' + (menuLevel - 1) + '"]'
-      ).removeClass(classes.subNavActive);
+      $('.' + classes.subNavToggleBtn + '[data-level="' + (menuLevel - 1) + '"]').removeClass(classes.subNavActive)
 
       if ($activeTrigger && $activeTrigger.length) {
-        $activeTrigger.removeClass(classes.subNavActive);
+        $activeTrigger.removeClass(classes.subNavActive)
       }
     } else {
-      $toggleBtn.addClass(classes.subNavActive);
+      $toggleBtn.addClass(classes.subNavActive)
     }
 
-    $activeTrigger = $toggleBtn;
+    $activeTrigger = $toggleBtn
 
-    goToSubnav($toggleBtn.data('target'));
+    goToSubnav($toggleBtn.data('target'))
   }
 
   function goToSubnav(target) {
     /*eslint-disable shopify/jquery-dollar-sign-reference */
 
-    var $targetMenu = target
-      ? $('.mobile-nav__dropdown[data-parent="' + target + '"]')
-      : cache.$mobileNav;
+    var $targetMenu = target ? $('.mobile-nav__dropdown[data-parent="' + target + '"]') : cache.$mobileNav
 
-    menuLevel = $targetMenu.data('level') ? $targetMenu.data('level') : 1;
+    menuLevel = $targetMenu.data('level') ? $targetMenu.data('level') : 1
 
     if ($activeSubNav && $activeSubNav.length) {
-      $activeSubNav.prepareTransition().addClass(classes.subNavClosing);
+      $activeSubNav.prepareTransition().addClass(classes.subNavClosing)
     }
 
-    $activeSubNav = $targetMenu;
+    $activeSubNav = $targetMenu
 
     /*eslint-enable shopify/jquery-dollar-sign-reference */
 
-    var translateMenuHeight = $targetMenu.outerHeight();
+    var translateMenuHeight = $targetMenu.outerHeight()
 
-    var openNavClass =
-      menuLevel > 2 ? classes.thirdNavShowing : classes.subNavShowing;
+    var openNavClass = menuLevel > 2 ? classes.thirdNavShowing : classes.subNavShowing
 
     cache.$mobileNavContainer
       .css('height', translateMenuHeight)
       .removeClass(classes.thirdNavShowing)
-      .addClass(openNavClass);
+      .addClass(openNavClass)
 
     if (!target) {
       // Show top level nav
-      cache.$mobileNavContainer
-        .removeClass(classes.thirdNavShowing)
-        .removeClass(classes.subNavShowing);
+      cache.$mobileNavContainer.removeClass(classes.thirdNavShowing).removeClass(classes.subNavShowing)
     }
 
     /* if going back to first subnav, focus is on whole header */
-    var $container = menuLevel === 1 ? cache.$sectionHeader : $targetMenu;
+    var $container = menuLevel === 1 ? cache.$sectionHeader : $targetMenu
 
-    var $menuTitle = $targetMenu.find('[data-menu-title=' + menuLevel + ']');
-    var $elementToFocus = $menuTitle ? $menuTitle : $targetMenu;
+    var $menuTitle = $targetMenu.find('[data-menu-title=' + menuLevel + ']')
+    var $elementToFocus = $menuTitle ? $menuTitle : $targetMenu
 
     // Focusing an item in the subnav early forces element into view and breaks the animation.
     cache.$mobileNavContainer.one(
@@ -1299,28 +1244,28 @@ theme.MobileNav = (function() {
           $container: $container,
           $elementToFocus: $elementToFocus,
           namespace: 'subNavFocus'
-        });
+        })
 
-        cache.$mobileNavContainer.off('.subnavToggle');
-        isTransitioning = false;
+        cache.$mobileNavContainer.off('.subnavToggle')
+        isTransitioning = false
       }
-    );
+    )
 
     // Match height of subnav
     cache.$pageContainer.css({
       transform: 'translateY(' + translateMenuHeight + 'px)'
-    });
+    })
 
-    $activeSubNav.removeClass(classes.subNavClosing);
+    $activeSubNav.removeClass(classes.subNavClosing)
   }
 
   return {
     init: init,
     closeMobileNav: closeMobileNav
-  };
-})(jQuery);
+  }
+})(jQuery)
 
-window.theme = window.theme || {};
+window.theme = window.theme || {}
 
 theme.Search = (function() {
   var selectors = {
@@ -1340,120 +1285,120 @@ theme.Search = (function() {
     searchHeaderSubmit: '.search-header__submit',
 
     mobileNavWrapper: '.mobile-nav-wrapper'
-  };
+  }
 
   var classes = {
     focus: 'search--focus',
     mobileNavIsOpen: 'js-menu--is-open'
-  };
+  }
 
   function init() {
     if (!$(selectors.siteHeader).length) {
-      return;
+      return
     }
 
-    initDrawer();
-    searchSubmit();
+    initDrawer()
+    searchSubmit()
 
     $(selectors.searchHeaderInput)
       .add(selectors.searchHeaderSubmit)
       .on('focus blur', function() {
-        $(selectors.searchHeader).toggleClass(classes.focus);
-      });
+        $(selectors.searchHeader).toggleClass(classes.focus)
+      })
 
     $(selectors.siteHeaderSearchToggle).on('click', function() {
-      var searchHeight = $(selectors.siteHeader).outerHeight();
-      var searchOffset = $(selectors.siteHeader).offset().top - searchHeight;
+      var searchHeight = $(selectors.siteHeader).outerHeight()
+      var searchOffset = $(selectors.siteHeader).offset().top - searchHeight
 
       $(selectors.searchDrawer).css({
         height: searchHeight + 'px',
         top: searchOffset + 'px'
-      });
-    });
+      })
+    })
   }
 
   function initDrawer() {
     // Add required classes to HTML
-    $('#PageContainer').addClass('drawer-page-content');
+    $('#PageContainer').addClass('drawer-page-content')
     $('.js-drawer-open-top')
       .attr('aria-controls', 'SearchDrawer')
       .attr('aria-expanded', 'false')
-      .attr('aria-haspopup', 'dialog');
+      .attr('aria-haspopup', 'dialog')
 
     theme.SearchDrawer = new theme.Drawers('SearchDrawer', 'top', {
       onDrawerOpen: searchDrawerFocus,
       onDrawerClose: searchDrawerFocusClose
-    });
+    })
   }
 
   function searchDrawerFocus() {
-    searchFocus($(selectors.searchDrawerInput));
+    searchFocus($(selectors.searchDrawerInput))
 
     if ($(selectors.mobileNavWrapper).hasClass(classes.mobileNavIsOpen)) {
-      theme.MobileNav.closeMobileNav();
+      theme.MobileNav.closeMobileNav()
     }
   }
 
   function searchFocus($el) {
-    $el.focus();
+    $el.focus()
     // set selection range hack for iOS
-    $el[0].setSelectionRange(0, $el[0].value.length);
+    $el[0].setSelectionRange(0, $el[0].value.length)
   }
 
   function searchDrawerFocusClose() {
-    $(selectors.siteHeaderSearchToggle).focus();
+    $(selectors.siteHeaderSearchToggle).focus()
   }
 
   function searchSubmit() {
     $(selectors.searchSubmit).on('click', function(evt) {
-      var $el = $(evt.target);
-      var $input = $el.parents(selectors.search).find(selectors.searchInput);
+      var $el = $(evt.target)
+      var $input = $el.parents(selectors.search).find(selectors.searchInput)
       if ($input.val().length === 0) {
-        evt.preventDefault();
-        searchFocus($input);
+        evt.preventDefault()
+        searchFocus($input)
       }
-    });
+    })
   }
 
   return {
     init: init
-  };
-})();
+  }
+})()
 
-(function() {
+;(function() {
   var selectors = {
     backButton: '.return-link'
-  };
+  }
 
-  var $backButton = $(selectors.backButton);
+  var $backButton = $(selectors.backButton)
 
   if (!document.referrer || !$backButton.length || !window.history.length) {
-    return;
+    return
   }
 
   $backButton.one('click', function(evt) {
-    evt.preventDefault();
+    evt.preventDefault()
 
-    var referrerDomain = urlDomain(document.referrer);
-    var shopDomain = urlDomain(window.location.href);
+    var referrerDomain = urlDomain(document.referrer)
+    var shopDomain = urlDomain(window.location.href)
 
     if (shopDomain === referrerDomain) {
-      history.back();
+      history.back()
     }
 
-    return false;
-  });
+    return false
+  })
 
   function urlDomain(url) {
-    var anchor = document.createElement('a');
-    anchor.ref = url;
+    var anchor = document.createElement('a')
+    anchor.ref = url
 
-    return anchor.hostname;
+    return anchor.hostname
   }
-})();
+})()
 
 theme.Slideshow = (function() {
-  this.$slideshow = null;
+  this.$slideshow = null
   var classes = {
     wrapper: 'slideshow-wrapper',
     slideshow: 'slideshow',
@@ -1463,12 +1408,12 @@ theme.Slideshow = (function() {
     closeVideoBtn: 'slideshow__video-control--close',
     pauseButton: 'slideshow__pause',
     isPaused: 'is-paused'
-  };
+  }
 
   function slideshow(el) {
-    this.$slideshow = $(el);
-    this.$wrapper = this.$slideshow.closest('.' + classes.wrapper);
-    this.$pause = this.$wrapper.find('.' + classes.pauseButton);
+    this.$slideshow = $(el)
+    this.$wrapper = this.$slideshow.closest('.' + classes.wrapper)
+    this.$pause = this.$wrapper.find('.' + classes.pauseButton)
 
     this.settings = {
       accessibility: true,
@@ -1479,123 +1424,121 @@ theme.Slideshow = (function() {
       touchThreshold: 20,
       autoplay: this.$slideshow.data('autoplay'),
       autoplaySpeed: this.$slideshow.data('speed')
-    };
+    }
 
-    this.$slideshow.on('beforeChange', beforeChange.bind(this));
-    this.$slideshow.on('init', slideshowA11y.bind(this));
-    this.$slideshow.slick(this.settings);
+    this.$slideshow.on('beforeChange', beforeChange.bind(this))
+    this.$slideshow.on('init', slideshowA11y.bind(this))
+    this.$slideshow.slick(this.settings)
 
-    this.$pause.on('click', this.togglePause.bind(this));
+    this.$pause.on('click', this.togglePause.bind(this))
   }
 
   function slideshowA11y(event, obj) {
-    var $slider = obj.$slider;
-    var $list = obj.$list;
-    var $wrapper = this.$wrapper;
-    var autoplay = this.settings.autoplay;
+    var $slider = obj.$slider
+    var $list = obj.$list
+    var $wrapper = this.$wrapper
+    var autoplay = this.settings.autoplay
 
     // Remove default Slick aria-live attr until slider is focused
-    $list.removeAttr('aria-live');
+    $list.removeAttr('aria-live')
 
     // When an element in the slider is focused
     // pause slideshow and set aria-live.
     $wrapper.on('focusin', function(evt) {
       if (!$wrapper.has(evt.target).length) {
-        return;
+        return
       }
 
-      $list.attr('aria-live', 'polite');
+      $list.attr('aria-live', 'polite')
 
       if (autoplay) {
-        $slider.slick('slickPause');
+        $slider.slick('slickPause')
       }
-    });
+    })
 
     // Resume autoplay
     $wrapper.on('focusout', function(evt) {
       if (!$wrapper.has(evt.target).length) {
-        return;
+        return
       }
 
-      $list.removeAttr('aria-live');
+      $list.removeAttr('aria-live')
 
       if (autoplay) {
         // Manual check if the focused element was the video close button
         // to ensure autoplay does not resume when focus goes inside YouTube iframe
         if ($(evt.target).hasClass(classes.closeVideoBtn)) {
-          return;
+          return
         }
 
-        $slider.slick('slickPlay');
+        $slider.slick('slickPlay')
       }
-    });
+    })
 
     // Add arrow key support when focused
     if (obj.$dots) {
       obj.$dots.on('keydown', function(evt) {
         if (evt.which === 37) {
-          $slider.slick('slickPrev');
+          $slider.slick('slickPrev')
         }
 
         if (evt.which === 39) {
-          $slider.slick('slickNext');
+          $slider.slick('slickNext')
         }
 
         // Update focus on newly selected tab
         if (evt.which === 37 || evt.which === 39) {
-          obj.$dots.find('.slick-active button').focus();
+          obj.$dots.find('.slick-active button').focus()
         }
-      });
+      })
     }
   }
 
   function beforeChange(event, slick, currentSlide, nextSlide) {
-    var $slider = slick.$slider;
-    var $currentSlide = $slider.find('.' + classes.currentSlide);
-    var $nextSlide = $slider.find(
-      '.slideshow__slide[data-slick-index="' + nextSlide + '"]'
-    );
+    var $slider = slick.$slider
+    var $currentSlide = $slider.find('.' + classes.currentSlide)
+    var $nextSlide = $slider.find('.slideshow__slide[data-slick-index="' + nextSlide + '"]')
 
     if (isVideoInSlide($currentSlide)) {
-      var $currentVideo = $currentSlide.find('.' + classes.video);
-      var currentVideoId = $currentVideo.attr('id');
-      theme.SlideshowVideo.pauseVideo(currentVideoId);
-      $currentVideo.attr('tabindex', '-1');
+      var $currentVideo = $currentSlide.find('.' + classes.video)
+      var currentVideoId = $currentVideo.attr('id')
+      theme.SlideshowVideo.pauseVideo(currentVideoId)
+      $currentVideo.attr('tabindex', '-1')
     }
 
     if (isVideoInSlide($nextSlide)) {
-      var $video = $nextSlide.find('.' + classes.video);
-      var videoId = $video.attr('id');
-      var isBackground = $video.hasClass(classes.videoBackground);
+      var $video = $nextSlide.find('.' + classes.video)
+      var videoId = $video.attr('id')
+      var isBackground = $video.hasClass(classes.videoBackground)
       if (isBackground) {
-        theme.SlideshowVideo.playVideo(videoId);
+        theme.SlideshowVideo.playVideo(videoId)
       } else {
-        $video.attr('tabindex', '0');
+        $video.attr('tabindex', '0')
       }
     }
   }
 
   function isVideoInSlide($slide) {
-    return $slide.find('.' + classes.video).length;
+    return $slide.find('.' + classes.video).length
   }
 
   slideshow.prototype.togglePause = function() {
-    var slideshowSelector = getSlideshowId(this.$pause);
+    var slideshowSelector = getSlideshowId(this.$pause)
     if (this.$pause.hasClass(classes.isPaused)) {
-      this.$pause.removeClass(classes.isPaused);
-      $(slideshowSelector).slick('slickPlay');
+      this.$pause.removeClass(classes.isPaused)
+      $(slideshowSelector).slick('slickPlay')
     } else {
-      this.$pause.addClass(classes.isPaused);
-      $(slideshowSelector).slick('slickPause');
+      this.$pause.addClass(classes.isPaused)
+      $(slideshowSelector).slick('slickPause')
     }
-  };
-
-  function getSlideshowId($el) {
-    return '#Slideshow-' + $el.data('id');
   }
 
-  return slideshow;
-})();
+  function getSlideshowId($el) {
+    return '#Slideshow-' + $el.data('id')
+  }
+
+  return slideshow
+})()
 
 // Youtube API callback
 // eslint-disable-next-line no-unused-vars
@@ -1604,13 +1547,13 @@ theme.Slideshow = (function() {
 // }
 
 theme.SlideshowVideo = (function() {
-  var autoplayCheckComplete = false;
-  var autoplayAvailable = false;
-  var playOnClickChecked = false;
-  var playOnClick = false;
-  var youtubeLoaded = false;
-  var videos = {};
-  var videoPlayers = [];
+  var autoplayCheckComplete = false
+  var autoplayAvailable = false
+  var playOnClickChecked = false
+  var playOnClick = false
+  var youtubeLoaded = false
+  var videos = {}
+  var videoPlayers = []
   var videoOptions = {
     ratio: 16 / 9,
     playerVars: {
@@ -1629,7 +1572,7 @@ theme.SlideshowVideo = (function() {
       onReady: onPlayerReady,
       onStateChange: onPlayerChange
     }
-  };
+  }
   var classes = {
     playing: 'video-is-playing',
     paused: 'video-is-paused',
@@ -1647,14 +1590,14 @@ theme.SlideshowVideo = (function() {
     slickClone: 'slick-cloned',
     supportsAutoplay: 'autoplay',
     supportsNoAutoplay: 'no-autoplay'
-  };
+  }
 
   /**
    * Public functions
    */
   function init($video) {
     if (!$video.length) {
-      return;
+      return
     }
 
     videos[$video.attr('id')] = {
@@ -1667,14 +1610,14 @@ theme.SlideshowVideo = (function() {
       $parentSlideshowWrapper: $video.closest('.' + classes.slideshowWrapper),
       controls: $video.data('type') === 'background' ? 0 : 1,
       slideshow: $video.data('slideshow')
-    };
+    }
 
     if (!youtubeLoaded) {
       // This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      var tag = document.createElement('script')
+      tag.src = 'https://www.youtube.com/iframe_api'
+      var firstScriptTag = document.getElementsByTagName('script')[0]
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
     }
   }
 
@@ -1683,45 +1626,42 @@ theme.SlideshowVideo = (function() {
     // If the slideshow asks to play a video, make sure
     // we have done the playOnClick check first
     if (!playOnClickChecked && !playOnClick) {
-      return;
+      return
     }
 
     if (playerId && typeof videoPlayers[playerId].playVideo === 'function') {
-      privatePlayVideo(playerId);
+      privatePlayVideo(playerId)
     }
   }
 
   function pauseVideo(playerId) {
-    if (
-      videoPlayers[playerId] &&
-      typeof videoPlayers[playerId].pauseVideo === 'function'
-    ) {
-      videoPlayers[playerId].pauseVideo();
+    if (videoPlayers[playerId] && typeof videoPlayers[playerId].pauseVideo === 'function') {
+      videoPlayers[playerId].pauseVideo()
     }
   }
 
   function loadVideos() {
     for (var key in videos) {
       if (videos.hasOwnProperty(key)) {
-        var args = $.extend({}, videoOptions, videos[key]);
-        args.playerVars.controls = args.controls;
-        videoPlayers[key] = new YT.Player(key, args);
+        var args = $.extend({}, videoOptions, videos[key])
+        args.playerVars.controls = args.controls
+        videoPlayers[key] = new YT.Player(key, args)
       }
     }
 
-    initEvents();
-    youtubeLoaded = true;
+    initEvents()
+    youtubeLoaded = true
   }
 
   function loadVideo(key) {
     if (!youtubeLoaded) {
-      return;
+      return
     }
-    var args = $.extend({}, videoOptions, videos[key]);
-    args.playerVars.controls = args.controls;
-    videoPlayers[key] = new YT.Player(key, args);
+    var args = $.extend({}, videoOptions, videos[key])
+    args.playerVars.controls = args.controls
+    videoPlayers[key] = new YT.Player(key, args)
 
-    initEvents();
+    initEvents()
   }
 
   /**
@@ -1729,84 +1669,82 @@ theme.SlideshowVideo = (function() {
    */
 
   function privatePlayVideo(id, clicked) {
-    var videoData = videos[id];
-    var player = videoPlayers[id];
-    var $slide = videos[id].$parentSlide;
+    var videoData = videos[id]
+    var player = videoPlayers[id]
+    var $slide = videos[id].$parentSlide
 
     if (playOnClick) {
       // playOnClick means we are probably on mobile (no autoplay).
       // setAsPlaying will show the iframe, requiring another click
       // to play the video.
-      setAsPlaying(videoData);
+      setAsPlaying(videoData)
     } else if (clicked || (autoplayCheckComplete && autoplayAvailable)) {
       // Play if autoplay is available or clicked to play
-      $slide.removeClass(classes.loading);
-      setAsPlaying(videoData);
-      player.playVideo();
-      return;
+      $slide.removeClass(classes.loading)
+      setAsPlaying(videoData)
+      player.playVideo()
+      return
     }
 
     // Check for autoplay if not already done
     if (!autoplayCheckComplete) {
-      autoplayCheckFunction(player, $slide);
+      autoplayCheckFunction(player, $slide)
     }
   }
 
   function setAutoplaySupport(supported) {
-    var supportClass = supported
-      ? classes.supportsAutoplay
-      : classes.supportsNoAutoplay;
-    $(document.documentElement).addClass(supportClass);
+    var supportClass = supported ? classes.supportsAutoplay : classes.supportsNoAutoplay
+    $(document.documentElement).addClass(supportClass)
 
     if (!supported) {
-      playOnClick = true;
+      playOnClick = true
     }
 
-    autoplayCheckComplete = true;
+    autoplayCheckComplete = true
   }
 
   function autoplayCheckFunction(player, $slide) {
     // attempt to play video
-    player.playVideo();
+    player.playVideo()
 
     autoplayTest(player)
       .then(function() {
-        setAutoplaySupport(true);
+        setAutoplaySupport(true)
       })
       .fail(function() {
         // No autoplay available (or took too long to start playing).
         // Show fallback image. Stop video for safety.
-        setAutoplaySupport(false);
-        player.stopVideo();
+        setAutoplaySupport(false)
+        player.stopVideo()
       })
       .always(function() {
-        autoplayCheckComplete = true;
-        $slide.removeClass(classes.loading);
-      });
+        autoplayCheckComplete = true
+        $slide.removeClass(classes.loading)
+      })
   }
 
   function autoplayTest(player) {
-    var deferred = $.Deferred();
-    var wait;
-    var timeout;
+    var deferred = $.Deferred()
+    var wait
+    var timeout
 
     wait = setInterval(function() {
       if (player.getCurrentTime() <= 0) {
-        return;
+        return
       }
 
-      autoplayAvailable = true;
-      clearInterval(wait);
-      clearTimeout(timeout);
-      deferred.resolve();
-    }, 500);
+      autoplayAvailable = true
+      clearInterval(wait)
+      clearTimeout(timeout)
+      deferred.resolve()
+    }, 500)
 
     timeout = setTimeout(function() {
-      clearInterval(wait);
-      deferred.reject();
-    }, 4000); // subjective. test up to 8 times over 4 seconds
+      clearInterval(wait)
+      deferred.reject()
+    }, 4000) // subjective. test up to 8 times over 4 seconds
 
-    return deferred;
+    return deferred
   }
 
   function playOnClickCheck() {
@@ -1815,225 +1753,225 @@ theme.SlideshowVideo = (function() {
     // - device sniff mobile browser
 
     if (playOnClickChecked) {
-      return;
+      return
     }
 
     if ($(window).width() < 750) {
-      playOnClick = true;
+      playOnClick = true
     } else if (window.mobileCheck()) {
-      playOnClick = true;
+      playOnClick = true
     }
 
     if (playOnClick) {
       // No need to also do the autoplay check
-      setAutoplaySupport(false);
+      setAutoplaySupport(false)
     }
 
-    playOnClickChecked = true;
+    playOnClickChecked = true
   }
 
   // The API will call this function when each video player is ready
   function onPlayerReady(evt) {
-    evt.target.setPlaybackQuality('hd1080');
-    var videoData = getVideoOptions(evt);
+    evt.target.setPlaybackQuality('hd1080')
+    var videoData = getVideoOptions(evt)
 
-    playOnClickCheck();
+    playOnClickCheck()
 
     // Prevent tabbing through YouTube player controls until visible
-    $('#' + videoData.id).attr('tabindex', '-1');
+    $('#' + videoData.id).attr('tabindex', '-1')
 
-    sizeBackgroundVideos();
+    sizeBackgroundVideos()
 
     // Customize based on options from the video ID
     switch (videoData.type) {
       case 'background-chrome':
       case 'background':
-        evt.target.mute();
+        evt.target.mute()
         // Only play the video if it is in the active slide
         if (videoData.$parentSlide.hasClass(classes.currentSlide)) {
-          privatePlayVideo(videoData.id);
+          privatePlayVideo(videoData.id)
         }
-        break;
+        break
     }
 
-    videoData.$parentSlide.addClass(classes.loaded);
+    videoData.$parentSlide.addClass(classes.loaded)
   }
 
   function onPlayerChange(evt) {
-    var videoData = getVideoOptions(evt);
+    var videoData = getVideoOptions(evt)
 
     switch (evt.data) {
       case 0: // ended
-        setAsFinished(videoData);
-        break;
+        setAsFinished(videoData)
+        break
       case 1: // playing
-        setAsPlaying(videoData);
-        break;
+        setAsPlaying(videoData)
+        break
       case 2: // paused
-        setAsPaused(videoData);
-        break;
+        setAsPaused(videoData)
+        break
     }
   }
 
   function setAsFinished(videoData) {
     switch (videoData.type) {
       case 'background':
-        videoPlayers[videoData.id].seekTo(0);
-        break;
+        videoPlayers[videoData.id].seekTo(0)
+        break
       case 'background-chrome':
-        videoPlayers[videoData.id].seekTo(0);
-        closeVideo(videoData.id);
-        break;
+        videoPlayers[videoData.id].seekTo(0)
+        closeVideo(videoData.id)
+        break
       case 'chrome':
-        closeVideo(videoData.id);
-        break;
+        closeVideo(videoData.id)
+        break
     }
   }
 
   function setAsPlaying(videoData) {
-    var $slideshow = videoData.$parentSlideshowWrapper;
-    var $slide = videoData.$parentSlide;
+    var $slideshow = videoData.$parentSlideshowWrapper
+    var $slide = videoData.$parentSlide
 
-    $slide.removeClass(classes.loading);
+    $slide.removeClass(classes.loading)
 
     // Do not change element visibility if it is a background video
     if (videoData.status === 'background') {
-      return;
+      return
     }
 
-    $('#' + videoData.id).attr('tabindex', '0');
+    $('#' + videoData.id).attr('tabindex', '0')
 
     switch (videoData.type) {
       case 'chrome':
       case 'background-chrome':
-        $slideshow.removeClass(classes.paused).addClass(classes.playing);
-        $slide.removeClass(classes.paused).addClass(classes.playing);
-        break;
+        $slideshow.removeClass(classes.paused).addClass(classes.playing)
+        $slide.removeClass(classes.paused).addClass(classes.playing)
+        break
     }
 
     // Update focus to the close button so we stay within the slide
-    $slide.find('.' + classes.closeVideoBtn).focus();
+    $slide.find('.' + classes.closeVideoBtn).focus()
   }
 
   function setAsPaused(videoData) {
-    var $slideshow = videoData.$parentSlideshowWrapper;
-    var $slide = videoData.$parentSlide;
+    var $slideshow = videoData.$parentSlideshowWrapper
+    var $slide = videoData.$parentSlide
 
     if (videoData.type === 'background-chrome') {
-      closeVideo(videoData.id);
-      return;
+      closeVideo(videoData.id)
+      return
     }
 
     // YT's events fire after our click event. This status flag ensures
     // we don't interact with a closed or background video.
     if (videoData.status !== 'closed' && videoData.type !== 'background') {
-      $slideshow.addClass(classes.paused);
-      $slide.addClass(classes.paused);
+      $slideshow.addClass(classes.paused)
+      $slide.addClass(classes.paused)
     }
 
     if (videoData.type === 'chrome' && videoData.status === 'closed') {
-      $slideshow.removeClass(classes.paused);
-      $slide.removeClass(classes.paused);
+      $slideshow.removeClass(classes.paused)
+      $slide.removeClass(classes.paused)
     }
 
-    $slideshow.removeClass(classes.playing);
-    $slide.removeClass(classes.playing);
+    $slideshow.removeClass(classes.playing)
+    $slide.removeClass(classes.playing)
   }
 
   function closeVideo(playerId) {
-    var videoData = videos[playerId];
-    var $slideshow = videoData.$parentSlideshowWrapper;
-    var $slide = videoData.$parentSlide;
-    var classesToRemove = [classes.pause, classes.playing].join(' ');
+    var videoData = videos[playerId]
+    var $slideshow = videoData.$parentSlideshowWrapper
+    var $slide = videoData.$parentSlide
+    var classesToRemove = [classes.pause, classes.playing].join(' ')
 
-    $('#' + videoData.id).attr('tabindex', '-1');
+    $('#' + videoData.id).attr('tabindex', '-1')
 
-    videoData.status = 'closed';
+    videoData.status = 'closed'
 
     switch (videoData.type) {
       case 'background-chrome':
-        videoPlayers[playerId].mute();
-        setBackgroundVideo(playerId);
-        break;
+        videoPlayers[playerId].mute()
+        setBackgroundVideo(playerId)
+        break
       case 'chrome':
-        videoPlayers[playerId].stopVideo();
-        setAsPaused(videoData); // in case the video is already paused
-        break;
+        videoPlayers[playerId].stopVideo()
+        setAsPaused(videoData) // in case the video is already paused
+        break
     }
 
-    $slideshow.removeClass(classesToRemove);
-    $slide.removeClass(classesToRemove);
+    $slideshow.removeClass(classesToRemove)
+    $slide.removeClass(classesToRemove)
   }
 
   function getVideoOptions(evt) {
-    return videos[evt.target.h.id];
+    return videos[evt.target.h.id]
   }
 
   function startVideoOnClick(playerId) {
-    var videoData = videos[playerId];
+    var videoData = videos[playerId]
     // add loading class to slide
-    videoData.$parentSlide.addClass(classes.loading);
+    videoData.$parentSlide.addClass(classes.loading)
 
-    videoData.status = 'open';
+    videoData.status = 'open'
 
     switch (videoData.type) {
       case 'background-chrome':
-        unsetBackgroundVideo(playerId, videoData);
-        videoPlayers[playerId].unMute();
-        privatePlayVideo(playerId, true);
-        break;
+        unsetBackgroundVideo(playerId, videoData)
+        videoPlayers[playerId].unMute()
+        privatePlayVideo(playerId, true)
+        break
       case 'chrome':
-        privatePlayVideo(playerId, true);
-        break;
+        privatePlayVideo(playerId, true)
+        break
     }
 
     // esc to close video player
     $(document).on('keydown.videoPlayer', function(evt) {
       if (evt.keyCode === 27) {
-        closeVideo(playerId);
+        closeVideo(playerId)
       }
-    });
+    })
   }
 
   function sizeBackgroundVideos() {
     $('.' + classes.videoBackground).each(function(index, el) {
-      sizeBackgroundVideo($(el));
-    });
+      sizeBackgroundVideo($(el))
+    })
   }
 
   function sizeBackgroundVideo($player) {
-    var $slide = $player.closest('.' + classes.slide);
+    var $slide = $player.closest('.' + classes.slide)
     // Ignore cloned slides
     if ($slide.hasClass(classes.slickClone)) {
-      return;
+      return
     }
-    var slideWidth = $slide.width();
-    var playerWidth = $player.width();
-    var playerHeight = $player.height();
+    var slideWidth = $slide.width()
+    var playerWidth = $player.width()
+    var playerHeight = $player.height()
 
     // when screen aspect ratio differs from video, video must center and underlay one dimension
     if (slideWidth / videoOptions.ratio < playerHeight) {
-      playerWidth = Math.ceil(playerHeight * videoOptions.ratio); // get new player width
+      playerWidth = Math.ceil(playerHeight * videoOptions.ratio) // get new player width
       $player
         .width(playerWidth)
         .height(playerHeight)
         .css({
           left: (slideWidth - playerWidth) / 2,
           top: 0
-        }); // player width is greater, offset left; reset top
+        }) // player width is greater, offset left; reset top
     } else {
       // new video width < window width (gap to right)
-      playerHeight = Math.ceil(slideWidth / videoOptions.ratio); // get new player height
+      playerHeight = Math.ceil(slideWidth / videoOptions.ratio) // get new player height
       $player
         .width(slideWidth)
         .height(playerHeight)
         .css({
           left: 0,
           top: (playerHeight - playerHeight) / 2
-        }); // player height is greater, offset top; reset left
+        }) // player height is greater, offset top; reset left
     }
 
-    $player.prepareTransition().addClass(classes.loaded);
+    $player.prepareTransition().addClass(classes.loaded)
   }
 
   function unsetBackgroundVideo(playerId) {
@@ -2041,60 +1979,52 @@ theme.SlideshowVideo = (function() {
     $('#' + playerId)
       .removeAttr('style')
       .removeClass(classes.videoBackground)
-      .addClass(classes.videoChrome);
+      .addClass(classes.videoChrome)
 
-    videos[playerId].$parentSlideshowWrapper
-      .removeClass(classes.slideBackgroundVideo)
-      .addClass(classes.playing);
+    videos[playerId].$parentSlideshowWrapper.removeClass(classes.slideBackgroundVideo).addClass(classes.playing)
 
-    videos[playerId].$parentSlide
-      .removeClass(classes.slideBackgroundVideo)
-      .addClass(classes.playing);
+    videos[playerId].$parentSlide.removeClass(classes.slideBackgroundVideo).addClass(classes.playing)
 
-    videos[playerId].status = 'open';
+    videos[playerId].status = 'open'
   }
 
   function setBackgroundVideo(playerId) {
     // Switch back to background-chrome when closed
     var $player = $('#' + playerId)
       .addClass(classes.videoBackground)
-      .removeClass(classes.videoChrome);
+      .removeClass(classes.videoChrome)
 
-    videos[playerId].$parentSlide.addClass(classes.slideBackgroundVideo);
+    videos[playerId].$parentSlide.addClass(classes.slideBackgroundVideo)
 
-    videos[playerId].status = 'background';
-    sizeBackgroundVideo($player);
+    videos[playerId].status = 'background'
+    sizeBackgroundVideo($player)
   }
 
   function initEvents() {
-    $(document).on('click.videoPlayer', '.' + classes.playVideoBtn, function(
-      evt
-    ) {
-      var playerId = $(evt.currentTarget).data('controls');
-      startVideoOnClick(playerId);
-    });
+    $(document).on('click.videoPlayer', '.' + classes.playVideoBtn, function(evt) {
+      var playerId = $(evt.currentTarget).data('controls')
+      startVideoOnClick(playerId)
+    })
 
-    $(document).on('click.videoPlayer', '.' + classes.closeVideoBtn, function(
-      evt
-    ) {
-      var playerId = $(evt.currentTarget).data('controls');
-      closeVideo(playerId);
-    });
+    $(document).on('click.videoPlayer', '.' + classes.closeVideoBtn, function(evt) {
+      var playerId = $(evt.currentTarget).data('controls')
+      closeVideo(playerId)
+    })
 
     // Listen to resize to keep a background-size:cover-like layout
     $(window).on(
       'resize.videoPlayer',
       $.debounce(250, function() {
         if (youtubeLoaded) {
-          sizeBackgroundVideos();
+          sizeBackgroundVideos()
         }
       })
-    );
+    )
   }
 
   function removeEvents() {
-    $(document).off('.videoPlayer');
-    $(window).off('.videoPlayer');
+    $(document).off('.videoPlayer')
+    $(window).off('.videoPlayer')
   }
 
   return {
@@ -2104,38 +2034,37 @@ theme.SlideshowVideo = (function() {
     playVideo: customPlayVideo,
     pauseVideo: pauseVideo,
     removeEvents: removeEvents
-  };
-})();
-
+  }
+})()
 
 /* ================ TEMPLATES ================ */
-(function() {
-  var $filterBy = $('#BlogTagFilter');
+;(function() {
+  var $filterBy = $('#BlogTagFilter')
 
   if (!$filterBy.length) {
-    return;
+    return
   }
 
   $filterBy.on('change', function() {
-    location.href = $(this).val();
-  });
-})();
+    location.href = $(this).val()
+  })
+})()
 
-window.theme = theme || {};
+window.theme = theme || {}
 
 theme.customerTemplates = (function() {
   function initEventListeners() {
     // Show reset password form
     $('#RecoverPassword').on('click', function(evt) {
-      evt.preventDefault();
-      toggleRecoverPasswordForm();
-    });
+      evt.preventDefault()
+      toggleRecoverPasswordForm()
+    })
 
     // Hide reset password form
     $('#HideRecoverPasswordLink').on('click', function(evt) {
-      evt.preventDefault();
-      toggleRecoverPasswordForm();
-    });
+      evt.preventDefault()
+      toggleRecoverPasswordForm()
+    })
   }
 
   /**
@@ -2144,8 +2073,8 @@ theme.customerTemplates = (function() {
    *
    */
   function toggleRecoverPasswordForm() {
-    $('#RecoverPasswordForm').toggleClass('hide');
-    $('#CustomerLoginForm').toggleClass('hide');
+    $('#RecoverPasswordForm').toggleClass('hide')
+    $('#CustomerLoginForm').toggleClass('hide')
   }
 
   /**
@@ -2154,15 +2083,15 @@ theme.customerTemplates = (function() {
    *
    */
   function resetPasswordSuccess() {
-    var $formState = $('.reset-password-success');
+    var $formState = $('.reset-password-success')
 
     // check if reset password form was successfully submited.
     if (!$formState.length) {
-      return;
+      return
     }
 
     // show success message
-    $('#ResetSuccess').removeClass('hide');
+    $('#ResetSuccess').removeClass('hide')
   }
 
   /**
@@ -2171,63 +2100,55 @@ theme.customerTemplates = (function() {
    *
    */
   function customerAddressForm() {
-    var $newAddressForm = $('#AddressNewForm');
+    var $newAddressForm = $('#AddressNewForm')
 
     if (!$newAddressForm.length) {
-      return;
+      return
     }
 
     // Initialize observers on address selectors, defined in shopify_common.js
     if (Shopify) {
       // eslint-disable-next-line no-new
-      new Shopify.CountryProvinceSelector(
-        'AddressCountryNew',
-        'AddressProvinceNew',
-        {
-          hideElement: 'AddressProvinceContainerNew'
-        }
-      );
+      new Shopify.CountryProvinceSelector('AddressCountryNew', 'AddressProvinceNew', {
+        hideElement: 'AddressProvinceContainerNew'
+      })
     }
 
     // Initialize each edit form's country/province selector
     $('.address-country-option').each(function() {
-      var formId = $(this).data('form-id');
-      var countrySelector = 'AddressCountry_' + formId;
-      var provinceSelector = 'AddressProvince_' + formId;
-      var containerSelector = 'AddressProvinceContainer_' + formId;
+      var formId = $(this).data('form-id')
+      var countrySelector = 'AddressCountry_' + formId
+      var provinceSelector = 'AddressProvince_' + formId
+      var containerSelector = 'AddressProvinceContainer_' + formId
 
       // eslint-disable-next-line no-new
       new Shopify.CountryProvinceSelector(countrySelector, provinceSelector, {
         hideElement: containerSelector
-      });
-    });
+      })
+    })
 
     // Toggle new/edit address forms
     $('.address-new-toggle').on('click', function() {
-      $newAddressForm.toggleClass('hide');
-    });
+      $newAddressForm.toggleClass('hide')
+    })
 
     $('.address-edit-toggle').on('click', function() {
-      var formId = $(this).data('form-id');
-      $('#EditAddress_' + formId).toggleClass('hide');
-    });
+      var formId = $(this).data('form-id')
+      $('#EditAddress_' + formId).toggleClass('hide')
+    })
 
     $('.address-delete').on('click', function() {
-      var $el = $(this);
-      var formId = $el.data('form-id');
-      var confirmMessage = $el.data('confirm-message');
+      var $el = $(this)
+      var formId = $el.data('form-id')
+      var confirmMessage = $el.data('confirm-message')
 
       // eslint-disable-next-line no-alert
-      if (
-        confirm(
-          confirmMessage || 'Are you sure you wish to delete this address?'
-        )
-      ) {
+      if (confirm(confirmMessage || 'Are you sure you wish to delete this address?')) {
         Shopify.postLink('/account/addresses/' + formId, {
           parameters: { _method: 'delete' }
-        });
+        })
       }
-    });
+    })
   }
 
   /**
@@ -2236,268 +2157,254 @@ theme.customerTemplates = (function() {
    *
    */
   function checkUrlHash() {
-    var hash = window.location.hash;
+    var hash = window.location.hash
 
     // Allow deep linking to recover password form
     if (hash === '#recover') {
-      toggleRecoverPasswordForm();
+      toggleRecoverPasswordForm()
     }
   }
 
   return {
     init: function() {
-      checkUrlHash();
-      initEventListeners();
-      resetPasswordSuccess();
-      customerAddressForm();
+      checkUrlHash()
+      initEventListeners()
+      resetPasswordSuccess()
+      customerAddressForm()
     }
-  };
-})();
-
+  }
+})()
 
 /*================ SECTIONS ================*/
-window.theme = window.theme || {};
+window.theme = window.theme || {}
 
 theme.Cart = (function() {
   var selectors = {
     edit: '.js-edit-toggle'
-  };
+  }
   var config = {
     showClass: 'cart__update--show',
     showEditClass: 'cart__edit--active',
     cartNoCookies: 'cart--no-cookies'
-  };
+  }
 
   function Cart(container) {
-    this.$container = $(container);
-    this.$edit = $(selectors.edit, this.$container);
+    this.$container = $(container)
+    this.$edit = $(selectors.edit, this.$container)
 
     if (!this.cookiesEnabled()) {
-      this.$container.addClass(config.cartNoCookies);
+      this.$container.addClass(config.cartNoCookies)
     }
 
-    this.$edit.on('click', this._onEditClick.bind(this));
+    this.$edit.on('click', this._onEditClick.bind(this))
   }
 
   Cart.prototype = _.assignIn({}, Cart.prototype, {
     onUnload: function() {
-      this.$edit.off('click', this._onEditClick);
+      this.$edit.off('click', this._onEditClick)
     },
 
     _onEditClick: function(evt) {
-      var $evtTarget = $(evt.target);
-      var $updateLine = $('.' + $evtTarget.data('target'));
+      var $evtTarget = $(evt.target)
+      var $updateLine = $('.' + $evtTarget.data('target'))
 
-      $evtTarget.toggleClass(config.showEditClass);
-      $updateLine.toggleClass(config.showClass);
+      $evtTarget.toggleClass(config.showEditClass)
+      $updateLine.toggleClass(config.showClass)
     },
 
     cookiesEnabled: function() {
-      var cookieEnabled = navigator.cookieEnabled;
+      var cookieEnabled = navigator.cookieEnabled
 
       if (!cookieEnabled) {
-        document.cookie = 'testcookie';
-        cookieEnabled = document.cookie.indexOf('testcookie') !== -1;
+        document.cookie = 'testcookie'
+        cookieEnabled = document.cookie.indexOf('testcookie') !== -1
       }
-      return cookieEnabled;
+      return cookieEnabled
     }
-  });
+  })
 
-  return Cart;
-})();
+  return Cart
+})()
 
-window.theme = window.theme || {};
+window.theme = window.theme || {}
 
 theme.Filters = (function() {
   var constants = {
     SORT_BY: 'sort_by'
-  };
+  }
   var selectors = {
     filterSelection: '#SortTags',
     sortSelection: '#SortBy',
     defaultSort: '#DefaultSortBy'
-  };
+  }
 
   function Filters(container) {
-    var $container = (this.$container = $(container));
+    var $container = (this.$container = $(container))
 
-    this.$filterSelect = $(selectors.filterSelection, $container);
-    this.$sortSelect = $(selectors.sortSelection, $container);
-    this.$selects = $(selectors.filterSelection, $container).add(
-      $(selectors.sortSelection, $container)
-    );
+    this.$filterSelect = $(selectors.filterSelection, $container)
+    this.$sortSelect = $(selectors.sortSelection, $container)
+    this.$selects = $(selectors.filterSelection, $container).add($(selectors.sortSelection, $container))
 
-    this.defaultSort = this._getDefaultSortValue();
-    this._resizeSelect(this.$selects);
-    this.$selects.removeClass('hidden');
+    this.defaultSort = this._getDefaultSortValue()
+    this._resizeSelect(this.$selects)
+    this.$selects.removeClass('hidden')
 
-    this.$filterSelect.on('change', this._onFilterChange.bind(this));
-    this.$sortSelect.on('change', this._onSortChange.bind(this));
+    this.$filterSelect.on('change', this._onFilterChange.bind(this))
+    this.$sortSelect.on('change', this._onSortChange.bind(this))
   }
 
   Filters.prototype = _.assignIn({}, Filters.prototype, {
     _onSortChange: function(evt) {
-      var sort = this._sortValue();
+      var sort = this._sortValue()
       if (sort.length) {
-        window.location.search = sort;
+        window.location.search = sort
       } else {
         // clean up our url if the sort value is blank for default
-        window.location.href = window.location.href.replace(
-          window.location.search,
-          ''
-        );
+        window.location.href = window.location.href.replace(window.location.search, '')
       }
-      this._resizeSelect($(evt.target));
+      this._resizeSelect($(evt.target))
     },
 
     _onFilterChange: function(evt) {
-      var filter = this._getFilterValue();
+      var filter = this._getFilterValue()
 
       // remove the 'page' parameter to go to the first page of results
-      var search = document.location.search.replace(/\?(page=\w+)?&?/, '');
+      var search = document.location.search.replace(/\?(page=\w+)?&?/, '')
 
       // only add the search parameters to the url if they exist
-      search = search !== '' ? '?' + search : '';
+      search = search !== '' ? '?' + search : ''
 
-      document.location.href = filter + search;
-      this._resizeSelect($(evt.target));
+      document.location.href = filter + search
+      this._resizeSelect($(evt.target))
     },
 
     _getFilterValue: function() {
-      return this.$filterSelect.val();
+      return this.$filterSelect.val()
     },
 
     _getSortValue: function() {
-      return this.$sortSelect.val() || this.defaultSort;
+      return this.$sortSelect.val() || this.defaultSort
     },
 
     _getDefaultSortValue: function() {
-      return $(selectors.defaultSort, this.$container).val();
+      return $(selectors.defaultSort, this.$container).val()
     },
 
     _sortValue: function() {
-      var sort = this._getSortValue();
-      var query = '';
+      var sort = this._getSortValue()
+      var query = ''
 
       if (sort !== this.defaultSort) {
-        query = constants.SORT_BY + '=' + sort;
+        query = constants.SORT_BY + '=' + sort
       }
 
-      return query;
+      return query
     },
 
     _resizeSelect: function($selection) {
       $selection.each(function() {
-        var $this = $(this);
-        var arrowWidth = 10;
+        var $this = $(this)
+        var arrowWidth = 10
         // create test element
-        var text = $this.find('option:selected').text();
-        var $test = $('<span>').html(text);
+        var text = $this.find('option:selected').text()
+        var $test = $('<span>').html(text)
 
         // add to body, get width, and get out
-        $test.appendTo('body');
-        var width = $test.width();
-        $test.remove();
+        $test.appendTo('body')
+        var width = $test.width()
+        $test.remove()
 
         // set select width
-        $this.width(width + arrowWidth);
-      });
+        $this.width(width + arrowWidth)
+      })
     },
 
     onUnload: function() {
-      this.$filterSelect.off('change', this._onFilterChange);
-      this.$sortSelect.off('change', this._onSortChange);
+      this.$filterSelect.off('change', this._onFilterChange)
+      this.$sortSelect.off('change', this._onSortChange)
     }
-  });
+  })
 
-  return Filters;
-})();
+  return Filters
+})()
 
-window.theme = window.theme || {};
+window.theme = window.theme || {}
 
 theme.HeaderSection = (function() {
   function Header() {
-    theme.Header.init();
-    theme.MobileNav.init();
-    theme.Search.init();
+    theme.Header.init()
+    theme.MobileNav.init()
+    theme.Search.init()
   }
 
   Header.prototype = _.assignIn({}, Header.prototype, {
     onUnload: function() {
-      theme.Header.unload();
+      theme.Header.unload()
     }
-  });
+  })
 
-  return Header;
-})();
+  return Header
+})()
 
 theme.Maps = (function() {
   var config = {
     zoom: 14
-  };
-  var apiStatus = null;
-  var mapsToLoad = [];
+  }
+  var apiStatus = null
+  var mapsToLoad = []
 
   var errors = {
     addressNoResults: theme.strings.addressNoResults,
     addressQueryLimit: theme.strings.addressQueryLimit,
     addressError: theme.strings.addressError,
     authError: theme.strings.authError
-  };
+  }
 
   var selectors = {
     section: '[data-section-type="map"]',
     map: '[data-map]',
     mapOverlay: '[data-map-overlay]'
-  };
+  }
 
   var classes = {
     mapError: 'map-section--load-error',
     errorMsg: 'map-section__error errors text-center'
-  };
+  }
 
   // Global function called by Google on auth errors.
   // Show an auto error message on all map instances.
   // eslint-disable-next-line camelcase, no-unused-vars
   window.gm_authFailure = function() {
     if (!Shopify.designMode) {
-      return;
+      return
     }
 
-    $(selectors.section).addClass(classes.mapError);
-    $(selectors.map).remove();
-    $(selectors.mapOverlay).after(
-      '<div class="' +
-        classes.errorMsg +
-        '">' +
-        theme.strings.authError +
-        '</div>'
-    );
-  };
+    $(selectors.section).addClass(classes.mapError)
+    $(selectors.map).remove()
+    $(selectors.mapOverlay).after('<div class="' + classes.errorMsg + '">' + theme.strings.authError + '</div>')
+  }
 
   function Map(container) {
-    this.$container = $(container);
-    this.$map = this.$container.find(selectors.map);
-    this.key = this.$map.data('api-key');
+    this.$container = $(container)
+    this.$map = this.$container.find(selectors.map)
+    this.key = this.$map.data('api-key')
 
     if (typeof this.key === 'undefined') {
-      return;
+      return
     }
 
     if (apiStatus === 'loaded') {
-      this.createMap();
+      this.createMap()
     } else {
-      mapsToLoad.push(this);
+      mapsToLoad.push(this)
 
       if (apiStatus !== 'loading') {
-        apiStatus = 'loading';
+        apiStatus = 'loading'
         if (typeof window.google === 'undefined') {
-          $.getScript(
-            'https://maps.googleapis.com/maps/api/js?key=' + this.key
-          ).then(function() {
-            apiStatus = 'loaded';
-            initAllMaps();
-          });
+          $.getScript('https://maps.googleapis.com/maps/api/js?key=' + this.key).then(function() {
+            apiStatus = 'loaded'
+            initAllMaps()
+          })
         }
       }
     }
@@ -2506,29 +2413,29 @@ theme.Maps = (function() {
   function initAllMaps() {
     // API has loaded, load all Map instances in queue
     $.each(mapsToLoad, function(index, instance) {
-      instance.createMap();
-    });
+      instance.createMap()
+    })
   }
 
   function geolocate($map) {
-    var deferred = $.Deferred();
-    var geocoder = new google.maps.Geocoder();
-    var address = $map.data('address-setting');
+    var deferred = $.Deferred()
+    var geocoder = new google.maps.Geocoder()
+    var address = $map.data('address-setting')
 
     geocoder.geocode({ address: address }, function(results, status) {
       if (status !== google.maps.GeocoderStatus.OK) {
-        deferred.reject(status);
+        deferred.reject(status)
       }
 
-      deferred.resolve(results);
-    });
+      deferred.resolve(results)
+    })
 
-    return deferred;
+    return deferred
   }
 
   Map.prototype = _.assignIn({}, Map.prototype, {
     createMap: function() {
-      var $map = this.$map;
+      var $map = this.$map
 
       return geolocate($map)
         .then(
@@ -2541,44 +2448,44 @@ theme.Maps = (function() {
               scrollwheel: false,
               disableDoubleClickZoom: true,
               disableDefaultUI: true
-            };
+            }
 
-            var map = (this.map = new google.maps.Map($map[0], mapOptions));
-            var center = (this.center = map.getCenter());
+            var map = (this.map = new google.maps.Map($map[0], mapOptions))
+            var center = (this.center = map.getCenter())
 
             //eslint-disable-next-line no-unused-vars
             var marker = new google.maps.Marker({
               map: map,
               position: map.getCenter()
-            });
+            })
 
             google.maps.event.addDomListener(
               window,
               'resize',
               $.debounce(250, function() {
-                google.maps.event.trigger(map, 'resize');
-                map.setCenter(center);
-                $map.removeAttr('style');
+                google.maps.event.trigger(map, 'resize')
+                map.setCenter(center)
+                $map.removeAttr('style')
               })
-            );
+            )
           }.bind(this)
         )
         .fail(function() {
-          var errorMessage;
+          var errorMessage
 
           switch (status) {
             case 'ZERO_RESULTS':
-              errorMessage = errors.addressNoResults;
-              break;
+              errorMessage = errors.addressNoResults
+              break
             case 'OVER_QUERY_LIMIT':
-              errorMessage = errors.addressQueryLimit;
-              break;
+              errorMessage = errors.addressQueryLimit
+              break
             case 'REQUEST_DENIED':
-              errorMessage = errors.authError;
-              break;
+              errorMessage = errors.authError
+              break
             default:
-              errorMessage = errors.addressError;
-              break;
+              errorMessage = errors.addressError
+              break
           }
 
           // Show errors only to merchant in the editor.
@@ -2586,33 +2493,27 @@ theme.Maps = (function() {
             $map
               .parent()
               .addClass(classes.mapError)
-              .html(
-                '<div class="' +
-                  classes.errorMsg +
-                  '">' +
-                  errorMessage +
-                  '</div>'
-              );
+              .html('<div class="' + classes.errorMsg + '">' + errorMessage + '</div>')
           }
-        });
+        })
     },
 
     onUnload: function() {
       if (this.$map.length === 0) {
-        return;
+        return
       }
-      google.maps.event.clearListeners(this.map, 'resize');
+      google.maps.event.clearListeners(this.map, 'resize')
     }
-  });
+  })
 
-  return Map;
-})();
+  return Map
+})()
 
 /* eslint-disable no-new */
 theme.Product = (function() {
   function Product(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr('data-section-id');
+    var $container = (this.$container = $(container))
+    var sectionId = $container.attr('data-section-id')
 
     this.settings = {
       // Breakpoints from src/stylesheets/global/variables.scss.liquid
@@ -2624,7 +2525,7 @@ theme.Product = (function() {
       sectionId: sectionId,
       sliderActive: false,
       zoomEnabled: false
-    };
+    }
 
     this.selectors = {
       addToCart: '#AddToCart-' + sectionId,
@@ -2645,162 +2546,132 @@ theme.Product = (function() {
       saleLabel: '.product-price__sale-label-' + sectionId,
       singleOptionSelector: '.single-option-selector-' + sectionId,
       shopifyPaymentButton: '.shopify-payment-button'
-    };
+    }
 
     // Stop parsing if we don't have the product json script tag when loading
     // section in the Theme Editor
     if (!$('#ProductJson-' + sectionId).html()) {
-      return;
+      return
     }
 
-    this.productSingleObject = JSON.parse(
-      document.getElementById('ProductJson-' + sectionId).innerHTML
-    );
+    this.productSingleObject = JSON.parse(document.getElementById('ProductJson-' + sectionId).innerHTML)
 
-    this.settings.zoomEnabled = $(this.selectors.productImageWraps).hasClass(
-      'js-zoom-enabled'
-    );
+    this.settings.zoomEnabled = $(this.selectors.productImageWraps).hasClass('js-zoom-enabled')
 
-    this._initBreakpoints();
-    this._stringOverrides();
-    this._initVariants();
-    this._initImageSwitch();
-    this._setActiveThumbnail();
+    this._initBreakpoints()
+    this._stringOverrides()
+    this._initVariants()
+    this._initImageSwitch()
+    this._setActiveThumbnail()
   }
 
   Product.prototype = _.assignIn({}, Product.prototype, {
     _stringOverrides: function() {
-      theme.productStrings = theme.productStrings || {};
-      $.extend(theme.strings, theme.productStrings);
+      theme.productStrings = theme.productStrings || {}
+      $.extend(theme.strings, theme.productStrings)
     },
 
     _initBreakpoints: function() {
-      var self = this;
+      var self = this
 
       enquire.register(this.settings.mediaQuerySmall, {
         match: function() {
           // initialize thumbnail slider on mobile if more than three thumbnails
           if ($(self.selectors.productThumbImages).length > 3) {
-            self._initThumbnailSlider();
+            self._initThumbnailSlider()
           }
 
           // destroy image zooming if enabled
           if (self.settings.zoomEnabled) {
             $(self.selectors.productImageWraps).each(function() {
-              _destroyZoom(this);
-            });
+              _destroyZoom(this)
+            })
           }
 
-          self.settings.bpSmall = true;
+          self.settings.bpSmall = true
         },
         unmatch: function() {
           if (self.settings.sliderActive) {
-            self._destroyThumbnailSlider();
+            self._destroyThumbnailSlider()
           }
 
-          self.settings.bpSmall = false;
+          self.settings.bpSmall = false
         }
-      });
+      })
 
       enquire.register(this.settings.mediaQueryMediumUp, {
         match: function() {
           if (self.settings.zoomEnabled) {
             $(self.selectors.productImageWraps).each(function() {
-              _enableZoom(this);
-            });
+              _enableZoom(this)
+            })
           }
         }
-      });
+      })
     },
 
     _initVariants: function() {
       var options = {
         $container: this.$container,
-        enableHistoryState:
-          this.$container.data('enable-history-state') || false,
+        enableHistoryState: this.$container.data('enable-history-state') || false,
         singleOptionSelector: this.selectors.singleOptionSelector,
         originalSelectorId: this.selectors.originalSelectorId,
         product: this.productSingleObject
-      };
+      }
 
-      this.variants = new slate.Variants(options);
+      this.variants = new slate.Variants(options)
 
-      this.$container.on(
-        'variantChange' + this.settings.namespace,
-        this._updateAvailability.bind(this)
-      );
-      this.$container.on(
-        'variantImageChange' + this.settings.namespace,
-        this._updateImages.bind(this)
-      );
-      this.$container.on(
-        'variantPriceChange' + this.settings.namespace,
-        this._updatePrice.bind(this)
-      );
-      this.$container.on(
-        'variantSKUChange' + this.settings.namespace,
-        this._updateSKU.bind(this)
-      );
+      this.$container.on('variantChange' + this.settings.namespace, this._updateAvailability.bind(this))
+      this.$container.on('variantImageChange' + this.settings.namespace, this._updateImages.bind(this))
+      this.$container.on('variantPriceChange' + this.settings.namespace, this._updatePrice.bind(this))
+      this.$container.on('variantSKUChange' + this.settings.namespace, this._updateSKU.bind(this))
     },
 
     _initImageSwitch: function() {
       if (!$(this.selectors.productThumbImages).length) {
-        return;
+        return
       }
 
-      var self = this;
+      var self = this
 
       $(this.selectors.productThumbImages).on('click', function(evt) {
-        evt.preventDefault();
-        var $el = $(this);
+        evt.preventDefault()
+        var $el = $(this)
 
-        var imageId = $el.data('thumbnail-id');
+        var imageId = $el.data('thumbnail-id')
 
-        self._switchImage(imageId);
-        self._setActiveThumbnail(imageId);
-      });
+        self._switchImage(imageId)
+        self._setActiveThumbnail(imageId)
+      })
     },
 
     _setActiveThumbnail: function(imageId) {
-      var activeClass = 'active-thumb';
+      var activeClass = 'active-thumb'
 
       // If there is no element passed, find it by the current product image
       if (typeof imageId === 'undefined') {
-        imageId = $(this.selectors.productImageWraps + ":not('.hide')").data(
-          'image-id'
-        );
+        imageId = $(this.selectors.productImageWraps + ":not('.hide')").data('image-id')
       }
 
-      var $thumbnail = $(
-        this.selectors.productThumbImages +
-          "[data-thumbnail-id='" +
-          imageId +
-          "']"
-      );
+      var $thumbnail = $(this.selectors.productThumbImages + "[data-thumbnail-id='" + imageId + "']")
 
       $(this.selectors.productThumbImages)
         .removeClass(activeClass)
-        .removeAttr('aria-current');
+        .removeAttr('aria-current')
 
-      $thumbnail.addClass(activeClass);
-      $thumbnail.attr('aria-current', true);
+      $thumbnail.addClass(activeClass)
+      $thumbnail.attr('aria-current', true)
     },
 
     _switchImage: function(imageId) {
-      var $newImage = $(
-        this.selectors.productImageWraps + "[data-image-id='" + imageId + "']",
-        this.$container
-      );
+      var $newImage = $(this.selectors.productImageWraps + "[data-image-id='" + imageId + "']", this.$container)
       var $otherImages = $(
-        this.selectors.productImageWraps +
-          ":not([data-image-id='" +
-          imageId +
-          "'])",
+        this.selectors.productImageWraps + ":not([data-image-id='" + imageId + "'])",
         this.$container
-      );
-      $newImage.removeClass('hide');
-      $newImage.find(this.selectors.productFeaturedImage).focus();
-      $otherImages.addClass('hide');
+      )
+      $newImage.removeClass('hide')
+      $newImage.find(this.selectors.productFeaturedImage).focus()
+      $otherImages.addClass('hide')
     },
 
     _initThumbnailSlider: function() {
@@ -2818,65 +2689,55 @@ theme.Product = (function() {
             }
           }
         ]
-      };
+      }
 
-      $(this.selectors.productThumbs).slick(options);
+      $(this.selectors.productThumbs).slick(options)
 
       // Accessibility concerns not yet fixed in Slick Slider
       $(this.selectors.productThumbsWrapper, this.$container)
         .find('.slick-list')
-        .removeAttr('aria-live');
+        .removeAttr('aria-live')
       $(this.selectors.productThumbsWrapper, this.$container)
         .find('.slick-disabled')
-        .removeAttr('aria-disabled');
+        .removeAttr('aria-disabled')
 
-      this.settings.sliderActive = true;
+      this.settings.sliderActive = true
     },
 
     _destroyThumbnailSlider: function() {
-      $(this.selectors.productThumbs).slick('unslick');
-      this.settings.sliderActive = false;
+      $(this.selectors.productThumbs).slick('unslick')
+      this.settings.sliderActive = false
 
       // Accessibility concerns not yet fixed in Slick Slider
       $(this.selectors.productThumbsWrapper, this.$container)
         .find('[tabindex="-1"]')
-        .removeAttr('tabindex');
+        .removeAttr('tabindex')
     },
 
     _liveRegionText: function(variant) {
       // Dummy content for live region
-      var liveRegionText = '[Availability] [Regular] [$$] [Sale] [$]';
+      var liveRegionText = '[Availability] [Regular] [$$] [Sale] [$]'
 
       if (!variant) {
-        liveRegionText = theme.strings.unavailable;
-        return liveRegionText;
+        liveRegionText = theme.strings.unavailable
+        return liveRegionText
       }
 
       // Update availability
-      var availability = variant.available ? '' : theme.strings.soldOut + ',';
-      liveRegionText = liveRegionText.replace('[Availability]', availability);
+      var availability = variant.available ? '' : theme.strings.soldOut + ','
+      liveRegionText = liveRegionText.replace('[Availability]', availability)
 
       // Update pricing information
-      var regularLabel = '';
-      var regularPrice = theme.Currency.formatMoney(
-        variant.price,
-        theme.moneyFormat
-      );
-      var saleLabel = '';
-      var salePrice = '';
+      var regularLabel = ''
+      var regularPrice = theme.Currency.formatMoney(variant.price, theme.moneyFormat)
+      var saleLabel = ''
+      var salePrice = ''
 
       if (variant.compare_at_price > variant.price) {
-        regularLabel = theme.strings.regularPrice;
-        regularPrice =
-          theme.Currency.formatMoney(
-            variant.compare_at_price,
-            theme.moneyFormat
-          ) + ',';
-        saleLabel = theme.strings.sale;
-        salePrice = theme.Currency.formatMoney(
-          variant.price,
-          theme.moneyFormat
-        );
+        regularLabel = theme.strings.regularPrice
+        regularPrice = theme.Currency.formatMoney(variant.compare_at_price, theme.moneyFormat) + ','
+        saleLabel = theme.strings.sale
+        salePrice = theme.Currency.formatMoney(variant.price, theme.moneyFormat)
       }
 
       liveRegionText = liveRegionText
@@ -2884,134 +2745,121 @@ theme.Product = (function() {
         .replace('[$$]', regularPrice)
         .replace('[Sale]', saleLabel)
         .replace('[$]', salePrice)
-        .trim();
+        .trim()
 
-      return liveRegionText;
+      return liveRegionText
     },
 
     _updateLiveRegion: function(evt) {
-      var variant = evt.variant;
-      var liveRegion = this.container.querySelector(
-        this.selectors.productStatus
-      );
-      liveRegion.textContent = this._liveRegionText(variant);
-      liveRegion.setAttribute('aria-hidden', false);
+      var variant = evt.variant
+      var liveRegion = this.container.querySelector(this.selectors.productStatus)
+      liveRegion.textContent = this._liveRegionText(variant)
+      liveRegion.setAttribute('aria-hidden', false)
 
       // hide content from accessibility tree after announcement
       setTimeout(function() {
-        liveRegion.setAttribute('aria-hidden', true);
-      }, 1000);
+        liveRegion.setAttribute('aria-hidden', true)
+      }, 1000)
     },
 
     _updateAddToCart: function(evt) {
-      var variant = evt.variant;
+      var variant = evt.variant
 
       if (variant) {
         $(this.selectors.productPrices)
           .removeClass('visibility-hidden')
-          .attr('aria-hidden', 'false');
+          .attr('aria-hidden', 'false')
 
         if (variant.available) {
-          $(this.selectors.addToCart).prop('disabled', false);
-          $(this.selectors.addToCartText).text(theme.strings.addToCart);
-          $(this.selectors.shopifyPaymentButton, this.$container).show();
+          $(this.selectors.addToCart).prop('disabled', false)
+          $(this.selectors.addToCartText).text(theme.strings.addToCart)
+          $(this.selectors.shopifyPaymentButton, this.$container).show()
         } else {
           // The variant doesn't exist, disable submit button and change the text.
           // This may be an error or notice that a specific variant is not available.
-          $(this.selectors.addToCart).prop('disabled', true);
-          $(this.selectors.addToCartText).text(theme.strings.soldOut);
-          $(this.selectors.shopifyPaymentButton, this.$container).hide();
+          $(this.selectors.addToCart).prop('disabled', true)
+          $(this.selectors.addToCartText).text(theme.strings.soldOut)
+          $(this.selectors.shopifyPaymentButton, this.$container).hide()
         }
       } else {
-        $(this.selectors.addToCart).prop('disabled', true);
-        $(this.selectors.addToCartText).text(theme.strings.unavailable);
+        $(this.selectors.addToCart).prop('disabled', true)
+        $(this.selectors.addToCartText).text(theme.strings.unavailable)
         $(this.selectors.productPrices)
           .addClass('visibility-hidden')
-          .attr('aria-hidden', 'true');
-        $(this.selectors.shopifyPaymentButton, this.$container).hide();
+          .attr('aria-hidden', 'true')
+        $(this.selectors.shopifyPaymentButton, this.$container).hide()
       }
     },
 
     _updateAvailability: function(evt) {
       // update form submit
-      this._updateAddToCart(evt);
+      this._updateAddToCart(evt)
       // update live region
-      this._updateLiveRegion(evt);
+      this._updateLiveRegion(evt)
     },
 
     _updateImages: function(evt) {
-      var variant = evt.variant;
-      var imageId = variant.featured_image.id;
+      var variant = evt.variant
+      var imageId = variant.featured_image.id
 
-      this._switchImage(imageId);
-      this._setActiveThumbnail(imageId);
+      this._switchImage(imageId)
+      this._setActiveThumbnail(imageId)
     },
 
     _updatePrice: function(evt) {
-      var variant = evt.variant;
+      var variant = evt.variant
 
       // Update the product price
-      $(this.selectors.originalPrice).html(
-        theme.Currency.formatMoney(variant.price, theme.moneyFormat)
-      );
+      $(this.selectors.originalPrice).html(theme.Currency.formatMoney(variant.price, theme.moneyFormat))
 
       // Update and show the product's compare price if necessary
       if (variant.compare_at_price > variant.price) {
         $(this.selectors.comparePrice)
-          .html(
-            theme.Currency.formatMoney(
-              variant.compare_at_price,
-              theme.moneyFormat
-            )
-          )
-          .removeClass('hide');
+          .html(theme.Currency.formatMoney(variant.compare_at_price, theme.moneyFormat))
+          .removeClass('hide')
 
-        $(this.selectors.originalPriceWrapper).addClass(
-          this.selectors.saleClasses
-        );
+        $(this.selectors.originalPriceWrapper).addClass(this.selectors.saleClasses)
 
-        $(this.selectors.saleLabel).removeClass('hide');
+        $(this.selectors.saleLabel).removeClass('hide')
       } else {
-        $(this.selectors.comparePrice).addClass('hide');
-        $(this.selectors.saleLabel).addClass('hide');
-        $(this.selectors.originalPriceWrapper).removeClass(
-          this.selectors.saleClasses
-        );
+        $(this.selectors.comparePrice).addClass('hide')
+        $(this.selectors.saleLabel).addClass('hide')
+        $(this.selectors.originalPriceWrapper).removeClass(this.selectors.saleClasses)
       }
     },
 
     _updateSKU: function(evt) {
-      var variant = evt.variant;
+      var variant = evt.variant
 
       // Update the sku
-      $(this.selectors.SKU).html(variant.sku);
+      $(this.selectors.SKU).html(variant.sku)
     },
 
     onUnload: function() {
-      this.$container.off(this.settings.namespace);
+      this.$container.off(this.settings.namespace)
     }
-  });
+  })
 
   function _enableZoom(el) {
-    var zoomUrl = $(el).data('zoom');
+    var zoomUrl = $(el).data('zoom')
     $(el).zoom({
       url: zoomUrl
-    });
+    })
   }
 
   function _destroyZoom(el) {
-    $(el).trigger('zoom.destroy');
+    $(el).trigger('zoom.destroy')
   }
 
-  return Product;
-})();
+  return Product
+})()
 
 theme.Quotes = (function() {
   var config = {
     mediaQuerySmall: 'screen and (max-width: 749px)',
     mediaQueryMediumUp: 'screen and (min-width: 750px)',
     slideCount: 0
-  };
+  }
   var defaults = {
     accessibility: true,
     arrows: false,
@@ -3020,195 +2868,186 @@ theme.Quotes = (function() {
     touchThreshold: 20,
     slidesToShow: 3,
     slidesToScroll: 3
-  };
+  }
 
   function Quotes(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr('data-section-id');
-    var wrapper = (this.wrapper = '.quotes-wrapper');
-    var slider = (this.slider = '#Quotes-' + sectionId);
-    var $slider = $(slider, wrapper);
+    var $container = (this.$container = $(container))
+    var sectionId = $container.attr('data-section-id')
+    var wrapper = (this.wrapper = '.quotes-wrapper')
+    var slider = (this.slider = '#Quotes-' + sectionId)
+    var $slider = $(slider, wrapper)
 
-    var sliderActive = false;
+    var sliderActive = false
     var mobileOptions = $.extend({}, defaults, {
       slidesToShow: 1,
       slidesToScroll: 1,
       adaptiveHeight: true
-    });
+    })
 
-    config.slideCount = $slider.data('count');
+    config.slideCount = $slider.data('count')
 
     // Override slidesToShow/Scroll if there are not enough blocks
     if (config.slideCount < defaults.slidesToShow) {
-      defaults.slidesToShow = config.slideCount;
-      defaults.slidesToScroll = config.slideCount;
+      defaults.slidesToShow = config.slideCount
+      defaults.slidesToScroll = config.slideCount
     }
 
-    $slider.on('init', this.a11y.bind(this));
+    $slider.on('init', this.a11y.bind(this))
 
     enquire.register(config.mediaQuerySmall, {
       match: function() {
-        initSlider($slider, mobileOptions);
+        initSlider($slider, mobileOptions)
       }
-    });
+    })
 
     enquire.register(config.mediaQueryMediumUp, {
       match: function() {
-        initSlider($slider, defaults);
+        initSlider($slider, defaults)
       }
-    });
+    })
 
     function initSlider(sliderObj, args) {
       if (sliderActive) {
-        sliderObj.slick('unslick');
-        sliderActive = false;
+        sliderObj.slick('unslick')
+        sliderActive = false
       }
 
-      sliderObj.slick(args);
-      sliderActive = true;
+      sliderObj.slick(args)
+      sliderActive = true
     }
   }
 
   Quotes.prototype = _.assignIn({}, Quotes.prototype, {
     onUnload: function() {
-      enquire.unregister(config.mediaQuerySmall);
-      enquire.unregister(config.mediaQueryMediumUp);
+      enquire.unregister(config.mediaQuerySmall)
+      enquire.unregister(config.mediaQueryMediumUp)
 
-      $(this.slider, this.wrapper).slick('unslick');
+      $(this.slider, this.wrapper).slick('unslick')
     },
 
     onBlockSelect: function(evt) {
       // Ignore the cloned version
-      var $slide = $(
-        '.quotes-slide--' + evt.detail.blockId + ':not(.slick-cloned)'
-      );
-      var slideIndex = $slide.data('slick-index');
+      var $slide = $('.quotes-slide--' + evt.detail.blockId + ':not(.slick-cloned)')
+      var slideIndex = $slide.data('slick-index')
 
       // Go to selected slide, pause autoplay
-      $(this.slider, this.wrapper).slick('slickGoTo', slideIndex);
+      $(this.slider, this.wrapper).slick('slickGoTo', slideIndex)
     },
 
     a11y: function(event, obj) {
-      var $list = obj.$list;
-      var $wrapper = $(this.wrapper, this.$container);
+      var $list = obj.$list
+      var $wrapper = $(this.wrapper, this.$container)
 
       // Remove default Slick aria-live attr until slider is focused
-      $list.removeAttr('aria-live');
+      $list.removeAttr('aria-live')
 
       // When an element in the slider is focused set aria-live
       $wrapper.on('focusin', function(evt) {
         if ($wrapper.has(evt.target).length) {
-          $list.attr('aria-live', 'polite');
+          $list.attr('aria-live', 'polite')
         }
-      });
+      })
 
       // Remove aria-live
       $wrapper.on('focusout', function(evt) {
         if ($wrapper.has(evt.target).length) {
-          $list.removeAttr('aria-live');
+          $list.removeAttr('aria-live')
         }
-      });
+      })
     }
-  });
+  })
 
-  return Quotes;
-})();
+  return Quotes
+})()
 
-theme.slideshows = {};
+theme.slideshows = {}
 
 theme.SlideshowSection = (function() {
   function SlideshowSection(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr('data-section-id');
-    var slideshow = (this.slideshow = '#Slideshow-' + sectionId);
+    var $container = (this.$container = $(container))
+    var sectionId = $container.attr('data-section-id')
+    var slideshow = (this.slideshow = '#Slideshow-' + sectionId)
 
     $('.slideshow__video', slideshow).each(function() {
-      var $el = $(this);
-      theme.SlideshowVideo.init($el);
-      theme.SlideshowVideo.loadVideo($el.attr('id'));
-    });
+      var $el = $(this)
+      theme.SlideshowVideo.init($el)
+      theme.SlideshowVideo.loadVideo($el.attr('id'))
+    })
 
-    theme.slideshows[slideshow] = new theme.Slideshow(slideshow);
+    theme.slideshows[slideshow] = new theme.Slideshow(slideshow)
   }
 
-  return SlideshowSection;
-})();
+  return SlideshowSection
+})()
 
-theme.SlideshowSection.prototype = _.assignIn(
-  {},
-  theme.SlideshowSection.prototype,
-  {
-    onUnload: function() {
-      delete theme.slideshows[this.slideshow];
-    },
+theme.SlideshowSection.prototype = _.assignIn({}, theme.SlideshowSection.prototype, {
+  onUnload: function() {
+    delete theme.slideshows[this.slideshow]
+  },
 
-    onBlockSelect: function(evt) {
-      var $slideshow = $(this.slideshow);
+  onBlockSelect: function(evt) {
+    var $slideshow = $(this.slideshow)
 
-      // Ignore the cloned version
-      var $slide = $(
-        '.slideshow__slide--' + evt.detail.blockId + ':not(.slick-cloned)'
-      );
-      var slideIndex = $slide.data('slick-index');
+    // Ignore the cloned version
+    var $slide = $('.slideshow__slide--' + evt.detail.blockId + ':not(.slick-cloned)')
+    var slideIndex = $slide.data('slick-index')
 
-      // Go to selected slide, pause autoplay
-      $slideshow.slick('slickGoTo', slideIndex).slick('slickPause');
-    },
+    // Go to selected slide, pause autoplay
+    $slideshow.slick('slickGoTo', slideIndex).slick('slickPause')
+  },
 
-    onBlockDeselect: function() {
-      // Resume autoplay
-      $(this.slideshow).slick('slickPlay');
-    }
+  onBlockDeselect: function() {
+    // Resume autoplay
+    $(this.slideshow).slick('slickPlay')
   }
-);
-
+})
 
 $(document).ready(function() {
-  var sections = new theme.Sections();
+  var sections = new theme.Sections()
 
-  sections.register('cart-template', theme.Cart);
-  sections.register('product', theme.Product);
-  sections.register('collection-template', theme.Filters);
-  sections.register('product-template', theme.Product);
-  sections.register('header-section', theme.HeaderSection);
-  sections.register('map', theme.Maps);
-  sections.register('slideshow-section', theme.SlideshowSection);
-  sections.register('quotes', theme.Quotes);
-});
+  sections.register('cart-template', theme.Cart)
+  sections.register('product', theme.Product)
+  sections.register('collection-template', theme.Filters)
+  sections.register('product-template', theme.Product)
+  sections.register('header-section', theme.HeaderSection)
+  sections.register('map', theme.Maps)
+  sections.register('slideshow-section', theme.SlideshowSection)
+  sections.register('quotes', theme.Quotes)
+})
 
 theme.init = function() {
-  theme.customerTemplates.init();
+  theme.customerTemplates.init()
 
   // Theme-specific selectors to make tables scrollable
-  var tableSelectors = '.rte table,' + '.custom__item-inner--html table';
+  var tableSelectors = '.rte table,' + '.custom__item-inner--html table'
 
   slate.rte.wrapTable({
     $tables: $(tableSelectors),
     tableWrapperClass: 'scrollable-wrapper'
-  });
+  })
 
   // Theme-specific selectors to make iframes responsive
   var iframeSelectors =
     '.rte iframe[src*="youtube.com/embed"],' +
     '.rte iframe[src*="player.vimeo"],' +
     '.custom__item-inner--html iframe[src*="youtube.com/embed"],' +
-    '.custom__item-inner--html iframe[src*="player.vimeo"]';
+    '.custom__item-inner--html iframe[src*="player.vimeo"]'
 
   slate.rte.wrapIframe({
     $iframes: $(iframeSelectors),
     iframeWrapperClass: 'video-wrapper'
-  });
+  })
 
   // Common a11y fixes
-  slate.a11y.pageLinkFocus($(window.location.hash));
+  slate.a11y.pageLinkFocus($(window.location.hash))
 
   $('.in-page-link').on('click', function(evt) {
-    slate.a11y.pageLinkFocus($(evt.currentTarget.hash));
-  });
+    slate.a11y.pageLinkFocus($(evt.currentTarget.hash))
+  })
 
   $('a[href="#"]').on('click', function(evt) {
-    evt.preventDefault();
-  });
+    evt.preventDefault()
+  })
 
   slate.a11y.accessibleLinks({
     messages: {
@@ -3217,22 +3056,7 @@ theme.init = function() {
       newWindowExternal: theme.strings.newWindowExternal
     },
     $links: $('a:not([aria-describedby], .product-single__thumbnail)')
-  });
-};
+  })
+}
 
-$(theme.init);
-
-var showingTrndMenu = false;
-$('#trnd-sidebar-menu').click(function() {
-  showingTrndMenu = !showingTrndMenu;
-  $('#trnd-sidebar-menu svg').toggle();
-  $('body').toggleClass('show-trnd-menu');
-});
-
-$('.main-content').click(function() {
-  if (showingTrndMenu) {
-    showingTrndMenu = !showingTrndMenu;
-    $('#trnd-sidebar-menu svg').toggle();
-    $('body').toggleClass('show-trnd-menu');
-  }
-});
+$(theme.init)

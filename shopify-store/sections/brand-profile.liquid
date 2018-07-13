@@ -61,14 +61,6 @@
       </div>
     </div>
   </div>
-  <div class="pdp-sidebar-footer">
-    {% for link in linklists.footer.links %}
-    <a class="pdp-sidebar-footer-link" href="{{ link.url }}">{{ link.title }}</a>
-    {% endfor %}
-    <div class="pdp-sidebar-footer-copyright">
-      © 2018 Trendiamo Unipessoal Lda.
-    </div>
-  </div>
 </div>
 </div>
 <div id="collection-stage" data-section-id="{{ section.id }}" data-section-type="collection-template">
@@ -238,14 +230,6 @@
     {% if paginate.pages > 1 %}
       {% include 'pagination' %}
     {% endif %}
-  </div>
-</div>
-<div class="pdp-footer">
-  {% for link in linklists.footer.links %}
-  <a class="pdp-sidebar-footer-link" href="{{ link.url }}">{{ link.title }}</a>
-  {% endfor %}
-  <div class="pdp-sidebar-footer-copyright">
-    © 2018 Trendiamo Unipessoal Lda.
   </div>
 </div>
 

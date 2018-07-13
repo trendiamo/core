@@ -155,14 +155,6 @@
         {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
       {% endif %}
     </div>
-    <div class="pdp-sidebar-footer">
-      {% for link in linklists.footer.links %}
-      <a class="pdp-sidebar-footer-link" href="{{ link.url }}">{{ link.title }}</a>
-      {% endfor %}
-      <div class="pdp-sidebar-footer-copyright">
-        © 2018 Trendiamo Unipessoal Lda.
-      </div>
-    </div>
   </div>
   </div>
   <div id="pdp" class="grid product-single{% if section.settings.enable_payment_button %} product-single--{{ section.settings.image_size }}-image{% endif %}">

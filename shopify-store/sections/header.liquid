@@ -1,61 +1,4 @@
-{% if section.settings.message %}
-  <style>
-    {% if section.settings.logo != blank %}
-      .site-header__logo-image {
-        max-width: {{ section.settings.logo_max_width | escape }}px;
-      }
-    {% endif %}
-
-    {% if section.settings.align_logo == 'left' %}
-      .site-header__logo-image {
-        margin: 0;
-      }
-    {% endif %}
-  </style>
-{% endif %}
-
 <div data-section-id="{{ section.id }}" data-section-type="header-section">
-  {% if section.settings.message %}
-    {% if section.settings.home_page_only == false or template.name == 'index' %}
-      <style>
-        .announcement-bar {
-          background-color: {{ section.settings.color_bg }};
-        }
-
-        .announcement-bar--link:hover {
-          {% assign brightness = section.settings.color_bg | color_brightness %}
-
-          {% if brightness <= 192 %}
-            {% assign lightenAmount = 255 | minus: brightness | divided_by: 255 | times: 16 %}
-            background-color: {{ section.settings.color_bg | color_lighten: lightenAmount }};
-          {% else %}
-            {% assign darkenAmount = 255 | divided_by: brightness | times: 8 %}
-            background-color: {{ section.settings.color_bg | color_darken: darkenAmount }};
-          {% endif %}
-        }
-
-        .announcement-bar__message {
-          color: {{ section.settings.color_text }};
-        }
-      </style>
-
-      {% if section.settings.message_link == blank %}
-        <div class="announcement-bar">
-      {% else %}
-        <a href="{{ section.settings.message_link }}" class="announcement-bar announcement-bar--link">
-      {% endif %}
-
-        <p class="announcement-bar__message">{{ section.settings.message_text | escape }}</p>
-
-      {% if section.settings.message_link == blank %}
-        </div>
-      {% else %}
-        </a>
-      {% endif %}
-
-    {% endif %}
-  {% endif %}
-
   <header class="site-header{% if section.settings.align_logo == 'left' %} border-bottom logo--left{% else %} logo--center{% endif %}" role="banner">
     <div class="grid grid--no-gutters grid--table site-header__mobile-nav">
       {% if section.settings.align_logo == 'center' %}
@@ -77,10 +20,6 @@
           Use the uploaded logo from theme settings if enabled.
           Site name gets precedence with H1 tag on homepage, div on other pages.
         {% endcomment %}
-        <button type="button" id="trnd-sidebar-menu" class="btn--link site-header__icon mobile-nav--open" aria-controls="navigation"  aria-expanded="false" aria-label="{{ 'layout.navigation.menu' | t }}">
-          {% include 'icon-hamburger' %}
-          {% include 'icon-close' %}
-        </button>
         {% if template.name == 'index' %}
           <h1 class="h2 site-header__logo">
         {% else %}
@@ -254,10 +193,6 @@
         {% endfor %}
       </ul>
     </nav>
-
-    <div class="header__announcement">
-      {{ section.settings.announcement }}
-    </div>
   </header>
 
   {% if section.settings.align_logo == 'center' %}
@@ -266,6 +201,7 @@
   </nav>
   {% endif %}
 </div>
+
 {% schema %}
   {
     "name": {

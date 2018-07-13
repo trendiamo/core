@@ -1,0 +1,22 @@
+{% if section.settings.announcement != blank %}
+  <div class="header__announcement">
+    {{ section.settings.announcement }}
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": {
+      "en": "Message"
+    },
+    "settings": [
+      {
+        "type": "text",
+        "id": "announcement",
+        "label": {
+          "en": "Announcement Text"
+        }
+      }
+    ]
+  }
+{% endschema %}
