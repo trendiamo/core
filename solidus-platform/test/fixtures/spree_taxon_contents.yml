@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  taxons: one
+  about_active: false
+  about_title: MyString
+  about_video_active: false
+  about_video_url: MyString
+  about_image_url: MyString
+  about_text: MyText
+  legal_business_name: MyString
+  business_location: MyString
+  produce_on_demand: false
+  shipping_timeframe: MyString
+
+two:
+  taxons: two
+  about_active: false
+  about_title: MyString
+  about_video_active: false
+  about_video_url: MyString
+  about_image_url: MyString
+  about_text: MyText
+  legal_business_name: MyString
+  business_location: MyString
+  produce_on_demand: false
+  shipping_timeframe: MyString
