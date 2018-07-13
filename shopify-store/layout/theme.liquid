@@ -86,6 +86,25 @@
 
   {{ content_for_header }}
 
+  <!-- Taboola Pixel -->
+
+  <script type='text/javascript'>
+  window._tfa = window._tfa || [];
+  window._tfa.push({notify: 'event', name: 'page_view'});
+  !function (t, f, a, x) {
+         if (!document.getElementById(x)) {
+            t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f);
+         }
+  }(document.createElement('script'),
+  document.getElementsByTagName('script')[0],
+  '//cdn.taboola.com/libtrc/unip/1152012/tfa.js',
+  'tb_tfa_script');
+  </script>
+  <noscript>
+    <img src='//trc.taboola.com/1152012/log/3/unip?en=page_view'
+        width='0' height='0' style='display:none'/>
+  </noscript>
+
 </head>
 {%- if template == 'index' or template == 'collection' or template == 'page.about' or template == 'page.contact' -%}
   {%- assign useSidebar = true %}
@@ -93,6 +112,24 @@
   {%- assign useSidebar = false %}
 {%- endif -%}
 <body class="template-{{ template | split: '.' | first }}{% if useSidebar == true %} use-sidebar{% endif %}">
+
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/en_GB/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your customer chat code -->
+  <div class="fb-customerchat"
+    attribution=setup_tool
+    page_id="1894150114188528"
+    theme_color="#36D4BC">
+  </div>
+
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
   <div id="SearchDrawer" class="search-bar drawer drawer--top" role="dialog" aria-modal="true" aria-label="{{ 'general.search.placeholder' | t }}">
@@ -172,7 +209,6 @@ if (!Cookies.get('isNewsletterModalClosed')) {
   });
 }
   </script>
-  <script src="{{ 'app.js' | asset_url }}"></script>
   <script type="text/javascript" id="cookiebanner" src="https://cdn.jsdelivr.net/gh/dobarkod/cookie-banner@1.2.1/dist/cookiebanner.min.js" data-message="We are using cookies to enhance your experience on this site. By continuing you agree to our cookie privacy agreement." data-bg="rgba(0, 0, 0, 0.8)" data-moreinfo="/pages/privacy" data-close-precedes="false" data-close-style="padding-top: 5px; padding-bottom: 5px; padding-left: 10px; float: none; margin-left: 5px;" data-linkmsg="Learn more" data-close-text="Okey"></script>
 </body>
 </html>

@@ -57,7 +57,7 @@ assets/theme.js:
   staging: 2018-01-15T06:07:38-05:00   b50b8c8a74107fa49eed6bf5b802166d
 assets/theme.scss.liquid:
   development: 2018-07-09T07:05:39-04:00   07fa9c2f16b981af953b337a3f334e43
-  production: 2018-07-05T13:51:15+01:00   07fa9c2f16b981af953b337a3f334e43
+  production: 2018-07-10T18:32:35+01:00   d91b46498ad3d65f569a6451274deb93
   staging: 2018-04-30T04:58:00-04:00   d8d755674161083b68f539a092ea1bd3
 assets/vendor.js:
   development: 2018-07-09T06:37:36-04:00   465fb5b94497c1cdcd55ba6cb04ffeb2
@@ -79,7 +79,7 @@ layout/password.liquid:
   staging: 2018-01-15T06:07:39-05:00   6351674ea67c53e01643a5bea02f7d0a
 layout/theme.liquid:
   development: 2018-07-09T06:38:13-04:00   547654a547c149b8a79f8e433f46cb6f
-  production: 2018-06-28T11:12:28+01:00   3234c5f8d17abb804a6976bbfdeefed9
+  production: 2018-07-10T18:42:17+01:00   25a0b9f417c0df5c025b1d494264165d
   staging: 2018-04-28T07:39:54-04:00   55be17acc7185ecc8168eabbb3108659
 locales/de.json:
   development: 2018-07-09T06:38:22-04:00   a8d5a1c84f4641c79ed995c97ea9a261
@@ -173,7 +173,7 @@ sections/header.liquid:
   staging: 2018-04-26T18:15:01-04:00   2d573e1e49bea69121d7adae479ddc84
 sections/hero.liquid:
   development: 2018-07-09T06:37:08-04:00   b75948d15b81b97297a923bc6ed33fc4
-  production: 2018-06-27T20:47:50+01:00   b75948d15b81b97297a923bc6ed33fc4
+  production: 2018-07-10T18:35:58+01:00   a86fe1c7ac2bacf2a44ed6c2d5424a60
   staging: 2018-01-15T06:07:36-05:00   d45cf37312b64d6e7511bdba56256758
 sections/image-bar.liquid:
   development: 2018-07-09T06:37:30-04:00   7b00dff3ab435ef3a663a146cf6c3649
@@ -237,7 +237,7 @@ sections/slideshow.liquid:
   staging: 2018-01-15T06:07:37-05:00   b45e3880ca33f6ac6de7c2b5eb9dd40b
 sections/trendiamo-sidebar.liquid:
   development: 2018-07-09T06:37:49-04:00   2e0c601bfd539d88f9652075614ada31
-  production: 2018-07-02T16:58:01+01:00   2e0c601bfd539d88f9652075614ada31
+  production: 2018-07-11T14:50:27+01:00   487bb2039a1c3c039c8a1bb1530e5f4c
 snippets/arrow-down.liquid:
   development: 2018-07-09T06:37:37-04:00   138bdd2b7e0d88983401008c10b7c69a
   production: 2018-05-22T17:14:57+02:00   138bdd2b7e0d88983401008c10b7c69a
