@@ -1,0 +1,18 @@
+{% section 'product-template' %}
+
+<script type="application/json" id="ProductJson-1">
+    {{ product | json }}
+</script>
+<script>
+    theme.money_format = '{{ shop.money_format }}';
+    theme.t.add_to_cart = '{{ 'products.product.add_to_cart' | t }}';
+    theme.t.sold_out = '{{ 'products.product.sold_out' | t }}';
+    theme.t.unavailable = '{{ 'products.product.unavailable' | t }}';
+
+    $(document).on('shopify:section:load', '.js-section__product-single', function(event) {
+        theme.productSelect('1','single', true);
+    });
+    $(document).ready(function(){
+        theme.productSelect('1','single', true);
+    });
+</script>

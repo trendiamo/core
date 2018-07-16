@@ -1,0 +1,103 @@
+<!doctype html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+  	<meta name="theme-color" content="{{ settings.color_brand }}">
+  	<link rel="canonical" href="{{ canonical_url }}">
+
+  	{% if settings.favicon != blank %}
+	    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+	{% endif %}
+
+  	<!-- Title and description ================================================== -->
+  	 {%- assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros: gift_card.currency -%}
+	{%- assign formatted_initial_value_stripped = formatted_initial_value | strip_html -%}
+	<title>{{ 'gift_cards.issued.title_html' | t: value: formatted_initial_value_stripped, shop: shop.name }}</title>
+  	
+  	<meta name="description" content="{{ 'gift_cards.issued.subtext' | t }}">
+
+  	<!-- Google fonts ========================================== -->
+	{% if settings.type_base_family contains 'google' %}
+	  	{%- assign type_base_parts = settings.type_base_family | split: '_' -%}
+	  	{% capture baseGoogleUrl %}{{ type_base_parts[1] }}:{% if type_base_parts[2] == '300' %}300,{% endif %}400,700{% endcapture %}
+	  	{{ '//fonts.googleapis.com/css?family=' | append: baseGoogleUrl | stylesheet_tag }}
+	{% endif %}
+	{% if settings.type_header_family contains 'google' %}
+	  	{%- assign type_header_parts = settings.type_header_family | split: '_' -%}
+	  	{% capture headerGoogleUrl %}{{ type_header_parts[1] }}:{{ type_header_parts[2] }}{% endcapture %}
+	  	{{ '//fonts.googleapis.com/css?family=' | append: headerGoogleUrl | stylesheet_tag }}
+	{% endif %}
+	{% if settings.type_button_family contains 'google' %}
+	  	{%- assign type_button_family = settings.type_button_family | split: '_' -%}
+	  	{% capture buttonGoogleUrl %}{{ type_button_family[1] }}:{{ type_button_family[2] }}{% endcapture %}
+	  	{{ '//fonts.googleapis.com/css?family=' | append: buttonGoogleUrl | stylesheet_tag }}
+	{% endif %}
+
+  	<!-- CSS ================================================== -->
+	{{ 'main.scss.css' | asset_url | stylesheet_tag }}
+	{{ 'gift-card.scss.css' | asset_url | stylesheet_tag }}
+
+  	<!-- JS ================================================== -->
+  	{{ 'vendor/qrcode.js' | shopify_asset_url | script_tag }}
+  	{{ '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js' | script_tag }}
+  	{{ 'plugins-top.js' | asset_url | script_tag }}
+  	{% if template contains 'customers' %}
+		{{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  	{% endif %}
+  	<script type="text/javascript">
+		theme = {};
+		theme.t = {};
+		theme.map = {};
+	</script>
+
+	<!-- Header hook for plugins ================================================== -->
+  	{{ content_for_header }}
+</head>  
+<body class="template-giftcard">
+	{{ content_for_layout }}
+
+	<script type="text/javascript">
+	$(function() {
+		var config = {
+		    qrCode: '#QrCode',
+		    giftCardCode: '#GiftCardDigits'
+		};
+
+		var $qrCode = $(config.qrCode);
+		// eslint-disable-next-line no-new
+		new QRCode($qrCode[0], {
+		    text: $qrCode.attr('data-identifier'),
+		    width: 120,
+		    height: 120
+		});
+
+		$(config.printButton).on('click', function() {
+		    window.print();
+		});
+
+		// Auto-select gift card code on click, based on ID passed to the function
+		$(config.giftCardCode).on('click', {element: 'GiftCardDigits'}, selectText);
+		  	function selectText(evt) {
+		    	var text = document.getElementById(evt.data.element);
+		    	var range = '';
+
+		    	if (document.body.createTextRange) { // ms method
+					range = document.body.createTextRange();
+					range.moveToElementText(text);
+					range.select();
+		    	} else if (window.getSelection) { // moz, opera, webkit method
+					var selection = window.getSelection();
+					range = document.createRange();
+					range.selectNodeContents(text);
+					selection.removeAllRanges();
+					selection.addRange(range);
+		    	}
+		  	}
+		});
+	</script>
+</body>
+</html>

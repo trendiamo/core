@@ -1,0 +1,241 @@
+{% if section.blocks.size > 0 %}
+<section class="section section--full-bg{% if section.settings.bg_color == 'white' %} section--no-bg{% else %} section--has-bg{% endif %}" data-section-id="{{ section.id }}" data-section-type="home-map">
+    <div class="home-map js-map js-map--{{ section.id }} u-bg-{{ section.settings.bg_color }}">
+        <div class="container">
+
+            <div class="home-map__content">
+                <div class="o-layout u-flex u-flex--middle">
+                    
+                    <div class="o-layout__item u-1/1 u-1/2@tab">
+                        <div class="home-map__items">
+                            {% for block in section.blocks %}
+                            <a href="#map-info-{{ section.id }}-{{ forloop.index }}" class="home-map__title js-map-trigger">
+                                <h3 class="home-map__title-text">{{ block.settings.title | escape }}</h3>
+                                {% if section.blocks.size > 1 %}
+                                    <span class="home-map__title-icon icon-fallback">
+                                        <i class="icon icon--plus" aria-hidden="true"></i>
+                                        <span class="icon-fallback__text">{{ 'sections.map.open' | t }}</span>
+                                    </span>
+                                {% endif %}
+                            </a>
+                            <div id="map-info-{{ section.id }}-{{ forloop.index }}" class="home-map__item js-map-info" {{ block.shopify_attributes }}>
+                                <div class="home-map__item-wrap">
+                                    <div class="o-layout">
+                                        <div class="o-layout__item u-1/1 u-1/2@desk">
+                                            <div class="home-map__text rte">
+                                                {{ block.settings.desc }}
+                                            </div>
+                                        </div>
+                                        <div class="o-layout__item u-1/1 u-1/2@desk">
+                                            <div class="home-map__sub-text u-small rte">
+                                                {{ block.settings.sub_desc }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="u-hidden@tab-up" data-set="map-replace-{{ section.id }}-{{ forloop.index }}"></div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="o-layout__item u-1/1 u-1/2@tab">
+                        <div class="home-map__media">
+                            {% for block in section.blocks %}
+                            <div class="home-map__media-map js-map-media{% if forloop.index == 1 %} home-map__media-map--first js-active{% endif %}" data-map-id="#map-info-{{ section.id }}-{{ forloop.index }}">
+                                <div class="u-hidden@tab-down" data-set="map-replace-{{ section.id }}-{{ forloop.index }}">
+                                    <div class="home-map__media-replace js-map-replace">
+                                        {% if block.settings.map_image == blank %}
+                                            <div id="map-{{ section.id }}-{{ forloop.index }}"
+                                            class="js-map-ids home-map__media-canvas" 
+                                            data-map-id="map-{{ section.id }}-{{ forloop.index }}" 
+                                            data-map-section="{{ section.id }}"
+                                            data-map-address="{{ block.settings.address | escape }}"
+                                            data-map-style="{{ section.settings.map_style }}"
+                                            data-map-pin="{% if section.settings.map_style == 'dark' or section.settings.map_style == 'minimal_dark' %}mapPinLight{% else %}mapPinDark{% endif %}"></div>
+                                        {% else %}
+                                            <div class="home-map__media-canvas home-map__media-canvas--img">
+                                                <div class="u-bg-cover lazyload js"
+                                                    data-bgset="{% include 'bgset', image: block.settings.map_image %}"
+                                                    data-sizes="auto"
+                                                    data-parent-fit="cover"
+                                                    style="background-image: url('{{ block.settings.map_image | img_url: '300x300' }});"></div>
+                                                <noscript>
+                                                    <div class="u-bg-cover"
+                                                        style="background-image: url('{{ block.settings.map_image | img_url: '720x' }});"></div>
+                                                    </div>
+                                                </noscript>
+                                            </div>
+                                        {% endif %}
+                                        {% if section.settings.show_directions_btn %}
+                                            <a href="https://maps.google.com?daddr={{ block.settings.address | escape }}" class="c-btn c-btn--primary c-btn--arrow home-map__media-btn" target="_blank">{{ 'sections.map.directions' | t }}</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if section.blocks.size == 0 %}
+    <div class="placeholder-noblocks">
+        {{ 'homepage.onboarding.no_content' | t }}
+    </div>
+{% endif %}
+
+<script type="text/javascript">
+theme.map = {};
+{%- unless section.settings.google_api_key == blank -%}
+theme.map = {
+    key: {{ section.settings.google_api_key | json }}
+};
+{%- endunless -%}
+</script>
+
+{% schema %}
+{
+    "name": "Map",
+    "class": "js-section__home-map",
+    "max_blocks": 3,
+    "settings": [
+        {
+            "type": "text",
+            "id": "google_api_key",
+            "label": "Google Maps API key",
+            "info": "If the map is not displaying in your live store you must create a Google Maps API key. [Get yours here](https://developers.google.com/maps/documentation/javascript/get-api-key). For more information [click here](https://safeasmilk.zendesk.com/hc/en-gb/articles/115001761269)."
+        },
+        {
+            "type": "checkbox",
+            "id": "show_directions_btn",
+            "label": "Show directions button",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "map_style",
+            "label": "Map style",
+            "default": "light",
+            "options": [
+                {
+                    "label": "Default",
+                    "value": "default"
+                },
+                {
+                    "label": "Blue water",
+                    "value": "blue_water"
+                },
+                {
+                    "label": "Clean cut",
+                    "value": "clean_cut"
+                },
+                {
+                    "label": "Dark",
+                    "value": "dark"
+                },
+                {
+                    "label": "Flat",
+                    "value": "flat"
+                },
+                {
+                    "label": "Light",
+                    "value": "light"
+                },
+                {
+                    "label": "Minimal dark",
+                    "value": "minimal_dark"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "grey",
+            "options": [
+                {
+                    "value": "grey",
+                    "label": "Default grey"
+                },
+                {
+                    "value": "brand",
+                    "label": "Brand"
+                },
+                {
+                    "value": "accent",
+                    "label": "Accent"
+                },
+                {
+                    "value": "white",
+                    "label": "White"
+                },
+                {
+                    "value": "black",
+                    "label": "Black"
+                }
+            ]
+        }
+    ],
+    "blocks": [
+        {
+            "type": "map",
+            "name": "Map",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Map"
+                },
+                {
+                    "type": "richtext",
+                    "id": "desc",
+                    "label": "Address",
+                    "default": "<p>273 Street Lane<br/>San Francisco, CA 94102<br/>(415) 557-4400<br/>store@email.com</p>"
+                },
+                {
+                    "type": "richtext",
+                    "id": "sub_desc",
+                    "label": "Hours",
+                    "default": "<p>Monday - Thursday, 12:00 to 23:00<br/>Friday &amp; Saturday, 12:00 to 00:00<br/>Sunday, Closed</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "address",
+                    "label": "Map address",
+                    "info": "Used for live map and directions button",
+                    "default": "100 Larkin St, San Francisco, CA 94102, USA"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "map_image",
+                    "label": "Image",
+                    "info": "Replaces live map"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Map",
+            "category": "Store information",
+            "blocks": [
+                {
+                    "type": "map",
+                    "settings": {
+                        "title": "Map 1",
+                        "address": "100 Larkin St, San Francisco, CA 94102, USA",
+                        "desc": "<p>273 Street Lane<br/>San Francisco, CA 94102<br/>(415) 557-4400<br/>store@email.com</p>",
+                        "sub_desc": "<p>Monday - Thursday, 12:00 to 23:00<br/>Friday &amp; Saturday, 12:00 to 00:00<br/>Sunday, Closed</p>"
+                    }
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,9 @@
+production:
+  store: trendiamo-platform.myshopify.com
+  password: 5b9692edc71db0e4fdf88b535a16556b
+  theme_id: "28241723507"
+  ignore_files:
+    - app
+    - "*.swp"
+    - "*~"
+    - "config/settings_data.json"
