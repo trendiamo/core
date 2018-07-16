@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem "aws-sdk", "~> 2.3"
+gem "invoicexpress"
 gem "graphql"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 3.7"
