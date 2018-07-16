@@ -8,4 +8,21 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # Custom controllers in admin
+  Spree::Core::Engine.routes.draw do
+    namespace :admin do
+      resources :taxonomies, only: [] do
+        resources :taxons, only: [] do
+          resources :taxon_contents, only: [:edit, :update]
+        end
+      end
+    end
+    namespace :api do
+      resources :taxonomies, only: [] do
+        resources :taxons, only: [] do
+          resources :taxon_contents, only: [:edit, :update]
+        end
+      end
+    end
+  end
 end

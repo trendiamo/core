@@ -1,0 +1,62 @@
+<div data-hook="admin_inside_taxon_form" class="row">
+  <div class="col-10">
+    <%= f.field_container :about_title do %>
+      <%= f.label :about_title %><br />
+      <%= f.text_field :about_title, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-10">
+    <%= f.field_container :about_text do %>
+      <%= f.label :about_text %><br />
+      <%= f.text_area :about_text, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-10">
+    <%= f.field_container :legal_business_name do %>
+      <%= f.label :legal_business_name %><br />
+      <%= f.text_field :legal_business_name, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-10">
+    <%= f.field_container :business_location do %>
+      <%= f.label :business_location %><br />
+      <%= f.text_field :business_location, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-10">
+    <%= f.field_container :about_video_url do %>
+      <%= f.label :about_video_url %><br />
+      <%= f.text_field :about_video_url, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-10">
+    <%= f.field_container :about_image_url do %>
+      <%= f.label :about_image_url %><br />
+      <%= f.text_field :about_image_url, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-10">
+    <%= f.field_container :shipping_timeframe do %>
+      <%= f.label :shipping_timeframe %><br />
+      <%= f.text_field :shipping_timeframe, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-4">
+    <%= f.field_container :about_active do %>
+      <%= f.label :about_active %><br />
+      <%= f.check_box :about_active, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-4">
+    <%= f.field_container :about_video_active do %>
+      <%= f.label :about_video_active %><br />
+      <%= f.check_box :about_video_active, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+  <div class="col-4">
+    <%= f.field_container :produce_on_demand do %>
+      <%= f.label :produce_on_demand %><br />
+      <%= f.check_box :produce_on_demand, class: 'fullwidth', rows: 6 %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<% admin_breadcrumb("Edit Taxon's Extra Content") %>
+<% content_for :page_actions do %>
+  <li>
+    <%= link_to 'Back to Taxon', edit_admin_taxonomy_taxon_url(@taxon.taxonomy,@taxon.id), class: 'btn btn-primary' %>
+  </li>
+<% end %>
+<% form_url = admin_taxonomy_taxon_taxon_content_path(@taxon.taxonomy.id, @taxon.id, @taxon.taxon_content.id) %>
+<%= form_for [:admin, @taxonomy, @taxon.taxon_content], method: :put, url: form_url, html: { multipart: true } do |f| %>
+  <%= render 'form', f: f %>
+
+  <div class="form-buttons filter-actions" data-hook="buttons">
+    <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
+    <%= link_to t('spree.actions.cancel'), edit_admin_taxonomy_taxon_url(@taxon.taxonomy,@taxon.id), class: 'btn btn-primary' %>
+  </div>
+
+<% end %>
