@@ -60,11 +60,11 @@
                     {%- if template == 'collection-seller' or true -%}
                       <div class="js-description-first-para">
                         <p>{{ collection_about_text | split: '<br><br>' | first }}</p>
-                        <button type="button" class="btn c-btn--small js-show-more">Show more</button>
+                        <button type="button" class="action-link js-show-more">Show more ⌄</button>
                       </div>
                       <div class="js-description-full u-hiddenVisually">
                         <p>{{ collection_about_text }}</p>
-                        <button type="button" class="btn c-btn--small js-show-less">Show less</button>
+                        <button type="button" class="action-link js-show-less">Show less ⌃</button>
                       </div>
                     {%- else -%}
                       {% if collection.description != blank %}

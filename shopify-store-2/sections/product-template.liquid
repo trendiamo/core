@@ -219,10 +219,11 @@
                                                 </div>
                                             {% endif %}
 
-                                            <div class="product-stock-info {% if produced_on_demand == 1 %}product-stock-demand{% else %}product-stock-stock{% endif %}">
-                                              {% if produced_on_demand == 1 %}produced on demand{% else %}shipping: {{ shipping_timeframe }}{% endif %}
+                                            <div class="product-stock-info-container">
+                                              <div class="product-stock-info {% if produced_on_demand == 1 %}product-stock-demand{% else %}product-stock-stock{% endif %}">
+                                                {% if produced_on_demand == 1 %}produced on demand{% else %}shipping: {{ shipping_timeframe }}{% endif %}
+                                              </div><div class="product-stock-mark-container"><a class="product-stock-mark" target="_blank" href="{{ shipping_terms_link }}">?</a></div>
                                             </div>
-                                            <div class="product-stock-mark-container"><div class="product-stock-mark">?</div></div>
 
                                             <div class="product-single__add js-product-buttons{% unless product.available %} product-single__add--sold{% endunless %}">
 
@@ -324,7 +325,7 @@
                                 {%- if business_name != null and business_location != null -%}
                                   <div class="product-supplier-info">
                                     Supplied and shipped by {{ business_name }} - {{ business_location }} <br>
-                                    <a href="{{ shipping_terms_link }}">learn more</a>
+                                    <a class="action-link" href="{{ shipping_terms_link }}">learn more</a>
                                   </div>
                                 {%- endif -%}
 
@@ -510,8 +511,7 @@
         show: 250,
         hide: 250
       },
-      title: '<a target="_blank" href="{{ shipping_terms_link }}">Find out more about shipping</a>',
-      html: true
+      title: 'Find out more about shipping',
     });
 
     $('.product-share').click(function(event) {
@@ -520,8 +520,7 @@
 
     var copiedTooltip = new Tooltip($('.product-share'), {
       title: 'Share link copied.',
-      trigger: 'manual',
-      placement: 'bottom'
+      trigger: 'manual'
     });
 
     new ClipboardJS('.product-share').on('success', function() {
