@@ -42,7 +42,7 @@
 
 	<!-- Header hook for plugins ================================================== -->
   	{{ content_for_header }}
-</head>  
+</head>
 
 <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
 	<script type="text/javascript">
@@ -60,15 +60,15 @@
 	{% section 'footer' %}
 	{% section 'promo-pop' %}
 	{% section 'age-checker' %}
-	
+
 	{% if settings.search_enable %}
 		<div class="search-draw js-search-draw mfp-hide">
-		    <div class="search-draw__wrapper">  
+		    <div class="search-draw__wrapper">
 		        <div class="search__head">
 		            <div class="search__label">
 		                <h3 class="search__label-title">{{ 'general.search.label' | t }}</h3>
 		            </div>
-		        </div>  
+		        </div>
 		        <div class="search__inner">
 		            <form action="/search" method="get" class="search__form" role="search">
 		                <input type="hidden" name="type" value="{{ settings.search_limit }}">
@@ -95,15 +95,15 @@
 		    </div>
 		</div>
 	{% endif %}
-	
+
 	<div class="ajaxcart-draw js-cart-draw mfp-hide">
-		<div class="ajaxcart-draw__wrapper js-cart-draw-inner">	
+		<div class="ajaxcart-draw__wrapper js-cart-draw-inner">
 			<div class="ajaxcart-draw__scroll">
 				<div class="ajaxcart__head">
 		            <div class="ajaxcart__label">
 		                <h3 class="ajaxcart__label-title">{{ 'cart.general.title' | t }}</h3>
 		            </div>
-		        </div>	
+		        </div>
 	       		<div id="CartContainer"></div>
 	       		<div id="EmptyCart">
 	       			<div class="ajaxcart-empty">
@@ -122,10 +122,13 @@
 
 	{% include 'ajax-cart-template' %}
 	{{ 'ajax-cart.js' | asset_url | script_tag }}
-	
+
 	{{ 'option_selection.js' | shopify_asset_url | script_tag }}
-  	{{ 'plugins.js' | asset_url | script_tag }}
-  	{{ 'main.js' | asset_url | script_tag }}
+	{{ 'plugins.js' | asset_url | script_tag }}
+  {{ 'https://unpkg.com/popper.js/dist/umd/popper.min.js' | script_tag }}
+  {{ 'https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js' | script_tag }}
+  {{ 'https://unpkg.com/clipboard/dist/clipboard.min.js' | script_tag }}
+	{{ 'main.js' | asset_url | script_tag }}
 
 	<script>
 	{% if resetPassword %}
