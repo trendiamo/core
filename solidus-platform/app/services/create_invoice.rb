@@ -39,6 +39,7 @@ class CreateInvoice
         name: line_item.variant.product.name,
         unit_price: line_item["price"] - line_item["included_tax_total"],
         quantity: line_item.quantity,
+        description: get_line_item_description(line_item.variant.option_values),
         tax: Invoicexpress::Models::Tax.new(
           name: "IVA23",
           value: 0.23
@@ -47,5 +48,14 @@ class CreateInvoice
       )
     end
     array
+  end
+
+  def get_line_item_description(option_values)
+    return unless option_values
+    array = []
+    option_values.each do |option_value|
+      array << option_value.option_type.presentation + ': ' + option_value.presentation
+    end
+    array.map { |k| "#{k}" }.join(" / ")
   end
 end
