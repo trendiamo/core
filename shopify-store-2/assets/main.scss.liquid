@@ -4559,6 +4559,18 @@ iframe {
 .icon--left-tri:before {
   content: "\e904";
 }
+
+.icon--svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: top;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
 /* ==========================================================================
    #LABEL
    ========================================================================== */
@@ -5331,11 +5343,21 @@ iframe {
     }
 }
 
+.seller-info-profilepic {
+  margin-right: 8px;
+  // padding: 8px;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
 .yt-aspect-ratio-container {
   height: 0;
   padding-top: 56.25%; // 16/9 aspect ratio
   position: relative;
   overflow: hidden;
+  margin-bottom: 1rem;
 }
 
 .yt-aspect-ratio {
@@ -5357,9 +5379,14 @@ iframe {
   margin-right: 8px;
   padding: 8px;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
+}
+
+.product-seller-info-title {
+  font-size: 1.4rem;
+  font-weight: 500;
 }
 
 .product-stock-info {
@@ -5394,6 +5421,8 @@ iframe {
   text-align: center;
   background-color: #e6e6e6;
   border-radius: 50%;
+  user-select: none;
+  cursor: default;
 }
 
 .popper,

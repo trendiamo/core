@@ -2,6 +2,9 @@
   {% if tag contains 'seller:' %}
     {% assign seller_name = tag | remove: 'seller:' %}
   {% endif %}
+  {% if tag contains 'supplier:' %}
+    {% assign supplier_name = tag | remove: 'supplier:' %}
+  {% endif %}
   {% if tag contains 'stock:' %}
     {% assign stock_type = tag | remove: 'stock:' %}
   {% endif %}
@@ -21,6 +24,28 @@
       {% else %}
         {% assign about_active = 0 %}
       {% endif %}
+      {% if collection.metafields.custom_fields["legal_business_name"] != blank %}
+        {% assign business_name = collection.metafields.custom_fields["legal_business_name"] %}
+      {% endif %}
+      {% if collection.metafields.custom_fields["shipping_timeframe"] != blank %}
+        {% assign shipping_timeframe = collection.metafields.custom_fields["shipping_timeframe"] %}
+      {% endif %}
+      {% if collection.metafields.custom_fields["business_location"] != blank %}
+        {% assign business_location = collection.metafields.custom_fields["business_location"] %}
+      {% endif %}
+      {% if collection.metafields.custom_fields["produce_on_demand"] != blank and collection.metafields.custom_fields["produce_on_demand"] == 1 %}
+        {% assign produced_on_demand = 1 %}
+      {% else %}
+        {% assign produced_on_demand = 0 %}
+      {% endif %}
+
+      {% assign collection_about_image_url = collection.metafields.custom_fields["about_image_url"] %}
+      {% assign collection_about_video_id = collection.metafields.custom_fields["about_video_url"] %}
+      {% assign collection_about_text = collection.metafields.custom_fields["about_text"] %}
+    {% endif %}
+  {% endfor %}
+  {% for collection in product.collections %}
+    {% if collection.title == supplier_name %}
       {% if collection.metafields.custom_fields["legal_business_name"] != blank %}
         {% assign business_name = collection.metafields.custom_fields["legal_business_name"] %}
       {% endif %}
@@ -229,7 +254,7 @@
                                                     {% if settings.share_link %}
                                                     <li class="product-single__share-item">
                                                         <a href="{{ shop.url }}{{ product.url }}{{ ga_campaign_link }}" class="product-single__share-link icon-fallback product-share" data-clipboard-text="{{ shop.url }}{{ product.url }}{{ ga_campaign_link }}">
-                                                            <i class="icon icon--rss" aria-hidden="true"></i>
+                                                            <img class="icon--svg" src="{{ 'share.svg' | asset_url }}" alt="Link" itemprop="logo">
                                                             <span class="icon-fallback__text">Link</span>
                                                         </a>
                                                     </li>
@@ -296,10 +321,12 @@
                                     {{ product.description }}
                                 </div>
 
-                                <div class="product-supplier-info">
-                                  Supplied and shipped by {{ business_name }} - {{ business_location }} <br>
-                                  <a href="{{ shipping_terms_link }}">learn more</a>
-                                </div>
+                                {%- if business_name != null and business_location != null -%}
+                                  <div class="product-supplier-info">
+                                    Supplied and shipped by {{ business_name }} - {{ business_location }} <br>
+                                    <a href="{{ shipping_terms_link }}">learn more</a>
+                                  </div>
+                                {%- endif -%}
 
                                 <div class="product-single__accordion js-accordion">
 
@@ -453,11 +480,16 @@
 </div>
 
 <div class="u-hidden js-seller-info-content">
-  <h4>About {{ seller_name }}</h4>
-  <img alt="" src="{{ collection.metafields.custom_fields['about_image_url'] }}" />
-  <div class="yt-aspect-ratio-container"><iframe class="yt-aspect-ratio" src="https://www.youtube.com/embed/{{ collection.metafields.custom_fields["about_video_url"] }}?rel=0" frameborder="0" allowfullscreen tabindex="-1"></iframe></div>
-  <div>{{ collection.metafields.custom_fields["about_text"] }}</div>
-  <!-- <div class="about-section-header-img" style="background-image: url('{{ collection.metafields.custom_fields['about_image_url'] }}');"></div> -->
+  {%- if collection_about_video_id != null -%}
+    <div class="yt-aspect-ratio-container">
+      <iframe class="yt-aspect-ratio" src="https://www.youtube.com/embed/{{ collection_about_video_id }}?rel=0" frameborder="0" allowfullscreen tabindex="-1"></iframe>
+    </div>
+  {%- else -%}
+    {%- if collection_about_image_url != null -%}
+      <img alt="" src="{{ collection_about_image_url }}" />
+    {%- endif -%}
+  {%- endif -%}
+  <div>{{ collection_about_text }}</div>
 </div>
 
 <script>
@@ -468,23 +500,7 @@
       var $sellerInfo = $($sellerInfoTitle.closest('a').attr('href'));
       if ($sellerInfo.length === 0) return;
 
-      // var aboutImageUrl = '{{ collection.metafields.custom_fields["about_image_url"] }}';
-      // var aboutVideoId = '{{ collection.metafields.custom_fields["about_video_url"] }}';
-      // // var aboutTitle = '{{ collection.metafields.custom_fields["about_title"] }}';
-      // var aboutTitle = 'About {{ seller_name }}';
-      // var aboutText = '{{ collection.metafields.custom_fields["about_text"] }}';
-      //
-      // var html = '';
-      // html += '<h4>' + aboutTitle + '</h4>';
-      // if (aboutText.length > 0) {
-      //   var shortAboutText = aboutText.split('<br><br>')[0];
-      //   html += '<div>' + shortAboutText + '</div>';
-      // }
-      // if (aboutImageUrl.length > 0) {
-      //   html += '<div class="about-section-header-img" style="background-image: url(\'{{ collection.metafields.custom_fields["about_image_url"] }}\');"></div>'
-      // }
-      // console.log('hello', aboutImageUrl, aboutVideoId);
-      // $sellerInfo.html(html);
+      $sellerInfoTitle.html('About {{ seller_name }}');
       $sellerInfo.html($('.js-seller-info-content').html());
     };
     fillSelllerInfo();
@@ -498,12 +514,12 @@
       html: true
     });
 
-    $('.product-share').click(function() {
-      return false;
+    $('.product-share').click(function(event) {
+      event.preventDefault();
     });
 
     var copiedTooltip = new Tooltip($('.product-share'), {
-      title: 'Copied.',
+      title: 'Share link copied.',
       trigger: 'manual',
       placement: 'bottom'
     });
