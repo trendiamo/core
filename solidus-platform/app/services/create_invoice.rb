@@ -1,11 +1,12 @@
 class CreateInvoice
+  def initialize(order)
+    @order = order
+  end
   def perform
     @client = Invoicexpress::Client.new(
       :account_name => "sample",
       :api_key     => "08d8be4944d410d63210ec09ae75b1e9db96401c",
     )
-    @order = Spree::Order.find_by(number: "#1024")
-
     invoice = Invoicexpress::Models::Invoice.new(
       :date => Date.current,
       :due_date => Date.current+3,
@@ -29,7 +30,7 @@ class CreateInvoice
   end
 
   private
-  
+
   def get_line_items(line_items)
     array = []
     line_items.each do |line_item|
