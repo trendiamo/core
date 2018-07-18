@@ -6,6 +6,16 @@ Rails.application.routes.draw do
   # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
   mount Spree::Core::Engine, at: "/"
 
+  Spree::Core::Engine.routes.draw do
+   namespace :admin do
+      resources :orders, only: [] do
+        member do
+          post :issue_invoice
+        end
+     end
+    end
+ end
+
   post "/graphql", to: "graphql#execute"
 
   defaults format: :json do
@@ -13,4 +23,5 @@ Rails.application.routes.draw do
       resources :orders, only: :create
     end
   end
+
 end

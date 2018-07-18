@@ -15,7 +15,8 @@ Spree.config do |config|
 
   config.checkout_zone = "EU_VAT"
 
-  config.default_country_iso = "DEU"
+  country = Spree::Country.find_by_name('Germany')
+  config.default_country_id = country.id if country.present?
 
   # When set, product caches are only invalidated when they fall below or rise
   # above the inventory_cache_threshold that is set. Default is to invalidate cache on
