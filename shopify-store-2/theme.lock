@@ -42,10 +42,10 @@ assets/jquery.currencies.min.js:
   production: 2018-07-09T19:44:16+01:00   6f08fe36050aa0335751c4913f21a0f1
   trnd-mvp: 2018-07-18T09:20:01-04:00   6f08fe36050aa0335751c4913f21a0f1
 assets/main.js.liquid:
-  production: 2018-07-18T13:22:20+01:00   7051a97a3f865e74027ea999585b210b
+  production: 2018-07-18T16:20:29+01:00   8b4d078a91d96e0bccdd6a3a9a6d6761
   trnd-mvp: 2018-07-18T09:20:07-04:00   7051a97a3f865e74027ea999585b210b
 assets/main.scss.liquid:
-  production: 2018-07-18T13:25:34+01:00   460a459c39e0d6fb306ba91d3f550235
+  production: 2018-07-18T16:24:43+01:00   c9ee9b22cc15de4d67548b18bc57067c
   trnd-mvp: 2018-07-18T09:20:16-04:00   460a459c39e0d6fb306ba91d3f550235
 assets/password.js.liquid:
   production: 2018-07-09T19:44:17+01:00   d5b0b4192b988c60cdfb399bf4a3646a
@@ -101,7 +101,7 @@ sections/blog-template.liquid:
   production: 2018-07-09T19:44:12+01:00   a9693da89925c17c0d6d3f71bcfaf395
   trnd-mvp: 2018-07-18T09:19:48-04:00   a9693da89925c17c0d6d3f71bcfaf395
 sections/collection-template.liquid:
-  production: 2018-07-18T15:11:05+01:00   bdf01a60d62ddb202bbc802044782b4b
+  production: 2018-07-18T15:49:02+01:00   7d43979d64bfb5fd14f5908f9daa4876
   trnd-mvp: 2018-07-18T10:11:11-04:00   bdf01a60d62ddb202bbc802044782b4b
 sections/footer.liquid:
   production: 2018-07-18T14:27:49+01:00   e7c275f0c9c1cba26724cabae421c252

@@ -4,7 +4,15 @@
 {%- assign collection_about_video_id = collection.metafields.custom_fields["about_video_url"] -%}
 {%- assign collection_about_text = collection.metafields.custom_fields["about_text"] -%}
 {%- assign header_media_present = false -%}
-{%- if template == 'collection.seller' -%}
+
+<!-- TODO: remove the hardcoded collection handles, which were only useful for the preview before the launch -->
+{%- if template == 'collection.seller' or collection.handle == 'isto' or collection.handle == 'thorpe' -%}
+  {%- assign collection_seller = true -%}
+{%- else -%}
+  {%- assign collection_seller = false -%}
+{%- endif -%}
+
+{%- if collection_seller -%}
   {%- assign center_title = true %}
   {%- if collection_about_video_id != null or collection_about_image_url != null -%}
     {%- assign header_media_present = true -%}
@@ -28,7 +36,7 @@
             <div class="container">
                 {% if header_media_present and section.settings.show_collection_image %}
                     <div class="collection__header-media">
-                      {%- if template == 'collection.seller' -%}
+                      {%- if collection_seller -%}
                         {%- if collection_about_video_id != null -%}
                           <iframe id="pdp-video" style="height:100%;" src="https://www.youtube.com/embed/{{ collection_about_video_id }}?rel=0&enablejsapi=1" frameborder="0" allowfullscreen tabindex="-1"></iframe>
                         {%- else -%}
@@ -50,25 +58,30 @@
                       {%- endif -%}
                     </div>
                 {% endif %}
-                <div class="collection__header-info"{% if template != 'collection.seller' %} style="background: #fff;"{% endif %}>
-                    <div class="section__title collection__header-info__title{% if center_title %} section__title--center{% endif %}">
-                        <h1 class="section__title-text collection__header-info__title-text">
-                          {%- if template == 'collection.seller' -%}
-                            <img alt="" class="seller-info-profilepic" src="{{ collection.image | img_url: 'compact' }}" />
-                          {%- endif -%}
-                          {{ collection.title }}
-                        </h1>
-                    </div>
-                    {%- if template == 'collection.seller' -%}
-                      <div class="js-description-first-para">
-                        <p>{{ collection_about_text | split: '<br><br>' | first }}</p>
-                        <button type="button" class="action-link link--arrow-down js-show-more">Show more</button>
-                      </div>
-                      <div class="js-description-full u-hiddenVisually">
-                        <p>{{ collection_about_text }}</p>
-                        <button type="button" class="action-link link--arrow-up js-show-less">Show less</button>
+                <div class="collection__header-info"{% if collection_seller %} style="padding-top: 40px;"{% else %} style="background: #fff;"{% endif %}>
+                    {%- if collection_seller -%}
+                      <div class="collection-seller-info">
+                        <div class="seller-info-profilepic-container">
+                          <img alt="" class="seller-info-profilepic" src="{{ collection.image | img_url: 'compact' }}" />
+                        </div>
+                        <div class="seller-info-description-container">
+                          <h1 class="collection-seller-info-title">{{ collection.title }}</h1>
+                          <div class="js-description-first-para">
+                            <p>{{ collection_about_text | split: '<br><br>' | first }}</p>
+                            <button type="button" class="action-link link--arrow-down js-show-more">Show more</button>
+                          </div>
+                          <div class="js-description-full u-hiddenVisually">
+                            <p>{{ collection_about_text }}</p>
+                            <button type="button" class="action-link link--arrow-up js-show-less">Show less</button>
+                          </div>
+                        </div>
                       </div>
                     {%- else -%}
+                      <div class="section__title collection__header-info__title{% if center_title %} section__title--center{% endif %}">
+                          <h1 class="section__title-text collection__header-info__title-text">
+                            {{ collection.title }}
+                          </h1>
+                      </div>
                       {% if collection.description != blank %}
                           <div class="collection__header-info__text rte rte--header">
                               {{ collection.description }}

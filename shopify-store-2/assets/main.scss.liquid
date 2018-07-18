@@ -3000,7 +3000,6 @@ iframe {
     width: 50%;
     max-width: 600px;
     padding: 24px;
-    padding-left: 0;
     position: relative;
 }
 .collection__header-media {
@@ -3010,7 +3009,6 @@ iframe {
 .collection--img {
 	.collection__header-info {
 		margin-top: -84px;
-		padding-left: 24px;
 	}
 	.collection-sidebar {
 		padding-left: 24px;
@@ -3133,7 +3131,6 @@ iframe {
 		height: 340px;
 	}
 	.collection__header-info {
-		padding-left: 0;
 		width: 70%;
 	}
 	.collection-main__filter {
@@ -5361,13 +5358,32 @@ iframe {
     }
 }
 
+.collection-seller-info {
+  display: flex;
+  text-align: left;
+}
+
+.seller-info-profilepic-container {
+  border-right: 4px solid #00d8bb;
+  height: 120px;
+  padding-right: 1rem;
+}
+
 .seller-info-profilepic {
-  margin-right: 8px;
-  // padding: 8px;
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
+}
+
+.seller-info-description-container {
+  flex: 100;
+  padding-left: 1rem;
+}
+
+.collection-seller-info-title {
+  font-size: 20px;
+  margin-bottom: 0;
 }
 
 .yt-aspect-ratio-container {
