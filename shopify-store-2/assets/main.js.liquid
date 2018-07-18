@@ -7,27 +7,62 @@ var winHeight = $(window).height();
 theme.mobileBrkp = 768;
 theme.tabletBrkp = 981;
 
-var $pdpVideo = $('#pdp-video');
-if ($pdpVideo.length > 0) {
-  $.video.global.youtube_api_ready_callbacks.push(function() {
-    var player = new YT.Player('pdp-video', {
-      events: {
-        'onStateChange': function(event) {
-          if (event.data == YT.PlayerState.PLAYING) {
-            $pdpVideo.css('height', $pdpVideo.height() + 'px');
-            window.setTimeout(function () {
-              $pdpVideo.parent().addClass('simple-yt-container');
-              $pdpVideo.css('height', ($pdpVideo.width() * 9 / 16) + 'px');
-            }, 450);
-          } else if (event.data == YT.PlayerState.PAUSED) {
-            $pdpVideo.parent().removeClass('simple-yt-container');
-            $pdpVideo.css('height', '100%');
+function pdpVideo() {
+  var $pdpVideo = $('#pdp-video');
+  if ($pdpVideo.length > 0) {
+    $.video.global.youtube_api_ready_callbacks.push(function() {
+      var player = new YT.Player('pdp-video', {
+        events: {
+          'onStateChange': function(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+              $pdpVideo.css('height', $pdpVideo.height() + 'px');
+              window.setTimeout(function () {
+                $pdpVideo.parent().addClass('simple-yt-container');
+                $pdpVideo.css('height', ($pdpVideo.width() * 9 / 16) + 'px');
+              }, 450);
+            } else if (event.data == YT.PlayerState.PAUSED) {
+              $pdpVideo.parent().removeClass('simple-yt-container');
+              $pdpVideo.css('height', '100%');
+            }
           }
         }
-      }
+      });
     });
-  });
-  if (typeof YT === 'undefined') $.getScript('https://www.youtube.com/iframe_api');
+    if (typeof YT === 'undefined') $.getScript('https://www.youtube.com/iframe_api');
+  }
+}
+pdpVideo();
+
+function changeShippingPage() {
+  var sections = $('.page__content').html().split(/<h1>(.*)<\/h1>/);
+
+  if (sections.length > 1) {
+    var html = sections[0];
+    html += '<div class="product-single__accordion js-accordion">';
+    for (var i = 1; i < sections.length - 2; i += 2) {
+      var sectionId = (i + 1) / 2;
+      var title = $('<span>' + sections[i] + '</span>').text();
+      var body = sections[i + 1];
+
+      html += '\
+        <a href="#acc-' + sectionId + '" class="link product-single__accordion__title js-accordion-trigger">\
+          <h4 class="product-single__accordion__title-text">' + title + '</h4>\
+          <span class="product-single__accordion__title-icon icon-fallback">\
+            <i class="icon icon--plus" aria-hidden="true"></i>\
+            <span class="icon-fallback__text">Open tab</span>\
+          </span>\
+        </a>\
+        <div id="acc-' + sectionId + '" class="product-single__accordion__item js-accordion-info">\
+          ' + body + '\
+        </div>\
+      ';
+    }
+    html += '</div>';
+    $('.page__content').html(html);
+  }
+}
+if (location.pathname === '/pages/shipping') {
+  changeShippingPage();
 }
 
 theme.homeMaps = function() {

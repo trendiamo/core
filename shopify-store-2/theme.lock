@@ -42,10 +42,10 @@ assets/jquery.currencies.min.js:
   production: 2018-07-09T19:44:16+01:00   6f08fe36050aa0335751c4913f21a0f1
   trnd-mvp: 2018-07-18T09:20:01-04:00   6f08fe36050aa0335751c4913f21a0f1
 assets/main.js.liquid:
-  production: 2018-07-18T16:20:29+01:00   8b4d078a91d96e0bccdd6a3a9a6d6761
+  production: 2018-07-18T17:17:50+01:00   ee90a3199b22658baeacaf6341d505f0
   trnd-mvp: 2018-07-18T09:20:07-04:00   7051a97a3f865e74027ea999585b210b
 assets/main.scss.liquid:
-  production: 2018-07-18T16:24:43+01:00   c9ee9b22cc15de4d67548b18bc57067c
+  production: 2018-07-18T17:16:29+01:00   c9ee9b22cc15de4d67548b18bc57067c
   trnd-mvp: 2018-07-18T09:20:16-04:00   460a459c39e0d6fb306ba91d3f550235
 assets/password.js.liquid:
   production: 2018-07-09T19:44:17+01:00   d5b0b4192b988c60cdfb399bf4a3646a
