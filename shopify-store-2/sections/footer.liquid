@@ -2,15 +2,15 @@
     {% if section.settings.footer_newsletter_home == false or template.name != 'index' %}
         <section class="section">
             <div class="container">
-                
+
                 <div class="newsletter u-content--dark newsletter--grey">
                     <div class="newsletter__content">
-                        
+
                         <div class="newsletter__title section__title section__title--center section__title--desc">
                             {% if section.settings.footer_newsletter_title != blank %}
                                 <h2 class="section__title-text">{{ section.settings.footer_newsletter_title | escape }}</h2>
                             {% endif %}
-                            {% if section.settings.footer_newsletter_desc != blank %} 
+                            {% if section.settings.footer_newsletter_desc != blank %}
                                 <div class="section__title-desc rte">{{ section.settings.footer_newsletter_desc }}</div>
                             {% endif %}
                         </div>
@@ -41,7 +41,7 @@
                                     </div>
                                 {% endif %}
                             {% endform %}
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
@@ -233,7 +233,7 @@
                                 {% unless block.settings.image == blank %}
                                     {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
                                     <img class="footer-nav__image-img lazyload js"
-                                        src="{{ block.settings.image | img_url: '100x' }}" 
+                                        src="{{ block.settings.image | img_url: '100x' }}"
                                         data-src="{{ img_url }}"
                                         data-widths="[180, 360, 540, 720]"
                                         data-sizes="auto"
@@ -241,7 +241,7 @@
                                         style="max-width: {{ block.settings.image_width }}px">
                                     <noscript>
                                         <img class="footer-nav__image-img"
-                                            src="{{ block.settings.image | img_url: '460x' }}" 
+                                            src="{{ block.settings.image | img_url: '460x' }}"
                                             alt="{{ block.settings.image.alt }}"
                                             style="max-width: {{ block.settings.image_width }}px">
                                     </noscript>
@@ -359,7 +359,7 @@
             <div class="footer-copyright">
                 <p class="footer-copyright__text">
                     <span class="footer-copyright__span footer-copyright__span--shop">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name }}</span>
-                    <span class="footer-copyright__span footer-copyright__span--powered"><a href="http://safeasmilk.co/" target="_blank">Theme by Safe As Milk</a>. {{ powered_by_link }}</span>
+                    <span class="footer-copyright__span footer-copyright__span--powered">All rights reserved.</span>
                 </p>
             </div>
 
@@ -395,7 +395,7 @@
                                         </li>
                                     {% endif %}
                                 {% endfor %}
-                            </ul>                  
+                            </ul>
                         {% endunless %}
                     </div>
                 {% endif %}

@@ -15,13 +15,11 @@ if ($pdpVideo.length > 0) {
         'onStateChange': function(event) {
           if (event.data == YT.PlayerState.PLAYING) {
             $pdpVideo.css('height', $pdpVideo.height() + 'px');
-            $pdpVideo.parent().css({ zIndex: 1 });
             window.setTimeout(function () {
               $pdpVideo.parent().addClass('simple-yt-container');
               $pdpVideo.css('height', ($pdpVideo.width() * 9 / 16) + 'px');
             }, 450);
           } else if (event.data == YT.PlayerState.PAUSED) {
-            $pdpVideo.parent().css({ zIndex: 'auto' });
             $pdpVideo.parent().removeClass('simple-yt-container');
             $pdpVideo.css('height', '100%');
           }

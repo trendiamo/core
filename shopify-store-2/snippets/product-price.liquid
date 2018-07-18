@@ -18,11 +18,11 @@
 {% if available %}
     {% if compare_at_price > price %}
         {% if price_varies %}
+        <strike class="product__price-cross"><span class="money">{{ compare_at_price | money }}</span></strike>
             <span class="product__price-price"><span class="money">{{ money_price }}</span></span>
-            <strike class="product__price-cross"><span class="money">{{ compare_at_price | money }}</span></strike>
         {% else %}
+        <strike class="product__price-cross"><span class="money">{{ compare_at_price | money }}</span></strike>
             <span class="product__price-price"><span class="money">{{ money_price }}</span></span>
-            <strike class="product__price-cross"><span class="money">{{ compare_at_price | money }}</span></strike>
         {% endif %}
     {% else %}
         <span class="product__price-price"><span class="money">{{ money_price }}</span></span>

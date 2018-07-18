@@ -2990,10 +2990,15 @@ iframe {
    #COLLECTION
    ========================================================================== */
 
+.collection__header {
+  background: #f4f4f4;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
 .collection__header-info {
-	width: 50%;
-	max-width: 600px;
-    background: $color--white;
+    width: 50%;
+    max-width: 600px;
     padding: 24px;
     padding-left: 0;
     position: relative;
@@ -3235,7 +3240,7 @@ iframe {
 	}
 	.collection__header-info.collection__header-info  {
 	    width: 100%;
-	    padding: 0 0 3px 0;
+	    padding-bottom: 3px;
 	    margin-top: 18px;
 	}
 	.collection--center {
@@ -4639,6 +4644,19 @@ iframe {
 	    position: relative;
 	}
 }
+.link--arrow-up {
+	&:after {
+		content: '\e914';
+		font-size: 12px;
+		font-family: $font--icons;
+		width: 24px;
+		left: 6px;
+	    display: inline;
+	    line-height: 1;
+	    text-align: center;
+	    position: relative;
+	}
+}
 .link--arrow-down {
 	&:after {
 		content: '\e915';
@@ -5374,6 +5392,7 @@ iframe {
 
 #pdp-video {
   transition: height 300ms ease;
+  max-height: calc(95vh - 90px);
 }
 
 .product-seller-info {
@@ -5399,7 +5418,7 @@ iframe {
 
 .product-stock-info-container {
   display: flex;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 34px;
 }
 
@@ -5407,16 +5426,15 @@ iframe {
   width: auto;
   padding: 0 12px;
   text-transform: uppercase;
-  font-weight: 500;
-  border: 1px solid #ccc;
+  border: 1px solid #d6d6d6;
 }
 
 .product-stock-mark {
   width: 36px;
   font-weight: bold;
   text-align: center;
-  background-color: #e6e6e6;
-  border: 1px solid #e6e6e6;
+  background-color: #d6d6d6;
+  border: 1px solid #d6d6d6;
   user-select: none;
   display: block;
 }
@@ -5427,7 +5445,6 @@ iframe {
 
 button.action-link {
   background: none !important;
-  color: inherit;
   border: none;
   padding: 0 !important;
   font: inherit;
@@ -5544,11 +5561,11 @@ button.action-link {
 .product-single__price-compare {
 	font-size: 1.15rem;
 	color: $color--alt-text;
-	margin-left: 6px;
 }
 
 .product-single__form {
-    padding: 12px 24px 0;
+    overflow: visible;
+    padding: 0 24px;
 }
 
 .product-single__variant {
@@ -5878,8 +5895,14 @@ button.action-link {
 	margin-left: 6px;
 	text-decoration: line-through;
 	font-size: 0.9em;
-	color: $color--alt-text;
+  color: $color--alt-text;
 }
+
+.product__price-cross + .product__price-price,
+.js-product-price-compare + .js-product-price-number > .product-single__price-number {
+  color: #e31e5b;
+}
+
 @include mq-max($tab) {
 	.product {
 		margin-bottom: 30px;

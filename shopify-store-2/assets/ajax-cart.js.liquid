@@ -81,6 +81,13 @@ ShopifyAPI.onError = function(XMLHttpRequest, textStatus) {
     - Allow custom error callback
 ==============================================================================*/
 ShopifyAPI.addItemFromForm = function(form, callback, errorCallback) {
+  // begin trendiamo: save compare_at price for showing in cart
+  // as per https://ecommerce.shopify.com/c/shopify-apis-and-technology/t/cart-json-doesn-t-include-compare-at-price-in-item-object-387682
+  var compareAtPrices = JSON.parse(localStorage.getItem('compareAtPrices') || '{}');
+  compareAtPrices[form.id.value] = $('.product-single__price-compare').text()
+  localStorage.setItem('compareAtPrices', JSON.stringify(compareAtPrices));
+  // end trendiamo: save compare_at price for showing in cart
+
   var $body = $(document.body),
   params = {
     type: 'POST',
@@ -307,6 +314,8 @@ var ajaxCart = (function(module, $) {
         source = $("#CartTemplate").html(),
         template = Handlebars.compile(source);
 
+    var compareAtPrices = JSON.parse(localStorage.getItem('compareAtPrices') || '{}'); // trendiamo added compareAtPrice
+
     // Add each item to our handlebars.js data
     $.each(cart.items, function(index, cartItem) {
 
@@ -321,6 +330,8 @@ var ajaxCart = (function(module, $) {
       } else {
         var prodImg = "//cdn.shopify.com/s/assets/admin/no-image-medium-cc9732cb976dd349a0df1d39816fbcc7.gif";
       }
+
+      var compareAtPrice = compareAtPrices[cartItem.id]; // trendiamo added compareAtPrice
 
       // Create item's data object and add to 'items' array
       item = {
@@ -338,6 +349,7 @@ var ajaxCart = (function(module, $) {
         vendor: cartItem.vendor,
         linePrice: Shopify.formatMoney(cartItem.line_price, settings.moneyFormat),
         originalLinePrice: Shopify.formatMoney(cartItem.original_line_price, settings.moneyFormat),
+        compareAtPrice: compareAtPrice, // trendiamo added compareAtPrice
         discounts: cartItem.discounts,
         discountsApplied: cartItem.line_price === cartItem.original_line_price ? false : true
       };

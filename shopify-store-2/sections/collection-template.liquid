@@ -4,13 +4,15 @@
 {%- assign collection_about_video_id = collection.metafields.custom_fields["about_video_url"] -%}
 {%- assign collection_about_text = collection.metafields.custom_fields["about_text"] -%}
 {%- assign header_media_present = false -%}
-{%- if template == 'collection-seller' or true -%}
+{%- if template == 'collection.seller' -%}
+  {%- assign center_title = true %}
   {%- if collection_about_video_id != null or collection_about_image_url != null -%}
     {%- assign header_media_present = true -%}
   {%- else -%}
     {%- assign header_media_present = false -%}
   {%- endif -%}
 {%- else -%}
+  {%- assign center_title = false %}
   {%- if collection.image -%}
     {%- assign header_media_present = true -%}
   {%- else -%}
@@ -20,13 +22,13 @@
 
 <section class="section" data-section-id="{{ section.id }}" data-section-type="collection-template">
 
-    <div class="collection{% if header_media_present and section.settings.show_collection_image %} collection--img{% endif %}{% if section.settings.center_title %} collection--center{% endif %}">
+    <div class="collection{% if header_media_present and section.settings.show_collection_image %} collection--img{% endif %}{% if center_title %} collection--center{% endif %}">
 
-        <div class="container">
-            <div class="collection__header{% if header_media_present and section.settings.show_collection_image %} collection__header--img{% endif %}">
+        <div class="collection__header{% if header_media_present and section.settings.show_collection_image %} collection__header--img{% endif %}">
+            <div class="container">
                 {% if header_media_present and section.settings.show_collection_image %}
                     <div class="collection__header-media">
-                      {%- if template == 'collection-seller' or true -%}
+                      {%- if template == 'collection.seller' -%}
                         {%- if collection_about_video_id != null -%}
                           <iframe id="pdp-video" style="height:100%;" src="https://www.youtube.com/embed/{{ collection_about_video_id }}?rel=0&enablejsapi=1" frameborder="0" allowfullscreen tabindex="-1"></iframe>
                         {%- else -%}
@@ -48,23 +50,23 @@
                       {%- endif -%}
                     </div>
                 {% endif %}
-                <div class="collection__header-info">
-                    <div class="section__title collection__header-info__title{% if section.settings.center_title %} section__title--center{% endif %}">
+                <div class="collection__header-info"{% if template != 'collection.seller' %} style="background: #fff;"{% endif %}>
+                    <div class="section__title collection__header-info__title{% if center_title %} section__title--center{% endif %}">
                         <h1 class="section__title-text collection__header-info__title-text">
-                          {%- if template == 'collection-seller' or true -%}
+                          {%- if template == 'collection.seller' -%}
                             <img alt="" class="seller-info-profilepic" src="{{ collection.image | img_url: 'compact' }}" />
                           {%- endif -%}
                           {{ collection.title }}
                         </h1>
                     </div>
-                    {%- if template == 'collection-seller' or true -%}
+                    {%- if template == 'collection.seller' -%}
                       <div class="js-description-first-para">
                         <p>{{ collection_about_text | split: '<br><br>' | first }}</p>
-                        <button type="button" class="action-link js-show-more">Show more ⌄</button>
+                        <button type="button" class="action-link link--arrow-down js-show-more">Show more</button>
                       </div>
                       <div class="js-description-full u-hiddenVisually">
                         <p>{{ collection_about_text }}</p>
-                        <button type="button" class="action-link js-show-less">Show less ⌃</button>
+                        <button type="button" class="action-link link--arrow-up js-show-less">Show less</button>
                       </div>
                     {%- else -%}
                       {% if collection.description != blank %}
@@ -75,7 +77,9 @@
                     {%- endif -%}
                 </div>
             </div>
+        </div>
 
+        <div class="container">
             {% case section.settings.grid %}
                 {% when 2 %}
                     {%- assign grid_item_width = 'u-1/1 u-1/2@phab' -%}
@@ -315,12 +319,6 @@
             "id": "show_collection_image",
             "label": "Show collection image",
             "default": true
-        },
-        {
-            "type": "checkbox",
-            "id": "center_title",
-            "label": "Center heading and text",
-            "default": false
         },
         {
             "type": "checkbox",
