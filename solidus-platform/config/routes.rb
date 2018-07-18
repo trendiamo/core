@@ -23,7 +23,5 @@ Rails.application.routes.draw do
       resources :orders, only: :create
     end
   end
-  # put "admin/orders/:id/issue_invoice", controller: 'spree/admin/orders', to: "spree/admin/orders#issue_invoice", as: :issue_invoice
-
 
 end

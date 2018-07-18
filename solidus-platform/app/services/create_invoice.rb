@@ -5,13 +5,23 @@ class CreateInvoice
 
   def perform
     @client = Invoicexpress::Client.new(
-      account_name: "sample",
-      api_key: "08d8be4944d410d63210ec09ae75b1e9db96401c"
+      account_name: ENV["INVOICEXPRESS_NAME"],
+      api_key: ENV["INVOICEXPRESS_KEY"]
     )
-    invoice = Invoicexpress::Models::Invoice.new(
+    invoice = @client.create_invoice(invoice_content)
+    invoice_state = Invoicexpress::Models::InvoiceState.new(
+      state: "finalized"
+    )
+    @client.update_invoice_state(invoice.id, invoice_state)
+  end
+
+  private
+
+  def invoice_content
+    Invoicexpress::Models::Invoice.new(
       date: Date.current,
       due_date: Date.current,
-      observations: "",
+      reference: @order.number,
       client: Invoicexpress::Models::Client.new(
         name: [@order.bill_address["firstname"], @order.bill_address["lastname"]].join(" "),
         email: @order.email,
@@ -23,28 +33,20 @@ class CreateInvoice
       ),
       items: get_line_items(@order.line_items)
     )
-    invoice = @client.create_invoice(invoice)
-    invoice_state = Invoicexpress::Models::InvoiceState.new(
-      state: "finalized"
-    )
-    @client.update_invoice_state(invoice.id, invoice_state)
   end
-
-  private
 
   def get_line_items(line_items)
     array = []
     line_items.each do |line_item|
       array << Invoicexpress::Models::Item.new(
         name: line_item.variant.product.name,
-        unit_price: line_item["price"] - line_item["included_tax_total"],
+        unit_price: line_item["price"] - (line_item["included_tax_total"] / line_item.quantity),
         quantity: line_item.quantity,
         description: get_line_item_description(line_item.variant.option_values),
+        discount: (line_item.promo_total / line_item.price),
         tax: Invoicexpress::Models::Tax.new(
-          name: "IVA23",
-          value: 0.23
-        ),
-        discount: (line_item.promo_total / line_item.price)
+          name: "VAT23"
+        )
       )
     end
     array
@@ -54,8 +56,8 @@ class CreateInvoice
     return unless option_values
     array = []
     option_values.each do |option_value|
-      array << option_value.option_type.presentation + ': ' + option_value.presentation
+      array << option_value.option_type.presentation + ": " + option_value.presentation
     end
-    array.map { |k| "#{k}" }.join(" / ")
+    array.join(" / ")
   end
 end
