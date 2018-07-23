@@ -100,7 +100,7 @@
 
                     <div class="cart__footer">
                         <p class="cart__footer-message">{{ 'cart.general.shipping_at_checkout' | t }}</p>
-                        <p class="cart__footer-total">{{ 'cart.general.subtotal' | t }} <span class="money">{{ cart.total_price | money }}</span></p>
+                        <p class="cart__footer-total"><span id="bk-cart-subtotal-label">{{ 'cart.general.subtotal' | t }}</span> <span class="money"><span id="bk-cart-subtotal-price">{{ cart.total_price | money }}</span></span></p>
                         {% if cart.total_discounts > 0 %}
                             {% assign savings = cart.total_discounts | money %}
                             <p class="cart__savings"><em><span class="money">{{ 'cart.general.savings_html' | t: price: savings }}</span></em></p>

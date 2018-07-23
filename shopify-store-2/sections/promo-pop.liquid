@@ -1,13 +1,13 @@
 {% comment %}Create variable so delay can be re-set if form has message{% endcomment %}
 {%- assign popup_delay = section.settings.delay -%}
 
-<div class="promo-pop js-promo-pop{% unless section.settings.enable %} promo-pop--disabled{% endunless %}" data-promo-enabled="{{ section.settings.enable }}" data-promo-delay="{{ popup_delay }}000" data-promo-expiry="{{ section.settings.expiry }}">    
+<div class="promo-pop js-promo-pop{% unless section.settings.enable %} promo-pop--disabled{% endunless %}" data-promo-enabled="{{ section.settings.enable }}" data-promo-delay="{{ popup_delay }}000" data-promo-expiry="{{ section.settings.expiry }}">
     <a href="#" class="promo-pop__close js-promo-pop-close icon-fallback">
         <i class="icon icon--close" aria-hidden="true"></i>
         <span class="icon-fallback__text">{{ 'layout.drawers.close' | t }}</span>
     </a>
 
-    <div class="promo-pop__wrapper">    
+    <div class="promo-pop__wrapper">
         <div class="promo-pop__content">
 
             {% unless section.settings.title == blank %}
@@ -17,7 +17,7 @@
             {% endunless %}
 
             {% unless section.settings.text == blank %}
-                <div class="promo-pop__desc rte">{{ section.settings.text }}</div>              
+                <div class="promo-pop__desc rte">{{ section.settings.text }}</div>
             {% endunless %}
 
             {% if section.settings.enable_newsletter %}
@@ -41,12 +41,12 @@
                                         placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}"
                                         autocorrect="off"
                                         autocapitalize="off">
-                            
+
                                 <button type="submit" class="c-btn c-btn--primary c-btn--arrow promo-pop__fieldset-item promo-pop__btn" name="commit" id="Subscribe">{{ 'general.newsletter_form.submit' | t }}</button>
                             </div>
                         {% endif %}
                     {% endform %}
-                </div> 
+                </div>
             {% endif %}
 
             {% unless section.settings.link == blank %}
@@ -111,7 +111,7 @@
             "label": "Popup expiry",
             "info": "Number of days before popup re-appears",
             "unit": "day",
-            "min": 3,
+            "min": 0,
             "max": 30,
             "step": 1,
             "default": 7

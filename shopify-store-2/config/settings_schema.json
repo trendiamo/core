@@ -4,8 +4,8 @@
     "theme_name": "Venue",
     "theme_author": "Safe As Milk",
     "theme_version": "3.5.0",
-    "theme_documentation_url": "https://safeasmilk.zendesk.com",
-    "theme_support_url": "http://safeasmilk.co"
+    "theme_documentation_url": "https:\/\/safeasmilk.zendesk.com",
+    "theme_support_url": "http:\/\/safeasmilk.co"
   },
   {
     "name": "Colors",
@@ -49,6 +49,18 @@
         "id": "color_button",
         "label": "Button and label text",
         "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale",
+        "default": "#e31d5b"
+      },
+      {
+        "type": "color",
+        "id": "color_few_available",
+        "label": "Few Available",
+        "default": "#e31d5b"
       },
       {
         "type": "header",
@@ -274,8 +286,7 @@
         "id": "product_grid_masonry",
         "label": "Masonry layout",
         "default": false,
-        "info":
-          "Enable if your product images are different ratios. For more information [click here](https://safeasmilk.zendesk.com/hc/en-gb/articles/115001766369)."
+        "info": "Enable if your product images are different ratios. For more information [click here](https:\/\/safeasmilk.zendesk.com\/hc\/en-gb\/articles\/115001766369)."
       },
       {
         "type": "select",
@@ -321,6 +332,21 @@
           }
         ],
         "default": "left"
+      },
+      {
+        "type": "checkbox",
+        "id": "few_available_active",
+        "label": "Show Few Available Alert",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "default_few_available_threshold",
+        "label": "Default Quantity Treshold",
+        "min": 1,
+        "max": 50,
+        "step": 1,
+        "default": 10
       }
     ]
   },
@@ -393,8 +419,7 @@
         "id": "search_linklist",
         "label": "Search popup menu",
         "default": "main-menu",
-        "info":
-          "This menu won't show dropdown items. We recommend creating a link list of the most visited parts of your store."
+        "info": "This menu won't show dropdown items. We recommend creating a link list of the most visited parts of your store."
       }
     ]
   },
@@ -455,67 +480,67 @@
         "type": "text",
         "id": "social_facebook_link",
         "label": "Facebook",
-        "info": "https://facebook.com/shopify"
+        "info": "https:\/\/facebook.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_twitter_link",
         "label": "Twitter",
-        "info": "https://twitter.com/shopify"
+        "info": "https:\/\/twitter.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_pinterest_link",
         "label": "Pinterest",
-        "info": "https://pinterest.com/shopify"
+        "info": "https:\/\/pinterest.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_instagram_link",
         "label": "Instagram",
-        "info": "http://instagram.com/shopify"
+        "info": "http:\/\/instagram.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_googleplus_link",
         "label": "Google+",
-        "info": "https://plus.google.com/+shopify"
+        "info": "https:\/\/plus.google.com\/+shopify"
       },
       {
         "type": "text",
         "id": "social_tumblr_link",
         "label": "Tumblr",
-        "info": "http://shopify.tumblr.com"
+        "info": "http:\/\/shopify.tumblr.com"
       },
       {
         "type": "text",
         "id": "social_snapchat_link",
         "label": "Snapchat",
-        "info": "https://www.snapchat.com/add/shopify"
+        "info": "https:\/\/www.snapchat.com\/add\/shopify"
       },
       {
         "type": "text",
         "id": "social_youtube_link",
         "label": "YouTube",
-        "info": "https://www.youtube.com/shopify"
+        "info": "https:\/\/www.youtube.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_vimeo_link",
         "label": "Vimeo",
-        "info": "https://vimeo.com/shopify"
+        "info": "https:\/\/vimeo.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_fancy_link",
         "label": "Fancy",
-        "info": "https://fancy.com/shopify"
+        "info": "https:\/\/fancy.com\/shopify"
       },
       {
         "type": "text",
         "id": "social_untappd_link",
         "label": "Untappd",
-        "info": "https://untappd.com/example"
+        "info": "https:\/\/untappd.com\/example"
       }
     ]
   },
@@ -524,8 +549,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content":
-          "Even though prices are displayed in different currencies, orders will still be processed in your store's currency."
+        "content": "Even though prices are displayed in different currencies, orders will still be processed in your store's currency."
       },
       {
         "type": "checkbox",
@@ -554,8 +578,7 @@
         "id": "supported_currencies",
         "label": "Supported currencies",
         "default": "USD CAD GBP AUD EUR JPY",
-        "info":
-          "Use the country's ISO [currency code](http://www.xe.com/iso4217.php). Separate your currency codes with a space."
+        "info": "Use the country's ISO [currency code](http:\/\/www.xe.com\/iso4217.php). Separate your currency codes with a space."
       }
     ]
   },

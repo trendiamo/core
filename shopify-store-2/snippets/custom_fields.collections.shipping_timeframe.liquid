@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/trendiamo-platform.myshopify.com/collections/edit-field/33255
+{% endcomment %}
+{% if collection.metafields.custom_fields["shipping_timeframe"] != blank %}
+  <div class="custom-field custom-field__shipping-timeframe custom-field__type--text">
+    <h3 class="custom-field--title">Shipping Timeframe</h3>
+    <div class="custom-field--value">
+      {{ collection.metafields.custom_fields["shipping_timeframe"] }}
+    </div>
+  </div>
+{% endif %}

@@ -224,6 +224,12 @@
                                                 </div>
                                             {% endif %}
 
+                                            {% if current_variant.inventory_quantity <= settings.default_few_available_threshold and current_variant.inventory_policy != "continue" and settings.few_available_active %}
+                                              <div class="product-single__stock-alert">
+                                                Only few available
+                                              </div>
+                                            {% endif %}
+
                                             <div class="product-single__add js-product-buttons{% unless product.available %} product-single__add--sold{% endunless %}">
 
                                                 <button type="submit" name="add" class="c-btn c-btn--full c-btn--plus c-btn--{% if section.settings.enable_payment_button %}light{% else %}primary{% endif %} product-single__add-btn js-product-add">
@@ -234,6 +240,12 @@
                                                 {% endif %}
 
                                             </div>
+
+                                            <a target="_blank" href="https://invite.trendiamo.com">
+                                              <div class="product-single__refer c-btn c-btn--full c-btn--light">
+                                                {{ section.settings.referral_button_text }}
+                                              </div>
+                                            </a>
 
                                         {% endform %}
 
@@ -680,6 +692,18 @@
             "id": "show_share_buttons",
             "label": "Show social sharing buttons",
             "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_referral_button",
+            "label": "Enable Referral Button",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "referral_button_text",
+            "label": "Referral Button Text",
+            "default": "Start Selling"
         },
         {
             "type": "header",

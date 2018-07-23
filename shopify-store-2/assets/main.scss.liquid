@@ -16,6 +16,10 @@ $color--accent-dark:    {{ settings.color_accent | color_darken: 5 }};
 $color--link:         	{{ settings.color_brand | color_lighten: 30 }};
 $color--link-dark:      {{ settings.color_brand | color_darken: 30 }};
 
+$color--sale:           {{ settings.color_sale }};
+$color--sold-out:       {{ settings.color_sale | color_darken: 15 }};
+$color--few-available:  {{ settings.color_few_available }};
+
 $color--white:        	#fff;
 $color--black:        	#111;
 
@@ -4584,6 +4588,29 @@ iframe {
     right: -6px;
     padding: 6px 18px;
 }
+
+.label2 {
+  position: absolute;
+    background: $color--brand;
+    top: 64px;
+    right: -6px;
+    padding: 6px 18px;
+}
+
+.sale {
+  background: $color--sale;
+}
+
+.soldout {
+  background: $color--sold-out;
+}
+
+.fewavailable {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: $color--few-available;
+}
+
 .label__text {
     color: $color--btn;
     font-family: $font--button;
@@ -5435,7 +5462,7 @@ iframe {
 
 .product-stock-info-container {
   display: flex;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 34px;
 }
 
@@ -5574,6 +5601,8 @@ button.action-link {
   text-align: center;
 	margin-bottom: 0;
 	font-size: 1.4rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .product-single__price-compare {
 	font-size: 1.15rem;
@@ -5599,6 +5628,11 @@ button.action-link {
 .product-single__qty-input {
 	float: right;
 }
+
+.product-single__stock-alert {
+  color: #e31e5b;
+}
+
 .product-single__add {
 	margin-top: 18px;
 }
@@ -5909,7 +5943,6 @@ button.action-link {
 }
 .product__price-cross {
 	position: relative;
-	margin-left: 6px;
 	text-decoration: line-through;
 	font-size: 0.9em;
   color: $color--alt-text;
