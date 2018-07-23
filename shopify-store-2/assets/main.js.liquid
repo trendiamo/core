@@ -1227,12 +1227,20 @@ theme.productZoom = function () {
 
 theme.promoPop = function (action) {
     var popup = $('.js-promo-pop');
+    var overlay = $('.js-promo-pop--overlay');
     var activeClass = 'js-active';
+
+    if (!overlay.length) {
+      $('body').append($('<div class="promo-pop--overlay js-promo-pop--overlay"></div>'));
+      overlay = $('.js-promo-pop--overlay');
+    }
 
     if (action == 'open') {
         popup.addClass(activeClass);
+        overlay.addClass(activeClass);
     } else if (action == 'close') {
         popup.removeClass(activeClass);
+        overlay.removeClass(activeClass);
     }
 };
 
