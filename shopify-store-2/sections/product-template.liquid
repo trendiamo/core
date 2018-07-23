@@ -1,9 +1,6 @@
 {% for tag in product.tags %}
   {% if tag contains 'seller:' %}
-    {% assign seller_name = tag | remove: 'seller:' %}
-  {% endif %}
-  {% if tag contains 'supplier:' %}
-    {% assign supplier_name = tag | remove: 'supplier:' %}
+    {% assign seller_tag = tag | remove: 'seller:' %}
   {% endif %}
   {% if tag contains 'stock:' %}
     {% assign stock_type = tag | remove: 'stock:' %}
@@ -12,57 +9,71 @@
     {% assign business_name = tag | remove: 'business:' %}
   {% endif %}
 {% endfor %}
-{% assign ga_campaign_link = '?utm_source=user-share&utm_medium=webshop&utm_campaign=share-button' %}
-{% assign shipping_terms_link = 'https://trendiamo.com/pages/shipping' %}
-{% if seller_name != null %}
-  {% for collection in product.collections %}
-    {% if collection.title == seller_name %}
-      {% assign profile_image = collection.image %}
-      {% assign profile_link = collection.url %}
-      {% if collection.metafields.custom_fields["about_active"] != blank and collection.metafields.custom_fields["about_active"] == 1 %}
-        {% assign about_active = 1 %}
-      {% else %}
-        {% assign about_active = 0 %}
-      {% endif %}
-      {% if collection.metafields.custom_fields["legal_business_name"] != blank %}
-        {% assign business_name = collection.metafields.custom_fields["legal_business_name"] %}
-      {% endif %}
-      {% if collection.metafields.custom_fields["shipping_timeframe"] != blank %}
-        {% assign shipping_timeframe = collection.metafields.custom_fields["shipping_timeframe"] %}
-      {% endif %}
-      {% if collection.metafields.custom_fields["business_location"] != blank %}
-        {% assign business_location = collection.metafields.custom_fields["business_location"] %}
-      {% endif %}
-      {% if collection.metafields.custom_fields["produce_on_demand"] != blank and collection.metafields.custom_fields["produce_on_demand"] == 1 %}
-        {% assign produced_on_demand = 1 %}
-      {% else %}
-        {% assign produced_on_demand = 0 %}
-      {% endif %}
 
-      {% assign collection_about_image_url = collection.metafields.custom_fields["about_image_url"] %}
-      {% assign collection_about_video_id = collection.metafields.custom_fields["about_video_url"] %}
-      {% assign collection_about_text = collection.metafields.custom_fields["about_text"] %}
-    {% endif %}
-  {% endfor %}
+{% if product.vendor != null %}
   {% for collection in product.collections %}
-    {% if collection.title == supplier_name %}
-      {% if collection.metafields.custom_fields["legal_business_name"] != blank %}
-        {% assign business_name = collection.metafields.custom_fields["legal_business_name"] %}
-      {% endif %}
-      {% if collection.metafields.custom_fields["shipping_timeframe"] != blank %}
-        {% assign shipping_timeframe = collection.metafields.custom_fields["shipping_timeframe"] %}
-      {% endif %}
-      {% if collection.metafields.custom_fields["business_location"] != blank %}
-        {% assign business_location = collection.metafields.custom_fields["business_location"] %}
-      {% endif %}
-      {% if collection.metafields.custom_fields["produce_on_demand"] != blank and collection.metafields.custom_fields["produce_on_demand"] == 1 %}
-        {% assign produced_on_demand = 1 %}
-      {% else %}
-        {% assign produced_on_demand = 0 %}
-      {% endif %}
+    {% if collection.title == product.vendor %}
+      {% assign vendor_collection = collection %}
     {% endif %}
   {% endfor %}
 {% endif %}
+{% if seller_tag != null %}
+  {% for collection in product.collections %}
+    {% if collection.slug == seller_tag %}
+      {% assign seller_collection = collection %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if seller_collection != null %}
+  {% assign profile_collection = seller_collection %}
+{% else %}
+  {% assign profile_collection = vendor_collection %}
+{% endif %}
+
+{% if profile_collection != null %}
+  {% if profile_collection.metafields.custom_fields["about_active"] != blank and profile_collection.metafields.custom_fields["about_active"] == 1 %}
+    {% assign about_active = 1 %}
+  {% else %}
+    {% assign about_active = 0 %}
+  {% endif %}
+  {% if profile_collection.metafields.custom_fields["legal_business_name"] != blank %}
+    {% assign business_name = profile_collection.metafields.custom_fields["legal_business_name"] %}
+  {% endif %}
+  {% if profile_collection.metafields.custom_fields["shipping_timeframe"] != blank %}
+    {% assign shipping_timeframe = profile_collection.metafields.custom_fields["shipping_timeframe"] %}
+  {% endif %}
+  {% if profile_collection.metafields.custom_fields["business_location"] != blank %}
+    {% assign business_location = profile_collection.metafields.custom_fields["business_location"] %}
+  {% endif %}
+  {% if profile_collection.metafields.custom_fields["produce_on_demand"] != blank and profile_collection.metafields.custom_fields["produce_on_demand"] == 1 %}
+    {% assign produced_on_demand = 1 %}
+  {% else %}
+    {% assign produced_on_demand = 0 %}
+  {% endif %}
+  {% assign collection_about_image_url = profile_collection.metafields.custom_fields["about_image_url"] %}
+  {% assign collection_about_video_id = profile_collection.metafields.custom_fields["about_video_url"] %}
+{% endif %}
+
+{% if vendor_collection != null %}
+  {% if vendor_collection.metafields.custom_fields["legal_business_name"] != blank %}
+    {% assign business_name = vendor_collection.metafields.custom_fields["legal_business_name"] %}
+  {% endif %}
+  {% if vendor_collection.metafields.custom_fields["shipping_timeframe"] != blank %}
+    {% assign shipping_timeframe = vendor_collection.metafields.custom_fields["shipping_timeframe"] %}
+  {% endif %}
+  {% if vendor_collection.metafields.custom_fields["business_location"] != blank %}
+    {% assign business_location = vendor_collection.metafields.custom_fields["business_location"] %}
+  {% endif %}
+  {% if vendor_collection.metafields.custom_fields["produce_on_demand"] != blank and vendor_collection.metafields.custom_fields["produce_on_demand"] == 1 %}
+    {% assign produced_on_demand = 1 %}
+  {% else %}
+    {% assign produced_on_demand = 0 %}
+  {% endif %}
+{% endif %}
+
+{% assign ga_campaign_link = '?utm_source=user-share&utm_medium=webshop&utm_campaign=share-button' %}
+{% assign shipping_terms_link = 'https://trendiamo.com/pages/shipping' %}
 
 <div itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true">
     <meta itemprop="name" content="{{ product.title }}">
@@ -157,10 +168,10 @@
                                         <meta itemprop="priceCurrency" content="{{ shop.currency }}">
                                         <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
 
-                                        {% if profile_image != null and seller_name != null %}
-                                          <a href="{{ profile_link }}" class="product-seller-info">
-                                            <img class="product-seller-info-profilepic" src="{{ profile_image.src | img_url: 'compact' }}">
-                                            <div class="product-seller-info-title">{{ seller_name }}</div>
+                                        {% if vendor_collection != null %}
+                                          <a href="{{ vendor_collection.url }}" class="product-seller-info">
+                                            <img class="product-seller-info-profilepic" src="{{ vendor_collection.image.src | img_url: 'compact' }}">
+                                            <div class="product-seller-info-title">{{ vendor_collection.title }}</div>
                                           </a>
                                         {% endif %}
 
@@ -501,7 +512,7 @@
       <img alt="" src="{{ collection_about_image_url }}" />
     {%- endif -%}
   {%- endif -%}
-  <div>{{ collection_about_text }}</div>
+  <div>{{ collection.description }}</div>
 </div>
 
 <script>
@@ -512,7 +523,7 @@
       var $sellerInfo = $($sellerInfoTitle.closest('a').attr('href'));
       if ($sellerInfo.length === 0) return;
 
-      $sellerInfoTitle.html('About {{ seller_name }}');
+      $sellerInfoTitle.html('About {{ vendor_collection.title }}');
       $sellerInfo.html($('.js-seller-info-content').html());
     };
     fillSelllerInfo();

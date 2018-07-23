@@ -1027,17 +1027,20 @@ theme.promoPopCookie = function () {
     var promoExpiry = $('.js-promo-pop').data('promo-expiry');
 
     if ($('.js-promo-pop').data('promo-enabled')) {
-        if (typeof Cookies != 'undefined') {
-            if (Cookies(promoCookie) !== '1') {
+        if (typeof Cookies !== 'undefined') {
+            if (Cookies(promoCookie) !== '1' && sessionStorage.getItem(promoCookie) !== '1') {
                 setTimeout(function(){
                     theme.promoPop('open');
+                    sessionStorage.setItem(promoCookie, '1');
                 }, promoDelay);
             }
         }
     }
 
     $('.js-promo-pop-close').click(function(e) {
-        Cookies(promoCookie, '1', { expires: promoExpiry, path: '/' });
+        if (typeof Cookies !== 'undefined') {
+          Cookies(promoCookie, '1', { expires: promoExpiry, path: '/' });
+        }
         theme.promoPop('close');
 
         e.preventDefault();

@@ -2,11 +2,9 @@
 {%- paginate collection.products by limit -%}
 {%- assign collection_about_image_url = collection.metafields.custom_fields["about_image_url"] -%}
 {%- assign collection_about_video_id = collection.metafields.custom_fields["about_video_url"] -%}
-{%- assign collection_about_text = collection.metafields.custom_fields["about_text"] -%}
 {%- assign header_media_present = false -%}
 
-<!-- TODO: remove the hardcoded collection handles, which were only useful for the preview before the launch -->
-{%- if template == 'collection.seller' or collection.handle == 'isto' or collection.handle == 'thorpe' -%}
+{%- if template == 'collection.seller' -%}
   {%- assign collection_seller = true -%}
 {%- else -%}
   {%- assign collection_seller = false -%}
@@ -27,6 +25,16 @@
     {%- assign header_media_present = false -%}
   {%- endif -%}
 {%- endif -%}
+
+<!-- {% assign filterable_tags = collection.all_tags %} -->
+{%- capture filterable_tags_string -%}
+  {%- for tag in collection.all_tags -%}
+    {%- if tag contains ':' -%}{%- continue -%}{%- endif -%}
+    {{ tag }}
+    {%- if forloop.last == false -%}::{%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign filterable_tags = filterable_tags_string | split: '::' -%}
 
 <section class="section" data-section-id="{{ section.id }}" data-section-type="collection-template">
 
@@ -66,14 +74,15 @@
                         </div>
                         <div class="seller-info-description-container">
                           <h1 class="collection-seller-info-title">{{ collection.title }}</h1>
-                          <div class="js-description-first-para">
-                            <p>{{ collection_about_text | split: '<br><br>' | first }}</p>
+                          {%- assign description_parts = collection.description | split: '<p>###</p>' -%}
+                          {%- if description_parts.size > 1 -%}
+                            <div>{{ description_parts | first }}</div>
+                            <div class="js-description-full u-hiddenVisually">{{ description_parts | last }}</div>
                             <button type="button" class="action-link link--arrow-down js-show-more">Show more</button>
-                          </div>
-                          <div class="js-description-full u-hiddenVisually">
-                            <p>{{ collection_about_text }}</p>
-                            <button type="button" class="action-link link--arrow-up js-show-less">Show less</button>
-                          </div>
+                            <button type="button" class="action-link link--arrow-up js-show-less u-hiddenVisually">Show less</button>
+                          {%- else -%}
+                            <div>{{ collection.description }}</div>
+                          {%- endif -%}
                         </div>
                       </div>
                     {%- else -%}
@@ -181,7 +190,7 @@
                                         {% endif %}
                                     {% endif %}
                                     {% if block.type == 'tags' %}
-                                        {% if collection.all_tags.size > 0 %}
+                                        {% if filterable_tags.size > 0 %}
                                             <div class="collection-sidebar__section collection-sidebar__section--tags">
                                                 <h4 class="collection-sidebar__title h5">
                                                     {{ block.settings.title | escape }}
@@ -190,14 +199,14 @@
                                                     {% endif %}
                                                 </h4>
                                                 <ul class="collection-sidebar__items o-list-bare">
-                                                    {% for tag in collection.all_tags %}
+                                                    {% for tag in filterable_tags %}
                                                         {% if current_tags contains tag %}
                                                             <li class="collection-sidebar__item collection-sidebar__item--active">
                                                                 {{ tag | link_to_remove_tag: tag | replace: ' title', ' class="collection-sidebar__link" title' }}
                                                             </li>
                                                         {% endif %}
                                                     {% endfor %}
-                                                    {% for tag in collection.all_tags %}
+                                                    {% for tag in filterable_tags %}
                                                         {% unless current_tags contains tag %}
                                                             <li class="collection-sidebar__item">
                                                                 {{ tag | link_to_add_tag: tag | replace: ' title', ' class="collection-sidebar__link" title' }}
@@ -293,11 +302,13 @@
 <script>
   $(function() {
     $('.js-show-more').click(function() {
-      $('.js-description-first-para').hide();
+      $('.js-show-more').hide();
+      $('.js-show-less').show();
       $('.js-description-full').slideDown();
     });
     $('.js-show-less').click(function() {
-      $('.js-description-first-para').show();
+      $('.js-show-less').hide();
+      $('.js-show-more').show();
       $('.js-description-full').slideUp();
     });
   });
