@@ -14,7 +14,7 @@ const H1 = styled.h1`
 
 const Taxon = ({ taxon }) => (
   <Link to={`/collections/${taxon.permalink}`}>
-    <img src={`${taxon.iconUrl}`} />
+    <img alt="" src={`${taxon.iconUrl}`} />
     <p>{taxon.name}</p>
   </Link>
 )
