@@ -5439,6 +5439,19 @@ iframe {
   max-height: calc(95vh - 90px);
 }
 
+.video-placeholder {
+  @include transition(1s ease all);
+
+  &.js-hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  a {
+    color: #fff;
+  }
+}
+
 .product-seller-info {
   background: $color--grey-lightest;
   display: flex;

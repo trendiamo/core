@@ -5,12 +5,12 @@
 {%- assign header_media_present = false -%}
 
 {%- if template == 'collection.seller' -%}
-  {%- assign collection_seller = true -%}
+  {%- assign is_seller = true -%}
 {%- else -%}
-  {%- assign collection_seller = false -%}
+  {%- assign is_seller = false -%}
 {%- endif -%}
 
-{%- if collection_seller -%}
+{%- if is_seller -%}
   {%- assign center_title = true %}
   {%- if collection_about_video_id != null or collection_about_image_url != null -%}
     {%- assign header_media_present = true -%}
@@ -44,9 +44,15 @@
             <div class="container">
                 {% if header_media_present and section.settings.show_collection_image %}
                     <div class="collection__header-media">
-                      {%- if collection_seller -%}
+                      {%- if is_seller -%}
                         {%- if collection_about_video_id != null -%}
                           <iframe id="pdp-video" style="height:100%;" src="https://www.youtube.com/embed/{{ collection_about_video_id }}?rel=0&enablejsapi=1" frameborder="0" allowfullscreen tabindex="-1"></iframe>
+                          <div class="video-placeholder u-flex u-flex--middle u-flex--center u-bg-cover u-bg-overlay u-bg-overlay--medium js-home-video-placeholder" style="background-image: url(https://img.youtube.com/vi/{{ collection_about_video_id }}/sddefault.jpg);">
+                            <a class="video-placeholder-btn c-btn c-btn--primary c-btn--play icon-fallback js-video-placeholder-trigger">
+                              <i class="icon icon--play" aria-hidden="true"></i>
+                              <span class="icon-fallback__text">Play</span>
+                            </a>
+                          </div>
                         {%- else -%}
                           {%- if collection_about_image_url != null -%}
                             <img alt="" src="{{ collection_about_image_url }}" />
@@ -66,8 +72,8 @@
                       {%- endif -%}
                     </div>
                 {% endif %}
-                <div class="collection__header-info"{% if collection_seller %} style="padding-top: 40px;"{% else %} style="background: #fff;"{% endif %}>
-                    {%- if collection_seller -%}
+                <div class="collection__header-info"{% if is_seller %} style="padding-top: 40px;"{% else %} style="background: #fff;"{% endif %}>
+                    {%- if is_seller -%}
                       <div class="collection-seller-info">
                         <div class="seller-info-profilepic-container">
                           <img alt="" class="seller-info-profilepic" src="{{ collection.image | img_url: 'compact' }}" />
@@ -310,6 +316,12 @@
       $('.js-show-less').hide();
       $('.js-show-more').show();
       $('.js-description-full').slideUp();
+    });
+
+    $('.js-video-placeholder-trigger').click(function() {
+      $(this).parent('.js-home-video-placeholder').addClass('js-hidden');
+      window.pdpVideoPlayer.playVideo();
+      return false;
     });
   });
 </script>

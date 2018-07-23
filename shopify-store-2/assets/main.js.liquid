@@ -11,7 +11,7 @@ function pdpVideo() {
   var $pdpVideo = $('#pdp-video');
   if ($pdpVideo.length > 0) {
     $.video.global.youtube_api_ready_callbacks.push(function() {
-      var player = new YT.Player('pdp-video', {
+      window.pdpVideoPlayer = new YT.Player('pdp-video', {
         events: {
           'onStateChange': function(event) {
             if (event.data == YT.PlayerState.PLAYING) {
