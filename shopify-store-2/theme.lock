@@ -185,7 +185,7 @@ sections/password-header.liquid:
   production: 2018-07-09T19:44:14+01:00   c4101060e1fad6f99d9ce5afc738d83a
   trnd-mvp: 2018-07-18T09:19:46-04:00   c4101060e1fad6f99d9ce5afc738d83a
 sections/product-template.liquid:
-  production: 2018-07-23T13:20:18+01:00   ab63e62c43d18e549ae8b8c5d694155b
+  production: 2018-07-24T10:38:30+01:00   54034866ab346349ad907ed7ae136dcb
   trnd-mvp: 2018-07-23T07:58:35-04:00   ab63e62c43d18e549ae8b8c5d694155b
 sections/promo-pop.liquid:
   production: 2018-07-21T13:20:07+01:00   313d0d921c5fc6e30ea9ca8d22215074

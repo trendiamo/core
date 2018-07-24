@@ -32,11 +32,6 @@
 {% endif %}
 
 {% if profile_collection != null %}
-  {% if profile_collection.metafields.custom_fields["about_active"] != blank and profile_collection.metafields.custom_fields["about_active"] == 1 %}
-    {% assign about_active = 1 %}
-  {% else %}
-    {% assign about_active = 0 %}
-  {% endif %}
   {% if profile_collection.metafields.custom_fields["legal_business_name"] != blank %}
     {% assign business_name = profile_collection.metafields.custom_fields["legal_business_name"] %}
   {% endif %}
