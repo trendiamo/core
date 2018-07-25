@@ -3,7 +3,7 @@ assets/ajax-cart.js.liquid:
   production: 2018-07-18T15:15:03+01:00   60b0818be79d290d9b637dbebe61c981
   trnd-mvp: 2018-07-25T08:36:10-04:00   60b0818be79d290d9b637dbebe61c981
 assets/app.js:
-  production: 2018-07-25T13:00:46+01:00   c24dba78d060a32b66997cbede88f4e0
+  production: 2018-07-25T13:53:44+01:00   9f00ffcd57b4447cd4ccd41bd97da2e3
   trnd-mvp: 2018-07-25T08:47:37-04:00   9f00ffcd57b4447cd4ccd41bd97da2e3
 assets/delivery-logo-caviar.png:
   production: 2018-07-09T19:44:15+01:00   952be220644ab8528f8333f5ba0a078d
@@ -78,7 +78,7 @@ layout/password.liquid:
   production: 2018-07-09T19:44:17+01:00   ed60d4f58539c2219260c0aa54953cf5
   trnd-mvp: 2018-07-18T09:19:44-04:00   ed60d4f58539c2219260c0aa54953cf5
 layout/theme.liquid:
-  production: 2018-07-25T13:04:04+01:00   9fd89abd8404b4ecf8d5b41dd398992a
+  production: 2018-07-25T13:53:42+01:00   b72e86140feb51581304590eea949987
   trnd-mvp: 2018-07-25T08:50:13-04:00   b72e86140feb51581304590eea949987
 locales/de.json:
   production: 2018-07-09T19:44:17+01:00   c49286b9c3cdfd4d9c363ab7b26803cf
