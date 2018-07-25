@@ -27,7 +27,7 @@ class Stripe::MakePayment
       metadata: product,
       # shipping: shipping,
       source: token["id"],
-      statement_descriptor: "Trendiamo purchase"
+      statement_descriptor: "Trendiamo purchase",
     }
   end
 
