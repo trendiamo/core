@@ -161,6 +161,8 @@
 	</script>
 	<!-- Venue theme by Safe As Milk - http://safeasmilk.co/ -->
 	<!-- Theme version 3.5.0 -->
-  <!-- BEEKETINGSCRIPT CODE START -->{% include 'bk-tracking' %}<!-- BEEKETINGSCRIPT CODE END -->
+  {%- if shop.domain == 'trendiamo.com' -%}
+    <!-- BEEKETINGSCRIPT CODE START -->{% include 'bk-tracking' %}<!-- BEEKETINGSCRIPT CODE END -->
+  {%- endif -%}
 </body>
 </html>
