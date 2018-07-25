@@ -12,6 +12,12 @@ const newAuth = () => ({
     this.authListeners.forEach(fn => fn(false))
   },
   email: null,
+  headers() {
+    return {
+      'X-USER-EMAIL': localStorage.getItem('authEmail'),
+      'X-USER-TOKEN': localStorage.getItem('authToken'),
+    }
+  },
   init() {
     this.authListeners = []
     this.email = localStorage.getItem('authEmail')

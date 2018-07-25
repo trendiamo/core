@@ -1,6 +1,15 @@
 Main::QueryType = GraphQL::ObjectType.define do
   name "Query"
 
+  field :me, Types::UserType do
+    description "The currently logged user"
+    resolve ->(obj, args, ctx) {
+      use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
+
+      current_user
+    }
+  end
+
   field :products, !types[Types::ProductType] do
     description "List products"
     argument :productRefs, !types[types.String]

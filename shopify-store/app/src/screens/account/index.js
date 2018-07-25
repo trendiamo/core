@@ -1,5 +1,7 @@
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 import React from 'react'
-import { compose, withHandlers, withProps } from 'recompose'
+import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 
 const Account = ({ email, logout }) => (
   <React.Fragment>
@@ -20,9 +22,22 @@ const Account = ({ email, logout }) => (
 )
 
 export default compose(
-  withProps(({ auth }) => ({
-    email: auth.email,
+  graphql(
+    gql`
+      query {
+        me {
+          email
+        }
+      }
+    `
+  ),
+  branch(({ data }) => data && (data.loading || data.error), renderNothing),
+  withProps(({ data }) => ({
+    email: data.me.email,
   })),
+  // withProps(({ auth }) => ({
+  //   email: auth.email,
+  // })),
   withHandlers({
     logout: ({ auth }) => event => {
       event.preventDefault()
