@@ -1,0 +1,31 @@
+<div class="page-width">
+  <div class="grid">
+    <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+      <div class="section-header text-center">
+        <h1>{{ page.title }}</h1>
+      </div>
+
+      <div style="margin: 0 auto; width: 500px;">
+        {% if page.content.size > 0 %}
+          <div class="rte">
+            {{ page.content }}
+          </div>
+        {% endif %}
+        <div id="hsbt-form"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--[if lte IE 8]>
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+<![endif]-->
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+<script>
+  hbspt.forms.create({
+	portalId: "4568386",
+	formId: "43da2818-2232-4e10-9234-50f573c49266",
+	css: "",
+  target: "#hsbt-form"
+});
+</script>

@@ -1,7 +1,30 @@
-import { $, authSuccess, baseApiUrl } from 'utils'
+import { entry } from 'index'
 
+const baseApiUrl = `https://${process.env.API_ENDPOINT}/api/v1`
 const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
 const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
+
+// export const isCurrentUser = user => user.email === localStorage.getItem('authEmail')
+
+// let isRedirectingToLogin = false
+// const handleAuthLost = () => {
+//   if (isRedirectingToLogin) return
+//   isRedirectingToLogin = true
+//   // auth.clear()
+//   setTimeout(() => {
+//     alert('Please login again')
+//   }, 1)
+// }
+
+// export const authGql = async action => {
+//   try {
+//     await action()
+//   } catch (e) {
+//     if (/You are not authorized to perform this action/.test(e.message)) {
+//       handleAuthLost()
+//     }
+//   }
+// }
 
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {
@@ -27,19 +50,20 @@ const errorMessages = json => {
   }
 }
 
-export const apiSaga = async (url, body) => {
+export const authRedirect = () => {
+  history.pushState({}, 'Account', '/u/account')
+  entry()
+}
+
+export const apiSaga = async (url, body, auth, setErrors) => {
   const json = await apiRequest(url, body)
   if (json.error || json.errors) {
-    const errors = $('.errors')
-    if (errors) {
-      errors.innerHTML = errorMessages(json)
-    } else {
-      $('.ReactModal__Content h1').insertAdjacentHTML('afterend', `<div class="errors">${errorMessages(json)}</div>`)
-    }
+    setErrors(errorMessages(json))
   } else {
-    authSuccess(json.authenticationToken, json.user.email)
+    auth.set(json.user.email, json.authenticationToken)
+    authRedirect()
   }
 }
 
-export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
-export const apiSignIn = body => apiSaga(SIGNIN_URL, body)
+export const apiSignUp = (body, auth, setErrors) => apiSaga(SIGNUP_URL, body, auth, setErrors)
+export const apiSignIn = (body, auth, setErrors) => apiSaga(SIGNIN_URL, body, auth, setErrors)

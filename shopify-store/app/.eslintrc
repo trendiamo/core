@@ -50,6 +50,7 @@
       "noSortAlphabetically": false,
       "reservedFirst": false,
     }],
+    "react/no-danger": 0,
     "react/no-set-state": 0,
     "react/require-optimization": 0,
     "react/no-multi-comp": 0,

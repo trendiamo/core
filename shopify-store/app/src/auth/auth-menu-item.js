@@ -1,19 +1,78 @@
-import IconLogin from 'icons/icon-login'
-import PropTypes from 'prop-types'
+import { authRedirect } from './utils'
+// import IconLogin from 'icons/icon-login'
 import React from 'react'
-import { compose, getContext, withHandlers } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
-const AuthMenuItem = ({ openAuthModal }) => (
-  <a onClick={openAuthModal}>
-    <IconLogin />
-  </a>
+const AuthMenuItem = ({ isLoggedIn, mobile, logout, onAccountClick, onMainAccountClick }) => (
+  <React.Fragment>
+    {isLoggedIn ? (
+      <React.Fragment>
+        <a
+          className={mobile ? 'mobile-nav__link' : 'nav__link--sub js-header-sub-link-a'}
+          href="/u/account"
+          onClick={onMainAccountClick}
+        >
+          {'Account'}
+        </a>
+        {mobile || (
+          <div className="nav__sub" id="sub-account">
+            <div className="nav__sub-wrap">
+              <ul className="nav__sub__items o-list-bare">
+                <li className="nav__sub__item">
+                  <a className="nav__sub__link" href="/account" onClick={onAccountClick}>
+                    {'Account'}
+                  </a>
+                </li>
+                <li className="nav__sub__item">
+                  <a className="nav__sub__link" href="/account/logout" onClick={logout}>
+                    {'Log out'}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        )}
+      </React.Fragment>
+    ) : (
+      <a className={mobile ? 'mobile-nav__link' : ''} href="/account/login">
+        {'Login'}
+      </a>
+    )}
+  </React.Fragment>
 )
 
 export default compose(
-  getContext({
-    openAuthModal: PropTypes.func,
-  }),
+  withState('isLoggedIn', 'setIsLoggedIn', ({ auth }) => auth.isLoggedIn),
   withHandlers({
-    openAuthModal: ({ openAuthModal }) => () => openAuthModal(),
+    logout: ({ auth }) => event => {
+      event.preventDefault()
+      auth.clear()
+      window.location = '/'
+    },
+    onAccountClick: () => event => {
+      event.preventDefault()
+      window.$.magnificPopup.close()
+      authRedirect()
+    },
+    onAuthChange: ({ setIsLoggedIn }) => isLoggedIn => {
+      setIsLoggedIn(isLoggedIn)
+    },
+    onMainAccountClick: ({ mobile }) => event => {
+      event.preventDefault()
+      if (mobile) {
+        window.$.magnificPopup.close()
+        authRedirect()
+      }
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { auth, onAuthChange } = this.props
+      auth.addAuthListener(onAuthChange)
+    },
+    componentWillUnmount() {
+      const { auth, onAuthChange } = this.props
+      auth.removeAuthListener(onAuthChange)
+    },
   })
 )(AuthMenuItem)
