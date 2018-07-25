@@ -19,7 +19,7 @@
 {% endif %}
 {% if seller_tag != null %}
   {% for collection in product.collections %}
-    {% if collection.slug == seller_tag %}
+    {% if collection.handle == seller_tag %}
       {% assign seller_collection = collection %}
     {% endif %}
   {% endfor %}
@@ -97,7 +97,7 @@
                     <div class="section__title section__title--center{% if section.settings.show_vendor %} section__title--vendor{% endif %} js-product-title">
                         <h1 itemprop="name" class="section__title-text product-single__title-text">{{ product.title }}</h1>
                         {% if section.settings.show_vendor %}
-                            <h4 class="section__title-desc product-single__title-desc">{{ product.vendor | link_to_vendor }}</h4>
+                            <h4 class="section__title-desc product-single__title-desc">{% if vendor_collection %}<a href="{{ vendor_collection.url }}">{{ vendor_collection.title }}</a>{% else %}{{ product.vendor | link_to_vendor }}{% endif %}</h4>
                         {% endif %}
                     </div>
                 </div>

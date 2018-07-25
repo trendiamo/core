@@ -128,7 +128,7 @@
   {{ 'https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js' | script_tag }}
   {{ 'https://unpkg.com/clipboard/dist/clipboard.min.js' | script_tag }}
   {{ 'main.js' | asset_url | script_tag }}
-  {% if shop.domain != 'trendiamo-platform.myshopify.com' %}{{ 'app.js' | asset_url | script_tag }}{% endif %}
+  {% if shop.domain != 'trendiamo.com' %}{{ 'app.js' | asset_url | script_tag }}{% endif %}
 
 	<script>
 	{% if resetPassword %}
