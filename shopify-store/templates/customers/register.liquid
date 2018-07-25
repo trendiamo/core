@@ -1,36 +1,39 @@
-<div class="page-width">
-  <div class="grid">
-    <div class="grid__item medium-up--one-half medium-up--push-one-quarter">
+<section class="section section--account account account--register">
+    <div class="container container--tiny">
 
-      <div class="form-vertical">
-        {% form 'create_customer' %}
+        <div class="section__title section__title--center">
+            <h1 class="section__title-text h2">{{ 'customer.register.title' | t }}</h1>
+        </div>
 
-          <h1 class="text-center">{{ 'customer.register.title' | t }}</h1>
+        <div class="account__form"> 
+            {% form 'create_customer' %}
 
-          {%- if form.errors -%}
-            <div class="form-message form-message--error">
-              {{ form.errors | default_errors }}
-            </div>
-          {%- endif -%}
+                {{ form.errors | default_errors }}
 
-          <label for="FirstName">{{ 'customer.register.first_name' | t }}</label>
-          <input type="text" name="customer[first_name]" id="FirstName" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autofocus>
+                <div class="o-layout">
+                    <div class="o-layout__item u-1/1 u-1/2@tab">
+                        <label for="FirstName" class="hidden-label">{{ 'customer.register.first_name' | t }}</label>
+                        <input type="text" name="customer[first_name]" id="FirstName" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+                    </div>
+                    <div class="o-layout__item u-1/1 u-1/2@tab">
+                        <label for="LastName" class="hidden-label">{{ 'customer.register.last_name' | t }}</label>
+                        <input type="text" name="customer[last_name]" id="LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+                    </div>
+                </div>
 
-          <label for="LastName">{{ 'customer.register.last_name' | t }}</label>
-          <input type="text" name="customer[last_name]" id="LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+                <label for="Email" class="hidden-label">{{ 'customer.register.email' | t }}</label>
+                <input type="email" name="customer[email]" id="Email" class="{% if form.errors contains 'email' %} error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
 
-          <label for="Email">{{ 'customer.register.email' | t }}</label>
-          <input type="email" name="customer[email]" id="Email" class="{% if form.errors contains 'email' %} input--error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+                <label for="CreatePassword" class="hidden-label">{{ 'customer.register.password' | t }}</label>
+                <input type="password" name="customer[password]" id="CreatePassword" class="{% if form.errors contains 'password' %} error{% endif %}">
+                
+                <div class="account__form-buttons">                    
+                    <input type="submit" class="c-btn c-btn--primary account__form-submit" value="{{ 'customer.register.submit' | t }}">
+                    <a href="{{ shop.url }}" class="link account__form-secondary-btn">{{ 'customer.register.cancel' | t }}</a>
+                </div>
 
-          <label for="CreatePassword">{{ 'customer.register.password' | t }}</label>
-          <input type="password" name="customer[password]" id="CreatePassword" class="{% if form.errors contains 'password' %} input--error{% endif %}">
+            {% endform %} 
+        </div>
 
-          <p class="text-center">
-            <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn">
-          </p>
-
-        {% endform %}
-      </div>
     </div>
-  </div>
-</div>
+</section>

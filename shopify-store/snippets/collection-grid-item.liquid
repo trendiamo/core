@@ -1,42 +1,48 @@
-{% if collection.image %}
-  {%- assign collection_image = collection.image -%}
-{% elsif collection.products.first and collection.products.first.images != empty %}
-  {%- assign collection_image = collection.products.first.featured_image -%}
+{% if collection.empty? %}
+    {% assign collection_image_url = '' %}
 {% else %}
-  {% assign collection_image = blank %}
+    {% if block.settings.image %}
+        {%- assign collection_image_url = block.settings.image -%}
+    {% elsif collection.image %}
+        {%- assign collection_image_url = collection.image -%}
+    {% elsif collection.products.first %}
+        {%- assign collection_image_url = collection.products.first.featured_image -%}
+    {% endif %}
 {% endif %}
 
-<div class="collection-grid-item">
-  <a href="{% if collection.products == empty %}#{% else %}{{ collection.url }}{% endif %}" class="collection-grid-item__link">
-    {% unless collection_image == blank %}
-      <div class="collection-grid-item__overlay box ratio-container lazyload js"
-        data-bgset="{% include 'bgset', image: collection_image %}"
-        data-sizes="auto"
-        data-parent-fit="cover"
-        style="background-image: url('{{ collection_image | img_url: '300x300' }}')">
-      </div>
-      <noscript>
-        <div class="collection-grid-item__overlay" style="background-image: url('{{ collection_image | img_url: '1024x1024' }}')"></div>
-      </noscript>
-    {% else %}
-      {% if collection == empty %}
-        <div class="collection-grid-item__overlay">
-          {% capture current %}{% cycle 1, 2, 3 %}{% endcapture %}
-          {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+{% unless collection.empty? %}
+<a href="{{ collection.url }}" class="collection-list__link">
+{% endunless %}
+    <div class="collection-list__item">
+        <div class="collection-list__bg u-bg-cover u-bg-overlay lazyload js"
+            data-bgset="{% include 'bgset', image: collection_image_url %}"
+            data-sizes="auto"
+            data-parent-fit="cover"
+            style="background-image: url('{{ collection_image_url | img_url: '300x300' }});">
+            {% if collection.empty? %}
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
         </div>
-      {% else %}
-        <div class="collection-grid-item__overlay" style="background-image: url('{{ collection_image | img_url: '1024x1024' }}')"></div>
-      {% endif %}
-    {% endunless %}
-
-    <div class="collection-grid-item__title-wrapper">
-      <div class="collection-grid-item__title h3">
-        {% if collection.title == blank %}
-          {{ 'homepage.onboarding.collection_title' | t }}
-        {% else %}
-          {{ collection.title }}
-        {% endif %}
-      </div>
+        <noscript>
+            <div class="collection-list__bg u-bg-cover u-bg-overlay" 
+                style="background-image: url('{{ collection_image_url | img_url: '720x720' }});">
+                {% if collection.empty? %}
+                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                    {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+            </div>
+        </noscript>
+        <div class="collection-list__title u-flex u-flex--middle u-flex--center{% if settings.type_header_underline %} collection-list__title--border{% endif %}">
+            <h3 class="collection-list__title-text h2">
+                {%- if collection.empty? -%}
+                    {{ 'homepage.onboarding.collection_title' | t }}
+                {%- else -%}
+                    {{ collection.title }}
+                {%- endif -%}
+            </h3>
+        </div>
     </div>
-  </a>
-</div>
+{% unless collection.empty? %}
+</a>
+{% endunless %}

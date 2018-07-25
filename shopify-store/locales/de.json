@@ -1,14 +1,5 @@
 {
   "general": {
-    "accessibility": {
-      "skip_to_content": "Direkt zum Inhalt",
-      "close_modal": "Schließen (Esc)",
-      "link_messages": {
-        "new_window": "Öffnet ein neues Fenster.",
-        "external": "Öffnet externe Webseite.",
-        "new_window_and_external": "Öffnet externe Webseite in einem neuen Fenster."
-      }
-    },
     "meta": {
       "tags": "Getaggt \"{{ tags }}\"",
       "page": "Seite {{ page }}"
@@ -16,12 +7,21 @@
     "404": {
       "title": "404 Seite nicht gefunden",
       "subtext": "Die von Ihnen angeforderte Seite existiert nicht.",
-      "link": "Einkauf fortzusetzen"
+      "link": "Weiter einkaufen"
     },
-    "pagination": {
-      "previous": "Vorherige Seite",
-      "next": "Nächste Seite",
-      "current_page": "Seite {{ current }} von {{ total }}"
+    "newsletter_form": {
+      "newsletter_email": "email@beispiel.com",
+      "submit": "Abonnieren",
+      "confirmation": "Danke fürs Anmelden"
+    },
+    "search": {
+      "no_results_html": "Ihre Suche nach \"{{ terms }}\" hat keine Ergebnisse hervorgebracht.",
+      "results_for_html": "Ihre Suche nach \"{{ terms }}\" hat folgende Ergebnisse hervorgebracht:",
+      "title": "Suchen Sie auf unserer Seite nach Produkten",
+      "label": "Suchen",
+      "placeholder": "Durchsuchen Sie unseren Shop",
+      "submit": "Suchen",
+      "more_label": "Weiterlesen"
     },
     "password_page": {
       "opening_soon": "Eröffnet demnächst",
@@ -30,79 +30,36 @@
       "login_form_password_placeholder": "Ihr Passwort",
       "login_form_submit": "Betreten",
       "signup_form_email_label": "E-Mail",
+      "signup_form_email_placeholder": "email@beispiel.com",
       "signup_form_success": "Wir senden Ihnen eine E-Mail, kurz bevor wir eröffnen!",
       "admin_link_html": "Sind Sie der Geschäftsinhaber? <a href=\"\/admin\" class=\"text-link\">Melden Sie sich hier an<\/a>",
       "password_link": "Mit Passwort betreten",
       "powered_by_shopify_html": "Dieser Shop wird mit Hilfe von {{ shopify }} betrieben werden"
-    },
-    "social": {
-      "share_on_facebook": "Teilen",
-      "share_on_twitter": "Twittern",
-      "share_on_pinterest": "Pinnen",
-      "alt_text": {
-        "share_on_facebook": "Auf Facebook teilen",
-        "share_on_twitter": "Auf Twitter twittern",
-        "share_on_pinterest": "Auf Pinterest pinnen"
-      }
-    },
-    "search": {
-      "no_results_html": "Bitte versuchen Sie einen anderen Suchbegriff oder gehen Sie zurück zur <a href=\"\/\">Startseite<\/a>.",
-      "results_with_count": {
-        "one": "{{ count }} Ergebnis für \"{{ terms }}\"",
-        "other": "{{ count }} Ergebnisse für \"{{ terms }}\""
-      },
-      "title": "Suchen Sie auf unserer Seite",
-      "placeholder": "Suchen",
-      "submit": "Suchen",
-      "close": "Schließen (esc)",
-      "heading": {
-        "one": "Suchergebnis",
-        "other": "Suchergebnisse"
-      }
-    },
-    "newsletter_form": {
-      "newsletter_email": "Join our mailing list",
-      "email_placeholder": " E-Mail-Adresse ",
-      "confirmation": " Danke für Ihre Anmeldung ",
-      "submit": "Abonnieren"
-    },
-    "filters": {
-      "show_more": "Mehr anzeigen",
-      "show_less": "Weniger anzeigen"
     }
   },
   "sections": {
-    "slideshow": {
-      "next_slide": "Nächster Schieber",
-      "previous_slide": "Vorheriger Schieber",
-      "pause_slideshow": "Diashow pausieren",
-      "play_slideshow": "Diashow abspielen",
-      "play_video": "Video abspielen",
-      "close_video": "Video schliessen"
+    "events": {
+      "name": "Veranstaltungsname",
+      "location": "Veranstaltungsort",
+      "more_label": "Weiterlesen"
     },
-    "featured_product": {
-      "title": "Vorgestelltes Produkt",
-      "gallery_thumbnail_alt": "Laden Sie das Bild in den Galerie-Viewer, {{ imageAlt }}"
+    "video": {
+      "play_label": "Video starten"
     },
     "map": {
-      "address_error": "Kann die Adresse nicht finden",
-      "address_no_results": "Keine Ergebnisse für diese Adresse",
-      "address_query_limit_html": "Sie haben die Google- API-Nutzungsgrenze überschritten. Betrachten wir zu einem <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium-Paket<\/a> zu aktualisieren.",
-      "auth_error_html": "Es gab ein Problem bei Google Maps Konto zu authentifizieren.",
-      "section_heading": "Lage"
+      "open": "Öffnen",
+      "directions": "Anweisungen bekommen"
     }
   },
   "blogs": {
+    "blog": {
+      "all": "Alle",
+      "tags": "Tags"
+    },
     "article": {
-      "view_all": "Alle anzeigen",
-      "view_all_blogs": "Alle anzeigen Artikel",
-      "all_topics": "Alle themen",
-      "by_author": "von {{ author }}",
-      "posted_in": "Veröffentlicht in",
-      "read_more": "Weiterlesen",
-      "read_more_title": "Weiterlesen: {{ title }}",
-      "back_to_blog": "Zurück zu {{ title }}",
-      "tags": "Stichworte"
+      "older_post": "Älterer Post",
+      "newer_post": "Neuerer Post",
+      "by_author": "von {{ author }}"
     },
     "comments": {
       "title": "Hinterlassen Sie einen Kommentar",
@@ -113,7 +70,7 @@
       "moderated": "Bitte beachten Sie, dass Kommentare vor der Veröffentlichung freigegeben werden müssen",
       "success_moderated": "Ihr Kommentar wurde erfolgreich gepostet. Da unser Blog moderiert wird, werden wir ihn erst kurze Zeit später veröffentlichen.",
       "success": "Ihr Kommentar wurde erfolgreich gepostet. Danke!",
-      "comments_with_count": {
+      "with_count": {
         "one": "{{ count }} Kommentar",
         "other": "{{ count }} Kommentare"
       }
@@ -122,38 +79,29 @@
   "cart": {
     "general": {
       "title": "Einkaufswagen",
-      "note": "Einen Hinweis zu Ihrer Bestellung hinzufügen",
       "remove": "Entfernen",
+      "note": "Besondere Hinweise an den Verkäufer",
       "subtotal": "Zwischensumme",
-      "savings": "Sie sparen",
       "shipping_at_checkout": "Liefer- und Preisnachlässe an der Kasse berechnet",
       "update": "Einkaufswagen aktualisieren",
-      "checkout": "Zur kasse",
+      "checkout": "Zur Kasse",
+      "continue_shopping": "Weiter einkaufen",
       "empty": "Ihr Einkaufswagen ist im Moment leer.",
-      "cookies_required": "Aktivieren Sie Cookies, um den Einkaufswagen benutzen zu können",
-      "cancel": "Abbrechen",
-      "edit": "Bearbeiten",
-      "continue_shopping": "Weiter einkaufen"
-    },
-    "label": {
-      "product": "Artikel",
-      "price": "Preis",
-      "quantity": "Menge",
-      "total": "Gesamt"
+      "empty_link": "Einkauf beginnen",
+      "savings_html": "Sie sparen  {{ price }}",
+      "reduce_quantity": "Artikelmenge um eins reduzieren",
+      "increase_quantity": "Artikelmenge um eins erhöhen"
     }
   },
   "collections": {
     "general": {
-      "view_all": "Alle anzeigen",
-      "view_all_label": "Sehen Sie alle Produkte in der {{ collection_name }}-Sammlung",
+      "all_collections": "Alle Sammlungen",
       "no_matches": "Es tut uns leid, aber Ihre Suche nach Produkten hat keine Treffer ergeben.",
-      "items_with_count": {
-        "one": "{{ count }} Produkt",
-        "other": "{{ count }} Produkte"
-      }
+      "tags_clear": "(alle)",
+      "filter_label": "Filtern"
     },
     "sorting": {
-      "title": "Sortieren",
+      "title": "Sortieren nach",
       "featured": "Ausgewählt",
       "best_selling": "Meistverkauft",
       "az": "Alphabetisch, A-Z",
@@ -162,10 +110,6 @@
       "price_descending": "Preis, hoch nach niedrig",
       "date_descending": "Datum, neu nach alt",
       "date_ascending": "Datum, alt nach neu"
-    },
-    "filters": {
-      "title_tags": "Filtern",
-      "all_tags": "Alle Produkte"
     }
   },
   "contact": {
@@ -174,8 +118,73 @@
       "email": "E-Mail",
       "phone": "Telefonnummer",
       "message": "Nachricht",
-      "submit": "Absenden",
+      "send": "Absenden",
       "post_success": "Danke, dass Sie uns kontaktiert haben. Wir werden uns so schnell wie möglich bei Ihnen melden."
+    }
+  },
+  "homepage": {
+    "onboarding": {
+      "product_title": "Beispielhafter Produkttitel",
+      "product_vendor": "Verkäufer",
+      "product_text": "Diesen Abschnitt können Sie nutzen, um die Details Ihres Produkts zu beschreiben. Erzählen Sie den Kunden, wie Ihr Produkt aussieht, sich anfühlt und designt ist. Fügen Sie Einzelheiten zu Farbe, verwendeten Materialien, Größe und Produktionsort hinzu.",
+      "product_more_label": "Mehr anzeigen",
+      "collection_title": "Beispielhafter Zusammenstellungstitel",
+      "blog_title": "Der Titel Ihres Posts",
+      "blog_excerpt": "Ihr Laden hat noch keine Blogposts veröffentlicht. Ein Blog kann genutzt werden, um über die Einführung neuer Produkte, Tipps oder andere Neuigkeiten, die Sie mit Ihren Kunden teilen möchten, zu berichten. Für Inspiration und Ratschläge für Ihren eigenen Laden und Blog können Sie den E-Commerce-Blog von Shopify besuchen.",
+      "blog_author": "Name des Autors",
+      "blog_date": "07\/12\/17",
+      "no_content": "Dieser Bereich hat zur Zeit keinen Inhalt. Füge diesem Bereich über die Seitenleiste Inhalte hinzu."
+    }
+  },
+  "layout": {
+    "navigation": {
+      "menu": "Menü",
+      "cart": "Einkaufswagen",
+      "search": "Suchen"
+    },
+    "drawers": {
+      "close": "Schließen (Esc)"
+    },
+    "cart": {
+      "title": "Einkaufswagen"
+    },
+    "customer": {
+      "account": "Account",
+      "log_out": "Ausloggen",
+      "log_in": "Einloggen",
+      "create_account": "Account erstellen"
+    }
+  },
+  "products": {
+    "general": {
+      "sale_price": "Sonderpreis",
+      "regular_price": "Normaler Preis"
+    },
+    "product": {
+      "sold_out": "Ausverkauft",
+      "on_sale": "Im Angebot",
+      "unavailable": "Nicht verfügbar",
+      "compare_at": "Vergleichen bei",
+      "quantity": "Menge",
+      "add_to_cart": "In den Einkaufswagen legen"
+    },
+    "layout": {
+      "tab_label": "Öffnen",
+      "reviews": "Bewertungen"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title_html": "Hier ist Ihre {{ value }} Geschenkkarte für {{ shop }}!",
+      "subtext": "Hier ist Ihre Geschenkkarte!",
+      "disabled": "Deaktiviert",
+      "expired": "Abgelaufen am {{ expiry }}",
+      "active": "Läuft ab am {{ expiry }}",
+      "redeem_html": "Nutzen Sie an der Kasse diesen Code, um Ihre Geschenkkarte einzulösen",
+      "shop_link": "Einkauf beginnen",
+      "print": "Drucken",
+      "remaining_html": "{{ balance }} übrig",
+      "add_to_apple_wallet": "Hinzufügen zu Apple Wallet"
     }
   },
   "customer": {
@@ -194,7 +203,6 @@
       "cancel": "Einladung ablehnen"
     },
     "addresses": {
-      "title": "Ihre Adressen",
       "default": "Standard",
       "add_new": "Neue Adresse hinzufügen",
       "edit_address": "Adresse bearbeiten",
@@ -213,8 +221,7 @@
       "update": "Adresse aktualisieren",
       "cancel": "Abbrechen",
       "edit": "Bearbeiten",
-      "delete": "Löschen",
-      "delete_confirm": "Sind Sie sicher, dass Sie diese Adresse löschen möchten?"
+      "delete": "Löschen"
     },
     "login": {
       "title": "Login",
@@ -222,6 +229,7 @@
       "password": "Passwort",
       "forgot_password": "Haben Sie Ihr Passwort vergessen?",
       "sign_in": "Anmelden",
+      "cancel": "Zurück zum Shop",
       "guest_title": "Als Gast fortsetzen",
       "guest_continue": "Fortsetzen"
     },
@@ -252,8 +260,7 @@
       "quantity": "Menge",
       "total": "Gesamt",
       "fulfilled_at": "Geliefert am {{ date }}",
-      "subtotal": "Zwischensumme",
-      "track_shipment": "Sendung verfolgen"
+      "subtotal": "Zwischensumme"
     },
     "recover_password": {
       "title": "Passwort zurücksetzen",
@@ -276,71 +283,8 @@
       "last_name": "Nachname",
       "email": "E-Mail",
       "password": "Passwort",
-      "submit": "Erstellen"
-    }
-  },
-  "homepage": {
-    "onboarding": {
-      "product_title": "Der Name Ihres Produkts",
-      "product_description": "Diesen Abschnitt können Sie nutzen, um die Details Ihres Produkts zu beschreiben. Erzählen Sie den Kunden, wie Ihr Produkt aussieht, sich anfühlt und designt ist. Fügen Sie Einzelheiten zu Farbe, verwendeten Materialien, Größe und Produktionsort hinzu.",
-      "collection_title": "Der Name Ihrer Kollektion",
-      "blog_title": "Der Titel Ihres Posts",
-      "blog_excerpt": "Ihr Laden hat noch keine Blogposts veröffentlicht. Ein Blog kann genutzt werden, um über die Einführung neuer Produkte, Tipps oder andere Neuigkeiten, die Sie mit Ihren Kunden teilen möchten, zu berichten. Für Inspiration und Ratschläge für Ihren eigenen Laden und Blog können Sie den E-Commerce-Blog von Shopify besuchen.",
-      "blog_author": "Name des Autors",
-      "no_content": "Dieser Bereich hat zur Zeit keinen Inhalt. Füge diesem Bereich über die Seitenleiste Inhalte hinzu."
-    }
-  },
-  "layout": {
-    "navigation": {
-      "search": "Suchen",
-      "expand": "ausklappen",
-      "collapse": "einklappen",
-      "menu": "Menü"
-    },
-    "cart": {
-      "title": "Einkaufswagen",
-      "items_count": {
-        "one": "Produkt",
-        "other": "Produkte"
-      }
-    },
-    "customer": {
-      "account": "Account",
-      "log_out": "Ausloggen",
-      "log_in": "Einloggen",
-      "create_account": "Account erstellen"
-    },
-    "footer": {
-      "social_platform": "{{ name }} auf {{ platform }}"
-    }
-  },
-  "products": {
-    "product": {
-      "regular_price": "Normaler Preis",
-      "sold_out": "Ausverkauft",
-      "unavailable": "Nicht verfügbar",
-      "on_sale": "Angebot",
-      "sale_price": "Sonderpreis",
-      "quantity": "Menge",
-      "add_to_cart": "In den Einkaufswagen legen",
-      "back_to_collection": "Zurück zu {{ title }}",
-      "vendor": "Verkäufer"
-    }
-  },
-  "gift_cards": {
-    "issued": {
-      "title_html": "Hier ist Ihre {{ value }} Geschenkkarte für {{ shop }}!",
-      "subtext": "Hier ist Ihre Geschenkkarte!",
-      "gift_card_code": "Gutscheincode",
-      "disabled": "Deaktiviert",
-      "expired": "Abgelaufen am {{ expiry }}",
-      "active": "Läuft ab am {{ expiry }}",
-      "redeem_html": "Nutzen Sie an der Kasse diesen Code, um Ihre {{ value }} Geschenkkarte einzulösen",
-      "shop_link": "Einkauf beginnen",
-      "print": "Diesen Geschenkgutschein ausdrucken",
-      "remaining_html": "{{ balance }} übrig",
-      "add_to_apple_wallet": "Hinzufügen zu Apple Wallet",
-      "qr_image_alt": "QR-Code - Scannen, um Geschenkkarte einzulösen"
+      "submit": "Erstellen",
+      "cancel": "Zurück zum Shop"
     }
   },
   "date_formats": {

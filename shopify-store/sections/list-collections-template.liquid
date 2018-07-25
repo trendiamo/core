@@ -1,200 +1,174 @@
-<div class="page-width">
-  <header class="section-header text-center">
-    <h1>{{ page_title }}</h1>
-  </header>
-
-  {%- assign blocks = section.blocks | sort: 'collection.all_products_count' -%}
-
-  {% case section.settings.grid %}
-    {% when 2 %}
-      {%- assign grid_item_width = 'medium-up--one-half' -%}
-      {%- assign image_size = '530x' -%}
-    {% when 3 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
-      {%- assign image_size = '350x' -%}
-    {% when 4 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
-      {%- assign image_size = '250x' -%}
-    {% when 5 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
-      {%- assign image_size = '225x' -%}
-  {% endcase %}
-
-  <div class="grid grid--uniform">
-    {% if section.settings.display_type == 'all' %}
-      {% case section.settings.sort %}
-        {% when 'products_high' or 'products_low' %}
-          {%- assign collections = collections | sort: 'all_products_count' -%}
-        {% when 'date' or 'date_reversed' %}
-          {%- assign collections = collections | sort: 'published_at' -%}
-      {% endcase %}
-      {% if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical' %}
-        {% for collection in collections %}
-          <div class="grid__item {{ grid_item_width }}">
-            {% include 'collection-grid-item', collection_image_size: image_size %}
-          </div>
-        {% endfor %}
-      {% else %}
-        {% for collection in collections reversed %}
-          <div class="grid__item {{ grid_item_width }}">
-            {% include 'collection-grid-item', collection_image_size: image_size %}
-          </div>
-        {% endfor %}
-      {% endif %}
+<style>
+.section--{{ section.id }} .collection-list__bg:before {
+    {% if section.settings.overlay_strength == 100 %}
+        opacity: 1;
     {% else %}
-      {% for block in section.blocks %}
-        <div class="grid__item {{ grid_item_width }}">
-          {%- assign collection = collections[block.settings.collection] -%}
-          {% include 'collection-grid-item', collection_image_size: image_size %}
-        </div>
-      {% endfor %}
+        opacity: .{{ section.settings.overlay_strength }};
     {% endif %}
-  </div>
-</div>
+}
+</style>
+
+<section class="section section--list-collections section--{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="list-collections">
+    <div class="container">
+        
+        <div class="section__title section__title--center">
+            <h1 class="section__title-text h2">{{ 'collections.general.all_collections' | t }}</h1>
+        </div>
+
+        <div class="collection-list">
+
+            {%- assign blocks = section.blocks | sort: 'collection.all_products_count' -%}
+
+            {% case section.settings.grid %}
+            {% when 2 %}
+                {%- assign grid_item_width = 'u-1/2@tab' -%}
+            {% when 3 %}
+                {%- assign grid_item_width = 'u-1/3@tab' -%}
+            {% when 4 %}
+                {%- assign grid_item_width = 'u-1/2@tab u-1/4@desk' -%}
+            {% endcase %}
+
+            <div class="collection-list__items">
+                <div class="o-layout">
+       
+                    {% if section.settings.display_type == 'all' %}
+
+                        {% case section.settings.sort %}
+                        {% when 'products_high' or 'products_low' %}
+                            {%- assign collections = collections | sort: 'all_products_count' -%}
+                        {% when 'date' or 'date_reversed' %}
+                            {%- assign collections = collections | sort: 'published_at' -%}
+                        {% endcase %}
+      
+                        {% if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical' %}
+                            {% for collection in collections %}
+                                <div class="o-layout__item {{ grid_item_width }}">
+                                    {% include 'collection-grid-item' %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {% for collection in collections reversed %}
+                                <div class="o-layout__item {{ grid_item_width }}">
+                                    {% include 'collection-grid-item' %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    
+                    {% else %}
+                        
+                        {% for block in section.blocks %}
+                            <div class="o-layout__item {{ grid_item_width }}">
+                                {%- assign collection = collections[block.settings.collection] -%}
+                                {% include 'collection-grid-item' %}
+                            </div>
+                        {% endfor %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
 {% schema %}
-  {
-    "name": {
-      "en": "Collections list page",
-      "de": "Kategorien-Liste Seite",
-      "fr": "Liste des collections"
-    },
+{
+    "name": "Collections list page",
+    "class": "js-section__list-collections", 
     "settings": [
-      {
-        "type": "paragraph",
-        "content": {
-          "en": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections.",
-          "de": "Alle kategorien sind automatisch gelistet. Zum Ändern der Liste wählen Sie 'Ausgewählt' und fügen Sie Kategorien hinzu.",
-          "fr": "Toutes vos collections sont listées par défaut. Pour personaliser votre liste, cliquez sur « Sélection » et ajoutez des collections."
-        }
-      },
-      {
-        "type": "radio",
-        "id": "display_type",
-        "label": {
-          "en": "Select collections to show",
-          "de": "Collections auswählen, die angezeigt werden sollen",
-          "fr": "Sélectionner les collections à afficher"
+        {
+            "type": "paragraph",
+            "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
         },
-        "default": "all",
-        "options": [
-          {
-            "value": "all",
-            "label": {
-              "en": "All",
-              "de": "Alle",
-              "fr": "Toutes"
-            }
-          },
-          {
-            "value": "selected",
-            "label": {
-              "en": "Selected",
-              "de": "Ausgewählt",
-              "fr": "Sélection"
-            }
-          }
-        ]
-      },
-      {
+        {
+            "type": "radio",
+            "id": "display_type",
+            "label": "Select collections to show",
+            "default": "all",
+            "options": [
+                {
+                    "value": "all",
+                    "label": "All"
+                },
+                {
+                    "value": "selected",
+                    "label": "Selected"
+                }
+            ]
+        },
+        {
         "type": "select",
         "id": "sort",
-        "label": {
-          "en": "Sort collections by:",
-          "de": "Kategorien sortieren nach:",
-          "fr": "Trier les collections par: "
-        },
-        "info": {
-          "en": "Sorting only applies when 'All' is selected",
-          "de": "Sortieren funktioniert nur, wenn 'Alle' ausgewählt ist",
-          "fr": "Le tri ne s'applique que lorsque “Toutes“ est sélectionné"
-        },
+        "label": "Sort collections by:",
+        "info": "Sorting only applies when 'All' is selected",
         "default": "alphabetical",
         "options": [
-          {
-            "value": "products_high",
-            "label": {
-              "en": "Product count, high to low",
-              "de": "Produktanzahl, hoch zu niedrig",
-              "fr": "Nombre de produits, ordre décroissant"
-            }
-          },
-          {
-            "value": "products_low",
-            "label": {
-              "en": "Product count, low to high",
-              "de": "Produktanzahl, niedrig zu hoch",
-              "fr": "Nombre de produits, ordre croissant"
-            }
-          },
-          {
-            "value": "alphabetical",
-            "label": {
-              "en": "Alphabetically, A-Z",
-              "de": "Alphabetisch, A-Z",
-              "fr": "Alphabétique, A-Z"
-            }
-          },
-          {
-            "value": "alphabetical_reversed",
-            "label": {
-              "en": "Alphabetically, Z-A",
-              "de": "Alphabetisch, Z-A",
-              "fr": "Alphabétique, Z-A"
-            }
-          },
-          {
-            "value": "date",
-            "label": {
-              "en": "Date, old to new",
-              "de": "Datum, alt zu neu",
-              "fr": "Date, anciennes à récentes"
-            }
-          },
-          {
-            "value": "date_reversed",
-            "label": {
-              "en": "Date, new to old",
-              "de": "Datum, neu zu alt",
-              "fr": "Date, récentes à anciennes"
-            }
-          }
-        ]
-      },
-      {
-        "type": "range",
-        "id": "grid",
-        "label": {
-          "en": "Collections per row",
-          "de": "Kategorien per Reihe",
-          "fr": "Collections par rangée"
+                {
+                    "value": "products_high",
+                    "label": "Product count, high to low"
+                },
+                {
+                    "value": "products_low",
+                    "label": "Product count, low to high"
+                },
+                {
+                    "value": "alphabetical",
+                    "label": "Alphabetically, A-Z"
+                },
+                {
+                    "value": "alphabetical_reversed",
+                    "label": "Alphabetically, Z-A"
+                },
+                {
+                    "value": "date",
+                    "label": "Date, old to new"
+                },
+                {
+                    "value": "date_reversed",
+                    "label": "Date, new to old"
+                }
+            ]
         },
-        "default": 3,
-        "min": 2,
-        "max": 5,
-        "step": 1
-      }
+        {
+            "type": "range",
+            "id": "grid",
+            "label": "Collections per row",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "overlay_strength",
+            "label": "Overlay strength",
+            "unit": "%",
+            "min": 0,
+            "max": 100,
+            "step": 10,
+            "default": 30
+        }
     ],
     "blocks": [
-      {
-        "type": "collection",
-        "name": {
-          "en": "Collection",
-          "de": "Kategorie",
-          "fr": "Collection"
-        },
-        "settings": [
-          {
-            "label": {
-              "en": "Collection",
-              "de": "Kategorie",
-              "fr": "Collection"
-            },
-            "id": "collection",
-            "type": "collection"
-          }
-        ]
-      }
+        {
+            "type": "collection",
+            "name": "Collection",
+            "settings": [
+                {
+                    "label": "Collection",
+                    "id": "collection",
+                    "type": "collection"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Replacement image",
+                    "info": "800px width recommended."
+                }
+            ]
+        }
     ]
-  }
+}
 {% endschema %}

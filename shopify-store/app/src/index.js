@@ -1,23 +1,19 @@
-import replaceAuth from 'auth'
-// import checkFence from 'fenced-collection'
-// import collection from 'collection'
-// import homepage from 'homepage'
-// import product from 'product'
+import login from 'screens/login'
+import register from 'screens/register'
+import replaceAuth from 'auth/replace-auth'
+import router from 'app/router'
 
-const app = async () => {
+export const entry = () => {
   replaceAuth()
-  console.log(`run app for ${location.pathname}`)
-  // await checkFence()
-  // switch (location.pathname) {
-  //   case '/':
-  //     return homepage()
-  // }
-  // if (/\/collections\/.*\/products\/.+/.test(location.pathname)) {
-  //   return product()
-  // }
-  //  else if (/\/collections\/.+/.test(location.pathname)) {
-  //   return collection()
-  // }
+  switch (location.pathname) {
+    case '/account/login':
+      return login()
+    case '/account/register':
+      return register()
+  }
+  if (/\/u\/.+/.test(location.pathname)) {
+    return router()
+  }
 }
 
-app()
+entry()

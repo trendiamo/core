@@ -1,18 +1,45 @@
-import { $ } from 'utils'
-import AuthMenuItem from './auth-menu-item'
-import AuthModalProvider from './auth-modal-provider'
-import React from 'react'
-import ReactDOM from 'react-dom'
+const newAuth = () => ({
+  addAuthListener(fn) {
+    this.authListeners.push(fn)
+  },
+  authListeners: null,
+  clear() {
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('authEmail')
+    this.email = null
+    this.token = null
+    this.isLoggedIn = false
+    this.authListeners.forEach(fn => fn(false))
+  },
+  email: null,
+  init() {
+    this.authListeners = []
+    this.email = localStorage.getItem('authEmail')
+    this.token = localStorage.getItem('authToken')
+    this.isLoggedIn = !!(this.email || this.token)
+  },
+  isLoggedIn: null,
+  removeAuthListener(fn) {
+    this.authListeners = this.authListeners.filter(e => fn.toString() !== e.toString())
+  },
+  set(email, token) {
+    localStorage.setItem('authEmail', email)
+    localStorage.setItem('authToken', token)
+    this.email = email
+    this.token = token
+    this.isLoggedIn = true
+    this.authListeners.forEach(fn => fn(true))
+  },
+  token: null,
+})
 
-export default () => {
-  const target = document.createElement('div')
-  target.classList.add('site-header__account')
-  $('.site-header__icons-wrapper').prepend(target)
-
-  ReactDOM.render(
-    <AuthModalProvider appElement={target}>
-      <AuthMenuItem />
-    </AuthModalProvider>,
-    target
-  )
+const authFactory = () => {
+  if (!window.__trndAuth) {
+    const auth = newAuth()
+    auth.init()
+    window.__trndAuth = auth
+  }
+  return window.__trndAuth
 }
+
+export default authFactory
