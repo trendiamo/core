@@ -3,6 +3,7 @@ assets/ajax-cart.js.liquid:
   production: 2018-07-18T15:15:03+01:00   60b0818be79d290d9b637dbebe61c981
   trnd-mvp: 2018-07-25T08:36:10-04:00   60b0818be79d290d9b637dbebe61c981
 assets/app.js:
+  development: 2018-07-30T04:49:49-04:00   6c4c6ff10f8dd601e100282d691f9c9e
   production: 2018-07-25T13:53:44+01:00   9f00ffcd57b4447cd4ccd41bd97da2e3
   trnd-mvp: 2018-07-30T06:15:18-04:00   de2df20637896773c708f08d634cc9f3
 assets/delivery-logo-caviar.png:
