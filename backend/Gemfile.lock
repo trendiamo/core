@@ -46,6 +46,8 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
     ast (2.4.0)
     bcrypt (3.1.11)
@@ -80,6 +82,10 @@ GEM
     graphql (1.7.13)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.6.0)
+      launchy (~> 2.2)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -103,6 +109,7 @@ GEM
       ast (~> 2.4.0)
     pg (0.21.0)
     powerpack (0.1.1)
+    public_suffix (3.0.2)
     puma (3.11.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
@@ -192,6 +199,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   graphql
+  letter_opener
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)
   puma (~> 3.7)
@@ -210,4 +218,4 @@ RUBY VERSION
    ruby 2.4.3p205
 
 BUNDLED WITH
-   1.16.1
+   1.16.3

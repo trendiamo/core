@@ -1,13 +1,21 @@
 import { apiSignIn } from 'auth/utils'
+import { FlashMessage } from 'shared/flash-message'
 import React from 'react'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
+const Login = ({ errors, loginForm, loginSubmit, setLoginValue, showMessage }) => (
   <section className="section section--account account account--login">
     <div className="container container--tiny">
       <div className="section__title section__title--center">
         <h1 className="section__title-text h2">{'Login'}</h1>
       </div>
+      {showMessage && (
+        <FlashMessage success={showMessage === 'confirmed'} warning={showMessage === 'error'}>
+          {showMessage === 'confirmed'
+            ? 'Your account has been confirmed, you can now login.'
+            : 'Confirmation link already used or expired, please try to login.'}
+        </FlashMessage>
+      )}
       <form acceptCharset="UTF-8" onSubmit={loginSubmit}>
         {errors && <div className="errors" dangerouslySetInnerHTML={{ __html: errors }} />}
         <label htmlFor="CustomerEmail">{'Email or Username'}</label>
@@ -38,6 +46,9 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
 export default compose(
   withState('loginForm', 'setLoginForm', { email: '', password: '' }),
   withState('errors', 'setErrors', ''),
+  withProps({
+    showMessage: location.hash.replace('#', ''),
+  }),
   withHandlers({
     loginSubmit: ({ auth, loginForm, setErrors }) => async event => {
       event.preventDefault()

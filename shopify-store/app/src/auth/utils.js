@@ -13,7 +13,7 @@ const handleAuthLost = auth => {
   auth.clear()
   setTimeout(() => {
     alert('Please login again')
-    window.location = '/'
+    window.location = '/account/login'
   }, 1)
   return null
 }
