@@ -1,10 +1,15 @@
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import { Helmet } from 'react-helmet'
 import React from 'react'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
+import { checkAuthError, treatAuthError } from 'auth/utils'
 
 const Account = ({ email, logout }) => (
   <React.Fragment>
+    <Helmet>
+      <title>{'My Account'}</title>
+    </Helmet>
     <section className="section section--account account account--main">
       <div className="container container--tiny">
         <div className="section__title section__title--center section__title--desc">
@@ -31,10 +36,12 @@ export default compose(
       }
     `
   ),
+  branch(checkAuthError, treatAuthError),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     email: data.me.email,
   })),
+  // If we're only showing email, we could have the following instead of the gql request:
   // withProps(({ auth }) => ({
   //   email: auth.email,
   // })),

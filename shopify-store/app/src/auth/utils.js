@@ -6,25 +6,31 @@ const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
 
 // export const isCurrentUser = user => user.email === localStorage.getItem('authEmail')
 
-// let isRedirectingToLogin = false
-// const handleAuthLost = () => {
-//   if (isRedirectingToLogin) return
-//   isRedirectingToLogin = true
-//   // auth.clear()
-//   setTimeout(() => {
-//     alert('Please login again')
-//   }, 1)
-// }
+let isRedirectingToLogin = false
+const handleAuthLost = auth => {
+  if (isRedirectingToLogin) return
+  isRedirectingToLogin = true
+  auth.clear()
+  setTimeout(() => {
+    alert('Please login again')
+    window.location = '/'
+  }, 1)
+  return null
+}
 
-// export const authGql = async action => {
-//   try {
-//     await action()
-//   } catch (e) {
-//     if (/You are not authorized to perform this action/.test(e.message)) {
-//       handleAuthLost()
-//     }
-//   }
-// }
+const matchAuthError = str => /You are not authorized to perform this action/.test(str)
+
+export const checkAuthError = ({ data }) => data && data.error && matchAuthError(data.error.message)
+
+export const treatAuthError = () => ({ auth }) => handleAuthLost(auth)
+
+export const authGql = async (auth, action) => {
+  try {
+    await action()
+  } catch (e) {
+    if (matchAuthError(e.message)) handleAuthLost(auth)
+  }
+}
 
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {

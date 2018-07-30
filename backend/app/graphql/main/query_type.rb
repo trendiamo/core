@@ -3,8 +3,9 @@ Main::QueryType = GraphQL::ObjectType.define do
 
   field :me, Types::UserType do
     description "The currently logged user"
-    resolve ->(obj, args, ctx) {
+    resolve Resolver.new ->(obj, args, ctx) {
       use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
+      authorize(:me)
 
       current_user
     }
