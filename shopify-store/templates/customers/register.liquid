@@ -5,7 +5,7 @@
             <h1 class="section__title-text h2">{{ 'customer.register.title' | t }}</h1>
         </div>
 
-        <div class="account__form"> 
+        <div class="account__form">
             {% form 'create_customer' %}
 
                 {{ form.errors | default_errors }}
@@ -26,13 +26,16 @@
 
                 <label for="CreatePassword" class="hidden-label">{{ 'customer.register.password' | t }}</label>
                 <input type="password" name="customer[password]" id="CreatePassword" class="{% if form.errors contains 'password' %} error{% endif %}">
-                
-                <div class="account__form-buttons">                    
+
+                <label for="CustomerFormNewsletter">Would you like to signup to our awesome newsletter?</label><br>
+                <input type="checkbox" id="CustomerFormNewsletter" name="customer[note][Newsletter]" value="Yes, please!" /> Yes, please!
+
+                <div class="account__form-buttons">
                     <input type="submit" class="c-btn c-btn--primary account__form-submit" value="{{ 'customer.register.submit' | t }}">
                     <a href="{{ shop.url }}" class="link account__form-secondary-btn">{{ 'customer.register.cancel' | t }}</a>
                 </div>
 
-            {% endform %} 
+            {% endform %}
         </div>
 
     </div>
