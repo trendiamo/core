@@ -3,11 +3,16 @@
 ## Setup
 
 ```sh
-brew tap shopify/shopify
-brew install themekit
+brew tap shopify/shopify && brew install themekit
 theme configure --password=<API_PASSWORD> --store=<YOUR-STORE>.myshopify.com --themeid=<YOUR-THEME-ID>
-API_ENDPOINT=<BACKEND-URL> pushd app; yarn watchp; popd
+pushd app; yarn; popd
 theme replace -f
+# Note: if there are errors with type_base_size do this:
+# 1. get data file from production (ask a team member with access)
+# 2. upload data file without the setting
+# 3. upload the schema file
+# 4. upload data file with the setting again
+# 5. re-upload theme.
 ```
 
 ## Develop

@@ -2,8 +2,7 @@
 
 ## Setup
 
-Create a Shopify account, then follow the setup guide here:
-https://shopify.github.io/themekit/#use-a-new-theme
+Create a Shopify account, go to `/admin/settings/checkout` and make it "Accounts are optional".
 
 You'll need to create your `.env` file, pointing to your Shopify instance. Ask a team member about this.
 
