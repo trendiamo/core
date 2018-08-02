@@ -28,7 +28,11 @@ export const authGql = async (auth, action) => {
   try {
     await action()
   } catch (e) {
-    if (matchAuthError(e.message)) handleAuthLost(auth)
+    if (matchAuthError(e.message)) {
+      handleAuthLost(auth)
+    } else {
+      throw e
+    }
   }
 }
 

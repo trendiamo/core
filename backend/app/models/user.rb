@@ -3,7 +3,7 @@ class User < ApplicationRecord
          :token_authenticatable
 
   has_many :authentication_tokens, class_name: "AuthToken", dependent: :destroy
-
+  has_one :brand
   validates :username, presence: true, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9_\.]+\Z/ }
 
   def self.find_for_database_authentication(warden_conditions)
