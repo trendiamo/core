@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180802094839) do
+ActiveRecord::Schema.define(version: 20180806114333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,30 @@ ActiveRecord::Schema.define(version: 20180802094839) do
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_user_auth_tokens_on_body"
     t.index ["user_id"], name: "index_user_auth_tokens_on_user_id"
+  end
+
+  create_table "brands", force: :cascade do |t|
+    t.string "name"
+    t.string "legal_address_city"
+    t.string "legal_address_number"
+    t.string "legal_address_postal_code"
+    t.string "legal_address_street"
+    t.string "legal_address_country"
+    t.string "legal_name"
+    t.string "logo_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.text "short_description"
+    t.text "long_description"
+    t.string "header_content_photo"
+    t.string "header_content_video"
+    t.string "domestic_shipping_time"
+    t.string "eu_shipping_time"
+    t.string "outside_eu_shipping_time"
+    t.text "general_shipping_info"
+    t.text "trendiamo_shipping_info"
+    t.index ["user_id"], name: "index_brands_on_user_id"
   end
 
   create_table "collection_modals", force: :cascade do |t|
@@ -137,6 +161,7 @@ ActiveRecord::Schema.define(version: 20180802094839) do
   end
 
   add_foreign_key "auth_tokens", "users"
+  add_foreign_key "brands", "users"
   add_foreign_key "collection_modals", "collections"
   add_foreign_key "comments", "users"
   add_foreign_key "fenced_collections", "collections"

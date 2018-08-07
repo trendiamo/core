@@ -102,7 +102,7 @@ export default compose(
     firstName: '',
     lastName: '',
     password: '',
-    subscribedToNewsletter: '',
+    subscribedToNewsletter: '0',
     username: '',
   }),
   withState('errors', 'setErrors', ''),
@@ -115,7 +115,8 @@ export default compose(
       apiSignUp({ user: registerForm }, auth, setErrors)
     },
     setRegisterValue: ({ registerForm, setRegisterForm }) => event => {
-      const value = event.target.name === 'subscribedToNewsletter' ? event.target.checked : event.target.value
+      const value =
+        event.target.name === 'subscribedToNewsletter' ? (event.target.checked ? '1' : '0') : event.target.value
       return setRegisterForm({ ...registerForm, [event.target.name]: value })
     },
   })
