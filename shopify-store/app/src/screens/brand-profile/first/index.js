@@ -295,8 +295,9 @@ export default compose(
         const { data } = await mutation({
           variables: { brand: brandInfoForm },
         })
-        if (data.updateBrand.errors && data.updateBrand.errors.length) {
-          setErrors(data.updateBrand.errors)
+        const mutationData = brand == null ? data.addBrand : data.updateBrand
+        if (mutationData.errors && mutationData.errors.length) {
+          setErrors(mutationData.errors)
         } else {
           history.push('/u/create-brand-profile/2')
         }
