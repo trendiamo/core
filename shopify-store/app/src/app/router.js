@@ -15,10 +15,10 @@ const AppRouter = ({ auth }) => (
   <Router>
     <ApolloProvider client={client}>
       <Route exact path="/u/account" render={() => <Account auth={auth} />} />
-      <Route exact path="/u/create-brand-profile/1" render={CbpInfo} />
-      <Route exact path="/u/create-brand-profile/2" render={CbpPreview} />
-      <Route exact path="/u/create-brand-profile/3" render={CbpShipping} />
-      <Route exact path="/u/create-brand-profile/4" render={CbpComplete} />
+      <Route component={CbpInfo} exact path="/u/create-brand-profile/1" />
+      <Route component={CbpPreview} exact path="/u/create-brand-profile/2" />
+      <Route component={CbpShipping} exact path="/u/create-brand-profile/3" />
+      <Route component={CbpComplete} exact path="/u/create-brand-profile/4" />
     </ApolloProvider>
   </Router>
 )

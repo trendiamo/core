@@ -1,6 +1,6 @@
 Types::BrandInputType = GraphQL::InputObjectType.define do
   name "BrandInputType"
-  argument :brandId, types.ID
+  argument :id, types.ID
   argument :name, types.String
   argument :legalName, types.String
   argument :legalAddressStreet, types.String

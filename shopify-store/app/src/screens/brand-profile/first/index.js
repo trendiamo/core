@@ -274,7 +274,8 @@ export default compose(
         name: username,
       }
     } else {
-      return brand
+      const { __typename, ...obj } = brand
+      return obj
     }
   }),
   withRouter,

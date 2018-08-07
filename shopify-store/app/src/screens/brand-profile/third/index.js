@@ -170,7 +170,10 @@ export default compose(
     brand: data.me.brand,
   })),
   withState('errors', 'setErrors', []),
-  withState('brandInfoForm', 'setBrandInfoForm', ({ brand }) => ({ ...brand })),
+  withState('brandInfoForm', 'setBrandInfoForm', ({ brand }) => {
+    const { __typename, ...obj } = brand
+    return obj
+  }),
   withRouter,
   withHandlers({
     brandInfoSubmit: ({ auth, brandInfoForm, history, mutate, setErrors }) => event => {
