@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import Steps from 'screens/brand-profile/steps'
 import { withRouter } from 'react-router'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
@@ -14,6 +15,7 @@ const Preview = ({ brandInfoForm, brandInfoSubmit, errors, setInfoValue }) => (
     </Helmet>
     <section className="section">
       <div className="container container--tiny">
+        <Steps currentStep={2} stepCount={3} tags={['SETUP', 'PREVIEW', 'SHIPPING']} />
         <div className="section__title section__title--center">
           <h1 className="section__title-text h2">{'PROFILE PREVIEW'}</h1>
         </div>

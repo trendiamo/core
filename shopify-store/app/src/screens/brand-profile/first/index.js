@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
+import Steps from 'screens/brand-profile/steps'
 import { withRouter } from 'react-router'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
@@ -12,8 +13,10 @@ const Info = ({ brandInfoForm, brandInfoSubmit, errors, username, setInfoValue }
     <Helmet>
       <title>{'Profile Information'}</title>
     </Helmet>
+
     <section className="section">
       <div className="container container--tiny">
+        <Steps currentStep={1} stepCount={3} tags={['SETUP', 'PREVIEW', 'SHIPPING']} />
         <div className="section__title section__title--center">
           <h1 className="section__title-text h2">{'PROFILE INFORMATION'}</h1>
         </div>
