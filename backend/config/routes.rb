@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         delete "/users/sign_out", to: "users/sessions#destroy"
       end
     end
+    get "s3/sign", to: "s3#sign"
     # post :stripe, to: 'stripe#webhook'
     # resources :payments, only: :create
 

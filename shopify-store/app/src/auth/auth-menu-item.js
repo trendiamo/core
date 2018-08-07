@@ -1,9 +1,10 @@
 import { authRedirect } from './utils'
+import { navTo } from 'app/utils'
 // import IconLogin from 'icons/icon-login'
 import React from 'react'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
-const AuthMenuItem = ({ isLoggedIn, mobile, logout, onAccountClick, onMainAccountClick }) => (
+const AuthMenuItem = ({ isLoggedIn, mobile, logout, onAccountClick, onAccountUpgradeClick, onMainAccountClick }) => (
   <React.Fragment>
     {isLoggedIn ? (
       <React.Fragment>
@@ -21,6 +22,11 @@ const AuthMenuItem = ({ isLoggedIn, mobile, logout, onAccountClick, onMainAccoun
                 <li className="nav__sub__item">
                   <a className="nav__sub__link" href="/account" onClick={onAccountClick}>
                     {'Account'}
+                  </a>
+                </li>
+                <li className="nav__sub__item">
+                  <a className="nav__sub__link" href="/u/create-brand-profile/1" onClick={onAccountUpgradeClick}>
+                    {'Upgrade to Brand'}
                   </a>
                 </li>
                 <li className="nav__sub__item">
@@ -53,6 +59,10 @@ export default compose(
       event.preventDefault()
       window.$.magnificPopup.close()
       authRedirect()
+    },
+    onAccountUpgradeClick: () => event => {
+      event.preventDefault()
+      navTo('/u/create-brand-profile/1')
     },
     onAuthChange: ({ setIsLoggedIn }) => isLoggedIn => {
       setIsLoggedIn(isLoggedIn)

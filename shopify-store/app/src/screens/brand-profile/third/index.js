@@ -157,16 +157,8 @@ const updateBrand = gql`
 `
 
 export default compose(
-  graphql(me),
-  graphql(updateBrand, {
-    options: {
-      refetchQueries: [
-        {
-          query: me,
-        },
-      ],
-    },
-  }),
+  graphql(me, { options: { fetchPolicy: 'network-only' } }),
+  graphql(updateBrand),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     brand: data.me.brand,

@@ -2,13 +2,14 @@ import { authGql } from 'auth/utils'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
+import Logo from './logo'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import Steps from 'screens/brand-profile/steps'
 import { withRouter } from 'react-router'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
-const Info = ({ brandInfoForm, brandInfoSubmit, errors, username, setInfoValue }) => (
+const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, setInfoValue, setLogoValue }) => (
   <React.Fragment>
     <Helmet>
       <title>{'Profile Information'}</title>
@@ -32,6 +33,7 @@ const Info = ({ brandInfoForm, brandInfoSubmit, errors, username, setInfoValue }
               ))}
             </ul>
           )}
+          <Logo onChange={setLogoValue} value={brandInfoForm.logoUrl} />
           <label htmlFor="name">{'BRAND NAME'}</label>
           <div className="brand-name-container" style={{ display: 'flex' }}>
             <div className="brand-name-container-input" style={{ width: '100%' }}>
@@ -176,7 +178,12 @@ const Info = ({ brandInfoForm, brandInfoSubmit, errors, username, setInfoValue }
             </div>
           </div>
           <div className="account__form-buttons">
-            <input className="c-btn c-btn--primary account__form-submit" type="submit" value="NEXT" />
+            <input
+              className="c-btn c-btn--primary account__form-submit"
+              disabled={!canSubmit}
+              type="submit"
+              value="NEXT"
+            />
             <a className="link account__form-secondary-btn" href="/">
               {'CANCEL'}
             </a>
@@ -237,34 +244,21 @@ const updateBrand = gql`
 `
 
 export default compose(
-  graphql(me),
+  graphql(me, { options: { fetchPolicy: 'network-only' } }),
   graphql(addBrand, {
     name: 'addBrandMutation',
-    options: {
-      refetchQueries: [
-        {
-          query: me,
-        },
-      ],
-    },
   }),
   graphql(updateBrand, {
     name: 'updateBrandMutation',
-    options: {
-      refetchQueries: [
-        {
-          query: me,
-        },
-      ],
-    },
   }),
+  withState('canSubmit', 'setCanSubmit', false),
   withState('errors', 'setErrors', []),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     brand: data.me.brand,
     username: data.me.username,
   })),
-  withState('brandInfoForm', 'setBrandInfoForm', ({ username, brand }) => {
+  withState('brandInfoForm', 'setBrandInfoForm', ({ username, brand, setCanSubmit }) => {
     if (brand == null) {
       return {
         legalAddressCity: '',
@@ -277,6 +271,7 @@ export default compose(
         name: username,
       }
     } else {
+      setCanSubmit(brand.logoUrl.length > 0)
       const { __typename, ...obj } = brand
       return obj
     }
@@ -308,10 +303,11 @@ export default compose(
     },
     setInfoValue: ({ brandInfoForm, setBrandInfoForm }) => event => {
       setBrandInfoForm({ ...brandInfoForm, [event.target.name]: event.target.value })
-      if ([event.target.name][0] === 'files[0]') {
-        brandInfoForm.logoUrl = URL.createObjectURL(event.target.files[0])
-        setBrandInfoForm({ ...brandInfoForm, [event.target.name]: event.target.value })
-      }
+    },
+    setLogoValue: ({ brandInfoForm, setCanSubmit, setBrandInfoForm }) => value => {
+      const newBrandInfoForm = { ...brandInfoForm, logoUrl: value }
+      setBrandInfoForm(newBrandInfoForm)
+      setCanSubmit(newBrandInfoForm.logoUrl.length > 0)
     },
   })
 )(Info)

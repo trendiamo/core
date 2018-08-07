@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(version: 20180806114333) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "media_items"
-    t.string "external_product_url"
     t.integer "anonymous_likes_count", default: 0, null: false
     t.index ["user_id"], name: "index_products_on_user_id"
   end

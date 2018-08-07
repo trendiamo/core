@@ -1,4 +1,4 @@
-import { entry } from 'index'
+import { navTo } from 'app/utils'
 
 const baseApiUrl = `https://${process.env.API_ENDPOINT}/api/v1`
 const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
@@ -60,10 +60,7 @@ const errorMessages = json => {
   }
 }
 
-export const authRedirect = () => {
-  history.pushState({}, 'Account', '/u/account')
-  entry()
-}
+export const authRedirect = () => navTo('/u/account')
 
 export const apiSaga = async (url, body, auth, setErrors) => {
   const json = await apiRequest(url, body)

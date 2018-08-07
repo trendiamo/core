@@ -9,11 +9,28 @@ import CbpShipping from 'screens/brand-profile/third'
 import client from './graphql'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { withRouter } from 'react-router'
+import { compose, lifecycle } from 'recompose'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
+
+// see app/utils navTo method.
+const ExposeNav = compose(
+  withRouter,
+  lifecycle({
+    componentDidMount() {
+      const { history } = this.props
+      window.__reactRouterHistory = history
+    },
+    componentWillUnmount() {
+      delete window.__reactRouterHistory
+    },
+  })
+)(() => null)
 
 const AppRouter = ({ auth }) => (
   <Router>
     <ApolloProvider client={client}>
+      <ExposeNav />
       <Route exact path="/u/account" render={() => <Account auth={auth} />} />
       <Route component={CbpInfo} exact path="/u/create-brand-profile/1" />
       <Route component={CbpPreview} exact path="/u/create-brand-profile/2" />
