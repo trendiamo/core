@@ -37,9 +37,13 @@ const Shipping = ({ brandInfoForm, brandInfoSubmit, setInfoValue }) => (
                   id="domesticShippingTime"
                   name="domesticShippingTime"
                   onChange={setInfoValue}
+                  required
                   style={{ paddingLeft: '10px' }}
-                  value={brandInfoForm.domesticShippingTime}
+                  value={brandInfoForm.domesticShippingTime || ''}
                 >
+                  <option hidden value="">
+                    {'Choose here'}
+                  </option>
                   <option value={'1-3 Business Days'}>{'1-3 Business Days'}</option>
                   <option value={'3-7 Business Days'}>{'3-7 Business Days'}</option>
                   <option value={'7-15 Business Days'}>{'7-15  Business Days'}</option>
@@ -54,9 +58,13 @@ const Shipping = ({ brandInfoForm, brandInfoSubmit, setInfoValue }) => (
                   id="euShippingTime"
                   name="euShippingTime"
                   onChange={setInfoValue}
+                  required
                   style={{ paddingLeft: '10px' }}
-                  value={brandInfoForm.euShippingTime}
+                  value={brandInfoForm.euShippingTime || ''}
                 >
+                  <option hidden value="">
+                    {'Choose here'}
+                  </option>
                   <option value={'1-3 Business Days'}>{'1-3 Business Days'}</option>
                   <option value={'3-7 Business Days'}>{'3-7 Business Days'}</option>
                   <option value={'7-15 Business Days'}>{'7-15  Business Days'}</option>
@@ -71,9 +79,13 @@ const Shipping = ({ brandInfoForm, brandInfoSubmit, setInfoValue }) => (
                   id="outsideEuShippingTime"
                   name="outsideEuShippingTime"
                   onChange={setInfoValue}
+                  required
                   style={{ paddingLeft: '10px' }}
-                  value={brandInfoForm.outsideEuShippingTime}
+                  value={brandInfoForm.outsideEuShippingTime || ''}
                 >
+                  <option hidden value="">
+                    {'Choose here'}
+                  </option>
                   <option value={'1-3 Business Days'}>{'1-3 Business Days'}</option>
                   <option value={'3-7 Business Days'}>{'3-7 Business Days'}</option>
                   <option value={'7-15 Business Days'}>{'7-15  Business Days'}</option>
@@ -94,7 +106,7 @@ const Shipping = ({ brandInfoForm, brandInfoSubmit, setInfoValue }) => (
                 rows="1"
                 spellCheck="false"
                 type="text"
-                value={brandInfoForm.generalShippingInfo}
+                value={brandInfoForm.generalShippingInfo || ''}
               />
             </div>
             <div className="o-layout__item u-1/1 u-1/1@tab">
@@ -110,7 +122,7 @@ const Shipping = ({ brandInfoForm, brandInfoSubmit, setInfoValue }) => (
                 rows="1"
                 spellCheck="false"
                 type="text"
-                value={brandInfoForm.trendiamoShippingInfo}
+                value={brandInfoForm.trendiamoShippingInfo || ''}
               />
             </div>
           </div>

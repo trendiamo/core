@@ -47,7 +47,7 @@ const Preview = ({ brandInfoForm, brandInfoSubmit, errors, setInfoValue }) => (
                   required
                   spellCheck="false"
                   type="text"
-                  value={brandInfoForm.headerContentPhoto}
+                  value={brandInfoForm.headerContentPhoto || ''}
                 />
               </div>
               <div className="o-layout__item u-1/1 u-1/1@tab">
@@ -62,7 +62,7 @@ const Preview = ({ brandInfoForm, brandInfoSubmit, errors, setInfoValue }) => (
                   required
                   spellCheck="false"
                   type="text"
-                  value={brandInfoForm.headerContentVideo}
+                  value={brandInfoForm.headerContentVideo || ''}
                 />
               </div>
               <div className="o-layout__item u-1/1 u-1/1@tab">
@@ -78,7 +78,7 @@ const Preview = ({ brandInfoForm, brandInfoSubmit, errors, setInfoValue }) => (
                   rows="1"
                   spellCheck="false"
                   type="text"
-                  value={brandInfoForm.shortDescription}
+                  value={brandInfoForm.shortDescription || ''}
                 />
               </div>
               <div className="o-layout__item u-1/1 u-1/1@tab">
@@ -94,7 +94,7 @@ const Preview = ({ brandInfoForm, brandInfoSubmit, errors, setInfoValue }) => (
                   rows="4"
                   spellCheck="false"
                   type="text"
-                  value={brandInfoForm.longDescription}
+                  value={brandInfoForm.longDescription || ''}
                 />
               </div>
             </div>
