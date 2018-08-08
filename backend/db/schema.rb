@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180806114333) do
+ActiveRecord::Schema.define(version: 20180808115345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20180806114333) do
     t.string "outside_eu_shipping_time"
     t.text "general_shipping_info"
     t.text "trendiamo_shipping_info"
+    t.boolean "is_complete", default: false
+    t.integer "shopify_collection_id"
     t.index ["user_id"], name: "index_brands_on_user_id"
   end
 
@@ -119,6 +121,7 @@ ActiveRecord::Schema.define(version: 20180806114333) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "media_items"
+    t.string "external_product_url"
     t.integer "anonymous_likes_count", default: 0, null: false
     t.index ["user_id"], name: "index_products_on_user_id"
   end
