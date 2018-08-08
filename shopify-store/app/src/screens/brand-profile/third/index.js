@@ -193,8 +193,9 @@ export default compose(
     brandInfoSubmit: ({ auth, brandInfoForm, history, mutate, setErrors }) => event => {
       event.preventDefault()
       authGql(auth, async () => {
+        const newBrandInfoForm = { ...brandInfoForm, isComplete: true }
         const { data } = await mutate({
-          variables: { brand: brandInfoForm },
+          variables: { brand: newBrandInfoForm },
         })
         if (data.updateBrand.errors && data.updateBrand.errors.length) {
           setErrors(data.updateBrand.errors)
