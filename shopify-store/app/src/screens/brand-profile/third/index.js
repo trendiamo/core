@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
+import { pick } from 'lodash'
 import React from 'react'
 import Steps from 'screens/brand-profile/steps'
 import { withRouter } from 'react-router'
@@ -177,8 +178,15 @@ export default compose(
   })),
   withState('errors', 'setErrors', []),
   withState('brandInfoForm', 'setBrandInfoForm', ({ brand }) => {
-    const { __typename, ...obj } = brand
-    return obj
+    return pick(brand, [
+      'id',
+      'name',
+      'domesticShippingTime',
+      'euShippingTime',
+      'generalShippingInfo',
+      'outsideEuShippingTime',
+      'trendiamoShippingInfo',
+    ])
   }),
   withRouter,
   withHandlers({

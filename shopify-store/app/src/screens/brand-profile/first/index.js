@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
 import Logo from './logo'
+import { pick } from 'lodash'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import Steps from 'screens/brand-profile/steps'
@@ -272,8 +273,17 @@ export default compose(
       }
     } else {
       setCanSubmit(brand.logoUrl.length > 0)
-      const { __typename, ...obj } = brand
-      return obj
+      return pick(brand, [
+        'id',
+        'legalAddressCity',
+        'legalAddressCountry',
+        'legalAddressNumber',
+        'legalAddressPostalCode',
+        'legalAddressStreet',
+        'legalName',
+        'logoUrl',
+        'name',
+      ])
     }
   }),
   withRouter,
