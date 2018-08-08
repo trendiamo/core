@@ -18,4 +18,5 @@ Types::BrandInputType = GraphQL::InputObjectType.define do
   argument :outsideEuShippingTime, types.String
   argument :generalShippingInfo, types.String
   argument :trendiamoShippingInfo, types.String
+  argument :isComplete, types.Boolean
 end
