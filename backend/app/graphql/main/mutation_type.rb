@@ -120,6 +120,10 @@ Main::MutationType = GraphQL::ObjectType.define do
       @brand = Brand.find(args[:brand].id)
       authorize(@brand)
       @brand.update(brand_args)
+      if @brand.is_complete
+        @create_collection = Shopify::CreateCollection.new(@brand)
+        @create_collection.perform
+      end
       @brand
     }
   end
