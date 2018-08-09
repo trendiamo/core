@@ -8,6 +8,7 @@ import CbpPreview from 'screens/brand-profile/second'
 import CbpShipping from 'screens/brand-profile/third'
 import client from './graphql'
 import Password from 'screens/password'
+import ProductManage from 'screens/product-manage'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { withRouter } from 'react-router'
@@ -38,6 +39,7 @@ const AppRouter = ({ auth }) => (
       <Route component={CbpPreview} exact path="/u/create-brand-profile/2" />
       <Route component={CbpShipping} exact path="/u/create-brand-profile/3" />
       <Route component={CbpComplete} exact path="/u/create-brand-profile/4" />
+      <Route exact path="/u/manage-products" render={() => <ProductManage />} />
     </ApolloProvider>
   </Router>
 )
