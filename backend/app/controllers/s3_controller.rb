@@ -1,5 +1,6 @@
 class S3Controller < ApplicationController
-  # TODO: make sure we're authed
+  before_action :authenticate_user!
+
   def sign
     render json: {
       fileUrl: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/#{file_key}",

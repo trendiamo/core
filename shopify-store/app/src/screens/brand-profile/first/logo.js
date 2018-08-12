@@ -181,7 +181,7 @@ export default compose(
         new S3Upload({
           contentDisposition: 'auto',
           files: [blob],
-          getSignedUrl: getSignedUrl,
+          getSignedUrl,
           onError: status => {
             console.error(status)
             alert('Error uploading file, please try again or contact us')
