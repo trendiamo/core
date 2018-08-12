@@ -21,6 +21,15 @@
         <a href="{{ section.settings.message_link }}" class="announcement__link">
         {% endunless %}
             <div class="announcement">
+                <div class="announcement-social">
+                  <a target="_blank" href="https://facebook.com/trendiamo"><div class="icon icon--facebook announcement-social-left"></div></a>
+                  <a target="_blank" href="https://instagram.com/trendiamo"><div class="icon icon--instagram announcement-social-left"></div></a>
+                </div>
+                <div class="announcement-account">
+                  <a href="https://trendiamo.com/account/login">login</a>
+                  <div class="announcement-account-split">|</div>
+                  <a href="https://trendiamo.com/account/register">register</a>
+                </div>
                 <p class="announcement__text">{{ section.settings.message_text | escape }}</p>
             </div>
         {% unless section.settings.message_link == blank %}
@@ -29,7 +38,7 @@
     {% endif %}
 {% endif %}
 <header role="banner" id="top" class="header js-header{% if section.settings.style contains 'sticky' %} js-header-sticky{% endif %}{% if section.settings.style == 'center' %} header--center{% else %} u-flex u-flex--middle u-flex--center{% endif %}{% if section.settings.show_border %} header--stripe{% endif %}{% if section.settings.mega_nav %} header--mega{% endif %}" data-section-id="{{ section.id }}" data-section-type="header-section">
-    
+
     {% if section.settings.show_border %}
         <div class="header-stripe"></div>
     {% endif %}
@@ -69,7 +78,7 @@
     </div>
 
     <div class="header-navs js-heaver-navs u-clearfix u-hidden@tab-down">
-        
+
         <nav class="primary-nav header-navs__items js-primary-nav" role="navigation">
             <ul class="primary-nav__items">
                 {% for link in linklists[section.settings.main_linklist].links %}
@@ -86,9 +95,9 @@
                                             <li class="nav__sub__item{% if sub_link.active %} nav__sub__item--active{% endif %}{% if sub_link.links != blank %} nav__sub__item--sub js-header-sub-t-link{% endif %}{% if sub_link.links.size > 7 %} nav__sub__item--mega-wide{% endif %}"{% if link.links != blank %} aria-has-popup="true" aria-expanded="false" aria-controls="sub-t-{{ parentIndex }}-{{ forloop.index }}"{% endif %}>
                                                 <a href="{{ sub_link.url }}" class="nav__sub__link{% if sub_link.links != blank %} js-header-sub-t-a{% endif %}">{{ sub_link.title | escape }}</a>
 
-                                                {% if sub_link.links != blank %} 
+                                                {% if sub_link.links != blank %}
                                                     <div class="nav__sub-t js-nav-sub-t" id="sub-t-{{ parentIndex }}-{{ forloop.index }}">
-                                                        <div class="nav__sub-t-wrap"> 
+                                                        <div class="nav__sub-t-wrap">
                                                             <ul class="nav__sub-t__items o-list-bare">
 
                                                                 {% for sub_sub_link in sub_link.links %}
@@ -116,7 +125,7 @@
                                                     {% if section.settings.mega_image %}
                                                         {%- assign img_url = section.settings.mega_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
                                                         <img class="nav__sub__cta-image lazyload js"
-                                                            src="{{ section.settings.mega_image | img_url: '300x' }}" 
+                                                            src="{{ section.settings.mega_image | img_url: '300x' }}"
                                                             data-src="{{ img_url }}"
                                                             data-widths="[180, 360, 540, 720, 900]"
                                                             data-sizes="auto"
@@ -166,26 +175,26 @@
                             <div class="nav__sub" id="sub-account">
                                 <div class="nav__sub-wrap">
                                     <ul class="nav__sub__items o-list-bare">
-                                        
+
                                         <li class="nav__sub__item"><a href="/account" class="nav__sub__link">{{ 'layout.customer.account' | t }}</a></li>
 
                                         <li class="nav__sub__item"><a href="/account/logout" class="nav__sub__link">{{ 'layout.customer.log_out' | t }}</a></li>
-                                        
+
                                     </ul>
                                 </div>
                             </div>
                         </li>
                     {% else %}
                         <li class="secondary-nav__item">
-                            <a href="/account/login" class="secondary-nav__link">{{ 'layout.customer.log_in' | t }}</a>
+                            <a href="/account/login" class="secondary-nav__link">{{ 'layout.customer.account' | t }}</a>
                         </li>
                     {% endif %}
                 {% endif %}
 
-                <li class="secondary-nav__item"> 
+                <li class="secondary-nav__item">
                     <a href="/cart" class="secondary-nav__link js-cart-trigger">{{ 'layout.cart.title' | t }} (<span id="CartCount">{{ cart.item_count }}</span>)</a>
                 </li>
-                
+
                 {% if settings.search_enable %}
                     <li class="secondary-nav__item secondary-nav__item--search">
                         <a href="/search" class="secondary-nav__link secondary-nav__link--search icon-fallback js-search-trigger">
@@ -287,7 +296,7 @@
             "id": "mega_title",
             "label": "Heading"
         },
-        { 
+        {
             "type": "richtext",
             "id": "mega_text",
             "label": "Text"

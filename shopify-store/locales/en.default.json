@@ -82,7 +82,7 @@
       "remove": "Remove",
       "note": "Special instructions for seller",
       "subtotal": "Subtotal",
-      "shipping_at_checkout": "Shipping & taxes calculated at checkout",
+      "shipping_at_checkout": "Shipping & taxes included in all prices!",
       "update": "Update Cart",
       "checkout": "Check Out",
       "continue_shopping": "Continue shopping",
@@ -289,5 +289,18 @@
   },
   "date_formats": {
     "month_day_year": "%B %d, %Y"
+  },
+  "socialshopwave": {
+    "add_to_cart": "Add To Cart",
+    "adding_to_cart": "Adding...",
+    "sold_out": "Sold Out",
+    "description": "Description"
+  },
+  "shopify": {
+    "checkout": {
+      "customer_account": {
+        "sign_in_link_label": "Log In"
+      }
+    }
   }
 }

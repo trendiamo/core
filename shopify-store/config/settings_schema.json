@@ -289,6 +289,12 @@
         "info": "Enable if your product images are different ratios. For more information [click here](https:\/\/safeasmilk.zendesk.com\/hc\/en-gb\/articles\/115001766369)."
       },
       {
+        "type": "checkbox",
+        "id": "product_card_shadow",
+        "label": "Show Product Card Shadow",
+        "default": false
+      },
+      {
         "type": "select",
         "id": "product_grid_bg",
         "label": "Product background color",

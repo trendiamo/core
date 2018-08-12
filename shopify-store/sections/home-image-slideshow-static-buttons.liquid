@@ -1,0 +1,207 @@
+{% if section.blocks.size > 0 %}
+<section class="section section--{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="home-carousel">
+    {% if section.settings.slideshow_width == 'contained' %}<div class="container container--mob-0">{% endif %}
+        <div class="home-carousel home-carousel--image js-home-carousel {% if section.settings.slideshow_width == 'full' %}home-carousel--full{% endif %}" data-autoplay="{{ section.settings.autoplay }}" data-slick='{"autoplay": {{ section.settings.autoplay }}, "autoplaySpeed": {{ section.settings.autoplay_speed }}000}'>
+            {% for block in section.blocks %}
+                <div {{ block.shopify_attributes }}>
+                    <div class="home-carousel__item home-carousel__item--{{ block.id }}" data-slide-id="{{ forloop.index0 }}">
+                        {% unless block.settings.image == blank %}
+                            {% unless block.settings.link == blank %}
+                            <a href="{{ block.settings.link }}" class="home-carousel--image_link">
+                            {% endunless %}
+                                {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                <img class="home-carousel-vertical-centered home-carousel--image_img lazyload js"
+                                    src="{{ block.settings.image | img_url: '300x' }}"
+                                    data-src="{{ img_url }}"
+                                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                    data-sizes="auto"
+                                    alt="{{ block.settings.image.alt }}">
+                                <noscript>
+                                    <img class="home-carousel--image_img"
+                                        src="{{ block.settings.image | img_url: '1400x' }}"
+                                        alt="{{ block.settings.image.alt }}">
+                                </noscript>
+                            {% unless block.settings.link == blank %}
+                            </a>
+                            {% endunless %}
+                        {% else %}
+                            {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                            {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                        {% endunless %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="home-carousel-overlay">
+          {% if section.settings.copy != blank %}
+            <div class="home-carousel-overlay-text {% if section.settings.text-shadow %}home-carousel-overlay-text-shadow{% endif %}" style="font-size:{{ section.settings.copy-size }}px;">
+              {{ section.settings.copy }}
+            </div>
+          {% endif %}
+          <div class="home-carousel-overlay-buttons">
+            {% if section.settings.button1-text != blank and section.settings.button1-link != blank %}
+            <a href="{{ section.settings.button1-link }}">
+              <div class="home-carousel-overlay-button">
+                {{ section.settings.button1-text }}
+              </div>
+            </a>
+            {% endif %}
+            {% if section.settings.button2-text != blank and section.settings.button2-link != blank %}
+            <a href="{{ section.settings.button2-link }}">
+              <div class="home-carousel-overlay-button">
+                {{ section.settings.button2-text }}
+              </div>
+            </a>
+            {% endif %}
+            {% if section.settings.button3-text != blank and section.settings.button3-link != blank %}
+            <a href="{{ section.settings.button3-link }}">
+              <div class="home-carousel-overlay-button">
+                {{ section.settings.button3-text }}
+              </div>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+    {% if section.settings.slideshow_width == 'contained' %}</div>{% endif %}
+</section>
+{% endif %}
+
+{% if section.blocks.size == 0 %}
+    <div class="placeholder-noblocks">
+        {{ 'homepage.onboarding.no_content' | t }}
+    </div>
+{% endif %}
+
+{% schema %}
+{
+    "name": "Buttons Slideshow",
+    "class": "js-section__home-slider",
+    "max_blocks": 5,
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto-rotate slides",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "autoplay_speed",
+            "label": "Change slides every",
+            "unit": "sec",
+            "min": 5,
+            "max": 10,
+            "step": 1,
+            "default": 8
+        },
+        {
+            "type": "select",
+            "id": "slideshow_width",
+            "label": "Section width",
+            "default": "contained",
+            "options": [
+                {
+                    "label": "Contained",
+                    "value": "contained"
+                },
+                {
+                    "label": "Full",
+                    "value": "full"
+                }
+            ]
+        },
+        {
+            "type": "richtext",
+            "id": "copy",
+            "label": "Copywriting",
+            "default": "<p>Welcome To Trendiamo</p>"
+        },
+        {
+            "type": "range",
+            "id": "copy-size",
+            "min": 14,
+            "max": 72,
+            "step": 1,
+            "unit": "px",
+            "label": "Copywriting Text Size",
+            "default": 24
+        },
+        {
+            "type": "checkbox",
+            "id": "text-shadow",
+            "label": "Text Shadow",
+            "default": false
+        },
+        {
+            "type": "text",
+            "id": "button1-text",
+            "label": "Left Button Text",
+            "default": "Men"
+        },
+        {
+            "type": "url",
+            "id": "button1-link",
+            "label": "Left Button Link"
+        },
+        {
+            "type": "text",
+            "id": "button2-text",
+            "label": "Middle Button Text",
+            "default": "Women"
+        },
+        {
+            "type": "url",
+            "id": "button2-link",
+            "label": "Middle Button Link"
+        },
+        {
+            "type": "text",
+            "id": "button3-text",
+            "label": "Right Button Text",
+            "default": "Kids"
+        },
+        {
+            "type": "url",
+            "id": "button3-link",
+            "label": "Right Button Link"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image slide",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image",
+                    "info": "1400px width recommended."
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Image slideshow",
+            "category": "Image",
+            "settings": {
+                "autoplay": true,
+                "autoplay_speed": 8
+            },
+            "blocks": [
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

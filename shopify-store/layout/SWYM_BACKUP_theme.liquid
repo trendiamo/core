@@ -176,15 +176,19 @@
             }, 100);
 		});
 	</script>
+	<!-- Venue theme by Safe As Milk - http://safeasmilk.co/ -->
+	<!-- Theme version 3.5.0 -->
+  {%- if shop.domain == 'trendiamo.com' -%}
+    
+  {%- endif -%}
+
+
+
+
+
+
 <!--begin-bc-sf-filter-js-->
   {% include 'bc-sf-filter' %}
 <!--end-bc-sf-filter-js-->
-
-{%- if shop.domain == 'trendiamo.com' -%}
-<!-- BEEKETINGSCRIPT CODE START -->{% include 'bk-tracking' %}<!-- BEEKETINGSCRIPT CODE END -->
-{%- endif -%}
-
-{% include 'swymSnippet' %}
-
-</body>
+<!-- BEEKETINGSCRIPT CODE START -->{% include 'bk-tracking' %}<!-- BEEKETINGSCRIPT CODE END --></body>
 </html>

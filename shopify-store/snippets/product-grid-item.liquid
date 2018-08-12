@@ -1,5 +1,5 @@
 <a href="{{ product.url | within: collection }}" class="product-link{% if page == 'home' %} home-products__link{% endif %}" title="{{ product.title }}">
-    <div class="product{% unless product.available %} product--sold-out{% endunless %} product--{{ settings.product_grid_align }}{% if page == 'home' %} home-products__item{% endif %}">
+    <div class="product{% unless product.available %} product--sold-out{% endunless %} product--{{ settings.product_grid_align }}{% if page == 'home' %} home-products__item{% endif %}{% if settings.product_card_shadow %} product-grid-card-shadow{% endif %}">
 
         <div class="product__media u-bg-{{ settings.product_grid_bg }}">
             <div class="product__img-wrapper">
@@ -60,7 +60,7 @@
                 {% endunless %}
             {% endif %}
         </div>
-        <div class="product__details">
+        <div class="product__details {% if settings.product_card_shadow %} product-grid-card-details-padding{% endif %}">
             <h3 class="product__title h4">{{ product.title }}</h3>
 
             {% if settings.product_grid_vendor %}
