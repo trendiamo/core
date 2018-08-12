@@ -55,7 +55,7 @@ Types::BrandType = GraphQL::ObjectType.define do
   end
   field :errors, !types[Types::ErrorType] do
     resolve ->(obj, _args, _ctx) {
-      obj.errors.messages.to_a.map{ |(key,messages)| { key: key.to_s, message: messages.join(", ") } }
+      obj.errors.messages.to_a.map { |(key, messages)| { key: key.to_s, message: messages.join(", ") } }
     }
   end
   field :isComplete, types.Boolean do

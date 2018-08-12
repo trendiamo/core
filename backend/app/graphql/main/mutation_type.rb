@@ -1,4 +1,4 @@
-Main::MutationType = GraphQL::ObjectType.define do
+Main::MutationType = GraphQL::ObjectType.define do # rubocop:disable Metrics/BlockLength TODO: remove after reorg
   name "Mutation"
 
   field :toggleLike, Types::ProductType do

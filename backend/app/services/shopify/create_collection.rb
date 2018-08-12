@@ -23,7 +23,6 @@ module Shopify
     end
 
     def shopify_collection_attrs
-      slug = brand.name.downcase.strip.tr(" ", "-").gsub(/[^\w-]/, "")
       {
         title: brand.name,
         handle: slug,
@@ -32,10 +31,12 @@ module Shopify
         body_html: brand.short_description + "\n\n<p>###</p>\n" + brand.long_description,
         rules: [{ column: "vendor", relation: "equals", condition: slug }],
         published: false,
-        image: {
-          src: brand.logo_url,
-        },
+        image: { src: brand.logo_url },
       }
+    end
+
+    def slug
+      brand.name.downcase.strip.tr(" ", "-").gsub(/[^\w-]/, "")
     end
   end
 end

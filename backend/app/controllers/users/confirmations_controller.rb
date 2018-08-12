@@ -14,7 +14,7 @@ module Users
       #   respond_with_navigational(resource.errors, status: :unprocessable_entity) { render :new }
       # end
       respond_with_navigational(resource) do
-        redirect_to "https://#{ENV["SHOPIFY_STORE"]}/account/login##{resource.errors.empty? ? "confirmed" : "error"}"
+        redirect_to "https://#{ENV['SHOPIFY_STORE']}/account/login##{resource.errors.empty? ? 'confirmed' : 'error'}"
       end
     end
   end
