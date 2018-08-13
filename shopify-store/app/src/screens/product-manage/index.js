@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet'
 import React from 'react'
-import styled from 'styled-components'
 import { compose, withHandlers, withState } from 'recompose'
 
 const ProductManage = ({ setInfoValue }) => (
@@ -9,6 +8,59 @@ const ProductManage = ({ setInfoValue }) => (
       <title>{'My Products'}</title>
     </Helmet>
     <section className="section">
+      <div
+        className="container"
+        style={{
+          borderRadius: '14px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.18)',
+          marginBottom: '2%',
+          marginTop: '2%',
+          paddingBottom: '1%',
+          paddingTop: '1%',
+          width: '50%',
+        }}
+      >
+        {'YOUR PRODUCTS'}
+        <div
+          style={{
+            backgroundColor: '#F4F4F4',
+            borderRadius: '6px',
+            margin: '1%',
+            width: '20%',
+          }}
+        >
+          <br />
+        </div>
+        <div
+          style={{
+            backgroundColor: '#F4F4F4',
+            borderRadius: '6px',
+            margin: '1%',
+          }}
+        >
+          <br />
+        </div>
+        <div
+          style={{
+            backgroundColor: '#F4F4F4',
+            borderRadius: '6px',
+            margin: '1%',
+            width: '35%',
+          }}
+        >
+          <br />
+        </div>
+        <div
+          style={{
+            backgroundColor: '#F4F4F4',
+            borderRadius: '6px',
+            margin: '1%',
+            width: '80%',
+          }}
+        >
+          <br />
+        </div>
+      </div>
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
         {' '}
         <p>
@@ -19,18 +71,32 @@ const ProductManage = ({ setInfoValue }) => (
         <a
           className="c-btn"
           download="delivery-logo-postmates.png"
-          href={''}
-          style={{ backgroundColor: '#6B8BD2' }}
+          href={'https://s3.eu-central-1.amazonaws.com/trnd-assets/products_template.csv'}
+          style={{ backgroundColor: '#6B8BD2', width: '54%' }}
           target="_blank"
         >
           {'DOWNLOAD TEMPLATE CSV'}
         </a>
+        <div className="custom-page-video-container">
+          <iframe
+            allow="encrypted-media"
+            allowFullScreen
+            className="custom-page-video"
+            frameBorder="0"
+            src="https://www.youtube.com/embed/N3oCS85HvpY"
+            style={{ marginTop: '5%', width: '54%' }}
+          />
+        </div>
         <div className="account__form-buttons">
-          <a className="c-btn c-btn--light account__form-submit" href="/">
+          <a className="c-btn c-btn--light account__form-submit" href="/" style={{ margin: '2%', width: '25%' }}>
             {'FINISH'}
           </a>
-          <input hidden id="fileUpload" onChange={setInfoValue} type="file" />
-          <label className="c-btn c-btn--primary account__form-submit" htmlFor="fileUpload">
+          <input hidden id="fileUpload" onChange={setInfoValue} style={{ margin: '2%' }} type="file" />
+          <label
+            className="c-btn c-btn--primary account__form-submit"
+            htmlFor="fileUpload"
+            style={{ margin: '2%', width: '25%' }}
+          >
             {'UPLOAD'}
           </label>
         </div>
@@ -61,7 +127,7 @@ export default compose(
               },
               method: 'POST',
             }
-            fetch(`https://626694df.ngrok.io/api/v1/csv`, options).then(response => {
+            fetch(`https://e4bec92b.ngrok.io/api/v1/csv`, options).then(response => {
               if (response.ok == true) {
                 alert('Successfully uploaded the file!')
               }
