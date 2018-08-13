@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers, withState } from 'recompose'
 
-const ProductManage = ({ brandInfoSubmit, setInfoValue }) => (
+const ProductManage = ({ setInfoValue }) => (
   <React.Fragment>
     <Helmet>
       <title>{'My Products'}</title>
@@ -40,13 +40,38 @@ const ProductManage = ({ brandInfoSubmit, setInfoValue }) => (
 )
 
 export default compose(
-  withState('csvForm', 'setCsvForm', ''),
+  withState('csv', 'setCsv', ''),
   withHandlers({
-    setInfoValue: ({ setCsvForm }) => event => {
+    setInfoValue: ({ setCsv }) => event => {
       event.preventDefault()
-      setCsvForm(event.target.value)
-      if (window.confirm(`Upload ${event.target.value} to Trendiamo?`)) {
-        console.log('Send Email')
+      const file = event.target.files[0]
+      setCsv(file)
+      if (window.confirm(`Upload ${file.name} to Trendiamo?`)) {
+        console.log(file.type)
+        if (file.size / 1000000 < 2) {
+          if (file.type === 'text/csv') {
+            let formData = new FormData()
+            formData.append('file_name', 'uploadedCsv')
+            formData.append('file', file)
+            let options = {
+              body: formData,
+              headers: {
+                'X-USER-EMAIL': localStorage.getItem('authEmail'),
+                'X-USER-TOKEN': localStorage.getItem('authToken'),
+              },
+              method: 'POST',
+            }
+            fetch(`https://626694df.ngrok.io/api/v1/csv`, options).then(response => {
+              if (response.ok == true) {
+                alert('Successfully uploaded the file!')
+              }
+            })
+          } else {
+            alert('Please upload a csv file!')
+          }
+        } else {
+          alert('Your File exceeds 2 MB!')
+        }
       } else {
         console.log('Do Nothing')
       }
