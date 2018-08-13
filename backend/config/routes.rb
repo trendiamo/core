@@ -23,4 +23,6 @@ Rails.application.routes.draw do
     #   resources :collections, only: %i[create index show update destroy]
     # end
   end
+
+  post "api/v1/csv", to: "csv#forward"
 end
