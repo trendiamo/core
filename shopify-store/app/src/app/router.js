@@ -7,6 +7,8 @@ import CbpInfo from 'screens/brand-profile/first'
 import CbpPreview from 'screens/brand-profile/second'
 import CbpShipping from 'screens/brand-profile/third'
 import client from './graphql'
+import Password from 'screens/password'
+import PasswordReset from 'screens/password/password-reset'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { withRouter } from 'react-router'
@@ -32,6 +34,8 @@ const AppRouter = ({ auth }) => (
     <ApolloProvider client={client}>
       <ExposeNav />
       <Route exact path="/u/account" render={() => <Account auth={auth} />} />
+      <Route exact path="/u/password" render={() => <Password auth={auth} />} />
+      <Route exact path="/u/password/reset" render={() => <PasswordReset auth={auth} />} />
       <Route component={CbpInfo} exact path="/u/create-brand-profile/1" />
       <Route component={CbpPreview} exact path="/u/create-brand-profile/2" />
       <Route component={CbpShipping} exact path="/u/create-brand-profile/3" />
