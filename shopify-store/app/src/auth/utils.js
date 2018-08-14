@@ -3,6 +3,8 @@ import { navTo } from 'app/utils'
 const baseApiUrl = `https://${process.env.API_ENDPOINT}/api/v1`
 const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
 const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
+const PASSWORD_URL = `${baseApiUrl}/users/password`
+const PASSWORD_RESET_URL = `${baseApiUrl}/users/password`
 
 // export const isCurrentUser = user => user.email === localStorage.getItem('authEmail')
 
@@ -47,16 +49,32 @@ const apiRequest = async (url, body) => {
   return res.json()
 }
 
+const apiPasswordRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
+    method: 'put',
+  })
+  return res.json()
+}
+
 const errorMessages = json => {
-  if (json.error) {
-    return '<ul><li>Invalid Credentials</li></ul>'
+  if (typeof json.errors === 'object') {
+    const listItems = json.errors.map(error => `<li>${error}</li>`)
+    return `<ul>${listItems.join('')}</ul>`
   } else {
-    if (typeof json.errors === 'object') {
-      const listItems = json.errors.map(error => `<li>${error}</li>`)
-      return `<ul>${listItems.join('')}</ul>`
-    } else {
-      return '<ul><li>Can not create account</li></ul>'
-    }
+    return '<ul><li>Can not create account</li></ul>'
+  }
+}
+
+const errorMessagesPasswordReset = json => {
+  if (typeof json.errors === 'object') {
+    const listItems = json.errors.map(error => `<li>${error}</li>`)
+    return `<ul>${listItems.join('')}</ul>`
+  } else {
+    return '<ul><li>Can not reset password</li></ul>'
   }
 }
 
@@ -72,5 +90,26 @@ export const apiSaga = async (url, body, auth, setErrors) => {
   }
 }
 
+export const apiPasswordSaga = async (url, body, setErrors) => {
+  const json = await apiRequest(url, body)
+  if (json.error || json.errors) {
+    console.log(body)
+    setErrors(errorMessages(json))
+  }
+}
+
+export const apiPasswordResetSaga = async (url, body, auth, setErrors) => {
+  const json = await apiPasswordRequest(url, body)
+  if (json.error || json.errors) {
+    setErrors(errorMessagesPasswordReset(json))
+  } else {
+    auth.set(json.user.email, json.authenticationToken)
+    authRedirect()
+  }
+}
+
 export const apiSignUp = (body, auth, setErrors) => apiSaga(SIGNUP_URL, body, auth, setErrors)
 export const apiSignIn = (body, auth, setErrors) => apiSaga(SIGNIN_URL, body, auth, setErrors)
+export const apiPassword = (body, setErrors) => apiPasswordSaga(PASSWORD_URL, body, setErrors)
+export const apiPasswordReset = (body, auth, setErrors) =>
+  apiPasswordResetSaga(PASSWORD_RESET_URL, body, auth, setErrors)
