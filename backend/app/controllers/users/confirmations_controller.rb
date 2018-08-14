@@ -4,7 +4,7 @@ module Users
     def show # rubocop:disable Metrics/AbcSize
       self.resource = resource_class.confirm_by_token(params[:confirmation_token])
       yield resource if block_given?
-      
+
       Hubspot::ImportContact.new(resource, request.remote_ip).perform
 
       # if resource.errors.empty?
