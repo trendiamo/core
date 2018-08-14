@@ -58,16 +58,21 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = { host: ENV["MAILER_URL"] }
-  config.action_mailer.smtp_settings = {
-    port: ENV["MAILGUN_SMTP_PORT"],
-    address: ENV["MAILGUN_SMTP_SERVER"],
-    user_name: ENV["MAILGUN_SMTP_LOGIN"],
-    password: ENV["MAILGUN_SMTP_PASSWORD"],
-    domain: ENV["MAILER_URL"],
-    authentication: :plain,
+  config.action_mailer.default_url_options = { host: ENV["MAILER_HOST"] }
+  # config.action_mailer.smtp_settings = {
+  #   port: ENV["MAILGUN_SMTP_PORT"],
+  #   address: ENV["MAILGUN_SMTP_SERVER"],
+  #   user_name: ENV["MAILGUN_SMTP_LOGIN"],
+  #   password: ENV["MAILGUN_SMTP_PASSWORD"],
+  #   domain: ENV["MAILER_URL"], # trendiamo.com.mailgun.org
+  #   authentication: :plain,
+  # }
+  # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+    api_key: ENV["MAILGUN_API_KEY"],
+    domain: ENV["MAILGUN_DOMAIN"],
   }
-  config.action_mailer.delivery_method = :smtp
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
