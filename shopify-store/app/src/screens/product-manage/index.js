@@ -93,16 +93,6 @@ const ProductManage = ({ setInfoValue }) => (
         >
           {'DOWNLOAD TEMPLATE CSV'}
         </a>
-        <div className="custom-page-video-container">
-          <iframe
-            allow="encrypted-media"
-            allowFullScreen
-            className="custom-page-video"
-            frameBorder="0"
-            src="https://www.youtube.com/embed/N3oCS85HvpY"
-            style={{ marginTop: '5%', width: '54%' }}
-          />
-        </div>
         <div className="account__form-buttons">
           <a className="c-btn c-btn--light account__form-submit" href="/" style={{ margin: '2%', width: '25%' }}>
             {'FINISH'}
@@ -143,7 +133,7 @@ export default compose(
               },
               method: 'POST',
             }
-            fetch(`https://e4bec92b.ngrok.io/api/v1/csv`, options).then(response => {
+            fetch(`https://10e926e7.ngrok.io/api/v1/csv`, options).then(response => {
               if (response.ok == true) {
                 alert('Successfully uploaded the file!')
               }

@@ -62,25 +62,25 @@ const AuthMenuItem = ({
   </React.Fragment>
 )
 
-// const me = gql`
-//   query {
-//     me {
-//       brand {
-//         id
-//         isComplete
-//       }
-//     }
-//   }
-// `
+const me = gql`
+  query {
+    me {
+      brand {
+        id
+        isComplete
+      }
+    }
+  }
+`
 
 export default compose(
-  // graphql(me),
-  // branch(({ data }) => data && (data.loading || data.error), renderNothing),
-  // withProps(({ data }) => ({
-  //   brand: data.me.brand,
-  // })),
+  graphql(me, { options: { fetchPolicy: 'network-only' } }),
+  branch(({ data }) => data && (data.loading || data.error), renderNothing),
+  withProps(({ data }) => ({
+    brand: data.me.brand,
+  })),
   withState('isLoggedIn', 'setIsLoggedIn', ({ auth }) => auth.isLoggedIn),
-  withState('isComplete', 'setIsComplete', true),
+  withState('isComplete', 'setIsComplete', ({ brand }) => brand.isComplete),
   withHandlers({
     logout: ({ auth }) => event => {
       event.preventDefault()
