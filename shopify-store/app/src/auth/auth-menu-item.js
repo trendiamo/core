@@ -1,10 +1,21 @@
 import { authRedirect } from './utils'
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 import { navTo } from 'app/utils'
 // import IconLogin from 'icons/icon-login'
 import React from 'react'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
-const AuthMenuItem = ({ isLoggedIn, mobile, logout, onAccountClick, onAccountUpgradeClick, onMainAccountClick }) => (
+const AuthMenuItem = ({
+  isComplete,
+  isLoggedIn,
+  mobile,
+  logout,
+  manageProducts,
+  onAccountClick,
+  onAccountUpgradeClick,
+  onMainAccountClick,
+}) => (
   <React.Fragment>
     {isLoggedIn ? (
       <React.Fragment>
@@ -25,8 +36,12 @@ const AuthMenuItem = ({ isLoggedIn, mobile, logout, onAccountClick, onAccountUpg
                   </a>
                 </li>
                 <li className="nav__sub__item">
-                  <a className="nav__sub__link" href="/u/create-brand-profile/1" onClick={onAccountUpgradeClick}>
-                    {'Upgrade to Brand'}
+                  <a
+                    className="nav__sub__link"
+                    href={isComplete ? '/u/manage-products' : '/u/create-brand-profile/1'}
+                    onClick={isComplete ? manageProducts : onAccountUpgradeClick}
+                  >
+                    {isComplete ? 'Manage Products' : 'Upgrade to Brand'}
                   </a>
                 </li>
                 <li className="nav__sub__item">
@@ -47,13 +62,34 @@ const AuthMenuItem = ({ isLoggedIn, mobile, logout, onAccountClick, onAccountUpg
   </React.Fragment>
 )
 
+// const me = gql`
+//   query {
+//     me {
+//       brand {
+//         id
+//         isComplete
+//       }
+//     }
+//   }
+// `
+
 export default compose(
+  // graphql(me),
+  // branch(({ data }) => data && (data.loading || data.error), renderNothing),
+  // withProps(({ data }) => ({
+  //   brand: data.me.brand,
+  // })),
   withState('isLoggedIn', 'setIsLoggedIn', ({ auth }) => auth.isLoggedIn),
+  withState('isComplete', 'setIsComplete', true),
   withHandlers({
     logout: ({ auth }) => event => {
       event.preventDefault()
       auth.clear()
       window.location = '/'
+    },
+    manageProducts: () => event => {
+      event.preventDefault()
+      navTo('/u/manage-products')
     },
     onAccountClick: () => event => {
       event.preventDefault()

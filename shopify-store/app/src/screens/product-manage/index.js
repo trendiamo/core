@@ -17,6 +17,7 @@ const ProductManage = ({ setInfoValue }) => (
           marginTop: '2%',
           paddingBottom: '1%',
           paddingTop: '1%',
+          position: 'relative',
           width: '50%',
         }}
       >
@@ -59,6 +60,21 @@ const ProductManage = ({ setInfoValue }) => (
           }}
         >
           <br />
+        </div>
+        <div
+          style={{
+            backgroundColor: 'white',
+            border: '2px solid rgb(200, 200, 200)',
+            borderRadius: '6px',
+            color: 'rgb(200, 200, 200)',
+            fontWeight: 'bold',
+            padding: '1%',
+            position: 'absolute',
+            right: '-4%',
+            transform: 'rotate(-20deg)',
+          }}
+        >
+          {'EMPTY'}
         </div>
       </div>
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
