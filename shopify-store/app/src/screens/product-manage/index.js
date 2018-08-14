@@ -118,35 +118,59 @@ export default compose(
       event.preventDefault()
       const file = event.target.files[0]
       setCsv(file)
-      if (window.confirm(`Upload ${file.name} to Trendiamo?`)) {
-        console.log(file.type)
-        if (file.size / 1000000 < 2) {
-          if (file.type === 'text/csv') {
-            let formData = new FormData()
-            formData.append('file_name', 'uploadedCsv')
-            formData.append('file', file)
-            let options = {
-              body: formData,
-              headers: {
-                'X-USER-EMAIL': localStorage.getItem('authEmail'),
-                'X-USER-TOKEN': localStorage.getItem('authToken'),
-              },
-              method: 'POST',
-            }
-            fetch(`https://10e926e7.ngrok.io/api/v1/csv`, options).then(response => {
-              if (response.ok == true) {
-                alert('Successfully uploaded the file!')
-              }
-            })
-          } else {
-            alert('Please upload a csv file!')
-          }
-        } else {
-          alert('Your File exceeds 2 MB!')
-        }
-      } else {
-        console.log('Do Nothing')
+      // if (confirm(`Upload ${file.name} to Trendiamo?`)) {
+      //   if (file.size / 1000000 < 2) {
+      //     if (file.type === 'text/csv') {
+      //       let formData = new FormData()
+      //       formData.append('file_name', 'uploadedCsv')
+      //       formData.append('file', file)
+      //       let options = {
+      //         body: formData,
+      //         headers: {
+      //           'X-USER-EMAIL': localStorage.getItem('authEmail'),
+      //           'X-USER-TOKEN': localStorage.getItem('authToken'),
+      //         },
+      //         method: 'POST',
+      //       }
+      //       fetch(`https://10e926e7.ngrok.io/api/v1/csv`, options).then(response => {
+      //         if (response.ok == true) {
+      //           alert('Successfully uploaded the file!')
+      //         }
+      //       })
+      //     } else {
+      //       alert('Please upload a csv file!')
+      //     }
+      //   } else {
+      //     alert('Your File exceeds 2 MB!')
+      //   }
+      // }
+      if (!confirm(`Upload ${file.name} to Trendiamo?`)) {
+        return
       }
+      if (file.size / 1000000 >= 2) {
+        alert('Please upload a csv file!')
+        return
+      }
+      if (file.type !== 'text/csv') {
+        alert('Please upload a csv file!')
+        return
+      }
+      let formData = new FormData()
+      formData.append('file_name', 'uploadedCsv')
+      formData.append('file', file)
+      let options = {
+        body: formData,
+        headers: {
+          'X-USER-EMAIL': localStorage.getItem('authEmail'),
+          'X-USER-TOKEN': localStorage.getItem('authToken'),
+        },
+        method: 'POST',
+      }
+      fetch(`https://${process.env.API_ENDPOINT}/api/v1/csv`, options).then(response => {
+        if (response.ok == true) {
+          alert('Successfully uploaded the file!')
+        }
+      })
     },
   })
 )(ProductManage)
