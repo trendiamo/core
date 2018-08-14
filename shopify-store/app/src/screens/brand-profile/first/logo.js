@@ -1,36 +1,11 @@
 import Dropzone from 'react-dropzone'
-import { getSignedUrl } from './utils'
+import { getSignedUrl } from 'app/utils'
 import React from 'react'
 import S3Upload from 'react-s3-uploader/s3upload'
-import styled from 'styled-components'
 import { compose, withHandlers, withState } from 'recompose'
+import { Progress, ProgressContainer, ProgressMessage } from 'shared/progress'
 import ReactCrop, { getPixelCrop, makeAspectCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
-
-const ProgressContainer = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const Progress = styled.progress`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: 0;
-  margin-right: 0.5rem;
-
-  &[value]::-webkit-progress-bar {
-    background-color: #efefef;
-  }
-  &[value]::-webkit-progress-value {
-    background-color: #bbb;
-    transition: all 250ms ease;
-  }
-`
-
-const ProgressMessage = styled.span`
-  font-size: small;
-`
 
 const Logo = ({
   crop,

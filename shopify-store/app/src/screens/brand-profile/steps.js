@@ -40,6 +40,7 @@ const Step = styled.div`
   text-align: center;
   margin: 0 auto 10px auto;
   border-radius: 50%;
+  user-select: none;
   ${({ active }) =>
     active &&
     `
