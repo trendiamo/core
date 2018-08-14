@@ -120,7 +120,7 @@ Main::MutationType = GraphQL::ObjectType.define do # rubocop:disable Metrics/Blo
       @brand = Brand.find(args[:brand].id)
       authorize(@brand)
       @brand.update(brand_args)
-      if @brand.is_complete
+      if @brand.is_complete && ShopifyAPI::Collection.find(@brand.shopify_collection_id).nil?
         @create_collection = Shopify::CreateCollection.new(@brand)
         @create_collection.perform
       end
