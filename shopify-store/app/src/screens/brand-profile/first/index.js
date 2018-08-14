@@ -53,11 +53,11 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
               />
             </div>
             <div className="brand-name-container-mark">
-              <a
+              <span
                 className="product-stock-mark"
                 data-for="brand-name"
                 data-tip
-                href=""
+                // href=""
                 style={{
                   alignItems: 'center',
                   display: 'flex',
@@ -68,7 +68,7 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
                 target="_blank"
               >
                 {'?'}
-              </a>
+              </span>
               <ReactTooltip
                 aria-haspopup="true"
                 delayHide={100}
