@@ -40,6 +40,18 @@
 		theme.cart_ajax = {{ settings.cart_ajax }};
 	</script>
 
+  <!-- Hotjar Tracking Code for www.trendiamo.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:944570,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
 	<!-- Header hook for plugins ================================================== -->
   	{{ content_for_header }}
 
@@ -145,7 +157,7 @@
   {{ 'https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js' | script_tag }}
   {{ 'https://unpkg.com/clipboard/dist/clipboard.min.js' | script_tag }}
   {{ 'main.js' | asset_url | script_tag }}
-  {% if shop.domain != 'trendiamo.com' %}{{ 'app.js' | asset_url | script_tag }}{% endif %}
+  {{ 'app.js' | asset_url | script_tag }}
 
 	<script>
 	{% if resetPassword %}
@@ -176,15 +188,18 @@
             }, 100);
 		});
 	</script>
+	<!-- Venue theme by Safe As Milk - http://safeasmilk.co/ -->
+	<!-- Theme version 3.5.0 -->
 <!--begin-bc-sf-filter-js-->
   {% include 'bc-sf-filter' %}
 <!--end-bc-sf-filter-js-->
-
-{%- if shop.domain == 'trendiamo.com' -%}
 <!-- BEEKETINGSCRIPT CODE START -->{% include 'bk-tracking' %}<!-- BEEKETINGSCRIPT CODE END -->
-{%- endif -%}
-
 {% include 'swymSnippet' %}
+
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TN56C9R"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 </body>
 </html>
