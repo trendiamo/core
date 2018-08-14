@@ -1,10 +1,10 @@
 import { apiSignIn } from 'auth/utils'
-import { entry } from 'index'
 import { FlashMessage } from 'shared/flash-message'
+import { navTo } from 'app/utils'
 import React from 'react'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const Login = ({ errors, loginForm, loginSubmit, setLoginValue, showMessage, passwordFormLoad }) => (
+const Login = ({ errors, loginForm, loginSubmit, setLoginValue, showMessage, onForgotPassword }) => (
   <section className="section section--account account account--login">
     <div className="container container--tiny">
       <div className="section__title section__title--center">
@@ -33,7 +33,7 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue, showMessage, pas
         <label htmlFor="CustomerPassword">{'Password'}</label>
         <input name="password" onChange={setLoginValue} required type="password" value={loginForm.password} />
         <p className="account__reset-link">
-          <a href="/u/password" onClick={passwordFormLoad}>
+          <a href="/u/password" onClick={onForgotPassword}>
             {'Forgot Password?'}
           </a>
         </p>
@@ -59,10 +59,9 @@ export default compose(
       event.preventDefault()
       apiSignIn({ user: loginForm }, auth, setErrors)
     },
-    passwordFormLoad: () => event => {
+    onForgotPassword: () => event => {
       event.preventDefault()
-      history.pushState({}, 'Password', event.target.href)
-      entry()
+      navTo(event.target.href)
     },
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),

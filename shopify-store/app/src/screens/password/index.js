@@ -9,7 +9,6 @@ const Password = ({ errors, passwordForm, setEmailValue, passwordChangeSubmit, s
         <h1 className="section__title-text h2">{'Reset your password'}</h1>
       </div>
       {submitted ? (
-        // load login page here
         <div className="account__note success" id="ResetSuccess">
           <p>
             {

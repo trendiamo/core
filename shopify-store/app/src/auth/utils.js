@@ -61,20 +61,19 @@ const apiPasswordRequest = async (url, body) => {
 }
 
 const errorMessages = json => {
-  if (typeof json.errors === 'object') {
-    const listItems = json.errors.map(error => `<li>${error}</li>`)
-    return `<ul>${listItems.join('')}</ul>`
+  if (json.error) {
+    return '<ul><li>Invalid Credentials</li></ul>'
   } else {
-    return '<ul><li>Can not create account</li></ul>'
+    errorMessagesContent(json, 'Can not create account')
   }
 }
 
-const errorMessagesPasswordReset = json => {
+const errorMessagesContent = (json, defaultMessage) => {
   if (typeof json.errors === 'object') {
     const listItems = json.errors.map(error => `<li>${error}</li>`)
     return `<ul>${listItems.join('')}</ul>`
   } else {
-    return '<ul><li>Can not reset password</li></ul>'
+    return `<ul><li>${defaultMessage}</li></ul>`
   }
 }
 
@@ -90,18 +89,10 @@ export const apiSaga = async (url, body, auth, setErrors) => {
   }
 }
 
-export const apiPasswordSaga = async (url, body, setErrors) => {
-  const json = await apiRequest(url, body)
-  if (json.error || json.errors) {
-    console.log(body)
-    setErrors(errorMessages(json))
-  }
-}
-
 export const apiPasswordResetSaga = async (url, body, auth, setErrors) => {
   const json = await apiPasswordRequest(url, body)
   if (json.error || json.errors) {
-    setErrors(errorMessagesPasswordReset(json))
+    setErrors(errorMessagesContent(json, 'Can not reset password'))
   } else {
     auth.set(json.user.email, json.authenticationToken)
     authRedirect()
@@ -110,6 +101,6 @@ export const apiPasswordResetSaga = async (url, body, auth, setErrors) => {
 
 export const apiSignUp = (body, auth, setErrors) => apiSaga(SIGNUP_URL, body, auth, setErrors)
 export const apiSignIn = (body, auth, setErrors) => apiSaga(SIGNIN_URL, body, auth, setErrors)
-export const apiPassword = (body, setErrors) => apiPasswordSaga(PASSWORD_URL, body, setErrors)
+export const apiPassword = body => apiRequest(PASSWORD_URL, body)
 export const apiPasswordReset = (body, auth, setErrors) =>
   apiPasswordResetSaga(PASSWORD_RESET_URL, body, auth, setErrors)
