@@ -10,7 +10,7 @@ export default () => {
   const target = $('.main')
   if (auth.isLoggedIn) {
     window.location = '/'
-  } else if (window.location.hash === '#reset_password') {
+  } else if (location.hash === '#reset_password') {
     ReactDOM.render(<PasswordReset auth={auth} />, target)
   } else {
     ReactDOM.render(<Login auth={auth} />, target)

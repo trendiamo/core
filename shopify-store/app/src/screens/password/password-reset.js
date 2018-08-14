@@ -1,5 +1,4 @@
 import { apiPasswordReset } from 'auth/utils'
-// import { entry } from 'index'
 import querystring from 'querystring'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'

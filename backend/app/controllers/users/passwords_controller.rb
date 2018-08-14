@@ -1,6 +1,5 @@
 module Users
   class PasswordsController < Devise::PasswordsController
-    # before_action :configure_permitted_parameters, only: [:create, :edit, :update]
 
     # POST /resource/password
     # create the email link
