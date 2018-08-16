@@ -96,14 +96,15 @@ const Preview = ({
           <div className="collection-products">
             <div className="o-layout__item u-1/2 u-1/3@tab u-1/4@desk">
               <a className="product-link" title="Dummy Product">
-                <div className="product product--left">
+                <div className="product product--left product-grid-card-shadow">
                   <div className="product__media u-bg-grey">
                     <div className="grid-view-item__image">
                       <Placeholder />
                     </div>
                   </div>
-                  <div className="product__details ">
+                  <div className="product__details product-grid-card-details-padding">
                     <h3 className="product__title h4">{'Dummy Product'}</h3>
+                    <h4 className="product__vendor h6">{brand.name}</h4>
                     <p className="product__price h5">
                       <span className="product__price-price">
                         <span className="money">{'€64.00'}</span>
