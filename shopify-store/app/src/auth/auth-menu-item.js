@@ -80,7 +80,13 @@ export default compose(
     brand: data.me.brand,
   })),
   withState('isLoggedIn', 'setIsLoggedIn', ({ auth }) => auth.isLoggedIn),
-  withState('isComplete', 'setIsComplete', ({ brand }) => brand.isComplete),
+  withState('isComplete', 'setIsComplete', ({ brand }) => {
+    if (brand) {
+      return brand.isComplete
+    } else {
+      return false
+    }
+  }),
   withHandlers({
     logout: ({ auth }) => event => {
       event.preventDefault()

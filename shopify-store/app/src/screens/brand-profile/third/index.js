@@ -190,7 +190,7 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    brandInfoSubmit: ({ auth, brandInfoForm, history, mutate, setErrors }) => event => {
+    brandInfoSubmit: ({ auth, brandInfoForm, mutate, setErrors }) => event => {
       event.preventDefault()
       authGql(auth, async () => {
         const newBrandInfoForm = { ...brandInfoForm, isComplete: true }
@@ -200,7 +200,7 @@ export default compose(
         if (data.updateBrand.errors && data.updateBrand.errors.length) {
           setErrors(data.updateBrand.errors)
         } else {
-          history.push('/u/create-brand-profile/4')
+          window.location = '/u/create-brand-profile/4'
         }
       })
     },
