@@ -39,9 +39,13 @@ const Logo = ({
               borderRadius: '50%',
               display: 'block',
               height: '100%',
+              position: 'relative',
               width: '100%',
             }}
           />
+          <span style={{ color: '#36d4bc', fontSize: '31px', left: '42%', position: 'absolute', top: '24%' }}>
+            {!image && '+'}
+          </span>
         </Dropzone>
       </div>
       <div className="o-layout__item u-3/4">
