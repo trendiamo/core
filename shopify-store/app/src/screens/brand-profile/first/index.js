@@ -7,20 +7,25 @@ import { pick } from 'lodash'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import Steps from 'screens/brand-profile/steps'
+import styled from 'styled-components'
 import { withRouter } from 'react-router'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
+
+const CorrectFormMargin = styled.div`
+  margin-left: -18px;
+`
 
 const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, setInfoValue, setLogoValue }) => (
   <React.Fragment>
     <Helmet>
       <title>{'Profile Information'}</title>
     </Helmet>
-
     <section className="section">
       <div className="container container--tiny">
         <Steps currentStep={1} stepCount={3} tags={['SETUP', 'PREVIEW', 'SHIPPING']} />
         <div className="section__title section__title--center">
           <h1 className="section__title-text h2">{'PROFILE INFORMATION'}</h1>
+          {/* <Loading /> */}
         </div>
         <form acceptCharset="UTF-8" onSubmit={brandInfoSubmit}>
           {errors.length > 0 && (
@@ -35,7 +40,7 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
             </ul>
           )}
           <Logo onChange={setLogoValue} value={brandInfoForm.logoUrl} />
-          <label htmlFor="name">{'BRAND NAME'}</label>
+          <label htmlFor="name">{'Brand name'}</label>
           <div className="brand-name-container" style={{ display: 'flex' }}>
             <div className="brand-name-container-input" style={{ width: '100%' }}>
               <input
@@ -53,11 +58,10 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
               />
             </div>
             <div className="brand-name-container-mark">
-              <a
+              <span
                 className="product-stock-mark"
                 data-for="brand-name"
                 data-tip
-                href=""
                 style={{
                   alignItems: 'center',
                   display: 'flex',
@@ -68,7 +72,7 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
                 target="_blank"
               >
                 {'?'}
-              </a>
+              </span>
               <ReactTooltip
                 aria-haspopup="true"
                 delayHide={100}
@@ -89,7 +93,7 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
             </div>
           </div>
 
-          <label htmlFor="legalName">{'LEGAL NAME OF BUSINESS'}</label>
+          <label htmlFor="legalName">{'Legal name of business'}</label>
           <input
             autoCapitalize="off"
             autoCorrect="off"
@@ -104,7 +108,7 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
           />
           <div className="o-layout">
             <div className="o-layout__item u-1/1 u-3/4@tab">
-              <label htmlFor="legalAddressStreet">{'LEGAL ADDRESS OF BUSINESS'}</label>
+              <label htmlFor="legalAddressStreet">{'Legal address of business'}</label>
               <input
                 autoCapitalize="off"
                 autoCorrect="off"
@@ -119,20 +123,22 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
               />
             </div>
             <div className="o-layout__item u-1/1 u-1/4@tab">
-              <label className="hidden-label" htmlFor="number" style={{ visibility: 'hidden' }}>
-                {'First Name'}
-              </label>
-              <input
-                autoCapitalize="off"
-                autoCorrect="off"
-                name="legalAddressNumber"
-                onChange={setInfoValue}
-                placeholder="Number"
-                required
-                spellCheck="false"
-                type="text"
-                value={brandInfoForm.legalAddressNumber}
-              />
+              <CorrectFormMargin>
+                <label className="hidden-label" htmlFor="number" style={{ visibility: 'hidden' }}>
+                  {'First Name'}
+                </label>
+                <input
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  name="legalAddressNumber"
+                  onChange={setInfoValue}
+                  placeholder="Number"
+                  required
+                  spellCheck="false"
+                  type="text"
+                  value={brandInfoForm.legalAddressNumber}
+                />
+              </CorrectFormMargin>
             </div>
           </div>
           <div className="o-layout">
@@ -150,17 +156,19 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
               />
             </div>
             <div className="o-layout__item u-1/1 u-1/3@tab">
-              <input
-                autoCapitalize="off"
-                autoCorrect="off"
-                name="legalAddressPostalCode"
-                onChange={setInfoValue}
-                placeholder="Postal-Code"
-                required
-                spellCheck="false"
-                type="text"
-                value={brandInfoForm.legalAddressPostalCode}
-              />
+              <CorrectFormMargin>
+                <input
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  name="legalAddressPostalCode"
+                  onChange={setInfoValue}
+                  placeholder="Postal-Code"
+                  required
+                  spellCheck="false"
+                  type="text"
+                  value={brandInfoForm.legalAddressPostalCode}
+                />
+              </CorrectFormMargin>
             </div>
           </div>
           <div className="o-layout">

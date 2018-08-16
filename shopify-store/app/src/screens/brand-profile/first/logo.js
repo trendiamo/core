@@ -22,7 +22,7 @@ const Logo = ({
   value,
 }) => (
   <React.Fragment>
-    <label>{'BRAND LOGO'}</label>
+    <label>{'Brand logo'}</label>
     <div className="o-layout" style={{ marginBottom: '12px' }}>
       <div className="o-layout__item u-1/4">
         <Dropzone
