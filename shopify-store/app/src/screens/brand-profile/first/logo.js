@@ -62,7 +62,11 @@ const Logo = ({
               />
               <div>
                 <p>{'Please crop the image (or leave as default).'}</p>
-                <button onClick={onDoneClick} type="button">
+                <button
+                  onClick={onDoneClick}
+                  style={{ backgroundColor: '#6B8BD2', border: '0', color: 'white', padding: '3%' }}
+                  type="button"
+                >
                   {'Done'}
                 </button>
                 {progress && (
