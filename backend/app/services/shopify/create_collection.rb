@@ -18,7 +18,6 @@ module Shopify
       shopify_collection_metafields.each do |metafield|
         @shopify_collection.add_metafield(metafield)
       end
-      @shopify_collection.save
     end
 
     def save_shopify_collection_id

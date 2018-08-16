@@ -77,12 +77,12 @@ export default compose(
   graphql(me, { options: { fetchPolicy: 'network-only' } }),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
-    brand: data.me.brand,
+    me: data.me,
   })),
   withState('isLoggedIn', 'setIsLoggedIn', ({ auth }) => auth.isLoggedIn),
-  withState('isComplete', 'setIsComplete', ({ brand }) => {
-    if (brand) {
-      return brand.isComplete
+  withState('isComplete', 'setIsComplete', ({ me }) => {
+    if (me.brand) {
+      return me.brand.isComplete
     } else {
       return false
     }
