@@ -9,16 +9,16 @@ const ProductManage = ({ setInfoValue }) => (
     </Helmet>
     <section className="section">
       <div
-        className="container"
+        className="container container--tiny"
         style={{
           borderRadius: '14px',
           boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.18)',
-          marginBottom: '2%',
-          marginTop: '2%',
-          paddingBottom: '1%',
-          paddingTop: '1%',
+          marginBottom: '2rem',
+          marginTop: '2rem',
+          paddingBottom: '1rem',
+          paddingTop: '1rem',
           position: 'relative',
-          width: '50%',
+          width: '90%',
         }}
       >
         {'YOUR PRODUCTS'}
@@ -66,45 +66,58 @@ const ProductManage = ({ setInfoValue }) => (
             backgroundColor: 'white',
             border: '2px solid rgb(200, 200, 200)',
             borderRadius: '6px',
+            bottom: '-10%',
+            boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.18) 0px 4px 16px',
             color: 'rgb(200, 200, 200)',
-            fontWeight: 'bold',
+            fontWeight: 'regular',
+            letterSpacing: '1px',
             padding: '1%',
             position: 'absolute',
-            right: '-4%',
+            right: '-3%',
             transform: 'rotate(-20deg)',
           }}
         >
-          {'EMPTY'}
+          {'Empty'}
         </div>
       </div>
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
         {' '}
-        <p>
+        <p style={{}}>
           {'Upload a CSV file with your products to get started!'}
           <br />
           {'You can download the template file here.'}
         </p>
-        <a
-          className="c-btn"
-          download="delivery-logo-postmates.png"
-          href={'https://s3.eu-central-1.amazonaws.com/trnd-assets/products_template.csv'}
-          style={{ backgroundColor: '#6B8BD2', width: '54%' }}
-          target="_blank"
-        >
-          {'DOWNLOAD TEMPLATE CSV'}
-        </a>
+        <div className="o-layout">
+          <div className="o-layout__item u-1/1 u-1/2@tab">
+            <a
+              className="c-btn"
+              download="delivery-logo-postmates.png"
+              href={'https://s3.eu-central-1.amazonaws.com/trnd-assets/products_template.csv'}
+              style={{ backgroundColor: '#6B8BD2', width: '100%' }}
+              target="_blank"
+            >
+              {'DOWNLOAD TEMPLATE CSV'}
+            </a>
+          </div>
+        </div>
         <div className="account__form-buttons">
-          <a className="c-btn c-btn--light account__form-submit" href="/" style={{ margin: '2%', width: '25%' }}>
-            {'FINISH'}
-          </a>
-          <input hidden id="fileUpload" onChange={setInfoValue} style={{ margin: '2%' }} type="file" />
-          <label
-            className="c-btn c-btn--primary account__form-submit"
-            htmlFor="fileUpload"
-            style={{ margin: '2%', width: '25%' }}
-          >
-            {'UPLOAD'}
-          </label>
+          <div className="o-layout">
+            <div className="o-layout__item u-1/2 u-1/4@tab">
+              <a className="c-btn c-btn--light account__form-submit" href="/" style={{ width: '100%' }}>
+                {'FINISH'}
+              </a>
+            </div>
+            <div className="o-layout__item u-1/2 u-1/4@tab">
+              <input hidden id="fileUpload" onChange={setInfoValue} type="file" />
+              <label
+                className="c-btn c-btn--primary account__form-submit"
+                htmlFor="fileUpload"
+                style={{ width: '100%' }}
+              >
+                {'UPLOAD'}
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </section>
