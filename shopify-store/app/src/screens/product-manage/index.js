@@ -82,7 +82,7 @@ const ProductManage = ({ setInfoValue }) => (
       </div>
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
         {' '}
-        <p style={{}}>
+        <p>
           {'Upload a CSV file with your products to get started!'}
           <br />
           {'You can download the template file here.'}
