@@ -81,7 +81,7 @@ export default compose(
   })),
   withState('isLoggedIn', 'setIsLoggedIn', ({ auth }) => auth.isLoggedIn),
   withState('isComplete', 'setIsComplete', ({ me }) => {
-    if (me.brand) {
+    if (me && me.brand) {
       return me.brand.isComplete
     } else {
       return false
