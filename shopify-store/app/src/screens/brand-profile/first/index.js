@@ -24,7 +24,6 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, setInfoValue,
         <Steps currentStep={1} stepCount={3} tags={['SETUP', 'PREVIEW', 'SHIPPING']} />
         <div className="section__title section__title--center">
           <h1 className="section__title-text h2">{'PROFILE INFORMATION'}</h1>
-          {/* <Loading /> */}
         </div>
         <form acceptCharset="UTF-8" onSubmit={brandInfoSubmit}>
           {errors.length > 0 && (

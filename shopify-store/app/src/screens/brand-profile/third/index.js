@@ -3,13 +3,14 @@ import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
+import Loader from 'shared/loader'
 import { pick } from 'lodash'
 import React from 'react'
 import Steps from 'screens/brand-profile/steps'
 import { withRouter } from 'react-router'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
-const Shipping = ({ brandInfoForm, brandInfoSubmit, setInfoValue }) => (
+const Shipping = ({ isLoading, brandInfoForm, brandInfoSubmit, setInfoValue }) => (
   <React.Fragment>
     <Helmet>
       <title>{'Shipping Information'}</title>
@@ -21,6 +22,7 @@ const Shipping = ({ brandInfoForm, brandInfoSubmit, setInfoValue }) => (
           <h1 className="section__title-text h2">{'SHIPPING INFORMATION'}</h1>
         </div>
         <form acceptCharset="UTF-8" onSubmit={brandInfoSubmit}>
+          <Loader isLoading={isLoading} />
           <div className="o-layout">
             <div className="o-layout__item u-1/1 u-1/1@tab">
               <p>
@@ -177,6 +179,7 @@ export default compose(
     brand: data.me.brand,
   })),
   withState('errors', 'setErrors', []),
+  withState('isLoading', 'setIsLoading', false),
   withState('brandInfoForm', 'setBrandInfoForm', ({ brand }) => {
     return pick(brand, [
       'id',
@@ -190,13 +193,16 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    brandInfoSubmit: ({ auth, brandInfoForm, history, mutate, setErrors }) => event => {
+    brandInfoSubmit: ({ auth, brandInfoForm, history, mutate, setErrors, setIsLoading }) => event => {
       event.preventDefault()
+      event.target.blur()
       authGql(auth, async () => {
         const newBrandInfoForm = { ...brandInfoForm, isComplete: true }
+        setIsLoading(true)
         const { data } = await mutate({
           variables: { brand: newBrandInfoForm },
         })
+        setIsLoading(false)
         if (data.updateBrand.errors && data.updateBrand.errors.length) {
           setErrors(data.updateBrand.errors)
         } else {

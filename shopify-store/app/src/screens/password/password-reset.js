@@ -1,9 +1,10 @@
 import { apiPasswordReset } from 'auth/utils'
+import Loader from 'shared/loader'
 import querystring from 'querystring'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 
-const PasswordReset = ({ passwordResetSubmit, passwordForm, setFieldValue, errors }) => (
+const PasswordReset = ({ isLoading, passwordResetSubmit, passwordForm, setFieldValue, errors }) => (
   <section className="section section--account account account--login">
     <div className="container container--tiny">
       <div className="section__title section__title--center section__title--desc">
@@ -36,6 +37,7 @@ const PasswordReset = ({ passwordResetSubmit, passwordForm, setFieldValue, error
         />
         <div className="account__form-buttons">
           <input className="c-btn c-btn--primary account__form-submit" type="submit" value="Reset password" />
+          <Loader isLoading={isLoading} />
         </div>
       </form>
     </div>
@@ -48,9 +50,11 @@ export default compose(
     fieldTwo: '',
   }),
   withState('errors', 'setErrors', ''),
+  withState('isLoading', 'setIsLoading', false),
   withHandlers({
-    passwordResetSubmit: ({ passwordForm, setErrors, auth }) => event => {
+    passwordResetSubmit: ({ passwordForm, setErrors, auth, setIsLoading }) => event => {
       event.preventDefault()
+      setIsLoading(true)
       if (passwordForm.fieldOne === passwordForm.fieldTwo) {
         apiPasswordReset(
           {
@@ -65,6 +69,7 @@ export default compose(
       } else {
         setErrors("<ul><li>Passwords don't match</li></ul>")
       }
+      setIsLoading(false)
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
       event.preventDefault()
