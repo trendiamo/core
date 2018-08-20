@@ -38,7 +38,7 @@ const AuthMenuItem = ({
                 href={isComplete ? '/u/manage-products' : '/u/create-brand-profile/1'}
                 onClick={isComplete ? manageProducts : onAccountUpgradeClick}
               >
-                {isComplete ? 'Manage Products' : 'Upgrade to Brand'}
+                {isComplete ? 'Manage Products' : 'Set up business profile'}
               </a>
             </li>
             <li className="nav__sub__item">

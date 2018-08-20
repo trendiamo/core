@@ -27,8 +27,8 @@ const Register = ({
               onChange={onLoginSystemChange}
               style={{ paddingLeft: '20px' }}
             >
-              <option value="customer">{'Customer'}</option>
-              <option value="brand">{'Brand'}</option>
+              <option value="customer">{"I'm a customer"}</option>
+              <option value="brand">{"I'm a brand"}</option>
             </select>
           </div>
           <div className="o-layout">

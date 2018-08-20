@@ -2,10 +2,21 @@ import Dropzone from 'react-dropzone'
 import { getSignedUrl } from 'app/utils'
 import React from 'react'
 import S3Upload from 'react-s3-uploader/s3upload'
+import styled from 'styled-components'
 import { compose, withHandlers, withState } from 'recompose'
 import { Progress, ProgressContainer, ProgressMessage } from 'shared/progress'
 import ReactCrop, { getPixelCrop, makeAspectCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
+
+const PlusSign = styled.div`
+  width: 100%;
+  line-height: 100px;
+  color: rgb(54, 212, 188);
+  font-size: 31px;
+  position: absolute;
+  top: 0;
+  text-align: center;
+`
 
 const Logo = ({
   crop,
@@ -35,7 +46,7 @@ const Logo = ({
             alt=""
             src={value ? value : croppedImage ? croppedImage : image ? image.preview : ''}
             style={{
-              backgroundColor: '#e5e5e5',
+              backgroundColor: '#c3f2eb',
               borderRadius: '50%',
               display: 'block',
               height: '100%',
@@ -43,9 +54,7 @@ const Logo = ({
               width: '100%',
             }}
           />
-          <span style={{ color: '#36d4bc', fontSize: '31px', left: '42%', position: 'absolute', top: '24%' }}>
-            {!image && '+'}
-          </span>
+          <PlusSign>{image || '+'}</PlusSign>
         </Dropzone>
       </div>
       <div className="o-layout__item u-3/4">

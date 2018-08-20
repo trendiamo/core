@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { checkAuthError, treatAuthError } from 'auth/utils'
@@ -15,6 +16,7 @@ const Account = ({ email, logout }) => (
         <div className="section__title section__title--center section__title--desc">
           <h1 className="section__title-text h2">{'My Account'}</h1>
           <p className="section__title-desc">{`You are logged in as ${email}`}</p>
+          <Link to="/u/create-brand-profile/1">{'Set up business profile'}</Link>
           <p className="section__title-desc">
             <a className="link" href="/account/logout" onClick={logout}>
               {'Log out'}
