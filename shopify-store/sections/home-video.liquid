@@ -24,10 +24,10 @@
 
                     <div class="o-ratio o-ratio--16:9">
                         <div class="o-ratio__content">
-                            
+
                             {% for block in section.blocks %}
                                 <div class="home-video__stage-video js-home-video{% if forloop.index == 1 %} js-active{% endif %}" id="js-home-video-{{ section.id }}-{{ forloop.index }}">
-                                    <iframe src="{% if block.settings.video_url.type == 'youtube' %}https://www.youtube.com/embed/{% elsif block.settings.video_url.type == 'vimeo' %}https://player.vimeo.com/video/{% endif %}{{ block.settings.video_url.id }}?rel=0" frameborder="0" allowfullscreen class="home-video__stage-iframe" tabindex="-1"></iframe>
+                                    <iframe src="{% if block.settings.video_url.type == 'youtube' %}https://www.youtube.com/embed/{% elsif block.settings.video_url.type == 'vimeo' %}https://player.vimeo.com/video/{% endif %}{{ block.settings.video_url.id }}?rel=0&enablejsapi=1" frameborder="0" allowfullscreen class="home-video__stage-iframe" tabindex="-1"></iframe>
                                 </div>
                             {% endfor %}
 
@@ -109,7 +109,7 @@
         {
             "type": "richtext",
             "id": "desc",
-            "label": "Text" 
+            "label": "Text"
         },
         {
             "type": "text",
