@@ -16,6 +16,4 @@ export const entry = () => {
   }
 }
 
-if (location.host !== 'trendiamo.com' || localStorage.getItem('trnd')) {
-  entry()
-}
+entry()

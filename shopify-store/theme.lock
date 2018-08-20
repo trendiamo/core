@@ -7,7 +7,7 @@ assets/ajax-cart.js.liquid:
 assets/app.js:
   development: 2018-07-30T08:13:27-04:00   a3d36b1c491d5229e40c037770d85d08
   fb: 2018-08-16T13:22:17-04:00   c242a3bd42c5bf42aa322aadc5bc4dec
-  production: 2018-08-20T16:55:01+01:00   2ecb8f29ea5facb792e0630b336da801
+  production: 2018-08-20T17:08:08+01:00   4039fc9f8a663af425bb052965522fdd
   trnd-mvp: 2018-08-20T11:47:14-04:00   4448b6aca717763924ebd3f9a93fe709
 assets/bc-sf-filter-ico.eot:
   fb: 2018-08-14T13:11:17-04:00   ceb95c781dfa863c03ec63b987e31fb9
