@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet'
 import Logo from './logo'
 import { pick } from 'lodash'
 import React from 'react'
-import ReactTooltip from 'react-tooltip'
 import Steps from 'screens/brand-profile/steps'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
@@ -15,7 +14,7 @@ const CorrectFormMargin = styled.div`
   margin-left: -18px;
 `
 
-const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, setInfoValue, setLogoValue }) => (
+const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, setInfoValue, setLogoValue }) => (
   <React.Fragment>
     <Helmet>
       <title>{'Profile Information'}</title>
@@ -41,56 +40,19 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
           )}
           <Logo onChange={setLogoValue} value={brandInfoForm.logoUrl} />
           <label htmlFor="name">{'Brand name'}</label>
-          <div className="brand-name-container" style={{ display: 'flex' }}>
-            <div className="brand-name-container-input" style={{ width: '100%' }}>
-              <input
-                autoCapitalize="off"
-                autoCorrect="off"
-                autoFocus
-                id="name"
-                name="name"
-                onChange={setInfoValue}
-                placeholder={username}
-                required
-                spellCheck="false"
-                type="text"
-                value={brandInfoForm.name}
-              />
-            </div>
-            <div className="brand-name-container-mark">
-              <span
-                className="product-stock-mark"
-                data-for="brand-name"
-                data-tip
-                style={{
-                  alignItems: 'center',
-                  display: 'flex',
-                  height: '48px',
-                  justifyContent: 'center',
-                  width: '48px',
-                }}
-                target="_blank"
-              >
-                {'?'}
-              </span>
-              <ReactTooltip
-                aria-haspopup="true"
-                delayHide={100}
-                delayShow={100}
-                effect="solid"
-                id="brand-name"
-                place="top"
-                type="dark"
-              >
-                <p>
-                  {`If your chosen username does not`}
-                  <br />
-                  {`represent your brand's name`}
-                  <br />
-                  {`correctly you can change it here`}
-                </p>
-              </ReactTooltip>
-            </div>
+          <div className="brand-name-container-input" style={{ width: '100%' }}>
+            <input
+              autoCapitalize="off"
+              autoCorrect="off"
+              autoFocus
+              id="name"
+              name="name"
+              onChange={setInfoValue}
+              required
+              spellCheck="false"
+              type="text"
+              value={brandInfoForm.name}
+            />
           </div>
 
           <label htmlFor="legalName">{'Legal name of business'}</label>
@@ -100,7 +62,6 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
             id="legalName"
             name="legalName"
             onChange={setInfoValue}
-            placeholder={username + ' LLC.'}
             required
             spellCheck="false"
             type="text"
@@ -206,7 +167,6 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, username, set
 const me = gql`
   query {
     me {
-      username
       brand {
         id
         legalAddressCity
@@ -265,9 +225,8 @@ export default compose(
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     brand: data.me.brand,
-    username: data.me.username,
   })),
-  withState('brandInfoForm', 'setBrandInfoForm', ({ username, brand, setCanSubmit }) => {
+  withState('brandInfoForm', 'setBrandInfoForm', ({ brand, setCanSubmit }) => {
     if (brand == null) {
       return {
         legalAddressCity: '',
@@ -275,9 +234,9 @@ export default compose(
         legalAddressNumber: '',
         legalAddressPostalCode: '',
         legalAddressStreet: '',
-        legalName: username + ' LLC.',
+        legalName: '',
         logoUrl: '',
-        name: username,
+        name: '',
       }
     } else {
       setCanSubmit(brand.logoUrl.length > 0)

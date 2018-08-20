@@ -4,11 +4,19 @@ import { navTo } from 'app/utils'
 import React from 'react'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const Login = ({ errors, loginForm, loginSubmit, setLoginValue, showMessage, onForgotPassword }) => (
+const Login = ({
+  errors,
+  loginForm,
+  loginSubmit,
+  onLoginSystemChange,
+  setLoginValue,
+  showMessage,
+  onForgotPassword,
+}) => (
   <section className="section section--account account account--login">
     <div className="container container--tiny">
       <div className="section__title section__title--center">
-        <h1 className="section__title-text h2">{'Login'}</h1>
+        <h1 className="section__title-text h2">{'Brand Login'}</h1>
       </div>
       {showMessage && (
         <FlashMessage success={showMessage === 'confirmed'} warning={showMessage === 'error'}>
@@ -19,7 +27,18 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue, showMessage, onF
       )}
       <form acceptCharset="UTF-8" onSubmit={loginSubmit}>
         {errors && <div className="errors" dangerouslySetInnerHTML={{ __html: errors }} />}
-        <label htmlFor="CustomerEmail">{'Email or Username'}</label>
+        <div className="selector-wrapper">
+          <select
+            defaultValue="brand"
+            id="login-system-select"
+            onChange={onLoginSystemChange}
+            style={{ paddingLeft: '20px' }}
+          >
+            <option value="customer">{'Customer'}</option>
+            <option value="brand">{'Brand'}</option>
+          </select>
+        </div>
+        <label htmlFor="CustomerEmail">{'Email'}</label>
         <input
           autoCapitalize="off"
           autoCorrect="off"
@@ -62,6 +81,11 @@ export default compose(
     onForgotPassword: () => event => {
       event.preventDefault()
       navTo(event.target.href)
+    },
+    onLoginSystemChange: () => event => {
+      if (event.target.value === 'customer') {
+        location.reload()
+      }
     },
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),

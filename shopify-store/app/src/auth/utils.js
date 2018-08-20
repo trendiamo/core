@@ -64,7 +64,7 @@ const errorMessages = json => {
   if (json.error) {
     return '<ul><li>Invalid Credentials</li></ul>'
   } else {
-    errorMessagesContent(json, 'Can not create account')
+    return errorMessagesContent(json, 'Can not create account')
   }
 }
 

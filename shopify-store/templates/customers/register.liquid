@@ -10,6 +10,13 @@
 
                 {{ form.errors | default_errors }}
 
+                <div class="selector-wrapper">
+                  <select id="login-system-select">
+                    <option value="customer" selected>Customer</option>
+                    <option value="brand">Brand</option>
+                  </select>
+                </div>
+
                 <div class="o-layout">
                     <div class="o-layout__item u-1/1 u-1/2@tab">
                         <label for="FirstName" class="hidden-label">{{ 'customer.register.first_name' | t }}</label>

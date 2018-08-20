@@ -2,27 +2,35 @@ import { apiSignUp } from 'auth/utils'
 import React from 'react'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const Register = ({ errors, isConfirmationNeeded, registerForm, registerSubmit, setRegisterValue }) => (
+const Register = ({
+  errors,
+  isConfirmationNeeded,
+  onLoginSystemChange,
+  registerForm,
+  registerSubmit,
+  setRegisterValue,
+}) => (
   <section className="section section--account account account--register">
     <div className="container container--tiny">
       <div className="section__title section__title--center">
-        <h1 className="section__title-text h2">{'Create Account'}</h1>
+        <h1 className="section__title-text h2">{'Create Brand Account'}</h1>
       </div>
       {isConfirmationNeeded ? (
         <p>{'Please check your email and follow the confirmation link there to continue. Thank you!'}</p>
       ) : (
         <form acceptCharset="UTF-8" onSubmit={registerSubmit}>
           {errors && <div className="errors" dangerouslySetInnerHTML={{ __html: errors }} />}
-          <label htmlFor="Username">{'Username'}</label>
-          <input
-            autoFocus
-            id="Username"
-            name="username"
-            onChange={setRegisterValue}
-            required
-            type="text"
-            value={registerForm.username}
-          />
+          <div className="selector-wrapper">
+            <select
+              defaultValue="brand"
+              id="login-system-select"
+              onChange={onLoginSystemChange}
+              style={{ paddingLeft: '20px' }}
+            >
+              <option value="customer">{'Customer'}</option>
+              <option value="brand">{'Brand'}</option>
+            </select>
+          </div>
           <div className="o-layout">
             <div className="o-layout__item u-1/1 u-1/2@tab">
               <label className="hidden-label" htmlFor="FirstName">
@@ -83,7 +91,6 @@ const Register = ({ errors, isConfirmationNeeded, registerForm, registerSubmit, 
               {'Yes, please!'}
             </label>
           </div>
-          {/* <p><a>Forgot your password?</a></p> */}
           <div className="account__form-buttons">
             <input className="c-btn c-btn--primary account__form-submit" type="submit" value="Create" />
             <a className="link account__form-secondary-btn" href="/">
@@ -103,13 +110,17 @@ export default compose(
     lastName: '',
     password: '',
     subscribedToNewsletter: '0',
-    username: '',
   }),
   withState('errors', 'setErrors', ''),
   withProps(({ errors }) => ({
     isConfirmationNeeded: errors === '<ul><li>signed up but unconfirmed</li></ul>',
   })),
   withHandlers({
+    onLoginSystemChange: () => event => {
+      if (event.target.value === 'customer') {
+        location.reload()
+      }
+    },
     registerSubmit: ({ auth, registerForm, setErrors }) => event => {
       event.preventDefault()
       apiSignUp({ user: registerForm }, auth, setErrors)

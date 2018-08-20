@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom'
 
 export default () => {
   const auth = authFactory()
+  if (!auth.isLoggedIn) return
 
   ReactDOM.render(
     <ApolloProvider client={client}>

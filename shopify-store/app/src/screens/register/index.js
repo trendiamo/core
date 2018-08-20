@@ -9,7 +9,10 @@ export default () => {
   if (auth.isLoggedIn) {
     window.location = '/'
   } else {
-    const target = $('.main')
-    ReactDOM.render(<Register auth={auth} />, target)
+    $('#login-system-select').addEventListener('change', event => {
+      if (event.target.value === 'brand') {
+        ReactDOM.render(<Register auth={auth} />, $('.main'))
+      }
+    })
   }
 }

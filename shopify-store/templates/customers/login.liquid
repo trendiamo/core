@@ -19,7 +19,7 @@
 
                 <p>{{ 'customer.recover_password.subtext' | t }}</p>
 
-                <div class="account__form-buttons">                    
+                <div class="account__form-buttons">
                     <input type="submit" class="c-btn c-btn--primary account__form-submit" value="{{ 'customer.recover_password.submit' | t }}">
                     <a href="#" onclick="hideRecoverPasswordForm();return false;" class="link account__form-secondary-btn">{{ 'customer.recover_password.cancel' | t }}</a>
                 </div>
@@ -40,6 +40,13 @@
             {% form 'customer_login' %}
 
                 {{ form.errors | default_errors }}
+
+                <div class="selector-wrapper">
+                  <select id="login-system-select">
+                    <option value="customer" selected>Customer</option>
+                    <option value="brand">Brand</option>
+                  </select>
+                </div>
 
                 <label for="CustomerEmail" class="label--hidden">{{ 'customer.login.email' | t }}</label>
                 <input type="email" name="customer[email]" id="CustomerEmail"{% if form.errors contains "email" %} class="error"{% endif %} autocorrect="off" autocapitalize="off" autofocus>

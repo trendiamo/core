@@ -8,7 +8,6 @@ import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, wit
 
 const AuthMenuItem = ({
   isComplete,
-  isLoggedIn,
   mobile,
   logout,
   manageProducts,
@@ -17,47 +16,39 @@ const AuthMenuItem = ({
   onMainAccountClick,
 }) => (
   <React.Fragment>
-    {isLoggedIn ? (
-      <React.Fragment>
-        <a
-          className={mobile ? 'mobile-nav__link' : 'nav__link--sub js-header-sub-link-a'}
-          href="/u/account"
-          onClick={onMainAccountClick}
-        >
-          {'Account'}
-        </a>
-        {mobile || (
-          <div className="nav__sub" id="sub-account">
-            <div className="nav__sub-wrap">
-              <ul className="nav__sub__items o-list-bare">
-                <li className="nav__sub__item">
-                  <a className="nav__sub__link" href="/account" onClick={onAccountClick}>
-                    {'Account'}
-                  </a>
-                </li>
-                <li className="nav__sub__item">
-                  <a
-                    className="nav__sub__link"
-                    href={isComplete ? '/u/manage-products' : '/u/create-brand-profile/1'}
-                    onClick={isComplete ? manageProducts : onAccountUpgradeClick}
-                  >
-                    {isComplete ? 'Manage Products' : 'Upgrade to Brand'}
-                  </a>
-                </li>
-                <li className="nav__sub__item">
-                  <a className="nav__sub__link" href="/account/logout" onClick={logout}>
-                    {'Log out'}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        )}
-      </React.Fragment>
-    ) : (
-      <a className={mobile ? 'mobile-nav__link' : ''} href="/account/login">
-        {'Login'}
-      </a>
+    <a
+      className={mobile ? 'mobile-nav__link' : 'nav__link--sub js-header-sub-link-a'}
+      href="/u/account"
+      onClick={onMainAccountClick}
+    >
+      {'Account'}
+    </a>
+    {mobile || (
+      <div className="nav__sub" id="sub-account">
+        <div className="nav__sub-wrap">
+          <ul className="nav__sub__items o-list-bare">
+            <li className="nav__sub__item">
+              <a className="nav__sub__link" href="/account" onClick={onAccountClick}>
+                {'Account'}
+              </a>
+            </li>
+            <li className="nav__sub__item">
+              <a
+                className="nav__sub__link"
+                href={isComplete ? '/u/manage-products' : '/u/create-brand-profile/1'}
+                onClick={isComplete ? manageProducts : onAccountUpgradeClick}
+              >
+                {isComplete ? 'Manage Products' : 'Upgrade to Brand'}
+              </a>
+            </li>
+            <li className="nav__sub__item">
+              <a className="nav__sub__link" href="/account/logout" onClick={logout}>
+                {'Log out'}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     )}
   </React.Fragment>
 )
@@ -79,9 +70,8 @@ export default compose(
   withProps(({ data }) => ({
     me: data.me,
   })),
-  withState('isLoggedIn', 'setIsLoggedIn', ({ auth }) => auth.isLoggedIn),
   withState('isComplete', 'setIsComplete', ({ me }) => {
-    if (me && me.brand) {
+    if (me.brand) {
       return me.brand.isComplete
     } else {
       return false
@@ -106,8 +96,8 @@ export default compose(
       event.preventDefault()
       navTo('/u/create-brand-profile/1')
     },
-    onAuthChange: ({ setIsLoggedIn }) => isLoggedIn => {
-      setIsLoggedIn(isLoggedIn)
+    onAuthChange: () => isLoggedIn => {
+      if (!isLoggedIn) location.reload()
     },
     onMainAccountClick: ({ mobile }) => event => {
       event.preventDefault()

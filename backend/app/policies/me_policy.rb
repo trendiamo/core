@@ -1,5 +1,5 @@
 class MePolicy < ApplicationPolicy
   def me?
-    true
+    user
   end
 end
