@@ -39,8 +39,12 @@ module Shopify
     end
 
     def shopify_collection_metafields
-      video_url = brand.header_content_video
-      video_id = video_url.match(/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/)[7]
+      if brand.header_content_video
+        video_url = brand.header_content_video
+        video_id = video_url.match(/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/)[7]
+      else
+        video_id = nil
+      end
       [
         ShopifyAPI::Metafield.new(
           {
