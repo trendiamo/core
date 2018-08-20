@@ -107,7 +107,7 @@ Main::MutationType = GraphQL::ObjectType.define do # rubocop:disable Metrics/Blo
       brand_args = permitted_attributes(Brand).merge(user: current_user)
       @brand = policy_scope(Brand).new(brand_args)
       authorize(@brand)
-      @brand.save
+      @brand.save!
       @brand
     }
   end
@@ -119,10 +119,9 @@ Main::MutationType = GraphQL::ObjectType.define do # rubocop:disable Metrics/Blo
       brand_args = permitted_attributes(Brand).merge(user: current_user)
       @brand = Brand.find(args[:brand].id)
       authorize(@brand)
-      @brand.update(brand_args)
+      @brand.update!(brand_args)
       if @brand.is_complete && @brand.shopify_collection_id.nil?
-        @create_collection = Shopify::CreateCollection.new(@brand)
-        @create_collection.perform
+        Shopify::CreateCollection.new(@brand).perform
       end
       @brand
     }
