@@ -8,6 +8,6 @@ class ProductUploadMailer < ActionMailer::Base
   def send_csv(user, file)
     @user = user
     attachments[file.original_filename] = File.read(file.tempfile)
-    mail(to: ENV["TRENDIAMO_EMAIL"], subject: "CSV upload").deliver_now
+    mail(to: ENV["TRENDIAMO_EMAIL"], subject: "CSV upload")
   end
 end
