@@ -54,7 +54,7 @@ const Logo = ({
               width: '100%',
             }}
           />
-          <PlusSign>{image || '+'}</PlusSign>
+          {!image && <PlusSign>{'+'}</PlusSign>}
         </Dropzone>
       </div>
       <div className="o-layout__item u-3/4">
