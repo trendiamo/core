@@ -1,4 +1,6 @@
-import { compose } from 'recompose'
+import { branch, compose, renderNothing, withProps, withState } from 'recompose'
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 import React from 'react'
 
 const Products = () => (
@@ -76,4 +78,21 @@ const Products = () => (
   </div>
 )
 
-export default compose()(Products)
+const collection = gql`
+  query {
+    collection(id: "gid://shopify/Collection/71688585273") {
+      id
+      handle
+    }
+  }
+`
+
+export default compose(
+  graphql(me, { options: { fetchPolicy: 'network-only' } }),
+  graphql(collection, { options: { fetchPolicy: 'network-only' } }),
+  branch(({ data }) => data && (data.loading || data.error), renderNothing),
+  withProps(({ data }) => ({
+    collection: data.collection,
+  })),
+  withState('errors', 'setErrors', ({ collection }) => console.log(collection))
+)(Products)
