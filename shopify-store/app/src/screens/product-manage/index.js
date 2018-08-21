@@ -1,8 +1,9 @@
 import { Helmet } from 'react-helmet'
+import Loader from 'shared/loader'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 
-const ProductManage = ({ setInfoValue }) => (
+const ProductManage = ({ isLoading, setInfoValue }) => (
   <React.Fragment>
     <Helmet>
       <title>{'My Products'}</title>
@@ -88,6 +89,7 @@ const ProductManage = ({ setInfoValue }) => (
           {'You can download the template file here.'}
         </p>
         <div className="o-layout">
+          <Loader isLoading={isLoading} />
           <div className="o-layout__item u-1/1 u-1/2@tab">
             <a
               className="c-btn"
@@ -126,8 +128,9 @@ const ProductManage = ({ setInfoValue }) => (
 
 export default compose(
   withState('csv', 'setCsv', ''),
+  withState('isLoading', 'setIsLoading', false),
   withHandlers({
-    setInfoValue: ({ setCsv }) => event => {
+    setInfoValue: ({ setCsv, setIsLoading }) => event => {
       event.preventDefault()
       const file = event.target.files[0]
       setCsv(file)
@@ -153,8 +156,10 @@ export default compose(
         },
         method: 'POST',
       }
+      setIsLoading(true)
       fetch(`https://${process.env.API_ENDPOINT}/api/v1/csv`, options).then(response => {
         if (response.ok == true) {
+          setIsLoading(false)
           alert('Successfully uploaded the file!')
         }
       })

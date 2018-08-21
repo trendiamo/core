@@ -1,8 +1,10 @@
 import { apiSignUp } from 'auth/utils'
+import Loader from 'shared/loader'
 import React from 'react'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
 const Register = ({
+  isLoading,
   errors,
   isConfirmationNeeded,
   onLoginSystemChange,
@@ -19,6 +21,7 @@ const Register = ({
         <p>{'Please check your email and follow the confirmation link there to continue. Thank you!'}</p>
       ) : (
         <form acceptCharset="UTF-8" onSubmit={registerSubmit}>
+          <Loader isLoading={isLoading} />
           {errors && <div className="errors" dangerouslySetInnerHTML={{ __html: errors }} />}
           <div className="selector-wrapper">
             <select
@@ -111,6 +114,7 @@ export default compose(
     password: '',
     subscribedToNewsletter: '0',
   }),
+  withState('isLoading', 'setIsLoading', false),
   withState('errors', 'setErrors', ''),
   withProps(({ errors }) => ({
     isConfirmationNeeded: errors === '<ul><li>signed up but unconfirmed</li></ul>',
@@ -121,9 +125,11 @@ export default compose(
         location.reload()
       }
     },
-    registerSubmit: ({ auth, registerForm, setErrors }) => event => {
+    registerSubmit: ({ auth, registerForm, setErrors, setIsLoading }) => async event => {
       event.preventDefault()
-      apiSignUp({ user: registerForm }, auth, setErrors)
+      setIsLoading(true)
+      await apiSignUp({ user: registerForm }, auth, setErrors)
+      setIsLoading(false)
     },
     setRegisterValue: ({ registerForm, setRegisterForm }) => event => {
       const value =
