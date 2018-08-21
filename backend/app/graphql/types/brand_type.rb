@@ -61,4 +61,7 @@ Types::BrandType = GraphQL::ObjectType.define do
   field :isComplete, types.Boolean do
     resolve ->(obj, _args, _ctx) { obj.is_complete }
   end
+  field :shopifyCollectionId, types.String do
+    resolve ->(obj, _args, _ctx) { obj.shopify_collection_id }
+  end
 end

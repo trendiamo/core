@@ -1,9 +1,10 @@
-import { branch, compose, renderNothing, withProps, withState } from 'recompose'
+import Empty from './empty'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import React from 'react'
+import { branch, compose, renderNothing, withProps, withState } from 'recompose'
 
-const Products = () => (
+const Products = ({ collection }) => (
   <div
     className="container container--tiny"
     style={{
@@ -18,81 +19,48 @@ const Products = () => (
     }}
   >
     {'YOUR PRODUCTS'}
-    <div
-      style={{
-        backgroundColor: '#F4F4F4',
-        borderRadius: '6px',
-        margin: '1%',
-        width: '20%',
-      }}
-    >
-      <br />
-    </div>
-    <div
-      style={{
-        backgroundColor: '#F4F4F4',
-        borderRadius: '6px',
-        margin: '1%',
-      }}
-    >
-      <br />
-    </div>
-    <div
-      style={{
-        backgroundColor: '#F4F4F4',
-        borderRadius: '6px',
-        margin: '1%',
-        width: '35%',
-      }}
-    >
-      <br />
-    </div>
-    <div
-      style={{
-        backgroundColor: '#F4F4F4',
-        borderRadius: '6px',
-        margin: '1%',
-        width: '80%',
-      }}
-    >
-      <br />
-    </div>
-    <div
-      style={{
-        backgroundColor: 'white',
-        border: '2px solid rgb(200, 200, 200)',
-        borderRadius: '6px',
-        bottom: '-10%',
-        boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.18) 0px 4px 16px',
-        color: 'rgb(200, 200, 200)',
-        fontWeight: 'regular',
-        letterSpacing: '1px',
-        padding: '1%',
-        position: 'absolute',
-        right: '-3%',
-        transform: 'rotate(-20deg)',
-      }}
-    >
-      {'Empty'}
-    </div>
+    {collection.products ? (
+      <ul>{collection.products.edges.map(edge => <li key={edge.node.handle}>{edge.node.handle}</li>)}</ul>
+    ) : (
+      <Empty />
+    )}
   </div>
 )
 
 const collection = gql`
-  query {
-    collection(id: "gid://shopify/Collection/71688585273") {
+  query($shopifyId: ID!) {
+    collection(id: $shopifyId) {
       id
       handle
+      products(first: 10) {
+        edges {
+          node {
+            id
+            handle
+            images(first: 1) {
+              edges {
+                node {
+                  id
+                  originalSrc
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 `
 
 export default compose(
-  graphql(me, { options: { fetchPolicy: 'network-only' } }),
-  graphql(collection, { options: { fetchPolicy: 'network-only' } }),
+  graphql(collection, {
+    options: ({ brand }) => ({
+      variables: { shopifyId: `gid://shopify/Collection/` + brand.shopifyCollectionId },
+    }),
+  }),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     collection: data.collection,
   })),
-  withState('errors', 'setErrors', ({ collection }) => console.log(collection))
+  withState('errors', 'setErrors', ({ collection }) => console.log(collection.products))
 )(Products)

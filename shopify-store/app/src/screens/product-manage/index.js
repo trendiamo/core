@@ -1,19 +1,21 @@
 import { ApolloProvider } from 'react-apollo'
 import clientShopify from '../../graphql/client-shopify'
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
 import Loader from 'shared/loader'
 import Products from './products'
 import React from 'react'
-import { compose, withHandlers, withState } from 'recompose'
+import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
-const ProductManage = ({ isLoading, setInfoValue }) => (
+const ProductManage = ({ brand, isLoading, setInfoValue }) => (
   <React.Fragment>
     <Helmet>
       <title>{'My Products'}</title>
     </Helmet>
     <section className="section">
       <ApolloProvider client={clientShopify}>
-        <Products />
+        <Products brand={brand} />
       </ApolloProvider>
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
         {' '}
@@ -60,7 +62,23 @@ const ProductManage = ({ isLoading, setInfoValue }) => (
   </React.Fragment>
 )
 
+const me = gql`
+  query {
+    me {
+      brand {
+        id
+        shopifyCollectionId
+      }
+    }
+  }
+`
+
 export default compose(
+  graphql(me, { options: { fetchPolicy: 'network-only' } }),
+  branch(({ data }) => data && (data.loading || data.error), renderNothing),
+  withProps(({ data }) => ({
+    brand: data.me.brand,
+  })),
   withState('csv', 'setCsv', ''),
   withState('isLoading', 'setIsLoading', false),
   withHandlers({
