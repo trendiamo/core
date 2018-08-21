@@ -7,8 +7,8 @@ assets/ajax-cart.js.liquid:
 assets/app.js:
   development: 2018-07-30T08:13:27-04:00   a3d36b1c491d5229e40c037770d85d08
   fb: 2018-08-16T13:22:17-04:00   c242a3bd42c5bf42aa322aadc5bc4dec
-  production: 2018-08-20T17:44:36+01:00   46178e8eb1a517d3e01ac0508ab85dc6
-  trnd-mvp: 2018-08-21T09:56:53-04:00   26d92771d53e3a97230b7c8c8a750d26
+  production: 2018-08-21T17:32:24+01:00   66a24b28edfe15f573b244a5b8c7613c
+  trnd-mvp: 2018-08-21T12:26:58-04:00   4937563e15d8d745a83aacae8095770a
 assets/bc-sf-filter-ico.eot:
   fb: 2018-08-14T13:11:17-04:00   ceb95c781dfa863c03ec63b987e31fb9
   production: 2018-08-09T19:54:57+01:00   ceb95c781dfa863c03ec63b987e31fb9
@@ -143,7 +143,7 @@ assets/main.js.liquid:
 assets/main.scss.liquid:
   development: 2018-07-25T06:46:54-04:00   ba78a68d2591e949e2bef6895643ba23
   fb: 2018-08-14T13:11:32-04:00   b3ecf06b3a6d051ec0e3d8477181ad18
-  production: 2018-08-17T15:59:29+01:00   b8a48237029c2f30935ee47d4d18501f
+  production: 2018-08-21T17:32:23+01:00   705e063fc0d193256ad51d26b2fbf993
   trnd-mvp: 2018-08-21T09:44:10-04:00   705e063fc0d193256ad51d26b2fbf993
 assets/password.js.liquid:
   development: 2018-07-25T06:46:15-04:00   d5b0b4192b988c60cdfb399bf4a3646a
@@ -238,7 +238,7 @@ locales/de.json:
 locales/en.default.json:
   development: 2018-07-25T06:45:18-04:00   d5a62a09ed5461dc98994e9bf3daeac0
   fb: 2018-08-14T13:11:42-04:00   cd16c74f26f4ab9f3d5740725c27a565
-  production: 2018-08-10T23:06:06+01:00   cd16c74f26f4ab9f3d5740725c27a565
+  production: 2018-08-21T17:32:23+01:00   f52ee8f71c1bc01b0c2357cbe26ca66a
   trnd-mvp: 2018-08-21T08:53:40-04:00   f52ee8f71c1bc01b0c2357cbe26ca66a
 locales/es.json:
   development: 2018-07-25T06:45:22-04:00   d344a90992ec4af5724e01fb0c51bbd6
@@ -626,7 +626,7 @@ templates/customers/addresses.liquid:
   trnd-mvp: 2018-07-18T09:19:50-04:00   239959e593dfd74285045d8f9f75de00
 templates/customers/login.liquid:
   development: 2018-07-25T06:46:39-04:00   724a0784cca2b6e383def59a0e7c36c4
-  production: 2018-08-20T16:54:58+01:00   f98ffa98512464ee13644460c247ade1
+  production: 2018-08-21T17:32:21+01:00   a72ac3c6b037b27a5e4a5f9742507197
   trnd-mvp: 2018-08-21T09:50:37-04:00   a72ac3c6b037b27a5e4a5f9742507197
 templates/customers/order.liquid:
   development: 2018-07-25T06:45:32-04:00   8e1b1bd811b40a1c73ad8738c01ca9f2
@@ -634,7 +634,7 @@ templates/customers/order.liquid:
   trnd-mvp: 2018-07-18T09:20:15-04:00   8e1b1bd811b40a1c73ad8738c01ca9f2
 templates/customers/register.liquid:
   development: 2018-07-30T07:23:13-04:00   689eef33dff86264e5bd7f0b0d33bec3
-  production: 2018-08-20T16:54:59+01:00   685cf67f972a83b1d26df5445f655ba8
+  production: 2018-08-21T17:32:21+01:00   1ef747a4d7eba7077554b90afec300a0
   trnd-mvp: 2018-08-21T09:55:55-04:00   1ef747a4d7eba7077554b90afec300a0
 templates/customers/reset_password.liquid:
   development: 2018-07-25T06:46:38-04:00   34053a7ab47d64171765899a28a5d76c

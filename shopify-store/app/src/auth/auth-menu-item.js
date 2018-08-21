@@ -74,7 +74,7 @@ export default compose(
   graphql(me, { options: { fetchPolicy: 'network-only' } }),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
-    isBrandProfileComplete: data.me.brand && data.me.brand.isComplete,
+    isBrandProfileComplete: data.me && data.me.brand && data.me.brand.isComplete,
     me: data.me,
   })),
   withHandlers({
