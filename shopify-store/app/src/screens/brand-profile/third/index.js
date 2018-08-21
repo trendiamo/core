@@ -195,7 +195,6 @@ export default compose(
   withHandlers({
     brandInfoSubmit: ({ auth, brandInfoForm, history, mutate, setErrors, setIsLoading }) => event => {
       event.preventDefault()
-      event.target.blur()
       authGql(auth, async () => {
         const newBrandInfoForm = { ...brandInfoForm, isComplete: true }
         setIsLoading(true)
