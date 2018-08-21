@@ -1438,10 +1438,6 @@ circular-json@^0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
 
-classnames@^2.2.5:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
-
 cli-cursor@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-2.1.0.tgz#b35dac376479facc3e94747d41d0d0f5238ffcb5"
@@ -3765,13 +3761,6 @@ react-spinners@^0.4.4:
     prop-types "^15.5.10"
     react-emotion "^9.1.1"
     recompose "0.27.1"
-
-react-tooltip@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.6.1.tgz#2ca993baa50d7e0271b8d13c6024445a883842eb"
-  dependencies:
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
 
 react@^16.3.2:
   version "16.4.1"
