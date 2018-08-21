@@ -3,7 +3,7 @@ import { getSignedUrl } from 'app/utils'
 import React from 'react'
 import S3Upload from 'react-s3-uploader/s3upload'
 import styled from 'styled-components'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import { Progress, ProgressContainer, ProgressMessage } from 'shared/progress'
 import ReactCrop, { getPixelCrop, makeAspectCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
@@ -20,9 +20,9 @@ const PlusSign = styled.div`
 
 const Logo = ({
   crop,
-  croppedImage,
   doneCropping,
   image,
+  previewImage,
   progress,
   onCropChange,
   onCropComplete,
@@ -30,7 +30,6 @@ const Logo = ({
   onDrop,
   onImageLoaded,
   setImagePreviewRef,
-  value,
 }) => (
   <React.Fragment>
     <label>{'Brand logo'}</label>
@@ -44,9 +43,9 @@ const Logo = ({
         >
           <img
             alt=""
-            src={value ? value : croppedImage ? croppedImage : image ? image.preview : ''}
+            src={previewImage}
             style={{
-              backgroundColor: '#c3f2eb',
+              backgroundColor: previewImage ? '#dedede' : '#c3f2eb',
               borderRadius: '50%',
               display: 'block',
               height: '100%',
@@ -54,7 +53,7 @@ const Logo = ({
               width: '100%',
             }}
           />
-          {!image && <PlusSign>{'+'}</PlusSign>}
+          {!previewImage && <PlusSign>{'+'}</PlusSign>}
         </Dropzone>
       </div>
       <div className="o-layout__item u-3/4">
@@ -155,6 +154,9 @@ export default compose(
   withState('croppedImage', 'setCroppedImage', null),
   withState('doneCropping', 'setDoneCropping', false),
   withState('progress', 'setProgress', null),
+  withProps(({ croppedImage, image, value }) => ({
+    previewImage: value ? value : croppedImage ? croppedImage : image ? image.preview : '',
+  })),
   withHandlers(() => {
     let imagePreviewRef
     return {

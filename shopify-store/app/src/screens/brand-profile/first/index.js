@@ -1,4 +1,5 @@
 import { authGql } from 'auth/utils'
+import Errors from 'shared/errors'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
@@ -9,12 +10,13 @@ import Steps from 'screens/brand-profile/steps'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import countries, { countrySeparator } from 'shared/countries'
 
 const CorrectFormMargin = styled.div`
   margin-left: -18px;
 `
 
-const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, setInfoValue, setLogoValue }) => (
+const Info = ({ brandInfoForm, brandInfoSubmit, errors, setInfoValue, setLogoValue }) => (
   <React.Fragment>
     <Helmet>
       <title>{'Profile Information'}</title>
@@ -27,15 +29,11 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, setInfoValue,
         </div>
         <form acceptCharset="UTF-8" onSubmit={brandInfoSubmit}>
           {errors.length > 0 && (
-            <ul>
+            <Errors>
               {errors.map(error => (
-                <li key={error.key}>
-                  {error.key}
-                  {': '}
-                  {error.message}
-                </li>
+                <li key={error.key}>{error.message}</li>
               ))}
-            </ul>
+            </Errors>
           )}
           <Logo onChange={setLogoValue} value={brandInfoForm.logoUrl} />
           <label htmlFor="name">{'Brand name'}</label>
@@ -133,26 +131,28 @@ const Info = ({ brandInfoForm, brandInfoSubmit, canSubmit, errors, setInfoValue,
           </div>
           <div className="o-layout">
             <div className="o-layout__item u-1/1 u-1/1@tab">
-              <input
-                autoCapitalize="off"
-                autoCorrect="off"
-                name="legalAddressCountry"
-                onChange={setInfoValue}
-                placeholder="Country"
-                required
-                spellCheck="false"
-                type="text"
-                value={brandInfoForm.legalAddressCountry}
-              />
+              <div className="selector-wrapper">
+                <select
+                  name="legalAddressCountry"
+                  onChange={setInfoValue}
+                  required
+                  style={{ paddingLeft: '10px' }}
+                  value={brandInfoForm.legalAddressCountry}
+                >
+                  <option hidden value="">
+                    {'Please select a country'}
+                  </option>
+                  {countries.map(country => (
+                    <option disabled={country === countrySeparator} key={country}>
+                      {country}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
           <div className="account__form-buttons">
-            <input
-              className="c-btn c-btn--primary account__form-submit"
-              disabled={!canSubmit}
-              type="submit"
-              value="NEXT"
-            />
+            <input className="c-btn c-btn--primary account__form-submit" type="submit" value="NEXT" />
             <a className="link account__form-secondary-btn" href="/">
               {'CANCEL'}
             </a>
@@ -219,13 +219,12 @@ export default compose(
   graphql(updateBrand, {
     name: 'updateBrandMutation',
   }),
-  withState('canSubmit', 'setCanSubmit', false),
   withState('errors', 'setErrors', []),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     brand: data.me.brand,
   })),
-  withState('brandInfoForm', 'setBrandInfoForm', ({ brand, setCanSubmit }) => {
+  withState('brandInfoForm', 'setBrandInfoForm', ({ brand }) => {
     if (brand == null) {
       return {
         legalAddressCity: '',
@@ -238,7 +237,6 @@ export default compose(
         name: '',
       }
     } else {
-      setCanSubmit(brand.logoUrl.length > 0)
       return pick(brand, [
         'id',
         'legalAddressCity',
@@ -264,6 +262,10 @@ export default compose(
       setErrors,
     }) => event => {
       event.preventDefault()
+      if (brandInfoForm.logoUrl.length === 0) {
+        setErrors([{ key: 'logoUrl', message: 'A logo image is required' }])
+        return
+      }
       authGql(auth, async () => {
         const mutation = brand == null ? addBrandMutation : updateBrandMutation
         const { data } = await mutation({
@@ -280,10 +282,9 @@ export default compose(
     setInfoValue: ({ brandInfoForm, setBrandInfoForm }) => event => {
       setBrandInfoForm({ ...brandInfoForm, [event.target.name]: event.target.value })
     },
-    setLogoValue: ({ brandInfoForm, setCanSubmit, setBrandInfoForm }) => value => {
+    setLogoValue: ({ brandInfoForm, setBrandInfoForm }) => value => {
       const newBrandInfoForm = { ...brandInfoForm, logoUrl: value }
       setBrandInfoForm(newBrandInfoForm)
-      setCanSubmit(newBrandInfoForm.logoUrl.length > 0)
     },
   })
 )(Info)

@@ -4,9 +4,11 @@ import React from 'react'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
 const Register = ({
+  confirmPassword,
   isLoading,
   errors,
   isConfirmationNeeded,
+  onChangeConfirmPassword,
   onLoginSystemChange,
   registerForm,
   registerSubmit,
@@ -81,6 +83,15 @@ const Register = ({
             type="password"
             value={registerForm.password}
           />
+          <label htmlFor="ConfirmPassword">{'Confirm Password'}</label>
+          <input
+            id="ConfirmPassword"
+            name="confirmPassword"
+            onChange={onChangeConfirmPassword}
+            required
+            type="password"
+            value={confirmPassword}
+          />
           <label>{'Would you like to signup to our awesome newsletter?'}</label>
           <div>
             <input
@@ -114,22 +125,30 @@ export default compose(
     password: '',
     subscribedToNewsletter: '0',
   }),
+  withState('confirmPassword', 'setConfirmPassword', ''),
   withState('isLoading', 'setIsLoading', false),
   withState('errors', 'setErrors', ''),
   withProps(({ errors }) => ({
     isConfirmationNeeded: errors === '<ul><li>signed up but unconfirmed</li></ul>',
   })),
   withHandlers({
+    onChangeConfirmPassword: ({ setConfirmPassword }) => event => {
+      setConfirmPassword(event.target.value)
+    },
     onLoginSystemChange: () => event => {
       if (event.target.value === 'customer') {
         location.reload()
       }
     },
-    registerSubmit: ({ auth, registerForm, setErrors, setIsLoading }) => async event => {
+    registerSubmit: ({ auth, confirmPassword, registerForm, setErrors, setIsLoading }) => async event => {
       event.preventDefault()
-      setIsLoading(true)
-      await apiSignUp({ user: registerForm }, auth, setErrors)
-      setIsLoading(false)
+      if (confirmPassword !== registerForm.password) {
+        setErrors('<ul><li>Password and password confirmation need to match</li></ul>')
+      } else {
+        setIsLoading(true)
+        await apiSignUp({ user: registerForm }, auth, setErrors)
+        setIsLoading(false)
+      }
     },
     setRegisterValue: ({ registerForm, setRegisterForm }) => event => {
       const value =

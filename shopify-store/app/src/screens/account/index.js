@@ -6,7 +6,7 @@ import React from 'react'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { checkAuthError, treatAuthError } from 'auth/utils'
 
-const Account = ({ email, logout }) => (
+const Account = ({ email, isBrandProfileComplete, logout }) => (
   <React.Fragment>
     <Helmet>
       <title>{'My Account'}</title>
@@ -16,7 +16,16 @@ const Account = ({ email, logout }) => (
         <div className="section__title section__title--center section__title--desc">
           <h1 className="section__title-text h2">{'My Account'}</h1>
           <p className="section__title-desc">{`You are logged in as ${email}`}</p>
-          <Link to="/u/create-brand-profile/1">{'Set up business profile'}</Link>
+          <br />
+          {isBrandProfileComplete ? (
+            <Link className="c-btn c-btn--primary" to="/u/manage-products">
+              {'Manage Products'}
+            </Link>
+          ) : (
+            <Link className="c-btn c-btn--primary" to="/u/create-brand-profile/1">
+              {'Set up business profile'}
+            </Link>
+          )}
           <p className="section__title-desc">
             <a className="link" href="/account/logout" onClick={logout}>
               {'Log out'}
@@ -34,19 +43,21 @@ export default compose(
       query {
         me {
           email
+          brand {
+            id
+            isComplete
+          }
         }
       }
-    `
+    `,
+    { options: { fetchPolicy: 'network-only' } }
   ),
   branch(checkAuthError, treatAuthError),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     email: data.me.email,
+    isBrandProfileComplete: data.me.brand && data.me.brand.isComplete,
   })),
-  // If we're only showing email, we could have the following instead of the gql request:
-  // withProps(({ auth }) => ({
-  //   email: auth.email,
-  // })),
   withHandlers({
     logout: ({ auth }) => event => {
       event.preventDefault()

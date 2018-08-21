@@ -4,10 +4,10 @@ import { graphql } from 'react-apollo'
 import { navTo } from 'app/utils'
 // import IconLogin from 'icons/icon-login'
 import React from 'react'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
 
 const AuthMenuItem = ({
-  isComplete,
+  isBrandProfileComplete,
   mobile,
   logout,
   manageProducts,
@@ -16,13 +16,19 @@ const AuthMenuItem = ({
   onMainAccountClick,
 }) => (
   <React.Fragment>
-    <a
-      className={mobile ? 'mobile-nav__link' : 'nav__link--sub js-header-sub-link-a'}
-      href="/u/account"
-      onClick={onMainAccountClick}
-    >
-      {'Account'}
-    </a>
+    {mobile ? (
+      <a className="mobile-nav__link" href="/u/account" onClick={onMainAccountClick}>
+        <span className={isBrandProfileComplete ? '' : ' nav__link--hl'}>{'Account'}</span>
+      </a>
+    ) : (
+      <a
+        className={`nav__link--sub js-header-sub-link-a${isBrandProfileComplete || ' nav__link--hl'}`}
+        href="/u/account"
+        onClick={onMainAccountClick}
+      >
+        {'Account'}
+      </a>
+    )}
     {mobile || (
       <div className="nav__sub" id="sub-account">
         <div className="nav__sub-wrap">
@@ -35,10 +41,10 @@ const AuthMenuItem = ({
             <li className="nav__sub__item">
               <a
                 className="nav__sub__link"
-                href={isComplete ? '/u/manage-products' : '/u/create-brand-profile/1'}
-                onClick={isComplete ? manageProducts : onAccountUpgradeClick}
+                href={isBrandProfileComplete ? '/u/manage-products' : '/u/create-brand-profile/1'}
+                onClick={isBrandProfileComplete ? manageProducts : onAccountUpgradeClick}
               >
-                {isComplete ? 'Manage Products' : 'Set up business profile'}
+                {isBrandProfileComplete ? 'Manage Products' : 'Set up business profile'}
               </a>
             </li>
             <li className="nav__sub__item">
@@ -68,15 +74,9 @@ export default compose(
   graphql(me, { options: { fetchPolicy: 'network-only' } }),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
+    isBrandProfileComplete: data.me.brand && data.me.brand.isComplete,
     me: data.me,
   })),
-  withState('isComplete', 'setIsComplete', ({ me }) => {
-    if (me.brand) {
-      return me.brand.isComplete
-    } else {
-      return false
-    }
-  }),
   withHandlers({
     logout: ({ auth }) => event => {
       event.preventDefault()

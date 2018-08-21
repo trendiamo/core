@@ -53,11 +53,11 @@ const Login = ({
         <input name="password" onChange={setLoginValue} required type="password" value={loginForm.password} />
         <p className="account__reset-link">
           <a href="/u/password" onClick={onForgotPassword}>
-            {'Forgot Password?'}
+            {'Forgot your password?'}
           </a>
         </p>
         <div className="account__form-buttons">
-          <input className="c-btn c-btn--primary account__form-submit" type="submit" value="Sign In" />
+          <input className="c-btn c-btn--primary account__form-submit" type="submit" value="Login" />
           <a className="link account__form-secondary-btn" href="/account/register">
             {'Create Account'}
           </a>
@@ -84,6 +84,7 @@ export default compose(
     },
     onLoginSystemChange: () => event => {
       if (event.target.value === 'customer') {
+        window.location = `${location.pathname}#customer`
         location.reload()
       }
     },

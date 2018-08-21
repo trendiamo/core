@@ -1199,6 +1199,11 @@ textarea {
     }
 }
 
+a.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 form {
     overflow: hidden;
     position: relative;
@@ -4030,6 +4035,30 @@ iframe {
         margin-left: 6px;
         line-height: 0;
     }
+}
+
+.nav__link--hl {
+  &:before {
+    content: ' ';
+    position: absolute;
+    background-color: #d12328;
+    border-radius: 50%;
+    display: block;
+    width: 9px;
+    height: 9px;
+    right: 13px;
+    top: 4px;
+  }
+}
+
+.mobile-nav__link span {
+  position: relative;
+  &.nav__link--hl {
+    &:before {
+      right: -6px;
+      top: -1px;
+    }
+  }
 }
 
 .nav__sub__link {
