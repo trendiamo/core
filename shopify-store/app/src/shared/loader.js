@@ -28,13 +28,7 @@ const defaultStyles = {
 
 const Loader = ({ isLoading }) => (
   <div>
-    <Modal
-      appElement={document.body}
-      contentLabel="Loading"
-      defaultStyles={defaultStyles}
-      isOpen={isLoading}
-      // style={customStyles}
-    >
+    <Modal appElement={document.body} contentLabel="Loading" defaultStyles={defaultStyles} isOpen={isLoading}>
       <Spinner />
     </Modal>
   </div>

@@ -16,6 +16,7 @@
     "react-dropzone": "^4.2.13",
     "react-helmet": "^5.2.0",
     "react-image-crop": "^4.0.2",
+    "react-modal": "^3.5.1",
     "react-router-dom": "^4.3.1",
     "react-s3-uploader": "^4.8.0",
     "react-spinners": "^0.4.4",
