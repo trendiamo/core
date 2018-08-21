@@ -1,3 +1,5 @@
+import { ApolloProvider } from 'react-apollo'
+import clientShopify from '../../graphql/client-shopify'
 import { Helmet } from 'react-helmet'
 import Loader from 'shared/loader'
 import Products from './products'
@@ -10,7 +12,9 @@ const ProductManage = ({ isLoading, setInfoValue }) => (
       <title>{'My Products'}</title>
     </Helmet>
     <section className="section">
-      <Products />
+      <ApolloProvider client={clientShopify}>
+        <Products />
+      </ApolloProvider>
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
         {' '}
         <p>

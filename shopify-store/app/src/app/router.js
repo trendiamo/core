@@ -6,7 +6,7 @@ import CbpComplete from 'screens/brand-profile/fourth'
 import CbpInfo from 'screens/brand-profile/first'
 import CbpPreview from 'screens/brand-profile/second'
 import CbpShipping from 'screens/brand-profile/third'
-import client from './graphql'
+import clientBackend from 'graphql/client-backend'
 import Password from 'screens/password'
 import ProductManage from 'screens/product-manage'
 import React from 'react'
@@ -31,7 +31,7 @@ const ExposeNav = compose(
 
 const AppRouter = ({ auth }) => (
   <Router>
-    <ApolloProvider client={client}>
+    <ApolloProvider client={clientBackend}>
       <ExposeNav />
       <Route exact path="/u/account" render={() => <Account auth={auth} />} />
       <Route exact path="/u/password" render={() => <Password auth={auth} />} />
@@ -39,7 +39,7 @@ const AppRouter = ({ auth }) => (
       <Route exact path="/u/create-brand-profile/2" render={() => <CbpPreview auth={auth} />} />
       <Route exact path="/u/create-brand-profile/3" render={() => <CbpShipping auth={auth} />} />
       <Route exact path="/u/create-brand-profile/4" render={() => <CbpComplete auth={auth} />} />
-      <Route exact path="/u/manage-products" render={() => <ProductManage />} />
+      <Route component={ProductManage} exact path="/u/manage-products" />
     </ApolloProvider>
   </Router>
 )
