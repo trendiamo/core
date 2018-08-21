@@ -137,6 +137,7 @@ export default compose(
     },
     onLoginSystemChange: () => event => {
       if (event.target.value === 'customer') {
+        window.location = `${location.pathname}#customer`
         location.reload()
       }
     },

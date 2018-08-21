@@ -7,8 +7,8 @@ assets/ajax-cart.js.liquid:
 assets/app.js:
   development: 2018-07-30T08:13:27-04:00   a3d36b1c491d5229e40c037770d85d08
   fb: 2018-08-16T13:22:17-04:00   c242a3bd42c5bf42aa322aadc5bc4dec
-  production: 2018-08-21T17:32:24+01:00   66a24b28edfe15f573b244a5b8c7613c
-  trnd-mvp: 2018-08-21T12:26:58-04:00   4937563e15d8d745a83aacae8095770a
+  production: 2018-08-21T18:44:16+01:00   3b934bb28cc8318dc14f3f57156fe5ab
+  trnd-mvp: 2018-08-21T13:42:55-04:00   90a943fb76521501414a47804dc7a0df
 assets/bc-sf-filter-ico.eot:
   fb: 2018-08-14T13:11:17-04:00   ceb95c781dfa863c03ec63b987e31fb9
   production: 2018-08-09T19:54:57+01:00   ceb95c781dfa863c03ec63b987e31fb9
@@ -296,8 +296,8 @@ sections/footer.liquid:
 sections/header.liquid:
   development: 2018-07-25T09:12:08-04:00   f4a0035a3ec665b113dd1ccfc3b0d5aa
   fb: 2018-08-14T13:11:49-04:00   0dd514dd1daef7850b4e9efc3f5c704c
-  production: 2018-08-14T12:10:13+01:00   0dd514dd1daef7850b4e9efc3f5c704c
-  trnd-mvp: 2018-08-12T07:19:51-04:00   0dd514dd1daef7850b4e9efc3f5c704c
+  production: 2018-08-21T18:44:15+01:00   72a0d17bac11a9a57be5e1e68b684a88
+  trnd-mvp: 2018-08-21T13:42:50-04:00   72a0d17bac11a9a57be5e1e68b684a88
 sections/home-blog.liquid:
   development: 2018-07-25T06:45:10-04:00   6c6a4946be0b6fde5429eb2acb63b365
   fb: 2018-08-14T13:11:48-04:00   6c6a4946be0b6fde5429eb2acb63b365
@@ -420,8 +420,8 @@ sections/password-header.liquid:
 sections/product-template.liquid:
   development: 2018-07-30T07:23:13-04:00   93a4e46e1ebbbbfd17f0be23146712fd
   fb: 2018-08-14T13:12:01-04:00   c7fd8dff5599de8083cd79b306172b7c
-  production: 2018-08-10T19:06:14+01:00   c7fd8dff5599de8083cd79b306172b7c
-  trnd-mvp: 2018-08-12T07:19:50-04:00   c7fd8dff5599de8083cd79b306172b7c
+  production: 2018-08-21T18:44:15+01:00   381dc98e04e7aebc30b8d96cb42e8a4c
+  trnd-mvp: 2018-08-21T13:42:51-04:00   381dc98e04e7aebc30b8d96cb42e8a4c
 sections/promo-pop.liquid:
   development: 2018-07-25T06:46:57-04:00   313d0d921c5fc6e30ea9ca8d22215074
   fb: 2018-08-14T13:12:01-04:00   313d0d921c5fc6e30ea9ca8d22215074
