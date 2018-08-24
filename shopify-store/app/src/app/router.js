@@ -35,10 +35,10 @@ const AppRouter = ({ auth }) => (
       <ExposeNav />
       <Route exact path="/u/account" render={() => <Account auth={auth} />} />
       <Route exact path="/u/password" render={() => <Password auth={auth} />} />
-      <Route component={CbpInfo} exact path="/u/create-brand-profile/1" />
-      <Route component={CbpPreview} exact path="/u/create-brand-profile/2" />
-      <Route component={CbpShipping} exact path="/u/create-brand-profile/3" />
-      <Route component={CbpComplete} exact path="/u/create-brand-profile/4" />
+      <Route exact path="/u/create-brand-profile/1" render={() => <CbpInfo auth={auth} />} />
+      <Route exact path="/u/create-brand-profile/2" render={() => <CbpPreview auth={auth} />} />
+      <Route exact path="/u/create-brand-profile/3" render={() => <CbpShipping auth={auth} />} />
+      <Route exact path="/u/create-brand-profile/4" render={() => <CbpComplete auth={auth} />} />
       <Route exact path="/u/manage-products" render={() => <ProductManage />} />
     </ApolloProvider>
   </Router>
