@@ -52,7 +52,7 @@ export default compose(
   withState('errors', 'setErrors', ''),
   withState('isLoading', 'setIsLoading', false),
   withHandlers({
-    passwordResetSubmit: ({ isLoading, passwordForm, setErrors, auth, setIsLoading }) => async event => {
+    passwordResetSubmit: ({ passwordForm, setErrors, auth, setIsLoading }) => async event => {
       event.preventDefault()
       setIsLoading(true)
       if (passwordForm.fieldOne === passwordForm.fieldTwo) {

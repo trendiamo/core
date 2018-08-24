@@ -99,6 +99,11 @@ export default compose(
     onAuthChange: () => isLoggedIn => {
       if (!isLoggedIn) location.reload()
     },
+    onBrandInfoComplete: ({ setIsComplete }) => authMetadata => {
+      if (authMetadata.isBrandProfileComplete) {
+        setIsComplete(authMetadata.isBrandProfileComplete)
+      }
+    },
     onMainAccountClick: ({ mobile }) => event => {
       event.preventDefault()
       if (mobile) {
@@ -109,12 +114,14 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { auth, onAuthChange } = this.props
+      const { auth, onAuthChange, onBrandInfoComplete } = this.props
       auth.addAuthListener(onAuthChange)
+      auth.addAuthListener(onBrandInfoComplete)
     },
     componentWillUnmount() {
-      const { auth, onAuthChange } = this.props
+      const { auth, onAuthChange, onBrandInfoComplete } = this.props
       auth.removeAuthListener(onAuthChange)
+      auth.removeAuthListener(onBrandInfoComplete)
     },
   })
 )(AuthMenuItem)
