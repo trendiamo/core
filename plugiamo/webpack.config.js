@@ -26,6 +26,10 @@ module.exports = {
   },
   // plugins: [new webpack.EnvironmentPlugin(['API_ENDPOINT'])],
   resolve: {
+    alias: {
+      react: 'preact-compat',
+      'react-dom': 'preact-compat',
+    },
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
   watch: true,
