@@ -20,7 +20,9 @@ const Register = ({
         <h1 className="section__title-text h2">{'Create Brand Account'}</h1>
       </div>
       {isConfirmationNeeded ? (
-        <p>{'Please check your email and follow the confirmation link there to continue. Thank you!'}</p>
+        <p style={{ textAlign: 'center' }}>
+          {'Please check your email and follow the confirmation link there to continue. Thank you!'}
+        </p>
       ) : (
         <form acceptCharset="UTF-8" onSubmit={registerSubmit}>
           <Loader isLoading={isLoading} />
