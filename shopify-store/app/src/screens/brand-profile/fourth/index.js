@@ -1,5 +1,7 @@
 import { compose } from 'recompose'
 import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom'
+
 import React from 'react'
 
 const Complete = () => (
@@ -7,19 +9,19 @@ const Complete = () => (
     <Helmet>
       <title>{'Success'}</title>
     </Helmet>
-    <section className="section">
+    <section className="section section--account account account--main">
       <div className="container container--tiny">
-        <div className="section__title section__title--center">
+        <div className="section__title section__title--center section__title--desc">
           <h1 className="section__title-text h2">{'SUCCESS'}</h1>
-        </div>
-        <div className="o-layout">
-          <div className="o-layout__item u-1/1 u-1/1@tab">
-            <p>
-              {
-                'You successfully upgraded your account to a brand profile! You can now begin to upload your products to Trendiamo and start selling them.'
-              }
-            </p>
-          </div>
+          <br />
+          <p>
+            {
+              'Your brand details have been successfully saved! You can now begin to upload your products to Trendiamo and start selling them.'
+            }
+          </p>
+          <Link className="c-btn c-btn--primary" to="/u/manage-products">
+            {'Manage Products'}
+          </Link>
         </div>
       </div>
     </section>
