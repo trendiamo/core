@@ -6521,7 +6521,8 @@ button.action-link {
 			margin-top: 0;
 		}
 	}
-	.promo-pop__title.promo-pop__title {
+	.promo-pop__title.promo-pop__title,
+  .generic-pop__title.generic-pop__title {
 		margin-bottom: 12px;
 	}
 	@include mq-max($tab) {
@@ -8187,7 +8188,8 @@ button.action-link {
 /* ==========================================================================
    #PROMOTION POPUP SECTION
    ========================================================================== */
-.promo-pop {
+.promo-pop,
+.generic-pop {
     position: fixed;
     right: 42px;
     bottom: 30px;
@@ -8208,14 +8210,16 @@ button.action-link {
 
     top: auto !important; //adding this to fix logged in top bar UI
 }
-.promo-pop--disabled {
+.promo-pop--disabled,
+.generic-pop--disabled {
     display: none;
     &.js-active {
         display: block;
     }
 }
 
-.promo-pop__close {
+.promo-pop__close,
+.generic-pop__close {
     position: absolute;
     right: 0;
     top: 0;
@@ -8233,15 +8237,18 @@ button.action-link {
     }
 }
 
-.promo-pop__title {
+.promo-pop__title,
+.generic-pop__title {
     margin-bottom: 24px;
     padding-right: 24px;
 }
 
-.promo-pop__form {
+.promo-pop__form,
+.generic-pop__form {
     margin-top: 18px;
 }
-.promo-pop__input {
+.promo-pop__input,
+.generic-pop__input {
     width: 100%;
     float: left;
     margin: 0;
@@ -8249,18 +8256,21 @@ button.action-link {
         outline: none;
     }
 }
-.promo-pop__btn {
+.promo-pop__btn,
+.generic-pop__btn {
     position: absolute;
     right: 0px;
     top: 0px;
 }
 
-.promo-pop__link {
+.promo-pop__link,
+.generic-pop__link {
     margin-top: 18px;
     display: inline-block;
 }
 
-.promo-pop--overlay {
+.promo-pop--overlay,
+.generic-pop--overlay {
   display: none;
   position: absolute;
   top: 0;
@@ -8272,15 +8282,18 @@ button.action-link {
 }
 
 @include mq-max($tab) {
-    .promo-pop {
+    .promo-pop,
+    .generic-pop, {
         max-width: 80%;
     }
-    .promo-pop__btn {
+    .promo-pop__btn,
+    .generic-pop__btn {
       width: 100%;
       margin-top: 12px;
       position: static;
     }
-    .promo-pop--overlay.js-active {
+    .promo-pop--overlay.js-active,
+    .generic-pop--overlay.js-active {
       display: block;
     }
 }
@@ -9293,7 +9306,8 @@ img.mfp-img {
 	z-index: 11 !important;
 }
 
-.promo-pop {
+.promo-pop,
+.generic-pop {
 	z-index: 12;
 }
 
