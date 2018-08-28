@@ -211,7 +211,7 @@
 
                                           <div class="product-stock-info-container">
                                             <div class="product-stock-info {% if produced_on_demand == 1 %}product-stock-demand{% else %}product-stock-stock{% endif %}">
-                                              {% if produced_on_demand == 1 %}produced on demand{% else %}shipping: {{ shipping_timeframe }}{% endif %}
+                                              {% if produced_on_demand == 1 %}produced on demand{% else %}free shipping: {{ shipping_timeframe }}{% endif %}
                                             </div><div class="product-stock-mark-container"><a class="product-stock-mark" target="_blank" href="{{ shipping_terms_link }}">?</a></div>
                                           </div>
 
@@ -360,7 +360,7 @@
                                 {%- if business_name != null and business_location != null -%}
                                   <div class="product-supplier-info">
                                     Supplied and shipped by {{ business_name }} - {{ business_location }} <br>
-                                    <a class="action-link link--arrow" href="{{ shipping_terms_link }}">Learn more</a>
+                                    <a class="action-link link--arrow" href="{{ shipping_terms_link }}">Learn more about shipping</a>
                                   </div>
                                 {%- endif -%}
 

@@ -32,8 +32,7 @@
       "signup_form_email_label": "Email",
       "signup_form_email_placeholder": "email@example.com",
       "signup_form_success": "We will send you an email right before we open!",
-      "admin_link_html":
-        "Are you the store owner? <a href=\"/admin\">Log in here</a>",
+      "admin_link_html": "Are you the store owner? <a href=\"\/admin\">Log in here<\/a>",
       "password_link": "Enter using password",
       "powered_by_shopify_html": "This shop will be powered by {{ shopify }}"
     }
@@ -68,10 +67,8 @@
       "email": "Email",
       "message": "Message",
       "post": "Post comment",
-      "moderated":
-        "Please note, comments must be approved before they are published",
-      "success_moderated":
-        "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
       "success": "Your comment was posted successfully! Thank you!",
       "with_count": {
         "one": "{{ count }} comment",
@@ -85,7 +82,7 @@
       "remove": "Remove",
       "note": "Special instructions for seller",
       "subtotal": "Subtotal",
-      "shipping_at_checkout": "Shipping & taxes included in all prices!",
+      "shipping_at_checkout": "Free shipping & returns!",
       "update": "Update Cart",
       "checkout": "Check Out",
       "continue_shopping": "Continue shopping",
@@ -122,25 +119,21 @@
       "phone": "Phone Number",
       "message": "Message",
       "send": "Send",
-      "post_success":
-        "Thanks for contacting us. We'll get back to you as soon as possible."
+      "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
     }
   },
   "homepage": {
     "onboarding": {
       "product_title": "Example Product Title",
       "product_vendor": "Vendor",
-      "product_text":
-        "This area is used to describe your product’s details. Tell customers about the look, feel, and style of your product. Add details on color, materials used, sizing, and where it was made.",
+      "product_text": "This area is used to describe your product’s details. Tell customers about the look, feel, and style of your product. Add details on color, materials used, sizing, and where it was made.",
       "product_more_label": "Learn more",
       "collection_title": "Example Collection Title",
       "blog_title": "Your post's title",
-      "blog_excerpt":
-        "Your store hasn’t published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers.",
+      "blog_excerpt": "Your store hasn’t published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers.",
       "blog_author": "Author name",
-      "blog_date": "07/12/17",
-      "no_content":
-        "This section doesn’t currently include any content. Add content to this section using the sidebar."
+      "blog_date": "07\/12\/17",
+      "no_content": "This section doesn’t currently include any content. Add content to this section using the sidebar."
     }
   },
   "layout": {
@@ -187,8 +180,7 @@
       "disabled": "Disabled",
       "expired": "Expired on {{ expiry }}",
       "active": "Expires on {{ expiry }}",
-      "redeem_html":
-        "Use this code at checkout to redeem your {{ value }} gift card",
+      "redeem_html": "Use this code at checkout to redeem your {{ value }} gift card",
       "shop_link": "Start shopping",
       "print": "Print this gift card",
       "remaining_html": "{{ balance }} left",
@@ -222,7 +214,7 @@
       "city": "City",
       "country": "Country",
       "province": "Province",
-      "zip": "Postal/Zip Code",
+      "zip": "Postal\/Zip Code",
       "phone": "Phone",
       "set_default": "Set as default address",
       "add": "Add Address",
