@@ -1,5 +1,6 @@
 import { apiPassword } from 'auth/utils'
 import React from 'react'
+import SuccessIcon from 'shared/success-icon'
 import { compose, withHandlers, withState } from 'recompose'
 
 const Password = ({ errors, passwordForm, setEmailValue, passwordChangeSubmit, submitted }) => (
@@ -10,6 +11,9 @@ const Password = ({ errors, passwordForm, setEmailValue, passwordChangeSubmit, s
       </div>
       {submitted ? (
         <div className="account__note success" id="ResetSuccess">
+          <SuccessIcon />
+          <br />
+          <br />
           <p>
             {
               'If you entered a correct email address, you will have recieved an email with a link to update your password.'
