@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
 import Loader from 'shared/loader'
-import Products from './products'
+import ProductsList from './products-list'
 import React from 'react'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
@@ -15,7 +15,7 @@ const ProductManage = ({ brand, isLoading, setInfoValue }) => (
     </Helmet>
     <section className="section">
       <ApolloProvider client={clientShopify}>
-        <Products brand={brand} />
+        <ProductsList brand={brand} />
       </ApolloProvider>
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
         {' '}
