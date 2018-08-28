@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo'
 import Product from './product'
 import React from 'react'
 import styled from 'styled-components'
-import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
 
 const PAGE_SIZE = 10
 
@@ -70,7 +70,7 @@ const ProductsList = ({
 }) => (
   <ProductsDiv className="container container--small">
     <ProductsDivHeaders>
-      <ProductsDivHeadersProducts>{`YOUR PRODUCTS (${productsCount})`}</ProductsDivHeadersProducts>
+      <ProductsDivHeadersProducts>{`Your Products (${productsCount})`}</ProductsDivHeadersProducts>
       {productsCount > 0 && (
         <ProductsDivHeadersDeleteAll onClick={deleteAllProducts}>{'Delete all'}</ProductsDivHeadersDeleteAll>
       )}
@@ -115,6 +115,7 @@ const Collection = gql`
           node {
             id
             handle
+            title
             variants(first: 10) {
               edges {
                 node {
@@ -225,6 +226,11 @@ export default compose(
     },
     previousPage: ({ CollectionQuery, products }) => () => {
       CollectionQuery.refetch({ after: undefined, before: products[0].cursor, first: undefined, last: PAGE_SIZE })
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      window.scrollTo(0, 0)
     },
   })
 )(ProductsList)

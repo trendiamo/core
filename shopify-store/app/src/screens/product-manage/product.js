@@ -7,14 +7,15 @@ const Li = styled.li`
   display: flex;
   flex-wrap: wrap;
   background-color: #f4f4f4;
-  margin: 1% 0;
+  margin: 0% 0% 20%;
   border-radius: 6px;
   overflow: hidden;
-  height: 50vh;
+  height: 60vh;
   flex-direction: column;
   @media screen and (min-width: 575px) {
     height: 8rem;
     flex-direction: row;
+    margin: 1% 0;
   }
 }
 `
@@ -25,39 +26,58 @@ const StyledIconTrash = styled(IconTrash)`
 `
 
 const H6 = styled.h6`
-  margin: auto;
-  flex: 6;
-  padding: 1rem;
+  flex: 1;
+  margin: 0% 0% 0%;
+  text-align: center;
+  padding: 0;
+  @media screen and (min-width: 575px) {
+    margin: auto;
+    flex: 6;
+    padding: 1rem;
+  }
 `
 const P = styled.p`
-  margin: auto;
-  flex: 6;
-  padding: 1rem;
+  flex: 1;
+  margin: 0% 0% 0%;
+  text-align: center;
+  @media screen and (min-width: 575px) {
+    margin: auto;
+    flex: 6;
+    padding: 1rem;
+  }
 `
 
 const Figure = styled.figure`
   background-image: ${({ background }) => (background ? `url('${background}')` : `'none'`)};
-  flex: 2;
+  flex: 10;
   margin: 0;
   background-size: cover;
   background-position: center;
+  @media screen and (min-width: 575px) {
+    flex: 2;
+  }
 `
 const Button = styled.button`
   background-color: #fd898a;
   border: 0;
-  flex: 1;
+  flex: 2;
   cursor: pointer;
   opacity: 0.8;
   transition: 0.3s;
+  max-height: 10%;
   &:hover {
     opacity: 1;
   }
+  @media screen and (min-width: 575px) {
+    flex: 1;
+    max-height: 100%;
+  }
 `
 
-const Product = ({ deleteProductChild, handle, imageUrl, variants }) => (
+const Product = ({ deleteProductChild, title, imageUrl, variants }) => (
   <Li>
     <Figure background={imageUrl} />
-    <H6>{handle}</H6>
+    <H6>{title}</H6>
     {variants && (
       <P>
         {'Variants: ' + variants.map(variant => `${variant.title} (${variant.inventoryQuantity} In stock)`).join(', ')}
@@ -71,8 +91,8 @@ const Product = ({ deleteProductChild, handle, imageUrl, variants }) => (
 
 export default compose(
   withProps(({ edge }) => ({
-    handle: edge.handle,
     imageUrl: edge.images.edges[0].node.originalSrc,
+    title: edge.title,
     variants: edge.variants.edges.map(edge => edge.node),
   })),
   withHandlers({
