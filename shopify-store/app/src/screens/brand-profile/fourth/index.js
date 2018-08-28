@@ -1,8 +1,8 @@
 import { compose } from 'recompose'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
-
 import React from 'react'
+import SuccessIcon from 'shared/success-icon'
 
 const Complete = () => (
   <React.Fragment>
@@ -13,6 +13,7 @@ const Complete = () => (
       <div className="container container--tiny">
         <div className="section__title section__title--center section__title--desc">
           <h1 className="section__title-text h2">{'SUCCESS'}</h1>
+          <SuccessIcon />
           <br />
           <p>
             {
