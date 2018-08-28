@@ -7,8 +7,8 @@ assets/ajax-cart.js.liquid:
 assets/app.js:
   development: 2018-07-30T08:13:27-04:00   a3d36b1c491d5229e40c037770d85d08
   fb: 2018-08-16T13:22:17-04:00   c242a3bd42c5bf42aa322aadc5bc4dec
-  production: 2018-08-21T18:44:16+01:00   3b934bb28cc8318dc14f3f57156fe5ab
-  trnd-mvp: 2018-08-28T09:39:06-04:00   3b934bb28cc8318dc14f3f57156fe5ab
+  production: 2018-08-28T18:17:16+01:00   df7e51c27f9c6128430c78f0ccc5c1ec
+  trnd-mvp: 2018-08-28T13:16:31-04:00   b7dea82b4eac5ddf5b61371782f547d1
 assets/bc-sf-filter-ico.eot:
   fb: 2018-08-14T13:11:17-04:00   ceb95c781dfa863c03ec63b987e31fb9
   production: 2018-08-09T19:54:57+01:00   ceb95c781dfa863c03ec63b987e31fb9
@@ -28,7 +28,7 @@ assets/bc-sf-filter-ico.woff:
 assets/bc-sf-filter-lib.js:
   fb: 2018-08-14T13:11:23-04:00   d268d8aef257f3a287a5025119500b74
   production: 2018-08-09T20:05:39+01:00   d268d8aef257f3a287a5025119500b74
-  trnd-mvp: 2018-08-12T07:19:35-04:00   d268d8aef257f3a287a5025119500b74
+  trnd-mvp: 2018-08-28T11:52:34-04:00   d268d8aef257f3a287a5025119500b74
 assets/bc-sf-filter-loading.gif:
   fb: 2018-08-14T13:11:19-04:00   4f0d7a057ab9bf47148d131d6823bc61
   production: 2018-08-09T19:55:04+01:00   4f0d7a057ab9bf47148d131d6823bc61
@@ -40,7 +40,7 @@ assets/bc-sf-filter-no-image.gif:
 assets/bc-sf-filter.js:
   fb: 2018-08-14T13:11:20-04:00   542ad7e0295f74efc4918225139ed722
   production: 2018-08-10T17:33:28+01:00   542ad7e0295f74efc4918225139ed722
-  trnd-mvp: 2018-08-12T07:19:38-04:00   542ad7e0295f74efc4918225139ed722
+  trnd-mvp: 2018-08-28T11:52:17-04:00   542ad7e0295f74efc4918225139ed722
 assets/bc-sf-filter.scss.liquid:
   fb: 2018-08-14T13:11:21-04:00   c7d319a154367f91f88c436fb4f8a7e8
   production: 2018-08-10T23:55:40+01:00   c7d319a154367f91f88c436fb4f8a7e8
@@ -138,13 +138,13 @@ assets/jquery.currencies.min.js:
 assets/main.js.liquid:
   development: 2018-07-25T06:47:00-04:00   c4b192008830ca1ee43192d0f38264e0
   fb: 2018-08-14T13:11:31-04:00   c4b192008830ca1ee43192d0f38264e0
-  production: 2018-08-09T19:51:51+01:00   c4b192008830ca1ee43192d0f38264e0
+  production: 2018-08-28T18:17:03+01:00   54b31b808d8c8700b4e35b3c7df87b5b
   trnd-mvp: 2018-08-28T10:56:56-04:00   54b31b808d8c8700b4e35b3c7df87b5b
 assets/main.scss.liquid:
   development: 2018-07-25T06:46:54-04:00   ba78a68d2591e949e2bef6895643ba23
   fb: 2018-08-14T13:11:32-04:00   b3ecf06b3a6d051ec0e3d8477181ad18
-  production: 2018-08-23T19:35:14+01:00   761073949345bdb01cc1603be1bf2bc4
-  trnd-mvp: 2018-08-28T10:40:18-04:00   7dd8a91f603bd64c5536eb3e7624620e
+  production: 2018-08-28T18:17:08+01:00   79f41df0d0e60e5dc6a7f7cc4bd23e3e
+  trnd-mvp: 2018-08-28T12:48:06-04:00   79f41df0d0e60e5dc6a7f7cc4bd23e3e
 assets/password.js.liquid:
   development: 2018-07-25T06:46:15-04:00   d5b0b4192b988c60cdfb399bf4a3646a
   fb: 2018-08-14T13:11:32-04:00   d5b0b4192b988c60cdfb399bf4a3646a
@@ -228,7 +228,7 @@ layout/password.liquid:
 layout/theme.liquid:
   development: 2018-07-30T07:23:13-04:00   af182b30a7069c6b1d6f01ed7bc9f36e
   fb: 2018-08-14T13:11:41-04:00   c06bcd0150d45b3f57ed370ac1e46622
-  production: 2018-08-17T10:27:41+01:00   222379b290c8edcd76d7d874dd50ddc8
+  production: 2018-08-28T18:17:04+01:00   4c5e917a6d6c35cd37e05bce80fe2c16
   trnd-mvp: 2018-08-28T09:39:04-04:00   4c5e917a6d6c35cd37e05bce80fe2c16
 locales/de.json:
   development: 2018-07-25T06:46:16-04:00   c49286b9c3cdfd4d9c363ab7b26803cf
@@ -294,11 +294,12 @@ sections/footer.liquid:
   production: 2018-08-09T19:52:52+01:00   e7c275f0c9c1cba26724cabae421c252
   trnd-mvp: 2018-07-23T06:09:33-04:00   e7c275f0c9c1cba26724cabae421c252
 sections/generic-pop.liquid:
-  trnd-mvp: 2018-08-28T10:24:01-04:00   c4204da642d31bdcc1e00253b3d05cf6
+  production: 2018-08-28T18:17:05+01:00   7589bec558473f57a07663907a8af674
+  trnd-mvp: 2018-08-28T12:36:39-04:00   7589bec558473f57a07663907a8af674
 sections/header.liquid:
   development: 2018-07-25T09:12:08-04:00   f4a0035a3ec665b113dd1ccfc3b0d5aa
   fb: 2018-08-14T13:11:49-04:00   0dd514dd1daef7850b4e9efc3f5c704c
-  production: 2018-08-22T10:48:30+01:00   f5c5b145ff8cdd1f31c958506845506e
+  production: 2018-08-28T18:17:04+01:00   c01c9661e5ca5a0f2501bbc496e4c4f9
   trnd-mvp: 2018-08-28T10:09:29-04:00   c01c9661e5ca5a0f2501bbc496e4c4f9
 sections/home-blog.liquid:
   development: 2018-07-25T06:45:10-04:00   6c6a4946be0b6fde5429eb2acb63b365
@@ -427,7 +428,7 @@ sections/product-template.liquid:
 sections/promo-pop.liquid:
   development: 2018-07-25T06:46:57-04:00   313d0d921c5fc6e30ea9ca8d22215074
   fb: 2018-08-14T13:12:01-04:00   313d0d921c5fc6e30ea9ca8d22215074
-  production: 2018-08-23T19:28:02+01:00   3c8d0b4d62bd2ac59b649558992b34db
+  production: 2018-08-28T18:17:02+01:00   28fa6ab6d6bb72dcdb992e1c045b15ea
   trnd-mvp: 2018-08-28T09:39:05-04:00   28fa6ab6d6bb72dcdb992e1c045b15ea
 sections/sswinstagram.liquid:
   fb: 2018-08-14T13:12:07-04:00   ee717c1fb67460b7f9c660386c452418

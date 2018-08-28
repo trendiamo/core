@@ -24,6 +24,35 @@
                 <div class="generic-pop__desc rte">{{ section.settings.text }}</div>
             {% endunless %}
 
+            {% if section.settings.enable_newsletter %}
+                <div class="generic-pop__form">
+                    {% form 'customer' %}
+                        {{ form.errors | default_errors }}
+                        {% if form.posted_successfully? %}
+                            {% comment %}Set delay to 0 so form message is visible instanlty{% endcomment %}
+                            {%- assign popup_delay = 0 -%}
+                            <div class="generic-pop__form-message">
+                                <h4 class="generic-pop__form-message__text">{{ 'general.newsletter_form.confirmation' | t }}</h4>
+                            </div>
+                        {% else %}
+                            <div class="generic-pop__fieldset">
+                                <input type="hidden" name="contact[tags]" value="newsletter">
+                                <input type="email"
+                                        name="contact[email]"
+                                        id="Email"
+                                        class="generic-pop__fieldset-item generic-pop__input"
+                                        value="{% if customer %}{{ customer.email }}{% endif %}"
+                                        placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}"
+                                        autocorrect="off"
+                                        autocapitalize="off">
+
+                                <button type="submit" class="c-btn c-btn--primary c-btn--arrow generic-pop__fieldset-item generic-pop__btn" name="commit" id="Subscribe">{{ 'general.newsletter_form.submit' | t }}</button>
+                            </div>
+                        {% endif %}
+                    {% endform %}
+                </div>
+            {% endif %}
+
             {% unless section.settings.link == blank %}
                 <a href="{{ section.settings.link }}" class="c-btn c-btn--primary c-btn--arrow c-btn--full generic-pop__link">{{ section.settings.link_title | escape }}</a>
             {% endunless %}
@@ -103,6 +132,12 @@
         {
             "type": "paragraph",
             "content": "Every sign up will create a 'Customer account' in this store. [Manage customers](/admin/customers?query=&accepts_marketing=1)"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_newsletter",
+            "label": "Enable newsletter",
+            "default": true
         }
     ]
 }

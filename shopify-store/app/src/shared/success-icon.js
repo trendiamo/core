@@ -1,18 +1,11 @@
-import { FaCheckCircle } from 'react-icons/fa'
-import { IconContext } from 'react-icons'
-import React from 'react'
+import IconSuccess from 'icons/icon-success'
+import styled from 'styled-components'
 
-const SuccessIcon = () => (
-  <IconContext.Provider
-    value={{
-      className: 'global-class-name',
-      color: '#6A8AD4',
-      size: '100',
-      style: { marginTop: '50px' },
-    }}
-  >
-    <FaCheckCircle />
-  </IconContext.Provider>
-)
+const SuccessIcon = styled(IconSuccess)`
+  width: 100px;
+  height: 100px;
+  fill: #6a8ad4;
+  margin-top: 50px;
+`
 
 export default SuccessIcon
