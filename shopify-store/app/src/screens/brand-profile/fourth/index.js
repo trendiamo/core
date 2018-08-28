@@ -1,6 +1,6 @@
+import { compose } from 'recompose'
 import { Helmet } from 'react-helmet'
 import React from 'react'
-import { compose, lifecycle } from 'recompose'
 
 const Complete = () => (
   <React.Fragment>
@@ -26,11 +26,4 @@ const Complete = () => (
   </React.Fragment>
 )
 
-export default compose(
-  lifecycle({
-    componentDidMount() {
-      const { auth } = this.props
-      auth.setMetadata({ isBrandProfileComplete: true })
-    },
-  })
-)(Complete)
+export default compose()(Complete)
