@@ -1,6 +1,7 @@
 import { apiSignUp } from 'auth/utils'
 import Loader from 'shared/loader'
 import React from 'react'
+import SuccessIcon from 'shared/success-icon'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
 const Register = ({
@@ -20,9 +21,14 @@ const Register = ({
         <h1 className="section__title-text h2">{'Create Brand Account'}</h1>
       </div>
       {isConfirmationNeeded ? (
-        <p style={{ textAlign: 'center' }}>
-          {'Please check your email and follow the confirmation link there to continue. Thank you!'}
-        </p>
+        <div className="account__note success">
+          <SuccessIcon />
+          <br />
+          <br />
+          <p style={{ textAlign: 'center' }}>
+            {'Please check your email and follow the confirmation link there to continue. Thank you!'}
+          </p>
+        </div>
       ) : (
         <form acceptCharset="UTF-8" onSubmit={registerSubmit}>
           <Loader isLoading={isLoading} />
