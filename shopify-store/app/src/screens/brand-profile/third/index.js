@@ -205,6 +205,7 @@ export default compose(
         if (data.updateBrand.errors && data.updateBrand.errors.length) {
           setErrors(data.updateBrand.errors)
         } else {
+          auth.setMetadata({ isBrandProfileComplete: true })
           history.push('/u/create-brand-profile/4')
         }
       })

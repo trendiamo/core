@@ -10,7 +10,7 @@ const newAuth = () => ({
     this.token = null
     this.metadata = null
     this.isLoggedIn = false
-    this.authListeners.forEach(fn => fn(false))
+    this.authListeners.forEach(fn => fn(this))
   },
   email: null,
   headers() {
@@ -37,11 +37,11 @@ const newAuth = () => ({
     this.email = email
     this.token = token
     this.isLoggedIn = true
-    this.authListeners.forEach(fn => fn(true))
+    this.authListeners.forEach(fn => fn(this))
   },
   setMetadata(newMetadata) {
     this.metadata = { ...this.metadata, ...newMetadata }
-    this.authListeners.forEach(fn => fn(this.metadata))
+    this.authListeners.forEach(fn => fn(this))
   },
   token: null,
 })

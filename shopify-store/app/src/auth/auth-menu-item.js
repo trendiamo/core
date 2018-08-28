@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo'
 import { navTo } from 'app/utils'
 // import IconLogin from 'icons/icon-login'
 import React from 'react'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
 const AuthMenuItem = ({
   isBrandProfileComplete,
@@ -73,9 +73,9 @@ const me = gql`
 export default compose(
   graphql(me, { options: { fetchPolicy: 'network-only' } }),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
-  withProps(({ data }) => ({
-    isBrandProfileComplete: data.me && data.me.brand && data.me.brand.isComplete,
-    me: data.me,
+  withState('isCompleteFromClient', 'setIsCompleteFromClient', false),
+  withProps(({ data, isCompleteFromClient }) => ({
+    isBrandProfileComplete: (data.me && data.me.brand && data.me.brand.isComplete) || isCompleteFromClient,
   })),
   withHandlers({
     logout: ({ auth }) => event => {
@@ -96,12 +96,12 @@ export default compose(
       event.preventDefault()
       navTo('/u/create-brand-profile/1')
     },
-    onAuthChange: () => isLoggedIn => {
-      if (!isLoggedIn) location.reload()
+    onAuthChange: () => auth => {
+      if (!auth.isLoggedIn) location.reload()
     },
-    onBrandInfoComplete: ({ setIsComplete }) => authMetadata => {
-      if (authMetadata.isBrandProfileComplete) {
-        setIsComplete(authMetadata.isBrandProfileComplete)
+    onBrandInfoComplete: ({ setIsCompleteFromClient }) => auth => {
+      if (auth.metadata.isBrandProfileComplete) {
+        setIsCompleteFromClient(auth.metadata.isBrandProfileComplete)
       }
     },
     onMainAccountClick: ({ mobile }) => event => {
