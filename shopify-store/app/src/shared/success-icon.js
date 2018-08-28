@@ -11,9 +11,7 @@ const SuccessIcon = () => (
       style: { marginTop: '50px' },
     }}
   >
-    <div>
-      <FaCheckCircle />
-    </div>
+    <FaCheckCircle />
   </IconContext.Provider>
 )
 
