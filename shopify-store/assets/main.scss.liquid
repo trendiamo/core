@@ -8220,6 +8220,32 @@ button.action-link {
 
     top: auto !important; //adding this to fix logged in top bar UI
 }
+
+.generic-pop {
+  padding: 0;
+}
+
+.generic-pop__title {
+  padding: 30px 30px 0 30px;
+}
+
+.generic-pop__desc {
+  padding: 0 30px 30px 30px;
+}
+
+.generic-pop-desktop-overlay {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .generic-pop {
+    right: calc(50% - 270px);
+    top: calc(50% - 200px) !important;
+    bottom: unset;
+    box-shadow: 0px 0px 100px;
+  }
+}
+
 .promo-pop--disabled,
 .generic-pop--disabled {
     display: none;

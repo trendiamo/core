@@ -10,6 +10,10 @@
     <div class="generic-pop__wrapper">
         <div class="generic-pop__content">
 
+            {% unless section.settings.image == blank %}
+                <img alt="{{ section.settings.image.alt }}" src="{{ section.settings.image | img_url: '600x' }}" />
+            {% endunless %}
+
             {% unless section.settings.title == blank %}
                 <div class="section__title generic-pop__title">
                     <h4 class="section__title-text">{{ section.settings.title | escape }}</h4>
@@ -19,35 +23,6 @@
             {% unless section.settings.text == blank %}
                 <div class="generic-pop__desc rte">{{ section.settings.text }}</div>
             {% endunless %}
-
-            {% if section.settings.enable_newsletter %}
-                <div class="generic-pop__form">
-                    {% form 'customer' %}
-                        {{ form.errors | default_errors }}
-                        {% if form.posted_successfully? %}
-                            {% comment %}Set delay to 0 so form message is visible instanlty{% endcomment %}
-                            {%- assign popup_delay = 0 -%}
-                            <div class="generic-pop__form-message">
-                                <h4 class="generic-pop__form-message__text">{{ 'general.newsletter_form.confirmation' | t }}</h4>
-                            </div>
-                        {% else %}
-                            <div class="generic-pop__fieldset">
-                                <input type="hidden" name="contact[tags]" value="newsletter">
-                                <input type="email"
-                                        name="contact[email]"
-                                        id="Email"
-                                        class="generic-pop__fieldset-item generic-pop__input"
-                                        value="{% if customer %}{{ customer.email }}{% endif %}"
-                                        placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}"
-                                        autocorrect="off"
-                                        autocapitalize="off">
-
-                                <button type="submit" class="c-btn c-btn--primary c-btn--arrow generic-pop__fieldset-item generic-pop__btn" name="commit" id="Subscribe">{{ 'general.newsletter_form.submit' | t }}</button>
-                            </div>
-                        {% endif %}
-                    {% endform %}
-                </div>
-            {% endif %}
 
             {% unless section.settings.link == blank %}
                 <a href="{{ section.settings.link }}" class="c-btn c-btn--primary c-btn--arrow c-btn--full generic-pop__link">{{ section.settings.link_title | escape }}</a>
@@ -69,6 +44,11 @@
             "info": "The popup does not display on mobile devices. For more information [click here](https://safeasmilk.zendesk.com/hc/en-gb/articles/115003509309)."
         },
         {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
             "type": "text",
             "id": "title",
             "label": "Heading",
@@ -78,7 +58,7 @@
             "type": "richtext",
             "id": "text",
             "label": "Text",
-            "default": "<p>Use this popup to embed a mailing list sign up form. Alternatively use it as a simple call to action with a link to a product or a page.</p>"
+            "default": "<p>Use this popup as a simple call to action with a link to a product or a page.</p>"
         },
         {
             "type": "text",
@@ -123,12 +103,6 @@
         {
             "type": "paragraph",
             "content": "Every sign up will create a 'Customer account' in this store. [Manage customers](/admin/customers?query=&accepts_marketing=1)"
-        },
-        {
-            "type": "checkbox",
-            "id": "enable_newsletter",
-            "label": "Enable newsletter",
-            "default": true
         }
     ]
 }
