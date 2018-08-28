@@ -97,7 +97,7 @@ export default compose(
       navTo('/u/create-brand-profile/1')
     },
     onAuthChange: ({ setIsCompleteFromClient }) => auth => {
-      if (auth.metadata.isBrandProfileComplete) {
+      if (auth.metadata && auth.metadata.isBrandProfileComplete) {
         setIsCompleteFromClient(auth.metadata.isBrandProfileComplete)
       }
       if (!auth.isLoggedIn) location.reload()
