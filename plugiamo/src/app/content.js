@@ -55,22 +55,25 @@ const AnimatedContent = compose(
   }))
 )(({ children, Component }) => <Component>{children}</Component>)
 
-const Content = () => (
+const Content = ({ exposition }) => (
   <TrendiamoContentFrame>
     <Wrapper>
       <Cover>
-        <AnimatedContent timeout={250 * 1}>{'Logan Paul says…'}</AnimatedContent>
+        <AnimatedContent timeout={250 * 1}>{`${exposition.influencer.name} says…`}</AnimatedContent>
       </Cover>
       <InnerContent>
         <AnimatedContent timeout={250 * 2}>
-          <p>{"Hello, why don't you buy a shirt, hmm? I find wearing a shirt to be something generally good."}</p>
-          <iframe
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            frameBorder="0"
-            src="https://www.youtube.com/embed/h-2iuDwxcUQ"
-            style={{ marginBottom: '1rem', width: '100%' }}
-          />
+          <p>{exposition.description}</p>
+          {exposition.videos.map(e => (
+            <iframe
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              frameBorder="0"
+              key={e.videoUrl}
+              src={e.videoUrl}
+              style={{ marginBottom: '1rem', width: '100%' }}
+            />
+          ))}
           <Button fullWidth>{'Go buy it'}</Button>
         </AnimatedContent>
       </InnerContent>

@@ -14,7 +14,7 @@ const Button = styled.button.attrs({
   font-size: ${({ small }) => (small ? '12px' : 'inherit')};
   line-height: ${({ small, medium }) => (small || medium ? '15px' : '1.4')};
   letter-spacing: ${({ small }) => (small ? 'normal' : '1.12px')};
-  border-radius: 2px
+  border-radius: 2px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.13);
   cursor: pointer;
   display: block;

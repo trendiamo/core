@@ -34,7 +34,7 @@ const SellerPic = styled.div`
   border-radius: 50%;
   background-position: center;
   background-size: cover;
-  background-image: url(https://yt3.ggpht.com/a-/ACSszfEr2ZPzTxeSJBq08hBbWlMBdy-X35tkyWqgGQ=s900-mo-c-c0xffffffff-rj-k-no);
+  background-image: url(${({ url }) => url});
   transform: ${({ active }) => (active ? 'none' : 'rotate(30deg) scale(0)')};
   opacity: ${({ active }) => (active ? 1 : 0)};
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -61,10 +61,10 @@ const CloseIcon = ({ active, onClick }) => (
   </CloseIconContainer>
 )
 
-const Launcher = ({ onToggleContent, showingContent }) => (
+const Launcher = ({ influencer, onToggleContent, showingContent }) => (
   <TrendiamoLauncherFrame>
     <div>
-      <SellerPic active={!showingContent} onClick={onToggleContent} />
+      <SellerPic active={!showingContent} onClick={onToggleContent} url={influencer.profilePic.url} />
       <CloseIcon active={showingContent} onClick={onToggleContent} />
     </div>
   </TrendiamoLauncherFrame>
