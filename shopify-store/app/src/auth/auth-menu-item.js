@@ -96,10 +96,8 @@ export default compose(
       event.preventDefault()
       navTo('/u/create-brand-profile/1')
     },
-    onAuthChange: () => auth => {
+    onAuthChange: ({ setIsCompleteFromClient }) => auth => {
       if (!auth.isLoggedIn) location.reload()
-    },
-    onBrandInfoComplete: ({ setIsCompleteFromClient }) => auth => {
       if (auth.metadata.isBrandProfileComplete) {
         setIsCompleteFromClient(auth.metadata.isBrandProfileComplete)
       }
@@ -114,14 +112,12 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { auth, onAuthChange, onBrandInfoComplete } = this.props
+      const { auth, onAuthChange } = this.props
       auth.addAuthListener(onAuthChange)
-      auth.addAuthListener(onBrandInfoComplete)
     },
     componentWillUnmount() {
-      const { auth, onAuthChange, onBrandInfoComplete } = this.props
+      const { auth, onAuthChange } = this.props
       auth.removeAuthListener(onAuthChange)
-      auth.removeAuthListener(onBrandInfoComplete)
     },
   })
 )(AuthMenuItem)
