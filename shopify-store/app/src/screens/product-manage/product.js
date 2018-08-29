@@ -34,6 +34,7 @@ const H6 = styled.h6`
     margin: auto;
     flex: 6;
     padding: 1rem;
+    text-align: left;
   }
 `
 const P = styled.p`
@@ -44,6 +45,7 @@ const P = styled.p`
     margin: auto;
     flex: 6;
     padding: 1rem;
+    text-align: left;
   }
 `
 
