@@ -12,7 +12,7 @@ const PAGE_SIZE = 10
 
 const ProductsDiv = styled.div`
   border-radius: 14px;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.18) 0px 4px 16px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
   margin-top: 2rem;
   padding: 2rem;
@@ -119,7 +119,7 @@ const Collection = gql`
             id
             handle
             title
-            variants(first: 10) {
+            variants(first: 20) {
               edges {
                 node {
                   id
@@ -198,12 +198,15 @@ export default compose(
   withHandlers({
     deleteAllProducts: ({
       auth,
-      productsCount,
       CollectionQuery,
       CollectionProductIdsQuery,
       mutate,
+      productsCount,
       setIsLoading,
     }) => () => {
+      if (!confirm(`Delete all the products?`)) {
+        return
+      }
       const productIds = CollectionProductIdsQuery.collection.products.edges.map(edge => edge.node.id)
       setIsLoading(true)
       let i = 1
@@ -221,6 +224,9 @@ export default compose(
       })
     },
     deleteProduct: ({ auth, collection, mutate, setIsLoading }) => edge => {
+      if (!confirm(`Delete ${edge.title}?`)) {
+        return
+      }
       authGql(auth, async () => {
         setIsLoading(true)
         const { data } = await mutate({
