@@ -2,10 +2,11 @@ import { authGql } from 'auth/utils'
 import Empty from './empty'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import Loader from 'shared/loader'
 import Product from './product'
 import React from 'react'
 import styled from 'styled-components'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
 const PAGE_SIZE = 10
 
@@ -62,6 +63,7 @@ const ProductsDivPageNavPrevious = styled.h6`
 const ProductsList = ({
   deleteAllProducts,
   deleteProduct,
+  isLoading,
   nextPage,
   pageInfo,
   previousPage,
@@ -69,6 +71,7 @@ const ProductsList = ({
   productsCount,
 }) => (
   <ProductsDiv className="container container--small">
+    <Loader isLoading={isLoading} />
     <ProductsDivHeaders>
       <ProductsDivHeadersProducts>{`Your Products (${productsCount})`}</ProductsDivHeadersProducts>
       {productsCount > 0 && (
@@ -190,30 +193,46 @@ export default compose(
       variables: { first: productsCount, shopifyId: collection.id },
     }),
   }),
+  withState('isLoading', 'setIsLoading', false),
   graphql(deleteProduct),
   withHandlers({
-    deleteAllProducts: ({ auth, products, CollectionQuery, CollectionProductIdsQuery, mutate }) => () => {
+    deleteAllProducts: ({
+      auth,
+      productsCount,
+      CollectionQuery,
+      CollectionProductIdsQuery,
+      mutate,
+      setIsLoading,
+    }) => () => {
       const productIds = CollectionProductIdsQuery.collection.products.edges.map(edge => edge.node.id)
+      setIsLoading(true)
+      let i = 1
       productIds.forEach(productId => {
         authGql(auth, async () => {
           await mutate({
             variables: { input: { id: productId } },
           })
+          i++
+          if (i === productsCount) {
+            CollectionQuery.refetch({ after: undefined, before: undefined, first: PAGE_SIZE, last: undefined })
+            setIsLoading(false)
+          }
         })
       })
-      CollectionQuery.refetch({ after: products[0].cursor, before: undefined, first: PAGE_SIZE, last: undefined })
     },
-    deleteProduct: ({ auth, collection, mutate }) => edge => {
+    deleteProduct: ({ auth, collection, mutate, setIsLoading }) => edge => {
       authGql(auth, async () => {
-        await mutate({
+        setIsLoading(true)
+        const { data } = await mutate({
           refetchQueries: [
             {
               query: Collection,
-              variables: { first: PAGE_SIZE, shopifyId: collection.id },
+              variables: { awaitRefetchQueries: true, first: PAGE_SIZE, shopifyId: collection.id },
             },
           ],
           variables: { input: { id: edge.id } },
         })
+        setIsLoading(data.loading)
       })
     },
     nextPage: ({ CollectionQuery, products }) => () => {
