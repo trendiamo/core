@@ -8221,6 +8221,10 @@ button.action-link {
     top: auto !important; //adding this to fix logged in top bar UI
 }
 
+.generic-pop--overlay.js-active {
+  display: initial;
+}
+
 .generic-pop {
   padding: 0;
 }
@@ -8247,7 +8251,6 @@ button.action-link {
     right: calc(50% - 270px);
     top: calc(50% - 200px) !important;
     bottom: unset;
-    box-shadow: 0px 0px 100px;
   }
 }
 
@@ -8318,8 +8321,8 @@ button.action-link {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 11;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 12;
 }
 
 @include mq-max($tab) {
@@ -9347,9 +9350,12 @@ img.mfp-img {
 	z-index: 11 !important;
 }
 
-.promo-pop,
-.generic-pop {
+.promo-pop {
 	z-index: 12;
+}
+
+.generic-pop {
+  z-index: 13;
 }
 
 .password-header__link {
