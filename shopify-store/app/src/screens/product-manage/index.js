@@ -59,10 +59,13 @@ const ProductManage = ({ brand, isLoading, onFileUpload, file, fileSubmit, alert
                   htmlFor="fileSubmit"
                   style={{ marginTop: '5px', width: '100%' }}
                 >
-                  {'Submit to Tredniamo'}
+                  {'Submit to Trendiamo'}
                 </label>
-                {(file && <p style={{ textAlign: 'left' }}>{`${file.name}`}</p>) ||
-                  (alert && <p style={{ color: `${alert.color}`, textAlign: 'center' }}>{`${alert.text}`}</p>)}
+                {file ? (
+                  <p style={{ textAlign: 'left' }}>{file.name}</p>
+                ) : (
+                  alert && <p style={{ color: alert.color, textAlign: 'center' }}>{alert.text}</p>
+                )}
               </div>
             </div>
           </div>
