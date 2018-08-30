@@ -21,7 +21,7 @@ const ProductManage = ({ brand, isLoading, onFileUpload, file, fileSubmit, alert
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
         {' '}
         <p>
-          {'Upload a file containing your products to get started!'}
+          {'To get started upload a file with your product details!'}
           <br />
           {'CSV or Excel files are prefered.'}
         </p>
@@ -61,12 +61,8 @@ const ProductManage = ({ brand, isLoading, onFileUpload, file, fileSubmit, alert
                 >
                   {'Submit to Tredniamo'}
                 </label>
-                <p hidden={!file} style={{ textAlign: 'left' }}>
-                  {`${file.name}`}
-                </p>
-                <p hidden={!alert} style={{ color: `${alert.color}`, textAlign: 'left' }}>
-                  {`${alert.text}`}
-                </p>
+                {(file && <p style={{ textAlign: 'left' }}>{`${file.name}`}</p>) ||
+                  (alert && <p style={{ color: `${alert.color}`, textAlign: 'center' }}>{`${alert.text}`}</p>)}
               </div>
             </div>
           </div>
@@ -95,13 +91,13 @@ export default compose(
     brand: data.me.brand,
   })),
   withState('csv', 'setCsv', ''),
-  withState('file', 'setFile', false),
-  withState('alert', 'setAlert', false),
+  withState('file', 'setFile', null),
+  withState('alert', 'setAlert', null),
   withState('isLoading', 'setIsLoading', false),
   withHandlers({
     fileSubmit: ({ file, setIsLoading, setFile, setAlert }) => event => {
       event.preventDefault()
-      if (file == false) {
+      if (file == null) {
         setAlert({
           color: '#D12328',
           text: 'You need to upload a file first!',
@@ -122,7 +118,7 @@ export default compose(
         fetch(`https://${process.env.API_ENDPOINT}/api/v1/csv`, options).then(response => {
           if (response.ok == true) {
             setIsLoading(false)
-            setFile(false)
+            setFile(null)
             setAlert({
               color: '#3F964D',
               text: 'Successfully sent to trendiamo, please check your email for more details!',
@@ -132,7 +128,7 @@ export default compose(
       }
     },
     onFileUpload: ({ setFile, setAlert }) => event => {
-      setAlert(false)
+      setAlert(null)
       event.preventDefault()
       const file = event.target.files[0]
       setFile(file)
