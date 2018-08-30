@@ -89,8 +89,8 @@ const me = gql`
 
 export default compose(
   graphql(me, { options: { fetchPolicy: 'network-only' } }),
-  branch(({ data }) => data && (data.loading || data.error), renderNothing),
   branch(checkAuthError, treatAuthError),
+  branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     brand: data.me.brand,
   })),

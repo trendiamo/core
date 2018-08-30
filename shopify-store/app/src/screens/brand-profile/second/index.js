@@ -10,6 +10,7 @@ import React from 'react'
 import Steps from 'screens/brand-profile/steps'
 import { withRouter } from 'react-router'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { checkAuthError, treatAuthError } from 'auth/utils'
 
 const Preview = ({
   brand,
@@ -162,6 +163,7 @@ const updateBrand = gql`
 export default compose(
   graphql(me, { options: { fetchPolicy: 'network-only' } }),
   graphql(updateBrand),
+  branch(checkAuthError, treatAuthError),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     brand: data.me.brand,

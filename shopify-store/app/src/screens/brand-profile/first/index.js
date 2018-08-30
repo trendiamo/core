@@ -10,6 +10,7 @@ import Steps from 'screens/brand-profile/steps'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { checkAuthError, treatAuthError } from 'auth/utils'
 import countries, { countrySeparator } from 'shared/countries'
 
 const CorrectFormMargin = styled.div`
@@ -220,6 +221,7 @@ export default compose(
     name: 'updateBrandMutation',
   }),
   withState('errors', 'setErrors', []),
+  branch(checkAuthError, treatAuthError),
   branch(({ data }) => data && (data.loading || data.error), renderNothing),
   withProps(({ data }) => ({
     brand: data.me.brand,

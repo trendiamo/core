@@ -39,7 +39,7 @@ const AppRouter = ({ auth }) => (
       <Route exact path="/u/create-brand-profile/2" render={() => <CbpPreview auth={auth} />} />
       <Route exact path="/u/create-brand-profile/3" render={() => <CbpShipping auth={auth} />} />
       <Route exact path="/u/create-brand-profile/4" render={() => <CbpComplete auth={auth} />} />
-      <Route component={ProductManage} exact path="/u/manage-products" />
+      <Route exact path="/u/manage-products" render={() => <ProductManage auth={auth} />} />
     </ApolloProvider>
   </Router>
 )
