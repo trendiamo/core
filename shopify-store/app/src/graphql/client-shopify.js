@@ -14,7 +14,7 @@ const clientShopify = new ApolloClient({
   link: authLink.concat(
     new HttpLink({
       fetchOptions: {
-        mode: 'cors',
+        mode: 'no-cors',
       },
       uri: gqlApiUrl,
     })
