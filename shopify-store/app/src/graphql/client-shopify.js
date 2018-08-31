@@ -11,7 +11,14 @@ const authLink = setContext(() => ({
 
 const clientShopify = new ApolloClient({
   cache: new InMemoryCache(),
-  link: authLink.concat(new HttpLink({ uri: gqlApiUrl })),
+  link: authLink.concat(
+    new HttpLink({
+      fetchOptions: {
+        mode: 'cors',
+      },
+      uri: gqlApiUrl,
+    })
+  ),
 })
 
 export default clientShopify
