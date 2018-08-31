@@ -1199,11 +1199,6 @@ textarea {
     }
 }
 
-a.is-disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
 form {
     overflow: hidden;
     position: relative;
@@ -4037,30 +4032,6 @@ iframe {
     }
 }
 
-.nav__link--hl {
-  &:before {
-    content: ' ';
-    position: absolute;
-    background-color: #d12328;
-    border-radius: 50%;
-    display: block;
-    width: 9px;
-    height: 9px;
-    right: 13px;
-    top: 4px;
-  }
-}
-
-.mobile-nav__link span {
-  position: relative;
-  &.nav__link--hl {
-    &:before {
-      right: -6px;
-      top: -1px;
-    }
-  }
-}
-
 .nav__sub__link {
     color: rgba($color--text,.8);
     width: 100%;
@@ -5518,23 +5489,17 @@ iframe {
   width: auto;
   padding: 0 12px;
   text-transform: uppercase;
-  background: rgba(97, 255, 51, 0.3);
-  color: green;
-  border-radius: 6px;
+  border: 1px solid #d6d6d6;
 }
 
 .product-stock-mark {
-  width: 24px;
-  height: 24px;
+  width: 36px;
   font-weight: bold;
   text-align: center;
-  background-color: #f4f5f4;
+  background-color: #d6d6d6;
+  border: 1px solid #d6d6d6;
   user-select: none;
   display: block;
-  border-radius: 100px;
-  line-height: 24px;
-  margin-top: 5px;
-  margin-left: 5px;
 }
 
 .product-supplier-info {
@@ -5979,10 +5944,6 @@ button.action-link {
 .product__title {
 	text-transform: $font--title-transform;
 	margin: 0;
-  font-size: 16px;
-  line-height: 18px;
-  padding-top: 10px;
-  margin-bottom: 4px;
 }
 .product__vendor {
 	font-family: $font--body;
@@ -6531,8 +6492,7 @@ button.action-link {
 			margin-top: 0;
 		}
 	}
-	.promo-pop__title.promo-pop__title,
-  .generic-pop__title.generic-pop__title {
+	.promo-pop__title.promo-pop__title {
 		margin-bottom: 12px;
 	}
 	@include mq-max($tab) {
@@ -8198,8 +8158,7 @@ button.action-link {
 /* ==========================================================================
    #PROMOTION POPUP SECTION
    ========================================================================== */
-.promo-pop,
-.generic-pop {
+.promo-pop {
     position: fixed;
     right: 42px;
     bottom: 30px;
@@ -8220,50 +8179,14 @@ button.action-link {
 
     top: auto !important; //adding this to fix logged in top bar UI
 }
-
-.generic-pop--overlay.js-active {
-  display: initial;
-}
-
-.generic-pop {
-  padding: 0;
-}
-
-.generic-pop__title {
-  padding: 30px 30px 0 30px;
-}
-
-.generic-pop__desc {
-  padding: 0 30px 30px 30px;
-}
-
-.generic-pop__form {
-  margin-top: 0!important;
-  padding: 0 30px 30px 30px;
-}
-
-.generic-pop-desktop-overlay {
-  display: none;
-}
-
-@media only screen and (min-width: 768px) {
-  .generic-pop {
-    right: calc(50% - 270px);
-    top: calc(50% - 200px) !important;
-    bottom: unset;
-  }
-}
-
-.promo-pop--disabled,
-.generic-pop--disabled {
+.promo-pop--disabled {
     display: none;
     &.js-active {
         display: block;
     }
 }
 
-.promo-pop__close,
-.generic-pop__close {
+.promo-pop__close {
     position: absolute;
     right: 0;
     top: 0;
@@ -8281,18 +8204,15 @@ button.action-link {
     }
 }
 
-.promo-pop__title,
-.generic-pop__title {
+.promo-pop__title {
     margin-bottom: 24px;
     padding-right: 24px;
 }
 
-.promo-pop__form,
-.generic-pop__form {
+.promo-pop__form {
     margin-top: 18px;
 }
-.promo-pop__input,
-.generic-pop__input {
+.promo-pop__input {
     width: 100%;
     float: left;
     margin: 0;
@@ -8300,44 +8220,38 @@ button.action-link {
         outline: none;
     }
 }
-.promo-pop__btn,
-.generic-pop__btn {
+.promo-pop__btn {
     position: absolute;
     right: 0px;
     top: 0px;
 }
 
-.promo-pop__link,
-.generic-pop__link {
+.promo-pop__link {
     margin-top: 18px;
     display: inline-block;
 }
 
-.promo-pop--overlay,
-.generic-pop--overlay {
+.promo-pop--overlay {
   display: none;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 12;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 11;
 }
 
 @include mq-max($tab) {
-    .promo-pop,
-    .generic-pop, {
+    .promo-pop {
         max-width: 80%;
     }
-    .promo-pop__btn,
-    .generic-pop__btn {
+    .promo-pop__btn {
       width: 100%;
       margin-top: 12px;
       position: static;
     }
-    .promo-pop--overlay.js-active,
-    .generic-pop--overlay.js-active {
+    .promo-pop--overlay.js-active {
       display: block;
     }
 }
@@ -9352,10 +9266,6 @@ img.mfp-img {
 
 .promo-pop {
 	z-index: 12;
-}
-
-.generic-pop {
-  z-index: 13;
 }
 
 .password-header__link {

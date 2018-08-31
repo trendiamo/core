@@ -25,13 +25,11 @@
                   <a target="_blank" href="https://facebook.com/trendiamo"><div class="icon icon--facebook announcement-social-left"></div></a>
                   <a target="_blank" href="https://instagram.com/trendiamo"><div class="icon icon--instagram announcement-social-left"></div></a>
                 </div>
-                <!-- LOGIN | REGISTER in top bar
                 <div class="announcement-account">
-                  <a href="/account/login">login</a>
+                  <a href="https://trendiamo.com/account/login">login</a>
                   <div class="announcement-account-split">|</div>
-                  <a href="/account/register">register</a>
+                  <a href="https://trendiamo.com/account/register">register</a>
                 </div>
-                -->
                 <p class="announcement__text">{{ section.settings.message_text | escape }}</p>
             </div>
         {% unless section.settings.message_link == blank %}
@@ -188,7 +186,7 @@
                         </li>
                     {% else %}
                         <li class="secondary-nav__item">
-                            <a href="/account/login" class="secondary-nav__link">{{ 'layout.customer.log_in' | t }}</a>
+                            <a href="/account/login" class="secondary-nav__link">{{ 'layout.customer.account' | t }}</a>
                         </li>
                     {% endif %}
                 {% endif %}

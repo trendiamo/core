@@ -42,21 +42,20 @@
                 {{ form.errors | default_errors }}
 
                 <div class="selector-wrapper">
-                  <select autofocus id="login-system-select">
-                    <option value="" hidden>Choose your account type...</option>
-                    <option value="customer">I'm a customer</option>
+                  <select id="login-system-select">
+                    <option value="customer" selected>I'm a customer</option>
                     <option value="brand">I'm a brand</option>
                   </select>
                 </div>
 
                 <label for="CustomerEmail" class="label--hidden">{{ 'customer.login.email' | t }}</label>
-                <input type="email" name="customer[email]" id="CustomerEmail"{% if form.errors contains "email" %} class="error"{% endif %} autocorrect="off" autocapitalize="off">
+                <input type="email" name="customer[email]" id="CustomerEmail"{% if form.errors contains "email" %} class="error"{% endif %} autocorrect="off" autocapitalize="off" autofocus>
 
                 {% if form.password_needed %}
                     <label for="CustomerPassword" class="label--hidden">{{ 'customer.login.password' | t }}</label>
                     <input type="password" value="" name="customer[password]" id="CustomerPassword"{% if form.errors contains "password" %} class="error"{% endif %}>
                     <p class="account__reset-link">
-                        <a href="">{{ 'customer.login.forgot_password' | t }}</a>
+                        <a href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
                     </p>
                 {% endif %}
                     <div class="account__form-buttons">
@@ -98,34 +97,7 @@
         document.getElementById('CustomerLoginForm').style.display = 'block';
     }
 
-    function disableForm() {
-      $('#customer_login input').prop('disabled', true);
-      $('#customer_login .account__reset-link a').addClass('is-disabled').click(function(e) {
-        e.preventDefault();
-      });
-    }
-
-    function enableForm() {
-      $('#customer_login input').removeProp('disabled');
-      $('#customer_login .account__reset-link a').removeClass('is-disabled').click(function(e) {
-        showRecoverPasswordForm();
-        e.preventDefault();
-      });
-    }
-
-    if (window.location.hash == '#recover') {
-      showRecoverPasswordForm();
-    } else if (window.location.hash == '#customer') {
-      $('#customer_login select').val('customer');
-    } else {
-      disableForm();
-      $('#customer_login select').change(function(e) {
-        if (e.target.value === 'customer') {
-          enableForm();
-          $('#CustomerEmail').focus();
-        }
-      });
-    }
+    if (window.location.hash == '#recover') { showRecoverPasswordForm() }
 
     {% if reset_success %}
         document.getElementById('ResetSuccess').style.display = 'block';

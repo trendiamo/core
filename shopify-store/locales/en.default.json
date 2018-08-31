@@ -82,7 +82,7 @@
       "remove": "Remove",
       "note": "Special instructions for seller",
       "subtotal": "Subtotal",
-      "shipping_at_checkout": "Free shipping & returns!",
+      "shipping_at_checkout": "Shipping & taxes included in all prices!",
       "update": "Update Cart",
       "checkout": "Check Out",
       "continue_shopping": "Continue shopping",
@@ -228,7 +228,7 @@
       "email": "Email",
       "password": "Password",
       "forgot_password": "Forgot your password?",
-      "sign_in": "Login",
+      "sign_in": "Sign In",
       "cancel": "Return to Store",
       "guest_title": "Continue as a guest",
       "guest_continue": "Continue"
@@ -283,7 +283,6 @@
       "last_name": "Last Name",
       "email": "Email",
       "password": "Password",
-      "confirm_password": "Confirm Password",
       "submit": "Create",
       "cancel": "Return to Store"
     }

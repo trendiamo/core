@@ -1047,33 +1047,6 @@ theme.promoPopCookie = function () {
     });
 };
 
-// generic popup
-theme.genericPopCookie = function () {
-    var genericCookie = 'generic-showed';
-    var genericDelay = $('.js-generic-pop').data('generic-delay');
-    var genericExpiry = $('.js-generic-pop').data('generic-expiry');
-
-    if ($('.js-generic-pop').data('generic-enabled')) {
-        if (typeof Cookies !== 'undefined') {
-            if (Cookies(genericCookie) !== '1' && sessionStorage.getItem(genericCookie) !== '1') {
-                setTimeout(function(){
-                    theme.genericPop('open');
-                    sessionStorage.setItem(genericCookie, '1');
-                }, genericDelay);
-            }
-        }
-    }
-
-    $('.js-generic-pop-close').click(function(e) {
-        if (typeof Cookies !== 'undefined') {
-          Cookies(genericCookie, '1', { expires: genericExpiry, path: '/' });
-        }
-        theme.genericPop('close');
-
-        e.preventDefault();
-    });
-};
-
 theme.footerTweet = function () {
     //set vars
     var twtEnable = $('.js-footer-tweet').data('footer-tweet-enable');
@@ -1271,25 +1244,6 @@ theme.promoPop = function (action) {
     }
 };
 
-theme.genericPop = function (action) {
-    var popup = $('.js-generic-pop');
-    var overlay = $('.js-generic-pop--overlay');
-    var activeClass = 'js-active';
-
-    if (!overlay.length) {
-      $('body').append($('<div class="generic-pop--overlay js-generic-pop--overlay"></div>'));
-      overlay = $('.js-generic-pop--overlay');
-    }
-
-    if (action == 'open') {
-        popup.addClass(activeClass);
-        overlay.addClass(activeClass);
-    } else if (action == 'close') {
-        popup.removeClass(activeClass);
-        overlay.removeClass(activeClass);
-    }
-};
-
 $(document).ready(function(){
     //adimations
     //remove body loading class and set to loaded
@@ -1381,7 +1335,6 @@ $(document).ready(function(){
     theme.magnificVideo();
     theme.ageCheckerCookie();
     theme.promoPopCookie();
-    theme.genericPopCookie();
     theme.footerTweet();
 
     //homepage
@@ -1575,17 +1528,6 @@ $(document)
                     theme.promoPop('open');
                 } else {
                     theme.promoPop('close');
-                }
-                //record current top offset
-                theme.currentOffset = $(document).scrollTop();
-                break;
-
-            case 'js-section__generic-pop':
-                var genericEnabled = $(section).find('.js-generic-pop').data('generic-enabled');
-                if (genericEnabled) {
-                    theme.genericPop('open');
-                } else {
-                    theme.genericPop('close');
                 }
                 //record current top offset
                 theme.currentOffset = $(document).scrollTop();
