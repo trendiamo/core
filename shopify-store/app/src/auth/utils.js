@@ -5,6 +5,7 @@ const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
 const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
 const PASSWORD_URL = `${baseApiUrl}/users/password`
 const PASSWORD_RESET_URL = `${baseApiUrl}/users/password`
+const CSV_UPLOAD_URL = `${baseApiUrl}/csv`
 
 // export const isCurrentUser = user => user.email === localStorage.getItem('authEmail')
 
@@ -60,6 +61,18 @@ const apiPasswordRequest = async (url, body) => {
   return res.json()
 }
 
+const apiCsvUploadRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: body,
+    headers: {
+      'X-USER-EMAIL': localStorage.getItem('authEmail'),
+      'X-USER-TOKEN': localStorage.getItem('authToken'),
+    },
+    method: 'post',
+  })
+  return res
+}
+
 const errorMessages = json => {
   if (json.error) {
     return '<ul><li>Invalid Credentials</li></ul>'
@@ -104,3 +117,4 @@ export const apiSignIn = (body, auth, setErrors) => apiSaga(SIGNIN_URL, body, au
 export const apiPassword = body => apiRequest(PASSWORD_URL, body)
 export const apiPasswordReset = (body, auth, setErrors) =>
   apiPasswordResetSaga(PASSWORD_RESET_URL, body, auth, setErrors)
+export const apiCsvUpload = body => apiCsvUploadRequest(CSV_UPLOAD_URL, body)

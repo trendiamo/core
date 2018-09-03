@@ -1,3 +1,4 @@
+import { apiCsvUpload } from 'auth/utils'
 import { ApolloProvider } from 'react-apollo'
 import clientShopify from '../../graphql/client-shopify'
 import gql from 'graphql-tag'
@@ -98,7 +99,7 @@ export default compose(
   withState('alert', 'setAlert', null),
   withState('isLoading', 'setIsLoading', false),
   withHandlers({
-    fileSubmit: ({ file, setIsLoading, setFile, setAlert }) => event => {
+    fileSubmit: ({ file, setIsLoading, setFile, setAlert }) => async event => {
       event.preventDefault()
       if (file == null) {
         setAlert({
@@ -109,25 +110,16 @@ export default compose(
         let formData = new FormData()
         formData.append('file_name', 'uploadedCsv')
         formData.append('file', file)
-        let options = {
-          body: formData,
-          headers: {
-            'X-USER-EMAIL': localStorage.getItem('authEmail'),
-            'X-USER-TOKEN': localStorage.getItem('authToken'),
-          },
-          method: 'POST',
-        }
         setIsLoading(true)
-        fetch(`https://${process.env.API_ENDPOINT}/api/v1/csv`, options).then(response => {
-          if (response.ok == true) {
-            setIsLoading(false)
-            setFile(null)
-            setAlert({
-              color: '#3F964D',
-              text: 'Successfully sent to trendiamo, please check your email for more details!',
-            })
-          }
-        })
+        const response = await apiCsvUpload(formData)
+        if (response.ok == true) {
+          setIsLoading(false)
+          setFile(null)
+          setAlert({
+            color: '#3F964D',
+            text: 'Successfully sent to trendiamo, please check your email for more details!',
+          })
+        }
       }
     },
     onFileUpload: ({ setFile, setAlert }) => event => {
