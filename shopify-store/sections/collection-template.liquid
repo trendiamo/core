@@ -180,7 +180,7 @@
 
                         <div class="o-layout__item u-1/1 u-1/4@desk">
                             <aside class="collection-sidebar collection-sidebar--{{ settings.color_drawer_style }} u-bg-{{ settings.color_drawer_bg }} js-collection-draw">
-                              
+
                               <div id="bc-sf-filter-tree"></div>
                             </aside>
                         </div>
@@ -299,6 +299,7 @@
       product_grid_label: {% if settings.product_grid_label %} {{ settings.product_grid_label | json }} {% else %} false {% endif %},
       product_grid_vendor: {% if settings.product_grid_vendor %} {{ settings.product_grid_vendor | json }} {% else %} false {% endif %},
       product_grid_second_hover: {% if settings.product_grid_second_hover %} {{ settings.product_grid_second_hover | json }} {% else %} false {% endif %},
+      color_table: {{ settings.color_table | json }},
     }
   };
 </script>

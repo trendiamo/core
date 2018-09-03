@@ -1,103 +1,104 @@
 <a href="{{ product.url | within: collection }}" class="product-link{% if page == 'home' %} home-products__link{% endif %}" title="{{ product.title }}">
-    <div class="product{% unless product.available %} product--sold-out{% endunless %} product--{{ settings.product_grid_align }}{% if page == 'home' %} home-products__item{% endif %}{% if settings.product_card_shadow %} product-grid-card-shadow{% endif %}">
+  <div class="product{% unless product.available %} product--sold-out{% endunless %} product--{{ settings.product_grid_align }}{% if page == 'home' %} home-products__item{% endif %}{% if settings.product_card_shadow %} product-grid-card-shadow{% endif %}">
+    <div class="product__media u-bg-{{ settings.product_grid_bg }}">
+      <div class="product__img-wrapper">
+        {%- assign img_url = product.featured_image.src | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <img class="product__img lazyload js"
+            src="{{ product.featured_image.src | img_url: '300x' }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512]"
+            data-sizes="auto"
+            alt="{{ product.featured_image.alt | escape }}">
+        <noscript>
+          <img class="product__img"
+               src="{{ product.featured_image.src | img_url: '720x' }}"
+               alt="{{ product.featured_image.alt | escape }}">
+        </noscript>
+        {% if settings.product_grid_second_hover and product.images[1] != blank %}
+          <div class="product__img-hover u-bg-{{ settings.product_grid_bg }} lazyload js"
+               data-bgset="{% include 'bgset', image: product.images[1] %}"
+               data-sizes="auto"
+               data-parent-fit="cover"
+               style="background-image: url('{{ product.images[1] | img_url: '300x300' }});"></div>
+          <noscript>
+            <div class="product__img-hover u-bg-{{ settings.product_grid_bg }}" style="background-image: url('{{ product.images[1] | img_url: '720x720' }});"></div>
+          </noscript>
+        {% endif %}
+      </div>
+      {% if settings.product_grid_label %}
+        {% assign product_on_sale = 0 %}
+        {% if product.compare_at_price > product.price and product.available %}
+          {% assign product_on_sale = 1 %}
+          <div class="product__label label sale">
+              <p class="product__label-text label__text">{{ 'products.product.on_sale' | t }}</p>
+          </div>
+        {% endif %}
 
-        <div class="product__media u-bg-{{ settings.product_grid_bg }}">
-            <div class="product__img-wrapper">
-                {%- assign img_url = product.featured_image.src | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-                <img class="product__img lazyload js"
-                    src="{{ product.featured_image.src | img_url: '300x' }}"
-                    data-src="{{ img_url }}"
-                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512]"
-                    data-sizes="auto"
-                    alt="{{ product.featured_image.alt | escape }}">
-                <noscript>
-                    <img class="product__img"
-                        src="{{ product.featured_image.src | img_url: '720x' }}"
-                        alt="{{ product.featured_image.alt | escape }}">
-                </noscript>
-                {% if settings.product_grid_second_hover and product.images[1] != blank %}
-                    <div class="product__img-hover u-bg-{{ settings.product_grid_bg }} lazyload js"
-                        data-bgset="{% include 'bgset', image: product.images[1] %}"
-                        data-sizes="auto"
-                        data-parent-fit="cover"
-                        style="background-image: url('{{ product.images[1] | img_url: '300x300' }});"></div>
-                    <noscript>
-                        <div class="product__img-hover u-bg-{{ settings.product_grid_bg }}" style="background-image: url('{{ product.images[1] | img_url: '720x720' }});">
-                        </div>
-                    </noscript>
-                {% endif %}
-            </div>
-            {% if settings.product_grid_label %}
-                {% assign product_on_sale = 0 %}
-                {% if product.compare_at_price > product.price and product.available %}
-                  {% assign product_on_sale = 1 %}
-                  <div class="product__label label sale">
-                      <p class="product__label-text label__text">{{ 'products.product.on_sale' | t }}</p>
-                  </div>
-                {% endif %}
+        {% assign product_is_new = 0 %}
+        {% for collection in product.collections %}
+          {% if collection.title contains 'New Arrivals' %}
+            {% assign product_is_new = 1 %}
+          {% endif %}
+        {% endfor %}
+        {% if product_is_new == 1 and product.available and product_on_sale == 0 %}
+          <div class="product__label label">
+             <p class="product__label-text label__text">NEW</p>
+          </div>
+        {% endif %}
+        {% if product_is_new == 1 and product.available and product_on_sale == 1 %}
+          <div class="product__label label2">
+             <p class="product__label-text label__text">NEW</p>
+          </div>
+        {% endif %}
 
-                {% assign product_is_new = 0 %}
-                {% for collection in product.collections %}
-                  {% if collection.title contains 'New Arrivals' %}
-                    {% assign product_is_new = 1 %}
-                  {% endif %}
-                {% endfor %}
-                {% if product_is_new == 1 and product.available and product_on_sale == 0 %}
-                  <div class="product__label label">
-                     <p class="product__label-text label__text">NEW</p>
-                  </div>
-                {% endif %}
-                {% if product_is_new == 1 and product.available and product_on_sale == 1 %}
-                  <div class="product__label label2">
-                     <p class="product__label-text label__text">NEW</p>
-                  </div>
-                {% endif %}
-
-                {% unless product.available %}
-                 <div class="product__label label soldout">
-                    <p class="product__label-text label__text">{{ 'products.product.sold_out' | t }}</p>
-                 </div>
-                {% endunless %}
-            {% endif %}
-        </div>
-        <div class="product__details {% if settings.product_card_shadow %} product-grid-card-details-padding{% endif %}">
-            <h3 class="product__title h4">{{ product.title }}</h3>
-
-            {% if settings.product_grid_vendor %}
-                <h4 class="product__vendor h6">{{ product.vendor }}</h4>
-            {% endif %}
-
-            <p class="product__price h5">
-                {% include 'product-price' %}
-            </p>
-
-            {% assign fat_tag_overriden = 0 %}
-            {% for tag in product.tags %}
-              {% if tag contains 'fat:' %}
-                {% assign product_few_available_threshold = tag | remove: 'fat:' %}
-                {% assign fat_tag_overriden = 1 %}
-              {% endif %}
-            {% endfor %}
-
-            {% unless fat_tag_overriden == 1 %}
-            {% assign product_few_available_threshold = settings.default_few_available_threshold %}
-            {% for collection in product.collections %}
-              {% if collection.title == product.vendor and collection.metafields.custom_fields["few_available_alert_treshold"] != blank %}
-                {% assign product_few_available_threshold = collection.metafields.custom_fields["few_available_alert_treshold"] %}
-              {% endif %}
-            {% endfor %}
-            {% endunless %}
-
-            {% assign few_available = 0 %}
-            {% for variant in product.variants %}
-              {% if variant.inventory_quantity <= product_few_available_threshold %}
-                {% assign few_available = 1 %}
-              {% endif %}
-            {% endfor %}
-            {% if few_available == 1 and settings.few_available_active and product.available %}
-              <p class="fewavailable">Few Available</p>
-            {% endif %}
-        </div>
-
+        {% unless product.available %}
+         <div class="product__label label soldout">
+            <p class="product__label-text label__text">{{ 'products.product.sold_out' | t }}</p>
+         </div>
+        {% endunless %}
+      {% endif %}
     </div>
+    <div class="product__details {% if settings.product_card_shadow %} product-grid-card-details-padding{% endif %}">
+      <h3 class="product__title h4">{{ product.title }}</h3>
+
+      {% if product.available and product.variants.size > 1 %}
+        {% include 'product-colors' %}
+      {% endif %}
+
+      {% if settings.product_grid_vendor %}
+        <h4 class="product__vendor h6">{{ product.vendor }}</h4>
+      {% endif %}
+
+      <p class="product__price h5">
+        {% include 'product-price' %}
+      </p>
+
+      {% assign fat_tag_overriden = 0 %}
+      {% for tag in product.tags %}
+        {% if tag contains 'fat:' %}
+          {% assign product_few_available_threshold = tag | remove: 'fat:' %}
+          {% assign fat_tag_overriden = 1 %}
+        {% endif %}
+      {% endfor %}
+
+      {% unless fat_tag_overriden == 1 %}
+      {% assign product_few_available_threshold = settings.default_few_available_threshold %}
+      {% for collection in product.collections %}
+        {% if collection.title == product.vendor and collection.metafields.custom_fields["few_available_alert_treshold"] != blank %}
+          {% assign product_few_available_threshold = collection.metafields.custom_fields["few_available_alert_treshold"] %}
+        {% endif %}
+      {% endfor %}
+      {% endunless %}
+
+      {% assign few_available = 0 %}
+      {% for variant in product.variants %}
+        {% if variant.inventory_quantity <= product_few_available_threshold %}
+          {% assign few_available = 1 %}
+        {% endif %}
+      {% endfor %}
+      {% if few_available == 1 and settings.few_available_active and product.available %}
+        <p class="fewavailable">Few Available</p>
+      {% endif %}
+    </div>
+  </div>
 </a>

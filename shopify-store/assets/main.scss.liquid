@@ -9828,3 +9828,28 @@ body:before {
   padding-bottom: 10px;
   background: white;
 }
+
+.swatch {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -4px;
+}
+
+.swatch-element {
+  position: relative;
+  margin: 0 4px;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #000;
+  &:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 1px solid #fff;
+  }
+}
