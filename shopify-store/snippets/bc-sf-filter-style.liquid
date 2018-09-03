@@ -110,7 +110,7 @@
     {%- assign bc_qv_enable = bc_settings | split: 'qvEnable":' | last | split: ',' | first | strip -%}
     {%- assign bc_atc_enable = bc_settings | split: 'atcEnable":' | last | split: ',' | first | split: '}' | first | strip -%}
     {%- if bc_qv_enable == 'true' or bc_atc_enable == 'true' -%}
-      {{ 'bc-al-lib.scss.css' | asset_url | stylesheet_tag }}
+      <!-- {{ 'bc-al-lib.scss.css' | asset_url | stylesheet_tag }} -->
 
       {%- assign bc_al_style = bc_settings | split: 'actionlist":{' | last | split: '}' | first | split: ',' -%}
       {%- if bc_al_style != blank -%}

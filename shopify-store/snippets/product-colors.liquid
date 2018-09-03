@@ -17,7 +17,7 @@
 
         {% assign color = settings.color_table[value] %}
         {% if color == blank %}{% continue %}{% endif %}
-        <div data-value="{{ value | escape }}" class="swatch-element {% if variant.available %}available{% else %}soldout{% endif %}" style="background-color: {{ color }}"></div>
+        <div class="swatch-element" style="background-color: {{ color }};"></div>
       {% endunless %}
     {% endfor %}
   </div>

@@ -45,6 +45,7 @@ var bcSfFilterTemplate = {
     bcSfFilterConfig.general.product_card_padding +
     '">' +
     '<h3 class="product__title h4">{{itemTitle}}</h3>' +
+    "{{itemColors}}" +
     "{{itemVendor}}" +
     '<p class="product__price h5">{{itemPrice}}</p>' +
     "</div>" +
@@ -95,6 +96,19 @@ BCSfFilter.prototype.buildProductGridItem = function(data) {
       }
     }
   }
+  var colors = (
+    (
+      data["options_with_values"].find(function(e) {
+        return e.name === "color";
+      }) || {}
+    ).values || []
+  )
+    .map(function(e) {
+      return bcSfFilterConfig.custom.color_table[e.title];
+    })
+    .filter(function(e) {
+      return e;
+    });
   /*** End Prepare data ***/
 
   // Get Template
@@ -190,10 +204,24 @@ BCSfFilter.prototype.buildProductGridItem = function(data) {
     : "";
   itemHtml = itemHtml.replace(/{{itemVendor}}/g, itemVendorHtml);
 
+  var colorsHtml =
+    '<div class="swatch">' +
+    colors
+      .map(function(color) {
+        return (
+          '<div class="swatch-element" style="background-color: ' +
+          color +
+          ';"></div>'
+        );
+      })
+      .join("") +
+    "</div>";
+
   // Add main attribute (Always put at the end of this function)
   itemHtml = itemHtml.replace(/{{itemId}}/g, data.id);
   itemHtml = itemHtml.replace(/{{itemHandle}}/g, data.handle);
   itemHtml = itemHtml.replace(/{{itemTitle}}/g, data.title);
+  itemHtml = itemHtml.replace(/{{itemColors}}/g, colorsHtml);
   itemHtml = itemHtml.replace(/{{itemUrl}}/g, this.buildProductItemUrl(data));
 
   return itemHtml;
