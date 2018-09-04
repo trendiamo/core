@@ -68,6 +68,9 @@
   {% if vendor_collection.metafields.custom_fields["business_location"] != blank %}
     {% assign business_location = vendor_collection.metafields.custom_fields["business_location"] %}
   {% endif %}
+  {% if vendor_collection.metafields.custom_fields["size_guide"] != blank %}
+    {% assign size_guide = vendor_collection.metafields.custom_fields["size_guide"]  %}
+  {% endif %}
   {% if vendor_collection.metafields.custom_fields["produce_on_demand"] != blank and vendor_collection.metafields.custom_fields["produce_on_demand"] == 1 %}
     {% assign produced_on_demand = 1 %}
   {% else %}
@@ -215,6 +218,7 @@
                                             </div><div class="product-stock-mark-container"><a class="product-stock-mark" target="_blank" href="{{ shipping_terms_link }}">?</a></div>
                                           </div>
 
+
                                             {% if section.settings.show_reviews %}
                                                 <div class="product-single__reviews-stars">
                                                     <a href="#acc-reviews" class="product-single__reviews-stars-link js-review-scroll js-accordion-trigger">
@@ -224,6 +228,9 @@
                                             {% endif %}
 
                                             <div class="product-single__variant">
+                                                {% if size_guide != blank %}
+                                                  <a class="action-link link--arrow" target="_blank" href={{size_guide}}>Read About {{ product.vendor }}'s Sizes</a>
+                                                {% endif %}
                                                 <select name="id" id="productSelect-1" class="product-single__variant-select">
                                                     {% for variant in product.variants %}
                                                         {% if variant.available %}
