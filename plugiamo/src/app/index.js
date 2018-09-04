@@ -47,6 +47,10 @@ export default compose(
   withProps(({ data }) => ({
     exposition: data.exposition,
   })),
+  branch(
+    ({ exposition }) => !exposition,
+    console.log('%c Trendiamo: no content found for this domain', 'color: #7189cf') || renderNothing
+  ),
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
