@@ -103,8 +103,8 @@ const ProductsList = ({
 )
 
 const Collection = gql`
-  query($shopifyId: ID!, $first: Int, $last: Int, $after: String, $before: String) {
-    collection(id: $shopifyId) {
+  query($shopifyId: String!, $first: Int, $last: Int, $after: String, $before: String) {
+    shopifyCollection(shopifyId: $shopifyId) {
       id
       handle
       productsCount
@@ -144,8 +144,8 @@ const Collection = gql`
 `
 
 const CollectionProductIds = gql`
-  query($shopifyId: ID!, $first: Int!) {
-    collection(id: $shopifyId) {
+  query($shopifyId: String!, $first: Int!) {
+    shopifyCollection(shopifyId: $shopifyId) {
       id
       products(first: $first) {
         edges {
@@ -159,8 +159,8 @@ const CollectionProductIds = gql`
 `
 
 const deleteProduct = gql`
-  mutation($input: ProductDeleteInput!) {
-    productDelete(input: $input) {
+  mutation($input: String!) {
+    deleteProducts(input: $input) {
       userErrors {
         field
         message
@@ -177,20 +177,20 @@ export default compose(
   graphql(Collection, {
     name: 'CollectionQuery',
     options: ({ brand }) => ({
-      variables: { first: PAGE_SIZE, shopifyId: `gid://shopify/Collection/${brand.shopifyCollectionId}` },
+      variables: { first: PAGE_SIZE, shopifyId: `${brand.shopifyCollectionId}` },
     }),
   }),
   branch(({ CollectionQuery }) => CollectionQuery && (CollectionQuery.loading || CollectionQuery.error), renderNothing),
   withProps(({ CollectionQuery }) => ({
-    collection: CollectionQuery.collection,
-    pageInfo: CollectionQuery.collection.products.pageInfo,
-    products: CollectionQuery.collection.products.edges,
-    productsCount: CollectionQuery.collection.productsCount,
+    collection: CollectionQuery.shopifyCollection,
+    pageInfo: CollectionQuery.shopifyCollection.products.pageInfo,
+    products: CollectionQuery.shopifyCollection.products.edges,
+    productsCount: CollectionQuery.shopifyCollection.productsCount,
   })),
   graphql(CollectionProductIds, {
     name: 'CollectionProductIdsQuery',
     options: ({ collection, productsCount }) => ({
-      variables: { first: productsCount, shopifyId: collection.id },
+      variables: { first: productsCount, shopifyId: `${collection.id}` },
     }),
   }),
   withState('isLoading', 'setIsLoading', false),

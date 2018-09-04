@@ -1,5 +1,5 @@
 Fields::AddBrandField = GraphQL::Field.define do
-  name "Add Brand"
+  name "addBrand"
   type Types::BrandType
   argument :brand, !Types::BrandInputType
   resolve Resolver.new ->(obj, args, ctx) {
