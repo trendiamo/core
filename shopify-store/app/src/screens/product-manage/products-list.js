@@ -1,14 +1,12 @@
 import { authGql } from 'auth/utils'
 import Empty from './empty'
 import gql from 'graphql-tag'
-import { graphql } from 'react-apollo'
 import Loader from 'shared/loader'
 import Product from './product'
 import React from 'react'
 import styled from 'styled-components'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
-
-const PAGE_SIZE = 10
+import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { graphql, withApollo } from 'react-apollo'
 
 const ProductsDiv = styled.div`
   border-radius: 14px;
@@ -41,35 +39,7 @@ const Ul = styled.ul`
   margin: 0;
 `
 
-const ProductsDivPageNav = styled.div`
-  display: flex;
-  justify-content: center;
-`
-
-const ProductsDivPageNavNext = styled.h6`
-  flex: 1;
-  cursor: pointer;
-  text-align: ${({ pageInfo }) => (pageInfo.hasPreviousPage && pageInfo.hasNextPage ? `left` : `center`)};
-  margin: 1rem;
-`
-
-const ProductsDivPageNavPrevious = styled.h6`
-  flex: 1;
-  cursor: pointer;
-  text-align: ${({ pageInfo }) => (pageInfo.hasPreviousPage && pageInfo.hasNextPage ? `right` : `center`)};
-  margin: 1rem;
-`
-
-const ProductsList = ({
-  deleteAllProducts,
-  deleteProduct,
-  isLoading,
-  nextPage,
-  pageInfo,
-  previousPage,
-  products,
-  productsCount,
-}) => (
+const ProductsList = ({ deleteAllProducts, deleteProduct, isLoading, products, productsCount }) => (
   <ProductsDiv className="container container--small">
     <Loader isLoading={isLoading} />
     <ProductsDivHeaders>
@@ -87,18 +57,6 @@ const ProductsList = ({
         ))}
       </Ul>
     )}
-    <ProductsDivPageNav>
-      {pageInfo.hasPreviousPage && (
-        <ProductsDivPageNavPrevious onClick={previousPage} pageInfo={pageInfo}>
-          {'Previous Page'}
-        </ProductsDivPageNavPrevious>
-      )}
-      {pageInfo.hasNextPage && (
-        <ProductsDivPageNavNext onClick={nextPage} pageInfo={pageInfo}>
-          {'Next Page'}
-        </ProductsDivPageNavNext>
-      )}
-    </ProductsDivPageNav>
   </ProductsDiv>
 )
 
@@ -143,41 +101,20 @@ const Collection = gql`
   }
 `
 
-const CollectionProductIds = gql`
-  query($shopifyId: String!, $first: Int!) {
-    shopifyCollection(shopifyId: $shopifyId) {
-      id
-      products(first: $first) {
-        edges {
-          node {
-            id
-          }
-        }
-      }
-    }
-  }
-`
-
 const deleteProduct = gql`
-  mutation($input: String!) {
+  mutation($input: [String]!) {
     deleteProducts(input: $input) {
-      userErrors {
-        field
-        message
-      }
-      deletedProductId
-      shop {
-        id
-      }
+      deletedProductsIds
     }
   }
 `
 
 export default compose(
+  withApollo,
   graphql(Collection, {
     name: 'CollectionQuery',
     options: ({ brand }) => ({
-      variables: { first: PAGE_SIZE, shopifyId: `${brand.shopifyCollectionId}` },
+      variables: { shopifyId: `${brand.shopifyCollectionId}` },
     }),
   }),
   branch(({ CollectionQuery }) => CollectionQuery && (CollectionQuery.loading || CollectionQuery.error), renderNothing),
@@ -187,75 +124,53 @@ export default compose(
     products: CollectionQuery.shopifyCollection.products.edges,
     productsCount: CollectionQuery.shopifyCollection.productsCount,
   })),
-  graphql(CollectionProductIds, {
-    name: 'CollectionProductIdsQuery',
-    options: ({ collection, productsCount }) => ({
-      variables: { first: productsCount, shopifyId: `${collection.id}` },
+  withState('isLoading', 'setIsLoading', false),
+  graphql(deleteProduct, {
+    options: ({ collection }) => ({
+      update: (client, { data: { deleteProducts } }) => {
+        const data = client.readQuery({
+          query: Collection,
+          variables: { shopifyId: collection.id },
+        })
+        const productIds = collection.products.edges.map(edge => edge.node.id)
+        deleteProducts.deletedProductsIds.forEach(productId => {
+          const index = productIds.indexOf(productId)
+          data.shopifyCollection.products.edges.splice(index, 1)
+          data.shopifyCollection.productsCount -= 1
+        })
+        client.writeQuery({
+          data,
+          query: Collection,
+          variables: { shopifyId: collection.id },
+        })
+      },
     }),
   }),
-  withState('isLoading', 'setIsLoading', false),
-  graphql(deleteProduct),
   withHandlers({
-    deleteAllProducts: ({
-      auth,
-      CollectionQuery,
-      CollectionProductIdsQuery,
-      mutate,
-      productsCount,
-      setIsLoading,
-    }) => () => {
+    deleteAllProducts: ({ auth, products, mutate, setIsLoading }) => () => {
       if (!confirm(`Delete all the products?`)) {
         return
       }
-      const productIds = CollectionProductIdsQuery.collection.products.edges.map(edge => edge.node.id)
-      setIsLoading(true)
-      let i = 1
-      productIds.forEach(productId => {
-        authGql(auth, async () => {
-          await mutate({
-            variables: { input: { id: productId } },
-          })
-          i++
-          if (i === productsCount) {
-            CollectionQuery.refetch({ after: undefined, before: undefined, first: PAGE_SIZE, last: undefined })
-            setIsLoading(false)
-          }
+      const productIds = products.map(edge => edge.node.id)
+      authGql(auth, async () => {
+        setIsLoading(true)
+        await mutate({
+          variables: { input: productIds },
         })
+        setIsLoading(false)
       })
     },
-    deleteProduct: ({ auth, collection, mutate, setIsLoading }) => edge => {
+    deleteProduct: ({ auth, mutate, setIsLoading }) => edge => {
       if (!confirm(`Delete ${edge.title}?`)) {
         return
       }
       authGql(auth, async () => {
         setIsLoading(true)
-        const { data } = await mutate({
-          refetchQueries: [
-            {
-              query: Collection,
-              variables: { awaitRefetchQueries: true, first: PAGE_SIZE, shopifyId: collection.id },
-            },
-          ],
-          variables: { input: { id: edge.id } },
+        await mutate({
+          variables: { input: [edge.id] },
         })
-        setIsLoading(data.loading)
+        setIsLoading(false)
       })
-    },
-    nextPage: ({ CollectionQuery, products }) => () => {
-      CollectionQuery.refetch({
-        after: products[products.length - 1].cursor,
-        before: undefined,
-        first: PAGE_SIZE,
-        last: undefined,
-      })
-    },
-    previousPage: ({ CollectionQuery, products }) => () => {
-      CollectionQuery.refetch({ after: undefined, before: products[0].cursor, first: undefined, last: PAGE_SIZE })
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      window.scrollTo(0, 0)
     },
   })
 )(ProductsList)
