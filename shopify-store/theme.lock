@@ -157,7 +157,7 @@ assets/main.js.liquid:
 assets/main.scss.liquid:
   development: 2018-09-03T10:40:59+01:00   20b640d27e8f9f8453017e672e01aea1
   fb: 2018-08-14T13:11:32-04:00   b3ecf06b3a6d051ec0e3d8477181ad18
-  production: 2018-09-03T15:54:46+01:00   f51363d3b1fe2bd51a4c63a9bcebd8b4
+  production: 2018-09-03T17:57:59+01:00   cad3b6d154d8c9a0b2c860f3e488cd1a
   trnd-mvp: 2018-09-03T08:29:55-04:00   c1d1afd87b2a7d3e1e8cef7fc9a92136
 assets/password.js.liquid:
   development: 2018-08-09T19:51:59+01:00   d5b0b4192b988c60cdfb399bf4a3646a
@@ -229,6 +229,8 @@ assets/zendesk-embeddable.js:
   fb: 2018-08-14T13:11:38-04:00   2792470da65f3229d04406a734669059
   production: 2018-08-10T22:04:34+01:00   2792470da65f3229d04406a734669059
   trnd-mvp: 2018-08-12T07:19:42-04:00   2792470da65f3229d04406a734669059
+config/settings_data.json:
+  production: 2018-09-03T15:28:37+01:00   d65f666c5b37c87426b04d6a32d9125f
 config/settings_schema.json:
   development: 2018-08-10T15:25:36+01:00   ec993d3224df7dd005cd634e8f25fed7
   fb: 2018-08-14T13:11:39-04:00   ec993d3224df7dd005cd634e8f25fed7
@@ -319,7 +321,8 @@ sections/collection-test.liquid:
   production: 2018-09-03T14:52:33+01:00   97a4e5a3971b9318c3f17249e288f601
   trnd-mvp: 2018-09-03T07:43:47-04:00   97a4e5a3971b9318c3f17249e288f601
 sections/collection-video.liquid:
-  production: 2018-09-03T12:18:17+01:00   97a4e5a3971b9318c3f17249e288f601
+  development: 2018-09-03T16:32:05+01:00   dc67a439550f013da5bb78504a9ae077
+  production: 2018-09-03T16:32:05+01:00   dc67a439550f013da5bb78504a9ae077
 sections/footer.liquid:
   development: 2018-08-09T19:52:52+01:00   e7c275f0c9c1cba26724cabae421c252
   fb: 2018-07-25T06:45:31-04:00   e7c275f0c9c1cba26724cabae421c252
