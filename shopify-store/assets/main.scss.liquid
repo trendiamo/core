@@ -3570,7 +3570,48 @@ iframe {
         }
     }
 }
+.header__currency-toggle {
+    color: white;
+    line-height: 42px;
+    span {
+        width: 32px;
+        display: inline-block;
+    }
+    .icon {
+        margin-left: 6px;
+        position: relative;
+        top: 1px;
+        font-size: 17px;
+        line-height: 0;
+    }
+    &:hover,
+    &.js-active {
+        color: $color--white;
+    }
+    &.js-active {
+        .icon {
+            &:before {
+                content: "\e915";
+            }
+        }
+    }
+}
 .footer__currency-box {
+    position: absolute;
+    bottom: 46px;
+    left: -6px;
+    padding-bottom: 8px;
+    opacity: 0;
+    visibility: hidden;
+    @include transform(translateY(10px));
+    @include transition($global-transition);
+    &.js-active {
+        opacity: 1;
+        visibility: visible;
+        @include transform(translateY(0));
+    }
+}
+.header__currency-box {
     position: absolute;
     bottom: 46px;
     left: -6px;
@@ -3607,6 +3648,27 @@ iframe {
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
     }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        bottom: 3px;
+        left: 18px;
+        box-shadow: 2px -2px 2px -2px $color--black;
+        @include transform(rotate(135deg));
+    }
+}
+.header__currency-items {
+    background: #303030;
+    box-shadow: 0px 0px 2px $color--black;
+    padding: 3px;
+    width: 142px;
+    left: 0;
+    color: $color--white;
+    display: block;
+    overflow: hidden;
+    @include transition($global-transition);
     &:after {
         content: '';
         position: absolute;
@@ -9859,4 +9921,33 @@ body:before {
 
 .video-collection-header {
   text-align: center;
+}
+
+/* Announcement Bar Currencies
+   ========================================================================== */
+
+.header__currency {
+  font-family: Quicksand,sans-serif;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  height: 42px;
+  padding-right: 10px;
+  float: right;
+}
+
+.header__currency-box {
+  position: absolute;
+  top: 44px;
+  left: -90px;
+  padding-bottom: 8px;
+  opacity: 0;
+  visibility: hidden;
+  -ms-transform: translateY(10px);
+  -webkit-transform: translateY(10px);
+  transform: translateY(10px);
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+  z-index: 999;
 }

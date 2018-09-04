@@ -157,7 +157,7 @@ assets/main.js.liquid:
 assets/main.scss.liquid:
   development: 2018-09-03T10:40:59+01:00   20b640d27e8f9f8453017e672e01aea1
   fb: 2018-08-14T13:11:32-04:00   b3ecf06b3a6d051ec0e3d8477181ad18
-  production: 2018-09-03T17:57:59+01:00   cad3b6d154d8c9a0b2c860f3e488cd1a
+  production: 2018-09-04T14:51:05+01:00   97f852e14559ca9ac9f29fb4f9461aa3
   trnd-mvp: 2018-09-03T08:29:55-04:00   c1d1afd87b2a7d3e1e8cef7fc9a92136
 assets/password.js.liquid:
   development: 2018-08-09T19:51:59+01:00   d5b0b4192b988c60cdfb399bf4a3646a
@@ -326,7 +326,7 @@ sections/collection-video.liquid:
 sections/footer.liquid:
   development: 2018-08-09T19:52:52+01:00   e7c275f0c9c1cba26724cabae421c252
   fb: 2018-07-25T06:45:31-04:00   e7c275f0c9c1cba26724cabae421c252
-  production: 2018-08-09T19:52:52+01:00   e7c275f0c9c1cba26724cabae421c252
+  production: 2018-09-04T14:19:05+01:00   3240756ad385b45f516e96b383e6c1da
   trnd-mvp: 2018-07-23T06:09:33-04:00   e7c275f0c9c1cba26724cabae421c252
 sections/generic-pop.liquid:
   development: 2018-08-28T18:17:05+01:00   7589bec558473f57a07663907a8af674
@@ -335,7 +335,7 @@ sections/generic-pop.liquid:
 sections/header.liquid:
   development: 2018-08-28T18:17:04+01:00   c01c9661e5ca5a0f2501bbc496e4c4f9
   fb: 2018-08-14T13:11:49-04:00   0dd514dd1daef7850b4e9efc3f5c704c
-  production: 2018-08-28T18:17:04+01:00   c01c9661e5ca5a0f2501bbc496e4c4f9
+  production: 2018-09-04T14:51:05+01:00   cbfbb69ef85f1fff16d86cdca282713d
   trnd-mvp: 2018-08-28T10:09:29-04:00   c01c9661e5ca5a0f2501bbc496e4c4f9
 sections/home-blog.liquid:
   development: 2018-08-09T19:52:55+01:00   6c6a4946be0b6fde5429eb2acb63b365

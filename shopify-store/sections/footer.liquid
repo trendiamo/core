@@ -369,6 +369,7 @@
     {% if settings.show_multiple_currencies or section.settings.show_payment_icons %}
         <div class="footer__bottom">
             <div class="container">
+              <!--
                 {% if settings.show_multiple_currencies %}
                     <div class="footer__currency footer__bottom-item">
                         <a href="#" class="footer__currency-toggle js-currency-trigger"><span class="js-currency-trigger-text">{{ shop.currency }}</span><i class="icon icon--up"></i></a>
@@ -382,7 +383,7 @@
                         </div>
                     </div>
                 {% endif %}
-
+              -->
                 {% if section.settings.show_payment_icons %}
                     <div class="footer__icons footer__bottom-item">
                         {% unless shop.enabled_payment_types == empty %}

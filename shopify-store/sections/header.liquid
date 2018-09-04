@@ -32,6 +32,19 @@
                   <a href="/account/register">register</a>
                 </div>
                 -->
+                {% if settings.show_multiple_currencies %}
+                    <div class="header__currency">
+                        <a href="#" class="header__currency-toggle js-currency-trigger"><span class="js-currency-trigger-text">{{ shop.currency }}</span><i class="icon icon--up"></i></a>
+                        <div class="header__currency-box js-currency-box">
+                            <span id="currencies" class="header__currency-items">
+                                {% assign currencies = settings.supported_currencies | split: " "  %}
+                                {% for currency in currencies %}
+                                    <span data-currency="{{ currency }}" class="footer__currency-item js-currency-item {% if shop.currency == currency %}selected {% endif %}">{{ currency }}</span>
+                                {% endfor %}
+                            </span>
+                        </div>
+                    </div>
+                {% endif %}
                 <p class="announcement__text">{{ section.settings.message_text | escape }}</p>
             </div>
         {% unless section.settings.message_link == blank %}
