@@ -1,14 +1,23 @@
 Types::ShopifyProductType = GraphQL::ObjectType.define do
   name "ShopifyProductType"
 
-  field :id, !types.ID
-  field :title, !types.String
-  field :vendor, types.String
-  field :tags, types.String
-  field :description, types.String do
-    resolve ->(obj, _args, _ctx) { obj.body_html }
+  field :id, !types.ID do
+    resolve ->(obj, _args, _ctx) { obj["id"] }
   end
-  field :featuredImage, types.String do
-    resolve ->(obj, _args, _ctx) { obj.image.src }
+  field :handle, !types.String do
+    resolve ->(obj, _args, _ctx) { obj["handle"] }
+  end
+  field :title, !types.String do
+    resolve ->(obj, _args, _ctx) { obj["title"] }
+  end
+  connection :variants, Types::ShopifyVariantType.connection_type do
+    resolve ->(obj, _args, _ctx) {
+      obj["variants"].map(&:attributes)
+    }
+  end
+  connection :images, Types::ShopifyImageType.connection_type do
+    resolve ->(obj, _args, _ctx) {
+      obj["images"].map(&:attributes)
+    }
   end
 end
