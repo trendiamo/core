@@ -9,4 +9,5 @@ Main::MutationType = GraphQL::ObjectType.define do
   field :removeComment, Fields::RemoveCommentField
   field :addBrand, Fields::AddBrandField
   field :updateBrand, Fields::UpdateBrandField
+  field :deleteProducts, Fields::DeleteProductsField
 end
