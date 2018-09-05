@@ -6012,13 +6012,21 @@ button.action-link {
 .product__media {
 	position: relative;
 	background: $color--grey-lightest;
+  padding-top: 100%;
 }
 .product__img-wrapper {
+  position: absolute;
 	overflow: hidden;
+  display: flex;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
 }
 .product__img.product__img {
 	width: 100%;
-	object-fit: cover;
+	object-fit: contain;
+  justify-content: center;
 	@include backface-visibility(hidden);
 	@include transition($global-transition);
 }
@@ -6045,7 +6053,11 @@ button.action-link {
   line-height: 18px;
   padding-top: 10px;
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 .product__vendor {
 	font-family: $font--body;
 	font-weight: $font--body-weight;
@@ -9867,22 +9879,12 @@ body:before {
 }
 
 @media screen and (max-width: 767px) {
-  .announcement {
-    height: 44px;
-  }
-
   .announcement-social {
     display: none;
   }
 
   .announcement-account {
     display: none;
-  }
-
-  .announcement__text {
-    width: 85%;
-    text-align: left;
-    padding: 9px 10px;
   }
 }
 
