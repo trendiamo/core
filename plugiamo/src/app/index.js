@@ -6,9 +6,9 @@ import Launcher from './launcher'
 import ReactGA from 'react-ga'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 
-const App = ({ exposition, onToggleContent, showingContent }) => (
+const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
   <div>
-    {showingContent && <Content exposition={exposition} />}
+    {showingContent && <Content exposition={exposition} onCtaClick={onCtaClick} />}
     <Launcher influencer={exposition.influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
   </div>
 )
@@ -19,6 +19,8 @@ export default compose(
       query($domain: String!) {
         exposition(where: { domain: $domain }) {
           id
+          ctaText
+          ctaUrl
           description
           influencer {
             name
@@ -28,6 +30,9 @@ export default compose(
           }
           videos {
             videoUrl
+          }
+          instagramPosts {
+            url
           }
         }
       }
@@ -42,8 +47,19 @@ export default compose(
   withProps(({ data }) => ({
     exposition: data.exposition,
   })),
+  branch(
+    ({ exposition }) => !exposition,
+    console.log('%c Trendiamo: no content found for this domain', 'color: #7189cf') || renderNothing
+  ),
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
+    onCtaClick: ({ exposition }) => () => {
+      ReactGA.event({
+        action: 'Click CTA',
+        category: 'Content',
+      })
+      window.location = exposition.ctaUrl
+    },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       ReactGA.event({
         action: !showingContent ? 'Opened' : 'Closed',

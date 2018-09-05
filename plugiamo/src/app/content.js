@@ -1,7 +1,9 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Button from 'shared/button'
+import config from '../config'
 import Frame from 'shared/frame'
 import { h } from 'preact'
+import IgPost from './ig-post'
 import styled from 'styled-components'
 import { compose, withProps } from 'recompose'
 
@@ -12,6 +14,8 @@ const TrendiamoContentFrame = animateOnMount(styled(Frame)`
   bottom: 100px;
   right: 30px;
   height: calc(100vh - 150px);
+  width: ${config.width}px;
+  overflow-x: hidden;
   max-height: 500px;
   background-color: #fff;
   border-radius: 8px;
@@ -30,11 +34,15 @@ const Wrapper = styled.div`
 `
 
 const Cover = styled.div`
-  padding: 2rem 1rem;
+  background-color: #55ebd1;
+  background-image: url(https://www.transparenttextures.com/patterns/dark-mosaic.png);
+  background-size: contain;
+  background-position: center;
+  color: #fff;
   font-size: 22px;
   font-weight: 500;
-  background-color: #35cbb1;
-  color: #fff;
+  padding: 2rem 1rem;
+  text-shadow: 1px 1px 1px #888;
 `
 
 const InnerContent = styled.div`
@@ -55,7 +63,17 @@ const AnimatedContent = compose(
   }))
 )(({ children, Component }) => <Component>{children}</Component>)
 
-const Content = ({ exposition }) => (
+const PoweredBy = styled.div`
+  color: #999;
+  font-size: small;
+  padding-top: 1.2rem;
+  text-align: center;
+  a {
+    color: #5d69b9;
+  }
+`
+
+const Content = ({ exposition, onCtaClick }) => (
   <TrendiamoContentFrame>
     <Wrapper>
       <Cover>
@@ -74,8 +92,19 @@ const Content = ({ exposition }) => (
               style={{ marginBottom: '1rem', width: '100%' }}
             />
           ))}
-          <Button fullWidth>{'Go buy it'}</Button>
+          {exposition.instagramPosts.map(e => (
+            <IgPost key={e.url} url={e.url} />
+          ))}
+          <Button fullWidth onClick={onCtaClick}>
+            {exposition.ctaText}
+          </Button>
         </AnimatedContent>
+        <PoweredBy>
+          {'Trusted by '}
+          <a href="https://trendiamo.com" rel="noopener noreferrer" target="_blank">
+            {'trendiamo'}
+          </a>
+        </PoweredBy>
       </InnerContent>
     </Wrapper>
   </TrendiamoContentFrame>

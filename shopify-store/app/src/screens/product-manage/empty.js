@@ -13,7 +13,7 @@ const EmptyCard = styled.div`
   border: 2px solid rgb(200, 200, 200);
   border-radius: 6px;
   bottom: -10%;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.18) 0px 4px 16px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
   color: rgb(200, 200, 200);
   font-weight: regular;
   letter-spacing: 1px;

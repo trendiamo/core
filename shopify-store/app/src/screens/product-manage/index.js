@@ -1,6 +1,4 @@
 import { apiCsvUpload } from 'auth/utils'
-import { ApolloProvider } from 'react-apollo'
-import clientShopify from '../../graphql/client-shopify'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import { Helmet } from 'react-helmet'
@@ -16,9 +14,7 @@ const ProductManage = ({ brand, isLoading, onFileUpload, file, fileSubmit, alert
       <title>{'My Products'}</title>
     </Helmet>
     <section className="section">
-      <ApolloProvider client={clientShopify}>
-        <ProductsList brand={brand} />
-      </ApolloProvider>
+      <ProductsList brand={brand} />
       <div className="container container--tiny" style={{ textAlign: 'center' }}>
         {' '}
         <p>
