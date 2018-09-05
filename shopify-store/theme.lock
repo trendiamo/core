@@ -7,7 +7,7 @@ assets/ajax-cart.js.liquid:
 assets/app.js:
   development: 2018-09-03T10:40:58+01:00   979469c0f61f35c5bb67e05d9a8f4a37
   fb: 2018-08-16T13:22:17-04:00   c242a3bd42c5bf42aa322aadc5bc4dec
-  production: 2018-09-03T14:52:33+01:00   092bb818f2318236ca804ea5bc2d36a0
+  production: 2018-09-05T11:01:25+01:00   149d891b88ebf540ae58a55de01baddc
   trnd-mvp: 2018-09-03T07:43:52-04:00   ff6c6e04a0aade1ccd66c32c321d0ff2
 assets/bc-sf-filter-ico.eot:
   development: 2018-08-09T19:54:57+01:00   ceb95c781dfa863c03ec63b987e31fb9
@@ -229,8 +229,6 @@ assets/zendesk-embeddable.js:
   fb: 2018-08-14T13:11:38-04:00   2792470da65f3229d04406a734669059
   production: 2018-08-10T22:04:34+01:00   2792470da65f3229d04406a734669059
   trnd-mvp: 2018-08-12T07:19:42-04:00   2792470da65f3229d04406a734669059
-config/settings_data.json:
-  production: 2018-09-03T15:28:37+01:00   d65f666c5b37c87426b04d6a32d9125f
 config/settings_schema.json:
   development: 2018-08-10T15:25:36+01:00   ec993d3224df7dd005cd634e8f25fed7
   fb: 2018-08-14T13:11:39-04:00   ec993d3224df7dd005cd634e8f25fed7
@@ -460,7 +458,7 @@ sections/password-header.liquid:
 sections/product-template.liquid:
   development: 2018-08-21T21:19:08+01:00   a1342b8231cc592fa38361c4566b88e0
   fb: 2018-08-14T13:12:01-04:00   c7fd8dff5599de8083cd79b306172b7c
-  production: 2018-08-21T21:19:08+01:00   a1342b8231cc592fa38361c4566b88e0
+  production: 2018-09-04T15:20:57+01:00   e86cd723dfbe467815821b39568ec42e
   trnd-mvp: 2018-08-28T10:09:30-04:00   a1342b8231cc592fa38361c4566b88e0
 sections/promo-pop.liquid:
   development: 2018-08-28T18:17:02+01:00   28fa6ab6d6bb72dcdb992e1c045b15ea
@@ -509,7 +507,7 @@ snippets/collection-grid-item.liquid:
 snippets/collections.custom_fields.liquid:
   development: 2018-08-09T19:53:37+01:00   3afb240121e2aba02748ddf4622505b5
   fb: 2018-08-14T13:12:03-04:00   3afb240121e2aba02748ddf4622505b5
-  production: 2018-08-09T19:53:37+01:00   3afb240121e2aba02748ddf4622505b5
+  production: 2018-09-04T12:35:02+01:00   276de7778802eb42fb293ba3c8a1c335
   trnd-mvp: 2018-07-09T06:38:05-04:00   3afb240121e2aba02748ddf4622505b5
 snippets/currencies.liquid:
   development: 2018-08-09T19:53:39+01:00   bb75b3e53759ec06440762840c35fef9
@@ -573,7 +571,7 @@ snippets/custom_fields.collections.shipping_timeframe.liquid:
   trnd-mvp: 2018-07-23T06:09:36-04:00   e40cb3a7c7d767d49c5e3fd202f7ec1c
 snippets/custom_fields.collections.size_guide.liquid:
   development: 2018-08-24T18:17:09+01:00   b26e3b1d267b362034d13ebac860fd82
-  production: 2018-08-24T18:17:09+01:00   b26e3b1d267b362034d13ebac860fd82
+  production: 2018-09-04T12:35:17+01:00   c62cdf3c202a3f059a10615e19bafc88
   trnd-mvp: 2018-08-28T10:09:29-04:00   b26e3b1d267b362034d13ebac860fd82
 snippets/product-colors.liquid:
   production: 2018-09-03T15:33:07+01:00   8b09ec38a0a0917b58bb07298432e3d6
