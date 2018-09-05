@@ -157,7 +157,7 @@ assets/main.js.liquid:
 assets/main.scss.liquid:
   development: 2018-09-03T10:40:59+01:00   20b640d27e8f9f8453017e672e01aea1
   fb: 2018-08-14T13:11:32-04:00   b3ecf06b3a6d051ec0e3d8477181ad18
-  production: 2018-09-05T15:30:39+01:00   bbc192dd5d02a178d50cca5a3825376a
+  production: 2018-09-05T15:39:33+01:00   d1230f453b1d079be87ea6ba5553455c
   trnd-mvp: 2018-09-03T08:29:55-04:00   c1d1afd87b2a7d3e1e8cef7fc9a92136
 assets/password.js.liquid:
   development: 2018-08-09T19:51:59+01:00   d5b0b4192b988c60cdfb399bf4a3646a
