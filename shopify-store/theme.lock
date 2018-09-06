@@ -575,7 +575,7 @@ snippets/custom_fields.collections.size_guide.liquid:
   production: 2018-09-04T12:35:17+01:00   c62cdf3c202a3f059a10615e19bafc88
   trnd-mvp: 2018-08-28T10:09:29-04:00   b26e3b1d267b362034d13ebac860fd82
 snippets/product-colors.liquid:
-  production: 2018-09-03T15:33:07+01:00   8b09ec38a0a0917b58bb07298432e3d6
+  production: 2018-09-06T12:19:35+01:00   12194ec06b5e22fe9d855a4be22559d6
   trnd-mvp: 2018-09-03T09:20:55-04:00   1d616206c10a759b8ab482b249c10cec
 snippets/product-grid-item.liquid:
   db: 2018-09-05T11:15:42-04:00   0448746b15b04a9bb08b6eff239577f6
