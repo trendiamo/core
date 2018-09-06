@@ -96,19 +96,22 @@ BCSfFilter.prototype.buildProductGridItem = function(data) {
       }
     }
   }
-  var colors = (
-    (
-      data["options_with_values"].find(function(e) {
-        return e.name === "color";
-      }) || {}
-    ).values || []
-  )
-    .map(function(e) {
-      return bcSfFilterConfig.custom.color_table[e.title];
-    })
-    .filter(function(e) {
-      return e;
-    });
+  var colorTable = bcSfFilterConfig.custom.color_table;
+  var colors = colorTable
+    ? (
+        (
+          data["options_with_values"].find(function(e) {
+            return e.name === "colour";
+          }) || {}
+        ).values || []
+      )
+        .map(function(e) {
+          return colorTable[e.title];
+        })
+        .filter(function(e) {
+          return e;
+        })
+    : [];
   /*** End Prepare data ***/
 
   // Get Template
