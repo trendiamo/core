@@ -76,6 +76,11 @@
   {% else %}
     {% assign produced_on_demand = 0 %}
   {% endif %}
+  {% if product.variants[0].title != "Default Title" %}
+    {% assign variants_check = true %}
+  {% else %}
+    {% assign variants_check = false %}
+  {% endif %}
 {% endif %}
 
 {% assign ga_campaign_link = '?utm_source=user-share&utm_medium=webshop&utm_campaign=share-button' %}
@@ -228,8 +233,19 @@
                                             {% endif %}
 
                                             <div class="product-single__variant">
-                                                {% if size_guide != blank %}
-                                                  <a class="action-link link--arrow" target="_blank" href={{size_guide}}>Read About {{ product.vendor }}'s Sizes</a>
+                                                {% if size_guide != blank and variants_check %}
+                                                    <a class="action-link link--arrow js-size-guide-trigger" target="_blank" href={{size_guide}}>Read About {{ product.vendor }}'s Sizes</a>
+                                                    <div class="js-size-guide-draw mfp-hide">
+                                                        <div class="size-guide__head">
+                                                            <div class="size-guide__label-title">
+                                                              <h3 class="size-guide__label-title">{{ product.vendor }} - SIZE GUIDE</h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="size-guide__body">
+                                                            <img class="size-guide__image" src={{size_guide}}>
+                                                        </div>
+                                                        <button title="Close (Esc)" type="button" class="mfp-close mfp-close--custom js-close-mfp"><i class="icon icon--close"></i></button>
+                                                    </div>
                                                 {% endif %}
                                                 <select name="id" id="productSelect-1" class="product-single__variant-select">
                                                     {% for variant in product.variants %}

@@ -1154,6 +1154,20 @@ theme.mfpOpen  = function (popup) {
             });
             break;
 
+        case 'size-guide':
+            $.magnificPopup.open({
+              items: {
+                src: '.js-size-guide-draw'
+              },
+              type: 'inline',
+              mainClass: 'mfp-medium',
+              fixedContentPos: true,
+              focus: '.js-search-input',
+              closeMarkup: closeBtn,
+              removalDelay: 200
+            });
+            break;
+
         case 'age':
             $.magnificPopup.open({
                 items: {
@@ -1340,6 +1354,13 @@ $(document).ready(function(){
         theme.mfpOpen('search');
         e.preventDefault();
     });
+
+    //size-guide popup trigger click
+    $(document).on('click', '.js-size-guide-trigger', function(popup) {
+      theme.mfpOpen('size-guide');
+      popup.preventDefault();
+    });
+
     //cart popup trigger click
     if (theme.cart_ajax) {
         $(document).on('click', '.js-cart-trigger', function(e) {
