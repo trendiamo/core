@@ -1,10 +1,10 @@
 import Content from './content'
-import gql from 'graphql-tag'
-import { graphql } from 'react-apollo'
 import { h } from 'preact'
+import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
 import ReactGA from 'react-ga'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { gql, graphql } from 'ext/recompose/graphql'
 
 const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
   <div>
@@ -37,20 +37,13 @@ export default compose(
         }
       }
     `,
-    {
-      options: () => ({
-        variables: { domain: location.host },
-      }),
-    }
+    { domain: location.host }
   ),
-  branch(({ data }) => data && (data.loading || data.error), renderNothing),
+  branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
     exposition: data.exposition,
   })),
-  branch(
-    ({ exposition }) => !exposition,
-    console.log('%c Trendiamo: no content found for this domain', 'color: #7189cf') || renderNothing
-  ),
+  branch(({ exposition }) => !exposition, infoMsg('Trendiamo: no content found for this domain')),
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
