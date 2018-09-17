@@ -1,7 +1,7 @@
-import ApolloClient from 'apollo-boost'
-import { ApolloProvider } from 'react-apollo'
 import App from 'app'
 import config from './config'
+import { GraphQLClient } from 'graphql-request'
+import { Provider } from 'ext/graphql-context'
 import ReactGA from 'react-ga'
 import { h, render } from 'preact'
 
@@ -12,12 +12,12 @@ const trendiamoContainer = document.createElement('div')
 trendiamoContainer.classList.add('trendiamo-container')
 document.body.appendChild(trendiamoContainer)
 
-const client = new ApolloClient({ uri: config.graphQlUrl })
+const client = new GraphQLClient(config.graphQlUrl)
 
 const RootComponent = () => (
-  <ApolloProvider client={client}>
+  <Provider value={client}>
     <App />
-  </ApolloProvider>
+  </Provider>
 )
 
 render(<RootComponent />, trendiamoContainer)

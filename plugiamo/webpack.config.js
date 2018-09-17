@@ -1,4 +1,5 @@
 /* eslint-disable */
+const Dotenv = require('dotenv-webpack')
 const path = require('path')
 const webpack = require('webpack')
 
@@ -28,7 +29,7 @@ module.exports = {
     maxAssetSize: 300000,
     maxEntrypointSize: 300000,
   },
-  // plugins: [new webpack.EnvironmentPlugin(['API_ENDPOINT'])],
+  plugins: [new Dotenv()],
   resolve: {
     alias: {
       react: 'preact-compat',

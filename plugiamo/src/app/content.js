@@ -19,7 +19,7 @@ const TrendiamoContentFrame = animateOnMount(styled(Frame)`
   max-height: 500px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transform: ${({ entry }) => (entry ? 'translateY(20px)' : 'none')};
   transition: opacity 0.25s ease, transform 0.25s ease;

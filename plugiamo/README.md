@@ -3,8 +3,9 @@
 ## Setup
 
 ```
-yarn global add surge http-server
+yarn global add http-server
 yarn
+touch .env # and then edit it to add needed variables
 ```
 
 ## Run locally
