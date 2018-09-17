@@ -63,7 +63,7 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
-      const callback = ({ exposition }) => {
+      const afterCTA = ({ exposition }) => {
         window.location = exposition.ctaUrl
       }
       mixpanel.track(
@@ -71,7 +71,7 @@ export default compose(
         {
           host: window.location.hostname,
         },
-        callback({ exposition })
+        afterCTA({ exposition })
       )
     },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
