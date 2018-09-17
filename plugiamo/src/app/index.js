@@ -67,7 +67,7 @@ export default compose(
         window.location = exposition.ctaUrl
       }
       mixpanel.track(
-        'ClickedCTA',
+        'Clicked CTA Link',
         {
           host: window.location.hostname,
         },
@@ -79,7 +79,7 @@ export default compose(
         host: window.location.hostname,
       })
       if (!showingContent) {
-        mixpanel.time_event('ClickedCTA')
+        mixpanel.time_event('Clicked CTA Link')
         mixpanel.time_event('Closed')
       } else {
         mixpanel.time_event('Opened')
