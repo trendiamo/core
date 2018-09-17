@@ -3,6 +3,7 @@
 ## Setup
 
 ```
+brew install awscli # for deploys
 yarn global add http-server
 yarn
 touch .env # and then edit it to add needed variables
