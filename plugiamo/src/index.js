@@ -17,7 +17,6 @@ trendiamoContainer.classList.add('trendiamo-container')
 document.body.appendChild(trendiamoContainer)
 
 const client = new GraphQLClient(config.graphQlUrl)
-console.log(client)
 
 const RootComponent = () => (
   <Provider value={client}>
