@@ -63,11 +63,16 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
-      mixpanel.track('ClickedCTA', {
-        host: window.location.hostname,
-      })
-      mixpanel.reset
-      // window.location = exposition.ctaUrl
+      const callback = ({ exposition }) => {
+        window.location = exposition.ctaUrl
+      }
+      mixpanel.track(
+        'ClickedCTA',
+        {
+          host: window.location.hostname,
+        },
+        callback({ exposition })
+      )
     },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       mixpanel.track(!showingContent ? 'Opened' : 'Closed', {
@@ -77,7 +82,6 @@ export default compose(
         mixpanel.time_event('ClickedCTA')
         mixpanel.time_event('Closed')
       } else {
-        mixpanel.reset
         mixpanel.time_event('Opened')
       }
       return setShowingContent(!showingContent)
