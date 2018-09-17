@@ -3,7 +3,7 @@ import Content from './content'
 import { h } from 'preact'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
-import ReactGA from 'react-ga'
+import mixpanel from 'mixpanel-browser'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
@@ -63,17 +63,23 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
-      ReactGA.event({
-        action: 'Click CTA',
-        category: 'Content',
+      mixpanel.track('ClickedCTA', {
+        host: window.location.hostname,
       })
-      window.location = exposition.ctaUrl
+      mixpanel.reset
+      // window.location = exposition.ctaUrl
     },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
-      ReactGA.event({
-        action: !showingContent ? 'Opened' : 'Closed',
-        category: 'Launcher',
+      mixpanel.track(!showingContent ? 'Opened' : 'Closed', {
+        host: window.location.hostname,
       })
+      if (!showingContent) {
+        mixpanel.time_event('ClickedCTA')
+        mixpanel.time_event('Closed')
+      } else {
+        mixpanel.reset
+        mixpanel.time_event('Opened')
+      }
       return setShowingContent(!showingContent)
     },
   })
