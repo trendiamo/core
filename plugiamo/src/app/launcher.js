@@ -14,6 +14,7 @@ const TrendiamoLauncherFrame = animateOnMount(styled(Frame)`
   height: 60px;
   border-radius: 50%;
   background: #849eda;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06), 0 2px 32px 0 rgba(0, 0, 0, 0.16);
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transition: opacity 0.25s ease;
 `)

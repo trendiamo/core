@@ -3,7 +3,7 @@
 ## Setup
 
 ```
-yarn global add surge http-server
+yarn global add http-server
 yarn
 ```
 
