@@ -10,7 +10,6 @@
     "preact": "^8.3.1",
     "preact-compat": "^3.18.3",
     "preact-context": "^1.1.1",
-    "react-apollo": "^2.1.11",
     "react-mixpanel": "^0.0.11",
     "recompose": "^0.28.2",
     "styled-components": "^3.4.5"
