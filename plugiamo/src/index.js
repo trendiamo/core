@@ -7,7 +7,7 @@ import { Provider } from 'ext/graphql-context'
 import { h, render } from 'preact'
 
 mixpanel.init(config.mixpanelToken)
-mixpanel.track('loadedPlugin', {
+mixpanel.track('Loaded Plugin', {
   host: window.location.hostname,
 })
 mixpanel.time_event('Opened')
