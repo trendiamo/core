@@ -1,23 +1,29 @@
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
 import App from 'app'
 import config from './config'
-import { GraphQLClient } from 'graphql-request'
-import { Provider } from 'ext/graphql-context'
-import ReactGA from 'react-ga'
+import mixpanel from 'mixpanel-browser'
+import MixpanelProvider from 'react-mixpanel'
 import { h, render } from 'preact'
 
-ReactGA.initialize(config.gaId, { testMode: process.env.NODE_ENV !== 'production', titleCase: false })
-ReactGA.ga('send', 'pageview', location.pathname)
+mixpanel.init(config.mpToken)
+mixpanel.track('loadedPlugin', {
+  host: window.location.hostname,
+})
+mixpanel.time_event('Opened')
 
 const trendiamoContainer = document.createElement('div')
 trendiamoContainer.classList.add('trendiamo-container')
 document.body.appendChild(trendiamoContainer)
 
-const client = new GraphQLClient(config.graphQlUrl)
+const client = new ApolloClient({ uri: config.graphQlUrl })
 
 const RootComponent = () => (
-  <Provider value={client}>
-    <App />
-  </Provider>
+  <ApolloProvider client={client}>
+    <MixpanelProvider mixpanel={mixpanel}>
+      <App />
+    </MixpanelProvider>
+  </ApolloProvider>
 )
 
 render(<RootComponent />, trendiamoContainer)
