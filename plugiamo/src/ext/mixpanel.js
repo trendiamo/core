@@ -17,6 +17,8 @@ const trndMixpanel = {
   track(eventName, properties, callback) {
     if (this.initialized) {
       mixpanel.track(eventName, properties, callback)
+    } else if (callback) {
+      callback()
     }
   },
 }
