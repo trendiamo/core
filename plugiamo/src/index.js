@@ -1,16 +1,16 @@
 import App from 'app'
 import config from './config'
 import { GraphQLClient } from 'graphql-request'
-import mixpanel from 'mixpanel-browser'
 import MixpanelProvider from 'react-mixpanel'
 import { Provider } from 'ext/graphql-context'
+import trndMixpanel from 'ext/mixpanel'
 import { h, render } from 'preact'
 
-mixpanel.init(config.mixpanelToken)
-mixpanel.track('Loaded Plugin', {
+trndMixpanel.init(config.mixpanelToken)
+trndMixpanel.track('Loaded Plugin', {
   host: window.location.hostname,
 })
-mixpanel.time_event('Opened')
+trndMixpanel.time_event('Opened')
 
 const trendiamoContainer = document.createElement('div')
 trendiamoContainer.classList.add('trendiamo-container')
@@ -20,7 +20,7 @@ const client = new GraphQLClient(config.graphQlUrl)
 
 const RootComponent = () => (
   <Provider value={client}>
-    <MixpanelProvider mixpanel={mixpanel}>
+    <MixpanelProvider mixpanel={trndMixpanel}>
       <App />
     </MixpanelProvider>
   </Provider>
