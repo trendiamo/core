@@ -3,8 +3,8 @@ import Content from './content'
 import { h } from 'preact'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
+import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
-import trndMixpanel from 'ext/mixpanel'
 import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 
@@ -66,7 +66,7 @@ export default compose(
       const afterCTA = ({ exposition }) => {
         window.location = exposition.ctaUrl
       }
-      trndMixpanel.track(
+      mixpanel.track(
         'Clicked CTA Link',
         {
           host: window.location.hostname,
@@ -75,14 +75,14 @@ export default compose(
       )
     },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
-      trndMixpanel.track(!showingContent ? 'Opened' : 'Closed', {
+      mixpanel.track(!showingContent ? 'Opened' : 'Closed', {
         host: window.location.hostname,
       })
       if (!showingContent) {
-        trndMixpanel.time_event('Clicked CTA Link')
-        trndMixpanel.time_event('Closed')
+        mixpanel.time_event('Clicked CTA Link')
+        mixpanel.time_event('Closed')
       } else {
-        trndMixpanel.time_event('Opened')
+        mixpanel.time_event('Opened')
       }
       return setShowingContent(!showingContent)
     },
