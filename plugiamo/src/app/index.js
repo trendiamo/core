@@ -71,7 +71,7 @@ export default compose(
         {
           host: window.location.hostname,
         },
-        afterCTA({ exposition })
+        () => afterCTA({ exposition })
       )
     },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
