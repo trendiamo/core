@@ -73,7 +73,7 @@ const PoweredBy = styled.div`
   }
 `
 
-const Content = ({ exposition, onCtaClick }) => (
+const Content = ({ exposition, onCtaClick, variation }) => (
   <TrendiamoContentFrame>
     <Wrapper>
       <Cover>
@@ -95,9 +95,16 @@ const Content = ({ exposition, onCtaClick }) => (
           {exposition.instagramPosts.map(e => (
             <IgPost key={e.url} url={e.url} />
           ))}
-          <Button fullWidth onClick={onCtaClick}>
-            {exposition.ctaText}
-          </Button>
+          {variation === 'control' && (
+            <Button fullWidth onClick={onCtaClick}>
+              {exposition.ctaText}
+            </Button>
+          )}
+          {variation === 'treatment' && (
+            <Button fullWidth onClick={onCtaClick} style={{ color: 'red' }}>
+              {exposition.ctaText}
+            </Button>
+          )}
         </AnimatedContent>
         <PoweredBy>
           {'Trusted by '}

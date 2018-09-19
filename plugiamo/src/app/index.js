@@ -1,9 +1,11 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
+import datafile from './datafile.json'
 import { h } from 'preact'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
+import optimizely from '@optimizely/optimizely-sdk'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
@@ -21,9 +23,14 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
+// Instantiate an Optimizely client
+var optimizelyClientInstance = optimizely.createInstance({ datafile: datafile })
+// Activate an A/B test for user 'frb3'
+var variation = optimizelyClientInstance.activate('CTA_BUTTON', 'frb3')
+
 const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
   <div>
-    {showingContent && <Content exposition={exposition} onCtaClick={onCtaClick} />}
+    {showingContent && <Content exposition={exposition} onCtaClick={onCtaClick} variation={variation} />}
     <Launcher influencer={exposition.influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>

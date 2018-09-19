@@ -1,0 +1,53 @@
+{
+  "version": "4",
+  "rollouts": [],
+  "anonymizeIP": true,
+  "projectId": "11500510563",
+  "variables": [],
+  "featureFlags": [],
+  "experiments": [
+    {
+      "status": "Running",
+      "key": "CTA_BUTTON",
+      "layerId": "11479330410",
+      "trafficAllocation": [
+        {
+          "entityId": "11481090315",
+          "endOfRange": 5000
+        },
+        {
+          "entityId": "11492380216",
+          "endOfRange": 10000
+        }
+      ],
+      "audienceIds": [],
+      "variations": [
+        {
+          "variables": [],
+          "id": "11492380216",
+          "key": "control"
+        },
+        {
+          "variables": [],
+          "id": "11481090315",
+          "key": "treatment"
+        }
+      ],
+      "forcedVariations": {},
+      "id": "11488720214"
+    }
+  ],
+  "audiences": [],
+  "groups": [],
+  "attributes": [],
+  "botFiltering": false,
+  "accountId": "11401306814",
+  "events": [
+    {
+      "experimentIds": ["11488720214"],
+      "id": "11477690152",
+      "key": "clickCta"
+    }
+  ],
+  "revision": "4"
+}
