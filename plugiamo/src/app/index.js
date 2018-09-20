@@ -5,7 +5,7 @@ import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
-import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 
 const Gradient = animateOnMount(styled.div`
@@ -30,6 +30,14 @@ const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
 )
 
 export default compose(
+  lifecycle({
+    componentDidMount() {
+      mixpanel.track('Loaded Plugin', {
+        host: location.hostname,
+      })
+      mixpanel.time_event('Opened')
+    },
+  }),
   graphql(
     gql`
       query($domain: String!) {
@@ -59,7 +67,7 @@ export default compose(
   withProps(({ data }) => ({
     exposition: data.exposition,
   })),
-  branch(({ exposition }) => !exposition, infoMsg('Trendiamo: no content found for this domain')),
+  branch(({ exposition }) => !exposition, infoMsg('no content found for this domain')),
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
@@ -69,14 +77,14 @@ export default compose(
       mixpanel.track(
         'Clicked CTA Link',
         {
-          host: window.location.hostname,
+          host: location.hostname,
         },
         () => afterCTA({ exposition })
       )
     },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       mixpanel.track(!showingContent ? 'Opened' : 'Closed', {
-        host: window.location.hostname,
+        host: location.hostname,
       })
       if (!showingContent) {
         mixpanel.time_event('Clicked CTA Link')

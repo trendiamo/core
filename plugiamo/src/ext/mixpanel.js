@@ -3,7 +3,7 @@ import mixpanel from 'mixpanel-browser'
 
 const trndMixpanel = {
   init(mpToken, mpConfig, name) {
-    if (config.mixpanelToken) {
+    if (mpToken && config.production) {
       mixpanel.init(mpToken, mpConfig, name)
       this.initialized = true
     }
