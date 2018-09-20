@@ -32,9 +32,7 @@ const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
 export default compose(
   lifecycle({
     componentDidMount() {
-      mixpanel.track('Loaded Plugin', {
-        host: location.hostname,
-      })
+      mixpanel.track('Loaded Plugin', { host: location.hostname })
       mixpanel.time_event('Opened')
     },
   }),
@@ -71,21 +69,12 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
-      const afterCTA = ({ exposition }) => {
+      mixpanel.track('Clicked CTA Link', { host: location.hostname }, () => {
         window.location = exposition.ctaUrl
-      }
-      mixpanel.track(
-        'Clicked CTA Link',
-        {
-          host: location.hostname,
-        },
-        () => afterCTA({ exposition })
-      )
+      })
     },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
-      mixpanel.track(!showingContent ? 'Opened' : 'Closed', {
-        host: location.hostname,
-      })
+      mixpanel.track(!showingContent ? 'Opened' : 'Closed', { host: location.hostname })
       if (!showingContent) {
         mixpanel.time_event('Clicked CTA Link')
         mixpanel.time_event('Closed')
