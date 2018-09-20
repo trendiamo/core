@@ -163,7 +163,7 @@
   {{ 'tooltip.js' | asset_url | script_tag }}
   {{ 'clipboard.js' | asset_url | script_tag }}
   {{ 'main.js' | asset_url | script_tag }}
-  {{ 'app.js' | asset_url | script_tag }}
+  <!-- {{ 'app.js' | asset_url | script_tag }} -->
 
 	<script>
 	{% if resetPassword %}
@@ -197,7 +197,16 @@
 	<!-- Venue theme by Safe As Milk - http://safeasmilk.co/ -->
 	<!-- Theme version 3.5.0 -->
 
-
+<script>
+!(function(t, r, e, n, d, i, a, m, o) {
+  t.addEventListener('load', function() {
+    var s1 = r.createElement('script'),
+      s2 = r.getElementsByTagName('script')[0]
+    s1.src = '//s3.eu-central-1.amazonaws.com/plugiamo/plugiamo.js'
+    s2.parentNode.insertBefore(s1, s2)
+  })
+})(window, document)
+</script>
 
 <!-- BEEKETINGSCRIPT CODE START -->{% include 'bk-tracking' %}<!-- BEEKETINGSCRIPT CODE END -->
 {% include 'swymSnippet' %}
