@@ -74,11 +74,12 @@ export default compose(
       })
     },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
-      mixpanel.track(!showingContent ? 'Opened' : 'Closed', { host: location.hostname })
       if (!showingContent) {
+        mixpanel.track('Opened', { host: location.hostname })
         mixpanel.time_event('Clicked CTA Link')
         mixpanel.time_event('Closed')
       } else {
+        mixpanel.track('Closed', { host: location.hostname })
         mixpanel.time_event('Opened')
       }
       return setShowingContent(!showingContent)
