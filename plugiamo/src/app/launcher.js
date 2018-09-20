@@ -56,6 +56,15 @@ const CloseIconContainer = styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `
 
+const Container = styled.div`
+  overflow: hidden;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 0;
+  left: 0;
+`
+
 const CloseIcon = ({ active, onClick }) => (
   <CloseIconContainer active={active} onClick={onClick}>
     <StyledIconClose />
@@ -64,10 +73,10 @@ const CloseIcon = ({ active, onClick }) => (
 
 const Launcher = ({ influencer, onToggleContent, showingContent }) => (
   <TrendiamoLauncherFrame>
-    <div>
+    <Container>
       <SellerPic active={!showingContent} onClick={onToggleContent} url={influencer.profilePic.url} />
       <CloseIcon active={showingContent} onClick={onToggleContent} />
-    </div>
+    </Container>
   </TrendiamoLauncherFrame>
 )
 
