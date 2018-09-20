@@ -76,9 +76,6 @@ export default compose(
         window.location = exposition.ctaUrl
       })
     },
-<<<<<<< HEAD
-    onToggleContent: ({ setShowingContent, showingContent }) => () => {
-=======
     onToggleContent: ({ setShowingContent, setVariation, showingContent }) => () => {
       // Instantiate an Optimizely client
       const optimizelyClientInstance = optimizely.createInstance({ datafile: datafile })
@@ -87,7 +84,6 @@ export default compose(
       mixpanel.track(!showingContent ? 'Opened' : 'Closed', {
         host: window.location.hostname,
       })
->>>>>>> Add unique user id to optimizely actions
       if (!showingContent) {
         mixpanel.track('Opened', { host: location.hostname })
         mixpanel.time_event('Clicked CTA Link')

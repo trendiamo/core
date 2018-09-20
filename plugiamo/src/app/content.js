@@ -1,10 +1,12 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Button from 'shared/button'
 import config from '../config'
+// import Experiment from 'shared/experiment'
 import Frame from 'shared/frame'
 import { h } from 'preact'
 import IgPost from './ig-post'
 import styled from 'styled-components'
+// import Variant from 'shared/variant'
 import { compose, withProps } from 'recompose'
 
 const TrendiamoContentFrame = animateOnMount(styled(Frame)`
@@ -73,7 +75,7 @@ const PoweredBy = styled.div`
   }
 `
 
-const Content = ({ exposition, onCtaClick, variation }) => (
+const Content = ({ exposition, onCtaClick }) => (
   <TrendiamoContentFrame>
     <Wrapper>
       <Cover>
@@ -95,16 +97,9 @@ const Content = ({ exposition, onCtaClick, variation }) => (
           {exposition.instagramPosts.map(e => (
             <IgPost key={e.url} url={e.url} />
           ))}
-          {variation === 'control' && (
-            <Button fullWidth onClick={onCtaClick}>
-              {exposition.ctaText}
-            </Button>
-          )}
-          {variation === 'treatment' && (
-            <Button fullWidth onClick={onCtaClick} style={{ color: 'red' }}>
-              {exposition.ctaText}
-            </Button>
-          )}
+          <Button fullWidth onClick={onCtaClick}>
+            {exposition.ctaText}
+          </Button>
         </AnimatedContent>
         <PoweredBy>
           {'Trusted by '}
