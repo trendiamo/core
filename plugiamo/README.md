@@ -55,3 +55,20 @@ yarn build && yarn deploy
 })(window, document)
 </script>
 ```
+
+## How to do experiments on Optimizely
+
+```js
+<Experiment experimentName="experience_name_on_optimizely">
+  <Variant variantName="variation0_name_on_optimezely">
+    <Button fullWidth onClick={onCtaClick}>
+      {exposition.ctaText}
+    </Button>
+  </Variant>
+  <Variant variantName="variation0_name_on_optimezely">
+    <Button fullWidth onClick={onCtaClick} style={{ color: 'red' }}>
+      {exposition.ctaText}
+    </Button>
+  </Variant>
+</Experiment>
+```
