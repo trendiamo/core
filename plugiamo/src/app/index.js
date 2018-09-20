@@ -23,12 +23,7 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-// Instantiate an Optimizely client
-var optimizelyClientInstance = optimizely.createInstance({ datafile: datafile })
-// Activate an A/B test for user 'frb3'
-var variation = optimizelyClientInstance.activate('CTA_BUTTON', 'frb3')
-
-const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
+const App = ({ exposition, onCtaClick, onToggleContent, showingContent, variation }) => (
   <div>
     {showingContent && <Content exposition={exposition} onCtaClick={onCtaClick} variation={variation} />}
     <Launcher influencer={exposition.influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
@@ -74,13 +69,25 @@ export default compose(
   })),
   branch(({ exposition }) => !exposition, infoMsg('no content found for this domain')),
   withState('showingContent', 'setShowingContent', false),
+  withState('variation', 'setVariation', ''),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
       mixpanel.track('Clicked CTA Link', { host: location.hostname }, () => {
         window.location = exposition.ctaUrl
       })
     },
+<<<<<<< HEAD
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
+=======
+    onToggleContent: ({ setShowingContent, setVariation, showingContent }) => () => {
+      // Instantiate an Optimizely client
+      const optimizelyClientInstance = optimizely.createInstance({ datafile: datafile })
+      // Activate an A/B test
+      setVariation(optimizelyClientInstance.activate('CTA_BUTTON', mixpanel.get_distinct_id()))
+      mixpanel.track(!showingContent ? 'Opened' : 'Closed', {
+        host: window.location.hostname,
+      })
+>>>>>>> Add unique user id to optimizely actions
       if (!showingContent) {
         mixpanel.track('Opened', { host: location.hostname })
         mixpanel.time_event('Clicked CTA Link')

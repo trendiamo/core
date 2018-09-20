@@ -2,6 +2,9 @@ import config from '../config'
 import mixpanel from 'mixpanel-browser'
 
 const trndMixpanel = {
+  get_distinct_id() {
+    return mixpanel.get_distinct_id()
+  },
   init(mpToken, mpConfig, name) {
     if (mpToken && config.production) {
       mixpanel.init(mpToken, mpConfig, name)
