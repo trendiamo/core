@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/trendiamo-test.myshopify.com/collections/edit-field/40752
+{% endcomment %}
+{% if collection.metafields.custom_fields["profile_image_#1"] != blank %}
+  <div class="custom-field custom-field__profile-image-1 custom-field__type--text">
+    <h3 class="custom-field--title">Profile Image #1</h3>
+    <div class="custom-field--value">
+      {{ collection.metafields.custom_fields["profile_image_#1"] }}
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,70 @@
+{% comment %}
+  This file handles each block available on product.sections or page.sections templates.
+  Each block is a near identical duplicate of a section also available on the home page.
+  Exception is sections that had blocks become hard coded options.
+{% endcomment %}
+{% for block in section.blocks %}
+  <div {{ block.shopify_attributes }}>
+    {% case block.type %}
+
+      {%- comment -%} ============================================= {%- endcomment -%}
+      {% when 'background-image-text' %}
+        <style>
+          @media screen and (max-width: 590px) {
+            .background-media-text--{{ block.id }} {
+              background: {{ block.settings.color_border }};
+            }
+          }
+          .background-media-text--{{ block.id }} .background-media-text__image {
+            background-position: {{ block.settings.alignment }};
+          }
+        </style>
+
+        <div
+          class="background-media-text background-media-text--{{ block.id }} background-media-text--{{ block.settings.height }} loaded"
+          data-aos="background-media-text__animation">
+
+          <div
+            class="background-media-text__image{% if block.settings.image != blank %} lazyload{% endif %}"
+            {% if block.settings.image != blank %}
+              data-bgset="{% include 'bgset', image: block.settings.image %}"
+              data-sizes="auto"
+            {% endif %}>
+            {% if block.settings.image == blank %}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          {% if block.settings.subtitle != blank or block.settings.title != blank or block.settings.text != blank %}
+            <div class="background-media-text__inner">
+              <div class="background-media-text__aligner background-media-text--{{ block.settings.layout }}">
+                <div class="animation-cropper">
+                  <div class="animation-contents">
+                    <div class="background-media-text__text">
+                      {% if block.settings.subtitle %}
+                        <p class="h5">{{ block.settings.subtitle }}</p>
+                      {% endif %}
+                      {% if block.settings.title != blank %}
+                        <p class="h3">{{ block.settings.title | escape }}</p>
+                      {% endif %}
+                      {% if block.settings.text != blank %}
+                        <div class="rte background-media-text__subtext">{{ block.settings.text }}</div>
+                      {% endif %}
+                      {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+                        <a href="{{ block.settings.button_link }}" class="btn">
+                          {{ block.settings.button_label }}
+                        </a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="background-media-text__spacer background-media-text--{{ block.settings.height }}"></div>
+
+      {%- comment -%} ============================================= {%- endcomment -%}
+    {% endcase %}
+  </div>
+{% endfor %}
