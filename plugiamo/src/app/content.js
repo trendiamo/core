@@ -1,12 +1,10 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Button from 'shared/button'
 import config from '../config'
-// import Experiment from 'shared/experiment'
 import Frame from 'shared/frame'
 import { h } from 'preact'
 import IgPost from './ig-post'
 import styled from 'styled-components'
-// import Variant from 'shared/variant'
 import { compose, withProps } from 'recompose'
 
 const TrendiamoContentFrame = animateOnMount(styled(Frame)`

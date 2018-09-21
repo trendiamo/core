@@ -59,6 +59,9 @@ yarn build && yarn deploy
 ## How to do experiments on Optimizely
 
 ```js
+import Experiment from 'shared/experiment'
+import Variant from 'shared/variant'
+
 <Experiment experimentName="experience_name_on_optimizely">
   <Variant variantName="variation0_name_on_optimezely">
     <Button fullWidth onClick={onCtaClick}>

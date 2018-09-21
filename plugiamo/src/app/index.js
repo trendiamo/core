@@ -1,11 +1,9 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
-import datafile from './datafile.json'
 import { h } from 'preact'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
-import optimizely from '@optimizely/optimizely-sdk'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
@@ -23,9 +21,9 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ exposition, onCtaClick, onToggleContent, showingContent, variation }) => (
+const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
   <div>
-    {showingContent && <Content exposition={exposition} onCtaClick={onCtaClick} variation={variation} />}
+    {showingContent && <Content exposition={exposition} onCtaClick={onCtaClick} />}
     <Launcher influencer={exposition.influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
@@ -69,21 +67,13 @@ export default compose(
   })),
   branch(({ exposition }) => !exposition, infoMsg('no content found for this domain')),
   withState('showingContent', 'setShowingContent', false),
-  withState('variation', 'setVariation', ''),
   withHandlers({
     onCtaClick: ({ exposition }) => () => {
       mixpanel.track('Clicked CTA Link', { host: location.hostname }, () => {
         window.location = exposition.ctaUrl
       })
     },
-    onToggleContent: ({ setShowingContent, setVariation, showingContent }) => () => {
-      // Instantiate an Optimizely client
-      const optimizelyClientInstance = optimizely.createInstance({ datafile: datafile })
-      // Activate an A/B test
-      setVariation(optimizelyClientInstance.activate('CTA_BUTTON', mixpanel.get_distinct_id()))
-      mixpanel.track(!showingContent ? 'Opened' : 'Closed', {
-        host: window.location.hostname,
-      })
+    onToggleContent: ({ setShowingContent, showingContent }) => () => {
       if (!showingContent) {
         mixpanel.track('Opened', { host: location.hostname })
         mixpanel.time_event('Clicked CTA Link')
