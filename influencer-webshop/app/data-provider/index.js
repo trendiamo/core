@@ -7,8 +7,6 @@ import ApolloClient from 'apollo-boost'
 const client = new ApolloClient({
   uri: "https://api-euwest.graphcms.com/v1/cjldl8gtb00qs01ciijssz1zr/master"
 })
-//
-// buildGraphQLProvider({ client: client })
 
 const myBuildQuery = introspection => (fetchType, resource, params) => {
     const builtQuery = buildQuery(introspection)(fetchType, resource, params);
