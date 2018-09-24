@@ -1,0 +1,42 @@
+{
+  "name": "admin-poc-plugiamo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "dependencies": {
+    "apollo-boost": "^0.1.16",
+    "apollo-client": "^2.4.2",
+    "babel-plugin-graphql-tag": "^1.6.0",
+    "graphql": "^14.0.2",
+    "graphql-request": "^1.8.2",
+    "graphql-tag": "^2.9.2",
+    "ra-data-graphql-simple": "^2.3.1",
+    "ra-data-json-server": "^2.3.1",
+    "ra-data-opencrud": "^0.0.6",
+    "react": "^16.5.2",
+    "react-admin": "^2.3.1",
+    "react-apollo": "^2.1.11",
+    "react-dom": "^16.5.2",
+    "recompose": "^0.30.0",
+    "webpack-cli": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "8.0.0-beta.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "eslint": "^5.6.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.14.3",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.19.1",
+    "webpack-dev-server": "^3.1.8"
+  }
+}
