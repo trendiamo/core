@@ -1,13 +1,13 @@
-import React from 'react';
-import { List, Datagrid, TextField } from 'react-admin';
-import { compose, withProps, withState, lifecycle, branch, renderNothing } from 'recompose'
+import React from "react";
+import { List, Datagrid, TextField } from "react-admin";
 
-const ExpositionsList = () => (
-    <List>
-        <Datagrid>
-            <TextField source="description" />
-        </Datagrid>
-    </List>
-)
-
-export default compose()(ExpositionsList)
+export const ExpositionsList = ({ ...props }) => (
+  <List {...props}>
+    <Datagrid>
+      <TextField source="description" />
+      <TextField source="ctaText" />
+      <TextField source="ctaUrl" />
+      <TextField source="domain" />
+    </Datagrid>
+  </List>
+);
