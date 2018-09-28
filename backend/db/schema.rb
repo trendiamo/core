@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180814185240) do
+ActiveRecord::Schema.define(version: 20180928110231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,31 @@ ActiveRecord::Schema.define(version: 20180814185240) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "expositions", force: :cascade do |t|
+    t.string "domain"
+    t.string "cta_text"
+    t.string "cta_url"
+    t.string "description"
+    t.bigint "influencer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["influencer_id"], name: "index_expositions_on_influencer_id"
+  end
+
+  create_table "expositions_instagram_posts", id: false, force: :cascade do |t|
+    t.bigint "exposition_id", null: false
+    t.bigint "instagram_post_id", null: false
+    t.index ["exposition_id"], name: "index_expositions_instagram_posts_on_exposition_id"
+    t.index ["instagram_post_id"], name: "index_expositions_instagram_posts_on_instagram_post_id"
+  end
+
+  create_table "expositions_videos", id: false, force: :cascade do |t|
+    t.bigint "exposition_id", null: false
+    t.bigint "video_id", null: false
+    t.index ["exposition_id"], name: "index_expositions_videos_on_exposition_id"
+    t.index ["video_id"], name: "index_expositions_videos_on_video_id"
+  end
+
   create_table "fenced_collections", force: :cascade do |t|
     t.bigint "collection_id", null: false
     t.string "domain_name", null: false
@@ -103,6 +128,19 @@ ActiveRecord::Schema.define(version: 20180814185240) do
     t.datetime "updated_at", null: false
     t.index ["comment_id"], name: "index_inappropriate_flags_on_comment_id"
     t.index ["user_id"], name: "index_inappropriate_flags_on_user_id"
+  end
+
+  create_table "influencers", force: :cascade do |t|
+    t.string "name"
+    t.string "profile_pic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "instagram_posts", force: :cascade do |t|
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "likes", force: :cascade do |t|
@@ -162,10 +200,17 @@ ActiveRecord::Schema.define(version: 20180814185240) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "videos", force: :cascade do |t|
+    t.string "video_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "auth_tokens", "users"
   add_foreign_key "brands", "users"
   add_foreign_key "collection_modals", "collections"
   add_foreign_key "comments", "users"
+  add_foreign_key "expositions", "influencers"
   add_foreign_key "fenced_collections", "collections"
   add_foreign_key "inappropriate_flags", "comments"
   add_foreign_key "inappropriate_flags", "users"
