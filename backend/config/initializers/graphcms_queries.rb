@@ -4,6 +4,7 @@ ExpositionQuery = GraphCMS::Client.parse <<-'GRAPHQL'
       id
       ctaText
       ctaUrl
+      domain
       description
       influencer {
         name
@@ -25,6 +26,7 @@ ExpositionsQuery = GraphCMS::Client.parse <<-'GRAPHQL'
   query {
     expositions {
       id
+      domain
       ctaText
       ctaUrl
       description
@@ -39,6 +41,32 @@ ExpositionsQuery = GraphCMS::Client.parse <<-'GRAPHQL'
       }
       instagramPosts {
         url
+      }
+    }
+  }
+GRAPHQL
+
+VideosQuery = GraphCMS::Client.parse <<-'GRAPHQL'
+  query {
+    videos {
+      id
+      status
+      videoUrl
+      expositions {
+        id
+      }
+    }
+  }
+GRAPHQL
+
+VideoQuery = GraphCMS::Client.parse <<-'GRAPHQL'
+  query($id: ID!) {
+    video(where: { id: $id }) {
+      id
+      status
+      videoUrl
+      expositions {
+        id
       }
     }
   }
