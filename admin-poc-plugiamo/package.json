@@ -9,6 +9,8 @@
   "dependencies": {
     "apollo-boost": "^0.1.16",
     "apollo-client": "^2.4.2",
+    "apollo-link-context": "^1.0.9",
+    "apollo-link-http": "^1.5.5",
     "auth0-js": "^9.7.3",
     "auth0-js-react": "^6.8.7",
     "babel-plugin-graphql-tag": "^1.6.0",

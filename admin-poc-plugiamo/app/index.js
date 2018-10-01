@@ -3,10 +3,15 @@ import { compose, lifecycle, withState } from 'recompose'
 import { Admin, GET_LIST, Resource } from 'react-admin'
 import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from './expositions'
 import { VideosList } from './videos'
-
 import buildOpenCrudProvider, { buildQuery } from 'ra-data-opencrud'
 import Hello from './hello'
 import Home from './home'
+import { HttpLink } from 'apollo-link-http'
+import { ExpositionsList } from './expositions'
+import React from 'react'
+import { setContext } from 'apollo-link-context'
+import { Admin, Resource } from 'react-admin'
+import { compose, lifecycle, withState } from 'recompose'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 // import * as auth0 from 'auth0-js'
 
@@ -47,9 +52,18 @@ export default compose(
   lifecycle({
     componentDidMount() {
       const { setDataProvider } = this.props
+      const uriPlugAdmin = `https://${process.env.API_ENDPOINT}/graphql`
+      const authLink = setContext((_, { headers }) => ({
+        headers: {
+          ...headers,
+          'X-USER-EMAIL': localStorage.getItem('authEmail'),
+          // 'X-USER-TOKEN': localStorage.getItem('authToken'),
+        },
+      }))
       buildOpenCrudProvider({
         clientOptions: {
-          uri: `https://${process.env.API_ENDPOINT}/graphql`,
+          // uri: uriAdmin,
+          link: authLink.concat(new HttpLink({ uri: uriPlugAdmin })),
         },
       })
         .then(dataProvider => {
