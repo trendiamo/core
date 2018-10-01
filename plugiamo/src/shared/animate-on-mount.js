@@ -1,12 +1,18 @@
 import { compose, lifecycle, withState } from 'recompose'
 
-const animateOnMount = (component, timeout) =>
+const animateOnMount = (component, ...timestamps) =>
   compose(
-    withState('entry', 'setEntry', true),
+    withState('animationStep', 'setAnimationStep', 0),
     lifecycle({
       componentDidMount() {
-        const { setEntry } = this.props
-        setTimeout(() => setEntry(false), timeout || 10)
+        const { setAnimationStep } = this.props
+        const actualTimestamps = timestamps.length === 0 ? [10] : timestamps
+        let absoluteTimestamp = 0
+
+        actualTimestamps.forEach((relativeTimestamp, i) => {
+          absoluteTimestamp += relativeTimestamp
+          setTimeout(() => setAnimationStep(i + 1), absoluteTimestamp)
+        })
       },
     })
   )(component)
