@@ -1,12 +1,14 @@
 import animateOnMount from 'shared/animate-on-mount'
+import { compose } from 'recompose'
 import Frame from 'shared/frame'
 import { h } from 'preact'
 import IconClose from 'icons/icon-close'
 import styled from 'styled-components'
+import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const TrendiamoLauncherFrame = animateOnMount(styled(Frame)`
   border: 0;
-  z-index: 2147483000;
+  z-index: 2147482999;
   position: fixed;
   bottom: 30px;
   right: 30px;
@@ -80,4 +82,10 @@ const Launcher = ({ influencer, onToggleContent, showingContent }) => (
   </TrendiamoLauncherFrame>
 )
 
-export default Launcher
+export default compose(
+  withHotkeys({
+    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
+      if (showingContent) onToggleContent()
+    },
+  })
+)(Launcher)

@@ -6,23 +6,32 @@ import { h } from 'preact'
 import IgPost from './ig-post'
 import styled from 'styled-components'
 import { compose, withProps } from 'recompose'
+import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const TrendiamoContentFrame = animateOnMount(styled(Frame)`
   border: 0;
   z-index: 2147483000;
   position: fixed;
-  bottom: 100px;
-  right: 30px;
-  height: calc(100vh - 150px);
-  width: ${config.width}px;
   overflow-x: hidden;
-  max-height: 500px;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transform: ${({ entry }) => (entry ? 'translateY(20px)' : 'none')};
   transition: opacity 0.25s ease, transform 0.25s ease;
+
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+
+  @media (min-width: 600px) {
+    border-radius: 8px;
+    bottom: 100px;
+    right: 30px;
+    width: ${config.width}px;
+    height: calc(100vh - 150px);
+    box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+    max-height: 500px;
+  }
 `)
 
 const Wrapper = styled.div`
@@ -110,4 +119,10 @@ const Content = ({ exposition, onCtaClick }) => (
   </TrendiamoContentFrame>
 )
 
-export default Content
+export default compose(
+  withHotkeys({
+    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
+      if (showingContent) onToggleContent()
+    },
+  })
+)(Content)

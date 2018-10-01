@@ -7,6 +7,7 @@ import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
+import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const Gradient = animateOnMount(styled.div`
   z-index: 2147482998;
@@ -23,7 +24,14 @@ const Gradient = animateOnMount(styled.div`
 
 const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
   <div>
-    {showingContent && <Content exposition={exposition} onCtaClick={onCtaClick} />}
+    {showingContent && (
+      <Content
+        exposition={exposition}
+        onCtaClick={onCtaClick}
+        onToggleContent={onToggleContent}
+        showingContent={showingContent}
+      />
+    )}
     <Launcher influencer={exposition.influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
@@ -83,6 +91,11 @@ export default compose(
         mixpanel.time_event('Opened')
       }
       return setShowingContent(!showingContent)
+    },
+  }),
+  withHotkeys({
+    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
+      if (showingContent) onToggleContent()
     },
   })
 )(App)
