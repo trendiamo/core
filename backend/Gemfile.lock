@@ -95,6 +95,9 @@ GEM
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     graphql (1.7.13)
+    graphql-client (0.13.0)
+      activesupport (>= 3.0, < 6.0)
+      graphql (~> 1.6)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
     hubspot-ruby (0.4.0)
@@ -222,6 +225,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   graphql
+  graphql-client
   hubspot-ruby
   letter_opener
   listen (>= 3.0.5, < 3.2)
