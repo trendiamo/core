@@ -5,6 +5,7 @@ import history from 'ext/history'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
 import { matchUrl } from 'ext/simple-router'
+import Launcher2 from './launcher2'
 import mixpanel from 'ext/mixpanel'
 import routes from './routes'
 import styled from 'styled-components'
@@ -31,7 +32,8 @@ const App = ({ chat, influencer, onToggleContent, showingContent, website }) => 
     {showingContent && (
       <Content chat={chat} onToggleContent={onToggleContent} showingContent={showingContent} website={website} />
     )}
-    <Launcher influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
+    {/* <Launcher influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} /> */}
+    <Launcher2 number={3} onToggleContent={onToggleContent} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
 )
