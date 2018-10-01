@@ -2,6 +2,8 @@ import React from 'react'
 import { compose, lifecycle, withState } from 'recompose'
 import { Admin, GET_LIST, Resource } from 'react-admin'
 import { ExpositionsList } from './expositions'
+import { VideosList } from './videos'
+
 import buildOpenCrudProvider, { buildQuery } from 'ra-data-opencrud'
 import Hello from './hello'
 import Home from './home'
@@ -28,6 +30,7 @@ const App = ({ dataProvider }) => (
     {dataProvider && (
       <Admin dataProvider={dataProvider.dataProvider}>
         <Resource list={ExpositionsList} name="Exposition" />
+        <Resource list={VideosList} name="Video" />
       </Admin>
     )}
   </div>
@@ -40,7 +43,7 @@ export default compose(
       const { setDataProvider } = this.props
       buildOpenCrudProvider({
         clientOptions: {
-          uri: 'https://b550d10d.ngrok.io/graphql',
+          uri: `https://${process.env.API_ENDPOINT}/graphql`,
         },
       })
         .then(dataProvider => {
