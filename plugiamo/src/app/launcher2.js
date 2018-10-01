@@ -29,21 +29,26 @@ const SellerPicContainer = animateOnMount(
     width: 60px;
     height: 60px;
 
-    transition: opacity 0.5s ease, transform 0.75s cubic-bezier(0.64, 0.41, 0.57, 1.38);
     opacity: ${({ animationStep }) => (animationStep === 0 ? 0 : 1)};
+    transition: opacity 0.5s ease,
+      transform
+        ${({ animationStep }) =>
+          animationStep < 2
+            ? `0.65s cubic-bezier(0.64, 0.41, 0.57, 1.38)`
+            : `0.25s cubic-bezier(0.46, -0.95, 0.6, 1.56)`};
     transform: ${({ animationStep, i, size }) =>
       animationStep === 0
         ? `rotate(${getAngle(i, size) - 120}deg) translate(-20px) scale(0.2)`
         : animationStep < 3
           ? `rotate(${getAngle(i, size)}deg) translate(-42px) scale(0.5)`
           : animationStep < 4
-            ? `rotate(${getAngle2(i, size)}deg) translate(-50px) scale(0.32)`
+            ? `rotate(${getAngle2(i, size)}deg) translate(-44px) scale(0.4)`
             : `rotate(${getAngle2(i, size)}deg) translate(0) scale(0.8)`};
   `,
-  250,
-  1200,
+  750,
+  1000,
   0,
-  750
+  400
 )
 
 const SellerPic = animateOnMount(
