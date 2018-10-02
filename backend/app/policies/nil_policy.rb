@@ -6,4 +6,8 @@ class NilPolicy < ApplicationPolicy
   def shopify_collection?
     user
   end
+
+  def expositions?
+    user
+  end
 end

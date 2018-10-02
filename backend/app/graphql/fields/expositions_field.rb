@@ -3,7 +3,9 @@ Fields::ExpositionsField = GraphQL::Field.define do
   description "List expositions"
   type !types[Types::ExpositionType]
 
-  resolve ->(_obj, _args, _ctx) {
+  resolve ->(obj, args, ctx) {
+    use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
+    authorize(:nil)
     result = GraphCMS::Client.query(ExpositionsQuery)
     result.data.expositions
   }

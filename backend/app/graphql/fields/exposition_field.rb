@@ -4,6 +4,8 @@ Fields::ExpositionField = GraphQL::Field.define do
   type Types::ExpositionType
 
   resolve ->(_obj, _args, _ctx) {
+    use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
+    authorize(:nil)
     result = GraphCMS::Client.query(ExpositionQuery, variables: { domain: "www.papajohns.com" })
     result.data.exposition
   }

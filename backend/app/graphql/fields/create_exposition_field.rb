@@ -7,8 +7,9 @@ Fields::CreateExpositionField = GraphQL::Field.define do
     puts args[:data][:description]
     puts args[:data][:ctaUrl]
     puts args[:data][:ctaText]
-    # result = GraphCMS::Client.mutation(CreateExpositionMutation, variables: { data: args[:data] })
-    # result.data.exposition
+    result = GraphCMS::Client.query(CreateExpositionMutation, variables: { domain: args[:data][:domain], description: args[:data][:description], ctaUrl: args[:data][:ctaUrl], ctaText: args[:data][:ctaText] })
+    puts result.errors.first
+    result.data
     # use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
     # brand_args = permitted_attributes(Brand).merge(user: current_user)
     # @brand = Brand.find(args[:brand].id)
