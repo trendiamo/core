@@ -10,4 +10,6 @@ Main::MutationType = GraphQL::ObjectType.define do
   field :addBrand, Fields::AddBrandField
   field :updateBrand, Fields::UpdateBrandField
   field :deleteProducts, Fields::DeleteProductsField
+
+  field :createExposition, Fields::CreateExpositionField
 end
