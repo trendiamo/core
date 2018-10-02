@@ -17,15 +17,22 @@
   "scripts": {
     "start": "webpack -d --config webpack.config.js",
     "build": "webpack -p --progress --config webpack.prod.js",
-    "deploy": "gzip -9 -c build/plugiamo.js | aws s3 cp - s3://plugiamo/plugiamo.js --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600'"
+    "deploy": "gzip -9 -c build/plugiamo.js | aws s3 cp - s3://plugiamo/plugiamo.js --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600'",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.11",
+    "@storybook/addon-links": "^3.4.11",
+    "@storybook/addons": "^3.4.11",
+    "@storybook/react": "^3.4.11",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-2": "^6.24.1",
+    "babel-runtime": "^6.26.0",
     "dotenv-webpack": "^1.5.7",
     "eslint": "^5.4.0",
     "eslint-config-prettier": "^3.0.1",
@@ -33,7 +40,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "prettier": "^1.14.2",
-    "webpack": "^4.17.0",
+    "webpack": "^3.x",
     "webpack-cli": "^3.1.0",
     "webpack-merge": "^4.1.4"
   }

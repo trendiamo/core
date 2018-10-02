@@ -8,13 +8,7 @@
     "browser": true
   },
   "plugins": ["react", "prettier"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/all",
-    "plugin:import/errors",
-    "prettier",
-    "prettier/react"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/all", "plugin:import/errors", "prettier", "prettier/react"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -27,7 +21,8 @@
   },
   "globals": {
     "Promise": true,
-    "process": true
+    "process": true,
+    "module": true
   },
   "rules": {
     "import/namespace": ["error", { "allowComputed": true }],
