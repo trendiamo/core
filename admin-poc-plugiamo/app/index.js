@@ -1,28 +1,19 @@
-import React from 'react'
-import { compose, lifecycle, withState } from 'recompose'
-import { Admin, GET_LIST, Resource } from 'react-admin'
-import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from './expositions'
-import { VideosList } from './videos'
-import buildOpenCrudProvider, { buildQuery } from 'ra-data-opencrud'
-import Hello from './hello'
-import Home from './home'
-import { HttpLink } from 'apollo-link-http'
 import authProvider from './auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
-import { ExpositionsList } from './expositions'
 import { HttpLink } from 'apollo-link-http'
 import React from 'react'
 import { setContext } from 'apollo-link-context'
-// import { VideosList } from './videos'
+import { VideosList } from './videos'
 // import customRoutes from './custom-routes'
 import { Admin, Resource } from 'react-admin'
 import { compose, lifecycle, withState } from 'recompose'
+import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from './expositions'
 
 const App = ({ dataProvider }) => (
   <div>
     {!dataProvider && <div>{'Loading'}</div>}
     {dataProvider && (
-      <Admin dataProvider={dataProvider.dataProvider}>
+      <Admin authProvider={authProvider} dataProvider={dataProvider.dataProvider}>
         <Resource
           create={ExpositionsCreate}
           edit={ExpositionsEdit}
