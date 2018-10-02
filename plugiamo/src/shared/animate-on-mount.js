@@ -3,16 +3,22 @@ import { compose, lifecycle, withState } from 'recompose'
 const animateOnMount = (component, ...timestamps) =>
   compose(
     withState('animationStep', 'setAnimationStep', 0),
+    withState('timeouts', 'setTimeouts', []),
     lifecycle({
       componentDidMount() {
-        const { setAnimationStep } = this.props
+        const { setAnimationStep, setTimeouts } = this.props
         const actualTimestamps = timestamps.length === 0 ? [10] : timestamps
         let absoluteTimestamp = 0
 
-        actualTimestamps.forEach((relativeTimestamp, i) => {
+        const timeouts = actualTimestamps.map((relativeTimestamp, i) => {
           absoluteTimestamp += relativeTimestamp
-          setTimeout(() => setAnimationStep(i + 1), absoluteTimestamp)
+          return setTimeout(() => setAnimationStep(i + 1), absoluteTimestamp)
         })
+        setTimeouts(timeouts)
+      },
+      componentWillUnmount() {
+        const { timeouts } = this.props
+        timeouts.forEach(timeout => clearTimeout(timeout))
       },
     })
   )(component)
