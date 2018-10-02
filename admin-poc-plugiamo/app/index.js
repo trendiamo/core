@@ -7,17 +7,18 @@ import buildOpenCrudProvider, { buildQuery } from 'ra-data-opencrud'
 import Hello from './hello'
 import Home from './home'
 import { HttpLink } from 'apollo-link-http'
-import authProvider from './auth/index'
+import authProvider from './auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
-// import customRoutes from './custom-routes'
 import { ExpositionsList } from './expositions'
 import { HttpLink } from 'apollo-link-http'
 import React from 'react'
 import { setContext } from 'apollo-link-context'
+// import { VideosList } from './videos'
+// import customRoutes from './custom-routes'
 import { Admin, Resource } from 'react-admin'
 import { compose, lifecycle, withState } from 'recompose'
 
-const App = ({ dataProvider, authProvider }) => (
+const App = ({ dataProvider }) => (
   <div>
     {!dataProvider && <div>{'Loading'}</div>}
     {dataProvider && (
