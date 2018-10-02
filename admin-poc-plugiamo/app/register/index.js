@@ -4,10 +4,10 @@ import React from 'react'
 // import { Admin, Resource } from 'react-admin'
 // import { ExpositionsList } from './expositions'
 
-const Hello = () => (
+const RegisterForm = () => (
   <div>
     <h1>{'hello'}</h1>
     <Link to="/">{'Back Home'}</Link>
   </div>
 )
-export default compose()(Hello)
+export default compose()(RegisterForm)
