@@ -1,6 +1,7 @@
 import authProvider from './auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
 import { HttpLink } from 'apollo-link-http'
+import loginPage from './login'
 import React from 'react'
 import { setContext } from 'apollo-link-context'
 import { VideosList } from './videos'
@@ -29,8 +30,10 @@ const App = ({ dataProvider }) => (
 
 export default compose(
   withState('dataProvider', 'setDataProvider', null),
+  withState('isLoggedIn', 'setIsloggedIn', null),
   lifecycle({
     componentDidMount() {
+      console.log('component did mount')
       const { setDataProvider } = this.props
       const uriPlugAdmin = `https://${process.env.API_ENDPOINT}/graphql`
       const authLink = setContext((_, { headers }) => ({
@@ -42,12 +45,12 @@ export default compose(
       }))
       buildOpenCrudProvider({
         clientOptions: {
-          // uri: uriAdmin,
           link: authLink.concat(new HttpLink({ uri: uriPlugAdmin })),
         },
       })
         .then(dataProvider => {
           setDataProvider({ dataProvider })
+          console.log('graphql query')
         })
         .catch(reason => console.log(reason))
     },
