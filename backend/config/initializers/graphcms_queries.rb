@@ -83,3 +83,15 @@ CreateExpositionMutation = GraphCMS::Client.parse <<-'GRAPHQL'
       }
     }
 GRAPHQL
+
+UpdateExpositionMutation = GraphCMS::Client.parse <<-'GRAPHQL'
+    mutation( $domain: String, $ctaUrl: String, $ctaText: String, $description: String) {
+      updateExposition(data: {ctaUrl: $ctaUrl, domain: $domain, ctaText: $ctaText, description: $description}, where: {domain: $domain}) {
+        id
+        ctaUrl
+        ctaText
+        domain
+        description
+    	}
+    }
+GRAPHQL

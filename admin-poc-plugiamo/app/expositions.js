@@ -1,5 +1,33 @@
 import React from 'react'
-import { Create, Datagrid, DisabledInput, Edit, List, SimpleForm, TextField, TextInput } from 'react-admin'
+import {
+  Create,
+  Datagrid,
+  DateField,
+  DisabledInput,
+  Edit,
+  EditButton,
+  List,
+  SelectInput,
+  Show,
+  ShowButton,
+  SimpleForm,
+  SimpleShowLayout,
+  TextField,
+  TextInput,
+} from 'react-admin'
+
+export const ExpositionShow = props => (
+  <Show {...props}>
+    <SimpleShowLayout>
+      <TextField source="id" />
+      <TextField source="description" />
+      <TextField source="ctaText" />
+      <TextField source="ctaUrl" />
+      <TextField source="domain" />
+      {/* <DateField label="Publication date" source="created_at" /> */}
+    </SimpleShowLayout>
+  </Show>
+)
 
 export const ExpositionsList = ({ ...props }) => (
   <List {...props}>
@@ -9,15 +37,20 @@ export const ExpositionsList = ({ ...props }) => (
       <TextField source="ctaText" />
       <TextField source="ctaUrl" />
       <TextField source="domain" />
+      <EditButton />
+      <ShowButton />
     </Datagrid>
   </List>
 )
 
 export const ExpositionsEdit = ({ ...props }) => (
-  <Edit title="Edit an exposition" {...props}>
+  <Edit {...props}>
     <SimpleForm>
       <DisabledInput source="id" />
+      <DisabledInput source="domain" />
       <TextInput source="description" />
+      <TextInput source="ctaText" />
+      <TextInput source="ctaUrl" />
     </SimpleForm>
   </Edit>
 )
