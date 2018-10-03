@@ -9,8 +9,6 @@ const apiRequest = async (url, body) => {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
-      'X-USER-EMAIL': localStorage.getItem('authEmail'),
-      'X-USER-TOKEN': localStorage.getItem('authToken'),
     }),
     method: 'post',
   })
@@ -22,6 +20,8 @@ const apiRequestSignout = async url => {
     // body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
+      'X-USER-EMAIL': localStorage.getItem('authEmail'),
+      'X-USER-TOKEN': localStorage.getItem('authToken'),
     }),
     method: 'delete',
   })
@@ -33,7 +33,6 @@ export const apiSaga = async (url, body) => {
   if (json.error || json.errors) {
     console.log(json.error)
   } else {
-    // auth.set(json.user.email, json.authenticationToken)
     localStorage.setItem('authToken', json.authenticationToken)
     localStorage.setItem('authEmail', json.user.email)
   }
@@ -44,7 +43,6 @@ export const apiSagaSignout = async (url, body) => {
   if (json.error || json.errors) {
     console.log(json.error)
   } else {
-    // auth.set(json.user.email, json.authenticationToken)
     localStorage.removeItem('authToken')
     localStorage.removeItem('authEmail')
   }
