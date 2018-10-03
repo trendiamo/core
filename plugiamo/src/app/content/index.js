@@ -1,11 +1,13 @@
 import animateOnMount from 'shared/animate-on-mount'
-import Button from 'shared/button'
-import config from '../config'
+import config from '../../config'
 import Frame from 'shared/frame'
 import { h } from 'preact'
-import IgPost from './ig-post'
+import history from './history'
+import { Router } from 'ext/simple-router'
 import styled from 'styled-components'
-import { compose, withProps } from 'recompose'
+import { compose, withHandlers } from 'recompose'
+import { ContentRoot, CoverRoot } from './root'
+import { ContentSpotlight, CoverSpotlight } from './spotlight'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const TrendiamoContentFrame = animateOnMount(styled(Frame)`
@@ -40,74 +42,59 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
 
 const Cover = styled.div`
-  background-color: #55ebd1;
-  background-image: url(https://www.transparenttextures.com/patterns/dark-mosaic.png);
-  background-size: contain;
-  background-position: center;
+  background-color: #232323;
   color: #fff;
   font-size: 22px;
-  font-weight: 500;
-  padding: 2rem 1rem;
-  text-shadow: 1px 1px 1px #888;
+  padding: 35px 20px 20px 20px;
+  position: relative;
+  min-height: 100px;
 `
 
 const InnerContent = styled.div`
   color: #333;
-  padding: 0 1rem 1rem 1rem;
+  padding: 1rem 1rem 0 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `
-
-const AnimatedContent = compose(
-  withProps(({ timeout }) => ({
-    Component: animateOnMount(
-      styled.div`
-        opacity: ${({ entry }) => (entry ? 0 : 1)};
-        transform: ${({ entry }) => (entry ? 'translateY(20px)' : 'none')};
-        transition: opacity 0.25s ease, transform 0.25s ease;
-      `,
-      timeout
-    ),
-  }))
-)(({ children, Component }) => <Component>{children}</Component>)
 
 const PoweredBy = styled.div`
   color: #999;
   font-size: small;
   padding-top: 1.2rem;
+  padding-bottom: 1rem;
   text-align: center;
   a {
     color: #5d69b9;
   }
 `
 
-const Content = ({ exposition, onCtaClick }) => (
+const Flex1 = styled.div`
+  flex: 1;
+`
+
+const Content = ({ onRouteChange, routeToRoot, routeToSpotlight, website }) => (
   <TrendiamoContentFrame>
     <Wrapper>
       <Cover>
-        <AnimatedContent timeout={250 * 1}>{`${exposition.influencer.name} says…`}</AnimatedContent>
+        <Router history={history} onChange={onRouteChange}>
+          <CoverRoot path={'/'} website={website} />
+          <CoverSpotlight path={'/spotlight/:id'} routeToRoot={routeToRoot} website={website} />
+        </Router>
       </Cover>
       <InnerContent>
-        <AnimatedContent timeout={250 * 2}>
-          <p>{exposition.description}</p>
-          {exposition.videos.map(e => (
-            <iframe
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              frameBorder="0"
-              key={e.videoUrl}
-              src={e.videoUrl}
-              style={{ marginBottom: '1rem', width: '100%' }}
-            />
-          ))}
-          {exposition.instagramPosts.map(e => (
-            <IgPost key={e.url} url={e.url} />
-          ))}
-          <Button fullWidth onClick={onCtaClick}>
-            {exposition.ctaText}
-          </Button>
-        </AnimatedContent>
+        <Flex1>
+          <Router history={history} onChange={onRouteChange}>
+            <ContentRoot path={'/'} routeToSpotlight={routeToSpotlight} spotlights={website.spotlights} />
+            <ContentSpotlight path={'/spotlight/:id'} website={website} />
+          </Router>
+        </Flex1>
         <PoweredBy>
           {'Trusted by '}
           <a href="https://trendiamo.com" rel="noopener noreferrer" target="_blank">
@@ -120,6 +107,15 @@ const Content = ({ exposition, onCtaClick }) => (
 )
 
 export default compose(
+  withHandlers({
+    onRouteChange: () => (/*previousRoute, route*/) => {
+      return new Promise(resolve => {
+        setTimeout(resolve, 400)
+      })
+    },
+    routeToRoot: () => () => history.replace('/'),
+    routeToSpotlight: () => spotlight => history.replace(`/spotlight/${spotlight.id}`),
+  }),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()

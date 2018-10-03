@@ -22,17 +22,10 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ exposition, onCtaClick, onToggleContent, showingContent }) => (
+const App = ({ influencer, onToggleContent, showingContent, website }) => (
   <div>
-    {showingContent && (
-      <Content
-        exposition={exposition}
-        onCtaClick={onCtaClick}
-        onToggleContent={onToggleContent}
-        showingContent={showingContent}
-      />
-    )}
-    <Launcher influencer={exposition.influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
+    {showingContent && <Content onToggleContent={onToggleContent} showingContent={showingContent} website={website} />}
+    <Launcher influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
 )
@@ -47,40 +40,45 @@ export default compose(
   graphql(
     gql`
       query($domain: String!) {
-        exposition(where: { domain: $domain }) {
-          id
-          ctaText
-          ctaUrl
-          description
-          influencer {
-            name
-            profilePic {
-              url
+        domain(where: { domain: $domain }) {
+          website {
+            title
+            spotlights {
+              id
+              influencer {
+                name
+                profilePic {
+                  url
+                }
+              }
             }
-          }
-          videos {
-            videoUrl
-          }
-          instagramPosts {
-            url
           }
         }
       }
     `,
-    { domain: location.host }
+    { domain: process.env.FORCED_HOST || location.host }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
-    exposition: data.exposition,
+    website: data.domain && data.domain.website,
   })),
-  branch(({ exposition }) => !exposition, infoMsg('no content found for this domain')),
+  withProps(({ website }) => ({
+    spotlights: website && website.spotlights,
+  })),
+  withProps(({ spotlights }) => ({
+    influencer: spotlights && spotlights.length && spotlights[0].influencer,
+  })),
+  branch(
+    ({ spotlights }) => !spotlights,
+    infoMsg(`no content found for domain ${process.env.FORCED_HOST || location.host}`)
+  ),
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
-    onCtaClick: ({ exposition }) => () => {
-      mixpanel.track('Clicked CTA Link', { host: location.hostname }, () => {
-        window.location = exposition.ctaUrl
-      })
-    },
+    // onCtaClick: ({ exposition }) => () => {
+    //   mixpanel.track('Clicked CTA Link', { host: location.hostname }, () => {
+    //     window.location = exposition.ctaUrl
+    //   })
+    // },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       if (!showingContent) {
         mixpanel.track('Opened', { host: location.hostname })

@@ -2,7 +2,7 @@ import animateOnMount from 'shared/animate-on-mount'
 import { compose } from 'recompose'
 import Frame from 'shared/frame'
 import { h } from 'preact'
-import IconClose from 'icons/icon-close'
+import { IconClose } from 'icons'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
@@ -15,7 +15,7 @@ const TrendiamoLauncherFrame = animateOnMount(styled(Frame)`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #849eda;
+  background: #232323;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06), 0 2px 32px 0 rgba(0, 0, 0, 0.16);
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transition: opacity 0.25s ease;
