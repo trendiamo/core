@@ -1,7 +1,7 @@
 import React from 'react'
 import { compose, lifecycle, withState } from 'recompose'
 import { Admin, GET_LIST, Resource } from 'react-admin'
-import { ExpositionsCreate, ExpositionsEdit, ExpositionsList } from './expositions'
+import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from './expositions'
 import { VideosList } from './videos'
 
 import buildOpenCrudProvider, { buildQuery } from 'ra-data-opencrud'
@@ -29,7 +29,13 @@ const App = ({ dataProvider }) => (
     {!dataProvider && <div>{'Loading'}</div>}
     {dataProvider && (
       <Admin dataProvider={dataProvider.dataProvider}>
-        <Resource create={ExpositionsCreate} list={ExpositionsList} name="Exposition" />
+        <Resource
+          create={ExpositionsCreate}
+          edit={ExpositionsEdit}
+          list={ExpositionsList}
+          name="Exposition"
+          show={ExpositionShow}
+        />
         <Resource list={VideosList} name="Video" />
       </Admin>
     )}

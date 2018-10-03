@@ -12,4 +12,5 @@ Main::MutationType = GraphQL::ObjectType.define do
   field :deleteProducts, Fields::DeleteProductsField
 
   field :createExposition, Fields::CreateExpositionField
+  field :updateExposition, Fields::UpdateExpositionField
 end
