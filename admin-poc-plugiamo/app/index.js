@@ -29,7 +29,7 @@ const App = ({ dataProvider }) => (
     {!dataProvider && <div>{'Loading'}</div>}
     {dataProvider && (
       <Admin dataProvider={dataProvider.dataProvider}>
-        <Resource create={ExpositionsCreate} edit={ExpositionsEdit} list={ExpositionsList} name="Exposition" />
+        <Resource create={ExpositionsCreate} list={ExpositionsList} name="Exposition" />
         <Resource list={VideosList} name="Video" />
       </Admin>
     )}

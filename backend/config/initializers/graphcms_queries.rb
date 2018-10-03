@@ -71,3 +71,15 @@ VideoQuery = GraphCMS::Client.parse <<-'GRAPHQL'
     }
   }
 GRAPHQL
+
+CreateExpositionMutation = GraphCMS::Client.parse <<-'GRAPHQL'
+    mutation($domain: String!, $ctaUrl: String!, $ctaText: String!, $description: String) {
+      createExposition(data: {domain: $domain, ctaUrl: $ctaUrl, ctaText: $ctaText, description: $description}) {
+        id
+        ctaUrl
+        ctaText
+        domain
+        description
+      }
+    }
+GRAPHQL
