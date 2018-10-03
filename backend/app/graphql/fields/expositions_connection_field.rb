@@ -2,9 +2,9 @@ Fields::ExpositionsConnectionField = GraphQL::ObjectType.define do
   name "expositionsConnection"
 
   connection :expositions, Types::ExpositionType.connection_type do
-    resolve ->(_obj, _args, _ctx) {
-      use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
-      authorize(:nil)
+    resolve ->(obj, args, ctx) {
+      # use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
+      # authorize(:nil)
       result = GraphCMS::Client.query(ExpositionsQuery)
       result.data.expositions
     }

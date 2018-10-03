@@ -2,12 +2,14 @@ require "graphql/client"
 require "graphql/client/http"
 
 module GraphCMS
-  HTTP = GraphQL::Client::HTTP.new(ENV['GRAPHCMS_URL'])
+  HTTP = GraphQL::Client::HTTP.new(ENV['GRAPHCMS_URL']) do
 
-  def headers(context)
-    {
-      "Authorization" => "Bearer #{ENV['GRAPHCMS_TOKEN']}"
-    }
+    def headers(context)
+      {
+        "Authorization" => "Bearer #{ENV['GRAPHCMS_TOKEN']}"
+      }
+    end
+
   end
 
 
