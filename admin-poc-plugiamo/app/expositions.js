@@ -3,6 +3,7 @@ import {
   Create,
   Datagrid,
   DateField,
+  DeleteButton,
   DisabledInput,
   Edit,
   EditButton,
@@ -39,6 +40,7 @@ export const ExpositionsList = ({ ...props }) => (
       <TextField source="domain" />
       <EditButton />
       <ShowButton />
+      <DeleteButton />
     </Datagrid>
   </List>
 )
