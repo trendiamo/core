@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react'
 import { Welcome } from '@storybook/react/demo'
 import { Card, CardContent, CardImg } from '../src/shared/card'
 import { IconChevronLeft, IconChevronRight, IconClose } from '../src/icons'
-import { List, ListContent, ListImg, ListItem } from '../src/shared/list'
+import { List, ListChevron, ListContent, ListImg, ListItem } from '../src/shared/list'
 import './styles.css'
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Buttons')} />)
@@ -45,10 +45,12 @@ storiesOf('Lists', module).add('simple', () => (
     <ListItem>
       <ListImg src="https://placeimg.com/200/200/any" />
       <ListContent>{'Buy this'}</ListContent>
+      <ListChevron />
     </ListItem>
     <ListItem>
       <ListImg src="https://placeimg.com/200/200/any" />
       <ListContent>{'Buy that'}</ListContent>
+      <ListChevron />
     </ListItem>
   </List>
 ))

@@ -1,10 +1,11 @@
 import Arrow from 'shared/arrow'
 import { h } from 'preact'
 import { IconChevronLeft } from 'icons'
+import { List } from 'shared/list'
+import ProductItem from './product-item'
 import styled from 'styled-components'
 import transition from './transition'
 import { animate, TopSlideAnimation } from 'shared/animate'
-import { Card, CardContent, CardImg } from 'shared/card'
 import { compose, lifecycle, withHandlers, withProps } from 'recompose'
 
 const FlexDiv = styled.div`
@@ -95,71 +96,20 @@ const CoverSpotlight = compose(
   </FlexDiv>
 ))
 
-const mockProducts = [
-  {
-    description: 'Lorem ipsum dolor sit amet pluribonum...',
-    displayPrice: '44 €',
-    id: 1,
-    name: 'Cotton Shirt',
-    url: 'https://placeimg.com/340/300/any',
-  },
-  {
-    description: 'Lorem ipsum dolor sit amet pluribonum...',
-    displayPrice: '38 €',
-    id: 2,
-    name: 'Blue pants',
-    url: 'https://placeimg.com/340/301/any',
-  },
-  {
-    description: 'Lorem ipsum dolor sit amet pluribonum...',
-    displayPrice: '72 €',
-    id: 2,
-    name: 'Black Shoes',
-    url: 'https://placeimg.com/340/302/any',
-  },
-]
-
-const ProductsContainer = styled.div`
-  overflow-x: scroll;
-  margin-left: -1rem;
-  margin-right: -1rem;
-  padding: 0 1rem;
-  padding-bottom: 1rem;
-`
-
-const Products = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-right: 1rem;
-`
-
 const ContentSpotlight = compose(
   withProps(({ id, website }) => ({
     spotlight: website.spotlights.find(e => e.id === id),
   }))
 )(({ isLeaving, spotlight }) => (
   <div>
-    <span>{`Products selected by ${spotlight.influencer.name}`}</span>
+    <span>{`Products selected by ${spotlight.influencer.name.split(' ')[0]}`}</span>
     <AnimatedBlackArrow isLeaving={isLeaving} timeout={250 * 2} />
     <TopSlideAnimation isLeaving={isLeaving}>
-      <ProductsContainer>
-        <Products style={{ width: (170 + 16) * mockProducts.length }}>
-          {mockProducts.map(mockProduct => (
-            <Card key={mockProduct.id} style={{ cursor: 'pointer', width: '170px' }}>
-              <CardImg src={mockProduct.url} />
-              <CardContent style={{ color: '#4a4a4a', letterSpacing: '0.1px' }}>
-                <FlexDiv style={{ marginBottom: '4px' }}>
-                  <div style={{ flex: 1, fontSize: '12px', fontWeight: '500', textTransform: 'uppercase' }}>
-                    {mockProduct.name}
-                  </div>
-                  <div style={{ fontSize: '13px', fontWeight: 'bold' }}>{mockProduct.displayPrice}</div>
-                </FlexDiv>
-                <div style={{ color: '#a9a9a9', fontSize: '12px' }}>{mockProduct.description}</div>
-              </CardContent>
-            </Card>
-          ))}
-        </Products>
-      </ProductsContainer>
+      <List>
+        {spotlight.productPicks.map(product => (
+          <ProductItem key={product.url} product={product} />
+        ))}
+      </List>
     </TopSlideAnimation>
   </div>
 ))

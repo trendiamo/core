@@ -1,18 +1,16 @@
 import { h } from 'preact'
-import { IconChevronRight } from 'icons'
 import styled from 'styled-components'
 import transition from './transition'
 import { compose, withHandlers } from 'recompose'
-import { ListContent, ListImg, ListItem } from 'shared/list'
+import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 
 const InfluencerName = styled.span`
   font-weight: 500;
+  font-size: 18px;
 `
 
-const Chevron = styled(IconChevronRight)`
-  height: 16px;
-  width: 16px;
-  margin: 10px;
+const InfluencerDescription = styled.div`
+  font-size: 14px;
 `
 
 const SpotlightItem = ({ onListItemClick, setImgRef, setNameRef, spotlight }) => (
@@ -20,8 +18,9 @@ const SpotlightItem = ({ onListItemClick, setImgRef, setNameRef, spotlight }) =>
     <ListImg ref={setImgRef} src={spotlight.influencer.profilePic.url} />
     <ListContent>
       <InfluencerName ref={setNameRef}>{spotlight.influencer.name}</InfluencerName>
+      <InfluencerDescription>{spotlight.influencer.description}</InfluencerDescription>
     </ListContent>
-    <Chevron />
+    <ListChevron />
   </ListItem>
 )
 
