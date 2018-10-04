@@ -5,7 +5,8 @@ import { h } from 'preact'
 import history from './history'
 import { Router } from 'ext/simple-router'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
+import transition from './transition'
+import { compose, withHandlers, withState } from 'recompose'
 import { ContentRoot, CoverRoot } from './root'
 import { ContentSpotlight, CoverSpotlight } from './spotlight'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
@@ -79,7 +80,16 @@ const Flex1 = styled.div`
   flex: 1;
 `
 
-const Content = ({ onRouteChange, routeToRoot, routeToSpotlight, website }) => (
+const GhostLayer = styled.div`
+  visibility: ${({ isTransitioning }) => (isTransitioning ? 'visible' : 'hidden')};
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`
+
+const Content = ({ isTransitioning, onRouteChange, routeToRoot, routeToSpotlight, website }) => (
   <TrendiamoContentFrame>
     <Wrapper>
       <Cover>
@@ -102,16 +112,26 @@ const Content = ({ onRouteChange, routeToRoot, routeToSpotlight, website }) => (
           </a>
         </PoweredBy>
       </InnerContent>
+      <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />
     </Wrapper>
   </TrendiamoContentFrame>
 )
 
 export default compose(
+  withState('isTransitioning', 'setIsTransitioning', false),
   withHandlers({
-    onRouteChange: () => (/*previousRoute, route*/) => {
-      return new Promise(resolve => {
-        setTimeout(resolve, 400)
-      })
+    onRouteChange: ({ setIsTransitioning }) => (previousRoute, route) => {
+      if (!previousRoute) return
+      const exitDuration = 300
+      if (previousRoute === '/' && route.startsWith('/spotlight')) {
+        setIsTransitioning(true)
+        transition.liftElements()
+        setTimeout(() => {
+          setIsTransitioning(false)
+          transition.clear()
+        }, exitDuration + transition.duration)
+      }
+      return new Promise(resolve => setTimeout(resolve, exitDuration)) // delay new page so we can see the exit animation
     },
     routeToRoot: () => () => history.replace('/'),
     routeToSpotlight: () => spotlight => history.replace(`/spotlight/${spotlight.id}`),

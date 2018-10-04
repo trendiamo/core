@@ -2,9 +2,10 @@ import Arrow from 'shared/arrow'
 import { h } from 'preact'
 import { IconChevronLeft } from 'icons'
 import styled from 'styled-components'
+import transition from './transition'
 import { animate, TopSlideAnimation } from 'shared/animate'
 import { Card, CardContent, CardImg } from 'shared/card'
-import { compose, withProps } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps } from 'recompose'
 
 const FlexDiv = styled.div`
   display: flex;
@@ -60,14 +61,32 @@ const AnimatedBlackArrow = animate(styled(Arrow).attrs({
 `)
 
 const CoverSpotlight = compose(
+  withHandlers(() => {
+    let imgRef, nameRef
+    return {
+      landElements: () => () => {
+        if (!transition.isLiftingElements) return
+        transition.landElement('img', imgRef.base)
+        transition.landElement('name', nameRef)
+      },
+      setImgRef: () => ref => (imgRef = ref),
+      setNameRef: () => ref => (nameRef = ref),
+    }
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { landElements } = this.props
+      landElements()
+    },
+  }),
   withProps(({ id, website }) => ({
     spotlight: website.spotlights.find(e => e.id === id),
   }))
-)(({ isLeaving, routeToRoot, spotlight }) => (
+)(({ isLeaving, routeToRoot, setImgRef, setNameRef, spotlight }) => (
   <FlexDiv path={'/'}>
-    <CoverImg src={spotlight.influencer.profilePic.url} />
+    <CoverImg ref={setImgRef} src={spotlight.influencer.profilePic.url} />
     <div style={{ paddingLeft: '10px' }}>
-      <div>{spotlight.influencer.name}</div>
+      <div ref={setNameRef}>{spotlight.influencer.name}</div>
     </div>
     <BackButton isLeaving={isLeaving} onClick={routeToRoot}>
       <Chevron />
