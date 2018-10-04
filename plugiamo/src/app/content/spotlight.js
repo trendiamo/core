@@ -32,7 +32,7 @@ const BackButton = animate(styled.button`
 `)
 
 const Chevron = styled(IconChevronLeft)`
-  fill: white;
+  fill: #aaa;
   height: 12px;
   width: 12px;
   vertical-align: middle;
@@ -61,6 +61,14 @@ const AnimatedBlackArrow = animate(styled(Arrow).attrs({
   transition: opacity 1s ease, transform 0.6s ease;
 `)
 
+const InfluencerDescription = animate(
+  styled.div`
+    color: #ddd;
+    font-size: 12px;
+  `,
+  250 * 2
+)
+
 const CoverSpotlight = compose(
   withHandlers(() => {
     let imgRef, nameRef
@@ -87,7 +95,10 @@ const CoverSpotlight = compose(
   <FlexDiv path={'/'}>
     <CoverImg ref={setImgRef} src={spotlight.influencer.profilePic.url} />
     <div style={{ paddingLeft: '10px' }}>
-      <div ref={setNameRef}>{spotlight.influencer.name}</div>
+      <span ref={setNameRef}>{spotlight.influencer.name}</span>
+      <TopSlideAnimation timeout={250 * 1}>
+        <InfluencerDescription>{spotlight.influencer.description}</InfluencerDescription>
+      </TopSlideAnimation>
     </div>
     <BackButton isLeaving={isLeaving} onClick={routeToRoot}>
       <Chevron />
