@@ -2,7 +2,8 @@ const baseApiUrl = `https://${process.env.API_ENDPOINT}/api/v1`
 const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
 const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
 const SIGNOUT_URL = `${baseApiUrl}/users/sign_out`
-// const PASSWORD_RESET_URL = `${baseApiUrl}/users/password`
+const PASSWORD_FORM_URL = `${baseApiUrl}/users/password`
+const PASSWORD_RESET_URL = `${baseApiUrl}/users/password`
 
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {
@@ -11,6 +12,17 @@ const apiRequest = async (url, body) => {
       'Content-Type': 'application/json',
     }),
     method: 'post',
+  })
+  return res.json()
+}
+
+const apiPasswordRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
+    method: 'put',
   })
   return res.json()
 }
@@ -26,6 +38,16 @@ const apiRequestSignout = async url => {
     method: 'delete',
   })
   return res.json()
+}
+
+export const apiPasswordResetSaga = async (url, body) => {
+  const json = await apiPasswordRequest(url, body)
+  if (json.error || json.errors) {
+    console.log(json.error)
+  } else {
+    localStorage.setItem('authToken', json.authenticationToken)
+    localStorage.setItem('authEmail', json.user.email)
+  }
 }
 
 export const apiSaga = async (url, body) => {
@@ -51,3 +73,5 @@ export const apiSagaSignout = async (url, body) => {
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
 export const apiSignIn = body => apiSaga(SIGNIN_URL, body)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
+export const apiPasswordEmailLink = body => apiRequest(PASSWORD_FORM_URL, body)
+export const apiPasswordReset = body => apiPasswordResetSaga(PASSWORD_RESET_URL, body)
