@@ -40,8 +40,8 @@ export default compose(
   }),
   graphql(
     gql`
-      query($domain: String!) {
-        domain(where: { domain: $domain }) {
+      query($hostname: String!) {
+        hostname(where: { hostname: $hostname }) {
           website {
             title
             spotlights {
@@ -57,11 +57,11 @@ export default compose(
         }
       }
     `,
-    { domain: hostname }
+    { hostname }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
-    website: data.domain && data.domain.website,
+    website: data.hostname && data.hostname.website,
   })),
   withProps(({ website }) => ({
     spotlights: website && website.spotlights,
@@ -69,7 +69,7 @@ export default compose(
   withProps(({ spotlights }) => ({
     influencer: spotlights && spotlights.length && spotlights[0].influencer,
   })),
-  branch(({ spotlights }) => !spotlights, infoMsg(`no content found for domain ${hostname}`)),
+  branch(({ spotlights }) => !spotlights, infoMsg(`no content found for hostname ${hostname}`)),
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     // onCtaClick: ({ exposition }) => () => {

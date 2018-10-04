@@ -1,5 +1,5 @@
 const graphQlUrl = process.env.GRAPHQL_URL
-const hostname = process.env.FORCED_HOST || location.hostname
+const hostname = process.env.HOSTNAME || location.hostname
 const mixpanelToken = process.env.MIXPANEL_TOKEN
 const production = process.env.NODE_ENV === 'production'
 const width = 360
