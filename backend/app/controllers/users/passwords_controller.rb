@@ -22,10 +22,10 @@ module Users
       # self.resource = resource_class.with_reset_password_token(params[:reset_password_token])
       set_minimum_password_length
       resource.reset_password_token = params[:reset_password_token]
-      path = "/account/login"
+      path = "login"
       query = "?reset_password_token="
       hash = "#reset_password"
-      redirect_to "https://#{ENV['SHOPIFY_STORE']}#{path}#{query}#{params[:reset_password_token]}#{hash}"
+      redirect_to "/#{path}#{query}#{params[:reset_password_token]}#{hash}"
     end
 
     # PUT /resource/password

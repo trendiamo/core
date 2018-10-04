@@ -54,7 +54,7 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
           <Typography variant="headline">{'Sign in'}</Typography>
           <form className={classes.form} onSubmit={loginSubmit}>
           <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="email">{'Email Address'}</InputLabel>
+            <InputLabel htmlFor="email">{'New Password'}</InputLabel>
             <Input
               autoComplete="email"
               autoFocus
@@ -64,7 +64,7 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
               value={loginForm.email}/>
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">{'Password'}</InputLabel>
+            <InputLabel htmlFor="password">{'Repeat Password'}</InputLabel>
             <Input
               name="password"
               type="password"
@@ -81,15 +81,8 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
             variant="raised"
             color="primary"
             className={classes.submit}
-            >{'Sign in'}</Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="raised"
-            color="secondary"
-            className={classes.submit}
-            onClick={onForgotPassword}
-          >{'Forgot Password'}</Button>
+            >{'Sign in'}
+          </Button>
         </form>
       </Paper>
     </main>
@@ -107,6 +100,7 @@ const CustomLogin = compose(
     },
     onForgotPassword: () => event => {
       event.preventDefault()
+      location.href = '/'
     },
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),
