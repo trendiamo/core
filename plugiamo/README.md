@@ -46,7 +46,7 @@ yarn run storybook
 ## Deploy
 
 ```
-yarn build && yarn deploy
+yarn deploy
 ```
 
 ## Install on a given site
