@@ -1,6 +1,6 @@
 ExpositionQuery = GraphCMS::Client.parse <<-'GRAPHQL'
-  query($domain: String!) {
-    exposition(where: { domain: $domain }) {
+  query($domain: String, $id: ID) {
+    exposition(where: { domain: $domain, id: $id }) {
       id
       ctaText
       ctaUrl

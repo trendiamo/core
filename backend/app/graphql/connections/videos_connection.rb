@@ -1,5 +1,5 @@
 Connections::VideosConnection = Types::VideoType.define_connection do
-  name 'videosConnection'
+  name "videosConnection"
 
   field :aggregate do
     type !Types::AggregateType
