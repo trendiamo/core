@@ -1,9 +1,23 @@
+import { IconChevronRight } from '../icons'
 import styled from 'styled-components'
 
 const List = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+`
+
+const ListChevron = styled(IconChevronRight)`
+  height: 16px;
+  width: 16px;
+  margin: 10px;
+`
+
+const ListContent = styled.div`
+  padding: 1rem;
+  height: 100px;
+  flex: 1;
+  color: #4a4a4a;
 `
 
 const ListItem = styled.li`
@@ -23,11 +37,4 @@ const ListImg = styled.img`
   object-fit: cover;
 `
 
-const ListContent = styled.div`
-  padding: 1rem;
-  height: 100px;
-  flex: 1;
-  color: #4a4a4a;
-`
-
-export { List, ListItem, ListImg, ListContent }
+export { List, ListChevron, ListContent, ListItem, ListImg }

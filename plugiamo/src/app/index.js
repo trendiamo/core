@@ -44,11 +44,22 @@ export default compose(
         hostname(where: { hostname: $hostname }) {
           website {
             title
+            subtitle
             spotlights {
               id
               influencer {
                 name
+                description
                 profilePic {
+                  url
+                }
+              }
+              productPicks {
+                url
+                name
+                description
+                displayPrice
+                picture {
                   url
                 }
               }

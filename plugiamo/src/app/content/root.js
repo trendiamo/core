@@ -8,7 +8,7 @@ import { animate, TopSlideAnimation } from 'shared/animate'
 const AnimatedWhiteArrow = animate(styled(Arrow).attrs({
   color: '#fff',
   lineColor: '#aaa',
-  width: '150px',
+  width: '100px',
 })`
   opacity: ${({ isEntering, isLeaving }) => (isEntering || isLeaving ? 0 : 1)};
   transform: ${({ isEntering, isLeaving }) =>
@@ -17,14 +17,25 @@ const AnimatedWhiteArrow = animate(styled(Arrow).attrs({
 `)
 
 const ArrowContainer = styled.div`
-  bottom: 0;
   position: absolute;
+  bottom: 2px;
+  left: 135px;
+`
+
+const Title = styled.div`
+  font-size: 22px;
+  line-height: 1.4;
+`
+
+const SubTitle = styled.div`
+  font-size: 14px;
 `
 
 const CoverRoot = ({ isLeaving, website }) => (
   <div>
     <TopSlideAnimation isLeaving={isLeaving} timeout={250 * 0}>
-      {website.title}
+      <Title>{website.title}</Title>
+      <SubTitle>{website.subtitle}</SubTitle>
     </TopSlideAnimation>
     <ArrowContainer>
       <AnimatedWhiteArrow isLeaving={isLeaving} timeout={250 * 2} />
