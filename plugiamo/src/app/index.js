@@ -1,6 +1,7 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
 import { h } from 'preact'
+import { hostname } from '../config'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
@@ -33,7 +34,7 @@ const App = ({ influencer, onToggleContent, showingContent, website }) => (
 export default compose(
   lifecycle({
     componentDidMount() {
-      mixpanel.track('Loaded Plugin', { host: location.hostname })
+      mixpanel.track('Loaded Plugin', { hostname: location.hostname })
       mixpanel.time_event('Opened')
     },
   }),
@@ -56,7 +57,7 @@ export default compose(
         }
       }
     `,
-    { domain: process.env.FORCED_HOST || location.host }
+    { domain: hostname }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
@@ -68,24 +69,21 @@ export default compose(
   withProps(({ spotlights }) => ({
     influencer: spotlights && spotlights.length && spotlights[0].influencer,
   })),
-  branch(
-    ({ spotlights }) => !spotlights,
-    infoMsg(`no content found for domain ${process.env.FORCED_HOST || location.host}`)
-  ),
+  branch(({ spotlights }) => !spotlights, infoMsg(`no content found for domain ${hostname}`)),
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
     // onCtaClick: ({ exposition }) => () => {
-    //   mixpanel.track('Clicked CTA Link', { host: location.hostname }, () => {
+    //   mixpanel.track('Clicked CTA Link', { hostname: location.hostname }, () => {
     //     window.location = exposition.ctaUrl
     //   })
     // },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       if (!showingContent) {
-        mixpanel.track('Opened', { host: location.hostname })
+        mixpanel.track('Opened', { hostname: location.hostname })
         mixpanel.time_event('Clicked CTA Link')
         mixpanel.time_event('Closed')
       } else {
-        mixpanel.track('Closed', { host: location.hostname })
+        mixpanel.track('Closed', { hostname: location.hostname })
         mixpanel.time_event('Opened')
       }
       return setShowingContent(!showingContent)

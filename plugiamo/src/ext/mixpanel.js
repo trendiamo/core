@@ -1,12 +1,12 @@
-import config from '../config'
 import mixpanel from 'mixpanel-browser'
+import { production } from '../config'
 
 const trndMixpanel = {
   get_distinct_id() {
     return mixpanel.get_distinct_id()
   },
   init(mpToken, mpConfig, name) {
-    if (mpToken && config.production) {
+    if (mpToken && production) {
       mixpanel.init(mpToken, mpConfig, name)
       this.initialized = true
     }

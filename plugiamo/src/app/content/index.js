@@ -1,11 +1,11 @@
 import animateOnMount from 'shared/animate-on-mount'
-import config from '../../config'
 import Frame from 'shared/frame'
 import { h } from 'preact'
 import history from './history'
 import { Router } from 'ext/simple-router'
 import styled from 'styled-components'
 import transition from './transition'
+import { width } from '../../config'
 import { compose, withHandlers, withState } from 'recompose'
 import { ContentRoot, CoverRoot } from './root'
 import { ContentSpotlight, CoverSpotlight } from './spotlight'
@@ -30,7 +30,7 @@ const TrendiamoContentFrame = animateOnMount(styled(Frame)`
     border-radius: 8px;
     bottom: 100px;
     right: 30px;
-    width: ${config.width}px;
+    width: ${width}px;
     height: calc(100vh - 150px);
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
     max-height: 500px;

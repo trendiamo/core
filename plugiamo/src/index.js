@@ -1,13 +1,13 @@
 import App from 'app'
-import config from './config'
 import { GraphQLClient } from 'graphql-request'
 import mixpanel from 'ext/mixpanel'
 import { Provider } from 'ext/graphql-context'
+import { graphQlUrl, mixpanelToken } from './config'
 import { h, render } from 'preact'
 
-mixpanel.init(config.mixpanelToken)
+mixpanel.init(mixpanelToken)
 
-const client = new GraphQLClient(config.graphQlUrl)
+const client = new GraphQLClient(graphQlUrl)
 
 const RootComponent = () => (
   <Provider value={client}>
