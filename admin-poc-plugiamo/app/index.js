@@ -14,7 +14,7 @@ const App = ({ dataProvider }) => (
   <div>
     {!dataProvider && <div>{'Loading'}</div>}
     {dataProvider && (
-      <Admin authProvider={authProvider} dataProvider={dataProvider.dataProvider}>
+      <Admin authProvider={authProvider} dataProvider={dataProvider.dataProvider} loginPage={loginPage}>
         <Resource
           create={ExpositionsCreate}
           edit={ExpositionsEdit}
@@ -33,7 +33,6 @@ export default compose(
   withState('isLoggedIn', 'setIsloggedIn', null),
   lifecycle({
     componentDidMount() {
-      console.log('component did mount')
       const { setDataProvider } = this.props
       const uriPlugAdmin = `https://${process.env.API_ENDPOINT}/graphql`
       const authLink = setContext((_, { headers }) => ({
@@ -50,7 +49,6 @@ export default compose(
       })
         .then(dataProvider => {
           setDataProvider({ dataProvider })
-          console.log('graphql query')
         })
         .catch(reason => console.log(reason))
     },
