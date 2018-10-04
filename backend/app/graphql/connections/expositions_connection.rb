@@ -1,5 +1,5 @@
 Connections::ExpositionsConnection = Types::ExpositionType.define_connection do
-  name 'expositionsConnection'
+  name "expositionsConnection"
 
   field :aggregate do
     type !Types::AggregateType
