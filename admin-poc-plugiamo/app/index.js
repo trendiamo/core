@@ -1,11 +1,10 @@
 import authProvider from './auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
+import customLoginPage from './login'
 import { HttpLink } from 'apollo-link-http'
-import loginPage from './login'
 import React from 'react'
 import { setContext } from 'apollo-link-context'
 import { VideosList } from './videos'
-// import customRoutes from './custom-routes'
 import { Admin, Resource } from 'react-admin'
 import { compose, lifecycle, withState } from 'recompose'
 import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from './expositions'
@@ -14,7 +13,7 @@ const App = ({ dataProvider }) => (
   <div>
     {!dataProvider && <div>{'Loading'}</div>}
     {dataProvider && (
-      <Admin authProvider={authProvider} dataProvider={dataProvider.dataProvider} loginPage={loginPage}>
+      <Admin authProvider={authProvider} dataProvider={dataProvider.dataProvider} loginPage={customLoginPage}>
         <Resource
           create={ExpositionsCreate}
           edit={ExpositionsEdit}
