@@ -1,27 +1,23 @@
 import { apiSignIn } from '../auth/utils'
+import FormControl from '@material-ui/core/FormControl'
+import FormGroup from '@material-ui/core/FormGroup'
+import Input from '@material-ui/core/Input'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 
 const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
-  <div id="root">
-    <div>
-      <h1>{'Login'}</h1>
-      <form acceptCharset="UTF-8" onSubmit={loginSubmit}>
-        <input
-          autoCapitalize="off"
-          autoCorrect="off"
-          autoFocus
-          name="email"
-          onChange={setLoginValue}
-          required
-          type="text"
-          value={loginForm.email}
-        />
-        <input name="password" onChange={setLoginValue} required type="password" value={loginForm.password} />
-        <input type="submit" value="Login" />
-      </form>
-    </div>
-  </div>
+  <form acceptCharset="UTF-8" onSubmit={loginSubmit}>
+    <Input
+      autoFocus
+      name="email"
+      onChange={setLoginValue}
+      required
+      type="text"
+      value={loginForm.email}
+    />
+    <Input name="password" onChange={setLoginValue} required type="password" value={loginForm.password} />
+    <Input type="submit" value="Login" />
+  </form>
 )
 
 export default compose(
