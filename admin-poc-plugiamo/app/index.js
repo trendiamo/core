@@ -22,7 +22,7 @@ const App = ({ dataProvider }) => (
           name="Exposition"
           show={ExpositionShow}
         />
-        <Resource list={VideosList} name="Video" />
+        {/* <Resource list={VideosList} name="Video" /> */}
       </Admin>
     )}
   </div>

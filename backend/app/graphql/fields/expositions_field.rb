@@ -6,7 +6,8 @@ Fields::ExpositionsField = GraphQL::Field.define do
   resolve ->(obj, args, ctx) {
     use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
     authorize(:nil)
-    result = GraphCMS::Client.query(ExpositionsQuery)
+    return unless current_user.exposition_hostname
+    result = GraphCMS::Client.query(ExpositionsQuery, variables: { domains: [current_user.exposition_hostname] })
     result.data.expositions
   }
 end

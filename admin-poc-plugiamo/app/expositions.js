@@ -40,7 +40,6 @@ export const ExpositionsList = ({ ...props }) => (
       <TextField source="domain" />
       <EditButton />
       <ShowButton />
-      <DeleteButton />
     </Datagrid>
   </List>
 )
