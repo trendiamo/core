@@ -1,4 +1,4 @@
-ExpositionQuery = GraphCMS::Client.parse <<-'GRAPHQL'
+ExpositionQuery = <<-'GRAPHQL'
   query($domain: String, $id: ID) {
     exposition(where: { domain: $domain, id: $id }) {
       id
@@ -22,7 +22,7 @@ ExpositionQuery = GraphCMS::Client.parse <<-'GRAPHQL'
   }
 GRAPHQL
 
-ExpositionsQuery = GraphCMS::Client.parse <<-'GRAPHQL'
+ExpositionsQuery = <<-'GRAPHQL'
   query($domains: [String!]) {
     expositions(where: { domain_in: $domains }) {
       id
@@ -46,7 +46,7 @@ ExpositionsQuery = GraphCMS::Client.parse <<-'GRAPHQL'
   }
 GRAPHQL
 
-VideosQuery = GraphCMS::Client.parse <<-'GRAPHQL'
+VideosQuery = <<-'GRAPHQL'
   query {
     videos {
       id
@@ -59,7 +59,7 @@ VideosQuery = GraphCMS::Client.parse <<-'GRAPHQL'
   }
 GRAPHQL
 
-VideoQuery = GraphCMS::Client.parse <<-'GRAPHQL'
+VideoQuery = <<-'GRAPHQL'
   query($id: ID!) {
     video(where: { id: $id }) {
       id
@@ -72,21 +72,21 @@ VideoQuery = GraphCMS::Client.parse <<-'GRAPHQL'
   }
 GRAPHQL
 
-CreateExpositionMutation = GraphCMS::Client.parse <<-'GRAPHQL'
-    mutation($domain: String!, $ctaUrl: String!, $ctaText: String!, $description: String) {
-      createExposition(data: {domain: $domain, ctaUrl: $ctaUrl, ctaText: $ctaText, description: $description}) {
-        id
-        ctaUrl
-        ctaText
-        domain
-        description
-      }
+CreateExpositionMutation = <<-'GRAPHQL'
+  mutation($domain: String!, $ctaUrl: String!, $ctaText: String!, $description: String) {
+    createExposition(data: {domain: $domain, ctaUrl: $ctaUrl, ctaText: $ctaText, description: $description}) {
+      id
+      ctaUrl
+      ctaText
+      domain
+      description
     }
+  }
 GRAPHQL
 
-UpdateExpositionMutation = GraphCMS::Client.parse <<-'GRAPHQL'
-    mutation($domain: String, $ctaUrl: String, $ctaText: String, $description: String) {
-      updateExposition(data: {ctaUrl: $ctaUrl, domain: $domain, ctaText: $ctaText, description: $description}, where: {domain: $domain}) {
+UpdateExpositionMutation = <<-'GRAPHQL'
+    mutation($domain: String, $ctaUrl: String, $ctaText: String, $description: String, $id: ID) {
+      updateExposition(data: {ctaUrl: $ctaUrl, domain: $domain, ctaText: $ctaText, description: $description}, where: {domain: $domain, id: $id}) {
         id
         ctaUrl
         ctaText
@@ -96,7 +96,7 @@ UpdateExpositionMutation = GraphCMS::Client.parse <<-'GRAPHQL'
     }
 GRAPHQL
 
-DeleteExpositionMutation = GraphCMS::Client.parse <<-'GRAPHQL'
+DeleteExpositionMutation = <<-'GRAPHQL'
     mutation($id: ID!) {
       deleteExposition(where: { id: $id }) {
         id

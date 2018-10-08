@@ -3,6 +3,6 @@ Types::ExpositionInputType = GraphQL::InputObjectType.define do
   argument :id, types.ID
   argument :description, types.String
   argument :ctaUrl, !types.String
-  argument :domain, !types.String
+  argument :domain, types.String
   argument :ctaText, !types.String
 end

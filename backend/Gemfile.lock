@@ -91,9 +91,15 @@ GEM
       i18n (>= 0.7)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.12.2)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    graphlient (0.3.3)
+      faraday
+      faraday_middleware
+      graphql-client
     graphql (1.7.13)
     graphql-client (0.13.0)
       activesupport (>= 3.0, < 6.0)
@@ -226,8 +232,8 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  graphlient
   graphql
-  graphql-client
   graphql-errors
   hubspot-ruby
   letter_opener

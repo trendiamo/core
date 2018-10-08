@@ -5,11 +5,8 @@ Fields::CreateExpositionField = GraphQL::Field.define do
   resolve Resolver.new ->(obj, args, ctx) {
     use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
     authorize(:nil)
-    return if current_user.exposition_hostname
-    data = { domain: args[:data][:domain], description: args[:data][:description], ctaUrl: args[:data][:ctaUrl],
-             ctaText: args[:data][:ctaText], }
-    result = GraphCMS::Client.query(CreateExpositionMutation, variables: data)
-    current_user.update(exposition_hostname: args[:data][:domain]) if result.errors.messages.empty?
-    result.data.create_exposition
+    variables = { domain: current_user.exposition_hostname, description: args[:data][:description],
+                  ctaUrl: args[:data][:ctaUrl], ctaText: args[:data][:ctaText], }
+    ExecuteQuery.execute(CreateExpositionMutation, variables, :create_exposition)
   }
 end
