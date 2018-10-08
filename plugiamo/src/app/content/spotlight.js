@@ -92,7 +92,7 @@ const CoverSpotlight = compose(
     spotlight: website.spotlights.find(e => e.id === id),
   }))
 )(({ isLeaving, routeToRoot, setImgRef, setNameRef, spotlight }) => (
-  <FlexDiv path={'/'}>
+  <FlexDiv>
     <CoverImg ref={setImgRef} src={spotlight.influencer.profilePic.url} />
     <div style={{ paddingLeft: '10px' }}>
       <span ref={setNameRef}>{spotlight.influencer.name}</span>

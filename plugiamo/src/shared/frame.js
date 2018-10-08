@@ -15,6 +15,9 @@ const style = `
 *, *::before, *::after {
   box-sizing: border-box;
 }
+body, html {
+  font-family: 'Roboto', sans-serif;
+}
 `
 
 const loadCss = (head, href) => {
