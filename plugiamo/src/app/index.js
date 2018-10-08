@@ -1,6 +1,7 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
 import { h } from 'preact'
+import history from 'ext/history'
 import { hostname } from '../config'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
@@ -31,13 +32,14 @@ const App = ({ influencer, onToggleContent, showingContent, website }) => (
   </div>
 )
 
+const pathFromHash = () => {
+  if (!location.hash) return
+  const match = /trnd:([^&]+)/.exec(location.hash)
+  if (!match) return
+  return match[1]
+}
+
 export default compose(
-  lifecycle({
-    componentDidMount() {
-      mixpanel.track('Loaded Plugin', { hostname: location.hostname })
-      mixpanel.time_event('Opened')
-    },
-  }),
   graphql(
     gql`
       query($hostname: String!) {
@@ -82,6 +84,19 @@ export default compose(
   })),
   branch(({ spotlights }) => !spotlights, infoMsg(`no content found for hostname ${hostname}`)),
   withState('showingContent', 'setShowingContent', false),
+  lifecycle({
+    componentDidMount() {
+      const path = pathFromHash()
+      mixpanel.track('Loaded Plugin', { hostname: location.hostname, path })
+      if (path) {
+        const { setShowingContent } = this.props
+        history.replace(path)
+        setShowingContent(true)
+      } else {
+        mixpanel.time_event('Opened')
+      }
+    },
+  }),
   withHandlers({
     // onCtaClick: ({ exposition }) => () => {
     //   mixpanel.track('Clicked CTA Link', { hostname: location.hostname }, () => {

@@ -87,3 +87,27 @@ import Variant from 'shared/variant'
   </Variant>
 </Experiment>
 ```
+
+## Links to open plugin
+
+If you want to have a link that auto-opens the plugin, you need to add to the hash part of the url.
+
+For example, if you have the following link:
+
+`https://www.engelhorn.de/f/produkte/39713117.html`
+
+And you want to open the plugin on it, then you want this:
+
+`https://www.engelhorn.de/f/produkte/39713117.html#trnd:/`
+
+If the url already has some hash based params, like this:
+
+`https://www.engelhorn.de/f/produkte/39713117.html#cart-open1,13`
+
+Then you want to do this:
+
+`https://www.engelhorn.de/f/produkte/39713117.html#cart-open1,13&trnd:/`
+
+If you want to open something other than the root page, simply change the path part of, for example to:
+
+`trnd:/spotlight/cjmrwnrejltva0932ru7mwa4k`

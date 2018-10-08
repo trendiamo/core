@@ -1,6 +1,6 @@
 import ContentFrame from './content-frame'
 import { h } from 'preact'
-import history from './history'
+import history from 'ext/history'
 import { Router } from 'ext/simple-router'
 import styled from 'styled-components'
 import transition from './transition'
