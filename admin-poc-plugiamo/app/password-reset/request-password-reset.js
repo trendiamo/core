@@ -1,4 +1,4 @@
-import { apiSignIn } from '../auth/utils'
+import { apiPasswordEmailLink } from '../auth/utils'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -43,7 +43,7 @@ const styles = theme => ({
   },
 })
 
-const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForgotPassword }) => (
+const CustomPasswordResetJSX = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, classes, submitted }) => (
   <React.Fragment>
     <CssBaseline />
     <main className={classes.layout}>
@@ -51,28 +51,17 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
         <Avatar className={classes.avatar}>
           <LockIcon />
         </Avatar>
-          <Typography variant="headline">{'Sign in'}</Typography>
-          <form className={classes.form} onSubmit={loginSubmit}>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="email">{'Email Address'}</InputLabel>
-            <Input
-              autoComplete="email"
-              autoFocus
-              id="email"
-              name="email"
-              onChange={setLoginValue}
-              value={loginForm.email}/>
-          </FormControl>
+          <Typography variant="headline">{'Reset Password'}</Typography>
+          <form className={classes.form} onSubmit={passwordChangeSubmit}>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">{'Password'}</InputLabel>
+            <InputLabel htmlFor="password">{'Email'}</InputLabel>
             <Input
-              name="password"
-              type="password"
-              onChange={setLoginValue}
+              name="email"
+              type="email"
+              onChange={setPasswordFormValue}
               required
-              id="password"
-              autoComplete="current-password"
-              value={loginForm.password}
+              id="email"
+              value={passwordForm.email}
             />
           </FormControl>
           <Button
@@ -81,37 +70,28 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
             variant="raised"
             color="primary"
             className={classes.submit}
-            >{'Sign in'}</Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="raised"
-            color="secondary"
-            className={classes.submit}
-            onClick={onForgotPassword}
-          >{'Forgot Password'}</Button>
+            >{'Send Reset Email'}
+          </Button>
         </form>
       </Paper>
     </main>
   </React.Fragment>
 )
 
-const CustomLogin = compose(
-  withState('loginForm', 'setLoginForm', { email: '', password: '' }),
+const CustomPasswordReset = compose(
+  withState('passwordForm', 'setPasswordForm', { email: '' }),
+  withState('submitted', 'setSubmitted', false),
   withState('errors', 'setErrors', null),
   withHandlers({
-    loginSubmit: ({ loginForm, setErrors }) => async event => {
+    passwordChangeSubmit: ({ passwordForm, setSubmitted, submitted, errors }) => async event => {
       event.preventDefault()
-      await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } })
-      localStorage.authToken && localStorage.authEmail ? (location.href = '/') : setErrors('there has been an error')
+      errors ? submitted : setSubmitted(true)
+      await apiPasswordEmailLink({ user: { email: passwordForm.email } })
+      alert('Email sent')
     },
-    onForgotPassword: () => event => {
-      event.preventDefault()
-      location.href = '#/request_password_reset'
-    },
-    setLoginValue: ({ loginForm, setLoginForm }) => event =>
-      setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),
+    setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>
+      setPasswordForm({ ...passwordForm, [event.target.name]: event.target.value }),
   })
-)(CustomLoginJSX)
+)(CustomPasswordResetJSX)
 
-export default withStyles(styles)(CustomLogin)
+export default withStyles(styles)(CustomPasswordReset)

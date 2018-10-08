@@ -1,6 +1,7 @@
 import authProvider from './auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
 import customLoginPage from './login'
+import customRoutes from './ext/custom-routes'
 import { HttpLink } from 'apollo-link-http'
 import React from 'react'
 import { setContext } from 'apollo-link-context'
@@ -13,7 +14,12 @@ const App = ({ dataProvider }) => (
   <div>
     {!dataProvider && <div>{'Loading'}</div>}
     {dataProvider && (
-      <Admin authProvider={authProvider} dataProvider={dataProvider.dataProvider} loginPage={customLoginPage}>
+      <Admin
+        authProvider={authProvider}
+        customRoutes={customRoutes}
+        dataProvider={dataProvider.dataProvider}
+        loginPage={customLoginPage}
+      >
         <Resource
           create={ExpositionsCreate}
           edit={ExpositionsEdit}
