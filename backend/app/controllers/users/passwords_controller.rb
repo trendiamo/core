@@ -22,10 +22,9 @@ module Users
       # self.resource = resource_class.with_reset_password_token(params[:reset_password_token])
       set_minimum_password_length
       resource.reset_password_token = params[:reset_password_token]
-      path = "login"
       query = "?reset_password_token="
-      hash = "#reset_password"
-      redirect_to "/#{path}#{query}#{params[:reset_password_token]}#{hash}"
+      password_form_url = "http://localhost:9000/#/password_reset#{query}#{params[:reset_password_token]}"
+      redirect_to password_form_url
     end
 
     # PUT /resource/password

@@ -20,6 +20,7 @@
     "graphql": "^14.0.2",
     "graphql-request": "^1.8.2",
     "graphql-tag": "^2.9.2",
+    "query-string": "^6.2.0",
     "ra-data-graphql-simple": "^2.3.1",
     "ra-data-json-server": "^2.3.1",
     "ra-data-opencrud": "^0.0.6",
