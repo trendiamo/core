@@ -2,6 +2,7 @@ import ContentFrame from './content-frame'
 import { h } from 'preact'
 import history from 'ext/history'
 import { Router } from 'ext/simple-router'
+import routes from '../routes'
 import styled from 'styled-components'
 import transition from './transition'
 import { compose, withHandlers, withState } from 'recompose'
@@ -93,7 +94,7 @@ export default compose(
     onRouteChange: ({ setIsTransitioning }) => (previousRoute, route) => {
       if (!previousRoute) return
       const exitDuration = 300
-      if (previousRoute === '/' && route.startsWith('/spotlight')) {
+      if (previousRoute === '/' && routes.isSpotlight(route)) {
         setIsTransitioning(true)
         transition.liftElements()
         setTimeout(() => {
@@ -103,8 +104,8 @@ export default compose(
       }
       return new Promise(resolve => setTimeout(resolve, exitDuration)) // delay new page so we can see the exit animation
     },
-    routeToRoot: () => () => history.replace('/'),
-    routeToSpotlight: () => spotlight => history.replace(`/spotlight/${spotlight.id}`),
+    routeToRoot: () => () => history.replace(routes.root()),
+    routeToSpotlight: () => spotlight => history.replace(routes.spotlight(spotlight.id)),
   }),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
