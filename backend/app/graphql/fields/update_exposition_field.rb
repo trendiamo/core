@@ -5,9 +5,9 @@ Fields::UpdateExpositionField = GraphQL::Field.define do
   resolve Resolver.new ->(obj, args, ctx) {
     use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
     authorize(:nil)
-    data = { domain: args[:data][:domain], description: args[:data][:description], ctaUrl: args[:data][:ctaUrl],
-             ctaText: args[:data][:ctaText], }
-    result = GraphCMS::Client.query(UpdateExpositionMutation, variables: data)
-    result.data.update_exposition
+    id = ctx[:variables][:where][:id]
+    variables = { id: id, domain: current_user.exposition_hostname, description: args[:data][:description],
+                  ctaUrl: args[:data][:ctaUrl], ctaText: args[:data][:ctaText], }
+    ExecuteQuery.execute(UpdateExpositionMutation, variables, :update_exposition)
   }
 end

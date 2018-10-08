@@ -1,20 +1,8 @@
-require "graphql/client"
-require "graphql/client/http"
-
+require "graphlient"
 module GraphCMS
-  HTTP = GraphQL::Client::HTTP.new(ENV['GRAPHCMS_URL']) do
-
-    def headers(context)
-      {
-        "Authorization" => "Bearer #{ENV['GRAPHCMS_TOKEN']}"
-      }
-    end
-
-  end
-
-
-  Schema = GraphQL::Client.load_schema(HTTP)
-
-  Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
-
+  Client = Graphlient::Client.new(ENV['GRAPHCMS_URL'],
+    headers: {
+      "Authorization" => "Bearer #{ENV['GRAPHCMS_TOKEN']}"
+    }
+  )
 end

@@ -2,13 +2,10 @@ import React from 'react'
 import {
   Create,
   Datagrid,
-  DateField,
-  DeleteButton,
   DisabledInput,
   Edit,
   EditButton,
   List,
-  SelectInput,
   Show,
   ShowButton,
   SimpleForm,
@@ -25,7 +22,6 @@ export const ExpositionShow = props => (
       <TextField source="ctaText" />
       <TextField source="ctaUrl" />
       <TextField source="domain" />
-      {/* <DateField label="Publication date" source="created_at" /> */}
     </SimpleShowLayout>
   </Show>
 )
@@ -58,8 +54,7 @@ export const ExpositionsEdit = ({ ...props }) => (
 
 export const ExpositionsCreate = ({ ...props }) => (
   <Create {...props}>
-    <SimpleForm>
-      <TextInput source="domain" />
+    <SimpleForm redirect="show">
       <TextInput source="description" />
       <TextInput source="ctaUrl" />
       <TextInput source="ctaText" />

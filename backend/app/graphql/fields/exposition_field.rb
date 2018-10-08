@@ -6,9 +6,7 @@ Fields::ExpositionField = GraphQL::Field.define do
   resolve ->(obj, args, ctx) {
     use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
     authorize(:nil)
-    domain = args[:domain]
-    id = ctx[:variables][:where][:id]
-    result = GraphCMS::Client.query(ExpositionQuery, variables: { id: id, domain: domain })
-    result.data.exposition
+    variables = { id: ctx[:variables][:where][:id], domain: args[:domain] }
+    ExecuteQuery.execute(ExpositionQuery, variables, :exposition)
   }
 end
