@@ -18,10 +18,10 @@ function segmentize(url) {
 
 const EMPTY = {}
 
-function exec(url, route) {
+function matchUrl(url, route) {
+  const reg = /(?:\?([^#]*))?(#.*)?$/
   let c = url.match(reg),
     matches = {},
-    reg = /(?:\?([^#]*))?(#.*)?$/,
     ret
   if (c && c[1]) {
     let p = c[1].split('&')
@@ -64,7 +64,7 @@ function exec(url, route) {
 const getMatchingChildren = (children, url) =>
   children
     .map(vnode => {
-      let matches = exec(url, vnode.attributes.path)
+      let matches = matchUrl(url, vnode.attributes.path)
       if (matches) {
         let newProps = { matches, url }
         assign(newProps, matches)
@@ -74,6 +74,8 @@ const getMatchingChildren = (children, url) =>
       }
     })
     .filter(Boolean)
+
+export { matchUrl }
 
 export default compose(
   withState('Component', 'setComponent', null),

@@ -1,3 +1,3 @@
-import Router from './router'
+import Router, { matchUrl } from './router'
 
-export { Router }
+export { matchUrl, Router }
