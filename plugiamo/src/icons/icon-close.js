@@ -5,6 +5,7 @@ const IconClose = ({ className, onClick, style }) => (
     className={className}
     focusable="false"
     onClick={onClick}
+    preserveAspectRatio="xMidYMid"
     role="presentation"
     style={style}
     viewBox="0 0 384 512"
