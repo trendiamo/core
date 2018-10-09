@@ -6,6 +6,7 @@ import routes from '../routes'
 import styled from 'styled-components'
 import transition from './transition'
 import { compose, withHandlers, withState } from 'recompose'
+import { ContentChat, CoverChat } from './chat'
 import { ContentRoot, CoverRoot } from './root'
 import { ContentSpotlight, CoverSpotlight } from './spotlight'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
@@ -18,6 +19,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  color: #333;
 `
 
 const Cover = styled.div`
@@ -28,28 +30,31 @@ const Cover = styled.div`
   min-height: 100px;
 `
 
-const InnerContent = styled.div`
-  color: #333;
-  padding: 1rem 1rem 0 1rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`
+// const InnerContent = styled.div`
+//   color: #333;
+//   height: 100%;
+//   height: 100%;
+//   padding: 1rem 1rem 0 1rem;
+//   display: flex;
+//   flex-direction: column;
+// `
 
-const PoweredBy = styled.div`
-  color: #999;
-  font-size: small;
-  padding-top: 1.2rem;
-  padding-bottom: 1rem;
-  text-align: center;
-  a {
-    color: #5d69b9;
-  }
-`
-
-const Flex1 = styled.div`
-  flex: 1;
-`
+// const PoweredBy = styled.div`
+//   color: #999;
+//   font-size: small;
+//   padding-top: 1.2rem;
+//   padding-bottom: 1rem;
+//   text-align: center;
+//   a {
+//     color: #5d69b9;
+//   }
+// `
+// <PoweredBy>
+//   {'Trusted by '}
+//   <a href="https://trendiamo.com" rel="noopener noreferrer" target="_blank">
+//     {'trendiamo'}
+//   </a>
+// </PoweredBy>
 
 const GhostLayer = styled.div`
   visibility: ${({ isTransitioning }) => (isTransitioning ? 'visible' : 'hidden')};
@@ -67,22 +72,14 @@ const Content = ({ isTransitioning, onRouteChange, onToggleContent, routeToRoot,
         <Router history={history} onChange={onRouteChange}>
           <CoverRoot path={'/'} website={website} />
           <CoverSpotlight path={'/spotlight/:id'} routeToRoot={routeToRoot} website={website} />
+          <CoverChat path={'/chat/:id'} routeToRoot={routeToRoot} website={website} />
         </Router>
       </Cover>
-      <InnerContent>
-        <Flex1>
-          <Router history={history} onChange={onRouteChange}>
-            <ContentRoot path={'/'} routeToSpotlight={routeToSpotlight} spotlights={website.spotlights} />
-            <ContentSpotlight path={'/spotlight/:id'} website={website} />
-          </Router>
-        </Flex1>
-        <PoweredBy>
-          {'Trusted by '}
-          <a href="https://trendiamo.com" rel="noopener noreferrer" target="_blank">
-            {'trendiamo'}
-          </a>
-        </PoweredBy>
-      </InnerContent>
+      <Router history={history} onChange={onRouteChange}>
+        <ContentRoot path={'/'} routeToSpotlight={routeToSpotlight} spotlights={website.spotlights} />
+        <ContentSpotlight path={'/spotlight/:id'} website={website} />
+        <ContentChat onToggleContent={onToggleContent} path={'/chat/:id'} routeToRoot={routeToRoot} website={website} />
+      </Router>
       <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />
     </Wrapper>
   </ContentFrame>

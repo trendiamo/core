@@ -35,5 +35,6 @@ module.exports = {
       react: path.resolve(__dirname, '../src/ext/preact-compat'),
       'react-dom': 'preact-compat',
     },
+    modules: [path.resolve(__dirname, '../src'), 'node_modules'],
   },
 }

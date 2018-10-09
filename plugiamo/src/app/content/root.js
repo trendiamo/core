@@ -43,14 +43,21 @@ const CoverRoot = ({ isLeaving, website }) => (
   </div>
 )
 
+const Container = styled.div`
+  height: 100%;
+  padding: 1rem;
+`
+
 const ContentRoot = ({ isLeaving, routeToSpotlight, spotlights }) => (
-  <TopSlideAnimation isLeaving={isLeaving} timeout={250 * 1}>
-    <List>
-      {spotlights.map(spotlight => (
-        <SpotlightItem key={spotlight.id} routeToSpotlight={routeToSpotlight} spotlight={spotlight} />
-      ))}
-    </List>
-  </TopSlideAnimation>
+  <Container>
+    <TopSlideAnimation isLeaving={isLeaving} timeout={250 * 1}>
+      <List>
+        {spotlights.map(spotlight => (
+          <SpotlightItem key={spotlight.id} routeToSpotlight={routeToSpotlight} spotlight={spotlight} />
+        ))}
+      </List>
+    </TopSlideAnimation>
+  </Container>
 )
 
 export { CoverRoot, ContentRoot }

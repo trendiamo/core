@@ -1,4 +1,7 @@
 const routes = {
+  chat(chatId) {
+    return `/chat/${chatId}`
+  },
   isSpotlight(path) {
     return path.startsWith('/spotlight')
   },

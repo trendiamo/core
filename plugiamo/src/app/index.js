@@ -2,13 +2,15 @@ import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
 import { h } from 'preact'
 import history from 'ext/history'
-import { hostname } from '../config'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
+import { matchUrl } from 'ext/simple-router'
 import mixpanel from 'ext/mixpanel'
+import routes from './routes'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
+import { hostname, pathname } from '../config'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const Gradient = animateOnMount(styled.div`
@@ -24,9 +26,11 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ influencer, onToggleContent, showingContent, website }) => (
+const App = ({ chat, influencer, onToggleContent, showingContent, website }) => (
   <div>
-    {showingContent && <Content onToggleContent={onToggleContent} showingContent={showingContent} website={website} />}
+    {showingContent && (
+      <Content chat={chat} onToggleContent={onToggleContent} showingContent={showingContent} website={website} />
+    )}
     <Launcher influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
@@ -47,6 +51,17 @@ export default compose(
           website {
             title
             subtitle
+            chats {
+              id
+              path
+              influencer {
+                name
+                description
+                profilePic {
+                  url
+                }
+              }
+            }
             spotlights {
               id
               influencer {
@@ -76,13 +91,15 @@ export default compose(
   withProps(({ data }) => ({
     website: data.hostname && data.hostname.website,
   })),
+  branch(({ website }) => !website, infoMsg(`no website found for hostname ${hostname}`)),
   withProps(({ website }) => ({
-    spotlights: website && website.spotlights,
+    chat: website.chats.find(chat => matchUrl(pathname, chat.path)),
   })),
-  withProps(({ spotlights }) => ({
-    influencer: spotlights && spotlights.length && spotlights[0].influencer,
+  withProps(({ chat, website }) => ({
+    influencer: chat
+      ? chat.influencer
+      : website.spotlights && website.spotlights.length && website.spotlights[0].influencer,
   })),
-  branch(({ spotlights }) => !spotlights, infoMsg(`no content found for hostname ${hostname}`)),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
@@ -93,6 +110,8 @@ export default compose(
         history.replace(path)
         setShowingContent(true)
       } else {
+        const { chat } = this.props
+        if (chat) history.replace(routes.chat(chat.id))
         mixpanel.time_event('Opened')
       }
     },

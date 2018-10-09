@@ -11,7 +11,7 @@ const queryComp = (BaseComponent, query, variables) =>
       componentDidMount() {
         const { client, setData } = this.props
         client
-          .request(query, variables)
+          .request(query, typeof variables === 'function' ? variables(this.props) : variables)
           .then(data => setData(data))
           .catch(error => setData({ error }))
       },

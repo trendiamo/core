@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import transition from './transition'
 import { animate, TopSlideAnimation } from 'shared/animate'
 import { compose, lifecycle, withHandlers, withProps } from 'recompose'
+import { CoverImg, InfluencerDescription, PaddedCover } from 'shared/cover'
 
 const FlexDiv = styled.div`
   display: flex;
@@ -43,13 +44,6 @@ const Span = styled.span`
   vertical-align: middle;
 `
 
-const CoverImg = styled.img`
-  border-radius: 50%;
-  height: 45px;
-  width: 45px;
-  object-fit: cover;
-`
-
 const AnimatedBlackArrow = animate(styled(Arrow).attrs({
   color: '#000',
   lineColor: '#444',
@@ -60,14 +54,6 @@ const AnimatedBlackArrow = animate(styled(Arrow).attrs({
     isEntering ? 'translateX(-200px)' : isLeaving ? 'translateX(600px)' : 'none'};
   transition: opacity 1s ease, transform 0.6s ease;
 `)
-
-const InfluencerDescription = animate(
-  styled.div`
-    color: #ddd;
-    font-size: 12px;
-  `,
-  250 * 2
-)
 
 const CoverSpotlight = compose(
   withHandlers(() => {
@@ -94,12 +80,12 @@ const CoverSpotlight = compose(
 )(({ isLeaving, routeToRoot, setImgRef, setNameRef, spotlight }) => (
   <FlexDiv>
     <CoverImg ref={setImgRef} src={spotlight.influencer.profilePic.url} />
-    <div style={{ paddingLeft: '10px' }}>
+    <PaddedCover>
       <span ref={setNameRef}>{spotlight.influencer.name}</span>
       <TopSlideAnimation timeout={250 * 1}>
         <InfluencerDescription>{spotlight.influencer.description}</InfluencerDescription>
       </TopSlideAnimation>
-    </div>
+    </PaddedCover>
     <BackButton isLeaving={isLeaving} onClick={routeToRoot}>
       <Chevron />
       <Span>{'Back'}</Span>
@@ -107,13 +93,21 @@ const CoverSpotlight = compose(
   </FlexDiv>
 ))
 
+const Container = styled.div`
+  height: 100%;
+  padding: 1rem;
+`
+
 const ContentSpotlight = compose(
   withProps(({ id, website }) => ({
     spotlight: website.spotlights.find(e => e.id === id),
+  })),
+  withProps(({ spotlight }) => ({
+    firstName: spotlight.influencer.name.split(' ')[0],
   }))
-)(({ isLeaving, spotlight }) => (
-  <div>
-    <span>{`Products selected by ${spotlight.influencer.name.split(' ')[0]}`}</span>
+)(({ firstName, isLeaving, spotlight }) => (
+  <Container>
+    <span>{`Products selected by ${firstName}`}</span>
     <AnimatedBlackArrow isLeaving={isLeaving} timeout={250 * 2} />
     <TopSlideAnimation isLeaving={isLeaving}>
       <List>
@@ -122,7 +116,7 @@ const ContentSpotlight = compose(
         ))}
       </List>
     </TopSlideAnimation>
-  </div>
+  </Container>
 ))
 
 export { CoverSpotlight, ContentSpotlight }
