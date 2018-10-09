@@ -23,7 +23,7 @@ module Users
       set_minimum_password_length
       resource.reset_password_token = params[:reset_password_token]
       query = "?reset_password_token="
-      password_form_url = "http://localhost:9000/#/password_reset#{query}#{params[:reset_password_token]}"
+      password_form_url = "http://#{ENV['CORS_ORIGIN']}/#/password_reset#{query}#{params[:reset_password_token]}"
       redirect_to password_form_url
     end
 
