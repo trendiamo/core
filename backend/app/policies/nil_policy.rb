@@ -23,10 +23,6 @@ class NilPolicy < ApplicationPolicy
     user
   end
 
-  def update_exposition?
-    user
-  end
-
   def delete_exposition?
     user
   end
