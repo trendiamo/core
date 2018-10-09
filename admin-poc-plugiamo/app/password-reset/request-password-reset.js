@@ -43,7 +43,13 @@ const styles = theme => ({
   },
 })
 
-const CustomPasswordResetJSX = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, classes, submitted }) => (
+const CustomPasswordResetJSX = ({
+  passwordForm,
+  passwordChangeSubmit,
+  setPasswordFormValue,
+  classes,
+  onBackToLogin,
+}) => (
   <React.Fragment>
     <CssBaseline />
     <main className={classes.layout}>
@@ -70,7 +76,15 @@ const CustomPasswordResetJSX = ({ passwordForm, passwordChangeSubmit, setPasswor
             variant="raised"
             color="primary"
             className={classes.submit}
-            >{'Send Reset Email'}
+            >{'Send Reset Instructions'}
+          </Button>
+          <Button
+            fullWidth
+            variant="raised"
+            color="secondary"
+            onClick={onBackToLogin}
+            className={classes.submit}
+            >{'Back to Login'}
           </Button>
         </form>
       </Paper>
@@ -83,6 +97,10 @@ const CustomPasswordReset = compose(
   withState('submitted', 'setSubmitted', false),
   withState('errors', 'setErrors', null),
   withHandlers({
+    onBackToLogin: () => event => {
+      event.preventDefault()
+      location.href = '#/login'
+    },
     passwordChangeSubmit: ({ passwordForm, setSubmitted, submitted, errors }) => async event => {
       event.preventDefault()
       errors ? submitted : setSubmitted(true)
