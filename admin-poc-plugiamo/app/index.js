@@ -1,11 +1,12 @@
 import authProvider from './auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
+import customLayout from './layout'
 import customLoginPage from './login'
+import customLogoutButton from './logout'
 import customRoutes from './ext/custom-routes'
 import { HttpLink } from 'apollo-link-http'
 import React from 'react'
 import { setContext } from 'apollo-link-context'
-import { VideosList } from './videos'
 import { Admin, Resource } from 'react-admin'
 import { compose, lifecycle, withState } from 'recompose'
 import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from './expositions'
@@ -15,10 +16,12 @@ const App = ({ dataProvider }) => (
     {!dataProvider && <div>{'Loading'}</div>}
     {dataProvider && (
       <Admin
+        appLayout={customLayout}
         authProvider={authProvider}
         customRoutes={customRoutes}
         dataProvider={dataProvider.dataProvider}
         loginPage={customLoginPage}
+        logoutButton={customLogoutButton}
       >
         <Resource
           create={ExpositionsCreate}
@@ -27,7 +30,6 @@ const App = ({ dataProvider }) => (
           name="Exposition"
           show={ExpositionShow}
         />
-        {/* <Resource list={VideosList} name="Video" /> */}
       </Admin>
     )}
   </div>

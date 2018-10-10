@@ -1,11 +1,8 @@
 import { apiSignOut } from './utils'
 import queryString from 'query-string'
-import { AUTH_CHECK, AUTH_GET_PERMISSIONS, AUTH_LOGOUT } from 'react-admin'
+import { AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin'
 
 const authProvider = type => {
-  if (type === AUTH_LOGOUT) {
-    apiSignOut()
-  }
   if (type === AUTH_CHECK) {
     // triggered every time url changes
     const isPasswordForm = location.hash.substring(2).includes('password_reset?')
