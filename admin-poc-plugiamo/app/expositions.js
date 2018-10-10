@@ -6,6 +6,7 @@ import {
   Edit,
   EditButton,
   List,
+  SelectInput,
   Show,
   ShowButton,
   SimpleForm,
@@ -19,6 +20,7 @@ export const ExpositionShow = props => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="description" />
+      <TextField source="status" />
       <TextField source="ctaText" />
       <TextField source="ctaUrl" />
       <TextField source="domain" />
@@ -31,6 +33,7 @@ export const ExpositionsList = ({ ...props }) => (
     <Datagrid>
       <TextField source="id" />
       <TextField source="description" />
+      <TextField source="status" />
       <TextField source="ctaText" />
       <TextField source="ctaUrl" />
       <TextField source="domain" />
@@ -48,6 +51,15 @@ export const ExpositionsEdit = ({ ...props }) => (
       <TextInput source="description" />
       <TextInput source="ctaText" />
       <TextInput source="ctaUrl" />
+      <SelectInput
+        choices={[
+          { id: 'DRAFT', name: 'DRAFT' },
+          { id: 'PUBLISHED', name: 'PUBLISHED' },
+          { id: 'ARCHIVED', name: 'ARCHIVED' },
+        ]}
+        label="Status"
+        source="status"
+      />
     </SimpleForm>
   </Edit>
 )
@@ -58,6 +70,15 @@ export const ExpositionsCreate = ({ ...props }) => (
       <TextInput source="description" />
       <TextInput source="ctaUrl" />
       <TextInput source="ctaText" />
+      <SelectInput
+        choices={[
+          { id: 'DRAFT', name: 'DRAFT' },
+          { id: 'PUBLISHED', name: 'PUBLISHED' },
+          { id: 'ARCHIVED', name: 'ARCHIVED' },
+        ]}
+        label="Status"
+        source="status"
+      />
     </SimpleForm>
   </Create>
 )
