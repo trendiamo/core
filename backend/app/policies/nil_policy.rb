@@ -15,6 +15,10 @@ class NilPolicy < ApplicationPolicy
     user
   end
 
+  def expositions_connection?
+    user
+  end
+
   def create_exposition?
     user
   end
