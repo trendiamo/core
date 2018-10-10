@@ -11,9 +11,11 @@ Main::QueryType = GraphQL::ObjectType.define do
   field :expositions, Fields::ExpositionsField
   field :exposition, Fields::ExpositionField
   connection :expositionsConnection, Connections::ExpositionsConnection do
-    resolve ->(_obj, _args, _ctx) {
-      result = GraphCMS::Client.query(ExpositionsQuery)
-      result.data.expositions
+    resolve ->(obj, args, ctx) {
+      use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
+      authorize(:nil)
+      variables = { domains: [current_user.exposition_hostname] }
+      ExecuteQuery.execute(ExpositionsQuery, variables, :expositions)
     }
   end
 
