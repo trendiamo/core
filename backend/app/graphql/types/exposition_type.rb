@@ -10,4 +10,5 @@ Types::ExpositionType = GraphQL::ObjectType.define do
   field :ctaText, types.String do
     resolve ->(obj, _args, _ctx) { obj.cta_text }
   end
+  field :status, Types::ExpositionStatusType
 end

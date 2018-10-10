@@ -18,6 +18,7 @@ ExpositionQuery = <<-'GRAPHQL'
       instagramPosts {
         url
       }
+      status
     }
   }
 GRAPHQL
@@ -42,6 +43,7 @@ ExpositionsQuery = <<-'GRAPHQL'
       instagramPosts {
         url
       }
+      status
     }
   }
 GRAPHQL
@@ -73,25 +75,27 @@ VideoQuery = <<-'GRAPHQL'
 GRAPHQL
 
 CreateExpositionMutation = <<-'GRAPHQL'
-  mutation($domain: String!, $ctaUrl: String!, $ctaText: String!, $description: String) {
-    createExposition(data: {domain: $domain, ctaUrl: $ctaUrl, ctaText: $ctaText, description: $description}) {
+  mutation($domain: String!, $ctaUrl: String!, $ctaText: String!, $description: String, $status: Status) {
+    createExposition(data: {domain: $domain, ctaUrl: $ctaUrl, ctaText: $ctaText, description: $description, status: $status}) {
       id
       ctaUrl
       ctaText
       domain
       description
+      status
     }
   }
 GRAPHQL
 
 UpdateExpositionMutation = <<-'GRAPHQL'
-    mutation($domain: String, $ctaUrl: String, $ctaText: String, $description: String, $id: ID) {
-      updateExposition(data: {ctaUrl: $ctaUrl, domain: $domain, ctaText: $ctaText, description: $description}, where: {domain: $domain, id: $id}) {
+    mutation($domain: String, $ctaUrl: String, $ctaText: String, $description: String, $id: ID, $status: Status) {
+      updateExposition(data: {ctaUrl: $ctaUrl, domain: $domain, ctaText: $ctaText, description: $description, status: $status}, where: {domain: $domain, id: $id}) {
         id
         ctaUrl
         ctaText
         domain
         description
+        status
     	}
     }
 GRAPHQL

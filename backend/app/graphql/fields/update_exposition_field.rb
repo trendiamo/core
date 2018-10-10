@@ -7,7 +7,7 @@ Fields::UpdateExpositionField = GraphQL::Field.define do
     authorize(:nil)
     id = ctx[:variables][:where][:id]
     variables = { id: id, domain: current_user.exposition_hostname, description: args[:data][:description],
-                  ctaUrl: args[:data][:ctaUrl], ctaText: args[:data][:ctaText], }
+                  ctaUrl: args[:data][:ctaUrl], ctaText: args[:data][:ctaText], status: args[:data][:status], }
     ExecuteQuery.execute(UpdateExpositionMutation, variables, :update_exposition)
   }
 end
