@@ -40,6 +40,7 @@
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": 0,
     "react/jsx-curly-brace-presence": ["off", "always"],
+    "react/jsx-max-depth": ["off", { "max": 5 }],
     "react/jsx-handler-names": 0,
     "react/jsx-no-bind": 0,
     "react/jsx-sort-props": ["error", {

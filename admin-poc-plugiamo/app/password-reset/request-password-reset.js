@@ -57,34 +57,24 @@ const CustomPasswordResetJSX = ({
         <Avatar className={classes.avatar}>
           <LockIcon />
         </Avatar>
-          <Typography variant="headline">{'Reset Password'}</Typography>
-          <form className={classes.form} onSubmit={passwordChangeSubmit}>
-          <FormControl margin="normal" required fullWidth>
+        <Typography variant="headline">{'Reset Password'}</Typography>
+        <form className={classes.form} onSubmit={passwordChangeSubmit}>
+          <FormControl fullWidth margin="normal" required>
             <InputLabel htmlFor="password">{'Email'}</InputLabel>
             <Input
+              id="email"
               name="email"
-              type="email"
               onChange={setPasswordFormValue}
               required
-              id="email"
+              type="email"
               value={passwordForm.email}
             />
           </FormControl>
-          <Button
-            type="submit"
-            fullWidth
-            variant="raised"
-            color="primary"
-            className={classes.submit}
-            >{'Send Reset Instructions'}
+          <Button className={classes.submit} color="primary" fullWidth type="submit" variant="raised">
+            {'Send Reset Instructions'}
           </Button>
-          <Button
-            fullWidth
-            variant="raised"
-            color="secondary"
-            onClick={onBackToLogin}
-            className={classes.submit}
-            >{'Back to Login'}
+          <Button className={classes.submit} color="secondary" fullWidth onClick={onBackToLogin} variant="raised">
+            {'Back to Login'}
           </Button>
         </form>
       </Paper>

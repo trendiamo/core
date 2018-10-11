@@ -51,8 +51,8 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
         <Avatar className={classes.avatar}>
           <LockIcon />
         </Avatar>
-          <Typography variant="headline">{'Sign in'}</Typography>
-          <form className={classes.form} onSubmit={loginSubmit}>
+        <Typography variant="headline">{'Sign in'}</Typography>
+        <form className={classes.form} onSubmit={loginSubmit}>
           <FormControl fullWidth margin="normal" required>
             <InputLabel htmlFor="email">{'Email Address'}</InputLabel>
             <Input
@@ -61,35 +61,34 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
               id="email"
               name="email"
               onChange={setLoginValue}
-              value={loginForm.email}/>
+              value={loginForm.email}
+            />
           </FormControl>
-          <FormControl margin="normal" required fullWidth>
+          <FormControl fullWidth margin="normal" required>
             <InputLabel htmlFor="password">{'Password'}</InputLabel>
             <Input
+              autoComplete="current-password"
+              id="password"
               name="password"
-              type="password"
               onChange={setLoginValue}
               required
-              id="password"
-              autoComplete="current-password"
+              type="password"
               value={loginForm.password}
             />
           </FormControl>
+          <Button className={classes.submit} color="primary" fullWidth type="submit" variant="raised">
+            {'Sign in'}
+          </Button>
           <Button
-            type="submit"
-            fullWidth
-            variant="raised"
-            color="primary"
             className={classes.submit}
-            >{'Sign in'}</Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="raised"
             color="secondary"
-            className={classes.submit}
+            fullWidth
             onClick={onForgotPassword}
-          >{'Forgot Password'}</Button>
+            type="submit"
+            variant="raised"
+          >
+            {'Forgot Password'}
+          </Button>
         </form>
       </Paper>
     </main>
@@ -102,7 +101,9 @@ const CustomLogin = compose(
   withHandlers({
     loginSubmit: ({ loginForm, setErrors }) => async event => {
       event.preventDefault()
-      await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } })
+      await apiSignIn({
+        user: { email: loginForm.email, password: loginForm.password },
+      })
       localStorage.authToken && localStorage.authEmail ? (location.href = '/') : setErrors('there has been an error')
     },
     onForgotPassword: () => event => {
