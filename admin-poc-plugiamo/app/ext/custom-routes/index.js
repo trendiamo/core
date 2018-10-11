@@ -4,6 +4,6 @@ import RequestPasswordReset from '../../password-reset/request-password-reset.js
 import { Route } from 'react-router-dom'
 
 export default [
-  <Route component={RequestPasswordReset} key="passwordReset" exact path="/request_password_reset" />,
-  <Route component={PasswordReset} key="passwordReset" exact path="/password_reset" />,
+  <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path="/request_password_reset" />,
+  <Route component={PasswordReset} exact key="passwordReset" noLayout path="/password_reset" />,
 ]
