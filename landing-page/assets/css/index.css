@@ -1,0 +1,14 @@
+@import 'tingle.js/dist/tingle.min.css';
+
+@import '_reset';
+@import '_box-sizing';
+@import '_font-smoothing';
+@import '_hs-form';
+@import '_tingle';
+
+@import 'base';
+@import 'sections';
+
+.tingle-modal-box {
+  text-align: left;
+}
