@@ -76,7 +76,7 @@ CustomAppBarJSX.defaultProps = {
 const CustomAppBar = compose(
   connect(
     state => ({
-      locale: state.i18n.locale, // force redraw on locale change
+      locale: state.i18n.locale,
     }),
     {
       toggleSidebar: toggleSidebarAction,

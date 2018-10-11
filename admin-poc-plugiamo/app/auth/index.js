@@ -1,4 +1,3 @@
-import { apiSignOut } from './utils'
 import queryString from 'query-string'
 import { AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin'
 
