@@ -45,7 +45,7 @@ const styles = theme => ({
   },
 })
 
-const CustomPasswordResetJSX = ({ passwordForm, passwordResetSubmit, setFieldValue, classes, location }) => (
+const CustomPasswordResetJSX = ({ errors, passwordForm, passwordResetSubmit, setFieldValue, classes, location }) => (
   <Authenticated authParams={{ foo: 'bar' }} location={location}>
     <React.Fragment>
       <CssBaseline />
@@ -56,6 +56,11 @@ const CustomPasswordResetJSX = ({ passwordForm, passwordResetSubmit, setFieldVal
           </Avatar>
           <Typography variant="headline">{'Reset Password'}</Typography>
           <form className={classes.form} onSubmit={passwordResetSubmit}>
+            {errors && (
+              <Typography align="center" color="error" variant="body2">
+                <li>{errors}</li>
+              </Typography>
+            )}
             <FormControl fullWidth margin="normal" required>
               <InputLabel htmlFor="email">{'New Password'}</InputLabel>
               <Input
@@ -97,18 +102,20 @@ const CustomPasswordReset = compose(
   }),
   withState('errors', 'setErrors', null),
   withHandlers({
-    passwordResetSubmit: ({ passwordForm }) => async event => {
+    passwordResetSubmit: ({ passwordForm, setErrors }) => async event => {
       event.preventDefault()
       if (passwordForm.fieldOne === passwordForm.fieldTwo) {
-        await apiPasswordReset({
-          user: {
-            password: passwordForm.fieldTwo,
-            reset_password_token: queryString.parse(location.hash.split('?')[1])['reset_password_token'],
+        await apiPasswordReset(
+          {
+            user: {
+              password: passwordForm.fieldTwo,
+              reset_password_token: queryString.parse(location.hash.split('?')[1])['reset_password_token'],
+            },
           },
-        })
-        location.href = '#/Exposition'
+          setErrors
+        )
       } else {
-        console.log('passwords dont match')
+        setErrors("Passwords don't match")
       }
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
