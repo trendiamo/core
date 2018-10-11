@@ -10,7 +10,7 @@ module.exports = {
   reshape: htmlStandards({
     locals: (ctx) => ({
       pageId: pageId(ctx),
-      description: 'Trendiamo: A tool to create and integrate your salesforce on your website.'
+      description: 'Trendiamo: A tool to create and integrate your sales force on your website.'
     }),
     minify: env === 'production'
   }),
