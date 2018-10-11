@@ -48,6 +48,7 @@ const CustomPasswordResetJSX = ({
   passwordChangeSubmit,
   setPasswordFormValue,
   classes,
+  notification,
   onBackToLogin,
 }) => (
   <React.Fragment>
@@ -59,6 +60,11 @@ const CustomPasswordResetJSX = ({
         </Avatar>
         <Typography variant="headline">{'Reset Password'}</Typography>
         <form className={classes.form} onSubmit={passwordChangeSubmit}>
+          {notification && (
+            <Typography align="center" color="secondary" variant="body2">
+              {notification}
+            </Typography>
+          )}
           <FormControl fullWidth margin="normal" required>
             <InputLabel htmlFor="password">{'Email'}</InputLabel>
             <Input
@@ -85,17 +91,17 @@ const CustomPasswordResetJSX = ({
 const CustomPasswordReset = compose(
   withState('passwordForm', 'setPasswordForm', { email: '' }),
   withState('submitted', 'setSubmitted', false),
-  withState('errors', 'setErrors', null),
+  withState('notification', 'setNotification', null),
   withHandlers({
     onBackToLogin: () => event => {
       event.preventDefault()
       location.href = '#/login'
     },
-    passwordChangeSubmit: ({ passwordForm, setSubmitted, submitted, errors }) => async event => {
+    passwordChangeSubmit: ({ passwordForm, setNotification, setSubmitted, submitted, errors }) => async event => {
       event.preventDefault()
       errors ? submitted : setSubmitted(true)
       await apiPasswordEmailLink({ user: { email: passwordForm.email } })
-      alert('Email sent')
+      setNotification('Email sent!')
     },
     setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>
       setPasswordForm({ ...passwordForm, [event.target.name]: event.target.value }),
