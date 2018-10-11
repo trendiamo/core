@@ -43,7 +43,7 @@ const styles = theme => ({
   },
 })
 
-const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForgotPassword }) => (
+const CustomLoginJSX = ({ errors, loginForm, loginSubmit, setLoginValue, classes, onForgotPassword }) => (
   <React.Fragment>
     <CssBaseline />
     <main className={classes.layout}>
@@ -53,6 +53,11 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
         </Avatar>
         <Typography variant="headline">{'Log in'}</Typography>
         <form className={classes.form} onSubmit={loginSubmit}>
+          {errors && (
+            <Typography align="center" color="error" variant="body2">
+              <li>{errors}</li>
+            </Typography>
+          )}
           <FormControl fullWidth margin="normal" required>
             <InputLabel htmlFor="email">{'Email Address'}</InputLabel>
             <Input
@@ -101,10 +106,10 @@ const CustomLogin = compose(
   withHandlers({
     loginSubmit: ({ loginForm, setErrors }) => async event => {
       event.preventDefault()
-      await apiSignIn({
-        user: { email: loginForm.email, password: loginForm.password },
-      })
-      localStorage.authToken && localStorage.authEmail ? (location.href = '/') : setErrors('there has been an error')
+      await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } }, setErrors)
+      if (localStorage.authToken && localStorage.authEmail) {
+        location.href = '/'
+      }
     },
     onForgotPassword: () => event => {
       event.preventDefault()

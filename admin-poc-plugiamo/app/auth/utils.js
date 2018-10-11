@@ -40,20 +40,38 @@ const apiRequestSignout = async url => {
   return res.json()
 }
 
-export const apiPasswordResetSaga = async (url, body) => {
+export const apiPasswordResetSaga = async (url, body, setErrors) => {
   const json = await apiPasswordRequest(url, body)
   if (json.error || json.errors) {
-    console.log(json.error)
+    setErrors(errorMessages(json))
   } else {
     localStorage.setItem('authToken', json.authenticationToken)
     localStorage.setItem('authEmail', json.user.email)
+    location.href = '/#'
   }
 }
 
-export const apiSaga = async (url, body) => {
+const errorMessages = json => {
+  if (json.error) {
+    return 'Invalid Credentials'
+  } else {
+    return errorMessagesContent(json, 'Can not create account')
+  }
+}
+
+const errorMessagesContent = (json, defaultMessage) => {
+  if (typeof json.errors === 'object') {
+    const listItems = json.errors.map(error => `${error}`)
+    return `${listItems.join('')}`
+  } else {
+    return `${defaultMessage}`
+  }
+}
+
+export const apiSaga = async (url, body, setErrors) => {
   const json = await apiRequest(url, body)
   if (json.error || json.errors) {
-    console.log(json.error)
+    setErrors(errorMessages(json))
   } else {
     localStorage.setItem('authToken', json.authenticationToken)
     localStorage.setItem('authEmail', json.user.email)
@@ -71,7 +89,7 @@ export const apiSagaSignout = async (url, body) => {
 }
 
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
-export const apiSignIn = body => apiSaga(SIGNIN_URL, body)
+export const apiSignIn = (body, setErrors) => apiSaga(SIGNIN_URL, body, setErrors)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
 export const apiPasswordEmailLink = body => apiRequest(PASSWORD_FORM_URL, body)
-export const apiPasswordReset = body => apiPasswordResetSaga(PASSWORD_RESET_URL, body)
+export const apiPasswordReset = (body, setErrors) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setErrors)
