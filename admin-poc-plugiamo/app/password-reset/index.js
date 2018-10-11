@@ -54,38 +54,34 @@ const CustomPasswordResetJSX = ({ passwordForm, passwordResetSubmit, setFieldVal
           <Avatar className={classes.avatar}>
             <LockIcon />
           </Avatar>
-            <Typography variant="headline">{'Reset Password'}</Typography>
-            <form className={classes.form} onSubmit={passwordResetSubmit}>
+          <Typography variant="headline">{'Reset Password'}</Typography>
+          <form className={classes.form} onSubmit={passwordResetSubmit}>
             <FormControl fullWidth margin="normal" required>
               <InputLabel htmlFor="email">{'New Password'}</InputLabel>
               <Input
                 autoComplete="email"
                 autoFocus
-                type="password"
                 id="email"
                 name="fieldOne"
                 onChange={setFieldValue}
-                value={passwordForm.fieldOne}/>
+                type="password"
+                value={passwordForm.fieldOne}
+              />
             </FormControl>
-            <FormControl margin="normal" required fullWidth>
+            <FormControl fullWidth margin="normal" required>
               <InputLabel htmlFor="password">{'Repeat Password'}</InputLabel>
               <Input
+                autoComplete="current-password"
+                id="password"
                 name="fieldTwo"
-                type="password"
                 onChange={setFieldValue}
                 required
-                id="password"
-                autoComplete="current-password"
+                type="password"
                 value={passwordForm.fieldTwo}
               />
             </FormControl>
-            <Button
-              type="submit"
-              fullWidth
-              variant="raised"
-              color="primary"
-              className={classes.submit}
-              >{'Reset'}
+            <Button className={classes.submit} color="primary" fullWidth type="submit" variant="raised">
+              {'Reset'}
             </Button>
           </form>
         </Paper>
