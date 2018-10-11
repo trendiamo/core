@@ -51,7 +51,7 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
         <Avatar className={classes.avatar}>
           <LockIcon />
         </Avatar>
-        <Typography variant="headline">{'Sign in'}</Typography>
+        <Typography variant="headline">{'Log in'}</Typography>
         <form className={classes.form} onSubmit={loginSubmit}>
           <FormControl fullWidth margin="normal" required>
             <InputLabel htmlFor="email">{'Email Address'}</InputLabel>
@@ -77,7 +77,7 @@ const CustomLoginJSX = ({ loginForm, loginSubmit, setLoginValue, classes, onForg
             />
           </FormControl>
           <Button className={classes.submit} color="primary" fullWidth type="submit" variant="raised">
-            {'Sign in'}
+            {'Log in'}
           </Button>
           <Button
             className={classes.submit}
