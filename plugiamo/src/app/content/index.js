@@ -5,7 +5,7 @@ import { Router } from 'ext/simple-router'
 import routes from '../routes'
 import styled from 'styled-components'
 import transition from './transition'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { ContentChat, CoverChat } from './chat'
 import { ContentRoot, CoverRoot } from './root'
 import { ContentSpotlight, CoverSpotlight } from './spotlight'
@@ -86,6 +86,11 @@ const Content = ({ isTransitioning, onRouteChange, onToggleContent, routeToRoot,
 )
 
 export default compose(
+  lifecycle({
+    componentWillUnmount() {
+      history.removeEventListeners()
+    },
+  }),
   withState('isTransitioning', 'setIsTransitioning', false),
   withHandlers({
     onRouteChange: ({ setIsTransitioning }) => (previousRoute, route) => {

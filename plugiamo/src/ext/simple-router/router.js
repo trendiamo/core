@@ -1,7 +1,7 @@
 // Taken from react-router, simplified, and added a wait for onChange
 
 import { cloneElement } from 'preact'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 
 const Router = ({ Component }) => Component
 
@@ -86,37 +86,38 @@ export default compose(
       setComponent(newComponent)
     },
   }),
-  lifecycle({
-    componentDidMount() {
-      const { executeRouteTo, history, setPreviousRoute } = this.props
-      setPreviousRoute(history.location)
+  withProps(({ Component, children, executeRouteTo, onChange, previousRoute, setComponent }) => ({
+    routeTo: route => {
+      if (route === previousRoute) return
+      const matchingChildren = getMatchingChildren(children, route)
+      const newComponent = matchingChildren ? matchingChildren[0] : null
 
-      const routeTo = route => {
-        const { Component, children, onChange, previousRoute, setComponent } = this.props
-        if (route === previousRoute) return
-        const matchingChildren = getMatchingChildren(children, route)
-        const newComponent = matchingChildren ? matchingChildren[0] : null
-
-        if (onChange) {
-          const result = onChange(previousRoute, route)
-          if (result === false) return
-          if (result && result.then) {
-            if (Component) {
-              setComponent(cloneElement(Component, { isLeaving: true }))
-            }
-            result.then(() => {
-              executeRouteTo(route, newComponent)
-            })
-          } else {
-            executeRouteTo(route, newComponent)
+      if (onChange) {
+        const result = onChange(previousRoute, route)
+        if (result === false) return
+        if (result && result.then) {
+          if (Component) {
+            setComponent(cloneElement(Component, { isLeaving: true }))
           }
+          result.then(() => {
+            executeRouteTo(route, newComponent)
+          })
         } else {
           executeRouteTo(route, newComponent)
         }
+      } else {
+        executeRouteTo(route, newComponent)
       }
-
+    },
+  })),
+  lifecycle({
+    componentDidMount() {
+      const { history, routeTo, setPreviousRoute } = this.props
+      setPreviousRoute(history.location)
       routeTo(history.location)
-      history.listen(routeTo)
+      // we don't remove this in componentWillUnmount because preact doesn't fire it inside iframes
+      // instead we do history.addEventListeners in the componentWillUnmount of Content
+      history.addEventListener(routeTo)
     },
   })
 )(Router)
