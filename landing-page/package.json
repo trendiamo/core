@@ -36,6 +36,6 @@
     "start": "spike watch",
     "build": "spike compile",
     "prod": "NODE_ENV=production spike compile -e production",
-    "deploy": "rm -rf public/* && yarn lint && yarn prod && scp -r public/* root@139.59.128.112:/var/www/html"
+    "deploy": "rm -rf public/* && yarn lint && yarn prod && rsync -azh -e ssh --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/html"
   }
 }
