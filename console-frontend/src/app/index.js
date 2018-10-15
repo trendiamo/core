@@ -1,9 +1,9 @@
 import authProvider from "./auth";
 import buildOpenCrudProvider from "ra-data-opencrud";
 import customLayout from "./layout";
-import customLoginPage from "./login";
-import customLogoutButton from "./logout";
-import customRoutes from "./ext/custom-routes";
+import customLoginPage from "./screens/login";
+import customLogoutButton from "./screens/logout";
+import customRoutes from "./ext/custom-routes.js";
 import { HttpLink } from "apollo-link-http";
 import React from "react";
 import { setContext } from "apollo-link-context";
@@ -14,7 +14,7 @@ import {
   ExpositionsEdit,
   ExpositionShow,
   ExpositionsList
-} from "./expositions";
+} from "./resources/expositions";
 
 const App = ({ dataProvider }) => (
   <div>
