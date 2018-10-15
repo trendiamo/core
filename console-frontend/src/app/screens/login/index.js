@@ -1,4 +1,4 @@
-import { apiPasswordEmailLink } from "../auth/utils";
+import { apiSignIn } from "../../auth/utils";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -44,13 +44,13 @@ const styles = theme => ({
   }
 });
 
-const CustomPasswordResetJSX = ({
-  passwordForm,
-  passwordChangeSubmit,
-  setPasswordFormValue,
+const CustomLoginJSX = ({
+  errors,
+  loginForm,
+  loginSubmit,
+  setLoginValue,
   classes,
-  notification,
-  onBackToLogin
+  onForgotPassword
 }) => (
   <React.Fragment>
     <CssBaseline />
@@ -59,22 +59,34 @@ const CustomPasswordResetJSX = ({
         <Avatar className={classes.avatar}>
           <LockIcon />
         </Avatar>
-        <Typography variant="headline">{"Reset Password"}</Typography>
-        <form className={classes.form} onSubmit={passwordChangeSubmit}>
-          {notification && (
-            <Typography align="center" color="secondary" variant="body2">
-              {notification}
+        <Typography variant="headline">{"Log in"}</Typography>
+        <form className={classes.form} onSubmit={loginSubmit}>
+          {errors && (
+            <Typography align="center" color="error" variant="body2">
+              <li>{errors}</li>
             </Typography>
           )}
           <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="password">{"Email"}</InputLabel>
+            <InputLabel htmlFor="email">{"Email Address"}</InputLabel>
             <Input
+              autoComplete="email"
+              autoFocus
               id="email"
               name="email"
-              onChange={setPasswordFormValue}
+              onChange={setLoginValue}
+              value={loginForm.email}
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal" required>
+            <InputLabel htmlFor="password">{"Password"}</InputLabel>
+            <Input
+              autoComplete="current-password"
+              id="password"
+              name="password"
+              onChange={setLoginValue}
               required
-              type="email"
-              value={passwordForm.email}
+              type="password"
+              value={loginForm.password}
             />
           </FormControl>
           <Button
@@ -84,16 +96,17 @@ const CustomPasswordResetJSX = ({
             type="submit"
             variant="raised"
           >
-            {"Send Reset Instructions"}
+            {"Log in"}
           </Button>
           <Button
             className={classes.submit}
             color="secondary"
             fullWidth
-            onClick={onBackToLogin}
+            onClick={onForgotPassword}
+            type="submit"
             variant="raised"
           >
-            {"Back to Login"}
+            {"Forgot Password"}
           </Button>
         </form>
       </Paper>
@@ -101,28 +114,27 @@ const CustomPasswordResetJSX = ({
   </React.Fragment>
 );
 
-const CustomPasswordReset = compose(
-  withState("passwordForm", "setPasswordForm", { email: "" }),
-  withState("notification", "setNotification", null),
+const CustomLogin = compose(
+  withState("loginForm", "setLoginForm", { email: "", password: "" }),
+  withState("errors", "setErrors", null),
   withHandlers({
-    onBackToLogin: () => event => {
+    loginSubmit: ({ loginForm, setErrors }) => async event => {
       event.preventDefault();
-      window.location.href = "#/login";
+      await apiSignIn(
+        { user: { email: loginForm.email, password: loginForm.password } },
+        setErrors
+      );
+      if (localStorage.authToken && localStorage.authEmail) {
+        window.location.href = "/";
+      }
     },
-    passwordChangeSubmit: ({
-      passwordForm,
-      setNotification
-    }) => async event => {
+    onForgotPassword: () => event => {
       event.preventDefault();
-      await apiPasswordEmailLink({ user: { email: passwordForm.email } });
-      setNotification("Email sent!");
+      window.location.href = "#/request_password_reset";
     },
-    setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>
-      setPasswordForm({
-        ...passwordForm,
-        [event.target.name]: event.target.value
-      })
+    setLoginValue: ({ loginForm, setLoginForm }) => event =>
+      setLoginForm({ ...loginForm, [event.target.name]: event.target.value })
   })
-)(CustomPasswordResetJSX);
+)(CustomLoginJSX);
 
-export default withStyles(styles)(CustomPasswordReset);
+export default withStyles(styles)(CustomLogin);

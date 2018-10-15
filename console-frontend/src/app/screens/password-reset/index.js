@@ -1,4 +1,4 @@
-import { apiPasswordReset } from "../auth/utils";
+import { apiPasswordReset } from "../../auth/utils";
 import { Authenticated } from "react-admin";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
