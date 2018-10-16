@@ -31,6 +31,9 @@ const styles = theme => ({
       width: 400,
     },
   },
+  notification: {
+    color: '#00AE5F',
+  },
   paper: {
     alignItems: 'center',
     display: 'flex',
@@ -61,7 +64,7 @@ const CustomPasswordResetJSX = ({
         <Typography variant="headline">{'Reset Password'}</Typography>
         <form className={classes.form} onSubmit={passwordChangeSubmit}>
           {notification && (
-            <Typography align="center" color="secondary" variant="body2">
+            <Typography align="center" className={classes.notification} variant="body2">
               {notification}
             </Typography>
           )}
