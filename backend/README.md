@@ -29,18 +29,8 @@ bin/rubocop
 
 ## Deploy
 
-Staging:
-
 ```sh
-git subtree push --prefix backend staging master
-# git push staging `git subtree split --prefix backend master`:master --force # forced deploy (shouldn't be needed)
-```
-
-Production:
-
-```sh
-git subtree push --prefix backend production master
-# git push production `git subtree split --prefix backend master`:master --force # forced deploy (shouldn't be needed)
+bin/rails deploy
 ```
 
 ## Interact with APIs
