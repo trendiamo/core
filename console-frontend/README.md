@@ -13,7 +13,7 @@ yarn
 ## Run locally
 
 ```sh
-yarn run
+REACT_APP_API_ENDPOINT={backend_hostname} yarn run
 ```
 
 ## Deploy
