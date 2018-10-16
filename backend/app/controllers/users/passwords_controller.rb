@@ -1,6 +1,5 @@
 module Users
   class PasswordsController < Devise::PasswordsController
-
     # POST /resource/password
     # create the email link
     def create
@@ -23,7 +22,7 @@ module Users
       set_minimum_password_length
       resource.reset_password_token = params[:reset_password_token]
       query = "?reset_password_token="
-      password_form_url = "http://#{ENV['CORS_ORIGIN']}/#/password_reset#{query}#{params[:reset_password_token]}"
+      password_form_url = "http://#{ENV['CORS_ORIGIN']}/password_reset#{query}#{params[:reset_password_token]}"
       redirect_to password_form_url
     end
 

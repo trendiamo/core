@@ -15,7 +15,7 @@ export default compose(
     onLogoutButtonClick: () => async event => {
       event.preventDefault()
       await apiSignOut()
-      window.location.href = '#/login'
+      window.location.href = '/login'
     },
   })
 )(CustomLogoutButton)
