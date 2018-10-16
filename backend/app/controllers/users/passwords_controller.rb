@@ -21,8 +21,8 @@ module Users
       # self.resource = resource_class.with_reset_password_token(params[:reset_password_token])
       set_minimum_password_length
       resource.reset_password_token = params[:reset_password_token]
-      query = "?reset_password_token="
-      password_form_url = "http://#{ENV['CORS_ORIGIN']}/password_reset#{query}#{params[:reset_password_token]}"
+      query = "?reset_password_token=#{params[:reset_password_token]}"
+      password_form_url = "http#{Rails.env.production? ? 's' : nil}://#{ENV['CORS_ORIGIN']}/password_reset#{query}"
       redirect_to password_form_url
     end
 
