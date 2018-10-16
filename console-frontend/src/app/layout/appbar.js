@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import MuiAppBar from '@material-ui/core/AppBar'
+import React from 'react'
 import styled from 'styled-components'
 import { toggleSidebar } from 'ra-core'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import { UserMenu } from 'react-admin'
+import UserMenu from './usermenu'
 import withWidth from '@material-ui/core/withWidth'
-import React, { cloneElement } from 'react'
 
 const StyledIconButton = styled(IconButton)`
   margin-left: 0.5em;
@@ -32,7 +32,7 @@ const StyledToolbar = styled(Toolbar)`
   padding-right: 24px;
 `
 
-const CustomAppBarJSX = ({ className, logout, open, userMenu, toggleSidebar, width, ...rest }) => (
+const CustomAppBarJSX = ({ className, open, toggleSidebar, width, ...rest }) => (
   <MuiAppBar className={className} color="secondary" position="static" {...rest}>
     <StyledToolbar disableGutters variant={width === 'xs' ? 'regular' : 'dense'}>
       <StyledIconButton aria-label="open drawer" color="inherit" onClick={toggleSidebar}>
@@ -44,14 +44,10 @@ const CustomAppBarJSX = ({ className, logout, open, userMenu, toggleSidebar, wid
       <Typography color="inherit" noWrap variant="subheading">{`logged in as: ${localStorage.getItem(
         'authEmail'
       )}`}</Typography>
-      {cloneElement(userMenu, { logout })}
-    </StyledToolbar>
+      <UserMenu />
+    </StyledToolbar>{' '}
   </MuiAppBar>
 )
-
-CustomAppBarJSX.defaultProps = {
-  userMenu: <UserMenu />,
-}
 
 const CustomAppBar = compose(
   connect(

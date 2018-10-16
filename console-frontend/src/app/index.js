@@ -3,7 +3,6 @@ import buildOpenCrudProvider from 'ra-data-opencrud'
 import { create } from 'jss'
 import CustomLayout from './layout'
 import customLoginPage from './screens/login'
-import customLogoutButton from './screens/logout'
 import customRoutes from './ext/custom-routes.js'
 import JssProvider from 'react-jss/lib/JssProvider'
 import React from 'react'
@@ -27,7 +26,6 @@ const App = ({ dataProvider, history }) => (
       dataProvider={dataProvider.dataProvider}
       history={history}
       loginPage={customLoginPage}
-      logoutButton={customLogoutButton}
     >
       <Resource
         create={ExpositionsCreate}
