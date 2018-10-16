@@ -94,7 +94,6 @@ export default compose(
   withState('isTransitioning', 'setIsTransitioning', false),
   withHandlers({
     onRouteChange: ({ setIsTransitioning }) => (previousRoute, route) => {
-      if (!previousRoute) return
       const exitDuration = 300
       if (previousRoute === '/' && routes.isSpotlight(route)) {
         setIsTransitioning(true)
@@ -104,7 +103,7 @@ export default compose(
           transition.clear()
         }, exitDuration + transition.duration)
       }
-      return new Promise(resolve => setTimeout(resolve, exitDuration)) // delay new page so we can see the exit animation
+      return new Promise(resolve => setTimeout(resolve, exitDuration)) // delay new page so the exit animation is seen
     },
     routeToRoot: () => () => history.replace(routes.root()),
     routeToSpotlight: () => spotlight => history.replace(routes.spotlight(spotlight.id)),

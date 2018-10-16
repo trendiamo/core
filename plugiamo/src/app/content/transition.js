@@ -19,6 +19,8 @@ const transition = {
   ghostElement: null,
   isLiftingElements: false,
   landElement(key, landingElement) {
+    if (!this.elements[key]) return
+
     landingElement.style.visibility = 'hidden'
     this.elements[key].landingElement = landingElement
 
@@ -56,7 +58,10 @@ const transition = {
       liftedElement.style.transitionTimingFunction = 'ease-out'
       this.ghostElement.appendChild(liftedElement)
       this.elements[k].liftedElement = liftedElement
-      element.style.visibility = 'hidden'
+      setTimeout(() => {
+        // doing it directly, or even using requestAnimationFrame results in a flickering element, so we use setTimeout
+        element.style.visibility = 'hidden'
+      }, 20)
     })
   },
   setGhostRef(ref) {
