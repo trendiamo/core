@@ -26,4 +26,16 @@ class NilPolicy < ApplicationPolicy
   def delete_exposition?
     user
   end
+
+  def website?
+    user
+  end
+
+  def websites?
+    user
+  end
+
+  def websites_connection?
+    user
+  end
 end
