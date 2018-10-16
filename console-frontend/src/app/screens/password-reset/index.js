@@ -104,12 +104,13 @@ const CustomPasswordReset = compose(
   withHandlers({
     passwordResetSubmit: ({ passwordForm, setErrors }) => async event => {
       event.preventDefault()
+      const parsedUrl = queryString.parse(window.location.search)
       if (passwordForm.fieldOne === passwordForm.fieldTwo) {
         await apiPasswordReset(
           {
             user: {
               password: passwordForm.fieldTwo,
-              reset_password_token: queryString.parse(window.location.hash.split('?')[1])['reset_password_token'],
+              reset_password_token: parsedUrl.reset_password_token,
             },
           },
           setErrors

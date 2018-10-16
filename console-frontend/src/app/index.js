@@ -1,5 +1,6 @@
 import authProvider from './auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
+import createHistory from 'history/createBrowserHistory'
 import customLayout from './layout'
 import customLoginPage from './screens/login'
 import customLogoutButton from './screens/logout'
@@ -11,6 +12,8 @@ import { Admin, Resource } from 'react-admin'
 import { compose, lifecycle, withState } from 'recompose'
 import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from './resources/expositions'
 
+const customHistory = createHistory()
+
 const App = ({ dataProvider }) => (
   <div>
     {!dataProvider && <div>{'Loading'}</div>}
@@ -20,6 +23,7 @@ const App = ({ dataProvider }) => (
         authProvider={authProvider}
         customRoutes={customRoutes}
         dataProvider={dataProvider.dataProvider}
+        history={customHistory}
         loginPage={customLoginPage}
         logoutButton={customLogoutButton}
       >

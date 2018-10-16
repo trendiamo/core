@@ -94,7 +94,7 @@ const CustomPasswordReset = compose(
   withHandlers({
     onBackToLogin: () => event => {
       event.preventDefault()
-      window.location.href = '#/login'
+      window.location.href = '/login'
     },
     passwordChangeSubmit: ({ passwordForm, setNotification }) => async event => {
       event.preventDefault()

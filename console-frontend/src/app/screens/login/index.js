@@ -113,7 +113,7 @@ const CustomLogin = compose(
     },
     onForgotPassword: () => event => {
       event.preventDefault()
-      window.location.href = '#/request_password_reset'
+      window.location.href = '/request_password_reset'
     },
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),
