@@ -4,4 +4,6 @@ class User < ApplicationRecord
 
   has_many :authentication_tokens, class_name: "AuthToken", dependent: :destroy
   has_one :brand
+
+  validates :website_ref, uniqueness: true
 end
