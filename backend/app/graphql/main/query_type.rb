@@ -19,12 +19,14 @@ Main::QueryType = GraphQL::ObjectType.define do
     }
   end
 
-  field :videos, Fields::VideosField
-  field :video, Fields::VideoField
-  connection :videosConnection, Connections::VideosConnection do
+  field :websites, Fields::WebsitesField
+  field :website, Fields::WebsiteField
+  connection :websitesConnection, Connections::WebsitesConnection do
     resolve ->(_obj, _args, _ctx) {
-      result = GraphCMS::Client.query(VideosQuery)
-      result.data.videos
+      use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
+      authorize(:nil)
+      variables = { ids: [current_user.website_ref] }
+      ExecuteQuery.execute(WebsitesQuery, variables, :websites)
     }
   end
 end

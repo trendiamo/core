@@ -1,3 +1,99 @@
+WebsiteQuery = <<-'GRAPHQL'
+  query($id: ID) {
+    website(where: {id: $id}) {
+      id
+      title
+      status
+      name
+      subtitle
+      chats {
+        id
+        path
+        influencer {
+          name
+          description
+          profilePic {
+            url
+          }
+        }
+      }
+      spotlights {
+        id
+        influencer {
+          name
+          description
+          profilePic {
+            url
+          }
+        }
+        productPicks {
+          url
+          name
+          description
+          displayPrice
+          picture {
+            url
+          }
+        }
+      }
+    }
+  }
+GRAPHQL
+
+WebsitesQuery = <<-'GRAPHQL'
+  query($ids: [ID!]) {
+    websites(where: { id_in: $ids }) {
+      id
+      title
+      status
+      subtitle
+      name
+      chats {
+        id
+        path
+        influencer {
+          name
+          description
+          profilePic {
+            url
+          }
+        }
+      }
+      spotlights {
+        id
+        influencer {
+          name
+          description
+          profilePic {
+            url
+          }
+        }
+        productPicks {
+          url
+          name
+          description
+          displayPrice
+          picture {
+            url
+          }
+        }
+      }
+    }
+  }
+GRAPHQL
+
+UpdateWebsiteMutation = <<-'GRAPHQL'
+    mutation($subtitle: String, $title: String, $name: String, $id: ID, $status: Status) {
+      updateWebsite(data: {subtitle: $subtitle, title: $title, name: $name, status: $status}, where: {name: $name, id: $id}) {
+        id
+        title
+        status
+        subtitle
+        name
+    	}
+    }
+GRAPHQL
+
 ExpositionQuery = <<-'GRAPHQL'
   query($domain: String, $id: ID) {
     exposition(where: { domain: $domain, id: $id }) {
