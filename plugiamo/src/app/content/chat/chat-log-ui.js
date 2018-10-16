@@ -23,12 +23,10 @@ const ChatLogUi = compose(
     componentDidMount() {
       const { client, initialChatStep, personName, updateLogs } = this.props
       chatLog.init(client, personName)
+      // we don't remove this listener in componentWillUnmount because preact doesn't fire it inside iframes
+      // instead we do a check for chatLog.timestamp in the chatLog logic, to prevent duplicates
       chatLog.addListener(updateLogs)
       chatLog.fetchStep(initialChatStep.id)
-    },
-    componentWillUnmount() {
-      const { updateLogs } = this.props
-      chatLog.removeListener(updateLogs)
     },
   })
 )(({ logs, onResetChat, onToggleContent }) => (

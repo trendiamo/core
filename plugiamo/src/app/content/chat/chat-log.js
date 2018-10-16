@@ -36,18 +36,19 @@ const chatLog = {
   addListener(fn) {
     this.listeners.push(fn)
   },
-  addLog(log) {
+  addLog(log, timestampParam) {
+    if (timestampParam !== this.timestamp) return // prevent duplicates if user opens & closes repeatedly and fast
     this.logs.push(log)
     this.listeners.forEach(fn => fn(this))
   },
-  addNextLog(logs) {
+  addNextLog(logs, timestampParam) {
     const [nextLog, ...otherLogs] = logs
     nextLog.nextLogs = otherLogs
-    setTimeout(() => this.addLog(nextLog), STEP_DELAY)
+    setTimeout(() => this.addLog(nextLog, timestampParam), STEP_DELAY)
   },
   client: null,
   fetchStep(id) {
-    this.client
+    return this.client
       .request(query, { id })
       .then(data => {
         const messageLogs = data.chatStep.chatMessages.map(message => ({
@@ -58,11 +59,12 @@ const chatLog = {
         const options = data.chatStep.chatOptions.length > 0 ? data.chatStep.chatOptions : finalOptions()
         const optionsLog = { options, type: 'options' }
         const logs = [...messageLogs, optionsLog]
-        this.addNextLog(logs)
+        this.addNextLog(logs, this.timestamp)
       })
       .catch(data => console.error(data))
   },
   init(client, personName) {
+    this.timestamp = Date.now()
     this.listeners = []
     this.logs = []
     this.client = client
@@ -74,6 +76,9 @@ const chatLog = {
   removeListener(fn) {
     this.listeners = this.listeners.filter(e => e !== fn)
   },
+  removeListeners() {
+    this.listeners = []
+  },
   resetLogs() {
     this.logs = []
     this.listeners.forEach(fn => fn(this))
@@ -83,6 +88,7 @@ const chatLog = {
     option.selected = true
     this.listeners.forEach(fn => fn(this))
   },
+  timestamp: null,
 }
 
 export default chatLog

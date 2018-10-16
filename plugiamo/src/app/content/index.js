@@ -1,3 +1,4 @@
+import chatLog from './chat/chat-log'
 import ContentFrame from './content-frame'
 import { h } from 'preact'
 import history from 'ext/history'
@@ -88,7 +89,7 @@ const Content = ({ isTransitioning, onRouteChange, onToggleContent, routeToRoot,
 export default compose(
   lifecycle({
     componentWillUnmount() {
-      history.removeEventListeners()
+      history.removeListeners()
     },
   }),
   withState('isTransitioning', 'setIsTransitioning', false),

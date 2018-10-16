@@ -10,10 +10,11 @@ const ChatMessage = compose(
       requestAnimationFrame(() => {
         this.base.scrollIntoView({ behavior: 'smooth' })
       })
+      const timestamp = chatLog.timestamp
       setTimeout(() => {
         setIsMessageShown(true)
+        chatLog.addNextLog(log.nextLogs, timestamp)
         log.timestamp = Date.now()
-        chatLog.addNextLog(log.nextLogs)
         requestAnimationFrame(() => {
           this.base.scrollIntoView({ behavior: 'smooth' })
         })

@@ -1,13 +1,13 @@
 const history = {
-  addEventListener(callback) {
+  addListener(callback) {
     this.callbacks.push(callback)
   },
   callbacks: [],
   location: '/',
-  removeEventListener(callback) {
+  removeListener(callback) {
     this.callbacks = this.callbacks.filter(e => e !== callback)
   },
-  removeEventListeners() {
+  removeListeners() {
     this.callbacks = []
   },
   replace(url) {

@@ -118,8 +118,8 @@ export default compose(
       const { history, attemptRouteTo } = this.props
       attemptRouteTo(history.location, true)
       // we don't remove this listener in componentWillUnmount because preact doesn't fire it inside iframes
-      // instead we do history.addEventListeners in the componentWillUnmount of Content
-      history.addEventListener(attemptRouteTo)
+      // instead we do history.removeListeners in the componentWillUnmount of Content
+      history.addListener(attemptRouteTo)
     },
   })
 )(Router)
