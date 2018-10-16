@@ -63,7 +63,7 @@ const CustomAppBarJSX = ({ classes, className, logout, open, userMenu, toggleSid
         color="inherit"
         noWrap
         variant="subheading"
-      >{`logged in as: ${localStorage.getItem('authEmail')}`}</Typography>
+      >{`logged on as: ${localStorage.getItem('authEmail')}`}</Typography>
       {cloneElement(userMenu, { logout })}
     </Toolbar>
   </MuiAppBar>
