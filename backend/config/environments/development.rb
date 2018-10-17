@@ -33,7 +33,11 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.action_mailer.delivery_method = :letter_opener
+  if ENV["SPARKPOST_API_KEY"]
+    config.action_mailer.delivery_method = :sparkpost
+  else
+    config.action_mailer.delivery_method = :letter_opener
+  end
   config.action_mailer.perform_deliveries = true
 
   # Print deprecation notices to the Rails logger.

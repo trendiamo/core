@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/dsgh/sparkpost_rails.git
+  revision: 0d3b5699c6a6672363676267a99cc4f1cdd2f5aa
+  branch: custom-api-endpoint
+  specs:
+    sparkpost_rails (1.5.1)
+      rails (>= 4.0, < 5.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -245,6 +253,7 @@ DEPENDENCIES
   rails (~> 5.1.4)
   rubocop
   shopify_api
+  sparkpost_rails!
   spring
   spring-watcher-listen (~> 2.0.0)
   stripe

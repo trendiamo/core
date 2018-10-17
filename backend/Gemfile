@@ -22,9 +22,9 @@ gem "pundit"
 gem "rack-cors"
 gem "rubocop"
 gem "shopify_api"
+gem "sparkpost_rails", github: "dsgh/sparkpost_rails", branch: "custom-api-endpoint" # changed to support the EU endpoint. https://github.com/the-refinery/sparkpost_rails/pull/58
 gem "stripe"
 gem "tiddle"
-# gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
