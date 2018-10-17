@@ -33,7 +33,7 @@ dokku apps:create console-backend
 dokku plugin:install https://github.com/dokku/dokku-postgres.git
 dokku postgres:create console-backend-pg
 dokku postgres:link console-backend-pg console-backend
-dokku config:set console-backend CORS_ORIGIN=console.trendiamo.com
+dokku config:set console-backend CORS_ORIGIN=console.trendiamo.com MAILER_HOST=trendiamo.com SPARKPOST_API_KEY=...
 dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
 # from your local machine, do the first deploy:

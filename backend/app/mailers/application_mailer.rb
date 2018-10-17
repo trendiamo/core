@@ -1,4 +1,3 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "no-reply@trendiamo.com"
-  layout "mailer"
+  default from: "Trendiamo Team <no-reply@trendiamo.com>"
 end
