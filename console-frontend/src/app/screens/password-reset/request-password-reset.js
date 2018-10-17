@@ -1,94 +1,45 @@
 import { apiPasswordEmailLink } from '../../auth/utils'
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import AuthLayout from '../auth-layout'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
-import LockIcon from '@material-ui/icons/LockOutlined'
-import Paper from '@material-ui/core/Paper'
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import withStyles from '@material-ui/core/styles/withStyles'
 import { compose, withHandlers, withState } from 'recompose'
-
-const styles = theme => ({
-  avatar: {
-    backgroundColor: theme.palette.secondary.main,
-    margin: theme.spacing.unit,
-  },
-  form: {
-    marginTop: theme.spacing.unit,
-    width: '100%',
-  },
-  layout: {
-    display: 'block',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      width: 400,
-    },
-  },
-  notification: {
-    color: '#00AE5F',
-  },
-  paper: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: theme.spacing.unit * 8,
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-  },
-  submit: {
-    marginTop: theme.spacing.unit * 3,
-  },
-})
+import { Notification, StyledButton, StyledForm } from '../shared'
 
 const CustomPasswordResetJSX = ({
   passwordForm,
   passwordChangeSubmit,
   setPasswordFormValue,
-  classes,
   notification,
   onBackToLogin,
 }) => (
-  <React.Fragment>
-    <CssBaseline />
-    <main className={classes.layout}>
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockIcon />
-        </Avatar>
-        <Typography variant="headline">{'Reset Password'}</Typography>
-        <form className={classes.form} onSubmit={passwordChangeSubmit}>
-          {notification && (
-            <Typography align="center" className={classes.notification} variant="body2">
-              {notification}
-            </Typography>
-          )}
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="password">{'Email'}</InputLabel>
-            <Input
-              id="email"
-              name="email"
-              onChange={setPasswordFormValue}
-              required
-              type="email"
-              value={passwordForm.email}
-            />
-          </FormControl>
-          <Button className={classes.submit} color="primary" fullWidth type="submit" variant="raised">
-            {'Send Reset Instructions'}
-          </Button>
-          <Button className={classes.submit} color="secondary" fullWidth onClick={onBackToLogin} variant="raised">
-            {'Back to Login'}
-          </Button>
-        </form>
-      </Paper>
-    </main>
-  </React.Fragment>
+  <AuthLayout title="Reset Password">
+    <StyledForm onSubmit={passwordChangeSubmit}>
+      {notification && (
+        <Notification align="center" variant="body2">
+          {notification}
+        </Notification>
+      )}
+      <FormControl fullWidth margin="normal" required>
+        <InputLabel htmlFor="password">{'Email'}</InputLabel>
+        <Input
+          id="email"
+          name="email"
+          onChange={setPasswordFormValue}
+          required
+          type="email"
+          value={passwordForm.email}
+        />
+      </FormControl>
+      <StyledButton color="primary" fullWidth type="submit" variant="raised">
+        {'Send Reset Instructions'}
+      </StyledButton>
+      <StyledButton color="secondary" fullWidth onClick={onBackToLogin} variant="raised">
+        {'Back to Login'}
+      </StyledButton>
+    </StyledForm>
+  </AuthLayout>
 )
 
 const CustomPasswordReset = compose(
@@ -112,4 +63,4 @@ const CustomPasswordReset = compose(
   })
 )(CustomPasswordResetJSX)
 
-export default withStyles(styles)(CustomPasswordReset)
+export default CustomPasswordReset
