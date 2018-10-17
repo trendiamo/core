@@ -16,7 +16,7 @@ import {
 } from 'react-admin'
 
 export const ExpositionShow = props => (
-  <Show {...props} title={`Plugiamo Console: Exposition`}>
+  <Show {...props} title="Exposition">
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="description" />
@@ -29,7 +29,7 @@ export const ExpositionShow = props => (
 )
 
 export const ExpositionsList = ({ ...props }) => (
-  <List {...props} title={`Plugiamo Console: Expositions`}>
+  <List {...props} title="Expositions">
     <Datagrid>
       <TextField source="id" />
       <TextField source="description" />
@@ -44,7 +44,7 @@ export const ExpositionsList = ({ ...props }) => (
 )
 
 export const ExpositionsEdit = ({ ...props }) => (
-  <Edit {...props} title={`Plugiamo Console: Edit Exposition`}>
+  <Edit {...props} title="Edit Exposition">
     <SimpleForm>
       <DisabledInput source="id" />
       <DisabledInput source="domain" />
@@ -65,7 +65,7 @@ export const ExpositionsEdit = ({ ...props }) => (
 )
 
 export const ExpositionsCreate = ({ ...props }) => (
-  <Create {...props} title={`Plugiamo Console: Create Exposition`}>
+  <Create {...props} title="Create Exposition">
     <SimpleForm redirect="show">
       <TextInput source="description" />
       <TextInput source="ctaUrl" />
