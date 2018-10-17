@@ -1,9 +1,11 @@
 import animateOnMount from 'shared/animate-on-mount'
+import { compose } from 'recompose'
 import Frame from 'shared/frame'
 import { h } from 'preact'
 import { IconClose } from 'icons'
 import styled from 'styled-components'
 import { width } from '../../config'
+import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const ContentFrameContainer = animateOnMount(styled.div`
   z-index: 2147483000;
@@ -30,15 +32,20 @@ const ContentFrameContainer = animateOnMount(styled.div`
   }
 `)
 
-const IFrame = styled(Frame)`
+const IFrame = compose(
+  withHotkeys({
+    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
+      if (showingContent) onToggleContent()
+    },
+  })
+)(styled(Frame)`
   border: 0;
-
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-`
+`)
 
 const CloseContent = styled(IconClose)`
   position: absolute;
@@ -55,7 +62,9 @@ const CloseContent = styled(IconClose)`
 
 const ContentFrame = ({ children, onToggleContent }) => (
   <ContentFrameContainer>
-    <IFrame>{children}</IFrame>
+    <IFrame onToggleContent={onToggleContent} showingContent>
+      {children}
+    </IFrame>
     <CloseContent onClick={onToggleContent} />
   </ContentFrameContainer>
 )

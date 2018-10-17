@@ -1,4 +1,3 @@
-import chatLog from './chat/chat-log'
 import ContentFrame from './content-frame'
 import { h } from 'preact'
 import history from 'ext/history'

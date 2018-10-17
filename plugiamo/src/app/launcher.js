@@ -67,17 +67,17 @@ const Container = styled.div`
   left: 0;
 `
 
-const CloseIcon = ({ active, onClick }) => (
-  <CloseIconContainer active={active} onClick={onClick}>
+const CloseIcon = ({ active }) => (
+  <CloseIconContainer active={active} >
     <StyledIconClose />
   </CloseIconContainer>
 )
 
 const Launcher = ({ influencer, onToggleContent, showingContent }) => (
   <TrendiamoLauncherFrame>
-    <Container>
-      <SellerPic active={!showingContent} onClick={onToggleContent} url={influencer.profilePic.url} />
-      <CloseIcon active={showingContent} onClick={onToggleContent} />
+    <Container onClick={onToggleContent} >
+      <SellerPic active={!showingContent} url={influencer.profilePic.url} />
+      <CloseIcon active={showingContent} />
     </Container>
   </TrendiamoLauncherFrame>
 )
