@@ -10,10 +10,17 @@ You can read the [default create-react-app README.md](https://github.com/faceboo
 yarn
 ```
 
-## Run locally
+## Run
 
 ```sh
 REACT_APP_API_ENDPOINT={backend_hostname} yarn run
+```
+
+## Run in prod mode
+
+```sh
+REACT_APP_API_ENDPOINT={backend_hostname} yarn build
+hs -p9000 build
 ```
 
 ## Deploy

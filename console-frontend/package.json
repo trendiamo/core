@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "cd ..; git subtree push --prefix console-frontend dokku-frontend master: cd -"
+    "deploy": "cd ..; git subtree push --prefix console-frontend dokku-frontend master; cd -"
   },
   "eslintConfig": {
     "extends": "react-app"
