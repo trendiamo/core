@@ -14,7 +14,7 @@ const CustomLoginJSX = ({ errors, loginForm, loginSubmit, setLoginValue, onForgo
     <StyledForm onSubmit={loginSubmit}>
       {errors && (
         <Typography align="center" color="error" variant="body2">
-          <div>{errors}</div>
+          {errors}
         </Typography>
       )}
       <FormControl fullWidth margin="normal" required>

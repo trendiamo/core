@@ -6,16 +6,13 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
-import Tooltip from '@material-ui/core/Tooltip'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
 const CustomUserMenuJSX = ({ onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
-  <div>
-    <Tooltip title="UserMenuTooltip">
-      <IconButton aria-haspopup="true" aria-owns={open ? 'menu-appbar' : null} color="inherit" onClick={handleMenu}>
-        <AccountCircle />
-      </IconButton>
-    </Tooltip>
+  <React.Fragment>
+    <IconButton aria-haspopup="true" aria-owns={open ? 'menu-appbar' : null} color="inherit" onClick={handleMenu}>
+      <AccountCircle />
+    </IconButton>
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
@@ -35,7 +32,7 @@ const CustomUserMenuJSX = ({ onLogoutButtonClick, anchorEl, handleMenu, handleCl
         <ExitIcon style={{ marginRight: '0.5rem' }} /> {'Logout'}
       </MenuItem>
     </Menu>
-  </div>
+  </React.Fragment>
 )
 
 export default compose(

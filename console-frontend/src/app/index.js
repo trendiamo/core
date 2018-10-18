@@ -3,9 +3,11 @@ import buildOpenCrudProvider from 'ra-data-opencrud'
 import { create } from 'jss'
 import CustomLayout from 'app/layout'
 import customLoginPage from 'app/screens/login'
-import customRoutes from 'app/ext/custom-routes.js'
 import JssProvider from 'react-jss/lib/JssProvider'
+import PasswordReset from 'app/screens/password-reset'
 import React from 'react'
+import RequestPasswordReset from 'app/screens/password-reset/request-password-reset'
+import { Route } from 'react-router-dom'
 import { Admin, Resource } from 'react-admin'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
@@ -16,6 +18,11 @@ const jss = create({
   ...jssPreset(),
   insertionPoint: 'jss-insertion-point',
 })
+
+const customRoutes = [
+  <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path="/request_password_reset" />,
+  <Route component={PasswordReset} exact key="passwordReset" noLayout path="/password_reset" />,
+]
 
 const App = ({ dataProvider, history }) => (
   <JssProvider generateClassName={generateClassName} jss={jss}>

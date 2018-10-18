@@ -16,7 +16,7 @@ const CustomPasswordResetJSX = ({ errors, passwordForm, passwordResetSubmit, set
       <StyledForm onSubmit={passwordResetSubmit}>
         {errors && (
           <Typography align="center" color="error" variant="body2">
-            <div>{errors}</div>
+            {errors}
           </Typography>
         )}
         <FormControl fullWidth margin="normal" required>
