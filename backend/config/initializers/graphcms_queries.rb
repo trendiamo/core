@@ -94,6 +94,66 @@ UpdateWebsiteMutation = <<-'GRAPHQL'
     }
 GRAPHQL
 
+HostnameQuery = <<-'GRAPHQL'
+  query($id: ID) {
+    hostname(where: { id: $id }) {
+      id
+      status
+      hostname
+      website {
+        id
+      }
+    }
+  }
+GRAPHQL
+
+HostnamesQuery = <<-'GRAPHQL'
+  query($id: ID) {
+    hostnames(where: { website: {id: $id } }) {
+      id
+      status
+      hostname
+      website {
+        id
+      }
+    }
+  }
+GRAPHQL
+
+CreateHostnameMutation = <<-'GRAPHQL'
+  mutation($hostname: String!, $status: Status, $website_id: ID) {
+    createHostname(data: {hostname: $hostname, status: $status, website: {connect: {id: $website_id}}}) {
+      id
+      status
+      hostname
+      website {
+        id
+      }
+    }
+  }
+GRAPHQL
+
+UpdateHostnameMutation = <<-'GRAPHQL'
+    mutation($hostname: String!, $status: Status, $id: ID) {
+      updateHostname(data: {hostname: $hostname, status: $status}, where: {id: $id}) {
+        id
+        status
+        hostname
+        website {
+          id
+        }
+    	}
+    }
+GRAPHQL
+
+DeleteHostnameMutation = <<-'GRAPHQL'
+    mutation($id: ID!) {
+      deleteHostname(where: {id: $id}) {
+        id
+    	}
+    }
+GRAPHQL
+
 ExpositionQuery = <<-'GRAPHQL'
   query($domain: String, $id: ID) {
     exposition(where: { domain: $domain, id: $id }) {

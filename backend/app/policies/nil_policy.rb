@@ -38,4 +38,20 @@ class NilPolicy < ApplicationPolicy
   def websites_connection?
     user
   end
+
+  def hostname?
+    user
+  end
+
+  def hostnames?
+    user
+  end
+
+  def hostnames_connection?
+    user
+  end
+
+  def create_hostname?
+    user
+  end
 end

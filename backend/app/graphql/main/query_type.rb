@@ -29,4 +29,15 @@ Main::QueryType = GraphQL::ObjectType.define do
       ExecuteQuery.execute(WebsitesQuery, variables, :websites)
     }
   end
+
+  field :hostnames, Fields::HostnamesField
+  field :hostname, Fields::HostnameField
+  connection :hostnamesConnection, Connections::HostnamesConnection do
+    resolve ->(_obj, _args, _ctx) {
+      use(Plugins::Pundit, obj: obj, args: args, ctx: ctx)
+      authorize(:nil)
+      variables = { id: current_user.website_ref }
+      ExecuteQuery.execute(HostnamesQuery, variables, :hostnames)
+    }
+  end
 end
