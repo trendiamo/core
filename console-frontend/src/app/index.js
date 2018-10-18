@@ -1,4 +1,3 @@
-import { authProvider } from 'app/auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
 import { create } from 'jss'
 import JssProvider from 'react-jss/lib/JssProvider'
@@ -10,6 +9,7 @@ import RequestPasswordReset from 'app/screens/password-reset/request-password-re
 import { Route } from 'react-router-dom'
 import { WebsiteEdit } from './resources/websites'
 import { Admin, Resource } from 'react-admin'
+import auth, { authProvider } from 'app/auth'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from 'app/resources/expositions'
@@ -23,6 +23,14 @@ const jss = create({
 const routes = [
   <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path="/request_password_reset" />,
   <Route component={PasswordReset} exact key="passwordReset" noLayout path="/password_reset" />,
+  <Route
+    exact
+    key="account"
+    path="/account"
+    render={() => (
+      <WebsiteEdit basePath="/Website" id={auth.getUser().websiteRef} location={{}} match={{}} resource="Website" />
+    )}
+  />,
 ]
 
 const App = ({ dataProvider, history }) => (
@@ -42,7 +50,7 @@ const App = ({ dataProvider, history }) => (
         name="Exposition"
         show={ExpositionShow}
       />
-      <Resource edit={WebsiteEdit} name="Website" />
+      <Resource name="Website" />
     </Admin>
   </JssProvider>
 )

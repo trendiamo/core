@@ -1,9 +1,10 @@
 import React from 'react'
 import { DisabledInput, Edit, SelectInput, SimpleForm, TextInput } from 'react-admin'
 
-export const WebsiteEdit = ({ ...props }) => (
-  <Edit {...props} title={`Account`}>
+export const WebsiteEdit = ({ id, ...props }) => (
+  <Edit {...props} id={id} title={`Account`}>
     <SimpleForm>
+      <DisabledInput source="id" />
       <DisabledInput source="name" />
       <TextInput source="title" />
       <TextInput source="subtitle" />
