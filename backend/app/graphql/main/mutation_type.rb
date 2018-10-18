@@ -16,4 +16,8 @@ Main::MutationType = GraphQL::ObjectType.define do
   # field :deleteExposition, Fields::DeleteExpositionField
 
   field :updateWebsite, Fields::UpdateWebsiteField
+
+  field :createHostname, Fields::CreateHostnameField
+  field :updateHostname, Fields::UpdateHostnameField
+  field :deleteHostname, Fields::DeleteHostnameField
 end
