@@ -1,6 +1,7 @@
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { apiSignOut } from '../auth/utils'
 import auth from 'app/auth'
+import Avatar from '@material-ui/core/Avatar'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
@@ -8,10 +9,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const CustomUserMenuJSX = ({ onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
+const CustomUserMenuJSX = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
   <React.Fragment>
     <IconButton aria-haspopup="true" aria-owns={open ? 'menu-appbar' : null} color="inherit" onClick={handleMenu}>
-      <AccountCircle />
+      {initials ? <Avatar>{initials}</Avatar> : <AccountCircle />}
     </IconButton>
     <Menu
       anchorEl={anchorEl}
@@ -27,7 +28,7 @@ const CustomUserMenuJSX = ({ onLogoutButtonClick, anchorEl, handleMenu, handleCl
         vertical: 'top',
       }}
     >
-      <MenuItem disabled>{auth.getEmail()}</MenuItem>
+      <MenuItem disabled>{auth.getDisplayName() || auth.getEmail()}</MenuItem>
       <MenuItem onClick={onLogoutButtonClick}>
         <ExitIcon style={{ marginRight: '0.5rem' }} /> {'Logout'}
       </MenuItem>
@@ -38,6 +39,7 @@ const CustomUserMenuJSX = ({ onLogoutButtonClick, anchorEl, handleMenu, handleCl
 export default compose(
   withState('anchorEl', 'setAnchorEl', null),
   withProps(({ anchorEl }) => ({
+    initials: auth.getInitials(),
     open: Boolean(anchorEl),
   })),
   withHandlers({

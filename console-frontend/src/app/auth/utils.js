@@ -45,7 +45,7 @@ export const apiPasswordResetSaga = async (url, body, setErrors) => {
   if (json.error || json.errors) {
     setErrors(errorMessages(json))
   } else {
-    auth.setAuth({ authEmail: json.user.email, authToken: json.authenticationToken })
+    auth.setAuth({ token: json.authenticationToken, user: json.user })
     window.location.href = '/#'
   }
 }
@@ -71,7 +71,7 @@ export const apiSaga = async (url, body, setErrors) => {
   if (json.error || json.errors) {
     setErrors(errorMessages(json))
   } else {
-    auth.setAuth({ authEmail: json.user.email, authToken: json.authenticationToken })
+    auth.setAuth({ token: json.authenticationToken, user: json.user })
   }
 }
 

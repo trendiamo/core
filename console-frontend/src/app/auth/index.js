@@ -3,8 +3,14 @@ import queryString from 'query-string'
 
 const auth = {
   clear() {
-    localStorage.removeItem('authToken')
     localStorage.removeItem('authEmail')
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('authUser')
+  },
+  getDisplayName() {
+    const user = this.getUser()
+    if (!user.firstName || !user.lastName) return null
+    return `${user.firstName} ${user.lastName}`
   },
   getEmail() {
     return localStorage.getItem('authEmail')
@@ -15,15 +21,24 @@ const auth = {
       'X-USER-TOKEN': this.getToken(),
     }
   },
+  getInitials() {
+    const user = this.getUser()
+    if (!user.firstName || !user.lastName) return null
+    return `${user.firstName[0]}${user.lastName[0]}`
+  },
   getToken() {
     return localStorage.getItem('authToken')
+  },
+  getUser() {
+    return JSON.parse(localStorage.getItem('authUser') || '{}')
   },
   isLoggedIn() {
     return this.getEmail() && this.getToken()
   },
-  setAuth({ authEmail, authToken }) {
-    localStorage.setItem('authEmail', authEmail)
-    localStorage.setItem('authToken', authToken)
+  setAuth({ token, user }) {
+    localStorage.setItem('authEmail', user.email)
+    localStorage.setItem('authToken', token)
+    localStorage.setItem('authUser', JSON.stringify(user))
   },
 }
 
