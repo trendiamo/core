@@ -8,6 +8,7 @@ import PasswordReset from 'app/screens/password-reset'
 import React from 'react'
 import RequestPasswordReset from 'app/screens/password-reset/request-password-reset'
 import { Route } from 'react-router-dom'
+import { WebsiteEdit } from './resources/websites'
 import { Admin, Resource } from 'react-admin'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
@@ -41,6 +42,7 @@ const App = ({ dataProvider, history }) => (
         name="Exposition"
         show={ExpositionShow}
       />
+      <Resource edit={WebsiteEdit} name="Website" />
     </Admin>
   </JssProvider>
 )
