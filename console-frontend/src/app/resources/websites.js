@@ -2,7 +2,7 @@ import React from 'react'
 import { DisabledInput, Edit, SelectInput, SimpleForm, TextInput } from 'react-admin'
 
 const WebsiteEdit = ({ id, ...props }) => (
-  <Edit {...props} id={id} title={`Account`}>
+  <Edit {...props} id={id} title="Account">
     <SimpleForm redirect="/account">
       <DisabledInput source="id" />
       <DisabledInput source="name" />
