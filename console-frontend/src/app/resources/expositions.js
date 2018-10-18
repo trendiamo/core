@@ -1,4 +1,5 @@
 import React from 'react'
+import StatusField from './status-field'
 import {
   Create,
   Datagrid,
@@ -20,10 +21,10 @@ export const ExpositionShow = props => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="description" />
-      <TextField source="status" />
       <TextField source="ctaText" />
       <TextField source="ctaUrl" />
       <TextField source="domain" />
+      <StatusField source="status" />
     </SimpleShowLayout>
   </Show>
 )
@@ -33,7 +34,7 @@ export const ExpositionsList = ({ ...props }) => (
     <Datagrid>
       <TextField source="id" />
       <TextField source="description" />
-      <TextField source="status" />
+      <StatusField source="status" />
       <TextField source="ctaText" />
       <TextField source="ctaUrl" />
       <TextField source="domain" />
