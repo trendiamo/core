@@ -7,9 +7,10 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
+import SettingsIcon from '@material-ui/icons/Settings'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
+const UserMenu = ({ onAccountButtonClick, initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
   <React.Fragment>
     <IconButton aria-haspopup="true" aria-owns={open ? 'menu-appbar' : null} color="inherit" onClick={handleMenu}>
       {initials ? <Avatar>{initials}</Avatar> : <AccountCircle />}
@@ -29,6 +30,10 @@ const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleC
       }}
     >
       <MenuItem disabled>{auth.getDisplayName() || auth.getEmail()}</MenuItem>
+      <MenuItem onClick={onAccountButtonClick}>
+        <SettingsIcon style={{ marginRight: '0.5rem' }} />
+        {'Account'}
+      </MenuItem>
       <MenuItem onClick={onLogoutButtonClick}>
         <ExitIcon style={{ marginRight: '0.5rem' }} /> {'Logout'}
       </MenuItem>
@@ -50,6 +55,10 @@ export default compose(
     handleMenu: ({ setAnchorEl }) => event => {
       event.preventDefault()
       setAnchorEl(event.currentTarget)
+    },
+    onAccountButtonClick: () => event => {
+      event.preventDefault()
+      window.location.href = '/Website/cjnai1lqb95gb0932tqokve0x'
     },
     onLogoutButtonClick: () => async event => {
       event.preventDefault()
