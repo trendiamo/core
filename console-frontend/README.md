@@ -7,6 +7,7 @@ You can read the [default create-react-app README.md](https://github.com/faceboo
 ## Setup
 
 ```sh
+yarn global add cross-env
 yarn
 ```
 
