@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 import { Notification, StyledButton, StyledForm } from '../shared'
+import routes from '../../routes'
 
 const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, notification, onBackToLogin }) => (
   <AuthLayout title="Reset Password">
@@ -42,7 +43,7 @@ export default compose(
   withHandlers({
     onBackToLogin: () => event => {
       event.preventDefault()
-      window.location.href = '/login'
+      window.location.href = routes.login()
     },
     passwordChangeSubmit: ({ passwordForm, setNotification }) => async event => {
       event.preventDefault()

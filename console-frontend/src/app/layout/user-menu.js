@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { compose, withHandlers, withProps, withState } from 'recompose'
+import routes from '../routes'
 
 const UserMenu = ({ onAccountButtonClick, initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
   <React.Fragment>
@@ -58,12 +59,12 @@ export default compose(
     },
     onAccountButtonClick: () => event => {
       event.preventDefault()
-      window.location.href = '/account'
+      window.location.href = routes.account()
     },
     onLogoutButtonClick: () => async event => {
       event.preventDefault()
       await apiSignOut()
-      window.location.href = '/login'
+      window.location.href = routes.login()
     },
   })
 )(UserMenu)

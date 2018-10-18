@@ -8,6 +8,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
 import { StyledButton, StyledForm } from '../shared'
+import routes from '../../routes'
 
 const Login = ({ errors, loginForm, loginSubmit, setLoginValue, onForgotPassword }) => (
   <AuthLayout title="Log in">
@@ -58,12 +59,12 @@ export default compose(
       event.preventDefault()
       await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } }, setErrors)
       if (auth.isLoggedIn()) {
-        window.location.href = '/'
+        window.location.href = routes.root()
       }
     },
     onForgotPassword: () => event => {
       event.preventDefault()
-      window.location.href = '/request_password_reset'
+      window.location.href = routes.requestPasswordReset()
     },
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),
