@@ -1,6 +1,5 @@
 class Influencer < ApplicationRecord
-  has_many :expositions
-
   validates :name, presence: true
-  validates :profile_pic, presence: true
+  validates :description, presence: true
+  validates :profile_pic_url, presence: true
 end
