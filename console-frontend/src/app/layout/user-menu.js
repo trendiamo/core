@@ -58,7 +58,7 @@ export default compose(
     },
     onAccountButtonClick: () => event => {
       event.preventDefault()
-      window.location.href = '/Website/cjnai1lqb95gb0932tqokve0x'
+      window.location.href = '/account'
     },
     onLogoutButtonClick: () => async event => {
       event.preventDefault()
