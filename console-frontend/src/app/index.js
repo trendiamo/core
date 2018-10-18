@@ -18,7 +18,7 @@ import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } f
 const generateClassName = createGenerateClassName()
 const jss = create({
   ...jssPreset(),
-  insertionPoint: 'jss-insertion-point',
+  insertionPoint: document.getElementById('jss-insertion-point'),
 })
 
 const routes = [
