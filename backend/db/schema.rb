@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181016140028) do
+ActiveRecord::Schema.define(version: 20181018171429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,66 +25,6 @@ ActiveRecord::Schema.define(version: 20181016140028) do
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_user_auth_tokens_on_body"
     t.index ["user_id"], name: "index_user_auth_tokens_on_user_id"
-  end
-
-  create_table "brands", force: :cascade do |t|
-    t.string "name"
-    t.string "legal_address_city"
-    t.string "legal_address_number"
-    t.string "legal_address_postal_code"
-    t.string "legal_address_street"
-    t.string "legal_address_country"
-    t.string "legal_name"
-    t.string "logo_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.text "short_description"
-    t.text "long_description"
-    t.string "header_content_photo"
-    t.string "header_content_video"
-    t.string "domestic_shipping_time"
-    t.string "eu_shipping_time"
-    t.string "outside_eu_shipping_time"
-    t.text "general_shipping_info"
-    t.text "trendiamo_shipping_info"
-    t.boolean "is_complete", default: false
-    t.string "shopify_collection_id"
-    t.index ["user_id"], name: "index_brands_on_user_id"
-  end
-
-  create_table "collection_modals", force: :cascade do |t|
-    t.bigint "collection_id", null: false
-    t.string "logo_pic_url", null: false
-    t.string "cover_pic_url", null: false
-    t.string "title", null: false
-    t.string "text", null: false
-    t.string "cta_text", null: false
-    t.index ["collection_id"], name: "index_collection_modals_on_collection_id"
-  end
-
-  create_table "collections", force: :cascade do |t|
-    t.string "handle", null: false
-    t.string "title", null: false
-    t.string "type", null: false
-    t.string "profile_pic_url", null: false
-    t.string "cover_pic_url", null: false
-    t.text "description", null: false
-  end
-
-  create_table "comments", force: :cascade do |t|
-    t.bigint "user_id"
-    t.text "content", null: false
-    t.boolean "pinned", default: false, null: false
-    t.integer "upvotes_count", default: 0, null: false
-    t.integer "inappropriate_flags_count", default: 0, null: false
-    t.datetime "removed_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "product_id", null: false
-    t.integer "anonymous_upvotes_count", default: 0, null: false
-    t.index ["product_id"], name: "index_comments_on_product_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "expositions", force: :cascade do |t|
@@ -112,24 +52,6 @@ ActiveRecord::Schema.define(version: 20181016140028) do
     t.index ["video_id"], name: "index_expositions_videos_on_video_id"
   end
 
-  create_table "fenced_collections", force: :cascade do |t|
-    t.bigint "collection_id", null: false
-    t.string "domain_name", null: false
-    t.string "favicon_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["collection_id"], name: "index_fenced_collections_on_collection_id"
-  end
-
-  create_table "inappropriate_flags", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "comment_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["comment_id"], name: "index_inappropriate_flags_on_comment_id"
-    t.index ["user_id"], name: "index_inappropriate_flags_on_user_id"
-  end
-
   create_table "influencers", force: :cascade do |t|
     t.string "name"
     t.string "profile_pic"
@@ -141,35 +63,6 @@ ActiveRecord::Schema.define(version: 20181016140028) do
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "likes", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_likes_on_product_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
-  end
-
-  create_table "products", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "product_ref", null: false
-    t.integer "likes_count", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.json "media_items"
-    t.integer "anonymous_likes_count", default: 0, null: false
-    t.index ["user_id"], name: "index_products_on_user_id"
-  end
-
-  create_table "upvotes", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "comment_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["comment_id"], name: "index_upvotes_on_comment_id"
-    t.index ["user_id"], name: "index_upvotes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -202,23 +95,6 @@ ActiveRecord::Schema.define(version: 20181016140028) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "videos", force: :cascade do |t|
-    t.string "video_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   add_foreign_key "auth_tokens", "users"
-  add_foreign_key "brands", "users"
-  add_foreign_key "collection_modals", "collections"
-  add_foreign_key "comments", "users"
   add_foreign_key "expositions", "influencers"
-  add_foreign_key "fenced_collections", "collections"
-  add_foreign_key "inappropriate_flags", "comments"
-  add_foreign_key "inappropriate_flags", "users"
-  add_foreign_key "likes", "products"
-  add_foreign_key "likes", "users"
-  add_foreign_key "products", "users"
-  add_foreign_key "upvotes", "comments"
-  add_foreign_key "upvotes", "users"
 end
