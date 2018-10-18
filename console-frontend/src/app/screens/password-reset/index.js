@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
 import { StyledButton, StyledForm } from '../shared'
 
-const CustomPasswordResetJSX = ({ errors, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
+const PasswordReset = ({ errors, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
     <AuthLayout title="Reset Password">
       <StyledForm onSubmit={passwordResetSubmit}>
@@ -51,7 +51,7 @@ const CustomPasswordResetJSX = ({ errors, passwordForm, passwordResetSubmit, set
   </Authenticated>
 )
 
-const CustomPasswordReset = compose(
+export default compose(
   withState('passwordForm', 'setPasswordForm', {
     fieldOne: '',
     fieldTwo: '',
@@ -81,6 +81,4 @@ const CustomPasswordReset = compose(
       setPasswordForm({ ...passwordForm, [event.target.name]: value })
     },
   })
-)(CustomPasswordResetJSX)
-
-export default CustomPasswordReset
+)(PasswordReset)

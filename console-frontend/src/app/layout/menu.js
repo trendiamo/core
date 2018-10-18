@@ -13,7 +13,7 @@ const Div = styled.div`
   justify-content: flex-start;
 `
 
-const CustomMenuJSX = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
+const Menu = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
   <Div {...rest}>
     {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
     {resources.filter(r => r.hasList).map(resource => (
@@ -29,7 +29,7 @@ const CustomMenuJSX = ({ dense, hasDashboard, onMenuClick, resources, ...rest })
   </Div>
 )
 
-CustomMenuJSX.defaultProps = {
+Menu.defaultProps = {
   onMenuClick: () => null,
 }
 
@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
   resources: getResources(state),
 })
 
-const enhance = compose(
+export default compose(
   connect(
     mapStateToProps,
     {},
@@ -51,6 +51,4 @@ const enhance = compose(
         prev.open === next.open,
     }
   )
-)
-
-export default enhance(CustomMenuJSX)
+)(Menu)

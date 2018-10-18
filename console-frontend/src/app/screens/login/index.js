@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
 import { StyledButton, StyledForm } from '../shared'
 
-const CustomLoginJSX = ({ errors, loginForm, loginSubmit, setLoginValue, onForgotPassword }) => (
+const Login = ({ errors, loginForm, loginSubmit, setLoginValue, onForgotPassword }) => (
   <AuthLayout title="Log in">
     <StyledForm onSubmit={loginSubmit}>
       {errors && (
@@ -50,7 +50,7 @@ const CustomLoginJSX = ({ errors, loginForm, loginSubmit, setLoginValue, onForgo
   </AuthLayout>
 )
 
-const CustomLogin = compose(
+export default compose(
   withState('loginForm', 'setLoginForm', { email: '', password: '' }),
   withState('errors', 'setErrors', null),
   withHandlers({
@@ -68,6 +68,4 @@ const CustomLogin = compose(
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),
   })
-)(CustomLoginJSX)
-
-export default CustomLogin
+)(Login)

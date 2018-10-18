@@ -7,13 +7,7 @@ import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 import { Notification, StyledButton, StyledForm } from '../shared'
 
-const CustomPasswordResetJSX = ({
-  passwordForm,
-  passwordChangeSubmit,
-  setPasswordFormValue,
-  notification,
-  onBackToLogin,
-}) => (
+const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, notification, onBackToLogin }) => (
   <AuthLayout title="Reset Password">
     <StyledForm onSubmit={passwordChangeSubmit}>
       {notification && (
@@ -42,7 +36,7 @@ const CustomPasswordResetJSX = ({
   </AuthLayout>
 )
 
-const CustomPasswordReset = compose(
+export default compose(
   withState('passwordForm', 'setPasswordForm', { email: '' }),
   withState('notification', 'setNotification', null),
   withHandlers({
@@ -61,6 +55,4 @@ const CustomPasswordReset = compose(
         [event.target.name]: event.target.value,
       }),
   })
-)(CustomPasswordResetJSX)
-
-export default CustomPasswordReset
+)(PasswordReset)

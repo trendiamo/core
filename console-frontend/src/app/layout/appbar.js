@@ -32,7 +32,7 @@ const StyledToolbar = styled(Toolbar)`
   padding-right: 24px;
 `
 
-const CustomAppBarJSX = ({ className, open, toggleSidebar, width, ...rest }) => (
+const AppBar = ({ className, open, toggleSidebar, width, ...rest }) => (
   <MuiAppBar className={className} color="secondary" position="static" {...rest}>
     <StyledToolbar disableGutters variant={width === 'xs' ? 'regular' : 'dense'}>
       <StyledIconButton aria-label="open drawer" color="inherit" onClick={toggleSidebar}>
@@ -46,12 +46,10 @@ const CustomAppBarJSX = ({ className, open, toggleSidebar, width, ...rest }) => 
   </MuiAppBar>
 )
 
-const CustomAppBar = compose(
+export default compose(
   connect(
     null,
     { toggleSidebar }
   ),
   withWidth()
-)(CustomAppBarJSX)
-
-export default CustomAppBar
+)(AppBar)

@@ -1,9 +1,9 @@
 import { authProvider } from 'app/auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
 import { create } from 'jss'
-import CustomLayout from 'app/layout'
-import customLoginPage from 'app/screens/login'
 import JssProvider from 'react-jss/lib/JssProvider'
+import Layout from 'app/layout'
+import LoginPage from 'app/screens/login'
 import PasswordReset from 'app/screens/password-reset'
 import React from 'react'
 import RequestPasswordReset from 'app/screens/password-reset/request-password-reset'
@@ -19,7 +19,7 @@ const jss = create({
   insertionPoint: 'jss-insertion-point',
 })
 
-const customRoutes = [
+const routes = [
   <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path="/request_password_reset" />,
   <Route component={PasswordReset} exact key="passwordReset" noLayout path="/password_reset" />,
 ]
@@ -27,12 +27,12 @@ const customRoutes = [
 const App = ({ dataProvider, history }) => (
   <JssProvider generateClassName={generateClassName} jss={jss}>
     <Admin
-      appLayout={CustomLayout}
+      appLayout={Layout}
       authProvider={authProvider}
-      customRoutes={customRoutes}
+      customRoutes={routes}
       dataProvider={dataProvider.dataProvider}
       history={history}
-      loginPage={customLoginPage}
+      loginPage={LoginPage}
     >
       <Resource
         create={ExpositionsCreate}

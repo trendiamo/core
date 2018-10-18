@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const CustomUserMenuJSX = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
+const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
   <React.Fragment>
     <IconButton aria-haspopup="true" aria-owns={open ? 'menu-appbar' : null} color="inherit" onClick={handleMenu}>
       {initials ? <Avatar>{initials}</Avatar> : <AccountCircle />}
@@ -57,4 +57,4 @@ export default compose(
       window.location.href = '/login'
     },
   })
-)(CustomUserMenuJSX)
+)(UserMenu)
