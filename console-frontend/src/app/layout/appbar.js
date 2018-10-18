@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { toggleSidebar } from 'ra-core'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import UserMenu from './usermenu'
+import UserMenu from './user-menu'
 import withWidth from '@material-ui/core/withWidth'
 
 const StyledIconButton = styled(IconButton)`

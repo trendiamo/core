@@ -2,10 +2,10 @@ import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 import { DashboardMenuItem } from 'ra-ui-materialui'
 import DefaultIcon from '@material-ui/icons/ViewList'
+import { getResources } from 'ra-core'
 import { MenuItemLink } from 'ra-ui-materialui'
 import React from 'react'
 import styled from 'styled-components'
-import { getResources, translate } from 'ra-core'
 
 const Div = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const Div = styled.div`
   justify-content: flex-start;
 `
 
-const Menu = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
+const CustomMenuJSX = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
   <Div {...rest}>
     {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
     {resources.filter(r => r.hasList).map(resource => (
@@ -29,7 +29,7 @@ const Menu = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
   </Div>
 )
 
-Menu.defaultProps = {
+CustomMenuJSX.defaultProps = {
   onMenuClick: () => null,
 }
 
@@ -40,7 +40,6 @@ const mapStateToProps = state => ({
 })
 
 const enhance = compose(
-  translate,
   connect(
     mapStateToProps,
     {},
@@ -54,4 +53,4 @@ const enhance = compose(
   )
 )
 
-export default enhance(Menu)
+export default enhance(CustomMenuJSX)
