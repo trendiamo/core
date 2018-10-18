@@ -1,15 +1,15 @@
-import authProvider from './auth'
+import { authProvider } from 'app/auth'
 import buildOpenCrudProvider from 'ra-data-opencrud'
 import { create } from 'jss'
-import CustomLayout from './layout'
-import customLoginPage from './screens/login'
-import customRoutes from './ext/custom-routes.js'
+import CustomLayout from 'app/layout'
+import customLoginPage from 'app/screens/login'
+import customRoutes from 'app/ext/custom-routes.js'
 import JssProvider from 'react-jss/lib/JssProvider'
 import React from 'react'
 import { Admin, Resource } from 'react-admin'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
-import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from './resources/expositions'
+import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from 'app/resources/expositions'
 
 const generateClassName = createGenerateClassName()
 const jss = create({

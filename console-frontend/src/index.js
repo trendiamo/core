@@ -1,4 +1,5 @@
-import App from './app'
+import App from 'app'
+import auth from 'app/auth'
 import createHistory from 'history/createBrowserHistory'
 import { HttpLink } from 'apollo-link-http'
 import React from 'react'
@@ -11,8 +12,7 @@ const uriPlugAdmin = `https://${process.env.REACT_APP_API_ENDPOINT}/graphql`
 const authLink1 = setContext((_, { headers }) => ({
   headers: {
     ...headers,
-    'X-USER-EMAIL': localStorage.getItem('authEmail'),
-    'X-USER-TOKEN': localStorage.getItem('authToken'),
+    ...auth.getHeaders(),
   },
 }))
 const authLink = authLink1.concat(new HttpLink({ uri: uriPlugAdmin }))

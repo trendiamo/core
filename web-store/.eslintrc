@@ -3,24 +3,15 @@
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true,
-    },
+      "jsx": true
+    }
   },
   "env": {
     "es6": true,
-    "browser": true,
+    "browser": true
   },
-  "plugins": [
-    "react",
-    "prettier"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/all",
-    "plugin:import/errors",
-    "prettier",
-    "prettier/react"
-  ],
+  "plugins": ["react", "prettier"],
+  "extends": ["eslint:recommended", "plugin:react/all", "plugin:import/errors", "prettier", "prettier/react"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -30,18 +21,21 @@
   },
   "globals": {
     "Promise": true,
-    "process": true,
+    "process": true
   },
   "rules": {
     "import/namespace": ["error", { "allowComputed": true }],
-    "prettier/prettier": ["error", {
-      "printWidth": 120,
-      "singleQuote": true,
-      "semi": false,
-      "trailingComma": "es5",
-      "bracketSpacing": true,
-      "jsxBracketSameLine": false,
-    }],
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120,
+        "singleQuote": true,
+        "semi": false,
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false
+      }
+    ],
     "no-console": 0,
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
@@ -49,28 +43,37 @@
     "react/jsx-curly-brace-presence": ["off", "always"],
     "react/jsx-handler-names": 0,
     "react/jsx-no-bind": 0,
-    "react/jsx-sort-props": ["error", {
-      "callbacksLast": false,
-      "shorthandFirst": false,
-      "shorthandLast": false,
-      "ignoreCase": true,
-      "noSortAlphabetically": false,
-      "reservedFirst": false,
-    }],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": false,
+        "shorthandFirst": false,
+        "shorthandLast": false,
+        "ignoreCase": true,
+        "noSortAlphabetically": false,
+        "reservedFirst": false
+      }
+    ],
     "react/no-set-state": 0,
     "react/require-optimization": 0,
     "react/no-multi-comp": 0,
     "react/forbid-component-props": 0,
-    "react/sort-prop-types": ["error", {
-      "callbacksLast": false,
-      "ignoreCase": true,
-      "requiredFirst": false
-    }],
-    "sort-imports": [2, {
-      "ignoreCase": true,
-      "ignoreMemberSort": false,
-      "memberSyntaxSortOrder": ["single", "multiple", "all", "none"]
-    }],
+    "react/sort-prop-types": [
+      "error",
+      {
+        "callbacksLast": false,
+        "ignoreCase": true,
+        "requiredFirst": false
+      }
+    ],
+    "sort-imports": [
+      2,
+      {
+        "ignoreCase": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["single", "multiple", "all", "none"]
+      }
+    ],
     "sort-keys": ["error", "asc", { "caseSensitive": false, "natural": true }],
     "sort-vars": ["error", { "ignoreCase": false }]
   }

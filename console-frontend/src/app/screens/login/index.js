@@ -1,4 +1,5 @@
 import { apiSignIn } from '../../auth/utils'
+import auth from 'app/auth'
 import AuthLayout from '../auth-layout'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
@@ -56,7 +57,7 @@ const CustomLogin = compose(
     loginSubmit: ({ loginForm, setErrors }) => async event => {
       event.preventDefault()
       await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } }, setErrors)
-      if (localStorage.authToken && localStorage.authEmail) {
+      if (auth.isLoggedIn()) {
         window.location.href = '/'
       }
     },

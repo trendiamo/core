@@ -1,5 +1,6 @@
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { apiSignOut } from '../auth/utils'
+import auth from 'app/auth'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
@@ -29,7 +30,7 @@ const CustomUserMenuJSX = ({ onLogoutButtonClick, anchorEl, handleMenu, handleCl
         vertical: 'top',
       }}
     >
-      <MenuItem disabled>{localStorage.getItem('authEmail')}</MenuItem>
+      <MenuItem disabled>{auth.getEmail()}</MenuItem>
       <MenuItem onClick={onLogoutButtonClick}>
         <ExitIcon style={{ marginRight: '0.5rem' }} /> {'Logout'}
       </MenuItem>

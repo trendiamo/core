@@ -1,3 +1,5 @@
+import auth from './index'
+
 const baseApiUrl = `https://${process.env.REACT_APP_API_ENDPOINT}/api/v1`
 const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
 const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
@@ -29,11 +31,9 @@ const apiPasswordRequest = async (url, body) => {
 
 const apiRequestSignout = async url => {
   const res = await fetch(url, {
-    // body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
-      'X-USER-EMAIL': localStorage.getItem('authEmail'),
-      'X-USER-TOKEN': localStorage.getItem('authToken'),
+      ...auth.getHeaders(),
     }),
     method: 'delete',
   })
@@ -45,8 +45,7 @@ export const apiPasswordResetSaga = async (url, body, setErrors) => {
   if (json.error || json.errors) {
     setErrors(errorMessages(json))
   } else {
-    localStorage.setItem('authToken', json.authenticationToken)
-    localStorage.setItem('authEmail', json.user.email)
+    auth.setAuth({ authEmail: json.user.email, authToken: json.authenticationToken })
     window.location.href = '/#'
   }
 }
@@ -61,10 +60,9 @@ const errorMessages = json => {
 
 const errorMessagesContent = (json, defaultMessage) => {
   if (typeof json.errors === 'object') {
-    const listItems = json.errors.map(error => `${error}`)
-    return `${listItems.join('')}`
+    return json.errors.map(error => `${error}`).join('')
   } else {
-    return `${defaultMessage}`
+    return defaultMessage
   }
 }
 
@@ -73,18 +71,16 @@ export const apiSaga = async (url, body, setErrors) => {
   if (json.error || json.errors) {
     setErrors(errorMessages(json))
   } else {
-    localStorage.setItem('authToken', json.authenticationToken)
-    localStorage.setItem('authEmail', json.user.email)
+    auth.setAuth({ authEmail: json.user.email, authToken: json.authenticationToken })
   }
 }
 
 export const apiSagaSignout = async (url, body) => {
   const json = await apiRequestSignout(url, body)
   if (json.error || json.errors) {
-    console.log(json.error)
+    console.error(json.error)
   } else {
-    localStorage.removeItem('authToken')
-    localStorage.removeItem('authEmail')
+    auth.clear()
   }
 }
 
