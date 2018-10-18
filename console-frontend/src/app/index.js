@@ -3,6 +3,7 @@ import { create } from 'jss'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import LoginPage from 'app/screens/login'
+import NotFound from 'app/screens/not-found'
 import PasswordReset from 'app/screens/password-reset'
 import React from 'react'
 import RequestPasswordReset from 'app/screens/password-reset/request-password-reset'
@@ -38,6 +39,7 @@ const App = ({ dataProvider, history }) => (
     <Admin
       appLayout={Layout}
       authProvider={authProvider}
+      catchAll={NotFound}
       customRoutes={routes}
       dataProvider={dataProvider.dataProvider}
       history={history}
