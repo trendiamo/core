@@ -25,6 +25,7 @@ bin/rails s
 
 ```sh
 bin/rubocop
+bin/brakeman -q
 ```
 
 ## Deploy
