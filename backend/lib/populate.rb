@@ -1,6 +1,5 @@
-users_attrs = [
-  { email: "dh@trendiamo.com", password: "password", password_confirmation: "password" },
-  { email: "dw@trendiamo.com", password: "password", password_confirmation: "password" },
-  { email: "md@example.com", password: "password", password_confirmation: "password" },
-]
+team_members_initials = %w[db dh fb mc]
+users_attrs = team_members_initials.map do |initials|
+  { email: "#{initials}@trendiamo.com", password: "password", password_confirmation: "password" },
+end
 User.create!(users_attrs)
