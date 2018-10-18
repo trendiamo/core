@@ -41,9 +41,6 @@ const CustomAppBarJSX = ({ className, open, toggleSidebar, width, ...rest }) => 
       <StyledTypography color="inherit" id="react-admin-title" variant="title">
         {'Plugiamo Console: '}
       </StyledTypography>
-      <Typography color="inherit" noWrap variant="subheading">{`logged in as: ${localStorage.getItem(
-        'authEmail'
-      )}`}</Typography>
       <UserMenu />
     </StyledToolbar>{' '}
   </MuiAppBar>

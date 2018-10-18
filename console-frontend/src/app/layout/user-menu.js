@@ -29,8 +29,9 @@ const CustomUserMenuJSX = ({ onLogoutButtonClick, anchorEl, handleMenu, handleCl
         vertical: 'top',
       }}
     >
+      <MenuItem disabled>{localStorage.getItem('authEmail')}</MenuItem>
       <MenuItem onClick={onLogoutButtonClick}>
-        <ExitIcon /> {'Logout'}
+        <ExitIcon style={{ marginRight: '0.5rem' }} /> {'Logout'}
       </MenuItem>
     </Menu>
   </div>
