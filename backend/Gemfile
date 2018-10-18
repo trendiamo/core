@@ -20,7 +20,8 @@ gem "graphql-errors"
 gem "pundit"
 gem "rack-cors"
 gem "rubocop"
-gem "sparkpost_rails", github: "dsgh/sparkpost_rails", branch: "custom-api-endpoint" # changed to support the EU endpoint. https://github.com/the-refinery/sparkpost_rails/pull/58
+# changed to support the EU endpoint. https://github.com/the-refinery/sparkpost_rails/pull/58
+gem "sparkpost_rails", github: "dsgh/sparkpost_rails", branch: "custom-api-endpoint"
 gem "stripe"
 gem "tiddle"
 
