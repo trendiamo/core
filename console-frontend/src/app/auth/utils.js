@@ -1,4 +1,5 @@
 import auth from './index'
+import routes from '../routes'
 
 const baseApiUrl = `https://${process.env.REACT_APP_API_ENDPOINT}/api/v1`
 const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
@@ -46,7 +47,7 @@ export const apiPasswordResetSaga = async (url, body, setErrors) => {
     setErrors(errorMessages(json))
   } else {
     auth.setAuth({ token: json.authenticationToken, user: json.user })
-    window.location.href = '/#'
+    window.location.href = routes.root()
   }
 }
 

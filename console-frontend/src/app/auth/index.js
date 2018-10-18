@@ -1,5 +1,6 @@
 import { AUTH_CHECK } from 'react-admin'
 import queryString from 'query-string'
+import routes from '../routes'
 
 const auth = {
   clear() {
@@ -45,7 +46,7 @@ const auth = {
 const authProvider = type => {
   // triggered every time url changes
   if (type === AUTH_CHECK) {
-    const isPasswordForm = window.location.pathname.includes('password_reset')
+    const isPasswordForm = routes.isPasswordReset()
     const parsedUrl = queryString.parse(window.location.search)
     // check if either the user is on the change password page or is logged in. In which case redirects won't render the
     // login page automatically
