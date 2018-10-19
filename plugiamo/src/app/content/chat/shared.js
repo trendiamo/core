@@ -69,7 +69,7 @@ const Option = styled.div`
   padding: 0.75rem;
   color: ${({ highlighted }) => (highlighted ? 'white' : '#0599ff')};
   background-color: ${({ highlighted }) => (highlighted ? '#0599ff' : 'white')};
-  cursor: pointer;
+  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -104,8 +104,8 @@ const ChatOption = compose(
   withHandlers({
     onClick: ({ chatOption, onOptionClick }) => () => onOptionClick(chatOption),
   })
-)(({ chatOption, onClick }) => (
-  <Option highlighted={chatOption.selected} key={chatOption.id} onClick={onClick}>
+)(({ active, chatOption, onClick }) => (
+  <Option active={active} highlighted={chatOption.selected} key={chatOption.id} onClick={onClick}>
     <AlignRight>{chatOption.text}</AlignRight>
     <Chevron highlighted={chatOption.selected} />
   </Option>
@@ -116,7 +116,12 @@ const ChatOptions = ({ log, onOptionClick }) => (
     <TopSlideAnimation timeout={250}>
       <ChatOptionsInner>
         {log.options.map(chatOption => (
-          <ChatOption chatOption={chatOption} key={chatOption.id} onOptionClick={onOptionClick} />
+          <ChatOption
+            active={!log.selected}
+            chatOption={chatOption}
+            key={chatOption.id}
+            onOptionClick={onOptionClick}
+          />
         ))}
       </ChatOptionsInner>
     </TopSlideAnimation>
