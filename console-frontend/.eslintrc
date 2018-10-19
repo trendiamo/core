@@ -24,9 +24,7 @@
   },
   "globals": {
     "Promise": true,
-    "process": true,
-    "require": true,
-    "module": true
+    "process": true
   },
   "rules": {
     "import/namespace": ["error", { "allowComputed": true }],
