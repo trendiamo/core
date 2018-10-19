@@ -4,9 +4,10 @@ import AuthLayout from '../auth-layout'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
-// import queryString from 'query-string'
 import React from 'react'
+import routes from 'app/routes'
 import Typography from '@material-ui/core/Typography'
+import { withRouter } from 'react-router'
 import { compose, withHandlers, withState } from 'recompose'
 import { StyledButton, StyledForm } from '../shared'
 
@@ -36,10 +37,10 @@ const ChangePassword = ({ errors, passwordForm, passwordResetSubmit, setFieldVal
           <Input
             autoComplete="email"
             id="email"
-            name="fieldOne"
+            name="password"
             onChange={setFieldValue}
             type="password"
-            value={passwordForm.fieldOne}
+            value={passwordForm.password}
           />
         </FormControl>
         <FormControl fullWidth margin="normal" required>
@@ -47,11 +48,11 @@ const ChangePassword = ({ errors, passwordForm, passwordResetSubmit, setFieldVal
           <Input
             autoComplete="current-password"
             id="password"
-            name="fieldTwo"
+            name="password_confirmation"
             onChange={setFieldValue}
             required
             type="password"
-            value={passwordForm.fieldTwo}
+            value={passwordForm.password_confirmation}
           />
         </FormControl>
         <StyledButton color="primary" fullWidth type="submit" variant="raised">
@@ -65,34 +66,33 @@ const ChangePassword = ({ errors, passwordForm, passwordResetSubmit, setFieldVal
 export default compose(
   withState('passwordForm', 'setPasswordForm', {
     currentPassword: '',
-    fieldOne: '',
-    fieldTwo: '',
+    password: '',
+    password_confirmation: '',
   }),
   withState('errors', 'setErrors', null),
+  withRouter,
   withHandlers({
-    passwordResetSubmit: ({ passwordForm, setErrors, errors }) => async event => {
+    passwordResetSubmit: ({ passwordForm, setErrors, history }) => async event => {
       event.preventDefault()
-      // const parsedUrl = queryString.parse(window.location.search)
-      if (passwordForm.fieldOne === passwordForm.fieldTwo) {
-        await apiPasswordChange(
+      if (passwordForm.password === passwordForm.password_confirmation) {
+        const success = await apiPasswordChange(
           {
             user: {
               current_password: passwordForm.currentPassword,
-              password: passwordForm.fieldOne,
-              password_confirmation: passwordForm.fieldTwo,
+              password: passwordForm.password,
+              password_confirmation: passwordForm.password_confirmation,
             },
           },
           setErrors
         )
+        if (success) history.push(routes.root())
       } else {
-        setErrors('New passwords dont match')
-        console.log(errors)
+        setErrors("New passwords don't match")
       }
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
       event.preventDefault()
-      const value = event.target.value
-      setPasswordForm({ ...passwordForm, [event.target.name]: value })
+      setPasswordForm({ ...passwordForm, [event.target.name]: event.target.value })
     },
   })
 )(ChangePassword)

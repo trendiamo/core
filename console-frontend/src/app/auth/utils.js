@@ -66,11 +66,11 @@ export const apiPasswordResetSaga = async (url, body, setErrors) => {
 
 export const apiPasswordChangeSaga = async (url, body, setErrors) => {
   const json = await apiPasswordChangeRequest(url, body)
-  if (json.error || json.errors) {
+  const error = Boolean(json.error || json.errors)
+  if (error) {
     setErrors(errorMessages(json))
-  } else {
-    window.location.href = routes.root()
   }
+  return !error
 }
 
 const errorMessages = json => {
