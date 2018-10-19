@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     scope "api/v1" do
       devise_scope :user do
         post "/users/sign_up", to: "users/registrations#create"
+        put "/users/change_password", to: "users/registrations#update"
         post "/users/password", to: "users/passwords#create"
         put "/users/password", to: "users/passwords#update"
         post "/users/sign_in", to: "users/sessions#create"

@@ -1,10 +1,10 @@
-import { apiPasswordReset } from '../../auth/utils'
+import { apiPasswordChange } from '../../auth/utils'
 import { Authenticated } from 'react-admin'
 import AuthLayout from '../auth-layout'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
-import queryString from 'query-string'
+// import queryString from 'query-string'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
@@ -20,22 +20,21 @@ const ChangePassword = ({ errors, passwordForm, passwordResetSubmit, setFieldVal
           </Typography>
         )}
         <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="email">{'Old Password'}</InputLabel>
+          <InputLabel htmlFor="email">{'Current Password'}</InputLabel>
           <Input
             autoComplete="email"
             autoFocus
-            id="old-password"
-            name="oldPassword"
+            id="currentPassword"
+            name="currentPassword"
             onChange={setFieldValue}
             type="password"
-            value={passwordForm.oldPassword}
+            value={passwordForm.currentPassword}
           />
         </FormControl>
         <FormControl fullWidth margin="normal" required>
           <InputLabel htmlFor="email">{'New Password'}</InputLabel>
           <Input
             autoComplete="email"
-            autoFocus
             id="email"
             name="fieldOne"
             onChange={setFieldValue}
@@ -65,27 +64,29 @@ const ChangePassword = ({ errors, passwordForm, passwordResetSubmit, setFieldVal
 
 export default compose(
   withState('passwordForm', 'setPasswordForm', {
+    currentPassword: '',
     fieldOne: '',
     fieldTwo: '',
-    oldPassword: '',
   }),
   withState('errors', 'setErrors', null),
   withHandlers({
-    passwordResetSubmit: ({ passwordForm, setErrors }) => async event => {
+    passwordResetSubmit: ({ passwordForm, setErrors, errors }) => async event => {
       event.preventDefault()
-      const parsedUrl = queryString.parse(window.location.search)
+      // const parsedUrl = queryString.parse(window.location.search)
       if (passwordForm.fieldOne === passwordForm.fieldTwo) {
-        await apiPasswordReset(
+        await apiPasswordChange(
           {
             user: {
-              password: passwordForm.fieldTwo,
-              reset_password_token: parsedUrl.reset_password_token,
+              current_password: passwordForm.currentPassword,
+              password: passwordForm.fieldOne,
+              password_confirmation: passwordForm.fieldTwo,
             },
           },
           setErrors
         )
       } else {
-        setErrors("New passwords don't match")
+        setErrors('New passwords dont match')
+        console.log(errors)
       }
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
