@@ -42,11 +42,11 @@ module Users
           render json: { errors: flash_key }
         end
         bypass_sign_in resource, scope: resource_name
-        render json: { user: resource }
+        render json: {}
       else
         clean_up_passwords resource
         set_minimum_password_length
-        render json: { errors: resource.errors.full_messages, user: resource }
+        render json: { errors: resource.errors.full_messages }
       end
     end
 
@@ -54,7 +54,6 @@ module Users
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name subscribed_to_newsletter])
-      # devise_parameter_sanitizer.permit(:update_resource, keys: %i[])
     end
   end
 end
