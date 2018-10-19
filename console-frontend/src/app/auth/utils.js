@@ -69,7 +69,6 @@ export const apiPasswordChangeSaga = async (url, body, setErrors) => {
   if (json.error || json.errors) {
     setErrors(errorMessages(json))
   } else {
-    auth.setAuth({ token: auth.getToken(), user: json.user })
     window.location.href = routes.root()
   }
 }
