@@ -1,5 +1,5 @@
 import React from 'react'
-import StatusField from './status-field'
+import StatusField from 'shared/status-field'
 import {
   Create,
   Datagrid,
