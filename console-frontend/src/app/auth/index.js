@@ -41,9 +41,6 @@ const auth = {
     localStorage.setItem('authToken', token)
     localStorage.setItem('authUser', JSON.stringify(user))
   },
-  updateAuth({ user }) {
-    localStorage.setItem('authUser', JSON.stringify(user))
-  },
 }
 
 const authProvider = type => {
