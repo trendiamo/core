@@ -7,6 +7,7 @@ const SIGNIN_URL = `${BASE_API_PATH}/users/sign_in`
 const SIGNOUT_URL = `${BASE_API_PATH}/users/sign_out`
 const PASSWORD_FORM_URL = `${BASE_API_PATH}/users/password`
 const PASSWORD_RESET_URL = `${BASE_API_PATH}/users/password`
+const PASSWORD_CHANGE_URL = `${BASE_API_PATH}/users/change_password`
 
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {
@@ -30,6 +31,18 @@ const apiPasswordRequest = async (url, body) => {
   return res.json()
 }
 
+const apiPasswordChangeRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'put',
+  })
+  return res.json()
+}
+
 const apiRequestSignout = async url => {
   const res = await fetch(url, {
     headers: new Headers({
@@ -47,6 +60,16 @@ export const apiPasswordResetSaga = async (url, body, setErrors) => {
     setErrors(errorMessages(json))
   } else {
     auth.setAuth({ token: json.authenticationToken, user: json.user })
+    window.location.href = routes.root()
+  }
+}
+
+export const apiPasswordChangeSaga = async (url, body, setErrors) => {
+  const json = await apiPasswordChangeRequest(url, body)
+  if (json.error || json.errors) {
+    setErrors(errorMessages(json))
+  } else {
+    auth.updateAuth({ user: json.user })
     window.location.href = routes.root()
   }
 }
@@ -100,3 +123,4 @@ export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
 export const apiPasswordEmailLink = (body, setErrors, setNotification) =>
   apiPasswordEmailLinkSaga(PASSWORD_FORM_URL, body, setErrors, setNotification)
 export const apiPasswordReset = (body, setErrors) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setErrors)
+export const apiPasswordChange = (body, setErrors) => apiPasswordChangeSaga(PASSWORD_CHANGE_URL, body, setErrors)
