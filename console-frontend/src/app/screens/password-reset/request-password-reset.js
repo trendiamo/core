@@ -6,16 +6,22 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
+import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
 import { Notification, StyledButton, StyledForm } from '../shared'
 
-const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, notification }) => (
+const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, notification, errors }) => (
   <AuthLayout title="Reset Password">
     <StyledForm onSubmit={passwordChangeSubmit}>
       {notification && (
         <Notification align="center" variant="body2">
           {notification}
         </Notification>
+      )}
+      {errors && (
+        <Typography align="center" color="error" variant="body2">
+          {errors}
+        </Typography>
       )}
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'Email'}</InputLabel>
@@ -43,15 +49,15 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
 export default compose(
   withState('passwordForm', 'setPasswordForm', { email: '' }),
   withState('notification', 'setNotification', null),
+  withState('errors', 'setErrors', null),
   withHandlers({
     onBackToLogin: () => event => {
       event.preventDefault()
       window.location.href = routes.login()
     },
-    passwordChangeSubmit: ({ passwordForm, setNotification }) => async event => {
+    passwordChangeSubmit: ({ passwordForm, setNotification, setErrors }) => async event => {
       event.preventDefault()
-      await apiPasswordEmailLink({ user: { email: passwordForm.email } })
-      setNotification('Email sent!')
+      await apiPasswordEmailLink({ user: { email: passwordForm.email } }, setErrors, setNotification)
     },
     setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>
       setPasswordForm({

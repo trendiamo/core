@@ -85,8 +85,18 @@ export const apiSagaSignout = async (url, body) => {
   }
 }
 
+export const apiPasswordEmailLinkSaga = async (url, body, setErrors, setNotification) => {
+  const json = await apiRequest(url, body)
+  if (json.error || json.errors) {
+    setErrors(errorMessages(json))
+  } else {
+    setNotification('Email sent!')
+  }
+}
+
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
 export const apiSignIn = (body, setErrors) => apiSaga(SIGNIN_URL, body, setErrors)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
-export const apiPasswordEmailLink = body => apiRequest(PASSWORD_FORM_URL, body)
+export const apiPasswordEmailLink = (body, setErrors, setNotification) =>
+  apiPasswordEmailLinkSaga(PASSWORD_FORM_URL, body, setErrors, setNotification)
 export const apiPasswordReset = (body, setErrors) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setErrors)
