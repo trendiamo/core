@@ -1,12 +1,13 @@
 import buildOpenCrudProvider from 'ra-data-opencrud'
+import ChangePassword from 'app/screens/change-password'
 import { create } from 'jss'
+import ForgotPassword from 'app/screens/forgot-password'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import LoginPage from 'app/screens/login'
 import NotFound from 'app/screens/not-found'
-import PasswordReset from 'app/screens/password-reset'
 import React from 'react'
-import RequestPasswordReset from 'app/screens/password-reset/request-password-reset'
+import RequestPasswordReset from 'app/screens/forgot-password/request-password-reset'
 import { Route } from 'react-router-dom'
 import routes from './routes'
 import WebsiteEdit from './resources/websites'
@@ -24,7 +25,8 @@ const jss = create({
 
 const customRoutes = [
   <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path={routes.requestPasswordReset()} />,
-  <Route component={PasswordReset} exact key="passwordReset" noLayout path={routes.passwordReset()} />,
+  <Route component={ForgotPassword} exact key="passwordReset" noLayout path={routes.passwordReset()} />,
+  <Route component={ChangePassword} exact key="passwordReset" path={routes.passwordChange()} />,
   <Route
     exact
     key="account"

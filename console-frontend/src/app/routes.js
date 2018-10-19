@@ -8,6 +8,9 @@ const routes = {
   login() {
     return '/login'
   },
+  passwordChange() {
+    return '/password_change'
+  },
   passwordReset() {
     return '/password-reset'
   },
