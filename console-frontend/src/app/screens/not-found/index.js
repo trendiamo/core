@@ -3,6 +3,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import HotTub from '@material-ui/icons/HotTub'
 import React from 'react'
+import routes from 'app/routes'
 import styled from 'styled-components'
 import { Title } from 'react-admin'
 import { compose, withHandlers } from 'recompose'
@@ -47,6 +48,6 @@ const NotFound = ({ onSafetyClick }) => (
 
 export default compose(
   withHandlers({
-    onSafetyClick: () => () => (window.location = '/'),
+    onSafetyClick: () => () => (window.location = routes.root()),
   })
 )(NotFound)

@@ -1,21 +1,21 @@
 const routes = {
-  root() {
-    return '/'
+  account() {
+    return '/account'
   },
   isPasswordReset() {
     return window.location.pathname.includes('/password_reset')
   },
-  passwordReset() {
-    return '/password_reset'
-  },
-  account() {
-    return '/account'
-  },
   login() {
     return '/login'
   },
+  passwordReset() {
+    return '/password_reset'
+  },
   requestPasswordReset() {
     return '/request_password_reset'
+  },
+  root() {
+    return '/'
   },
 }
 

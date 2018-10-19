@@ -7,9 +7,9 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
+import routes from 'app/routes'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { compose, withHandlers, withProps, withState } from 'recompose'
-import routes from '../routes'
 
 const UserMenu = ({ onAccountButtonClick, initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
   <React.Fragment>

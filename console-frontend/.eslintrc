@@ -17,6 +17,9 @@
       "node": {
         "moduleDirectory": ["node_modules", "src/"]
       }
+    },
+    "react": {
+      "version": "16.5.2"
     }
   },
   "globals": {

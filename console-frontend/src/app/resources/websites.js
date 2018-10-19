@@ -1,6 +1,6 @@
 import React from 'react'
+import routes from 'app/routes'
 import { DisabledInput, Edit, SelectInput, SimpleForm, TextInput } from 'react-admin'
-import routes from '../routes'
 
 const WebsiteEdit = ({ id, ...props }) => (
   <Edit {...props} id={id} title="Account">

@@ -1,6 +1,6 @@
 import { AUTH_CHECK } from 'react-admin'
 import queryString from 'query-string'
-import routes from '../routes'
+import routes from 'app/routes'
 
 const auth = {
   clear() {

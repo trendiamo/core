@@ -1,17 +1,17 @@
-import React from 'react'
 import { ChipField } from 'react-admin'
+import React from 'react'
 
 var statusStyles = {
+  ARCHIVED: {
+    background: '#fb7604',
+    color: '#fff',
+  },
   DRAFT: {
     background: '#4a90e2',
     color: '#fff',
   },
   PUBLISHED: {
     background: '#04fb50',
-    color: '#fff',
-  },
-  ARCHIVED: {
-    background: '#fb7604',
     color: '#fff',
   },
 }
