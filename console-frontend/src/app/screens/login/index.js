@@ -4,13 +4,14 @@ import AuthLayout from '../auth-layout'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
+import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
 import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
 import { StyledButton, StyledForm } from '../shared'
 
-const Login = ({ errors, loginForm, loginSubmit, setLoginValue, onForgotPassword }) => (
+const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout title="Log in">
     <StyledForm onSubmit={loginSubmit}>
       {errors && (
@@ -44,9 +45,11 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue, onForgotPassword
       <StyledButton color="primary" fullWidth type="submit" variant="raised">
         {'Log in'}
       </StyledButton>
-      <StyledButton color="secondary" fullWidth onClick={onForgotPassword} type="submit" variant="raised">
-        {'Forgot Password'}
-      </StyledButton>
+      <Link to={routes.requestPasswordReset()}>
+        <StyledButton color="secondary" fullWidth type="submit" variant="raised">
+          {'Forgot Password'}
+        </StyledButton>
+      </Link>
     </StyledForm>
   </AuthLayout>
 )
@@ -61,10 +64,6 @@ export default compose(
       if (auth.isLoggedIn()) {
         window.location.href = routes.root()
       }
-    },
-    onForgotPassword: () => event => {
-      event.preventDefault()
-      window.location.href = routes.requestPasswordReset()
     },
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),

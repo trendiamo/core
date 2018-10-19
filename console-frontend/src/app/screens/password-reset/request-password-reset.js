@@ -3,12 +3,13 @@ import AuthLayout from '../auth-layout'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
+import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
 import { compose, withHandlers, withState } from 'recompose'
 import { Notification, StyledButton, StyledForm } from '../shared'
 
-const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, notification, onBackToLogin }) => (
+const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, notification }) => (
   <AuthLayout title="Reset Password">
     <StyledForm onSubmit={passwordChangeSubmit}>
       {notification && (
@@ -30,9 +31,11 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
       <StyledButton color="primary" fullWidth type="submit" variant="raised">
         {'Send Reset Instructions'}
       </StyledButton>
-      <StyledButton color="secondary" fullWidth onClick={onBackToLogin} variant="raised">
-        {'Back to Login'}
-      </StyledButton>
+      <Link to={routes.login()}>
+        <StyledButton color="secondary" fullWidth variant="raised">
+          {'Back to Login'}
+        </StyledButton>
+      </Link>
     </StyledForm>
   </AuthLayout>
 )
