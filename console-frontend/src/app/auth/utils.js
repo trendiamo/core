@@ -1,12 +1,12 @@
 import auth from './index'
 import routes from 'app/routes'
 
-const baseApiUrl = `https://${process.env.REACT_APP_API_ENDPOINT}/api/v1`
-const SIGNUP_URL = `${baseApiUrl}/users/sign_up`
-const SIGNIN_URL = `${baseApiUrl}/users/sign_in`
-const SIGNOUT_URL = `${baseApiUrl}/users/sign_out`
-const PASSWORD_FORM_URL = `${baseApiUrl}/users/password`
-const PASSWORD_RESET_URL = `${baseApiUrl}/users/password`
+const BASE_API_PATH = '/api/v1'
+const SIGNUP_URL = `${BASE_API_PATH}/users/sign_up`
+const SIGNIN_URL = `${BASE_API_PATH}/users/sign_in`
+const SIGNOUT_URL = `${BASE_API_PATH}/users/sign_out`
+const PASSWORD_FORM_URL = `${BASE_API_PATH}/users/password`
+const PASSWORD_RESET_URL = `${BASE_API_PATH}/users/password`
 
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {

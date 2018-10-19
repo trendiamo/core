@@ -8,14 +8,13 @@ import { setContext } from 'apollo-link-context'
 // import * as serviceWorker from "./serviceWorker";
 
 const history = createHistory()
-const uriPlugAdmin = `https://${process.env.REACT_APP_API_ENDPOINT}/graphql`
 const authLink1 = setContext((_, { headers }) => ({
   headers: {
     ...headers,
     ...auth.getHeaders(),
   },
 }))
-const authLink = authLink1.concat(new HttpLink({ uri: uriPlugAdmin }))
+const authLink = authLink1.concat(new HttpLink({ uri: '/graphql' }))
 
 ReactDOM.render(<App authLink={authLink} history={history} />, document.getElementById('root'))
 
