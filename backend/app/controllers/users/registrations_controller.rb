@@ -54,6 +54,7 @@ module Users
 
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name subscribed_to_newsletter])
+      # devise_parameter_sanitizer.permit(:update_resource, keys: %i[])
     end
   end
 end

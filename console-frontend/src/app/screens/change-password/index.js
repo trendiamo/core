@@ -77,7 +77,7 @@ export default compose(
         )
         if (success) history.push(routes.root())
       } else {
-        setErrors("New passwords don't match")
+        setErrors('New passwords dont match')
       }
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
