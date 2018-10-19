@@ -19,7 +19,7 @@ class DeviseSparkpostMailer < Devise::Mailer
   def mail(*args)
     if ENV["SPARKPOST_API_KEY"]
       # https://github.com/the-refinery/sparkpost_rails#using-sparkpost-templates
-      mail(*args) { |f| f.text { render plain: "" } }
+      super(*args) { |f| f.text { render plain: "" } }
     else
       Rails.logger.info("Deliver email: #{args.join}")
     end
