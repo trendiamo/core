@@ -8,6 +8,7 @@ import PasswordReset from 'app/screens/password-reset'
 import React from 'react'
 import RequestPasswordReset from 'app/screens/password-reset/request-password-reset'
 import { Route } from 'react-router-dom'
+import routes from './routes'
 import WebsiteEdit from './resources/websites'
 import { Admin, Resource } from 'react-admin'
 import auth, { authProvider } from 'app/auth'
@@ -21,13 +22,13 @@ const jss = create({
   insertionPoint: document.getElementById('jss-insertion-point'),
 })
 
-const routes = [
-  <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path="/request_password_reset" />,
-  <Route component={PasswordReset} exact key="passwordReset" noLayout path="/password_reset" />,
+const customRoutes = [
+  <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path={routes.requestPasswordReset()} />,
+  <Route component={PasswordReset} exact key="passwordReset" noLayout path={routes.passwordReset()} />,
   <Route
     exact
     key="account"
-    path="/account"
+    path={routes.account()}
     render={() => (
       <WebsiteEdit basePath="/Website" id={auth.getUser().websiteRef} location={{}} match={{}} resource="Website" />
     )}
@@ -40,7 +41,7 @@ const App = ({ dataProvider, history }) => (
       appLayout={Layout}
       authProvider={authProvider}
       catchAll={NotFound}
-      customRoutes={routes}
+      customRoutes={customRoutes}
       dataProvider={dataProvider.dataProvider}
       history={history}
       loginPage={LoginPage}
