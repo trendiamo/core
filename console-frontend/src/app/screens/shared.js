@@ -1,6 +1,7 @@
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
+import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 
@@ -26,9 +27,27 @@ const Main = styled.main`
   }
 `
 
-const Notification = styled(Typography)`
-  color: #00ae5f;
-`
+const Notification = ({ data }) => {
+  const commonStyle = {
+    fontWeight: 700,
+  }
+  const styles = {
+    error: {
+      color: '#f44',
+    },
+    success: {
+      color: '#4f7',
+    },
+  }
+  const status = data ? data.status : null
+  const message = data ? data.message : null
+  const currentStyle = { ...commonStyle, ...styles[status] }
+  return (
+    <Typography align="center" style={currentStyle} variant="body2">
+      {message}
+    </Typography>
+  )
+}
 
 const StyledPaper = styled(Paper)`
   align-items: center;

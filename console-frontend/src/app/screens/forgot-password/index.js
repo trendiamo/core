@@ -6,19 +6,14 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import queryString from 'query-string'
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from '../shared'
+import { Notification, StyledButton, StyledForm } from '../shared'
 
-const PasswordReset = ({ errors, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
+const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
     <AuthLayout title="Reset Password">
       <StyledForm onSubmit={passwordResetSubmit}>
-        {errors && (
-          <Typography align="center" color="error" variant="body2">
-            {errors}
-          </Typography>
-        )}
+        <Notification data={info} />
         <FormControl fullWidth margin="normal" required>
           <InputLabel htmlFor="email">{'New Password'}</InputLabel>
           <Input
@@ -56,9 +51,9 @@ export default compose(
     fieldOne: '',
     fieldTwo: '',
   }),
-  withState('errors', 'setErrors', null),
+  withState('info', 'setInfo', null),
   withHandlers({
-    passwordResetSubmit: ({ passwordForm, setErrors }) => async event => {
+    passwordResetSubmit: ({ passwordForm, setInfo }) => async event => {
       event.preventDefault()
       const parsedUrl = queryString.parse(window.location.search)
       if (passwordForm.fieldOne === passwordForm.fieldTwo) {
@@ -69,10 +64,10 @@ export default compose(
               reset_password_token: parsedUrl.reset_password_token,
             },
           },
-          setErrors
+          setInfo
         )
       } else {
-        setErrors("Passwords don't match")
+        setInfo("Passwords don't match")
       }
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
