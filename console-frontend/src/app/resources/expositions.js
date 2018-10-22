@@ -7,10 +7,12 @@ import {
   Edit,
   EditButton,
   List,
+  Responsive,
   SelectInput,
   Show,
   ShowButton,
   SimpleForm,
+  SimpleList,
   SimpleShowLayout,
   TextField,
   TextInput,
@@ -31,16 +33,27 @@ export const ExpositionShow = props => (
 
 export const ExpositionsList = ({ ...props }) => (
   <List {...props} title="Expositions">
-    <Datagrid>
-      <TextField source="id" />
-      <TextField source="description" />
-      <StatusField source="status" />
-      <TextField source="ctaText" />
-      <TextField source="ctaUrl" />
-      <TextField source="domain" />
-      <EditButton />
-      <ShowButton />
-    </Datagrid>
+    <Responsive
+      medium={
+        <Datagrid>
+          <TextField source="id" />
+          <TextField source="description" />
+          <StatusField source="status" />
+          <TextField source="ctaText" />
+          <TextField source="ctaUrl" />
+          <TextField source="domain" />
+          <EditButton />
+          <ShowButton />
+        </Datagrid>
+      }
+      small={
+        <SimpleList
+          primaryText={record => record.id}
+          secondaryText={record => record.description}
+          tertiaryText={record => record.status}
+        />
+      }
+    />
   </List>
 )
 
