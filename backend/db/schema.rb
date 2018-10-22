@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20181022130500) do
     t.boolean "subscribed_to_newsletter", default: false, null: false
     t.string "exposition_hostname"
     t.string "website_ref"
-    t.bigint "account_id"
+    t.bigint "account_id", null: false
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20181022130500) do
     t.string "hostnames", null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "account_id"
+    t.bigint "account_id", null: false
     t.index ["account_id"], name: "index_websites_on_account_id"
     t.index ["hostnames"], name: "index_websites_on_hostnames", using: :gin
   end
