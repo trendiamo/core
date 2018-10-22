@@ -4,7 +4,7 @@ import { SaveButton } from 'react-admin'
 import withWidth from '@material-ui/core/withWidth'
 import React, { Children } from 'react'
 const valueOrDefault = (value, defaultValue) => (typeof value === 'undefined' ? defaultValue : value)
-const Toolbar = ({
+const ToolbarWithoutDelete = ({
   basePath,
   children,
   handleSubmit,
@@ -49,8 +49,8 @@ const Toolbar = ({
     )}
   </MuiToolbar>
 )
-Toolbar.defaultProps = {
+ToolbarWithoutDelete.defaultProps = {
   submitOnEnter: true,
 }
 const enhance = compose(withWidth())
-export default enhance(Toolbar)
+export default enhance(ToolbarWithoutDelete)
