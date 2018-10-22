@@ -6,20 +6,15 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import React from 'react'
 import routes from 'app/routes'
-import Typography from '@material-ui/core/Typography'
 import { withRouter } from 'react-router'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from '../shared'
+import { Notification, StyledButton, StyledForm } from '../shared'
 
-const ChangePassword = ({ errors, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
+const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
     <AuthLayout title="Change Password">
       <StyledForm onSubmit={passwordResetSubmit}>
-        {errors && (
-          <Typography align="center" color="error" variant="body2">
-            {errors}
-          </Typography>
-        )}
+        <Notification data={info} />
         <FormControl fullWidth margin="normal" required>
           <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
           <Input
@@ -59,10 +54,10 @@ export default compose(
     password: '',
     passwordConfirmation: '',
   }),
-  withState('errors', 'setErrors', null),
+  withState('info', 'setInfo', null),
   withRouter,
   withHandlers({
-    passwordResetSubmit: ({ passwordForm, setErrors, history }) => async event => {
+    passwordResetSubmit: ({ passwordForm, setInfo, history }) => async event => {
       event.preventDefault()
       if (passwordForm.password === passwordForm.passwordConfirmation) {
         const success = await apiPasswordChange(
@@ -73,11 +68,11 @@ export default compose(
               password_confirmation: passwordForm.passwordConfirmation,
             },
           },
-          setErrors
+          setInfo
         )
         if (success) history.push(routes.root())
       } else {
-        setErrors("New passwords don't match")
+        setInfo({ message: "New passwords don't match", status: 'error' })
       }
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {

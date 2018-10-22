@@ -6,23 +6,13 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
-import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
 import { Notification, StyledButton, StyledForm } from '../shared'
 
-const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, notification, errors }) => (
+const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, info }) => (
   <AuthLayout title="Reset Password">
     <StyledForm onSubmit={passwordChangeSubmit}>
-      {notification && (
-        <Notification align="center" variant="body2">
-          {notification}
-        </Notification>
-      )}
-      {errors && (
-        <Typography align="center" color="error" variant="body2">
-          {errors}
-        </Typography>
-      )}
+      <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'Email'}</InputLabel>
         <Input
@@ -48,16 +38,15 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
 
 export default compose(
   withState('passwordForm', 'setPasswordForm', { email: '' }),
-  withState('notification', 'setNotification', null),
-  withState('errors', 'setErrors', null),
+  withState('info', 'setInfo', null),
   withHandlers({
     onBackToLogin: () => event => {
       event.preventDefault()
       window.location.href = routes.login()
     },
-    passwordChangeSubmit: ({ passwordForm, setNotification, setErrors }) => async event => {
+    passwordChangeSubmit: ({ passwordForm, setInfo }) => async event => {
       event.preventDefault()
-      await apiPasswordEmailLink({ user: { email: passwordForm.email } }, setErrors, setNotification)
+      await apiPasswordEmailLink({ user: { email: passwordForm.email } }, setInfo)
     },
     setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>
       setPasswordForm({

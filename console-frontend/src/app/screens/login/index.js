@@ -7,18 +7,13 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
-import Typography from '@material-ui/core/Typography'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from '../shared'
+import { Notification, StyledButton, StyledForm } from '../shared'
 
-const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
+const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout title="Log in">
     <StyledForm onSubmit={loginSubmit}>
-      {errors && (
-        <Typography align="center" color="error" variant="body2">
-          {errors}
-        </Typography>
-      )}
+      <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'Email Address'}</InputLabel>
         <Input
@@ -56,11 +51,11 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
 
 export default compose(
   withState('loginForm', 'setLoginForm', { email: '', password: '' }),
-  withState('errors', 'setErrors', null),
+  withState('info', 'setInfo', null),
   withHandlers({
-    loginSubmit: ({ loginForm, setErrors }) => async event => {
+    loginSubmit: ({ loginForm, setInfo }) => async event => {
       event.preventDefault()
-      await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } }, setErrors)
+      await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } }, setInfo)
       if (auth.isLoggedIn()) {
         window.location.href = routes.root()
       }

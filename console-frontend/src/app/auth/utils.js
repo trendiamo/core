@@ -9,6 +9,29 @@ const PASSWORD_FORM_URL = `${BASE_API_PATH}/users/password`
 const PASSWORD_RESET_URL = `${BASE_API_PATH}/users/password`
 const PASSWORD_CHANGE_URL = `${BASE_API_PATH}/users/change_password`
 
+// Converts the input (json) to an object where the status keyword is always present.
+// Simplifies the use in the <Notification /> component
+const convertToInfo = (json, defaultMessage) => {
+  defaultMessage = defaultMessage || 'Success!'
+  const hasError = json.error || json.errors
+  const status = hasError ? 'error' : 'success'
+  const message = hasError ? errorMessages(json) : defaultMessage
+  return { message: message, status: status }
+}
+
+const errorMessages = json => {
+  const defaultErrorMessage = 'Something went wrong!'
+  if (json.error) {
+    return 'Invalid Credentials'
+  } else {
+    return typeof json === 'object' ? mapErrors(json) : defaultErrorMessage
+  }
+}
+
+const mapErrors = json => {
+  return json.errors.map(error => `${error}`).join('')
+}
+
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
@@ -54,72 +77,52 @@ const apiRequestSignout = async url => {
   return res.json()
 }
 
-export const apiPasswordResetSaga = async (url, body, setErrors) => {
+export const apiPasswordResetSaga = async (url, body, setInfo) => {
   const json = await apiPasswordRequest(url, body)
-  if (json.error || json.errors) {
-    setErrors(errorMessages(json))
-  } else {
+  const info = convertToInfo(json)
+  if (info.status === 'success') {
     auth.setAuth({ token: json.authenticationToken, user: json.user })
     window.location.href = routes.root()
   }
+  setInfo(info)
 }
 
-export const apiPasswordChangeSaga = async (url, body, setErrors) => {
+export const apiPasswordChangeSaga = async (url, body, setInfo) => {
   const json = await apiPasswordChangeRequest(url, body)
-  const error = Boolean(json.error || json.errors)
-  if (error) {
-    setErrors(errorMessages(json))
+  const info = convertToInfo(json)
+  if (info.status === 'error') {
+    setInfo(info)
   }
-  return !error
+  return info.status !== 'error'
 }
 
-const errorMessages = json => {
-  if (json.error) {
-    return 'Invalid Credentials'
-  } else {
-    return errorMessagesContent(json, 'Can not create account')
-  }
-}
-
-const errorMessagesContent = (json, defaultMessage) => {
-  if (typeof json.errors === 'object') {
-    return json.errors.map(error => `${error}`).join('')
-  } else {
-    return defaultMessage
-  }
-}
-
-export const apiSaga = async (url, body, setErrors) => {
+export const apiPasswordEmailLinkSaga = async (url, body, setInfo) => {
   const json = await apiRequest(url, body)
-  if (json.error || json.errors) {
-    setErrors(errorMessages(json))
-  } else {
+  setInfo(convertToInfo(json, 'Email sent!'))
+}
+
+export const apiSaga = async (url, body, setInfo) => {
+  const json = await apiRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') {
     auth.setAuth({ token: json.authenticationToken, user: json.user })
   }
+  setInfo(info)
 }
 
-export const apiSagaSignout = async (url, body) => {
-  const json = await apiRequestSignout(url, body)
-  if (json.error || json.errors) {
-    console.error(json.error)
-  } else {
-    auth.clear()
+export const apiSagaSignout = async url => {
+  const json = await apiRequestSignout(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') {
+    return auth.clear()
   }
-}
-
-export const apiPasswordEmailLinkSaga = async (url, body, setErrors, setNotification) => {
-  const json = await apiRequest(url, body)
-  if (json.error || json.errors) {
-    setErrors(errorMessages(json))
-  } else {
-    setNotification('Email sent!')
-  }
+  console.error('Error on Logout!')
 }
 
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
-export const apiSignIn = (body, setErrors) => apiSaga(SIGNIN_URL, body, setErrors)
+export const apiSignIn = (body, setInfo) => apiSaga(SIGNIN_URL, body, setInfo)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
-export const apiPasswordEmailLink = (body, setErrors, setNotification) =>
-  apiPasswordEmailLinkSaga(PASSWORD_FORM_URL, body, setErrors, setNotification)
-export const apiPasswordReset = (body, setErrors) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setErrors)
-export const apiPasswordChange = (body, setErrors) => apiPasswordChangeSaga(PASSWORD_CHANGE_URL, body, setErrors)
+
+export const apiPasswordEmailLink = (body, setInfo) => apiPasswordEmailLinkSaga(PASSWORD_FORM_URL, body, setInfo)
+export const apiPasswordReset = (body, setInfo) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setInfo)
+export const apiPasswordChange = (body, setInfo) => apiPasswordChangeSaga(PASSWORD_CHANGE_URL, body, setInfo)
