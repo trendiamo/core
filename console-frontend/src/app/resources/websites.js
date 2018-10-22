@@ -1,6 +1,6 @@
 import React from 'react'
 import routes from 'app/routes'
-import Toolbar from '../layout/toolbar'
+import Toolbar from '../layout/toolbar-without-delete'
 import { DisabledInput, Edit, SelectInput, SimpleForm, TextInput } from 'react-admin'
 
 const WebsiteEdit = ({ id, ...props }) => (
