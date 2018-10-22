@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181019150228) do
+ActiveRecord::Schema.define(version: 20181022130500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,11 +76,12 @@ ActiveRecord::Schema.define(version: 20181019150228) do
     t.string "name", null: false
     t.string "title", null: false
     t.string "subtitle"
-    t.json "hostnames", default: [], null: false, array: true
+    t.string "hostnames", null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id"
     t.index ["account_id"], name: "index_websites_on_account_id"
+    t.index ["hostnames"], name: "index_websites_on_hostnames", using: :gin
   end
 
   add_foreign_key "auth_tokens", "users"
