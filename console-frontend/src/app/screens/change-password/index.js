@@ -21,38 +21,28 @@ const ChangePassword = ({ errors, passwordForm, passwordResetSubmit, setFieldVal
           </Typography>
         )}
         <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="email">{'Current Password'}</InputLabel>
+          <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
           <Input
-            autoComplete="email"
             autoFocus
-            id="currentPassword"
             name="currentPassword"
             onChange={setFieldValue}
+            required
             type="password"
             value={passwordForm.currentPassword}
           />
         </FormControl>
         <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="email">{'New Password'}</InputLabel>
-          <Input
-            autoComplete="email"
-            id="email"
-            name="password"
-            onChange={setFieldValue}
-            type="password"
-            value={passwordForm.password}
-          />
+          <InputLabel htmlFor="password">{'New Password'}</InputLabel>
+          <Input name="password" onChange={setFieldValue} type="password" value={passwordForm.password} />
         </FormControl>
         <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="password">{'Repeat Password'}</InputLabel>
+          <InputLabel htmlFor="passwordConfirmation">{'Repeat Password'}</InputLabel>
           <Input
-            autoComplete="current-password"
-            id="password"
-            name="password_confirmation"
+            name="passwordConfirmation"
             onChange={setFieldValue}
             required
             type="password"
-            value={passwordForm.password_confirmation}
+            value={passwordForm.passwordConfirmation}
           />
         </FormControl>
         <StyledButton color="primary" fullWidth type="submit" variant="raised">
@@ -67,20 +57,20 @@ export default compose(
   withState('passwordForm', 'setPasswordForm', {
     currentPassword: '',
     password: '',
-    password_confirmation: '',
+    passwordConfirmation: '',
   }),
   withState('errors', 'setErrors', null),
   withRouter,
   withHandlers({
     passwordResetSubmit: ({ passwordForm, setErrors, history }) => async event => {
       event.preventDefault()
-      if (passwordForm.password === passwordForm.password_confirmation) {
+      if (passwordForm.password === passwordForm.passwordConfirmation) {
         const success = await apiPasswordChange(
           {
             user: {
               current_password: passwordForm.currentPassword,
               password: passwordForm.password,
-              password_confirmation: passwordForm.password_confirmation,
+              password_confirmation: passwordForm.passwordConfirmation,
             },
           },
           setErrors
