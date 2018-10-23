@@ -26,7 +26,6 @@ class InfluencersController < ApplicationController
   def create
     @influencer = Influencer.new(influencer_params)
     authorize @influencer
-    @influencer.account = current_user.account
     if @influencer.save
       render json: @influencer, status: :created
     else
