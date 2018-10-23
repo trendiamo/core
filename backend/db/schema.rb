@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181022130500) do
+ActiveRecord::Schema.define(version: 20181023135040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 20181022130500) do
     t.string "profile_pic_url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "account_id", null: false
+    t.index ["account_id"], name: "index_influencers_on_account_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -85,6 +87,7 @@ ActiveRecord::Schema.define(version: 20181022130500) do
   end
 
   add_foreign_key "auth_tokens", "users"
+  add_foreign_key "influencers", "accounts"
   add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
 end
