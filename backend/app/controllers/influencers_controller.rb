@@ -26,6 +26,7 @@ class InfluencersController < ApplicationController
   def create
     @influencer = Influencer.new(influencer_params)
     authorize @influencer
+    @influencer.account = current_user.account
     if @influencer.save
       render json: @influencer, status: :created
     else
@@ -46,7 +47,7 @@ class InfluencersController < ApplicationController
   private
 
   def influencer_params
-    params.require(:influencer).permit(:id, :name, :description, :profile_pic_url).merge(account: current_user.account)
+    params.require(:influencer).permit(:id, :name, :description, :profile_pic_url)
   end
 
   def render_error
