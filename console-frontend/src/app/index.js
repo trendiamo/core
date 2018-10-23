@@ -1,4 +1,3 @@
-import buildOpenCrudProvider from 'ra-data-opencrud'
 import ChangePassword from 'app/screens/change-password'
 import { create } from 'jss'
 import ForgotPassword from 'app/screens/forgot-password'
@@ -13,9 +12,7 @@ import routes from './routes'
 import WebsiteEdit from './resources/websites'
 import { Admin, Resource } from 'react-admin'
 import auth, { authProvider } from 'app/auth'
-import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
-import { ExpositionsCreate, ExpositionsEdit, ExpositionShow, ExpositionsList } from 'app/resources/expositions'
 
 const generateClassName = createGenerateClassName()
 const jss = create({
@@ -32,7 +29,7 @@ const customRoutes = [
     key="account"
     path={routes.account()}
     render={() => (
-      <WebsiteEdit basePath="/Website" id={auth.getUser().websiteRef} location={{}} match={{}} resource="Website" />
+      <WebsiteEdit basePath="/websites" id={auth.getUser().websiteRef} location={{}} match={{}} resource="websites" />
     )}
   />,
 ]
@@ -44,32 +41,13 @@ const App = ({ dataProvider, history }) => (
       authProvider={authProvider}
       catchAll={NotFound}
       customRoutes={customRoutes}
-      dataProvider={dataProvider.dataProvider}
+      dataProvider={dataProvider}
       history={history}
       loginPage={LoginPage}
     >
-      <Resource
-        create={ExpositionsCreate}
-        edit={ExpositionsEdit}
-        list={ExpositionsList}
-        name="Exposition"
-        show={ExpositionShow}
-      />
-      <Resource name="Website" />
+      <Resource name="websites" />
     </Admin>
   </JssProvider>
 )
 
-export default compose(
-  withState('dataProvider', 'setDataProvider', null),
-  withState('isLoggedIn', 'setIsloggedIn', null),
-  lifecycle({
-    componentDidMount() {
-      const { authLink, setDataProvider } = this.props
-      buildOpenCrudProvider({ clientOptions: { link: authLink } })
-        .then(dataProvider => setDataProvider({ dataProvider }))
-        .catch(console.error)
-    },
-  }),
-  branch(({ dataProvider }) => !dataProvider, renderNothing)
-)(App)
+export default App

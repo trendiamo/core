@@ -1,25 +1,22 @@
 import App from 'app'
 import auth from 'app/auth'
 import createHistory from 'history/createBrowserHistory'
-import { HttpLink } from 'apollo-link-http'
+import { fetchUtils } from 'react-admin'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { setContext } from 'apollo-link-context'
-// import * as serviceWorker from "./serviceWorker";
+import simpleRestProvider from 'ra-data-simple-rest'
 
 const history = createHistory()
-const uriPlugAdmin = `https://${process.env.REACT_APP_API_ENDPOINT}/graphql`
-const authLink1 = setContext((_, { headers }) => ({
-  headers: {
-    ...headers,
-    ...auth.getHeaders(),
-  },
-}))
-const authLink = authLink1.concat(new HttpLink({ uri: uriPlugAdmin }))
 
-ReactDOM.render(<App authLink={authLink} history={history} />, document.getElementById('root'))
+const httpClient = (url, options = {}) => {
+  if (!options.headers) {
+    options.headers = new Headers({ Accept: 'application/json' })
+  }
+  Object.keys(auth.getHeaders()).forEach(key => {
+    options.headers.set(key, auth.getHeaders()[key])
+  })
+  return fetchUtils.fetchJson(url, options)
+}
+const dataProvider = simpleRestProvider(`https://${process.env.REACT_APP_API_ENDPOINT}/api/v1`, httpClient)
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-// serviceWorker.unregister();
+ReactDOM.render(<App dataProvider={dataProvider} history={history} />, document.getElementById('root'))
