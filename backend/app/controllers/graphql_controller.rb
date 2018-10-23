@@ -1,20 +1,14 @@
 class GraphqlController < ApplicationController
-  # before_action :authenticate_user!
-
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    context = { current_user: current_user, headers: request.headers, variables: variables }
+    context = {}
     result = TrendiamoSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
-    check_permission(result) ? (render json: result) : (render json: { errors: ERROR_MESSAGE }, status: :forbidden)
+    render json: result
   end
 
   private
-
-  def check_permission(result)
-    !(result.to_h["errors"] && result.to_h["errors"].first["message"] == ERROR_MESSAGE)
-  end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)
