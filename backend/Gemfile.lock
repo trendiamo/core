@@ -74,6 +74,7 @@ GEM
     byebug (9.1.0)
     concurrent-ruby (1.0.5)
     crass (1.0.3)
+    database_cleaner (1.7.0)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -90,26 +91,17 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faker (1.8.7)
+    faker (1.9.1)
       i18n (>= 0.7)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (0.12.2)
-      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    graphlient (0.3.3)
-      faraday
-      faraday_middleware
-      graphql-client
     graphql (1.7.13)
-    graphql-client (0.13.0)
-      activesupport (>= 3.0, < 6.0)
-      graphql (~> 1.6)
     graphql-errors (0.2.0)
       graphql (>= 1.6.0, < 2)
-    i18n (0.9.1)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     jmespath (1.4.0)
     launchy (2.4.3)
@@ -128,7 +120,7 @@ GEM
     method_source (0.9.0)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.11.1)
+    minitest (5.10.3)
     multipart-post (2.0.0)
     nio4r (2.2.0)
     nokogiri (1.8.1)
@@ -225,15 +217,16 @@ DEPENDENCIES
   aws-sdk-s3
   brakeman
   byebug
+  database_cleaner
   devise
   dotenv-rails
   factory_bot_rails
   faker
-  graphlient
   graphql
   graphql-errors
   letter_opener
   listen (>= 3.0.5, < 3.2)
+  minitest (= 5.10.3)
   pg (~> 0.18)
   puma (~> 3.7)
   pundit

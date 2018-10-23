@@ -24,6 +24,7 @@ bin/rails s
 ## Code checks
 
 ```sh
+bin/rails t
 bin/rubocop
 bin/brakeman -q
 ```

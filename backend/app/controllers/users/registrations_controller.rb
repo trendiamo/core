@@ -29,7 +29,7 @@ module Users
       end
     end
 
-    def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
       self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
       prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
@@ -37,8 +37,13 @@ module Users
       yield resource if block_given?
       if resource_updated
         if is_flashing_format?
-          flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
-            :update_needs_confirmation : :updated
+          flash_key = begin
+            if update_needs_confirmation?(resource, prev_unconfirmed_email)
+              :update_needs_confirmation
+            else
+              :updated
+            end
+          end
           render json: { errors: flash_key }
         end
         bypass_sign_in resource, scope: resource_name

@@ -14,8 +14,6 @@ gem "acts_as_tenant"
 gem "aws-sdk-s3"
 gem "brakeman"
 gem "devise"
-gem "faker"
-gem "graphlient"
 gem "graphql"
 gem "graphql-errors"
 gem "pundit"
@@ -39,6 +37,12 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
+end
+
+group :test do
+  gem "database_cleaner"
+  gem "faker"
+  gem "minitest", "5.10.3" # https://stackoverflow.com/questions/48229515/rails-minitest-crashing-when-tests-fail
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
