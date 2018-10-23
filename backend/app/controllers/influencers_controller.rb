@@ -2,17 +2,19 @@ class InfluencersController < ApplicationController
   def index
     @influencers = Influencer.all
     authorize @influencers
+    response.headers["Content-Range"] = "influencers #{@influencers.count}/#{@influencers.count}"
+    response.headers["Access-Control-Expose-Headers"] = "Content-Range"
     render json: @influencers
   end
 
   def show
-    @influencer = Influencer.find(influencer_params[:id])
+    @influencer = Influencer.find(params[:id])
     authorize @influencer
     render json: @influencer
   end
 
   def update
-    @influencer = Influencer.find(influencer_params[:id])
+    @influencer = Influencer.find(params[:id])
     authorize @influencer
     if @influencer.update(influencer_params)
       render json: @influencer
@@ -32,10 +34,10 @@ class InfluencersController < ApplicationController
   end
 
   def destroy
-    @influencer = Influencer.find(influencer_params[:id])
+    @influencer = Influencer.find(params[:id])
     authorize @influencer
     if @influencer.destroy
-      render json: { ok: true }
+      render json: { data: @influencer }
     else
       render_error
     end
