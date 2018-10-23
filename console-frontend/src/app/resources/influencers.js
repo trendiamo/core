@@ -1,4 +1,7 @@
+import { Field } from 'redux-form'
+import ProfilePicture from '../../shared/profile-picture'
 import React from 'react'
+import { compose, withHandlers, withState } from 'recompose'
 import {
   Create,
   Datagrid,
@@ -15,6 +18,31 @@ import {
   TextField,
   TextInput,
 } from 'react-admin'
+
+const FieldPic = ({ picValue, setPicture }) => <ProfilePicture onChange={setPicture} value={picValue} />
+
+const EnhancedProfilePic = compose(
+  withState('picValue', 'setPicValue', ({ input }) => input.value),
+  withHandlers({
+    setPicture: ({ input, setPicValue }) => value => {
+      setPicValue(value)
+      input.onChange(value)
+    },
+  })
+)(FieldPic)
+
+const ProfilePicInput = ({ source }) => <Field component={EnhancedProfilePic} label="picture" name={source} />
+
+export const InfluencersEdit = ({ ...props }) => (
+  <Edit {...props} title="Edit Influencer">
+    <SimpleForm>
+      <ProfilePicInput source="profilePicUrl" />
+      <DisabledInput source="id" />
+      <TextInput source="name" />
+      <TextInput source="description" />
+    </SimpleForm>
+  </Edit>
+)
 
 export const InfluencerShow = props => (
   <Show {...props} title="Influencer">
@@ -49,17 +77,6 @@ export const InfluencersList = ({ ...props }) => (
       }
     />
   </List>
-)
-
-export const InfluencersEdit = ({ ...props }) => (
-  <Edit {...props} title="Edit Influencer">
-    <SimpleForm>
-      <DisabledInput source="id" />
-      <TextInput source="name" />
-      <TextInput source="description" />
-      <TextInput source="profilePicUrl" />
-    </SimpleForm>
-  </Edit>
 )
 
 export const InfluencersCreate = ({ ...props }) => (
