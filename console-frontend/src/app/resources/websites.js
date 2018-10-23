@@ -1,7 +1,9 @@
 import React from 'react'
 import routes from 'app/routes'
 import Toolbar from '../layout/toolbar-without-delete'
-import { DisabledInput, Edit, SelectInput, SimpleForm, TextInput } from 'react-admin'
+import { ArrayInput, DisabledInput, Edit, SimpleForm, SimpleFormIterator, TextInput } from 'react-admin'
+
+const CustomTextInput = record => <TextInput label={false} source={record.source} type="url" />
 
 const WebsiteEdit = ({ id, ...props }) => (
   <Edit {...props} id={id} title="Account">
@@ -10,15 +12,11 @@ const WebsiteEdit = ({ id, ...props }) => (
       <DisabledInput source="name" />
       <TextInput source="title" />
       <TextInput source="subtitle" />
-      <SelectInput
-        choices={[
-          { id: 'DRAFT', name: 'DRAFT' },
-          { id: 'PUBLISHED', name: 'PUBLISHED' },
-          { id: 'ARCHIVED', name: 'ARCHIVED' },
-        ]}
-        label="Status"
-        source="status"
-      />
+      <ArrayInput source="hostnames">
+        <SimpleFormIterator>
+          <CustomTextInput />
+        </SimpleFormIterator>
+      </ArrayInput>
     </SimpleForm>
   </Edit>
 )

@@ -18,6 +18,6 @@ class WebsitesController < ApplicationController
   private
 
   def website_params
-    params.require(:website).permit(:id, :name, :title, :subtitle, :hostnames)
+    params.require(:website).permit(:id, :name, :title, :subtitle, hostnames: [])
   end
 end
