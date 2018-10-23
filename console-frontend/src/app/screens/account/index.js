@@ -76,6 +76,7 @@ export default compose(
       const json = await apiAccountShow(setInfo)
       setAccountForm({
         id: json.id,
+        hostnames: json.hostnames,
         name: json.name,
         subtitle: json.subtitle,
         title: json.title,
