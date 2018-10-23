@@ -1,3 +1,5 @@
+import Account from 'app/screens/account'
+import { authProvider } from 'app/auth'
 import ChangePassword from 'app/screens/change-password'
 import { create } from 'jss'
 import ForgotPassword from 'app/screens/forgot-password'
@@ -10,9 +12,7 @@ import RequestPasswordReset from 'app/screens/forgot-password/request-password-r
 import { Route } from 'react-router-dom'
 import routes from './routes'
 import theme from './theme'
-import WebsiteEdit from './resources/websites'
 import { Admin, Resource } from 'react-admin'
-import auth, { authProvider } from 'app/auth'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { InfluencersCreate, InfluencersEdit, InfluencerShow, InfluencersList } from './resources/influencers'
 
@@ -26,14 +26,7 @@ const customRoutes = [
   <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path={routes.requestPasswordReset()} />,
   <Route component={ForgotPassword} exact key="passwordReset" noLayout path={routes.passwordReset()} />,
   <Route component={ChangePassword} exact key="passwordReset" path={routes.passwordChange()} />,
-  <Route
-    exact
-    key="account"
-    path={routes.account()}
-    render={() => (
-      <WebsiteEdit basePath="/websites" id={auth.getUser().websiteRef} location={{}} match={{}} resource="websites" />
-    )}
-  />,
+  <Route component={Account} exact key="account" path={routes.account()} />,
 ]
 
 const App = ({ dataProvider, history }) => (
