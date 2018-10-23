@@ -28,6 +28,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -41,7 +42,6 @@ end
 
 group :test do
   gem "database_cleaner"
-  gem "faker"
   gem "minitest", "5.10.3" # https://stackoverflow.com/questions/48229515/rails-minitest-crashing-when-tests-fail
 end
 
