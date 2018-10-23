@@ -33,6 +33,10 @@ const auth = {
   getUser() {
     return JSON.parse(localStorage.getItem('authUser') || '{}')
   },
+  getWebsiteRef() {
+    const user = this.getUser()
+    return user.websiteRef
+  },
   isLoggedIn() {
     return this.getEmail() && this.getToken()
   },

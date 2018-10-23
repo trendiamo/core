@@ -8,9 +8,11 @@ const SIGNOUT_URL = `${BASE_API_PATH}/users/sign_out`
 const PASSWORD_FORM_URL = `${BASE_API_PATH}/users/password`
 const PASSWORD_RESET_URL = `${BASE_API_PATH}/users/password`
 const PASSWORD_CHANGE_URL = `${BASE_API_PATH}/users/change_password`
+const ACCOUNT_URL = `${BASE_API_PATH}/websites/`
 
 // Converts the input (json) to an object where the status keyword is always present.
 // Simplifies the use in the <Notification /> component
+
 const convertToInfo = (json, defaultMessage) => {
   defaultMessage = defaultMessage || 'Success!'
   const hasError = json.error || json.errors
@@ -48,6 +50,31 @@ const apiPasswordRequest = async (url, body) => {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
+    }),
+    method: 'put',
+  })
+  return res.json()
+}
+
+const apiAccountShowRequest = async url => {
+  const websiteRef = auth.getWebsiteRef()
+  const res = await fetch(`${url}${websiteRef}`, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
+const apiAccountUpdateRequest = async (url, body) => {
+  const websiteRef = auth.getWebsiteRef()
+  const res = await fetch(`${url}${websiteRef}`, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
     }),
     method: 'put',
   })
@@ -96,6 +123,24 @@ export const apiPasswordChangeSaga = async (url, body, setInfo) => {
   return info.status !== 'error'
 }
 
+export const apiAccountShowSaga = async (url, body, setInfo) => {
+  const json = await apiAccountShowRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') {
+    return json
+  }
+  return setInfo(info)
+}
+
+export const apiAccountUpdateSaga = async (url, body, setInfo) => {
+  const json = await apiAccountUpdateRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') {
+    return json
+  }
+  return setInfo(info)
+}
+
 export const apiPasswordEmailLinkSaga = async (url, body, setInfo) => {
   const json = await apiRequest(url, body)
   setInfo(convertToInfo(json, 'Email sent!'))
@@ -126,3 +171,6 @@ export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
 export const apiPasswordEmailLink = (body, setInfo) => apiPasswordEmailLinkSaga(PASSWORD_FORM_URL, body, setInfo)
 export const apiPasswordReset = (body, setInfo) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setInfo)
 export const apiPasswordChange = (body, setInfo) => apiPasswordChangeSaga(PASSWORD_CHANGE_URL, body, setInfo)
+
+export const apiAccountShow = setInfo => apiAccountShowSaga(ACCOUNT_URL, setInfo)
+export const apiAccountUpdate = (body, setInfo) => apiAccountUpdateSaga(ACCOUNT_URL, body, setInfo)
