@@ -12,6 +12,7 @@ import routes from './routes'
 import WebsiteEdit from './resources/websites'
 import { Admin, Resource } from 'react-admin'
 import auth, { authProvider } from 'app/auth'
+import { InfluencersCreate, InfluencersEdit, InfluencerShow, InfluencersList } from './resources/influencers'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 
 const generateClassName = createGenerateClassName()
@@ -46,6 +47,13 @@ const App = ({ dataProvider, history }) => (
       loginPage={LoginPage}
     >
       <Resource name="websites" />
+      <Resource
+        create={InfluencersCreate}
+        edit={InfluencersEdit}
+        list={InfluencersList}
+        name="influencers"
+        show={InfluencerShow}
+      />
     </Admin>
   </JssProvider>
 )
