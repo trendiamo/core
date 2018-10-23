@@ -6,6 +6,7 @@ import { getResources } from 'ra-core'
 import { MenuItemLink } from 'ra-ui-materialui'
 import React from 'react'
 import styled from 'styled-components'
+import UserMenu from './user-menu'
 
 const Div = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ const Div = styled.div`
 
 const Menu = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
   <Div {...rest}>
+    <UserMenu />
     {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
     {resources.filter(r => r.hasList).map(resource => (
       <MenuItemLink
@@ -23,6 +25,7 @@ const Menu = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
         leftIcon={resource.icon ? <resource.icon /> : <DefaultIcon />}
         onClick={onMenuClick}
         primaryText={resource.name}
+        style={{ color: '#ddd' }}
         to={`/${resource.name}`}
       />
     ))}

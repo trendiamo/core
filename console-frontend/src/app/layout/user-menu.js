@@ -1,9 +1,9 @@
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { apiSignOut } from '../auth/utils'
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'app/auth'
-import Avatar from '@material-ui/core/Avatar'
+import Divider from '@material-ui/core/Divider'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
-import IconButton from '@material-ui/core/IconButton'
 import Link from 'shared/link'
 import Lock from '@material-ui/icons/Lock'
 import Menu from '@material-ui/core/Menu'
@@ -11,41 +11,83 @@ import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import routes from 'app/routes'
 import SettingsIcon from '@material-ui/icons/Settings'
+import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
+
+const AvatarContainer = styled.div`
+  width: 100%;
+  padding: 20px;
+`
+
+const Avatar = styled.div`
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font-weight: 700;
+  border: 1px solid #fff;
+  overflow: hidden;
+  text-align: center;
+  background: #fff;
+  color: #32333d;
+`
+
+const AccountInitials = styled.div`
+  padding-top: 12px;
+  font-size: 2rem;
+  letter-spacing: 2px;
+`
+
+const AccountCircleCustom = styled(AccountCircle)`
+  font-size: 3.8rem;
+`
+
+// Common style for menu items goes here.
+const MenuItemStyle = {
+  marginRight: '0.5rem',
+}
 
 const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
   <React.Fragment>
-    <IconButton aria-haspopup="true" aria-owns={open ? 'menu-appbar' : null} color="inherit" onClick={handleMenu}>
-      {initials ? <Avatar>{initials}</Avatar> : <AccountCircle />}
-    </IconButton>
+    <AvatarContainer>
+      <Avatar>{initials ? <AccountInitials>{initials}</AccountInitials> : <AccountCircleCustom />}</Avatar>
+    </AvatarContainer>
+    <MenuItem
+      aria-haspopup="true"
+      aria-owns={open ? 'menu-appbar' : null}
+      onClick={handleMenu}
+      style={{ color: '#ddd' }}
+    >
+      {auth.getDisplayName() || auth.getEmail()}
+      <ArrowDropDown />
+    </MenuItem>
+    <Divider style={{ background: '#aaa' }} />
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        horizontal: 'right',
+        horizontal: 'center',
         vertical: 'top',
       }}
       id="menu-appbar"
       onClick={handleClose}
       open={open}
       transformOrigin={{
-        horizontal: 'right',
+        horizontal: 'center',
         vertical: 'top',
       }}
     >
-      <MenuItem disabled>{auth.getDisplayName() || auth.getEmail()}</MenuItem>
       <Link to={routes.account()}>
         <MenuItem>
-          <SettingsIcon style={{ marginRight: '0.5rem' }} />
+          <SettingsIcon style={MenuItemStyle} />
           {'Account'}
         </MenuItem>
       </Link>
       <Link to={routes.passwordChange()}>
         <MenuItem>
-          <Lock style={{ marginRight: '0.5rem' }} /> {'Change Password'}
+          <Lock style={MenuItemStyle} /> {'Change Password'}
         </MenuItem>
       </Link>
       <MenuItem onClick={onLogoutButtonClick}>
-        <ExitIcon style={{ marginRight: '0.5rem' }} /> {'Logout'}
+        <ExitIcon style={MenuItemStyle} /> {'Logout'}
       </MenuItem>
     </Menu>
   </React.Fragment>
