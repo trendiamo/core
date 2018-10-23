@@ -13,6 +13,8 @@
     "react": "^16.5.2",
     "react-admin": "^2.3.4",
     "react-dom": "^16.5.2",
+    "react-image-crop": "^6.0.1",
+    "react-s3-uploader": "^4.8.0",
     "react-scripts": "2.0.4",
     "styled-components": "^4.0.0"
   },
