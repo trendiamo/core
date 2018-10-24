@@ -27,6 +27,11 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.svg$/,
+        use: [{ loader: './svg-hoc-loader' }, 'svg-loader'],
+        include: [path.resolve(__dirname, '../src')],
+      },
     ],
   },
   resolve: {
