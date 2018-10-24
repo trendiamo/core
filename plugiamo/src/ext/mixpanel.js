@@ -1,5 +1,5 @@
 import mixpanel from 'mixpanel-browser'
-import { production } from '../config'
+import { production } from 'config'
 
 const trndMixpanel = {
   get_distinct_id() {

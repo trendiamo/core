@@ -4,13 +4,13 @@ import { h } from 'preact'
 import history from 'ext/history'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
+import { location } from 'config'
 import { matchUrl } from 'ext/simple-router'
 import mixpanel from 'ext/mixpanel'
 import routes from './routes'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
-import { hostname, pathname } from '../config'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const Gradient = animateOnMount(styled.div`
@@ -26,12 +26,10 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ chat, influencer, onToggleContent, showingContent, website }) => (
+const App = ({ sellerPicUrl, onToggleContent, showingContent, website }) => (
   <div>
-    {showingContent && (
-      <Content chat={chat} onToggleContent={onToggleContent} showingContent={showingContent} website={website} />
-    )}
     <Launcher influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
+    {showingContent && <Content onToggleContent={onToggleContent} showingContent={showingContent} website={website} />}
     {showingContent && <Gradient />}
   </div>
 )
@@ -85,15 +83,15 @@ export default compose(
         }
       }
     `,
-    { hostname }
+    { hostname: location.hostname }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
     website: data.hostname && data.hostname.website,
   })),
-  branch(({ website }) => !website, infoMsg(`no website found for hostname ${hostname}`)),
+  branch(({ website }) => !website, infoMsg(`no website found for hostname ${location.hostname}`)),
   withProps(({ website }) => ({
-    chat: website.chats.find(chat => matchUrl(pathname, chat.path)),
+    chat: website.chats.find(chat => matchUrl(location.pathname, chat.path)),
   })),
   withProps(({ chat, website }) => ({
     influencer: chat

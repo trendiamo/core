@@ -2,7 +2,7 @@ import { h } from 'preact'
 import jsonp from 'jsonp-p'
 import qs from 'querystring'
 import styled from 'styled-components'
-import { width } from '../../config'
+import { width } from 'config'
 import { compose, lifecycle, withState } from 'recompose'
 
 const StyledIframe = styled.iframe`

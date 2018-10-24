@@ -1,19 +1,20 @@
 const graphQlUrl = process.env.GRAPHQL_URL
-const hostname = process.env.HOSTNAME || location.hostname
-const pathname = process.env.PATHNAME || location.pathname
 const mixpanelToken = process.env.MIXPANEL_TOKEN
 const production = process.env.NODE_ENV === 'production'
 const width = 360
+const location = {
+  ...window.location,
+}
+if (process.env.HOSTNAME) location.hostname = process.env.HOSTNAME
+if (process.env.PATHNAME) location.pathname = process.env.PATHNAME
+if (process.env.SEARCH) location.search = process.env.SEARCH
 
 // export as both a default object and indivudal items
-
-export { graphQlUrl, hostname, mixpanelToken, pathname, production, width }
-
+export { graphQlUrl, location, mixpanelToken, production, width }
 export default {
   graphQlUrl,
-  hostname,
+  location,
   mixpanelToken,
-  pathname,
   production,
   width,
 }

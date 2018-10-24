@@ -68,15 +68,15 @@ const Container = styled.div`
 `
 
 const CloseIcon = ({ active }) => (
-  <CloseIconContainer active={active} >
+  <CloseIconContainer active={active}>
     <StyledIconClose />
   </CloseIconContainer>
 )
 
 const Launcher = ({ influencer, onToggleContent, showingContent }) => (
   <TrendiamoLauncherFrame>
-    <Container onClick={onToggleContent} >
       <SellerPic active={!showingContent} url={influencer.profilePic.url} />
+    <Container onClick={onToggleContent}>
       <CloseIcon active={showingContent} />
     </Container>
   </TrendiamoLauncherFrame>

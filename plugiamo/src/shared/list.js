@@ -1,4 +1,4 @@
-import { IconChevronRight } from '../icons'
+import { IconChevronRight } from 'icons'
 import styled from 'styled-components'
 
 const List = styled.ul`
@@ -15,7 +15,6 @@ const ListChevron = styled(IconChevronRight)`
 
 const ListContent = styled.div`
   padding: 1rem;
-  height: 100px;
   flex: 1;
   color: #4a4a4a;
 `

@@ -1,4 +1,4 @@
-import datafile from '../optimizely.json'
+import datafile from 'optimizely.json'
 import mixpanel from 'ext/mixpanel'
 import optimizely from '@optimizely/optimizely-sdk'
 import { cloneElement, h } from 'preact'
