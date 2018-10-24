@@ -1,9 +1,10 @@
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { apiSignOut } from '../auth/utils'
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'app/auth'
 import Avatar from '@material-ui/core/Avatar'
+import Divider from '@material-ui/core/Divider'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
-import IconButton from '@material-ui/core/IconButton'
 import Link from 'shared/link'
 import Lock from '@material-ui/icons/Lock'
 import Menu from '@material-ui/core/Menu'
@@ -11,41 +12,70 @@ import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import routes from 'app/routes'
 import SettingsIcon from '@material-ui/icons/Settings'
+import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
+
+const AvatarContainer = styled.div`
+  width: 100%;
+  padding: 20px 15px;
+`
+
+const AccountCircleCustom = styled(AccountCircle)`
+  font-size: 4rem;
+`
+
+const StyledAvatar = styled(Avatar)`
+  width: 64px;
+  height: 64px;
+`
+
+// Common style for the menu items goes here.
+const MenuItemStyle = {
+  marginRight: '0.5rem',
+}
 
 const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
   <React.Fragment>
-    <IconButton aria-haspopup="true" aria-owns={open ? 'menu-appbar' : null} color="inherit" onClick={handleMenu}>
-      {initials ? <Avatar>{initials}</Avatar> : <AccountCircle />}
-    </IconButton>
+    <AvatarContainer>
+      <StyledAvatar size={100}>{initials ? initials : <AccountCircleCustom />}</StyledAvatar>
+    </AvatarContainer>
+    <MenuItem
+      aria-haspopup="true"
+      aria-owns={open ? 'menu-appbar' : null}
+      onClick={handleMenu}
+      style={{ color: '#ddd' }}
+    >
+      {auth.getDisplayName() || auth.getEmail()}
+      <ArrowDropDown />
+    </MenuItem>
+    <Divider style={{ background: '#aaa' }} />
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        horizontal: 'right',
+        horizontal: 'center',
         vertical: 'top',
       }}
       id="menu-appbar"
       onClick={handleClose}
       open={open}
       transformOrigin={{
-        horizontal: 'right',
+        horizontal: 'center',
         vertical: 'top',
       }}
     >
-      <MenuItem disabled>{auth.getDisplayName() || auth.getEmail()}</MenuItem>
       <Link to={routes.account()}>
         <MenuItem>
-          <SettingsIcon style={{ marginRight: '0.5rem' }} />
+          <SettingsIcon style={MenuItemStyle} />
           {'Account'}
         </MenuItem>
       </Link>
       <Link to={routes.passwordChange()}>
         <MenuItem>
-          <Lock style={{ marginRight: '0.5rem' }} /> {'Change Password'}
+          <Lock style={MenuItemStyle} /> {'Change Password'}
         </MenuItem>
       </Link>
       <MenuItem onClick={onLogoutButtonClick}>
-        <ExitIcon style={{ marginRight: '0.5rem' }} /> {'Logout'}
+        <ExitIcon style={MenuItemStyle} /> {'Logout'}
       </MenuItem>
     </Menu>
   </React.Fragment>

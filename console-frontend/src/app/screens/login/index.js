@@ -37,11 +37,11 @@ const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
           value={loginForm.password}
         />
       </FormControl>
-      <StyledButton color="primary" fullWidth type="submit" variant="raised">
+      <StyledButton color="secondary" fullWidth type="submit" variant="contained">
         {'Log in'}
       </StyledButton>
       <Link to={routes.requestPasswordReset()}>
-        <StyledButton color="secondary" fullWidth type="submit" variant="raised">
+        <StyledButton color="default" fullWidth variant="text">
           {'Forgot Password'}
         </StyledButton>
       </Link>

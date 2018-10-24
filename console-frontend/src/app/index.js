@@ -9,11 +9,12 @@ import React from 'react'
 import RequestPasswordReset from 'app/screens/forgot-password/request-password-reset'
 import { Route } from 'react-router-dom'
 import routes from './routes'
+import theme from './theme'
 import WebsiteEdit from './resources/websites'
 import { Admin, Resource } from 'react-admin'
 import auth, { authProvider } from 'app/auth'
-import { InfluencersCreate, InfluencersEdit, InfluencerShow, InfluencersList } from './resources/influencers'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
+import { InfluencersCreate, InfluencersEdit, InfluencerShow, InfluencersList } from './resources/influencers'
 
 const generateClassName = createGenerateClassName()
 const jss = create({
@@ -45,6 +46,7 @@ const App = ({ dataProvider, history }) => (
       dataProvider={dataProvider}
       history={history}
       loginPage={LoginPage}
+      theme={theme}
     >
       <Resource name="websites" />
       <Resource
