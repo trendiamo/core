@@ -26,7 +26,7 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ sellerPicUrl, onToggleContent, showingContent, website }) => (
+const App = ({ influencer, onToggleContent, showingContent, website }) => (
   <div>
     <Launcher influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
     {showingContent && <Content onToggleContent={onToggleContent} showingContent={showingContent} website={website} />}
