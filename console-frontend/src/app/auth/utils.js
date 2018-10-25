@@ -31,7 +31,8 @@ const errorMessages = json => {
 }
 
 const mapErrors = json => {
-  return json.errors.map(error => `${error}`).join('')
+  const errors = Array.isArray(json.errors) ? json.errors : Object.entries(json.errors).flat(10)
+  errors.length === 2 ? errors.map(error => `${error}`).join(' ') : errors.map(error => `${error}`).join('')
 }
 
 const apiRequest = async (url, body) => {
@@ -129,7 +130,7 @@ export const apiAccountShowSaga = async (url, body, setInfo) => {
   if (info.status === 'success') {
     return json
   }
-  return setInfo(info)
+  setInfo(info)
 }
 
 export const apiAccountUpdateSaga = async (url, body, setInfo) => {
@@ -138,7 +139,7 @@ export const apiAccountUpdateSaga = async (url, body, setInfo) => {
   if (info.status === 'success') {
     return json
   }
-  return setInfo(info)
+  setInfo(info)
 }
 
 export const apiPasswordEmailLinkSaga = async (url, body, setInfo) => {
