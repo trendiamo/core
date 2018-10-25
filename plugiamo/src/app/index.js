@@ -26,10 +26,10 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ influencer, onToggleContent, showingContent, website }) => (
+const App = ({ onToggleContent, sellerPicUrl, showingContent, website }) => (
   <div>
-    <Launcher influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
     {showingContent && <Content onToggleContent={onToggleContent} showingContent={showingContent} website={website} />}
+    <Launcher onToggleContent={onToggleContent} sellerPicUrl={sellerPicUrl} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
 )
@@ -114,6 +114,9 @@ export default compose(
       }
     },
   }),
+  withProps(({ influencer }) => ({
+    sellerPicUrl: influencer ? influencer.profilePic.url : undefined,
+  })),
   withHandlers({
     // onCtaClick: ({ exposition }) => () => {
     //   mixpanel.track('Clicked CTA Link', { hostname: location.hostname }, () => {

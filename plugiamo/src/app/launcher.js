@@ -37,7 +37,7 @@ const SellerPic = styled.div`
   border-radius: 50%;
   background-position: center;
   background-size: cover;
-  background-image: url(${({ url }) => url});
+  background-image: ${({ url }) => (url ? `url(${url})` : 'none')});
   transform: ${({ active }) => (active ? 'none' : 'rotate(30deg) scale(0)')};
   opacity: ${({ active }) => (active ? 1 : 0)};
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -73,10 +73,10 @@ const CloseIcon = ({ active }) => (
   </CloseIconContainer>
 )
 
-const Launcher = ({ influencer, onToggleContent, showingContent }) => (
+const Launcher = ({ onToggleContent, sellerPicUrl, showingContent }) => (
   <TrendiamoLauncherFrame>
     <Container onClick={onToggleContent}>
-      <SellerPic active={!showingContent} url={influencer.profilePic.url} />
+      <SellerPic active={!showingContent} url={sellerPicUrl} />
       <CloseIcon active={showingContent} />
     </Container>
   </TrendiamoLauncherFrame>
