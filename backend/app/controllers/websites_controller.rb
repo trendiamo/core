@@ -8,7 +8,7 @@ class WebsitesController < ApplicationController
   def update
     @website = Website.find(params[:id])
     authorize @website
-    if @website.update_attributes!(website_params)
+    if @website.update_attributes(website_params)
       render json: @website
     else
       render json: { errors: @website.errors }, status: :unprocessable_entity
