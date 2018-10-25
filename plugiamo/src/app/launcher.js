@@ -75,8 +75,8 @@ const CloseIcon = ({ active }) => (
 
 const Launcher = ({ influencer, onToggleContent, showingContent }) => (
   <TrendiamoLauncherFrame>
-    <SellerPic active={!showingContent} url={influencer.profilePic.url} />
     <Container onClick={onToggleContent}>
+      <SellerPic active={!showingContent} url={influencer.profilePic.url} />
       <CloseIcon active={showingContent} />
     </Container>
   </TrendiamoLauncherFrame>
