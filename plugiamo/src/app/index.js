@@ -94,9 +94,7 @@ export default compose(
     chat: website.chats.find(chat => matchUrl(location.pathname, chat.path)),
   })),
   withProps(({ chat, website }) => ({
-    influencer: chat
-      ? chat.influencer
-      : website.spotlights && website.spotlights.length && website.spotlights[0].influencer,
+    influencer: chat ? chat.influencer : website.spotlights.length ? website.spotlights[0].influencer : undefined,
   })),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
