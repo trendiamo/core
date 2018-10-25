@@ -15,7 +15,7 @@ const palette = {
   },
   secondary: {
     contrastText: '#fff',
-    main: '#0bb3cc',
+    main: '#0560ff',
   },
   text: {
     disabled: '#ccc',
@@ -25,6 +25,9 @@ const palette = {
 
 const theme = createMuiTheme({
   palette: palette,
+  shape: {
+    borderRadius: 8,
+  },
   typography: typography,
 })
 

@@ -29,8 +29,8 @@ const StyledAvatar = styled(Avatar)`
   height: 64px;
 `
 
-// Common style for the menu items goes here.
-const MenuItemStyle = {
+// Common style for the menu icons goes here.
+const MenuIconStyle = {
   marginRight: '0.5rem',
 }
 
@@ -43,12 +43,12 @@ const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleC
       aria-haspopup="true"
       aria-owns={open ? 'menu-appbar' : null}
       onClick={handleMenu}
-      style={{ color: '#ddd' }}
+      style={{ color: '#fff' }}
     >
       {auth.getDisplayName() || auth.getEmail()}
       <ArrowDropDown />
     </MenuItem>
-    <Divider style={{ background: '#aaa' }} />
+    <Divider style={{ background: '#6c6c71' }} />
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
@@ -65,17 +65,17 @@ const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleC
     >
       <Link to={routes.account()}>
         <MenuItem>
-          <SettingsIcon style={MenuItemStyle} />
+          <SettingsIcon style={MenuIconStyle} />
           {'Account'}
         </MenuItem>
       </Link>
       <Link to={routes.passwordChange()}>
         <MenuItem>
-          <Lock style={MenuItemStyle} /> {'Change Password'}
+          <Lock style={MenuIconStyle} /> {'Change Password'}
         </MenuItem>
       </Link>
       <MenuItem onClick={onLogoutButtonClick}>
-        <ExitIcon style={MenuItemStyle} /> {'Logout'}
+        <ExitIcon style={MenuIconStyle} /> {'Logout'}
       </MenuItem>
     </Menu>
   </React.Fragment>

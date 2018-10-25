@@ -7,29 +7,42 @@ import { MenuItemLink } from 'ra-ui-materialui'
 import React from 'react'
 import styled from 'styled-components'
 import UserMenu from './user-menu'
+import { withStyles } from '@material-ui/core/styles'
 
-const Div = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 `
 
+const MenuItemStyles = theme => ({
+  active: {
+    color: theme.palette.secondary.main,
+  },
+  root: {
+    color: theme.palette.grey[500],
+  },
+})
+
+const StyledMenuItemLink = withStyles(MenuItemStyles)(({ classes, ...props }) => (
+  <MenuItemLink classes={classes} {...props} />
+))
+
 const Menu = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
-  <Div {...rest}>
+  <Container {...rest}>
     <UserMenu />
     {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
     {resources.filter(r => r.hasList).map(resource => (
-      <MenuItemLink
+      <StyledMenuItemLink
         dense={dense}
         key={resource.name}
         leftIcon={resource.icon ? <resource.icon /> : <DefaultIcon />}
         onClick={onMenuClick}
         primaryText={resource.name}
-        style={{ color: '#ddd' }}
         to={`/${resource.name}`}
       />
     ))}
-  </Div>
+  </Container>
 )
 
 Menu.defaultProps = {

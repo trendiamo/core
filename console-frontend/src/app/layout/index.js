@@ -5,42 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Menu from './menu'
 import React from 'react'
 import Sidebar from './sidebar'
+import { styles } from './layout-styles'
 import { withRouter } from 'react-router'
 import { Error, Loading, Notification } from 'react-admin'
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
-
-const styles = theme => ({
-  appFrame: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    [theme.breakpoints.up('xs')]: {
-      paddingLeft: 5,
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: 0,
-    },
-  },
-  contentWithSidebar: {
-    display: 'flex',
-    flexGrow: 1,
-  },
-  root: {
-    backgroundColor: theme.palette.background.default,
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-    minWidth: 'fit-content',
-    position: 'relative',
-    width: '100%',
-    zIndex: 1,
-  },
-})
 
 const sanitizeProps = props => {
   const newProps = { ...props }
@@ -67,9 +35,9 @@ const Layout = ({
   <div className={classes.root} {...sanitizeProps(props)}>
     <div className={classes.appFrame}>
       <CssBaseline />
-      <AppBar logout={logout} open={open} title={title} />
+      <AppBar classes={classes} logout={logout} open={open} title={title} />
       <main className={classes.contentWithSidebar}>
-        <Sidebar>
+        <Sidebar classes={classes}>
           <Menu hasDashboard={!!dashboard} logout={logout} />
         </Sidebar>
         <div className={classes.content}>
