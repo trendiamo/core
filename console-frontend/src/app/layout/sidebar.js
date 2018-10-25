@@ -1,23 +1,16 @@
 // import compose from 'recompose/compose'
+import { Sidebar as RaSidebar } from 'react-admin'
 import React from 'react'
-import { Sidebar } from 'react-admin'
-import theme from '../theme'
+import { drawerWidth, drawerWidthClosed } from './layout-styles'
 
-const SidebarStyle = {
-  background: theme.palette.primary.main,
-  flex: '1',
-  marginRight: '10px',
-  minHeight: '100vh',
-}
-
-const SidebarParentStyle = {
-  display: 'flex',
-}
-
-const MySidebar = ({ ...props }) => (
-  <div style={SidebarParentStyle}>
-    <Sidebar {...props} style={SidebarStyle} />
-  </div>
+const Sidebar = ({ classes, ...props }) => (
+  <RaSidebar
+    classes={{ drawerPaper: classes.drawerPaper }}
+    closedSize={drawerWidthClosed}
+    size={drawerWidth}
+    style={{ display: 'flex' }}
+    {...props}
+  />
 )
 
-export default MySidebar
+export default Sidebar

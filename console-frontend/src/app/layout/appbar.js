@@ -1,16 +1,15 @@
-import compose from 'recompose/compose'
-import { connect } from 'react-redux'
+import classNames from 'classnames'
+import MuiAppBar from '@material-ui/core/AppBar'
 import React from 'react'
-import { toggleSidebar } from 'ra-core'
-import withWidth from '@material-ui/core/withWidth'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 
-//  RA includes its default AppBar if nothing was provided in <Layout />. So we override it by an empty div.
-const AppBar = () => <div />
+const AppBar = ({ classes, open, ...props }) => (
+  <MuiAppBar {...props} className={classNames(classes.appBar, open && classes.appBarShift)} position="absolute">
+    <Toolbar>
+      <Typography className={classes.title} color="default" id="react-admin-title" variant="title" />
+    </Toolbar>
+  </MuiAppBar>
+)
 
-export default compose(
-  connect(
-    null,
-    { toggleSidebar }
-  ),
-  withWidth()
-)(AppBar)
+export default AppBar
