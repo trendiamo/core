@@ -59,7 +59,7 @@ const Picture = ({
         {image &&
           !doneCropping && (
             <div style={{ display: 'flex', height: '100px' }}>
-              <img ref={setImagePreviewRef} src={image.preview} style={{ display: 'none' }} />
+              <img alt="" ref={setImagePreviewRef} src={image.preview} style={{ display: 'none' }} />
               <ReactCrop
                 crop={crop}
                 keepSelection

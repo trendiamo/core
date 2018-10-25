@@ -18,9 +18,9 @@ export const getSignedUrl = (file, callback) => {
     .then(response => response.json())
     .then(json => {
       if (json.error) {
-        throw json.error
+        throw new Error(json.error)
       } else if (!json.signedUrl) {
-        throw 'invalid server response'
+        throw new Error('invalid server response')
       } else {
         return json
       }
