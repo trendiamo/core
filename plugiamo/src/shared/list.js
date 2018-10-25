@@ -20,6 +20,7 @@ const ListContent = styled.div`
 `
 
 const ListItem = styled.li`
+  background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
   display: flex;

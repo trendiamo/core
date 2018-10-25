@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import transition from './transition'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { ContentChat, CoverChat } from './chat'
+import { ContentOnboarding, CoverOnboarding } from './onboarding'
 import { ContentRoot, CoverRoot } from './root'
 import { ContentSpotlight, CoverSpotlight } from './spotlight'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
@@ -73,12 +74,14 @@ const Content = ({ isTransitioning, onRouteChange, onToggleContent, routeToRoot,
           <CoverRoot path={'/'} website={website} />
           <CoverSpotlight path={'/spotlight/:id'} routeToRoot={routeToRoot} website={website} />
           <CoverChat path={'/chat/:id'} routeToRoot={routeToRoot} website={website} />
+          <CoverOnboarding path={'/onboarding/uniplaces/:step?'} />
         </Router>
       </Cover>
       <Router history={history} onChange={onRouteChange}>
         <ContentRoot path={'/'} routeToSpotlight={routeToSpotlight} spotlights={website.spotlights} />
         <ContentSpotlight path={'/spotlight/:id'} website={website} />
         <ContentChat onToggleContent={onToggleContent} path={'/chat/:id'} routeToRoot={routeToRoot} website={website} />
+        <ContentOnboarding path={'/onboarding/uniplaces/:step?'} />
       </Router>
       <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />
     </Wrapper>

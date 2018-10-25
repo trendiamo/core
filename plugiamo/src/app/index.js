@@ -7,6 +7,7 @@ import Launcher from './launcher'
 import { location } from 'config'
 import { matchUrl } from 'ext/simple-router'
 import mixpanel from 'ext/mixpanel'
+import overrides from 'overrides'
 import routes from './routes'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
@@ -99,10 +100,10 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
-      const path = pathFromHash()
+      const { setShowingContent } = this.props
+      const path = pathFromHash() || overrides()
       mixpanel.track('Loaded Plugin', { hostname: location.hostname, path })
       if (path) {
-        const { setShowingContent } = this.props
         history.replace(path)
         setShowingContent(true)
       } else {
@@ -113,7 +114,14 @@ export default compose(
     },
   }),
   withProps(({ influencer }) => ({
-    sellerPicUrl: influencer ? influencer.profilePic.url : undefined,
+    sellerPicUrl:
+      history.location === '/chat/cjnmynzkfdwgz09328tz7i6ha' // TODO: needed until multiple url matchers
+        ? 'https://media.graphcms.com/7R6oeyvlSFuKvcUmmiy4'
+        : history.location.match(/\/onboarding\/uniplaces/) // TODO: needed until multiple url matchers
+          ? 'https://media.graphcms.com/ldBc0l5fTkSskjgscwam'
+          : influencer
+            ? influencer.profilePic.url
+            : undefined,
   })),
   withHandlers({
     // onCtaClick: ({ exposition }) => () => {

@@ -99,8 +99,8 @@ const Container = styled.div`
   }
 `
 
-const OptionButton = ({ title, Icon, imageUrl }) => (
-  <Container>
+const OptionButton = ({ title, Icon, imageUrl, onClick }) => (
+  <Container onClick={onClick}>
     <Box imageUrl={imageUrl}>
       {imageUrl && <Background imageUrl={imageUrl} />}
       {Icon && <Icon />}
