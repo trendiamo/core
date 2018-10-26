@@ -12,6 +12,7 @@ import RATextField from '@material-ui/core/TextField'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
+import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiAccountShow, apiAccountUpdate } from 'app/auth/utils'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Main, StyledButton, StyledForm, StyledPaper } from '../shared'
@@ -133,6 +134,7 @@ const Account = ({
 )
 
 export default compose(
+  withRaTitle('Account'),
   withState('accountForm', 'setAccountForm', {
     hostnames: [''],
     id: '',
