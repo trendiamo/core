@@ -1,11 +1,12 @@
+import Avatar from '@material-ui/core/Avatar'
 import { Field } from 'redux-form'
 import ProfilePicture from '../../shared/profile-picture'
 import React from 'react'
+import styled from 'styled-components'
 import { compose, withHandlers, withState } from 'recompose'
 import {
   Create,
   Datagrid,
-  DisabledInput,
   Edit,
   EditButton,
   List,
@@ -18,6 +19,12 @@ import {
   TextField,
   TextInput,
 } from 'react-admin'
+
+const StyledAvatar = styled(Avatar)`
+  width: ${({ small }) => (small ? '40px' : '100px')};
+  height: ${({ small }) => (small ? '40px' : '100px')};
+`
+const ProfilePic = ({ record, small }) => <StyledAvatar alt={record.name} small={small} src={record.profilePicUrl} />
 
 const FieldPic = ({ picValue, setPicture }) => <ProfilePicture onChange={setPicture} value={picValue} />
 
@@ -37,7 +44,6 @@ export const InfluencersEdit = ({ ...props }) => (
   <Edit {...props} title="Edit Influencer">
     <SimpleForm>
       <ProfilePicInput source="profilePicUrl" />
-      <DisabledInput source="id" />
       <TextInput source="name" />
       <TextInput source="description" />
     </SimpleForm>
@@ -47,10 +53,9 @@ export const InfluencersEdit = ({ ...props }) => (
 export const InfluencerShow = props => (
   <Show {...props} title="Influencer">
     <SimpleShowLayout>
-      <TextField source="id" />
+      <ProfilePic />
       <TextField source="name" />
       <TextField source="description" />
-      <TextField source="profilePicUrl" />
     </SimpleShowLayout>
   </Show>
 )
@@ -60,10 +65,9 @@ export const InfluencersList = ({ ...props }) => (
     <Responsive
       medium={
         <Datagrid>
-          <TextField source="id" />
+          <ProfilePic small />
           <TextField source="name" />
           <TextField source="description" />
-          <TextField source="profilePicUrl" />
           <EditButton />
           <ShowButton />
         </Datagrid>
@@ -82,9 +86,9 @@ export const InfluencersList = ({ ...props }) => (
 export const InfluencersCreate = ({ ...props }) => (
   <Create {...props} title="Create Influencer">
     <SimpleForm redirect="show">
+      <ProfilePicInput source="profilePicUrl" />
       <TextInput source="name" />
       <TextInput source="description" />
-      <TextInput source="profilePicUrl" />
     </SimpleForm>
   </Create>
 )
