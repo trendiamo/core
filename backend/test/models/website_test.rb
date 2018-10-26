@@ -1,6 +1,24 @@
 require "test_helper"
 
 class WebsiteTest < ActiveSupport::TestCase
+  test "hostnames cannot be blank (nil case)" do
+    ActsAsTenant.default_tenant = Account.create!
+
+    @website = build(:website, hostnames: [])
+
+    refute_predicate @website, :valid?
+    assert_includes @website.errors[:hostnames], "can't be blank"
+  end
+
+  test "hostnames cannot be blank (empty string case)" do
+    ActsAsTenant.default_tenant = Account.create!
+
+    @website = build(:website, hostnames: [""])
+
+    refute_predicate @website, :valid?
+    assert_includes @website.errors[:hostnames], "can't be blank"
+  end
+
   test "hostnames cannot be repeated" do
     ActsAsTenant.default_tenant = Account.create!
     create(:website, hostnames: %w[a.com b.com])
@@ -8,8 +26,8 @@ class WebsiteTest < ActiveSupport::TestCase
 
     @website = build(:website, hostnames: %w[b.com])
 
-    assert !@website.valid?
-    assert @website.errors[:hostnames].include?("already exists")
+    refute_predicate @website, :valid?
+    assert_includes @website.errors[:hostnames], "already exists"
   end
 
   test "hostnames cannot be repeated even across accounts" do
@@ -20,7 +38,7 @@ class WebsiteTest < ActiveSupport::TestCase
 
     @website = build(:website, hostnames: %w[other.com])
 
-    assert !@website.valid?
-    assert @website.errors[:hostnames].include?("already exists")
+    refute_predicate @website, :valid?
+    assert_includes @website.errors[:hostnames], "already exists"
   end
 end
