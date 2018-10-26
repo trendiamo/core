@@ -52,14 +52,4 @@ const StyledButton = styled(Button)`
   margin-top: 24px;
 `
 
-export {
-  StyledPaper,
-  StyledAvatar,
-  StyledForm,
-  StyledAuthForm,
-  AuthMain,
-  Main,
-  Notification,
-  AuthStyledPaper,
-  StyledButton,
-}
+export { StyledPaper, StyledAvatar, StyledForm, StyledAuthForm, AuthMain, Main, AuthStyledPaper, StyledButton }
