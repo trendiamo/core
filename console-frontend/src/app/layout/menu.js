@@ -24,7 +24,7 @@ const MenuItemStyles = theme => ({
   },
 })
 
-const StyledMenuItemLink = withStyles(MenuItemStyles)(({ classes, ...props }) => (
+const StyledMenuItemLink = withStyles(MenuItemStyles, { index: 2 })(({ classes, ...props }) => (
   <MenuItemLink classes={classes} {...props} />
 ))
 

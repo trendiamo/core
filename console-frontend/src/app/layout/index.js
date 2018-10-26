@@ -61,7 +61,7 @@ const EnhancedLayout = compose(
     {}
   ),
   withRouter,
-  withStyles(styles)
+  withStyles(styles, { index: 1 })
 )(Layout)
 
 const LayoutWithTheme = ({ theme, ...rest }) => (
