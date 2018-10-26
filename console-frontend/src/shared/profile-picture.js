@@ -189,7 +189,7 @@ export default compose(
           },
           onProgress: (progress, message) => setProgress({ message, progress }),
           preprocess: (file, next) => next(file),
-          uploadRequestHeaders: {}, // don't use x-amz-acl as that would have to be signed, and we don't need it
+          uploadRequestHeaders: { 'x-amz-acl': 'public-read' },
         })
       },
       onDrop: ({ onChange, setDoneCropping, setImage }) => files => {
