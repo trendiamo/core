@@ -4,10 +4,11 @@ import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Link from 'shared/link'
+import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import { compose, withHandlers, withState } from 'recompose'
-import { Notification, StyledButton, StyledForm } from '../shared'
+import { StyledButton, StyledForm } from '../shared'
 
 const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, info }) => (
   <AuthLayout title="Reset Password">
