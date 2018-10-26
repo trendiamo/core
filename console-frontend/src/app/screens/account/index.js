@@ -6,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
+import Notification from 'shared/notification'
 import RACancel from '@material-ui/icons/Cancel'
 import RATextField from '@material-ui/core/TextField'
 import React from 'react'
@@ -13,7 +14,7 @@ import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { apiAccountShow, apiAccountUpdate } from 'app/auth/utils'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { Main, Notification, StyledButton, StyledForm, StyledPaper } from '../shared'
+import { Main, StyledButton, StyledForm, StyledPaper } from '../shared'
 
 const StyledDiv = styled.div`
   height: 100%;
