@@ -3,7 +3,7 @@ class S3Controller < ApplicationController
 
   def sign
     render json: {
-      fileUrl: "https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/#{file_key}",
+      fileUrl: "https://#{ENV['DO_BUCKET']}.#{ENV['DO_SPACE_ENDPOINT']}/#{file_key}",
       signedUrl: signed_url,
     }
   end
@@ -12,7 +12,7 @@ class S3Controller < ApplicationController
 
   def signed_url
     s3_sign_params = {
-      bucket: ENV["S3_BUCKET"],
+      bucket: ENV["DO_BUCKET"],
       key: file_key,
       content_type: params[:content_type],
       acl: "public-read",
@@ -21,7 +21,7 @@ class S3Controller < ApplicationController
   end
 
   def file_key
-    @file_key ||= "uploads/brand-logos/#{SecureRandom.hex(4)}/#{params[:object_name]}"
+    @file_key ||= "uploads/influencers-profile-pics/#{SecureRandom.hex(4)}/#{params[:object_name]}"
   end
 
   def s3_presigner
@@ -29,6 +29,6 @@ class S3Controller < ApplicationController
   end
 
   def s3_bucket
-    @s3_bucket ||= Aws::S3::Resource.new.bucket(ENV["S3_BUCKET"])
+    @s3_bucket ||= Aws::S3::Resource.new.bucket(ENV["DO_BUCKET"])
   end
 end

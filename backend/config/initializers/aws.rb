@@ -1,6 +1,8 @@
 aws_config = {
   region: "eu-central-1",
-  credentials: Aws::Credentials.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"]),
+  endpoint: "https://#{ENV["DO_SPACE_ENDPOINT"]}",
+  access_key_id: ENV["DO_SPACES_KEY_ID"],
+  secret_access_key: ENV["DO_SECRET_ACCESS_KEY"],
 }
 
 Aws.config.update(aws_config)
