@@ -137,7 +137,6 @@ export default compose(
   withRaTitle('Account'),
   withState('accountForm', 'setAccountForm', {
     hostnames: [''],
-    id: '',
     name: '',
     subtitle: '',
     title: '',
@@ -149,7 +148,6 @@ export default compose(
       await apiAccountUpdate(
         {
           hostnames: accountForm.hostnames,
-          id: accountForm.id,
           name: accountForm.name,
           subtitle: accountForm.subtitle,
           title: accountForm.title,
@@ -179,11 +177,10 @@ export default compose(
       const { setAccountForm, setInfo } = this.props
       const json = await apiAccountShow(setInfo)
       setAccountForm({
-        hostnames: json.hostnames,
-        id: json.id,
-        name: json.name,
-        subtitle: json.subtitle,
-        title: json.title,
+        hostnames: json.hostnames || [''],
+        name: json.name || '',
+        subtitle: json.subtitle || '',
+        title: json.title || '',
       })
     },
   })
