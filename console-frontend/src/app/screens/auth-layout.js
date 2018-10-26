@@ -3,18 +3,18 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import React from 'react'
 import theme from '../theme'
 import Typography from '@material-ui/core/Typography'
-import { Main, StyledPaper } from './shared'
+import { AuthMain, AuthStyledPaper } from './shared'
 
 const AuthLayout = ({ children, title }) => (
   <React.Fragment>
     <CssBaseline />
     <MuiThemeProvider theme={theme}>
-      <Main>
-        <StyledPaper>
+      <AuthMain>
+        <AuthStyledPaper>
           <Typography variant="headline">{title}</Typography>
           {children}
-        </StyledPaper>
-      </Main>
+        </AuthStyledPaper>
+      </AuthMain>
     </MuiThemeProvider>
   </React.Fragment>
 )

@@ -8,12 +8,12 @@ import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from '../shared'
+import { StyledAuthForm, StyledButton } from '../shared'
 
 const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
     <AuthLayout title="Reset Password">
-      <StyledForm onSubmit={passwordResetSubmit}>
+      <StyledAuthForm onSubmit={passwordResetSubmit}>
         <Notification data={info} />
         <FormControl fullWidth margin="normal" required>
           <InputLabel htmlFor="email">{'New Password'}</InputLabel>
@@ -42,7 +42,7 @@ const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue,
         <StyledButton color="primary" fullWidth type="submit" variant="raised">
           {'Reset'}
         </StyledButton>
-      </StyledForm>
+      </StyledAuthForm>
     </AuthLayout>
   </Authenticated>
 )

@@ -15,7 +15,7 @@ const ACCOUNT_URL = `${BASE_API_PATH}/websites/`
 
 const convertToInfo = (json, defaultMessage) => {
   defaultMessage = defaultMessage || 'Success!'
-  const hasError = json.error || json.errors
+  const hasError = json.errors || json.error
   const status = hasError ? 'error' : 'success'
   const message = hasError ? errorMessages(json) : defaultMessage
   return { message: message, status: status }
@@ -31,8 +31,9 @@ const errorMessages = json => {
 }
 
 const mapErrors = json => {
-  const errors = Array.isArray(json.errors) ? json.errors : Object.entries(json.errors).flat(10)
-  errors.length === 2 ? errors.map(error => `${error}`).join(' ') : errors.map(error => `${error}`).join('')
+  const errors = Array.isArray(json.errors) ? json.errors : Object.entries(json.errors).flat(2)
+  const isLengthTwo = Boolean(errors.length === 2)
+  return isLengthTwo ? errors.map(error => `${error}`).join(' ') : errors.map(error => `${error}`).join('')
 }
 
 const apiRequest = async (url, body) => {
