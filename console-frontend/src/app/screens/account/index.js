@@ -1,5 +1,6 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import { Authenticated } from 'react-admin'
+import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
@@ -8,18 +9,41 @@ import InputLabel from '@material-ui/core/InputLabel'
 import RACancel from '@material-ui/icons/Cancel'
 import RATextField from '@material-ui/core/TextField'
 import React from 'react'
+import styled from 'styled-components'
+import Typography from '@material-ui/core/Typography'
 import { apiAccountShow, apiAccountUpdate } from 'app/auth/utils'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { Main, StyledPaper } from '../shared'
-import { Notification, StyledButton, StyledForm } from '../shared'
+import { Main, Notification, StyledButton, StyledForm, StyledPaper } from '../shared'
+
+const StyledDiv = styled.div`
+  height: 100%;
+  width: 100%;
+`
+
+const StyledTypography = styled(Typography)`
+  margin-left: 10px;
+`
+
+const StyledAddCircleOutline = styled(AddCircleOutline)`
+  color: #6c6c6c;
+`
 
 const AccountLayout = ({ children }) => (
   <React.Fragment>
     <CssBaseline />
     <Main>
-      <StyledPaper>{children}</StyledPaper>
+      <StyledPaper>
+        <StyledDiv>{children}</StyledDiv>
+      </StyledPaper>
     </Main>
   </React.Fragment>
+)
+
+const AddHostnameButton = ({ addHostnameSelect }) => (
+  <Button onClick={addHostnameSelect} size={'small'}>
+    <StyledAddCircleOutline />
+    <StyledTypography>{'Add Hostname'}</StyledTypography>
+  </Button>
 )
 
 const TextField = compose(
@@ -38,6 +62,10 @@ const Cancel = compose(
   })
 )(({ deleteHostname, ...props }) => <RACancel {...props} onClick={deleteHostname} />)
 
+const StyledTextField = styled(TextField)`
+  width: 70%;
+`
+
 const Account = ({
   addHostnameSelect,
   deleteHostname,
@@ -53,10 +81,6 @@ const Account = ({
       <StyledForm onSubmit={accountFormSubmit}>
         <Notification data={info} />
         <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="id">{'ID'}</InputLabel>
-          <Input name="id" onChange={setFieldValue} value={accountForm.id} />
-        </FormControl>
-        <FormControl fullWidth margin="normal" required>
           <InputLabel htmlFor="name">{'Name'}</InputLabel>
           <Input autoFocus name="name" onChange={setFieldValue} value={accountForm.name} />
         </FormControl>
@@ -64,24 +88,22 @@ const Account = ({
           <InputLabel htmlFor="title">{'Title'}</InputLabel>
           <Input name="title" onChange={setFieldValue} value={accountForm.title} />
         </FormControl>
-        <FormControl fullWidth margin="normal" required>
+        <FormControl fullWidth margin="normal">
           <InputLabel htmlFor="subtitle">{'Subtitle'}</InputLabel>
           <Input name="subtitle" onChange={setFieldValue} value={accountForm.subtitle} />
         </FormControl>
         <InputLabel htmlFor="hostname">{'Hostnames'}</InputLabel>
         <FormControl fullWidth margin="normal">
           {accountForm.hostnames.map((hostname, index) => (
-            <React.Fragment key={index}>
-              <TextField index={index} onChange={editHostnameValue} value={hostname} />
+            <div key={index}>
+              <StyledTextField index={index} onChange={editHostnameValue} value={hostname} />
               <IconButton>
-                <Cancel index={index} onClick={deleteHostname} style={{ marginRight: '0.5rem' }} />
+                <Cancel index={index} onClick={deleteHostname} />
               </IconButton>
-            </React.Fragment>
+            </div>
           ))}
         </FormControl>
-        <IconButton>
-          <AddCircleOutline onClick={addHostnameSelect} style={{ marginRight: '0.5rem' }} /> {'Add Hostname'}
-        </IconButton>
+        <AddHostnameButton addHostnameSelect={addHostnameSelect} />
         <StyledButton color="primary" fullWidth type="submit" variant="raised">
           {'Save'}
         </StyledButton>
@@ -132,7 +154,7 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { setAccountForm, setInfo, info } = this.props
+      const { setAccountForm, setInfo } = this.props
       const json = await apiAccountShow(setInfo)
       setAccountForm({
         hostnames: json.hostnames,

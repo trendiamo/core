@@ -9,11 +9,11 @@ import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from '../shared'
+import { StyledAuthForm, StyledButton } from '../shared'
 
 const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout title="Log in">
-    <StyledForm onSubmit={loginSubmit}>
+    <StyledAuthForm onSubmit={loginSubmit}>
       <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'Email Address'}</InputLabel>
@@ -46,7 +46,7 @@ const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
           {'Forgot Password'}
         </StyledButton>
       </Link>
-    </StyledForm>
+    </StyledAuthForm>
   </AuthLayout>
 )
 

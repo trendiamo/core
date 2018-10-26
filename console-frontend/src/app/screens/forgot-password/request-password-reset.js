@@ -8,11 +8,11 @@ import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from '../shared'
+import { StyledAuthForm, StyledButton } from '../shared'
 
 const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, info }) => (
   <AuthLayout title="Reset Password">
-    <StyledForm onSubmit={passwordChangeSubmit}>
+    <StyledAuthForm onSubmit={passwordChangeSubmit}>
       <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'Email'}</InputLabel>
@@ -33,7 +33,7 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
           {'Back to Login'}
         </StyledButton>
       </Link>
-    </StyledForm>
+    </StyledAuthForm>
   </AuthLayout>
 )
 

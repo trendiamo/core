@@ -8,12 +8,17 @@ const StyledAvatar = styled(Avatar)`
   margin: 8px;
 `
 
-const StyledForm = styled.form`
+const StyledAuthForm = styled.form`
   margin-top: 8px;
   width: 100%;
 `
 
-const Main = styled.main`
+const StyledForm = styled.form`
+  margin-top: 8px;
+  width: 33%;
+`
+
+const AuthMain = styled.main`
   display: block;
   margin-left: 24px;
   margin-right: 24px;
@@ -24,8 +29,11 @@ const Main = styled.main`
     width: 400px;
   }
 `
+const Main = styled.main`
+  display: block;
+`
 
-const StyledPaper = styled(Paper)`
+const AuthStyledPaper = styled(Paper)`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -33,8 +41,25 @@ const StyledPaper = styled(Paper)`
   padding: 16px 24px 24px;
 `
 
+const StyledPaper = styled(Paper)`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px 24px;
+`
+
 const StyledButton = styled(Button)`
   margin-top: 24px;
 `
 
-export { StyledAvatar, StyledForm, Main, Notification, StyledPaper, StyledButton }
+export {
+  StyledPaper,
+  StyledAvatar,
+  StyledForm,
+  StyledAuthForm,
+  AuthMain,
+  Main,
+  Notification,
+  AuthStyledPaper,
+  StyledButton,
+}

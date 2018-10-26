@@ -9,12 +9,12 @@ import React from 'react'
 import routes from 'app/routes'
 import { withRouter } from 'react-router'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from '../shared'
+import { StyledAuthForm, StyledButton } from '../shared'
 
 const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
     <AuthLayout title="Change Password">
-      <StyledForm onSubmit={passwordResetSubmit}>
+      <StyledAuthForm onSubmit={passwordResetSubmit}>
         <Notification data={info} />
         <FormControl fullWidth margin="normal" required>
           <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
@@ -44,7 +44,7 @@ const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue
         <StyledButton color="secondary" fullWidth type="submit" variant="raised">
           {'Reset'}
         </StyledButton>
-      </StyledForm>
+      </StyledAuthForm>
     </AuthLayout>
   </Authenticated>
 )

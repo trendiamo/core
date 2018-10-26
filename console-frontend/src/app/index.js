@@ -41,7 +41,6 @@ const App = ({ dataProvider, history }) => (
       loginPage={LoginPage}
       theme={theme}
     >
-      <Resource name="websites" />
       <Resource
         create={InfluencersCreate}
         edit={InfluencersEdit}
