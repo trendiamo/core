@@ -34,7 +34,7 @@ dokku plugin:install https://github.com/dokku/dokku-postgres.git
 dokku postgres:create console-backend-pg
 dokku postgres:link console-backend-pg console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
-dokku config:set console-backend CORS_ORIGIN=console.trendiamo.com FRONTEND_BASE_URL=https://console.trendiamo.com MAILER_HOST=api.trendiamo.com SPARKPOST_API_KEY=...
+dokku config:set console-backend CORS_ORIGIN=console.trendiamo.com FRONTEND_BASE_URL=https://console.trendiamo.com MAILER_HOST=api.trendiamo.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=...
 dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
 # from your local machine, do the first deploy:
