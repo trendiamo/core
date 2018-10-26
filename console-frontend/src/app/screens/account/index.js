@@ -96,6 +96,7 @@ const Account = ({
         <InputLabel htmlFor="hostname">{'Hostnames'}</InputLabel>
         <FormControl fullWidth margin="normal">
           {accountForm.hostnames.map((hostname, index) => (
+            // eslint-disable-next-line react/no-array-index-key
             <div key={index}>
               <StyledTextField index={index} onChange={editHostnameValue} value={hostname} />
               <IconButton>
