@@ -6,9 +6,15 @@ const typography = {
     fontWeight: '700',
     textTransform: 'uppercase',
   },
+  caption: {
+    letterSpacing: '0.4px',
+  },
 }
 
 const palette = {
+  error: {
+    main: '#b00020',
+  },
   primary: {
     contrastText: '#fff',
     main: '#32333d',
@@ -16,6 +22,10 @@ const palette = {
   secondary: {
     contrastText: '#fff',
     main: '#0560ff',
+  },
+  // This color is not in MUI definitions, but we use it in our success messages
+  success: {
+    main: '#14c29d',
   },
   text: {
     disabled: '#ccc',

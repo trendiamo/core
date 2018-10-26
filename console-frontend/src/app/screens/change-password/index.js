@@ -4,11 +4,12 @@ import AuthLayout from '../auth-layout'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
+import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import { withRouter } from 'react-router'
 import { compose, withHandlers, withState } from 'recompose'
-import { Notification, StyledButton, StyledForm } from '../shared'
+import { StyledButton, StyledForm } from '../shared'
 
 const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>

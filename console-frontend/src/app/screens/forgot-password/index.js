@@ -4,10 +4,11 @@ import AuthLayout from '../auth-layout'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
+import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
-import { Notification, StyledButton, StyledForm } from '../shared'
+import { StyledButton, StyledForm } from '../shared'
 
 const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
