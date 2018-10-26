@@ -50,6 +50,7 @@ class InfluencersController < ApplicationController
   end
 
   def render_error
-    render json: { errors: @influencer.errors }, status: :unprocessable_entity
+    errors = @influencer.errors.full_messages.map { |string| { title: string } }
+    render json: { errors: errors }, status: :unprocessable_entity
   end
 end

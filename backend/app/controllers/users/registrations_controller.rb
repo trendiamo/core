@@ -18,14 +18,17 @@ module Users
         else
           # set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
           expire_data_after_sign_in!
-          render json: { errors: ["signed up but #{resource.inactive_message}"] }
+
+          errors = [{ title: "signed up but #{resource.inactive_message}" }]
+          render json: { errors: errors }
           # respond_with resource, location: after_inactive_sign_up_path_for(resource)
         end
       else
         clean_up_passwords resource
         set_minimum_password_length
         # respond_with resource
-        render json: { errors: resource.errors.full_messages, user: resource }
+        errors = resource.errors.full_messages.map { |string| { title: string } }
+        render json: { errors: errors, user: resource }
       end
     end
 
@@ -51,7 +54,8 @@ module Users
       else
         clean_up_passwords resource
         set_minimum_password_length
-        render json: { errors: resource.errors.full_messages }
+        errors = resource.errors.full_messages.map { |string| { title: string } }
+        render json: { errors: errors }
       end
     end
 
