@@ -8,11 +8,12 @@ const SIGNOUT_URL = `${BASE_API_PATH}/users/sign_out`
 const PASSWORD_FORM_URL = `${BASE_API_PATH}/users/password`
 const PASSWORD_RESET_URL = `${BASE_API_PATH}/users/password`
 const PASSWORD_CHANGE_URL = `${BASE_API_PATH}/users/change_password`
-const ACCOUNT_URL = `${BASE_API_PATH}/websites/`
+const WEBSITE_URL = `${BASE_API_PATH}/websites`
+
+const defaultErrorMessage = 'Something went wrong!'
 
 // Converts the input (json) to an object where the status keyword is always present.
 // Simplifies the use in the <Notification /> component
-
 const convertToInfo = (json, defaultMessage) => {
   defaultMessage = defaultMessage || 'Success!'
   const hasError = json.errors || json.error
@@ -22,7 +23,6 @@ const convertToInfo = (json, defaultMessage) => {
 }
 
 const errorMessages = json => {
-  const defaultErrorMessage = 'Something went wrong!'
   if (json.error) {
     return 'Invalid Credentials'
   } else {
@@ -31,9 +31,7 @@ const errorMessages = json => {
 }
 
 const mapErrors = json => {
-  const errors = Array.isArray(json.errors) ? json.errors : Object.entries(json.errors).flat(2)
-  const isLengthTwo = Boolean(errors.length === 2)
-  return isLengthTwo ? errors.map(error => `${error}`).join(' ') : errors.map(error => `${error}`).join('')
+  return Array.isArray(json.errors) ? json.errors.map(error => error.title).join(', ') : defaultErrorMessage
 }
 
 const apiRequest = async (url, body) => {
@@ -60,7 +58,7 @@ const apiPasswordRequest = async (url, body) => {
 
 const apiAccountShowRequest = async url => {
   const websiteRef = auth.getWebsiteRef()
-  const res = await fetch(`${url}${websiteRef}`, {
+  const res = await fetch(`${url}/${websiteRef}`, {
     headers: new Headers({
       'Content-Type': 'application/json',
       ...auth.getHeaders(),
@@ -72,7 +70,7 @@ const apiAccountShowRequest = async url => {
 
 const apiAccountUpdateRequest = async (url, body) => {
   const websiteRef = auth.getWebsiteRef()
-  const res = await fetch(`${url}${websiteRef}`, {
+  const res = await fetch(`${url}/${websiteRef}`, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -174,5 +172,5 @@ export const apiPasswordEmailLink = (body, setInfo) => apiPasswordEmailLinkSaga(
 export const apiPasswordReset = (body, setInfo) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setInfo)
 export const apiPasswordChange = (body, setInfo) => apiPasswordChangeSaga(PASSWORD_CHANGE_URL, body, setInfo)
 
-export const apiAccountShow = setInfo => apiAccountShowSaga(ACCOUNT_URL, setInfo)
-export const apiAccountUpdate = (body, setInfo) => apiAccountUpdateSaga(ACCOUNT_URL, body, setInfo)
+export const apiAccountShow = setInfo => apiAccountShowSaga(WEBSITE_URL, setInfo)
+export const apiAccountUpdate = (body, setInfo) => apiAccountUpdateSaga(WEBSITE_URL, body, setInfo)

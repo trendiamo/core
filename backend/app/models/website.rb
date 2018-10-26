@@ -17,7 +17,7 @@ class Website < ApplicationRecord
 
   def hostnames_cannot_be_repeated
     other_hostnames = Website.unscoped.where.not(id: id).pluck(:hostnames).flatten
-    return if (hostnames & other_hostnames).empty?
+    return if ((hostnames || []) & other_hostnames).empty?
     errors.add(:hostnames, "already exists")
   end
 end

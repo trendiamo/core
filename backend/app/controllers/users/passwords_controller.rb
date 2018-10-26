@@ -11,7 +11,8 @@ module Users
         render json: { resource: resource }
       else
         # respond_with(resource)
-        render json: { errors: resource.errors.full_messages }
+        errors = resource.errors.full_messages.map { |string| { title: string } }
+        render json: { errors: errors }
       end
     end
 
@@ -40,7 +41,8 @@ module Users
       else
         set_minimum_password_length
         # respond_with resource
-        render json: { errors: resource.errors.full_messages }
+        errors = resource.errors.full_messages.map { |string| { title: string } }
+        render json: { errors: errors }
       end
     end
   end
