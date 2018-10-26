@@ -41,9 +41,9 @@ const AccountLayout = ({ children }) => (
 )
 
 const AddHostnameButton = ({ addHostnameSelect }) => (
-  <Button onClick={addHostnameSelect} size={'small'}>
+  <Button onClick={addHostnameSelect} size="small">
     <StyledAddCircleOutline />
-    <StyledTypography>{'Add Hostname'}</StyledTypography>
+    <StyledTypography>{'Add Another Hostname'}</StyledTypography>
   </Button>
 )
 
@@ -63,8 +63,22 @@ const Cancel = compose(
   })
 )(({ deleteHostname, ...props }) => <RACancel {...props} onClick={deleteHostname} />)
 
+const FlexDiv = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const StyledTextField = styled(TextField)`
-  width: 70%;
+  flex: 1;
+  margin: 8px 0;
+`
+
+const LabelContainer = styled.div`
+  margin-top: 1rem;
+`
+
+const MultiFormControl = styled.div`
+  margin-top: 0;
 `
 
 const Account = ({
@@ -93,18 +107,22 @@ const Account = ({
           <InputLabel htmlFor="subtitle">{'Subtitle'}</InputLabel>
           <Input name="subtitle" onChange={setFieldValue} value={accountForm.subtitle} />
         </FormControl>
-        <InputLabel htmlFor="hostname">{'Hostnames'}</InputLabel>
-        <FormControl fullWidth margin="normal">
+        <LabelContainer>
+          <InputLabel>{'Hostnames'}</InputLabel>
+        </LabelContainer>
+        <MultiFormControl fullWidth margin="normal">
           {accountForm.hostnames.map((hostname, index) => (
             // eslint-disable-next-line react/no-array-index-key
-            <div key={index}>
+            <FlexDiv key={index}>
               <StyledTextField index={index} onChange={editHostnameValue} value={hostname} />
-              <IconButton>
-                <Cancel index={index} onClick={deleteHostname} />
-              </IconButton>
-            </div>
+              {accountForm.hostnames.length > 1 && (
+                <IconButton>
+                  <Cancel index={index} onClick={deleteHostname} />
+                </IconButton>
+              )}
+            </FlexDiv>
           ))}
-        </FormControl>
+        </MultiFormControl>
         <AddHostnameButton addHostnameSelect={addHostnameSelect} />
         <StyledButton color="primary" fullWidth type="submit" variant="raised">
           {'Save'}
