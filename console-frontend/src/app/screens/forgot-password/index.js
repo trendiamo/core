@@ -7,12 +7,29 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
+import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm, StyledButton } from '../shared'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledAuthForm, StyledButton } from '../shared'
+
+const AuthMessage = () => (
+  <React.Fragment>
+    <AuthTitle variant="display1">
+      {"Don't have an account?"}
+      <br />
+      {'Get to know what we can do for you.'}
+    </AuthTitle>
+    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body2">
+      {'Is something wrong? '}
+      <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
+    </AuthText>
+    <a href="http://trendiamo.com">
+      <AuthButton>{'Learn about Trendiamo'}</AuthButton>
+    </a>
+  </React.Fragment>
+)
 
 const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
-    <AuthLayout title="Reset Password">
+    <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
       <StyledAuthForm onSubmit={passwordResetSubmit}>
         <Notification data={info} />
         <FormControl fullWidth margin="normal" required>

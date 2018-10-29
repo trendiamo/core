@@ -7,12 +7,33 @@ import Link from 'shared/link'
 import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
+import Typography from '@material-ui/core/Typography'
+import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm, StyledButton } from '../shared'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledAuthForm, StyledButton } from '../shared'
+
+const AuthMessage = () => (
+  <React.Fragment>
+    <AuthTitle variant="display1">
+      {"Don't have an account?"}
+      <br />
+      {'Get to know what we can do for you.'}
+    </AuthTitle>
+    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body2">
+      {'Is something wrong? '}
+      <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
+    </AuthText>
+    <a href="http://trendiamo.com">
+      <AuthButton>{'Learn about Trendiamo'}</AuthButton>
+    </a>
+  </React.Fragment>
+)
 
 const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, info }) => (
-  <AuthLayout title="Reset Password">
+  <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <StyledAuthForm onSubmit={passwordChangeSubmit}>
+      <Typography variant="body1">
+        {'We can help you reset your password using your email address linked to your account.'}
+      </Typography>
       <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'Email'}</InputLabel>
