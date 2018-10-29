@@ -20,11 +20,13 @@ const convertToInfo = (json, defaultMessage) => {
   const status = hasError ? 'error' : 'success'
   const message = hasError ? errorMessages(json) : defaultMessage
   const isAuthError = hasError ? checkAuth(json) : false
+  // return { message: message, status: status }
   return isAuthError ? auth.clear() : { message: message, status: status }
 }
 
 const checkAuth = json => {
-  return json.errors[0].title === 'Invalid email or token'
+  const test = json.errors.find(error => error.title === 'Invalid email or token')
+  return typeof test !== 'undefined'
 }
 
 const errorMessages = json => {

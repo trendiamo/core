@@ -3,8 +3,6 @@ class DeviseFailureApp < Devise::FailureApp
     {
       errors: [
         {
-          id: :unauthorized,
-          status: 401,
           title: i18n_message,
         },
       ],
