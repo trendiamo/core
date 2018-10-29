@@ -3,6 +3,7 @@ import { Field } from 'redux-form'
 import ProfilePicture from '../../shared/profile-picture'
 import React from 'react'
 import styled from 'styled-components'
+import UserIcon from '../../assets/baseline-person.svg'
 import { compose, withHandlers, withState } from 'recompose'
 import {
   Create,
@@ -24,7 +25,25 @@ const StyledAvatar = styled(Avatar)`
   width: ${({ small }) => (small ? '40px' : '100px')};
   height: ${({ small }) => (small ? '40px' : '100px')};
 `
-const ProfilePic = ({ record, small }) => <StyledAvatar alt={record.name} small={small} src={record.profilePicUrl} />
+const BaseProfilePic = ({ record, small, picSrc, setErrorPicture }) => (
+  <StyledAvatar
+    alt={record.name}
+    imgProps={{
+      onError: setErrorPicture,
+    }}
+    small={small}
+    src={picSrc}
+  />
+)
+
+const ProfilePic = compose(
+  withState('picSrc', 'setPicSrc', ({ record }) => record.profilePicUrl),
+  withHandlers({
+    setErrorPicture: ({ setPicSrc }) => {
+      setPicSrc(UserIcon)
+    },
+  })
+)(BaseProfilePic)
 
 const FieldPic = ({ picValue, setPicture }) => <ProfilePicture onChange={setPicture} value={picValue} />
 
