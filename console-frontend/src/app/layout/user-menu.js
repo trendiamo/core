@@ -99,7 +99,6 @@ export default compose(
     onLogoutButtonClick: () => async event => {
       event.preventDefault()
       await apiSignOut()
-      window.location.href = routes.login()
     },
   })
 )(UserMenu)
