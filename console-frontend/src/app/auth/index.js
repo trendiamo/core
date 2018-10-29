@@ -7,6 +7,7 @@ const auth = {
     localStorage.removeItem('authEmail')
     localStorage.removeItem('authToken')
     localStorage.removeItem('authUser')
+    window.location.href = routes.login()
   },
   getDisplayName() {
     const user = this.getUser()

@@ -1,4 +1,6 @@
 class WebsitesController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     @website = Website.find(params[:id])
     authorize @website
