@@ -8,15 +8,32 @@ import Link from 'shared/link'
 import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
+import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm, StyledButton } from '../shared'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledAuthForm, StyledButton } from '../shared'
+
+const AuthMessage = () => (
+  <React.Fragment>
+    <AuthTitle variant="display1">
+      {"Don't have an account?"}
+      <br />
+      {'Get to know what we can do for you.'}
+    </AuthTitle>
+    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body2">
+      {'Is something wrong? '}
+      <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
+    </AuthText>
+    <AuthLink href="http://trendiamo.com">
+      <AuthButton>{'Learn about Trendiamo'}</AuthButton>
+    </AuthLink>
+  </React.Fragment>
+)
 
 const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
-  <AuthLayout title="Log in">
+  <AuthLayout authMessage={<AuthMessage />} title="Login">
     <StyledAuthForm onSubmit={loginSubmit}>
       <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
-        <InputLabel htmlFor="email">{'Email Address'}</InputLabel>
+        <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
         <Input
           autoComplete="email"
           autoFocus
@@ -39,11 +56,11 @@ const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
         />
       </FormControl>
       <StyledButton color="secondary" fullWidth type="submit" variant="contained">
-        {'Log in'}
+        {'Login'}
       </StyledButton>
       <Link to={routes.requestPasswordReset()}>
         <StyledButton color="default" fullWidth variant="text">
-          {'Forgot Password'}
+          {'Forgot Password?'}
         </StyledButton>
       </Link>
     </StyledAuthForm>
