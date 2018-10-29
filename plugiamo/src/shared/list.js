@@ -16,7 +16,6 @@ const ListChevron = styled(IconChevronRight)`
 const ListContent = styled.div`
   padding: 1rem;
   flex: 1;
-  color: #4a4a4a;
 `
 
 const ListItem = styled.li`
@@ -26,6 +25,14 @@ const ListItem = styled.li`
   margin-bottom: 1rem;
   align-items: center;
   cursor: pointer;
+  color: #4a4a4a;
+
+  transition: background-color 0.4s linear;
+
+  :active {
+    background-color: #00adef;
+    color: white;
+  }
 `
 
 const ListImg = styled.img`
