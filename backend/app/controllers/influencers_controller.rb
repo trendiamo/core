@@ -2,9 +2,7 @@ class InfluencersController < ApplicationController
   def index
     @influencers = Influencer.all
     authorize @influencers
-    response.headers["Content-Range"] = "influencers #{@influencers.count}/#{@influencers.count}"
-    response.headers["Access-Control-Expose-Headers"] = "Content-Range"
-    render json: @influencers
+    render json: pagination(@influencers)
   end
 
   def show
