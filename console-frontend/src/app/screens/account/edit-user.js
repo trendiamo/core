@@ -1,3 +1,4 @@
+import auth from 'app/auth'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -41,9 +42,11 @@ export default compose(
   }),
   withState('info', 'setInfo', null),
   withHandlers({
-    onSubmit: ({ userForm, setInfo }) => event => {
+    onSubmit: ({ userForm, setInfo }) => async event => {
       event.preventDefault()
-      return apiMeUpdate({ user: userForm }, setInfo)
+      const user = await apiMeUpdate({ user: userForm }, setInfo)
+      auth.setUser(user)
+      return user
     },
     setFieldValue: ({ userForm, setUserForm }) => event => {
       setUserForm({ ...userForm, [event.target.name]: event.target.value })
@@ -55,12 +58,13 @@ export default compose(
   lifecycle({
     async componentDidMount() {
       const { setUserForm, setInfo } = this.props
-      const json = await apiMe(setInfo)
+      const user = await apiMe(setInfo)
+      auth.setUser(user)
       setUserForm({
-        email: json.email || '',
-        firstName: json.firstName || '',
-        lastName: json.lastName || '',
-        profilePicUrl: json.profilePicUrl || '',
+        email: user.email || '',
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        profilePicUrl: user.profilePicUrl || '',
       })
     },
   })

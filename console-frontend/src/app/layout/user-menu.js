@@ -13,7 +13,7 @@ import React from 'react'
 import routes from 'app/routes'
 import SettingsIcon from '@material-ui/icons/Settings'
 import styled from 'styled-components'
-import { compose, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 
 const AvatarContainer = styled.div`
   width: 100%;
@@ -34,10 +34,21 @@ const MenuIconStyle = {
   marginRight: '0.5rem',
 }
 
-const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleClose, open }) => (
+const UserMenu = ({
+  initials,
+  onLogoutButtonClick,
+  anchorEl,
+  handleMenu,
+  handleClose,
+  open,
+  profilePicUrl,
+  userIdentifier,
+}) => (
   <React.Fragment>
     <AvatarContainer>
-      <StyledAvatar size={100}>{initials ? initials : <AccountCircleCustom />}</StyledAvatar>
+      <StyledAvatar size={100} src={profilePicUrl}>
+        {profilePicUrl ? null : initials ? initials : <AccountCircleCustom />}
+      </StyledAvatar>
     </AvatarContainer>
     <MenuItem
       aria-haspopup="true"
@@ -45,7 +56,7 @@ const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleC
       onClick={handleMenu}
       style={{ color: '#fff' }}
     >
-      {auth.getDisplayName() || auth.getEmail()}
+      {userIdentifier}
       <ArrowDropDown />
     </MenuItem>
     <Divider style={{ background: '#6c6c71' }} />
@@ -83,9 +94,12 @@ const UserMenu = ({ initials, onLogoutButtonClick, anchorEl, handleMenu, handleC
 
 export default compose(
   withState('anchorEl', 'setAnchorEl', null),
-  withProps(({ anchorEl }) => ({
-    initials: auth.getInitials(),
+  withState('user', 'setUser', auth.getUser()),
+  withProps(({ anchorEl, user }) => ({
+    initials: !user.firstName || !user.lastName ? null : `${user.firstName[0]}${user.lastName[0]}`,
     open: Boolean(anchorEl),
+    profilePicUrl: user.profilePicUrl,
+    userIdentifier: (!user.firstName || !user.lastName ? null : `${user.firstName} ${user.lastName}`) || user.email,
   })),
   withHandlers({
     handleClose: ({ setAnchorEl }) => event => {
@@ -99,6 +113,19 @@ export default compose(
     onLogoutButtonClick: () => async event => {
       event.preventDefault()
       await apiSignOut()
+    },
+    updateUser: ({ setUser }) => user => {
+      setUser(user)
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { updateUser } = this.props
+      auth.addListener(updateUser)
+    },
+    componentWillUnmount() {
+      const { updateUser } = this.props
+      auth.removeListener(updateUser)
     },
   })
 )(UserMenu)
