@@ -1,6 +1,8 @@
 import Button from '@material-ui/core/Button'
 import CloudUpload from '@material-ui/icons/CloudUpload'
-import { getSignedUrl } from 'app/utils'
+import { Field } from 'redux-form'
+import { getSignedUrlFactory } from 'app/utils'
+import Label from 'shared/label'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import React from 'react'
 import ReactDropzone from 'react-dropzone'
@@ -33,7 +35,17 @@ const InnerLabel = styled.div`
   border-radius: 50%;
 `
 
-const StyledDropzone = styled(ReactDropzone)`
+const sanitizeProps = props => {
+  const newProps = { ...props }
+  delete newProps.isDragging
+  delete newProps.previewImage
+  delete newProps.setIsDragging
+  return newProps
+}
+
+const FilteredReactDropzone = props => <ReactDropzone {...sanitizeProps(props)} />
+
+const StyledDropzone = styled(FilteredReactDropzone)`
   border-width: 0;
   cursor: pointer;
   position: relative;
@@ -174,11 +186,11 @@ const pictureUploaderFactory = uploadImage => {
           }
           setPreviewCrop({ image: imagePreviewRef, pixelCrop, setCroppedImage })
         },
-        onDoneClick: ({ crop, image, onChange, setDoneCropping, setProgress }) => async () => {
+        onDoneClick: ({ crop, image, onChange, setDoneCropping, setProgress, type }) => async () => {
           setDoneCropping(true)
           const blob = await resultingCrop(imagePreviewRef, getPixelCrop(imagePreviewRef, crop))
           blob.name = image.name
-          uploadImage({ blob, onChange, setProgress })
+          uploadImage({ blob, onChange, setProgress, type })
         },
         onDrop: ({ onChange, setDoneCropping, setImage }) => files => {
           onChange('')
@@ -249,11 +261,11 @@ const resultingCrop = (image, pixelCrop) => {
 
 const setPreviewCrop = ({ image, pixelCrop, setCroppedImage }) => setCroppedImage(previewCrop(image, pixelCrop))
 
-const uploadImage = ({ blob, onChange, setProgress }) => {
+const uploadImage = ({ blob, onChange, setProgress, type }) => {
   new S3Upload({
     contentDisposition: 'auto',
     files: [blob],
-    getSignedUrl,
+    getSignedUrl: getSignedUrlFactory(type),
     onError: status => {
       console.error(status)
       alert('Error uploading file, please try again or contact us')
@@ -273,5 +285,24 @@ const uploadImage = ({ blob, onChange, setProgress }) => {
 
 const PictureUploader = pictureUploaderFactory(uploadImage)
 
-export { pictureUploaderFactory }
+const PictureField = compose(
+  withState('picValue', 'setPicValue', ({ input }) => input.value),
+  withHandlers({
+    setPicture: ({ input, setPicValue }) => value => {
+      setPicValue(value)
+      input.onChange(value)
+    },
+  })
+)(({ label, picValue, setPicture, type }) => (
+  <React.Fragment>
+    <Label>{label}</Label>
+    <PictureUploader onChange={setPicture} type={type} value={picValue} />
+  </React.Fragment>
+))
+
+const PictureInput = ({ label, source, type }) => (
+  <Field component={PictureField} label={label} name={source} type={type} />
+)
+
+export { PictureInput, pictureUploaderFactory }
 export default PictureUploader

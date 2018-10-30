@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         delete "/users/sign_out", to: "users/sessions#destroy"
       end
       resources :influencers, only: %i[index show update create destroy]
+      resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end
     get "s3/sign", to: "s3#sign"
