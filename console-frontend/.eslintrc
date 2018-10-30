@@ -40,10 +40,11 @@
       }
     ],
     "no-console": 0,
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": 0,
-    "react/jsx-curly-brace-presence": ["off", "always"],
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "ignore" }],
     "react/jsx-handler-names": 0,
     "react/jsx-max-depth": [2, { "max": 4 }],
     "react/jsx-no-bind": 0,
