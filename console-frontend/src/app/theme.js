@@ -30,7 +30,7 @@ const palette = {
   },
   secondary: {
     contrastText: '#fff',
-    main: '#ffaa00', // weird coloris temporary here: make sure we're not using this yet.
+    main: '#ffaa00', // weird color is temporary here: make sure we're not using this yet.
   },
   text: {
     disabled: '#ccc',
