@@ -3,7 +3,7 @@ import React from 'react'
 
 const Logotype = ({ ...props }) => (
   <LogotypeContainer>
-    <img src="/img/trendiamo-logo.svg" {...props} />
+    <img alt="" src="/img/trendiamo-logo.svg" {...props} />
   </LogotypeContainer>
 )
 
