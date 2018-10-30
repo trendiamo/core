@@ -41,8 +41,12 @@ const Layout = ({
           <Menu hasDashboard={!!dashboard} logout={logout} />
         </Sidebar>
         <div className={classes.content}>
-          {isLoading ? <Loading /> : null}
-          {hasError ? <Error error={errorMessage} errorInfo={errorInfo} /> : children}
+          {isLoading && <Loading />}
+          {hasError ? (
+            <Error error={errorMessage} errorInfo={errorInfo} />
+          ) : (
+            <div style={{ visibility: isLoading ? 'hidden' : 'visible' }}>{children}</div>
+          )}
         </div>
       </main>
       <Notification />
