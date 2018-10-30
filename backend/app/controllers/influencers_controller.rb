@@ -2,7 +2,7 @@ class InfluencersController < ApplicationController
   def index
     @influencers = Influencer.all
     authorize @influencers
-    render json: pagination(@influencers)
+    render json: pagination(sorting(@influencers))
   end
 
   def show
