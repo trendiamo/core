@@ -1,8 +1,8 @@
 import Avatar from '@material-ui/core/Avatar'
 import { Field } from 'redux-form'
-import ProfilePicture from '../../shared/profile-picture'
 import React from 'react'
 import styled from 'styled-components'
+import UploadPicture from 'shared/picture-uploader'
 import { compose, withHandlers, withState } from 'recompose'
 import {
   Create,
@@ -26,9 +26,14 @@ const StyledAvatar = styled(Avatar)`
 `
 const ProfilePic = ({ record, small }) => <StyledAvatar alt={record.name} small={small} src={record.profilePicUrl} />
 
-const FieldPic = ({ picValue, setPicture }) => <ProfilePicture onChange={setPicture} value={picValue} />
+const Label = styled.label`
+  display: block;
+  color: #222;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  margin-bottom: 0.5rem;
+`
 
-const EnhancedProfilePic = compose(
+const FieldPic = compose(
   withState('picValue', 'setPicValue', ({ input }) => input.value),
   withHandlers({
     setPicture: ({ input, setPicValue }) => value => {
@@ -36,9 +41,14 @@ const EnhancedProfilePic = compose(
       input.onChange(value)
     },
   })
-)(FieldPic)
+)(({ picValue, setPicture }) => (
+  <React.Fragment>
+    <Label>{'Picture'}</Label>
+    <UploadPicture onChange={setPicture} value={picValue} />
+  </React.Fragment>
+))
 
-const ProfilePicInput = ({ source }) => <Field component={EnhancedProfilePic} label="picture" name={source} />
+const ProfilePicInput = ({ source }) => <Field component={FieldPic} label="picture" name={source} />
 
 export const InfluencersEdit = ({ ...props }) => (
   <Edit {...props} title="Edit Influencer">
