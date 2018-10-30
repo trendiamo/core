@@ -94,7 +94,7 @@ const EditWebsite = ({
       {websiteForm.hostnames.map((hostname, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <FlexDiv key={index}>
-          <StyledTextField index={index} onChange={editHostnameValue} value={hostname} />
+          <StyledTextField index={index} onChange={editHostnameValue} required value={hostname} />
           {websiteForm.hostnames.length > 1 && (
             <IconButton>
               <Cancel index={index} onClick={deleteHostname} />

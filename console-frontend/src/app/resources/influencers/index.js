@@ -2,6 +2,7 @@ import Avatar from '@material-ui/core/Avatar'
 import { PictureInput } from 'shared/picture-uploader'
 import React from 'react'
 import styled from 'styled-components'
+import validateInfluencer from './influencer-validations'
 import {
   Create,
   Datagrid,
@@ -35,7 +36,7 @@ const ProfilePic = ({ record, small }) => <StyledAvatar alt={record.name} small=
 
 export const InfluencersEdit = ({ ...props }) => (
   <Edit {...props} title="Edit Influencer">
-    <SimpleForm>
+    <SimpleForm validate={validateInfluencer}>
       <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pic" />
       <TextInput source="name" />
       <TextInput source="description" />
@@ -78,7 +79,7 @@ export const InfluencersList = ({ ...props }) => (
 
 export const InfluencersCreate = ({ ...props }) => (
   <Create {...props} title="Create Influencer">
-    <SimpleForm redirect="show">
+    <SimpleForm redirect="show" validate={validateInfluencer}>
       <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pic" />
       <TextInput source="name" />
       <TextInput source="description" />
