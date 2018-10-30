@@ -68,9 +68,10 @@ export const InfluencersList = ({ ...props }) => (
       }
       small={
         <SimpleList
-          primaryText={record => record.id}
+          leftAvatar={record => <Avatar src={record.profilePicUrl} />}
+          linkType="show"
+          primaryText={record => record.name}
           secondaryText={record => record.description}
-          tertiaryText={record => record.status}
         />
       }
     />
