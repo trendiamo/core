@@ -84,8 +84,7 @@ const apiPasswordRequest = async (url, body) => {
 }
 
 const apiWebsiteShowRequest = async url => {
-  const websiteRef = auth.getWebsiteRef()
-  const res = await fetch(`${url}/${websiteRef}`, {
+  const res = await fetch(url, {
     headers: new Headers({
       'Content-Type': 'application/json',
       ...auth.getHeaders(),
@@ -96,8 +95,7 @@ const apiWebsiteShowRequest = async url => {
 }
 
 const apiWebsiteUpdateRequest = async (url, body) => {
-  const websiteRef = auth.getWebsiteRef()
-  const res = await fetch(`${url}/${websiteRef}`, {
+  const res = await fetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -207,8 +205,8 @@ export const apiPasswordEmailLink = (body, setInfo) => apiPasswordEmailLinkSaga(
 export const apiPasswordReset = (body, setInfo) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setInfo)
 export const apiPasswordChange = (body, setInfo) => apiPasswordChangeSaga(PASSWORD_CHANGE_URL, body, setInfo)
 
-export const apiWebsiteShow = setInfo => apiWebsiteShowSaga(WEBSITES_URL, setInfo)
-export const apiWebsiteUpdate = (body, setInfo) => apiWebsiteUpdateSaga(WEBSITES_URL, body, setInfo)
+export const apiWebsiteShow = (id, setInfo) => apiWebsiteShowSaga(`${WEBSITES_URL}/${id}`, setInfo)
+export const apiWebsiteUpdate = (id, body, setInfo) => apiWebsiteUpdateSaga(`${WEBSITES_URL}/${id}`, body, setInfo)
 
 export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
 export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)

@@ -1,4 +1,5 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
+import auth from 'app/auth'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
@@ -11,7 +12,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { apiWebsiteShow, apiWebsiteUpdate } from 'app/auth/utils'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { StyledButton, StyledForm } from 'app/screens/shared'
 
 const StyledTypography = styled(Typography)`
@@ -117,6 +118,9 @@ export default compose(
     title: '',
   }),
   withState('info', 'setInfo', null),
+  withProps(() => ({
+    websiteId: auth.getUser().account.websiteIds[0],
+  })),
   withHandlers({
     addHostnameSelect: ({ websiteForm, setWebsiteForm }) => () => {
       setWebsiteForm({ ...websiteForm, hostnames: [...websiteForm.hostnames, ''] })
@@ -131,9 +135,9 @@ export default compose(
       newHostnames[index] = newValue
       setWebsiteForm({ ...websiteForm, hostnames: newHostnames })
     },
-    onSubmit: ({ websiteForm, setInfo }) => event => {
+    onSubmit: ({ websiteForm, websiteId, setInfo }) => event => {
       event.preventDefault()
-      return apiWebsiteUpdate({ website: websiteForm }, setInfo)
+      return apiWebsiteUpdate(websiteId, { website: websiteForm }, setInfo)
     },
     setFieldValue: ({ websiteForm, setWebsiteForm }) => event => {
       setWebsiteForm({ ...websiteForm, [event.target.name]: event.target.value })
@@ -141,8 +145,8 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { setWebsiteForm, setInfo } = this.props
-      const json = await apiWebsiteShow(setInfo)
+      const { websiteId, setWebsiteForm, setInfo } = this.props
+      const json = await apiWebsiteShow(websiteId, setInfo)
       setWebsiteForm({
         hostnames: json.hostnames || [''],
         name: json.name || '',

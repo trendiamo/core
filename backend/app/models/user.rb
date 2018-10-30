@@ -10,6 +10,8 @@ class User < ApplicationRecord
   validates :website_ref, uniqueness: true
 
   def as_json(_options = {})
-    attributes.slice("id", "email", "first_name", "last_name", "profile_pic_url", "created_at", "updated_at")
+    attributes
+      .slice("id", "email", "first_name", "last_name", "profile_pic_url", "created_at", "updated_at")
+      .merge(account: { website_ids: account.website_ids })
   end
 end
