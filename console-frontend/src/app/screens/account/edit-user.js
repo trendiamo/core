@@ -45,6 +45,9 @@ export default compose(
       event.preventDefault()
       return apiMeUpdate({ user: userForm }, setInfo)
     },
+    setFieldValue: ({ userForm, setUserForm }) => event => {
+      setUserForm({ ...userForm, [event.target.name]: event.target.value })
+    },
     setProfilePicUrl: ({ userForm, setUserForm }) => profilePicUrl => {
       setUserForm({ ...userForm, profilePicUrl })
     },
