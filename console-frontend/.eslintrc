@@ -49,6 +49,7 @@
     ],
     "no-console": 0,
     "quotes": ["error", "single", { "avoidEscape": true }],
+    "object-shorthand": ["error", "always"],
     "jsx-a11y/no-autofocus": 0,
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
