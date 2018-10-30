@@ -150,7 +150,7 @@ export const apiPasswordChangeSaga = async (url, body, setInfo) => {
   return info.status !== 'error'
 }
 
-export const apiWebsiteShowSaga = async (url, body, setInfo) => {
+export const apiWebsiteShowSaga = async (url, setInfo) => {
   const json = await apiWebsiteShowRequest(url)
   const info = convertToInfo(json)
   if (info.status === 'success') return json
