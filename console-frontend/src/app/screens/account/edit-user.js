@@ -27,7 +27,7 @@ const EditUser = ({ info, onSubmit, userForm, setFieldValue, setProfilePicUrl })
       <InputLabel htmlFor="lastName">{'Last Name'}</InputLabel>
       <Input name="lastName" onChange={setFieldValue} value={userForm.lastName} />
     </FormControl>
-    <StyledButton color="primary" fullWidth type="submit" variant="raised">
+    <StyledButton color="primary" fullWidth type="submit" variant="contained">
       {'Save'}
     </StyledButton>
   </StyledForm>

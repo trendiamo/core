@@ -26,15 +26,11 @@ const palette = {
   },
   primary: {
     contrastText: '#fff',
-    main: '#32333d',
+    main: '#0560ff',
   },
   secondary: {
     contrastText: '#fff',
-    main: '#0560ff',
-  },
-  // This color is not in MUI definitions, but we use it in our success messages
-  success: {
-    main: '#14c29d',
+    main: '#ffaa00', // weird coloris temporary here: make sure we're not using this yet.
   },
   text: {
     disabled: '#ccc',
@@ -43,11 +39,17 @@ const palette = {
 }
 
 const theme = createMuiTheme({
+  // These colors are not in MUI definitions, but we use it for our own purposes
+  customPalette: {
+    success: {
+      main: '#14c29d',
+    },
+  },
   palette,
   shape: {
     borderRadius: 8,
   },
-  typography: typography,
+  typography,
 })
 
 export default theme

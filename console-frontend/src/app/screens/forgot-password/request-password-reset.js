@@ -46,7 +46,7 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
           value={passwordForm.email}
         />
       </FormControl>
-      <StyledButton color="secondary" fullWidth type="submit" variant="raised">
+      <StyledButton color="primary" fullWidth type="submit" variant="contained">
         {'Send Reset Instructions'}
       </StyledButton>
       <Link to={routes.login()}>

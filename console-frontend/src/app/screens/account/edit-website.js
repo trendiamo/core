@@ -104,7 +104,7 @@ const EditWebsite = ({
       ))}
     </MultiFormControl>
     <AddHostnameButton addHostnameSelect={addHostnameSelect} />
-    <StyledButton color="primary" fullWidth type="submit" variant="raised">
+    <StyledButton color="primary" fullWidth type="submit" variant="contained">
       {'Save'}
     </StyledButton>
   </StyledForm>

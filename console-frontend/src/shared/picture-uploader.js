@@ -155,7 +155,7 @@ const BarebonesPictureUploader = ({
           />
           <div>
             <p>{'Please crop the image (or leave as default).'}</p>
-            <Button color="primary" onClick={onDoneClick} type="button" variant="raised">
+            <Button color="primary" onClick={onDoneClick} type="button" variant="contained">
               {'Done'}
             </Button>
           </div>

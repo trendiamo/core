@@ -41,7 +41,7 @@ export const styles = theme => ({
     flexGrow: 1,
   },
   drawerPaper: {
-    background: theme.palette.primary.main,
+    background: '#32333d',
     flex: '1',
     marginTop: 0,
     minHeight: '100vh',

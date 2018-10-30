@@ -56,7 +56,7 @@ const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue,
             value={passwordForm.fieldTwo}
           />
         </FormControl>
-        <StyledButton color="primary" fullWidth type="submit" variant="raised">
+        <StyledButton color="primary" fullWidth type="submit" variant="contained">
           {'Reset'}
         </StyledButton>
       </StyledAuthForm>

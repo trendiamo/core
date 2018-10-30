@@ -42,7 +42,7 @@ const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue
             value={passwordForm.passwordConfirmation}
           />
         </FormControl>
-        <StyledButton color="secondary" fullWidth type="submit" variant="raised">
+        <StyledButton color="primary" fullWidth type="submit" variant="contained">
           {'Reset'}
         </StyledButton>
       </StyledAuthForm>

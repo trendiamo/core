@@ -38,7 +38,7 @@ const NotFound = ({ onSafetyClick }) => (
         <h1>{'404: Page not found'}</h1>
         <p>{'Either you typed a wrong URL, or you followed a bad link, or we screwed up.'}</p>
         <p>{"We'll assume that we screwed up."}</p>
-        <Button onClick={onSafetyClick} variant="raised">
+        <Button onClick={onSafetyClick} variant="contained">
           {'Take me out of here!'}
         </Button>
       </CardContent>
