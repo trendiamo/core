@@ -1,4 +1,4 @@
-import AppBar from './appbar'
+import AppBar from './app-bar'
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -16,6 +16,7 @@ const sanitizeProps = props => {
   delete newProps.history
   delete newProps.location
   delete newProps.match
+  delete newProps.title
   return newProps
 }
 
@@ -26,7 +27,6 @@ const Layout = ({
   logout,
   isLoading,
   open,
-  title,
   hasError,
   errorMessage,
   errorInfo,
@@ -35,14 +35,14 @@ const Layout = ({
   <div className={classes.root} {...sanitizeProps(props)}>
     <div className={classes.appFrame}>
       <CssBaseline />
-      <AppBar classes={classes} logout={logout} open={open} title={title} />
+      <AppBar classes={classes} open={open} />
       <main className={classes.contentWithSidebar}>
         <Sidebar classes={classes}>
           <Menu hasDashboard={!!dashboard} logout={logout} />
         </Sidebar>
         <div className={classes.content}>
           {isLoading ? <Loading /> : null}
-          {hasError ? <Error error={errorMessage} errorInfo={errorInfo} title={title} /> : children}
+          {hasError ? <Error error={errorMessage} errorInfo={errorInfo} /> : children}
         </div>
       </main>
       <Notification />
