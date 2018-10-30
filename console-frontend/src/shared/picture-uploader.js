@@ -10,7 +10,7 @@ import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import S3Upload from 'react-s3-uploader/s3upload'
 import styled from 'styled-components'
 import theme from 'app/theme'
-import { compose, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import ReactCrop, { getPixelCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 
@@ -218,11 +218,12 @@ const pictureUploaderFactory = uploadImage => {
     withHandlers(() => {
       let imagePreviewRef
       return {
-        onCancelClick: ({ previousValue, onChange, setCroppedImage, setDoneCropping, setImage }) => () => {
+        onCancelClick: ({ image, previousValue, onChange, setCroppedImage, setDoneCropping, setImage }) => () => {
           onChange(previousValue)
           setImage(null)
           setCroppedImage(null)
           setDoneCropping(true)
+          URL.revokeObjectURL(image.preview)
         },
         onCropChange: ({ setCrop }) => crop => setCrop(crop),
         onCropComplete: ({ setCrop, setCroppedImage }) => (_crop, pixelCrop) => {
@@ -238,6 +239,7 @@ const pictureUploaderFactory = uploadImage => {
           const blob = await resultingCrop(imagePreviewRef, getPixelCrop(imagePreviewRef, crop))
           blob.name = image.name
           uploadImage({ blob, onChange, setProgress, type })
+          URL.revokeObjectURL(image.preview)
         },
         onDrop: ({ onChange, setDoneCropping, setImage, setPreviousValue, value }) => files => {
           setPreviousValue(value)
@@ -260,6 +262,12 @@ const pictureUploaderFactory = uploadImage => {
         onRemove: ({ onChange }) => () => onChange(null),
         setImagePreviewRef: () => ref => (imagePreviewRef = ref),
       }
+    }),
+    lifecycle({
+      componentWillUnmount() {
+        const { image } = this.props
+        image && URL.revokeObjectURL(image.preview)
+      },
     })
   )(BarebonesPictureUploader)
 
