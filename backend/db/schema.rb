@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181023135040) do
+ActiveRecord::Schema.define(version: 20181030141330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,43 @@ ActiveRecord::Schema.define(version: 20181023135040) do
     t.datetime "updated_at", null: false
     t.index ["body"], name: "index_user_auth_tokens_on_body"
     t.index ["user_id"], name: "index_user_auth_tokens_on_user_id"
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.integer "delay", null: false
+    t.text "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "chat_step_id"
+    t.index ["chat_step_id"], name: "index_chat_messages_on_chat_step_id"
+  end
+
+  create_table "chat_options", force: :cascade do |t|
+    t.string "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "chat_step_id"
+    t.bigint "destinaton_chat_step_id"
+    t.index ["chat_step_id"], name: "index_chat_options_on_chat_step_id"
+    t.index ["destinaton_chat_step_id"], name: "index_chat_options_on_destinaton_chat_step_id"
+  end
+
+  create_table "chat_steps", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "chat_id"
+    t.index ["chat_id"], name: "index_chat_steps_on_chat_id"
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.string "path", null: false
+    t.string "title", null: false
+    t.bigint "influencer_id"
+    t.bigint "website_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["influencer_id"], name: "index_chats_on_influencer_id"
+    t.index ["website_id"], name: "index_chats_on_website_id"
   end
 
   create_table "influencers", force: :cascade do |t|
@@ -87,6 +124,12 @@ ActiveRecord::Schema.define(version: 20181023135040) do
   end
 
   add_foreign_key "auth_tokens", "users"
+  add_foreign_key "chat_messages", "chat_steps"
+  add_foreign_key "chat_options", "chat_steps"
+  add_foreign_key "chat_options", "chat_steps", column: "destinaton_chat_step_id"
+  add_foreign_key "chat_steps", "chats"
+  add_foreign_key "chats", "influencers"
+  add_foreign_key "chats", "websites"
   add_foreign_key "influencers", "accounts"
   add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
