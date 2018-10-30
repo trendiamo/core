@@ -44,7 +44,7 @@ class InfluencersController < ApplicationController
   private
 
   def influencer_params
-    params.require(:influencer).permit(:id, :name, :description, :profile_pic_url)
+    params.require(:influencer).permit(:name, :description, :profile_pic_url)
   end
 
   def render_error
