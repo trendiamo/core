@@ -41,4 +41,13 @@ class ApplicationController < ActionController::API
     add_pagination_headers(chain, pagination_hash[:range])
     chain.page(pagination_hash[:page_number]).per(pagination_hash[:total_per_page])
   end
+
+  def sorting(chain)
+    begin
+      sort_params = JSON.parse(params[:sort])
+    rescue JSON::ParserError
+      return []
+    end
+    chain.order(sort_params[0].underscore.concat(" #{sort_params[1]}"))
+  end
 end
