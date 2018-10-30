@@ -2,7 +2,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Logotype from 'shared/logotype'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import React from 'react'
-import theme from '../theme'
+import theme from 'app/theme'
 import Typography from '@material-ui/core/Typography'
 import { AuthMain, AuthMessage, AuthStyledPaper, BackgroundImage } from './shared'
 

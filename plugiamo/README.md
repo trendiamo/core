@@ -44,7 +44,7 @@ yarn eslint src
 https://storybook.js.org/
 
 ```
-yarn run storybook
+yarn storybook
 ```
 
 ## Deploy
