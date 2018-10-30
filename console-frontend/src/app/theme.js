@@ -43,7 +43,7 @@ const palette = {
 }
 
 const theme = createMuiTheme({
-  palette: palette,
+  palette,
   shape: {
     borderRadius: 8,
   },
