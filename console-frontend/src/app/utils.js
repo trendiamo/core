@@ -1,11 +1,14 @@
 import auth from './auth'
 import qs from 'querystring'
 
-export const getSignedUrl = (file, callback) => {
-  return fetch(
-    `https://${process.env.REACT_APP_API_ENDPOINT}/s3/sign?${qs.stringify({
+const S3_URL = `https://${process.env.REACT_APP_API_ENDPOINT}/s3/sign`
+
+export const getSignedUrlFactory = type => (file, callback) =>
+  fetch(
+    `${S3_URL}?${qs.stringify({
       content_type: file.type,
       object_name: file.name,
+      type,
     })}`,
     {
       headers: new Headers({
@@ -26,4 +29,3 @@ export const getSignedUrl = (file, callback) => {
       }
     })
     .then(callback)
-}

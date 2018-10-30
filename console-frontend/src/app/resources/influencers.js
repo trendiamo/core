@@ -1,9 +1,7 @@
 import Avatar from '@material-ui/core/Avatar'
-import { Field } from 'redux-form'
+import { PictureInput } from 'shared/picture-uploader'
 import React from 'react'
 import styled from 'styled-components'
-import UploadPicture from 'shared/picture-uploader'
-import { compose, withHandlers, withState } from 'recompose'
 import {
   Create,
   Datagrid,
@@ -26,34 +24,10 @@ const StyledAvatar = styled(Avatar)`
 `
 const ProfilePic = ({ record, small }) => <StyledAvatar alt={record.name} small={small} src={record.profilePicUrl} />
 
-const Label = styled.label`
-  display: block;
-  color: #222;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  margin-bottom: 0.5rem;
-`
-
-const FieldPic = compose(
-  withState('picValue', 'setPicValue', ({ input }) => input.value),
-  withHandlers({
-    setPicture: ({ input, setPicValue }) => value => {
-      setPicValue(value)
-      input.onChange(value)
-    },
-  })
-)(({ picValue, setPicture }) => (
-  <React.Fragment>
-    <Label>{'Picture'}</Label>
-    <UploadPicture onChange={setPicture} value={picValue} />
-  </React.Fragment>
-))
-
-const ProfilePicInput = ({ source }) => <Field component={FieldPic} label="picture" name={source} />
-
 export const InfluencersEdit = ({ ...props }) => (
   <Edit {...props} title="Edit Influencer">
     <SimpleForm>
-      <ProfilePicInput source="profilePicUrl" />
+      <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pic" />
       <TextInput source="name" />
       <TextInput source="description" />
     </SimpleForm>
@@ -96,7 +70,7 @@ export const InfluencersList = ({ ...props }) => (
 export const InfluencersCreate = ({ ...props }) => (
   <Create {...props} title="Create Influencer">
     <SimpleForm redirect="show">
-      <ProfilePicInput source="profilePicUrl" />
+      <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pic" />
       <TextInput source="name" />
       <TextInput source="description" />
     </SimpleForm>

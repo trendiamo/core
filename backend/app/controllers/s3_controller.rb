@@ -21,7 +21,15 @@ class S3Controller < ApplicationController
   end
 
   def file_key
-    @file_key ||= "uploads/influencers-profile-pics/#{SecureRandom.hex(4)}/#{params[:object_name]}"
+    @file_key ||= "uploads/#{folder}/#{SecureRandom.hex(4)}/#{params[:object_name]}"
+  end
+
+  def folder
+    if %w[influencers-profile-pics users-profile-pics].include?(params[:type])
+      params[:type]
+    else
+      "unknown"
+    end
   end
 
   def s3_presigner

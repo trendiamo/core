@@ -10,9 +10,9 @@ import RATextField from '@material-ui/core/TextField'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import { apiAccountShow, apiAccountUpdate } from 'app/auth/utils'
+import { apiWebsiteShow, apiWebsiteUpdate } from 'app/auth/utils'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from '../shared'
+import { StyledButton, StyledForm } from 'app/screens/shared'
 
 const StyledTypography = styled(Typography)`
   margin-left: 10px;
@@ -69,14 +69,14 @@ const EditWebsite = ({
   editHostnameValue,
   info,
   websiteForm,
-  websiteFormSubmit,
+  onSubmit,
   setFieldValue,
 }) => (
-  <StyledForm onSubmit={websiteFormSubmit}>
+  <StyledForm onSubmit={onSubmit}>
     <Notification data={info} />
     <FormControl fullWidth margin="normal" required>
       <InputLabel htmlFor="name">{'Name'}</InputLabel>
-      <Input autoFocus name="name" onChange={setFieldValue} value={websiteForm.name} />
+      <Input name="name" onChange={setFieldValue} value={websiteForm.name} />
     </FormControl>
     <FormControl fullWidth margin="normal" required>
       <InputLabel htmlFor="title">{'Title'}</InputLabel>
@@ -131,26 +131,18 @@ export default compose(
       newHostnames[index] = newValue
       setWebsiteForm({ ...websiteForm, hostnames: newHostnames })
     },
+    onSubmit: ({ websiteForm, setInfo }) => event => {
+      event.preventDefault()
+      return apiWebsiteUpdate({ website: websiteForm }, setInfo)
+    },
     setFieldValue: ({ websiteForm, setWebsiteForm }) => event => {
       setWebsiteForm({ ...websiteForm, [event.target.name]: event.target.value })
-    },
-    websiteFormSubmit: ({ websiteForm, setInfo }) => async event => {
-      event.preventDefault()
-      await apiAccountUpdate(
-        {
-          hostnames: websiteForm.hostnames,
-          name: websiteForm.name,
-          subtitle: websiteForm.subtitle,
-          title: websiteForm.title,
-        },
-        setInfo
-      )
     },
   }),
   lifecycle({
     async componentDidMount() {
       const { setWebsiteForm, setInfo } = this.props
-      const json = await apiAccountShow(setInfo)
+      const json = await apiWebsiteShow(setInfo)
       setWebsiteForm({
         hostnames: json.hostnames || [''],
         name: json.name || '',

@@ -1,14 +1,15 @@
 import auth from './index'
 import routes from 'app/routes'
 
-const BASE_API_PATH = `https://${process.env.REACT_APP_API_ENDPOINT}/api/v1`
-const SIGNUP_URL = `${BASE_API_PATH}/users/sign_up`
-const SIGNIN_URL = `${BASE_API_PATH}/users/sign_in`
-const SIGNOUT_URL = `${BASE_API_PATH}/users/sign_out`
-const PASSWORD_FORM_URL = `${BASE_API_PATH}/users/password`
-const PASSWORD_RESET_URL = `${BASE_API_PATH}/users/password`
-const PASSWORD_CHANGE_URL = `${BASE_API_PATH}/users/change_password`
-const WEBSITE_URL = `${BASE_API_PATH}/websites`
+const BASE_API_URL = `https://${process.env.REACT_APP_API_ENDPOINT}/api/v1`
+const SIGNUP_URL = `${BASE_API_URL}/users/sign_up`
+const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
+const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
+const PASSWORD_FORM_URL = `${BASE_API_URL}/users/password`
+const PASSWORD_RESET_URL = `${BASE_API_URL}/users/password`
+const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
+const ME_URL = `${BASE_API_URL}/me`
+const WEBSITES_URL = `${BASE_API_URL}/websites`
 
 const defaultErrorMessage = 'Something went wrong!'
 
@@ -23,7 +24,7 @@ const convertToInfo = (json, defaultMessage) => {
   return isAuthError ? auth.clear() : { message, status }
 }
 
-const checkAuth = json => json.errors.find(error => error.title === 'Invalid email or token')
+const checkAuth = json => (json.errors || []).find(error => error.title === 'Invalid email or token')
 
 const errorMessages = json => {
   if (json.error) {
@@ -48,6 +49,29 @@ const apiRequest = async (url, body) => {
   return res.json()
 }
 
+const apiMeRequest = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
+const apiMeUpdateRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'put',
+  })
+  return res.json()
+}
+
 const apiPasswordRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
@@ -59,7 +83,7 @@ const apiPasswordRequest = async (url, body) => {
   return res.json()
 }
 
-const apiAccountShowRequest = async url => {
+const apiWebsiteShowRequest = async url => {
   const websiteRef = auth.getWebsiteRef()
   const res = await fetch(`${url}/${websiteRef}`, {
     headers: new Headers({
@@ -71,7 +95,7 @@ const apiAccountShowRequest = async url => {
   return res.json()
 }
 
-const apiAccountUpdateRequest = async (url, body) => {
+const apiWebsiteUpdateRequest = async (url, body) => {
   const websiteRef = auth.getWebsiteRef()
   const res = await fetch(`${url}/${websiteRef}`, {
     body: JSON.stringify(body),
@@ -126,21 +150,31 @@ export const apiPasswordChangeSaga = async (url, body, setInfo) => {
   return info.status !== 'error'
 }
 
-export const apiAccountShowSaga = async (url, body, setInfo) => {
-  const json = await apiAccountShowRequest(url)
+export const apiWebsiteShowSaga = async (url, body, setInfo) => {
+  const json = await apiWebsiteShowRequest(url)
   const info = convertToInfo(json)
-  if (info.status === 'success') {
-    return json
-  }
+  if (info.status === 'success') return json
   setInfo(info)
 }
 
-export const apiAccountUpdateSaga = async (url, body, setInfo) => {
-  const json = await apiAccountUpdateRequest(url, body)
+export const apiWebsiteUpdateSaga = async (url, body, setInfo) => {
+  const json = await apiWebsiteUpdateRequest(url, body)
   const info = convertToInfo(json)
-  if (info.status === 'success') {
-    return json
-  }
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+export const apiMeSaga = async (url, body, setInfo) => {
+  const json = await apiMeRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+export const apiMeUpdateSaga = async (url, body, setInfo) => {
+  const json = await apiMeUpdateRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
   setInfo(info)
 }
 
@@ -161,9 +195,7 @@ export const apiSaga = async (url, body, setInfo) => {
 export const apiSagaSignout = async url => {
   const json = await apiRequestSignout(url)
   const info = convertToInfo(json)
-  if (info.status === 'success') {
-    return auth.clear()
-  }
+  if (info.status === 'success') return auth.clear()
   console.error('Error on Logout!')
 }
 
@@ -175,5 +207,8 @@ export const apiPasswordEmailLink = (body, setInfo) => apiPasswordEmailLinkSaga(
 export const apiPasswordReset = (body, setInfo) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setInfo)
 export const apiPasswordChange = (body, setInfo) => apiPasswordChangeSaga(PASSWORD_CHANGE_URL, body, setInfo)
 
-export const apiAccountShow = setInfo => apiAccountShowSaga(WEBSITE_URL, setInfo)
-export const apiAccountUpdate = (body, setInfo) => apiAccountUpdateSaga(WEBSITE_URL, body, setInfo)
+export const apiWebsiteShow = setInfo => apiWebsiteShowSaga(WEBSITES_URL, setInfo)
+export const apiWebsiteUpdate = (body, setInfo) => apiWebsiteUpdateSaga(WEBSITES_URL, body, setInfo)
+
+export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
+export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)
