@@ -80,8 +80,10 @@ const Dropzone = compose(
       onDrop(acceptedFiles, rejectedFiles)
     },
   })
-)(({ isDragging, onDragEnter, onDragLeave, previewImage, ...props }) => (
+)(({ disabled, isDragging, onDragEnter, onDragLeave, previewImage, ...props }) => (
   <StyledDropzone
+    disableClick={disabled}
+    disabled={disabled}
     isDragging={isDragging}
     onDragEnter={onDragEnter}
     onDragLeave={onDragLeave}
@@ -127,6 +129,7 @@ const StatusMessage = styled.div`
 const BarebonesPictureUploader = ({
   crop,
   doneCropping,
+  disabled,
   image,
   previewImage,
   progress,
@@ -138,7 +141,7 @@ const BarebonesPictureUploader = ({
   setImagePreviewRef,
 }) => (
   <Container>
-    <Dropzone accept="image/*" multiple={false} onDrop={onDrop} previewImage={previewImage} />
+    <Dropzone accept="image/*" disabled={disabled} multiple={false} onDrop={onDrop} previewImage={previewImage} />
     {progress && (
       <React.Fragment>
         <StatusMessage>{`${progress.message}...`}</StatusMessage>
@@ -201,7 +204,14 @@ const pictureUploaderFactory = uploadImage => {
         onDrop: ({ onChange, setDoneCropping, setImage }) => files => {
           onChange('')
           setDoneCropping(false)
-          setImage(files[0])
+          if (files.length === 0) return
+          const file = files[0]
+          setImage({
+            name: file.name,
+            preview: URL.createObjectURL(file),
+            size: file.size,
+            type: file.type,
+          })
         },
         onImageLoaded: ({ setCrop, setCroppedImage }) => image => {
           const crop = defaultCrop(image)
