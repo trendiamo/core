@@ -1,9 +1,9 @@
 import Button from '@material-ui/core/Button'
 import CloudUpload from '@material-ui/icons/CloudUpload'
-import Dropzone from 'react-dropzone'
 import { getSignedUrl } from 'app/utils'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import React from 'react'
+import ReactDropzone from 'react-dropzone'
 import S3Upload from 'react-s3-uploader/s3upload'
 import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
@@ -16,24 +16,6 @@ const Container = styled.div`
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 `
 
-const StyledDropzone = styled(Dropzone)`
-  border-width: 0;
-  cursor: pointer;
-  position: relative;
-  height: 150px;
-  width: 150px;
-  margin-bottom: 1rem;
-`
-const Img = styled.img`
-  background-color: ${({ src }) => (src ? 'transparent' : '#f2f4f7')};
-  border: ${({ src }) => (src ? 'none' : 'dashed 2px #a1a3b4')};
-  border-radius: 50%;
-  display: block;
-  height: 100%;
-  position: relative;
-  width: 100%;
-`
-
 const InnerLabel = styled.div`
   position: absolute;
   top: 0;
@@ -43,12 +25,67 @@ const InnerLabel = styled.div`
 
   letter-spacing: 0.3px;
   text-align: center;
-  color: #7f8086;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+`
+
+const StyledDropzone = styled(ReactDropzone)`
+  border-width: 0;
+  cursor: pointer;
+  position: relative;
+  height: 150px;
+  width: 150px;
+  margin-bottom: 1rem;
+  color: ${({ isDragging, previewImage }) => (previewImage ? '#fff' : isDragging ? '#0560ff' : '#7f8086')};
+
+  ${InnerLabel} {
+    visibility: ${({ previewImage }) => (previewImage ? 'hidden' : 'visible')};
+  }
+
+  &:hover ${InnerLabel} {
+    visibility: visible;
+    background-color: ${({ previewImage }) => (previewImage ? 'rgba(0, 0, 0, 0.6)' : 'transparent')};
+  }
+`
+
+const Dropzone = compose(
+  withState('isDragging', 'setIsDragging', false),
+  withHandlers({
+    onDragEnter: ({ setIsDragging }) => () => {
+      setIsDragging(true)
+    },
+    onDragLeave: ({ setIsDragging }) => () => {
+      setIsDragging(false)
+    },
+  })
+)(({ isDragging, onDragEnter, onDragLeave, previewImage, ...props }) => (
+  <StyledDropzone
+    isDragging={isDragging}
+    onDragEnter={onDragEnter}
+    onDragLeave={onDragLeave}
+    previewImage={previewImage}
+    {...props}
+  >
+    <Img alt="" src={previewImage} />
+    <InnerLabel>
+      <CloudUpload />
+      <div>{'Drop a file or click to select one'}</div>
+    </InnerLabel>
+  </StyledDropzone>
+))
+
+const Img = styled.img`
+  background-color: ${({ src }) => (src ? 'transparent' : '#f2f4f7')};
+  border: ${({ src }) => (src ? 'none' : 'dashed 2px')};
+  border-radius: 50%;
+  display: block;
+  height: 100%;
+  position: relative;
+  width: 100%;
 `
 
 const HiddenImg = styled.img`
@@ -83,15 +120,7 @@ const BarebonesPictureUploader = ({
   setImagePreviewRef,
 }) => (
   <Container>
-    <StyledDropzone accept="image/*" multiple={false} onDrop={onDrop}>
-      <Img alt="" src={previewImage} />
-      {!previewImage && (
-        <InnerLabel>
-          <CloudUpload />
-          <div>{'Drop a file or click to select one'}</div>
-        </InnerLabel>
-      )}
-    </StyledDropzone>
+    <Dropzone accept="image/*" multiple={false} onDrop={onDrop} previewImage={previewImage} />
     {progress && (
       <React.Fragment>
         <StatusMessage>{`${progress.message}...`}</StatusMessage>
