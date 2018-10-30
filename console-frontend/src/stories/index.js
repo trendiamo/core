@@ -7,7 +7,7 @@ import { Welcome } from '@storybook/react/demo'
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />)
 
-const mockUploadImage = ({ onChange, setDoneCropping, setProgress }) => {
+const mockUploadImage = ({ onChange, setProgress }) => {
   setProgress({ message: 'Start uploading', progress: 10 })
   setTimeout(() => {
     setProgress({ message: 'Still uploading', progress: 50 })
@@ -18,7 +18,6 @@ const mockUploadImage = ({ onChange, setDoneCropping, setProgress }) => {
   setTimeout(() => {
     onChange('Done!')
     setProgress(null)
-    setDoneCropping(true)
   }, 3500)
 }
 

@@ -92,15 +92,15 @@ const BarebonesPictureUploader = ({
         </InnerLabel>
       )}
     </StyledDropzone>
+    {progress && (
+      <React.Fragment>
+        <StatusMessage>{`${progress.message}...`}</StatusMessage>
+        <StyledLinearProgress value={progress.progress} variant="determinate" />
+      </React.Fragment>
+    )}
     {image &&
       !doneCropping && (
         <React.Fragment>
-          {progress && (
-            <React.Fragment>
-              <StatusMessage>{`${progress.message}...`}</StatusMessage>
-              <StyledLinearProgress value={progress.progress} variant="determinate" />
-            </React.Fragment>
-          )}
           <HiddenImg alt="" ref={setImagePreviewRef} src={image.preview} />
           <StyledReactCrop
             crop={crop}
@@ -146,9 +146,10 @@ const pictureUploaderFactory = uploadImage => {
           setPreviewCrop({ image: imagePreviewRef, pixelCrop, setCroppedImage })
         },
         onDoneClick: ({ crop, image, onChange, setDoneCropping, setProgress }) => async () => {
+          setDoneCropping(true)
           const blob = await resultingCrop(imagePreviewRef, getPixelCrop(imagePreviewRef, crop))
           blob.name = image.name
-          uploadImage({ blob, onChange, setDoneCropping, setProgress })
+          uploadImage({ blob, onChange, setProgress })
         },
         onDrop: ({ onChange, setDoneCropping, setImage }) => files => {
           onChange('')
@@ -219,7 +220,7 @@ const resultingCrop = (image, pixelCrop) => {
 
 const setPreviewCrop = ({ image, pixelCrop, setCroppedImage }) => setCroppedImage(previewCrop(image, pixelCrop))
 
-const uploadImage = ({ blob, onChange, setDoneCropping, setProgress }) => {
+const uploadImage = ({ blob, onChange, setProgress }) => {
   new S3Upload({
     contentDisposition: 'auto',
     files: [blob],
@@ -232,7 +233,6 @@ const uploadImage = ({ blob, onChange, setDoneCropping, setProgress }) => {
     onFinishS3Put: ({ fileUrl }) => {
       setTimeout(() => {
         onChange(fileUrl)
-        setDoneCropping(true)
         setProgress(null)
       }, 250)
     },
