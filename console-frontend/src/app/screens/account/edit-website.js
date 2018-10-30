@@ -5,7 +5,9 @@ import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
+import { isEqual } from 'lodash'
 import Notification from 'shared/notification'
+import { Prompt } from 'react-router'
 import RACancel from '@material-ui/icons/Cancel'
 import RATextField from '@material-ui/core/TextField'
 import React from 'react'
@@ -68,11 +70,13 @@ const EditWebsite = ({
   deleteHostname,
   editHostnameValue,
   info,
+  isPristine,
   websiteForm,
   onSubmit,
   setFieldValue,
 }) => (
   <form onSubmit={onSubmit}>
+    <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isPristine} />
     <Notification data={info} />
     <FormControl fullWidth margin="normal" required>
       <InputLabel htmlFor="name">{'Name'}</InputLabel>
@@ -112,13 +116,17 @@ const EditWebsite = ({
 )
 
 export default compose(
-  withState('websiteForm', 'setWebsiteForm', {
+  withState('initialWebsiteForm', 'setInitialWebsiteForm', {
     hostnames: [''],
     name: '',
     subtitle: '',
     title: '',
   }),
+  withState('websiteForm', 'setWebsiteForm', ({ initialWebsiteForm }) => initialWebsiteForm),
   withState('info', 'setInfo', null),
+  withProps(({ websiteForm, initialWebsiteForm }) => ({
+    isPristine: isEqual(websiteForm, initialWebsiteForm),
+  })),
   withProps(() => ({
     websiteId: auth.getUser().account.websiteIds[0],
   })),
@@ -136,9 +144,11 @@ export default compose(
       newHostnames[index] = newValue
       setWebsiteForm({ ...websiteForm, hostnames: newHostnames })
     },
-    onSubmit: ({ websiteForm, websiteId, setInfo }) => event => {
+    onSubmit: ({ websiteForm, websiteId, setInfo, setInitialWebsiteForm }) => async event => {
       event.preventDefault()
-      return apiWebsiteUpdate(websiteId, { website: websiteForm }, setInfo)
+      const website = await apiWebsiteUpdate(websiteId, { website: websiteForm }, setInfo)
+      setInitialWebsiteForm(websiteForm)
+      return website
     },
     setFieldValue: ({ websiteForm, setWebsiteForm }) => event => {
       setWebsiteForm({ ...websiteForm, [event.target.name]: event.target.value })
@@ -146,14 +156,16 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { websiteId, setWebsiteForm, setInfo } = this.props
+      const { websiteId, setWebsiteForm, setInfo, setInitialWebsiteForm } = this.props
       const json = await apiWebsiteShow(websiteId, setInfo)
-      setWebsiteForm({
+      const websiteObject = {
         hostnames: json.hostnames || [''],
         name: json.name || '',
         subtitle: json.subtitle || '',
         title: json.title || '',
-      })
+      }
+      setInitialWebsiteForm(websiteObject)
+      setWebsiteForm(websiteObject)
     },
   })
 )(EditWebsite)
