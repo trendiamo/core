@@ -18,10 +18,19 @@ import {
   TextInput,
 } from 'react-admin'
 
-const StyledAvatar = styled(Avatar)`
+const sanitizeProps = props => {
+  const newProps = { ...props }
+  delete newProps.small
+  return newProps
+}
+
+const FilteredAvatar = props => <Avatar {...sanitizeProps(props)} />
+
+const StyledAvatar = styled(FilteredAvatar)`
   width: ${({ small }) => (small ? '40px' : '100px')};
   height: ${({ small }) => (small ? '40px' : '100px')};
 `
+
 const ProfilePic = ({ record, small }) => <StyledAvatar alt={record.name} small={small} src={record.profilePicUrl} />
 
 export const InfluencersEdit = ({ ...props }) => (
