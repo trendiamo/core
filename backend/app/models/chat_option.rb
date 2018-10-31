@@ -1,14 +1,6 @@
 class ChatOption < ApplicationRecord
   belongs_to :chat_step
+  has_one :destination_chat_step, foreign_key: "refering_chat_option_id", class_name: "ChatStep"
 
   validates :text, presence: true
-  validate :chat_step_cannot_equal_destion
-
-  private
-
-  def chat_step_cannot_equal_destination
-    chat_step_valid = chat_step_id == destinaton_chat_step_id
-    unless chat_step_valid errors.add(:chat_steps, "chat step cannot be the same as destination chat step")
-    end
-  end
 end
