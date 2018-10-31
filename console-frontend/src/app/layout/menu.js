@@ -1,13 +1,15 @@
+import classNames from 'classnames'
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 import { DashboardMenuItem } from 'ra-ui-materialui'
 import DefaultIcon from '@material-ui/icons/ViewList'
 import { getResources } from 'ra-core'
-import { MenuItemLink } from 'ra-ui-materialui'
+import Link from 'shared/link'
+import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import styled from 'styled-components'
+import Typography from '@material-ui/core/Typography'
 import UserMenu from './user-menu'
-import { withStyles } from '@material-ui/core/styles'
 
 const Container = styled.div`
   display: flex;
@@ -15,32 +17,28 @@ const Container = styled.div`
   justify-content: flex-start;
 `
 
-const MenuItemStyles = theme => ({
-  active: {
-    color: theme.palette.secondary.main,
-  },
-  root: {
-    color: theme.palette.grey[500],
-  },
-})
-
-const StyledMenuItemLink = withStyles(MenuItemStyles, { index: 2 })(({ classes, ...props }) => (
-  <MenuItemLink classes={classes} {...props} />
-))
-
-const Menu = ({ dense, hasDashboard, onMenuClick, resources, ...rest }) => (
+const Menu = ({ classes, hasDashboard, onMenuClick, resources, pathname, ...rest }) => (
   <Container {...rest}>
     <UserMenu />
     {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
     {resources.filter(r => r.hasList).map(resource => (
-      <StyledMenuItemLink
-        dense={dense}
-        key={resource.name}
-        leftIcon={resource.icon ? <resource.icon /> : <DefaultIcon />}
-        onClick={onMenuClick}
-        primaryText={resource.name}
-        to={`/${resource.name}`}
-      />
+      <Link key={resource.name} to={`/${resource.name}`}>
+        <MenuItem>
+          {resource.icon ? (
+            <resource.icon />
+          ) : (
+            <DefaultIcon
+              classes={{ root: pathname === `/${resource.name}` ? classes.menuItemIconActive : classes.menuItemIcon }}
+            />
+          )}
+          <Typography
+            className={pathname === `/${resource.name}` ? classes.menuItemActive : classes.menuItem}
+            variant="body2"
+          >
+            {resource.name}
+          </Typography>
+        </MenuItem>
+      </Link>
     ))}
   </Container>
 )

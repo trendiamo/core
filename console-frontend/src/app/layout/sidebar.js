@@ -1,16 +1,49 @@
-// import compose from 'recompose/compose'
-import { Sidebar as RaSidebar } from 'react-admin'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
+import Drawer from '@material-ui/core/Drawer'
+import Hidden from '@material-ui/core/Hidden'
 import React from 'react'
-import { drawerWidth, drawerWidthClosed } from './layout-styles'
+import withWidth from '@material-ui/core/withWidth'
 
-const Sidebar = ({ classes, ...props }) => (
-  <RaSidebar
-    classes={{ drawerPaper: classes.drawerPaper }}
-    closedSize={drawerWidthClosed}
-    size={drawerWidth}
-    style={{ display: 'flex' }}
-    {...props}
-  />
+const Sidebar = ({ children, classes, toggleMobileOpen, mobileOpen, open }) => (
+  <React.Fragment>
+    <Hidden implementation="js" mdUp>
+      <Drawer
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        onClose={toggleMobileOpen}
+        open={mobileOpen}
+        variant="temporary"
+      >
+        {children}
+      </Drawer>
+    </Hidden>
+    <Hidden implementation="js" smDown>
+      <Drawer
+        classes={{
+          paper: open ? classes.drawerPaper : classes.drawerPaperClose,
+        }}
+        open={open}
+        variant="permanent"
+      >
+        {children}
+      </Drawer>
+    </Hidden>
+  </React.Fragment>
 )
 
-export default Sidebar
+const mapStateToProps = state => ({
+  locale: state.locale, // force redraw on locale change
+})
+
+export default compose(
+  connect(
+    mapStateToProps,
+    {}
+  ),
+  withWidth({ resizeInterval: Infinity }) // used to initialize the visibility on first render
+)(Sidebar)

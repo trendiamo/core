@@ -3,13 +3,16 @@ export const drawerWidthClosed = 64
 
 export const styles = theme => ({
   appBar: {
-    background: '#fff',
+    backgroundColor: theme.customPalette.appBar.main,
     color: '333',
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(['width', 'margin', 'backgroundColor'], {
       duration: theme.transitions.duration.leavingScreen,
       easing: theme.transitions.easing.sharp,
     }),
     zIndex: theme.zIndex.drawer + 1,
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: theme.customPalette.appBarMobile.main,
+    },
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -28,11 +31,11 @@ export const styles = theme => ({
     flexDirection: 'column',
     flexGrow: 1,
     marginTop: '60px',
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing.unit * 2,
     [theme.breakpoints.up('xs')]: {
-      paddingLeft: 14,
+      padding: 14,
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       padding: 0,
     },
   },
@@ -41,7 +44,7 @@ export const styles = theme => ({
     flexGrow: 1,
   },
   drawerPaper: {
-    background: '#32333d',
+    background: theme.customPalette.sidebar.main,
     flex: '1',
     marginTop: 0,
     minHeight: '100vh',
@@ -63,7 +66,12 @@ export const styles = theme => ({
     },
   },
   drawerPaperClose: {
+    background: theme.customPalette.sidebar.main,
+    flex: '1',
+    marginTop: 0,
+    minHeight: '100vh',
     overflowX: 'hidden',
+    position: 'relative',
     transition: theme.transitions.create('width', {
       duration: theme.transitions.duration.leavingScreen,
       easing: theme.transitions.easing.sharp,
@@ -83,7 +91,32 @@ export const styles = theme => ({
     width: '100%',
     zIndex: 1,
   },
+  title: {
+    [theme.breakpoints.down('sm')]: {
+      color: theme.palette.primary.contrastText,
+    },
+  },
   toolbar: {
     paddingRight: 14, // keep right padding when drawer closed
+  },
+  menuButton: {
+    color: '#333',
+    [theme.breakpoints.down('sm')]: {
+      color: '#fff',
+    },
+  },
+  menuItemIcon: {
+    color: '#fff',
+    paddingRight: '20px',
+  },
+  menuItemIconActive: {
+    color: '#0560ff',
+    paddingRight: '20px',
+  },
+  menuItemActive: {
+    color: '#0560ff',
+  },
+  menuItem: {
+    color: '#fff',
   },
 })
