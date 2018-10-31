@@ -15,7 +15,6 @@ import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 
 const AvatarContainer = styled.div`
-  width: 100%;
   padding: 20px 15px;
 `
 
@@ -45,9 +44,11 @@ const UserMenu = ({
 }) => (
   <React.Fragment>
     <AvatarContainer>
-      <StyledAvatar size={100} src={profilePicUrl}>
-        {profilePicUrl ? null : initials ? initials : <AccountCircleCustom />}
-      </StyledAvatar>
+      <Link to={routes.account()}>
+        <StyledAvatar size={100} src={profilePicUrl}>
+          {profilePicUrl ? null : initials ? initials : <AccountCircleCustom />}
+        </StyledAvatar>
+      </Link>
     </AvatarContainer>
     <MenuItem
       aria-haspopup="true"
