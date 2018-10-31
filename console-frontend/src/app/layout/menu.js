@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 import { DashboardMenuItem } from 'ra-ui-materialui'
