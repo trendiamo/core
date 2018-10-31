@@ -9,7 +9,7 @@ import ReactDropzone from 'react-dropzone'
 import S3Upload from 'react-s3-uploader/s3upload'
 import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
-import ReactCrop, { getPixelCrop, makeAspectCrop } from 'react-image-crop'
+import ReactCrop, { getPixelCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 
 const Container = styled.div`
@@ -210,16 +210,24 @@ const pictureUploaderFactory = uploadImage => {
   return PictureUploaderSkeleton
 }
 
-const defaultCrop = image =>
-  makeAspectCrop(
-    {
-      aspect: 1,
-      width: 100,
-      x: 0,
-      y: 0,
-    },
-    image.width / image.height
-  )
+const defaultCrop = image => {
+  const imageAspect = image.width / image.height
+  let height, width
+  if (imageAspect < 1) {
+    width = 100
+    height = width * imageAspect
+  } else {
+    height = 100
+    width = height / imageAspect
+  }
+  return {
+    aspect: 1,
+    height,
+    width,
+    x: 0,
+    y: 0,
+  }
+}
 
 const previewCrop = (image, pixelCrop) => {
   const canvas = document.createElement('canvas')
