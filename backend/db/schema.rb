@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181030141330) do
+ActiveRecord::Schema.define(version: 20181031123902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 20181030141330) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "chat_step_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_chat_messages_on_account_id"
     t.index ["chat_step_id"], name: "index_chat_messages_on_chat_step_id"
   end
 
@@ -47,6 +49,8 @@ ActiveRecord::Schema.define(version: 20181030141330) do
     t.datetime "updated_at", null: false
     t.bigint "chat_step_id"
     t.bigint "destinaton_chat_step_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_chat_options_on_account_id"
     t.index ["chat_step_id"], name: "index_chat_options_on_chat_step_id"
     t.index ["destinaton_chat_step_id"], name: "index_chat_options_on_destinaton_chat_step_id"
   end
@@ -55,7 +59,13 @@ ActiveRecord::Schema.define(version: 20181030141330) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "chat_id"
+    t.bigint "account_id"
+    t.bigint "chat_option_id"
+    t.bigint "refering_chat_option_id"
+    t.index ["account_id"], name: "index_chat_steps_on_account_id"
     t.index ["chat_id"], name: "index_chat_steps_on_chat_id"
+    t.index ["chat_option_id"], name: "index_chat_steps_on_chat_option_id"
+    t.index ["refering_chat_option_id"], name: "index_chat_steps_on_refering_chat_option_id"
   end
 
   create_table "chats", force: :cascade do |t|
@@ -65,6 +75,8 @@ ActiveRecord::Schema.define(version: 20181030141330) do
     t.bigint "website_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_chats_on_account_id"
     t.index ["influencer_id"], name: "index_chats_on_influencer_id"
     t.index ["website_id"], name: "index_chats_on_website_id"
   end
@@ -124,10 +136,16 @@ ActiveRecord::Schema.define(version: 20181030141330) do
   end
 
   add_foreign_key "auth_tokens", "users"
+  add_foreign_key "chat_messages", "accounts"
   add_foreign_key "chat_messages", "chat_steps"
+  add_foreign_key "chat_options", "accounts"
   add_foreign_key "chat_options", "chat_steps"
   add_foreign_key "chat_options", "chat_steps", column: "destinaton_chat_step_id"
+  add_foreign_key "chat_steps", "accounts"
+  add_foreign_key "chat_steps", "chat_options"
+  add_foreign_key "chat_steps", "chat_options", column: "refering_chat_option_id"
   add_foreign_key "chat_steps", "chats"
+  add_foreign_key "chats", "accounts"
   add_foreign_key "chats", "influencers"
   add_foreign_key "chats", "websites"
   add_foreign_key "influencers", "accounts"
