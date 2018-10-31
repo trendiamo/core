@@ -1,4 +1,4 @@
-import { LogotypeContainer } from 'app/screens/shared'
+import { LogotypeContainer } from 'shared/components'
 import React from 'react'
 
 const Logotype = ({ ...props }) => (

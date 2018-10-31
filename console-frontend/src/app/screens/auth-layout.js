@@ -4,7 +4,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import React from 'react'
 import theme from 'app/theme'
 import Typography from '@material-ui/core/Typography'
-import { AuthMain, AuthMessage, AuthStyledPaper, BackgroundImage } from './shared'
+import { AuthMain, AuthMessage, AuthStyledPaper, BackgroundImage } from 'shared/components'
 
 const AuthLayout = ({ children, title, authMessage }) => (
   <React.Fragment>

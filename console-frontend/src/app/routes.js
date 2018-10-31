@@ -9,7 +9,7 @@ const routes = {
     return '/login'
   },
   passwordChange() {
-    return '/password-change'
+    return '/account/change-password'
   },
   passwordReset() {
     return '/password-reset'

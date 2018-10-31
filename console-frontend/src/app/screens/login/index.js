@@ -1,6 +1,7 @@
 import { apiSignIn } from '../../auth/utils'
 import auth from 'app/auth'
 import AuthLayout from '../auth-layout'
+import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -8,7 +9,7 @@ import Link from 'shared/link'
 import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
-import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm, StyledButton } from '../shared'
+import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm } from 'shared/components'
 import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (
@@ -55,14 +56,18 @@ const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
           value={loginForm.password}
         />
       </FormControl>
-      <StyledButton color="primary" fullWidth type="submit" variant="contained">
-        {'Login'}
-      </StyledButton>
-      <Link to={routes.requestPasswordReset()}>
-        <StyledButton color="default" fullWidth variant="text">
-          {'Forgot Password?'}
-        </StyledButton>
-      </Link>
+      <div style={{ marginTop: '1rem' }}>
+        <Button color="primary" fullWidth type="submit" variant="contained">
+          {'Login'}
+        </Button>
+      </div>
+      <div style={{ marginTop: '1rem' }}>
+        <Link to={routes.requestPasswordReset()}>
+          <Button color="default" fullWidth variant="text">
+            {'Forgot Password?'}
+          </Button>
+        </Link>
+      </div>
     </StyledAuthForm>
   </AuthLayout>
 )

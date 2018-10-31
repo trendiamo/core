@@ -1,17 +1,19 @@
 import auth from 'app/auth'
+import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Label from 'shared/label'
+import Link from 'shared/link'
 import Notification from 'shared/notification'
 import PictureUploader from 'shared/picture-uploader'
 import React from 'react'
+import routes from 'app/routes'
 import { apiMe, apiMeUpdate } from 'app/auth/utils'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { StyledButton, StyledForm } from 'app/screens/shared'
 
 const EditUser = ({ info, onSubmit, userForm, setFieldValue, setProfilePicUrl }) => (
-  <StyledForm onSubmit={onSubmit}>
+  <form onSubmit={onSubmit}>
     <Label>{'Picture'}</Label>
     <PictureUploader onChange={setProfilePicUrl} type="users-profile-pics" value={userForm.profilePicUrl} />
     <Notification data={info} />
@@ -27,10 +29,19 @@ const EditUser = ({ info, onSubmit, userForm, setFieldValue, setProfilePicUrl })
       <InputLabel htmlFor="lastName">{'Last Name'}</InputLabel>
       <Input name="lastName" onChange={setFieldValue} value={userForm.lastName} />
     </FormControl>
-    <StyledButton color="primary" fullWidth type="submit" variant="contained">
-      {'Save'}
-    </StyledButton>
-  </StyledForm>
+    <div style={{ marginTop: '1rem' }}>
+      <Button color="primary" type="submit" variant="contained">
+        {'Save'}
+      </Button>
+    </div>
+    <div style={{ marginTop: '1rem' }}>
+      <Link to={routes.passwordChange()}>
+        <Button color="default" variant="text">
+          {'Change Password'}
+        </Button>
+      </Link>
+    </div>
+  </form>
 )
 
 export default compose(

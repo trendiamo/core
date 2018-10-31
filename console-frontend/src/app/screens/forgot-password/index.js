@@ -1,13 +1,14 @@
 import { apiPasswordReset } from '../../auth/utils'
 import { Authenticated } from 'react-admin'
 import AuthLayout from '../auth-layout'
+import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
-import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm, StyledButton } from '../shared'
+import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm } from 'shared/components'
 import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (
@@ -56,9 +57,11 @@ const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue,
             value={passwordForm.fieldTwo}
           />
         </FormControl>
-        <StyledButton color="primary" fullWidth type="submit" variant="contained">
-          {'Reset'}
-        </StyledButton>
+        <div style={{ marginTop: '1rem' }}>
+          <Button color="primary" type="submit" variant="contained">
+            {'Reset'}
+          </Button>
+        </div>
       </StyledAuthForm>
     </AuthLayout>
   </Authenticated>

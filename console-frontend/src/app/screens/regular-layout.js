@@ -1,7 +1,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline'
 import React from 'react'
 import styled from 'styled-components'
-import { Main, StyledPaper } from './shared'
+import { Main, StyledPaper } from 'shared/components'
 
 const StyledDiv = styled.div`
   height: 100%;

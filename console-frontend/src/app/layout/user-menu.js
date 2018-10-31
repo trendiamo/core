@@ -6,7 +6,6 @@ import Avatar from '@material-ui/core/Avatar'
 import Divider from '@material-ui/core/Divider'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import Link from 'shared/link'
-import Lock from '@material-ui/icons/Lock'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
@@ -78,11 +77,6 @@ const UserMenu = ({
         <MenuItem>
           <SettingsIcon style={MenuIconStyle} />
           {'Account'}
-        </MenuItem>
-      </Link>
-      <Link to={routes.passwordChange()}>
-        <MenuItem>
-          <Lock style={MenuIconStyle} /> {'Change Password'}
         </MenuItem>
       </Link>
       <MenuItem onClick={onLogoutButtonClick}>

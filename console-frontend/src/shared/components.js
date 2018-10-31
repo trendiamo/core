@@ -14,11 +14,6 @@ const StyledAuthForm = styled.form`
   width: 100%;
 `
 
-const StyledForm = styled.form`
-  margin-top: 8px;
-  width: 33%;
-`
-
 const AuthMain = styled.main`
   display: block;
   padding: 0 20px;
@@ -64,10 +59,6 @@ const StyledPaper = styled(Paper)`
   display: flex;
   flex-direction: column;
   padding: 16px 24px 24px;
-`
-
-const StyledButton = styled(Button)`
-  margin-top: 24px;
 `
 
 const AuthButton = styled(Button)`
@@ -172,7 +163,5 @@ export {
   Main,
   AuthMain,
   AuthStyledPaper,
-  StyledButton,
   StyledPaper,
-  StyledForm,
 }

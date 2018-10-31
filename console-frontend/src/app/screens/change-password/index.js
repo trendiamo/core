@@ -1,5 +1,6 @@
 import { apiPasswordChange } from '../../auth/utils'
 import { Authenticated } from 'react-admin'
+import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -7,10 +8,10 @@ import Notification from 'shared/notification'
 import React from 'react'
 import RegularLayout from 'app/screens/regular-layout'
 import routes from 'app/routes'
+import { StyledAuthForm } from 'shared/components'
 import withRaTitle from 'ext/recompose/with-ra-title'
 import { withRouter } from 'react-router'
 import { compose, withHandlers, withState } from 'recompose'
-import { StyledAuthForm, StyledButton } from '../shared'
 
 const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
@@ -42,9 +43,11 @@ const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue
             value={passwordForm.passwordConfirmation}
           />
         </FormControl>
-        <StyledButton color="primary" fullWidth type="submit" variant="contained">
-          {'Reset'}
-        </StyledButton>
+        <div style={{ marginTop: '1rem' }}>
+          <Button color="primary" type="submit" variant="contained">
+            {'Reset'}
+          </Button>
+        </div>
       </StyledAuthForm>
     </RegularLayout>
   </Authenticated>

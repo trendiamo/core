@@ -13,7 +13,6 @@ import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { apiWebsiteShow, apiWebsiteUpdate } from 'app/auth/utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
-import { StyledButton, StyledForm } from 'app/screens/shared'
 
 const StyledTypography = styled(Typography)`
   margin-left: 10px;
@@ -73,7 +72,7 @@ const EditWebsite = ({
   onSubmit,
   setFieldValue,
 }) => (
-  <StyledForm onSubmit={onSubmit}>
+  <form onSubmit={onSubmit}>
     <Notification data={info} />
     <FormControl fullWidth margin="normal" required>
       <InputLabel htmlFor="name">{'Name'}</InputLabel>
@@ -90,7 +89,7 @@ const EditWebsite = ({
     <LabelContainer>
       <InputLabel>{'Hostnames'}</InputLabel>
     </LabelContainer>
-    <MultiFormControl fullWidth margin="normal">
+    <MultiFormControl margin="normal">
       {websiteForm.hostnames.map((hostname, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <FlexDiv key={index}>
@@ -104,10 +103,12 @@ const EditWebsite = ({
       ))}
     </MultiFormControl>
     <AddHostnameButton addHostnameSelect={addHostnameSelect} />
-    <StyledButton color="primary" fullWidth type="submit" variant="contained">
-      {'Save'}
-    </StyledButton>
-  </StyledForm>
+    <div style={{ marginTop: '1rem' }}>
+      <Button color="primary" type="submit" variant="contained">
+        {'Save'}
+      </Button>
+    </div>
+  </form>
 )
 
 export default compose(
