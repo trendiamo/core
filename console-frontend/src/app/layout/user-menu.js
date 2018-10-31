@@ -1,5 +1,5 @@
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import { apiSignOut } from '../auth/utils'
+import { apiSignOut } from 'app/auth/utils'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'app/auth'
 import Avatar from '@material-ui/core/Avatar'
