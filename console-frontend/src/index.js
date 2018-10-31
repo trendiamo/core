@@ -17,6 +17,6 @@ const httpClient = (url, options = {}) => {
   })
   return fetchUtils.fetchJson(url, options)
 }
-const dataProvider = simpleRestProvider(`https://${process.env.REACT_APP_API_ENDPOINT}/api/v1`, httpClient)
+const dataProvider = simpleRestProvider(`${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`, httpClient)
 
 ReactDOM.render(<App dataProvider={dataProvider} history={history} />, document.getElementById('root'))

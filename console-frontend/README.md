@@ -14,7 +14,7 @@ yarn
 ## Run
 
 ```sh
-REACT_APP_API_ENDPOINT={backend_hostname} yarn start
+yarn start
 ```
 
 ## Run in prod mode

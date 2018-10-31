@@ -1,7 +1,7 @@
 import auth from './index'
 import routes from 'app/routes'
 
-const BASE_API_URL = `https://${process.env.REACT_APP_API_ENDPOINT}/api/v1`
+const BASE_API_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`
 const SIGNUP_URL = `${BASE_API_URL}/users/sign_up`
 const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`

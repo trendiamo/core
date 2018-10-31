@@ -17,7 +17,6 @@ bin/rails db:schema:load
 
 ```sh
 pg_ctl -D /usr/local/var/postgres start
-ngrok http 3000 # If you want to allow remote access
 bin/rails s
 ```
 

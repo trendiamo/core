@@ -1,7 +1,7 @@
 import auth from './auth'
 import qs from 'querystring'
 
-const S3_URL = `https://${process.env.REACT_APP_API_ENDPOINT}/s3/sign`
+const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
 
 export const getSignedUrlFactory = type => (file, callback) =>
   fetch(

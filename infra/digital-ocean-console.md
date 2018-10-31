@@ -22,7 +22,7 @@ cat PUB_KEY | ssh root@46.101.129.17 "sudo sshcommand acl-add dokku <key-id>"
 
 dokku apps:create console-frontend
 dokku config:set console-frontend BUILDPACK_URL=https://github.com/mars/create-react-app-buildpack.git
-dokku config:set console-frontend NODE_ENV=production REACT_APP_API_ENDPOINT=api.trendiamo.com
+dokku config:set console-frontend NODE_ENV=production REACT_APP_API_ENDPOINT=https://api.trendiamo.com
 dokku domains:add console-frontend console.trendiamo.com
 # from your local machine, do the first deploy:
 git subtree push --prefix console-frontend dokku-frontend master
