@@ -17,8 +17,7 @@ const sanitizeProps = props => {
   delete newProps.location
   delete newProps.match
   delete newProps.title
-  delete newProps.handleOpen
-  delete newProps.handleMobileOpen
+  delete newProps.setOpen
   return newProps
 }
 
@@ -29,32 +28,18 @@ const Layout = ({
   logout,
   isLoading,
   open,
-  mobileOpen,
   hasError,
   errorMessage,
   errorInfo,
-  handleOpenToggle,
-  handleMobileToggle,
+  toggleOpen,
   ...props
 }) => (
   <div className={classes.root} {...sanitizeProps(props)}>
     <div className={classes.appFrame}>
       <CssBaseline />
-      <AppBar
-        classes={classes}
-        logout={logout}
-        open={open}
-        toggleMobileOpen={handleMobileToggle}
-        toggleOpen={handleOpenToggle}
-      />
+      <AppBar classes={classes} logout={logout} open={open} toggleOpen={toggleOpen} />
       <main className={classes.contentWithSidebar}>
-        <Sidebar
-          classes={classes}
-          mobileOpen={mobileOpen}
-          open={open}
-          toggleMobileOpen={handleMobileToggle}
-          toggleOpen={handleOpenToggle}
-        >
+        <Sidebar classes={classes} open={open} toggleOpen={toggleOpen}>
           <Menu classes={classes} hasDashboard={!!dashboard} logout={logout} />
         </Sidebar>
         <div className={classes.content}>
@@ -76,20 +61,14 @@ const mapStateToProps = state => ({
 })
 
 const EnhancedLayout = compose(
-  withState('open', 'handleOpen', false),
-  withState('mobileOpen', 'handleMobileOpen', false),
+  withState('open', 'setOpen', true),
   connect(
     mapStateToProps,
     {}
   ),
   withRouter,
   withHandlers({
-    handleMobileToggle: ({ handleMobileOpen, mobileOpen }) => () => {
-      handleMobileOpen(!mobileOpen)
-    },
-    handleOpenToggle: ({ open, handleOpen }) => () => {
-      handleOpen(!open)
-    },
+    toggleOpen: ({ open, setOpen }) => () => setOpen(!open),
   }),
   withStyles(styles, { index: 1 })
 )(Layout)

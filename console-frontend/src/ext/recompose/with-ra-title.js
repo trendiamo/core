@@ -9,11 +9,13 @@ const withRaTitle = title =>
 
         componentDidMount() {
           const titleElement = document.querySelector('#react-admin-title')
+          if (!titleElement) return
           titleElement.innerText = title
         }
 
         componentWillUnmount() {
           const titleElement = document.querySelector('#react-admin-title')
+          if (!titleElement) return
           titleElement.innerText = ''
         }
 

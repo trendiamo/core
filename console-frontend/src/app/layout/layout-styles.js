@@ -56,7 +56,6 @@ export const styles = theme => ({
     whiteSpace: 'nowrap',
     width: drawerWidth,
     [theme.breakpoints.only('xs')]: {
-      backgroundColor: theme.palette.background.default,
       marginTop: 0,
       position: 'inherit',
     },

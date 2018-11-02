@@ -5,7 +5,7 @@ import Hidden from '@material-ui/core/Hidden'
 import React from 'react'
 import withWidth from '@material-ui/core/withWidth'
 
-const Sidebar = ({ children, classes, toggleMobileOpen, mobileOpen, open }) => (
+const Sidebar = ({ children, classes, open, toggleOpen }) => (
   <React.Fragment>
     <Hidden implementation="js" mdUp>
       <Drawer
@@ -15,8 +15,8 @@ const Sidebar = ({ children, classes, toggleMobileOpen, mobileOpen, open }) => (
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
-        onClose={toggleMobileOpen}
-        open={mobileOpen}
+        onClose={toggleOpen}
+        open={open}
         variant="temporary"
       >
         {children}
