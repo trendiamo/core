@@ -23,7 +23,7 @@ const AuthMessage = () => (
       {'Is something wrong? '}
       <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
     </AuthText>
-    <AuthLink href="http://trendiamo.com">
+    <AuthLink href="https://trendiamo.com">
       <AuthButton>{'Learn about Trendiamo'}</AuthButton>
     </AuthLink>
   </React.Fragment>
