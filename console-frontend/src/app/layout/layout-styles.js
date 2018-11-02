@@ -1,21 +1,49 @@
 export const drawerWidth = 256
-export const drawerWidthClosed = 64
+export const drawerWidthClosed = 70
+const avatarSize = 64
+const avatarSizeClosed = 48
 
 export const styles = theme => ({
+  accountArrow: {
+    color: '#fff',
+    opacity: 1,
+    position: 'absolute',
+    right: '10px',
+    transition: theme.transitions.create(['opacity'], {
+      duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.sharp,
+    }),
+  },
+  accountArrowHidden: {
+    opacity: 0,
+  },
+  accountMenu: {
+    left: '-10px',
+  },
+  accountMenuItem: {
+    padding: '15px 21px',
+    width: drawerWidth - 55,
+  },
+  accountMenuText: {
+    marginLeft: '10px',
+  },
   appBar: {
     backgroundColor: theme.customPalette.appBar.main,
+    boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.12)',
     color: '333',
     transition: theme.transitions.create(['width', 'margin', 'backgroundColor'], {
       duration: theme.transitions.duration.leavingScreen,
       easing: theme.transitions.easing.sharp,
     }),
+    width: `calc(100% - ${drawerWidthClosed}px)`,
     zIndex: theme.zIndex.drawer + 1,
     [theme.breakpoints.down('sm')]: {
       backgroundColor: theme.customPalette.appBarMobile.main,
+      width: '100%',
     },
   },
   appBarShift: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       marginLeft: drawerWidth,
       transition: theme.transitions.create(['width', 'margin'], {
         duration: theme.transitions.duration.enteringScreen,
@@ -27,6 +55,20 @@ export const styles = theme => ({
   appFrame: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  avatar: {
+    height: avatarSize,
+    margin: '20px',
+    transition: theme.transitions.create(['width', 'height'], {
+      duration: theme.transitions.duration.enteringScreen,
+      easing: theme.transitions.easing.sharp,
+    }),
+    width: avatarSize,
+  },
+  avatarClosed: {
+    height: avatarSizeClosed,
+    margin: '9px 7px 7px',
+    width: avatarSizeClosed,
   },
   content: {
     display: 'flex',
@@ -47,6 +89,8 @@ export const styles = theme => ({
   },
   drawerPaper: {
     background: theme.customPalette.sidebar.main,
+    border: 'none',
+    boxShadow: '0 16px 16px 0 rgba(0, 0, 0, 0.24), 0 0 16px 0 rgba(0, 0, 0, 0.18)',
     flex: '1',
     marginTop: 0,
     minHeight: '100vh',
@@ -62,12 +106,13 @@ export const styles = theme => ({
       position: 'inherit',
     },
     [theme.breakpoints.up('xs')]: {
-      border: 'none',
       marginTop: 0,
     },
+    zIndex: 5000,
   },
   drawerPaperClose: {
     background: theme.customPalette.sidebar.main,
+    border: 'none',
     flex: '1',
     marginTop: 0,
     minHeight: '100vh',
@@ -79,28 +124,47 @@ export const styles = theme => ({
     }),
     width: theme.spacing.unit * 7,
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
+      width: drawerWidthClosed,
     },
   },
   menuButton: {
-    color: '#333',
+    color: '#777',
+    marginRight: '6px',
     [theme.breakpoints.down('sm')]: {
       color: '#fff',
     },
   },
+  menuIcon: {
+    color: '#ddd',
+    paddingRight: '20px',
+  },
+  menuIconActive: {
+    color: '#fff',
+    paddingRight: '20px',
+  },
   menuItem: {
+    transition: theme.transitions.create(['padding', 'height', 'visibility'], {
+      duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.sharp,
+    }),
+    visibility: 'visible',
+  },
+  menuItemClosed: {
+    paddingLeft: 18,
+    paddingRight: 0,
+  },
+  menuItemHidden: {
+    height: 0,
+    overflow: 'hidden',
+    paddingBottom: 0,
+    paddingTop: 0,
+    visibility: 'hidden',
+  },
+  menuText: {
+    color: '#7f8086',
+  },
+  menuTextActive: {
     color: '#fff',
-  },
-  menuItemActive: {
-    color: '#0560ff',
-  },
-  menuItemIcon: {
-    color: '#fff',
-    paddingRight: '20px',
-  },
-  menuItemIconActive: {
-    color: '#0560ff',
-    paddingRight: '20px',
   },
   root: {
     backgroundColor: theme.palette.background.default,
@@ -113,11 +177,16 @@ export const styles = theme => ({
     zIndex: 1,
   },
   title: {
+    color: '#777',
     [theme.breakpoints.down('sm')]: {
       color: theme.palette.primary.contrastText,
     },
   },
   toolbar: {
-    paddingRight: 14, // keep right padding when drawer closed
+    paddingRight: 14,
+  },
+  topToolbar: {
+    paddingLeft: 14,
+    paddingRight: 14,
   },
 })

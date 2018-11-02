@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 import { DashboardMenuItem } from 'ra-ui-materialui'
@@ -21,25 +22,34 @@ const itemIsActive = (resource, pathname) => {
   return pathname && pathname.startsWith(`/${resource.name}`)
 }
 
-const Menu = ({ classes, hasDashboard, onMenuClick, resources, pathname, ...rest }) => (
-  <Container {...rest}>
-    <UserMenu />
-    {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
-    {resources.filter(r => r.hasList).map(resource => (
+const capitalizeFirstLetter = string => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+const Content = ({ resources, classes, pathname, open }) => {
+  return resources.filter(r => r.hasList).map(resource => {
+    const isActive = itemIsActive(resource, pathname)
+    const itemClass = classNames(classes.menuItem, !open && classes.menuItemClosed)
+    const textClass = classNames(classes.menuText, isActive && classes.menuTextActive)
+    const iconClass = classNames(classes.menuIcon, isActive && classes.menuIconActive)
+    return (
       <Link key={resource.name} to={`/${resource.name}`}>
-        <MenuItem>
-          <SvgIcon className={itemIsActive(resource, pathname) ? classes.menuItemIconActive : classes.menuItemIcon}>
-            {resource.icon ? <resource.icon /> : <DefaultIcon />}
-          </SvgIcon>
-          <Typography
-            className={itemIsActive(resource, pathname) ? classes.menuItemActive : classes.menuItem}
-            variant="body2"
-          >
-            {resource.name}
+        <MenuItem className={itemClass}>
+          <SvgIcon className={iconClass}>{resource.icon ? <resource.icon /> : <DefaultIcon />}</SvgIcon>
+          <Typography className={textClass} variant="body2">
+            {open ? capitalizeFirstLetter(resource.name) : ''}
           </Typography>
         </MenuItem>
       </Link>
-    ))}
+    )
+  })
+}
+
+const Menu = ({ classes, hasDashboard, onMenuClick, resources, pathname, open, ...rest }) => (
+  <Container {...rest}>
+    <UserMenu classes={classes} open={open} />
+    {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
+    <Content classes={classes} open={open} pathname={pathname} resources={resources} />
   </Container>
 )
 
@@ -48,7 +58,6 @@ Menu.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  open: state.admin.ui.sidebarOpen,
   pathname: state.routing.location.pathname, // used to force redraw on navigation
   resources: getResources(state),
 })
@@ -60,9 +69,7 @@ export default compose(
     null,
     {
       areStatePropsEqual: (prev, next) =>
-        prev.resources.every((value, index) => value === next.resources[index]) &&
-        prev.pathname === next.pathname &&
-        prev.open === next.open,
+        prev.resources.every((value, index) => value === next.resources[index]) && prev.pathname === next.pathname,
     }
   )
 )(Menu)

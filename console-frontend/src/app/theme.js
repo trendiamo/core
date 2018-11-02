@@ -5,6 +5,11 @@ const typography = {
     color: 'rgba(0,0,0,.6)',
     letterSpacing: '0.5px',
   },
+  body2: {
+    color: 'rgba(0,0,0,.6)',
+    fontSize: '13.7px',
+    letterSpacing: '0.3px',
+  },
   button: {
     color: 'rgba(255, 255, 255, 0.8)',
     fontWeight: '700',
@@ -18,6 +23,12 @@ const typography = {
     fontSize: '33.4px',
     letterSpacing: '0.3px',
   },
+  display6: {
+    color: '#32333d',
+    fontSize: '19.6px',
+    letterSpacing: '0.3px',
+  },
+  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
 }
 
 const palette = {
