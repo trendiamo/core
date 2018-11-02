@@ -37,7 +37,7 @@ const ProfilePic = ({ record, small }) => <StyledAvatar alt={record.name} small=
 export const InfluencersEdit = ({ ...props }) => (
   <Edit {...props} title="Edit Influencer">
     <SimpleForm validate={validateInfluencer}>
-      <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pic" />
+      <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pics" />
       <TextInput source="name" />
       <TextInput source="description" />
     </SimpleForm>
@@ -81,7 +81,7 @@ export const InfluencersList = ({ ...props }) => (
 export const InfluencersCreate = ({ ...props }) => (
   <Create {...props} title="Create Influencer">
     <SimpleForm redirect="show" validate={validateInfluencer}>
-      <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pic" />
+      <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pics" />
       <TextInput source="name" />
       <TextInput source="description" />
     </SimpleForm>
