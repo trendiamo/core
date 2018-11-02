@@ -7,6 +7,7 @@ import Link from 'shared/link'
 import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import styled from 'styled-components'
+import SvgIcon from '@material-ui/core/SvgIcon'
 import Typography from '@material-ui/core/Typography'
 import UserMenu from './user-menu'
 
@@ -16,6 +17,10 @@ const Container = styled.div`
   justify-content: flex-start;
 `
 
+const itemIsActive = (resource, pathname) => {
+  return pathname && pathname.startsWith(`/${resource.name}`)
+}
+
 const Menu = ({ classes, hasDashboard, onMenuClick, resources, pathname, ...rest }) => (
   <Container {...rest}>
     <UserMenu />
@@ -23,15 +28,11 @@ const Menu = ({ classes, hasDashboard, onMenuClick, resources, pathname, ...rest
     {resources.filter(r => r.hasList).map(resource => (
       <Link key={resource.name} to={`/${resource.name}`}>
         <MenuItem>
-          {resource.icon ? (
-            <resource.icon />
-          ) : (
-            <DefaultIcon
-              classes={{ root: pathname === `/${resource.name}` ? classes.menuItemIconActive : classes.menuItemIcon }}
-            />
-          )}
+          <SvgIcon className={itemIsActive(resource, pathname) ? classes.menuItemIconActive : classes.menuItemIcon}>
+            {resource.icon ? <resource.icon /> : <DefaultIcon />}
+          </SvgIcon>
           <Typography
-            className={pathname === `/${resource.name}` ? classes.menuItemActive : classes.menuItem}
+            className={itemIsActive(resource, pathname) ? classes.menuItemActive : classes.menuItem}
             variant="body2"
           >
             {resource.name}
