@@ -1,4 +1,4 @@
-import { apiSignIn } from 'auth/utils'
+import { apiSignIn } from 'utils'
 import auth from 'auth'
 import AuthLayout from 'auth/auth-layout'
 import Button from '@material-ui/core/Button'

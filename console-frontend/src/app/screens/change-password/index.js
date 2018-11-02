@@ -1,4 +1,4 @@
-import { apiPasswordChange } from 'auth/utils'
+import { apiPasswordChange } from 'utils'
 import AppLayout from 'app/app-layout'
 import { Authenticated } from 'react-admin'
 import Button from '@material-ui/core/Button'

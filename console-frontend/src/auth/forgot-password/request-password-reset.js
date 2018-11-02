@@ -1,4 +1,4 @@
-import { apiPasswordEmailLink } from 'auth/utils'
+import { apiPasswordEmailLink } from 'utils'
 import AuthLayout from 'auth/auth-layout'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'

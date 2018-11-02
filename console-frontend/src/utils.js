@@ -1,4 +1,4 @@
-import auth from './index'
+import auth from 'auth'
 import routes from 'app/routes'
 
 const BASE_API_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`

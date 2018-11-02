@@ -9,7 +9,7 @@ import Notification from 'shared/notification'
 import PictureUploader from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
-import { apiMe, apiMeUpdate } from 'auth/utils'
+import { apiMe, apiMeUpdate } from 'utils'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
 const EditUser = ({ info, onSubmit, userForm, setFieldValue, setProfilePicUrl }) => (
