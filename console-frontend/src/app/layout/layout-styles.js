@@ -15,12 +15,14 @@ export const styles = theme => ({
     },
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['width', 'margin'], {
-      duration: theme.transitions.duration.enteringScreen,
-      easing: theme.transitions.easing.sharp,
-    }),
-    width: `calc(100% - ${drawerWidth}px)`,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(['width', 'margin'], {
+        duration: theme.transitions.duration.enteringScreen,
+        easing: theme.transitions.easing.sharp,
+      }),
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
   },
   appFrame: {
     display: 'flex',
