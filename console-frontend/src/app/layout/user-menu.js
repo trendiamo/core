@@ -1,8 +1,9 @@
-import AccountCircle from '@material-ui/icons/AccountCircle'
+import AccountCircleOutlined from '@material-ui/icons/AccountCircleOutlined'
 import { apiSignOut } from 'utils'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'auth'
 import Avatar from '@material-ui/core/Avatar'
+import classNames from 'classnames'
 import Divider from '@material-ui/core/Divider'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import Link from 'shared/link'
@@ -10,54 +11,46 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import routes from 'app/routes'
-import SettingsIcon from '@material-ui/icons/Settings'
-import styled from 'styled-components'
+import Typography from '@material-ui/core/Typography'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 
-const AvatarContainer = styled.div`
-  padding: 20px 15px;
-`
-
-const AccountCircleCustom = styled(AccountCircle)`
-  font-size: 4rem;
-`
-
-const StyledAvatar = styled(Avatar)`
-  width: 64px;
-  height: 64px;
-`
-
-// Common style for the menu icons goes here.
-const MenuIconStyle = {
-  marginRight: '0.5rem',
+const MenuItemThemed = ({ classes, icon, text, ...props }) => {
+  return (
+    <MenuItem className={classes.accountMenuItem} {...props}>
+      {icon}
+      <Typography className={classes.accountMenuText}>{text}</Typography>
+    </MenuItem>
+  )
 }
 
 const UserMenu = ({
+  classes,
   initials,
   onLogoutButtonClick,
   anchorEl,
   handleMenu,
   handleClose,
+  openMenu,
   open,
   profilePicUrl,
   userIdentifier,
 }) => (
   <React.Fragment>
-    <AvatarContainer>
-      <Link to={routes.account()}>
-        <StyledAvatar size={100} src={profilePicUrl}>
-          {profilePicUrl ? null : initials ? initials : <AccountCircleCustom />}
-        </StyledAvatar>
-      </Link>
-    </AvatarContainer>
+    <div onClick={handleMenu} onKeyPress={handleMenu} role="presentation" style={{ cursor: 'pointer' }}>
+      <Avatar className={classNames(classes.avatar, !open && classes.avatarClosed)} src={profilePicUrl}>
+        {profilePicUrl ? null : initials ? initials : ''}
+      </Avatar>
+    </div>
     <MenuItem
       aria-haspopup="true"
-      aria-owns={open ? 'menu-appbar' : null}
+      aria-owns={openMenu ? 'menu-appbar' : null}
+      className={classNames(classes.menuItem, !open && classes.menuItemHidden)}
       onClick={handleMenu}
-      style={{ color: '#fff' }}
     >
-      {userIdentifier}
-      <ArrowDropDown />
+      <Typography className={classes.menuTextActive} variant="body2">
+        {userIdentifier}
+      </Typography>
+      <ArrowDropDown className={classNames(classes.accountArrow, !open && classes.accountArrowHidden)} />
     </MenuItem>
     <Divider style={{ background: '#6c6c71' }} />
     <Menu
@@ -66,23 +59,19 @@ const UserMenu = ({
         horizontal: 'center',
         vertical: 'top',
       }}
+      className={classes.accountMenu}
       id="menu-appbar"
       onClick={handleClose}
-      open={open}
+      open={openMenu}
       transformOrigin={{
         horizontal: 'center',
         vertical: 'top',
       }}
     >
       <Link to={routes.account()}>
-        <MenuItem>
-          <SettingsIcon style={MenuIconStyle} />
-          {'Account'}
-        </MenuItem>
+        <MenuItemThemed classes={classes} icon={<AccountCircleOutlined />} text="Account" />
       </Link>
-      <MenuItem onClick={onLogoutButtonClick}>
-        <ExitIcon style={MenuIconStyle} /> {'Logout'}
-      </MenuItem>
+      <MenuItemThemed classes={classes} icon={<ExitIcon />} onClick={onLogoutButtonClick} text="Logout" />
     </Menu>
   </React.Fragment>
 )
@@ -92,7 +81,7 @@ export default compose(
   withState('user', 'setUser', auth.getUser()),
   withProps(({ anchorEl, user }) => ({
     initials: !user.firstName || !user.lastName ? null : `${user.firstName[0]}${user.lastName[0]}`,
-    open: Boolean(anchorEl),
+    openMenu: Boolean(anchorEl),
     profilePicUrl: user.profilePicUrl,
     userIdentifier: (!user.firstName || !user.lastName ? null : `${user.firstName} ${user.lastName}`) || user.email,
   })),

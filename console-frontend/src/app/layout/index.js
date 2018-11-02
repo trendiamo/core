@@ -40,7 +40,7 @@ const Layout = ({
       <AppBar classes={classes} logout={logout} open={open} toggleOpen={toggleOpen} />
       <main className={classes.contentWithSidebar}>
         <Sidebar classes={classes} open={open} toggleOpen={toggleOpen}>
-          <Menu classes={classes} hasDashboard={!!dashboard} logout={logout} />
+          <Menu classes={classes} hasDashboard={!!dashboard} logout={logout} open={open} />
         </Sidebar>
         <div className={classes.content}>
           {isLoading && <Loading />}

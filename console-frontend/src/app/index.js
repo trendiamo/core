@@ -15,6 +15,7 @@ import theme from './theme'
 import { Admin, Resource } from 'react-admin'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { InfluencersCreate, InfluencersEdit, InfluencerShow, InfluencersList } from './resources/influencers'
+import 'assets/css/fonts.css'
 
 const generateClassName = createGenerateClassName()
 const jss = create({
