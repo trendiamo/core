@@ -55,7 +55,9 @@ const StyledDropzone = styled(FilteredReactDropzone)`
   color: ${({ isDragging, previewImage }) => (previewImage ? '#fff' : isDragging ? '#0560ff' : '#7f8086')};
 
   ${InnerLabel} {
-    visibility: ${({ previewImage }) => (previewImage ? 'hidden' : 'visible')};
+    visibility: ${({ isDragging, previewImage }) => (isDragging || !previewImage ? 'visible' : 'hidden')};
+    background-color: ${({ isDragging, previewImage }) =>
+      isDragging && previewImage ? 'rgba(0, 0, 0, 0.6)' : 'transparent'};
   }
 
   &:hover ${InnerLabel} {
@@ -72,6 +74,10 @@ const Dropzone = compose(
     },
     onDragLeave: ({ setIsDragging }) => () => {
       setIsDragging(false)
+    },
+    onDrop: ({ onDrop, setIsDragging }) => (acceptedFiles, rejectedFiles) => {
+      setIsDragging(false)
+      onDrop(acceptedFiles, rejectedFiles)
     },
   })
 )(({ isDragging, onDragEnter, onDragLeave, previewImage, ...props }) => (
