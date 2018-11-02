@@ -1,11 +1,11 @@
 import { apiPasswordChange } from 'utils'
-import AppLayout from 'app/app-layout'
 import { Authenticated } from 'react-admin'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Notification from 'shared/notification'
+import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
 import withRaTitle from 'ext/recompose/with-ra-title'
@@ -14,7 +14,7 @@ import { compose, withHandlers, withState } from 'recompose'
 
 const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
-    <AppLayout>
+    <PaperContainer>
       <form onSubmit={passwordResetSubmit}>
         <Notification data={info} />
         <FormControl fullWidth margin="normal" required>
@@ -48,7 +48,7 @@ const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue
           </Button>
         </div>
       </form>
-    </AppLayout>
+    </PaperContainer>
   </Authenticated>
 )
 

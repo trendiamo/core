@@ -1,6 +1,6 @@
 import { apiSignIn } from 'utils'
 import auth from 'auth'
-import AuthLayout from 'auth/auth-layout'
+import AuthLayout from 'auth/layout'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'

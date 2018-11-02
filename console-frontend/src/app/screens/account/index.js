@@ -1,8 +1,8 @@
-import AppLayout from 'app/app-layout'
 import { Authenticated } from 'react-admin'
 import { compose } from 'recompose'
 import EditUser from './edit-user'
 import EditWebsite from './edit-website'
+import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
@@ -14,7 +14,7 @@ const Section = styled.section`
 
 const Account = ({ location }) => (
   <Authenticated location={location}>
-    <AppLayout>
+    <PaperContainer>
       <Section>
         <Typography variant="display1">{'Your Personal Info'}</Typography>
         <EditUser />
@@ -23,7 +23,7 @@ const Account = ({ location }) => (
         <Typography variant="display1">{'Your Website'}</Typography>
         <EditWebsite />
       </Section>
-    </AppLayout>
+    </PaperContainer>
   </Authenticated>
 )
 

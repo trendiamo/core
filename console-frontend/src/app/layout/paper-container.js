@@ -1,11 +1,6 @@
-import CssBaseline from '@material-ui/core/CssBaseline'
 import Paper from '@material-ui/core/Paper'
 import React from 'react'
 import styled from 'styled-components'
-
-const Main = styled.main`
-  display: block;
-`
 
 const StyledDiv = styled.div`
   height: 100%;
@@ -19,15 +14,13 @@ const StyledPaper = styled(Paper)`
   padding: 16px 24px 24px;
 `
 
-const AppLayout = ({ children }) => (
+// Provide a paper container similar to what react-admin uses, for use in non-react-admin pages
+const PaperContainer = ({ children }) => (
   <React.Fragment>
-    <CssBaseline />
-    <Main>
-      <StyledPaper>
-        <StyledDiv>{children}</StyledDiv>
-      </StyledPaper>
-    </Main>
+    <StyledPaper>
+      <StyledDiv>{children}</StyledDiv>
+    </StyledPaper>
   </React.Fragment>
 )
 
-export default AppLayout
+export default PaperContainer

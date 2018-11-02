@@ -106,7 +106,7 @@ const Logotype = ({ ...props }) => (
   </LogotypeContainer>
 )
 
-const AuthLayout = ({ children, title, authMessage }) => (
+const Layout = ({ children, title, authMessage }) => (
   <React.Fragment>
     <CssBaseline />
     <MuiThemeProvider theme={theme}>
@@ -123,4 +123,4 @@ const AuthLayout = ({ children, title, authMessage }) => (
   </React.Fragment>
 )
 
-export default AuthLayout
+export default Layout
