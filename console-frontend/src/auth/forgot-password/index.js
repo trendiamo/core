@@ -1,6 +1,6 @@
-import { apiPasswordReset } from 'app/auth/utils'
+import { apiPasswordReset } from 'auth/utils'
 import { Authenticated } from 'react-admin'
-import AuthLayout from 'app/screens/auth-layout'
+import AuthLayout from 'auth/auth-layout'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
@@ -8,7 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
-import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm } from 'shared/components'
+import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (
@@ -31,7 +31,7 @@ const AuthMessage = () => (
 const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>
     <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
-      <StyledAuthForm onSubmit={passwordResetSubmit}>
+      <form onSubmit={passwordResetSubmit}>
         <Notification data={info} />
         <FormControl fullWidth margin="normal" required>
           <InputLabel htmlFor="email">{'New Password'}</InputLabel>
@@ -62,7 +62,7 @@ const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue,
             {'Reset'}
           </Button>
         </div>
-      </StyledAuthForm>
+      </form>
     </AuthLayout>
   </Authenticated>
 )

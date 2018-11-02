@@ -1,4 +1,4 @@
-import auth from './auth'
+import auth from 'auth'
 import qs from 'querystring'
 
 const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`

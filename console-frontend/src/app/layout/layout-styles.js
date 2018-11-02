@@ -81,6 +81,26 @@ export const styles = theme => ({
       width: theme.spacing.unit * 9,
     },
   },
+  menuButton: {
+    color: '#333',
+    [theme.breakpoints.down('sm')]: {
+      color: '#fff',
+    },
+  },
+  menuItem: {
+    color: '#fff',
+  },
+  menuItemActive: {
+    color: '#0560ff',
+  },
+  menuItemIcon: {
+    color: '#fff',
+    paddingRight: '20px',
+  },
+  menuItemIconActive: {
+    color: '#0560ff',
+    paddingRight: '20px',
+  },
   root: {
     backgroundColor: theme.palette.background.default,
     display: 'flex',
@@ -98,25 +118,5 @@ export const styles = theme => ({
   },
   toolbar: {
     paddingRight: 14, // keep right padding when drawer closed
-  },
-  menuButton: {
-    color: '#333',
-    [theme.breakpoints.down('sm')]: {
-      color: '#fff',
-    },
-  },
-  menuItemIcon: {
-    color: '#fff',
-    paddingRight: '20px',
-  },
-  menuItemIconActive: {
-    color: '#0560ff',
-    paddingRight: '20px',
-  },
-  menuItemActive: {
-    color: '#0560ff',
-  },
-  menuItem: {
-    color: '#fff',
   },
 })

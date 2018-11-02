@@ -1,6 +1,6 @@
-import { apiSignIn } from 'app/auth/utils'
-import auth from 'app/auth'
-import AuthLayout from 'app/screens/auth-layout'
+import { apiSignIn } from 'auth/utils'
+import auth from 'auth'
+import AuthLayout from 'auth/auth-layout'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
@@ -9,7 +9,7 @@ import Link from 'shared/link'
 import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
-import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm } from 'shared/components'
+import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (
@@ -31,7 +31,7 @@ const AuthMessage = () => (
 
 const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Login">
-    <StyledAuthForm onSubmit={loginSubmit}>
+    <form onSubmit={loginSubmit}>
       <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
@@ -68,7 +68,7 @@ const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
           </Button>
         </Link>
       </div>
-    </StyledAuthForm>
+    </form>
   </AuthLayout>
 )
 

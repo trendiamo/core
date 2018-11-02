@@ -1,5 +1,5 @@
 import App from 'app'
-import auth from 'app/auth'
+import auth from 'auth'
 import createHistory from 'history/createBrowserHistory'
 import { fetchUtils } from 'react-admin'
 import React from 'react'

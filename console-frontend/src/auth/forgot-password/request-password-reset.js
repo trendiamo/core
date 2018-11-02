@@ -1,5 +1,5 @@
-import { apiPasswordEmailLink } from 'app/auth/utils'
-import AuthLayout from 'app/screens/auth-layout'
+import { apiPasswordEmailLink } from 'auth/utils'
+import AuthLayout from 'auth/auth-layout'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
@@ -9,7 +9,7 @@ import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import Typography from '@material-ui/core/Typography'
-import { AuthButton, AuthLink, AuthText, AuthTitle, StyledAuthForm } from 'shared/components'
+import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (
@@ -31,7 +31,7 @@ const AuthMessage = () => (
 
 const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, info }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
-    <StyledAuthForm onSubmit={passwordChangeSubmit}>
+    <form onSubmit={passwordChangeSubmit}>
       <Typography variant="body1">
         {'We can help you reset your password using your email address linked to your account.'}
       </Typography>
@@ -59,7 +59,7 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
           </Button>
         </Link>
       </div>
-    </StyledAuthForm>
+    </form>
   </AuthLayout>
 )
 

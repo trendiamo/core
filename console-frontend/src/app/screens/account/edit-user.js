@@ -1,4 +1,4 @@
-import auth from 'app/auth'
+import auth from 'auth'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
@@ -9,7 +9,7 @@ import Notification from 'shared/notification'
 import PictureUploader from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
-import { apiMe, apiMeUpdate } from 'app/auth/utils'
+import { apiMe, apiMeUpdate } from 'auth/utils'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
 const EditUser = ({ info, onSubmit, userForm, setFieldValue, setProfilePicUrl }) => (

@@ -1,5 +1,5 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
-import auth from 'app/auth'
+import auth from 'auth'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
@@ -11,7 +11,7 @@ import RATextField from '@material-ui/core/TextField'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import { apiWebsiteShow, apiWebsiteUpdate } from 'app/auth/utils'
+import { apiWebsiteShow, apiWebsiteUpdate } from 'auth/utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 
 const StyledTypography = styled(Typography)`
