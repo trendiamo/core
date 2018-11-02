@@ -6,8 +6,10 @@ import Label from 'shared/label'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import React from 'react'
 import ReactDropzone from 'react-dropzone'
+import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import S3Upload from 'react-s3-uploader/s3upload'
 import styled from 'styled-components'
+import theme from 'app/theme'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import ReactCrop, { getPixelCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
@@ -51,7 +53,7 @@ const StyledDropzone = styled(FilteredReactDropzone)`
   position: relative;
   height: 150px;
   width: 150px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.4rem;
   color: ${({ isDragging, previewImage }) => (previewImage ? '#fff' : isDragging ? '#0560ff' : '#7f8086')};
 
   ${InnerLabel} {
@@ -111,6 +113,7 @@ const HiddenImg = styled.img`
 `
 
 const StyledReactCrop = styled(ReactCrop)`
+  margin-top: 1rem;
   border: 2px dashed #fff;
 `
 
@@ -124,17 +127,32 @@ const StatusMessage = styled.div`
   color: #7f8086;
 `
 
+const RemoveButtonContainer = styled.div`
+  text-align: center;
+  width: 150px;
+
+  button {
+    font-size: 11px;
+  }
+  svg {
+    font-size: 17px;
+    margin-right: 4px;
+  }
+`
+
 const BarebonesPictureUploader = ({
   crop,
   doneCropping,
   image,
   previewImage,
   progress,
+  onCancelClick,
   onCropChange,
   onCropComplete,
   onDoneClick,
   onDrop,
   onImageLoaded,
+  onRemove,
   setImagePreviewRef,
 }) => (
   <Container>
@@ -145,6 +163,16 @@ const BarebonesPictureUploader = ({
         <StyledLinearProgress value={progress.progress} variant="determinate" />
       </React.Fragment>
     )}
+    {(image || previewImage) &&
+      (image ? doneCropping : true) &&
+      !progress && (
+        <RemoveButtonContainer>
+          <Button mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
+            <RemoveCircle />
+            {'delete'}
+          </Button>
+        </RemoveButtonContainer>
+      )}
     {image &&
       !doneCropping && (
         <React.Fragment>
@@ -164,6 +192,9 @@ const BarebonesPictureUploader = ({
             <Button color="primary" onClick={onDoneClick} type="button" variant="contained">
               {'Done'}
             </Button>
+            <Button onClick={onCancelClick} style={{ marginLeft: '1rem' }} type="button">
+              {'Cancel'}
+            </Button>
           </div>
         </React.Fragment>
       )}
@@ -176,6 +207,7 @@ const pictureUploaderFactory = uploadImage => {
     withState('crop', 'setCrop', {}),
     withState('croppedImage', 'setCroppedImage', null),
     withState('doneCropping', 'setDoneCropping', false),
+    withState('previousValue', 'setPreviousValue', null),
     withState('progress', 'setProgress', null),
     withProps(({ croppedImage, image, value }) => ({
       previewImage: value ? value : croppedImage ? croppedImage : image ? image.preview : '',
@@ -183,6 +215,12 @@ const pictureUploaderFactory = uploadImage => {
     withHandlers(() => {
       let imagePreviewRef
       return {
+        onCancelClick: ({ previousValue, onChange, setCroppedImage, setDoneCropping, setImage }) => () => {
+          onChange(previousValue)
+          setImage(null)
+          setCroppedImage(null)
+          setDoneCropping(true)
+        },
         onCropChange: ({ setCrop }) => crop => setCrop(crop),
         onCropComplete: ({ setCrop, setCroppedImage }) => (_crop, pixelCrop) => {
           if (pixelCrop.height === 0 || pixelCrop.width === 0) {
@@ -198,7 +236,8 @@ const pictureUploaderFactory = uploadImage => {
           blob.name = image.name
           uploadImage({ blob, onChange, setProgress, type })
         },
-        onDrop: ({ onChange, setDoneCropping, setImage }) => files => {
+        onDrop: ({ onChange, setDoneCropping, setImage, setPreviousValue, value }) => files => {
+          setPreviousValue(value)
           onChange('')
           setDoneCropping(false)
           setImage(files[0])
@@ -208,6 +247,7 @@ const pictureUploaderFactory = uploadImage => {
           setCrop(crop)
           setPreviewCrop({ image: imagePreviewRef, pixelCrop: getPixelCrop(image, crop), setCroppedImage })
         },
+        onRemove: ({ onChange }) => () => onChange(null),
         setImagePreviewRef: () => ref => (imagePreviewRef = ref),
       }
     })
