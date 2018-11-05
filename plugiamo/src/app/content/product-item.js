@@ -7,7 +7,7 @@ const ProductItem = ({ product, onListItemClick }) => (
   <ListItem onClick={onListItemClick}>
     <ListImg src={product.picture.url} />
     <ListContent>
-      <div style={{ color: '#4a4a4a', display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div style={{ color: '#4a4a4a', display: 'flex', flexDirection: 'column' }}>
         <div style={{ fontSize: '16px', fontWeight: '500', lineHeight: '1.4' }}>{product.name}</div>
         <div style={{ flex: 1, fontSize: '12px' }}>{product.description}</div>
         <div style={{ fontSize: '13px', fontWeight: 'bold' }}>{product.displayPrice}</div>
