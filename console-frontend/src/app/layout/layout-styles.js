@@ -82,6 +82,7 @@ export const styles = theme => ({
     flexGrow: 1,
     marginTop: '60px',
     padding: theme.spacing.unit * 2,
+    position: 'relative',
     [theme.breakpoints.up('xs')]: {
       padding: 14,
     },
@@ -136,6 +137,36 @@ export const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       width: drawerWidthClosed,
     },
+  },
+  loadingContainer: {
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    bottom: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    left: 0,
+    margin: '5px 0px',
+    position: 'absolute',
+    right: 0,
+    textAlign: 'center',
+    top: 0,
+    zIndex: 1000,
+  },
+  loadingIcon: {
+    height: '80px',
+    marginBottom: '20px',
+    width: '80px',
+  },
+  loadingInnerContainer: {
+    bottom: 0,
+    display: 'inline-block',
+    position: 'fixed',
+    textAlign: 'center',
+    top: 0,
+  },
+  loadingMessage: {
+    position: 'relative',
+    top: '50%',
+    transform: 'translateY(-50%)',
   },
   menuButton: {
     color: '#777',

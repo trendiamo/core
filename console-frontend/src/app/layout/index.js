@@ -1,13 +1,14 @@
 import AppBar from './app-bar'
 import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import Loading from 'app/layout/loading'
 import Menu from './menu'
 import React from 'react'
 import Sidebar from './sidebar'
 import { styles } from './layout-styles'
 import { withRouter } from 'react-router'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
-import { Error, Loading, Notification } from 'react-admin'
+import { Error, Notification } from 'react-admin'
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
 
 const Layout = ({
@@ -31,13 +32,11 @@ const Layout = ({
           <Menu classes={classes} hasDashboard={!!dashboard} logout={logout} open={open} />
         </Sidebar>
         <div className={classes.content}>
-          {isLoading && <Loading />}
+          {isLoading && <Loading classes={classes} />}
           {hasError ? (
             <Error error={errorMessage} errorInfo={errorInfo} />
           ) : (
-            <div className={classes.contentInnerDiv} style={{ visibility: isLoading ? 'hidden' : 'visible' }}>
-              {children}
-            </div>
+            <div className={classes.contentInnerDiv}>{children}</div>
           )}
         </div>
       </main>
