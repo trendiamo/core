@@ -6,20 +6,9 @@ import React from 'react'
 import Sidebar from './sidebar'
 import { styles } from './layout-styles'
 import { withRouter } from 'react-router'
-import { compose, withHandlers, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Error, Loading, Notification } from 'react-admin'
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
-
-const sanitizeProps = props => {
-  const newProps = { ...props }
-  delete newProps.staticContext
-  delete newProps.history
-  delete newProps.location
-  delete newProps.match
-  delete newProps.title
-  delete newProps.setOpen
-  return newProps
-}
 
 const Layout = ({
   children,
@@ -32,9 +21,8 @@ const Layout = ({
   errorMessage,
   errorInfo,
   toggleOpen,
-  ...props
 }) => (
-  <div className={classes.root} {...sanitizeProps(props)}>
+  <div className={classes.root}>
     <div className={classes.appFrame}>
       <CssBaseline />
       <AppBar classes={classes} logout={logout} open={open} toggleOpen={toggleOpen} />
@@ -47,11 +35,22 @@ const Layout = ({
           {hasError ? (
             <Error error={errorMessage} errorInfo={errorInfo} />
           ) : (
-            <div style={{ visibility: isLoading ? 'hidden' : 'visible' }}>{children}</div>
+            <div className={classes.contentInnerDiv} style={{ visibility: isLoading ? 'hidden' : 'visible' }}>
+              {children}
+            </div>
           )}
         </div>
       </main>
       <Notification />
+    </div>
+  </div>
+)
+
+const EmptyLayout = ({ classes, children }) => (
+  <div className={classes.root}>
+    <CssBaseline />
+    <div className={classes.content}>
+      <div className={classes.contentInnerDiv}>{children}</div>
     </div>
   </div>
 )
@@ -70,7 +69,8 @@ const EnhancedLayout = compose(
   withHandlers({
     toggleOpen: ({ open, setOpen }) => () => setOpen(!open),
   }),
-  withStyles(styles, { index: 1 })
+  withStyles(styles, { index: 1 }),
+  branch(({ isLoggedIn }) => !isLoggedIn, renderComponent(props => <EmptyLayout {...props} />))
 )(Layout)
 
 const LayoutWithTheme = ({ theme, ...rest }) => (

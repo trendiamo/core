@@ -70,6 +70,12 @@ export const styles = theme => ({
     margin: '9px 7px 7px',
     width: avatarSizeClosed,
   },
+  buttonLarge: {
+    color: theme.palette.grey.A700,
+    letterSpacing: '1.3px',
+    marginTop: 25,
+    padding: '12px 80px',
+  },
   content: {
     display: 'flex',
     flexDirection: 'column',
@@ -83,9 +89,13 @@ export const styles = theme => ({
       padding: 0,
     },
   },
+  contentInnerDiv: {
+    height: '100%',
+  },
   contentWithSidebar: {
     display: 'flex',
     flexGrow: 1,
+    minHeight: '100vh',
   },
   drawerPaper: {
     background: theme.customPalette.sidebar.main,
@@ -165,6 +175,9 @@ export const styles = theme => ({
   },
   menuTextActive: {
     color: '#fff',
+  },
+  notFoundTitle: {
+    color: '#fb0',
   },
   root: {
     backgroundColor: theme.palette.background.default,

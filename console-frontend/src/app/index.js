@@ -1,5 +1,4 @@
 import Account from 'app/screens/account'
-import { authProvider } from 'auth'
 import ChangePassword from 'app/screens/change-password'
 import { create } from 'jss'
 import ForgotPassword from 'auth/forgot-password'
@@ -13,6 +12,7 @@ import { Route } from 'react-router-dom'
 import routes from './routes'
 import theme from './theme'
 import { Admin, Resource } from 'react-admin'
+import auth, { authProvider } from 'auth'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { InfluencersCreate, InfluencersEdit, InfluencerShow, InfluencersList } from './resources/influencers'
 import 'assets/css/fonts.css'
@@ -30,10 +30,13 @@ const customRoutes = [
   <Route component={Account} exact key="account" path={routes.account()} />,
 ]
 
+// Here isLoggedIn property is passed in order to inform the <Layout /> whether to show Menus and Bars (404 page needs that)
+const LayoutWithProps = ({ ...props }) => <Layout isLoggedIn={auth.isLoggedIn()} {...props} />
+
 const App = ({ dataProvider, history }) => (
   <JssProvider generateClassName={generateClassName} jss={jss}>
     <Admin
-      appLayout={Layout}
+      appLayout={LayoutWithProps}
       authProvider={authProvider}
       catchAll={NotFound}
       customRoutes={customRoutes}
