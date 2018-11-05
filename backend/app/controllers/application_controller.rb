@@ -36,7 +36,7 @@ class ApplicationController < ActionController::API
     pagination_hash = begin
       pagination_vars(params[:range])
     rescue JSON::ParserError
-      return []
+      return chain
     end
     add_pagination_headers(chain, pagination_hash[:range])
     chain.page(pagination_hash[:page_number]).per(pagination_hash[:total_per_page])
@@ -46,8 +46,11 @@ class ApplicationController < ActionController::API
     begin
       sort_params = JSON.parse(params[:sort])
     rescue JSON::ParserError
-      return []
+      return chain
     end
-    chain.order(sort_params[0].underscore.concat(" #{sort_params[1]}"))
+    column, direction = *sort_params
+    column = ActiveRecord::Base.connection.quote_column_name(column.underscore)
+    direction = direction.match?(/asc/i) ? "asc" : "desc"
+    chain.order("#{column} #{direction}")
   end
 end
