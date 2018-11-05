@@ -5,19 +5,17 @@ import styled from 'styled-components'
 import validateInfluencer from './influencer-validations'
 import {
   Create,
-  Datagrid,
   Edit,
-  EditButton,
   List,
   Responsive,
   Show,
-  ShowButton,
   SimpleForm,
   SimpleList,
   SimpleShowLayout,
   TextField,
   TextInput,
 } from 'react-admin'
+import { Datagrid, EditButton, ShowButton } from 'ext/react-admin'
 
 const sanitizeProps = props => {
   const newProps = { ...props }
@@ -54,17 +52,29 @@ export const InfluencerShow = props => (
   </Show>
 )
 
+const SizedDatagrid = styled(Datagrid)`
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 20%;
+  }
+
+  th:nth-child(4),
+  td:nth-child(4) {
+    width: 80%;
+  }
+`
+
 export const InfluencersList = ({ ...props }) => (
   <List {...props} title="Influencers">
     <Responsive
       medium={
-        <Datagrid>
+        <SizedDatagrid>
           <ProfilePic small />
           <TextField source="name" />
           <TextField source="description" />
           <EditButton />
           <ShowButton />
-        </Datagrid>
+        </SizedDatagrid>
       }
       small={
         <SimpleList
