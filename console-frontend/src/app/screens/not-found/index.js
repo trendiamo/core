@@ -1,53 +1,62 @@
 import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import HotTub from '@material-ui/icons/HotTub'
+import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
-import { Title } from 'react-admin'
-import { compose, withHandlers } from 'recompose'
+import { styles } from 'app/layout/layout-styles'
+import theme from 'app/theme'
+import Typography from '@material-ui/core/Typography'
 
 const Fullscreen = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  z-index: 1100;
-  color: #666;
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 `
 
-const StyledHotTub = styled(HotTub)`
+const Container = styled.div`
+  position:relative
+  text-align: center;
+  max-width: 60%;
+  flex: none;
+  margin: auto;
+`
+
+const BackgroundImage = styled.img`
   width: 100%;
-  height: 9em;
-  color: #8b8b8b;
+  height: auto;
+  margin-bottom: 30px;
 `
 
-const NotFound = ({ onSafetyClick }) => (
+const BoldLink = styled.a`
+  text-decoration: none;
+  color: #777;
+  font-weight: 700;
+  cursor: pointer;
+`
+
+const newStyles = styles(theme)
+
+const NotFound = () => (
   <Fullscreen>
-    <Card>
-      <Title title="Not Found" />
-      <CardContent>
-        <StyledHotTub />
-        <h1>{'404: Page not found'}</h1>
-        <p>{'Either you typed a wrong URL, or you followed a bad link, or we screwed up.'}</p>
-        <p>{"We'll assume that we screwed up."}</p>
-        <Button onClick={onSafetyClick} variant="contained">
-          {'Take me out of here!'}
+    <Container>
+      <BackgroundImage src="/img/background/not-found.png" />
+      <Typography gutterBottom variant="display1">
+        {'Oops! This page is not available'}
+      </Typography>
+      <Typography variant="body2">
+        {'Is something wrong? '}
+        <BoldLink href="mailto:support@trendiamo.com">{'Get in touch'}</BoldLink>
+      </Typography>
+      <Typography variant="body2">{'Or come back to home page:'}</Typography>
+      <Link to={routes.root()}>
+        <Button size="large" style={newStyles.buttonLarge} variant="outlined">
+          {'Go Back'}
         </Button>
-      </CardContent>
-    </Card>
+      </Link>
+    </Container>
   </Fullscreen>
 )
 
-export default compose(
-  withHandlers({
-    onSafetyClick: () => () => (window.location = routes.root()),
-  })
-)(NotFound)
+export default NotFound
