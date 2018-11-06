@@ -52,22 +52,31 @@ const palette = {
   },
 }
 
+const customButtons = {
+  error: {
+    color: '#b00020',
+  },
+}
+
+const customPalette = {
+  appBar: {
+    main: '#fff',
+  },
+  appBarMobile: {
+    main: '#32333d',
+  },
+  sidebar: {
+    main: '#32333d',
+  },
+  success: {
+    main: '#14c29d',
+  },
+}
+
 const theme = createMuiTheme({
   // These colors are not in MUI definitions, but we use it for our own purposes
-  customPalette: {
-    appBar: {
-      main: '#fff',
-    },
-    appBarMobile: {
-      main: '#32333d',
-    },
-    sidebar: {
-      main: '#32333d',
-    },
-    success: {
-      main: '#14c29d',
-    },
-  },
+  customButtons,
+  customPalette,
   palette,
   shape: {
     borderRadius: 8,
