@@ -23,3 +23,8 @@ export const graphql = (query, variables) => BaseComponent => {
   const Graphql = props => <Consumer>{client => <QueryComp {...props} client={client} />}</Consumer>
   return Graphql
 }
+
+export const withClient = () => BaseComponent => {
+  const WithClient = props => <Consumer>{client => <BaseComponent {...props} client={client} />}</Consumer>
+  return WithClient
+}
