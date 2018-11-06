@@ -1,7 +1,9 @@
 import Avatar from '@material-ui/core/Avatar'
+import { BulkActions } from 'shared/list-actions'
 import { PictureInput } from 'shared/picture-uploader'
 import React from 'react'
 import styled from 'styled-components'
+import Toolbar from 'shared/edit-toolbar'
 import validateInfluencer from './influencer-validations'
 import {
   Create,
@@ -32,9 +34,21 @@ const StyledAvatar = styled(FilteredAvatar)`
 
 const ProfilePic = ({ record, small }) => <StyledAvatar alt={record.name} small={small} src={record.profilePicUrl} />
 
+const SizedDatagrid = styled(Datagrid)`
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 20%;
+  }
+
+  th:nth-child(4),
+  td:nth-child(4) {
+    width: 80%;
+  }
+`
+
 export const InfluencersEdit = ({ ...props }) => (
   <Edit {...props} title="Edit Influencer">
-    <SimpleForm validate={validateInfluencer}>
+    <SimpleForm toolbar={<Toolbar />} validate={validateInfluencer}>
       <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pics" />
       <TextInput source="name" />
       <TextInput source="description" />
@@ -52,20 +66,8 @@ export const InfluencerShow = props => (
   </Show>
 )
 
-const SizedDatagrid = styled(Datagrid)`
-  th:nth-child(3),
-  td:nth-child(3) {
-    width: 20%;
-  }
-
-  th:nth-child(4),
-  td:nth-child(4) {
-    width: 80%;
-  }
-`
-
 export const InfluencersList = ({ ...props }) => (
-  <List {...props} title="Influencers">
+  <List {...props} bulkActionButtons={<BulkActions />} title="Influencers">
     <Responsive
       medium={
         <SizedDatagrid>
