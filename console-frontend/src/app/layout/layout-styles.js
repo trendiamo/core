@@ -145,7 +145,7 @@ export const styles = theme => ({
     },
   },
   menuIcon: {
-    color: '#ddd',
+    color: '#a0a3a7',
     paddingRight: '20px',
   },
   menuIconActive: {
@@ -171,7 +171,7 @@ export const styles = theme => ({
     visibility: 'hidden',
   },
   menuText: {
-    color: '#7f8086',
+    color: '#a0a3a7',
   },
   menuTextActive: {
     color: '#fff',
