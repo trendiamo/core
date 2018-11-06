@@ -41,4 +41,15 @@ class WebsiteTest < ActiveSupport::TestCase
     refute_predicate @website, :valid?
     assert_includes @website.errors[:hostnames], "already exists"
   end
+
+  test ".find_by_hostname" do
+    ActsAsTenant.default_tenant = Account.create!
+    website1 = create(:website, hostnames: %w[a.com b.com])
+    website2 = create(:website, hostnames: %w[c.com])
+
+    assert_equal website1, Website.find_by_hostname("a.com")
+    assert_equal website1, Website.find_by_hostname("b.com")
+    assert_equal website2, Website.find_by_hostname("c.com")
+    assert_nil Website.find_by_hostname("d.com")
+  end
 end

@@ -9,6 +9,10 @@ class Website < ApplicationRecord
   validate :hostnames_cannot_be_blank
   validate :hostnames_cannot_be_repeated
 
+  def self.find_by_hostname(hostname)
+    find_by("hostnames @> array[:hostname]::varchar[]", hostname: hostname)
+  end
+
   private
 
   def hostnames_cannot_be_blank
