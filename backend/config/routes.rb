@@ -24,10 +24,5 @@ Rails.application.routes.draw do
     get "s3/sign", to: "s3#sign"
     # post :stripe, to: 'stripe#webhook'
     # resources :payments, only: :create
-
-    # namespace :bubble do
-    #   resources :users, only: :create
-    #   resources :collections, only: %i[create index show update destroy]
-    # end
   end
 end
