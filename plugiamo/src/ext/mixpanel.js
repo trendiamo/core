@@ -2,16 +2,18 @@ import mixpanel from 'mixpanel-browser'
 import { production } from 'config'
 
 const mockUniqueId = () => {
-  if (!window.__mockUniqueId) {
-    window.__mockUniqueId = Array.from(Array(4))
+  let mockUniqueId = localStorage.getItem('mockUniqueId')
+  if (!mockUniqueId) {
+    mockUniqueId = Array.from(Array(4))
       .map(() =>
         Math.random()
           .toString(16)
           .substring(2, 15)
       )
       .join('-')
+    localStorage.setItem('mockUniqueId', mockUniqueId)
   }
-  return window.__mockUniqueId
+  return mockUniqueId
 }
 
 const trndMixpanel = {
