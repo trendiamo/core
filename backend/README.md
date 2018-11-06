@@ -17,7 +17,7 @@ bin/rails db:schema:load
 
 ```sh
 pg_ctl -D /usr/local/var/postgres start
-bin/rails s
+foreman start
 ```
 
 ## Code checks

@@ -32,5 +32,7 @@ module TrendiamoBackend
     config.api_only = true
 
     config.middleware.use JsonCamelCase
+
+    config.active_job.queue_adapter = :resque
   end
 end
