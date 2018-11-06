@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include CleanupAssets
+
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable
 

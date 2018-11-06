@@ -1,4 +1,8 @@
+require "resque/server"
+
 Rails.application.routes.draw do
+  mount Resque::Server, at: "/jobs" if Rails.env.development?
+
   devise_for :users, only: []
   post "/graphql", to: "graphql#execute"
 

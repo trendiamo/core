@@ -33,12 +33,18 @@ dokku apps:create console-backend
 dokku plugin:install https://github.com/dokku/dokku-postgres.git
 dokku postgres:create console-backend-pg
 dokku postgres:link console-backend-pg console-backend
+dokku plugin:install https://github.com/dokku/dokku-redis.git redis
+dokku redis:create console-backend-redis
+dokku redis:link console-backend-redis console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
 dokku config:set console-backend CORS_ORIGIN=console.trendiamo.com FRONTEND_BASE_URL=https://console.trendiamo.com MAILER_HOST=api.trendiamo.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=...
 dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
+dokku ps:scale console-backend web=1 worker=1 scheduler=1
 # from your local machine, do the first deploy:
 git subtree push --prefix backend dokku-backend master
+# if you want to deploy from a different local branch:
+git push dokku-backend `git subtree split --prefix backend <your-branch-name>`:master
 
 # certificates:
 add-apt-repository ppa:certbot/certbot
