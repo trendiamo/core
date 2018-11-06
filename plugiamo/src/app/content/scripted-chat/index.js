@@ -12,7 +12,7 @@ const FlexDiv = styled.div`
   display: flex;
 `
 
-const CoverChat = compose(
+const CoverScriptedChat = compose(
   withProps(({ id, website }) => ({
     chat: website.chats.find(e => e.id === id),
   }))
@@ -34,7 +34,7 @@ const H2 = styled.h2`
   margin-bottom: 12px;
 `
 
-const ContentChat = compose(
+const ContentScriptedChat = compose(
   withProps(({ id, website }) => ({
     chat: website.chats.find(e => e.id === id),
   })),
@@ -74,4 +74,4 @@ const ContentChat = compose(
   </ChatBackground>
 ))
 
-export { CoverChat, ContentChat }
+export { CoverScriptedChat, ContentScriptedChat }

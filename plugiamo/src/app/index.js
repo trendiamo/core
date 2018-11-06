@@ -107,7 +107,7 @@ export default compose(
         setShowingContent(true)
       } else {
         const { chat } = this.props
-        if (chat) history.replace(routes.chat(chat.id))
+        if (chat) history.replace(routes.scriptedChat(chat.id))
         mixpanel.time_event('Opened')
       }
     },
