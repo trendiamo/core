@@ -18,6 +18,7 @@ gem "graphql"
 gem "kaminari"
 gem "pundit"
 gem "rack-cors"
+gem "redis"
 gem "rubocop"
 # changed to support the EU endpoint. https://github.com/the-refinery/sparkpost_rails/pull/58
 gem "sparkpost_rails", github: "dsgh/sparkpost_rails", branch: "custom-api-endpoint"

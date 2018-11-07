@@ -12,7 +12,7 @@ require "action_cable/engine"
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
-require_relative '../lib/json_camel_case'
+require_relative "../lib/json_camel_case"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -32,5 +32,9 @@ module TrendiamoBackend
     config.api_only = true
 
     config.middleware.use JsonCamelCase
+
+    config.action_cable.mount_path = "/cable"
+    config.action_cable.url = "ws://localhost:3000/cable"
+    config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
   end
 end

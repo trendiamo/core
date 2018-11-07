@@ -4,8 +4,6 @@ import { h } from 'preact'
 import history from 'ext/history'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
-import { location } from 'config'
-import { matchUrl } from 'ext/simple-router'
 import mixpanel from 'ext/mixpanel'
 import routes from './routes'
 import styled from 'styled-components'
@@ -44,57 +42,17 @@ const pathFromHash = () => {
 export default compose(
   graphql(
     gql`
-      query($hostname: String!) {
-        hostname(where: { hostname: $hostname }) {
-          website {
-            title
-            subtitle
-            chats {
-              id
-              path
-              influencer {
-                name
-                description
-                profilePic {
-                  url
-                }
-              }
-            }
-            spotlights {
-              id
-              influencer {
-                name
-                description
-                profilePic {
-                  url
-                }
-              }
-              productPicks {
-                url
-                name
-                description
-                displayPrice
-                picture {
-                  url
-                }
-              }
-            }
-          }
+      query {
+        website {
+          name
         }
       }
-    `,
-    { hostname: location.hostname }
+    `
   ),
-  branch(({ data }) => !data || data.loading || data.error, renderNothing),
+  branch(({ data }) => !data || data.loading, renderNothing),
+  branch(({ data }) => data.error, () => ({ data }) => infoMsg(data.error.response.error)),
   withProps(({ data }) => ({
-    website: data.hostname && data.hostname.website,
-  })),
-  branch(({ website }) => !website, infoMsg(`no website found for hostname ${location.hostname}`)),
-  withProps(({ website }) => ({
-    chat: website.chats.find(chat => matchUrl(location.pathname, chat.path)),
-  })),
-  withProps(({ chat, website }) => ({
-    influencer: chat ? chat.influencer : website.spotlights.length ? website.spotlights[0].influencer : undefined,
+    website: data.website,
   })),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({

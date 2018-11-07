@@ -3,4 +3,5 @@ Main::QueryType = GraphQL::ObjectType.define do
 
   field :me, Fields::MeField
   field :website, Fields::WebsiteField
+  field :conversation, Fields::ConversationField
 end

@@ -20,9 +20,13 @@ Rails.application.routes.draw do
       resources :influencers, only: %i[index show update create destroy]
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
+      resources :conversations, only: %i[index create]
+      resources :messages, only: :create
     end
     get "s3/sign", to: "s3#sign"
     # post :stripe, to: 'stripe#webhook'
     # resources :payments, only: :create
   end
+
+  mount ActionCable.server, at: "/cable"
 end

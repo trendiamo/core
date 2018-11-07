@@ -6,6 +6,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import transition from './transition'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { ContentLiveChat, CoverLiveChat } from './live-chat'
 import { ContentRoot, CoverRoot } from './root'
 import { ContentScriptedChat, CoverScriptedChat } from './scripted-chat'
 import { ContentSpotlight, CoverSpotlight } from './spotlight'
@@ -73,6 +74,7 @@ const Content = ({ isTransitioning, onRouteChange, onToggleContent, routeToRoot,
           <CoverRoot path={'/'} website={website} />
           <CoverSpotlight path={'/spotlight/:id'} routeToRoot={routeToRoot} website={website} />
           <CoverScriptedChat path={'/scripted-chat/:id'} routeToRoot={routeToRoot} website={website} />
+          <CoverLiveChat path={'/live-chat'} routeToRoot={routeToRoot} website={website} />
         </Router>
       </Cover>
       <Router history={history} onChange={onRouteChange}>
@@ -81,6 +83,12 @@ const Content = ({ isTransitioning, onRouteChange, onToggleContent, routeToRoot,
         <ContentScriptedChat
           onToggleContent={onToggleContent}
           path={'/scripted-chat/:id'}
+          routeToRoot={routeToRoot}
+          website={website}
+        />
+        <ContentLiveChat
+          onToggleContent={onToggleContent}
+          path={'/live-chat'}
           routeToRoot={routeToRoot}
           website={website}
         />
