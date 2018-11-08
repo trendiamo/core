@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Toolbar from 'shared/edit-toolbar'
 import validateInfluencer from './influencer-validations'
 import { BulkActions } from 'shared/list-actions'
+import { compose, withHandlers, withState } from 'recompose'
 import {
   Create,
   Edit,
@@ -46,15 +47,58 @@ const SizedDatagrid = styled(Datagrid)`
   }
 `
 
-export const InfluencersEdit = ({ ...props }) => (
-  <Edit {...props} title="Edit Influencer">
-    <SimpleForm toolbar={<Toolbar />} validate={validateInfluencer}>
-      <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pics" />
+export const EditView = ({
+  setProfilePic,
+  profilePic,
+  setProfilePicUrl,
+  setInputRef,
+  isCropping,
+  setDisabled,
+  disabled,
+  ...props
+}) => (
+  <Edit {...props} title="Edit Influencer" undoable>
+    <SimpleForm
+      toolbar={
+        <Toolbar
+          disabled={disabled}
+          isCropping={isCropping}
+          profilePic={profilePic}
+          setProfilePicUrl={setProfilePicUrl}
+        />
+      }
+      validate={validateInfluencer}
+    >
+      <PictureInput
+        disabled={disabled}
+        label="Picture"
+        required
+        setDisabled={setDisabled}
+        setInputRef={setInputRef}
+        setProfilePic={setProfilePic}
+        source="profilePicUrl"
+      />
       <TextInput source="name" />
       <TextInput source="description" />
     </SimpleForm>
   </Edit>
 )
+
+export const InfluencersEdit = compose(
+  withState('profilePic', 'setProfilePic', null),
+  //  Disables the submit button while the image is being cropped.
+  withState('disabled', 'setDisabled', false),
+  withHandlers(() => {
+    let inputRef
+    return {
+      setInputRef: () => ref => (inputRef = ref),
+      setProfilePicUrl: () => value => {
+        inputRef.value = value
+        inputRef.onChange(value)
+      },
+    }
+  })
+)(EditView)
 
 export const InfluencerShow = props => (
   <Show {...props} title="Influencer">
@@ -90,12 +134,57 @@ export const InfluencersList = ({ ...props }) => (
   </List>
 )
 
-export const InfluencersCreate = ({ ...props }) => (
-  <Create {...props} title="Create Influencer">
-    <SimpleForm redirect="show" validate={validateInfluencer}>
-      <PictureInput label="Picture" source="profilePicUrl" type="influencers-profile-pics" />
+export const CreateView = ({
+  setProfilePic,
+  profilePic,
+  setProfilePicUrl,
+  setInputRef,
+  isCropping,
+  setDisabled,
+  disabled,
+  ...props
+}) => (
+  <Create {...props} title="Edit Influencer">
+    <SimpleForm
+      redirect="show"
+      toolbar={
+        <Toolbar
+          deletable={false}
+          disabled={disabled}
+          isCropping={isCropping}
+          profilePic={profilePic}
+          setProfilePicUrl={setProfilePicUrl}
+        />
+      }
+      validate={validateInfluencer}
+    >
+      <PictureInput
+        disabled={disabled}
+        label="Picture"
+        setDisabled={setDisabled}
+        setInputRef={setInputRef}
+        setProfilePic={setProfilePic}
+        source="profilePicUrl"
+      />
       <TextInput source="name" />
       <TextInput source="description" />
     </SimpleForm>
   </Create>
 )
+
+export const InfluencersCreate = compose(
+  withState('profilePic', 'setProfilePic', null),
+  //  Disables the submit button while the image is being cropped.
+  withState('disabled', 'setDisabled', false),
+  withHandlers(() => {
+    let inputRef
+    return {
+      setInputRef: () => ref => (inputRef = ref),
+      setProfilePicUrl: () => value => {
+        console.log('setProfilePicUrl', value)
+        inputRef.value = value
+        inputRef.onChange(value)
+      },
+    }
+  })
+)(CreateView)
