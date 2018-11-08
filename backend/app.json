@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dokku": {
-      "predeploy": "mv Procfile.prod Procfile",
+      "predeploy": "cp Procfile.prod Procfile",
       "postdeploy": "bin/rails db:migrate"
     }
   }
