@@ -42,9 +42,7 @@ dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
 dokku ps:scale console-backend web=1 worker=1 scheduler=1
 # from your local machine, do the first deploy:
-git subtree push --prefix backend dokku-backend master
-# if you want to deploy from a different local branch:
-git push dokku-backend `git subtree split --prefix backend <your-branch-name>`:master
+bin/rails deploy
 
 # certificates:
 add-apt-repository ppa:certbot/certbot

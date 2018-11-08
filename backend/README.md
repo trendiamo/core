@@ -7,6 +7,8 @@ Create a Shopify account, go to `/admin/settings/checkout` and make it "Accounts
 You'll need to create your `.env` file, pointing to your Shopify instance. Ask a team member about this.
 
 ```sh
+brew install redis
+gem install foreman
 bundle
 pg_ctl -D /usr/local/var/postgres start
 bin/rails db:create
