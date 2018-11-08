@@ -6,7 +6,7 @@ import React from 'react'
 import ReactCrop, { getPixelCrop } from 'react-image-crop'
 import ReactDropzone from 'react-dropzone'
 import RemoveCircle from '@material-ui/icons/RemoveCircle'
-import S3Upload from 'react-s3-uploader/s3upload'
+import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
@@ -142,13 +142,19 @@ const RemoveButtonContainer = styled.div`
   }
 `
 
+const ProgressBar = ({ progress }) => (
+  <React.Fragment>
+    <StatusMessage>{`${progress.message}...`}</StatusMessage>
+    <StyledLinearProgress value={progress.progress} variant="determinate" />
+  </React.Fragment>
+)
+
 const BarebonesPictureUploader = ({
   crop,
   doneCropping,
   disabled,
   image,
   previewImage,
-  progress,
   onCancelClick,
   onCropChange,
   onCropComplete,
@@ -160,13 +166,8 @@ const BarebonesPictureUploader = ({
 }) => (
   <Container>
     <Dropzone accept="image/*" disabled={disabled} multiple={false} onDrop={onDrop} previewImage={previewImage} />
-    {progress && (
-      <React.Fragment>
-        <StatusMessage>{`${progress.message}...`}</StatusMessage>
-        <StyledLinearProgress value={progress.progress} variant="determinate" />
-      </React.Fragment>
-    )}
-    {(image || previewImage) && (image ? doneCropping : true) && !progress && (
+
+    {(image || previewImage) && (image ? doneCropping : true) && (
       <RemoveButtonContainer>
         <Button mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
           <RemoveCircle />
@@ -200,76 +201,6 @@ const BarebonesPictureUploader = ({
     )}
   </Container>
 )
-
-const pictureUploaderFactory = uploadImage => {
-  const PictureUploaderSkeleton = compose(
-    withState('image', 'setImage', null),
-    withState('crop', 'setCrop', {}),
-    withState('croppedImage', 'setCroppedImage', null),
-    withState('doneCropping', 'setDoneCropping', false),
-    withState('previousValue', 'setPreviousValue', null),
-    withState('progress', 'setProgress', null),
-    withProps(({ croppedImage, image, value }) => ({
-      previewImage: value ? value : croppedImage ? croppedImage : image ? image.preview : '',
-    })),
-    withHandlers(() => {
-      let imagePreviewRef
-      return {
-        onCancelClick: ({ image, previousValue, onChange, setCroppedImage, setDoneCropping, setImage }) => () => {
-          onChange(previousValue)
-          setImage(null)
-          setCroppedImage(null)
-          setDoneCropping(true)
-          URL.revokeObjectURL(image.preview)
-        },
-        onCropChange: ({ setCrop }) => crop => setCrop(crop),
-        onCropComplete: ({ setCrop, setCroppedImage }) => (_crop, pixelCrop) => {
-          if (pixelCrop.height === 0 || pixelCrop.width === 0) {
-            const crop = defaultCrop(imagePreviewRef)
-            setCrop(crop)
-            pixelCrop = getPixelCrop(imagePreviewRef, crop)
-          }
-          setPreviewCrop({ image: imagePreviewRef, pixelCrop, setCroppedImage })
-        },
-        onDoneClick: ({ crop, image, onChange, setDoneCropping, setProgress, type }) => async () => {
-          setDoneCropping(true)
-          const blob = await resultingCrop(imagePreviewRef, getPixelCrop(imagePreviewRef, crop))
-          blob.name = image.name
-          uploadImage({ blob, onChange, setProgress, type })
-          URL.revokeObjectURL(image.preview)
-        },
-        onDrop: ({ onChange, setDoneCropping, setImage, setPreviousValue, value }) => files => {
-          setPreviousValue(value)
-          onChange('')
-          setDoneCropping(false)
-          if (files.length === 0) return
-          const file = files[0]
-          setImage({
-            name: file.name,
-            preview: URL.createObjectURL(file),
-            size: file.size,
-            type: file.type,
-          })
-        },
-        onImageLoaded: ({ setCrop, setCroppedImage }) => image => {
-          const crop = defaultCrop(image)
-          setCrop(crop)
-          setPreviewCrop({ image: imagePreviewRef, pixelCrop: getPixelCrop(image, crop), setCroppedImage })
-        },
-        onRemove: ({ onChange }) => () => onChange(null),
-        setImagePreviewRef: () => ref => (imagePreviewRef = ref),
-      }
-    }),
-    lifecycle({
-      componentWillUnmount() {
-        const { image } = this.props
-        image && URL.revokeObjectURL(image.preview)
-      },
-    })
-  )(BarebonesPictureUploader)
-
-  return PictureUploaderSkeleton
-}
 
 const defaultCrop = image => {
   const imageAspect = image.width / image.height
@@ -330,48 +261,135 @@ const resultingCrop = (image, pixelCrop) => {
 
 const setPreviewCrop = ({ image, pixelCrop, setCroppedImage }) => setCroppedImage(previewCrop(image, pixelCrop))
 
-const uploadImage = ({ blob, onChange, setProgress, type }) => {
-  new S3Upload({
-    contentDisposition: 'auto',
-    files: [blob],
-    getSignedUrl: getSignedUrlFactory(type),
-    onError: status => {
-      console.error(status)
-      alert('Error uploading file, please try again or contact us')
-      window.location.reload()
-    },
-    onFinishS3Put: ({ fileUrl }) => {
-      setTimeout(() => {
-        onChange(fileUrl)
-        setProgress(null)
-      }, 250)
-    },
-    onProgress: (progress, message) => setProgress({ message, progress }),
-    preprocess: (file, next) => next(file),
-    uploadRequestHeaders: { 'x-amz-acl': 'public-read' },
-  })
+const uploadImage = async ({ blob, setProgress, type }) => {
+  if (!blob) return null
+  try {
+    const { fileUrl } = await S3Upload({
+      contentDisposition: 'auto',
+      files: [blob],
+      getSignedUrl: getSignedUrlFactory(type),
+      onProgress: (progress, message) => setProgress({ message, progress }),
+      preprocess: (file, next) => next(file),
+      uploadRequestHeaders: { 'x-amz-acl': 'public-read' },
+    })
+    setProgress(null)
+    return fileUrl
+  } catch (status) {
+    console.error(status)
+    alert('Error uploading file, please try again or contact us')
+    window.location.reload()
+  }
 }
 
-const PictureUploader = pictureUploaderFactory(uploadImage)
+const PictureUploader = compose(
+  withState('image', 'setImage', null),
+  withState('crop', 'setCrop', {}),
+  withState('croppedImage', 'setCroppedImage', null),
+  withState('doneCropping', 'setDoneCropping', true),
+  withState('previousValue', 'setPreviousValue', null),
+  withProps(({ croppedImage, image, value }) => ({
+    previewImage: value ? value : croppedImage ? croppedImage : image ? image.preview : '',
+  })),
+  withHandlers(() => {
+    let imagePreviewRef
+    return {
+      onCancelClick: ({ image, previousValue, onChange, setCroppedImage, setDoneCropping, setImage }) => () => {
+        onChange(previousValue)
+        setImage(null)
+        setCroppedImage(null)
+        setDoneCropping(true)
+        URL.revokeObjectURL(image.preview)
+      },
+      onCropChange: ({ setCrop }) => crop => setCrop(crop),
+      onCropComplete: ({ setCrop, setCroppedImage }) => (_crop, pixelCrop) => {
+        if (pixelCrop.height === 0 || pixelCrop.width === 0) {
+          const crop = defaultCrop(imagePreviewRef)
+          setCrop(crop)
+          pixelCrop = getPixelCrop(imagePreviewRef, crop)
+        }
+        setPreviewCrop({ image: imagePreviewRef, pixelCrop, setCroppedImage })
+      },
+      onDoneClick: ({ crop, image, setDoneCropping, setProfilePic }) => async () => {
+        setDoneCropping(true)
+        const blob = await resultingCrop(imagePreviewRef, getPixelCrop(imagePreviewRef, crop))
+        blob.name = image.name
+        setProfilePic(blob)
+        URL.revokeObjectURL(image.preview)
+      },
+      onDrop: ({ onChange, setDoneCropping, setImage, setPreviousValue, value }) => files => {
+        setPreviousValue(value)
+        onChange('')
+        setDoneCropping(false)
+        if (files.length === 0) return
+        const file = files[0]
+        setImage({
+          name: file.name,
+          preview: URL.createObjectURL(file),
+          size: file.size,
+          type: file.type,
+        })
+      },
+      onImageLoaded: ({ setCrop, setCroppedImage }) => image => {
+        const crop = defaultCrop(image)
+        setCrop(crop)
+        setPreviewCrop({ image: imagePreviewRef, pixelCrop: getPixelCrop(image, crop), setCroppedImage })
+      },
+      onRemove: ({ onChange }) => () => onChange(null),
+      setImagePreviewRef: () => ref => (imagePreviewRef = ref),
+    }
+  }),
+  lifecycle({
+    componentDidUpdate() {
+      const { setDisabled, doneCropping, disabled } = this.props
+      if (setDisabled && disabled === doneCropping) setDisabled(!doneCropping)
+    },
+    componentWillUnmount() {
+      const { image } = this.props
+      image && URL.revokeObjectURL(image.preview)
+    },
+  })
+)(BarebonesPictureUploader)
+
+const PictureFieldElement = ({ label, picValue, setPicture, setProfilePic, setDisabled, disabled }) => (
+  <React.Fragment>
+    <Label>{label}</Label>
+    <PictureUploader
+      disabled={disabled}
+      onChange={setPicture}
+      setDisabled={setDisabled}
+      setProfilePic={setProfilePic}
+      value={picValue}
+    />
+  </React.Fragment>
+)
 
 const PictureField = compose(
   withState('picValue', 'setPicValue', ({ input }) => input.value),
   withHandlers({
     setPicture: ({ input, setPicValue }) => value => {
+      // Sets the full-size picture.
       setPicValue(value)
       input.onChange(value)
     },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { input, setInputRef, required = false } = this.props
+      setInputRef({ ...input, required })
+    },
   })
-)(({ label, picValue, setPicture, type }) => (
-  <React.Fragment>
-    <Label>{label}</Label>
-    <PictureUploader onChange={setPicture} type={type} value={picValue} />
-  </React.Fragment>
-))
+)(PictureFieldElement)
 
-const PictureInput = ({ label, source, type }) => (
-  <Field component={PictureField} label={label} name={source} type={type} />
+const PictureInput = ({ label, setProfilePic, source, setInputRef, ...props }) => (
+  <Field
+    {...props}
+    component={PictureField}
+    label={label}
+    name={source}
+    setInputRef={setInputRef}
+    setProfilePic={setProfilePic}
+  />
 )
 
-export { PictureInput, pictureUploaderFactory }
+export { PictureInput, uploadImage, ProgressBar }
 export default PictureUploader

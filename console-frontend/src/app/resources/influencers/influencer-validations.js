@@ -6,9 +6,6 @@ const validateInfluencer = values => {
   if (!values.description) {
     errors.description = ['Required']
   }
-  if (!values.profilePicUrl) {
-    errors.profilePicUrl = ['Required']
-  }
   return errors
 }
 
