@@ -62,4 +62,19 @@ rmdir keycert
 # To test renew: `certbot renew --dry-run`
 # To renew: `certbot renew` or `certbot certonly`
 service nginx start
+
+# Backups:
+
+# To backup the console-backend postgres db:
+dokku postgres:backup-auth console-backend-pg <DO_SPACES_KEY_ID> <DO_SECRET_ACCESS_KEY> ams3 s3v4 https://ams3.digitaloceanspaces.com
+# To create a backup of the console-backend postgres db:
+dokku postgres:backup console-backend-pg console-db-backups
+# To schedule a backup of the console-backend postgres db:
+dokku postgres:backup-schedule console-backend-pg "0 0 * * *" console-db-backups
+# To unschedule the backup of the console-backend postgres db:
+# dokku postgres:backup-unschedule console-backend-pg
+# To import a backup a dump into the console-backend postgres db:
+# download the compressed file and decompress it in your local machine (file name: "export"). Then copy this file to the remote server using the scp command:
+# scp export root@46.101.129.17:/root/
+# dokku postgres:import console-backend-pg < export
 ```
