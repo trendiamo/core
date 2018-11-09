@@ -1,9 +1,9 @@
 import chatLog from './chat-log'
 import ChatMessage from './chat-message'
 import ChatOptions from './chat-options'
-import { h } from 'preact'
 import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { h } from 'preact'
 
 const FlexDiv = styled.div`
   display: flex;
@@ -31,13 +31,12 @@ const ChatLogUi = compose(
   })
 )(({ logs, onResetChat, onToggleContent }) => (
   <FlexDiv>
-    {logs.map(
-      log =>
-        log.type === 'message' ? (
-          <ChatMessage log={log} />
-        ) : (
-          <ChatOptions log={log} onResetChat={onResetChat} onStopChat={onToggleContent} />
-        )
+    {logs.map(log =>
+      log.type === 'message' ? (
+        <ChatMessage log={log} />
+      ) : (
+        <ChatOptions log={log} onResetChat={onResetChat} onStopChat={onToggleContent} />
+      )
     )}
   </FlexDiv>
 ))

@@ -1,9 +1,9 @@
 import App from 'app'
-import { GraphQLClient } from 'graphql-request'
 import mixpanel from 'ext/mixpanel'
-import { Provider } from 'ext/graphql-context'
+import { GraphQLClient } from 'graphql-request'
 import { graphQlUrl, mixpanelToken } from './config'
 import { h, render } from 'preact'
+import { Provider } from 'ext/graphql-context'
 
 mixpanel.init(mixpanelToken)
 

@@ -1,6 +1,6 @@
-import { h } from 'preact'
 import timeago from 'timeago.js'
 import { compose, lifecycle, withHandlers } from 'recompose'
+import { h } from 'preact'
 
 const LiveTimestamp = compose(
   withHandlers(() => {

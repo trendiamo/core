@@ -1,9 +1,9 @@
-import { h } from 'preact'
 import jsonp from 'jsonp-p'
 import qs from 'querystring'
 import styled from 'styled-components'
-import { width } from 'config'
 import { compose, lifecycle, withState } from 'recompose'
+import { h } from 'preact'
+import { width } from 'config'
 
 const StyledIframe = styled.iframe`
   margin-bottom: 1rem;

@@ -1,12 +1,14 @@
 import animateOnMount from 'shared/animate-on-mount'
-import { compose } from 'recompose'
 import Frame from 'shared/frame'
-import { h } from 'preact'
-import { IconClose } from 'icons'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import { compose } from 'recompose'
+import { h } from 'preact'
+import { IconClose } from 'icons'
 
-const TrendiamoLauncherFrame = animateOnMount(styled(Frame)`
+const TrendiamoLauncherFrame = animateOnMount(styled(Frame).attrs({
+  title: 'Trendiamo Launcher',
+})`
   border: 0;
   z-index: 2147482999;
   position: fixed;

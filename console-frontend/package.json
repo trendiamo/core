@@ -25,11 +25,15 @@
     "@storybook/react": "^4.0.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
+    "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-local-rules": "^0.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "prettier": "^1.14.3"
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.3.0",
+    "prettier": "^1.15.1"
   },
   "scripts": {
     "start": "cross-env PORT=9000 react-scripts start",

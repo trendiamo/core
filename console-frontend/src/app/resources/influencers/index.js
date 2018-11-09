@@ -1,10 +1,9 @@
 import Avatar from '@material-ui/core/Avatar'
-import { BulkActions } from 'shared/list-actions'
-import { PictureInput } from 'shared/picture-uploader'
 import React from 'react'
 import styled from 'styled-components'
 import Toolbar from 'shared/edit-toolbar'
 import validateInfluencer from './influencer-validations'
+import { BulkActions } from 'shared/list-actions'
 import {
   Create,
   Edit,
@@ -18,6 +17,7 @@ import {
   TextInput,
 } from 'react-admin'
 import { Datagrid, EditButton, ShowButton } from 'ext/react-admin'
+import { PictureInput } from 'shared/picture-uploader'
 
 const sanitizeProps = props => {
   const newProps = { ...props }

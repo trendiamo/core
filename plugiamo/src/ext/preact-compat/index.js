@@ -1,4 +1,3 @@
-import { createContext } from 'preact-context'
 import {
   __spread,
   Children,
@@ -17,6 +16,7 @@ import {
   unstable_renderSubtreeIntoContainer,
   version,
 } from 'preact-compat'
+import { createContext } from 'preact-context'
 
 export {
   version,

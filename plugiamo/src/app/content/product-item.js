@@ -1,6 +1,6 @@
-import { h } from 'preact'
 import mixpanel from 'ext/mixpanel'
 import { compose, withHandlers } from 'recompose'
+import { h } from 'preact'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 
 const ProductItem = ({ product, onListItemClick }) => (

@@ -8,12 +8,12 @@ const Experiment = ({ testChildren }) => <div>{testChildren}</div>
 
 export default compose(
   withProps(() => ({
-    optimizelyClientInstance: optimizely.createInstance({ datafile: datafile }),
+    optimizelyClientInstance: optimizely.createInstance({ datafile }),
   })),
   withProps(({ experimentName, optimizelyClientInstance }) => ({
     variation: optimizelyClientInstance.activate(experimentName, mixpanel.get_distinct_id()),
   })),
   withProps(({ children, variation }) => ({
-    testChildren: children.map(child => cloneElement(child, { variation: variation })),
+    testChildren: children.map(child => cloneElement(child, { variation })),
   }))
 )(Experiment)

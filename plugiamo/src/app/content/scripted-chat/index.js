@@ -1,12 +1,12 @@
-import { ChatBackground } from './shared'
 import ChatLogUi from './chat-log-ui'
-import { Consumer } from 'ext/graphql-context'
-import { h } from 'preact'
 import styled from 'styled-components'
-import { TopSlideAnimation } from 'shared/animate'
 import { branch, compose, renderNothing, withProps } from 'recompose'
+import { ChatBackground } from './shared'
+import { Consumer } from 'ext/graphql-context'
 import { CoverImg, InfluencerDescription, PaddedCover } from 'shared/cover'
 import { gql, graphql } from 'ext/recompose/graphql'
+import { h } from 'preact'
+import { TopSlideAnimation } from 'shared/animate'
 
 const FlexDiv = styled.div`
   display: flex;

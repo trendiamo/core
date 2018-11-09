@@ -1,6 +1,6 @@
+import { compose, lifecycle, withState } from 'recompose'
 import { Consumer } from 'ext/graphql-context'
 import { h } from 'preact'
-import { compose, lifecycle, withState } from 'recompose'
 
 export const gql = strings => strings.join('')
 

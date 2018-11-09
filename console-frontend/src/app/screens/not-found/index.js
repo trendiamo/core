@@ -3,9 +3,9 @@ import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
-import { styles } from 'app/layout/layout-styles'
 import theme from 'app/theme'
 import Typography from '@material-ui/core/Typography'
+import { styles } from 'app/layout/layout-styles'
 
 const Fullscreen = styled.div`
   position: relative;

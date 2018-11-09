@@ -10,7 +10,13 @@
     "es6": true,
     "browser": true
   },
-  "plugins": ["react", "prettier", "jsx-a11y", "eslint-plugin-local-rules"],
+  "plugins": [
+    "react",
+    "prettier",
+    "jsx-a11y",
+    "sort-imports-es6-autofix",
+    "eslint-plugin-local-rules"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:react/all",
@@ -55,7 +61,10 @@
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": 0,
-    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "ignore" }],
+    "react/jsx-curly-brace-presence": [
+      "error",
+      { "props": "never", "children": "ignore" }
+    ],
     "react/jsx-handler-names": 0,
     "react/jsx-max-depth": [2, { "max": 4 }],
     "react/jsx-no-bind": 0,
@@ -82,7 +91,7 @@
         "requiredFirst": false
       }
     ],
-    "sort-imports": [
+    "sort-imports-es6-autofix/sort-imports-es6": [
       2,
       {
         "ignoreCase": true,
@@ -90,7 +99,7 @@
         "memberSyntaxSortOrder": ["single", "multiple", "all", "none"]
       }
     ],
-    "sort-keys": ["error", "asc", { "caseSensitive": false, "natural": true }],
+    "sort-keys": 0,
     "sort-vars": ["error", { "ignoreCase": false }]
   }
 }

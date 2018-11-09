@@ -1,4 +1,3 @@
-import { apiSignIn } from 'utils'
 import auth from 'auth'
 import AuthLayout from 'auth/layout'
 import Button from '@material-ui/core/Button'
@@ -9,6 +8,7 @@ import Link from 'shared/link'
 import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
+import { apiSignIn } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { compose, withHandlers, withState } from 'recompose'
 

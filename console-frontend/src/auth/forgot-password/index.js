@@ -1,5 +1,3 @@
-import { apiPasswordReset } from 'utils'
-import { Authenticated } from 'react-admin'
 import AuthLayout from 'auth/layout'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
@@ -8,7 +6,9 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
+import { apiPasswordReset } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
+import { Authenticated } from 'react-admin'
 import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (

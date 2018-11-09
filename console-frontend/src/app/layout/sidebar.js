@@ -1,9 +1,9 @@
-import { compose } from 'recompose'
-import { connect } from 'react-redux'
 import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
 import React from 'react'
 import withWidth from '@material-ui/core/withWidth'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
 
 const Sidebar = ({ children, classes, open, toggleOpen }) => (
   <React.Fragment>

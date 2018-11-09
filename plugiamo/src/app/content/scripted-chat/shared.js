@@ -1,10 +1,10 @@
-import { h } from 'preact'
 import LiveTimestamp from 'shared/live-timestamp'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
-import { TopSlideAnimation } from 'shared/animate'
 import { compose, withHandlers } from 'recompose'
+import { h } from 'preact'
 import { IconAnimatedEllipsis, IconChevronRight } from 'icons'
+import { TopSlideAnimation } from 'shared/animate'
 
 const AnimatedEllipsis = styled(IconAnimatedEllipsis)`
   width: 15px;

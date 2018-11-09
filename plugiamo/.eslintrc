@@ -7,8 +7,15 @@
     "es6": true,
     "browser": true
   },
-  "plugins": ["react", "prettier"],
-  "extends": ["eslint:recommended", "plugin:react/all", "plugin:import/errors", "prettier", "prettier/react"],
+  "plugins": ["react", "prettier", "jsx-a11y", "sort-imports-es6-autofix", "eslint-plugin-local-rules"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/all",
+    "plugin:import/errors",
+    "prettier",
+    "prettier/react",
+    "plugin:jsx-a11y/recommended"
+  ],
   "settings": {
     "import/resolver": {
       "node": {
@@ -38,13 +45,17 @@
       }
     ],
     "no-console": 0,
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "object-shorthand": ["error", "always"],
+    "jsx-a11y/no-autofocus": 0,
+    "local-rules/no-relative-parent-imports": 2,
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": 0,
-    "react/jsx-curly-brace-presence": ["off", "always"],
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "ignore" }],
     "react/jsx-handler-names": 0,
+    "react/jsx-max-depth": [2, { "max": 4 }],
     "react/jsx-no-bind": 0,
-    "react/jsx-max-depth": [2, { "max": 5 }],
     "react/jsx-sort-props": [
       "error",
       {
@@ -68,7 +79,7 @@
         "requiredFirst": false
       }
     ],
-    "sort-imports": [
+    "sort-imports-es6-autofix/sort-imports-es6": [
       2,
       {
         "ignoreCase": true,
@@ -76,7 +87,7 @@
         "memberSyntaxSortOrder": ["single", "multiple", "all", "none"]
       }
     ],
-    "sort-keys": ["error", "asc", { "caseSensitive": false, "natural": true }],
+    "sort-keys": 0,
     "sort-vars": ["error", { "ignoreCase": false }]
   }
 }

@@ -1,9 +1,9 @@
 import Arrow from 'shared/arrow'
-import { h } from 'preact'
-import { List } from 'shared/list'
 import SpotlightItem from './spotlight-item'
 import styled from 'styled-components'
 import { animate, TopSlideAnimation } from 'shared/animate'
+import { h } from 'preact'
+import { List } from 'shared/list'
 
 const AnimatedWhiteArrow = animate(styled(Arrow).attrs({
   color: '#fff',

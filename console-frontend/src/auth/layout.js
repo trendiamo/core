@@ -1,10 +1,10 @@
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { MuiThemeProvider } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import React from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import Typography from '@material-ui/core/Typography'
+import { MuiThemeProvider } from '@material-ui/core/styles'
 
 const AuthMessage = styled.div`
   flex: 2;

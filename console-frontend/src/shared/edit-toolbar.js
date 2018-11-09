@@ -1,8 +1,8 @@
 import Button from 'shared/button'
-import { connect } from 'react-redux'
 import Dialog from 'shared/dialog'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
+import { connect } from 'react-redux'
 import { crudDelete, SaveButton, startUndoable } from 'react-admin'
 
 const DeleteActions = ({ handleClose, handleDelete }) => (

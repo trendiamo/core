@@ -1,11 +1,11 @@
 import animateOnMount from 'shared/animate-on-mount'
-import { compose } from 'recompose'
 import Frame from 'shared/frame'
+import styled from 'styled-components'
+import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import { compose } from 'recompose'
 import { h } from 'preact'
 import { IconClose } from 'icons'
-import styled from 'styled-components'
 import { width } from 'config'
-import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 
 const ContentFrameContainer = animateOnMount(styled.div`
   z-index: 2147483000;
@@ -38,7 +38,9 @@ const IFrame = compose(
       if (showingContent) onToggleContent()
     },
   })
-)(styled(Frame)`
+)(styled(Frame).attrs({
+  title: 'Trendiamo Content',
+})`
   border: 0;
   position: absolute;
   top: 0;

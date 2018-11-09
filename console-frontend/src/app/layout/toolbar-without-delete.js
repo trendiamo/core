@@ -1,8 +1,8 @@
 import compose from 'recompose/compose'
 import MuiToolbar from '@material-ui/core/Toolbar'
-import { SaveButton } from 'react-admin'
-import withWidth from '@material-ui/core/withWidth'
 import React, { Children } from 'react'
+import withWidth from '@material-ui/core/withWidth'
+import { SaveButton } from 'react-admin'
 const valueOrDefault = (value, defaultValue) => (typeof value === 'undefined' ? defaultValue : value)
 const ToolbarWithoutDelete = ({
   basePath,
@@ -28,23 +28,18 @@ const ToolbarWithoutDelete = ({
         />
       </div>
     ) : (
-      Children.map(
-        children,
-        button =>
-          button
-            ? React.cloneElement(button, {
-                basePath,
-                handleSubmit: valueOrDefault(button.props.handleSubmit, handleSubmit),
-                handleSubmitWithRedirect: valueOrDefault(
-                  button.props.handleSubmitWithRedirect,
-                  handleSubmitWithRedirect
-                ),
-                invalid,
-                pristine,
-                saving,
-                submitOnEnter: valueOrDefault(button.props.submitOnEnter, submitOnEnter),
-              })
-            : null
+      Children.map(children, button =>
+        button
+          ? React.cloneElement(button, {
+              basePath,
+              handleSubmit: valueOrDefault(button.props.handleSubmit, handleSubmit),
+              handleSubmitWithRedirect: valueOrDefault(button.props.handleSubmitWithRedirect, handleSubmitWithRedirect),
+              invalid,
+              pristine,
+              saving,
+              submitOnEnter: valueOrDefault(button.props.submitOnEnter, submitOnEnter),
+            })
+          : null
       )
     )}
   </MuiToolbar>

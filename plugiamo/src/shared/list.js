@@ -1,5 +1,5 @@
-import { IconChevronRight } from 'icons'
 import styled from 'styled-components'
+import { IconChevronRight } from 'icons'
 
 const List = styled.ul`
   list-style: none;

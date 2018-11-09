@@ -1,7 +1,7 @@
-import { h } from 'preact'
 import styled from 'styled-components'
 import transition from './transition'
 import { compose, withHandlers } from 'recompose'
+import { h } from 'preact'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 
 const InfluencerName = styled.span`

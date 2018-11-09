@@ -1,5 +1,5 @@
-import { hoistStatics, wrapDisplayName } from 'recompose'
 import React, { Component } from 'react'
+import { hoistStatics, wrapDisplayName } from 'recompose'
 
 const withRaTitle = title =>
   hoistStatics(

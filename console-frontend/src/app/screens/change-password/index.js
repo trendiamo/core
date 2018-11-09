@@ -1,5 +1,3 @@
-import { apiPasswordChange } from 'utils'
-import { Authenticated } from 'react-admin'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
@@ -9,8 +7,10 @@ import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
 import withRaTitle from 'ext/recompose/with-ra-title'
-import { withRouter } from 'react-router'
+import { apiPasswordChange } from 'utils'
+import { Authenticated } from 'react-admin'
 import { compose, withHandlers, withState } from 'recompose'
+import { withRouter } from 'react-router'
 
 const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
   <Authenticated location={location}>

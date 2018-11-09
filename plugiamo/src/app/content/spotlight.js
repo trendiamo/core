@@ -1,13 +1,13 @@
 import Arrow from 'shared/arrow'
-import { h } from 'preact'
-import { IconChevronLeft } from 'icons'
-import { List } from 'shared/list'
 import ProductItem from './product-item'
 import styled from 'styled-components'
 import transition from './transition'
 import { animate, TopSlideAnimation } from 'shared/animate'
 import { compose, lifecycle, withHandlers, withProps } from 'recompose'
 import { CoverImg, InfluencerDescription, PaddedCover } from 'shared/cover'
+import { h } from 'preact'
+import { IconChevronLeft } from 'icons'
+import { List } from 'shared/list'
 
 const FlexDiv = styled.div`
   display: flex;

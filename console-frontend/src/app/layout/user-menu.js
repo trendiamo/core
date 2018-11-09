@@ -1,5 +1,4 @@
 import AccountCircleOutlined from '@material-ui/icons/AccountCircleOutlined'
-import { apiSignOut } from 'utils'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'auth'
 import Avatar from '@material-ui/core/Avatar'
@@ -12,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import routes from 'app/routes'
 import Typography from '@material-ui/core/Typography'
+import { apiSignOut } from 'utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 
 const MenuItemThemed = ({ classes, icon, text, ...props }) => {

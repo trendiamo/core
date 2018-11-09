@@ -1,6 +1,6 @@
-import { AUTH_CHECK } from 'react-admin'
 import queryString from 'query-string'
 import routes from 'app/routes'
+import { AUTH_CHECK } from 'react-admin'
 
 const auth = {
   addListener(fn) {

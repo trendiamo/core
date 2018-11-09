@@ -1,5 +1,5 @@
-import { ChipField } from 'react-admin'
 import React from 'react'
+import { ChipField } from 'react-admin'
 
 var statusStyles = {
   ARCHIVED: {

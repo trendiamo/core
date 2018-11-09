@@ -1,17 +1,17 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
-import { h } from 'preact'
 import history from 'ext/history'
 import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
-import { location } from 'config'
-import { matchUrl } from 'ext/simple-router'
 import mixpanel from 'ext/mixpanel'
 import routes from './routes'
 import styled from 'styled-components'
+import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
-import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import { h } from 'preact'
+import { location } from 'config'
+import { matchUrl } from 'ext/simple-router'
 
 const Gradient = animateOnMount(styled.div`
   z-index: 2147482998;

@@ -1,5 +1,5 @@
-import { animate } from 'shared/animate'
 import styled from 'styled-components'
+import { animate } from 'shared/animate'
 
 const CoverImg = styled.img`
   border-radius: 50%;

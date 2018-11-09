@@ -3,9 +3,7 @@ import auth from 'auth'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
-import { isEqual } from 'lodash'
 import Notification from 'shared/notification'
-import { Prompt } from 'react-router'
 import RACancel from '@material-ui/icons/Cancel'
 import RATextField from '@material-ui/core/TextField'
 import React from 'react'
@@ -14,6 +12,8 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { apiWebsiteShow, apiWebsiteUpdate } from 'utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { isEqual } from 'lodash'
+import { Prompt } from 'react-router'
 
 const StyledTypography = styled(Typography)`
   margin-left: 10px;

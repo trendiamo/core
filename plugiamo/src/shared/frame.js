@@ -1,11 +1,11 @@
-import { h } from 'preact'
 import omit from 'lodash.omit'
 import ReactDOM from 'preact-compat'
-import { StyleSheetManager } from 'styled-components'
 import { compose, lifecycle, withProps, withState } from 'recompose'
+import { h } from 'preact'
+import { StyleSheetManager } from 'styled-components'
 
-const Frame = ({ children, iframeHead, iframeBody, setIframeRef, className, ...rest }) => (
-  <iframe {...omit(rest, ['iframeRef'])} className={className} ref={setIframeRef} tabIndex="-1">
+const Frame = ({ children, iframeHead, iframeBody, setIframeRef, className, title, ...rest }) => (
+  <iframe {...omit(rest, ['iframeRef'])} className={className} ref={setIframeRef} tabIndex="-1" title={title}>
     {iframeBody &&
       ReactDOM.createPortal(<StyleSheetManager target={iframeHead}>{children}</StyleSheetManager>, iframeBody)}
   </iframe>

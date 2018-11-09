@@ -1,4 +1,3 @@
-import { apiPasswordEmailLink } from 'utils'
 import AuthLayout from 'auth/layout'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
@@ -9,6 +8,7 @@ import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import Typography from '@material-ui/core/Typography'
+import { apiPasswordEmailLink } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { compose, withHandlers, withState } from 'recompose'
 

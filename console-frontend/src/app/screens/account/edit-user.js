@@ -1,16 +1,16 @@
 import auth from 'auth'
 import Button from '@material-ui/core/Button'
-import { isEqual } from 'lodash'
 import Label from 'shared/label'
 import Link from 'shared/link'
 import Notification from 'shared/notification'
 import PictureUploader from 'shared/picture-uploader'
-import { Prompt } from 'react-router'
 import React from 'react'
 import routes from 'app/routes'
 import TextField from '@material-ui/core/TextField'
 import { apiMe, apiMeUpdate } from 'utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { isEqual } from 'lodash'
+import { Prompt } from 'react-router'
 
 const EditUser = ({ info, isPristine, onSubmit, userForm, isLoading, setFieldValue, setProfilePicUrl }) => (
   <form onSubmit={onSubmit}>

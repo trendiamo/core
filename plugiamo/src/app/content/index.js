@@ -1,15 +1,15 @@
 import ContentFrame from './content-frame'
-import { h } from 'preact'
 import history from 'ext/history'
-import { Router } from 'ext/simple-router'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import transition from './transition'
+import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { ContentRoot, CoverRoot } from './root'
 import { ContentScriptedChat, CoverScriptedChat } from './scripted-chat'
 import { ContentSpotlight, CoverSpotlight } from './spotlight'
-import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import { h } from 'preact'
+import { Router } from 'ext/simple-router'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -70,17 +70,17 @@ const Content = ({ isTransitioning, onRouteChange, onToggleContent, routeToRoot,
     <Wrapper>
       <Cover>
         <Router history={history} onChange={onRouteChange}>
-          <CoverRoot path={'/'} website={website} />
-          <CoverSpotlight path={'/spotlight/:id'} routeToRoot={routeToRoot} website={website} />
-          <CoverScriptedChat path={'/scripted-chat/:id'} routeToRoot={routeToRoot} website={website} />
+          <CoverRoot path="/" website={website} />
+          <CoverSpotlight path="/spotlight/:id" routeToRoot={routeToRoot} website={website} />
+          <CoverScriptedChat path="/scripted-chat/:id" routeToRoot={routeToRoot} website={website} />
         </Router>
       </Cover>
       <Router history={history} onChange={onRouteChange}>
-        <ContentRoot path={'/'} routeToSpotlight={routeToSpotlight} spotlights={website.spotlights} />
-        <ContentSpotlight path={'/spotlight/:id'} website={website} />
+        <ContentRoot path="/" routeToSpotlight={routeToSpotlight} spotlights={website.spotlights} />
+        <ContentSpotlight path="/spotlight/:id" website={website} />
         <ContentScriptedChat
           onToggleContent={onToggleContent}
-          path={'/scripted-chat/:id'}
+          path="/scripted-chat/:id"
           routeToRoot={routeToRoot}
           website={website}
         />

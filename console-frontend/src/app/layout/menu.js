@@ -1,9 +1,6 @@
 import classNames from 'classnames'
 import compose from 'recompose/compose'
-import { connect } from 'react-redux'
-import { DashboardMenuItem } from 'ra-ui-materialui'
 import DefaultIcon from '@material-ui/icons/ViewList'
-import { getResources } from 'ra-core'
 import Link from 'shared/link'
 import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
@@ -11,6 +8,9 @@ import styled from 'styled-components'
 import SvgIcon from '@material-ui/core/SvgIcon'
 import Typography from '@material-ui/core/Typography'
 import UserMenu from './user-menu'
+import { connect } from 'react-redux'
+import { DashboardMenuItem } from 'ra-ui-materialui'
+import { getResources } from 'ra-core'
 
 const Container = styled.div`
   display: flex;
@@ -27,22 +27,24 @@ const capitalizeFirstLetter = string => {
 }
 
 const Content = ({ resources, classes, pathname, open }) => {
-  return resources.filter(r => r.hasList).map(resource => {
-    const isActive = itemIsActive(resource, pathname)
-    const itemClass = classNames(classes.menuItem, !open && classes.menuItemClosed)
-    const textClass = classNames(classes.menuText, isActive && classes.menuTextActive)
-    const iconClass = classNames(classes.menuIcon, isActive && classes.menuIconActive)
-    return (
-      <Link key={resource.name} to={`/${resource.name}`}>
-        <MenuItem className={itemClass}>
-          <SvgIcon className={iconClass}>{resource.icon ? <resource.icon /> : <DefaultIcon />}</SvgIcon>
-          <Typography className={textClass} variant="body2">
-            {open ? capitalizeFirstLetter(resource.name) : ''}
-          </Typography>
-        </MenuItem>
-      </Link>
-    )
-  })
+  return resources
+    .filter(r => r.hasList)
+    .map(resource => {
+      const isActive = itemIsActive(resource, pathname)
+      const itemClass = classNames(classes.menuItem, !open && classes.menuItemClosed)
+      const textClass = classNames(classes.menuText, isActive && classes.menuTextActive)
+      const iconClass = classNames(classes.menuIcon, isActive && classes.menuIconActive)
+      return (
+        <Link key={resource.name} to={`/${resource.name}`}>
+          <MenuItem className={itemClass}>
+            <SvgIcon className={iconClass}>{resource.icon ? <resource.icon /> : <DefaultIcon />}</SvgIcon>
+            <Typography className={textClass} variant="body2">
+              {open ? capitalizeFirstLetter(resource.name) : ''}
+            </Typography>
+          </MenuItem>
+        </Link>
+      )
+    })
 }
 
 const Menu = ({ classes, hasDashboard, onMenuClick, resources, pathname, open, ...rest }) => (

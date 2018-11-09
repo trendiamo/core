@@ -1,17 +1,17 @@
 import Button from '@material-ui/core/Button'
 import CloudUpload from '@material-ui/icons/CloudUpload'
-import { Field } from 'redux-form'
-import { getSignedUrlFactory } from 'app/utils'
 import Label from 'shared/label'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import React from 'react'
+import ReactCrop, { getPixelCrop } from 'react-image-crop'
 import ReactDropzone from 'react-dropzone'
 import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import S3Upload from 'react-s3-uploader/s3upload'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
-import ReactCrop, { getPixelCrop } from 'react-image-crop'
+import { Field } from 'redux-form'
+import { getSignedUrlFactory } from 'app/utils'
 import 'react-image-crop/dist/ReactCrop.css'
 
 const Container = styled.div`
@@ -166,41 +166,38 @@ const BarebonesPictureUploader = ({
         <StyledLinearProgress value={progress.progress} variant="determinate" />
       </React.Fragment>
     )}
-    {(image || previewImage) &&
-      (image ? doneCropping : true) &&
-      !progress && (
-        <RemoveButtonContainer>
-          <Button mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
-            <RemoveCircle />
-            {'delete'}
+    {(image || previewImage) && (image ? doneCropping : true) && !progress && (
+      <RemoveButtonContainer>
+        <Button mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
+          <RemoveCircle />
+          {'delete'}
+        </Button>
+      </RemoveButtonContainer>
+    )}
+    {image && !doneCropping && (
+      <React.Fragment>
+        <HiddenImg alt="" ref={setImagePreviewRef} src={image.preview} />
+        <StyledReactCrop
+          crop={crop}
+          keepSelection
+          minHeight={20}
+          minWidth={20}
+          onChange={onCropChange}
+          onComplete={onCropComplete}
+          onImageLoaded={onImageLoaded}
+          src={image.preview}
+        />
+        <div>
+          <p>{'Please crop the image (or leave as default).'}</p>
+          <Button color="primary" onClick={onDoneClick} type="button" variant="contained">
+            {'Done'}
           </Button>
-        </RemoveButtonContainer>
-      )}
-    {image &&
-      !doneCropping && (
-        <React.Fragment>
-          <HiddenImg alt="" ref={setImagePreviewRef} src={image.preview} />
-          <StyledReactCrop
-            crop={crop}
-            keepSelection
-            minHeight={20}
-            minWidth={20}
-            onChange={onCropChange}
-            onComplete={onCropComplete}
-            onImageLoaded={onImageLoaded}
-            src={image.preview}
-          />
-          <div>
-            <p>{'Please crop the image (or leave as default).'}</p>
-            <Button color="primary" onClick={onDoneClick} type="button" variant="contained">
-              {'Done'}
-            </Button>
-            <Button onClick={onCancelClick} style={{ marginLeft: '1rem' }} type="button">
-              {'Cancel'}
-            </Button>
-          </div>
-        </React.Fragment>
-      )}
+          <Button onClick={onCancelClick} style={{ marginLeft: '1rem' }} type="button">
+            {'Cancel'}
+          </Button>
+        </div>
+      </React.Fragment>
+    )}
   </Container>
 )
 

@@ -1,11 +1,11 @@
 import Button from '@material-ui/core/Button'
 import Create from '@material-ui/icons/Create'
-import { Link } from 'react-router-dom'
-import { linkToRecord } from 'ra-core'
-import { Datagrid as RaDataGrid } from 'react-admin'
 import React from 'react'
 import RemoveRedEye from '@material-ui/icons/RemoveRedEye'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import { linkToRecord } from 'ra-core'
+import { Datagrid as RaDataGrid } from 'react-admin'
 
 const Datagrid = styled(RaDataGrid)`
   thead tr {
