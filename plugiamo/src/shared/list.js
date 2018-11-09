@@ -16,6 +16,8 @@ const ListChevron = styled(IconChevronRight)`
 const ListContent = styled.div`
   padding: 1rem;
   flex: 1;
+  height: 100px;
+  overflow-y: auto;
 `
 
 const ListItem = styled.li`
