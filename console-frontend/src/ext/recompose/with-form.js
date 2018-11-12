@@ -10,10 +10,11 @@ const withForm = initialForm => BaseComponent =>
       isFormPristine: isEqual(form, initialForm),
     })),
     withHandlers({
-      onFormSubmit: ({ form, saveFormObject, setInitialForm }) => async event => {
+      onFormSubmit: ({ afterSave, form, saveFormObject, setInitialForm }) => async event => {
         event.preventDefault()
         const result = await saveFormObject(form)
         setInitialForm(form)
+        afterSave && afterSave(result)
         return result
       },
       setFieldValue: ({ form, setForm }) => event => {
