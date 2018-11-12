@@ -180,6 +180,7 @@ const BarebonesPictureUploader = ({
         <HiddenImg alt="" ref={setImagePreviewRef} src={image.preview} />
         <StyledReactCrop
           crop={crop}
+          imageStyle={{ maxHeight: 'initial' }}
           keepSelection
           minHeight={20}
           minWidth={20}
