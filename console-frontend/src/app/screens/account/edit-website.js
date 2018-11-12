@@ -10,9 +10,9 @@ import React from 'react'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
+import withForm from 'ext/recompose/with-form'
 import { apiWebsiteShow, apiWebsiteUpdate } from 'utils'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
-import { isEqual } from 'lodash'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import { Prompt } from 'react-router'
 
 const StyledTypography = styled(Typography)`
@@ -67,71 +67,71 @@ const MultiFormControl = styled.div`
 const EditWebsite = ({
   addHostnameSelect,
   deleteHostname,
-  isLoading,
+  isFormLoading,
   editHostnameValue,
   info,
-  isPristine,
-  websiteForm,
-  onSubmit,
+  isFormPristine,
+  form,
+  onFormSubmit,
   setFieldValue,
 }) => (
-  <form onSubmit={onSubmit}>
-    <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isPristine} />
+  <form onSubmit={onFormSubmit}>
+    <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
     <Notification data={info} />
     <TextField
-      disabled={isLoading}
+      disabled={isFormLoading}
       fullWidth
       label="Name"
       margin="normal"
       name="name"
       onChange={setFieldValue}
       required
-      value={websiteForm.name}
+      value={form.name}
     />
     <TextField
-      disabled={isLoading}
+      disabled={isFormLoading}
       fullWidth
       label="Title"
       margin="normal"
       name="title"
       onChange={setFieldValue}
       required
-      value={websiteForm.title}
+      value={form.title}
     />
     <TextField
-      disabled={isLoading}
+      disabled={isFormLoading}
       fullWidth
       label="Subtitle"
       margin="normal"
       name="subtitle"
       onChange={setFieldValue}
-      value={websiteForm.subtitle}
+      value={form.subtitle}
     />
     <LabelContainer>
       <InputLabel>{'Hostnames'}</InputLabel>
     </LabelContainer>
     <MultiFormControl margin="normal">
-      {websiteForm.hostnames.map((hostname, index) => (
+      {form.hostnames.map((hostname, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <FlexDiv key={index}>
           <StyledHostnameTextField
-            disabled={isLoading}
+            disabled={isFormLoading}
             index={index}
             onChange={editHostnameValue}
             required
             value={hostname}
           />
-          {websiteForm.hostnames.length > 1 && (
+          {form.hostnames.length > 1 && (
             <IconButton>
-              <Cancel disabled={isLoading} index={index} onClick={deleteHostname} />
+              <Cancel disabled={isFormLoading} index={index} onClick={deleteHostname} />
             </IconButton>
           )}
         </FlexDiv>
       ))}
     </MultiFormControl>
-    <AddHostnameButton addHostnameSelect={addHostnameSelect} disabled={isLoading} />
+    <AddHostnameButton addHostnameSelect={addHostnameSelect} disabled={isFormLoading} />
     <div style={{ marginTop: '1rem' }}>
-      <Button color="primary" disabled={isLoading} type="submit" variant="contained">
+      <Button color="primary" disabled={isFormLoading} type="submit" variant="contained">
         {'Save'}
       </Button>
     </div>
@@ -139,58 +139,43 @@ const EditWebsite = ({
 )
 
 export default compose(
-  withState('initialWebsiteForm', 'setInitialWebsiteForm', {
-    hostnames: [''],
-    name: '',
-    subtitle: '',
-    title: '',
-  }),
-  withState('isLoading', 'setIsLoading', true),
-  withState('websiteForm', 'setWebsiteForm', ({ initialWebsiteForm }) => initialWebsiteForm),
   withState('info', 'setInfo', null),
-  withProps(({ websiteForm, initialWebsiteForm }) => ({
-    isPristine: isEqual(websiteForm, initialWebsiteForm),
-  })),
   withProps(() => ({
     websiteId: auth.getUser().account.websiteIds[0],
   })),
   withHandlers({
-    addHostnameSelect: ({ websiteForm, setWebsiteForm }) => () => {
-      setWebsiteForm({ ...websiteForm, hostnames: [...websiteForm.hostnames, ''] })
-    },
-    deleteHostname: ({ websiteForm, setWebsiteForm }) => index => {
-      let newHostnames = [...websiteForm.hostnames]
-      newHostnames.splice(index, 1)
-      setWebsiteForm({ ...websiteForm, hostnames: newHostnames })
-    },
-    editHostnameValue: ({ websiteForm, setWebsiteForm }) => (index, newValue) => {
-      const newHostnames = [...websiteForm.hostnames]
-      newHostnames[index] = newValue
-      setWebsiteForm({ ...websiteForm, hostnames: newHostnames })
-    },
-    onSubmit: ({ websiteForm, websiteId, setInfo, setInitialWebsiteForm }) => async event => {
-      event.preventDefault()
-      const website = await apiWebsiteUpdate(websiteId, { website: websiteForm }, setInfo)
-      setInitialWebsiteForm(websiteForm)
-      return website
-    },
-    setFieldValue: ({ websiteForm, setWebsiteForm }) => event => {
-      setWebsiteForm({ ...websiteForm, [event.target.name]: event.target.value })
-    },
-  }),
-  lifecycle({
-    async componentDidMount() {
-      const { websiteId, setWebsiteForm, setInfo, setInitialWebsiteForm, setIsLoading } = this.props
+    loadFormObject: ({ websiteId, setInfo }) => async () => {
       const json = await apiWebsiteShow(websiteId, setInfo)
-      setIsLoading(false)
-      const websiteObject = {
+      return {
         hostnames: json.hostnames || [''],
         name: json.name || '',
         subtitle: json.subtitle || '',
         title: json.title || '',
       }
-      setInitialWebsiteForm(websiteObject)
-      setWebsiteForm(websiteObject)
+    },
+    saveFormObject: ({ websiteId, setInfo }) => async form => {
+      return await apiWebsiteUpdate(websiteId, { website: form }, setInfo)
+    },
+  }),
+  withForm({
+    hostnames: [''],
+    name: '',
+    subtitle: '',
+    title: '',
+  }),
+  withHandlers({
+    addHostnameSelect: ({ form, setForm }) => () => {
+      setForm({ ...form, hostnames: [...form.hostnames, ''] })
+    },
+    deleteHostname: ({ form, setForm }) => index => {
+      let newHostnames = [...form.hostnames]
+      newHostnames.splice(index, 1)
+      setForm({ ...form, hostnames: newHostnames })
+    },
+    editHostnameValue: ({ form, setForm }) => (index, newValue) => {
+      const newHostnames = [...form.hostnames]
+      newHostnames[index] = newValue
+      setForm({ ...form, hostnames: newHostnames })
     },
   })
 )(EditWebsite)
