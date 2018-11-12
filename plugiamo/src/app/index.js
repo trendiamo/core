@@ -1,3 +1,4 @@
+import addPicture from './add-picture'
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
 import history from 'ext/history'
@@ -34,11 +35,16 @@ const App = ({ onToggleContent, sellerPicUrl, showingContent, website }) => (
   </div>
 )
 
-const pathFromHash = () => {
-  if (!location.hash) return
+const optionsFromHash = () => {
+  const result = {}
+  if (!location.hash) return result
   const match = /trnd:([^&]+)/.exec(location.hash)
-  if (!match) return
-  return match[1]
+  if (!match) return result
+  match[1].split(',').forEach(pairStr => {
+    const matches = /(.+):(.+)/.exec(pairStr)
+    result[matches[1]] = matches[2]
+  })
+  return result
 }
 
 export default compose(
@@ -93,21 +99,41 @@ export default compose(
   withProps(({ website }) => ({
     chat: website.chats.find(chat => matchUrl(location.pathname, chat.path)),
   })),
-  withProps(({ chat, website }) => ({
-    influencer: chat ? chat.influencer : website.spotlights.length ? website.spotlights[0].influencer : undefined,
-  })),
+  withState('influencer', 'setInfluencer'),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
-      const path = pathFromHash()
-      mixpanel.track('Loaded Plugin', { hostname: location.hostname, path })
+      mixpanel.track('Loaded Plugin', { hash: location.hash, hostname: location.hostname })
+      const { influencer, open, path, picture } = optionsFromHash()
+
+      /* set influencer */ {
+        const { chat, setInfluencer, website } = this.props
+        let influencerObj
+        if (influencer) {
+          const influencers = [chat && chat.influencer, ...website.spotlights].filter(e => e)
+          influencerObj = influencers.find(e => e.id === influencer)
+        }
+        const defaultInfluencer = influencerObj
+          ? influencerObj.influencer
+          : chat
+          ? chat.influencer
+          : website.spotlights.length
+          ? website.spotlights[0].influencer
+          : undefined
+        setInfluencer(defaultInfluencer)
+      }
+
+      if (picture) addPicture(picture)
       if (path) {
-        const { setShowingContent } = this.props
         history.replace(path)
-        setShowingContent(true)
       } else {
         const { chat } = this.props
         if (chat) history.replace(routes.scriptedChat(chat.id))
+      }
+      if (open && open.match(/1|true/)) {
+        const { setShowingContent } = this.props
+        setShowingContent(true)
+      } else {
         mixpanel.time_event('Opened')
       }
     },

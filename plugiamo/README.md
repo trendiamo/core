@@ -57,14 +57,14 @@ yarn deploy
 
 ```html
 <script>
-!(function(t, r, e, n, d, i, a, m, o) {
-  t.addEventListener('load', function() {
-    var s1 = r.createElement('script'),
-      s2 = r.getElementsByTagName('script')[0]
-    s1.src = '//s3.eu-central-1.amazonaws.com/plugiamo/plugiamo.js'
-    s2.parentNode.insertBefore(s1, s2)
-  })
-})(window, document)
+  !(function(t, r, e, n, d, i, a, m, o) {
+    t.addEventListener('load', function() {
+      var s1 = r.createElement('script'),
+        s2 = r.getElementsByTagName('script')[0]
+      s1.src = '//s3.eu-central-1.amazonaws.com/plugiamo/plugiamo.js'
+      s2.parentNode.insertBefore(s1, s2)
+    })
+  })(window, document)
 </script>
 ```
 
@@ -98,7 +98,7 @@ For example, if you have the following link:
 
 And you want to open the plugin on it, then you want this:
 
-`https://www.engelhorn.de/f/produkte/39713117.html#trnd:/`
+`https://www.engelhorn.de/f/produkte/39713117.html#trnd:open:1`
 
 If the url already has some hash based params, like this:
 
@@ -106,8 +106,8 @@ If the url already has some hash based params, like this:
 
 Then you want to do this:
 
-`https://www.engelhorn.de/f/produkte/39713117.html#cart-open1,13&trnd:/`
+`https://www.engelhorn.de/f/produkte/39713117.html#cart-open1,13&trnd:open:1`
 
-If you want to open something other than the root page, simply change the path part of, for example to:
+If you want to open something other than the root page, simply add the path option, for example to:
 
-`trnd:/spotlight/cjmrwnrejltva0932ru7mwa4k`
+`trnd:open:1,path:/spotlight/cjmrwnrejltva0932ru7mwa4k`
