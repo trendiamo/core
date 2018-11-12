@@ -95,6 +95,18 @@ const apiWebsiteShowRequest = async url => {
   return res.json()
 }
 
+const apiWebsiteUpdateRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'put',
+  })
+  return res.json()
+}
+
 const apiInfluencerShowRequest = async url => {
   const res = await fetch(url, {
     headers: new Headers({
@@ -106,14 +118,14 @@ const apiInfluencerShowRequest = async url => {
   return res.json()
 }
 
-const apiWebsiteUpdateRequest = async (url, body) => {
+const apiInfluencerCreateRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
       ...auth.getHeaders(),
     }),
-    method: 'put',
+    method: 'post',
   })
   return res.json()
 }
@@ -216,6 +228,13 @@ export const apiInfluencerShowSaga = async (url, setInfo) => {
   setInfo(info)
 }
 
+export const apiInfluencerCreateSaga = async (url, body, setInfo) => {
+  const json = await apiInfluencerCreateRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
 export const apiSignIn = (body, setInfo) => apiSaga(SIGNIN_URL, body, setInfo)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
@@ -231,3 +250,4 @@ export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
 export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)
 
 export const apiInfluencerShow = (id, setInfo) => apiInfluencerShowSaga(`${INFLUENCERS_URL}/${id}`, setInfo)
+export const apiInfluencerCreate = (body, setInfo) => apiInfluencerCreateSaga(`${INFLUENCERS_URL}`, body, setInfo)
