@@ -130,6 +130,18 @@ const apiInfluencerCreateRequest = async (url, body) => {
   return res.json()
 }
 
+const apiInfluencerUpdateRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'put',
+  })
+  return res.json()
+}
+
 const apiPasswordChangeRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
@@ -221,6 +233,13 @@ export const apiSagaSignout = async url => {
   console.error('Error on Logout!')
 }
 
+export const apiInfluencerUpdateSaga = async (url, body, setInfo) => {
+  const json = await apiInfluencerUpdateRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
 export const apiInfluencerShowSaga = async (url, setInfo) => {
   const json = await apiInfluencerShowRequest(url)
   const info = convertToInfo(json)
@@ -251,3 +270,6 @@ export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setI
 
 export const apiInfluencerShow = (id, setInfo) => apiInfluencerShowSaga(`${INFLUENCERS_URL}/${id}`, setInfo)
 export const apiInfluencerCreate = (body, setInfo) => apiInfluencerCreateSaga(`${INFLUENCERS_URL}`, body, setInfo)
+
+export const apiInfluencerUpdate = (id, body, setInfo) =>
+  apiInfluencerUpdateSaga(`${INFLUENCERS_URL}/${id}`, body, setInfo)

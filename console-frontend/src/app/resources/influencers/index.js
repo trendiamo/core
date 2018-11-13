@@ -47,59 +47,6 @@ const SizedDatagrid = styled(Datagrid)`
   }
 `
 
-export const EditView = ({
-  setProfilePic,
-  profilePic,
-  setProfilePicUrl,
-  setInputRef,
-  isCropping,
-  setDisabled,
-  disabled,
-  ...props
-}) => (
-  <Edit {...props} title="Edit Influencer" undoable>
-    <SimpleForm
-      toolbar={
-        <Toolbar
-          disabled={disabled}
-          isCropping={isCropping}
-          profilePic={profilePic}
-          setProfilePicUrl={setProfilePicUrl}
-        />
-      }
-      validate={validateInfluencer}
-    >
-      <PictureInput
-        disabled={disabled}
-        label="Picture"
-        required
-        setDisabled={setDisabled}
-        setInputRef={setInputRef}
-        setProfilePic={setProfilePic}
-        source="profilePicUrl"
-      />
-      <TextInput source="name" />
-      <TextInput source="description" />
-    </SimpleForm>
-  </Edit>
-)
-
-export const InfluencersEdit = compose(
-  withState('profilePic', 'setProfilePic', null),
-  //  Disables the submit button while the image is being cropped.
-  withState('disabled', 'setDisabled', false),
-  withHandlers(() => {
-    let inputRef
-    return {
-      setInputRef: () => ref => (inputRef = ref),
-      setProfilePicUrl: () => value => {
-        inputRef.value = value
-        inputRef.onChange(value)
-      },
-    }
-  })
-)(EditView)
-
 export const InfluencerShow = props => (
   <Show {...props} title="Influencer">
     <SimpleShowLayout>

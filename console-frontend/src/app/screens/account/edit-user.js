@@ -85,6 +85,7 @@ export default compose(
         blob: profilePic,
         setProgress,
         type: 'users-profile-pics',
+        defaultValue: form.profilePicUrl,
       })
       // update user data
       const data = { ...form, profilePicUrl }
