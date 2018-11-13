@@ -9,7 +9,7 @@ import routes from 'app/routes'
 import TextField from '@material-ui/core/TextField'
 import withForm from 'ext/recompose/with-form'
 import { apiMe, apiMeUpdate } from 'utils'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { compose, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 
 const EditUser = ({
