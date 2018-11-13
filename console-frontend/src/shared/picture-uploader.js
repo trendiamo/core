@@ -335,7 +335,12 @@ const PictureUploader = compose(
         setCrop(crop)
         setPreviewCrop({ image: imagePreviewRef, pixelCrop: getPixelCrop(image, crop), setCroppedImage })
       },
-      onRemove: ({ onChange }) => () => onChange(null),
+      onRemove: ({ onChange, setImage, setCroppedImage, setProfilePic }) => () => {
+        setImage(null)
+        onChange('')
+        setProfilePic(null)
+        setCroppedImage(null)
+      },
       setImagePreviewRef: () => ref => (imagePreviewRef = ref),
     }
   }),
