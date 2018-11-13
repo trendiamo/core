@@ -3,6 +3,7 @@ import auth, { authProvider } from 'auth'
 import ChangePassword from 'app/screens/change-password'
 import ForgotPassword from 'auth/forgot-password'
 import InfluencerCreate from './resources/influencers/create'
+import InfluencerEdit from './resources/influencers/edit'
 import InfluencerShow from './resources/influencers/show'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
@@ -15,7 +16,7 @@ import theme from './theme'
 import { Admin, Resource } from 'react-admin'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
-import { InfluencersEdit, InfluencersList } from './resources/influencers'
+import { InfluencersList } from './resources/influencers'
 import { Route } from 'react-router-dom'
 import 'assets/css/fonts.css'
 
@@ -49,7 +50,7 @@ const App = ({ dataProvider, history }) => (
     >
       <Resource
         create={InfluencerCreate}
-        edit={InfluencersEdit}
+        edit={InfluencerEdit}
         list={InfluencersList}
         name="influencers"
         show={InfluencerShow}

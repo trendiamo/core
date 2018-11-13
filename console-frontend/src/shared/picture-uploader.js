@@ -262,8 +262,8 @@ const resultingCrop = (image, pixelCrop) => {
 
 const setPreviewCrop = ({ image, pixelCrop, setCroppedImage }) => setCroppedImage(previewCrop(image, pixelCrop))
 
-const uploadImage = async ({ blob, setProgress, type }) => {
-  if (!blob) return null
+const uploadImage = async ({ blob, setProgress, type, defaultValue }) => {
+  if (!blob) return defaultValue
   try {
     const { fileUrl } = await S3Upload({
       contentDisposition: 'auto',
