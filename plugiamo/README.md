@@ -25,12 +25,12 @@ ngrok http 8080
 
 ```js
 // paste this on the javascript console
-!(function(t, r, e, n, d, i, a, m, o) {
-  var s1 = r.createElement('script'),
-    s2 = r.getElementsByTagName('script')[0]
+!(function(d) {
+  var s1 = d.createElement('script'),
+    s2 = d.getElementsByTagName('script')[0]
   s1.src = '//YOUR_NGROK_URL/plugiamo.js?' + Date.now()
   s2.parentNode.insertBefore(s1, s2)
-})(window, document)
+})(document)
 ```
 
 ## Code checks
