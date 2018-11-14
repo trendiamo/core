@@ -1,4 +1,5 @@
 import ChatLogUi from './chat-log-ui'
+import Cover from 'app/content/cover'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withProps } from 'recompose'
 import { ChatBackground } from './shared'
@@ -12,21 +13,17 @@ const FlexDiv = styled.div`
   display: flex;
 `
 
-const CoverScriptedChat = compose(
-  withProps(({ id, website }) => ({
-    chat: website.chats.find(e => e.id === id),
-  }))
-)(({ chat }) => (
+const CoverScriptedChat = ({ influencer }) => (
   <FlexDiv>
-    <CoverImg src={chat.influencer.profilePic.url} />
+    <CoverImg src={influencer.profilePic.url} />
     <PaddedCover>
-      <span>{chat.influencer.name}</span>
+      <span>{influencer.name}</span>
       <TopSlideAnimation timeout={250 * 1}>
-        <InfluencerDescription>{chat.influencer.description}</InfluencerDescription>
+        <InfluencerDescription>{influencer.description}</InfluencerDescription>
       </TopSlideAnimation>
     </PaddedCover>
   </FlexDiv>
-))
+)
 
 const H2 = styled.h2`
   margin: 0;
@@ -35,28 +32,8 @@ const H2 = styled.h2`
 `
 
 const ContentScriptedChat = compose(
-  withProps(({ id, website }) => ({
-    chat: website.chats.find(e => e.id === id),
-  })),
-  withProps(({ chat }) => ({
-    firstName: chat.influencer.name.split(' ')[0],
-  })),
-  graphql(
-    gql`
-      query($id: ID!) {
-        chat(where: { id: $id }) {
-          title
-          chatStep {
-            id
-          }
-        }
-      }
-    `,
-    ({ id }) => ({ id })
-  ),
-  branch(({ data }) => !data || data.loading || data.error, renderNothing),
-  withProps(({ data }) => ({
-    chat: data.chat,
+  withProps(({ influencer }) => ({
+    firstName: influencer.name.split(' ')[0],
   }))
 )(({ chat, firstName, onToggleContent }) => (
   <ChatBackground>
@@ -74,4 +51,32 @@ const ContentScriptedChat = compose(
   </ChatBackground>
 ))
 
-export { CoverScriptedChat, ContentScriptedChat }
+const ScriptedChat = compose(
+  graphql(
+    gql`
+      query($id: ID!) {
+        chat(where: { id: $id }) {
+          id
+          title
+          chatStep {
+            id
+          }
+        }
+      }
+    `,
+    ({ id }) => ({ id })
+  ),
+  branch(({ data }) => !data || data.loading || data.error, renderNothing),
+  withProps(({ data }) => ({
+    chat: data.chat,
+  }))
+)(({ chat, influencer }) => (
+  <div>
+    <Cover>
+      <CoverScriptedChat influencer={influencer} />
+    </Cover>
+    <ContentScriptedChat chat={chat} influencer={influencer} />
+  </div>
+))
+
+export default ScriptedChat
