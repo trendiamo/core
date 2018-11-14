@@ -67,8 +67,9 @@ export default compose(
   withState('info', 'setInfo', null),
   lifecycle({
     async componentDidMount() {
-      const { id, setIsLoading, setInfo, setInfluencer } = this.props
-      const json = await apiInfluencerShow(id, setInfo)
+      const { id, setIsLoading, setInfo, setInfluencer, match } = this.props
+      const multipleId = id || match.params.influencerId
+      const json = await apiInfluencerShow(multipleId, setInfo)
       setIsLoading(false)
       setInfluencer(json)
     },

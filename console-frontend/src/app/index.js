@@ -9,6 +9,7 @@ import InfluencersList from './resources/influencers/list'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import LoginPage from 'auth/login'
+import NonRALayout from 'app/non-ra-layout'
 import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
@@ -17,7 +18,8 @@ import theme from './theme'
 import { Admin, Resource } from 'react-admin'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
-import { Route } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { styles } from 'app/layout/layout-styles'
 import 'assets/css/fonts.css'
 
 const generateClassName = createGenerateClassName()
@@ -57,6 +59,22 @@ const App = ({ dataProvider, history }) => (
       />
     </Admin>
   </JssProvider>
+)
+
+const NonRALayoutWithProps = ({ ...props }) => <NonRALayout isLoggedIn={auth.isLoggedIn()} {...props} />
+
+export const CustomApp = () => (
+  <Router>
+    <JssProvider generateClassName={generateClassName} jss={jss}>
+      <NonRALayoutWithProps theme={theme}>
+        <Switch>
+          <Route component={InfluencerCreate} exact path="/influencers/create" />
+          <Route component={InfluencerShow} exact path="/influencers/:influencerId/show" />
+          <Route component={InfluencerEdit} exact path="/influencers/:influencerId/(|edit)" />
+        </Switch>
+      </NonRALayoutWithProps>
+    </JssProvider>
+  </Router>
 )
 
 export default App
