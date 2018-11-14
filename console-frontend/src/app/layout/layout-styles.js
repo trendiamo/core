@@ -3,16 +3,25 @@ export const drawerWidthClosed = 70
 const avatarSize = 64
 const avatarSizeClosed = 48
 
+// Add transitions with different params here and use it in createTransition by providing key as type attribute.
+const transitions = theme => ({
+  standard: {
+    duration: theme.transitions.duration.leavingScreen,
+    easing: theme.transitions.easing.sharp,
+  },
+})
+
+const createTransition = (theme, style, type = 'standard') => {
+  return theme.transitions.create(style, transitions(theme)[type])
+}
+
 export const styles = theme => ({
   accountArrow: {
     color: '#fff',
     opacity: 1,
     position: 'absolute',
     right: '10px',
-    transition: theme.transitions.create(['opacity'], {
-      duration: theme.transitions.duration.leavingScreen,
-      easing: theme.transitions.easing.sharp,
-    }),
+    transition: createTransition(theme, ['opacity']),
   },
   accountArrowHidden: {
     opacity: 0,
@@ -31,10 +40,7 @@ export const styles = theme => ({
     backgroundColor: theme.customPalette.appBar.main,
     boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.12)',
     color: '333',
-    transition: theme.transitions.create(['width', 'margin', 'backgroundColor'], {
-      duration: theme.transitions.duration.leavingScreen,
-      easing: theme.transitions.easing.sharp,
-    }),
+    transition: createTransition(theme, ['width', 'margin', 'backgroundColor']),
     width: `calc(100% - ${drawerWidthClosed}px)`,
     zIndex: theme.zIndex.drawer + 1,
     [theme.breakpoints.down('sm')]: {
@@ -45,10 +51,7 @@ export const styles = theme => ({
   appBarShift: {
     [theme.breakpoints.up('md')]: {
       marginLeft: drawerWidth,
-      transition: theme.transitions.create(['width', 'margin'], {
-        duration: theme.transitions.duration.enteringScreen,
-        easing: theme.transitions.easing.sharp,
-      }),
+      transition: createTransition(theme, ['width', 'margin']),
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
@@ -59,10 +62,7 @@ export const styles = theme => ({
   avatar: {
     height: avatarSize,
     margin: '20px',
-    transition: theme.transitions.create(['width', 'height', 'margin'], {
-      duration: theme.transitions.duration.enteringScreen,
-      easing: theme.transitions.easing.sharp,
-    }),
+    transition: createTransition(theme, ['width', 'height', 'margin']),
     width: avatarSize,
   },
   avatarClosed: {
@@ -95,10 +95,7 @@ export const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       width: 0,
     },
-    transition: theme.transitions.create('width', {
-      duration: theme.transitions.duration.enteringScreen,
-      easing: theme.transitions.easing.sharp,
-    }),
+    transition: createTransition(theme, ['width']),
   },
   drawerGhostClosed: {
     width: drawerWidthClosed,
@@ -119,10 +116,7 @@ export const styles = theme => ({
     marginTop: 0,
     minHeight: '100vh',
     position: 'fixed',
-    transition: theme.transitions.create('width', {
-      duration: theme.transitions.duration.enteringScreen,
-      easing: theme.transitions.easing.sharp,
-    }),
+    transition: createTransition(theme, ['width']),
     whiteSpace: 'nowrap',
     width: drawerWidth,
     [theme.breakpoints.only('xs')]: {
@@ -142,10 +136,7 @@ export const styles = theme => ({
     minHeight: '100vh',
     overflowX: 'hidden',
     position: 'fixed',
-    transition: theme.transitions.create('width', {
-      duration: theme.transitions.duration.leavingScreen,
-      easing: theme.transitions.easing.sharp,
-    }),
+    transition: createTransition(theme, ['width']),
     width: theme.spacing.unit * 7,
     [theme.breakpoints.up('sm')]: {
       width: drawerWidthClosed,
@@ -198,10 +189,7 @@ export const styles = theme => ({
   },
   menuItem: {
     flexShrink: 0,
-    transition: theme.transitions.create(['padding', 'height', 'visibility'], {
-      duration: theme.transitions.duration.leavingScreen,
-      easing: theme.transitions.easing.sharp,
-    }),
+    transition: createTransition(theme, ['padding', 'height', 'visibility']),
     visibility: 'visible',
   },
   menuItemClosed: {
