@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import transition from './transition'
+import transition from 'ext/transition'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'

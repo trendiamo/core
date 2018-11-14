@@ -1,18 +1,15 @@
-import addPicture from './add-picture'
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
-import history from 'ext/history'
-import infoMsg from 'ext/recompose/info-msg'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
-import routes from './routes'
+import setup, { optionsFromHash } from './setup'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
+import { infoMsgHof } from 'shared/info-msg'
 import { location } from 'config'
-import { matchUrl } from 'ext/simple-router'
 
 const Gradient = animateOnMount(styled.div`
   z-index: 2147482998;
@@ -27,119 +24,99 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ onToggleContent, sellerPicUrl, showingContent, website }) => (
+const App = ({ influencer, onToggleContent, sellerPicUrl, showingContent }) => (
   <div>
-    {showingContent && <Content onToggleContent={onToggleContent} showingContent={showingContent} website={website} />}
+    {showingContent && (
+      <Content influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
+    )}
     <Launcher onToggleContent={onToggleContent} sellerPicUrl={sellerPicUrl} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
 )
 
-const optionsFromHash = () => {
-  const result = {}
-  if (!location.hash) return result
-  const match = /trnd:([^&]+)/.exec(location.hash)
-  if (!match) return result
-  match[1].split(',').forEach(pairStr => {
-    const matches = /(.+):(.+)/.exec(pairStr)
-    result[matches[1]] = matches[2]
-  })
-  return result
-}
-
 export default compose(
   graphql(
     gql`
-      query($hostname: String!) {
+      query($hasInfluencer: Boolean!, $hostname: String!, $influencerId: ID) {
         hostname(where: { hostname: $hostname }) {
           website {
-            title
-            subtitle
-            chats {
+            flows {
               id
-              path
-              influencer {
-                name
-                description
-                profilePic {
-                  url
+              order
+              urlMatchers {
+                regexp
+              }
+              chat {
+                id
+                influencer {
+                  name
+                  description
+                  profilePic {
+                    url
+                  }
                 }
               }
-            }
-            spotlights {
-              id
-              influencer {
-                name
-                description
-                profilePic {
-                  url
+              curation {
+                id
+                influencer {
+                  name
+                  description
+                  profilePic {
+                    url
+                  }
                 }
               }
-              productPicks {
-                url
-                name
-                description
-                displayPrice
-                picture {
-                  url
+              success {
+                id
+                influencer {
+                  name
+                  description
+                  profilePic {
+                    url
+                  }
                 }
               }
             }
           }
         }
+        influencer(where: { id: $influencerId }) @include(if: $hasInfluencer) {
+          name
+          description
+          profilePic {
+            url
+          }
+        }
       }
     `,
-    { hostname: location.hostname }
+    {
+      hasInfluencer: !!optionsFromHash().influencer,
+      hostname: location.hostname,
+      influencerId: optionsFromHash().influencer,
+    }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
     website: data.hostname && data.hostname.website,
   })),
-  branch(({ website }) => !website, infoMsg(`no website found for hostname ${location.hostname}`)),
-  withProps(({ website }) => ({
-    chat: website.chats.find(chat => matchUrl(location.pathname, chat.path)),
-  })),
+  branch(({ website }) => !website, infoMsgHof(`no website found for hostname ${location.hostname}`)),
   withState('influencer', 'setInfluencer'),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
       mixpanel.track('Loaded Plugin', { hash: location.hash, hostname: location.hostname })
-      const { influencer, open, path, picture } = optionsFromHash()
-
-      /* set influencer */ {
-        const { chat, setInfluencer, website } = this.props
-        let influencerObj
-        if (influencer) {
-          const influencers = [chat && chat.influencer, ...website.spotlights].filter(e => e)
-          influencerObj = influencers.find(e => e.id === influencer)
-        }
-        const defaultInfluencer = influencerObj
-          ? influencerObj.influencer
-          : chat
-          ? chat.influencer
-          : website.spotlights.length
-          ? website.spotlights[0].influencer
-          : undefined
-        setInfluencer(defaultInfluencer)
-      }
-
-      if (picture) addPicture(picture)
-      if (path) {
-        history.replace(path)
-      } else {
-        const { chat } = this.props
-        if (chat) history.replace(routes.scriptedChat(chat.id))
-      }
-      if (open && open.match(/1|true/)) {
-        const { setShowingContent } = this.props
+      const { data, setInfluencer, setShowingContent } = this.props
+      const { influencer, open } = setup(data)
+      setInfluencer(influencer)
+      if (open) {
         setShowingContent(true)
       } else {
         mixpanel.time_event('Opened')
       }
     },
   }),
+  branch(({ influencer }) => !influencer, renderNothing),
   withProps(({ influencer }) => ({
-    sellerPicUrl: influencer ? influencer.profilePic.url : undefined,
+    sellerPicUrl: influencer.profilePic.url,
   })),
   withHandlers({
     // onCtaClick: ({ exposition }) => () => {

@@ -1,7 +1,7 @@
 import Arrow from 'shared/arrow'
 import ProductItem from './product-item'
 import styled from 'styled-components'
-import transition from './transition'
+import transition from 'ext/transition'
 import { animate, TopSlideAnimation } from 'shared/animate'
 import { compose, lifecycle, withHandlers, withProps } from 'recompose'
 import { CoverImg, InfluencerDescription, PaddedCover } from 'shared/cover'
@@ -74,10 +74,10 @@ const CoverSpotlight = compose(
       landElements()
     },
   }),
-  withProps(({ id, website }) => ({
-    spotlight: website.spotlights.find(e => e.id === id),
+  withProps(({ id, spotlights }) => ({
+    spotlight: spotlights.find(e => e.id === id),
   }))
-)(({ isLeaving, routeToRoot, setImgRef, setNameRef, spotlight }) => (
+)(({ isLeaving, routeToCuration, setImgRef, setNameRef, spotlight }) => (
   <FlexDiv>
     <CoverImg ref={setImgRef} src={spotlight.influencer.profilePic.url} />
     <PaddedCover>
@@ -86,7 +86,7 @@ const CoverSpotlight = compose(
         <InfluencerDescription>{spotlight.influencer.description}</InfluencerDescription>
       </TopSlideAnimation>
     </PaddedCover>
-    <BackButton isLeaving={isLeaving} onClick={routeToRoot}>
+    <BackButton isLeaving={isLeaving} onClick={routeToCuration}>
       <Chevron />
       <Span>{'Back'}</Span>
     </BackButton>
@@ -99,8 +99,8 @@ const Container = styled.div`
 `
 
 const ContentSpotlight = compose(
-  withProps(({ id, website }) => ({
-    spotlight: website.spotlights.find(e => e.id === id),
+  withProps(({ id, spotlights }) => ({
+    spotlight: spotlights.find(e => e.id === id),
   })),
   withProps(({ spotlight }) => ({
     firstName: spotlight.influencer.name.split(' ')[0],
