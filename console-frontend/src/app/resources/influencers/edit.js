@@ -76,7 +76,7 @@ export default compose(
   withState('progress', 'setProgress', null),
   withRouter,
   withHandlers({
-    saveFormObject: ({ setInfo, setProgress, profilePic, id }) => async form => {
+    saveFormObject: ({ setInfo, setProgress, profilePic, id, match }) => async form => {
       // upload the image
       const profilePicUrl = await uploadImage({
         blob: profilePic,
@@ -85,8 +85,9 @@ export default compose(
         defaultValue: form.profilePicUrl,
       })
       // update user data
+      const multipleId = id || match.params.influencerId
       const data = { ...form, profilePicUrl }
-      const result = await apiInfluencerUpdate(id, { influencer: data }, setInfo)
+      const result = await apiInfluencerUpdate(multipleId, { influencer: data }, setInfo)
       return result
     },
     afterSave: ({ history }) => result => {
@@ -94,8 +95,9 @@ export default compose(
     },
   }),
   withHandlers({
-    loadFormObject: ({ id, setInfo }) => async () => {
-      const result = await apiInfluencerShow(id, setInfo)
+    loadFormObject: ({ id, setInfo, match }) => async () => {
+      const multipleId = id || match.params.influencerId
+      const result = await apiInfluencerShow(multipleId, setInfo)
       const resultObject = {
         name: result.name || '',
         description: result.description || '',
