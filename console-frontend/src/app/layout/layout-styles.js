@@ -59,7 +59,7 @@ export const styles = theme => ({
   avatar: {
     height: avatarSize,
     margin: '20px',
-    transition: theme.transitions.create(['width', 'height'], {
+    transition: theme.transitions.create(['width', 'height', 'margin'], {
       duration: theme.transitions.duration.enteringScreen,
       easing: theme.transitions.easing.sharp,
     }),
@@ -67,7 +67,7 @@ export const styles = theme => ({
   },
   avatarClosed: {
     height: avatarSizeClosed,
-    margin: '9px 7px 7px',
+    margin: '9px 11px 7px',
     width: avatarSizeClosed,
   },
   buttonLarge: {
@@ -90,6 +90,19 @@ export const styles = theme => ({
       padding: 0,
     },
   },
+  drawerGhost: {
+    width: drawerWidth,
+    [theme.breakpoints.down('xs')]: {
+      width: 0,
+    },
+    transition: theme.transitions.create('width', {
+      duration: theme.transitions.duration.enteringScreen,
+      easing: theme.transitions.easing.sharp,
+    }),
+  },
+  drawerGhostClosed: {
+    width: drawerWidthClosed,
+  },
   contentInnerDiv: {
     height: '100%',
   },
@@ -105,7 +118,7 @@ export const styles = theme => ({
     flex: '1',
     marginTop: 0,
     minHeight: '100vh',
-    position: 'relative',
+    position: 'fixed',
     transition: theme.transitions.create('width', {
       duration: theme.transitions.duration.enteringScreen,
       easing: theme.transitions.easing.sharp,
@@ -128,7 +141,7 @@ export const styles = theme => ({
     marginTop: 0,
     minHeight: '100vh',
     overflowX: 'hidden',
-    position: 'relative',
+    position: 'fixed',
     transition: theme.transitions.create('width', {
       duration: theme.transitions.duration.leavingScreen,
       easing: theme.transitions.easing.sharp,
@@ -184,6 +197,7 @@ export const styles = theme => ({
     paddingRight: '20px',
   },
   menuItem: {
+    flexShrink: 0,
     transition: theme.transitions.create(['padding', 'height', 'visibility'], {
       duration: theme.transitions.duration.leavingScreen,
       easing: theme.transitions.easing.sharp,
@@ -191,7 +205,7 @@ export const styles = theme => ({
     visibility: 'visible',
   },
   menuItemClosed: {
-    paddingLeft: 18,
+    paddingLeft: 22,
     paddingRight: 0,
   },
   menuItemHidden: {

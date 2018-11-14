@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
 import React from 'react'
@@ -8,6 +9,7 @@ import { connect } from 'react-redux'
 const Sidebar = ({ children, classes, open, toggleOpen }) => (
   <React.Fragment>
     <Hidden implementation="js" mdUp>
+      <div className={classNames(classes.drawerGhost)} />
       <Drawer
         classes={{
           paper: classes.drawerPaper,
@@ -23,6 +25,7 @@ const Sidebar = ({ children, classes, open, toggleOpen }) => (
       </Drawer>
     </Hidden>
     <Hidden implementation="js" smDown>
+      <div className={classNames(classes.drawerGhost, !open && classes.drawerGhostClosed)} />
       <Drawer
         classes={{
           paper: open ? classes.drawerPaper : classes.drawerPaperClose,
