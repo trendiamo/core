@@ -1,13 +1,18 @@
 import omit from 'lodash.omit'
 import ReactDOM from 'preact-compat'
-import { compose, lifecycle, withProps, withState } from 'recompose'
+import { compose, lifecycle, withState } from 'recompose'
 import { h } from 'preact'
 import { StyleSheetManager } from 'styled-components'
 
-const Frame = ({ children, iframeHead, iframeBody, setIframeRef, className, title, ...rest }) => (
+const Frame = ({ children, iframeRef, setIframeRef, className, title, ...rest }) => (
   <iframe {...omit(rest, ['iframeRef'])} className={className} ref={setIframeRef} tabIndex="-1" title={title}>
-    {iframeBody &&
-      ReactDOM.createPortal(<StyleSheetManager target={iframeHead}>{children}</StyleSheetManager>, iframeBody)}
+    {iframeRef &&
+      iframeRef.contentDocument &&
+      iframeRef.contentDocument.body &&
+      ReactDOM.createPortal(
+        <StyleSheetManager target={iframeRef.contentDocument.head}>{children}</StyleSheetManager>,
+        iframeRef.contentDocument.body
+      )}
   </iframe>
 )
 
@@ -41,16 +46,19 @@ const addCss = (head, css) => {
 
 export default compose(
   withState('iframeRef', 'setIframeRef', null),
-  withProps(({ iframeRef }) => ({
-    iframeBody: iframeRef && iframeRef.contentDocument.body,
-    iframeHead: iframeRef && iframeRef.contentDocument.head,
-  })),
   lifecycle({
     componentDidUpdate(prevProps) {
       const { iframeRef } = this.props
       if (iframeRef && iframeRef !== prevProps.iframeRef) {
-        loadCss(iframeRef.contentDocument.head, 'https://fonts.googleapis.com/css?family=Roboto:400,500,700')
-        addCss(iframeRef.contentDocument.head, style)
+        const initCss = () => {
+          loadCss(iframeRef.contentDocument.head, 'https://fonts.googleapis.com/css?family=Roboto:400,500,700')
+          addCss(iframeRef.contentDocument.head, style)
+        }
+        if (iframeRef.contentDocument.readyState === 'complete') {
+          initCss()
+        } else {
+          iframeRef.onload = initCss
+        }
       }
     },
   })
