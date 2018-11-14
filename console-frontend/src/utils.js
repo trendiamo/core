@@ -107,6 +107,17 @@ const apiWebsiteUpdateRequest = async (url, body) => {
   return res.json()
 }
 
+const apiInfluencerListRequest = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
 const apiInfluencerShowRequest = async url => {
   const res = await fetch(url, {
     headers: new Headers({
@@ -126,6 +137,17 @@ const apiInfluencerCreateRequest = async (url, body) => {
       ...auth.getHeaders(),
     }),
     method: 'post',
+  })
+  return res.json()
+}
+
+const apiInfluencerDestroyRequest = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'delete',
   })
   return res.json()
 }
@@ -240,6 +262,13 @@ export const apiInfluencerUpdateSaga = async (url, body, setInfo) => {
   setInfo(info)
 }
 
+export const apiInfluencerListSaga = async (url, setInfo) => {
+  const json = await apiInfluencerListRequest(url)
+  const info = convertToInfo(json)
+  if (json.status === 'success') return json
+  setInfo(info)
+}
+
 export const apiInfluencerShowSaga = async (url, setInfo) => {
   const json = await apiInfluencerShowRequest(url)
   const info = convertToInfo(json)
@@ -249,6 +278,13 @@ export const apiInfluencerShowSaga = async (url, setInfo) => {
 
 export const apiInfluencerCreateSaga = async (url, body, setInfo) => {
   const json = await apiInfluencerCreateRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+export const apiInfluencerDestroySaga = async (url, setInfo) => {
+  const json = await apiInfluencerDestroyRequest(url)
   const info = convertToInfo(json)
   if (info.status === 'success') return json
   setInfo(info)
@@ -268,8 +304,9 @@ export const apiWebsiteUpdate = (id, body, setInfo) => apiWebsiteUpdateSaga(`${W
 export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
 export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)
 
+export const apiInfluencerList = setInfo => apiInfluencerListSaga(INFLUENCERS_URL, setInfo)
 export const apiInfluencerShow = (id, setInfo) => apiInfluencerShowSaga(`${INFLUENCERS_URL}/${id}`, setInfo)
 export const apiInfluencerCreate = (body, setInfo) => apiInfluencerCreateSaga(`${INFLUENCERS_URL}`, body, setInfo)
-
 export const apiInfluencerUpdate = (id, body, setInfo) =>
   apiInfluencerUpdateSaga(`${INFLUENCERS_URL}/${id}`, body, setInfo)
+export const apiInfluencerDestroy = (ids, setInfo) => apiInfluencerDestroySaga(`${INFLUENCERS_URL}/${ids}`, setInfo)
