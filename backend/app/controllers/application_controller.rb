@@ -35,7 +35,7 @@ class ApplicationController < ActionController::API
   def pagination(chain)
     pagination_hash = begin
       pagination_vars(params[:range])
-    rescue JSON::ParserError
+    rescue JSON::ParserError, TypeError
       return chain
     end
     add_pagination_headers(chain, pagination_hash[:range])
@@ -43,9 +43,9 @@ class ApplicationController < ActionController::API
   end
 
   def sorting(chain)
-    begin
-      sort_params = JSON.parse(params[:sort])
-    rescue JSON::ParserError
+    sort_params = begin
+      JSON.parse(params[:sort])
+    rescue JSON::ParserError, TypeError
       return chain
     end
     column, direction = *sort_params
