@@ -5,7 +5,7 @@ import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose } from 'recompose'
 import { h } from 'preact'
 import { IconClose } from 'icons'
-import { width } from 'config'
+import { MAIN_BREAKPOINT, WIDTH } from 'config'
 
 const ContentFrameContainer = animateOnMount(styled.div`
   z-index: 2147483000;
@@ -21,11 +21,11 @@ const ContentFrameContainer = animateOnMount(styled.div`
   width: 100%;
   height: 100%;
 
-  @media (min-width: 600px) {
+  @media (min-width: ${MAIN_BREAKPOINT}px) {
     border-radius: 8px;
     bottom: 100px;
     right: 30px;
-    width: ${width}px;
+    width: ${WIDTH}px;
     height: calc(100vh - 150px);
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
     max-height: 500px;
@@ -57,7 +57,7 @@ const CloseContent = styled(IconClose)`
   height: 20px;
   width: 20px;
 
-  @media (min-width: 600px) {
+  @media (min-width: ${MAIN_BREAKPOINT}px) {
     display: none;
   }
 `

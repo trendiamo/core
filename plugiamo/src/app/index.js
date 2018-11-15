@@ -9,6 +9,7 @@ import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, wit
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { infoMsgHof } from 'shared/info-msg'
+import { isSmall } from 'utils'
 import { location } from 'config'
 
 const Gradient = animateOnMount(styled.div`
@@ -107,7 +108,8 @@ export default compose(
       const { data, setInfluencer, setShowingContent } = this.props
       const { influencer, open } = setup(data)
       setInfluencer(influencer)
-      if (open) {
+
+      if (open && !isSmall()) {
         setShowingContent(true)
       } else {
         mixpanel.time_event('Opened')
