@@ -90,9 +90,9 @@ export default compose(
       }
     `,
     {
-      hasInfluencer: !!optionsFromHash().influencer,
+      hasInfluencer: !!optionsFromHash().persona,
       hostname: location.hostname,
-      influencerId: optionsFromHash().influencer,
+      influencerId: optionsFromHash().persona,
     }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),

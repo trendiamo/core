@@ -41,7 +41,7 @@ const getMatchedInfluencer = ({ flow, data }) => {
 }
 
 const setup = data => {
-  const { /* influencer,*/ open, path, picture } = optionsFromHash()
+  const { /* persona,*/ open, path, picture } = optionsFromHash()
   const { flow, type: flowType } = getMatchedFlow(data.hostname.website.flows)
 
   if (picture) addPicture(picture)
