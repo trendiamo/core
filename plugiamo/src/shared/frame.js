@@ -4,13 +4,13 @@ import { compose, lifecycle, withState } from 'recompose'
 import { h } from 'preact'
 import { StyleSheetManager } from 'styled-components'
 
-const Frame = ({ children, iframeRef, setIframeRef, className, title, ...rest }) => (
+const Frame = ({ children, iframeRef, isLoaded, setIframeRef, className, title, ...rest }) => (
   <iframe {...omit(rest, ['iframeRef'])} className={className} ref={setIframeRef} tabIndex="-1" title={title}>
     {iframeRef &&
       iframeRef.contentDocument &&
       iframeRef.contentDocument.body &&
       ReactDOM.createPortal(
-        <StyleSheetManager target={iframeRef.contentDocument.head}>{children}</StyleSheetManager>,
+        <StyleSheetManager target={iframeRef.contentDocument.head}>{isLoaded ? children : <div />}</StyleSheetManager>,
         iframeRef.contentDocument.body
       )}
   </iframe>
@@ -46,18 +46,20 @@ const addCss = (head, css) => {
 
 export default compose(
   withState('iframeRef', 'setIframeRef', null),
+  withState('isLoaded', 'setIsLoaded', false),
   lifecycle({
     componentDidUpdate(prevProps) {
-      const { iframeRef } = this.props
+      const { iframeRef, setIsLoaded } = this.props
       if (iframeRef && iframeRef !== prevProps.iframeRef) {
-        const initCss = () => {
+        const load = () => {
           loadCss(iframeRef.contentDocument.head, 'https://fonts.googleapis.com/css?family=Roboto:400,500,700')
           addCss(iframeRef.contentDocument.head, style)
+          setIsLoaded(true)
         }
         if (iframeRef.contentDocument.readyState === 'complete') {
-          initCss()
+          load()
         } else {
-          iframeRef.onload = initCss
+          iframeRef.onload = load
         }
       }
     },
