@@ -8,48 +8,45 @@ import React from 'react'
 import routes from 'app/routes'
 import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiPasswordChange } from 'utils'
-import { Authenticated } from 'react-admin'
 import { compose, withHandlers, withState } from 'recompose'
 import { withRouter } from 'react-router'
 
-const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
-  <Authenticated location={location}>
-    <PaperContainer>
-      <form onSubmit={passwordResetSubmit}>
-        <Notification data={info} />
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
-          <Input
-            autoFocus
-            name="currentPassword"
-            onChange={setFieldValue}
-            required
-            type="password"
-            value={passwordForm.currentPassword}
-          />
-        </FormControl>
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="password">{'New Password'}</InputLabel>
-          <Input name="password" onChange={setFieldValue} type="password" value={passwordForm.password} />
-        </FormControl>
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="passwordConfirmation">{'Repeat Password'}</InputLabel>
-          <Input
-            name="passwordConfirmation"
-            onChange={setFieldValue}
-            required
-            type="password"
-            value={passwordForm.passwordConfirmation}
-          />
-        </FormControl>
-        <div style={{ marginTop: '1rem' }}>
-          <Button color="primary" type="submit" variant="contained">
-            {'Reset'}
-          </Button>
-        </div>
-      </form>
-    </PaperContainer>
-  </Authenticated>
+const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue }) => (
+  <PaperContainer>
+    <form onSubmit={passwordResetSubmit}>
+      <Notification data={info} />
+      <FormControl fullWidth margin="normal" required>
+        <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
+        <Input
+          autoFocus
+          name="currentPassword"
+          onChange={setFieldValue}
+          required
+          type="password"
+          value={passwordForm.currentPassword}
+        />
+      </FormControl>
+      <FormControl fullWidth margin="normal" required>
+        <InputLabel htmlFor="password">{'New Password'}</InputLabel>
+        <Input name="password" onChange={setFieldValue} type="password" value={passwordForm.password} />
+      </FormControl>
+      <FormControl fullWidth margin="normal" required>
+        <InputLabel htmlFor="passwordConfirmation">{'Repeat Password'}</InputLabel>
+        <Input
+          name="passwordConfirmation"
+          onChange={setFieldValue}
+          required
+          type="password"
+          value={passwordForm.passwordConfirmation}
+        />
+      </FormControl>
+      <div style={{ marginTop: '1rem' }}>
+        <Button color="primary" type="submit" variant="contained">
+          {'Reset'}
+        </Button>
+      </div>
+    </form>
+  </PaperContainer>
 )
 
 export default compose(

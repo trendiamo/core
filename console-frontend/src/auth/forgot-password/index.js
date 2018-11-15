@@ -8,7 +8,6 @@ import queryString from 'query-string'
 import React from 'react'
 import { apiPasswordReset } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
-import { Authenticated } from 'react-admin'
 import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (
@@ -28,43 +27,41 @@ const AuthMessage = () => (
   </React.Fragment>
 )
 
-const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue, location }) => (
-  <Authenticated location={location}>
-    <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
-      <form onSubmit={passwordResetSubmit}>
-        <Notification data={info} />
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="email">{'New Password'}</InputLabel>
-          <Input
-            autoComplete="email"
-            autoFocus
-            id="email"
-            name="fieldOne"
-            onChange={setFieldValue}
-            type="password"
-            value={passwordForm.fieldOne}
-          />
-        </FormControl>
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="password">{'Repeat Password'}</InputLabel>
-          <Input
-            autoComplete="current-password"
-            id="password"
-            name="fieldTwo"
-            onChange={setFieldValue}
-            required
-            type="password"
-            value={passwordForm.fieldTwo}
-          />
-        </FormControl>
-        <div style={{ marginTop: '1rem' }}>
-          <Button color="primary" type="submit" variant="contained">
-            {'Reset'}
-          </Button>
-        </div>
-      </form>
-    </AuthLayout>
-  </Authenticated>
+const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue }) => (
+  <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
+    <form onSubmit={passwordResetSubmit}>
+      <Notification data={info} />
+      <FormControl fullWidth margin="normal" required>
+        <InputLabel htmlFor="email">{'New Password'}</InputLabel>
+        <Input
+          autoComplete="email"
+          autoFocus
+          id="email"
+          name="fieldOne"
+          onChange={setFieldValue}
+          type="password"
+          value={passwordForm.fieldOne}
+        />
+      </FormControl>
+      <FormControl fullWidth margin="normal" required>
+        <InputLabel htmlFor="password">{'Repeat Password'}</InputLabel>
+        <Input
+          autoComplete="current-password"
+          id="password"
+          name="fieldTwo"
+          onChange={setFieldValue}
+          required
+          type="password"
+          value={passwordForm.fieldTwo}
+        />
+      </FormControl>
+      <div style={{ marginTop: '1rem' }}>
+        <Button color="primary" type="submit" variant="contained">
+          {'Reset'}
+        </Button>
+      </div>
+    </form>
+  </AuthLayout>
 )
 
 export default compose(

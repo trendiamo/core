@@ -60,6 +60,7 @@ const EditView = ({
       {progress && <ProgressBar progress={progress} />}
       <div style={{ marginTop: '1rem' }}>
         <Button color="primary" disabled={isFormLoading || isCropping} type="submit" variant="contained">
+          <SaveIcon />
           {'Save'}
         </Button>
       </div>
@@ -76,7 +77,7 @@ export default compose(
   withState('progress', 'setProgress', null),
   withRouter,
   withHandlers({
-    saveFormObject: ({ setInfo, setProgress, profilePic, id, match }) => async form => {
+    saveFormObject: ({ setInfo, setProgress, profilePic, match }) => async form => {
       // upload the image
       const profilePicUrl = await uploadImage({
         blob: profilePic,
@@ -85,9 +86,9 @@ export default compose(
         defaultValue: form.profilePicUrl,
       })
       // update user data
-      const multipleId = id || match.params.influencerId
+      const id = match.params.influencerId
       const data = { ...form, profilePicUrl }
-      const result = await apiInfluencerUpdate(multipleId, { influencer: data }, setInfo)
+      const result = await apiInfluencerUpdate(id, { influencer: data }, setInfo)
       return result
     },
     afterSave: ({ history }) => result => {
@@ -95,9 +96,9 @@ export default compose(
     },
   }),
   withHandlers({
-    loadFormObject: ({ id, setInfo, match }) => async () => {
-      const multipleId = id || match.params.influencerId
-      const result = await apiInfluencerShow(multipleId, setInfo)
+    loadFormObject: ({ setInfo, match }) => async () => {
+      const id = match.params.influencerId
+      const result = await apiInfluencerShow(id, setInfo)
       const resultObject = {
         name: result.name || '',
         description: result.description || '',
