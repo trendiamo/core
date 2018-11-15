@@ -51,6 +51,12 @@ const ContentScriptedChat = compose(
   </ChatBackground>
 ))
 
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`
+
 const ScriptedChat = compose(
   graphql(
     gql`
@@ -71,12 +77,12 @@ const ScriptedChat = compose(
     chat: data.chat,
   }))
 )(({ chat, influencer, onToggleContent }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+  <FlexContainer>
     <Cover>
       <CoverScriptedChat influencer={influencer} />
     </Cover>
     <ContentScriptedChat chat={chat} influencer={influencer} onToggleContent={onToggleContent} />
-  </div>
+  </FlexContainer>
 ))
 
 export default ScriptedChat
