@@ -34,6 +34,20 @@ const getMatchedFlow = flows => {
   }
 }
 
+// XXX: we'll remove this method after changing the fetching logic of flows, triggers, path, etc.
+const getFlowFromPath = (flows, path) => {
+  const match = path.match(/\/(.+)\/(.+)/)
+  if (match && match.length < 3) return {}
+  const idFromPath = path.match(/\/(.+)\/(.+)/)[2]
+  for (let i = 0; i < flows.length; i++) {
+    const flow = flows[i]
+    if (flow.curation && flow.curation.id === idFromPath) return { flow: flow.curation, type: 'curation' }
+    if (flow.chat && flow.chat.id === idFromPath) return { flow: flow.chat, type: 'scriptedChat' }
+    if (flow.success && flow.success.id === idFromPath) return { flow: flow.success, type: 'success' }
+  }
+  return {}
+}
+
 const getMatchedInfluencer = ({ flow, data }) => {
   if (data.influencer) return data.influencer
   // XXX: maybe also save last influencer we interacted with, and use that if available here, finally fallback to this:
@@ -42,7 +56,9 @@ const getMatchedInfluencer = ({ flow, data }) => {
 
 const setup = data => {
   const { /* persona,*/ open, path, picture } = optionsFromHash()
-  const { flow, type: flowType } = getMatchedFlow(data.hostname.website.flows)
+  const { flow, type: flowType } = path
+    ? getFlowFromPath(data.hostname.website.flows, path)
+    : getMatchedFlow(data.hostname.website.flows)
 
   if (picture) addPicture(picture)
 
