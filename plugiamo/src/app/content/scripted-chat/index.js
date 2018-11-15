@@ -70,12 +70,12 @@ const ScriptedChat = compose(
   withProps(({ data }) => ({
     chat: data.chat,
   }))
-)(({ chat, influencer }) => (
   <div>
+)(({ chat, influencer, onToggleContent }) => (
     <Cover>
       <CoverScriptedChat influencer={influencer} />
     </Cover>
-    <ContentScriptedChat chat={chat} influencer={influencer} />
+    <ContentScriptedChat chat={chat} influencer={influencer} onToggleContent={onToggleContent} />
   </div>
 ))
 

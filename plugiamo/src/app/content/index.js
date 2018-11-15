@@ -16,7 +16,7 @@ const Content = ({ influencer, isTransitioning, onRouteChange, onToggleContent }
     <Wrapper>
       <Router history={history} onChange={onRouteChange}>
         <Curation isTransitioning={isTransitioning} onRouteChange={onRouteChange} path="/curation/:id*" />
-        <ScriptedChat influencer={influencer} path="/scripted-chat/:id" />
+        <ScriptedChat influencer={influencer} onToggleContent={onToggleContent} path="/scripted-chat/:id" />
         <Success influencer={influencer} path="/success/:id" />
       </Router>
     </Wrapper>
