@@ -1,6 +1,4 @@
-import queryString from 'query-string'
 import routes from 'app/routes'
-import { AUTH_CHECK } from 'react-admin'
 
 const auth = {
   addListener(fn) {
@@ -52,23 +50,4 @@ const auth = {
   user: null,
 }
 
-const authProvider = type => {
-  // triggered every time url changes
-  if (type === AUTH_CHECK) {
-    const isPasswordForm = routes.isPasswordReset()
-    const parsedUrl = queryString.parse(window.location.search)
-    // check if either the user is on the reset password page or is logged in. In which case redirects won't render the
-    // login page automatically
-    return (isPasswordForm && parsedUrl.reset_password_token) || auth.isLoggedIn()
-      ? Promise.resolve()
-      : Promise.reject()
-  }
-  // will be used in future if we want to add authorization for certain roles on certain pages triggered with authorization component
-  // if (type === AUTH_GET_PERMISSIONS) {
-  //   const role = localStorage.getItem('authRole')
-  //   return role ? Promise.resolve(role) : Promise.reject
-  // }
-}
-
-export { authProvider }
 export default auth

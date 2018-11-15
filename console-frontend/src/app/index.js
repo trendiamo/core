@@ -1,5 +1,5 @@
 import Account from 'app/screens/account'
-import auth, { authProvider } from 'auth'
+import auth from 'auth'
 import ChangePassword from 'app/screens/change-password'
 import ForgotPassword from 'auth/forgot-password'
 import InfluencerCreate from './resources/influencers/create'
@@ -9,17 +9,14 @@ import InfluencersList from './resources/influencers/list'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import LoginPage from 'auth/login'
-import NonRALayout from 'app/non-ra-layout'
 import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
 import theme from './theme'
-import { Admin, Resource } from 'react-admin'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-import { styles } from 'app/layout/layout-styles'
+import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import 'assets/css/fonts.css'
 
 const generateClassName = createGenerateClassName()
@@ -28,51 +25,48 @@ const jss = create({
   insertionPoint: document.getElementById('jss-insertion-point'),
 })
 
-const customRoutes = [
-  <Route component={RequestPasswordReset} exact key="passwordReset" noLayout path={routes.requestPasswordReset()} />,
-  <Route component={ForgotPassword} exact key="passwordReset" noLayout path={routes.passwordReset()} />,
-  <Route component={ChangePassword} exact key="passwordReset" path={routes.passwordChange()} />,
-  <Route component={Account} exact key="account" path={routes.account()} />,
-]
-
-// Here isLoggedIn property is passed in order to inform the <Layout /> whether to show Menus and Bars (404 page needs that)
-const LayoutWithProps = ({ ...props }) => <Layout isLoggedIn={auth.isLoggedIn()} {...props} />
-
-const App = ({ dataProvider, history }) => (
-  <JssProvider generateClassName={generateClassName} jss={jss}>
-    <Admin
-      appLayout={LayoutWithProps}
-      authProvider={authProvider}
-      catchAll={NotFound}
-      customRoutes={customRoutes}
-      dataProvider={dataProvider}
-      history={history}
-      loginPage={LoginPage}
-      theme={theme}
-    >
-      <Resource
-        create={InfluencerCreate}
-        edit={InfluencerEdit}
-        list={InfluencersList}
-        name="influencers"
-        show={InfluencerShow}
-      />
-    </Admin>
-  </JssProvider>
+// Auth protected route.
+const PrivateRoute = ({ component, path, ...props }) => (
+  <Route
+    {...props}
+    path={path}
+    render={({ match }) =>
+      auth.isLoggedIn() ? React.createElement(component, { match }) : <Redirect to={routes.login()} />
+    }
+  />
 )
 
-const NonRALayoutWithProps = ({ ...props }) => <NonRALayout isLoggedIn={auth.isLoggedIn()} {...props} />
+const ExternalRoute = ({ component, path, ...props }) => (
+  <Route
+    {...props}
+    path={path}
+    render={() => (auth.isLoggedIn() ? <Redirect to={routes.root()} /> : React.createElement(component))}
+  />
+)
 
-export const CustomApp = () => (
-  <Router>
+const RedirectRoot = () => <React.Fragment>{!auth.isLoggedIn() && <Redirect to={routes.login()} />}</React.Fragment>
+
+const Routes = () => (
+  <Switch>
+    <PrivateRoute component={InfluencerCreate} exact path="/influencers/create" />
+    <PrivateRoute component={InfluencerShow} exact path="/influencers/:influencerId/show" />
+    <PrivateRoute component={InfluencerEdit} exact path="/influencers/:influencerId/(|edit)" />
+    <PrivateRoute component={Account} exact path={routes.account()} />
+    <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
+    <ExternalRoute component={LoginPage} path={routes.login()} />
+    <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
+    <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
+    <Route component={RedirectRoot} path={routes.root()} />
+    <Route component={NotFound} />
+  </Switch>
+)
+
+export const App = ({ history }) => (
+  <Router history={history}>
     <JssProvider generateClassName={generateClassName} jss={jss}>
-      <NonRALayoutWithProps theme={theme}>
-        <Switch>
-          <Route component={InfluencerCreate} exact path="/influencers/create" />
-          <Route component={InfluencerShow} exact path="/influencers/:influencerId/show" />
-          <Route component={InfluencerEdit} exact path="/influencers/:influencerId/(|edit)" />
-        </Switch>
-      </NonRALayoutWithProps>
+      <Layout isLoggedIn={auth.isLoggedIn()} theme={theme}>
+        <Routes />
+      </Layout>
     </JssProvider>
   </Router>
 )
