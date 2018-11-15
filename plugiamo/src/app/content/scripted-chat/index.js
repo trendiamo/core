@@ -70,8 +70,8 @@ const ScriptedChat = compose(
   withProps(({ data }) => ({
     chat: data.chat,
   }))
-  <div>
 )(({ chat, influencer, onToggleContent }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
     <Cover>
       <CoverScriptedChat influencer={influencer} />
     </Cover>

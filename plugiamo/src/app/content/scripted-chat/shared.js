@@ -94,6 +94,10 @@ const ChatOptionsInner = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   margin-bottom: 1rem;
+
+  ${Option}:last-child {
+    border-bottom: 0;
+  }
 `
 
 const AlignRight = styled.div`
