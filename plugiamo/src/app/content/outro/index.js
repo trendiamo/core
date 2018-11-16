@@ -61,7 +61,7 @@ const Hr = styled.hr`
   border-bottom: 0;
 `
 
-const Success = ({ influencer }) => (
+const Outro = ({ influencer }) => (
   <Wrapper>
     <InnerContent>
       <InfluencerImg src={influencer.profilePic.url} />
@@ -77,4 +77,4 @@ const Success = ({ influencer }) => (
   </Wrapper>
 )
 
-export default Success
+export default Outro

@@ -29,8 +29,8 @@ const getMatchedFlow = flows => {
     return { flow: matchedFlow.curation, type: 'curation' }
   } else if (matchedFlow.chat) {
     return { flow: matchedFlow.chat, type: 'scriptedChat' }
-  } else if (matchedFlow.success) {
-    return { flow: matchedFlow.success, type: 'success' }
+  } else if (matchedFlow.outro) {
+    return { flow: matchedFlow.outro, type: 'outro' }
   }
 }
 
@@ -43,7 +43,7 @@ const getFlowFromPath = (flows, path) => {
     const flow = flows[i]
     if (flow.curation && flow.curation.id === idFromPath) return { flow: flow.curation, type: 'curation' }
     if (flow.chat && flow.chat.id === idFromPath) return { flow: flow.chat, type: 'scriptedChat' }
-    if (flow.success && flow.success.id === idFromPath) return { flow: flow.success, type: 'success' }
+    if (flow.outro && flow.outro.id === idFromPath) return { flow: flow.outro, type: 'outro' }
   }
   return {}
 }

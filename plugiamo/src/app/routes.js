@@ -8,6 +8,9 @@ const routes = {
   isSpotlight(path) {
     return path.match(/\/curation\/([^/]+)\/spotlight\/([^/]+)/)
   },
+  outro(outroId) {
+    return `/outro/${outroId}`
+  },
   root() {
     return '/'
   },
@@ -16,9 +19,6 @@ const routes = {
   },
   spotlight(curationId, spotlightId) {
     return `/curation/${curationId}/spotlight/${spotlightId}`
-  },
-  success(successId) {
-    return `/success/${successId}`
   },
 }
 

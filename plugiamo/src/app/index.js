@@ -67,7 +67,7 @@ export default compose(
                   }
                 }
               }
-              success {
+              outro {
                 id
                 influencer {
                   name

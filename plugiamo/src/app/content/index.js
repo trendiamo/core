@@ -1,9 +1,9 @@
 import ContentFrame from './content-frame'
 import Curation from './curation'
 import history from 'ext/history'
+import Outro from './outro'
 import routes from 'app/routes'
 import ScriptedChat from './scripted-chat'
-import Success from './success'
 import transition from 'ext/transition'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import Wrapper from './wrapper'
@@ -17,7 +17,7 @@ const Content = ({ influencer, isTransitioning, onRouteChange, onToggleContent }
       <Router history={history} onChange={onRouteChange}>
         <Curation isTransitioning={isTransitioning} onRouteChange={onRouteChange} path="/curation/:id*" />
         <ScriptedChat influencer={influencer} onToggleContent={onToggleContent} path="/scripted-chat/:id" />
-        <Success influencer={influencer} path="/success/:id" />
+        <Outro influencer={influencer} path="/outro/:id" />
       </Router>
     </Wrapper>
   </ContentFrame>
