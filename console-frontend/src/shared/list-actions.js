@@ -2,8 +2,8 @@ import Button from 'shared/button'
 import Dialog from 'shared/dialog'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
-import { connect } from 'react-redux'
-import { crudDeleteMany, startUndoable } from 'react-admin'
+// import { connect } from 'react-redux'
+// import { crudDeleteMany, startUndoable } from 'react-admin'
 
 const DeleteActions = ({ handleClose, handleDelete }) => (
   <React.Fragment>
@@ -33,13 +33,13 @@ const BulkActionButtons = ({ handleOpen, showDialog, handleClose, handleDelete, 
 )
 
 export const BulkActions = compose(
-  connect(
-    undefined,
-    {
-      dispatchCrudDeleteMany: crudDeleteMany,
-      startUndoable,
-    }
-  ),
+  // connect(
+  //   undefined,
+  //   {
+  //     // dispatchCrudDeleteMany: crudDeleteMany,
+  //     // startUndoable,
+  //   }
+  // ),
   withState('showDialog', 'setShowDialog', false),
   withHandlers({
     handleClose: ({ setShowDialog }) => () => {

@@ -8,7 +8,6 @@ import SvgIcon from '@material-ui/core/SvgIcon'
 import Typography from '@material-ui/core/Typography'
 import UserMenu from './user-menu'
 import { compose, withState } from 'recompose'
-import { DashboardMenuItem } from 'ra-ui-materialui'
 import { withRouter } from 'react-router'
 
 const Container = styled.div`
@@ -46,17 +45,12 @@ const Content = ({ resources, classes, pathname, open }) => {
   })
 }
 
-const Menu = ({ classes, pathname, hasDashboard, onMenuClick, resources, open, ...rest }) => (
+const Menu = ({ classes, pathname, resources, open, ...rest }) => (
   <Container {...rest}>
     <UserMenu classes={classes} open={open} />
-    {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
     <Content classes={classes} open={open} pathname={pathname} resources={resources} />
   </Container>
 )
-
-Menu.defaultProps = {
-  onMenuClick: () => null,
-}
 
 const resources = [{ name: 'influencers' }]
 
