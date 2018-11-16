@@ -8,13 +8,13 @@ const withRaTitle = title =>
         displayName = wrapDisplayName(BaseComponent, 'withRaTitle')
 
         componentDidMount() {
-          const titleElement = document.querySelector('#react-admin-title')
+          const titleElement = document.querySelector('#admin-title')
           if (!titleElement) return
           titleElement.innerText = title
         }
 
         componentWillUnmount() {
-          const titleElement = document.querySelector('#react-admin-title')
+          const titleElement = document.querySelector('#admin-title')
           if (!titleElement) return
           titleElement.innerText = ''
         }

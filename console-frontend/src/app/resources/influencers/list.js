@@ -89,7 +89,6 @@ export default compose(
     async componentDidMount() {
       const { setIsLoading, setInfo, setInfluencers } = this.props
       const influencersResponse = await apiInfluencerList(setInfo)
-      console.log(influencersResponse)
       setInfluencers(influencersResponse)
       setIsLoading(false)
     },

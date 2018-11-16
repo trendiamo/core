@@ -2,10 +2,6 @@ import Account from 'app/screens/account'
 import auth from 'auth'
 import ChangePassword from 'app/screens/change-password'
 import ForgotPassword from 'auth/forgot-password'
-import InfluencerCreate from './resources/influencers/create'
-import InfluencerEdit from './resources/influencers/edit'
-import InfluencerShow from './resources/influencers/show'
-import InfluencersList from './resources/influencers/list'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import LoginPage from 'auth/login'
@@ -16,6 +12,7 @@ import routes from './routes'
 import theme from './theme'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
+import { InfluencerCreate, InfluencerEdit, InfluencerShow, InfluencersList } from './resources/influencers'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import 'assets/css/fonts.css'
 
@@ -44,10 +41,13 @@ const ExternalRoute = ({ component, path, ...props }) => (
   />
 )
 
-const RedirectRoot = () => <React.Fragment>{!auth.isLoggedIn() && <Redirect to={routes.login()} />}</React.Fragment>
+const RedirectRoot = () => (
+  <React.Fragment>{<Redirect to={auth.isLoggedIn() ? '/influencers' : routes.login()} />}</React.Fragment>
+)
 
 const Routes = () => (
   <Switch>
+    <PrivateRoute component={InfluencersList} exact path="/influencers" />
     <PrivateRoute component={InfluencerCreate} exact path="/influencers/create" />
     <PrivateRoute component={InfluencerShow} exact path="/influencers/:influencerId/show" />
     <PrivateRoute component={InfluencerEdit} exact path="/influencers/:influencerId/(|edit)" />
@@ -56,7 +56,7 @@ const Routes = () => (
     <ExternalRoute component={LoginPage} path={routes.login()} />
     <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
     <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
-    <Route component={RedirectRoot} path={routes.root()} />
+    <Route component={RedirectRoot} exact path={routes.root()} />
     <Route component={NotFound} />
   </Switch>
 )

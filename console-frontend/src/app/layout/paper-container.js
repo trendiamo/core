@@ -14,7 +14,6 @@ const StyledPaper = styled(Paper)`
   padding: 16px 24px 24px;
 `
 
-// Provide a paper container similar to what react-admin uses, for use in non-react-admin pages
 const PaperContainer = ({ children }) => (
   <React.Fragment>
     <StyledPaper>
