@@ -26,7 +26,7 @@ const TableHead = () => (
   <RATableHead>
     <TableRow>
       {rows.map(row => {
-        return <TableCell key={row.name} />
+        return <TableCell key={row.name}>{row.name}</TableCell>
       })}
     </TableRow>
   </RATableHead>
@@ -71,8 +71,8 @@ const InfluencerList = ({
             orderBy={orderBy}
           />
           <TableBody>
-            {influencers.map((influencer, index) => (
-              <InfluencerRow influencer={influencer} key={index} />
+            {influencers.map(influencer => (
+              <InfluencerRow influencer={influencer} key={influencer.id} />
             ))}
           </TableBody>
         </Table>
