@@ -41,7 +41,7 @@ export default compose(
       query($hasInfluencer: Boolean!, $hostname: String!, $influencerId: ID) {
         hostname(where: { hostname: $hostname }) {
           website {
-            flows {
+            triggers {
               id
               order
               urlMatchers {

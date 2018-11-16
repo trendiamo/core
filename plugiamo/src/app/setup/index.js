@@ -19,33 +19,32 @@ export const optionsFromHash = () => {
   return window.__trendiamoOptionsFromHash
 }
 
-const getMatchedFlow = flows => {
-  const matchedFlow = flows
-    .sort((a, b) => a.order - b.order)
-    .find(flow =>
-      flow.urlMatchers.some(urlMatcher => urlMatcher.regexp === '*' || matchUrl(location.pathname, urlMatcher.regexp))
-    )
-  if (matchedFlow && matchedFlow.curation) {
-    return { flow: matchedFlow.curation, type: 'curation' }
-  } else if (matchedFlow.chat) {
-    return { flow: matchedFlow.chat, type: 'scriptedChat' }
-  } else if (matchedFlow.outro) {
-    return { flow: matchedFlow.outro, type: 'outro' }
-  }
-}
-
 // XXX: we'll remove this method after changing the fetching logic of flows, triggers, path, etc.
-const getFlowFromPath = (flows, path) => {
+const getFlowFromPath = (triggers, path) => {
   const match = path.match(/\/(.+)\/(.+)/)
   if (match && match.length < 3) return {}
   const idFromPath = path.match(/\/(.+)\/(.+)/)[2]
-  for (let i = 0; i < flows.length; i++) {
-    const flow = flows[i]
-    if (flow.curation && flow.curation.id === idFromPath) return { flow: flow.curation, type: 'curation' }
-    if (flow.chat && flow.chat.id === idFromPath) return { flow: flow.chat, type: 'scriptedChat' }
-    if (flow.outro && flow.outro.id === idFromPath) return { flow: flow.outro, type: 'outro' }
+  for (let i = 0; i < triggers.length; i++) {
+    const trigger = triggers[i]
+    if (trigger.curation && trigger.curation.id === idFromPath) return { flow: trigger.curation, type: 'curation' }
+    if (trigger.chat && trigger.chat.id === idFromPath) return { flow: trigger.chat, type: 'scriptedChat' }
+    if (trigger.outro && trigger.outro.id === idFromPath) return { flow: trigger.outro, type: 'outro' }
   }
   return {}
+}
+
+const getFlowFromTriggers = triggers => {
+  const trigger = triggers
+    .sort((a, b) => a.order - b.order)
+    .find(trigger =>
+      trigger.urlMatchers.some(
+        urlMatcher => urlMatcher.regexp === '*' || matchUrl(location.pathname, urlMatcher.regexp)
+      )
+    )
+  if (!trigger) return
+  if (trigger.curation) return { flow: trigger.curation, type: 'curation' }
+  if (trigger.chat) return { flow: trigger.chat, type: 'scriptedChat' }
+  if (trigger.outro) return { flow: trigger.outro, type: 'outro' }
 }
 
 const getMatchedInfluencer = ({ flow, data }) => {
@@ -57,8 +56,8 @@ const getMatchedInfluencer = ({ flow, data }) => {
 const setup = data => {
   const { /* persona,*/ open, path, picture } = optionsFromHash()
   const { flow, type: flowType } = path
-    ? getFlowFromPath(data.hostname.website.flows, path)
-    : getMatchedFlow(data.hostname.website.flows)
+    ? getFlowFromPath(data.hostname.website.triggers, path)
+    : getFlowFromTriggers(data.hostname.website.triggers)
 
   if (picture) addPicture(picture)
 
