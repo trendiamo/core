@@ -17,7 +17,7 @@ import theme from './theme'
 import { Admin, Resource } from 'react-admin'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
-import { InfluencersCreate, InfluencersEdit } from './resources/influencers'
+// import { InfluencersList } from './resources/influencers'
 import { Route } from 'react-router-dom'
 import 'assets/css/fonts.css'
 
