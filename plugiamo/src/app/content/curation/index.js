@@ -87,6 +87,7 @@ const Curation = compose(
           subtitle
           spotlights {
             id
+            text
             persona {
               name
               description

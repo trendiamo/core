@@ -18,7 +18,7 @@ const SpotlightItem = ({ onListItemClick, setImgRef, setNameRef, spotlight }) =>
     <ListImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
     <ListContent>
       <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>
-      <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
+      <PersonaDescription>{spotlight.text}</PersonaDescription>
     </ListContent>
     <ListChevron />
   </ListItem>

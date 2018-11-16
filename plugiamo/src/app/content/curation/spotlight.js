@@ -83,7 +83,7 @@ const CoverSpotlight = compose(
     <PaddedCover>
       <span ref={setNameRef}>{spotlight.persona.name}</span>
       <TopSlideAnimation timeout={250 * 1}>
-        <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
+        <PersonaDescription>{spotlight.text}</PersonaDescription>
       </TopSlideAnimation>
     </PaddedCover>
     <BackButton isLeaving={isLeaving} onClick={routeToCuration}>
