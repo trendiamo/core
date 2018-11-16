@@ -13,11 +13,21 @@ const ListChevron = styled(IconChevronRight)`
   margin: 10px;
 `
 
+// 101px makes it so 3 lines of text fit with no need for scroll
 const ListContent = styled.div`
+  height: 101px;
   padding: 1rem;
   flex: 1;
-  height: 100px;
   overflow-y: auto;
+`
+
+// 101px makes it so 3 lines of text fit with no need for scroll
+const ListImg = styled.img`
+  width: 101px;
+  height: 101px;
+  display: block;
+  border-radius: 8px 0 0 8px;
+  object-fit: cover;
 `
 
 const ListItem = styled.li`
@@ -35,14 +45,6 @@ const ListItem = styled.li`
     background-color: #00adef;
     color: white;
   }
-`
-
-const ListImg = styled.img`
-  display: block;
-  border-radius: 8px 0 0 8px;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
 `
 
 export { List, ListChevron, ListContent, ListItem, ListImg }
