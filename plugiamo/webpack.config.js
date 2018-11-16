@@ -7,7 +7,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'plugiamo.js',
+    filename: 'plugin.js',
   },
   module: {
     rules: [
