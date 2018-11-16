@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import transition from 'ext/transition'
 import { animate, TopSlideAnimation } from 'shared/animate'
 import { compose, lifecycle, withHandlers, withProps } from 'recompose'
-import { CoverImg, InfluencerDescription, PaddedCover } from 'shared/cover'
+import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
 import { h } from 'preact'
 import { IconChevronLeft } from 'icons'
 import { List } from 'shared/list'
@@ -79,11 +79,11 @@ const CoverSpotlight = compose(
   }))
 )(({ isLeaving, routeToCuration, setImgRef, setNameRef, spotlight }) => (
   <FlexDiv>
-    <CoverImg ref={setImgRef} src={spotlight.influencer.profilePic.url} />
+    <CoverImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
     <PaddedCover>
-      <span ref={setNameRef}>{spotlight.influencer.name}</span>
+      <span ref={setNameRef}>{spotlight.persona.name}</span>
       <TopSlideAnimation timeout={250 * 1}>
-        <InfluencerDescription>{spotlight.influencer.description}</InfluencerDescription>
+        <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
       </TopSlideAnimation>
     </PaddedCover>
     <BackButton isLeaving={isLeaving} onClick={routeToCuration}>
@@ -103,7 +103,7 @@ const ContentSpotlight = compose(
     spotlight: spotlights.find(e => e.id === id),
   })),
   withProps(({ spotlight }) => ({
-    firstName: spotlight.influencer.name.split(' ')[0],
+    firstName: spotlight.persona.name.split(' ')[0],
   }))
 )(({ firstName, isLeaving, spotlight }) => (
   <Container>

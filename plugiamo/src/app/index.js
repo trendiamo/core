@@ -25,12 +25,10 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ influencer, onToggleContent, sellerPicUrl, showingContent }) => (
+const App = ({ persona, onToggleContent, personaPicUrl, showingContent }) => (
   <div>
-    {showingContent && (
-      <Content influencer={influencer} onToggleContent={onToggleContent} showingContent={showingContent} />
-    )}
-    <Launcher onToggleContent={onToggleContent} sellerPicUrl={sellerPicUrl} showingContent={showingContent} />
+    {showingContent && <Content onToggleContent={onToggleContent} persona={persona} showingContent={showingContent} />}
+    <Launcher onToggleContent={onToggleContent} personaPicUrl={personaPicUrl} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
 )
@@ -38,7 +36,7 @@ const App = ({ influencer, onToggleContent, sellerPicUrl, showingContent }) => (
 export default compose(
   graphql(
     gql`
-      query($hasInfluencer: Boolean!, $hostname: String!, $influencerId: ID) {
+      query($hasPersona: Boolean!, $hostname: String!, $personaId: ID) {
         hostname(where: { hostname: $hostname }) {
           website {
             triggers {
@@ -49,7 +47,7 @@ export default compose(
               }
               scriptedChat {
                 id
-                influencer {
+                persona {
                   name
                   description
                   profilePic {
@@ -59,7 +57,7 @@ export default compose(
               }
               curation {
                 id
-                influencer {
+                persona {
                   name
                   description
                   profilePic {
@@ -69,7 +67,7 @@ export default compose(
               }
               outro {
                 id
-                influencer {
+                persona {
                   name
                   description
                   profilePic {
@@ -80,7 +78,7 @@ export default compose(
             }
           }
         }
-        influencer(where: { id: $influencerId }) @include(if: $hasInfluencer) {
+        persona(where: { id: $personaId }) @include(if: $hasPersona) {
           name
           description
           profilePic {
@@ -90,9 +88,9 @@ export default compose(
       }
     `,
     {
-      hasInfluencer: !!optionsFromHash().persona,
+      hasPersona: !!optionsFromHash().persona,
       hostname: location.hostname,
-      influencerId: optionsFromHash().persona,
+      personaId: optionsFromHash().persona,
     }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
@@ -100,14 +98,14 @@ export default compose(
     website: data.hostname && data.hostname.website,
   })),
   branch(({ website }) => !website, infoMsgHof(`no website found for hostname ${location.hostname}`)),
-  withState('influencer', 'setInfluencer'),
+  withState('persona', 'setPersona'),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
       mixpanel.track('Loaded Plugin', { hash: location.hash, hostname: location.hostname })
-      const { data, setInfluencer, setShowingContent } = this.props
-      const { influencer, open } = setup(data)
-      setInfluencer(influencer)
+      const { data, setPersona, setShowingContent } = this.props
+      const { persona, open } = setup(data)
+      setPersona(persona)
 
       if (open && !isSmall()) {
         setShowingContent(true)
@@ -116,9 +114,9 @@ export default compose(
       }
     },
   }),
-  branch(({ influencer }) => !influencer, renderNothing),
-  withProps(({ influencer }) => ({
-    sellerPicUrl: influencer.profilePic.url,
+  branch(({ persona }) => !persona, renderNothing),
+  withProps(({ persona }) => ({
+    personaPicUrl: persona.profilePic.url,
   })),
   withHandlers({
     // onCtaClick: ({ exposition }) => () => {

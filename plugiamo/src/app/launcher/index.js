@@ -29,7 +29,7 @@ const StyledIconClose = styled(IconClose)`
   height: 20px;
 `
 
-const SellerPic = styled.div`
+const PersonaPic = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -75,10 +75,10 @@ const CloseIcon = ({ active }) => (
   </CloseIconContainer>
 )
 
-const Launcher = ({ onToggleContent, sellerPicUrl, showingContent }) => (
+const Launcher = ({ onToggleContent, personaPicUrl, showingContent }) => (
   <TrendiamoLauncherFrame>
     <Container onClick={onToggleContent}>
-      <SellerPic active={!showingContent} url={sellerPicUrl} />
+      <PersonaPic active={!showingContent} url={personaPicUrl} />
       <CloseIcon active={showingContent} />
     </Container>
   </TrendiamoLauncherFrame>

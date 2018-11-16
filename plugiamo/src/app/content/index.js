@@ -11,13 +11,13 @@ import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 import { Router } from 'ext/simple-router'
 
-const Content = ({ influencer, isTransitioning, onRouteChange, onToggleContent }) => (
+const Content = ({ persona, isTransitioning, onRouteChange, onToggleContent }) => (
   <ContentFrame onToggleContent={onToggleContent}>
     <Wrapper>
       <Router history={history} onChange={onRouteChange}>
         <Curation isTransitioning={isTransitioning} onRouteChange={onRouteChange} path="/curation/:id*" />
-        <ScriptedChat influencer={influencer} onToggleContent={onToggleContent} path="/scripted-chat/:id" />
-        <Outro influencer={influencer} path="/outro/:id" />
+        <ScriptedChat onToggleContent={onToggleContent} path="/scripted-chat/:id" persona={persona} />
+        <Outro path="/outro/:id" persona={persona} />
       </Router>
     </Wrapper>
   </ContentFrame>

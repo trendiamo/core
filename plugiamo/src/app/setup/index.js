@@ -48,10 +48,10 @@ const getFlowFromTriggers = triggers => {
   if (trigger.outro) return { flow: trigger.outro, type: 'outro' }
 }
 
-const getMatchedInfluencer = ({ flow, data }) => {
-  if (data.influencer) return data.influencer
-  // XXX: maybe also save last influencer we interacted with, and use that if available here, finally fallback to this:
-  if (flow) return flow.influencer
+const getMatchedPersona = ({ flow, data }) => {
+  if (data.persona) return data.persona
+  // XXX: maybe also save last persona we interacted with, and use that if available here, finally fallback to this:
+  if (flow) return flow.persona
 }
 
 const setup = data => {
@@ -69,7 +69,7 @@ const setup = data => {
   }
 
   return {
-    influencer: getMatchedInfluencer({ flow, data }),
+    persona: getMatchedPersona({ flow, data }),
     open: open && open.match(/1|true/),
   }
 }

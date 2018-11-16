@@ -12,7 +12,7 @@ const PaddedCover = styled.div`
   padding-left: 10px;
 `
 
-const InfluencerDescription = animate(
+const PersonaDescription = animate(
   styled.div`
     color: #ddd;
     font-size: 12px;
@@ -20,4 +20,4 @@ const InfluencerDescription = animate(
   250 * 2
 )
 
-export { CoverImg, InfluencerDescription, PaddedCover }
+export { CoverImg, PersonaDescription, PaddedCover }

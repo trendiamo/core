@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { branch, compose, renderNothing, withProps } from 'recompose'
 import { ChatBackground } from './shared'
 import { Consumer } from 'ext/graphql-context'
-import { CoverImg, InfluencerDescription, PaddedCover } from 'shared/cover'
+import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { TopSlideAnimation } from 'shared/animate'
@@ -13,13 +13,13 @@ const FlexDiv = styled.div`
   display: flex;
 `
 
-const CoverScriptedChat = ({ influencer }) => (
+const CoverScriptedChat = ({ persona }) => (
   <FlexDiv>
-    <CoverImg src={influencer.profilePic.url} />
+    <CoverImg src={persona.profilePic.url} />
     <PaddedCover>
-      <span>{influencer.name}</span>
+      <span>{persona.name}</span>
       <TopSlideAnimation timeout={250 * 1}>
-        <InfluencerDescription>{influencer.description}</InfluencerDescription>
+        <PersonaDescription>{persona.description}</PersonaDescription>
       </TopSlideAnimation>
     </PaddedCover>
   </FlexDiv>
@@ -32,8 +32,8 @@ const H2 = styled.h2`
 `
 
 const ContentScriptedChat = compose(
-  withProps(({ influencer }) => ({
-    firstName: influencer.name.split(' ')[0],
+  withProps(({ persona }) => ({
+    firstName: persona.name.split(' ')[0],
   }))
 )(({ scriptedChat, firstName, onToggleContent }) => (
   <ChatBackground>
@@ -76,12 +76,12 @@ const ScriptedChat = compose(
   withProps(({ data }) => ({
     scriptedChat: data.scriptedChat,
   }))
-)(({ scriptedChat, influencer, onToggleContent }) => (
+)(({ scriptedChat, persona, onToggleContent }) => (
   <FlexContainer>
     <Cover>
-      <CoverScriptedChat influencer={influencer} />
+      <CoverScriptedChat persona={persona} />
     </Cover>
-    <ContentScriptedChat influencer={influencer} onToggleContent={onToggleContent} scriptedChat={scriptedChat} />
+    <ContentScriptedChat onToggleContent={onToggleContent} persona={persona} scriptedChat={scriptedChat} />
   </FlexContainer>
 ))
 

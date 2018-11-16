@@ -71,7 +71,7 @@ const chatLog = {
     this.personName = personName
   },
   listeners: [],
-  logs: [], // logs are messages 'from promoter' and options from end-user. They have a type:'message' or type:'options'
+  logs: [], // logs are messages from persona and options from end-user. They have a type:'message' or type:'options'
   personName: null,
   removeListener(fn) {
     this.listeners = this.listeners.filter(e => e !== fn)

@@ -4,21 +4,21 @@ import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 
-const InfluencerName = styled.span`
+const PersonaName = styled.span`
   font-weight: 500;
   font-size: 18px;
 `
 
-const InfluencerDescription = styled.div`
+const PersonaDescription = styled.div`
   font-size: 14px;
 `
 
 const SpotlightItem = ({ onListItemClick, setImgRef, setNameRef, spotlight }) => (
   <ListItem onClick={onListItemClick}>
-    <ListImg ref={setImgRef} src={spotlight.influencer.profilePic.url} />
+    <ListImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
     <ListContent>
-      <InfluencerName ref={setNameRef}>{spotlight.influencer.name}</InfluencerName>
-      <InfluencerDescription>{spotlight.influencer.description}</InfluencerDescription>
+      <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>
+      <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
     </ListContent>
     <ListChevron />
   </ListItem>

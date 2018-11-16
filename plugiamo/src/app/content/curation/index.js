@@ -87,7 +87,7 @@ const Curation = compose(
           subtitle
           spotlights {
             id
-            influencer {
+            persona {
               name
               description
               profilePic {

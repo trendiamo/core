@@ -41,7 +41,7 @@ const Name = styled.div`
   font-weight: bold;
 `
 
-const InfluencerImg = styled.img`
+const PersonaImg = styled.img`
   margin-top: 80px;
   margin-bottom: 1rem;
   border-radius: 50%;
@@ -61,11 +61,11 @@ const Hr = styled.hr`
   border-bottom: 0;
 `
 
-const Outro = ({ influencer }) => (
+const Outro = ({ persona }) => (
   <Wrapper>
     <InnerContent>
-      <InfluencerImg src={influencer.profilePic.url} />
-      <Name>{influencer.name}</Name>
+      <PersonaImg src={persona.profilePic.url} />
+      <Name>{persona.name}</Name>
       <p>{'Thanks for buying my recommendation.'}</p>
       <Hr />
       <p>{'Enjoy and let me know what you think! 🙌'}</p>
