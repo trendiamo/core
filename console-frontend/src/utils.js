@@ -305,7 +305,7 @@ export const apiWebsiteUpdate = (id, body, setInfo) => apiWebsiteUpdateSaga(`${W
 export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
 export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)
 
-export const apiInfluencerList = (setInfo, pagRows) => apiInfluencerListSaga(`${INFLUENCERS_URL}/?${pagRows}`, setInfo)
+export const apiInfluencerList = setInfo => apiInfluencerListSaga(`${INFLUENCERS_URL}`, setInfo)
 export const apiInfluencerShow = (id, setInfo) => apiInfluencerShowSaga(`${INFLUENCERS_URL}/${id}`, setInfo)
 export const apiInfluencerCreate = (body, setInfo) => apiInfluencerCreateSaga(INFLUENCERS_URL, body, setInfo)
 export const apiInfluencerUpdate = (id, body, setInfo) =>
