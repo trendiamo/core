@@ -3,6 +3,7 @@ import mixpanel from 'ext/mixpanel'
 import { GraphQLClient } from 'graphql-request'
 import { graphQlUrl, mixpanelToken } from './config'
 import { h, render } from 'preact'
+import { isSmall } from 'utils'
 import { Provider } from 'ext/graphql-context'
 
 mixpanel.init(mixpanelToken)
@@ -15,7 +16,9 @@ const RootComponent = () => (
   </Provider>
 )
 
-const trendiamoContainer = document.createElement('div')
-trendiamoContainer.classList.add('trendiamo-container')
-document.body.appendChild(trendiamoContainer)
-render(<RootComponent />, trendiamoContainer)
+if (!isSmall()) {
+  const trendiamoContainer = document.createElement('div')
+  trendiamoContainer.classList.add('trendiamo-container')
+  document.body.appendChild(trendiamoContainer)
+  render(<RootComponent />, trendiamoContainer)
+}
