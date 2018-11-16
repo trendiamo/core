@@ -14,8 +14,8 @@ const routes = {
   root() {
     return '/'
   },
-  scriptedChat(chatId) {
-    return `/scripted-chat/${chatId}`
+  scriptedChat(scriptedChatId) {
+    return `/scripted-chat/${scriptedChatId}`
   },
   spotlight(curationId, spotlightId) {
     return `/curation/${curationId}/spotlight/${spotlightId}`

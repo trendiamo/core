@@ -47,7 +47,7 @@ export default compose(
               urlMatchers {
                 regexp
               }
-              chat {
+              scriptedChat {
                 id
                 influencer {
                   name

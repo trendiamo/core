@@ -35,14 +35,14 @@ const ContentScriptedChat = compose(
   withProps(({ influencer }) => ({
     firstName: influencer.name.split(' ')[0],
   }))
-)(({ chat, firstName, onToggleContent }) => (
+)(({ scriptedChat, firstName, onToggleContent }) => (
   <ChatBackground>
-    <H2>{chat.title}</H2>
+    <H2>{scriptedChat.title}</H2>
     <Consumer>
       {client => (
         <ChatLogUi
           client={client}
-          initialChatStep={chat.chatStep}
+          initialChatStep={scriptedChat.chatStep}
           onToggleContent={onToggleContent}
           personName={firstName}
         />
@@ -61,7 +61,7 @@ const ScriptedChat = compose(
   graphql(
     gql`
       query($id: ID!) {
-        chat(where: { id: $id }) {
+        scriptedChat(where: { id: $id }) {
           id
           title
           chatStep {
@@ -74,14 +74,14 @@ const ScriptedChat = compose(
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
-    chat: data.chat,
+    scriptedChat: data.scriptedChat,
   }))
-)(({ chat, influencer, onToggleContent }) => (
+)(({ scriptedChat, influencer, onToggleContent }) => (
   <FlexContainer>
     <Cover>
       <CoverScriptedChat influencer={influencer} />
     </Cover>
-    <ContentScriptedChat chat={chat} influencer={influencer} onToggleContent={onToggleContent} />
+    <ContentScriptedChat influencer={influencer} onToggleContent={onToggleContent} scriptedChat={scriptedChat} />
   </FlexContainer>
 ))
 
