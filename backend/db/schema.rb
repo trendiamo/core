@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181119142143) do
+ActiveRecord::Schema.define(version: 20181119152010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,25 +59,14 @@ ActiveRecord::Schema.define(version: 20181119142143) do
   create_table "chat_steps", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "chat_id"
+    t.bigint "scripted_chat_id"
     t.bigint "account_id"
     t.bigint "chat_option_id"
     t.bigint "refering_chat_option_id"
     t.index ["account_id"], name: "index_chat_steps_on_account_id"
-    t.index ["chat_id"], name: "index_chat_steps_on_chat_id"
     t.index ["chat_option_id"], name: "index_chat_steps_on_chat_option_id"
     t.index ["refering_chat_option_id"], name: "index_chat_steps_on_refering_chat_option_id"
-  end
-
-  create_table "chats", force: :cascade do |t|
-    t.string "path", null: false
-    t.string "title", null: false
-    t.bigint "influencer_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "account_id"
-    t.index ["account_id"], name: "index_chats_on_account_id"
-    t.index ["influencer_id"], name: "index_chats_on_influencer_id"
+    t.index ["scripted_chat_id"], name: "index_chat_steps_on_scripted_chat_id"
   end
 
   create_table "influencers", force: :cascade do |t|
@@ -88,6 +77,16 @@ ActiveRecord::Schema.define(version: 20181119142143) do
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
     t.index ["account_id"], name: "index_influencers_on_account_id"
+  end
+
+  create_table "scripted_chats", force: :cascade do |t|
+    t.string "title", null: false
+    t.bigint "influencer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_scripted_chats_on_account_id"
+    t.index ["influencer_id"], name: "index_scripted_chats_on_influencer_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -139,10 +138,10 @@ ActiveRecord::Schema.define(version: 20181119142143) do
   add_foreign_key "chat_steps", "accounts"
   add_foreign_key "chat_steps", "chat_options"
   add_foreign_key "chat_steps", "chat_options", column: "refering_chat_option_id"
-  add_foreign_key "chat_steps", "chats"
-  add_foreign_key "chats", "accounts"
-  add_foreign_key "chats", "influencers"
+  add_foreign_key "chat_steps", "scripted_chats"
   add_foreign_key "influencers", "accounts"
+  add_foreign_key "scripted_chats", "accounts"
+  add_foreign_key "scripted_chats", "influencers"
   add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
 end
