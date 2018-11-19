@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import PaperContainer from 'app/layout/paper-container'
 import ProfilePic from './profile-pic'
 import React from 'react'
+import routes from 'app/routes'
 import styled from 'styled-components'
 import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiInfluencerShow } from 'utils'
@@ -35,7 +36,7 @@ const InfluencerShow = ({ influencer, isLoading }) => (
     ) : (
       <PaperContainer>
         <ButtonsContainer>
-          <Button color="primary" component={Link} to="edit">
+          <Button color="primary" component={Link} to={routes.influencerEdit(influencer.id)}>
             <EditIcon />
             {'Edit'}
           </Button>

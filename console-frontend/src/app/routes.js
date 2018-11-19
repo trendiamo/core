@@ -20,6 +20,12 @@ const routes = {
   root() {
     return '/'
   },
+  influencerShow(id) {
+    return `/influencers/${id}`
+  },
+  influencerEdit(id) {
+    return `/influencers/${id}/edit`
+  },
 }
 
 export default routes
