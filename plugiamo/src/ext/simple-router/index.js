@@ -59,8 +59,7 @@ function matchUrl(url, route) {
 }
 
 const getMatchingChildren = (children, url) =>
-  [children]
-    .flat(1)
+  (Array.isArray(children) ? children : [children])
     .map(vnode => {
       let matches = matchUrl(url, vnode.attributes.path)
       if (matches) {
