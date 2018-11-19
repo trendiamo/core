@@ -15,8 +15,6 @@ const StyledAvatar = styled(FilteredAvatar)`
   height: ${({ small }) => (small ? '40px' : '100px')};
 `
 
-const ProfilePic = ({ influencer, small }) => (
-  <StyledAvatar alt={influencer.name} small={small} src={influencer.profilePicUrl} />
-)
+const ProfilePic = ({ persona, small }) => <StyledAvatar alt={persona.name} small={small} src={persona.profilePicUrl} />
 
 export default ProfilePic

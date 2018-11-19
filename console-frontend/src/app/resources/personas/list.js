@@ -22,7 +22,7 @@ import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
-import { apiInfluencerDestroy, apiInfluencerList } from 'utils'
+import { apiPersonaDestroy, apiPersonaList } from 'utils'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Link } from 'react-router-dom'
 
@@ -59,10 +59,10 @@ const SelectedTypography = styled(Typography)`
   margin-top: 12px;
 `
 
-const AddInfluencerButton = () => (
-  <Button component={Link} size="small" to={routes.influencerCreate()}>
+const AddPersonaButton = () => (
+  <Button component={Link} size="small" to={routes.personaCreate()}>
     <StyledAddCircleOutline />
-    <StyledTypography>{'Add Influencer'}</StyledTypography>
+    <StyledTypography>{'Add Persona'}</StyledTypography>
   </Button>
 )
 
@@ -72,19 +72,19 @@ const columns = [
   { name: 'description', numeric: false, disablePadding: false, label: 'description' },
 ]
 
-const TableToolbar = ({ selectedIds, deleteInfluencers }) => (
+const TableToolbar = ({ selectedIds, deletePersonas }) => (
   <Toolbar>
     <Typography id="tableTitle" variant="headline">
-      {'Influencers'}
+      {'Personas'}
     </Typography>
-    <AddInfluencerButton />
+    <AddPersonaButton />
     {selectedIds.length > 0 ? (
       <SelectedDiv>
         <SelectedTypography color="inherit" variant="subheading">
           {`${selectedIds.length} selected`}
         </SelectedTypography>
         <Tooltip title="Delete">
-          <IconButton aria-label="Delete" onClick={deleteInfluencers}>
+          <IconButton aria-label="Delete" onClick={deletePersonas}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -121,50 +121,50 @@ const TableHead = ({ handleSelectAll, isSelectAll }) => (
   </MUITableHead>
 )
 
-const InfluencerRow = compose(
+const PersonaRow = compose(
   withHandlers({
-    handleSelect: ({ setSelectedIds, selectedIds, influencer }) => event => {
+    handleSelect: ({ setSelectedIds, selectedIds, persona }) => event => {
       if (event.target.checked) {
-        setSelectedIds([...selectedIds, influencer.id])
+        setSelectedIds([...selectedIds, persona.id])
       } else {
         let newIdsToDelete = [...selectedIds]
-        newIdsToDelete.splice(selectedIds.indexOf(influencer.id), 1)
+        newIdsToDelete.splice(selectedIds.indexOf(persona.id), 1)
         setSelectedIds(newIdsToDelete)
       }
     },
   })
-)(({ influencer, handleSelect, selectedIds }) => (
+)(({ persona, handleSelect, selectedIds }) => (
   <TableRow hover role="checkbox" tabIndex={-1}>
     <TableCell padding="checkbox">
-      <Checkbox checked={selectedIds.includes(influencer.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
+      <Checkbox checked={selectedIds.includes(persona.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
-      <Avatar alt="Remy Sharp" src={influencer.profilePicUrl} />
+      <Avatar alt="Remy Sharp" src={persona.profilePicUrl} />
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
-      {influencer.name}
+      {persona.name}
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
-      {influencer.description}
+      {persona.description}
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
-      <Button color="primary" component={Link} to={routes.influencerShow(influencer.id)}>
+      <Button color="primary" component={Link} to={routes.personaShow(persona.id)}>
         <ShowIcon />
       </Button>
-      <Button color="primary" component={Link} to={routes.influencerEdit(influencer.id)}>
+      <Button color="primary" component={Link} to={routes.personaEdit(persona.id)}>
         <EditIcon />
       </Button>
     </TableCell>
   </TableRow>
 ))
 
-const InfluencerList = ({
+const PersonaList = ({
   selectedIds,
   handleSelectAll,
-  influencers,
+  personas,
   handleRequestSort,
   isLoading,
-  deleteInfluencers,
+  deletePersonas,
   setSelectedIds,
   isSelectAll,
 }) => (
@@ -175,22 +175,22 @@ const InfluencerList = ({
       </CircularProgressContainer>
     ) : (
       <PaperContainer>
-        <TableToolbar deleteInfluencers={deleteInfluencers} selectedIds={selectedIds} />
-        <Table aria-labelledby="Influencers">
+        <TableToolbar deletePersonas={deletePersonas} selectedIds={selectedIds} />
+        <Table aria-labelledby="Personas">
           <TableHead
             handleRequestSort={handleRequestSort}
             handleSelectAll={handleSelectAll}
-            influencers={influencers}
             isSelectAll={isSelectAll}
+            personas={personas}
             selectedIds={selectedIds}
           />
           <TableBody>
-            {influencers.map((influencer, index) => (
-              <InfluencerRow
+            {personas.map((persona, index) => (
+              <PersonaRow
                 handleSelectAll={handleSelectAll}
                 index={index}
-                influencer={influencer}
-                key={influencer.id}
+                key={persona.id}
+                persona={persona}
                 selectedIds={selectedIds}
                 setSelectedIds={setSelectedIds}
               />
@@ -203,31 +203,31 @@ const InfluencerList = ({
 )
 
 export default compose(
-  withState('influencers', 'setInfluencers', []),
+  withState('personas', 'setPersonas', []),
   withState('isLoading', 'setIsLoading', true),
   withState('info', 'setInfo', null),
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
   withHandlers({
-    deleteInfluencers: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setInfluencers }) => async event => {
+    deletePersonas: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setPersonas }) => async event => {
       event.preventDefault()
-      await apiInfluencerDestroy({ ids: selectedIds }, setInfo)
-      const influencersResponse = await apiInfluencerList(setInfo)
-      setInfluencers(influencersResponse)
+      await apiPersonaDestroy({ ids: selectedIds }, setInfo)
+      const personasResponse = await apiPersonaList(setInfo)
+      setPersonas(personasResponse)
       setIsLoading(false)
       setSelectedIds([])
     },
-    handleSelectAll: ({ setSelectedIds, influencers, setIsSelectAll }) => event => {
-      setSelectedIds(event.target.checked ? influencers.map(influencer => influencer.id) : [])
+    handleSelectAll: ({ setSelectedIds, personas, setIsSelectAll }) => event => {
+      setSelectedIds(event.target.checked ? personas.map(persona => persona.id) : [])
       setIsSelectAll(event.target.checked)
     },
   }),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setInfo, setInfluencers } = this.props
-      const influencersResponse = await apiInfluencerList(setInfo)
-      setInfluencers(influencersResponse)
+      const { setIsLoading, setInfo, setPersonas } = this.props
+      const personasResponse = await apiPersonaList(setInfo)
+      setPersonas(personasResponse)
       setIsLoading(false)
     },
   })
-)(InfluencerList)
+)(PersonaList)

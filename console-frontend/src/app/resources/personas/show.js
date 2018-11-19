@@ -10,7 +10,7 @@ import React from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import withRaTitle from 'ext/recompose/with-ra-title'
-import { apiInfluencerShow } from 'utils'
+import { apiPersonaShow } from 'utils'
 import { compose, lifecycle, withState } from 'recompose'
 import { Link } from 'react-router-dom'
 
@@ -27,7 +27,7 @@ const CircularProgressContainer = styled.div`
   justify-content: center;
 `
 
-const InfluencerShow = ({ influencer, isLoading }) => (
+const PersonaShow = ({ persona, isLoading }) => (
   <React.Fragment>
     {isLoading ? (
       <CircularProgressContainer>
@@ -36,22 +36,22 @@ const InfluencerShow = ({ influencer, isLoading }) => (
     ) : (
       <PaperContainer>
         <ButtonsContainer>
-          <Button color="primary" component={Link} to={routes.influencerEdit(influencer.id)}>
+          <Button color="primary" component={Link} to={routes.personaEdit(persona.id)}>
             <EditIcon />
             {'Edit'}
           </Button>
         </ButtonsContainer>
         <List>
           <ListItem>
-            <ProfilePic influencer={influencer} />
+            <ProfilePic persona={persona} />
           </ListItem>
           <ListItem>
-            <ListItemText primary="Name" secondary={influencer.name} secondaryTypographyProps={{ variant: 'body1' }} />
+            <ListItemText primary="Name" secondary={persona.name} secondaryTypographyProps={{ variant: 'body1' }} />
           </ListItem>
           <ListItem>
             <ListItemText
               primary="Description"
-              secondary={influencer.description}
+              secondary={persona.description}
               secondaryTypographyProps={{ variant: 'body1' }}
             />
           </ListItem>
@@ -62,17 +62,17 @@ const InfluencerShow = ({ influencer, isLoading }) => (
 )
 
 export default compose(
-  withRaTitle('Influencer'),
-  withState('influencer', 'setInfluencer', {}),
+  withRaTitle('Persona'),
+  withState('persona', 'setPersona', {}),
   withState('isLoading', 'setIsLoading', true),
   withState('info', 'setInfo', null),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setInfo, setInfluencer, match } = this.props
-      const id = match.params.influencerId
-      const json = await apiInfluencerShow(id, setInfo)
+      const { setIsLoading, setInfo, setPersona, match } = this.props
+      const id = match.params.personaId
+      const json = await apiPersonaShow(id, setInfo)
       setIsLoading(false)
-      setInfluencer(json)
+      setPersona(json)
     },
   })
-)(InfluencerShow)
+)(PersonaShow)

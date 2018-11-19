@@ -8,7 +8,7 @@ import SaveIcon from '@material-ui/icons/Save'
 import TextField from '@material-ui/core/TextField'
 import withForm from 'ext/recompose/with-form'
 import withRaTitle from 'ext/recompose/with-ra-title'
-import { apiInfluencerShow, apiInfluencerUpdate } from 'utils'
+import { apiPersonaShow, apiPersonaUpdate } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 import { withRouter } from 'react-router'
@@ -70,7 +70,7 @@ const EditView = ({
 )
 
 export default compose(
-  withRaTitle('Edit Influencer'),
+  withRaTitle('Edit Persona'),
   withState('info', 'setInfo', null),
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
@@ -82,13 +82,13 @@ export default compose(
       const profilePicUrl = await uploadImage({
         blob: profilePic,
         setProgress,
-        type: 'users-profile-pics',
+        type: 'personas-profile-pics',
         defaultValue: form.profilePicUrl,
       })
       // update user data
-      const id = match.params.influencerId
+      const id = match.params.personaId
       const data = { ...form, profilePicUrl }
-      const result = await apiInfluencerUpdate(id, { influencer: data }, setInfo)
+      const result = await apiPersonaUpdate(id, { persona: data }, setInfo)
       return result
     },
     afterSave: ({ history }) => result => {
@@ -97,8 +97,8 @@ export default compose(
   }),
   withHandlers({
     loadFormObject: ({ setInfo, match }) => async () => {
-      const id = match.params.influencerId
-      const result = await apiInfluencerShow(id, setInfo)
+      const id = match.params.personaId
+      const result = await apiPersonaShow(id, setInfo)
       const resultObject = {
         name: result.name || '',
         description: result.description || '',

@@ -20,14 +20,14 @@ const routes = {
   root() {
     return '/'
   },
-  influencerCreate() {
-    return '/influencers/create'
+  personaCreate() {
+    return '/personas/create'
   },
-  influencerShow(id) {
-    return `/influencers/${id}`
+  personaShow(id) {
+    return `/personas/${id}`
   },
-  influencerEdit(id) {
-    return `/influencers/${id}/edit`
+  personaEdit(id) {
+    return `/personas/${id}/edit`
   },
 }
 
