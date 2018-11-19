@@ -22,7 +22,7 @@ class ApplicationController < ActionController::API
   end
 
   def pagination_vars(range_params)
-    range = range_params.map()
+    range = range_params.map(&:to_i)
     total_per_page = range[1] - range[0] + 1
     page_number = (range[0] / total_per_page) + 1
     {

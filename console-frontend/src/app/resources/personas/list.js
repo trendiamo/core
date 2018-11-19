@@ -214,12 +214,14 @@ export default compose(
       setSelectedIds(event.target.checked ? personas.map(persona => persona.id) : [])
       setIsSelectAll(event.target.checked)
     },
-    handleChangeRowsPerPage: ({ setInfluencers, setRowsPerPage, setInfo, rowsPerPage }) => async event => {
-      setRowsPerPage(event.target.value)
+    handleChangeRowsPerPage: ({ setInfluencers, setRowsPerPage, setInfo }) => async event => {
       const influencersResponse = await apiPersonaList(
         setInfo,
-        queryString.stringify({ range: [0, rowsPerPage - 1] }, { arrayFormat: 'bracket' })
+        queryString.stringify({ range: [0, event.target.value - 1] }, { arrayFormat: 'bracket' })
       )
+      setRowsPerPage(event.target.value)
+      // setPage()
+      console.log(influencersResponse)
       setInfluencers(influencersResponse)
     },
     handleChangePage: ({ setPage }) => event => {
