@@ -129,9 +129,11 @@ export default compose(
         mixpanel.track('Opened', { hostname: location.hostname })
         mixpanel.time_event('Clicked CTA Link')
         mixpanel.time_event('Closed')
+        document.documentElement.classList.add('trnd-open')
       } else {
         mixpanel.track('Closed', { hostname: location.hostname })
         mixpanel.time_event('Opened')
+        document.documentElement.classList.remove('trnd-open')
       }
       return setShowingContent(!showingContent)
     },

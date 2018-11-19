@@ -28,6 +28,10 @@ module.exports = {
         use: [{ loader: './svg-hoc-loader' }, 'svg-loader'],
         include: [path.resolve(__dirname, './src')],
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   performance: {

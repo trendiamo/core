@@ -5,6 +5,7 @@ import { graphQlUrl, mixpanelToken } from './config'
 import { h, render } from 'preact'
 import { isSmall } from 'utils'
 import { Provider } from 'ext/graphql-context'
+import './styles.css'
 
 mixpanel.init(mixpanelToken)
 
