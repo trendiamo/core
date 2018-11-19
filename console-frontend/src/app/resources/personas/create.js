@@ -8,12 +8,12 @@ import SaveIcon from '@material-ui/icons/Save'
 import TextField from '@material-ui/core/TextField'
 import withForm from 'ext/recompose/with-form'
 import withRaTitle from 'ext/recompose/with-ra-title'
-import { apiInfluencerCreate } from 'utils'
+import { apiPersonaCreate } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 import { withRouter } from 'react-router'
 
-const InfluencerCreate = ({
+const PersonaCreate = ({
   form,
   info,
   isFormLoading,
@@ -68,7 +68,7 @@ const InfluencerCreate = ({
 )
 
 export default compose(
-  withRaTitle('Create Influencer'),
+  withRaTitle('Create Persona'),
   withState('info', 'setInfo', null),
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
@@ -79,11 +79,11 @@ export default compose(
       const profilePicUrl = await uploadImage({
         blob: profilePic,
         setProgress,
-        type: 'influencers-profile-pics',
+        type: 'personas-profile-pics',
       })
       const data = { ...form, profilePicUrl }
-      const influencer = await apiInfluencerCreate({ influencer: data }, setInfo)
-      return influencer
+      const persona = await apiPersonaCreate({ persona: data }, setInfo)
+      return persona
     },
   }),
   withHandlers({
@@ -110,4 +110,4 @@ export default compose(
       setForm({ ...form, profilePicUrl })
     },
   })
-)(InfluencerCreate)
+)(PersonaCreate)

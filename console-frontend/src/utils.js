@@ -2,7 +2,7 @@ import auth from 'auth'
 import routes from 'app/routes'
 
 const BASE_API_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`
-const INFLUENCERS_URL = `${BASE_API_URL}/influencers`
+const PERSONAS_URL = `${BASE_API_URL}/personas`
 const SIGNUP_URL = `${BASE_API_URL}/users/sign_up`
 const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
@@ -107,7 +107,7 @@ const apiWebsiteUpdateRequest = async (url, body) => {
   return res.json()
 }
 
-const apiInfluencerListRequest = async url => {
+const apiPersonaListRequest = async url => {
   const res = await fetch(url, {
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ const apiInfluencerListRequest = async url => {
   return res.json()
 }
 
-const apiInfluencerShowRequest = async url => {
+const apiPersonaShowRequest = async url => {
   const res = await fetch(url, {
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ const apiInfluencerShowRequest = async url => {
   return res.json()
 }
 
-const apiInfluencerCreateRequest = async (url, body) => {
+const apiPersonaCreateRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
@@ -141,7 +141,7 @@ const apiInfluencerCreateRequest = async (url, body) => {
   return res.json()
 }
 
-const apiInfluencerDestroyRequest = async (url, body) => {
+const apiPersonaDestroyRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
@@ -153,7 +153,7 @@ const apiInfluencerDestroyRequest = async (url, body) => {
   return res.json()
 }
 
-const apiInfluencerUpdateRequest = async (url, body) => {
+const apiPersonaUpdateRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
@@ -256,36 +256,36 @@ export const apiSagaSignout = async url => {
   console.error('Error on Logout!')
 }
 
-export const apiInfluencerListSaga = async (url, setInfo) => {
-  const json = await apiInfluencerListRequest(url)
+export const apiPersonaListSaga = async (url, setInfo) => {
+  const json = await apiPersonaListRequest(url)
   const info = convertToInfo(json)
   if (info.status === 'success') return json
   setInfo(info)
 }
 
-export const apiInfluencerUpdateSaga = async (url, body, setInfo) => {
-  const json = await apiInfluencerUpdateRequest(url, body)
+export const apiPersonaUpdateSaga = async (url, body, setInfo) => {
+  const json = await apiPersonaUpdateRequest(url, body)
   const info = convertToInfo(json)
   if (info.status === 'success') return json
   setInfo(info)
 }
 
-export const apiInfluencerShowSaga = async (url, setInfo) => {
-  const json = await apiInfluencerShowRequest(url)
+export const apiPersonaShowSaga = async (url, setInfo) => {
+  const json = await apiPersonaShowRequest(url)
   const info = convertToInfo(json)
   if (info.status === 'success') return json
   setInfo(info)
 }
 
-export const apiInfluencerCreateSaga = async (url, body, setInfo) => {
-  const json = await apiInfluencerCreateRequest(url, body)
+export const apiPersonaCreateSaga = async (url, body, setInfo) => {
+  const json = await apiPersonaCreateRequest(url, body)
   const info = convertToInfo(json)
   if (info.status === 'success') return json
   setInfo(info)
 }
 
-export const apiInfluencerDestroySaga = async (url, body, setInfo) => {
-  const json = await apiInfluencerDestroyRequest(url, body)
+export const apiPersonaDestroySaga = async (url, body, setInfo) => {
+  const json = await apiPersonaDestroyRequest(url, body)
   const info = convertToInfo(json)
   if (info.status === 'success') return json
   setInfo(info)
@@ -305,9 +305,8 @@ export const apiWebsiteUpdate = (id, body, setInfo) => apiWebsiteUpdateSaga(`${W
 export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
 export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)
 
-export const apiInfluencerList = setInfo => apiInfluencerListSaga(INFLUENCERS_URL, setInfo)
-export const apiInfluencerShow = (id, setInfo) => apiInfluencerShowSaga(`${INFLUENCERS_URL}/${id}`, setInfo)
-export const apiInfluencerCreate = (body, setInfo) => apiInfluencerCreateSaga(INFLUENCERS_URL, body, setInfo)
-export const apiInfluencerUpdate = (id, body, setInfo) =>
-  apiInfluencerUpdateSaga(`${INFLUENCERS_URL}/${id}`, body, setInfo)
-export const apiInfluencerDestroy = (body, setInfo) => apiInfluencerDestroySaga(INFLUENCERS_URL, body, setInfo)
+export const apiPersonaDestroy = (body, setInfo) => apiPersonaDestroySaga(PERSONAS_URL, body, setInfo)
+export const apiPersonaList = setInfo => apiPersonaListSaga(PERSONAS_URL, setInfo)
+export const apiPersonaShow = (id, setInfo) => apiPersonaShowSaga(`${PERSONAS_URL}/${id}`, setInfo)
+export const apiPersonaCreate = (body, setInfo) => apiPersonaCreateSaga(PERSONAS_URL, body, setInfo)
+export const apiPersonaUpdate = (id, body, setInfo) => apiPersonaUpdateSaga(`${PERSONAS_URL}/${id}`, body, setInfo)

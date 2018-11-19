@@ -12,7 +12,7 @@ import routes from './routes'
 import theme from './theme'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
-import { InfluencerCreate, InfluencerEdit, InfluencerShow, InfluencersList } from './resources/influencers'
+import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import 'assets/css/fonts.css'
 
@@ -42,15 +42,15 @@ const ExternalRoute = ({ component, path, ...props }) => (
 )
 
 const RedirectRoot = () => (
-  <React.Fragment>{<Redirect to={auth.isLoggedIn() ? '/influencers' : routes.login()} />}</React.Fragment>
+  <React.Fragment>{<Redirect to={auth.isLoggedIn() ? '/personas' : routes.login()} />}</React.Fragment>
 )
 
 const Routes = () => (
   <Switch>
-    <PrivateRoute component={InfluencersList} exact path="/influencers" />
-    <PrivateRoute component={InfluencerCreate} exact path="/influencers/create" />
-    <PrivateRoute component={InfluencerShow} exact path="/influencers/:influencerId" />
-    <PrivateRoute component={InfluencerEdit} exact path="/influencers/:influencerId/edit" />
+    <PrivateRoute component={PersonasList} exact path="/personas" />
+    <PrivateRoute component={PersonaCreate} exact path="/personas/create" />
+    <PrivateRoute component={PersonaShow} exact path="/personas/:personaId" />
+    <PrivateRoute component={PersonaEdit} exact path="/personas/:personaId/edit" />
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />

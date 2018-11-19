@@ -52,7 +52,7 @@ const Menu = ({ classes, pathname, resources, open, ...rest }) => (
   </Container>
 )
 
-const resources = [{ name: 'influencers' }]
+const resources = [{ name: 'personas' }]
 
 export default compose(
   withRouter,
