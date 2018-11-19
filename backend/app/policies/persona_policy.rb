@@ -1,4 +1,4 @@
-class InfluencerPolicy < ApplicationPolicy
+class PersonaPolicy < ApplicationPolicy
   def index?
     user
   end

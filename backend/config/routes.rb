@@ -21,8 +21,8 @@ Rails.application.routes.draw do
         post "/users/sign_in", to: "users/sessions#create"
         delete "/users/sign_out", to: "users/sessions#destroy"
       end
-      resources :influencers, only: %i[index show update create]
-      delete "/influencers", to: "influencers#destroy"
+      resources :personas, only: %i[index show update create]
+      delete "/personas", to: "personas#destroy"
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end

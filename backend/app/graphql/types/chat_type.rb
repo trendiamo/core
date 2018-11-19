@@ -5,11 +5,6 @@ Types::ChatType = GraphQL::ObjectType.define do
   field :status, Types::StatusType
   field :title, types.String
   field :path, types.String
-  # field :influencer, Types::InfluencerType do
-  #   resolve ->(obj, _args, _ctx) {
-  #     obj.influencer
-  #   }
-  # end
   field :website, Types::WebsiteType do
     resolve ->(obj, _args, _ctx) {
       obj.website

@@ -25,7 +25,7 @@ class S3Controller < ApplicationController
   end
 
   def folder
-    if %w[influencers-profile-pics users-profile-pics].include?(params[:type])
+    if %w[personas-profile-pics users-profile-pics].include?(params[:type])
       params[:type]
     else
       "unknown"
