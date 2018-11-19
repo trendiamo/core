@@ -1,6 +1,5 @@
 import Button from '@material-ui/core/Button'
 import CloudUpload from '@material-ui/icons/CloudUpload'
-import Label from 'shared/label'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import React from 'react'
 import ReactCrop, { getPixelCrop } from 'react-image-crop'
@@ -10,7 +9,6 @@ import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
-import { Field } from 'redux-form'
 import { getSignedUrlFactory } from 'app/utils'
 import 'react-image-crop/dist/ReactCrop.css'
 
@@ -356,46 +354,5 @@ const PictureUploader = compose(
   })
 )(BarebonesPictureUploader)
 
-const PictureFieldElement = ({ label, picValue, setPicture, setProfilePic, setDisabled, disabled }) => (
-  <React.Fragment>
-    <Label>{label}</Label>
-    <PictureUploader
-      disabled={disabled}
-      onChange={setPicture}
-      setDisabled={setDisabled}
-      setProfilePic={setProfilePic}
-      value={picValue}
-    />
-  </React.Fragment>
-)
-
-const PictureField = compose(
-  withState('picValue', 'setPicValue', ({ input }) => input.value),
-  withHandlers({
-    setPicture: ({ input, setPicValue }) => value => {
-      // Sets the full-size picture.
-      setPicValue(value)
-      input.onChange(value)
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { input, setInputRef, required = false } = this.props
-      setInputRef({ ...input, required })
-    },
-  })
-)(PictureFieldElement)
-
-const PictureInput = ({ label, setProfilePic, source, setInputRef, ...props }) => (
-  <Field
-    {...props}
-    component={PictureField}
-    label={label}
-    name={source}
-    setInputRef={setInputRef}
-    setProfilePic={setProfilePic}
-  />
-)
-
-export { PictureInput, uploadImage, ProgressBar }
+export { uploadImage, ProgressBar }
 export default PictureUploader

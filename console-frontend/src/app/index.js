@@ -49,8 +49,8 @@ const Routes = () => (
   <Switch>
     <PrivateRoute component={InfluencersList} exact path="/influencers" />
     <PrivateRoute component={InfluencerCreate} exact path="/influencers/create" />
-    <PrivateRoute component={InfluencerShow} exact path="/influencers/:influencerId/show" />
-    <PrivateRoute component={InfluencerEdit} exact path="/influencers/:influencerId/(|edit)" />
+    <PrivateRoute component={InfluencerShow} exact path="/influencers/:influencerId" />
+    <PrivateRoute component={InfluencerEdit} exact path="/influencers/:influencerId/edit" />
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
