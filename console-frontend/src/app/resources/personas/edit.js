@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button'
+import CircularProgress from 'shared/circular-progress'
 import Label from 'shared/label'
 import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
@@ -9,22 +10,22 @@ import TextField from '@material-ui/core/TextField'
 import withForm from 'ext/recompose/with-form'
 import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiPersonaShow, apiPersonaUpdate } from 'utils'
-import { compose, withHandlers, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 import { withRouter } from 'react-router'
 
 const EditView = ({
-  isFormPristine,
-  onFormSubmit,
+  form,
   isCropping,
+  isFormLoading,
+  isFormPristine,
+  info,
+  onFormSubmit,
+  progress,
   setFieldValue,
+  setIsCropping,
   setProfilePic,
   setProfilePicUrl,
-  progress,
-  setIsCropping,
-  isFormLoading,
-  form,
-  info,
 }) => (
   <PaperContainer>
     <form onSubmit={onFormSubmit}>
@@ -117,5 +118,6 @@ export default compose(
     setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
       setForm({ ...form, profilePicUrl })
     },
-  })
+  }),
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(EditView)
