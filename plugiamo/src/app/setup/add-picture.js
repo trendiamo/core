@@ -41,7 +41,11 @@ const addPictures = {
 const addPicture = picture => {
   const method = addPictures[location.hostname]
   if (method) {
-    method(picture)
+    try {
+      method(picture)
+    } catch (e) {
+      infoMsg('addPicture failed', e)
+    }
   } else {
     infoMsg(`addPicture not implemented for ${location.hostname}`)
   }
