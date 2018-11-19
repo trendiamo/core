@@ -7,6 +7,7 @@ import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
 import MUITableHead from '@material-ui/core/TableHead'
 import MUIToolbar from '@material-ui/core/Toolbar'
 import PaperContainer from 'app/layout/paper-container'
+import queryString from 'query-string'
 import React from 'react'
 import routes from 'app/routes'
 import ShowIcon from '@material-ui/icons/Visibility'
@@ -14,6 +15,7 @@ import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
+import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -144,8 +146,12 @@ const PersonaList = ({
   personas,
   handleRequestSort,
   deletePersonas,
+  handleChangeRowsPerPage,
   setSelectedIds,
   isSelectAll,
+  handleChangePage,
+  rowsPerPage,
+  page,
 }) => (
   <PaperContainer>
     <EnhancedToolbar deletePersonas={deletePersonas} selectedIds={selectedIds} />
@@ -170,6 +176,21 @@ const PersonaList = ({
         ))}
       </TableBody>
     </Table>
+    <TablePagination
+      backIconButtonProps={{
+        'aria-label': 'Previous Page',
+      }}
+      component="div"
+      count={influencers && influencers.length}
+      nextIconButtonProps={{
+        'aria-label': 'Next Page',
+      }}
+      onChangePage={handleChangePage}
+      onChangeRowsPerPage={handleChangeRowsPerPage}
+      page={page}
+      rowsPerPage={rowsPerPage}
+      rowsPerPageOptions={[5, 10, 25]}
+    />
   </PaperContainer>
 )
 
@@ -179,6 +200,8 @@ export default compose(
   withState('info', 'setInfo', null),
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
+  withState('page', 'setPage', 1),
+  withState('rowsPerPage', 'setRowsPerPage', 10),
   withHandlers({
     deletePersonas: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setPersonas }) => async () => {
       await apiPersonaDestroy({ ids: selectedIds }, setInfo)
@@ -191,12 +214,26 @@ export default compose(
       setSelectedIds(event.target.checked ? personas.map(persona => persona.id) : [])
       setIsSelectAll(event.target.checked)
     },
+    handleChangeRowsPerPage: ({ setInfluencers, setRowsPerPage, setInfo, rowsPerPage }) => async event => {
+      setRowsPerPage(event.target.value)
+      const influencersResponse = await apiPersonaList(
+        setInfo,
+        queryString.stringify({ range: [0, rowsPerPage - 1] }, { arrayFormat: 'bracket' })
+      )
+      setInfluencers(influencersResponse)
+    },
+    handleChangePage: ({ setPage }) => event => {
+      // use set page with response from server
+    },
   }),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setInfo, setPersonas } = this.props
-      const personasResponse = await apiPersonaList(setInfo)
-      setPersonas(personasResponse)
+      const { setIsLoading, setInfo, setPersonas, rowsPerPage } = this.props
+      const influencersResponse = await apiPersonaList(
+        setInfo,
+        queryString.stringify({ range: [0, rowsPerPage - 1] }, { arrayFormat: 'bracket' })
+      )
+      setPersonas(influencersResponse)
       setIsLoading(false)
     },
   }),

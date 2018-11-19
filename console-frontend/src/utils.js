@@ -306,7 +306,7 @@ export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
 export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)
 
 export const apiPersonaDestroy = (body, setInfo) => apiPersonaDestroySaga(PERSONAS_URL, body, setInfo)
-export const apiPersonaList = setInfo => apiPersonaListSaga(PERSONAS_URL, setInfo)
+export const apiPersonaList = (setInfo, pagRows) => apiPersonaListSaga(`${PERSONAS_URL}/?${pagRows}`, setInfo)
 export const apiPersonaShow = (id, setInfo) => apiPersonaShowSaga(`${PERSONAS_URL}/${id}`, setInfo)
 export const apiPersonaCreate = (body, setInfo) => apiPersonaCreateSaga(PERSONAS_URL, body, setInfo)
 export const apiPersonaUpdate = (id, body, setInfo) => apiPersonaUpdateSaga(`${PERSONAS_URL}/${id}`, body, setInfo)
