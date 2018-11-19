@@ -1,7 +1,12 @@
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import EditIcon from '@material-ui/icons/Edit'
 import PaperContainer from 'app/layout/paper-container'
 import RATableHead from '@material-ui/core/TableHead'
 import React from 'react'
+import routes from 'app/routes'
+import ShowIcon from '@material-ui/icons/Visibility'
 import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,6 +14,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import { apiInfluencerList } from 'utils'
 import { compose, lifecycle, withState } from 'recompose'
+import { Link } from 'react-router-dom'
 
 const CircularProgressContainer = styled.div`
   height: 100%;
@@ -25,9 +31,11 @@ const rows = [
 const TableHead = () => (
   <RATableHead>
     <TableRow>
+      <TableCell key="avatar" />
       {rows.map(row => {
         return <TableCell key={row.name}>{row.name}</TableCell>
       })}
+      <TableCell key="actions" />
     </TableRow>
   </RATableHead>
 )
@@ -35,10 +43,21 @@ const TableHead = () => (
 const InfluencerRow = ({ influencer }) => (
   <TableRow hover role="checkbox" tabIndex={-1}>
     <TableCell component="th" padding="none" scope="row">
+      <Avatar alt="Remy Sharp" src={influencer.profilePicUrl} />
+    </TableCell>
+    <TableCell component="th" padding="none" scope="row">
       {influencer.name}
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
       {influencer.description}
+    </TableCell>
+    <TableCell component="th" padding="none" scope="row">
+      <Button color="primary" component={Link} to={routes.influencerShow(influencer.id)}>
+        <ShowIcon />
+      </Button>
+      <Button color="primary" component={Link} to={routes.influencerEdit(influencer.id)}>
+        <EditIcon />
+      </Button>
     </TableCell>
   </TableRow>
 )
