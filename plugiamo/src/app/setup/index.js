@@ -42,7 +42,7 @@ const getFlowFromTriggers = triggers => {
         urlMatcher => urlMatcher.regexp === '*' || matchUrl(location.pathname, urlMatcher.regexp)
       )
     )
-  if (!trigger) return
+  if (!trigger) return {}
   if (trigger.curation) return { flow: trigger.curation, type: 'curation' }
   if (trigger.scriptedChat) return { flow: trigger.scriptedChat, type: 'scriptedChat' }
   if (trigger.outro) return { flow: trigger.outro, type: 'outro' }
