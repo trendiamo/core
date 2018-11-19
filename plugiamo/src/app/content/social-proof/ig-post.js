@@ -3,7 +3,7 @@ import qs from 'querystring'
 import styled from 'styled-components'
 import { compose, lifecycle, withState } from 'recompose'
 import { h } from 'preact'
-import { width } from 'config'
+import { WIDTH } from 'config'
 
 const StyledIframe = styled.iframe`
   margin-bottom: 1rem;
@@ -25,7 +25,7 @@ export default compose(
       })
       jsonp(`https://api.instagram.com/oembed/?${queryParams}`).promise.then(response => {
         const aspectRatio = response.thumbnail_width / response.thumbnail_height
-        const imgHeight = Math.round((width - 16 * 2) / aspectRatio)
+        const imgHeight = Math.round((WIDTH - 16 * 2) / aspectRatio)
         setHeight(IG_HEIGHT + imgHeight)
       })
     },
