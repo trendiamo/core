@@ -4,7 +4,6 @@ class Website < ApplicationRecord
   belongs_to :account
 
   validates :name, presence: true, uniqueness: true
-  validates :title, presence: true
   validates :hostnames, presence: true
   validate :hostnames_cannot_be_blank
   validate :hostnames_cannot_be_repeated
