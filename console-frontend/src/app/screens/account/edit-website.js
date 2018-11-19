@@ -1,6 +1,7 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import auth from 'auth'
 import Button from '@material-ui/core/Button'
+import CircularProgress from 'shared/circular-progress'
 import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
 import Notification from 'shared/notification'
@@ -12,7 +13,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import withForm from 'ext/recompose/with-form'
 import { apiWebsiteShow, apiWebsiteUpdate } from 'utils'
-import { compose, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Prompt } from 'react-router'
 
 const StyledTypography = styled(Typography)`
@@ -177,5 +178,6 @@ export default compose(
       newHostnames[index] = newValue
       setForm({ ...form, hostnames: newHostnames })
     },
-  })
+  }),
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(EditWebsite)

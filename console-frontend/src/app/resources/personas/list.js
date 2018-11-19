@@ -2,7 +2,7 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from 'shared/circular-progress'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import FilterListIcon from '@material-ui/icons/FilterList'
@@ -23,15 +23,8 @@ import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import { apiPersonaDestroy, apiPersonaList } from 'utils'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import { Link } from 'react-router-dom'
-
-const CircularProgressContainer = styled.div`
-  height: 100%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
@@ -163,43 +156,34 @@ const PersonaList = ({
   handleSelectAll,
   personas,
   handleRequestSort,
-  isLoading,
   deletePersonas,
   setSelectedIds,
   isSelectAll,
 }) => (
-  <React.Fragment>
-    {isLoading ? (
-      <CircularProgressContainer>
-        <CircularProgress size={80} />
-      </CircularProgressContainer>
-    ) : (
-      <PaperContainer>
-        <TableToolbar deletePersonas={deletePersonas} selectedIds={selectedIds} />
-        <Table aria-labelledby="Personas">
-          <TableHead
-            handleRequestSort={handleRequestSort}
+  <PaperContainer>
+    <TableToolbar deletePersonas={deletePersonas} selectedIds={selectedIds} />
+    <Table aria-labelledby="Personas">
+      <TableHead
+        handleRequestSort={handleRequestSort}
+        handleSelectAll={handleSelectAll}
+        isSelectAll={isSelectAll}
+        personas={personas}
+        selectedIds={selectedIds}
+      />
+      <TableBody>
+        {personas.map((persona, index) => (
+          <PersonaRow
             handleSelectAll={handleSelectAll}
-            isSelectAll={isSelectAll}
-            personas={personas}
+            index={index}
+            key={persona.id}
+            persona={persona}
             selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
           />
-          <TableBody>
-            {personas.map((persona, index) => (
-              <PersonaRow
-                handleSelectAll={handleSelectAll}
-                index={index}
-                key={persona.id}
-                persona={persona}
-                selectedIds={selectedIds}
-                setSelectedIds={setSelectedIds}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </PaperContainer>
-    )}
-  </React.Fragment>
+        ))}
+      </TableBody>
+    </Table>
+  </PaperContainer>
 )
 
 export default compose(
@@ -229,5 +213,6 @@ export default compose(
       setPersonas(personasResponse)
       setIsLoading(false)
     },
-  })
+  }),
+  branch(({ isLoading }) => isLoading, renderComponent(CircularProgress))
 )(PersonaList)

@@ -1,5 +1,6 @@
 import auth from 'auth'
 import Button from '@material-ui/core/Button'
+import CircularProgress from 'shared/circular-progress'
 import Label from 'shared/label'
 import Link from 'shared/link'
 import Notification from 'shared/notification'
@@ -9,7 +10,7 @@ import routes from 'app/routes'
 import TextField from '@material-ui/core/TextField'
 import withForm from 'ext/recompose/with-form'
 import { apiMe, apiMeUpdate } from 'utils'
-import { compose, withHandlers, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 
 const EditUser = ({
@@ -117,5 +118,6 @@ export default compose(
     setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
       setForm({ ...form, profilePicUrl })
     },
-  })
+  }),
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(EditUser)

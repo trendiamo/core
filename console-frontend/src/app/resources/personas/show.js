@@ -1,5 +1,5 @@
 import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from 'shared/circular-progress'
 import EditIcon from '@material-ui/icons/Edit'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -11,7 +11,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiPersonaShow } from 'utils'
-import { compose, lifecycle, withState } from 'recompose'
+import { branch, compose, lifecycle, renderComponent, withState } from 'recompose'
 import { Link } from 'react-router-dom'
 
 const ButtonsContainer = styled.div`
@@ -20,45 +20,30 @@ const ButtonsContainer = styled.div`
   flex-flow: row wrap;
 `
 
-const CircularProgressContainer = styled.div`
-  height: 100%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`
-
-const PersonaShow = ({ persona, isLoading }) => (
-  <React.Fragment>
-    {isLoading ? (
-      <CircularProgressContainer>
-        <CircularProgress size={80} />
-      </CircularProgressContainer>
-    ) : (
-      <PaperContainer>
-        <ButtonsContainer>
-          <Button color="primary" component={Link} to={routes.personaEdit(persona.id)}>
-            <EditIcon />
-            {'Edit'}
-          </Button>
-        </ButtonsContainer>
-        <List>
-          <ListItem>
-            <ProfilePic persona={persona} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Name" secondary={persona.name} secondaryTypographyProps={{ variant: 'body1' }} />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary="Description"
-              secondary={persona.description}
-              secondaryTypographyProps={{ variant: 'body1' }}
-            />
-          </ListItem>
-        </List>
-      </PaperContainer>
-    )}
-  </React.Fragment>
+const PersonaShow = ({ persona }) => (
+  <PaperContainer>
+    <ButtonsContainer>
+      <Button color="primary" component={Link} to={routes.personaEdit(persona.id)}>
+        <EditIcon />
+        {'Edit'}
+      </Button>
+    </ButtonsContainer>
+    <List>
+      <ListItem>
+        <ProfilePic persona={persona} />
+      </ListItem>
+      <ListItem>
+        <ListItemText primary="Name" secondary={persona.name} secondaryTypographyProps={{ variant: 'body1' }} />
+      </ListItem>
+      <ListItem>
+        <ListItemText
+          primary="Description"
+          secondary={persona.description}
+          secondaryTypographyProps={{ variant: 'body1' }}
+        />
+      </ListItem>
+    </List>
+  </PaperContainer>
 )
 
 export default compose(
@@ -74,5 +59,6 @@ export default compose(
       setIsLoading(false)
       setPersona(json)
     },
-  })
+  }),
+  branch(({ isLoading }) => isLoading, renderComponent(CircularProgress))
 )(PersonaShow)
