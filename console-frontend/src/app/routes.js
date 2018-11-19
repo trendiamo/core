@@ -20,6 +20,9 @@ const routes = {
   root() {
     return '/'
   },
+  influencerCreate() {
+    return '/influencers/create'
+  },
   influencerShow(id) {
     return `/influencers/${id}`
   },

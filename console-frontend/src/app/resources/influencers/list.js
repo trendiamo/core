@@ -1,3 +1,4 @@
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -6,10 +7,10 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import IconButton from '@material-ui/core/IconButton'
+import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
+import MUITableHead from '@material-ui/core/TableHead'
+import MUIToolbar from '@material-ui/core/Toolbar'
 import PaperContainer from 'app/layout/paper-container'
-import RACheckBoxIcon from '@material-ui/icons/CheckBox'
-import RATableHead from '@material-ui/core/TableHead'
-import RAToolbar from '@material-ui/core/Toolbar'
 import React from 'react'
 import routes from 'app/routes'
 import ShowIcon from '@material-ui/icons/Visibility'
@@ -32,16 +33,42 @@ const CircularProgressContainer = styled.div`
   justify-content: center;
 `
 
-const CheckBoxIcon = styled(RACheckBoxIcon)`
+const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
 `
 
-const Toolbar = styled(RAToolbar)`
-  color: blue;
+const Toolbar = styled(MUIToolbar)`
+  display: flex;
+  justify-content: space-between;
 `
+
+const SelectedDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledAddCircleOutline = styled(AddCircleOutline)`
+  color: #6c6c6c;
+`
+const StyledTypography = styled(Typography)`
+  margin-left: 10px;
+`
+
+const SelectedTypography = styled(Typography)`
+  margin-right: 10px;
+  margin-top: 12px;
+`
+
+const AddInfluencerButton = () => (
+  <Button component={Link} size="small" to={routes.influencerCreate()}>
+    <StyledAddCircleOutline />
+    <StyledTypography>{'Add Influencer'}</StyledTypography>
+  </Button>
+)
 
 const columns = [
-  { name: 'name', numeric: false, disablePadding: true, label: 'name' },
+  { name: 'avatar', numeric: false, disablePadding: true, label: 'avatar' },
+  { name: 'name', numeric: false, disablePadding: false, label: 'name' },
   { name: 'description', numeric: false, disablePadding: false, label: 'description' },
 ]
 
@@ -50,17 +77,18 @@ const TableToolbar = ({ selectedIds, deleteInfluencers }) => (
     <Typography id="tableTitle" variant="headline">
       {'Influencers'}
     </Typography>
+    <AddInfluencerButton />
     {selectedIds.length > 0 ? (
-      <div>
-        <Typography color="inherit" variant="subheading">
+      <SelectedDiv>
+        <SelectedTypography color="inherit" variant="subheading">
           {`${selectedIds.length} selected`}
-        </Typography>
+        </SelectedTypography>
         <Tooltip title="Delete">
           <IconButton aria-label="Delete" onClick={deleteInfluencers}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-      </div>
+      </SelectedDiv>
     ) : (
       <div>
         <Tooltip title="Filter list">
@@ -74,7 +102,7 @@ const TableToolbar = ({ selectedIds, deleteInfluencers }) => (
 )
 
 const TableHead = ({ handleSelectAll, isSelectAll }) => (
-  <RATableHead>
+  <MUITableHead>
     <TableRow>
       <TableCell padding="checkbox">
         <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
@@ -90,7 +118,7 @@ const TableHead = ({ handleSelectAll, isSelectAll }) => (
       })}
       <TableCell key="actions" />
     </TableRow>
-  </RATableHead>
+  </MUITableHead>
 )
 
 const InfluencerRow = compose(
@@ -190,13 +218,8 @@ export default compose(
       setSelectedIds([])
     },
     handleSelectAll: ({ setSelectedIds, influencers, setIsSelectAll }) => event => {
-      if (event.target.checked) {
-        setSelectedIds(influencers.map(influencer => influencer.id))
-        setIsSelectAll(true)
-      } else {
-        setSelectedIds([])
-        setIsSelectAll(false)
-      }
+      setSelectedIds(event.target.checked ? influencers.map(influencer => influencer.id) : [])
+      setIsSelectAll(event.target.checked)
     },
   }),
   lifecycle({
