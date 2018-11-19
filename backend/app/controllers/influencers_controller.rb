@@ -2,7 +2,7 @@ class InfluencersController < ApplicationController
   def index
     @influencers = Influencer.all
     authorize @influencers
-    render json: pagination(sorting(@influencers))
+    render json: @influencers
   end
 
   def show
@@ -32,10 +32,10 @@ class InfluencersController < ApplicationController
   end
 
   def destroy
-    @influencer = Influencer.find(params[:id])
-    authorize @influencer
-    if @influencer.destroy
-      render json: { data: @influencer }
+    @influencers = Influencer.where(id: params[:ids])
+    authorize @influencers
+    if @influencers.destroy_all
+      render json: { data: @influencers }
     else
       render_error
     end
