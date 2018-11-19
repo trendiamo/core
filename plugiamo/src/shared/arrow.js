@@ -8,12 +8,14 @@ const Arrow = styled.div`
   margin: 1.5rem 0;
 
   &::before {
-    content: '▶';
+    content: '';
     color: ${({ color }) => color || '#333'};
     position: absolute;
     top: -3px;
     right: -2px;
-    font-size: 7px;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid currentColor;
   }
 `
 
