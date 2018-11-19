@@ -1,14 +1,14 @@
-import { action } from '@storybook/addon-actions'
 import Arrow from 'shared/arrow'
 import Button from 'shared/button'
+import { action } from '@storybook/addon-actions'
+import { Card, CardContent, CardImg } from 'shared/card'
+import { ChatBackground, ChatMessage, ChatOptions } from 'app/content/scripted-chat/shared'
 import { h } from 'preact'
+import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose } from 'icons'
 import { linkTo } from '@storybook/addon-links'
+import { List, ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 import { storiesOf } from '@storybook/react'
 import { Welcome } from '@storybook/react/demo'
-import { Card, CardContent, CardImg } from 'shared/card'
-import { ChatBackground, ChatMessage, ChatOptions } from 'app/content/chat/shared'
-import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose } from 'icons'
-import { List, ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 import './styles.css'
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Buttons')} />)
@@ -36,7 +36,7 @@ storiesOf('Cards', module).add('simple', () => (
   </Card>
 ))
 
-storiesOf('Chat', module).add('simple', () => (
+storiesOf('Scripted Chat', module).add('simple', () => (
   <ChatBackground style={{ height: '500px', width: '300px' }}>
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <ChatMessage isMessageShown log={{ from: 'Peter', message: { text: 'Hello 😃' }, timestamp: Date.now() }} />
