@@ -52,7 +52,7 @@ const CoverCuration = ({ isLeaving, subtitle, title }) => (
 )
 
 const Container = styled.div`
-  height: 100%;
+  flex: 1;
   padding: 1rem;
 `
 
@@ -75,6 +75,12 @@ const GhostLayer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+`
+
+const FlexDiv = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `
 
 const Curation = compose(
@@ -122,7 +128,7 @@ const Curation = compose(
     routeToSpotlight: ({ curation }) => spotlight => history.replace(routes.spotlight(curation.id, spotlight.id)),
   })
 )(({ onRouteChange, routeToCuration, routeToSpotlight, isTransitioning, spotlights, subtitle, title }) => (
-  <div>
+  <FlexDiv>
     <Cover>
       <Router history={history} onChange={onRouteChange}>
         <CoverCuration path="/curation/:id" subtitle={subtitle} title={title} />
@@ -134,7 +140,7 @@ const Curation = compose(
       <ContentSpotlight path="/curation/:id/spotlight/:id" spotlights={spotlights} />
     </Router>
     <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />
-  </div>
+  </FlexDiv>
 ))
 
 export default Curation
