@@ -1,4 +1,4 @@
-class Influencer < ApplicationRecord
+class Persona < ApplicationRecord
   include CleanupAssets
 
   acts_as_tenant
