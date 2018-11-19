@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181119123720) do
+ActiveRecord::Schema.define(version: 20181119124758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,13 +73,11 @@ ActiveRecord::Schema.define(version: 20181119123720) do
     t.string "path", null: false
     t.string "title", null: false
     t.bigint "influencer_id"
-    t.bigint "website_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id"
     t.index ["account_id"], name: "index_chats_on_account_id"
     t.index ["influencer_id"], name: "index_chats_on_influencer_id"
-    t.index ["website_id"], name: "index_chats_on_website_id"
   end
 
   create_table "influencers", force: :cascade do |t|
@@ -146,7 +144,6 @@ ActiveRecord::Schema.define(version: 20181119123720) do
   add_foreign_key "chat_steps", "chats"
   add_foreign_key "chats", "accounts"
   add_foreign_key "chats", "influencers"
-  add_foreign_key "chats", "websites"
   add_foreign_key "influencers", "accounts"
   add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
