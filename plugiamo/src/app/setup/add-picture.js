@@ -8,18 +8,22 @@ const addPictures = {
     const sectionId = window.ShopifyAnalytics.meta.product.id
     const productThumbs = window.$(`#ProductThumbs-${sectionId}`)
     const productPhotos = window.$(`#ProductPhotos-${sectionId}`)
-    productThumbs.slick('unslick')
-    productPhotos.slick('unslick')
     const index = window.$('> div', productPhotos).length
-    const thumbTemplate = `
+
+    if (!productThumbs.is('.small--hide')) {
+      productThumbs.slick('unslick')
+      const thumbTemplate = `
 <div class="product__thumb-item" data-index="${index}" tabindex="-1" role="option">
   <div class="image-wrap" style="height: 0; padding-bottom: 66.625%;">
     <div class="product__thumb js-no-transition" data-zoom="https://media.graphcms.com/resize=w:1200/${picture}">
       <img class="animation-delay-3 lazyloaded" alt="" src="https://media.graphcms.com/${picture}" />
     </div>
   </div>
-</div>
-    `
+</div>`
+      productThumbs.append(window.$(thumbTemplate))
+    }
+
+    productPhotos.slick('unslick')
     const photoTemplate = `
 <div class="secondary-slide photo-zoom-init" data-index="${index}" tabindex="-1" role="option">
   <div class="product-image-main product-image-main--10633868871">
@@ -30,9 +34,7 @@ const addPictures = {
       </div>
     </div>
   </div>
-</div>
-    `
-    productThumbs.append(window.$(thumbTemplate))
+</div>`
     productPhotos.append(window.$(photoTemplate))
     window.$('body').trigger('matchLarge') // this makes it so slicks are re-generated
   },
