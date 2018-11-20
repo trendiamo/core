@@ -31,11 +31,7 @@ const H2 = styled.h2`
   margin-bottom: 12px;
 `
 
-const ContentScriptedChat = compose(
-  withProps(({ persona }) => ({
-    firstName: persona.name.split(' ')[0],
-  }))
-)(({ scriptedChat, firstName, onToggleContent }) => (
+const ContentScriptedChat = ({ scriptedChat, onToggleContent, persona }) => (
   <ChatBackground>
     <H2>{scriptedChat.title}</H2>
     <Consumer>
@@ -44,12 +40,12 @@ const ContentScriptedChat = compose(
           client={client}
           initialChatStep={scriptedChat.chatStep}
           onToggleContent={onToggleContent}
-          personName={firstName}
+          persona={persona}
         />
       )}
     </Consumer>
   </ChatBackground>
-))
+)
 
 const FlexContainer = styled.div`
   display: flex;

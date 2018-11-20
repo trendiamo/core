@@ -1,8 +1,10 @@
+import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import transition from 'ext/transition'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
+import { location } from 'config'
 
 const PersonaName = styled.span`
   font-weight: 500;
@@ -29,6 +31,12 @@ export default compose(
     let imgRef, nameRef
     return {
       onListItemClick: ({ routeToSpotlight, spotlight }) => () => {
+        mixpanel.track('Clicked Persona', {
+          flowType: 'curation',
+          hostname: location.hostname,
+          personaName: spotlight.persona.name,
+          personaRef: spotlight.persona.id,
+        })
         transition.addElement('img', imgRef.base)
         transition.addElement('name', nameRef.base)
         routeToSpotlight(spotlight)

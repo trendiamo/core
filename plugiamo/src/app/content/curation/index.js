@@ -95,6 +95,7 @@ const Curation = compose(
             id
             text
             persona {
+              id
               name
               description
               profilePic {

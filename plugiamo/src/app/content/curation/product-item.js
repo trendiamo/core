@@ -2,6 +2,7 @@ import mixpanel from 'ext/mixpanel'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
+import { location } from 'config'
 
 const ProductItem = ({ product, onListItemClick }) => (
   <ListItem onClick={onListItemClick}>
@@ -19,10 +20,20 @@ const ProductItem = ({ product, onListItemClick }) => (
 
 export default compose(
   withHandlers({
-    onListItemClick: ({ product }) => () => {
-      mixpanel.track('Clicked Product', { hostname: location.hostname }, () => {
-        window.location = product.url
-      })
+    onListItemClick: ({ product, spotlight }) => () => {
+      mixpanel.track(
+        'Clicked Product',
+        {
+          flowType: 'curation',
+          personaName: spotlight.persona.name,
+          personaRef: spotlight.persona.id,
+          hostname: location.hostname,
+          productName: product.name,
+        },
+        () => {
+          window.location = product.url
+        }
+      )
     },
   })
 )(ProductItem)

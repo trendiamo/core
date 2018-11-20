@@ -112,7 +112,7 @@ const ContentSpotlight = compose(
     <TopSlideAnimation isLeaving={isLeaving}>
       <List>
         {spotlight.productPicks.map(product => (
-          <ProductItem key={product.url} product={product} />
+          <ProductItem key={product.url} product={product} spotlight={spotlight} />
         ))}
       </List>
     </TopSlideAnimation>

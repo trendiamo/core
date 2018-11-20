@@ -2,7 +2,7 @@ import chatLog from './chat-log'
 import ChatMessage from './chat-message'
 import ChatOptions from './chat-options'
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 
 const FlexDiv = styled.div`
@@ -11,6 +11,9 @@ const FlexDiv = styled.div`
 `
 
 const ChatLogUi = compose(
+  withProps(({ persona }) => ({
+    personName: persona.name.split(' ')[0],
+  })),
   withState('logs', 'setLogs', []),
   withHandlers({
     onResetChat: ({ initialChatStep }) => () => {
@@ -29,13 +32,13 @@ const ChatLogUi = compose(
       chatLog.fetchStep(initialChatStep.id)
     },
   })
-)(({ logs, onResetChat, onToggleContent }) => (
+)(({ logs, onResetChat, onToggleContent, persona }) => (
   <FlexDiv>
     {logs.map(log =>
       log.type === 'message' ? (
         <ChatMessage log={log} />
       ) : (
-        <ChatOptions log={log} onResetChat={onResetChat} onStopChat={onToggleContent} />
+        <ChatOptions log={log} onResetChat={onResetChat} onStopChat={onToggleContent} persona={persona} />
       )
     )}
   </FlexDiv>

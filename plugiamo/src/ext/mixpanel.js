@@ -35,8 +35,9 @@ const trndMixpanel = {
   track(eventName, properties, callback) {
     if (this.initialized) {
       mixpanel.track(eventName, properties, callback)
-    } else if (callback) {
-      callback()
+    } else {
+      if (!production) console.info(`%c mixpanel.track('${eventName}')`, 'color: #a271cf', properties)
+      if (callback) callback()
     }
   },
 }

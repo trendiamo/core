@@ -1,6 +1,7 @@
 import addPicture from './add-picture'
 import history from 'ext/history'
 import routes from 'app/routes'
+import { isSmall } from 'utils'
 import { location } from 'config'
 import { matchUrl } from 'ext/simple-router'
 
@@ -69,8 +70,9 @@ const setup = data => {
   }
 
   return {
+    flowType,
+    open: !!(open && open.match(/1|true/) && !isSmall()),
     persona: getMatchedPersona({ flow, data }),
-    open: open && open.match(/1|true/),
   }
 }
 

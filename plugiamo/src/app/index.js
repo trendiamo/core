@@ -9,7 +9,6 @@ import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, wit
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { infoMsgHof } from 'shared/info-msg'
-import { isSmall } from 'utils'
 import { location } from 'config'
 
 const Gradient = animateOnMount(styled.div`
@@ -48,6 +47,7 @@ export default compose(
               scriptedChat {
                 id
                 persona {
+                  id
                   name
                   description
                   profilePic {
@@ -58,6 +58,7 @@ export default compose(
               curation {
                 id
                 persona {
+                  id
                   name
                   description
                   profilePic {
@@ -68,6 +69,7 @@ export default compose(
               outro {
                 id
                 persona {
+                  id
                   name
                   description
                   profilePic {
@@ -79,6 +81,7 @@ export default compose(
           }
         }
         persona(where: { id: $personaId }) @include(if: $hasPersona) {
+          id
           name
           description
           profilePic {
@@ -102,15 +105,22 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
-      mixpanel.track('Loaded Plugin', { hash: location.hash, hostname: location.hostname })
       const { data, setPersona, setShowingContent } = this.props
-      const { persona, open } = setup(data)
+      const { flowType, open: autoOpen, persona } = setup(data)
       setPersona(persona)
+      mixpanel.track('Loaded Plugin', {
+        autoOpen,
+        flowType,
+        hash: location.hash,
+        hostname: location.hostname,
+        personaName: persona.name,
+        personaRef: persona.id,
+      })
 
-      if (open && !isSmall()) {
+      if (autoOpen) {
         setShowingContent(true)
       } else {
-        mixpanel.time_event('Opened')
+        mixpanel.time_event('Toggled Plugin')
       }
     },
   }),
@@ -119,20 +129,12 @@ export default compose(
     personaPicUrl: persona.profilePic.url,
   })),
   withHandlers({
-    // onCtaClick: ({ exposition }) => () => {
-    //   mixpanel.track('Clicked CTA Link', { hostname: location.hostname }, () => {
-    //     window.location = exposition.ctaUrl
-    //   })
-    // },
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
+      mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
+      mixpanel.time_event('Toggled Plugin')
       if (!showingContent) {
-        mixpanel.track('Opened', { hostname: location.hostname })
-        mixpanel.time_event('Clicked CTA Link')
-        mixpanel.time_event('Closed')
         document.documentElement.classList.add('trnd-open')
       } else {
-        mixpanel.track('Closed', { hostname: location.hostname })
-        mixpanel.time_event('Opened')
         document.documentElement.classList.remove('trnd-open')
       }
       return setShowingContent(!showingContent)
