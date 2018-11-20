@@ -81,8 +81,18 @@ const EnhancedToolbar = ({ selectedIds, deletePersonas }) => (
   </Toolbar>
 )
 
+const StyledTableHead = styled(MUITableHead)`
+  background-color: #fafafa;
+  border-top: 1px solid #dfe0df;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.3px;
+  color: #555;
+  text-transform: uppercase;
+`
+
 const TableHead = ({ handleSelectAll, isSelectAll }) => (
-  <MUITableHead>
+  <StyledTableHead>
     <TableRow>
       <TableCell padding="checkbox">
         <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
@@ -98,7 +108,7 @@ const TableHead = ({ handleSelectAll, isSelectAll }) => (
       })}
       <TableCell key="actions" />
     </TableRow>
-  </MUITableHead>
+  </StyledTableHead>
 )
 
 const PersonaRow = compose(
