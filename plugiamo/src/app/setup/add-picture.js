@@ -10,7 +10,7 @@ const addPictures = {
     const productPhotos = window.$(`#ProductPhotos-${sectionId}`)
     const index = window.$('> div', productPhotos).length
 
-    if (!productThumbs.is('.small--hide')) {
+    if (productThumbs.is(':visible')) {
       productThumbs.slick('unslick')
       const thumbTemplate = `
 <div class="product__thumb-item" data-index="${index}" tabindex="-1" role="option">
