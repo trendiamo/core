@@ -54,7 +54,8 @@ const palette = {
 
 const customButtons = {
   error: {
-    color: '#b00020',
+    backgroundColor: '#b00020',
+    color: '#fff',
   },
 }
 

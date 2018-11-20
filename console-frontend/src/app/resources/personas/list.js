@@ -1,12 +1,8 @@
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import CircularProgress from 'shared/circular-progress'
-import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
-import FilterListIcon from '@material-ui/icons/FilterList'
-import IconButton from '@material-ui/core/IconButton'
 import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
 import MUITableHead from '@material-ui/core/TableHead'
 import MUIToolbar from '@material-ui/core/Toolbar'
@@ -24,6 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import { apiPersonaDestroy, apiPersonaList } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
+import { BulkActions } from 'shared/list-actions'
 import { Link } from 'react-router-dom'
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
@@ -35,28 +32,15 @@ const Toolbar = styled(MUIToolbar)`
   justify-content: space-between;
 `
 
-const SelectedDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const StyledAddCircleOutline = styled(AddCircleOutline)`
-  color: #6c6c6c;
-`
-const StyledTypography = styled(Typography)`
-  margin-left: 10px;
-`
-
-const SelectedTypography = styled(Typography)`
-  margin-right: 10px;
-  margin-top: 12px;
+const StyledButton = styled(Button)`
+  overflow: hidden;
+  white-space: nowrap;
 `
 
 const AddPersonaButton = () => (
-  <Button component={Link} size="small" to={routes.personaCreate()}>
-    <StyledAddCircleOutline />
-    <StyledTypography>{'Add Persona'}</StyledTypography>
-  </Button>
+  <StyledButton color="primary" component={Link} to={routes.personaCreate()} variant="contained">
+    {'Create New'}
+  </StyledButton>
 )
 
 const columns = [
@@ -65,32 +49,35 @@ const columns = [
   { name: 'description', numeric: false, disablePadding: false, label: 'description' },
 ]
 
-const TableToolbar = ({ selectedIds, deletePersonas }) => (
+const Title = styled.div`
+  flex: 0 0 auto;
+`
+
+const Spacer = styled.div`
+  flex: 1 1 100%;
+`
+
+const EnhancedToolbar = ({ selectedIds, deletePersonas }) => (
   <Toolbar>
-    <Typography id="tableTitle" variant="headline">
-      {'Personas'}
-    </Typography>
-    <AddPersonaButton />
-    {selectedIds.length > 0 ? (
-      <SelectedDiv>
-        <SelectedTypography color="inherit" variant="subheading">
+    <Title>
+      {selectedIds.length > 0 ? (
+        <Typography color="inherit" variant="subtitle1">
           {`${selectedIds.length} selected`}
-        </SelectedTypography>
-        <Tooltip title="Delete">
-          <IconButton aria-label="Delete" onClick={deletePersonas}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      </SelectedDiv>
-    ) : (
-      <div>
-        <Tooltip title="Filter list">
-          <IconButton aria-label="Filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      </div>
-    )}
+        </Typography>
+      ) : (
+        <Typography id="tableTitle" variant="h6">
+          {'Personas'}
+        </Typography>
+      )}
+    </Title>
+    <Spacer />
+    <div>
+      {selectedIds.length > 0 ? (
+        <BulkActions deleteBulk={deletePersonas} selectedIds={selectedIds} />
+      ) : (
+        <AddPersonaButton />
+      )}
+    </div>
   </Toolbar>
 )
 
@@ -161,7 +148,7 @@ const PersonaList = ({
   isSelectAll,
 }) => (
   <PaperContainer>
-    <TableToolbar deletePersonas={deletePersonas} selectedIds={selectedIds} />
+    <EnhancedToolbar deletePersonas={deletePersonas} selectedIds={selectedIds} />
     <Table aria-labelledby="Personas">
       <TableHead
         handleRequestSort={handleRequestSort}
@@ -193,8 +180,7 @@ export default compose(
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
   withHandlers({
-    deletePersonas: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setPersonas }) => async event => {
-      event.preventDefault()
+    deletePersonas: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setPersonas }) => async () => {
       await apiPersonaDestroy({ ids: selectedIds }, setInfo)
       const personasResponse = await apiPersonaList(setInfo)
       setPersonas(personasResponse)
