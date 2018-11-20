@@ -2,7 +2,7 @@ class PersonasController < ApplicationController
   def index
     @personas = Persona.all
     authorize @personas
-    render json: pagination(sorting(@personas))
+    render json: @personas
   end
 
   def show
@@ -32,10 +32,10 @@ class PersonasController < ApplicationController
   end
 
   def destroy
-    @persona = Persona.find(params[:id])
-    authorize @persona
-    if @persona.destroy
-      render json: { data: @persona }
+    @personas = Persona.where(id: params[:ids])
+    authorize @personas
+    if @personas.destroy_all
+      render json: { data: @personas }
     else
       render_error
     end
