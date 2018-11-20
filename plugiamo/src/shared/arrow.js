@@ -5,7 +5,7 @@ const Arrow = styled.div`
   position: relative;
   background-color: ${({ color, lineColor }) => lineColor || color || '#333'};
   height: 2px;
-  margin: 1.5rem 0;
+  margin: 24px 0;
 
   &::before {
     content: '';
