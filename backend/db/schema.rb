@@ -133,6 +133,19 @@ ActiveRecord::Schema.define(version: 20181126135000) do
     t.index ["persona_id"], name: "index_spotlights_on_persona_id"
   end
 
+  create_table "triggers", force: :cascade do |t|
+    t.integer "order", null: false
+    t.string "url_matchers", null: false, array: true
+    t.string "flow_type"
+    t.bigint "flow_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_triggers_on_account_id"
+    t.index ["flow_type", "flow_id"], name: "index_triggers_on_flow_type_and_flow_id"
+    t.index ["url_matchers"], name: "index_triggers_on_url_matchers", using: :gin
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", default: "", null: false
     t.string "email", default: "", null: false
@@ -194,6 +207,7 @@ ActiveRecord::Schema.define(version: 20181126135000) do
   add_foreign_key "scripted_chats", "personas"
   add_foreign_key "spotlights", "accounts"
   add_foreign_key "spotlights", "personas"
+  add_foreign_key "triggers", "accounts"
   add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
 end
