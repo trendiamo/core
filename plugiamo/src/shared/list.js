@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { compose, withHandlers, withState } from 'recompose'
 import { IconChevronRight } from 'icons'
 
 const List = styled.ul`
@@ -16,7 +17,7 @@ const ListChevron = styled(IconChevronRight)`
 // 101px makes it so 3 lines of text fit with no need for scroll
 const ListContent = styled.div`
   height: 101px;
-  padding: 1rem;
+  padding: 8px 12px;
   flex: 1;
   overflow-y: auto;
 `
@@ -30,21 +31,25 @@ const ListImg = styled.img`
   object-fit: cover;
 `
 
-const ListItem = styled.li`
+const ListItem = compose(
+  withState('isClicked', 'setIsClicked', false),
+  withHandlers({
+    onClick: ({ onClick, setIsClicked }) => event => {
+      setIsClicked(true)
+      setTimeout(() => setIsClicked(false), 300)
+      return onClick(event)
+    },
+  })
+)(styled.li`
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
   display: flex;
   margin-bottom: 1rem;
   align-items: center;
   cursor: pointer;
-  color: #4a4a4a;
-
+  color: ${({ isClicked }) => (isClicked ? 'white' : '#4a4a4a')};
   transition: background-color 0.4s linear;
-
-  :active {
-    background-color: #00adef;
-    color: white;
-  }
-`
+  background-color: ${({ isClicked }) => (isClicked ? '#00adef' : 'transparent')};
+`)
 
 export { List, ListChevron, ListContent, ListItem, ListImg }

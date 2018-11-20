@@ -1,5 +1,4 @@
 import Arrow from 'shared/arrow'
-import Button from 'shared/button'
 import { action } from '@storybook/addon-actions'
 import { Card, CardContent, CardImg } from 'shared/card'
 import { ChatBackground, ChatMessage, ChatOptions } from 'app/content/scripted-chat/shared'
@@ -14,20 +13,6 @@ import './styles.css'
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Buttons')} />)
 
 storiesOf('Arrows', module).add('arrow', () => <Arrow />)
-
-storiesOf('Buttons', module)
-  .add('simple', () => <Button>{'Buy this'}</Button>)
-  .add('outline', () => <Button outline>{'Buy this'}</Button>)
-  .add('fullWidth', () => <Button fullWidth>{'Buy this'}</Button>)
-  .add('small', () => <Button small>{'Buy this'}</Button>)
-  .add('medium', () => <Button medium>{'Buy this'}</Button>)
-  .add('with some emoji', () => (
-    <Button onClick={action('clicked')}>
-      <span aria-label="so cool" role="img">
-        {'😀 😎 👍 💯'}
-      </span>
-    </Button>
-  ))
 
 storiesOf('Cards', module).add('simple', () => (
   <Card style={{ width: '100px' }}>
@@ -53,12 +38,12 @@ storiesOf('Icons', module)
 
 storiesOf('Lists', module).add('simple', () => (
   <List>
-    <ListItem>
+    <ListItem onClick={action('clicked-list-item')}>
       <ListImg src="https://placeimg.com/200/200/any" />
       <ListContent>{'Buy this'}</ListContent>
       <ListChevron />
     </ListItem>
-    <ListItem>
+    <ListItem onClick={action('clicked-list-item')}>
       <ListImg src="https://placeimg.com/200/200/any" />
       <ListContent>{'Buy that'}</ListContent>
       <ListChevron />
