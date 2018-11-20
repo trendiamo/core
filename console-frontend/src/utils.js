@@ -7,6 +7,7 @@ const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/curations`
 const SCRIPTED_CHATS_URL = `${BASE_API_URL}/scripted_chats`
+const TRIGGERS_URL = `${BASE_API_URL}/triggers`
 const SIGNUP_URL = `${BASE_API_URL}/users/sign_up`
 const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
@@ -306,6 +307,24 @@ export const apiDestroySaga = async (url, body, setInfo) => {
   setInfo(info)
 }
 
+export const apiTriggerListSaga = async (url, setInfo) => {
+  const json = await apiTriggerListRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiTriggerListRequest = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
 export const apiSignIn = (body, setInfo) => apiSaga(SIGNIN_URL, body, setInfo)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
@@ -335,3 +354,5 @@ export const apiCurationDestroy = (body, setInfo) => apiDestroySaga(CURATIONS_UR
 export const apiScriptedChatList = (setInfo, query) =>
   apiListSaga(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`, setInfo)
 export const apiScriptedChatDestroy = (body, setInfo) => apiDestroySaga(SCRIPTED_CHATS_URL, body, setInfo)
+
+export const apiTriggerList = setInfo => apiTriggerListSaga(TRIGGERS_URL, setInfo)
