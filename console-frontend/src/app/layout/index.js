@@ -1,9 +1,11 @@
 import AppBar from './app-bar'
+import auth from 'auth'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Menu from './menu'
 import React from 'react'
 import Sidebar from './sidebar'
-import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
+import theme from 'app/theme'
+import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
 import { styles } from './layout-styles'
 import { withRouter } from 'react-router'
@@ -41,10 +43,13 @@ const EnhancedLayout = compose(
     toggleOpen: ({ open, setOpen }) => () => setOpen(!open),
   }),
   withStyles(styles, { index: 1 }),
+  withProps(() => ({
+    isLoggedIn: auth.isLoggedIn(),
+  })),
   branch(({ isLoggedIn }) => !isLoggedIn, renderComponent(props => <EmptyLayout {...props} />))
 )(Layout)
 
-const LayoutWithTheme = ({ theme, ...rest }) => (
+const LayoutWithTheme = ({ ...rest }) => (
   <MuiThemeProvider theme={theme}>
     <EnhancedLayout {...rest} />
   </MuiThemeProvider>

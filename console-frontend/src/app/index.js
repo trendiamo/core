@@ -9,7 +9,6 @@ import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
-import theme from './theme'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
@@ -64,7 +63,7 @@ const Routes = () => (
 export const App = ({ history }) => (
   <Router history={history}>
     <JssProvider generateClassName={generateClassName} jss={jss}>
-      <Layout isLoggedIn={auth.isLoggedIn()} theme={theme}>
+      <Layout>
         <Routes />
       </Layout>
     </JssProvider>
