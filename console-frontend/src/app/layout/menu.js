@@ -15,6 +15,7 @@ const resources = [
   { label: 'Curations', route: routes.curationsList() },
   { label: 'Scripted Chats', route: routes.scriptedChatsList() },
   { label: 'Outros', route: routes.outrosList() },
+  { label: 'Triggers', route: routes.triggersList() },
   { label: 'Personas', route: routes.personasList() },
 ]
 

@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       delete "/scripted_chats", to: "scripted_chats#destroy"
       resources :outros, only: %i[index]
       delete "/outros", to: "outros#destroy"
-
+      resources :triggers, only: %i[index]
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end
