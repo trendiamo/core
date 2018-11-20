@@ -16,9 +16,11 @@ const DeleteActions = ({ handleClose, handleDelete }) => (
 
 const BulkActionButtons = ({ handleOpen, showDialog, handleClose, handleDelete, selectedIds }) => (
   <React.Fragment>
-    <Button color="error" onClick={handleOpen} variant="outlined">
-      {'Delete'}
-    </Button>
+    {selectedIds.length > 0 && (
+      <Button color="error" onClick={handleOpen} variant="contained">
+        {'Delete'}
+      </Button>
+    )}
     <Dialog
       content={`Are you sure that you want to delete ${selectedIds.length} ${
         selectedIds.length > 1 ? 'elements' : 'element'
@@ -36,8 +38,8 @@ export const BulkActions = compose(
     handleClose: ({ setShowDialog }) => () => {
       setShowDialog(false)
     },
-    handleDelete: ({ setShowDialog, resource, basePath, selectedIds, dispatchCrudDeleteMany }) => () => {
-      dispatchCrudDeleteMany(resource, selectedIds, basePath)
+    handleDelete: ({ deleteBulk, setShowDialog }) => () => {
+      deleteBulk()
       setShowDialog(false)
     },
     handleOpen: ({ setShowDialog }) => () => {
