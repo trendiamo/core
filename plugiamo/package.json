@@ -19,7 +19,7 @@
     "timeago.js": "^4.0.0-beta.1"
   },
   "scripts": {
-    "start": "webpack -d --config webpack.config.js",
+    "start": "webpack-dev-server",
     "build": "webpack -p --progress --config webpack.prod.js",
     "deploy": "bin/deploy",
     "storybook": "start-storybook -p 6006",
@@ -40,16 +40,16 @@
     "dotenv-webpack": "^1.5.7",
     "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-local-rules": "^0.1.0",
-    "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-sort-imports-es6-autofix": "^0.3.0",
     "prettier": "^1.15.1",
     "svg-loader": "^0.0.2",
     "webpack": "^3.x",
-    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "2.11.1",
     "webpack-merge": "^4.1.4"
   }
 }

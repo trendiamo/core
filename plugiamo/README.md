@@ -4,7 +4,6 @@
 
 ```
 brew install awscli # for deploys
-yarn global add http-server
 yarn
 touch .env # and then edit it to add needed variables
 touch build/index.html # and then edit it to add a basic html template and the plugin script
@@ -14,7 +13,6 @@ touch build/index.html # and then edit it to add a basic html template and the p
 
 ```sh
 yarn start
-hs build
 ```
 
 ### Run locally on a given site (manually after it loads)
