@@ -4,6 +4,7 @@ import Plugin from '../plugin'
 import { ChatBackground, ChatMessage, ChatOptions } from 'app/content/scripted-chat/shared'
 import { CoverScriptedChat } from 'app/content/scripted-chat'
 import { h } from 'preact'
+import { Main } from '../components'
 
 const ScriptedChatComp = ({ persona }) => (
   <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -27,6 +28,13 @@ const ScriptedChatComp = ({ persona }) => (
   </div>
 )
 
-const ScriptedChat = () => <Plugin Component={<ScriptedChatComp />} />
+const ScriptedChat = () => (
+  <div>
+    <Main>
+      <p>{'Users can receive clarification on a few previously set questions.'}</p>
+    </Main>
+    <Plugin Component={<ScriptedChatComp />} />
+  </div>
+)
 
 export default ScriptedChat

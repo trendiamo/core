@@ -3,6 +3,7 @@ import history from 'ext/history'
 import Plugin from '../plugin'
 import { CurationBase } from 'app/content/curation'
 import { h } from 'preact'
+import { Main } from '../components'
 
 const spotlights = [
   {
@@ -92,17 +93,22 @@ history.location = '/curation/1'
 const routeToSpotlight = () => (history.location = '/curation/1/spotlight/1')
 
 const Outro = () => (
-  <Plugin
-    Component={
-      <CurationBase
-        history={history}
-        routeToSpotlight={routeToSpotlight}
-        spotlights={spotlights}
-        subtitle="We can help you"
-        title="Need advice from us?"
-      />
-    }
-  />
+  <div>
+    <Main>
+      <p>{'Guide users to interesting products.'}</p>
+    </Main>
+    <Plugin
+      Component={
+        <CurationBase
+          history={history}
+          routeToSpotlight={routeToSpotlight}
+          spotlights={spotlights}
+          subtitle="We can help you"
+          title="Need advice from us?"
+        />
+      }
+    />
+  </div>
 )
 
 export default Outro
