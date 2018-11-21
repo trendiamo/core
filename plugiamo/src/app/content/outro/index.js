@@ -17,6 +17,10 @@ const InnerContent = styled.div`
   padding-left: 60px;
   padding-right: 60px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `
 
 const PoweredBy = styled(({ className }) => (
@@ -42,7 +46,6 @@ const Name = styled.div`
 `
 
 const PersonaImg = styled.img`
-  margin-top: 80px;
   margin-bottom: 1rem;
   border-radius: 50%;
   height: 80px;

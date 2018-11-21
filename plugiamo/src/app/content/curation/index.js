@@ -1,5 +1,5 @@
 import Arrow from 'shared/arrow'
-import Cover from 'app/content/cover'
+import Cover, { BelowCover } from 'app/content/cover'
 import history from 'ext/history'
 import routes from 'app/routes'
 import SpotlightItem from './spotlight-item'
@@ -83,7 +83,35 @@ const FlexDiv = styled.div`
   flex-direction: column;
 `
 
+export const CurationBase = ({
+  history,
+  onRouteChange,
+  routeToCuration,
+  routeToSpotlight,
+  isTransitioning,
+  spotlights,
+  subtitle,
+  title,
+}) => (
+  <FlexDiv>
+    <Cover>
+      <Router history={history} onChange={onRouteChange}>
+        <CoverCuration path="/curation/:id" subtitle={subtitle} title={title} />
+        <CoverSpotlight path="/curation/:id/spotlight/:id" routeToCuration={routeToCuration} spotlights={spotlights} />
+      </Router>
+    </Cover>
+    <BelowCover>
+      <Router history={history} onChange={onRouteChange}>
+        <ContentCuration path="/curation/:id" routeToSpotlight={routeToSpotlight} spotlights={spotlights} />
+        <ContentSpotlight path="/curation/:id/spotlight/:id" spotlights={spotlights} />
+      </Router>
+    </BelowCover>
+    <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />
+  </FlexDiv>
+)
+
 const Curation = compose(
+  withProps({ history }),
   graphql(
     gql`
       query($id: ID!) {
@@ -128,20 +156,6 @@ const Curation = compose(
     routeToCuration: ({ curation }) => () => history.replace(routes.curation(curation.id)),
     routeToSpotlight: ({ curation }) => spotlight => history.replace(routes.spotlight(curation.id, spotlight.id)),
   })
-)(({ onRouteChange, routeToCuration, routeToSpotlight, isTransitioning, spotlights, subtitle, title }) => (
-  <FlexDiv>
-    <Cover>
-      <Router history={history} onChange={onRouteChange}>
-        <CoverCuration path="/curation/:id" subtitle={subtitle} title={title} />
-        <CoverSpotlight path="/curation/:id/spotlight/:id" routeToCuration={routeToCuration} spotlights={spotlights} />
-      </Router>
-    </Cover>
-    <Router history={history} onChange={onRouteChange}>
-      <ContentCuration path="/curation/:id" routeToSpotlight={routeToSpotlight} spotlights={spotlights} />
-      <ContentSpotlight path="/curation/:id/spotlight/:id" spotlights={spotlights} />
-    </Router>
-    <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />
-  </FlexDiv>
-))
+)(CurationBase)
 
 export default Curation

@@ -1,5 +1,5 @@
 import ChatLogUi from './chat-log-ui'
-import Cover from 'app/content/cover'
+import Cover, { BelowCover } from 'app/content/cover'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withProps } from 'recompose'
 import { ChatBackground } from './shared'
@@ -13,7 +13,7 @@ const FlexDiv = styled.div`
   display: flex;
 `
 
-const CoverScriptedChat = ({ persona }) => (
+export const CoverScriptedChat = ({ persona }) => (
   <FlexDiv>
     <CoverImg src={persona.profilePic.url} />
     <PaddedCover>
@@ -77,7 +77,9 @@ const ScriptedChat = compose(
     <Cover>
       <CoverScriptedChat persona={persona} />
     </Cover>
-    <ContentScriptedChat onToggleContent={onToggleContent} persona={persona} scriptedChat={scriptedChat} />
+    <BelowCover>
+      <ContentScriptedChat onToggleContent={onToggleContent} persona={persona} scriptedChat={scriptedChat} />
+    </BelowCover>
   </FlexContainer>
 ))
 

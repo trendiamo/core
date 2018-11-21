@@ -1,0 +1,108 @@
+/* eslint-disable local-rules/no-relative-parent-imports */
+import history from 'ext/history'
+import Plugin from '../plugin'
+import { CurationBase } from 'app/content/curation'
+import { h } from 'preact'
+
+const spotlights = [
+  {
+    id: 1,
+    text: 'This is good',
+    persona: {
+      name: 'Jon Snow',
+      profilePic: {
+        url: 'https://randomuser.me/api/portraits/men/1.jpg',
+      },
+    },
+  },
+  {
+    id: 2,
+    text: 'This is good',
+    persona: {
+      name: 'Bran Stark',
+      profilePic: {
+        url: 'https://randomuser.me/api/portraits/men/2.jpg',
+      },
+    },
+  },
+  {
+    id: 3,
+    text: 'This is good',
+    persona: {
+      name: 'Rickon Stark',
+      profilePic: {
+        url: 'https://randomuser.me/api/portraits/men/3.jpg',
+      },
+    },
+  },
+  {
+    id: 4,
+    text: 'This is good',
+    persona: {
+      name: 'Robb Stark',
+      profilePic: {
+        url: 'https://randomuser.me/api/portraits/men/4.jpg',
+      },
+    },
+  },
+  {
+    id: 5,
+    text: 'This is good',
+    persona: {
+      name: 'Ned Stark',
+      profilePic: {
+        url: 'https://randomuser.me/api/portraits/men/5.jpg',
+      },
+    },
+  },
+  {
+    id: 6,
+    text: 'This is good',
+    persona: {
+      name: 'Sansa Stark',
+      profilePic: {
+        url: 'https://randomuser.me/api/portraits/women/1.jpg',
+      },
+    },
+  },
+  {
+    id: 7,
+    text: 'This is good',
+    persona: {
+      name: 'Arya Stark',
+      profilePic: {
+        url: 'https://randomuser.me/api/portraits/women/2.jpg',
+      },
+    },
+  },
+  {
+    id: 8,
+    text: 'This is good',
+    persona: {
+      name: 'Catelyn Stark',
+      profilePic: {
+        url: 'https://randomuser.me/api/portraits/women/3.jpg',
+      },
+    },
+  },
+]
+
+// If we want navigation, we'll need onRouteChange, routeToCuration, isTransitioning
+history.location = '/curation/1'
+const routeToSpotlight = () => (history.location = '/curation/1/spotlight/1')
+
+const Outro = () => (
+  <Plugin
+    Component={
+      <CurationBase
+        history={history}
+        routeToSpotlight={routeToSpotlight}
+        spotlights={spotlights}
+        subtitle="We can help you"
+        title="Need advice from us?"
+      />
+    }
+  />
+)
+
+export default Outro
