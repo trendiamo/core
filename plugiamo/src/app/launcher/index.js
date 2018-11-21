@@ -2,7 +2,7 @@ import animateOnMount from 'shared/animate-on-mount'
 import Frame from 'shared/frame'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { compose } from 'recompose'
+import { compose, withProps } from 'recompose'
 import { h } from 'preact'
 import { IconClose } from 'icons'
 
@@ -85,6 +85,9 @@ const Launcher = ({ onToggleContent, personaPicUrl, showingContent }) => (
 )
 
 export default compose(
+  withProps(({ persona }) => ({
+    personaPicUrl: persona.profilePic.url,
+  })),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()

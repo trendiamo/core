@@ -1,4 +1,5 @@
 import Arrow from 'shared/arrow'
+import BackButton from 'shared/back-button'
 import ProductItem from './product-item'
 import styled from 'styled-components'
 import transition from 'ext/transition'
@@ -6,42 +7,10 @@ import { animate, TopSlideAnimation } from 'shared/animate'
 import { compose, lifecycle, withHandlers, withProps } from 'recompose'
 import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
 import { h } from 'preact'
-import { IconChevronLeft } from 'icons'
 import { List } from 'shared/list'
 
 const FlexDiv = styled.div`
   display: flex;
-`
-
-const BackButton = animate(styled.button`
-  color: #aaa;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-
-  position: absolute;
-  left: 10px;
-  top: 10px;
-
-  background: transparent;
-  outline: none;
-  border: none;
-  padding: 0;
-
-  transform: ${({ isEntering, isLeaving }) => (isEntering || isLeaving ? 'translateY(-200px)' : 'none')};
-  transition: transform 0.6s ease;
-`)
-
-const Chevron = styled(IconChevronLeft)`
-  fill: #aaa;
-  height: 12px;
-  width: 12px;
-  vertical-align: middle;
-`
-
-const Span = styled.span`
-  margin-left: 3px;
-  vertical-align: middle;
 `
 
 const AnimatedBlackArrow = animate(styled(Arrow).attrs({
@@ -86,10 +55,7 @@ const CoverSpotlight = compose(
         <PersonaDescription>{spotlight.text}</PersonaDescription>
       </TopSlideAnimation>
     </PaddedCover>
-    <BackButton isLeaving={isLeaving} onClick={routeToCuration}>
-      <Chevron />
-      <Span>{'Back'}</Span>
-    </BackButton>
+    <BackButton isLeaving={isLeaving} onClick={routeToCuration} />
   </FlexDiv>
 ))
 

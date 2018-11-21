@@ -2,14 +2,15 @@ import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
+import Router from './content/router'
 import setup, { optionsFromHash } from './setup'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
+import { HEIGHT_BREAKPOINT, location } from 'config'
 import { infoMsgHof } from 'shared/info-msg'
-import { location } from 'config'
 
 const Gradient = animateOnMount(styled.div`
   z-index: 2147482998;
@@ -24,15 +25,28 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-const App = ({ persona, onToggleContent, personaPicUrl, showingContent }) => (
-  <div>
-    {showingContent && <Content onToggleContent={onToggleContent} persona={persona} showingContent={showingContent} />}
-    <Launcher onToggleContent={onToggleContent} personaPicUrl={personaPicUrl} showingContent={showingContent} />
+export const AppBase = styled(({ className, Component, onToggleContent, persona, showingContent }) => (
+  <div className={className}>
+    {showingContent && (
+      <Content
+        Component={Component}
+        onToggleContent={onToggleContent}
+        persona={persona}
+        showingContent={showingContent}
+      />
+    )}
+    <Launcher onToggleContent={onToggleContent} persona={persona} showingContent={showingContent} />
     {showingContent && <Gradient />}
   </div>
-)
+))`
+  display: none;
+  @media (min-height: ${HEIGHT_BREAKPOINT}px) {
+    display: block;
+  }
+`
 
 export default compose(
+  withProps({ Component: <Router /> }),
   graphql(
     gql`
       query($hasPersona: Boolean!, $hostname: String!, $personaId: ID) {
@@ -125,9 +139,6 @@ export default compose(
     },
   }),
   branch(({ persona }) => !persona, renderNothing),
-  withProps(({ persona }) => ({
-    personaPicUrl: persona.profilePic.url,
-  })),
   withHandlers({
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
@@ -145,4 +156,4 @@ export default compose(
       if (showingContent) onToggleContent()
     },
   })
-)(App)
+)(AppBase)
