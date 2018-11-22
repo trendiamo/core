@@ -16,9 +16,9 @@ class ApplicationController < ActionController::API
     render json: { errors: errors }, status: :forbidden
   end
 
-  def add_pagination_headers(chain, range)
-    response.headers["Content-Range"] = "#{chain.name.downcase.pluralize} #{range[0]}-#{range[1]}/#{chain.count}"
-    response.headers["Access-Control-Expose-Headers"] = "Content-Range"
+  def add_pagination_headers(page)
+    response.headers["Content-Page"] = page.to_s
+    response.headers["Access-Control-Expose-Headers"] = "Content-Page"
   end
 
   def pagination_vars(range_params)
@@ -38,7 +38,7 @@ class ApplicationController < ActionController::API
     rescue JSON::ParserError, TypeError
       return chain
     end
-    add_pagination_headers(chain, pagination_hash[:range])
+    add_pagination_headers(pagination_hash[:page_number] - 1)
     chain.page(pagination_hash[:page_number]).per(pagination_hash[:total_per_page])
   end
 

@@ -118,6 +118,17 @@ const apiPersonaListRequest = async url => {
   return res.json()
 }
 
+const apiPersonalListHeaders = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return { page: res.headers.get('Content-Page'), range: res.headers.get('Content-Range') }
+}
+
 const apiPersonaShowRequest = async url => {
   const res = await fetch(url, {
     headers: new Headers({
@@ -257,9 +268,10 @@ export const apiSagaSignout = async url => {
 }
 
 export const apiPersonaListSaga = async (url, setInfo) => {
-  const json = await apiPersonaListRequest(url)
-  const info = convertToInfo(json)
-  if (info.status === 'success') return json
+  const body = await apiPersonaListRequest(url)
+  const headers = await apiPersonalListHeaders(url)
+  const info = convertToInfo(body)
+  if (info.status === 'success') return { body, headers }
   setInfo(info)
 }
 

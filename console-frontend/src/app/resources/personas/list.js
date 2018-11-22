@@ -149,6 +149,7 @@ const PersonaList = ({
   handleChangeRowsPerPage,
   setSelectedIds,
   isSelectAll,
+  personasCount,
   handleChangePage,
   rowsPerPage,
   page,
@@ -181,7 +182,7 @@ const PersonaList = ({
         'aria-label': 'Previous Page',
       }}
       component="div"
-      count={influencers && influencers.length}
+      count={personasCount}
       nextIconButtonProps={{
         'aria-label': 'Next Page',
       }}
@@ -198,44 +199,54 @@ export default compose(
   withState('personas', 'setPersonas', []),
   withState('isLoading', 'setIsLoading', true),
   withState('info', 'setInfo', null),
+  withState('personasCount', 'setInfluencerCount', 0),
+  withState('range', 'setRange', []),
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
-  withState('page', 'setPage', 1),
+  withState('page', 'setPage', 0),
   withState('rowsPerPage', 'setRowsPerPage', 10),
   withHandlers({
     deletePersonas: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setPersonas }) => async () => {
       await apiPersonaDestroy({ ids: selectedIds }, setInfo)
-      const personasResponse = await apiPersonaList(setInfo)
-      setPersonas(personasResponse)
-      setIsLoading(false)
+      const filter = persona => {
+        return selectedIds.indexOf(persona.id) === -1
+      }
+      setPersonas(personas.filter(filter))
       setSelectedIds([])
     },
     handleSelectAll: ({ setSelectedIds, personas, setIsSelectAll }) => event => {
       setSelectedIds(event.target.checked ? personas.map(persona => persona.id) : [])
       setIsSelectAll(event.target.checked)
     },
-    handleChangeRowsPerPage: ({ setInfluencers, setRowsPerPage, setInfo }) => async event => {
-      const influencersResponse = await apiPersonaList(
+    handleChangeRowsPerPage: ({ setPersonas, setRowsPerPage, setInfo }) => async event => {
+      const personasResponse = await apiPersonaList(
         setInfo,
         queryString.stringify({ range: [0, event.target.value - 1] }, { arrayFormat: 'bracket' })
       )
       setRowsPerPage(event.target.value)
-      // setPage()
-      console.log(influencersResponse)
-      setInfluencers(influencersResponse)
+      setPersonas(personasResponse.body.personas)
     },
-    handleChangePage: ({ setPage }) => event => {
-      // use set page with response from server
+    handleChangePage: ({ setPage, setInfo, setPersonas, rowsPerPage }) => async (event, page) => {
+      const personasResponse = await apiPersonaList(
+        setInfo,
+        queryString.stringify(
+          { range: [page * rowsPerPage, rowsPerPage * page + (rowsPerPage - 1)] },
+          { arrayFormat: 'bracket' }
+        )
+      )
+      setPersonas(personasResponse.body.personas)
+      setPage(Number(personasResponse.headers.page))
     },
   }),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setInfo, setPersonas, rowsPerPage } = this.props
-      const influencersResponse = await apiPersonaList(
+      const { setIsLoading, setInfo, setPersonas, rowsPerPage, setInfluencerCount } = this.props
+      const personasResponse = await apiPersonaList(
         setInfo,
         queryString.stringify({ range: [0, rowsPerPage - 1] }, { arrayFormat: 'bracket' })
       )
-      setPersonas(influencersResponse)
+      setPersonas(personasResponse.body.personas)
+      setInfluencerCount(personasResponse.body.count)
       setIsLoading(false)
     },
   }),
