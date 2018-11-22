@@ -14,6 +14,7 @@ import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
+import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -61,11 +62,11 @@ const EnhancedToolbar = ({ selectedIds, deletePersonas }) => (
   <Toolbar>
     <Title>
       {selectedIds.length > 0 ? (
-        <Typography color="inherit" variant="subtitle1">
+        <Typography color="inherit" variant="subheading">
           {`${selectedIds.length} selected`}
         </Typography>
       ) : (
-        <Typography id="tableTitle" variant="h6">
+        <Typography id="tableTitle" variant="subheading">
           {'Personas'}
         </Typography>
       )}
@@ -154,8 +155,13 @@ const PersonaList = ({
   personas,
   handleRequestSort,
   deletePersonas,
+  handleChangeRowsPerPage,
   setSelectedIds,
   isSelectAll,
+  personaCount,
+  handleChangePage,
+  rowsPerPage,
+  page,
 }) => (
   <PaperContainer>
     <EnhancedToolbar deletePersonas={deletePersonas} selectedIds={selectedIds} />
@@ -180,6 +186,21 @@ const PersonaList = ({
         ))}
       </TableBody>
     </Table>
+    <TablePagination
+      backIconButtonProps={{
+        'aria-label': 'Previous Page',
+      }}
+      component="div"
+      count={personaCount}
+      nextIconButtonProps={{
+        'aria-label': 'Next Page',
+      }}
+      onChangePage={handleChangePage}
+      onChangeRowsPerPage={handleChangeRowsPerPage}
+      page={page}
+      rowsPerPage={rowsPerPage}
+      rowsPerPageOptions={[5, 10, 25]}
+    />
   </PaperContainer>
 )
 
@@ -187,26 +208,56 @@ export default compose(
   withState('personas', 'setPersonas', []),
   withState('isLoading', 'setIsLoading', true),
   withState('info', 'setInfo', null),
+  withState('personaCount', 'setPersonaCount', 0),
+  withState('range', 'setRange', []),
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
+  withState('page', 'setPage', 0),
+  withState('rowsPerPage', 'setRowsPerPage', 10),
   withHandlers({
-    deletePersonas: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setPersonas }) => async () => {
+    setQuery: ({ setInfo, rowsPerPage }) => async page => {
+      const query = { range: JSON.stringify([page * rowsPerPage, (page + 1) * rowsPerPage - 1]) }
+      return await apiPersonaList(setInfo, query)
+    },
+  }),
+  withHandlers({
+    deletePersonas: ({
+      selectedIds,
+      setInfo,
+      setPersonas,
+      setQuery,
+      page,
+      setPersonaCount,
+      setSelectedIds,
+    }) => async () => {
       await apiPersonaDestroy({ ids: selectedIds }, setInfo)
-      const personasResponse = await apiPersonaList(setInfo)
-      setPersonas(personasResponse)
-      setIsLoading(false)
+      const personasResponse = await setQuery(page)
+      setPersonas(personasResponse.json)
+      setPersonaCount(personasResponse.count)
       setSelectedIds([])
     },
     handleSelectAll: ({ setSelectedIds, personas, setIsSelectAll }) => event => {
       setSelectedIds(event.target.checked ? personas.map(persona => persona.id) : [])
       setIsSelectAll(event.target.checked)
     },
+    handleChangeRowsPerPage: ({ setPersonas, setRowsPerPage, setInfo }) => async event => {
+      const query = { range: JSON.stringify([0, event.target.value - 1]) }
+      const personasResponse = await apiPersonaList(setInfo, query)
+      setRowsPerPage(event.target.value)
+      setPersonas(personasResponse.json)
+    },
+    handleChangePage: ({ setPage, setQuery, setPersonas }) => async (event, page) => {
+      const personasResponse = await setQuery(page)
+      setPersonas(personasResponse.json)
+      setPage(page)
+    },
   }),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setInfo, setPersonas } = this.props
-      const personasResponse = await apiPersonaList(setInfo)
-      setPersonas(personasResponse)
+      const { setIsLoading, setPersonaCount, setQuery, page, setPersonas } = this.props
+      const personasResponse = await setQuery(page)
+      setPersonas(personasResponse.json)
+      setPersonaCount(personasResponse.count)
       setIsLoading(false)
     },
   }),
