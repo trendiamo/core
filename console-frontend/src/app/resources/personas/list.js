@@ -63,11 +63,11 @@ const EnhancedToolbar = ({ selectedIds, deletePersonas }) => (
   <Toolbar>
     <Title>
       {selectedIds.length > 0 ? (
-        <Typography color="inherit" variant="subtitle1">
+        <Typography color="inherit" variant="subheading">
           {`${selectedIds.length} selected`}
         </Typography>
       ) : (
-        <Typography id="tableTitle" variant="h6">
+        <Typography id="tableTitle" variant="subheading">
           {'Personas'}
         </Typography>
       )}
@@ -206,7 +206,7 @@ export default compose(
   withState('page', 'setPage', 0),
   withState('rowsPerPage', 'setRowsPerPage', 10),
   withHandlers({
-    deletePersonas: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setPersonas }) => async () => {
+    deletePersonas: ({ selectedIds, setInfo, setSelectedIds, setPersonas, personas }) => async () => {
       await apiPersonaDestroy({ ids: selectedIds }, setInfo)
       const filter = persona => {
         return selectedIds.indexOf(persona.id) === -1
