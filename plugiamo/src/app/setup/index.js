@@ -1,5 +1,4 @@
 import addPicture from './add-picture'
-import history from 'ext/history'
 import routes from 'app/routes'
 import { isSmall } from 'utils'
 import { location } from 'config'
@@ -63,11 +62,7 @@ const setup = data => {
 
   if (picture) addPicture(picture)
 
-  if (path) {
-    history.replace(path)
-  } else if (flow) {
-    history.replace(routes[flowType](flow.id))
-  }
+  window.__trndInitialPath = path ? path : flow ? routes[flowType](flow.id) : undefined
 
   return {
     flowType,

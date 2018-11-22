@@ -16,6 +16,9 @@ const Content = ({ Component, onToggleContent }) => (
 
 export default compose(
   lifecycle({
+    componentDidMount() {
+      if (window.__trndInitialPath) history.replace(window.__trndInitialPath)
+    },
     componentWillUnmount() {
       history.removeListeners()
     },
