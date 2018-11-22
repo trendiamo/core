@@ -1,5 +1,6 @@
 import auth from 'auth'
 import routes from 'app/routes'
+import { stringify } from 'query-string'
 
 const BASE_API_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
@@ -115,7 +116,18 @@ const apiPersonaListRequest = async url => {
     }),
     method: 'get',
   })
-  return res.json()
+  const json = await res.json()
+  const count = parseInt(
+    res.headers
+      .get('content-range')
+      .split('/')
+      .pop(),
+    10
+  )
+  return {
+    json,
+    count,
+  }
 }
 
 const apiPersonaShowRequest = async url => {
@@ -257,9 +269,9 @@ export const apiSagaSignout = async url => {
 }
 
 export const apiPersonaListSaga = async (url, setInfo) => {
-  const json = await apiPersonaListRequest(url)
+  const { json, count } = await apiPersonaListRequest(url)
   const info = convertToInfo(json)
-  if (info.status === 'success') return json
+  if (info.status === 'success') return { json, count }
   setInfo(info)
 }
 
@@ -306,7 +318,7 @@ export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
 export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)
 
 export const apiPersonaDestroy = (body, setInfo) => apiPersonaDestroySaga(PERSONAS_URL, body, setInfo)
-export const apiPersonaList = setInfo => apiPersonaListSaga(PERSONAS_URL, setInfo)
+export const apiPersonaList = (setInfo, query) => apiPersonaListSaga(`${PERSONAS_URL}/?${stringify(query)}`, setInfo)
 export const apiPersonaShow = (id, setInfo) => apiPersonaShowSaga(`${PERSONAS_URL}/${id}`, setInfo)
 export const apiPersonaCreate = (body, setInfo) => apiPersonaCreateSaga(PERSONAS_URL, body, setInfo)
 export const apiPersonaUpdate = (id, body, setInfo) => apiPersonaUpdateSaga(`${PERSONAS_URL}/${id}`, body, setInfo)

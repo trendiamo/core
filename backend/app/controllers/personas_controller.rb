@@ -2,7 +2,7 @@ class PersonasController < ApplicationController
   def index
     @personas = Persona.all
     authorize @personas
-    render json: @personas
+    render json: pagination(@personas)
   end
 
   def show
