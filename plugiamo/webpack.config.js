@@ -9,7 +9,7 @@ module.exports = {
     compress: true,
     open: true,
   },
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'plugin.js',
