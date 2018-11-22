@@ -20,6 +20,8 @@ const ListContent = styled.div`
   padding: 8px 12px;
   flex: 1;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 `
 
 // 101px makes it so 3 lines of text fit with no need for scroll
