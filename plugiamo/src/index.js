@@ -5,6 +5,7 @@ import { graphQlUrl, mixpanelToken } from './config'
 import { h, render } from 'preact'
 import { Provider } from 'ext/graphql-context'
 import './styles.css'
+import 'ext/rollbar'
 
 mixpanel.init(mixpanelToken)
 
