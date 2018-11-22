@@ -5,6 +5,7 @@ import CircularProgress from 'shared/circular-progress'
 import EditIcon from '@material-ui/icons/Edit'
 import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
 import MUITableHead from '@material-ui/core/TableHead'
+import MUITableSortLabel from '@material-ui/core/TableSortLabel'
 import MUIToolbar from '@material-ui/core/Toolbar'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
@@ -16,7 +17,6 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import { apiPersonaDestroy, apiPersonaList } from 'utils'
@@ -91,18 +91,39 @@ const StyledTableHead = styled(MUITableHead)`
   color: #555;
   text-transform: uppercase;
 `
+const TableSortLabel = compose(
+  withHandlers({
+    handleRequestSort: ({ value, onClick }) => () => {
+      onClick(value)
+    },
+  })
+)(({ handleRequestSort, ...props }) => <MUITableSortLabel {...props} onClick={handleRequestSort} />)
 
-const TableHead = ({ handleSelectAll, isSelectAll }) => (
+const TableHead = ({ handleSelectAll, handleRequestSort, isSelectAll, order, orderBy }) => (
   <StyledTableHead>
     <TableRow>
       <TableCell padding="checkbox">
         <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
       </TableCell>
-      {columns.map(row => {
+      {columns.map(column => {
         return (
-          <TableCell key={row.name} numeric={row.numeric} padding={row.disablePadding ? 'none' : 'default'}>
-            <Tooltip enterDelay={300} placement={row.numeric ? 'bottom-end' : 'bottom-start'} title="Sort">
-              <TableSortLabel value={row.name}>{row.label}</TableSortLabel>
+          <TableCell key={column.name} numeric={column.numeric} padding={column.disablePadding ? 'none' : 'default'}>
+            <Tooltip
+              disableFocusListener={column.name === 'avatar'}
+              disableHoverListener={column.name === 'avatar'}
+              disableTouchListener={column.name === 'avatar'}
+              enterDelay={50}
+              placement={column.numeric ? 'bottom-end' : 'bottom-start'}
+              title={column.name !== 'avatar' && 'sort'}
+            >
+              <TableSortLabel
+                active={orderBy === column.name && column.name !== 'avatar'}
+                direction={order}
+                onClick={handleRequestSort}
+                value={column.name}
+              >
+                {column.label}
+              </TableSortLabel>
             </Tooltip>
           </TableCell>
         )
@@ -130,7 +151,7 @@ const PersonaRow = compose(
       <Checkbox checked={selectedIds.includes(persona.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
-      <Avatar alt="Remy Sharp" src={persona.profilePicUrl} />
+      <Avatar alt={persona.name} src={persona.profilePicUrl} />
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
       {persona.name}
@@ -162,6 +183,8 @@ const PersonaList = ({
   handleChangePage,
   rowsPerPage,
   page,
+  order,
+  orderBy,
 }) => (
   <PaperContainer>
     <EnhancedToolbar deletePersonas={deletePersonas} selectedIds={selectedIds} />
@@ -170,6 +193,8 @@ const PersonaList = ({
         handleRequestSort={handleRequestSort}
         handleSelectAll={handleSelectAll}
         isSelectAll={isSelectAll}
+        order={order}
+        orderBy={orderBy}
         personas={personas}
         selectedIds={selectedIds}
       />
@@ -210,13 +235,18 @@ export default compose(
   withState('info', 'setInfo', null),
   withState('personaCount', 'setPersonaCount', 0),
   withState('range', 'setRange', []),
+  withState('order', 'setOrder', 'asc'),
+  withState('orderBy', 'setOrderBy', 'id'),
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
   withState('page', 'setPage', 0),
   withState('rowsPerPage', 'setRowsPerPage', 10),
   withHandlers({
-    setQuery: ({ setInfo, rowsPerPage }) => async page => {
-      const query = { range: JSON.stringify([page * rowsPerPage, (page + 1) * rowsPerPage - 1]) }
+    setQuery: ({ setInfo, rowsPerPage, order, orderBy }) => async page => {
+      const query = {
+        range: JSON.stringify([page * rowsPerPage, (page + 1) * rowsPerPage - 1]),
+        sort: JSON.stringify([orderBy, order]),
+      }
       return await apiPersonaList(setInfo, query)
     },
   }),
@@ -240,8 +270,8 @@ export default compose(
       setSelectedIds(event.target.checked ? personas.map(persona => persona.id) : [])
       setIsSelectAll(event.target.checked)
     },
-    handleChangeRowsPerPage: ({ setPersonas, setRowsPerPage, setInfo }) => async event => {
-      const query = { range: JSON.stringify([0, event.target.value - 1]) }
+    handleChangeRowsPerPage: ({ setPersonas, setRowsPerPage, setInfo, order, orderBy }) => async event => {
+      const query = { range: JSON.stringify([0, event.target.value - 1]), sort: JSON.stringify([orderBy, order]) }
       const personasResponse = await apiPersonaList(setInfo, query)
       setRowsPerPage(event.target.value)
       setPersonas(personasResponse.json)
@@ -250,6 +280,23 @@ export default compose(
       const personasResponse = await setQuery(page)
       setPersonas(personasResponse.json)
       setPage(page)
+    },
+    handleRequestSort: ({
+      setOrderBy,
+      setOrder,
+      order,
+      orderBy,
+      setQuery,
+      page,
+      setPersonas,
+      setPersonaCount,
+    }) => async columnName => {
+      if (columnName === 'avatar') return
+      setOrderBy(columnName)
+      setOrder(orderBy === columnName && order === 'desc' ? 'asc' : 'desc')
+      const personasResponse = await setQuery(page)
+      setPersonas(personasResponse.json)
+      setPersonaCount(personasResponse.count)
     },
   }),
   lifecycle({
