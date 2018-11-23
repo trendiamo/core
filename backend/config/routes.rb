@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resources :outros, only: %i[index]
       delete "/outros", to: "outros#destroy"
       resources :triggers, only: %i[index]
+      delete "/triggers", to: "triggers#destroy"
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end

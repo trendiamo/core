@@ -325,6 +325,25 @@ const apiTriggerListRequest = async url => {
   return res.json()
 }
 
+export const apiTriggerDestroySaga = async (url, body, setInfo) => {
+  const json = await apiTriggerDestroyRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiTriggerDestroyRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'delete',
+  })
+  return res.json()
+}
+
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
 export const apiSignIn = (body, setInfo) => apiSaga(SIGNIN_URL, body, setInfo)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
@@ -356,3 +375,4 @@ export const apiScriptedChatList = (setInfo, query) =>
 export const apiScriptedChatDestroy = (body, setInfo) => apiDestroySaga(SCRIPTED_CHATS_URL, body, setInfo)
 
 export const apiTriggerList = setInfo => apiTriggerListSaga(TRIGGERS_URL, setInfo)
+export const apiTriggerDestroy = (body, setInfo) => apiTriggerDestroySaga(TRIGGERS_URL, body, setInfo)
