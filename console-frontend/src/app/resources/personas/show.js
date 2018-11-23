@@ -33,13 +33,13 @@ const PersonaShow = ({ persona }) => (
         <ProfilePic persona={persona} />
       </ListItem>
       <ListItem>
-        <ListItemText primary="Name" secondary={persona.name} secondaryTypographyProps={{ variant: 'body1' }} />
+        <ListItemText primary="Name" secondary={persona.name} secondaryTypographyProps={{ variant: 'body2' }} />
       </ListItem>
       <ListItem>
         <ListItemText
           primary="Description"
           secondary={persona.description}
-          secondaryTypographyProps={{ variant: 'body1' }}
+          secondaryTypographyProps={{ variant: 'body2' }}
         />
       </ListItem>
     </List>

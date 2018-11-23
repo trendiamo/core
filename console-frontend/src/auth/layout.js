@@ -114,7 +114,7 @@ const Layout = ({ children, title, authMessage }) => (
       <Logotype />
       <AuthMain>
         <AuthStyledPaper elevation={3}>
-          <Typography variant="display1">{title}</Typography>
+          <Typography variant="h4">{title}</Typography>
           {children}
         </AuthStyledPaper>
         <AuthMessage>{authMessage}</AuthMessage>

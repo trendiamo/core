@@ -62,11 +62,11 @@ const EnhancedToolbar = ({ selectedIds, deletePersonas }) => (
   <Toolbar>
     <Title>
       {selectedIds.length > 0 ? (
-        <Typography color="inherit" variant="subheading">
+        <Typography color="inherit" variant="subtitle1">
           {`${selectedIds.length} selected`}
         </Typography>
       ) : (
-        <Typography id="tableTitle" variant="subheading">
+        <Typography id="tableTitle" variant="subtitle1">
           {'Personas'}
         </Typography>
       )}

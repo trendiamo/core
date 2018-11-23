@@ -12,7 +12,7 @@ const AppBar = ({ classes, open, toggleOpen }) => (
       <IconButton aria-label="Open drawer" className={classes.menuButton} color="inherit" onClick={toggleOpen}>
         <MenuIcon />
       </IconButton>
-      <Typography className={classes.title} color="default" id="admin-title" variant="title" />
+      <Typography className={classes.title} color="default" id="admin-title" variant="h6" />
     </Toolbar>
   </MuiAppBar>
 )

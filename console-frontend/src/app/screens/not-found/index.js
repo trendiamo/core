@@ -42,7 +42,7 @@ const NotFound = () => (
   <Fullscreen>
     <Container>
       <BackgroundImage src="/img/background/not-found.png" />
-      <Typography gutterBottom variant="display1">
+      <Typography gutterBottom variant="h4">
         {'Oops! This page is not available'}
       </Typography>
       <Typography variant="body2">
