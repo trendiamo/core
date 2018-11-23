@@ -1,3 +1,4 @@
+import TriggerCreate from './create'
 import TriggersList from './list'
 
-export { TriggersList }
+export { TriggerCreate, TriggersList }

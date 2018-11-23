@@ -68,6 +68,12 @@ const routes = {
   scriptedChatEdit(id) {
     return `/scripted-chats/${id}/edit`
   },
+  triggerCreate() {
+    return '/triggers/create'
+  },
+  triggersList() {
+    return '/triggers'
+  },
 }
 
 export default routes

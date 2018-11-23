@@ -3,6 +3,10 @@ class TriggerPolicy < ApplicationPolicy
     user
   end
 
+  def create?
+    user
+  end
+  
   def destroy?
     user
   end

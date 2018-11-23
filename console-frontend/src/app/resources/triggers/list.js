@@ -7,6 +7,7 @@ import MUITableHead from '@material-ui/core/TableHead'
 import MUIToolbar from '@material-ui/core/Toolbar'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
+import routes from 'app/routes'
 import ShowIcon from '@material-ui/icons/Visibility'
 import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
@@ -36,7 +37,7 @@ const StyledButton = styled(Button)`
 `
 
 const AddTriggerButton = () => (
-  <StyledButton color="primary" component={Link} disabled to="" variant="contained">
+  <StyledButton color="primary" component={Link} to={routes.triggerCreate()} variant="contained">
     {'Create New'}
   </StyledButton>
 )

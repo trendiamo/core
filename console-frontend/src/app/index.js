@@ -16,7 +16,7 @@ import { OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { ScriptedChatsList } from './resources/scripted-chats'
-import { TriggersList } from './resources/triggers'
+import { TriggerCreate, TriggersList } from './resources/triggers'
 import 'assets/css/fonts.css'
 
 const generateClassName = createGenerateClassName()
@@ -58,6 +58,7 @@ const Routes = () => (
     <PrivateRoute component={ScriptedChatsList} exact path={routes.scriptedChatsList()} />
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={TriggersList} exact path="/triggers" />
+    <PrivateRoute component={TriggerCreate} exact path="/triggers/create" />
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
