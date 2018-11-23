@@ -57,6 +57,7 @@ const transition = {
       liftedElement.style.transitionDuration = `${this.duration}ms`
       liftedElement.style.transitionTimingFunction = 'ease-out'
       liftedElement.style.visibility = 'visible'
+      liftedElement.style.zIndex = '42000'
       this.ghostElement.appendChild(liftedElement)
       this.elements[k].liftedElement = liftedElement
       setTimeout(() => {
