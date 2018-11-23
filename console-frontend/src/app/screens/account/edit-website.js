@@ -4,9 +4,8 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from 'shared/circular-progress'
 import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
+import MuiCancel from '@material-ui/icons/Cancel'
 import Notification from 'shared/notification'
-import RACancel from '@material-ui/icons/Cancel'
-import RATextField from '@material-ui/core/TextField'
 import React from 'react'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
@@ -37,7 +36,7 @@ const HostnameTextField = compose(
       onChange(index, event.target.value)
     },
   })
-)(({ editHostnameValue, value, ...props }) => <RATextField {...props} onChange={editHostnameValue} value={value} />)
+)(({ editHostnameValue, value, ...props }) => <TextField {...props} onChange={editHostnameValue} value={value} />)
 
 const Cancel = compose(
   withHandlers({
@@ -45,7 +44,7 @@ const Cancel = compose(
       if (!disabled) onClick(index)
     },
   })
-)(({ deleteHostname, ...props }) => <RACancel {...props} onClick={deleteHostname} />)
+)(({ deleteHostname, ...props }) => <MuiCancel {...props} onClick={deleteHostname} />)
 
 const FlexDiv = styled.div`
   display: flex;
