@@ -20,6 +20,9 @@ const routes = {
   root() {
     return '/'
   },
+  personasList() {
+    return '/personas'
+  },
   personaCreate() {
     return '/personas/create'
   },
@@ -28,6 +31,12 @@ const routes = {
   },
   personaEdit(id) {
     return `/personas/${id}/edit`
+  },
+  outrosList() {
+    return '/outros'
+  },
+  outroCreate() {
+    return '/outros/create'
   },
 }
 

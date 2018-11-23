@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181119155115) do
+ActiveRecord::Schema.define(version: 20181123125504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 20181119155115) do
     t.index ["chat_option_id"], name: "index_chat_steps_on_chat_option_id"
     t.index ["refering_chat_option_id"], name: "index_chat_steps_on_refering_chat_option_id"
     t.index ["scripted_chat_id"], name: "index_chat_steps_on_scripted_chat_id"
+  end
+
+  create_table "outros", force: :cascade do |t|
+    t.bigint "persona_id"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_outros_on_account_id"
+    t.index ["persona_id"], name: "index_outros_on_persona_id"
   end
 
   create_table "personas", force: :cascade do |t|
@@ -139,6 +148,8 @@ ActiveRecord::Schema.define(version: 20181119155115) do
   add_foreign_key "chat_steps", "chat_options"
   add_foreign_key "chat_steps", "chat_options", column: "refering_chat_option_id"
   add_foreign_key "chat_steps", "scripted_chats"
+  add_foreign_key "outros", "accounts"
+  add_foreign_key "outros", "personas"
   add_foreign_key "personas", "accounts"
   add_foreign_key "scripted_chats", "accounts"
   add_foreign_key "scripted_chats", "personas"
