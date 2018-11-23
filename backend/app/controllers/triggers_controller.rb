@@ -15,6 +15,22 @@ class TriggersController < ApplicationController
     end
   end
 
+  def show
+    @trigger = Trigger.find(params[:id])
+    authorize @trigger
+    render json: @trigger
+  end
+
+  def update
+    @trigger = Trigger.find(params[:id])
+    authorize @trigger
+    if @trigger.update(trigger_params)
+      render json: @trigger
+    else
+      render_error
+    end
+  end
+
   def destroy
     @triggers = Trigger.where(id: params[:ids])
     authorize @triggers

@@ -363,6 +363,43 @@ const apiTriggerCreateRequest = async (url, body) => {
   return res.json()
 }
 
+const apiTriggerShowRequest = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
+export const apiTriggerShowSaga = async (url, setInfo) => {
+  const json = await apiTriggerShowRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiTriggerUpdateRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'put',
+  })
+  return res.json()
+}
+
+export const apiTriggerUpdateSaga = async (url, body, setInfo) => {
+  const json = await apiTriggerUpdateRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
 export const apiSignIn = (body, setInfo) => apiSaga(SIGNIN_URL, body, setInfo)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
@@ -396,3 +433,5 @@ export const apiScriptedChatDestroy = (body, setInfo) => apiDestroySaga(SCRIPTED
 export const apiTriggerList = setInfo => apiTriggerListSaga(TRIGGERS_URL, setInfo)
 export const apiTriggerDestroy = (body, setInfo) => apiTriggerDestroySaga(TRIGGERS_URL, body, setInfo)
 export const apiTriggerCreate = (body, setInfo) => apiTriggerCreateSaga(TRIGGERS_URL, body, setInfo)
+export const apiTriggerShow = (id, setInfo) => apiTriggerShowSaga(`${TRIGGERS_URL}/${id}`, setInfo)
+export const apiTriggerUpdate = (id, body, setInfo) => apiTriggerUpdateSaga(`${TRIGGERS_URL}/${id}`, body, setInfo)

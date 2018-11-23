@@ -74,6 +74,9 @@ const routes = {
   triggersList() {
     return '/triggers'
   },
+  triggerEdit(id) {
+    return `/triggers/${id}/edit`
+  },
 }
 
 export default routes

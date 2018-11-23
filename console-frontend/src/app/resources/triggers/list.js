@@ -137,10 +137,7 @@ const TriggerRow = compose(
       {trigger.flowId}
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
-      <Button color="primary" component={Link} disabled to="">
-        <ShowIcon />
-      </Button>
-      <Button color="primary" component={Link} disabled to="">
+      <Button color="primary" component={Link} to={routes.triggerEdit(trigger.id)}>
         <EditIcon />
       </Button>
     </TableCell>
