@@ -16,7 +16,7 @@ import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
-import { apiTriggerList } from 'utils'
+import { apiTriggerDestroy, apiTriggerList } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import { BulkActions } from 'shared/list-actions'
 import { Link } from 'react-router-dom'
@@ -188,9 +188,12 @@ export default compose(
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
   withHandlers({
-    deleteTriggers: () => async () => {
-      // TODO:
-      console.log('delete triggers')
+    deleteTriggers: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setTriggers }) => async () => {
+      await apiTriggerDestroy({ ids: selectedIds }, setInfo)
+      const triggersResponse = await apiTriggerList(setInfo)
+      setTriggers(triggersResponse)
+      setIsLoading(false)
+      setSelectedIds([])
     },
     handleSelectAll: ({ setSelectedIds, triggers, setIsSelectAll }) => event => {
       setSelectedIds(event.target.checked ? triggers.map(trigger => trigger.id) : [])
