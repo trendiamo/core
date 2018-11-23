@@ -4,6 +4,7 @@ import { stringify } from 'query-string'
 
 const BASE_API_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
+const OUTROS_URL = `${BASE_API_URL}/outros`
 const SIGNUP_URL = `${BASE_API_URL}/users/sign_up`
 const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
@@ -108,7 +109,7 @@ const apiWebsiteUpdateRequest = async (url, body) => {
   return res.json()
 }
 
-const apiPersonaListRequest = async url => {
+const apiListRequest = async url => {
   const res = await fetch(url, {
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -153,7 +154,7 @@ const apiPersonaCreateRequest = async (url, body) => {
   return res.json()
 }
 
-const apiPersonaDestroyRequest = async (url, body) => {
+const apiDestroyRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
@@ -268,8 +269,8 @@ export const apiSagaSignout = async url => {
   console.error('Error on Logout!')
 }
 
-export const apiPersonaListSaga = async (url, setInfo) => {
-  const { json, count } = await apiPersonaListRequest(url)
+export const apiListSaga = async (url, setInfo) => {
+  const { json, count } = await apiListRequest(url)
   const info = convertToInfo(json)
   if (info.status === 'success') return { json, count }
   setInfo(info)
@@ -296,8 +297,8 @@ export const apiPersonaCreateSaga = async (url, body, setInfo) => {
   setInfo(info)
 }
 
-export const apiPersonaDestroySaga = async (url, body, setInfo) => {
-  const json = await apiPersonaDestroyRequest(url, body)
+export const apiDestroySaga = async (url, body, setInfo) => {
+  const json = await apiDestroyRequest(url, body)
   const info = convertToInfo(json)
   if (info.status === 'success') return json
   setInfo(info)
@@ -317,8 +318,11 @@ export const apiWebsiteUpdate = (id, body, setInfo) => apiWebsiteUpdateSaga(`${W
 export const apiMe = setInfo => apiMeSaga(ME_URL, setInfo)
 export const apiMeUpdate = (body, setInfo) => apiMeUpdateSaga(ME_URL, body, setInfo)
 
-export const apiPersonaDestroy = (body, setInfo) => apiPersonaDestroySaga(PERSONAS_URL, body, setInfo)
-export const apiPersonaList = (setInfo, query) => apiPersonaListSaga(`${PERSONAS_URL}/?${stringify(query)}`, setInfo)
+export const apiPersonaList = (setInfo, query) => apiListSaga(`${PERSONAS_URL}/?${stringify(query)}`, setInfo)
 export const apiPersonaShow = (id, setInfo) => apiPersonaShowSaga(`${PERSONAS_URL}/${id}`, setInfo)
 export const apiPersonaCreate = (body, setInfo) => apiPersonaCreateSaga(PERSONAS_URL, body, setInfo)
 export const apiPersonaUpdate = (id, body, setInfo) => apiPersonaUpdateSaga(`${PERSONAS_URL}/${id}`, body, setInfo)
+export const apiPersonaDestroy = (body, setInfo) => apiDestroySaga(PERSONAS_URL, body, setInfo)
+
+export const apiOutroList = (setInfo, query) => apiListSaga(`${OUTROS_URL}/?${stringify(query)}`, setInfo)
+export const apiOutroDestroy = (body, setInfo) => apiDestroySaga(OUTROS_URL, body, setInfo)

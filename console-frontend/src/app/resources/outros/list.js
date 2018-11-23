@@ -8,26 +8,22 @@ import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TablePagination from '@material-ui/core/TablePagination'
-import { apiPersonaDestroy, apiPersonaList } from 'utils'
+import { apiOutroDestroy, apiOutroList } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withState } from 'recompose'
 import { TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 
-const columns = [
-  { name: 'avatar', numeric: false, disablePadding: true, label: 'avatar' },
-  { name: 'name', numeric: false, disablePadding: false, label: 'name' },
-  { name: 'description', numeric: false, disablePadding: false, label: 'description' },
-]
+const columns = [{ name: 'influencer', numeric: false, disablePadding: true, label: 'infleuncer' }]
 
-const PersonasList = ({
+const OutrosList = ({
   selectedIds,
   handleSelectAll,
-  personas,
+  outros,
   handleRequestSort,
   deleteResources,
   handleChangeRowsPerPage,
   setSelectedIds,
   isSelectAll,
-  personasCount,
+  outrosCount,
   handleChangePage,
   rowsPerPage,
   page,
@@ -37,11 +33,11 @@ const PersonasList = ({
   <PaperContainer>
     <TableToolbar
       deleteResources={deleteResources}
-      resourceCreatePath={routes.personaCreate()}
-      resourceName="Personas"
+      resourceCreatePath={routes.outroCreate()}
+      resourceName="Outros"
       selectedIds={selectedIds}
     />
-    <Table aria-labelledby="Personas">
+    <Table aria-labelledby="Outros">
       <TableHead
         columns={columns}
         handleRequestSort={handleRequestSort}
@@ -52,25 +48,17 @@ const PersonasList = ({
         selectedIds={selectedIds}
       />
       <TableBody>
-        {personas.map((persona, index) => (
+        {outros.map((outro, index) => (
           <TableRow
             handleSelectAll={handleSelectAll}
             index={index}
-            key={persona.id}
-            resource={persona}
-            resourceEditPath={routes.personaEdit(persona.id)}
-            resourceShowPath={routes.personaShow(persona.id)}
+            key={outro.id}
+            resource={outro}
             selectedIds={selectedIds}
             setSelectedIds={setSelectedIds}
           >
             <TableCell component="th" padding="none" scope="row">
-              <Avatar alt={persona.name} src={persona.profilePicUrl} />
-            </TableCell>
-            <TableCell component="th" padding="none" scope="row">
-              {persona.name}
-            </TableCell>
-            <TableCell component="th" padding="none" scope="row">
-              {persona.description}
+              <Avatar alt={toString(outro.id)} src={outro.persona.profilePicUrl} />
             </TableCell>
           </TableRow>
         ))}
@@ -81,7 +69,7 @@ const PersonasList = ({
         'aria-label': 'Previous Page',
       }}
       component="div"
-      count={personasCount}
+      count={outrosCount}
       nextIconButtonProps={{
         'aria-label': 'Next Page',
       }}
@@ -95,10 +83,10 @@ const PersonasList = ({
 )
 
 export default compose(
-  withState('personas', 'setPersonas', []),
+  withState('outros', 'setOutros', []),
   withState('isLoading', 'setIsLoading', true),
   withState('info', 'setInfo', null),
-  withState('personasCount', 'setPersonasCount', 0),
+  withState('outrosCount', 'setOutrosCount', 0),
   withState('range', 'setRange', []),
   withState('order', 'setOrder', 'asc'),
   withState('orderBy', 'setOrderBy', 'id'),
@@ -106,20 +94,20 @@ export default compose(
   withState('isSelectAll', 'setIsSelectAll', false),
   withState('page', 'setPage', 0),
   withState('rowsPerPage', 'setRowsPerPage', 10),
-  enhanceList(apiPersonaList, apiPersonaDestroy, ({ personas, setPersonas, personasCount, setPersonasCount }) => ({
-    resources: personas,
-    setResources: setPersonas,
-    resourcesCount: personasCount,
-    setResourcesCount: setPersonasCount,
+  enhanceList(apiOutroList, apiOutroDestroy, ({ outros, setOutros, outrosCount, setOutrosCount }) => ({
+    resources: outros,
+    setResources: setOutros,
+    resourcesCount: outrosCount,
+    setResourcesCount: setOutrosCount,
   })),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setPersonasCount, setQuery, page, setPersonas } = this.props
-      const personasResponse = await setQuery(page)
-      setPersonas(personasResponse.json)
-      setPersonasCount(personasResponse.count)
+      const { setIsLoading, setOutrosCount, setQuery, page, setOutros } = this.props
+      const outrosResponse = await setQuery(page)
+      setOutros(outrosResponse.json)
+      setOutrosCount(outrosResponse.count)
       setIsLoading(false)
     },
   }),
   branch(({ isLoading }) => isLoading, renderComponent(CircularProgress))
-)(PersonasList)
+)(OutrosList)
