@@ -14,7 +14,7 @@ import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (
   <React.Fragment>
-    <AuthTitle variant="display1">
+    <AuthTitle variant="h4">
       {"Don't have an account?"}
       <br />
       {'Get to know what we can do for you.'}

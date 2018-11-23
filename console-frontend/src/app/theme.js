@@ -1,14 +1,15 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
 const typography = {
+  useNextVariants: true,
   body1: {
-    color: 'rgba(0,0,0,.6)',
-    letterSpacing: '0.5px',
-  },
-  body2: {
     color: 'rgba(0,0,0,.6)',
     fontSize: '13.7px',
     letterSpacing: '0.3px',
+  },
+  body2: {
+    color: 'rgba(0,0,0,.6)',
+    letterSpacing: '0.5px',
   },
   button: {
     color: 'rgba(255, 255, 255, 0.8)',
@@ -18,14 +19,9 @@ const typography = {
   caption: {
     letterSpacing: '0.4px',
   },
-  display1: {
+  h4: {
     color: '#32333d',
     fontSize: '33.4px',
-    letterSpacing: '0.3px',
-  },
-  display6: {
-    color: '#32333d',
-    fontSize: '19.6px',
     letterSpacing: '0.3px',
   },
   fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',

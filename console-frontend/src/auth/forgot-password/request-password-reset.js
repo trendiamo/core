@@ -14,12 +14,12 @@ import { compose, withHandlers, withState } from 'recompose'
 
 const AuthMessage = () => (
   <React.Fragment>
-    <AuthTitle variant="display1">
+    <AuthTitle variant="h4">
       {"Don't have an account?"}
       <br />
       {'Get to know what we can do for you.'}
     </AuthTitle>
-    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body2">
+    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body1">
       {'Is something wrong? '}
       <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
     </AuthText>
@@ -32,7 +32,7 @@ const AuthMessage = () => (
 const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, info }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <form onSubmit={passwordChangeSubmit}>
-      <Typography variant="body1">
+      <Typography variant="body2">
         {'We can help you reset your password using your email address linked to your account.'}
       </Typography>
       <Notification data={info} />
