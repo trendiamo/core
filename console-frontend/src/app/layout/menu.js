@@ -11,7 +11,11 @@ import UserMenu from './user-menu'
 import { compose, withProps } from 'recompose'
 import { withRouter } from 'react-router'
 
-const resources = [{ label: 'Personas', route: routes.personasList() }, { label: 'Outros', route: routes.outrosList() }]
+const resources = [
+  { label: 'Curations', route: routes.curationsList() },
+  { label: 'Outros', route: routes.outrosList() },
+  { label: 'Personas', route: routes.personasList() },
+]
 
 const Container = styled.div`
   display: flex;

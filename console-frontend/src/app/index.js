@@ -11,6 +11,7 @@ import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
+import { CurationsList } from './resources/curations'
 import { OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
@@ -52,6 +53,7 @@ const Routes = () => (
     <PrivateRoute component={PersonaShow} exact path="/personas/:personaId" />
     <PrivateRoute component={PersonaEdit} exact path="/personas/:personaId/edit" />
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
+    <PrivateRoute component={CurationsList} exact path={routes.curationsList()} />
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />

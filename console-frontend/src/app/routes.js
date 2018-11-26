@@ -44,6 +44,18 @@ const routes = {
   outroEdit(id) {
     return `/outros/${id}/edit`
   },
+  curationsList() {
+    return '/curations'
+  },
+  curationCreate() {
+    return '/curations/create'
+  },
+  curationShow(id) {
+    return `/curations/${id}`
+  },
+  curationEdit(id) {
+    return `/curations/${id}/edit`
+  },
 }
 
 export default routes

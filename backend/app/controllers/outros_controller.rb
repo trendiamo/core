@@ -1,6 +1,6 @@
 class OutrosController < ApplicationController
   def index
-    @outros = Outro.all
+    @outros = Outro.includes(:persona).all
     authorize @outros
     render json: sorting(pagination(@outros))
   end

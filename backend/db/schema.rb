@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181123125504) do
+ActiveRecord::Schema.define(version: 20181126135000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,17 @@ ActiveRecord::Schema.define(version: 20181123125504) do
     t.index ["scripted_chat_id"], name: "index_chat_steps_on_scripted_chat_id"
   end
 
+  create_table "curations", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "persona_id"
+    t.string "title", null: false
+    t.string "subtitle", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_curations_on_account_id"
+    t.index ["persona_id"], name: "index_curations_on_persona_id"
+  end
+
   create_table "outros", force: :cascade do |t|
     t.bigint "persona_id"
     t.bigint "account_id"
@@ -88,6 +99,20 @@ ActiveRecord::Schema.define(version: 20181123125504) do
     t.index ["account_id"], name: "index_personas_on_account_id"
   end
 
+  create_table "product_picks", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "spotlight_id"
+    t.string "name", null: false
+    t.string "url", null: false
+    t.string "description", null: false
+    t.string "pic_url", null: false
+    t.string "displayPrice", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_product_picks_on_account_id"
+    t.index ["spotlight_id"], name: "index_product_picks_on_spotlight_id"
+  end
+
   create_table "scripted_chats", force: :cascade do |t|
     t.string "title", null: false
     t.bigint "persona_id"
@@ -96,6 +121,16 @@ ActiveRecord::Schema.define(version: 20181123125504) do
     t.bigint "account_id"
     t.index ["account_id"], name: "index_scripted_chats_on_account_id"
     t.index ["persona_id"], name: "index_scripted_chats_on_persona_id"
+  end
+
+  create_table "spotlights", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "persona_id"
+    t.string "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_spotlights_on_account_id"
+    t.index ["persona_id"], name: "index_spotlights_on_persona_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -148,11 +183,17 @@ ActiveRecord::Schema.define(version: 20181123125504) do
   add_foreign_key "chat_steps", "chat_options"
   add_foreign_key "chat_steps", "chat_options", column: "refering_chat_option_id"
   add_foreign_key "chat_steps", "scripted_chats"
+  add_foreign_key "curations", "accounts"
+  add_foreign_key "curations", "personas"
   add_foreign_key "outros", "accounts"
   add_foreign_key "outros", "personas"
   add_foreign_key "personas", "accounts"
+  add_foreign_key "product_picks", "accounts"
+  add_foreign_key "product_picks", "spotlights"
   add_foreign_key "scripted_chats", "accounts"
   add_foreign_key "scripted_chats", "personas"
+  add_foreign_key "spotlights", "accounts"
+  add_foreign_key "spotlights", "personas"
   add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
 end

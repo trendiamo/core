@@ -5,6 +5,7 @@ import { stringify } from 'query-string'
 const BASE_API_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
+const CURATIONS_URL = `${BASE_API_URL}/curations`
 const SIGNUP_URL = `${BASE_API_URL}/users/sign_up`
 const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
@@ -326,3 +327,6 @@ export const apiPersonaDestroy = (body, setInfo) => apiDestroySaga(PERSONAS_URL,
 
 export const apiOutroList = (setInfo, query) => apiListSaga(`${OUTROS_URL}/?${stringify(query)}`, setInfo)
 export const apiOutroDestroy = (body, setInfo) => apiDestroySaga(OUTROS_URL, body, setInfo)
+
+export const apiCurationList = (setInfo, query) => apiListSaga(`${CURATIONS_URL}/?${stringify(query)}`, setInfo)
+export const apiCurationDestroy = (body, setInfo) => apiDestroySaga(CURATIONS_URL, body, setInfo)
