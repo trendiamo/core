@@ -13,6 +13,7 @@ import { withRouter } from 'react-router'
 
 const resources = [
   { label: 'Curations', route: routes.curationsList() },
+  { label: 'Scripted Chats', route: routes.scriptedChatsList() },
   { label: 'Outros', route: routes.outrosList() },
   { label: 'Personas', route: routes.personasList() },
 ]

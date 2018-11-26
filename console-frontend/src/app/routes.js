@@ -56,6 +56,18 @@ const routes = {
   curationEdit(id) {
     return `/curations/${id}/edit`
   },
+  scriptedChatsList() {
+    return '/scripted-chats'
+  },
+  scriptedChatCreate() {
+    return '/scripted-chats/create'
+  },
+  scriptedChatShow(id) {
+    return `/scripted-chats/${id}`
+  },
+  scriptedChatEdit(id) {
+    return `/scripted-chats/${id}/edit`
+  },
 }
 
 export default routes

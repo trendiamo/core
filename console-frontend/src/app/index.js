@@ -15,6 +15,7 @@ import { CurationsList } from './resources/curations'
 import { OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
+import { ScriptedChatsList } from './resources/scripted-chats'
 import 'assets/css/fonts.css'
 
 const generateClassName = createGenerateClassName()
@@ -52,8 +53,9 @@ const Routes = () => (
     <PrivateRoute component={PersonaCreate} exact path={routes.personaCreate()} />
     <PrivateRoute component={PersonaShow} exact path="/personas/:personaId" />
     <PrivateRoute component={PersonaEdit} exact path="/personas/:personaId/edit" />
-    <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={CurationsList} exact path={routes.curationsList()} />
+    <PrivateRoute component={ScriptedChatsList} exact path={routes.scriptedChatsList()} />
+    <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />

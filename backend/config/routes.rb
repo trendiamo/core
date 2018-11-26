@@ -24,10 +24,13 @@ Rails.application.routes.draw do
 
       resources :personas, only: %i[index show update create]
       delete "/personas", to: "personas#destroy"
-      resources :outros, only: %i[index]
-      delete "/outros", to: "outros#destroy"
+
       resources :curations, only: %i[index]
       delete "/curations", to: "curations#destroy"
+      resources :scripted_chats, only: %i[index]
+      delete "/scripted_chats", to: "scripted_chats#destroy"
+      resources :outros, only: %i[index]
+      delete "/outros", to: "outros#destroy"
 
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
