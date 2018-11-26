@@ -42,7 +42,7 @@ const ExternalRoute = ({ component, path, ...props }) => (
 )
 
 const RedirectRoot = () => (
-  <React.Fragment>{<Redirect to={auth.isLoggedIn() ? '/personas' : routes.login()} />}</React.Fragment>
+  <React.Fragment>{<Redirect to={auth.isLoggedIn() ? routes.personasList() : routes.login()} />}</React.Fragment>
 )
 
 const Routes = () => (
