@@ -49,8 +49,8 @@ const Routes = () => (
   <Switch>
     <PrivateRoute component={PersonasList} exact path={routes.personasList()} />
     <PrivateRoute component={PersonaCreate} exact path={routes.personaCreate()} />
-    <PrivateRoute component={PersonaShow} exact path={routes.personaShow()} />
-    <PrivateRoute component={PersonaEdit} exact path={routes.personaEdit()} />
+    <PrivateRoute component={PersonaShow} exact path="/personas/:personaId" />
+    <PrivateRoute component={PersonaEdit} exact path="/personas/:personaId/edit" />
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
