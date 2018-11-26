@@ -1,4 +1,6 @@
 class TriggersController < ApplicationController
+  before_action :change_trigger_params, only: %i[create update]
+
   def index
     @triggers = Trigger.all.order(:order)
     authorize @triggers
@@ -6,7 +8,7 @@ class TriggersController < ApplicationController
   end
 
   def create
-    @trigger = Trigger.new(trigger_params.merge(flow: ScriptedChat.last))
+    @trigger = Trigger.new(trigger_params)
     authorize @trigger
     if @trigger.save
       render json: @trigger, status: :created
@@ -18,7 +20,7 @@ class TriggersController < ApplicationController
   def show
     @trigger = Trigger.find(params[:id])
     authorize @trigger
-    render json: @trigger
+    render json: { trigger: @trigger, flow: @trigger.flow }
   end
 
   def update
@@ -43,8 +45,13 @@ class TriggersController < ApplicationController
 
   private
 
+  def change_trigger_params
+    params[:trigger][:flow_type] = params[:trigger][:flow_type].singularize
+    params[:trigger][:flow_type][0] = params[:trigger][:flow_type][0].capitalize
+  end
+
   def trigger_params
-    params.require(:trigger).permit(:order, url_matchers: [])
+    params.require(:trigger).permit(:order, :flow_id, :flow_type, url_matchers: [])
   end
 
   def render_error

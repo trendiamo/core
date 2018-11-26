@@ -1,19 +1,24 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import Button from '@material-ui/core/Button'
 import Cancel from '@material-ui/icons/Cancel'
+import CircularProgress from 'shared/circular-progress'
+import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
+import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
 import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import SaveIcon from '@material-ui/icons/Save'
+import Select from '@material-ui/core/Select'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import withForm from 'ext/recompose/with-form'
 import withRaTitle from 'ext/recompose/with-ra-title'
-import { apiTriggerCreate } from 'utils'
-import { compose, withHandlers, withState } from 'recompose'
+import { apiFlowsList, apiTriggerCreate } from 'utils'
+import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 import { withRouter } from 'react-router'
 
@@ -64,6 +69,16 @@ const AddUrlButton = ({ disabled, addUrlSelect }) => (
   </Button>
 )
 
+const selectValue = (form, flows) => {
+  if (form.flowType === '') return ''
+  if (form.flowType === 'scriptedChats' || form.flowType === 'ScriptedChat')
+    return flows['scriptedChats'].find(scriptedChat => scriptedChat.id === form.flowId).title
+  if (form.flowType === 'outros' || form.flowType === 'Outro')
+    return flows['outros'].find(outro => outro.id === form.flowId).id
+  if (form.flowType === 'curations' || form.flowType === 'Curation')
+    return flows['curations'].find(curation => curation.id === form.flowId).title
+}
+
 const TriggerCreate = ({
   deleteUrl,
   editUrlValue,
@@ -74,6 +89,8 @@ const TriggerCreate = ({
   isFormPristine,
   onFormSubmit,
   setFieldValue,
+  selectFlow,
+  flows,
 }) => (
   <PaperContainer>
     <form onSubmit={onFormSubmit}>
@@ -89,14 +106,37 @@ const TriggerCreate = ({
         required
         value={form.order}
       />
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
-        label="Flow Type"
-        margin="normal"
-        name="flow"
-        value="Last ScriptedChat in db"
-      />
+      <FormControl disabled={isFormLoading}>
+        <InputLabel htmlFor="flow-label-placeholder" shrink>
+          {'Flow'}
+        </InputLabel>
+        <Select
+          displayEmpty
+          input={<Input id="flow-label-placeholder" name="flow" />}
+          name="flow"
+          onChange={selectFlow}
+          value={selectValue(form, flows)}
+        >
+          {flows.scriptedChats.map((flow, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <MenuItem key={index} type="scriptedChats" value={flow.title}>
+              {`Scripted Chat: ${flow.title}`}
+            </MenuItem>
+          ))}
+          {flows.outros.map((flow, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <MenuItem key={index} type="outros" value={flow.id}>
+              {`Outro: ${flow.id}`}
+            </MenuItem>
+          ))}
+          {flows.curations.map((flow, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <MenuItem key={index} type="curations" value={flow.title}>
+              {`Curation: ${flow.title}`}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <LabelContainer>
         <InputLabel>{'Url Matchers'}</InputLabel>
       </LabelContainer>
@@ -135,6 +175,7 @@ const TriggerCreate = ({
 export default compose(
   withRaTitle('Create Trigger'),
   withState('info', 'setInfo', null),
+  withState('flows', 'setFlows', []),
   withRouter,
   withHandlers({
     saveFormObject: ({ setInfo }) => async form => {
@@ -146,17 +187,21 @@ export default compose(
     },
   }),
   withHandlers({
-    loadFormObject: () => () => {
+    loadFormObject: ({ setFlows, setInfo }) => async () => {
+      const flows = await apiFlowsList(setInfo)
+      setFlows(flows)
       return {
         order: '',
-        flow: '',
+        flowId: '',
+        flowType: '',
         urlMatchers: [''],
       }
     },
   }),
   withForm({
     order: '',
-    flow: '',
+    flowId: '',
+    flowType: '',
     urlMatchers: [''],
   }),
   withHandlers({
@@ -173,5 +218,11 @@ export default compose(
       newUrls.splice(index, 1)
       setForm({ ...form, urlMatchers: newUrls })
     },
-  })
+  }),
+  withHandlers({
+    selectFlow: ({ flows, form, setForm }) => (index, newValue) => {
+      setForm({ ...form, flowId: flows[newValue.props.type][newValue.key].id, flowType: newValue.props.type })
+    },
+  }),
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(TriggerCreate)

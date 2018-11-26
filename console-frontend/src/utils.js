@@ -16,6 +16,7 @@ const PASSWORD_RESET_URL = `${BASE_API_URL}/users/password`
 const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
 const ME_URL = `${BASE_API_URL}/me`
 const WEBSITES_URL = `${BASE_API_URL}/websites`
+const FLOWS_URL = `${BASE_API_URL}/flows`
 
 const defaultErrorMessage = 'Something went wrong!'
 
@@ -400,6 +401,60 @@ export const apiTriggerUpdateSaga = async (url, body, setInfo) => {
   setInfo(info)
 }
 
+export const apiScriptedChatListSaga = async (url, setInfo) => {
+  const json = await apiScriptedChatListRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiScriptedChatListRequest = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
+export const apiOutroListSaga = async (url, setInfo) => {
+  const json = await apiOutroListRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiOutroListRequest = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
+export const apiFlowsListSaga = async (url, setInfo) => {
+  const json = await apiFlowListRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiFlowListRequest = async url => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
 export const apiSignUp = body => apiSaga(SIGNUP_URL, body)
 export const apiSignIn = (body, setInfo) => apiSaga(SIGNIN_URL, body, setInfo)
 export const apiSignOut = () => apiSagaSignout(SIGNOUT_URL)
@@ -435,3 +490,5 @@ export const apiTriggerDestroy = (body, setInfo) => apiTriggerDestroySaga(TRIGGE
 export const apiTriggerCreate = (body, setInfo) => apiTriggerCreateSaga(TRIGGERS_URL, body, setInfo)
 export const apiTriggerShow = (id, setInfo) => apiTriggerShowSaga(`${TRIGGERS_URL}/${id}`, setInfo)
 export const apiTriggerUpdate = (id, body, setInfo) => apiTriggerUpdateSaga(`${TRIGGERS_URL}/${id}`, body, setInfo)
+
+export const apiFlowsList = setInfo => apiFlowsListSaga(`${FLOWS_URL}`, setInfo)
