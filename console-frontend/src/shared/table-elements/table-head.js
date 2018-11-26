@@ -31,7 +31,7 @@ const TableSortLabel = compose(
   })
 )(({ handleRequestSort, ...props }) => <MUITableSortLabel {...props} onClick={handleRequestSort} />)
 
-const TableHead = ({ handleSelectAll, handleRequestSort, isSelectAll, order, orderBy, columns }) => (
+const TableHead = ({ handleSelectAll, handleRequestSort, isSelectAll, orderBy, orderDirection, columns }) => (
   <StyledTableHead>
     <TableRow>
       <TableCell padding="checkbox">
@@ -44,7 +44,7 @@ const TableHead = ({ handleSelectAll, handleRequestSort, isSelectAll, order, ord
               <Tooltip enterDelay={50} placement={column.numeric ? 'bottom-end' : 'bottom-start'} title="Sort">
                 <TableSortLabel
                   active={orderBy === column.name}
-                  direction={order}
+                  direction={orderDirection}
                   onClick={handleRequestSort}
                   value={column.name}
                 >

@@ -38,6 +38,12 @@ const routes = {
   outroCreate() {
     return '/outros/create'
   },
+  outroShow(id) {
+    return `/outros/${id}`
+  },
+  outroEdit(id) {
+    return `/outros/${id}/edit`
+  },
 }
 
 export default routes

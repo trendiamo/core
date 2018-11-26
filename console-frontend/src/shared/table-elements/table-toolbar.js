@@ -24,13 +24,13 @@ const Spacer = styled.div`
   flex: 1 1 100%;
 `
 
-const AddResourceButton = ({ resourceCreatePath }) => (
-  <StyledButton color="primary" component={Link} to={resourceCreatePath} variant="contained">
+const AddRecordButton = ({ createRoute }) => (
+  <StyledButton color="primary" component={Link} to={createRoute} variant="contained">
     {'Create New'}
   </StyledButton>
 )
 
-const TableToolbar = ({ selectedIds, deleteResources, resourceCreatePath, resourceName }) => (
+const TableToolbar = ({ selectedIds, deleteRecords, createRoute, label }) => (
   <SimpleToolbar>
     <Title>
       {selectedIds.length > 0 ? (
@@ -39,16 +39,16 @@ const TableToolbar = ({ selectedIds, deleteResources, resourceCreatePath, resour
         </Typography>
       ) : (
         <Typography id="tableTitle" variant="subtitle1">
-          {resourceName}
+          {label}
         </Typography>
       )}
     </Title>
     <Spacer />
     <div>
       {selectedIds.length > 0 ? (
-        <BulkActions deleteBulk={deleteResources} selectedIds={selectedIds} />
+        <BulkActions deleteBulk={deleteRecords} selectedIds={selectedIds} />
       ) : (
-        <AddResourceButton resourceCreatePath={resourceCreatePath} />
+        <AddRecordButton createRoute={createRoute} />
       )}
     </div>
   </SimpleToolbar>
