@@ -12,7 +12,7 @@ import { apiOutroDestroy, apiOutroList } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withState } from 'recompose'
 import { TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 
-const columns = [{ name: 'influencer', numeric: false, disablePadding: true, label: 'infleuncer' }]
+const columns = [{ name: 'persona', padding: 'none', label: 'persona' }]
 
 const OutrosList = ({
   selectedIds,
