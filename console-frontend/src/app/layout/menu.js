@@ -12,10 +12,10 @@ import { compose, withProps } from 'recompose'
 import { withRouter } from 'react-router'
 
 const resources = [
+  { label: 'Triggers', route: routes.triggersList() },
   { label: 'Curations', route: routes.curationsList() },
   { label: 'Scripted Chats', route: routes.scriptedChatsList() },
   { label: 'Outros', route: routes.outrosList() },
-  { label: 'Triggers', route: routes.triggersList() },
   { label: 'Personas', route: routes.personasList() },
 ]
 

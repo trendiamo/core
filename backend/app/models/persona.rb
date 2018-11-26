@@ -5,7 +5,6 @@ class Persona < ApplicationRecord
 
   paginates_per 10
 
-  belongs_to :account
   has_many :outros, dependent: :destroy
 
   validates :name, presence: true

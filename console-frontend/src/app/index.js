@@ -52,14 +52,14 @@ const Routes = () => (
   <Switch>
     <PrivateRoute component={PersonasList} exact path={routes.personasList()} />
     <PrivateRoute component={PersonaCreate} exact path={routes.personaCreate()} />
-    <PrivateRoute component={PersonaShow} exact path="/personas/:personaId" />
-    <PrivateRoute component={PersonaEdit} exact path="/personas/:personaId/edit" />
+    <PrivateRoute component={PersonaShow} exact path={routes.personaShow(':personaId')} />
+    <PrivateRoute component={PersonaEdit} exact path={routes.personaEdit(':personaId')} />
     <PrivateRoute component={CurationsList} exact path={routes.curationsList()} />
     <PrivateRoute component={ScriptedChatsList} exact path={routes.scriptedChatsList()} />
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
-    <PrivateRoute component={TriggersList} exact path="/triggers" />
-    <PrivateRoute component={TriggerCreate} exact path="/triggers/create" />
-    <PrivateRoute component={TriggerEdit} exact path="/triggers/:triggerId/edit" />
+    <PrivateRoute component={TriggersList} exact path={routes.triggersList()} />
+    <PrivateRoute component={TriggerCreate} exact path={routes.triggerCreate()} />
+    <PrivateRoute component={TriggerEdit} exact path={routes.triggerEdit(':triggerId')} />
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
