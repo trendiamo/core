@@ -11,7 +11,7 @@ const Dialog = ({ open, handleClose, dialogActions, title, content }) => (
     <DialogContent>
       {typeof content == 'string' ? <DialogContentText>{content}</DialogContentText> : content}
     </DialogContent>
-    <DialogActions>{dialogActions}</DialogActions>
+    <DialogActions style={{ margin: '12px' }}>{dialogActions}</DialogActions>
   </MuiDialog>
 )
 

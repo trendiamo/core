@@ -8,7 +8,7 @@ const DeleteActions = ({ handleClose, handleDelete }) => (
     <Button color="primary" onClick={handleClose}>
       {'Cancel'}
     </Button>
-    <Button color="primary" onClick={handleDelete}>
+    <Button color="error" onClick={handleDelete}>
       {'Delete'}
     </Button>
   </React.Fragment>
