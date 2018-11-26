@@ -13,9 +13,9 @@ import { branch, compose, lifecycle, renderComponent, withState } from 'recompos
 import { TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 
 const columns = [
-  { name: 'avatar', numeric: false, disablePadding: true, label: 'avatar' },
-  { name: 'name', numeric: false, disablePadding: false, label: 'name' },
-  { name: 'description', numeric: false, disablePadding: false, label: 'description' },
+  { name: 'avatar', padding: 'none', label: 'avatar' },
+  { name: 'name', label: 'name', sortable: true },
+  { name: 'description', label: 'description' },
 ]
 
 const PersonasList = ({

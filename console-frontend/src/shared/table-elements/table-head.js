@@ -39,24 +39,21 @@ const TableHead = ({ handleSelectAll, handleRequestSort, isSelectAll, order, ord
       </TableCell>
       {columns.map(column => {
         return (
-          <TableCell key={column.name} numeric={column.numeric} padding={column.disablePadding ? 'none' : 'default'}>
-            <Tooltip
-              disableFocusListener={column.name === 'avatar'}
-              disableHoverListener={column.name === 'avatar'}
-              disableTouchListener={column.name === 'avatar'}
-              enterDelay={50}
-              placement={column.numeric ? 'bottom-end' : 'bottom-start'}
-              title={column.name !== 'avatar' && 'sort'}
-            >
-              <TableSortLabel
-                active={orderBy === column.name && column.name !== 'avatar'}
-                direction={order}
-                onClick={handleRequestSort}
-                value={column.name}
-              >
-                {column.label}
-              </TableSortLabel>
-            </Tooltip>
+          <TableCell key={column.name} numeric={column.numeric} padding={column.padding || 'default'}>
+            {column.sortable ? (
+              <Tooltip enterDelay={50} placement={column.numeric ? 'bottom-end' : 'bottom-start'} title="Sort">
+                <TableSortLabel
+                  active={orderBy === column.name}
+                  direction={order}
+                  onClick={handleRequestSort}
+                  value={column.name}
+                >
+                  {column.label}
+                </TableSortLabel>
+              </Tooltip>
+            ) : (
+              column.label
+            )}
           </TableCell>
         )
       })}

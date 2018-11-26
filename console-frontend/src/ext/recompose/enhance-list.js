@@ -42,7 +42,6 @@ const enhanceList = (apiResourceList, apiResourceDestroy, mapProps) => ResourceL
         setResources,
         setResourcesCount,
       }) => async columnName => {
-        if (columnName === 'avatar') return
         setOrderBy(columnName)
         setOrder(orderBy === columnName && order === 'desc' ? 'asc' : 'desc')
         const resourceResponse = await setQuery(page)
