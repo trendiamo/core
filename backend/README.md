@@ -11,6 +11,7 @@ bundle
 pg_ctl -D /usr/local/var/postgres start
 bin/rails db:create
 bin/rails db:schema:load
+bin/rails populate
 ```
 
 ## Run locally
@@ -33,7 +34,3 @@ bin/brakeman -q --no-pager
 ```sh
 bin/rails deploy
 ```
-
-## Interact with APIs
-
-The signup and signin requests are REST, the rest is graphql.
