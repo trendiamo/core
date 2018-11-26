@@ -1,4 +1,5 @@
 class ChatStep < ApplicationRecord
+  acts_as_tenant
   belongs_to :scripted_chat
   has_many :chat_messages
   has_many :chat_options
