@@ -19,7 +19,7 @@ const AuthMessage = () => (
       <br />
       {'Get to know what we can do for you.'}
     </AuthTitle>
-    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body1">
+    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body2">
       {'Is something wrong? '}
       <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
     </AuthText>
