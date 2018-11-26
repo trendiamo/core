@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
+import Chip from '@material-ui/core/Chip'
 import CircularProgress from 'shared/circular-progress'
 import EditIcon from '@material-ui/icons/Edit'
 import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
@@ -8,7 +9,6 @@ import MUIToolbar from '@material-ui/core/Toolbar'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
-import ShowIcon from '@material-ui/icons/Visibility'
 import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -46,6 +46,7 @@ const columns = [
   { name: 'order', numeric: true, disablePadding: false, label: 'order' },
   { name: 'flowType', numeric: false, disablePadding: false, label: 'flow type' },
   { name: 'flowId', numeric: false, disablePadding: true, label: 'flow id' },
+  { name: 'urlMatchers', numeric: false, disablePadding: true, label: 'Url Matchers' },
 ]
 
 const Title = styled.div`
@@ -88,6 +89,10 @@ const StyledTableHead = styled(MUITableHead)`
   letter-spacing: 1.3px;
   color: #555;
   text-transform: uppercase;
+`
+
+const StyledChip = styled(Chip)`
+  margin: 0.25rem;
 `
 
 const TableHead = ({ handleSelectAll, isSelectAll }) => (
@@ -135,6 +140,12 @@ const TriggerRow = compose(
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
       {trigger.flowId}
+    </TableCell>
+    <TableCell component="th" padding="none" scope="row">
+      {trigger.urlMatchers.map((url, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <StyledChip key={`url${index}`} label={url} />
+      ))}
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
       <Button color="primary" component={Link} to={routes.triggerEdit(trigger.id)}>

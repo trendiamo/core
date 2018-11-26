@@ -6,6 +6,9 @@ class Curation < ApplicationRecord
 
   accepts_nested_attributes_for :spotlights
 
+  validates :title, presence: true
+  validates :subtitle, presence: true
+
   def as_json(_options = {})
     attributes
       .slice("id", "title", "subtitle", "created_at", "updated_at")
