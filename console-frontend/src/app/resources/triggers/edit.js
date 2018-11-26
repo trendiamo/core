@@ -19,6 +19,7 @@ import withForm from 'ext/recompose/with-form'
 import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiFlowsList, apiTriggerShow, apiTriggerUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
+import { camelize, singularize } from 'inflected'
 import { Prompt } from 'react-router'
 import { withRouter } from 'react-router'
 
@@ -71,11 +72,11 @@ const AddUrlButton = ({ disabled, addUrlSelect }) => (
 
 const selectValue = (form, flows) => {
   if (form.flowType === 'scriptedChats' || form.flowType === 'ScriptedChat')
-    return flows['scriptedChats'].find(scriptedChat => scriptedChat.id === form.flowId).title
+    return `Scripted Chat: ${flows['scriptedChats'].find(scriptedChat => scriptedChat.id === form.flowId).id}`
   if (form.flowType === 'outros' || form.flowType === 'Outro')
-    return flows['outros'].find(outro => outro.id === form.flowId).id
+    return `Outro: ${flows['outros'].find(outro => outro.id === form.flowId).id}`
   if (form.flowType === 'curations' || form.flowType === 'Curation')
-    return flows['curations'].find(curation => curation.id === form.flowId).title
+    return `Curation: ${flows['curations'].find(curation => curation.id === form.flowId).id}`
 }
 
 const TriggerEdit = ({
@@ -98,6 +99,16 @@ const TriggerEdit = ({
       <TextField
         disabled={isFormLoading}
         fullWidth
+        label="Name"
+        margin="normal"
+        name="name"
+        onChange={setFieldValue}
+        required
+        value={form.name}
+      />
+      <TextField
+        disabled={isFormLoading}
+        fullWidth
         label="Order"
         margin="normal"
         name="order"
@@ -116,22 +127,24 @@ const TriggerEdit = ({
           onChange={selectFlow}
           value={selectValue(form, flows)}
         >
-          {flows.scriptedChats.map((flow, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <MenuItem key={index} type="scriptedChats" value={flow.title}>
-              {`Scripted Chat: ${flow.title}`}
+          {flows.scriptedChats.map(flow => (
+            <MenuItem
+              id={flow.id}
+              key={`scriptedChat-${flow.id}`}
+              type="scriptedChats"
+              value={`Scripted Chat: ${flow.id}`}
+            >
+              {`Scripted Chat: ${flow.id}`}
             </MenuItem>
           ))}
-          {flows.outros.map((flow, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <MenuItem key={index} type="outros" value={flow.id}>
+          {flows.outros.map(flow => (
+            <MenuItem id={flow.id} key={`outro-${flow.id}`} type="outros" value={`Outro: ${flow.id}`}>
               {`Outro: ${flow.id}`}
             </MenuItem>
           ))}
-          {flows.curations.map((flow, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <MenuItem key={index} type="curations" value={flow.title}>
-              {`Curation: ${flow.title}`}
+          {flows.curations.map(flow => (
+            <MenuItem id={flow.id} key={`curation-${flow.id}`} type="curations" value={`Curation: ${flow.id}`}>
+              {`Curation: ${flow.id}`}
             </MenuItem>
           ))}
         </Select>
@@ -167,7 +180,11 @@ export default compose(
   withHandlers({
     saveFormObject: ({ setInfo, match }) => async form => {
       const id = match.params.triggerId
-      const trigger = await apiTriggerUpdate(id, { trigger: form }, setInfo)
+      const trigger = await apiTriggerUpdate(
+        id,
+        { trigger: { ...form, flowType: camelize(singularize(form.flowType)) } },
+        setInfo
+      )
       return trigger
     },
     afterSave: ({ history }) => result => {
@@ -181,6 +198,7 @@ export default compose(
       const id = match.params.triggerId
       const triggerJson = await apiTriggerShow(id, setInfo)
       return {
+        name: triggerJson.trigger.name || '',
         order: triggerJson.trigger.order || '',
         flowId: triggerJson.trigger.flowId || '',
         flowType: triggerJson.trigger.flowType || '',
@@ -189,6 +207,7 @@ export default compose(
     },
   }),
   withForm({
+    name: '',
     order: '',
     flowId: '',
     flowType: '',
@@ -210,8 +229,12 @@ export default compose(
     },
   }),
   withHandlers({
-    selectFlow: ({ flows, form, setForm }) => (index, newValue) => {
-      setForm({ ...form, flowId: flows[newValue.props.type][newValue.key].id, flowType: newValue.props.type })
+    selectFlow: ({ form, setForm }) => (index, newValue) => {
+      setForm({
+        ...form,
+        flowId: newValue.props.id,
+        flowType: newValue.props.type,
+      })
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))

@@ -43,6 +43,7 @@ const AddTriggerButton = () => (
 )
 
 const columns = [
+  { name: 'name', numeric: true, disablePadding: false, label: 'name' },
   { name: 'order', numeric: true, disablePadding: false, label: 'order' },
   { name: 'flowType', numeric: false, disablePadding: false, label: 'flow type' },
   { name: 'flowId', numeric: false, disablePadding: true, label: 'flow id' },
@@ -133,6 +134,9 @@ const TriggerRow = compose(
       <Checkbox checked={selectedIds.includes(trigger.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
+      {trigger.name}
+    </TableCell>
+    <TableCell component="th" padding="none" scope="row">
       {trigger.order}
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
@@ -197,12 +201,20 @@ export default compose(
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
   withHandlers({
-    deleteTriggers: ({ selectedIds, setInfo, setIsLoading, setSelectedIds, setTriggers }) => async () => {
+    deleteTriggers: ({
+      setIsSelectAll,
+      selectedIds,
+      setInfo,
+      setIsLoading,
+      setSelectedIds,
+      setTriggers,
+    }) => async () => {
       await apiTriggerDestroy({ ids: selectedIds }, setInfo)
       const triggersResponse = await apiTriggerList(setInfo)
       setTriggers(triggersResponse)
       setIsLoading(false)
       setSelectedIds([])
+      setIsSelectAll(false)
     },
     handleSelectAll: ({ setSelectedIds, triggers, setIsSelectAll }) => event => {
       setSelectedIds(event.target.checked ? triggers.map(trigger => trigger.id) : [])

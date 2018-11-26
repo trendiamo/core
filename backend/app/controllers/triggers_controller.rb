@@ -1,6 +1,4 @@
 class TriggersController < ApplicationController
-  before_action :change_trigger_params, only: %i[create update]
-
   def index
     @triggers = Trigger.all.order(:order)
     authorize @triggers
@@ -45,13 +43,8 @@ class TriggersController < ApplicationController
 
   private
 
-  def change_trigger_params
-    params[:trigger][:flow_type] = params[:trigger][:flow_type].singularize
-    params[:trigger][:flow_type][0] = params[:trigger][:flow_type][0].capitalize
-  end
-
   def trigger_params
-    params.require(:trigger).permit(:order, :flow_id, :flow_type, url_matchers: [])
+    params.require(:trigger).permit(:name, :order, :flow_id, :flow_type, url_matchers: [])
   end
 
   def render_error
