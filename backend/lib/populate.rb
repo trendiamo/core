@@ -11,6 +11,7 @@ class Populate
     create_outros
     create_scripted_chats
     create_curations
+    create_triggers
   end
 
   def create_accounts
@@ -25,7 +26,8 @@ class Populate
   def create_users
     team_members_initials = %w[db dh frb mc]
     users_attrs = team_members_initials.map do |initials|
-      { account: @account, email: "#{initials}@trendiamo.com", password: "password", password_confirmation: "password" }
+      { account: @account, email: "#{initials}@trendiamo.com", password: "password", password_confirmation: "password",
+        confirmed_at: Time.now, }
     end
     User.create!(users_attrs)
   end
@@ -43,37 +45,54 @@ class Populate
   end
 
   def create_outros
-    outro_attrs = {
-      account: account,
-      persona: Persona.order("RANDOM()").first,
-    }
     30.times do
+      outro_attrs = {
+        account: @account,
+        persona: Persona.order("RANDOM()").first,
+      }
       Outro.create!(outro_attrs)
     end
   end
 
   def create_scripted_chats
-    scripted_chat_attrs = {
-      account: @account,
-      persona: Persona.order("RANDOM()").first,
-      title: "Hello there",
-    }
-
     30.times do
+      scripted_chat_attrs = {
+        account: @account,
+        persona: Persona.order("RANDOM()").first,
+        title: "Hello there",
+      }
       ScriptedChat.create!(scripted_chat_attrs)
     end
   end
 
   def create_curations
-    curation_attrs = {
-      account: @account,
-      persona: Persona.order("RANDOM()").first,
-      title: Faker::Lorem.sentence,
-      subtitle: Faker::Lorem.sentence,
-    }
-
     30.times do
+      curation_attrs = {
+        account: @account,
+        persona: Persona.order("RANDOM()").first,
+        title: Faker::Lorem.sentence,
+        subtitle: Faker::Lorem.sentence,
+      }
       Curation.create!(curation_attrs)
+    end
+  end
+
+  def urls_array(word)
+    Array.new(rand(1...5)).map do
+      Faker::Internet.url(word)
+    end
+  end
+
+  def create_triggers
+    8.times do
+      trigger_attrs = {
+        order: rand(1...8),
+        account: @account,
+        name: Faker::App.name,
+        flow: [Curation, ScriptedChat, Outro].sample.all.sample,
+        url_matchers:  urls_array(Faker::Lorem.word),
+      }
+      Trigger.create!(trigger_attrs)
     end
   end
 end
