@@ -7,6 +7,7 @@ import { Consumer } from 'ext/graphql-context'
 import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
+import { isGraphCMS } from 'config'
 import { TopSlideAnimation } from 'shared/animate'
 
 const FlexDiv = styled.div`
@@ -55,17 +56,29 @@ const FlexContainer = styled.div`
 
 const ScriptedChat = compose(
   graphql(
-    gql`
-      query($id: ID!) {
-        scriptedChat(where: { id: $id }) {
-          id
-          title
-          chatStep {
-            id
+    isGraphCMS
+      ? gql`
+          query($id: ID!) {
+            scriptedChat(where: { id: $id }) {
+              id
+              title
+              chatStep {
+                id
+              }
+            }
           }
-        }
-      }
-    `,
+        `
+      : gql`
+          query($id: ID!) {
+            scriptedChat(id: $id) {
+              id
+              title
+              chatStep {
+                id
+              }
+            }
+          }
+        `,
     ({ id }) => ({ id })
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),

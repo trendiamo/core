@@ -1,7 +1,7 @@
 import addPicture from './add-picture'
 import routes from 'app/routes'
+import { isGraphCMS, location } from 'config'
 import { isSmall } from 'utils'
-import { location } from 'config'
 import { matchUrl } from 'ext/simple-router'
 
 export const optionsFromHash = () => {
@@ -21,9 +21,8 @@ export const optionsFromHash = () => {
 
 // XXX: we'll remove this method after changing the fetching logic of flows, triggers, path, etc.
 const getFlowFromPath = (triggers, path) => {
-  const match = path.match(/\/(.+)\/(.+)/)
-  if (match && match.length < 3) return {}
-  const idFromPath = path.match(/\/(.+)\/(.+)/)[2]
+  const idFromPath = getFlowIdFromPath(path)
+  if (!idFromPath) return
   for (let i = 0; i < triggers.length; i++) {
     const trigger = triggers[i]
     if (trigger.curation && trigger.curation.id === idFromPath) return { flow: trigger.curation, type: 'curation' }
@@ -32,6 +31,12 @@ const getFlowFromPath = (triggers, path) => {
     if (trigger.outro && trigger.outro.id === idFromPath) return { flow: trigger.outro, type: 'outro' }
   }
   return {}
+}
+
+const getFlowIdFromPath = path => {
+  const match = path.match(/\/(.+)\/(.+)/)
+  if (match && match.length < 3) return null
+  return path.match(/\/(.+)\/(.+)/)[2]
 }
 
 const getFlowFromTriggers = triggers => {
@@ -56,9 +61,11 @@ const getMatchedPersona = ({ flow, data }) => {
 
 const setup = data => {
   const { /* persona,*/ open, path, picture } = optionsFromHash()
-  const { flow, type: flowType } = path
-    ? getFlowFromPath(data.hostname.website.triggers, path)
-    : getFlowFromTriggers(data.hostname.website.triggers)
+  const { flow, type: flowType } = isGraphCMS
+    ? path
+      ? getFlowFromPath(data.hostname.website.triggers, path)
+      : getFlowFromTriggers(data.hostname.website.triggers)
+    : { flow: data.flow, type: data.flow.flowType }
 
   if (picture) addPicture(picture)
 

@@ -22,7 +22,9 @@ class GraphqlController < ApplicationController
   end
 
   def hostname
-    @hostname ||= (request.origin || "").gsub(%r{https?://|:\d+}, "")
+    hostname = (request.origin || "").gsub(%r{https?://|:\d+}, "")
+    hostname = request.headers["Override-Hostname"] if !Rails.env.production? && request.headers["Override-Hostname"]
+    @hostname ||= hostname
   end
 
   def website_from_request

@@ -1,5 +1,5 @@
 Types::ChatStepType = GraphQL::ObjectType.define do
-  name "ChatMessage"
+  name "ChatStep"
 
   field :id, !types.ID
   field :status, Types::StatusType
@@ -18,5 +18,5 @@ Types::ChatStepType = GraphQL::ObjectType.define do
       obj.referring_chat_options
     }
   end
-  field :chat, Types::ChatType
+  field :scriptedChat, Types::ScriptedChatType
 end

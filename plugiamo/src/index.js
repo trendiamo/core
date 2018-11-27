@@ -3,7 +3,7 @@ import initRollbar from 'ext/rollbar'
 import mixpanel from 'ext/mixpanel'
 import { detect } from 'detect-browser'
 import { GraphQLClient } from 'graphql-request'
-import { graphQlUrl, mixpanelToken } from './config'
+import { graphQlUrl, location, mixpanelToken, production } from './config'
 import { h, render } from 'preact'
 import { Provider } from 'ext/graphql-context'
 import './styles.css'
@@ -14,7 +14,10 @@ if (browser && supportedBrowsers.includes(browser.name)) {
   initRollbar()
   mixpanel.init(mixpanelToken)
 
-  const client = new GraphQLClient(graphQlUrl)
+  const client = new GraphQLClient(
+    graphQlUrl,
+    production ? undefined : { headers: { 'Override-Hostname': location.hostname } }
+  )
 
   const RootComponent = () => (
     <Provider value={client}>

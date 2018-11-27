@@ -1,8 +1,10 @@
 class ScriptedChat < ApplicationRecord
   acts_as_tenant
   belongs_to :persona
-  has_one :first_chat_step, foreign_key: "scripted_chat_id", class_name: "ChatStep"
+  has_one :chat_step, foreign_key: "scripted_chat_id", class_name: "ChatStep"
   has_many :triggers, as: :flow, dependent: :destroy
+
+  accepts_nested_attributes_for :chat_step
 
   validates :title, presence: true
 

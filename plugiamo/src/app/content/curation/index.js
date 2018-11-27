@@ -10,6 +10,7 @@ import { branch, compose, renderNothing, withHandlers, withProps } from 'recompo
 import { ContentSpotlight, CoverSpotlight } from './spotlight'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
+import { isGraphCMS } from 'config'
 import { List } from 'shared/list'
 import { Router } from 'ext/simple-router'
 
@@ -113,36 +114,67 @@ export const CurationBase = ({
 const Curation = compose(
   withProps({ history }),
   graphql(
-    gql`
-      query($id: ID!) {
-        curation(where: { id: $id }) {
-          id
-          title
-          subtitle
-          spotlights {
-            id
-            text
-            persona {
+    isGraphCMS
+      ? gql`
+          query($id: ID!) {
+            curation(where: { id: $id }) {
               id
-              name
-              description
-              profilePic {
-                url
-              }
-            }
-            productPicks {
-              url
-              name
-              description
-              displayPrice
-              picture {
-                url
+              title
+              subtitle
+              spotlights {
+                id
+                text
+                persona {
+                  id
+                  name
+                  description
+                  profilePic {
+                    url
+                  }
+                }
+                productPicks {
+                  url
+                  name
+                  description
+                  displayPrice
+                  picture {
+                    url
+                  }
+                }
               }
             }
           }
-        }
-      }
-    `,
+        `
+      : gql`
+          query($id: ID!) {
+            curation(id: $id) {
+              id
+              title
+              subtitle
+              spotlights {
+                id
+                text
+                persona {
+                  id
+                  name
+                  description
+                  profilePic {
+                    url
+                  }
+                }
+                productPicks {
+                  url
+                  name
+                  description
+                  displayPrice
+                  picture {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        `,
     ({ id }) => ({ id })
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),

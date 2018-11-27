@@ -1,6 +1,7 @@
 class Outro < ApplicationRecord
   acts_as_tenant
   belongs_to :persona
+  has_many :triggers, as: :flow, dependent: :destroy
 
   def as_json(_options = {})
     attributes
