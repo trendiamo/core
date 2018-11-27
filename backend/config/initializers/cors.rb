@@ -5,14 +5,14 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
-if ENV["CORS_ORIGIN"]
-  Rails.application.config.middleware.insert_before 0, Rack::Cors do
-    allow do
-      origins(*ENV["CORS_ORIGIN"].split(", "))
-
-      resource "*",
-        headers: :any,
-        methods: [:get, :post, :put, :patch, :delete, :options, :head]
-    end
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins "*"
+    resource "/graphql", headers: :any, methods: :post
   end
+
+  allow do
+    origins(*ENV["CORS_ORIGIN"].split(", "))
+    resource "*", headers: :any, methods: %i[get post put patch delete options head]
+  end if ENV["CORS_ORIGIN"]
 end
