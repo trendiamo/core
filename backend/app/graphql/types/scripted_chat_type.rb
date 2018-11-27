@@ -1,5 +1,5 @@
-Types::ChatType = GraphQL::ObjectType.define do
-  name "Chat"
+Types::ScriptedChatType = GraphQL::ObjectType.define do
+  name "ScriptedChat"
 
   field :id, !types.ID
   field :status, Types::StatusType

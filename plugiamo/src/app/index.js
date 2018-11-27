@@ -9,7 +9,7 @@ import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
-import { HEIGHT_BREAKPOINT, location } from 'config'
+import { HEIGHT_BREAKPOINT, isGraphCMS, location } from 'config'
 import { infoMsgHof } from 'shared/info-msg'
 
 const Gradient = animateOnMount(styled.div`
@@ -48,73 +48,100 @@ export const AppBase = styled(({ className, Component, onToggleContent, persona,
 export default compose(
   withProps({ Component: <Router /> }),
   graphql(
-    gql`
-      query($hasPersona: Boolean!, $hostname: String!, $personaId: ID) {
-        hostname(where: { hostname: $hostname }) {
-          website {
-            triggers {
-              id
-              order
-              urlMatchers {
-                regexp
-              }
-              scriptedChat {
-                id
-                persona {
+    isGraphCMS
+      ? gql`
+          query($hasPersona: Boolean!, $hostname: String!, $personaId: ID) {
+            hostname(where: { hostname: $hostname }) {
+              website {
+                triggers {
                   id
-                  name
-                  description
-                  profilePic {
-                    url
+                  order
+                  urlMatchers {
+                    regexp
                   }
-                }
-              }
-              curation {
-                id
-                persona {
-                  id
-                  name
-                  description
-                  profilePic {
-                    url
+                  scriptedChat {
+                    id
+                    persona {
+                      id
+                      name
+                      description
+                      profilePic {
+                        url
+                      }
+                    }
                   }
-                }
-              }
-              outro {
-                id
-                persona {
-                  id
-                  name
-                  description
-                  profilePic {
-                    url
+                  curation {
+                    id
+                    persona {
+                      id
+                      name
+                      description
+                      profilePic {
+                        url
+                      }
+                    }
+                  }
+                  outro {
+                    id
+                    persona {
+                      id
+                      name
+                      description
+                      profilePic {
+                        url
+                      }
+                    }
                   }
                 }
               }
             }
+            persona(where: { id: $personaId }) @include(if: $hasPersona) {
+              id
+              name
+              description
+              profilePic {
+                url
+              }
+            }
           }
-        }
-        persona(where: { id: $personaId }) @include(if: $hasPersona) {
-          id
-          name
-          description
-          profilePic {
-            url
+        `
+      : gql`
+          query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
+            flow(pathname: $pathname, pluginPath: $pluginPath) {
+              id
+              flowType
+              persona {
+                id
+                name
+                description
+                profilePic {
+                  url
+                }
+              }
+            }
+            persona(id: $personaId) @include(if: $hasPersona) {
+              id
+              name
+              description
+              profilePic {
+                url
+              }
+            }
           }
-        }
-      }
-    `,
+        `,
     {
       hasPersona: !!optionsFromHash().persona,
-      hostname: location.hostname,
+      pathname: location.pathname,
       personaId: optionsFromHash().persona,
+      pluginPath: optionsFromHash().path,
+      ...(isGraphCMS ? { hostname: location.hostname } : {}),
     }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
-  withProps(({ data }) => ({
-    website: data.hostname && data.hostname.website,
-  })),
-  branch(({ website }) => !website, infoMsgHof(`no website found for hostname ${location.hostname}`)),
+  branch(
+    ({ data }) => (isGraphCMS ? !data.hostname || !data.hostname.website : !data.flow),
+    infoMsgHof(`no data found for hostname ${location.hostname}`)
+  ),
   withState('persona', 'setPersona'),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({

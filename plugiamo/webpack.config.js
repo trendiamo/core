@@ -8,6 +8,9 @@ module.exports = {
     contentBase: path.join(__dirname, 'build'),
     compress: true,
     open: true,
+    historyApiFallback: {
+      index: 'index.html',
+    },
   },
   entry: ['babel-polyfill', './src/index.js'],
   output: {

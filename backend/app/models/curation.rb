@@ -1,6 +1,10 @@
 class Curation < ApplicationRecord
   acts_as_tenant
   belongs_to :persona
+  has_many :spotlights, dependent: :destroy
+  has_many :triggers, as: :flow, dependent: :destroy
+
+  accepts_nested_attributes_for :spotlights
 
   def as_json(_options = {})
     attributes

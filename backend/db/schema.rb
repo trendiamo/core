@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181126135000) do
+ActiveRecord::Schema.define(version: 20181127115903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20181126135000) do
     t.string "subtitle", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "graphcms_ref"
     t.index ["account_id"], name: "index_curations_on_account_id"
     t.index ["persona_id"], name: "index_curations_on_persona_id"
   end
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(version: 20181126135000) do
     t.bigint "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "graphcms_ref"
     t.index ["account_id"], name: "index_outros_on_account_id"
     t.index ["persona_id"], name: "index_outros_on_persona_id"
   end
@@ -96,6 +98,7 @@ ActiveRecord::Schema.define(version: 20181126135000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
+    t.string "graphcms_ref"
     t.index ["account_id"], name: "index_personas_on_account_id"
   end
 
@@ -106,7 +109,7 @@ ActiveRecord::Schema.define(version: 20181126135000) do
     t.string "url", null: false
     t.string "description", null: false
     t.string "pic_url", null: false
-    t.string "displayPrice", null: false
+    t.string "display_price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_product_picks_on_account_id"
@@ -119,6 +122,7 @@ ActiveRecord::Schema.define(version: 20181126135000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id"
+    t.string "graphcms_ref"
     t.index ["account_id"], name: "index_scripted_chats_on_account_id"
     t.index ["persona_id"], name: "index_scripted_chats_on_persona_id"
   end
@@ -129,7 +133,9 @@ ActiveRecord::Schema.define(version: 20181126135000) do
     t.string "text", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "curation_id"
     t.index ["account_id"], name: "index_spotlights_on_account_id"
+    t.index ["curation_id"], name: "index_spotlights_on_curation_id"
     t.index ["persona_id"], name: "index_spotlights_on_persona_id"
   end
 
@@ -141,6 +147,7 @@ ActiveRecord::Schema.define(version: 20181126135000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id"
+    t.string "name"
     t.index ["account_id"], name: "index_triggers_on_account_id"
     t.index ["flow_type", "flow_id"], name: "index_triggers_on_flow_type_and_flow_id"
     t.index ["url_matchers"], name: "index_triggers_on_url_matchers", using: :gin
@@ -206,6 +213,7 @@ ActiveRecord::Schema.define(version: 20181126135000) do
   add_foreign_key "scripted_chats", "accounts"
   add_foreign_key "scripted_chats", "personas"
   add_foreign_key "spotlights", "accounts"
+  add_foreign_key "spotlights", "curations"
   add_foreign_key "spotlights", "personas"
   add_foreign_key "triggers", "accounts"
   add_foreign_key "users", "accounts"
