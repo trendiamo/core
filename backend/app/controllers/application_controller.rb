@@ -13,13 +13,6 @@ class ApplicationController < ActionController::API
     set_current_tenant(current_user.account) if current_user
   end
 
-  # This method is called when CSRF validation fails. By default it raises
-  # an ActionController::InvalidAuthenticityToken 422 Exception.
-  # In order to simplify the response to front-end we rewrite it to 403 instead.
-  def handle_unverified_request
-    user_not_authorized
-  end
-
   def user_not_authorized
     errors = [{ title: "You are not authorized to perform this action." }]
     render json: { errors: errors }, status: :forbidden
