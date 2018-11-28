@@ -14,7 +14,7 @@ import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { CurationsList } from './resources/curations'
 import { getCsrfToken } from 'utils'
-import { OutrosList } from './resources/outros'
+import { OutroCreate, OutroEdit, OutroShow, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { ScriptedChatsList } from './resources/scripted-chats'
@@ -59,6 +59,9 @@ const Routes = () => (
     <PrivateRoute component={CurationsList} exact path={routes.curationsList()} />
     <PrivateRoute component={ScriptedChatsList} exact path={routes.scriptedChatsList()} />
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
+    <PrivateRoute component={OutroCreate} exact path={routes.outroCreate()} />
+    <PrivateRoute component={OutroEdit} exact path={routes.outroEdit(':outroId')} />
+    <PrivateRoute component={OutroShow} exact path={routes.outroShow(':outroId')} />
     <PrivateRoute component={TriggersList} exact path={routes.triggersList()} />
     <PrivateRoute component={TriggerCreate} exact path={routes.triggerCreate()} />
     <PrivateRoute component={TriggerEdit} exact path={routes.triggerEdit(':triggerId')} />
