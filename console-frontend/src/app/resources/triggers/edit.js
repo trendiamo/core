@@ -8,16 +8,13 @@ export default compose(
   withRaTitle('Edit Trigger'),
   withRouter,
   withHandlers({
-    saveFormObject: ({ setInfo, match }) => async form => {
+    saveFormObject: ({ match }) => async (form, { setInfo }) => {
       const id = match.params.triggerId
       return await apiTriggerUpdate(id, { trigger: form }, setInfo)
     },
-    afterSave: ({ history }) => result => {
-      result && history.push('/triggers')
-    },
   }),
   withHandlers({
-    loadFormObject: ({ match }) => async setInfo => {
+    loadFormObject: ({ match }) => async ({ setInfo }) => {
       const id = match.params.triggerId
       const response = await apiTriggerShow(id, setInfo)
       return {

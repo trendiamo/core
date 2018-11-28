@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
+import routes from 'app/routes'
 import SaveIcon from '@material-ui/icons/Save'
 import Select from '@material-ui/core/Select'
 import styled from 'styled-components'
@@ -20,6 +21,7 @@ import { apiFlowsList } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { camelize, singularize } from 'inflected'
 import { Prompt } from 'react-router'
+import { withRouter } from 'react-router'
 
 const LabelContainer = styled.div`
   margin-top: 1rem;
@@ -182,6 +184,9 @@ export default compose(
       setFlows(flows)
       return loadFormObject({ setInfo })
     },
+    saveFormObject: ({ saveFormObject, setInfo }) => form => {
+      return saveFormObject(form, { setInfo })
+    },
   }),
   withForm({
     name: '',
@@ -205,7 +210,13 @@ export default compose(
       setForm({ ...form, urlMatchers: newUrlMatchers })
     },
   }),
+  withRouter,
   withHandlers({
+    onFormSubmit: ({ history, onFormSubmit }) => async event => {
+      const result = await onFormSubmit(event)
+      result && history.push(routes.triggersList())
+      return result
+    },
     selectFlow: ({ form, setForm }) => (index, newValue) => {
       setForm({
         ...form,

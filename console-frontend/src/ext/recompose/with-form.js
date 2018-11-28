@@ -10,11 +10,10 @@ const withForm = initialForm => BaseComponent =>
       isFormPristine: isEqual(form, initialForm),
     })),
     withHandlers({
-      onFormSubmit: ({ afterSave, form, saveFormObject, setInitialForm }) => async event => {
+      onFormSubmit: ({ form, saveFormObject, setInitialForm }) => async event => {
         event.preventDefault()
         const result = await saveFormObject(form)
         setInitialForm(form)
-        afterSave && afterSave(result)
         return result
       },
       setFieldValue: ({ form, setForm }) => event => {
@@ -23,8 +22,8 @@ const withForm = initialForm => BaseComponent =>
     }),
     lifecycle({
       async componentDidMount() {
-        const { loadFormObject, setForm, setInfo, setInitialForm, setIsFormLoading } = this.props
-        const formObject = await loadFormObject(setInfo)
+        const { loadFormObject, setForm, setInitialForm, setIsFormLoading } = this.props
+        const formObject = await loadFormObject()
         setInitialForm(formObject)
         setForm(formObject)
         setIsFormLoading(false)

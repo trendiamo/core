@@ -5,11 +5,13 @@ import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
+import routes from 'app/routes'
 import SaveIcon from '@material-ui/icons/Save'
 import TextField from '@material-ui/core/TextField'
 import withForm from 'ext/recompose/with-form'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
+import { withRouter } from 'react-router'
 
 const PersonaForm = ({
   form,
@@ -72,14 +74,25 @@ export default compose(
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
   withState('progress', 'setProgress', null),
+  withHandlers({
+    loadFormObject: ({ loadFormObject, setInfo }) => async () => {
+      return loadFormObject({ setInfo })
+    },
+    saveFormObject: ({ saveFormObject, setProgress, profilePic, setInfo }) => form => {
+      return saveFormObject(form, { setProgress, profilePic, setInfo })
+    },
+  }),
   withForm({
     name: '',
     description: '',
     profilePicUrl: '',
   }),
+  withRouter,
   withHandlers({
-    loadFormObject: ({ loadFormObject, setInfo }) => async () => {
-      return loadFormObject({ setInfo })
+    onFormSubmit: ({ history, onFormSubmit }) => async event => {
+      const result = await onFormSubmit(event)
+      result && history.push(routes.personasList())
+      return result
     },
     setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
       setForm({ ...form, profilePicUrl })

@@ -3,13 +3,11 @@ import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiPersonaShow, apiPersonaUpdate } from 'utils'
 import { compose, withHandlers } from 'recompose'
 import { uploadImage } from 'shared/picture-uploader'
-import { withRouter } from 'react-router'
 
 export default compose(
   withRaTitle('Edit Persona'),
-  withRouter,
   withHandlers({
-    saveFormObject: ({ setInfo, setProgress, profilePic, match }) => async form => {
+    saveFormObject: ({ match }) => async (form, { setProgress, profilePic, setInfo }) => {
       const profilePicUrl = await uploadImage({
         blob: profilePic,
         setProgress,
@@ -20,12 +18,9 @@ export default compose(
       const data = { ...form, profilePicUrl }
       return await apiPersonaUpdate(id, { persona: data }, setInfo)
     },
-    afterSave: ({ history }) => result => {
-      result && history.push('/')
-    },
   }),
   withHandlers({
-    loadFormObject: ({ match }) => async setInfo => {
+    loadFormObject: ({ match }) => async ({ setInfo }) => {
       const id = match.params.personaId
       const result = await apiPersonaShow(id, setInfo)
       const resultObject = {
