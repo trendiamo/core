@@ -18,13 +18,13 @@ gem "graphql"
 gem "kaminari"
 gem "pundit"
 gem "rack-cors"
+gem "redis-rails", "~> 5"
 gem "resque"
 gem "resque-scheduler"
 gem "rubocop"
 # changed to support the EU endpoint. https://github.com/the-refinery/sparkpost_rails/pull/58
 gem "sparkpost_rails", github: "dsgh/sparkpost_rails", branch: "custom-api-endpoint"
 gem "stripe"
-gem "tiddle"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

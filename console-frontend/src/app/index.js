@@ -9,9 +9,11 @@ import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
+import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { CurationsList } from './resources/curations'
+import { getCsrfToken } from 'utils'
 import { OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
@@ -80,4 +82,15 @@ export const App = ({ history }) => (
   </Router>
 )
 
-export default App
+export default compose(
+  withState('loading', 'setLoading', true),
+  lifecycle({
+    componentWillMount() {
+      const { setLoading } = this.props
+      getCsrfToken().then(() => {
+        setLoading(false)
+      })
+    },
+  }),
+  branch(({ loading }) => loading, renderNothing)
+)(App)

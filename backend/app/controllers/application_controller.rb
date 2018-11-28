@@ -1,14 +1,23 @@
 class ApplicationController < ActionController::API
+  include ActionController::Cookies
   include Pundit
   set_current_tenant_through_filter
   before_action :current_tenant
-
+  include ActionController::RequestForgeryProtection
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  protect_from_forgery with: :exception, prepend: true
 
   private
 
   def current_tenant
     set_current_tenant(current_user.account) if current_user
+  end
+
+  # This method is called when CSRF validation fails. By default it raises
+  # an ActionController::InvalidAuthenticityToken 422 Exception.
+  # In order to simplify the response to front-end we rewrite it to 403 instead.
+  def handle_unverified_request
+    user_not_authorized
   end
 
   def user_not_authorized

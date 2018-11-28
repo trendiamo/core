@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   defaults format: :json do
     scope "api/v1" do
+      get "/csrf_token", to: "csrf#csrf_token"
       devise_scope :user do
         post "/users/sign_up", to: "users/registrations#create"
         put "/users/change_password", to: "users/registrations#update"
@@ -35,7 +36,7 @@ Rails.application.routes.draw do
       resources :triggers, only: %i[index show update create]
       delete "/triggers", to: "triggers#destroy"
       resources :flows, only: %i[index]
-      
+
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end

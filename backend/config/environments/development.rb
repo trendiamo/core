@@ -23,7 +23,9 @@ Rails.application.configure do
   else
     config.action_controller.perform_caching = false
 
-    config.cache_store = :null_store
+    # CSRF protection doesn't work with :null_store option while using session
+    # cookies as opposed to other store types.
+    config.cache_store = :memory_store
   end
 
   # Don't care if the mailer can't send.
