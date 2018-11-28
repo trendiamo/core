@@ -332,6 +332,25 @@ export const apiPersonaCreateSaga = async (url, body, setInfo) => {
   setInfo(info)
 }
 
+export const apiPersonaListSaga = async (url, setInfo) => {
+  const json = await apiPersonaListRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiPersonaListRequest = async url => {
+  const res = await fetch(url, {
+    credentials: 'include',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
 export const apiDestroySaga = async (url, body, setInfo) => {
   const json = await apiDestroyRequest(url, body)
   const info = convertToInfo(json)
@@ -475,6 +494,65 @@ const apiOutroListRequest = async url => {
   return res.json()
 }
 
+export const apiOutroCreateSaga = async (url, body, setInfo) => {
+  const json = await apiOutroCreateRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiOutroCreateRequest = async (url, body) => {
+  const res = await fetch(url, {
+    body: JSON.stringify(body),
+    credentials: 'include',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'post',
+  })
+  return res.json()
+}
+
+const apiOutroShowRequest = async url => {
+  const res = await fetch(url, {
+    credentials: 'include',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'get',
+  })
+  return res.json()
+}
+
+export const apiOutroShowSaga = async (url, setInfo) => {
+  const json = await apiOutroShowRequest(url)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
+const apiOutroUpdateRequest = async (url, body) => {
+  const res = await fetch(url, {
+    credentials: 'include',
+    body: JSON.stringify(body),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    method: 'put',
+  })
+  return res.json()
+}
+
+export const apiOutroUpdateSaga = async (url, body, setInfo) => {
+  const json = await apiOutroUpdateRequest(url, body)
+  const info = convertToInfo(json)
+  if (info.status === 'success') return json
+  setInfo(info)
+}
+
 export const apiFlowsListSaga = async (url, setInfo) => {
   const json = await apiFlowListRequest(url)
   const info = convertToInfo(json)
@@ -513,9 +591,14 @@ export const apiPersonaShow = (id, setInfo) => apiPersonaShowSaga(`${PERSONAS_UR
 export const apiPersonaCreate = (body, setInfo) => apiPersonaCreateSaga(PERSONAS_URL, body, setInfo)
 export const apiPersonaUpdate = (id, body, setInfo) => apiPersonaUpdateSaga(`${PERSONAS_URL}/${id}`, body, setInfo)
 export const apiPersonaDestroy = (body, setInfo) => apiDestroySaga(PERSONAS_URL, body, setInfo)
+export const apiPersonaSimpleList = (setInfo, query) =>
+  apiPersonaListSaga(`${PERSONAS_URL}/?${stringify(query)}`, setInfo)
 
 export const apiOutroList = (setInfo, query) => apiListSaga(`${OUTROS_URL}/?${stringify(query)}`, setInfo)
 export const apiOutroDestroy = (body, setInfo) => apiDestroySaga(OUTROS_URL, body, setInfo)
+export const apiOutroCreate = (body, setInfo) => apiOutroCreateSaga(OUTROS_URL, body, setInfo)
+export const apiOutroShow = (id, setInfo) => apiOutroShowSaga(`${OUTROS_URL}/${id}`, setInfo)
+export const apiOutroUpdate = (id, body, setInfo) => apiOutroUpdateSaga(`${OUTROS_URL}/${id}`, body, setInfo)
 
 export const apiCurationList = (setInfo, query) => apiListSaga(`${CURATIONS_URL}/?${stringify(query)}`, setInfo)
 export const apiCurationDestroy = (body, setInfo) => apiDestroySaga(CURATIONS_URL, body, setInfo)

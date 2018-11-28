@@ -1,3 +1,6 @@
+import OutroCreate from './create'
+import OutroEdit from './edit'
+import OutroShow from './show'
 import OutrosList from './list'
 
-export { OutrosList }
+export { OutroShow, OutroEdit, OutrosList, OutroCreate }
