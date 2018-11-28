@@ -225,7 +225,7 @@ const apiPasswordChangeRequest = async (url, body) => {
 }
 
 const apiRequestSignout = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -347,7 +347,7 @@ export const apiTriggerListSaga = async (url, setInfo) => {
 }
 
 const apiTriggerListRequest = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -366,7 +366,7 @@ export const apiTriggerDestroySaga = async (url, body, setInfo) => {
 }
 
 const apiTriggerDestroyRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     credentials: 'include',
     headers: new Headers({
@@ -386,7 +386,7 @@ export const apiTriggerCreateSaga = async (url, body, setInfo) => {
 }
 
 const apiTriggerCreateRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     credentials: 'include',
     headers: new Headers({
@@ -399,7 +399,7 @@ const apiTriggerCreateRequest = async (url, body) => {
 }
 
 const apiTriggerShowRequest = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -418,7 +418,7 @@ export const apiTriggerShowSaga = async (url, setInfo) => {
 }
 
 const apiTriggerUpdateRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     credentials: 'include',
     headers: new Headers({
@@ -445,7 +445,7 @@ export const apiScriptedChatListSaga = async (url, setInfo) => {
 }
 
 const apiScriptedChatListRequest = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -464,7 +464,7 @@ export const apiOutroListSaga = async (url, setInfo) => {
 }
 
 const apiOutroListRequest = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -483,7 +483,7 @@ export const apiFlowsListSaga = async (url, setInfo) => {
 }
 
 const apiFlowListRequest = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
