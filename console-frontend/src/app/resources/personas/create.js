@@ -1,78 +1,12 @@
-import Button from '@material-ui/core/Button'
-import Label from 'shared/label'
-import Notification from 'shared/notification'
-import PaperContainer from 'app/layout/paper-container'
-import PictureUploader, { ProgressBar, uploadImage } from 'shared/picture-uploader'
-import React from 'react'
-import SaveIcon from '@material-ui/icons/Save'
-import TextField from '@material-ui/core/TextField'
-import withForm from 'ext/recompose/with-form'
+import PersonaForm from './form'
 import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiPersonaCreate } from 'utils'
-import { compose, withHandlers, withState } from 'recompose'
-import { Prompt } from 'react-router'
+import { compose, withHandlers } from 'recompose'
+import { uploadImage } from 'shared/picture-uploader'
 import { withRouter } from 'react-router'
-
-const PersonaCreate = ({
-  form,
-  info,
-  isFormLoading,
-  isFormPristine,
-  isCropping,
-  onFormSubmit,
-  progress,
-  setFieldValue,
-  setIsCropping,
-  setProfilePic,
-  setProfilePicUrl,
-}) => (
-  <PaperContainer>
-    <form onSubmit={onFormSubmit}>
-      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={info} />
-      <Label>{'Picture'}</Label>
-      <PictureUploader
-        disabled={isCropping}
-        onChange={setProfilePicUrl}
-        setDisabled={setIsCropping}
-        setProfilePic={setProfilePic}
-        value={form.profilePicUrl}
-      />
-      <TextField
-        disabled={isFormLoading || isCropping}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
-      />
-      <TextField
-        disabled={isFormLoading || isCropping}
-        fullWidth
-        label="Description"
-        margin="normal"
-        name="description"
-        onChange={setFieldValue}
-        required
-        value={form.description}
-      />
-      {progress && <ProgressBar progress={progress} />}
-      <Button color="primary" disabled={isFormLoading || isCropping} type="submit" variant="contained">
-        <SaveIcon />
-        {'Save'}
-      </Button>
-    </form>
-  </PaperContainer>
-)
 
 export default compose(
   withRaTitle('Create Persona'),
-  withState('info', 'setInfo', null),
-  withState('isCropping', 'setIsCropping', false),
-  withState('profilePic', 'setProfilePic', null),
-  withState('progress', 'setProgress', null),
   withRouter,
   withHandlers({
     saveFormObject: ({ setInfo, setProgress, profilePic }) => async form => {
@@ -80,13 +14,11 @@ export default compose(
         blob: profilePic,
         setProgress,
         type: 'personas-profile-pics',
+        defaultValue: form.profilePicUrl,
       })
       const data = { ...form, profilePicUrl }
-      const persona = await apiPersonaCreate({ persona: data }, setInfo)
-      return persona
+      return await apiPersonaCreate({ persona: data }, setInfo)
     },
-  }),
-  withHandlers({
     afterSave: ({ history }) => result => {
       result && history.push('/')
     },
@@ -99,15 +31,5 @@ export default compose(
         profilePicUrl: '',
       }
     },
-  }),
-  withForm({
-    name: '',
-    description: '',
-    profilePicUrl: '',
-  }),
-  withHandlers({
-    setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
-      setForm({ ...form, profilePicUrl })
-    },
   })
-)(PersonaCreate)
+)(PersonaForm)

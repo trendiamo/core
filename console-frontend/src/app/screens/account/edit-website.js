@@ -60,10 +60,6 @@ const LabelContainer = styled.div`
   margin-top: 1rem;
 `
 
-const MultiFormControl = styled.div`
-  margin-top: 0;
-`
-
 const EditWebsite = ({
   addHostnameSelect,
   deleteHostname,
@@ -110,25 +106,23 @@ const EditWebsite = ({
     <LabelContainer>
       <InputLabel>{'Hostnames'}</InputLabel>
     </LabelContainer>
-    <MultiFormControl margin="normal">
-      {form.hostnames.map((hostname, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <FlexDiv key={index}>
-          <StyledHostnameTextField
-            disabled={isFormLoading}
-            index={index}
-            onChange={editHostnameValue}
-            required
-            value={hostname}
-          />
-          {form.hostnames.length > 1 && (
-            <IconButton>
-              <Cancel disabled={isFormLoading} index={index} onClick={deleteHostname} />
-            </IconButton>
-          )}
-        </FlexDiv>
-      ))}
-    </MultiFormControl>
+    {form.hostnames.map((hostname, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <FlexDiv key={index}>
+        <StyledHostnameTextField
+          disabled={isFormLoading}
+          index={index}
+          onChange={editHostnameValue}
+          required
+          value={hostname}
+        />
+        {form.hostnames.length > 1 && (
+          <IconButton>
+            <Cancel disabled={isFormLoading} index={index} onClick={deleteHostname} />
+          </IconButton>
+        )}
+      </FlexDiv>
+    ))}
     <AddHostnameButton addHostnameSelect={addHostnameSelect} disabled={isFormLoading} />
     <div style={{ marginTop: '1rem' }}>
       <Button color="primary" disabled={isFormLoading} type="submit" variant="contained">
