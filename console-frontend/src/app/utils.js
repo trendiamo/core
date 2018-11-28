@@ -1,10 +1,11 @@
 import auth from 'auth'
 import qs from 'querystring'
+import { authFetch } from 'utils'
 
 const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
 
 export const getSignedUrlFactory = type => (file, callback) =>
-  fetch(
+  authFetch(
     `${S3_URL}?${qs.stringify({
       content_type: file.type,
       object_name: file.name,

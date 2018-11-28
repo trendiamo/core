@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181127115903) do
+ActiveRecord::Schema.define(version: 20181128134905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,18 +19,6 @@ ActiveRecord::Schema.define(version: 20181127115903) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
-  end
-
-  create_table "auth_tokens", force: :cascade do |t|
-    t.string "body"
-    t.bigint "user_id"
-    t.datetime "last_used_at"
-    t.string "ip_address"
-    t.string "user_agent"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["body"], name: "index_user_auth_tokens_on_body"
-    t.index ["user_id"], name: "index_user_auth_tokens_on_user_id"
   end
 
   create_table "chat_messages", force: :cascade do |t|
@@ -193,7 +181,6 @@ ActiveRecord::Schema.define(version: 20181127115903) do
     t.index ["hostnames"], name: "index_websites_on_hostnames", using: :gin
   end
 
-  add_foreign_key "auth_tokens", "users"
   add_foreign_key "chat_messages", "accounts"
   add_foreign_key "chat_messages", "chat_steps"
   add_foreign_key "chat_options", "accounts"

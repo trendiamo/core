@@ -1,12 +1,10 @@
 class User < ApplicationRecord
   include CleanupAssets
 
-  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable,
-         :token_authenticatable
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :validatable
 
   acts_as_tenant
 
-  has_many :authentication_tokens, class_name: "AuthToken", dependent: :destroy
   belongs_to :account
 
   def as_json(_options = {})

@@ -3,6 +3,7 @@ import routes from 'app/routes'
 import { stringify } from 'query-string'
 
 const BASE_API_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`
+const CSRF_TOKEN_URL = `${BASE_API_URL}/csrf_token`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/curations`
@@ -31,6 +32,12 @@ const convertToInfo = (json, defaultMessage) => {
   return isAuthError ? auth.clear() : { message, status }
 }
 
+// Gets generated from the backend CSRF token and saves it in the client-side (local storage).
+export const getCsrfToken = async () => {
+  const json = await apiMeRequest(CSRF_TOKEN_URL)
+  auth.setCsrfToken(json)
+}
+
 const checkAuth = json => (json.errors || []).find(error => error.title === 'Invalid email or token')
 
 const errorMessages = json => {
@@ -45,11 +52,21 @@ const mapErrors = json => {
   return Array.isArray(json.errors) ? json.errors.map(error => error.title).join(', ') : defaultErrorMessage
 }
 
+export const authFetch = async (url, params) => {
+  const result = await fetch(url, params)
+  if (result.status === 403 || result.status === 401) {
+    auth.clear()
+    return {}
+  }
+  return result
+}
+
 const apiRequest = async (url, body) => {
   const res = await fetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': auth.getToken(),
     }),
     method: 'post',
   })
@@ -68,7 +85,7 @@ const apiMeRequest = async url => {
 }
 
 const apiMeUpdateRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -84,6 +101,7 @@ const apiPasswordRequest = async (url, body) => {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
+      ...auth.getHeaders(),
     }),
     method: 'put',
   })
@@ -91,7 +109,7 @@ const apiPasswordRequest = async (url, body) => {
 }
 
 const apiWebsiteShowRequest = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     headers: new Headers({
       'Content-Type': 'application/json',
       ...auth.getHeaders(),
@@ -102,7 +120,7 @@ const apiWebsiteShowRequest = async url => {
 }
 
 const apiWebsiteUpdateRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -114,7 +132,7 @@ const apiWebsiteUpdateRequest = async (url, body) => {
 }
 
 const apiListRequest = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     headers: new Headers({
       'Content-Type': 'application/json',
       ...auth.getHeaders(),
@@ -136,7 +154,7 @@ const apiListRequest = async url => {
 }
 
 const apiPersonaShowRequest = async url => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     headers: new Headers({
       'Content-Type': 'application/json',
       ...auth.getHeaders(),
@@ -147,7 +165,7 @@ const apiPersonaShowRequest = async url => {
 }
 
 const apiPersonaCreateRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -159,7 +177,7 @@ const apiPersonaCreateRequest = async (url, body) => {
 }
 
 const apiDestroyRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -171,7 +189,7 @@ const apiDestroyRequest = async (url, body) => {
 }
 
 const apiPersonaUpdateRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -183,7 +201,7 @@ const apiPersonaUpdateRequest = async (url, body) => {
 }
 
 const apiPasswordChangeRequest = async (url, body) => {
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     body: JSON.stringify(body),
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -209,7 +227,7 @@ export const apiPasswordResetSaga = async (url, body, setInfo) => {
   const json = await apiPasswordRequest(url, body)
   const info = convertToInfo(json)
   if (info.status === 'success') {
-    auth.setAuth({ token: json.authenticationToken, user: json.user })
+    auth.setAuth({ user: json.user })
     window.location.href = routes.root()
   }
   setInfo(info)
@@ -261,7 +279,7 @@ export const apiSaga = async (url, body, setInfo) => {
   const json = await apiRequest(url, body)
   const info = convertToInfo(json)
   if (info.status === 'success') {
-    auth.setAuth({ token: json.authenticationToken, user: json.user })
+    auth.setAuth({ user: json.user })
   }
   setInfo(info)
 }
