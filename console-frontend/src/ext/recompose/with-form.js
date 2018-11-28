@@ -23,8 +23,8 @@ const withForm = initialForm => BaseComponent =>
     }),
     lifecycle({
       async componentDidMount() {
-        const { loadFormObject, setForm, setInitialForm, setIsFormLoading } = this.props
-        const formObject = await loadFormObject()
+        const { loadFormObject, setForm, setInfo, setInitialForm, setIsFormLoading } = this.props
+        const formObject = await loadFormObject(setInfo)
         setInitialForm(formObject)
         setForm(formObject)
         setIsFormLoading(false)
