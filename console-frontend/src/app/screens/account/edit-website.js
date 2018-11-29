@@ -85,25 +85,6 @@ const EditWebsite = ({
       required
       value={form.name}
     />
-    <TextField
-      disabled={isFormLoading}
-      fullWidth
-      label="Title"
-      margin="normal"
-      name="title"
-      onChange={setFieldValue}
-      required
-      value={form.title}
-    />
-    <TextField
-      disabled={isFormLoading}
-      fullWidth
-      label="Subtitle"
-      margin="normal"
-      name="subtitle"
-      onChange={setFieldValue}
-      value={form.subtitle}
-    />
     <LabelContainer>
       <InputLabel>{'Hostnames'}</InputLabel>
     </LabelContainer>
@@ -144,8 +125,6 @@ export default compose(
       return {
         hostnames: json.hostnames || [''],
         name: json.name || '',
-        subtitle: json.subtitle || '',
-        title: json.title || '',
       }
     },
     saveFormObject: ({ websiteId, setErrors }) => async form => {
@@ -158,8 +137,6 @@ export default compose(
   withForm({
     hostnames: [''],
     name: '',
-    subtitle: '',
-    title: '',
   }),
   withHandlers({
     addHostnameSelect: ({ form, setForm }) => () => {
