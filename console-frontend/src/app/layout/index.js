@@ -4,17 +4,16 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Menu from './menu'
 import React from 'react'
 import Sidebar from './sidebar'
-import theme from 'app/theme'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
 import { styles } from './layout-styles'
 import { withRouter } from 'react-router'
+import { withStyles } from '@material-ui/core/styles'
 
-const Layout = ({ children, classes, dashboard, logout, open, toggleOpen }) => (
+const Layout = ({ appBarContent, children, classes, dashboard, logout, open, toggleOpen }) => (
   <div className={classes.root}>
     <div className={classes.appFrame}>
       <CssBaseline />
-      <AppBar classes={classes} logout={logout} open={open} toggleOpen={toggleOpen} />
+      <AppBar appBarContent={appBarContent} classes={classes} logout={logout} open={open} toggleOpen={toggleOpen} />
       <main className={classes.contentWithSidebar}>
         <Sidebar classes={classes} open={open} toggleOpen={toggleOpen}>
           <Menu classes={classes} hasDashboard={!!dashboard} logout={logout} open={open} />
@@ -49,10 +48,4 @@ const EnhancedLayout = compose(
   branch(({ isLoggedIn }) => !isLoggedIn, renderComponent(props => <EmptyLayout {...props} />))
 )(Layout)
 
-const LayoutWithTheme = ({ ...rest }) => (
-  <MuiThemeProvider theme={theme}>
-    <EnhancedLayout {...rest} />
-  </MuiThemeProvider>
-)
-
-export default LayoutWithTheme
+export default EnhancedLayout

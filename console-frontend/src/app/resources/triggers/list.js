@@ -21,6 +21,7 @@ import { apiTriggerDestroy, apiTriggerList } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import { BulkActions } from 'shared/list-actions'
 import { Link } from 'react-router-dom'
+import { withTitle } from 'ext/recompose/with-title'
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
@@ -195,6 +196,7 @@ const TriggerList = ({
 )
 
 export default compose(
+  withTitle('Triggers'),
   withState('triggers', 'setTriggers', []),
   withState('isLoading', 'setIsLoading', true),
   withState('selectedIds', 'setSelectedIds', []),

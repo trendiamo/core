@@ -1,11 +1,11 @@
 import OutroForm from './form'
-import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiOutroCreate } from 'utils'
 import { compose, withHandlers } from 'recompose'
 import { extractErrors } from 'utils/shared'
+import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withRaTitle('Create Outro'),
+  withTitle('Create Outro'),
   withHandlers({
     saveFormObject: () => async (form, { setErrors }) => {
       const response = await apiOutroCreate({ outro: form })

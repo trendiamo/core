@@ -6,9 +6,11 @@ import TableBody from '@material-ui/core/TableBody'
 import TablePagination from '@material-ui/core/TablePagination'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { TableHead, TableRow, TableToolbar } from 'shared/table-elements'
+import { withTitle } from './with-title'
 
 const enhanceList = ({ api, columns, label, routes }) => ResourceRow =>
   compose(
+    withTitle(() => label),
     withState('records', 'setRecords', []),
     withState('recordsCount', 'setRecordsCount', 0),
     withState('range', 'setRange', []),

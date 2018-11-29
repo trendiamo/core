@@ -9,10 +9,10 @@ import ProfilePic from 'app/resources/personas/profile-pic'
 import React from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
-import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiOutroShow } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withState } from 'recompose'
 import { Link } from 'react-router-dom'
+import { withTitle } from 'ext/recompose/with-title'
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ const PersonaShow = ({ outro }) => (
 )
 
 export default compose(
-  withRaTitle('Outro'),
+  withTitle('Outro'),
   withState('outro', 'setOutro', {}),
   withState('isLoading', 'setIsLoading', true),
   lifecycle({

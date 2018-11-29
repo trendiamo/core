@@ -6,10 +6,10 @@ import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
-import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiPasswordChange } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
 import { withRouter } from 'react-router'
+import { withTitle } from 'ext/recompose/with-title'
 
 const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue }) => (
   <PaperContainer>
@@ -50,7 +50,7 @@ const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue
 )
 
 export default compose(
-  withRaTitle('Change Password'),
+  withTitle('Change Password'),
   withState('passwordForm', 'setPasswordForm', {
     currentPassword: '',
     password: '',

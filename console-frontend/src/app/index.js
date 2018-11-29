@@ -9,16 +9,19 @@ import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
+import theme from 'app/theme'
 import { apiGetCsrfToken } from 'utils'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { CurationsList } from './resources/curations'
+import { MuiThemeProvider } from '@material-ui/core/styles'
 import { OutroCreate, OutroEdit, OutroShow, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { ScriptedChatsList } from './resources/scripted-chats'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
+import { withStoreProvider } from 'ext/recompose/with-store'
 import 'assets/css/fonts.css'
 
 const generateClassName = createGenerateClassName()
@@ -78,14 +81,17 @@ const Routes = () => (
 export const App = ({ history }) => (
   <Router history={history}>
     <JssProvider generateClassName={generateClassName} jss={jss}>
-      <Layout>
-        <Routes />
-      </Layout>
+      <MuiThemeProvider theme={theme}>
+        <Layout>
+          <Routes />
+        </Layout>
+      </MuiThemeProvider>
     </JssProvider>
   </Router>
 )
 
 export default compose(
+  withStoreProvider,
   withState('loading', 'setLoading', true),
   lifecycle({
     componentWillMount() {

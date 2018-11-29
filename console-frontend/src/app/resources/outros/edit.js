@@ -1,11 +1,11 @@
 import OutroForm from './form'
-import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiOutroShow, apiOutroUpdate } from 'utils'
 import { compose, withHandlers } from 'recompose'
 import { extractErrors } from 'utils/shared'
+import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withRaTitle('Edit Outro'),
+  withTitle('Edit Outro'),
   withHandlers({
     saveFormObject: ({ match }) => async (form, { setErrors }) => {
       const id = match.params.outroId

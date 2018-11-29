@@ -1,12 +1,12 @@
 import PersonaForm from './form'
-import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiPersonaShow, apiPersonaUpdate } from 'utils'
 import { compose, withHandlers } from 'recompose'
 import { extractErrors } from 'utils/shared'
 import { uploadImage } from 'shared/picture-uploader'
+import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withRaTitle('Edit Persona'),
+  withTitle('Edit Persona'),
   withHandlers({
     saveFormObject: ({ match }) => async (form, { setProgress, profilePic, setErrors }) => {
       const profilePicUrl = await uploadImage({

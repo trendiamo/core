@@ -1,12 +1,12 @@
 import TriggerForm from './form'
-import withRaTitle from 'ext/recompose/with-ra-title'
 import { apiTriggerShow, apiTriggerUpdate } from 'utils'
 import { compose, withHandlers } from 'recompose'
 import { extractErrors } from 'utils/shared'
 import { withRouter } from 'react-router'
+import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withRaTitle('Edit Trigger'),
+  withTitle('Edit Trigger'),
   withRouter,
   withHandlers({
     saveFormObject: ({ match }) => async (form, { setErrors }) => {
