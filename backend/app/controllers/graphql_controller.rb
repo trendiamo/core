@@ -1,4 +1,5 @@
 class GraphqlController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :ensure_hash_variables
   before_action :ensure_website
 
