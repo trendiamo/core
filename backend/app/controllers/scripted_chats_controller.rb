@@ -2,7 +2,8 @@ class ScriptedChatsController < ApplicationController
   def index
     @scripted_chats = ScriptedChat.includes(:persona).all
     authorize @scripted_chats
-    render json: sorting(pagination(@scripted_chats))
+    fresh_when(etag: @scripted_chats)
+    render json: sorting(pagination(@scripted_chats)) if stale?(@scripted_chats)
   end
 
   def destroy

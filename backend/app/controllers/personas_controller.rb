@@ -2,13 +2,15 @@ class PersonasController < ApplicationController
   def index
     @personas = Persona.all
     authorize @personas
-    render json: sorting(pagination(@personas))
+    fresh_when(etag: @personas)
+    render json: sorting(pagination(@personas)) if stale?(@personas)
   end
 
   def show
     @persona = Persona.find(params[:id])
     authorize @persona
-    render json: @persona
+    fresh_when(etag: @persona)
+    render json: @persona if stale?(@personas)
   end
 
   def update

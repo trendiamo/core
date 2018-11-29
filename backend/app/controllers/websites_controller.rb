@@ -4,7 +4,8 @@ class WebsitesController < ApplicationController
   def show
     @website = Website.find(params[:id])
     authorize @website
-    render json: @website
+    fresh_when(etag: @website)
+    render json: @website if stale?(@website)
   end
 
   def update
