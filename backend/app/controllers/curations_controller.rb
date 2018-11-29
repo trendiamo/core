@@ -7,6 +7,32 @@ class CurationsController < RestController
     render json: chain if stale?(@curations)
   end
 
+  def create
+    @curation = Curation.new(curation_params)
+    authorize @curation
+    if @curation.save
+      render json: @curation, status: :created
+    else
+      render_error
+    end
+  end
+
+  def show
+    @curation = Curation.find(params[:id])
+    authorize @curation
+    render json: @curation
+  end
+
+  def update
+    @curation = Curation.find(params[:id])
+    authorize @curation
+    if @curation.update(curation_params)
+      render json: @curation
+    else
+      render_error
+    end
+  end
+
   def destroy
     @curations = Curation.where(id: params[:ids])
     authorize @curations
@@ -18,6 +44,18 @@ class CurationsController < RestController
   end
 
   private
+
+  def curation_params
+    params.require(:curation).permit(
+      :title, :subtitle, :persona_id,
+      spotlights_attributes: [
+        :text, :persona_id,
+        product_picks_attributes: %i[
+          url name description display_price pic_url
+        ],
+      ]
+    )
+  end
 
   def render_error
     errors = @curation.errors.full_messages.map { |string| { title: string } }
