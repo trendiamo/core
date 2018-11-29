@@ -10,7 +10,7 @@ const columns = [{ name: 'persona', padding: 'none', label: 'persona' }]
 
 const OutrosRow = ({ record }) => (
   <React.Fragment>
-    <TableCell component="th" padding="none" scope="row">
+    <TableCell component="th" padding="none" scope="row" style={{ width: '100%' }}>
       <Avatar alt="" src={record.persona.profilePicUrl} />
     </TableCell>
   </React.Fragment>

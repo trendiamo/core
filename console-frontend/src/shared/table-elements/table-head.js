@@ -57,7 +57,11 @@ const TableHead = ({ handleSelectAll, handleRequestSort, isSelectAll, orderBy, o
           </TableCell>
         )
       })}
-      <TableCell key="actions" />
+      <TableCell
+        style={{
+          whiteSpace: 'nowrap',
+        }}
+      />
     </TableRow>
   </StyledTableHead>
 )

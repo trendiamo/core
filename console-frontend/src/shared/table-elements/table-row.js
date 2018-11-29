@@ -32,7 +32,14 @@ const TableRow = compose(
       <Checkbox checked={selectedIds.includes(resource.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
     {children}
-    <TableCell component="th" padding="none" scope="row">
+    <TableCell
+      component="th"
+      padding="none"
+      scope="row"
+      style={{
+        whiteSpace: 'nowrap',
+      }}
+    >
       {resourceShowPath ? (
         <Button color="primary" component={Link} to={resourceShowPath}>
           <ShowIcon />

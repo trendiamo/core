@@ -17,10 +17,10 @@ const PersonasRow = ({ record }) => (
     <TableCell component="th" padding="none" scope="row">
       <Avatar alt={record.name} src={record.profilePicUrl} />
     </TableCell>
-    <TableCell component="th" padding="none" scope="row">
+    <TableCell component="th" padding="none" scope="row" style={{ width: '30%' }}>
       {record.name}
     </TableCell>
-    <TableCell component="th" padding="none" scope="row">
+    <TableCell component="th" padding="none" scope="row" style={{ width: '70%' }}>
       {record.description}
     </TableCell>
   </React.Fragment>
