@@ -12,7 +12,7 @@ const enhanceList = ({ api, columns, label, routes }) => ResourceRow =>
     withState('records', 'setRecords', []),
     withState('recordsCount', 'setRecordsCount', 0),
     withState('range', 'setRange', []),
-    withState('orderDirection', 'setOrderDirection', 'asc'),
+    withState('orderDirection', 'setOrderDirection', 'desc'),
     withState('orderBy', 'setOrderBy', 'id'),
     withState('selectedIds', 'setSelectedIds', []),
     withState('isSelectAll', 'setIsSelectAll', false),
