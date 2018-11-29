@@ -36,7 +36,7 @@ module Users
         resource.unlock_access! if unlockable?(resource)
         sign_in(resource_name, resource) if Devise.sign_in_after_reset_password
         # respond_with resource, location: after_resetting_password_path_for(resource)
-        render json: { user: resource}
+        render json: { user: resource }
       else
         set_minimum_password_length
         # respond_with resource
