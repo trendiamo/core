@@ -2,7 +2,8 @@ class OutrosController < ApplicationController
   def index
     @outros = Outro.includes(:persona).all
     authorize @outros
-    render json: sorting(pagination(@outros))
+    fresh_when(etag: @outros)
+    render json: sorting(pagination(@outros)) if stale?(@outros)
   end
 
   def create
@@ -18,7 +19,8 @@ class OutrosController < ApplicationController
   def show
     @outro = Outro.find(params[:id])
     authorize @outro
-    render json: @outro
+    fresh_when(etag: @outro)
+    render json: @outro if stale?(@outro)
   end
 
   def update

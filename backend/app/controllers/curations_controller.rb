@@ -2,7 +2,8 @@ class CurationsController < ApplicationController
   def index
     @curations = Curation.all
     authorize @curations
-    render json: sorting(pagination(@curations))
+    fresh_when(etag: @curations)
+    render json: sorting(pagination(@curations)) if stale?(@curations)
   end
 
   def destroy

@@ -2,7 +2,8 @@ class TriggersController < ApplicationController
   def index
     @triggers = Trigger.all.order(:order)
     authorize @triggers
-    render json: @triggers
+    fresh_when(etag: @triggers)
+    render json: @triggers if stale?(@triggers)
   end
 
   def create
@@ -18,7 +19,8 @@ class TriggersController < ApplicationController
   def show
     @trigger = Trigger.find(params[:id])
     authorize @trigger
-    render json: { trigger: @trigger, flow: @trigger.flow }
+    fresh_when(etag: @trigger)
+    render json: { trigger: @trigger, flow: @trigger.flow } if stale?(@trigger)
   end
 
   def update
