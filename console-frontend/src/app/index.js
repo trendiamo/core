@@ -9,11 +9,11 @@ import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
+import { apiGetCsrfToken } from 'utils'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { CurationsList } from './resources/curations'
-import { getCsrfToken } from 'utils'
 import { OutroCreate, OutroEdit, OutroShow, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
@@ -90,7 +90,7 @@ export default compose(
   lifecycle({
     componentWillMount() {
       const { setLoading } = this.props
-      getCsrfToken().then(() => {
+      apiGetCsrfToken().then(() => {
         setLoading(false)
       })
     },

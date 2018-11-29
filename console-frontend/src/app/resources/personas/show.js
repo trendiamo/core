@@ -50,12 +50,11 @@ export default compose(
   withRaTitle('Persona'),
   withState('persona', 'setPersona', {}),
   withState('isLoading', 'setIsLoading', true),
-  withState('info', 'setInfo', null),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setInfo, setPersona, match } = this.props
+      const { setIsLoading, setPersona, match } = this.props
       const id = match.params.personaId
-      const json = await apiPersonaShow(id, setInfo)
+      const json = await apiPersonaShow(id)
       setIsLoading(false)
       setPersona(json)
     },

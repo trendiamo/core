@@ -19,7 +19,6 @@ const enhanceList = ({ api, columns, label, routes }) => ResourceRow =>
     withState('page', 'setPage', 0),
     withState('rowsPerPage', 'setRowsPerPage', 10),
     withState('isLoading', 'setIsLoading', true),
-    withState('info', 'setInfo', null),
     withProps(({ rowsPerPage, page, orderDirection, orderBy }) => ({
       query: {
         range: JSON.stringify([page * rowsPerPage, (page + 1) * rowsPerPage - 1]),
@@ -27,9 +26,9 @@ const enhanceList = ({ api, columns, label, routes }) => ResourceRow =>
       },
     })),
     withHandlers({
-      fetchRecords: ({ setInfo, setIsLoading, setRecords, setRecordsCount, query }) => async () => {
+      fetchRecords: ({ setIsLoading, setRecords, setRecordsCount, query }) => async () => {
         setIsLoading(true)
-        const resourceResponse = await api.fetch(setInfo, query)
+        const resourceResponse = await api.fetch(query)
         setRecords(resourceResponse.json)
         setRecordsCount(resourceResponse.count)
         setIsLoading(false)
@@ -52,8 +51,8 @@ const enhanceList = ({ api, columns, label, routes }) => ResourceRow =>
     }),
     branch(({ isLoading }) => isLoading, renderComponent(CircularProgress)),
     withHandlers({
-      deleteRecords: ({ selectedIds, setInfo, fetchRecords, setSelectedIds, setIsSelectAll }) => async () => {
-        await api.destroy({ ids: selectedIds }, setInfo)
+      deleteRecords: ({ selectedIds, fetchRecords, setSelectedIds, setIsSelectAll }) => async () => {
+        await api.destroy({ ids: selectedIds })
         await fetchRecords()
         setSelectedIds([])
         setIsSelectAll(false)

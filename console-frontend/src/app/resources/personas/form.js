@@ -15,7 +15,7 @@ import { withRouter } from 'react-router'
 
 const PersonaForm = ({
   form,
-  info,
+  errors,
   isCropping,
   isFormLoading,
   isFormPristine,
@@ -29,7 +29,7 @@ const PersonaForm = ({
   <PaperContainer>
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={info} />
+      <Notification data={errors} />
       <Label>{'Picture'}</Label>
       <PictureUploader
         disabled={isCropping}
@@ -70,16 +70,16 @@ const PersonaForm = ({
 )
 
 export default compose(
-  withState('info', 'setInfo', null),
+  withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
   withState('progress', 'setProgress', null),
   withHandlers({
-    loadFormObject: ({ loadFormObject, setInfo }) => async () => {
-      return loadFormObject({ setInfo })
+    loadFormObject: ({ loadFormObject }) => async () => {
+      return loadFormObject()
     },
-    saveFormObject: ({ saveFormObject, setProgress, profilePic, setInfo }) => form => {
-      return saveFormObject(form, { setProgress, profilePic, setInfo })
+    saveFormObject: ({ saveFormObject, setProgress, profilePic, setErrors }) => form => {
+      return saveFormObject(form, { setProgress, profilePic, setErrors })
     },
   }),
   withForm({

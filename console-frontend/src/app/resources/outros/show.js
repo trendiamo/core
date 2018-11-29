@@ -47,12 +47,11 @@ export default compose(
   withRaTitle('Outro'),
   withState('outro', 'setOutro', {}),
   withState('isLoading', 'setIsLoading', true),
-  withState('info', 'setInfo', null),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setInfo, setOutro, match } = this.props
+      const { setIsLoading, setOutro, match } = this.props
       const id = match.params.outroId
-      const json = await apiOutroShow(id, setInfo)
+      const json = await apiOutroShow(id)
       setOutro(json)
       setIsLoading(false)
     },

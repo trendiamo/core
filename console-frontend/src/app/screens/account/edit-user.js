@@ -11,10 +11,11 @@ import TextField from '@material-ui/core/TextField'
 import withForm from 'ext/recompose/with-form'
 import { apiMe, apiMeUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
+import { extractErrors } from 'utils/shared'
 import { Prompt } from 'react-router'
 
 const EditUser = ({
-  info,
+  errors,
   isFormPristine,
   onFormSubmit,
   isCropping,
@@ -28,6 +29,7 @@ const EditUser = ({
 }) => (
   <form onSubmit={onFormSubmit}>
     <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
+    <Notification data={errors} />
     <Label>{'Picture'}</Label>
     <PictureUploader
       disabled={isCropping}
@@ -36,7 +38,6 @@ const EditUser = ({
       setProfilePic={setProfilePic}
       value={form.profilePicUrl}
     />
-    <Notification data={info} />
     <TextField disabled fullWidth id="email" label="Email" margin="normal" required value={form.email} />
     <TextField
       disabled={isFormLoading || isCropping}
@@ -75,12 +76,12 @@ const EditUser = ({
 )
 
 export default compose(
-  withState('info', 'setInfo', null),
+  withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
   withState('progress', 'setProgress', null),
   withHandlers({
-    saveFormObject: ({ setInfo, setProgress, profilePic }) => async form => {
+    saveFormObject: ({ setErrors, setProgress, profilePic }) => async form => {
       // upload the image
       const profilePicUrl = await uploadImage({
         blob: profilePic,
@@ -90,14 +91,19 @@ export default compose(
       })
       // update user data
       const data = { ...form, profilePicUrl }
-      const user = await apiMeUpdate({ user: data }, setInfo)
-      auth.setUser(user)
-      return user
+      const response = await apiMeUpdate({ user: data })
+      const errors = extractErrors(response)
+      if (errors) {
+        setErrors(errors)
+      } else {
+        auth.setUser(response)
+      }
+      return response
     },
   }),
   withHandlers({
-    loadFormObject: ({ setInfo }) => async () => {
-      const user = await apiMe(setInfo)
+    loadFormObject: () => async () => {
+      const user = await apiMe()
       const userObject = {
         email: user.email || '',
         firstName: user.firstName || '',
