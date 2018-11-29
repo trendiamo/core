@@ -22,11 +22,11 @@ export default compose(
       const id = match.params.triggerId
       const response = await apiTriggerShow(id)
       return {
-        name: response.trigger.name || '',
-        order: response.trigger.order || '',
-        flowId: response.trigger.flowId || '',
-        flowType: response.trigger.flowType || '',
-        urlMatchers: response.trigger.urlMatchers || [''],
+        name: response.name || '',
+        order: response.order || '',
+        flowId: response.flowId || '',
+        flowType: response.flowType || '',
+        urlMatchers: response.urlMatchers || [''],
       }
     },
   })

@@ -20,7 +20,7 @@ class TriggersController < ApplicationController
     @trigger = Trigger.find(params[:id])
     authorize @trigger
     fresh_when(etag: @trigger)
-    render json: { trigger: @trigger, flow: @trigger.flow } if stale?(@trigger)
+    render json: @trigger if stale?(@trigger)
   end
 
   def update
