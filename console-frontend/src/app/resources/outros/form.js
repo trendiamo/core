@@ -43,11 +43,11 @@ const selectValue = (form, personas) => {
   return `Persona ${personaIndex}: ${personas[personaIndex].name}`
 }
 
-const TriggerForm = ({ personas, form, info, isFormLoading, isFormPristine, onFormSubmit, selectPersona }) => (
+const TriggerForm = ({ personas, form, errors, isFormLoading, isFormPristine, onFormSubmit, selectPersona }) => (
   <PaperContainer>
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={info} />
+      <Notification data={errors} />
       <FormControl disabled={isFormLoading} fullWidth>
         <InputLabel htmlFor="persona-label-placeholder" shrink>
           {'Persona'}
@@ -78,16 +78,16 @@ const TriggerForm = ({ personas, form, info, isFormLoading, isFormPristine, onFo
 )
 
 export default compose(
-  withState('info', 'setInfo', null),
+  withState('errors', 'setErrors', null),
   withState('personas', 'setPersonas', []),
   withHandlers({
-    loadFormObject: ({ loadFormObject, setInfo, setPersonas }) => async () => {
-      const personas = await apiPersonaSimpleList(setInfo)
+    loadFormObject: ({ loadFormObject, setPersonas }) => async () => {
+      const personas = await apiPersonaSimpleList()
       setPersonas(personas)
-      return loadFormObject({ setInfo })
+      return loadFormObject()
     },
-    saveFormObject: ({ saveFormObject, setInfo }) => form => {
-      return saveFormObject(form, { setInfo })
+    saveFormObject: ({ saveFormObject, setErrors }) => form => {
+      return saveFormObject(form, { setErrors })
     },
   }),
   withForm({

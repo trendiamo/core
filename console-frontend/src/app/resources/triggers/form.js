@@ -74,7 +74,7 @@ const TriggerForm = ({
   editUrlValue,
   flows,
   form,
-  info,
+  errors,
   isFormLoading,
   isFormPristine,
   onFormSubmit,
@@ -84,7 +84,7 @@ const TriggerForm = ({
   <PaperContainer>
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={info} />
+      <Notification data={errors} />
       <TextField
         disabled={isFormLoading}
         fullWidth
@@ -176,16 +176,16 @@ const TriggerForm = ({
 )
 
 export default compose(
-  withState('info', 'setInfo', null),
+  withState('errors', 'setErrors', null),
   withState('flows', 'setFlows', { scriptedChats: [], outros: [], curations: [] }),
   withHandlers({
-    loadFormObject: ({ loadFormObject, setInfo, setFlows }) => async () => {
-      const flows = await apiFlowsList(setInfo)
+    loadFormObject: ({ loadFormObject, setFlows }) => async () => {
+      const flows = await apiFlowsList()
       setFlows(flows)
-      return loadFormObject({ setInfo })
+      return loadFormObject()
     },
-    saveFormObject: ({ saveFormObject, setInfo }) => form => {
-      return saveFormObject(form, { setInfo })
+    saveFormObject: ({ saveFormObject, setErrors }) => form => {
+      return saveFormObject(form, { setErrors })
     },
   }),
   withForm({

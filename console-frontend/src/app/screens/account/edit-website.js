@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography'
 import withForm from 'ext/recompose/with-form'
 import { apiWebsiteShow, apiWebsiteUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { extractErrors } from 'utils/shared'
 import { Prompt } from 'react-router'
 
 const StyledTypography = styled(Typography)`
@@ -65,7 +66,7 @@ const EditWebsite = ({
   deleteHostname,
   isFormLoading,
   editHostnameValue,
-  info,
+  errors,
   isFormPristine,
   form,
   onFormSubmit,
@@ -73,7 +74,7 @@ const EditWebsite = ({
 }) => (
   <form onSubmit={onFormSubmit}>
     <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-    <Notification data={info} />
+    <Notification data={errors} />
     <TextField
       disabled={isFormLoading}
       fullWidth
@@ -133,13 +134,13 @@ const EditWebsite = ({
 )
 
 export default compose(
-  withState('info', 'setInfo', null),
+  withState('errors', 'setErrors', null),
   withProps(() => ({
     websiteId: auth.getUser().account.websiteIds[0],
   })),
   withHandlers({
-    loadFormObject: ({ websiteId, setInfo }) => async () => {
-      const json = await apiWebsiteShow(websiteId, setInfo)
+    loadFormObject: ({ websiteId }) => async () => {
+      const json = await apiWebsiteShow(websiteId)
       return {
         hostnames: json.hostnames || [''],
         name: json.name || '',
@@ -147,8 +148,11 @@ export default compose(
         title: json.title || '',
       }
     },
-    saveFormObject: ({ websiteId, setInfo }) => async form => {
-      return await apiWebsiteUpdate(websiteId, { website: form }, setInfo)
+    saveFormObject: ({ websiteId, setErrors }) => async form => {
+      const response = await apiWebsiteUpdate(websiteId, { website: form })
+      const errors = extractErrors(response)
+      if (errors) setErrors(errors)
+      return response
     },
   }),
   withForm({

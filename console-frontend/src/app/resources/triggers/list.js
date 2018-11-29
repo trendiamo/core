@@ -197,20 +197,12 @@ const TriggerList = ({
 export default compose(
   withState('triggers', 'setTriggers', []),
   withState('isLoading', 'setIsLoading', true),
-  withState('info', 'setInfo', null),
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
   withHandlers({
-    deleteTriggers: ({
-      setIsSelectAll,
-      selectedIds,
-      setInfo,
-      setIsLoading,
-      setSelectedIds,
-      setTriggers,
-    }) => async () => {
-      await apiTriggerDestroy({ ids: selectedIds }, setInfo)
-      const triggersResponse = await apiTriggerList(setInfo)
+    deleteTriggers: ({ setIsSelectAll, selectedIds, setIsLoading, setSelectedIds, setTriggers }) => async () => {
+      await apiTriggerDestroy({ ids: selectedIds })
+      const triggersResponse = await apiTriggerList()
       setTriggers(triggersResponse)
       setIsLoading(false)
       setSelectedIds([])
@@ -223,8 +215,8 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setInfo, setTriggers } = this.props
-      const triggersResponse = await apiTriggerList(setInfo)
+      const { setIsLoading, setTriggers } = this.props
+      const triggersResponse = await apiTriggerList()
       setTriggers(triggersResponse)
       setIsLoading(false)
     },

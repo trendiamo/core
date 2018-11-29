@@ -8,8 +8,8 @@ import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
 import theme from 'app/theme'
+import { apiGetSignedUrlFactory } from 'utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
-import { getSignedUrlFactory } from 'app/utils'
 import 'react-image-crop/dist/ReactCrop.css'
 
 const Container = styled.div`
@@ -266,7 +266,7 @@ const uploadImage = async ({ blob, setProgress, type, defaultValue }) => {
     const { fileUrl } = await S3Upload({
       contentDisposition: 'auto',
       files: [blob],
-      getSignedUrl: getSignedUrlFactory(type),
+      getSignedUrl: apiGetSignedUrlFactory(type),
       onProgress: (progress, message) => setProgress({ message, progress }),
       preprocess: (file, next) => next(file),
       uploadRequestHeaders: { 'x-amz-acl': 'public-read' },
