@@ -8,10 +8,23 @@ import React from 'react'
 import routes from 'app/routes'
 import SaveIcon from '@material-ui/icons/Save'
 import TextField from '@material-ui/core/TextField'
+import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
-import { Prompt } from 'react-router'
-import { withRouter } from 'react-router'
+import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { Prompt, withRouter } from 'react-router'
+
+const Actions = ({ isCropping, isFormLoading, onFormSubmit }) => (
+  <Button
+    color="primary"
+    disabled={isFormLoading || isCropping}
+    onClick={onFormSubmit}
+    type="submit"
+    variant="contained"
+  >
+    <SaveIcon />
+    {'Save'}
+  </Button>
+)
 
 const PersonaForm = ({
   form,
@@ -59,12 +72,6 @@ const PersonaForm = ({
         value={form.description}
       />
       {progress && <ProgressBar progress={progress} />}
-      <div style={{ marginTop: '1rem' }}>
-        <Button color="primary" disabled={isFormLoading || isCropping} type="submit" variant="contained">
-          <SaveIcon />
-          {'Save'}
-        </Button>
-      </div>
     </form>
   </PaperContainer>
 )
@@ -98,5 +105,12 @@ export default compose(
       setForm({ ...form, profilePicUrl })
     },
   }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
+  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, onFormSubmit }) => ({
+    Actions: <Actions isCropping={isCropping} isFormLoading={isFormLoading} onFormSubmit={onFormSubmit} />,
+    breadcrumbs,
+  })),
+  withProps(({ breadcrumbs }) => ({
+    title: breadcrumbs.slice(-1)[0].text,
+  }))
 )(PersonaForm)

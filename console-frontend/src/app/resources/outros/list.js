@@ -18,7 +18,7 @@ const OutrosRow = ({ record }) => (
 
 export default compose(
   enhanceList({
-    label: 'Outros',
+    breadcrumbs: [{ text: 'Outros' }],
     columns,
     api: { fetch: apiOutroList, destroy: apiOutroDestroy },
     routes: { create: routes.outroCreate, edit: routes.outroEdit, show: routes.outroShow },

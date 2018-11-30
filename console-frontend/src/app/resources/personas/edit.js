@@ -1,12 +1,14 @@
 import PersonaForm from './form'
+import routes from 'app/routes'
 import { apiPersonaShow, apiPersonaUpdate } from 'utils'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
 import { uploadImage } from 'shared/picture-uploader'
-import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withTitle('Edit Persona'),
+  withProps({
+    breadcrumbs: [{ text: 'Personas', route: routes.personasList() }, { text: 'Edit Persona' }],
+  }),
   withHandlers({
     saveFormObject: ({ match }) => async (form, { setProgress, profilePic, setErrors }) => {
       const profilePicUrl = await uploadImage({

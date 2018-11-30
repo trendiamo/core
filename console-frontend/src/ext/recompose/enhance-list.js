@@ -1,16 +1,34 @@
+import Button from '@material-ui/core/Button'
 import CircularProgress from 'shared/circular-progress'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
+import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TablePagination from '@material-ui/core/TablePagination'
+import withAppBarContent from './with-app-bar-content'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { Link } from 'react-router-dom'
 import { TableHead, TableRow, TableToolbar } from 'shared/table-elements'
-import { withTitle } from './with-title'
 
-const enhanceList = ({ api, columns, label, routes }) => ResourceRow =>
+const StyledButton = styled(Button)`
+  overflow: hidden;
+  white-space: nowrap;
+`
+
+const Actions = ({ createRoute }) => (
+  <StyledButton color="primary" component={Link} to={createRoute} variant="contained">
+    {'Create New'}
+  </StyledButton>
+)
+
+const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
   compose(
-    withTitle(() => label),
+    withAppBarContent(() => ({
+      Actions: <Actions createRoute={routes.create()} />,
+      breadcrumbs,
+    })),
+    withProps({ label: breadcrumbs && breadcrumbs[0].text }),
     withState('records', 'setRecords', []),
     withState('recordsCount', 'setRecordsCount', 0),
     withState('range', 'setRange', []),
@@ -82,6 +100,7 @@ const enhanceList = ({ api, columns, label, routes }) => ResourceRow =>
       handleRequestSort,
       handleSelectAll,
       isSelectAll,
+      label,
       orderBy,
       orderDirection,
       handleChangeRowsPerPage,

@@ -17,11 +17,11 @@ import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
+import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiTriggerDestroy, apiTriggerList } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import { BulkActions } from 'shared/list-actions'
 import { Link } from 'react-router-dom'
-import { withTitle } from 'ext/recompose/with-title'
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
@@ -37,7 +37,7 @@ const StyledButton = styled(Button)`
   white-space: nowrap;
 `
 
-const AddTriggerButton = () => (
+const Actions = () => (
   <StyledButton color="primary" component={Link} to={routes.triggerCreate()} variant="contained">
     {'Create New'}
   </StyledButton>
@@ -73,13 +73,7 @@ const EnhancedToolbar = ({ selectedIds, deleteTriggers }) => (
       )}
     </Title>
     <Spacer />
-    <div>
-      {selectedIds.length > 0 ? (
-        <BulkActions deleteBulk={deleteTriggers} selectedIds={selectedIds} />
-      ) : (
-        <AddTriggerButton />
-      )}
-    </div>
+    <div>{selectedIds.length > 0 && <BulkActions deleteBulk={deleteTriggers} selectedIds={selectedIds} />}</div>
   </Toolbar>
 )
 
@@ -196,7 +190,7 @@ const TriggerList = ({
 )
 
 export default compose(
-  withTitle('Triggers'),
+  withAppBarContent({ Actions: <Actions />, breadcrumbs: [{ text: 'Triggers' }] }),
   withState('triggers', 'setTriggers', []),
   withState('isLoading', 'setIsLoading', true),
   withState('selectedIds', 'setSelectedIds', []),

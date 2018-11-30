@@ -13,9 +13,10 @@ import SaveIcon from '@material-ui/icons/Save'
 import Select from '@material-ui/core/Select'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
+import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { apiPersonaSimpleList } from 'utils'
-import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Prompt } from 'react-router'
 import { withRouter } from 'react-router'
 
@@ -33,9 +34,12 @@ const Item = styled.div`
   align-items: center;
 `
 
-const StyledButton = styled(Button)`
-  margin-top: 1rem;
-`
+const Actions = ({ isFormLoading, onFormSubmit }) => (
+  <Button color="primary" disabled={isFormLoading} onClick={onFormSubmit} type="submit" variant="contained">
+    <SaveIcon />
+    {'Save'}
+  </Button>
+)
 
 const selectValue = (form, personas) => {
   if (form.personaId === '') return ''
@@ -43,8 +47,9 @@ const selectValue = (form, personas) => {
   return `Persona ${personaIndex}: ${personas[personaIndex].name}`
 }
 
-const TriggerForm = ({ personas, form, errors, isFormLoading, isFormPristine, onFormSubmit, selectPersona }) => (
+const TriggerForm = ({ personas, form, errors, isFormLoading, isFormPristine, onFormSubmit, selectPersona, title }) => (
   <PaperContainer>
+    <Typography variant="subtitle1">{title}</Typography>
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
@@ -69,10 +74,6 @@ const TriggerForm = ({ personas, form, errors, isFormLoading, isFormPristine, on
           ))}
         </Select>
       </FormControl>
-      <StyledButton color="primary" disabled={isFormLoading} type="submit" variant="contained">
-        <SaveIcon />
-        {'Save'}
-      </StyledButton>
     </form>
   </PaperContainer>
 )
@@ -107,5 +108,12 @@ export default compose(
       return result
     },
   }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
+  withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
+    Actions: <Actions isFormLoading={isFormLoading} onFormSubmit={onFormSubmit} />,
+    breadcrumbs,
+  })),
+  withProps(({ breadcrumbs }) => ({
+    title: breadcrumbs.slice(-1)[0].text,
+  }))
 )(TriggerForm)

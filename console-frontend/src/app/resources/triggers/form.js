@@ -16,12 +16,20 @@ import Select from '@material-ui/core/Select'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
+import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { apiFlowsList } from 'utils'
-import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { camelize, singularize } from 'inflected'
 import { Prompt } from 'react-router'
 import { withRouter } from 'react-router'
+
+const Actions = ({ isFormLoading, onFormSubmit }) => (
+  <Button color="primary" disabled={isFormLoading} onClick={onFormSubmit} type="submit" variant="contained">
+    <SaveIcon />
+    {'Save'}
+  </Button>
+)
 
 const LabelContainer = styled.div`
   margin-top: 1rem;
@@ -167,10 +175,6 @@ const TriggerForm = ({
         )}
         <AddUrlButton addUrlSelect={addUrlSelect} disabled={isFormLoading} />{' '}
       </div>
-      <Button color="primary" disabled={isFormLoading} type="submit" variant="contained">
-        <SaveIcon />
-        {'Save'}
-      </Button>
     </form>
   </PaperContainer>
 )
@@ -225,5 +229,12 @@ export default compose(
       })
     },
   }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
+  withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
+    Actions: <Actions isFormLoading={isFormLoading} onFormSubmit={onFormSubmit} />,
+    breadcrumbs,
+  })),
+  withProps(({ breadcrumbs }) => ({
+    title: breadcrumbs.slice(-1)[0].text,
+  }))
 )(TriggerForm)

@@ -4,8 +4,8 @@ import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
+import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { compose } from 'recompose'
-import { withTitle } from 'ext/recompose/with-title'
 
 const Section = styled.section`
   margin-bottom: 3rem;
@@ -24,4 +24,4 @@ const Account = () => (
   </PaperContainer>
 )
 
-export default compose(withTitle('Account'))(Account)
+export default compose(withAppBarContent({ breadcrumbs: [{ text: 'Account' }] }))(Account)
