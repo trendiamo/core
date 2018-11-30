@@ -84,13 +84,13 @@ class Populate
   end
 
   def create_triggers
-    8.times do
+    8.times do |i|
       trigger_attrs = {
-        order: rand(1...8),
         account: @account,
+        order: i + 1,
         name: Faker::App.name,
         flow: [Curation, ScriptedChat, Outro].sample.all.sample,
-        url_matchers:  urls_array(Faker::Lorem.word),
+        url_matchers: urls_array(Faker::Lorem.word),
       }
       Trigger.create!(trigger_attrs)
     end
