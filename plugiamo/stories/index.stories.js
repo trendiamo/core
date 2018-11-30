@@ -1,7 +1,7 @@
 import Arrow from 'shared/arrow'
 import Welcome from './welcome'
 import { action } from '@storybook/addon-actions'
-import { Basics, CoverFixedPositionLogic } from './layout'
+import { Basics, CoverFixedPositionLogic, PulsatingEffect } from './layout'
 import { Card, CardContent, CardImg } from 'shared/card'
 import { Curation, Outro, ScriptedChat } from './flows'
 import { h } from 'preact'
@@ -15,6 +15,7 @@ storiesOf('Welcome', module).add('README', Welcome)
 storiesOf('Layout', module)
   .add('Basics', Basics)
   .add('Cover fixed position logic', CoverFixedPositionLogic)
+  .add('Pulsating Launcher', PulsatingEffect)
 
 storiesOf('Flows', module)
   .add('Curation', Curation)

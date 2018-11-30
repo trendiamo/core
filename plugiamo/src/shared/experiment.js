@@ -13,7 +13,7 @@ export default compose(
   withProps(({ experimentName, optimizelyClientInstance }) => ({
     variation: optimizelyClientInstance.activate(experimentName, mixpanel.get_distinct_id()),
   })),
-  withProps(({ children, variation }) => ({
-    testChildren: children.map(child => cloneElement(child, { variation })),
+  withProps(({ children, variation, optimizelyClientInstance }) => ({
+    testChildren: children.map(child => cloneElement(child, { variation, optimizelyClientInstance })),
   }))
 )(Experiment)

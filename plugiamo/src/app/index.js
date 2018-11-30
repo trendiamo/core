@@ -25,7 +25,7 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-export const AppBase = styled(({ className, Component, onToggleContent, persona, showingContent }) => (
+export const AppBase = styled(({ className, Component, Launcher, onToggleContent, persona, showingContent }) => (
   <div className={className}>
     {showingContent && (
       <Content
@@ -47,6 +47,7 @@ export const AppBase = styled(({ className, Component, onToggleContent, persona,
 
 export default compose(
   withProps({ Component: <Router /> }),
+  withProps({ Launcher }),
   graphql(
     isGraphCMS
       ? gql`
