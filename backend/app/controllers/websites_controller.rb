@@ -1,4 +1,4 @@
-class WebsitesController < ApplicationController
+class WebsitesController < RestController
   before_action :authenticate_user!
 
   def show

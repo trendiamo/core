@@ -1,4 +1,4 @@
-class PersonasController < ApplicationController
+class PersonasController < RestController
   def index
     @personas = Persona.all
     authorize @personas

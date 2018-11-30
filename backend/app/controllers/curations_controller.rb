@@ -1,4 +1,4 @@
-class CurationsController < ApplicationController
+class CurationsController < RestController
   def index
     @curations = Curation.all
     authorize @curations

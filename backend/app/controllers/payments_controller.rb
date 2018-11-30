@@ -1,4 +1,4 @@
-class PaymentsController < ApplicationController
+class PaymentsController < RestController
   def create
     # @payment = policy_scope(Payment).build(permitted_attributes(Payment))
     # authorize @payment

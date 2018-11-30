@@ -1,4 +1,4 @@
-class ScriptedChatsController < ApplicationController
+class ScriptedChatsController < RestController
   def index
     @scripted_chats = ScriptedChat.includes(:persona).all
     authorize @scripted_chats

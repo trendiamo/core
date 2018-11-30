@@ -1,4 +1,4 @@
-class OutrosController < ApplicationController
+class OutrosController < RestController
   def index
     @outros = Outro.includes(:persona).all
     authorize @outros

@@ -1,5 +1,5 @@
 class GraphqlController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  set_current_tenant_through_filter
   before_action :ensure_hash_variables
   before_action :ensure_website
 
@@ -19,7 +19,7 @@ class GraphqlController < ApplicationController
   def ensure_website
     @website = website_from_request
     return render json: { error: "no website found for hostname #{hostname}" }, status: :bad_request unless @website
-    ActsAsTenant.default_tenant = @website.account
+    set_current_tenant(@website.account)
   end
 
   def hostname

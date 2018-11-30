@@ -1,4 +1,4 @@
-class TriggersController < ApplicationController
+class TriggersController < RestController
   def index
     @triggers = Trigger.all.order(:order)
     authorize @triggers

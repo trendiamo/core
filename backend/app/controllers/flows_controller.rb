@@ -1,4 +1,4 @@
-class FlowsController < ApplicationController
+class FlowsController < RestController
   def index
     @scripted_chats = ScriptedChat.all
     @outros = Outro.all

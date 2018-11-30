@@ -1,4 +1,4 @@
-class S3Controller < ApplicationController
+class S3Controller < RestController
   before_action :authenticate_user!
 
   def sign
