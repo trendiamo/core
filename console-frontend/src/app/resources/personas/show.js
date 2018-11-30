@@ -8,26 +8,22 @@ import PaperContainer from 'app/layout/paper-container'
 import ProfilePic from './profile-pic'
 import React from 'react'
 import routes from 'app/routes'
-import styled from 'styled-components'
+import Typography from '@material-ui/core/Typography'
+import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiPersonaShow } from 'utils'
-import { branch, compose, lifecycle, renderComponent, withState } from 'recompose'
+import { branch, compose, lifecycle, renderComponent, withProps, withState } from 'recompose'
 import { Link } from 'react-router-dom'
-import { withTitle } from 'ext/recompose/with-title'
 
-const ButtonsContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  flex-flow: row wrap;
-`
+const Actions = ({ persona }) => (
+  <Button color="primary" component={Link} to={routes.personaEdit(persona.id)}>
+    <EditIcon />
+    {'Edit'}
+  </Button>
+)
 
-const PersonaShow = ({ persona }) => (
+const PersonaShow = ({ persona, title }) => (
   <PaperContainer>
-    <ButtonsContainer>
-      <Button color="primary" component={Link} to={routes.personaEdit(persona.id)}>
-        <EditIcon />
-        {'Edit'}
-      </Button>
-    </ButtonsContainer>
+    <Typography variant="subtitle1">{title}</Typography>
     <List>
       <ListItem>
         <ProfilePic persona={persona} />
@@ -47,8 +43,12 @@ const PersonaShow = ({ persona }) => (
 )
 
 export default compose(
-  withTitle('Persona'),
   withState('persona', 'setPersona', {}),
+  withProps(({ persona }) => ({ title: persona.name || 'Persona' })),
+  withAppBarContent(({ persona, title }) => ({
+    Actions: <Actions persona={persona} />,
+    breadcrumbs: [{ text: 'Personas', route: routes.personasList() }, { text: title }],
+  })),
   withState('isLoading', 'setIsLoading', true),
   lifecycle({
     async componentDidMount() {

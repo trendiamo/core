@@ -234,5 +234,6 @@ export const styles = theme => ({
   topToolbar: {
     paddingLeft: 14,
     paddingRight: 14,
+    display: 'flex',
   },
 })

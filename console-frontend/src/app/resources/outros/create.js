@@ -1,11 +1,13 @@
 import OutroForm from './form'
+import routes from 'app/routes'
 import { apiOutroCreate } from 'utils'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
-import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withTitle('Create Outro'),
+  withProps({
+    breadcrumbs: [{ text: 'Outros', route: routes.outrosList() }, { text: 'Create Outro' }],
+  }),
   withHandlers({
     saveFormObject: () => async (form, { setErrors }) => {
       const response = await apiOutroCreate({ outro: form })

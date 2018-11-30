@@ -1,11 +1,13 @@
 import OutroForm from './form'
+import routes from 'app/routes'
 import { apiOutroShow, apiOutroUpdate } from 'utils'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
-import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withTitle('Edit Outro'),
+  withProps({
+    breadcrumbs: [{ text: 'Outros', route: routes.outrosList() }, { text: 'Edit Outro' }],
+  }),
   withHandlers({
     saveFormObject: ({ match }) => async (form, { setErrors }) => {
       const id = match.params.outroId

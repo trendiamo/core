@@ -18,7 +18,7 @@ const ScriptedChatsRow = ({ record }) => (
 
 export default compose(
   enhanceList({
-    label: 'Scripted Chats',
+    breadcrumbs: [{ text: 'Scripted Chats' }],
     columns,
     api: { fetch: apiScriptedChatList, destroy: apiScriptedChatDestroy },
     routes: { create: routes.scriptedChatCreate, edit: routes.scriptedChatEdit, show: routes.scriptedChatShow },

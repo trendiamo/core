@@ -6,14 +6,22 @@ import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
+import Typography from '@material-ui/core/Typography'
+import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiPasswordChange } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
 import { withRouter } from 'react-router'
-import { withTitle } from 'ext/recompose/with-title'
 
-const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue }) => (
+const Actions = ({ onFormSubmit }) => (
+  <Button color="primary" onClick={onFormSubmit} type="submit" variant="contained">
+    {'Reset'}
+  </Button>
+)
+
+const ChangePassword = ({ info, passwordForm, onFormSubmit, setFieldValue }) => (
   <PaperContainer>
-    <form onSubmit={passwordResetSubmit}>
+    <Typography variant="subtitle1">{'Change Password'}</Typography>
+    <form onSubmit={onFormSubmit}>
       <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
@@ -40,17 +48,11 @@ const ChangePassword = ({ info, passwordForm, passwordResetSubmit, setFieldValue
           value={passwordForm.passwordConfirmation}
         />
       </FormControl>
-      <div style={{ marginTop: '1rem' }}>
-        <Button color="primary" type="submit" variant="contained">
-          {'Reset'}
-        </Button>
-      </div>
     </form>
   </PaperContainer>
 )
 
 export default compose(
-  withTitle('Change Password'),
   withState('passwordForm', 'setPasswordForm', {
     currentPassword: '',
     password: '',
@@ -59,7 +61,7 @@ export default compose(
   withState('info', 'setInfo', null),
   withRouter,
   withHandlers({
-    passwordResetSubmit: ({ passwordForm, setInfo, history }) => async event => {
+    onFormSubmit: ({ passwordForm, setInfo, history }) => async event => {
       event.preventDefault()
       if (passwordForm.password === passwordForm.passwordConfirmation) {
         const success = await apiPasswordChange(
@@ -81,5 +83,9 @@ export default compose(
       event.preventDefault()
       setPasswordForm({ ...passwordForm, [event.target.name]: event.target.value })
     },
-  })
+  }),
+  withAppBarContent(({ onFormSubmit }) => ({
+    Actions: <Actions onFormSubmit={onFormSubmit} />,
+    breadcrumbs: [{ route: routes.account(), text: 'Account' }, { text: 'Change Password' }],
+  }))
 )(ChangePassword)

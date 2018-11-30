@@ -18,7 +18,7 @@ const CurationsRow = ({ record }) => (
 
 export default compose(
   enhanceList({
-    label: 'Curations',
+    breadcrumbs: [{ text: 'Curations' }],
     columns,
     api: { fetch: apiCurationList, destroy: apiCurationDestroy },
     routes: { create: routes.curationCreate, edit: routes.curationEdit, show: routes.curationShow },

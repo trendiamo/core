@@ -1,11 +1,13 @@
+import routes from 'app/routes'
 import TriggerForm from './form'
 import { apiTriggerCreate } from 'utils'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
-import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withTitle('Create Trigger'),
+  withProps({
+    breadcrumbs: [{ text: 'Triggers', route: routes.triggersList() }, { text: 'Create Trigger' }],
+  }),
   withHandlers({
     saveFormObject: () => async (form, { setErrors }) => {
       const response = await apiTriggerCreate({ trigger: form })

@@ -8,26 +8,22 @@ import PaperContainer from 'app/layout/paper-container'
 import ProfilePic from 'app/resources/personas/profile-pic'
 import React from 'react'
 import routes from 'app/routes'
-import styled from 'styled-components'
+import Typography from '@material-ui/core/Typography'
+import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiOutroShow } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withState } from 'recompose'
 import { Link } from 'react-router-dom'
-import { withTitle } from 'ext/recompose/with-title'
 
-const ButtonsContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  flex-flow: row wrap;
-`
+const Actions = ({ route }) => (
+  <Button color="primary" component={Link} to={route}>
+    <EditIcon />
+    {'Edit'}
+  </Button>
+)
 
-const PersonaShow = ({ outro }) => (
+const OutroShow = ({ outro }) => (
   <PaperContainer>
-    <ButtonsContainer>
-      <Button color="primary" component={Link} to={routes.outroEdit(outro.id)}>
-        <EditIcon />
-        {'Edit'}
-      </Button>
-    </ButtonsContainer>
+    <Typography variant="subtitle1">{'Outro'}</Typography>
     <List>
       <ListItem>
         <ProfilePic persona={outro.persona} />
@@ -44,8 +40,11 @@ const PersonaShow = ({ outro }) => (
 )
 
 export default compose(
-  withTitle('Outro'),
   withState('outro', 'setOutro', {}),
+  withAppBarContent(({ match }) => ({
+    Actions: <Actions route={routes.outroEdit(match.params.outroId)} />,
+    breadcrumbs: [{ text: 'Outros', route: routes.outrosList() }, { text: 'Outro' }],
+  })),
   withState('isLoading', 'setIsLoading', true),
   lifecycle({
     async componentDidMount() {
@@ -57,4 +56,4 @@ export default compose(
     },
   }),
   branch(({ isLoading }) => isLoading, renderComponent(CircularProgress))
-)(PersonaShow)
+)(OutroShow)

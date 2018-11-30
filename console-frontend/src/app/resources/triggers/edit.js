@@ -1,12 +1,14 @@
+import routes from 'app/routes'
 import TriggerForm from './form'
 import { apiTriggerShow, apiTriggerUpdate } from 'utils'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
 import { withRouter } from 'react-router'
-import { withTitle } from 'ext/recompose/with-title'
 
 export default compose(
-  withTitle('Edit Trigger'),
+  withProps({
+    breadcrumbs: [{ text: 'Triggers', route: routes.triggersList() }, { text: 'Edit Trigger' }],
+  }),
   withRouter,
   withHandlers({
     saveFormObject: ({ match }) => async (form, { setErrors }) => {
