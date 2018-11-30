@@ -1,3 +1,4 @@
+import DefaultLauncher from 'app/launcher/original'
 import { AppBase } from 'app/index'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
@@ -14,8 +15,14 @@ const Plugin = compose(
   withHandlers({
     onToggleContent: ({ setShowingContent, showingContent }) => () => setShowingContent(!showingContent),
   })
-)(({ Component, onToggleContent, persona, showingContent }) => (
-  <AppBase Component={Component} onToggleContent={onToggleContent} persona={persona} showingContent={showingContent} />
+)(({ Component, onToggleContent, persona, showingContent, Launcher }) => (
+  <AppBase
+    Component={Component}
+    Launcher={Launcher || DefaultLauncher}
+    onToggleContent={onToggleContent}
+    persona={persona}
+    showingContent={showingContent}
+  />
 ))
 
 export default Plugin
