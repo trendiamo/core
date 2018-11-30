@@ -7,7 +7,7 @@ import { withStoreConsumer } from './with-store'
 const Sink = createSink(({ appBarContent, store, setStore, ...props }) => {
   if (typeof appBarContent === 'function') appBarContent = appBarContent(props)
   if (isEqual(appBarContent, store.appBarContent)) return
-  setStore({ appBarContent })
+  setStore({ ...store, appBarContent })
 })
 
 const withAppBarContent = appBarContent => BaseComponent =>
