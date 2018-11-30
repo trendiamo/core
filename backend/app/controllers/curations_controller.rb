@@ -3,7 +3,8 @@ class CurationsController < RestController
     @curations = Curation.all
     authorize @curations
     fresh_when(etag: @curations)
-    render json: sorting(pagination(@curations)) if stale?(@curations)
+    chain = sorting(pagination(@curations)) # makes it so headers are sent even if stale
+    render json: chain if stale?(@curations)
   end
 
   def destroy

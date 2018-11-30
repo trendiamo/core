@@ -3,7 +3,8 @@ class OutrosController < RestController
     @outros = Outro.includes(:persona).all
     authorize @outros
     fresh_when(etag: @outros)
-    render json: sorting(pagination(@outros)) if stale?(@outros)
+    chain = sorting(pagination(@outros)) # makes it so headers are sent even if stale
+    render json: chain if stale?(@outros)
   end
 
   def create

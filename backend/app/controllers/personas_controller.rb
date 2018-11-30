@@ -3,7 +3,8 @@ class PersonasController < RestController
     @personas = Persona.all
     authorize @personas
     fresh_when(etag: @personas)
-    render json: sorting(pagination(@personas)) if stale?(@personas)
+    chain = sorting(pagination(@personas)) # makes it so headers are sent even if stale
+    render json: chain if stale?(@personas)
   end
 
   def show

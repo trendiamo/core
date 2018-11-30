@@ -3,7 +3,8 @@ class ScriptedChatsController < RestController
     @scripted_chats = ScriptedChat.includes(:persona).all
     authorize @scripted_chats
     fresh_when(etag: @scripted_chats)
-    render json: sorting(pagination(@scripted_chats)) if stale?(@scripted_chats)
+    chain = sorting(pagination(@scripted_chats)) # makes it so headers are sent even if stale
+    render json: chain if stale?(@scripted_chats)
   end
 
   def destroy
