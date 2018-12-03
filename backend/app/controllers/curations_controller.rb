@@ -20,7 +20,8 @@ class CurationsController < RestController
   def show
     @curation = Curation.find(params[:id])
     authorize @curation
-    render json: @curation
+    fresh_when(etag: @curation)
+    render json: @curation.as_json if stale?(@curation)
   end
 
   def update

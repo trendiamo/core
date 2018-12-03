@@ -1,3 +1,5 @@
+import CurationCreate from './create'
+import CurationEdit from './edit'
 import CurationsList from './list'
 
-export { CurationsList }
+export { CurationEdit, CurationCreate, CurationsList }

@@ -47,7 +47,7 @@ const selectValue = (form, personas) => {
   return `Persona ${personaIndex}: ${personas[personaIndex].name}`
 }
 
-const TriggerForm = ({ personas, form, errors, isFormLoading, isFormPristine, onFormSubmit, selectPersona, title }) => (
+const OutroForm = ({ personas, form, errors, isFormLoading, isFormPristine, onFormSubmit, selectPersona, title }) => (
   <PaperContainer>
     <Typography variant="subtitle1">{title}</Typography>
     <form onSubmit={onFormSubmit}>
@@ -116,4 +116,4 @@ export default compose(
   withProps(({ breadcrumbs }) => ({
     title: breadcrumbs.slice(-1)[0].text,
   }))
-)(TriggerForm)
+)(OutroForm)

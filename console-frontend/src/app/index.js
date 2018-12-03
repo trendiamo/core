@@ -14,7 +14,7 @@ import { apiGetCsrfToken } from 'utils'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
-import { CurationsList } from './resources/curations'
+import { CurationCreate, CurationEdit, CurationsList } from './resources/curations'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { OutroCreate, OutroEdit, OutroShow, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
@@ -60,6 +60,8 @@ const Routes = () => (
     <PrivateRoute component={PersonaShow} exact path={routes.personaShow(':personaId')} />
     <PrivateRoute component={PersonaEdit} exact path={routes.personaEdit(':personaId')} />
     <PrivateRoute component={CurationsList} exact path={routes.curationsList()} />
+    <PrivateRoute component={CurationCreate} exact path={routes.curationCreate()} />
+    <PrivateRoute component={CurationEdit} exact path={routes.curationEdit(':curationId')} />
     <PrivateRoute component={ScriptedChatsList} exact path={routes.scriptedChatsList()} />
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={OutroCreate} exact path={routes.outroCreate()} />

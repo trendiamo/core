@@ -176,6 +176,9 @@ export const apiOutroUpdate = (id, body) => apiUpdateRequest(`${OUTROS_URL}/${id
 
 export const apiCurationList = query => apiListRequest(`${CURATIONS_URL}/?${stringify(query)}`)
 export const apiCurationDestroy = body => apiDestroyMultipleRequest(CURATIONS_URL, body)
+export const apiCurationCreate = body => apiCreateRequest(CURATIONS_URL, body)
+export const apiCurationShow = id => apiGetRequest(`${CURATIONS_URL}/${id}`)
+export const apiCurationUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL}/${id}`, body)
 
 export const apiScriptedChatList = query => apiListRequest(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`)
 export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED_CHATS_URL, body)
