@@ -185,5 +185,6 @@ export const apiTriggerDestroy = body => apiDestroyMultipleRequest(TRIGGERS_URL,
 export const apiTriggerCreate = body => apiCreateRequest(TRIGGERS_URL, body)
 export const apiTriggerShow = id => apiGetRequest(`${TRIGGERS_URL}/${id}`)
 export const apiTriggerUpdate = (id, body) => apiUpdateRequest(`${TRIGGERS_URL}/${id}`, body)
+export const apiTriggerSort = body => apiCreateRequest(`${TRIGGERS_URL}/sort`, body)
 
 export const apiFlowsList = () => apiGetRequest(FLOWS_URL)

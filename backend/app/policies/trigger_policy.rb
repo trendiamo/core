@@ -15,6 +15,10 @@ class TriggerPolicy < ApplicationPolicy
     user
   end
 
+  def sort?
+    user
+  end
+
   def destroy?
     user
   end

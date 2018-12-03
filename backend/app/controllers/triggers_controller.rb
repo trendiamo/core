@@ -33,6 +33,16 @@ class TriggersController < RestController
     end
   end
 
+  def sort
+    @triggers = Trigger.where(id: params[:ids])
+    authorize @triggers
+    if @triggers.all? { |trigger| trigger.update(order: params[:ids].index(trigger.id)) }
+      render json: @triggers
+    else
+      render_error
+    end
+  end
+
   def destroy
     @triggers = Trigger.where(id: params[:ids])
     authorize @triggers

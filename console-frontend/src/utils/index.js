@@ -24,6 +24,7 @@ import {
   apiTriggerDestroy,
   apiTriggerList,
   apiTriggerShow,
+  apiTriggerSort,
   apiTriggerUpdate,
   apiWebsiteShow,
   apiWebsiteUpdate,
@@ -58,6 +59,7 @@ export {
   apiTriggerList,
   apiTriggerShow,
   apiTriggerUpdate,
+  apiTriggerSort,
   apiWebsiteShow,
   apiWebsiteUpdate,
 }

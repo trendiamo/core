@@ -18,16 +18,24 @@ import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import { apiTriggerDestroy, apiTriggerList } from 'utils'
+import { apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
+import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import { BulkActions } from 'shared/list-actions'
+import { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
 `
 
-const Toolbar = styled(MUIToolbar)`
+const TriggerRowStyle = createGlobalStyle`
+  .sortable-trigger-row {
+    z-index: 1;
+  }
+`
+
+const StyledToolbar = styled(MUIToolbar)`
   display: flex;
   justify-content: space-between;
 `
@@ -45,7 +53,6 @@ const Actions = () => (
 
 const columns = [
   { name: 'name', numeric: true, disablePadding: false, label: 'name' },
-  { name: 'order', numeric: true, disablePadding: false, label: 'order' },
   { name: 'flowType', numeric: false, disablePadding: false, label: 'flow type' },
   { name: 'flowId', numeric: false, disablePadding: true, label: 'flow id' },
   { name: 'urlMatchers', numeric: false, disablePadding: true, label: 'Url Matchers' },
@@ -59,8 +66,8 @@ const Spacer = styled.div`
   flex: 1 1 100%;
 `
 
-const EnhancedToolbar = ({ selectedIds, deleteTriggers }) => (
-  <Toolbar>
+const Toolbar = ({ selectedIds, deleteTriggers }) => (
+  <StyledToolbar>
     <Title>
       {selectedIds.length > 0 ? (
         <Typography color="inherit" variant="subtitle1">
@@ -74,7 +81,7 @@ const EnhancedToolbar = ({ selectedIds, deleteTriggers }) => (
     </Title>
     <Spacer />
     <div>{selectedIds.length > 0 && <BulkActions deleteBulk={deleteTriggers} selectedIds={selectedIds} />}</div>
-  </Toolbar>
+  </StyledToolbar>
 )
 
 const StyledTableHead = styled(MUITableHead)`
@@ -132,9 +139,6 @@ const TriggerRow = compose(
       {trigger.name}
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
-      {trigger.order}
-    </TableCell>
-    <TableCell component="th" padding="none" scope="row">
       {trigger.flowType}
     </TableCell>
     <TableCell component="th" padding="none" scope="row">
@@ -154,18 +158,45 @@ const TriggerRow = compose(
   </TableRow>
 ))
 
+const SortableTriggerRow = SortableElement(({ trigger, index, handleSelectAll, selectedIds, setSelectedIds }) => (
+  <TriggerRow
+    handleSelectAll={handleSelectAll}
+    index={index}
+    selectedIds={selectedIds}
+    setSelectedIds={setSelectedIds}
+    trigger={trigger}
+  />
+))
+
+const SortableTriggerRows = SortableContainer(({ triggers, handleSelectAll, selectedIds, setSelectedIds }) => (
+  <TableBody>
+    {triggers.map((trigger, index) => (
+      <SortableTriggerRow
+        handleSelectAll={handleSelectAll}
+        index={index}
+        key={trigger.id}
+        selectedIds={selectedIds}
+        setSelectedIds={setSelectedIds}
+        trigger={trigger}
+      />
+    ))}
+  </TableBody>
+))
+
 const TriggerList = ({
   selectedIds,
   handleSelectAll,
   triggers,
   handleRequestSort,
   deleteTriggers,
+  onSortEnd,
   setSelectedIds,
   isSelectAll,
 }) => (
   <PaperContainer>
-    <EnhancedToolbar deleteTriggers={deleteTriggers} selectedIds={selectedIds} />
+    <Toolbar deleteTriggers={deleteTriggers} selectedIds={selectedIds} />
     <Table aria-labelledby="Triggers">
+      <TriggerRowStyle />
       <TableHead
         handleRequestSort={handleRequestSort}
         handleSelectAll={handleSelectAll}
@@ -173,18 +204,14 @@ const TriggerList = ({
         selectedIds={selectedIds}
         triggers={triggers}
       />
-      <TableBody>
-        {triggers.map((trigger, index) => (
-          <TriggerRow
-            handleSelectAll={handleSelectAll}
-            index={index}
-            key={trigger.id}
-            selectedIds={selectedIds}
-            setSelectedIds={setSelectedIds}
-            trigger={trigger}
-          />
-        ))}
-      </TableBody>
+      <SortableTriggerRows
+        handleSelectAll={handleSelectAll}
+        helperClass="sortable-trigger-row"
+        onSortEnd={onSortEnd}
+        selectedIds={selectedIds}
+        setSelectedIds={setSelectedIds}
+        triggers={triggers}
+      />
     </Table>
   </PaperContainer>
 )
@@ -207,6 +234,12 @@ export default compose(
     handleSelectAll: ({ setSelectedIds, triggers, setIsSelectAll }) => event => {
       setSelectedIds(event.target.checked ? triggers.map(trigger => trigger.id) : [])
       setIsSelectAll(event.target.checked)
+    },
+    onSortEnd: ({ setTriggers, triggers }) => async ({ oldIndex, newIndex }) => {
+      const orderedTriggers = arrayMove(triggers, oldIndex, newIndex)
+      const orderedIds = orderedTriggers.map(trigger => trigger.id)
+      setTriggers(orderedTriggers)
+      await apiTriggerSort({ ids: orderedIds })
     },
   }),
   lifecycle({
