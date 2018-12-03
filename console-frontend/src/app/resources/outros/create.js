@@ -20,6 +20,7 @@ export default compose(
     loadFormObject: () => () => {
       return {
         personaId: '',
+        name: '',
       }
     },
   })

@@ -51,6 +51,7 @@ const selectValue = (form, personas) => {
 const OutroForm = ({
   personas,
   form,
+  formRef,
   setFieldValue,
   errors,
   isFormLoading,
@@ -61,7 +62,7 @@ const OutroForm = ({
 }) => (
   <PaperContainer>
     <Typography variant="subtitle1">{title}</Typography>
-    <form onSubmit={onFormSubmit}>
+    <form onSubmit={onFormSubmit} ref={formRef}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
       <FormControl disabled={isFormLoading} fullWidth>
@@ -100,6 +101,7 @@ const OutroForm = ({
 )
 
 export default compose(
+  withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('personas', 'setPersonas', []),
   withHandlers({
@@ -124,9 +126,10 @@ export default compose(
         personaId: newValue.props.id,
       })
     },
-    onFormSubmit: ({ history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
+      if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      result && history.push(routes.outrosList())
+      if (!result.error && !result.errors) history.push(routes.outrosList())
       return result
     },
   }),

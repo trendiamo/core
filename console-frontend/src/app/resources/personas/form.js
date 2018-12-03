@@ -28,6 +28,7 @@ const Actions = ({ isCropping, isFormLoading, onFormSubmit }) => (
 
 const PersonaForm = ({
   form,
+  formRef,
   errors,
   isCropping,
   isFormLoading,
@@ -40,7 +41,7 @@ const PersonaForm = ({
   setProfilePicUrl,
 }) => (
   <PaperContainer>
-    <form onSubmit={onFormSubmit}>
+    <form onSubmit={onFormSubmit} ref={formRef}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
       <Label>{'Picture'}</Label>
@@ -77,6 +78,7 @@ const PersonaForm = ({
 )
 
 export default compose(
+  withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
@@ -96,9 +98,10 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    onFormSubmit: ({ history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
+      if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      result && history.push(routes.personasList())
+      if (!result.error && !result.errors) history.push(routes.personasList())
       return result
     },
     setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {

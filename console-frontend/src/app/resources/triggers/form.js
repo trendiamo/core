@@ -90,6 +90,7 @@ const TriggerForm = ({
   editUrlValue,
   flows,
   form,
+  formRef,
   errors,
   isFormLoading,
   isFormPristine,
@@ -98,7 +99,7 @@ const TriggerForm = ({
   setFieldValue,
 }) => (
   <PaperContainer>
-    <form onSubmit={onFormSubmit}>
+    <form onSubmit={onFormSubmit} ref={formRef}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
       <TextField
@@ -188,6 +189,7 @@ const TriggerForm = ({
 )
 
 export default compose(
+  withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('flows', 'setFlows', { scriptedChats: [], outros: [], curations: [] }),
   withHandlers({
@@ -224,9 +226,10 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    onFormSubmit: ({ history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
+      if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      result && history.push(routes.triggersList())
+      if (!result.error && !result.errors) history.push(routes.triggersList())
       return result
     },
     selectFlow: ({ form, setForm }) => (index, newValue) => {
