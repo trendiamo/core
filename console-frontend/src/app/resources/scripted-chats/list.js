@@ -6,12 +6,18 @@ import TableCell from '@material-ui/core/TableCell'
 import { apiScriptedChatDestroy, apiScriptedChatList } from 'utils'
 import { compose } from 'recompose'
 
-const columns = [{ name: 'persona', padding: 'none', label: 'persona' }]
+const columns = [
+  { name: 'persona', padding: 'none', label: 'persona' },
+  { name: 'name', sortable: true, label: 'name' },
+]
 
 const ScriptedChatsRow = ({ record }) => (
   <React.Fragment>
-    <TableCell component="th" padding="none" scope="row" style={{ width: '100%' }}>
+    <TableCell component="th" padding="none" scope="row" style={{ width: '20%' }}>
       <Avatar alt="" src={record.persona.profilePicUrl} />
+    </TableCell>
+    <TableCell component="th" padding="none" scope="row" style={{ width: '80%' }}>
+      {record.name}
     </TableCell>
   </React.Fragment>
 )

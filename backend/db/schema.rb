@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20181203111100) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "graphcms_ref"
+    t.string "name"
     t.index ["account_id"], name: "index_curations_on_account_id"
     t.index ["persona_id"], name: "index_curations_on_persona_id"
   end
@@ -71,6 +72,7 @@ ActiveRecord::Schema.define(version: 20181203111100) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "graphcms_ref"
+    t.string "name"
     t.index ["account_id"], name: "index_outros_on_account_id"
     t.index ["persona_id"], name: "index_outros_on_persona_id"
   end
@@ -107,6 +109,7 @@ ActiveRecord::Schema.define(version: 20181203111100) do
     t.datetime "updated_at", null: false
     t.bigint "account_id"
     t.string "graphcms_ref"
+    t.string "name"
     t.index ["account_id"], name: "index_scripted_chats_on_account_id"
     t.index ["persona_id"], name: "index_scripted_chats_on_persona_id"
   end

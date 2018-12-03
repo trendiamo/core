@@ -29,6 +29,9 @@ const OutroShow = ({ outro }) => (
         <ProfilePic persona={outro.persona} />
       </ListItem>
       <ListItem>
+        <ListItemText primary="Outro Name" secondary={outro.name} secondaryTypographyProps={{ variant: 'body2' }} />
+      </ListItem>
+      <ListItem>
         <ListItemText
           primary="Persona Name"
           secondary={outro.persona.name}
