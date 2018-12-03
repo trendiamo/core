@@ -53,6 +53,7 @@ const PersonaForm = ({
         value={form.profilePicUrl}
       />
       <TextField
+        autoFocus
         disabled={isFormLoading || isCropping}
         fullWidth
         label="Name"

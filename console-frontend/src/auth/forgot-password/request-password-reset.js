@@ -39,6 +39,7 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'Email'}</InputLabel>
         <Input
+          autoFocus
           id="email"
           name="email"
           onChange={setPasswordFormValue}

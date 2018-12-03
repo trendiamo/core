@@ -103,6 +103,7 @@ const TriggerForm = ({
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
       <TextField
+        autoFocus
         disabled={isFormLoading}
         fullWidth
         label="Name"

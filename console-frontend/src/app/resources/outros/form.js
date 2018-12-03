@@ -65,6 +65,17 @@ const OutroForm = ({
     <form onSubmit={onFormSubmit} ref={formRef}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
+      <TextField
+        autoFocus
+        disabled={isFormLoading}
+        fullWidth
+        label="Name"
+        margin="normal"
+        name="name"
+        onChange={setFieldValue}
+        required
+        value={form.name}
+      />
       <FormControl disabled={isFormLoading} fullWidth>
         <InputLabel htmlFor="persona-label-placeholder" shrink>
           {'Persona'}
@@ -86,16 +97,6 @@ const OutroForm = ({
           ))}
         </Select>
       </FormControl>
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
-      />
     </form>
   </PaperContainer>
 )
