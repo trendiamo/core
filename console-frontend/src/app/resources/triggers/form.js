@@ -1,12 +1,12 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import Button from '@material-ui/core/Button'
-import Cancel from '@material-ui/icons/Cancel'
 import CircularProgress from 'shared/circular-progress'
 import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
+import MuiCancel from '@material-ui/icons/Cancel'
 import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
@@ -76,9 +76,17 @@ const selectValue = (form, flows) => {
     return `Curation: ${flows['curations'].find(curation => curation.id === form.flowId).id}`
 }
 
+const Cancel = compose(
+  withHandlers({
+    deleteUrlMatcher: ({ index, onClick }) => () => {
+      onClick(index)
+    },
+  })
+)(({ deleteUrlMatcher, ...props }) => <MuiCancel {...props} onClick={deleteUrlMatcher} />)
+
 const TriggerForm = ({
   addUrlSelect,
-  deleteUrl,
+  deleteUrlMatcher,
   editUrlValue,
   flows,
   form,
@@ -167,7 +175,7 @@ const TriggerForm = ({
               <StyledUrlTextField disabled={isFormLoading} index={index} onChange={editUrlValue} required value={url} />
               {form.urlMatchers.length > 1 && (
                 <IconButton>
-                  <Cancel disabled={isFormLoading} index={index} onClick={deleteUrl} />
+                  <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
                 </IconButton>
               )}
             </FlexDiv>
@@ -208,7 +216,7 @@ export default compose(
       newUrlMatchers[index] = newValue
       setForm({ ...form, urlMatchers: newUrlMatchers })
     },
-    deleteUrl: ({ form, setForm }) => index => {
+    deleteUrlMatcher: ({ form, setForm }) => index => {
       let newUrlMatchers = [...form.urlMatchers]
       newUrlMatchers.splice(index, 1)
       setForm({ ...form, urlMatchers: newUrlMatchers })
