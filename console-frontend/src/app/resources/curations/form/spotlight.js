@@ -93,7 +93,7 @@ const Spotlight = ({
         <div key={productPickIndex}>
           <Card>
             <CardContent>
-              <Typography variant="subtitle2">{`Product Pick ${productPickIndex}`}</Typography>
+              <Typography variant="subtitle2">{`Product Pick #${productPickIndex + 1}`}</Typography>
               <ProductPick
                 form={form.spotlightsAttributes[index]}
                 index={productPickIndex}

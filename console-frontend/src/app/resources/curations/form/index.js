@@ -91,6 +91,7 @@ const CurationForm = ({
         autoFocus
         disabled={isFormLoading}
         fullWidth
+        label="Name"
         margin="normal"
         name="name"
         onChange={setFieldValue}
@@ -145,7 +146,7 @@ const CurationForm = ({
           <div key={index}>
             <Card>
               <CardContent>
-                <Typography variant="subtitle1">{`Spotlight ${index}`}</Typography>
+                <Typography variant="subtitle1">{`Spotlight #${index + 1}`}</Typography>
                 <Spotlight
                   form={form}
                   index={index}
