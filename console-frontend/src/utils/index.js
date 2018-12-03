@@ -1,6 +1,9 @@
 import {
+  apiCurationCreate,
   apiCurationDestroy,
   apiCurationList,
+  apiCurationShow,
+  apiCurationUpdate,
   apiFlowsList,
   apiGetSignedUrlFactory,
   apiMe,
@@ -33,8 +36,11 @@ import { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn } fr
 
 export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn }
 export {
+  apiCurationCreate,
   apiCurationDestroy,
   apiCurationList,
+  apiCurationShow,
+  apiCurationUpdate,
   apiFlowsList,
   apiGetSignedUrlFactory,
   apiMe,
