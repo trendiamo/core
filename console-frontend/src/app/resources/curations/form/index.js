@@ -86,6 +86,16 @@ const CurationForm = ({
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
+      <TextField
+        disabled={isFormLoading}
+        fullWidth
+        label="Curation Name"
+        margin="normal"
+        name="name"
+        onChange={setFieldValue}
+        required
+        value={form.name}
+      />
       <FormControl disabled={isFormLoading} fullWidth>
         <InputLabel htmlFor="persona-label-placeholder" shrink>
           {'Persona'}

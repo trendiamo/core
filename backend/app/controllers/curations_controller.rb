@@ -48,7 +48,7 @@ class CurationsController < RestController
 
   def curation_params
     params.require(:curation).permit(
-      :title, :subtitle, :persona_id,
+      :name, :title, :subtitle, :persona_id,
       spotlights_attributes: [
         :text, :persona_id,
         product_picks_attributes: %i[

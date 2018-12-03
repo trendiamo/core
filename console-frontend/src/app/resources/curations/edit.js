@@ -22,6 +22,7 @@ export default compose(
       const id = match.params.curationId
       const response = await apiCurationShow(id)
       return {
+        name: response.name || '',
         personaId: response.persona.id || '',
         title: response.title || '',
         subtitle: response.subtitle || '',

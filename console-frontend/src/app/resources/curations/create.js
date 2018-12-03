@@ -19,6 +19,7 @@ export default compose(
   withHandlers({
     loadFormObject: () => () => {
       return {
+        name: '',
         personaId: '',
         title: '',
         subtitle: '',
