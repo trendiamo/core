@@ -27,6 +27,6 @@ export default compose(
     breadcrumbs: [{ text: 'Curations' }],
     columns,
     api: { fetch: apiCurationList, destroy: apiCurationDestroy },
-    routes: { create: routes.curationCreate, edit: routes.curationEdit, show: routes.curationShow },
+    routes: { create: routes.curationCreate, edit: routes.curationEdit },
   })
 )(CurationsRow)

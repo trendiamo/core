@@ -27,6 +27,6 @@ export default compose(
     breadcrumbs: [{ text: 'Outros' }],
     columns,
     api: { fetch: apiOutroList, destroy: apiOutroDestroy },
-    routes: { create: routes.outroCreate, edit: routes.outroEdit, show: routes.outroShow },
+    routes: { create: routes.outroCreate, edit: routes.outroEdit },
   })
 )(OutrosRow)

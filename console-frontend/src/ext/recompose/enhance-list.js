@@ -143,7 +143,6 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
                 key={record.id}
                 resource={record}
                 resourceEditPath={routes.edit(record.id)}
-                resourceShowPath={routes.show(record.id)}
                 selectedIds={selectedIds}
                 setSelectedIds={setSelectedIds}
               >

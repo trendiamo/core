@@ -31,6 +31,6 @@ export default compose(
     breadcrumbs: [{ text: 'Personas' }],
     columns,
     api: { fetch: apiPersonaList, destroy: apiPersonaDestroy },
-    routes: { create: routes.personaCreate, edit: routes.personaEdit, show: routes.personaShow },
+    routes: { create: routes.personaCreate, edit: routes.personaEdit },
   })
 )(PersonasRow)

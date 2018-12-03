@@ -26,9 +26,6 @@ const routes = {
   personaCreate() {
     return '/personas/create'
   },
-  personaShow(id) {
-    return `/personas/${id}`
-  },
   personaEdit(id) {
     return `/personas/${id}/edit`
   },
@@ -37,9 +34,6 @@ const routes = {
   },
   outroCreate() {
     return '/outros/create'
-  },
-  outroShow(id) {
-    return `/outros/${id}`
   },
   outroEdit(id) {
     return `/outros/${id}/edit`
@@ -50,9 +44,6 @@ const routes = {
   curationCreate() {
     return '/curations/create'
   },
-  curationShow(id) {
-    return `/curations/${id}`
-  },
   curationEdit(id) {
     return `/curations/${id}/edit`
   },
@@ -61,9 +52,6 @@ const routes = {
   },
   scriptedChatCreate() {
     return '/scripted-chats/create'
-  },
-  scriptedChatShow(id) {
-    return `/scripted-chats/${id}`
   },
   scriptedChatEdit(id) {
     return `/scripted-chats/${id}/edit`

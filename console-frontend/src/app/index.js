@@ -16,8 +16,8 @@ import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { CurationCreate, CurationEdit, CurationsList } from './resources/curations'
 import { MuiThemeProvider } from '@material-ui/core/styles'
-import { OutroCreate, OutroEdit, OutroShow, OutrosList } from './resources/outros'
-import { PersonaCreate, PersonaEdit, PersonaShow, PersonasList } from './resources/personas'
+import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
+import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { ScriptedChatsList } from './resources/scripted-chats'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
@@ -57,7 +57,6 @@ const Routes = () => (
   <Switch>
     <PrivateRoute component={PersonasList} exact path={routes.personasList()} />
     <PrivateRoute component={PersonaCreate} exact path={routes.personaCreate()} />
-    <PrivateRoute component={PersonaShow} exact path={routes.personaShow(':personaId')} />
     <PrivateRoute component={PersonaEdit} exact path={routes.personaEdit(':personaId')} />
     <PrivateRoute component={CurationsList} exact path={routes.curationsList()} />
     <PrivateRoute component={CurationCreate} exact path={routes.curationCreate()} />
@@ -66,7 +65,6 @@ const Routes = () => (
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={OutroCreate} exact path={routes.outroCreate()} />
     <PrivateRoute component={OutroEdit} exact path={routes.outroEdit(':outroId')} />
-    <PrivateRoute component={OutroShow} exact path={routes.outroShow(':outroId')} />
     <PrivateRoute component={TriggersList} exact path={routes.triggersList()} />
     <PrivateRoute component={TriggerCreate} exact path={routes.triggerCreate()} />
     <PrivateRoute component={TriggerEdit} exact path={routes.triggerEdit(':triggerId')} />
