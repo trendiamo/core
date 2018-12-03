@@ -31,7 +31,6 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
     withProps({ label: breadcrumbs && breadcrumbs[0].text }),
     withState('records', 'setRecords', []),
     withState('recordsCount', 'setRecordsCount', 0),
-    withState('range', 'setRange', []),
     withState('orderDirection', 'setOrderDirection', 'desc'),
     withState('orderBy', 'setOrderBy', 'id'),
     withState('selectedIds', 'setSelectedIds', []),
@@ -46,9 +45,18 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
       },
     })),
     withHandlers({
-      fetchRecords: ({ setIsLoading, setRecords, setRecordsCount, query }) => async () => {
+      fetchRecords: ({
+        setIsLoading,
+        setIsSelectAll,
+        setRecords,
+        setRecordsCount,
+        setSelectedIds,
+        query,
+      }) => async () => {
         setIsLoading(true)
         const resourceResponse = await api.fetch(query)
+        setSelectedIds([])
+        setIsSelectAll(false)
         setRecords(resourceResponse.json)
         setRecordsCount(resourceResponse.count)
         setIsLoading(false)
