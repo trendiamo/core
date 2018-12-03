@@ -1,9 +1,8 @@
-import Avatar from '@material-ui/core/Avatar'
 import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
-import TableCell from '@material-ui/core/TableCell'
 import { apiScriptedChatDestroy, apiScriptedChatList } from 'utils'
+import { Avatar, TableCell } from 'shared/table-elements'
 import { compose } from 'recompose'
 
 const columns = [
@@ -13,12 +12,10 @@ const columns = [
 
 const ScriptedChatsRow = ({ record }) => (
   <React.Fragment>
-    <TableCell component="th" padding="none" scope="row" style={{ width: '20%' }}>
+    <TableCell width="20%">
       <Avatar alt="" src={record.persona.profilePicUrl} />
     </TableCell>
-    <TableCell component="th" padding="none" scope="row" style={{ width: '80%' }}>
-      {record.name}
-    </TableCell>
+    <TableCell width="80%">{record.name}</TableCell>
   </React.Fragment>
 )
 

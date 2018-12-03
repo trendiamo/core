@@ -4,7 +4,7 @@ import MUITableHead from '@material-ui/core/TableHead'
 import MUITableSortLabel from '@material-ui/core/TableSortLabel'
 import React from 'react'
 import styled from 'styled-components'
-import TableCell from '@material-ui/core/TableCell'
+import TableCell from './table-cell'
 import TableRow from '@material-ui/core/TableRow'
 import Tooltip from '@material-ui/core/Tooltip'
 import { compose, withHandlers } from 'recompose'
@@ -34,18 +34,26 @@ const TableSortLabel = compose(
 const TableHead = ({ handleSelectAll, handleRequestSort, isSelectAll, orderBy, orderDirection, columns }) => (
   <StyledTableHead>
     <TableRow>
-      <TableCell padding="checkbox">
+      <TableCell width="72px">
         <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
       </TableCell>
       {columns.map(column => {
         return (
-          <TableCell key={column.name} numeric={column.numeric} padding={column.padding || 'default'}>
+          <TableCell
+            align={column.align}
+            component="th"
+            key={column.name}
+            numeric={column.numeric}
+            padding={column.padding}
+          >
             {column.sortable ? (
               <Tooltip enterDelay={50} placement={column.numeric ? 'bottom-end' : 'bottom-start'} title="Sort">
                 <TableSortLabel
                   active={orderBy === column.name}
                   direction={orderDirection}
+                  hideSortIcon
                   onClick={handleRequestSort}
+                  style={{ verticalAlign: 'baseline' }}
                   value={column.name}
                 >
                   {column.label}
