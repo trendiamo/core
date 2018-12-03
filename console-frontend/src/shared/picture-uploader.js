@@ -152,6 +152,7 @@ const BarebonesPictureUploader = ({
   doneCropping,
   disabled,
   image,
+  imagePreviewRef,
   previewImage,
   onCancelClick,
   onCropChange,
@@ -160,7 +161,6 @@ const BarebonesPictureUploader = ({
   onDrop,
   onImageLoaded,
   onRemove,
-  setImagePreviewRef,
 }) => (
   <Container>
     <Dropzone accept="image/*" disabled={disabled} multiple={false} onDrop={onDrop} previewImage={previewImage} />
@@ -175,7 +175,7 @@ const BarebonesPictureUploader = ({
     )}
     {image && !doneCropping && (
       <React.Fragment>
-        <HiddenImg alt="" ref={setImagePreviewRef} src={image.preview} />
+        <HiddenImg alt="" ref={imagePreviewRef} src={image.preview} />
         <StyledReactCrop
           crop={crop}
           imageStyle={{ maxHeight: 'initial' }}
@@ -281,6 +281,7 @@ const uploadImage = async ({ blob, setProgress, type, defaultValue }) => {
 }
 
 const PictureUploader = compose(
+  withProps({ imagePreviewRef: React.createRef() }),
   withState('image', 'setImage', null),
   withState('crop', 'setCrop', {}),
   withState('croppedImage', 'setCroppedImage', null),
@@ -289,58 +290,54 @@ const PictureUploader = compose(
   withProps(({ croppedImage, image, value }) => ({
     previewImage: value ? value : croppedImage ? croppedImage : image ? image.preview : '',
   })),
-  withHandlers(() => {
-    let imagePreviewRef
-    return {
-      onCancelClick: ({ image, previousValue, onChange, setCroppedImage, setDoneCropping, setImage }) => () => {
-        onChange(previousValue)
-        setImage(null)
-        setCroppedImage(null)
-        setDoneCropping(true)
-        URL.revokeObjectURL(image.preview)
-      },
-      onCropChange: ({ setCrop }) => crop => setCrop(crop),
-      onCropComplete: ({ setCrop, setCroppedImage }) => (_crop, pixelCrop) => {
-        if (pixelCrop.height === 0 || pixelCrop.width === 0) {
-          const crop = defaultCrop(imagePreviewRef)
-          setCrop(crop)
-          pixelCrop = getPixelCrop(imagePreviewRef, crop)
-        }
-        setPreviewCrop({ image: imagePreviewRef, pixelCrop, setCroppedImage })
-      },
-      onDoneClick: ({ crop, image, setDoneCropping, setProfilePic }) => async () => {
-        setDoneCropping(true)
-        const blob = await resultingCrop(imagePreviewRef, getPixelCrop(imagePreviewRef, crop))
-        blob.name = image.name
-        setProfilePic(blob)
-        URL.revokeObjectURL(image.preview)
-      },
-      onDrop: ({ onChange, setDoneCropping, setImage, setPreviousValue, value }) => files => {
-        setPreviousValue(value)
-        onChange('')
-        setDoneCropping(false)
-        if (files.length === 0) return
-        const file = files[0]
-        setImage({
-          name: file.name,
-          preview: URL.createObjectURL(file),
-          size: file.size,
-          type: file.type,
-        })
-      },
-      onImageLoaded: ({ setCrop, setCroppedImage }) => image => {
-        const crop = defaultCrop(image)
+  withHandlers({
+    onCancelClick: ({ image, previousValue, onChange, setCroppedImage, setDoneCropping, setImage }) => () => {
+      onChange(previousValue)
+      setImage(null)
+      setCroppedImage(null)
+      setDoneCropping(true)
+      URL.revokeObjectURL(image.preview)
+    },
+    onCropChange: ({ setCrop }) => crop => setCrop(crop),
+    onCropComplete: ({ setCrop, imagePreviewRef, setCroppedImage }) => (_crop, pixelCrop) => {
+      if (pixelCrop.height === 0 || pixelCrop.width === 0) {
+        const crop = defaultCrop(imagePreviewRef.current)
         setCrop(crop)
-        setPreviewCrop({ image: imagePreviewRef, pixelCrop: getPixelCrop(image, crop), setCroppedImage })
-      },
-      onRemove: ({ onChange, setImage, setCroppedImage, setProfilePic }) => () => {
-        setImage(null)
-        onChange('')
-        setProfilePic(null)
-        setCroppedImage(null)
-      },
-      setImagePreviewRef: () => ref => (imagePreviewRef = ref),
-    }
+        pixelCrop = getPixelCrop(imagePreviewRef.current, crop)
+      }
+      setPreviewCrop({ image: imagePreviewRef.current, pixelCrop, setCroppedImage })
+    },
+    onDoneClick: ({ crop, image, imagePreviewRef, setDoneCropping, setProfilePic }) => async () => {
+      setDoneCropping(true)
+      const blob = await resultingCrop(imagePreviewRef.current, getPixelCrop(imagePreviewRef.current, crop))
+      blob.name = image.name
+      setProfilePic(blob)
+      URL.revokeObjectURL(image.preview)
+    },
+    onDrop: ({ onChange, setDoneCropping, setImage, setPreviousValue, value }) => files => {
+      setPreviousValue(value)
+      onChange('')
+      setDoneCropping(false)
+      if (files.length === 0) return
+      const file = files[0]
+      setImage({
+        name: file.name,
+        preview: URL.createObjectURL(file),
+        size: file.size,
+        type: file.type,
+      })
+    },
+    onImageLoaded: ({ imagePreviewRef, setCrop, setCroppedImage }) => image => {
+      const crop = defaultCrop(image)
+      setCrop(crop)
+      setPreviewCrop({ image: imagePreviewRef.current, pixelCrop: getPixelCrop(image, crop), setCroppedImage })
+    },
+    onRemove: ({ onChange, setImage, setCroppedImage, setProfilePic }) => () => {
+      setImage(null)
+      onChange('')
+      setProfilePic(null)
+      setCroppedImage(null)
+    },
   }),
   lifecycle({
     componentDidUpdate() {
