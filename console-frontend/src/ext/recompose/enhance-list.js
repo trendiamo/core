@@ -165,7 +165,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
           onChangeRowsPerPage={handleChangeRowsPerPage}
           page={page}
           rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[]}
         />
       </PaperContainer>
     )
