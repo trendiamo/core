@@ -81,16 +81,16 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
         setSelectedIds(event.target.checked ? records.map(resource => resource.id) : [])
         setIsSelectAll(event.target.checked)
       },
-      handleRequestSort: ({ setOrderBy, setOrderDirection, orderDirection, orderBy }) => async columnName => {
+      handleRequestSort: ({ setOrderBy, setOrderDirection, orderDirection, orderBy }) => columnName => {
         const newDirection = orderBy === columnName ? (orderDirection === 'desc' ? 'asc' : 'desc') : 'asc'
         setOrderBy(columnName)
         setOrderDirection(newDirection)
       },
-      handleChangeRowsPerPage: ({ setRowsPerPage }) => async event => {
-        setRowsPerPage(event.target.value)
-      },
-      handleChangePage: ({ setPage }) => async (event, page) => {
-        setPage(page)
+      handleChangeRowsPerPage: ({ setRowsPerPage }) => event => setRowsPerPage(event.target.value),
+      handleChangePage: ({ setPage }) => (event, page) => setPage(page),
+      setSelectedIds: ({ records, setIsSelectAll, setSelectedIds }) => selectedIds => {
+        setIsSelectAll(selectedIds.length === records.length)
+        setSelectedIds(selectedIds)
       },
     })
   )(

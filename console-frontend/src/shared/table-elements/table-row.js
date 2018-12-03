@@ -20,9 +20,9 @@ const TableRow = compose(
       if (event.target.checked) {
         setSelectedIds([...selectedIds, resource.id])
       } else {
-        let newIdsToDelete = [...selectedIds]
-        newIdsToDelete.splice(selectedIds.indexOf(resource.id), 1)
-        setSelectedIds(newIdsToDelete)
+        let newSelectedIds = [...selectedIds]
+        newSelectedIds.splice(selectedIds.indexOf(resource.id), 1)
+        setSelectedIds(newSelectedIds)
       }
     },
   })
