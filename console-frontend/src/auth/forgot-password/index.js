@@ -1,3 +1,4 @@
+import auth from 'auth'
 import AuthLayout from 'auth/layout'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
@@ -6,9 +7,11 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
+import routes from 'app/routes'
 import { apiPasswordReset } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { compose, withHandlers, withState } from 'recompose'
+import { extractErrors } from 'utils/shared'
 
 const AuthMessage = () => (
   <React.Fragment>
@@ -27,10 +30,10 @@ const AuthMessage = () => (
   </React.Fragment>
 )
 
-const PasswordReset = ({ info, passwordForm, passwordResetSubmit, setFieldValue }) => (
+const PasswordReset = ({ errors, passwordForm, passwordResetSubmit, setFieldValue }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <form onSubmit={passwordResetSubmit}>
-      <Notification data={info} />
+      <Notification data={errors} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'New Password'}</InputLabel>
         <Input
@@ -69,23 +72,25 @@ export default compose(
     fieldOne: '',
     fieldTwo: '',
   }),
-  withState('info', 'setInfo', null),
+  withState('errors', 'setErrors', null),
   withHandlers({
-    passwordResetSubmit: ({ passwordForm, setInfo }) => async event => {
+    passwordResetSubmit: ({ passwordForm, setErrors }) => async event => {
       event.preventDefault()
       const parsedUrl = queryString.parse(window.location.search)
       if (passwordForm.fieldOne === passwordForm.fieldTwo) {
-        await apiPasswordReset(
-          {
-            user: {
-              password: passwordForm.fieldTwo,
-              reset_password_token: parsedUrl.reset_password_token,
-            },
+        const response = await apiPasswordReset({
+          user: {
+            password: passwordForm.fieldTwo,
+            reset_password_token: parsedUrl.reset_password_token,
           },
-          setInfo
-        )
+        })
+        const errors = extractErrors(response)
+        if (errors) setErrors(errors)
+        if (auth.isLoggedIn()) {
+          window.location.href = routes.root()
+        }
       } else {
-        setInfo("Passwords don't match")
+        setErrors({ status: 'error', message: "Passwords don't match" })
       }
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {

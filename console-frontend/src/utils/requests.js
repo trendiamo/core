@@ -1,5 +1,4 @@
 import auth from 'auth'
-import routes from 'app/routes'
 import { BASE_API_URL, convertToInfo } from './shared'
 
 const CSRF_TOKEN_URL = `${BASE_API_URL}/csrf_token`
@@ -45,26 +44,22 @@ const apiPutRequest = async (url, body) => {
   return res.json()
 }
 
-const apiPasswordResetSaga = async (url, body, setInfo) => {
-  const json = await apiPutRequest(url, body)
-  const info = convertToInfo(json)
-  if (info.status === 'success') {
-    auth.setAuth({ user: json.user })
-    window.location.href = routes.root()
-  }
-  setInfo(info)
+export const apiPasswordReset = async body => {
+  const json = await apiPutRequest(PASSWORD_RESET_URL, body)
+  if (!json.errors && !json.error) auth.setAuth({ user: json.user })
+  return json
 }
 
-const apiPasswordEmailLinkSaga = async (url, body, setInfo) => {
-  const json = await apiPostRequest(url, body)
+export const apiPasswordEmailLink = async (body, setInfo) => {
+  const json = await apiPostRequest(PASSWORD_FORM_URL, body)
   setInfo(convertToInfo(json, 'Email sent!'))
+  return json
 }
 
-const apiPostSaga = async (url, body, setInfo) => {
-  const json = await apiPostRequest(url, body)
-  const info = convertToInfo(json)
-  if (info.status === 'success') auth.setAuth({ user: json.user })
-  setInfo(info)
+export const apiSignIn = async body => {
+  const json = await apiPostRequest(SIGNIN_URL, body)
+  if (!json.errors && !json.error) auth.setAuth({ user: json.user })
+  return json
 }
 
 export const apiGetCsrfToken = async () => {
@@ -72,7 +67,3 @@ export const apiGetCsrfToken = async () => {
   auth.setCsrfToken(json)
   return json
 }
-
-export const apiSignIn = (body, setInfo) => apiPostSaga(SIGNIN_URL, body, setInfo)
-export const apiPasswordEmailLink = (body, setInfo) => apiPasswordEmailLinkSaga(PASSWORD_FORM_URL, body, setInfo)
-export const apiPasswordReset = (body, setInfo) => apiPasswordResetSaga(PASSWORD_RESET_URL, body, setInfo)

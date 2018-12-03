@@ -11,6 +11,7 @@ import routes from 'app/routes'
 import { apiSignIn } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { compose, withHandlers, withState } from 'recompose'
+import { extractErrors } from 'utils/shared'
 
 const AuthMessage = () => (
   <React.Fragment>
@@ -29,10 +30,10 @@ const AuthMessage = () => (
   </React.Fragment>
 )
 
-const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
+const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Login">
     <form onSubmit={loginSubmit}>
-      <Notification data={info} />
+      <Notification data={errors} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
         <Input
@@ -74,11 +75,13 @@ const Login = ({ info, loginForm, loginSubmit, setLoginValue }) => (
 
 export default compose(
   withState('loginForm', 'setLoginForm', { email: '', password: '' }),
-  withState('info', 'setInfo', null),
+  withState('errors', 'setErrors', null),
   withHandlers({
-    loginSubmit: ({ loginForm, setInfo }) => async event => {
+    loginSubmit: ({ loginForm, setErrors }) => async event => {
       event.preventDefault()
-      await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } }, setInfo)
+      const response = await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } })
+      const errors = extractErrors(response)
+      if (errors) setErrors(errors)
       if (auth.isLoggedIn()) {
         window.location.href = routes.root()
       }
