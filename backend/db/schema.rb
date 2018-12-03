@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181128134905) do
+ActiveRecord::Schema.define(version: 20181203111100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,11 +49,7 @@ ActiveRecord::Schema.define(version: 20181128134905) do
     t.datetime "updated_at", null: false
     t.bigint "scripted_chat_id"
     t.bigint "account_id"
-    t.bigint "chat_option_id"
-    t.bigint "refering_chat_option_id"
     t.index ["account_id"], name: "index_chat_steps_on_account_id"
-    t.index ["chat_option_id"], name: "index_chat_steps_on_chat_option_id"
-    t.index ["refering_chat_option_id"], name: "index_chat_steps_on_refering_chat_option_id"
     t.index ["scripted_chat_id"], name: "index_chat_steps_on_scripted_chat_id"
   end
 
@@ -187,8 +183,6 @@ ActiveRecord::Schema.define(version: 20181128134905) do
   add_foreign_key "chat_options", "chat_steps"
   add_foreign_key "chat_options", "chat_steps", column: "destinaton_chat_step_id"
   add_foreign_key "chat_steps", "accounts"
-  add_foreign_key "chat_steps", "chat_options"
-  add_foreign_key "chat_steps", "chat_options", column: "refering_chat_option_id"
   add_foreign_key "chat_steps", "scripted_chats"
   add_foreign_key "curations", "accounts"
   add_foreign_key "curations", "personas"
