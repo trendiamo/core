@@ -132,10 +132,10 @@ export default compose(
       form.spotlightsAttributes[index].productPicksAttributes = newProductPicks
       setForm(form)
     },
-    deleteProductPick: ({ index, form, setForm }) => () => {
+    deleteProductPick: ({ index, form, setForm }) => productPickIndex => {
       let newProductPicks = [...form.spotlightsAttributes[index].productPicksAttributes]
-      newProductPicks.splice(index, 1)
-      form.spotlightsAttributes[index].productPicksAttributes = newProductPicks.splice(index, 1)
+      newProductPicks.splice(productPickIndex, 1)
+      form.spotlightsAttributes[index].productPicksAttributes = newProductPicks
       setForm(form)
     },
   }),
