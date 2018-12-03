@@ -13,7 +13,6 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -25,6 +24,7 @@ import { branch, compose, lifecycle, renderComponent, withHandlers, withState } 
 import { BulkActions } from 'shared/list-actions'
 import { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
+import { TableCell } from 'shared/table-elements'
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
@@ -57,10 +57,10 @@ const Actions = () => (
 )
 
 const columns = [
-  { name: 'name', numeric: true, disablePadding: false, label: 'name' },
-  { name: 'flowType', numeric: false, disablePadding: false, label: 'flow type' },
-  { name: 'flowId', numeric: false, disablePadding: true, label: 'flow id' },
-  { name: 'urlMatchers', numeric: false, disablePadding: true, label: 'Url Matchers' },
+  { name: 'name', label: 'name' },
+  { name: 'flowType', label: 'flow type' },
+  { name: 'flowId', label: 'flow id' },
+  { name: 'urlMatchers', disablePadding: true, label: 'Url Matchers' },
 ]
 
 const Title = styled.div`
@@ -101,20 +101,21 @@ const StyledTableHead = styled(MUITableHead)`
 
 const StyledChip = styled(Chip)`
   margin: 0.25rem;
+  margin-left: 0;
 `
 
 const TableHead = ({ handleSelectAll, isSelectAll }) => (
   <StyledTableHead>
     <TableRow>
-      <TableCell padding="checkbox">
+      <TableCell>
         <ReorderIcon />
       </TableCell>
-      <TableCell padding="checkbox">
+      <TableCell>
         <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
       </TableCell>
       {columns.map(row => {
         return (
-          <TableCell key={row.name} numeric={row.numeric} padding={row.disablePadding ? 'none' : 'default'}>
+          <TableCell key={row.name} numeric={row.numeric}>
             <Tooltip enterDelay={300} placement={row.numeric ? 'bottom-end' : 'bottom-start'} title="Sort">
               <TableSortLabel value={row.name}>{row.label}</TableSortLabel>
             </Tooltip>
@@ -142,28 +143,22 @@ const TriggerRow = compose(
   })
 )(({ trigger, handleSelect, selectedIds }) => (
   <TableRow hover role="checkbox" tabIndex={-1}>
-    <TableCell padding="checkbox">
+    <TableCell>
       <DragHandle />
     </TableCell>
-    <TableCell padding="checkbox">
+    <TableCell>
       <Checkbox checked={selectedIds.includes(trigger.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
-    <TableCell component="th" padding="none" scope="row">
-      {trigger.name}
-    </TableCell>
-    <TableCell component="th" padding="none" scope="row">
-      {trigger.flowType}
-    </TableCell>
-    <TableCell component="th" padding="none" scope="row">
-      {trigger.flowId}
-    </TableCell>
-    <TableCell component="th" padding="none" scope="row">
+    <TableCell>{trigger.name}</TableCell>
+    <TableCell>{trigger.flowType}</TableCell>
+    <TableCell>{trigger.flowId}</TableCell>
+    <TableCell>
       {trigger.urlMatchers.map((url, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <StyledChip key={`url${index}`} label={url} />
       ))}
     </TableCell>
-    <TableCell component="th" padding="none" scope="row">
+    <TableCell>
       <Button color="primary" component={Link} to={routes.triggerEdit(trigger.id)}>
         <EditIcon />
       </Button>

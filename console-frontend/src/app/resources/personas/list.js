@@ -1,8 +1,8 @@
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from 'shared/table-elements/avatar'
 import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
-import TableCell from '@material-ui/core/TableCell'
+import TableCell from 'shared/table-elements/table-cell'
 import { apiPersonaDestroy, apiPersonaList } from 'utils'
 import { compose } from 'recompose'
 
@@ -14,15 +14,11 @@ const columns = [
 
 const PersonasRow = ({ record }) => (
   <React.Fragment>
-    <TableCell component="th" padding="none" scope="row">
+    <TableCell>
       <Avatar alt={record.name} src={record.profilePicUrl} />
     </TableCell>
-    <TableCell component="th" padding="none" scope="row" style={{ width: '30%' }}>
-      {record.name}
-    </TableCell>
-    <TableCell component="th" padding="none" scope="row" style={{ width: '70%' }}>
-      {record.description}
-    </TableCell>
+    <TableCell width="20%">{record.name}</TableCell>
+    <TableCell width="80%">{record.description}</TableCell>
   </React.Fragment>
 )
 

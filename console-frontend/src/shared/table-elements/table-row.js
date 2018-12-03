@@ -5,7 +5,7 @@ import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
 import MUITableRow from '@material-ui/core/TableRow'
 import React from 'react'
 import styled from 'styled-components'
-import TableCell from '@material-ui/core/TableCell'
+import TableCell from './table-cell'
 import { compose, withHandlers } from 'recompose'
 import { Link } from 'react-router-dom'
 
@@ -27,14 +27,11 @@ const TableRow = compose(
   })
 )(({ resource, handleSelect, selectedIds, resourceEditPath, children }) => (
   <MUITableRow hover role="checkbox" tabIndex={-1}>
-    <TableCell padding="checkbox">
+    <TableCell>
       <Checkbox checked={selectedIds.includes(resource.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
     {children}
     <TableCell
-      component="th"
-      padding="none"
-      scope="row"
       style={{
         whiteSpace: 'nowrap',
       }}
