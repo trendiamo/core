@@ -126,7 +126,7 @@ main_curation = Curation.create!(main_curation_params)
 
 purchase_outro_params = {
   persona: adam,
-  name: "Adam Outro",
+  name: "Purchase Outro",
   graphcms_ref: "cjofpd048sy170932lw0h6wrk",
 }
 purchase_outro = Outro.create!(purchase_outro_params)

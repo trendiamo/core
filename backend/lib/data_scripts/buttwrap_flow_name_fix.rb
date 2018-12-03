@@ -1,31 +1,14 @@
-# rubocop:disable Metrics/LineLength
+account = Account.find_or_create_by!(name: "Buttwrap")
+ActsAsTenant.default_tenant = account
 
-adam = Persona.find_by(name: "Adam Jakubowski")
-james = Persona.find_by(name: "James Kindle")
-oscar = Persona.find_by(name: "Oscar Cuenca")
-
-main_curation = Curation.where(persona_id: adam.id).first
-
-adam_outro = adam.outros.first
-
-adam_chats = ScriptedChat.where(persona_id: adam.id)
-james_chats = ScriptedChat.where(persona_id: james.id)
-oscar_chats = ScriptedChat.where(persona_id: oscar.id)
-
-adam_chats[0].update(name: "Adam EBW Chat")
-adam_chats[1].update(name: "Adam OBR Chat")
-adam_chats[2].update(name: "Adam BGM Chat")
-
-james_chats[0].update(name: "James OBR Chat")
-james_chats[1].update(name: "James BG Chat")
-james_chats[2].update(name: "James BGM Chat")
-
-oscar_chats[0].update(name: "Oscar GBB Chat")
-oscar_chats[1].update(name: "Oscar EBW Chat")
-oscar_chats[2].update(name: "Oscar BW Chat")
-
-adam_outro.update(name: "Adam Outro")
-
-main_curation.update(name: "Main Curation")
-
-# rubocop:enable Metrics/LineLength
+Trigger.find_by!(name: "Main Curation").flow.update!(name: "Main Curation")
+Trigger.find_by!(name: "Purchase Outro").flow.update!(name: "Purchase Outro")
+Trigger.find_by!(name: "Adam EBW Chat").flow.update!(name: "Adam EBW Chat")
+Trigger.find_by!(name: "Adam OBR Chat").flow.update!(name: "Adam OBR Chat")
+Trigger.find_by!(name: "Adam BGM Chat").flow.update!(name: "Adam BGM Chat")
+Trigger.find_by!(name: "James OBR Chat").flow.update!(name: "James OBR Chat")
+Trigger.find_by!(name: "James BG Chat").flow.update!(name: "James BG Chat")
+Trigger.find_by!(name: "James BGM Chat").flow.update!(name: "James BGM Chat")
+Trigger.find_by!(name: "Oscar GBB Chat").flow.update!(name: "Oscar GBB Chat")
+Trigger.find_by!(name: "Oscar EBW Chat").flow.update!(name: "Oscar EBW Chat")
+Trigger.find_by!(name: "Oscar BW Chat").flow.update!(name: "Oscar BW Chat")
