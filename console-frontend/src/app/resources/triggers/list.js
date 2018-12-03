@@ -8,6 +8,7 @@ import MUITableHead from '@material-ui/core/TableHead'
 import MUIToolbar from '@material-ui/core/Toolbar'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
+import ReorderIcon from '@material-ui/icons/Reorder'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
@@ -19,7 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
-import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
+import { arrayMove, SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import { BulkActions } from 'shared/list-actions'
 import { createGlobalStyle } from 'styled-components'
@@ -33,6 +34,10 @@ const TriggerRowStyle = createGlobalStyle`
   .sortable-trigger-row {
     z-index: 1;
   }
+`
+
+const StyledReorderIcon = styled(ReorderIcon)`
+  cursor: ns-resize;
 `
 
 const StyledToolbar = styled(MUIToolbar)`
@@ -102,6 +107,9 @@ const TableHead = ({ handleSelectAll, isSelectAll }) => (
   <StyledTableHead>
     <TableRow>
       <TableCell padding="checkbox">
+        <ReorderIcon />
+      </TableCell>
+      <TableCell padding="checkbox">
         <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
       </TableCell>
       {columns.map(row => {
@@ -118,6 +126,8 @@ const TableHead = ({ handleSelectAll, isSelectAll }) => (
   </StyledTableHead>
 )
 
+const DragHandle = SortableHandle(() => <StyledReorderIcon />)
+
 const TriggerRow = compose(
   withHandlers({
     handleSelect: ({ setSelectedIds, selectedIds, trigger }) => event => {
@@ -132,6 +142,9 @@ const TriggerRow = compose(
   })
 )(({ trigger, handleSelect, selectedIds }) => (
   <TableRow hover role="checkbox" tabIndex={-1}>
+    <TableCell padding="checkbox">
+      <DragHandle />
+    </TableCell>
     <TableCell padding="checkbox">
       <Checkbox checked={selectedIds.includes(trigger.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
@@ -205,12 +218,14 @@ const TriggerList = ({
         triggers={triggers}
       />
       <SortableTriggerRows
+        distance={1}
         handleSelectAll={handleSelectAll}
         helperClass="sortable-trigger-row"
         onSortEnd={onSortEnd}
         selectedIds={selectedIds}
         setSelectedIds={setSelectedIds}
         triggers={triggers}
+        useDragHandle
       />
     </Table>
   </PaperContainer>
