@@ -25,7 +25,6 @@ export default compose(
       const response = await apiTriggerShow(id)
       return {
         name: response.name || '',
-        order: response.order || '',
         flowId: response.flowId || '',
         flowType: response.flowType || '',
         urlMatchers: response.urlMatchers || [''],

@@ -56,7 +56,7 @@ class TriggersController < RestController
   private
 
   def trigger_params
-    params.require(:trigger).permit(:name, :order, :flow_id, :flow_type, url_matchers: [])
+    params.require(:trigger).permit(:name, :flow_id, :flow_type, url_matchers: [])
   end
 
   def render_error

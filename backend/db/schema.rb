@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181203111100) do
+ActiveRecord::Schema.define(version: 20181203164517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20181203111100) do
   end
 
   create_table "triggers", force: :cascade do |t|
-    t.integer "order", null: false
+    t.integer "order", default: 1, null: false
     t.string "url_matchers", null: false, array: true
     t.string "flow_type"
     t.bigint "flow_id"

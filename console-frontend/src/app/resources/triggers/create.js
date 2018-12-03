@@ -20,7 +20,6 @@ export default compose(
     loadFormObject: () => () => {
       return {
         name: '',
-        order: '',
         flowId: '',
         flowType: '',
         urlMatchers: [''],

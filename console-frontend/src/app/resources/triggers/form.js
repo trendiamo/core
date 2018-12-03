@@ -112,16 +112,6 @@ const TriggerForm = ({
         required
         value={form.name}
       />
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
-        label="Order"
-        margin="normal"
-        name="order"
-        onChange={setFieldValue}
-        required
-        value={form.order}
-      />
       <FormControl disabled={isFormLoading} fullWidth>
         <InputLabel htmlFor="flow-label-placeholder" shrink>
           {'Flow'}
@@ -204,7 +194,6 @@ export default compose(
   }),
   withForm({
     name: '',
-    order: '',
     flowId: '',
     flowType: '',
     urlMatchers: [''],
