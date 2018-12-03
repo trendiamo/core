@@ -47,7 +47,7 @@ class OutrosController < RestController
   private
 
   def outro_params
-    params.require(:outro).permit(:persona_id)
+    params.require(:outro).permit(:persona_id, :name)
   end
 
   def render_error

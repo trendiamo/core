@@ -18,6 +18,7 @@ import withForm from 'ext/recompose/with-form'
 import { apiPersonaSimpleList } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Prompt } from 'react-router'
+import { TextField } from '@material-ui/core'
 import { withRouter } from 'react-router'
 
 const StyledAvatar = styled(Avatar)`
@@ -47,7 +48,17 @@ const selectValue = (form, personas) => {
   return `Persona ${personaIndex}: ${personas[personaIndex].name}`
 }
 
-const OutroForm = ({ personas, form, errors, isFormLoading, isFormPristine, onFormSubmit, selectPersona, title }) => (
+const OutroForm = ({
+  personas,
+  form,
+  setFieldValue,
+  errors,
+  isFormLoading,
+  isFormPristine,
+  onFormSubmit,
+  selectPersona,
+  title,
+}) => (
   <PaperContainer>
     <Typography variant="subtitle1">{title}</Typography>
     <form onSubmit={onFormSubmit}>
@@ -74,6 +85,16 @@ const OutroForm = ({ personas, form, errors, isFormLoading, isFormPristine, onFo
           ))}
         </Select>
       </FormControl>
+      <TextField
+        disabled={isFormLoading}
+        fullWidth
+        label="Name"
+        margin="normal"
+        name="name"
+        onChange={setFieldValue}
+        required
+        value={form.name}
+      />
     </form>
   </PaperContainer>
 )
@@ -93,6 +114,7 @@ export default compose(
   }),
   withForm({
     personaId: '',
+    name: '',
   }),
   withRouter,
   withHandlers({

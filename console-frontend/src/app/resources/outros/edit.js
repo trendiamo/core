@@ -23,6 +23,7 @@ export default compose(
       const response = await apiOutroShow(id)
       return {
         personaId: response.persona.id || '',
+        name: response.name || '',
       }
     },
   })
