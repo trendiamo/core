@@ -77,9 +77,9 @@ class Populate
     end
   end
 
-  def urls_array(word)
+  def urls_array
     Array.new(rand(1...5)).map do
-      Faker::Internet.url(word)
+      "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-"))
     end
   end
 
@@ -90,7 +90,7 @@ class Populate
         order: i + 1,
         name: Faker::App.name,
         flow: [Curation, ScriptedChat, Outro].sample.all.sample,
-        url_matchers: urls_array(Faker::Lorem.word),
+        url_matchers: urls_array,
       }
       Trigger.create!(trigger_attrs)
     end
