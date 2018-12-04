@@ -140,7 +140,7 @@ const TriggerList = ({
   isSelectAll,
 }) => (
   <PaperContainer>
-    <TableToolbar deleteTriggers={deleteTriggers} label="triggers" selectedIds={selectedIds} />
+    <TableToolbar deleteTriggers={deleteTriggers} label="Triggers" selectedIds={selectedIds} />
     <Table aria-labelledby="Triggers">
       <TriggerRowStyle />
       <TableHead
