@@ -24,7 +24,7 @@ james_params = {
 james = Persona.create!(james_params)
 oscar_params = {
   name: "Oscar Cuenca",
-  description: "I'm 20 years old model from Barcelona. I love to party and to go to the gym.",
+  description: "I'm a 20 years old model from Barcelona. I love to party and to go to the gym.",
   profile_pic_url: "https://media.graphcms.com/9GeTZ0CDRAa27T0JbN1L",
   graphcms_ref: "cjoe89tupivzj0932jcsyrxwr",
 }
@@ -93,7 +93,7 @@ main_curation_params = {
       persona: james,
     },
     {
-      text: "I'm 20 years old model from Barcelona. I love to party and to go to the gym.",
+      text: "I'm a 20 years old model from Barcelona. I love to party and to go to the gym.",
       product_picks_attributes: [
         {
           url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton#trnd:open:1,picture:KNYtfFxoQhqPchSkSCKU",
@@ -576,16 +576,16 @@ oscar_bw_chat_params = {
 oscar_bw_chat = ScriptedChat.create!(oscar_bw_chat_params)
 
 # triggers:
-Trigger.create!(order: 1, name: "Main Curation", url_matchers: %w[/], flow: main_curation)
-Trigger.create!(order: 2, name: "Purchase Outro", url_matchers: %w[/:id/checkouts/:checkoutId/thank_you], flow: purchase_outro)
-Trigger.create!(order: 3, name: "Adam EBW Chat", url_matchers: %w[/collections/:collectionName/products/elephant-brief-white-organic-cotton /products/elephant-brief-white-organic-cotton], flow: adam_ebw_chat)
-Trigger.create!(order: 4, name: "Adam OBR Chat", url_matchers: %w[/collections/:collectionName/products/orangutan-brief-red-organic-cotton /products/orangutan-brief-red-organic-cotton], flow: adam_obr_chat)
-Trigger.create!(order: 5, name: "Adam BGM Chat", url_matchers: %w[/collections/:collectionName/products/brief-cottonstretch-tight-grey-melange /products/brief-cottonstretch-tight-grey-melange], flow: adam_bgm_chat)
-Trigger.create!(order: 6, name: "James OBR Chat", url_matchers: %w[/collections/:collectionName/products/orangutan-brief-red-organic-cotton /products/orangutan-brief-red-organic-cotton], flow: james_obr_chat)
-Trigger.create!(order: 7, name: "James BG Chat", url_matchers: %w[/collections/:collectionName/products/boxer-cottonstretch-tight-green /products/boxer-cottonstretch-tight-green], flow: james_bg_chat)
-Trigger.create!(order: 8, name: "James BGM Chat", url_matchers: %w[/collections/:collectionName/products/brief-cottonstretch-tight-grey-melange /products/brief-cottonstretch-tight-grey-melange], flow: james_bgm_chat)
-Trigger.create!(order: 9, name: "Oscar GBB Chat", url_matchers: %w[/collections/:collectionName/products/gorilla-boxer-black-organic-cotton /products/gorilla-boxer-black-organic-cotton], flow: oscar_gbb_chat)
-Trigger.create!(order: 10, name: "Oscar EBW Chat", url_matchers: %w[/collections/:collectionName/products/elephant-boxer-white-organic-cotton /products/elephant-boxer-white-organic-cotton], flow: oscar_ebw_chat)
-Trigger.create!(order: 11, name: "Oscar BW Chat", url_matchers: %w[/collections/:collectionName/products/boxer-cottonstretch-tight-white /products/boxer-cottonstretch-tight-white], flow: oscar_bw_chat)
+Trigger.create!(order: 1, url_matchers: %w[/], flow: main_curation)
+Trigger.create!(order: 2, url_matchers: %w[/:id/checkouts/:checkoutId/thank_you], flow: purchase_outro)
+Trigger.create!(order: 3, url_matchers: %w[/collections/:collectionName/products/elephant-brief-white-organic-cotton /products/elephant-brief-white-organic-cotton], flow: adam_ebw_chat)
+Trigger.create!(order: 4, url_matchers: %w[/collections/:collectionName/products/orangutan-brief-red-organic-cotton /products/orangutan-brief-red-organic-cotton], flow: adam_obr_chat)
+Trigger.create!(order: 5, url_matchers: %w[/collections/:collectionName/products/brief-cottonstretch-tight-grey-melange /products/brief-cottonstretch-tight-grey-melange], flow: adam_bgm_chat)
+Trigger.create!(order: 6, url_matchers: %w[/collections/:collectionName/products/orangutan-brief-red-organic-cotton /products/orangutan-brief-red-organic-cotton], flow: james_obr_chat)
+Trigger.create!(order: 7, url_matchers: %w[/collections/:collectionName/products/boxer-cottonstretch-tight-green /products/boxer-cottonstretch-tight-green], flow: james_bg_chat)
+Trigger.create!(order: 8, url_matchers: %w[/collections/:collectionName/products/brief-cottonstretch-tight-grey-melange /products/brief-cottonstretch-tight-grey-melange], flow: james_bgm_chat)
+Trigger.create!(order: 9, url_matchers: %w[/collections/:collectionName/products/gorilla-boxer-black-organic-cotton /products/gorilla-boxer-black-organic-cotton], flow: oscar_gbb_chat)
+Trigger.create!(order: 10, url_matchers: %w[/collections/:collectionName/products/elephant-boxer-white-organic-cotton /products/elephant-boxer-white-organic-cotton], flow: oscar_ebw_chat)
+Trigger.create!(order: 11, url_matchers: %w[/collections/:collectionName/products/boxer-cottonstretch-tight-white /products/boxer-cottonstretch-tight-white], flow: oscar_bw_chat)
 
 # rubocop:enable Metrics/LineLength
