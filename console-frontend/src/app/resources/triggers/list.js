@@ -4,8 +4,6 @@ import Chip from '@material-ui/core/Chip'
 import CircularProgress from 'shared/circular-progress'
 import EditIcon from '@material-ui/icons/Edit'
 import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
-import MUITableHead from '@material-ui/core/TableHead'
-import MUIToolbar from '@material-ui/core/Toolbar'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import ReorderIcon from '@material-ui/icons/Reorder'
@@ -14,17 +12,14 @@ import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
-import Tooltip from '@material-ui/core/Tooltip'
-import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
 import { arrayMove, SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
-import { BulkActions } from 'shared/list-actions'
+import { camelize } from 'inflected'
 import { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
-import { TableCell } from 'shared/table-elements'
+import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
@@ -40,11 +35,6 @@ const StyledReorderIcon = styled(ReorderIcon)`
   cursor: ns-resize;
 `
 
-const StyledToolbar = styled(MUIToolbar)`
-  display: flex;
-  justify-content: space-between;
-`
-
 const StyledButton = styled(Button)`
   overflow: hidden;
   white-space: nowrap;
@@ -57,75 +47,14 @@ const Actions = () => (
 )
 
 const columns = [
-  { name: 'name', label: 'name' },
-  { name: 'flowType', label: 'flow type' },
-  { name: 'flowId', label: 'flow id' },
-  { name: 'urlMatchers', disablePadding: true, label: 'Url Matchers' },
+  { name: 'flow', padding: 'none', label: 'flow' },
+  { name: 'urlMatchers', padding: 'none', label: 'Url Matchers' },
 ]
-
-const Title = styled.div`
-  flex: 0 0 auto;
-`
-
-const Spacer = styled.div`
-  flex: 1 1 100%;
-`
-
-const Toolbar = ({ selectedIds, deleteTriggers }) => (
-  <StyledToolbar>
-    <Title>
-      {selectedIds.length > 0 ? (
-        <Typography color="inherit" variant="subtitle1">
-          {`${selectedIds.length} selected`}
-        </Typography>
-      ) : (
-        <Typography id="tableTitle" variant="h6">
-          {'Triggers'}
-        </Typography>
-      )}
-    </Title>
-    <Spacer />
-    <div>{selectedIds.length > 0 && <BulkActions deleteBulk={deleteTriggers} selectedIds={selectedIds} />}</div>
-  </StyledToolbar>
-)
-
-const StyledTableHead = styled(MUITableHead)`
-  background-color: #fafafa;
-  border-top: 1px solid #dfe0df;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 1.3px;
-  color: #555;
-  text-transform: uppercase;
-`
 
 const StyledChip = styled(Chip)`
   margin: 0.25rem;
   margin-left: 0;
 `
-
-const TableHead = ({ handleSelectAll, isSelectAll }) => (
-  <StyledTableHead>
-    <TableRow>
-      <TableCell>
-        <ReorderIcon />
-      </TableCell>
-      <TableCell>
-        <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
-      </TableCell>
-      {columns.map(row => {
-        return (
-          <TableCell key={row.name} numeric={row.numeric}>
-            <Tooltip enterDelay={300} placement={row.numeric ? 'bottom-end' : 'bottom-start'} title="Sort">
-              <TableSortLabel value={row.name}>{row.label}</TableSortLabel>
-            </Tooltip>
-          </TableCell>
-        )
-      })}
-      <TableCell key="actions" />
-    </TableRow>
-  </StyledTableHead>
-)
 
 const DragHandle = SortableHandle(() => <StyledReorderIcon />)
 
@@ -149,10 +78,19 @@ const TriggerRow = compose(
     <TableCell>
       <Checkbox checked={selectedIds.includes(trigger.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
-    <TableCell>{trigger.name}</TableCell>
-    <TableCell>{trigger.flowType}</TableCell>
-    <TableCell>{trigger.flowId}</TableCell>
-    <TableCell>
+    <TableCell width="50%">
+      {`${trigger.flowType} #${trigger.flowId}: '${trigger.flow.name}'`}
+      <Button
+        component={Link}
+        size="small"
+        style={{ marginLeft: '0.5rem' }}
+        to={routes[`${camelize(trigger.flowType, false)}Edit`](trigger.flowId)}
+        variant="outlined"
+      >
+        {'Edit this flow'}
+      </Button>
+    </TableCell>
+    <TableCell width="50%">
       {trigger.urlMatchers.map((url, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <StyledChip key={`url${index}`} label={url} />
@@ -202,13 +140,24 @@ const TriggerList = ({
   isSelectAll,
 }) => (
   <PaperContainer>
-    <Toolbar deleteTriggers={deleteTriggers} selectedIds={selectedIds} />
+    <TableToolbar deleteTriggers={deleteTriggers} label="triggers" selectedIds={selectedIds} />
     <Table aria-labelledby="Triggers">
       <TriggerRowStyle />
       <TableHead
+        columns={columns}
         handleRequestSort={handleRequestSort}
         handleSelectAll={handleSelectAll}
         isSelectAll={isSelectAll}
+        leftColumns={
+          <React.Fragment>
+            <TableCell>
+              <ReorderIcon />
+            </TableCell>
+            <TableCell>
+              <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
+            </TableCell>
+          </React.Fragment>
+        }
         selectedIds={selectedIds}
         triggers={triggers}
       />

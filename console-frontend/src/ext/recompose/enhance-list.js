@@ -1,5 +1,7 @@
 import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox'
 import CircularProgress from 'shared/circular-progress'
+import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import styled from 'styled-components'
@@ -9,7 +11,11 @@ import TablePagination from '@material-ui/core/TablePagination'
 import withAppBarContent from './with-app-bar-content'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Link } from 'react-router-dom'
-import { TableHead, TableRow, TableToolbar } from 'shared/table-elements'
+import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
+
+const CheckBoxIcon = styled(MUICheckBoxIcon)`
+  color: blue;
+`
 
 const StyledButton = styled(Button)`
   overflow: hidden;
@@ -130,8 +136,11 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
           <TableHead
             columns={columns}
             handleRequestSort={handleRequestSort}
-            handleSelectAll={handleSelectAll}
-            isSelectAll={isSelectAll}
+            leftColumns={
+              <TableCell>
+                <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
+              </TableCell>
+            }
             orderBy={orderBy}
             orderDirection={orderDirection}
           />

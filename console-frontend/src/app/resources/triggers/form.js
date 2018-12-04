@@ -96,23 +96,11 @@ const TriggerForm = ({
   isFormPristine,
   onFormSubmit,
   selectFlow,
-  setFieldValue,
 }) => (
   <PaperContainer>
     <form onSubmit={onFormSubmit} ref={formRef}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
-      <TextField
-        autoFocus
-        disabled={isFormLoading}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
-      />
       <FormControl disabled={isFormLoading} fullWidth>
         <InputLabel htmlFor="flow-label-placeholder" shrink>
           {'Flow'}
@@ -194,7 +182,6 @@ export default compose(
     },
   }),
   withForm({
-    name: '',
     flowId: '',
     flowType: '',
     urlMatchers: [''],

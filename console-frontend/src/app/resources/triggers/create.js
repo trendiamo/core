@@ -19,7 +19,6 @@ export default compose(
   withHandlers({
     loadFormObject: () => () => {
       return {
-        name: '',
         flowId: '',
         flowType: '',
         urlMatchers: [''],

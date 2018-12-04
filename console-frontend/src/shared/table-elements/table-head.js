@@ -1,5 +1,3 @@
-import Checkbox from '@material-ui/core/Checkbox'
-import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
 import MUITableHead from '@material-ui/core/TableHead'
 import MUITableSortLabel from '@material-ui/core/TableSortLabel'
 import React from 'react'
@@ -19,10 +17,6 @@ const StyledTableHead = styled(MUITableHead)`
   text-transform: uppercase;
 `
 
-const CheckBoxIcon = styled(MUICheckBoxIcon)`
-  color: blue;
-`
-
 const TableSortLabel = compose(
   withHandlers({
     handleRequestSort: ({ value, onClick }) => () => {
@@ -31,12 +25,10 @@ const TableSortLabel = compose(
   })
 )(({ handleRequestSort, ...props }) => <MUITableSortLabel {...props} onClick={handleRequestSort} />)
 
-const TableHead = ({ handleSelectAll, handleRequestSort, isSelectAll, orderBy, orderDirection, columns }) => (
+const TableHead = ({ leftColumns, handleRequestSort, orderBy, orderDirection, columns }) => (
   <StyledTableHead>
     <TableRow>
-      <TableCell width="72px">
-        <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
-      </TableCell>
+      {leftColumns}
       {columns.map(column => {
         return (
           <TableCell

@@ -48,6 +48,7 @@ class Populate
     30.times do
       outro_attrs = {
         account: @account,
+        name: "#{Faker::Lorem.word} Outro",
         persona: Persona.order("RANDOM()").first,
       }
       Outro.create!(outro_attrs)
@@ -58,6 +59,7 @@ class Populate
     30.times do
       scripted_chat_attrs = {
         account: @account,
+        name: "#{Faker::Lorem.word} Chat",
         persona: Persona.order("RANDOM()").first,
         title: "Hello there",
       }
@@ -69,6 +71,7 @@ class Populate
     30.times do
       curation_attrs = {
         account: @account,
+        name: "#{Faker::Lorem.word} Curation",
         persona: Persona.order("RANDOM()").first,
         title: Faker::Lorem.sentence,
         subtitle: Faker::Lorem.sentence,
@@ -88,7 +91,6 @@ class Populate
       trigger_attrs = {
         account: @account,
         order: i + 1,
-        name: Faker::App.name,
         flow: [Curation, ScriptedChat, Outro].sample.all.sample,
         url_matchers: urls_array,
       }
