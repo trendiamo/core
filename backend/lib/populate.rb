@@ -4,7 +4,7 @@ class Populate
   end
 
   def process
-    create_accounts
+    create_account
     create_websites
     create_users
     create_personas
@@ -14,20 +14,34 @@ class Populate
     create_triggers
   end
 
-  def create_accounts
-    @account = Account.create!(name: "Trendiamo")
-    ActsAsTenant.default_tenant = @account
+  private
+
+  def team_members
+    [
+      { email: "db", name: "David Bennett" },
+      { email: "dh", name: "Dylan Henderson" },
+      { email: "frb", name: "Fabian Brooks" },
+      { email: "mc", name: "Michael Campbell" },
+    ]
+  end
+
+  def create_account
+    ActsAsTenant.default_tenant = Account.create!(name: "Trendiamo")
   end
 
   def create_websites
-    Website.create!(account: @account, name: "Demo", hostnames: %w[demo.trendiamo.com])
+    Website.create!(name: "Demo", hostnames: %w[demo.trendiamo.com])
   end
 
   def create_users
-    team_members_initials = %w[db dh frb mc]
-    users_attrs = team_members_initials.map do |initials|
-      { account: @account, email: "#{initials}@trendiamo.com", password: "password", password_confirmation: "password",
-        confirmed_at: Time.now, }
+    users_attrs = team_members.map do |team_member|
+      {
+        email: "#{team_member[:email]}@trendiamo.com",
+        first_name: team_member[:name].split(" ")[0],
+        last_name: team_member[:name].split(" ")[1],
+        password: "password", password_confirmation: "password",
+        confirmed_at: Time.now,
+      }
     end
     User.create!(users_attrs)
   end
@@ -35,7 +49,6 @@ class Populate
   def create_personas
     60.times do |i|
       persona_attrs = {
-        account: @account,
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
         profile_pic_url: "https://randomuser.me/api/portraits/men/#{i % 99}.jpg",
@@ -47,7 +60,6 @@ class Populate
   def create_outros
     30.times do
       outro_attrs = {
-        account: @account,
         name: "#{Faker::Lorem.word} Outro",
         persona: Persona.order("RANDOM()").first,
       }
@@ -58,7 +70,6 @@ class Populate
   def create_scripted_chats
     30.times do
       scripted_chat_attrs = {
-        account: @account,
         name: "#{Faker::Lorem.word} Chat",
         persona: Persona.order("RANDOM()").first,
         title: "Hello there",
@@ -70,7 +81,6 @@ class Populate
   def create_curations
     30.times do
       curation_attrs = {
-        account: @account,
         name: "#{Faker::Lorem.word} Curation",
         persona: Persona.order("RANDOM()").first,
         title: Faker::Lorem.sentence,
@@ -80,19 +90,12 @@ class Populate
     end
   end
 
-  def urls_array
-    Array.new(rand(1...5)).map do
-      "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-"))
-    end
-  end
-
   def create_triggers
     8.times do |i|
       trigger_attrs = {
-        account: @account,
         order: i + 1,
         flow: [Curation, ScriptedChat, Outro].sample.all.sample,
-        url_matchers: urls_array,
+        url_matchers: Array.new(rand(1...5)).map { "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-")) },
       }
       Trigger.create!(trigger_attrs)
     end
