@@ -25,9 +25,7 @@ const TableToolbar = ({ selectedIds, deleteRecords, label }) => (
           {`${selectedIds.length} selected`}
         </Typography>
       ) : (
-        <Typography id="tableTitle" variant="subtitle1">
-          {label}
-        </Typography>
+        <Typography variant="subtitle1">{label}</Typography>
       )}
     </Title>
     <Spacer />
