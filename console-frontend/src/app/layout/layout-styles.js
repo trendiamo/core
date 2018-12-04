@@ -92,7 +92,8 @@ export const styles = theme => ({
   },
   drawerGhost: {
     width: drawerWidth,
-    [theme.breakpoints.down('xs')]: {
+    flexShrink: 0,
+    [theme.breakpoints.down('sm')]: {
       width: 0,
     },
     transition: createTransition(theme, ['width']),
