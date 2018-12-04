@@ -6,6 +6,7 @@ class ScriptedChat < ApplicationRecord
 
   accepts_nested_attributes_for :chat_step
 
+  validates :name, presence: true
   validates :title, presence: true
 
   def as_json(_options = {})

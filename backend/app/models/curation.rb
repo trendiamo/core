@@ -6,6 +6,7 @@ class Curation < ApplicationRecord
 
   accepts_nested_attributes_for :spotlights
 
+  validates :name, presence: true
   validates :title, presence: true
   validates :subtitle, presence: true
 

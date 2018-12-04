@@ -3,6 +3,8 @@ class Outro < ApplicationRecord
   belongs_to :persona
   has_many :triggers, as: :flow, dependent: :destroy
 
+  validates :name, presence: true
+
   def as_json(_options = {})
     attributes
       .slice("id", "name", "created_at", "updated_at")
