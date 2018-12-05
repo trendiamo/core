@@ -15,8 +15,8 @@ This droplet has apps managed by dokku. The apps are: `console-frontend` and `co
 
 # TODO: firewall
 
-# To add users to be able to deploy, run in your local machine:
-cat PUB_KEY | ssh root@46.101.129.17 "sudo sshcommand acl-add dokku <key-id>"
+# To add users to be able to deploy, run in your local machine (make sure to replace vars below):
+cat <pub-key-file> | ssh root@46.101.129.17 "sudo sshcommand acl-add dokku <key-id>"
 
 # To setup the console-frontend app:
 

@@ -14,6 +14,16 @@ bin/rails db:schema:load
 bin/rails populate
 ```
 
+## To be able to deploy
+
+Add to .git/config in the root folder (core):
+
+```
+[remote "dokku-backend"]
+	url = dokku@46.101.129.17:console-backend
+	fetch = +refs/heads/*:refs/remotes/dokku-backend/*
+```
+
 ## Run locally
 
 ```sh

@@ -11,6 +11,16 @@ yarn global add cross-env
 yarn
 ```
 
+## To be able to deploy
+
+Add to .git/config in the root folder (core):
+
+```
+[remote "dokku-frontend"]
+	url = dokku@46.101.129.17:console-frontend
+	fetch = +refs/heads/*:refs/remotes/dokku-frontend/*
+```
+
 ## Run
 
 ```sh
