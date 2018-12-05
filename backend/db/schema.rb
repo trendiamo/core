@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(version: 20181212121958) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "chat_step_id"
-    t.bigint "destinaton_chat_step_id"
+    t.bigint "destination_chat_step_id"
     t.bigint "account_id"
     t.index ["account_id"], name: "index_chat_options_on_account_id"
     t.index ["chat_step_id"], name: "index_chat_options_on_chat_step_id"
-    t.index ["destinaton_chat_step_id"], name: "index_chat_options_on_destinaton_chat_step_id"
+    t.index ["destination_chat_step_id"], name: "index_chat_options_on_destination_chat_step_id"
   end
 
   create_table "chat_steps", force: :cascade do |t|
@@ -184,7 +184,7 @@ ActiveRecord::Schema.define(version: 20181212121958) do
   add_foreign_key "chat_messages", "chat_steps"
   add_foreign_key "chat_options", "accounts"
   add_foreign_key "chat_options", "chat_steps"
-  add_foreign_key "chat_options", "chat_steps", column: "destinaton_chat_step_id"
+  add_foreign_key "chat_options", "chat_steps", column: "destination_chat_step_id"
   add_foreign_key "chat_steps", "accounts"
   add_foreign_key "chat_steps", "scripted_chats"
   add_foreign_key "curations", "accounts"
