@@ -1,11 +1,9 @@
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
-import Cancel from './shared/cancel'
 import ProductPick from './product-pick'
 import React from 'react'
 import styled from 'styled-components'
+import { AddItemButton, Cancel } from 'shared/form-elements'
 import {
   Avatar,
-  Button,
   Card,
   CardContent,
   FormControl,
@@ -32,17 +30,6 @@ const Item = styled.div`
   display: flex;
   align-items: center;
 `
-
-const StyledAddCircleOutline = styled(AddCircleOutline)`
-  color: #6c6c6c;
-`
-
-const AddProductPickButton = ({ disabled, addProductPick }) => (
-  <Button disabled={disabled} onClick={addProductPick} size="small">
-    <StyledAddCircleOutline />
-    <StyledTypography>{'Add Another Product Pick'}</StyledTypography>
-  </Button>
-)
 
 const Spotlight = ({
   personas,
@@ -108,7 +95,12 @@ const Spotlight = ({
           </Card>
         </div>
       ))}
-      <AddProductPickButton addProductPick={addProductPick} disabled={isFormLoading} index={index} />{' '}
+      <AddItemButton
+        disabled={isFormLoading}
+        index={index}
+        message="Add Another Product Pick"
+        onClick={addProductPick}
+      />{' '}
     </div>
   </React.Fragment>
 )

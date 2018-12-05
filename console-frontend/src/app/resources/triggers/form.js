@@ -1,35 +1,22 @@
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
-import Button from '@material-ui/core/Button'
 import CircularProgress from 'shared/circular-progress'
 import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import MuiCancel from '@material-ui/icons/Cancel'
-import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
-import SaveIcon from '@material-ui/icons/Save'
 import Select from '@material-ui/core/Select'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
+import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
 import { apiFlowsList } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { camelize, singularize } from 'inflected'
-import { Prompt } from 'react-router'
 import { withRouter } from 'react-router'
-
-const Actions = ({ isFormLoading, onFormSubmit }) => (
-  <Button color="primary" disabled={isFormLoading} onClick={onFormSubmit} type="submit" variant="contained">
-    <SaveIcon />
-    {'Save'}
-  </Button>
-)
 
 const LabelContainer = styled.div`
   margin-top: 1rem;
@@ -52,19 +39,6 @@ const StyledUrlTextField = styled(UrlTextField)`
   flex: 1;
   margin: 8px 0;
 `
-const StyledAddCircleOutline = styled(AddCircleOutline)`
-  color: #6c6c6c;
-`
-const StyledTypography = styled(Typography)`
-  margin-left: 10px;
-`
-
-const AddUrlButton = ({ disabled, addUrlSelect }) => (
-  <Button disabled={disabled} onClick={addUrlSelect} size="small">
-    <StyledAddCircleOutline />
-    <StyledTypography>{'Add Another Url'}</StyledTypography>
-  </Button>
-)
 
 const selectValue = (form, flows) => {
   if (form.flowType === '') return ''
@@ -75,14 +49,6 @@ const selectValue = (form, flows) => {
   if (form.flowType === 'curations' || form.flowType === 'Curation')
     return `Curation: ${flows['curations'].find(curation => curation.id === form.flowId).id}`
 }
-
-const Cancel = compose(
-  withHandlers({
-    deleteUrlMatcher: ({ index, onClick }) => () => {
-      onClick(index)
-    },
-  })
-)(({ deleteUrlMatcher, ...props }) => <MuiCancel {...props} onClick={deleteUrlMatcher} />)
 
 const TriggerForm = ({
   addUrlSelect,
@@ -98,9 +64,7 @@ const TriggerForm = ({
   selectFlow,
 }) => (
   <PaperContainer>
-    <form onSubmit={onFormSubmit} ref={formRef}>
-      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={errors} />
+    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <FormControl disabled={isFormLoading} fullWidth>
         <InputLabel htmlFor="flow-label-placeholder" shrink>
           {'Flow'}
@@ -161,9 +125,9 @@ const TriggerForm = ({
             </FlexDiv>
           ))
         )}
-        <AddUrlButton addUrlSelect={addUrlSelect} disabled={isFormLoading} />{' '}
+        <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
       </div>
-    </form>
+    </Form>
   </PaperContainer>
 )
 
@@ -219,7 +183,7 @@ export default compose(
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
   withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions isFormLoading={isFormLoading} onFormSubmit={onFormSubmit} />,
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({

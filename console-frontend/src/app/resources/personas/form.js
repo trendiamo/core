@@ -1,30 +1,15 @@
-import Button from '@material-ui/core/Button'
 import CircularProgress from 'shared/circular-progress'
 import Label from 'shared/label'
-import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
-import SaveIcon from '@material-ui/icons/Save'
 import TextField from '@material-ui/core/TextField'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
+import { Actions, Form } from 'shared/form-elements'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Prompt, withRouter } from 'react-router'
-
-const Actions = ({ isCropping, isFormLoading, onFormSubmit }) => (
-  <Button
-    color="primary"
-    disabled={isFormLoading || isCropping}
-    onClick={onFormSubmit}
-    type="submit"
-    variant="contained"
-  >
-    <SaveIcon />
-    {'Save'}
-  </Button>
-)
+import { withRouter } from 'react-router'
 
 const PersonaForm = ({
   form,
@@ -41,9 +26,7 @@ const PersonaForm = ({
   setProfilePicUrl,
 }) => (
   <PaperContainer>
-    <form onSubmit={onFormSubmit} ref={formRef}>
-      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={errors} />
+    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <Label>{'Picture'}</Label>
       <PictureUploader
         disabled={isCropping}
@@ -74,7 +57,7 @@ const PersonaForm = ({
         value={form.description}
       />
       {progress && <ProgressBar progress={progress} />}
-    </form>
+    </Form>
   </PaperContainer>
 )
 
@@ -111,7 +94,7 @@ export default compose(
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
   withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions isCropping={isCropping} isFormLoading={isFormLoading} onFormSubmit={onFormSubmit} />,
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading || isCropping} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({

@@ -1,23 +1,20 @@
 import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
 import CircularProgress from 'shared/circular-progress'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
-import SaveIcon from '@material-ui/icons/Save'
 import Select from '@material-ui/core/Select'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
+import { Actions, Form } from 'shared/form-elements'
 import { apiPersonaSimpleList } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
 import { withRouter } from 'react-router'
 
@@ -34,13 +31,6 @@ const Item = styled.div`
   display: flex;
   align-items: center;
 `
-
-const Actions = ({ isFormLoading, onFormSubmit }) => (
-  <Button color="primary" disabled={isFormLoading} onClick={onFormSubmit} type="submit" variant="contained">
-    <SaveIcon />
-    {'Save'}
-  </Button>
-)
 
 const selectValue = (form, personas) => {
   if (form.personaId === '') return ''
@@ -62,9 +52,7 @@ const OutroForm = ({
 }) => (
   <PaperContainer>
     <Typography variant="subtitle1">{title}</Typography>
-    <form onSubmit={onFormSubmit} ref={formRef}>
-      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={errors} />
+    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <TextField
         autoFocus
         disabled={isFormLoading}
@@ -97,7 +85,7 @@ const OutroForm = ({
           ))}
         </Select>
       </FormControl>
-    </form>
+    </Form>
   </PaperContainer>
 )
 
@@ -136,7 +124,7 @@ export default compose(
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
   withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions isFormLoading={isFormLoading} onFormSubmit={onFormSubmit} />,
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({

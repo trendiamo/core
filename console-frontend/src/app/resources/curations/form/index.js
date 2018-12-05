@@ -1,19 +1,15 @@
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
-import Cancel from './shared/cancel'
 import CircularProgress from 'shared/circular-progress'
-import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
-import SaveIcon from '@material-ui/icons/Save'
 import Spotlight from './spotlight'
 import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
+import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
 import { apiPersonaSimpleList } from 'utils'
 import {
   Avatar,
-  Button,
   Card,
   CardContent,
   FormControl,
@@ -26,7 +22,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Prompt, withRouter } from 'react-router'
+import { withRouter } from 'react-router'
 
 const StyledAvatar = styled(Avatar)`
   display: inline-block;
@@ -41,24 +37,6 @@ const Item = styled.div`
   display: flex;
   align-items: center;
 `
-
-const Actions = ({ isFormLoading, onFormSubmit }) => (
-  <Button color="primary" disabled={isFormLoading} onClick={onFormSubmit} type="submit" variant="contained">
-    <SaveIcon />
-    {'Save'}
-  </Button>
-)
-
-const StyledAddCircleOutline = styled(AddCircleOutline)`
-  color: #6c6c6c;
-`
-
-const AddSpotlightButton = ({ disabled, addSpotlight }) => (
-  <Button disabled={disabled} onClick={addSpotlight} size="small">
-    <StyledAddCircleOutline />
-    <StyledTypography>{'Add Another Spotlight'}</StyledTypography>
-  </Button>
-)
 
 const selectValue = (form, personas) => {
   if (form.personaId === '') return ''
@@ -84,9 +62,7 @@ const CurationForm = ({
 }) => (
   <PaperContainer>
     <Typography variant="subtitle1">{title}</Typography>
-    <form onSubmit={onFormSubmit} ref={formRef}>
-      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={errors} />
+    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <TextField
         autoFocus
         disabled={isFormLoading}
@@ -163,9 +139,9 @@ const CurationForm = ({
             </Card>
           </div>
         ))}
-        <AddSpotlightButton addSpotlight={addSpotlight} disabled={isFormLoading} />{' '}
+        <AddItemButton disabled={isFormLoading} message="Add another spotlight" onClick={addSpotlight} />{' '}
       </div>
-    </form>
+    </Form>
   </PaperContainer>
 )
 
@@ -253,7 +229,7 @@ export default compose(
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
   withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions isFormLoading={isFormLoading} onFormSubmit={onFormSubmit} />,
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({
