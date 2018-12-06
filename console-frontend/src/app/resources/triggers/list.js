@@ -12,6 +12,7 @@ import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
+import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
 import { arrayMove, SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
@@ -25,9 +26,16 @@ const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
 `
 
+const InlineTypography = styled(Typography)`
+  display: inline-block;
+`
+
 const TriggerRowStyle = createGlobalStyle`
   .sortable-trigger-row {
+    pointer-events: auto !important;
     z-index: 1;
+    background: #fff !important;
+    box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.24);
   }
 `
 
@@ -79,7 +87,9 @@ const TriggerRow = compose(
       <Checkbox checked={selectedIds.includes(trigger.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
     </TableCell>
     <TableCell width="50%">
-      {`${trigger.flowType} #${trigger.flowId}: '${trigger.flow.name}'`}
+      <InlineTypography variant="subtitle2">{`${trigger.flowType} #${trigger.flowId}: '${
+        trigger.flow.name
+      }'`}</InlineTypography>
       <Button
         component={Link}
         size="small"
@@ -165,11 +175,13 @@ const TriggerList = ({
         distance={1}
         handleSelectAll={handleSelectAll}
         helperClass="sortable-trigger-row"
+        lockAxis="y"
         onSortEnd={onSortEnd}
         selectedIds={selectedIds}
         setSelectedIds={setSelectedIds}
         triggers={triggers}
         useDragHandle
+        useWindowAsScrollContainer
       />
     </Table>
   </PaperContainer>
