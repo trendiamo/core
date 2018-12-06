@@ -1,14 +1,9 @@
 import Avatar from '@material-ui/core/Avatar'
 import React from 'react'
+import sanitizeProps from 'shared/sanitize-props'
 import styled from 'styled-components'
 
-const sanitizeProps = props => {
-  const newProps = { ...props }
-  delete newProps.small
-  return newProps
-}
-
-const FilteredAvatar = props => <Avatar {...sanitizeProps(props)} />
+const FilteredAvatar = props => <Avatar {...sanitizeProps(props, ['small'])} />
 
 const StyledAvatar = styled(FilteredAvatar)`
   width: ${({ small }) => (small ? '40px' : '100px')};

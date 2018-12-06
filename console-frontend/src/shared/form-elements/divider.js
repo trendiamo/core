@@ -1,7 +1,9 @@
 import MuiDivider from '@material-ui/core/Divider'
+import React from 'react'
+import sanitizeProps from 'shared/sanitize-props'
 import styled from 'styled-components'
 
-const Divider = styled(MuiDivider)`
+const Divider = styled(props => <MuiDivider {...sanitizeProps(props, ['folded'])} />)`
   height: ${({ folded }) => (folded ? '0' : '1px')};
   background: none;
   border-bottom: 1px solid #ddd;

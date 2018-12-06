@@ -6,6 +6,7 @@ import ReactCrop, { getPixelCrop } from 'react-image-crop'
 import ReactDropzone from 'react-dropzone'
 import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import S3Upload from 'ext/react-s3-uploader'
+import sanitizeProps from 'shared/sanitize-props'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { apiGetSignedUrlFactory } from 'utils'
@@ -35,15 +36,9 @@ const InnerLabel = styled.div`
   border-radius: 50%;
 `
 
-const sanitizeProps = props => {
-  const newProps = { ...props }
-  delete newProps.isDragging
-  delete newProps.previewImage
-  delete newProps.setIsDragging
-  return newProps
-}
-
-const FilteredReactDropzone = props => <ReactDropzone {...sanitizeProps(props)} />
+const FilteredReactDropzone = props => (
+  <ReactDropzone {...sanitizeProps(props, ['isDragging', 'previewImage', 'setIsDragging'])} />
+)
 
 const StyledDropzone = styled(FilteredReactDropzone)`
   border-width: 0;
