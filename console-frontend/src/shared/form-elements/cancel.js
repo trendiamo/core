@@ -1,8 +1,13 @@
-import MuiCancel from '@material-ui/icons/Cancel'
+import MuiDelete from '@material-ui/icons/DeleteOutlined'
 import React from 'react'
 import { compose, withHandlers } from 'recompose'
+import { IconButton } from '@material-ui/core'
 
-const Cancel = ({ onClick, ...props }) => <MuiCancel {...props} onClick={onClick} />
+const Cancel = ({ onClick, ...props }) => (
+  <IconButton>
+    <MuiDelete {...props} onClick={onClick} />
+  </IconButton>
+)
 
 export default compose(
   withHandlers({

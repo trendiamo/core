@@ -12,6 +12,9 @@ const StyledPaper = styled(Paper)`
   display: flex;
   flex-direction: column;
   padding: 16px 24px 24px;
+  & + * {
+    margin-top: 10px;
+  }
 `
 
 const PaperContainer = ({ children }) => (
