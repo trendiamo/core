@@ -1,13 +1,11 @@
 import ProductPick from './product-pick'
 import React from 'react'
 import styled from 'styled-components'
-import { AddItemButton, Cancel } from 'shared/form-elements'
+import { AddItemButton, Cancel, Section } from 'shared/form-elements'
 import {
   Avatar,
-  Card,
-  CardContent,
   FormControl,
-  IconButton,
+  Grid,
   Input,
   InputLabel,
   MenuItem,
@@ -42,66 +40,65 @@ const Spotlight = ({
   editSpotlightValue,
 }) => (
   <React.Fragment>
-    <TextField
-      disabled={isFormLoading}
-      fullWidth
-      label="Spotlight Text"
-      margin="normal"
-      name="text"
-      onChange={editSpotlightValue}
-      required
-      value={form.spotlightsAttributes[index].text}
-    />
-    <FormControl disabled={isFormLoading} fullWidth>
-      <InputLabel htmlFor="persona-label-placeholder" shrink>
-        {'Persona'}
-      </InputLabel>
-      <Select
-        displayEmpty
-        input={<Input id="persona-label-placeholder" name="persona" />}
-        name="personaId"
+    <Grid item sm={6}>
+      <TextField
+        disabled={isFormLoading}
+        fullWidth
+        label="Spotlight Text"
+        margin="normal"
+        name="text"
         onChange={editSpotlightValue}
-        value={form.spotlightsAttributes[index].personaId}
-      >
-        {personas.map(persona => (
-          <MenuItem key={`persona-${persona.id}`} value={persona.id}>
-            <Item>
-              <StyledAvatar alt={persona.name} src={persona.profilePicUrl} />
-              <StyledTypography>{persona.name}</StyledTypography>
-            </Item>
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-    <Typography variant="subtitle1">{'Spotlight Product Picks'}</Typography>
-    <div>
+        required
+        value={form.spotlightsAttributes[index].text}
+      />
+      <FormControl disabled={isFormLoading} fullWidth>
+        <InputLabel htmlFor="persona-label-placeholder" shrink>
+          {'Persona'}
+        </InputLabel>
+        <Select
+          displayEmpty
+          input={<Input id="persona-label-placeholder" name="persona" />}
+          name="personaId"
+          onChange={editSpotlightValue}
+          value={form.spotlightsAttributes[index].personaId}
+        >
+          {personas.map(persona => (
+            <MenuItem key={`persona-${persona.id}`} value={persona.id}>
+              <Item>
+                <StyledAvatar alt={persona.name} src={persona.profilePicUrl} />
+                <StyledTypography>{persona.name}</StyledTypography>
+              </Item>
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Grid>
+    <div style={{ marginTop: '24px' }}>
       {form.spotlightsAttributes[index].productPicksAttributes.map((productPick, productPickIndex) => (
         // eslint-disable-next-line react/no-array-index-key
         <div key={productPickIndex}>
-          <Card>
-            <CardContent>
-              <Typography variant="subtitle2">{`Product Pick #${productPickIndex + 1}`}</Typography>
+          <Section
+            actions={
+              form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
+                <Cancel disabled={isFormLoading} index={productPickIndex} onClick={deleteProductPick} />
+              )
+            }
+            foldable
+            title="Spotlight Product Picks"
+          >
+            <div>
+              <Typography variant="subtitle1">{`Product Pick #${productPickIndex + 1}`}</Typography>
               <ProductPick
                 form={form.spotlightsAttributes[index]}
                 index={productPickIndex}
                 onChange={editProductPickValue}
               />
-              {form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
-                <IconButton>
-                  <Cancel disabled={isFormLoading} index={productPickIndex} onClick={deleteProductPick} />
-                </IconButton>
-              )}
-            </CardContent>
-          </Card>
+            </div>
+          </Section>
         </div>
       ))}
-      <AddItemButton
-        disabled={isFormLoading}
-        index={index}
-        message="Add Another Product Pick"
-        onClick={addProductPick}
-      />{' '}
     </div>
+    <AddItemButton disabled={isFormLoading} index={index} message="Add Another Product Pick" onClick={addProductPick} />{' '}
   </React.Fragment>
 )
 

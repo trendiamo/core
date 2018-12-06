@@ -1,19 +1,16 @@
 import CircularProgress from 'shared/circular-progress'
-import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
 import Spotlight from './spotlight'
 import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
+import { Actions, AddItemContainer, Cancel, Card, Form, Section } from 'shared/form-elements'
 import { apiPersonaSimpleList } from 'utils'
 import {
   Avatar,
-  Card,
-  CardContent,
   FormControl,
-  IconButton,
+  Grid,
   Input,
   InputLabel,
   MenuItem,
@@ -60,89 +57,94 @@ const CurationForm = ({
   setForm,
   title,
 }) => (
-  <PaperContainer>
-    <Typography variant="subtitle1">{title}</Typography>
-    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-      <TextField
-        autoFocus
-        disabled={isFormLoading}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
-      />
-      <FormControl disabled={isFormLoading} fullWidth>
-        <InputLabel htmlFor="persona-label-placeholder" shrink>
-          {'Persona'}
-        </InputLabel>
-        <Select
-          displayEmpty
-          input={<Input id="persona-label-placeholder" name="persona" />}
-          name="persona"
-          onChange={selectPersona}
-          value={selectValue(form, personas)}
-        >
-          {personas.map((persona, index) => (
-            <MenuItem id={persona.id} key={`persona-${persona.id}`} value={`Persona ${index}: ${persona.name}`}>
-              <Item>
-                <StyledAvatar alt={persona.name} src={persona.profilePicUrl} />
-                <StyledTypography>{persona.name}</StyledTypography>
-              </Item>
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
-        label="Curation Title"
-        margin="normal"
-        name="title"
-        onChange={setFieldValue}
-        required
-        value={form.title}
-      />
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
-        label="Curation Subtitle"
-        margin="normal"
-        name="subtitle"
-        onChange={setFieldValue}
-        required
-        value={form.subtitle}
-      />
-      <Typography variant="h6">{'Curation Spotlights'}</Typography>
-      <div>
-        {form.spotlightsAttributes.map((spotlight, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={index}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle1">{`Spotlight #${index + 1}`}</Typography>
-                <Spotlight
-                  form={form}
-                  index={index}
-                  onChange={editSpotlightValue}
-                  personas={personas}
-                  setForm={setForm}
-                />
-                {form.spotlightsAttributes.length > 1 && (
-                  <IconButton>
-                    <Cancel disabled={isFormLoading} index={index} onClick={deleteSpotlight} />
-                  </IconButton>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        ))}
-        <AddItemButton disabled={isFormLoading} message="Add another spotlight" onClick={addSpotlight} />{' '}
-      </div>
-    </Form>
-  </PaperContainer>
+  <>
+    <Card title={title}>
+      <Grid item sm={6}>
+        <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+          <TextField
+            autoFocus
+            disabled={isFormLoading}
+            fullWidth
+            label="Name"
+            margin="normal"
+            name="name"
+            onChange={setFieldValue}
+            required
+            value={form.name}
+          />
+          <FormControl disabled={isFormLoading} fullWidth>
+            <InputLabel htmlFor="persona-label-placeholder" shrink>
+              {'Persona'}
+            </InputLabel>
+            <Select
+              displayEmpty
+              input={<Input id="persona-label-placeholder" name="persona" />}
+              name="persona"
+              onChange={selectPersona}
+              value={selectValue(form, personas)}
+            >
+              {personas.map((persona, index) => (
+                <MenuItem id={persona.id} key={`persona-${persona.id}`} value={`Persona ${index}: ${persona.name}`}>
+                  <Item>
+                    <StyledAvatar alt={persona.name} src={persona.profilePicUrl} />
+                    <StyledTypography>{persona.name}</StyledTypography>
+                  </Item>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            disabled={isFormLoading}
+            fullWidth
+            label="Curation Title"
+            margin="normal"
+            name="title"
+            onChange={setFieldValue}
+            required
+            value={form.title}
+          />
+          <TextField
+            disabled={isFormLoading}
+            fullWidth
+            label="Curation Subtitle"
+            margin="normal"
+            name="subtitle"
+            onChange={setFieldValue}
+            required
+            value={form.subtitle}
+          />
+        </Form>
+      </Grid>
+    </Card>
+    <div>
+      {form.spotlightsAttributes.map((spotlight, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Card key={index}>
+          <Section
+            actions={
+              form.spotlightsAttributes.length > 1 && (
+                <Cancel disabled={isFormLoading} index={index} onClick={deleteSpotlight} />
+              )
+            }
+            foldable
+            hideTop
+            title={`Spotlight #${index + 1}`}
+          >
+            <Spotlight
+              deleteSpotlight={deleteSpotlight}
+              form={form}
+              index={index}
+              isFormLoading={isFormLoading}
+              onChange={editSpotlightValue}
+              personas={personas}
+              setForm={setForm}
+            />
+          </Section>
+        </Card>
+      ))}
+      <AddItemContainer disabled={isFormLoading} message="Add new spotlight" onClick={addSpotlight} />{' '}
+    </div>
+  </>
 )
 
 export default compose(
