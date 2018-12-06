@@ -225,8 +225,16 @@ export const styles = theme => ({
   },
   title: {
     color: '#777',
+    display: 'inline-block',
+    marginRight: '5px',
     [theme.breakpoints.down('sm')]: {
       color: theme.palette.primary.contrastText,
+      fontSize: '16px',
+    },
+  },
+  titleResponsive: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
     },
   },
   toolbar: {

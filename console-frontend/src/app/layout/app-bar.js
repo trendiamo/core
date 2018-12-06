@@ -23,9 +23,9 @@ const AppBarContent = compose(
     Actions: store.appBarContent.Actions,
     breadcrumbs: store.appBarContent.breadcrumbs,
   }))
-)(({ Actions, breadcrumbs }) => (
+)(({ Actions, breadcrumbs, classes }) => (
   <React.Fragment>
-    <Breadcrumbs breadcrumbs={breadcrumbs} />
+    <Breadcrumbs breadcrumbs={breadcrumbs} classes={classes} />
     {Actions && <ButtonsContainer>{Actions}</ButtonsContainer>}
   </React.Fragment>
 ))
@@ -36,7 +36,7 @@ const AppBar = ({ classes, open, toggleOpen }) => (
       <IconButton aria-label="Open drawer" className={classes.menuButton} color="inherit" onClick={toggleOpen}>
         <MenuIcon />
       </IconButton>
-      <AppBarContent />
+      <AppBarContent classes={classes} />
     </Toolbar>
   </MuiAppBar>
 )

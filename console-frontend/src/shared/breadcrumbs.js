@@ -1,27 +1,26 @@
+import classnames from 'classnames'
 import Link from 'shared/link'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
-const Breadcrumbs = ({ breadcrumbs }) => (
+const Title = ({ text, classes, responsive }) => (
+  <Typography className={classnames(classes.title, responsive && classes.titleResponsive)} variant="h6">
+    {text}
+  </Typography>
+)
+
+const Breadcrumbs = ({ breadcrumbs, classes }) => (
   <React.Fragment>
     {breadcrumbs.map((breadcrumb, i) => (
       <React.Fragment key={breadcrumb.route || breadcrumb.text}>
         {breadcrumb.route ? (
           <Link to={breadcrumb.route}>
-            <Typography color="default" style={{ display: 'inline' }} variant="h6">
-              {breadcrumb.text}
-            </Typography>
+            <Title classes={classes} responsive text={breadcrumb.text} />
           </Link>
         ) : (
-          <Typography color="default" style={{ display: 'inline' }} variant="h6">
-            {breadcrumb.text}
-          </Typography>
+          <Title classes={classes} text={breadcrumb.text} />
         )}
-        {i < breadcrumbs.length - 1 && (
-          <Typography color="default" style={{ display: 'inline', margin: '0 0.5rem' }} variant="h6">
-            {'/'}
-          </Typography>
-        )}
+        {i < breadcrumbs.length - 1 && <Title classes={classes} responsive text="/" />}
       </React.Fragment>
     ))}
   </React.Fragment>
