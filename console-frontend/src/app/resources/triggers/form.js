@@ -10,6 +10,7 @@ import routes from 'app/routes'
 import Select from '@material-ui/core/Select'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
@@ -61,9 +62,11 @@ const TriggerForm = ({
   isFormLoading,
   isFormPristine,
   onFormSubmit,
+  title,
   selectFlow,
 }) => (
   <PaperContainer>
+    <Typography variant="subtitle1">{title}</Typography>
     <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <FormControl disabled={isFormLoading} fullWidth>
         <InputLabel htmlFor="flow-label-placeholder" shrink>
