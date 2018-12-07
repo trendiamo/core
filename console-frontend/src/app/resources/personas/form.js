@@ -5,6 +5,7 @@ import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
 import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
@@ -23,9 +24,11 @@ const PersonaForm = ({
   setFieldValue,
   setIsCropping,
   setProfilePic,
+  title,
   setProfilePicUrl,
 }) => (
   <PaperContainer>
+    <Typography variant="subtitle1">{title}</Typography>
     <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <Label>{'Picture'}</Label>
       <PictureUploader
