@@ -12,6 +12,7 @@ class ScriptedChat < ApplicationRecord
   def as_json(_options = {})
     attributes
       .slice("id", "title", "name", "created_at", "updated_at")
-      .merge(persona: { profile_pic_url: persona.profile_pic_url })
+      .merge(persona: { profile_pic_url: persona.profile_pic_url },
+             type: "ScriptedChat")
   end
 end

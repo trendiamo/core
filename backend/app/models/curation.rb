@@ -14,7 +14,8 @@ class Curation < ApplicationRecord
     attributes
       .slice("id", "title", "subtitle", "name", "created_at", "updated_at")
       .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url },
-             spotlights_attributes: spotlights_attributes(spotlights))
+             spotlights_attributes: spotlights_attributes(spotlights),
+             type: "Curation")
   end
 
   def spotlights_attributes(spotlights)

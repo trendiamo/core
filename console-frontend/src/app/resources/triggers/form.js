@@ -1,22 +1,19 @@
 import CircularProgress from 'shared/circular-progress'
 import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
-import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
-import Select from '@material-ui/core/Select'
+import Select from 'shared/select'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
-import { apiFlowsList } from 'utils'
+import { apiFlowsAutocomplete, apiFlowsList } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { camelize, singularize } from 'inflected'
 import { withRouter } from 'react-router'
 
 const LabelContainer = styled.div`
@@ -41,16 +38,6 @@ const StyledUrlTextField = styled(UrlTextField)`
   margin: 8px 0;
 `
 
-const selectValue = (form, flows) => {
-  if (form.flowType === '') return ''
-  if (form.flowType === 'scriptedChats' || form.flowType === 'ScriptedChat')
-    return `Scripted Chat: ${flows['scriptedChats'].find(scriptedChat => scriptedChat.id === form.flowId).id}`
-  if (form.flowType === 'outros' || form.flowType === 'Outro')
-    return `Outro: ${flows['outros'].find(outro => outro.id === form.flowId).id}`
-  if (form.flowType === 'curations' || form.flowType === 'Curation')
-    return `Curation: ${flows['curations'].find(curation => curation.id === form.flowId).id}`
-}
-
 const TriggerForm = ({
   addUrlSelect,
   deleteUrlMatcher,
@@ -58,6 +45,7 @@ const TriggerForm = ({
   flows,
   form,
   formRef,
+  setFlows,
   errors,
   isFormLoading,
   isFormPristine,
@@ -73,33 +61,13 @@ const TriggerForm = ({
           {'Flow'}
         </InputLabel>
         <Select
-          displayEmpty
-          input={<Input id="flow-label-placeholder" name="flow" />}
-          name="flow"
+          autocomplete={apiFlowsAutocomplete}
+          defaultOptions={flows}
+          list={apiFlowsList}
           onChange={selectFlow}
-          value={selectValue(form, flows)}
-        >
-          {flows.scriptedChats.map(flow => (
-            <MenuItem
-              id={flow.id}
-              key={`scriptedChat-${flow.id}`}
-              type="scriptedChats"
-              value={`Scripted Chat: ${flow.id}`}
-            >
-              {`Scripted Chat: ${flow.id}`}
-            </MenuItem>
-          ))}
-          {flows.outros.map(flow => (
-            <MenuItem id={flow.id} key={`outro-${flow.id}`} type="outros" value={`Outro: ${flow.id}`}>
-              {`Outro: ${flow.id}`}
-            </MenuItem>
-          ))}
-          {flows.curations.map(flow => (
-            <MenuItem id={flow.id} key={`curation-${flow.id}`} type="curations" value={`Curation: ${flow.id}`}>
-              {`Curation: ${flow.id}`}
-            </MenuItem>
-          ))}
-        </Select>
+          placeholder="Flow *"
+          setOptions={setFlows}
+        />
       </FormControl>
       <div>
         <LabelContainer>
@@ -137,7 +105,7 @@ const TriggerForm = ({
 export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
-  withState('flows', 'setFlows', { scriptedChats: [], outros: [], curations: [] }),
+  withState('flows', 'setFlows', []),
   withHandlers({
     loadFormObject: ({ loadFormObject, setFlows }) => async () => {
       const flows = await apiFlowsList()
@@ -176,11 +144,11 @@ export default compose(
       if (!result.error && !result.errors) history.push(routes.triggersList())
       return result
     },
-    selectFlow: ({ form, setForm }) => (index, newValue) => {
+    selectFlow: ({ form, setForm }) => selected => {
       setForm({
         ...form,
-        flowId: newValue.props.id,
-        flowType: camelize(singularize(newValue.props.type)),
+        flowId: selected.value.id,
+        flowType: selected.value.type,
       })
     },
   }),
