@@ -1,6 +1,6 @@
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
-import EditIcon from '@material-ui/icons/Edit'
+import EditIcon from '@material-ui/icons/EditOutlined'
 import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
 import MUITableRow from '@material-ui/core/TableRow'
 import React from 'react'
