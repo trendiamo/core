@@ -1,48 +1,18 @@
 import CircularProgress from 'shared/circular-progress'
 import React from 'react'
 import routes from 'app/routes'
+import Select from 'shared/select'
 import Spotlight from './spotlight'
-import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Cancel, Card, Form, Section } from 'shared/form-elements'
-import { apiPersonaSimpleList } from 'utils'
-import {
-  Avatar,
-  FormControl,
-  Grid,
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@material-ui/core'
+import { apiPersonasAutocomplete, apiPersonaSimpleList } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { Grid, TextField } from '@material-ui/core'
 import { withRouter } from 'react-router'
 
-const StyledAvatar = styled(Avatar)`
-  display: inline-block;
-`
-
-const StyledTypography = styled(Typography)`
-  display: inline-block;
-  margin-left: 20px;
-`
-
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const selectValue = (form, personas) => {
-  if (form.personaId === '') return ''
-  const personaIndex = personas.findIndex(persona => persona.id === form.personaId)
-  return `Persona ${personaIndex}: ${personas[personaIndex].name}`
-}
-
 const CurationForm = ({
-  setFieldValue,
+  selectPersona,
   personas,
   form,
   formRef,
@@ -50,7 +20,8 @@ const CurationForm = ({
   isFormLoading,
   isFormPristine,
   onFormSubmit,
-  selectPersona,
+  setFieldValue,
+  setPersonas,
   deleteSpotlight,
   editSpotlightValue,
   addSpotlight,
@@ -72,27 +43,14 @@ const CurationForm = ({
             required
             value={form.name}
           />
-          <FormControl disabled={isFormLoading} fullWidth>
-            <InputLabel htmlFor="persona-label-placeholder" shrink>
-              {'Persona'}
-            </InputLabel>
-            <Select
-              displayEmpty
-              input={<Input id="persona-label-placeholder" name="persona" />}
-              name="persona"
-              onChange={selectPersona}
-              value={selectValue(form, personas)}
-            >
-              {personas.map((persona, index) => (
-                <MenuItem id={persona.id} key={`persona-${persona.id}`} value={`Persona ${index}: ${persona.name}`}>
-                  <Item>
-                    <StyledAvatar alt={persona.name} src={persona.profilePicUrl} />
-                    <StyledTypography>{persona.name}</StyledTypography>
-                  </Item>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Select
+            autocomplete={apiPersonasAutocomplete}
+            defaultOptions={personas}
+            list={apiPersonaSimpleList}
+            onChange={selectPersona}
+            placeholder="Persona *"
+            setOptions={setPersonas}
+          />
           <TextField
             disabled={isFormLoading}
             fullWidth
@@ -138,6 +96,7 @@ const CurationForm = ({
               onChange={editSpotlightValue}
               personas={personas}
               setForm={setForm}
+              setPersonas={setPersonas}
             />
           </Section>
         </Card>
@@ -216,10 +175,10 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    selectPersona: ({ form, setForm }) => (index, newValue) => {
+    selectPersona: ({ form, setForm }) => selected => {
       setForm({
         ...form,
-        personaId: newValue.props.id,
+        personaId: selected.value.id,
       })
     },
     onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
         delete "/users/sign_out", to: "users/sessions#destroy"
       end
 
+      get "/personas/autocomplete", to: "autocompletes#personas_autocomplete"
       resources :personas, only: %i[index show update create]
       delete "/personas", to: "personas#destroy"
 
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
       post "/triggers/sort", to: "triggers#sort"
       delete "/triggers", to: "triggers#destroy"
       resources :flows, only: %i[index]
+      get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
 
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]

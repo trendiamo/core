@@ -167,6 +167,7 @@ export const apiPersonaShow = id => apiGetRequest(`${PERSONAS_URL}/${id}`)
 export const apiPersonaCreate = body => apiCreateRequest(PERSONAS_URL, body)
 export const apiPersonaUpdate = (id, body) => apiUpdateRequest(`${PERSONAS_URL}/${id}`, body)
 export const apiPersonaDestroy = body => apiDestroyMultipleRequest(PERSONAS_URL, body)
+export const apiPersonasAutocomplete = query => apiGetRequest(`${PERSONAS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiOutroList = query => apiListRequest(`${OUTROS_URL}/?${stringify(query)}`)
 export const apiOutroDestroy = body => apiDestroyMultipleRequest(OUTROS_URL, body)
@@ -191,3 +192,4 @@ export const apiTriggerUpdate = (id, body) => apiUpdateRequest(`${TRIGGERS_URL}/
 export const apiTriggerSort = body => apiCreateRequest(`${TRIGGERS_URL}/sort`, body)
 
 export const apiFlowsList = () => apiGetRequest(FLOWS_URL)
+export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocomplete/?${stringify(query)}`)

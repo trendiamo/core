@@ -1,39 +1,18 @@
 import ProductPick from './product-pick'
 import React from 'react'
-import styled from 'styled-components'
+import Select from 'shared/select'
 import { AddItemButton, Cancel, Section } from 'shared/form-elements'
-import {
-  Avatar,
-  FormControl,
-  Grid,
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@material-ui/core'
+import { apiPersonasAutocomplete, apiPersonaSimpleList } from 'utils'
 import { compose, withHandlers } from 'recompose'
-
-const StyledAvatar = styled(Avatar)`
-  display: inline-block;
-`
-
-const StyledTypography = styled(Typography)`
-  display: inline-block;
-  margin-left: 20px;
-`
-
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-`
+import { Grid, TextField, Typography } from '@material-ui/core'
 
 const Spotlight = ({
   personas,
+  setPersonas,
   addProductPick,
   index,
   deleteProductPick,
+  selectPersona,
   form,
   editProductPickValue,
   isFormLoading,
@@ -51,27 +30,15 @@ const Spotlight = ({
         required
         value={form.spotlightsAttributes[index].text}
       />
-      <FormControl disabled={isFormLoading} fullWidth>
-        <InputLabel htmlFor="persona-label-placeholder" shrink>
-          {'Persona'}
-        </InputLabel>
-        <Select
-          displayEmpty
-          input={<Input id="persona-label-placeholder" name="persona" />}
-          name="personaId"
-          onChange={editSpotlightValue}
-          value={form.spotlightsAttributes[index].personaId}
-        >
-          {personas.map(persona => (
-            <MenuItem key={`persona-${persona.id}`} value={persona.id}>
-              <Item>
-                <StyledAvatar alt={persona.name} src={persona.profilePicUrl} />
-                <StyledTypography>{persona.name}</StyledTypography>
-              </Item>
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Select
+        autocomplete={apiPersonasAutocomplete}
+        defaultOptions={personas}
+        list={apiPersonaSimpleList}
+        name="personaId"
+        onChange={selectPersona}
+        placeholder="Persona *"
+        setOptions={setPersonas}
+      />
     </Grid>
     <div style={{ marginTop: '24px' }}>
       {form.spotlightsAttributes[index].productPicksAttributes.map((productPick, productPickIndex) => (
@@ -106,6 +73,14 @@ export default compose(
   withHandlers({
     editSpotlightValue: ({ index, onChange }) => event => {
       onChange(index, event.target)
+    },
+    selectPersona: ({ form, setForm, index }) => selected => {
+      const newSpotlightAttributes = {
+        ...form.spotlightsAttributes[index],
+        personaId: selected.value.id,
+      }
+      form.spotlightsAttributes[index] = newSpotlightAttributes
+      setForm(form)
     },
     addProductPick: ({ form, index, setForm }) => () => {
       const newProductPicks = [
