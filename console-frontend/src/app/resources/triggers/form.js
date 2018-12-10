@@ -1,7 +1,6 @@
 import CircularProgress from 'shared/circular-progress'
 import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
@@ -71,41 +70,31 @@ const TriggerForm = ({
             setOptions={setFlows}
           />
         </FormControl>
-        <div>
-          <LabelContainer>
-            <InputLabel>{'Url Matchers'}</InputLabel>
-          </LabelContainer>
-          {form.urlMatchers.length === 0 ? (
-            <FlexDiv>
-              <StyledUrlTextField
-                disabled={isFormLoading}
-                index={0}
-                onChange={editUrlValue}
-                required
-                value={form.urlMatchers[0]}
-              />
+        <LabelContainer>
+          <InputLabel>{'Url Matchers'}</InputLabel>
+        </LabelContainer>
+        {form.urlMatchers.length === 0 ? (
+          <FlexDiv>
+            <StyledUrlTextField
+              disabled={isFormLoading}
+              index={0}
+              onChange={editUrlValue}
+              required
+              value={form.urlMatchers[0]}
+            />
+          </FlexDiv>
+        ) : (
+          form.urlMatchers.map((url, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <FlexDiv key={index}>
+              <StyledUrlTextField disabled={isFormLoading} index={index} onChange={editUrlValue} required value={url} />
+              {form.urlMatchers.length > 1 && (
+                <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
+              )}
             </FlexDiv>
-          ) : (
-            form.urlMatchers.map((url, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <FlexDiv key={index}>
-                <StyledUrlTextField
-                  disabled={isFormLoading}
-                  index={index}
-                  onChange={editUrlValue}
-                  required
-                  value={url}
-                />
-                {form.urlMatchers.length > 1 && (
-                  <IconButton>
-                    <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
-                  </IconButton>
-                )}
-              </FlexDiv>
-            ))
-          )}
-          <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
-        </div>
+          ))
+        )}
+        <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
       </Form>
     </Grid>
   </PaperContainer>
