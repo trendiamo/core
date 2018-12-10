@@ -1,5 +1,6 @@
 import CircularProgress from 'shared/circular-progress'
 import FormControl from '@material-ui/core/FormControl'
+import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
 import PaperContainer from 'app/layout/paper-container'
@@ -55,50 +56,58 @@ const TriggerForm = ({
 }) => (
   <PaperContainer>
     <Typography variant="subtitle1">{title}</Typography>
-    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-      <FormControl disabled={isFormLoading} fullWidth>
-        <InputLabel htmlFor="flow-label-placeholder" shrink>
-          {'Flow'}
-        </InputLabel>
-        <Select
-          autocomplete={apiFlowsAutocomplete}
-          defaultOptions={flows}
-          list={apiFlowsList}
-          onChange={selectFlow}
-          placeholder="Flow *"
-          setOptions={setFlows}
-        />
-      </FormControl>
-      <div>
-        <LabelContainer>
-          <InputLabel>{'Url Matchers'}</InputLabel>
-        </LabelContainer>
-        {form.urlMatchers.length === 0 ? (
-          <FlexDiv>
-            <StyledUrlTextField
-              disabled={isFormLoading}
-              index={0}
-              onChange={editUrlValue}
-              required
-              value={form.urlMatchers[0]}
-            />
-          </FlexDiv>
-        ) : (
-          form.urlMatchers.map((url, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <FlexDiv key={index}>
-              <StyledUrlTextField disabled={isFormLoading} index={index} onChange={editUrlValue} required value={url} />
-              {form.urlMatchers.length > 1 && (
-                <IconButton>
-                  <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
-                </IconButton>
-              )}
+    <Grid item sm={6}>
+      <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+        <FormControl disabled={isFormLoading} fullWidth>
+          <InputLabel htmlFor="flow-label-placeholder" shrink>
+            {'Flow'}
+          </InputLabel>
+          <Select
+            autocomplete={apiFlowsAutocomplete}
+            defaultOptions={flows}
+            list={apiFlowsList}
+            onChange={selectFlow}
+            placeholder="Flow *"
+            setOptions={setFlows}
+          />
+        </FormControl>
+        <div>
+          <LabelContainer>
+            <InputLabel>{'Url Matchers'}</InputLabel>
+          </LabelContainer>
+          {form.urlMatchers.length === 0 ? (
+            <FlexDiv>
+              <StyledUrlTextField
+                disabled={isFormLoading}
+                index={0}
+                onChange={editUrlValue}
+                required
+                value={form.urlMatchers[0]}
+              />
             </FlexDiv>
-          ))
-        )}
-        <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
-      </div>
-    </Form>
+          ) : (
+            form.urlMatchers.map((url, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <FlexDiv key={index}>
+                <StyledUrlTextField
+                  disabled={isFormLoading}
+                  index={index}
+                  onChange={editUrlValue}
+                  required
+                  value={url}
+                />
+                {form.urlMatchers.length > 1 && (
+                  <IconButton>
+                    <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
+                  </IconButton>
+                )}
+              </FlexDiv>
+            ))
+          )}
+          <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
+        </div>
+      </Form>
+    </Grid>
   </PaperContainer>
 )
 
