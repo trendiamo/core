@@ -27,6 +27,12 @@ const StyledSelect = styled(AsyncSelect)`
   .react-select__option {
     color: #77777f;
   }
+  .react-select__option--is-selected {
+    background-color: #f2f4f7;
+  }
+  .react-select__option--is-focused {
+    background-color: #deebff;
+  }
   .react-select__placeholder {
     color: #77777f;
   }
@@ -42,26 +48,15 @@ const StyledSelect = styled(AsyncSelect)`
 const Select = compose(
   withHandlers({
     loadOptions: ({ autocomplete, name }) => async searchQuery => {
+      if (searchQuery.length <= 2) return
       const rawOptions = await autocomplete({ searchQuery })
       const options = rawOptions.map(option => {
         return { value: option, label: option.name, name }
       })
       return options
     },
-    loadAllOptions: ({ setOptions, list, name }) => async searchQuery => {
-      const rawOptions = await list({ searchQuery })
-      const options = rawOptions.map(option => {
-        return { value: option, label: option.name, name }
-      })
-      setOptions(options)
-    },
-  }),
-  withHandlers({
-    handleLoadAllOptions: ({ loadAllOptions }) => searchQuery => {
-      loadAllOptions(searchQuery)
-    },
   })
-)(({ onChange, options, handleLoadAllOptions, placeholder, defaultOptions, loadOptions }) => (
+)(({ options, defaultOptions, placeholder, loadOptions, onChange }) => (
   <StyledSelect
     cacheOptions
     classNamePrefix="react-select"
@@ -69,7 +64,6 @@ const Select = compose(
     loadOptions={loadOptions}
     menuPlacement="auto"
     onChange={onChange}
-    onMenuOpen={handleLoadAllOptions}
     options={options}
     placeholder={placeholder}
   />

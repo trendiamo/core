@@ -1,8 +1,9 @@
+import debounce from 'debounce-promise'
 import ProductPick from './product-pick'
 import React from 'react'
 import Select from 'shared/select'
 import { AddItemButton, Cancel, Section } from 'shared/form-elements'
-import { apiPersonasAutocomplete, apiPersonaSimpleList } from 'utils'
+import { apiPersonasAutocomplete } from 'utils'
 import { compose, withHandlers } from 'recompose'
 import { Grid, TextField, Typography } from '@material-ui/core'
 
@@ -31,9 +32,10 @@ const Spotlight = ({
         value={form.spotlightsAttributes[index].text}
       />
       <Select
-        autocomplete={apiPersonasAutocomplete}
-        defaultOptions={personas}
-        list={apiPersonaSimpleList}
+        autocomplete={debounce(apiPersonasAutocomplete, 150)}
+        defaultOptions={personas.map(persona => {
+          return { value: persona, label: persona.name, name: 'personaId' }
+        })}
         name="personaId"
         onChange={selectPersona}
         placeholder="Persona *"

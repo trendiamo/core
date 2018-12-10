@@ -1,4 +1,5 @@
 import CircularProgress from 'shared/circular-progress'
+import debounce from 'debounce-promise'
 import React from 'react'
 import routes from 'app/routes'
 import Select from 'shared/select'
@@ -44,9 +45,10 @@ const CurationForm = ({
             value={form.name}
           />
           <Select
-            autocomplete={apiPersonasAutocomplete}
-            defaultOptions={personas}
-            list={apiPersonaSimpleList}
+            autocomplete={debounce(apiPersonasAutocomplete, 150)}
+            defaultOptions={personas.map(persona => {
+              return { value: persona, label: persona.name }
+            })}
             onChange={selectPersona}
             placeholder="Persona *"
             setOptions={setPersonas}
