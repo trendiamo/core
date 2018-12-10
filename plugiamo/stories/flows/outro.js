@@ -1,8 +1,8 @@
 /* eslint-disable local-rules/no-relative-parent-imports */
-import OutroComp from 'app/content/outro'
 import Plugin from '../plugin'
 import { h } from 'preact'
 import { Main } from '../components'
+import { Outro as OutroComp } from 'plugin-base'
 
 const Outro = () => (
   <div>

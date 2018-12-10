@@ -1,5 +1,5 @@
+import React from 'react'
 import styled from 'styled-components'
-import { h } from 'preact'
 
 const Wrapper = styled.div`
   background: linear-gradient(to bottom, #f3fdff, #fff);
