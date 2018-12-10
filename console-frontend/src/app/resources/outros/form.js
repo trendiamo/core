@@ -1,9 +1,11 @@
 import CircularProgress from 'shared/circular-progress'
 import debounce from 'debounce-promise'
 import PaperContainer from 'app/layout/paper-container'
+import PluginPreviewFrame from 'shared/plugin-preview-frame'
 import React from 'react'
 import routes from 'app/routes'
 import Select from 'shared/select'
+import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
@@ -11,8 +13,22 @@ import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid } from '@material-ui/core'
+import { Outro } from 'plugin-base'
 import { TextField } from '@material-ui/core'
 import { withRouter } from 'react-router'
+
+const PluginPreview = styled(({ className, persona }) => (
+  <PluginPreviewFrame className={className}>
+    <Outro persona={persona} />
+  </PluginPreviewFrame>
+))`
+  border: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  width: 320px;
+  height: 500px;
+  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+`
 
 const OutroForm = ({
   formRef,
@@ -23,40 +39,69 @@ const OutroForm = ({
   isFormLoading,
   isFormPristine,
   onFormSubmit,
+  previewOutro,
   title,
 }) => (
   <PaperContainer>
     <Typography variant="subtitle1">{title}</Typography>
-    <Grid item sm={6}>
-      <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-        <TextField
-          autoFocus
-          disabled={isFormLoading}
-          fullWidth
-          label="Name"
-          margin="normal"
-          name="name"
-          onChange={setFieldValue}
-          required
-          value={form.name}
-        />
-      </Form>
-      <Select
-        autocomplete={debounce(apiPersonasAutocomplete, 150)}
-        defaultValue={form.personaId ? { value: form.personaId, label: form.personaLabel } : null}
-        onChange={selectPersona}
-        placeholder="Persona *"
-      />
+    <Grid container spacing={24}>
+      <Grid item sm={6}>
+        <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+          <TextField
+            autoFocus
+            disabled={isFormLoading}
+            fullWidth
+            label="Name"
+            margin="normal"
+            name="name"
+            onChange={setFieldValue}
+            required
+            value={form.name}
+          />
+          <Select
+            autocomplete={debounce(apiPersonasAutocomplete, 150)}
+            defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+            onChange={selectPersona}
+            placeholder="Persona *"
+          />
+        </Form>
+      </Grid>
+      <Grid item sm={6} style={{ display: 'flex', justifyContent: 'center' }}>
+        <PluginPreview persona={previewOutro.persona} />
+      </Grid>
     </Grid>
   </PaperContainer>
 )
 
+const emptyPreviewOutro = {
+  persona: {
+    name: '',
+    profilePic: {
+      url: '',
+    },
+  },
+}
+
 export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
+  withState('previewOutro', 'setPreviewOutro', emptyPreviewOutro),
   withHandlers({
-    loadFormObject: ({ loadFormObject }) => async () => {
-      return loadFormObject()
+    convertPersona: () => persona => ({
+      name: persona ? persona.name : '',
+      profilePic: {
+        url: persona ? persona.profilePicUrl : '',
+      },
+    }),
+  }),
+  withHandlers({
+    loadFormObject: ({ convertPersona, loadFormObject, previewOutro, setPreviewOutro }) => async () => {
+      const result = await loadFormObject()
+      setPreviewOutro({
+        ...previewOutro,
+        persona: convertPersona(result.__persona),
+      })
+      return result
     },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
@@ -68,10 +113,14 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    selectPersona: ({ form, setForm }) => selected => {
+    selectPersona: ({ convertPersona, form, previewOutro, setForm, setPreviewOutro }) => ({ value }) => {
       setForm({
         ...form,
-        personaId: selected.value.id,
+        personaId: value.id,
+      })
+      setPreviewOutro({
+        ...previewOutro,
+        persona: convertPersona(value),
       })
     },
     onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {

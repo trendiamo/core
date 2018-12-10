@@ -1,8 +1,8 @@
 import Curation from './curation'
 import history from 'ext/history'
-import Outro from './outro'
 import ScriptedChat from './scripted-chat'
 import { h } from 'preact'
+import { Outro } from 'plugin-base'
 import { Router as SimpleRouter } from 'ext/simple-router'
 
 const Router = ({ persona, isTransitioning, onRouteChange, onToggleContent }) => (

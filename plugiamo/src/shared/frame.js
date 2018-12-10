@@ -4,13 +4,14 @@ import { compose, lifecycle, withState } from 'recompose'
 import { h } from 'preact'
 import { StyleSheetManager } from 'styled-components'
 
-const Frame = ({ children, iframeRef, isLoaded, setIframeRef, className, title, ...rest }) => (
-  <iframe {...omit(rest, ['iframeRef'])} className={className} ref={setIframeRef} tabIndex="-1" title={title}>
-    {iframeRef &&
+const Frame = ({ children, iframeRef, isLoaded, setIframeRef, title, ...rest }) => (
+  <iframe {...omit(rest, ['setIsLoaded'])} ref={setIframeRef} tabIndex="-1" title={title}>
+    {isLoaded &&
+      iframeRef &&
       iframeRef.contentDocument &&
       iframeRef.contentDocument.body &&
       ReactDOM.createPortal(
-        <StyleSheetManager target={iframeRef.contentDocument.head}>{isLoaded ? children : <div />}</StyleSheetManager>,
+        <StyleSheetManager target={iframeRef.contentDocument.head}>{children}</StyleSheetManager>,
         iframeRef.contentDocument.body
       )}
   </iframe>
@@ -21,7 +22,8 @@ const style = `
   box-sizing: border-box;
 }
 body, html {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  margin: 0;
 }
 `
 
