@@ -9,6 +9,7 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete, apiPersonaSimpleList } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { Grid } from '@material-ui/core'
 import { TextField } from '@material-ui/core'
 import { withRouter } from 'react-router'
 
@@ -27,27 +28,29 @@ const OutroForm = ({
 }) => (
   <PaperContainer>
     <Typography variant="subtitle1">{title}</Typography>
-    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-      <TextField
-        autoFocus
-        disabled={isFormLoading}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
+    <Grid item sm={6}>
+      <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+        <TextField
+          autoFocus
+          disabled={isFormLoading}
+          fullWidth
+          label="Name"
+          margin="normal"
+          name="name"
+          onChange={setFieldValue}
+          required
+          value={form.name}
+        />
+      </Form>
+      <Select
+        autocomplete={apiPersonasAutocomplete}
+        defaultOptions={personas}
+        list={apiPersonaSimpleList}
+        onChange={selectPersona}
+        placeholder="Persona *"
+        setOptions={setPersonas}
       />
-    </Form>
-    <Select
-      autocomplete={apiPersonasAutocomplete}
-      defaultOptions={personas}
-      list={apiPersonaSimpleList}
-      onChange={selectPersona}
-      placeholder="Persona *"
-      setOptions={setPersonas}
-    />
+    </Grid>
   </PaperContainer>
 )
 
