@@ -1,4 +1,5 @@
 import CircularProgress from 'shared/circular-progress'
+import debounce from 'debounce-promise'
 import React from 'react'
 import routes from 'app/routes'
 import Select from 'shared/select'
@@ -6,7 +7,7 @@ import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Cancel, Card, Form, Section } from 'shared/form-elements'
-import { apiPersonasAutocomplete, apiPersonaSimpleList } from 'utils'
+import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid, TextField } from '@material-ui/core'
 import { withRouter } from 'react-router'
@@ -21,7 +22,6 @@ const CurationForm = ({
   isFormPristine,
   onFormSubmit,
   setFieldValue,
-  setPersonas,
   deleteSpotlight,
   editSpotlightValue,
   addSpotlight,
@@ -44,12 +44,10 @@ const CurationForm = ({
             value={form.name}
           />
           <Select
-            autocomplete={apiPersonasAutocomplete}
-            defaultOptions={personas}
-            list={apiPersonaSimpleList}
+            autocomplete={debounce(apiPersonasAutocomplete, 150)}
+            defaultValue={form.personaId ? { value: form.personaId, label: form.personaLabel } : null}
             onChange={selectPersona}
             placeholder="Persona *"
-            setOptions={setPersonas}
           />
           <TextField
             disabled={isFormLoading}
@@ -96,7 +94,6 @@ const CurationForm = ({
               onChange={editSpotlightValue}
               personas={personas}
               setForm={setForm}
-              setPersonas={setPersonas}
             />
           </Section>
         </Card>
@@ -109,11 +106,8 @@ const CurationForm = ({
 export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
-  withState('personas', 'setPersonas', []),
   withHandlers({
-    loadFormObject: ({ loadFormObject, setPersonas }) => async () => {
-      const personas = await apiPersonaSimpleList()
-      setPersonas(personas)
+    loadFormObject: ({ loadFormObject }) => async () => {
       return loadFormObject()
     },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {

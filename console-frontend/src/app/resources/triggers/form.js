@@ -1,4 +1,5 @@
 import CircularProgress from 'shared/circular-progress'
+import debounce from 'debounce-promise'
 import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -42,10 +43,8 @@ const TriggerForm = ({
   addUrlSelect,
   deleteUrlMatcher,
   editUrlValue,
-  flows,
   form,
   formRef,
-  setFlows,
   errors,
   isFormLoading,
   isFormPristine,
@@ -62,12 +61,10 @@ const TriggerForm = ({
             {'Flow'}
           </InputLabel>
           <Select
-            autocomplete={apiFlowsAutocomplete}
-            defaultOptions={flows}
-            list={apiFlowsList}
+            autocomplete={debounce(apiFlowsAutocomplete, 150)}
+            defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}
             onChange={selectFlow}
             placeholder="Flow *"
-            setOptions={setFlows}
           />
         </FormControl>
         <LabelContainer>

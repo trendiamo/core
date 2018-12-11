@@ -24,6 +24,7 @@ export default compose(
       return {
         personaId: response.persona.id || '',
         name: response.name || '',
+        personaLabel: response.persona.name || '',
       }
     },
   })

@@ -27,6 +27,7 @@ export default compose(
         flowId: response.flowId || '',
         flowType: response.flowType || '',
         urlMatchers: response.urlMatchers || [''],
+        flowLabel: response.flow.name,
       }
     },
   })

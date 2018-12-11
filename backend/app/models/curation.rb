@@ -13,7 +13,7 @@ class Curation < ApplicationRecord
   def as_json(_options = {})
     attributes
       .slice("id", "title", "subtitle", "name", "created_at", "updated_at")
-      .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url },
+      .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Curation")
   end
@@ -22,7 +22,7 @@ class Curation < ApplicationRecord
     spotlights.map do |spotlight|
       {
         text: spotlight.text,
-        persona_id: spotlight.persona.id,
+        persona: { id: spotlight.persona.id, name: spotlight.persona.name },
         product_picks_attributes: product_picks_attributes(spotlight.product_picks),
       }
     end

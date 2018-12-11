@@ -26,9 +26,11 @@ export default compose(
         personaId: response.persona.id || '',
         title: response.title || '',
         subtitle: response.subtitle || '',
+        personaLabel: response.persona.name || '',
         spotlightsAttributes: response.spotlightsAttributes.map(spotlight => ({
           text: spotlight.text || '',
-          personaId: spotlight.personaId || '',
+          personaId: spotlight.persona.id || '',
+          personaLabel: spotlight.persona.name || '',
           productPicksAttributes: spotlight.productPicksAttributes
             ? spotlight.productPicksAttributes.map(productPick => ({
                 url: productPick.url || '',
