@@ -55,6 +55,17 @@ export const styles = theme => ({
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
+  appBarButton: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    '&:hover': {
+      background: '#fff !important',
+    },
+    [theme.breakpoints.down('sm')]: {
+      background: '#fff',
+      color: theme.palette.primary.main,
+    },
+  },
   appFrame: {
     display: 'flex',
     flexDirection: 'column',
@@ -174,7 +185,7 @@ export const styles = theme => ({
     transform: 'translateY(-50%)',
   },
   menuButton: {
-    color: '#777',
+    color: theme.customPalette.sidebar.main,
     marginRight: '6px',
     [theme.breakpoints.down('sm')]: {
       color: '#fff',
@@ -224,17 +235,29 @@ export const styles = theme => ({
     zIndex: 1,
   },
   title: {
-    color: '#777',
+    color: theme.customPalette.sidebar.main,
     display: 'inline-block',
-    marginRight: '5px',
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    fontSize: '14px',
+    marginRight: '2px',
     [theme.breakpoints.down('sm')]: {
       color: theme.palette.primary.contrastText,
       fontSize: '16px',
     },
+    transition: createTransition(theme, ['color']),
   },
   titleResponsive: {
     [theme.breakpoints.down('sm')]: {
       display: 'none',
+    },
+  },
+  titleHighlight: {
+    [theme.breakpoints.up('md')]: {
+      '&:hover': {
+        color: theme.palette.primary.main,
+      },
     },
   },
   toolbar: {

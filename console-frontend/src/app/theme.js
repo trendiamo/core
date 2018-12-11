@@ -43,8 +43,12 @@ const palette = {
     main: '#ffaa00', // weird color is temporary here: make sure we're not using this yet.
   },
   text: {
-    disabled: '#ccc',
-    hint: '#ddd',
+    disabled: '#999',
+    hint: '#999',
+  },
+  action: {
+    disabled: '#fff',
+    disabledBackground: '#575a6a',
   },
 }
 
