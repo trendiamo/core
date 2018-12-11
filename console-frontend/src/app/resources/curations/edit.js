@@ -28,11 +28,13 @@ export default compose(
         subtitle: response.subtitle || '',
         __persona: response.persona,
         spotlightsAttributes: response.spotlightsAttributes.map(spotlight => ({
+          id: spotlight.id || '',
           text: spotlight.text || '',
           personaId: spotlight.persona.id || '',
           __persona: spotlight.persona,
           productPicksAttributes: spotlight.productPicksAttributes
             ? spotlight.productPicksAttributes.map(productPick => ({
+                id: productPick.id || '',
                 url: productPick.url || '',
                 name: productPick.name || '',
                 description: productPick.description || '',
