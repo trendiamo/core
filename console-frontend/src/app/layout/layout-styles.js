@@ -58,10 +58,10 @@ export const styles = theme => ({
   appBarButton: {
     overflow: 'hidden',
     whiteSpace: 'nowrap',
-    '&:hover': {
-      background: '#fff !important',
-    },
     [theme.breakpoints.down('sm')]: {
+      '&:hover': {
+        background: '#fff !important',
+      },
       background: '#fff',
       color: theme.palette.primary.main,
     },
