@@ -21,6 +21,7 @@ class Curation < ApplicationRecord
   def spotlights_attributes(spotlights)
     spotlights.map do |spotlight|
       {
+        id: spotlight.id,
         text: spotlight.text,
         persona: { id: spotlight.persona.id, name: spotlight.persona.name },
         product_picks_attributes: product_picks_attributes(spotlight.product_picks),
@@ -31,6 +32,7 @@ class Curation < ApplicationRecord
   def product_picks_attributes(product_picks)
     product_picks.map do |product_pick|
       {
+        id: product_pick.id,
         url: product_pick.url,
         name: product_pick.name,
         description: product_pick.description,
