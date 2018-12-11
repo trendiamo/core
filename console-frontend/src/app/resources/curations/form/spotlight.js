@@ -32,12 +32,10 @@ const Spotlight = ({
       <Select
         autocomplete={debounce(apiPersonasAutocomplete, 150)}
         defaultValue={
-          form.spotlightsAttributes[index].personaId
-            ? {
-                value: form.spotlightsAttributes[index].personaId,
-                label: form.spotlightsAttributes[index].personaLabel,
-              }
-            : null
+          form.spotlightsAttributes[index].__persona && {
+            value: form.spotlightsAttributes[index].__persona.id,
+            label: form.spotlightsAttributes[index].__persona.name,
+          }
         }
         name="personaId"
         onChange={selectPersona}
@@ -82,7 +80,7 @@ export default compose(
       const newSpotlightAttributes = {
         ...form.spotlightsAttributes[index],
         personaId: selected.value.id,
-        personaLabel: selected.value.name,
+        __persona: selected.value,
       }
       form.spotlightsAttributes[index] = newSpotlightAttributes
       setForm(form)

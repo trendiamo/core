@@ -1,4 +1,5 @@
 import auth from 'auth'
+import omitDeep from 'ext/lodash/omit-deep'
 import { BASE_API_URL, convertToInfo } from './shared'
 import { stringify } from 'query-string'
 
@@ -13,6 +14,8 @@ const WEBSITES_URL = `${BASE_API_URL}/websites`
 const FLOWS_URL = `${BASE_API_URL}/flows`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
 const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
+
+const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
 const authFetch = async (url, params) => {
   const result = await fetch(url, params)
@@ -37,7 +40,7 @@ const apiDestroyRequest = async url => {
 
 const apiDestroyMultipleRequest = async (url, body) => {
   const res = await authFetch(url, {
-    body: JSON.stringify(body),
+    body: JSON.stringify(filterBody(body)),
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -50,7 +53,7 @@ const apiDestroyMultipleRequest = async (url, body) => {
 
 const apiCreateRequest = async (url, body) => {
   const res = await authFetch(url, {
-    body: JSON.stringify(body),
+    body: JSON.stringify(filterBody(body)),
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -63,7 +66,7 @@ const apiCreateRequest = async (url, body) => {
 
 const apiUpdateRequest = async (url, body) => {
   const res = await authFetch(url, {
-    body: JSON.stringify(body),
+    body: JSON.stringify(filterBody(body)),
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',

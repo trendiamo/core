@@ -45,7 +45,7 @@ const CurationForm = ({
           />
           <Select
             autocomplete={debounce(apiPersonasAutocomplete, 150)}
-            defaultValue={form.personaId ? { value: form.personaId, label: form.personaLabel } : null}
+            defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
             onChange={selectPersona}
             placeholder="Persona *"
           />
