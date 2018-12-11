@@ -1,4 +1,4 @@
-import Button from '@material-ui/core/Button'
+import AppBarButton from 'shared/app-bar-button'
 import Checkbox from '@material-ui/core/Checkbox'
 import CircularProgress from 'shared/circular-progress'
 import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
@@ -17,15 +17,10 @@ const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
 `
 
-const StyledButton = styled(Button)`
-  overflow: hidden;
-  white-space: nowrap;
-`
-
 const Actions = ({ createRoute }) => (
-  <StyledButton color="primary" component={Link} to={createRoute} variant="contained">
+  <AppBarButton color="primary" component={Link} to={createRoute} variant="contained">
     {'Create New'}
-  </StyledButton>
+  </AppBarButton>
 )
 
 const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>

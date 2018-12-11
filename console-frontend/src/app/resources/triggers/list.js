@@ -1,3 +1,4 @@
+import AppBarButton from 'shared/app-bar-button'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import Chip from '@material-ui/core/Chip'
@@ -43,15 +44,10 @@ const StyledReorderIcon = styled(ReorderIcon)`
   cursor: ns-resize;
 `
 
-const StyledButton = styled(Button)`
-  overflow: hidden;
-  white-space: nowrap;
-`
-
 const Actions = () => (
-  <StyledButton color="primary" component={Link} to={routes.triggerCreate()} variant="contained">
+  <AppBarButton color="primary" component={Link} to={routes.triggerCreate()} variant="contained">
     {'Create New'}
-  </StyledButton>
+  </AppBarButton>
 )
 
 const columns = [

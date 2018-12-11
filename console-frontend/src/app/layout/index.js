@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Menu from './menu'
 import React from 'react'
 import Sidebar from './sidebar'
+import withClasses from 'ext/recompose/with-classes'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { styles } from './layout-styles'
 import { withRouter } from 'react-router'
@@ -45,6 +46,7 @@ const EnhancedLayout = compose(
   withProps(() => ({
     isLoggedIn: auth.isLoggedIn(),
   })),
+  withClasses,
   branch(({ isLoggedIn }) => !isLoggedIn, renderComponent(props => <EmptyLayout {...props} />))
 )(Layout)
 

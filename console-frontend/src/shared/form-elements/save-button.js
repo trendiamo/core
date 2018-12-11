@@ -1,10 +1,10 @@
-import MuiButton from '@material-ui/core/Button'
+import AppBarButton from 'shared/app-bar-button'
 import React from 'react'
 
 const Button = ({ message, ...props }) => (
-  <MuiButton {...props} color="primary" type="submit" variant="contained">
+  <AppBarButton color="primary" {...props} type="submit" variant="contained">
     {message || 'Save'}
-  </MuiButton>
+  </AppBarButton>
 )
 
 export default Button
