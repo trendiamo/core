@@ -1,4 +1,5 @@
 import CircularProgress from 'shared/circular-progress'
+import debounce from 'debounce-promise'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
@@ -7,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
-import { apiPersonasAutocomplete, apiPersonaSimpleList } from 'utils'
+import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid } from '@material-ui/core'
 import { TextField } from '@material-ui/core'
@@ -22,8 +23,6 @@ const OutroForm = ({
   isFormLoading,
   isFormPristine,
   onFormSubmit,
-  personas,
-  setPersonas,
   title,
 }) => (
   <PaperContainer>
@@ -43,12 +42,10 @@ const OutroForm = ({
         />
       </Form>
       <Select
-        autocomplete={apiPersonasAutocomplete}
-        defaultOptions={personas}
-        list={apiPersonaSimpleList}
+        autocomplete={debounce(apiPersonasAutocomplete, 150)}
+        defaultValue={form.personaId ? { value: form.personaId, label: form.personaLabel } : null}
         onChange={selectPersona}
         placeholder="Persona *"
-        setOptions={setPersonas}
       />
     </Grid>
   </PaperContainer>
@@ -57,11 +54,8 @@ const OutroForm = ({
 export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
-  withState('personas', 'setPersonas', []),
   withHandlers({
-    loadFormObject: ({ loadFormObject, setPersonas }) => async () => {
-      const personas = await apiPersonaSimpleList()
-      setPersonas(personas)
+    loadFormObject: ({ loadFormObject }) => async () => {
       return loadFormObject()
     },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {

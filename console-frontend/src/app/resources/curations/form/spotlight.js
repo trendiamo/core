@@ -1,14 +1,13 @@
+import debounce from 'debounce-promise'
 import ProductPick from './product-pick'
 import React from 'react'
 import Select from 'shared/select'
 import { AddItemButton, Cancel, Section } from 'shared/form-elements'
-import { apiPersonasAutocomplete, apiPersonaSimpleList } from 'utils'
+import { apiPersonasAutocomplete } from 'utils'
 import { compose, withHandlers } from 'recompose'
 import { Grid, TextField, Typography } from '@material-ui/core'
 
 const Spotlight = ({
-  personas,
-  setPersonas,
   addProductPick,
   index,
   deleteProductPick,
@@ -31,13 +30,18 @@ const Spotlight = ({
         value={form.spotlightsAttributes[index].text}
       />
       <Select
-        autocomplete={apiPersonasAutocomplete}
-        defaultOptions={personas}
-        list={apiPersonaSimpleList}
+        autocomplete={debounce(apiPersonasAutocomplete, 150)}
+        defaultValue={
+          form.spotlightsAttributes[index].personaId
+            ? {
+                value: form.spotlightsAttributes[index].personaId,
+                label: form.spotlightsAttributes[index].personaLabel,
+              }
+            : null
+        }
         name="personaId"
         onChange={selectPersona}
         placeholder="Persona *"
-        setOptions={setPersonas}
       />
     </Grid>
     <div style={{ marginTop: '24px' }}>
@@ -78,6 +82,7 @@ export default compose(
       const newSpotlightAttributes = {
         ...form.spotlightsAttributes[index],
         personaId: selected.value.id,
+        personaLabel: selected.value.name,
       }
       form.spotlightsAttributes[index] = newSpotlightAttributes
       setForm(form)
