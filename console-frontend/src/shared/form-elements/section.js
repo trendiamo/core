@@ -20,7 +20,7 @@ const SectionContainer = styled.div`
 `
 
 const Content = styled.div`
-  margin: 16px 0 16px;
+  margin: 0px 0 16px;
 `
 
 const Section = ({ title, children, folded, foldable, toggleFolded, actions, hideTop, hideBottom }) => (

@@ -2,10 +2,10 @@ import debounce from 'debounce-promise'
 import ProductPick from './product-pick'
 import React from 'react'
 import Select from 'shared/select'
-import { AddItemButton, Cancel, Section } from 'shared/form-elements'
+import { AddItemButton, Cancel, Divider, Section } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { compose, withHandlers } from 'recompose'
-import { Grid, TextField, Typography } from '@material-ui/core'
+import { Grid, TextField } from '@material-ui/core'
 
 const Spotlight = ({
   addProductPick,
@@ -43,29 +43,31 @@ const Spotlight = ({
       />
     </Grid>
     <div style={{ marginTop: '24px' }}>
-      {form.spotlightsAttributes[index].productPicksAttributes.map((productPick, productPickIndex) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <div key={productPickIndex}>
-          <Section
-            actions={
-              form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
-                <Cancel disabled={isFormLoading} index={productPickIndex} onClick={deleteProductPick} />
-              )
-            }
-            foldable
-            title="Spotlight Product Picks"
-          >
-            <div>
-              <Typography variant="subtitle1">{`Product Pick #${productPickIndex + 1}`}</Typography>
-              <ProductPick
-                form={form.spotlightsAttributes[index]}
-                index={productPickIndex}
-                onChange={editProductPickValue}
-              />
-            </div>
-          </Section>
-        </div>
-      ))}
+      <Section foldable title="Spotlight Product Picks">
+        {form.spotlightsAttributes[index].productPicksAttributes.map((productPick, productPickIndex) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={productPickIndex}>
+            <Section
+              actions={
+                form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
+                  <Cancel disabled={isFormLoading} index={productPickIndex} onClick={deleteProductPick} />
+                )
+              }
+              hideBottom
+              hideTop={productPickIndex === 0}
+              title={`Product Pick #${productPickIndex + 1}`}
+            >
+              <div>
+                <ProductPick
+                  form={form.spotlightsAttributes[index]}
+                  index={productPickIndex}
+                  onChange={editProductPickValue}
+                />
+              </div>
+            </Section>
+          </div>
+        ))}
+      </Section>
     </div>
     <AddItemButton disabled={isFormLoading} index={index} message="Add Another Product Pick" onClick={addProductPick} />{' '}
   </React.Fragment>
