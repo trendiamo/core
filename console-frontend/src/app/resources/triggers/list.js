@@ -93,7 +93,7 @@ const TriggerRow = compose(
         to={routes[`${camelize(trigger.flowType, false)}Edit`](trigger.flowId)}
         variant="outlined"
       >
-        {'Edit this flow'}
+        {'Edit flow'}
       </Button>
     </TableCell>
     <TableCell width="50%">
