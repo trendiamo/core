@@ -3,6 +3,7 @@ import Link from 'shared/link'
 import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import routes from 'app/routes'
+import sanitizeProps from 'shared/sanitize-props'
 import styled from 'styled-components'
 import SvgIcon from '@material-ui/core/SvgIcon'
 import Typography from '@material-ui/core/Typography'
@@ -18,18 +19,74 @@ import {
 import { compose, withProps } from 'recompose'
 import { withRouter } from 'react-router'
 
-const resources = [
-  { icon: TuneOutlined, label: 'Triggers', route: routes.triggersList() },
-  { icon: PersonPinOutlined, label: 'Curations', route: routes.curationsList() },
-  { icon: SmsOutlined, label: 'Scripted Chats', route: routes.scriptedChatsList() },
-  { icon: AssignmentTurnedInOutlined, label: 'Outros', route: routes.outrosList() },
-  { icon: AccountCircleOutlined, label: 'Personas', route: routes.personasList() },
-]
+const resources = {
+  triggers: { icon: TuneOutlined, label: 'Triggers', route: routes.triggersList() },
+  curations: { icon: PersonPinOutlined, label: 'Curations', route: routes.curationsList() },
+  scriptedChats: { icon: SmsOutlined, label: 'Scripted Chats', route: routes.scriptedChatsList() },
+  outros: { icon: AssignmentTurnedInOutlined, label: 'Outros', route: routes.outrosList() },
+  personas: { icon: AccountCircleOutlined, label: 'Personas', route: routes.personasList() },
+}
+
+const resourceGroups = {
+  main: {
+    name: 'Main',
+    showTitle: false,
+    resources: [resources.triggers],
+  },
+  flows: {
+    name: 'Flows',
+    showTitle: true,
+    resources: [resources.curations, resources.scriptedChats, resources.outros],
+  },
+  basic: {
+    name: 'Basic',
+    showTitle: true,
+    resources: [resources.personas],
+  },
+}
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+`
+
+const GroupText = styled(({ ...props }) => <Typography {...sanitizeProps(props, ['sidebarOpen'])} />)`
+  color: ${({ sidebarOpen }) => (sidebarOpen ? '#fff' : '#333')}
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  transition: 0.6s all;
+  height: 1rem;
+  opacity: ${({ sidebarOpen }) => (sidebarOpen ? 1 : 0)};
+  overflow: hidden;
+  user-select: none;
+  position: absolute;
+`
+
+const MenuItemGroup = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: ${({ sidebarOpen, showTitle }) => (sidebarOpen ? '15px 0 0' : showTitle && '15px 0')};
+  padding: ${({ sidebarOpen }) => (sidebarOpen ? '8px 16px 14px' : '0 16px')};
+  ${({ showTitle }) => !showTitle && 'padding-bottom: 0'};
+  height: ${({ sidebarOpen, showTitle }) => (showTitle ? !sidebarOpen && '2px' : '0px')};
+  transition: 0.2s all;
+  overflow: hidden;
+  ${({ showTitle, sidebarOpen }) =>
+    showTitle &&
+    `&:before {
+      content: '';
+      position: absolute;
+      left: 34px;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: ${sidebarOpen ? '60px' : '12px'};
+      height: ${sidebarOpen ? '12px' : '2px'};
+      background: ${!sidebarOpen && '#767676'};
+      transition: ${sidebarOpen ? '.3s' : '.6s'} all;
+    }`}
 `
 
 const itemIsActive = route => {
@@ -41,27 +98,36 @@ const Item = compose(
   withProps(({ resource }) => ({
     isActive: itemIsActive(resource.route),
   })),
-  withProps(({ open, classes, isActive }) => ({
-    itemClass: classNames(classes.menuItem, !open && classes.menuItemClosed),
+  withProps(({ sidebarOpen, classes, isActive }) => ({
+    itemClass: classNames(classes.menuItem, !sidebarOpen && classes.menuItemClosed),
     textClass: classNames(classes.menuText, isActive && classes.menuTextActive),
     iconClass: classNames(classes.menuIcon, isActive && classes.menuIconActive),
   }))
-)(({ open, resource, itemClass, iconClass, textClass }) => (
+)(({ sidebarOpen, resource, itemClass, iconClass, textClass }) => (
   <Link key={resource.route} to={resource.route}>
     <MenuItem className={itemClass}>
       <SvgIcon className={iconClass}>{resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}</SvgIcon>
       <Typography className={textClass} variant="body2">
-        {open ? resource.label : ''}
+        {sidebarOpen ? resource.label : ''}
       </Typography>
     </MenuItem>
   </Link>
 ))
 
-const Menu = ({ classes, open, ...rest }) => (
+const Menu = ({ classes, sidebarOpen, ...rest }) => (
   <Container {...rest}>
-    <UserMenu classes={classes} open={open} />
-    {resources.map(resource => (
-      <Item classes={classes} key={resource.route} open={open} resource={resource} />
+    <UserMenu classes={classes} sidebarOpen={sidebarOpen} />
+    {Object.keys(resourceGroups).map(group => (
+      <div key={group}>
+        <MenuItemGroup showTitle={resourceGroups[group].showTitle} sidebarOpen={sidebarOpen}>
+          <GroupText sidebarOpen={sidebarOpen}>
+            {resourceGroups[group].showTitle && resourceGroups[group].name}
+          </GroupText>
+        </MenuItemGroup>
+        {resourceGroups[group].resources.map(resource => (
+          <Item classes={classes} key={resource.route} resource={resource} sidebarOpen={sidebarOpen} />
+        ))}
+      </div>
     ))}
   </Container>
 )

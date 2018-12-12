@@ -10,14 +10,20 @@ import { styles } from './layout-styles'
 import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles'
 
-const Layout = ({ appBarContent, children, classes, dashboard, logout, open, toggleOpen }) => (
+const Layout = ({ appBarContent, children, classes, logout, sidebarOpen, toggleOpen }) => (
   <div className={classes.root}>
     <div className={classes.appFrame}>
       <CssBaseline />
-      <AppBar appBarContent={appBarContent} classes={classes} logout={logout} open={open} toggleOpen={toggleOpen} />
+      <AppBar
+        appBarContent={appBarContent}
+        classes={classes}
+        logout={logout}
+        sidebarOpen={sidebarOpen}
+        toggleOpen={toggleOpen}
+      />
       <main className={classes.contentWithSidebar}>
-        <Sidebar classes={classes} open={open} toggleOpen={toggleOpen}>
-          <Menu classes={classes} hasDashboard={!!dashboard} logout={logout} open={open} />
+        <Sidebar classes={classes} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen}>
+          <Menu classes={classes} logout={logout} sidebarOpen={sidebarOpen} />
         </Sidebar>
         <div className={classes.content}>
           <div className={classes.contentInnerDiv}>{children}</div>
@@ -37,10 +43,10 @@ const EmptyLayout = ({ classes, children }) => (
 )
 
 const EnhancedLayout = compose(
-  withState('open', 'setOpen', true),
+  withState('sidebarOpen', 'setSidebarOpen', true),
   withRouter,
   withHandlers({
-    toggleOpen: ({ open, setOpen }) => () => setOpen(!open),
+    toggleOpen: ({ sidebarOpen, setSidebarOpen }) => () => setSidebarOpen(!sidebarOpen),
   }),
   withStyles(styles, { index: 1 }),
   withProps(() => ({
