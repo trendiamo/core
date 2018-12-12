@@ -1,5 +1,6 @@
 import Arrow from 'shared/arrow'
 import BackButton from 'shared/back-button'
+import i18n from 'ext/i18n'
 import ProductItem from './product-item'
 import styled from 'styled-components'
 import transition from 'ext/transition'
@@ -73,7 +74,7 @@ const ContentSpotlight = compose(
   }))
 )(({ firstName, isLeaving, spotlight }) => (
   <Container>
-    <span>{`Products selected by ${firstName}`}</span>
+    <span>{i18n.productsSelectedBy(firstName)}</span>
     <AnimatedBlackArrow isLeaving={isLeaving} timeout={250 * 2} />
     <TopSlideAnimation isLeaving={isLeaving}>
       <List>

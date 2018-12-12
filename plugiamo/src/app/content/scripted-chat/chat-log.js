@@ -1,3 +1,4 @@
+import i18n from 'ext/i18n'
 import { gql } from 'ext/recompose/graphql'
 import { isGraphCMS } from 'config'
 
@@ -44,11 +45,11 @@ const query = isGraphCMS
 const finalOptions = () => [
   {
     id: 'reset',
-    text: 'I still need help',
+    text: i18n.iStillNeedHelp(),
   },
   {
     id: 'stop',
-    text: "I'm done",
+    text: i18n.imDone(),
   },
 ]
 
