@@ -33,9 +33,9 @@ oscar = Persona.create!(oscar_params)
 # flows:
 
 main_curation_params = {
+  name: "Main Curation",
   title: "Need advice from our models?",
   subtitle: "Ask our models",
-  name: "Main Curation",
   persona_id: adam.id,
   spotlights_attributes: [
     {
@@ -125,16 +125,16 @@ main_curation_params = {
 main_curation = Curation.create!(main_curation_params)
 
 purchase_outro_params = {
-  persona: adam,
   name: "Purchase Outro",
+  persona: adam,
   graphcms_ref: "cjofpd048sy170932lw0h6wrk",
 }
 purchase_outro = Outro.create!(purchase_outro_params)
 
 adam_ebw_chat_params = {
+  name: "Adam EBW Chat",
   title: "Do you need help?",
   persona_id: adam.id,
-  name: "Adam EBW Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
@@ -181,9 +181,9 @@ adam_ebw_chat_params = {
 }
 adam_ebw_chat = ScriptedChat.create!(adam_ebw_chat_params)
 adam_obr_chat_params = {
+  name: "Adam OBR Chat",
   title: "Do you need help?",
   persona_id: adam.id,
-  name: "Adam OBR Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
@@ -230,9 +230,9 @@ adam_obr_chat_params = {
 }
 adam_obr_chat = ScriptedChat.create!(adam_obr_chat_params)
 adam_bgm_chat_params = {
+  name: "Adam BGM Chat",
   title: "Do you need help?",
   persona_id: adam.id,
-  name: "Adam BGM Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
@@ -279,9 +279,9 @@ adam_bgm_chat_params = {
 }
 adam_bgm_chat = ScriptedChat.create!(adam_bgm_chat_params)
 james_obr_chat_params = {
+  name: "James OBR Chat",
   title: "Do you need help?",
   persona_id: james.id,
-  name: "James OBR Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
@@ -329,9 +329,9 @@ james_obr_chat_params = {
 }
 james_obr_chat = ScriptedChat.create!(james_obr_chat_params)
 james_bg_chat_params = {
+  name: "James BG Chat",
   title: "Do you need help?",
   persona_id: james.id,
-  name: "James BG Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
@@ -378,9 +378,9 @@ james_bg_chat_params = {
 }
 james_bg_chat = ScriptedChat.create!(james_bg_chat_params)
 james_bgm_chat_params = {
+  name: "James BGM Chat",
   title: "Do you need help?",
   persona_id: james.id,
-  name: "James BGM Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
@@ -428,9 +428,9 @@ james_bgm_chat_params = {
 }
 james_bgm_chat = ScriptedChat.create!(james_bgm_chat_params)
 oscar_gbb_chat_params = {
+  name: "Oscar GBB Chat",
   title: "Do you need help?",
   persona_id: oscar.id,
-  name: "Oscar GBB Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
@@ -477,9 +477,9 @@ oscar_gbb_chat_params = {
 }
 oscar_gbb_chat = ScriptedChat.create!(oscar_gbb_chat_params)
 oscar_ebw_chat_params = {
+  name: "Oscar EBW Chat",
   title: "Do you need help?",
   persona_id: oscar.id,
-  name: "Oscar EBW Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
@@ -526,9 +526,9 @@ oscar_ebw_chat_params = {
 }
 oscar_ebw_chat = ScriptedChat.create!(oscar_ebw_chat_params)
 oscar_bw_chat_params = {
+  name: "Oscar BW Chat",
   title: "Do you need help?",
   persona_id: oscar.id,
-  name: "Oscar BW Chat",
   chat_step_attributes: {
     chat_messages_attributes: [
       {
