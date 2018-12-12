@@ -5,7 +5,7 @@ import React from 'react'
 import withWidth from '@material-ui/core/withWidth'
 import { compose } from 'recompose'
 
-const Sidebar = ({ children, classes, open, toggleOpen }) => (
+const Sidebar = ({ children, classes, sidebarOpen, toggleOpen }) => (
   <React.Fragment>
     <Hidden implementation="js" mdUp>
       <div className={classNames(classes.drawerGhost)} />
@@ -17,19 +17,19 @@ const Sidebar = ({ children, classes, open, toggleOpen }) => (
           keepMounted: true, // Better open performance on mobile.
         }}
         onClose={toggleOpen}
-        open={open}
+        open={sidebarOpen}
         variant="temporary"
       >
         {children}
       </Drawer>
     </Hidden>
     <Hidden implementation="js" smDown>
-      <div className={classNames(classes.drawerGhost, !open && classes.drawerGhostClosed)} />
+      <div className={classNames(classes.drawerGhost, !sidebarOpen && classes.drawerGhostClosed)} />
       <Drawer
         classes={{
-          paper: open ? classes.drawerPaper : classes.drawerPaperClose,
+          paper: sidebarOpen ? classes.drawerPaper : classes.drawerPaperClose,
         }}
-        open={open}
+        open={sidebarOpen}
         variant="permanent"
       >
         {children}

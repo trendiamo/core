@@ -31,26 +31,26 @@ const UserMenu = ({
   handleMenu,
   handleClose,
   openMenu,
-  open,
+  sidebarOpen,
   profilePicUrl,
   userIdentifier,
 }) => (
   <React.Fragment>
     <div onClick={handleMenu} onKeyPress={handleMenu} role="presentation" style={{ cursor: 'pointer' }}>
-      <Avatar className={classNames(classes.avatar, !open && classes.avatarClosed)} src={profilePicUrl}>
+      <Avatar className={classNames(classes.avatar, !sidebarOpen && classes.avatarClosed)} src={profilePicUrl}>
         {profilePicUrl ? null : initials ? initials : ''}
       </Avatar>
     </div>
     <MenuItem
       aria-haspopup="true"
       aria-owns={openMenu ? 'menu-appbar' : null}
-      className={classNames(classes.menuItem, !open && classes.menuItemHidden)}
+      className={classNames(classes.menuItem, !sidebarOpen && classes.menuItemHidden)}
       onClick={handleMenu}
     >
       <Typography className={classes.menuTextActive} variant="body2">
         {userIdentifier}
       </Typography>
-      <ArrowDropDown className={classNames(classes.accountArrow, !open && classes.accountArrowHidden)} />
+      <ArrowDropDown className={classNames(classes.accountArrow, !sidebarOpen && classes.accountArrowHidden)} />
     </MenuItem>
     <Divider style={{ background: '#6c6c71' }} />
     <Menu
