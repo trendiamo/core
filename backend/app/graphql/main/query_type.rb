@@ -1,6 +1,7 @@
 Main::QueryType = GraphQL::ObjectType.define do
   name "Query"
 
+  field :website, Fields::WebsiteField
   field :flow, Fields::FlowField
   field :persona, Fields::PersonaField
   field :curation, Fields::CurationField

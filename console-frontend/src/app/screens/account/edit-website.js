@@ -1,7 +1,10 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import auth from 'auth'
 import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox'
 import CircularProgress from 'shared/circular-progress'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
 import MuiCancel from '@material-ui/icons/Cancel'
@@ -71,6 +74,7 @@ const EditWebsite = ({
   form,
   onFormSubmit,
   setFieldValue,
+  setPreviewMode,
 }) => (
   <form onSubmit={onFormSubmit}>
     <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
@@ -85,6 +89,12 @@ const EditWebsite = ({
       required
       value={form.name}
     />
+    <FormControlLabel
+      control={<Checkbox checked={!form.previewMode} onChange={setPreviewMode} />}
+      disabled={isFormLoading}
+      label="Live"
+    />
+    <FormHelperText>{'Dangerous: this controls wether or not the plugin appears on your website'}</FormHelperText>
     <LabelContainer>
       <InputLabel>{'Hostnames'}</InputLabel>
     </LabelContainer>
@@ -137,6 +147,7 @@ export default compose(
   withForm({
     hostnames: [''],
     name: '',
+    previewMode: false,
   }),
   withHandlers({
     addHostnameSelect: ({ form, setForm }) => () => {
@@ -151,6 +162,11 @@ export default compose(
       const newHostnames = [...form.hostnames]
       newHostnames[index] = newValue
       setForm({ ...form, hostnames: newHostnames })
+    },
+  }),
+  withHandlers({
+    setPreviewMode: ({ form, setForm }) => (event, checked) => {
+      setForm({ ...form, previewMode: !checked })
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))

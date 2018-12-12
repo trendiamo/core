@@ -14,12 +14,12 @@ const Section = styled.section`
 const Account = () => (
   <PaperContainer>
     <Section>
-      <Typography variant="h4">{'Your Personal Info'}</Typography>
-      <EditUser />
+      <Typography variant="h4">{'Account'}</Typography>
+      <EditWebsite />
     </Section>
     <Section>
-      <Typography variant="h4">{'Your Website'}</Typography>
-      <EditWebsite />
+      <Typography variant="h4">{'Your Personal Info'}</Typography>
+      <EditUser />
     </Section>
   </PaperContainer>
 )

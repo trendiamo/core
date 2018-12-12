@@ -108,6 +108,9 @@ export default compose(
         `
       : gql`
           query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
+            website {
+              previewMode
+            }
             flow(pathname: $pathname, pluginPath: $pluginPath) {
               id
               flowType
@@ -143,6 +146,7 @@ export default compose(
     ({ data }) => (isGraphCMS ? !data.hostname || !data.hostname.website : !data.flow),
     infoMsgHof(`no data found for hostname ${location.hostname}`)
   ),
+  branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
   withState('persona', 'setPersona'),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
