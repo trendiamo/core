@@ -3,6 +3,7 @@ import CircularProgress from 'shared/circular-progress'
 import Notification from 'shared/notification'
 import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
+import routes from 'app/routes'
 import sanitizeProps from 'shared/sanitize-props'
 import SaveIcon from '@material-ui/icons/Save'
 import styled from 'styled-components'
@@ -145,24 +146,29 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    onFormSubmit: ({ form, onFormSubmit, setForm }) => async event => {
+    onFormSubmit: ({ form, history, onFormSubmit, setForm }) => async event => {
       const result = form.id ? await apiScriptedChatUpdate(form.id, { scripted_chat: form }) : await onFormSubmit(event)
-      setForm({
-        id: result.id || '',
-        name: result.name || '',
-        title: result.title || '',
-        personaId: result.persona.id || '',
-        chatStepAttributes: {
-          id: result.chatStepAttributes.id,
-          chatMessagesAttributes: result.chatStepAttributes.chatMessagesAttributes || [
-            {
-              delay: '',
-              text: '',
-            },
-          ],
-          chatOptionsAttributes: result.chatStepAttributes.chatOptionsAttributes,
-        },
-      })
+      if (result.error || result.errors) return
+      if (!form.id) {
+        history.push(routes.scriptedChatEdit(result.id))
+      } else {
+        setForm({
+          id: result.id || '',
+          name: result.name || '',
+          title: result.title || '',
+          personaId: result.persona.id || '',
+          chatStepAttributes: {
+            id: result.chatStepAttributes.id,
+            chatMessagesAttributes: result.chatStepAttributes.chatMessagesAttributes || [
+              {
+                delay: '',
+                text: '',
+              },
+            ],
+            chatOptionsAttributes: result.chatStepAttributes.chatOptionsAttributes,
+          },
+        })
+      }
     },
   }),
   withHandlers({
