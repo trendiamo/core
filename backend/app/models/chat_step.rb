@@ -5,6 +5,6 @@ class ChatStep < ApplicationRecord
   has_many :chat_options, dependent: :destroy
   has_many :refering_chat_options, foreign_key: "destination_chat_step_id", class_name: "ChatOption"
 
-  accepts_nested_attributes_for :chat_messages
-  accepts_nested_attributes_for :chat_options
+  accepts_nested_attributes_for :chat_messages, allow_destroy: true
+  accepts_nested_attributes_for :chat_options, allow_destroy: true
 end

@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
       resources :curations, only: %i[index show update create]
       delete "/curations", to: "curations#destroy"
-      resources :scripted_chats, only: %i[index]
+      resources :scripted_chats, only: %i[index show update create]
       delete "/scripted_chats", to: "scripted_chats#destroy"
       resources :outros, only: %i[index show update create]
       delete "/outros", to: "outros#destroy"
