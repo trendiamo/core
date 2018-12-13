@@ -58,8 +58,10 @@ const ScriptedChatForm = ({
   addChatStepAttribute,
   deleteChatStepAttribute,
   showChildSteps,
+  title,
 }) => (
   <PaperContainer>
+    <Typography variant="subtitle1">{title}</Typography>
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
