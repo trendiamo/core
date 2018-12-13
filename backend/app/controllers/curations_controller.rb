@@ -50,9 +50,9 @@ class CurationsController < RestController
     params.require(:curation).permit(
       :name, :title, :subtitle, :persona_id,
       spotlights_attributes: [
-        :id, :text, :persona_id,
+        :id, :text, :persona_id, :_destroy,
         product_picks_attributes: %i[
-          id url name description display_price pic_url
+          id url name description display_price pic_url _destroy
         ],
       ]
     )

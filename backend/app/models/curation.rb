@@ -4,7 +4,7 @@ class Curation < ApplicationRecord
   has_many :spotlights, dependent: :destroy
   has_many :triggers, as: :flow, dependent: :destroy
 
-  accepts_nested_attributes_for :spotlights
+  accepts_nested_attributes_for :spotlights, allow_destroy: true
 
   validates :name, presence: true
   validates :title, presence: true

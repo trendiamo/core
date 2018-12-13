@@ -72,31 +72,34 @@ const CurationForm = ({
       </Grid>
     </Card>
     <div>
-      {form.spotlightsAttributes.map((spotlight, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Card key={index}>
-          <Section
-            actions={
-              form.spotlightsAttributes.length > 1 && (
-                <Cancel disabled={isFormLoading} index={index} onClick={deleteSpotlight} />
-              )
-            }
-            foldable
-            hideTop
-            title={`Spotlight #${index + 1}`}
-          >
-            <Spotlight
-              deleteSpotlight={deleteSpotlight}
-              form={form}
-              index={index}
-              isFormLoading={isFormLoading}
-              onChange={editSpotlightValue}
-              personas={personas}
-              setForm={setForm}
-            />
-          </Section>
-        </Card>
-      ))}
+      {form.spotlightsAttributes.map(
+        (spotlight, index) =>
+          !spotlight._destroy && (
+            // eslint-disable-next-line react/no-array-index-key
+            <Card key={index}>
+              <Section
+                actions={
+                  form.spotlightsAttributes.length > 1 && (
+                    <Cancel disabled={isFormLoading} index={index} onClick={deleteSpotlight} />
+                  )
+                }
+                foldable
+                hideTop
+                title={`Spotlight #${index + 1}`}
+              >
+                <Spotlight
+                  deleteSpotlight={deleteSpotlight}
+                  form={form}
+                  index={index}
+                  isFormLoading={isFormLoading}
+                  onChange={editSpotlightValue}
+                  personas={personas}
+                  setForm={setForm}
+                />
+              </Section>
+            </Card>
+          )
+      )}
       <AddItemContainer disabled={isFormLoading} message="Add new spotlight" onClick={addSpotlight} />{' '}
     </div>
   </>
@@ -158,8 +161,12 @@ export default compose(
       setForm({ ...form, spotlightsAttributes: newSpotlights })
     },
     deleteSpotlight: ({ form, setForm }) => index => {
+      const spotlightToDelete = {
+        id: form.spotlightsAttributes[index].id,
+        _destroy: true,
+      }
       let newSpotlights = [...form.spotlightsAttributes]
-      newSpotlights.splice(index, 1)
+      newSpotlights[index] = spotlightToDelete
       setForm({ ...form, spotlightsAttributes: newSpotlights })
     },
   }),

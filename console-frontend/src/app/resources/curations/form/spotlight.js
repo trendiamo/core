@@ -43,29 +43,33 @@ const Spotlight = ({
     </Grid>
     <div style={{ marginTop: '24px' }}>
       <Section foldable title="Spotlight Product Picks">
-        {form.spotlightsAttributes[index].productPicksAttributes.map((productPick, productPickIndex) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={productPickIndex}>
-            <Section
-              actions={
-                form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
-                  <Cancel disabled={isFormLoading} index={productPickIndex} onClick={deleteProductPick} />
-                )
-              }
-              hideBottom
-              hideTop={productPickIndex === 0}
-              title={`Product Pick #${productPickIndex + 1}`}
-            >
-              <div>
-                <ProductPick
-                  form={form.spotlightsAttributes[index]}
-                  index={productPickIndex}
-                  onChange={editProductPickValue}
-                />
-              </div>
-            </Section>
-          </div>
-        ))}
+        {form.spotlightsAttributes[index].productPicksAttributes &&
+          form.spotlightsAttributes[index].productPicksAttributes.map(
+            (productPick, productPickIndex) =>
+              !productPick._destroy && (
+                // eslint-disable-next-line react/no-array-index-key
+                <div key={productPickIndex}>
+                  <Section
+                    actions={
+                      form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
+                        <Cancel disabled={isFormLoading} index={productPickIndex} onClick={deleteProductPick} />
+                      )
+                    }
+                    hideBottom
+                    hideTop={productPickIndex === 0}
+                    title={`Product Pick #${productPickIndex + 1}`}
+                  >
+                    <div>
+                      <ProductPick
+                        form={form.spotlightsAttributes[index]}
+                        index={productPickIndex}
+                        onChange={editProductPickValue}
+                      />
+                    </div>
+                  </Section>
+                </div>
+              )
+          )}
       </Section>
     </div>
     <AddItemButton disabled={isFormLoading} index={index} message="Add Another Product Pick" onClick={addProductPick} />{' '}
@@ -101,8 +105,12 @@ export default compose(
       setForm(form)
     },
     deleteProductPick: ({ index, form, setForm }) => productPickIndex => {
+      const productPickToDelete = {
+        id: form.spotlightsAttributes[index].productPicksAttributes[productPickIndex].id,
+        _destroy: true,
+      }
       let newProductPicks = [...form.spotlightsAttributes[index].productPicksAttributes]
-      newProductPicks.splice(productPickIndex, 1)
+      newProductPicks[productPickIndex] = productPickToDelete
       form.spotlightsAttributes[index].productPicksAttributes = newProductPicks
       setForm(form)
     },
