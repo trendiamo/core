@@ -15,11 +15,15 @@ const Spotlight = ({
   editProductPickValue,
   isFormLoading,
   editSpotlightValue,
+  setProductPicks,
+  setProductPicture,
+  setIsCropping,
+  isCropping,
 }) => (
   <React.Fragment>
     <Grid item sm={6}>
       <TextField
-        disabled={isFormLoading}
+        disabled={isCropping || isFormLoading}
         fullWidth
         label="Text"
         margin="normal"
@@ -36,6 +40,7 @@ const Spotlight = ({
             label: form.spotlightsAttributes[index].__persona.name,
           }
         }
+        isDisabled={isCropping || isFormLoading}
         name="personaId"
         onChange={selectPersona}
         placeholder="Persona *"
@@ -52,7 +57,11 @@ const Spotlight = ({
                   <FormSection
                     actions={
                       form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
-                        <Cancel disabled={isFormLoading} index={productPickIndex} onClick={deleteProductPick} />
+                        <Cancel
+                          disabled={isCropping || isFormLoading}
+                          index={productPickIndex}
+                          onClick={deleteProductPick}
+                        />
                       )
                     }
                     hideBottom
@@ -62,7 +71,11 @@ const Spotlight = ({
                     <ProductPick
                       form={form.spotlightsAttributes[index]}
                       index={productPickIndex}
+                      isCropping={isCropping}
                       onChange={editProductPickValue}
+                      setIsCropping={setIsCropping}
+                      setProductPicks={setProductPicks}
+                      setProductPicture={setProductPicture}
                     />
                   </FormSection>
                 </div>
@@ -70,7 +83,12 @@ const Spotlight = ({
           )}
       </FormSection>
     </div>
-    <AddItemButton disabled={isFormLoading} index={index} message="Add Another Product Pick" onClick={addProductPick} />{' '}
+    <AddItemButton
+      disabled={isCropping || isFormLoading}
+      index={index}
+      message="Add Another Product Pick"
+      onClick={addProductPick}
+    />{' '}
   </React.Fragment>
 )
 
@@ -111,6 +129,17 @@ export default compose(
       newProductPicks[productPickIndex] = productPickToDelete
       form.spotlightsAttributes[index].productPicksAttributes = newProductPicks
       setForm(form)
+    },
+    setProductPicks: ({ form, setForm }) => productPicks => {
+      setForm({ ...form, productPicksAttributes: productPicks })
+    },
+    setProductPicture: ({ index, productPicksPictures, setProductPicksPictures }) => (
+      productPickIndex,
+      blob,
+      setProgress
+    ) => {
+      productPicksPictures.push({ spotlightIndex: index, productPickIndex, blob, setProgress })
+      setProductPicksPictures(productPicksPictures)
     },
   }),
   withHandlers({

@@ -33,7 +33,7 @@ const InnerLabel = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: ${({ square }) => (square ? 'none' : '50%')};
 `
 
 const FilteredReactDropzone = props => (
@@ -75,7 +75,7 @@ const Dropzone = compose(
       onDrop(acceptedFiles, rejectedFiles)
     },
   })
-)(({ disabled, isDragging, onDragEnter, onDragLeave, previewImage, ...props }) => (
+)(({ disabled, square, isDragging, onDragEnter, onDragLeave, previewImage, ...props }) => (
   <StyledDropzone
     disableClick={disabled}
     disabled={disabled}
@@ -85,8 +85,8 @@ const Dropzone = compose(
     previewImage={previewImage}
     {...props}
   >
-    <Img alt="" src={previewImage} />
-    <InnerLabel>
+    <Img alt="" square={square} src={previewImage} />
+    <InnerLabel square={square}>
       <CloudUpload />
       <div>{'Drop a file or click to select one'}</div>
     </InnerLabel>
@@ -96,7 +96,7 @@ const Dropzone = compose(
 const Img = styled.img`
   background-color: ${({ src }) => (src ? 'transparent' : '#f2f4f7')};
   border: ${({ src }) => (src ? 'none' : 'dashed 2px')};
-  border-radius: 50%;
+  border-radius: ${({ square }) => (square ? 'none' : '50%')};
   display: block;
   height: 100%;
   position: relative;
@@ -156,13 +156,21 @@ const BarebonesPictureUploader = ({
   onDrop,
   onImageLoaded,
   onRemove,
+  square,
 }) => (
   <Container>
-    <Dropzone accept="image/*" disabled={disabled} multiple={false} onDrop={onDrop} previewImage={previewImage} />
+    <Dropzone
+      accept="image/*"
+      disabled={disabled}
+      multiple={false}
+      onDrop={onDrop}
+      previewImage={previewImage}
+      square={square}
+    />
 
     {(image || previewImage) && (image ? doneCropping : true) && (
       <RemoveButtonContainer>
-        <Button mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
+        <Button disabled={disabled} mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
           <RemoveCircle />
           {'delete'}
         </Button>
@@ -335,9 +343,10 @@ const PictureUploader = compose(
     },
   }),
   lifecycle({
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
       const { setDisabled, doneCropping, disabled } = this.props
-      if (setDisabled && disabled === doneCropping) setDisabled(!doneCropping)
+      if (setDisabled && prevProps.doneCropping !== doneCropping && disabled === doneCropping)
+        setDisabled(!doneCropping)
     },
     componentWillUnmount() {
       const { image } = this.props

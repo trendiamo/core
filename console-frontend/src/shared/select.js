@@ -111,6 +111,7 @@ const Select = compose(
     onMenuOpen,
     menuIsOpen,
     onFocus,
+    isDisabled,
     shouldBlurText,
   }) => (
     <StyledSelect
@@ -118,6 +119,7 @@ const Select = compose(
       classNamePrefix="react-select"
       defaultOptions={defaultOptions}
       defaultValue={defaultValue}
+      isDisabled={isDisabled}
       loadOptions={loadOptions}
       menuIsOpen={menuIsOpen}
       onBlur={onBlur}
