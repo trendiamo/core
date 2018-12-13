@@ -1,9 +1,12 @@
 import AsyncSelect from 'react-select/lib/Async'
+import debounce from 'debounce-promise'
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 
-const StyledSelect = styled(AsyncSelect)`
+const StyledSelect = styled(AsyncSelect).attrs({
+  singleValueColor: ({ shouldBlurText }) => (shouldBlurText ? '#77777f' : '#372727'),
+})`
   font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
   .react-select__control {
     color: #372727;
@@ -15,20 +18,22 @@ const StyledSelect = styled(AsyncSelect)`
     box-shadow: none;
     &: hover {
       border-color: #212121;
+      cursor: text;
       border-width: 0px 0px 2px;
-      .react-select__indicator {
-        color: #212121;
-      }
     }
   }
   .react-select__value-container {
     padding: 0px;
   }
-  .react-select__option {
-    color: #77777f;
+  .react-select__indicator {
+    &: hover {
+      color: #212121;
+      cursor: pointer;
+    }
   }
   .react-select__option--is-selected {
     background-color: #f2f4f7;
+    color: #2f2f27;
   }
   .react-select__option--is-focused {
     background-color: #deebff;
@@ -37,7 +42,7 @@ const StyledSelect = styled(AsyncSelect)`
     color: #77777f;
   }
   .react-select__single-value {
-    color: #372727;
+    color: ${({ singleValueColor }) => singleValueColor};
   }
   #react-select-2-input {
     font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
@@ -50,26 +55,81 @@ const StyledSelect = styled(AsyncSelect)`
 `
 
 const Select = compose(
-  withHandlers({
-    loadOptions: ({ autocomplete, name }) => async searchQuery => {
-      if (searchQuery.length <= 2) return
-      const rawOptions = await autocomplete({ searchQuery })
-      const options = rawOptions.map(option => {
-        return { value: option, label: option.name, name }
-      })
-      return options
-    },
+  withProps(({ autocomplete }) => ({
+    debouncedAutocomplete: debounce(autocomplete, 250),
+  })),
+  withState('defaultOptions', 'setDefaultOptions', []),
+  withState('menuIsOpen', 'setMenuIsOpen', false),
+  withState('shouldBlurText', 'setShouldBlurText', false),
+  withHandlers(() => {
+    let hasTyped = false
+    return {
+      onInputChange: ({ setMenuIsOpen, setShouldBlurText }) => (searchQuery, event) => {
+        hasTyped = true
+        setShouldBlurText(event.action === 'set-value')
+        setMenuIsOpen(!(0 < searchQuery.length || searchQuery.length <= 2))
+      },
+      onMenuOpen: ({ setMenuIsOpen, setDefaultOptions, name, autocomplete, defaultOptions }) => async () => {
+        if (hasTyped) {
+          hasTyped = false
+          return
+        }
+        setMenuIsOpen(true)
+        if (0 < defaultOptions.length) return
+        const rawOptions = await autocomplete('')
+        const options = rawOptions.map(option => {
+          return { value: option, label: option.name, name }
+        })
+        setDefaultOptions(options)
+      },
+      loadOptions: ({ name, setMenuIsOpen, debouncedAutocomplete }) => async searchQuery => {
+        if (searchQuery.length <= 2) return setMenuIsOpen(false)
+        setMenuIsOpen(true)
+        const rawOptions = await debouncedAutocomplete({ searchQuery })
+        const options = rawOptions.map(option => {
+          return { value: option, label: option.name, name }
+        })
+        return options
+      },
+      onFocus: ({ setShouldBlurText }) => () => {
+        setShouldBlurText(true)
+      },
+      onBlur: ({ setShouldBlurText }) => () => {
+        setShouldBlurText(false)
+      },
+    }
   })
-)(({ placeholder, loadOptions, onChange, defaultValue }) => (
-  <StyledSelect
-    cacheOptions
-    classNamePrefix="react-select"
-    defaultOptions
-    defaultValue={defaultValue}
-    loadOptions={loadOptions}
-    onChange={onChange}
-    placeholder={placeholder}
-  />
-))
+)(
+  ({
+    placeholder,
+    loadOptions,
+    onChange,
+    defaultValue,
+    onInputChange,
+    defaultOptions,
+    onBlur,
+    onMenuOpen,
+    menuIsOpen,
+    onFocus,
+    shouldBlurText,
+  }) => (
+    <StyledSelect
+      cacheOptions
+      classNamePrefix="react-select"
+      defaultOptions={defaultOptions}
+      defaultValue={defaultValue}
+      loadOptions={loadOptions}
+      menuIsOpen={menuIsOpen}
+      onBlur={onBlur}
+      onChange={onChange}
+      onFocus={onFocus}
+      onInputChange={onInputChange}
+      onMenuOpen={onMenuOpen}
+      openMenuOnClick={false}
+      placeholder={placeholder}
+      shouldBlurText={shouldBlurText}
+    />
+  )
+)
 
 export default Select

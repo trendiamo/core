@@ -1,5 +1,4 @@
 import CircularProgress from 'shared/circular-progress'
-import debounce from 'debounce-promise'
 import PaperContainer from 'app/layout/paper-container'
 import PluginPreviewFrame from 'shared/plugin-preview-frame'
 import React from 'react'
@@ -59,7 +58,7 @@ const OutroForm = ({
             value={form.name}
           />
           <Select
-            autocomplete={debounce(apiPersonasAutocomplete, 150)}
+            autocomplete={apiPersonasAutocomplete}
             defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
             onChange={selectPersona}
             placeholder="Persona *"
