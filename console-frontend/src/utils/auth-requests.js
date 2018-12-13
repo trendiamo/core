@@ -186,6 +186,9 @@ export const apiCurationUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL
 
 export const apiScriptedChatList = query => apiListRequest(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`)
 export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED_CHATS_URL, body)
+export const apiScriptedChatCreate = body => apiCreateRequest(SCRIPTED_CHATS_URL, body)
+export const apiScriptedChatShow = id => apiGetRequest(`${SCRIPTED_CHATS_URL}/${id}`)
+export const apiScriptedChatUpdate = (id, body) => apiUpdateRequest(`${SCRIPTED_CHATS_URL}/${id}`, body)
 
 export const apiTriggerList = () => apiGetRequest(TRIGGERS_URL)
 export const apiTriggerDestroy = body => apiDestroyMultipleRequest(TRIGGERS_URL, body)

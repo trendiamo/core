@@ -19,7 +19,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
-import { ScriptedChatsList } from './resources/scripted-chats'
+import { ScriptedChatCreate, ScriptedChatEdit, ScriptedChatsList } from './resources/scripted-chats'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
 import { withStoreProvider } from 'ext/recompose/with-store'
 import 'assets/css/fonts.css'
@@ -62,6 +62,8 @@ const Routes = () => (
     <PrivateRoute component={CurationCreate} exact path={routes.curationCreate()} />
     <PrivateRoute component={CurationEdit} exact path={routes.curationEdit(':curationId')} />
     <PrivateRoute component={ScriptedChatsList} exact path={routes.scriptedChatsList()} />
+    <PrivateRoute component={ScriptedChatCreate} exact path={routes.scriptedChatCreate()} />
+    <PrivateRoute component={ScriptedChatEdit} exact path={routes.scriptedChatEdit(':scriptedChatId')} />
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={OutroCreate} exact path={routes.outroCreate()} />
     <PrivateRoute component={OutroEdit} exact path={routes.outroEdit(':outroId')} />

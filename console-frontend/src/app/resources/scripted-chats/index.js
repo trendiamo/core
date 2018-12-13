@@ -1,3 +1,5 @@
+import ScriptedChatCreate from './create'
+import ScriptedChatEdit from './edit'
 import ScriptedChatsList from './list'
 
-export { ScriptedChatsList }
+export { ScriptedChatEdit, ScriptedChatsList, ScriptedChatCreate }
