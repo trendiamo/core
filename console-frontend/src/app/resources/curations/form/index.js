@@ -25,7 +25,11 @@ const CurationForm = ({
   deleteSpotlight,
   editSpotlightValue,
   addSpotlight,
+  productPicksPictures,
+  setProductPicksPictures,
   setForm,
+  isCropping,
+  setIsCropping,
   title,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
@@ -33,7 +37,7 @@ const CurationForm = ({
       <Grid item sm={6}>
         <TextField
           autoFocus
-          disabled={isFormLoading}
+          disabled={isCropping || isFormLoading}
           fullWidth
           label="Name"
           margin="normal"
@@ -45,11 +49,12 @@ const CurationForm = ({
         <Select
           autocomplete={apiPersonasAutocomplete}
           defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+          isDisabled={isCropping || isFormLoading}
           onChange={selectPersona}
           placeholder="Persona *"
         />
         <TextField
-          disabled={isFormLoading}
+          disabled={isCropping || isFormLoading}
           fullWidth
           label="Title"
           margin="normal"
@@ -59,7 +64,7 @@ const CurationForm = ({
           value={form.title}
         />
         <TextField
-          disabled={isFormLoading}
+          disabled={isCropping || isFormLoading}
           fullWidth
           label="Subtitle"
           margin="normal"
@@ -78,7 +83,7 @@ const CurationForm = ({
             <FormSection
               actions={
                 form.spotlightsAttributes.length > 1 && (
-                  <Cancel disabled={isFormLoading} index={index} onClick={deleteSpotlight} />
+                  <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />
                 )
               }
               foldable
@@ -89,22 +94,27 @@ const CurationForm = ({
                 deleteSpotlight={deleteSpotlight}
                 form={form}
                 index={index}
+                isCropping={isCropping}
                 isFormLoading={isFormLoading}
                 onChange={editSpotlightValue}
                 personas={personas}
+                productPicksPictures={productPicksPictures}
                 setForm={setForm}
+                setIsCropping={setIsCropping}
+                setProductPicksPictures={setProductPicksPictures}
               />
             </FormSection>
           </Section>
         )
     )}
-    <AddItemContainer disabled={isFormLoading} message="Add new spotlight" onClick={addSpotlight} />
+    <AddItemContainer disabled={isCropping || isFormLoading} message="Add new spotlight" onClick={addSpotlight} />
   </Form>
 )
 
 export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
+  withState('isCropping', 'setIsCropping', false),
   withHandlers({
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
