@@ -8,7 +8,7 @@ const Experiment = ({ testChildren }) => <div>{testChildren}</div>
 
 export default compose(
   withProps(() => ({
-    optimizelyClientInstance: optimizely.createInstance({ datafile }),
+    optimizelyClientInstance: optimizely.createInstance({ datafile, logger: { log: () => null } }),
   })),
   withProps(({ experimentName, optimizelyClientInstance }) => ({
     variation: optimizelyClientInstance.activate(experimentName, mixpanel.get_distinct_id()),
