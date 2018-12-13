@@ -1,4 +1,3 @@
-import debounce from 'debounce-promise'
 import ProductPick from './product-pick'
 import React from 'react'
 import Select from 'shared/select'
@@ -30,7 +29,7 @@ const Spotlight = ({
         value={form.spotlightsAttributes[index].text}
       />
       <Select
-        autocomplete={debounce(apiPersonasAutocomplete, 150)}
+        autocomplete={apiPersonasAutocomplete}
         defaultValue={
           form.spotlightsAttributes[index].__persona && {
             value: form.spotlightsAttributes[index].__persona.id,
@@ -78,11 +77,11 @@ export default compose(
     editSpotlightValue: ({ index, onChange }) => event => {
       onChange(index, event.target)
     },
-    selectPersona: ({ form, setForm, index }) => selected => {
+    selectPersona: ({ form, setForm, index }) => ({ value }) => {
       const newSpotlightAttributes = {
         ...form.spotlightsAttributes[index],
-        personaId: selected.value.id,
-        __persona: selected.value,
+        personaId: value.id,
+        __persona: value,
       }
       form.spotlightsAttributes[index] = newSpotlightAttributes
       setForm(form)

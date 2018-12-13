@@ -1,5 +1,4 @@
 import CircularProgress from 'shared/circular-progress'
-import debounce from 'debounce-promise'
 import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -13,7 +12,7 @@ import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
-import { apiFlowsAutocomplete, apiFlowsList } from 'utils'
+import { apiFlowsAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { withRouter } from 'react-router'
 
@@ -61,7 +60,7 @@ const TriggerForm = ({
             {'Flow'}
           </InputLabel>
           <Select
-            autocomplete={debounce(apiFlowsAutocomplete, 150)}
+            autocomplete={apiFlowsAutocomplete}
             defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}
             onChange={selectFlow}
             placeholder="Flow *"
@@ -102,11 +101,6 @@ export default compose(
   withState('errors', 'setErrors', null),
   withState('flows', 'setFlows', []),
   withHandlers({
-    loadFormObject: ({ loadFormObject, setFlows }) => async () => {
-      const flows = await apiFlowsList()
-      setFlows(flows)
-      return loadFormObject()
-    },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
     },
@@ -139,11 +133,11 @@ export default compose(
       if (!result.error && !result.errors) history.push(routes.triggersList())
       return result
     },
-    selectFlow: ({ form, setForm }) => selected => {
+    selectFlow: ({ form, setForm }) => ({ value }) => {
       setForm({
         ...form,
-        flowId: selected.value.id,
-        flowType: selected.value.type,
+        flowId: value.id,
+        flowType: value.type,
       })
     },
   }),
