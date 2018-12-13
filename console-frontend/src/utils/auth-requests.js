@@ -165,7 +165,6 @@ export const apiMe = () => apiGetRequest(ME_URL)
 export const apiMeUpdate = body => apiUpdateRequest(ME_URL, body)
 
 export const apiPersonaList = query => apiListRequest(`${PERSONAS_URL}/?${stringify(query)}`)
-export const apiPersonaSimpleList = query => apiGetRequest(`${PERSONAS_URL}/?${stringify(query)}`)
 export const apiPersonaShow = id => apiGetRequest(`${PERSONAS_URL}/${id}`)
 export const apiPersonaCreate = body => apiCreateRequest(PERSONAS_URL, body)
 export const apiPersonaUpdate = (id, body) => apiUpdateRequest(`${PERSONAS_URL}/${id}`, body)

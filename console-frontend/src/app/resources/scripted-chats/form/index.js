@@ -6,22 +6,13 @@ import React from 'react'
 import routes from 'app/routes'
 import sanitizeProps from 'shared/sanitize-props'
 import SaveIcon from '@material-ui/icons/Save'
-import styled from 'styled-components'
+import Select from 'shared/select'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { apiPersonaSimpleList, apiScriptedChatUpdate } from 'utils'
-import {
-  Avatar,
-  Button,
-  FormControl,
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@material-ui/core'
+import { apiPersonasAutocomplete } from 'utils'
+import { apiScriptedChatUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { Button, TextField, Typography } from '@material-ui/core'
 import { Prompt, withRouter } from 'react-router'
 
 const Actions = ({ isFormLoading, onFormSubmit }) => (
@@ -31,32 +22,18 @@ const Actions = ({ isFormLoading, onFormSubmit }) => (
   </Button>
 )
 
-const StyledAvatar = styled(Avatar)`
-  display: inline-block;
-`
-
-const StyledTypography = styled(Typography)`
-  display: inline-block;
-  margin-left: 20px;
-`
-
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-`
-
 const ScriptedChatForm = ({
-  setFieldValue,
-  form,
-  personas,
+  addChatStepAttribute,
+  deleteChatStepAttribute,
+  editChatStepAttribute,
   errors,
+  form,
   isFormLoading,
   isFormPristine,
   onFormSubmit,
-  editChatStepAttribute,
+  selectPersona,
+  setFieldValue,
   setForm,
-  addChatStepAttribute,
-  deleteChatStepAttribute,
   showChildSteps,
   title,
 }) => (
@@ -85,27 +62,12 @@ const ScriptedChatForm = ({
         required
         value={form.title}
       />
-      <FormControl disabled={isFormLoading} fullWidth>
-        <InputLabel htmlFor="persona-label-placeholder" shrink>
-          {'Persona'}
-        </InputLabel>
-        <Select
-          displayEmpty
-          input={<Input id="persona-label-placeholder" name="persona" />}
-          name="personaId"
-          onChange={setFieldValue}
-          value={form.personaId}
-        >
-          {personas.map(persona => (
-            <MenuItem key={`persona-${persona.id}`} value={persona.id}>
-              <Item>
-                <StyledAvatar alt={persona.name} src={persona.profilePicUrl} />
-                <StyledTypography>{persona.name}</StyledTypography>
-              </Item>
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Select
+        autocomplete={apiPersonasAutocomplete}
+        defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+        onChange={selectPersona}
+        placeholder="Persona *"
+      />
       <ChatStep
         addAction={addChatStepAttribute}
         chatStepType="chatStepAttributes"
@@ -122,13 +84,7 @@ const ScriptedChatForm = ({
 
 export default compose(
   withState('errors', 'setErrors', null),
-  withState('personas', 'setPersonas', []),
   withHandlers({
-    loadFormObject: ({ loadFormObject, setPersonas }) => async () => {
-      const personas = await apiPersonaSimpleList()
-      setPersonas(personas)
-      return loadFormObject()
-    },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
     },
@@ -148,6 +104,12 @@ export default compose(
   }),
   withRouter,
   withHandlers({
+    selectPersona: ({ form, setForm }) => ({ value }) => {
+      setForm({
+        ...form,
+        personaId: value.id,
+      })
+    },
     onFormSubmit: ({ form, history, onFormSubmit, setForm }) => async event => {
       const result = form.id ? await apiScriptedChatUpdate(form.id, { scripted_chat: form }) : await onFormSubmit(event)
       if (result.error || result.errors) return

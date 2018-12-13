@@ -22,10 +22,10 @@ export default compose(
       const id = match.params.scriptedChatId
       const response = await apiScriptedChatShow(id)
       return {
-        id: response.id || '',
         name: response.name || '',
         title: response.title || '',
         personaId: response.persona.id || '',
+        __persona: response.persona,
         chatStepAttributes: {
           id: response.chatStepAttributes.id,
           chatMessagesAttributes: response.chatStepAttributes.chatMessagesAttributes || [
