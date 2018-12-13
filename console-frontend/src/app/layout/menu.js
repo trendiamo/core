@@ -63,6 +63,7 @@ const GroupText = styled(({ ...props }) => <Typography {...omit(props, ['sidebar
   text-transform: uppercase;
   transition: 0.6s all;
   height: 1rem;
+  line-height: 1rem;
   opacity: ${({ sidebarOpen }) => (sidebarOpen ? 1 : 0)};
   overflow: hidden;
   user-select: none;
