@@ -5,7 +5,7 @@ import Select from 'shared/select'
 import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemContainer, Cancel, Card, Form, Section } from 'shared/form-elements'
+import { Actions, AddItemContainer, Cancel, Form, FormContainer, Section } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid, TextField } from '@material-ui/core'
@@ -28,7 +28,7 @@ const CurationForm = ({
   title,
 }) => (
   <>
-    <Card title={title}>
+    <FormContainer title={title}>
       <Grid item sm={6}>
         <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
           <TextField
@@ -70,13 +70,13 @@ const CurationForm = ({
           />
         </Form>
       </Grid>
-    </Card>
+    </FormContainer>
     <div>
       {form.spotlightsAttributes.map(
         (spotlight, index) =>
           !spotlight._destroy && (
             // eslint-disable-next-line react/no-array-index-key
-            <Card key={index}>
+            <FormContainer key={index}>
               <Section
                 actions={
                   form.spotlightsAttributes.length > 1 && (
@@ -97,7 +97,7 @@ const CurationForm = ({
                   setForm={setForm}
                 />
               </Section>
-            </Card>
+            </FormContainer>
           )
       )}
       <AddItemContainer disabled={isFormLoading} message="Add new spotlight" onClick={addSpotlight} />{' '}

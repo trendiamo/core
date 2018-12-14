@@ -2,10 +2,10 @@ import Actions from './actions'
 import AddItemButton from './add-item-button'
 import AddItemContainer from './add-item-container'
 import Cancel from './cancel'
-import Card from './card'
 import Divider from './divider'
 import FlexBar from './flex-bar'
 import Form from './form'
+import FormContainer from './form-container'
 import Header from './header'
 import InlineTypography from './inline-typography'
 import Prompt from './prompt'
@@ -17,11 +17,11 @@ export {
   AddItemButton,
   AddItemContainer,
   Cancel,
-  Card,
   Divider,
+  Form,
+  FormContainer,
   Header,
   InlineTypography,
-  Form,
   Prompt,
   SaveButton,
   Section,
