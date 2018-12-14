@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import Link from 'shared/link'
 import MenuItem from '@material-ui/core/MenuItem'
+import omit from 'lodash.omit'
 import React from 'react'
 import routes from 'app/routes'
-import sanitizeProps from 'shared/sanitize-props'
 import styled from 'styled-components'
 import SvgIcon from '@material-ui/core/SvgIcon'
 import Typography from '@material-ui/core/Typography'
@@ -56,7 +56,7 @@ const Container = styled.div`
   justify-content: flex-start;
 `
 
-const GroupText = styled(({ ...props }) => <Typography {...sanitizeProps(props, ['sidebarOpen'])} />)`
+const GroupText = styled(({ ...props }) => <Typography {...omit(props, ['sidebarOpen'])} />)`
   color: ${({ sidebarOpen }) => (sidebarOpen ? '#fff' : '#333')}
   text-align: left;
   font-size: 12px;

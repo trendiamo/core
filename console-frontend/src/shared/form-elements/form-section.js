@@ -1,12 +1,12 @@
+import omit from 'lodash.omit'
 import React from 'react'
-import sanitizeProps from 'shared/sanitize-props'
 import styled from 'styled-components'
 import { Collapse, IconButton } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
 import { Divider, FlexBar, Header } from './index'
 import { ExpandMore } from '@material-ui/icons'
 
-const FoldIcon = styled(props => <ExpandMore {...sanitizeProps(props, ['folded'])} />)`
+const FoldIcon = styled(props => <ExpandMore {...omit(props, ['folded'])} />)`
   transform: rotate(${({ folded }) => (folded ? '0deg' : '540deg')});
   transition: transform 0.6s;
 `

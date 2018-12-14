@@ -1,12 +1,12 @@
 import Button from '@material-ui/core/Button'
 import CloudUpload from '@material-ui/icons/CloudUpload'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import omit from 'lodash.omit'
 import React from 'react'
 import ReactCrop, { getPixelCrop } from 'react-image-crop'
 import ReactDropzone from 'react-dropzone'
 import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import S3Upload from 'ext/react-s3-uploader'
-import sanitizeProps from 'shared/sanitize-props'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { apiGetSignedUrlFactory } from 'utils'
@@ -37,7 +37,7 @@ const InnerLabel = styled.div`
 `
 
 const FilteredReactDropzone = props => (
-  <ReactDropzone {...sanitizeProps(props, ['isDragging', 'previewImage', 'setIsDragging'])} />
+  <ReactDropzone {...omit(props, ['isDragging', 'previewImage', 'setIsDragging'])} />
 )
 
 const StyledDropzone = styled(FilteredReactDropzone)`

@@ -1,6 +1,6 @@
 import ChatStep from './chat-step'
+import omit from 'lodash.omit'
 import React from 'react'
-import sanitizeProps from 'shared/sanitize-props'
 import { compose, withHandlers, withState } from 'recompose'
 import { FormControl, Input, InputLabel, ListItem, MenuItem, Select, TextField, Typography } from '@material-ui/core'
 
@@ -116,7 +116,7 @@ export default compose(
         // to choose the parent chatstep option on the select, removing the destinationChatStepAttributes hash
         if (form[chatStepType].chatOptionsAttributes[index].destinationChatStepAttributes) {
           const filteredObject = form[chatStepType].chatOptionsAttributes[index]
-          const newObject = sanitizeProps(filteredObject, ['destinationChatStepAttributes'])
+          const newObject = omit(filteredObject, ['destinationChatStepAttributes'])
           form[chatStepType].chatOptionsAttributes[index] = newObject
         }
         onChange(index, newValue.props)

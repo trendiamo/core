@@ -1,9 +1,9 @@
 import ChatStep from './chat-step'
 import CircularProgress from 'shared/circular-progress'
 import Notification from 'shared/notification'
+import omit from 'lodash.omit'
 import React from 'react'
 import routes from 'app/routes'
-import sanitizeProps from 'shared/sanitize-props'
 import SaveIcon from '@material-ui/icons/Save'
 import Section from 'shared/section'
 import Select from 'shared/select'
@@ -162,10 +162,10 @@ export default compose(
         let newObject
         let filteredObject = childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex]
         if (chatStepAttribute === 'chatMessagesAttributes') {
-          newObject = sanitizeProps(filteredObject, ['delay', 'text'])
+          newObject = omit(filteredObject, ['delay', 'text'])
         } else {
           // filteredObject = childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex]
-          newObject = sanitizeProps(filteredObject, ['text'])
+          newObject = omit(filteredObject, ['text'])
         }
         //if the object we want to delete has an id, it means it's in the db, we need to destroy it in the backend
         //if not, we just remove it from the form

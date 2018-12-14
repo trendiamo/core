@@ -1,5 +1,5 @@
 // adapted from https://github.com/lodash/lodash/issues/723#issuecomment-443403094
-// changed so that seoncd param is a method
+// changed so that second param is a method
 const omitDeep = (input, excludesFn) => {
   return Object.entries(input).reduce((nextInput, [key, value]) => {
     const shouldExclude = excludesFn(key)
