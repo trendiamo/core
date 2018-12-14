@@ -14,6 +14,16 @@ class MesController < RestController
     end
   end
 
+  def update_onboarding
+    user_params = params.require(:user).permit(:show_onboarding)
+    if current_user.update(user_params)
+      render json: current_user
+    else
+      errors = current_user.errors.full_messages.map { |string| { title: string } }
+      render json: { errors: errors }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def user_params

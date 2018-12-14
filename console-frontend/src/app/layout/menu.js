@@ -20,11 +20,16 @@ import { compose, withProps } from 'recompose'
 import { withRouter } from 'react-router'
 
 const resources = {
-  triggers: { icon: TuneOutlined, label: 'Triggers', route: routes.triggersList() },
-  curations: { icon: PersonPinOutlined, label: 'Curations', route: routes.curationsList() },
-  scriptedChats: { icon: SmsOutlined, label: 'Scripted Chats', route: routes.scriptedChatsList() },
-  outros: { icon: AssignmentTurnedInOutlined, label: 'Outros', route: routes.outrosList() },
-  personas: { icon: AccountCircleOutlined, label: 'Personas', route: routes.personasList() },
+  triggers: { icon: TuneOutlined, label: 'Triggers', class: 'triggers', route: routes.triggersList() },
+  curations: { icon: PersonPinOutlined, label: 'Curations', class: 'curations', route: routes.curationsList() },
+  scriptedChats: {
+    icon: SmsOutlined,
+    label: 'Scripted Chats',
+    class: 'scripted-chats',
+    route: routes.scriptedChatsList(),
+  },
+  outros: { icon: AssignmentTurnedInOutlined, label: 'Outros', class: 'outros', route: routes.outrosList() },
+  personas: { icon: AccountCircleOutlined, label: 'Personas', class: 'personas', route: routes.personasList() },
 }
 
 const resourceGroups = {
@@ -104,14 +109,16 @@ const Item = compose(
     iconClass: classNames(classes.menuIcon, isActive && classes.menuIconActive),
   }))
 )(({ sidebarOpen, resource, itemClass, iconClass, textClass }) => (
-  <Link key={resource.route} to={resource.route}>
-    <MenuItem className={itemClass}>
-      <SvgIcon className={iconClass}>{resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}</SvgIcon>
-      <Typography className={textClass} variant="body2">
-        {sidebarOpen ? resource.label : ''}
-      </Typography>
-    </MenuItem>
-  </Link>
+  <div className={`onboard-${resource.class}`}>
+    <Link key={resource.route} to={resource.route}>
+      <MenuItem className={itemClass}>
+        <SvgIcon className={iconClass}>{resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}</SvgIcon>
+        <Typography className={textClass} variant="body2">
+          {sidebarOpen ? resource.label : ''}
+        </Typography>
+      </MenuItem>
+    </Link>
+  </div>
 ))
 
 const Menu = ({ classes, sidebarOpen, ...rest }) => (

@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "email", "first_name", "last_name", "profile_pic_url", "created_at", "updated_at")
+      .slice("id", "email", "first_name", "last_name", "profile_pic_url", "show_onboarding", "created_at", "updated_at")
       .merge(account: { website_ids: account.website_ids })
   end
 end

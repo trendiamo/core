@@ -11,6 +11,7 @@ import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
 const PersonaForm = ({
@@ -87,6 +88,7 @@ export default compose(
     profilePicUrl: '',
   }),
   withRouter,
+  withOnboardingConsumer,
   withHandlers({
     onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
@@ -99,8 +101,14 @@ export default compose(
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading || isCropping} />,
+  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, onFormSubmit, create }) => ({
+    Actions: (
+      <Actions
+        onFormSubmit={onFormSubmit}
+        saveClassName={create && 'onboard-create-persona'}
+        saveDisabled={isFormLoading || isCropping}
+      />
+    ),
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({
