@@ -1,26 +1,18 @@
 import ChatStep from './chat-step'
 import CircularProgress from 'shared/circular-progress'
-import Notification from 'shared/notification'
 import omit from 'lodash.omit'
 import React from 'react'
 import routes from 'app/routes'
-import SaveIcon from '@material-ui/icons/Save'
 import Section from 'shared/section'
 import Select from 'shared/select'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
+import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { apiScriptedChatUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Button, TextField } from '@material-ui/core'
-import { Prompt, withRouter } from 'react-router'
-
-const Actions = ({ isFormLoading, onFormSubmit }) => (
-  <Button color="primary" disabled={isFormLoading} onClick={onFormSubmit} type="submit" variant="contained">
-    <SaveIcon />
-    {'Save'}
-  </Button>
-)
+import { TextField } from '@material-ui/core'
+import { withRouter } from 'react-router'
 
 const ScriptedChatForm = ({
   addChatStepAttribute,
@@ -38,9 +30,7 @@ const ScriptedChatForm = ({
   title,
 }) => (
   <Section title={title}>
-    <form onSubmit={onFormSubmit}>
-      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <Notification data={errors} />
+    <Form errors={errors} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <TextField
         disabled={isFormLoading}
         fullWidth
@@ -77,7 +67,7 @@ const ScriptedChatForm = ({
         setForm={setForm}
         showChildSteps={showChildSteps}
       />
-    </form>
+    </Form>
   </Section>
 )
 
@@ -195,7 +185,7 @@ export default compose(
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
   withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions isFormLoading={isFormLoading} onFormSubmit={onFormSubmit} />,
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({
