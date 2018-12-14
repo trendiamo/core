@@ -28,82 +28,78 @@ const CurationForm = ({
   setForm,
   title,
 }) => (
-  <>
+  <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
       <Grid item sm={6}>
-        <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-          <TextField
-            autoFocus
-            disabled={isFormLoading}
-            fullWidth
-            label="Name"
-            margin="normal"
-            name="name"
-            onChange={setFieldValue}
-            required
-            value={form.name}
-          />
-          <Select
-            autocomplete={apiPersonasAutocomplete}
-            defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
-            onChange={selectPersona}
-            placeholder="Persona *"
-          />
-          <TextField
-            disabled={isFormLoading}
-            fullWidth
-            label="Curation Title"
-            margin="normal"
-            name="title"
-            onChange={setFieldValue}
-            required
-            value={form.title}
-          />
-          <TextField
-            disabled={isFormLoading}
-            fullWidth
-            label="Curation Subtitle"
-            margin="normal"
-            name="subtitle"
-            onChange={setFieldValue}
-            required
-            value={form.subtitle}
-          />
-        </Form>
+        <TextField
+          autoFocus
+          disabled={isFormLoading}
+          fullWidth
+          label="Name"
+          margin="normal"
+          name="name"
+          onChange={setFieldValue}
+          required
+          value={form.name}
+        />
+        <Select
+          autocomplete={apiPersonasAutocomplete}
+          defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+          onChange={selectPersona}
+          placeholder="Persona *"
+        />
+        <TextField
+          disabled={isFormLoading}
+          fullWidth
+          label="Title"
+          margin="normal"
+          name="title"
+          onChange={setFieldValue}
+          required
+          value={form.title}
+        />
+        <TextField
+          disabled={isFormLoading}
+          fullWidth
+          label="Subtitle"
+          margin="normal"
+          name="subtitle"
+          onChange={setFieldValue}
+          required
+          value={form.subtitle}
+        />
       </Grid>
     </Section>
-    <div>
-      {form.spotlightsAttributes.map(
-        (spotlight, index) =>
-          !spotlight._destroy && (
-            // eslint-disable-next-line react/no-array-index-key
-            <Section key={index}>
-              <FormSection
-                actions={
-                  form.spotlightsAttributes.length > 1 && (
-                    <Cancel disabled={isFormLoading} index={index} onClick={deleteSpotlight} />
-                  )
-                }
-                foldable
-                hideTop
-                title={`Spotlight #${index + 1}`}
-              >
-                <Spotlight
-                  deleteSpotlight={deleteSpotlight}
-                  form={form}
-                  index={index}
-                  isFormLoading={isFormLoading}
-                  onChange={editSpotlightValue}
-                  personas={personas}
-                  setForm={setForm}
-                />
-              </FormSection>
-            </Section>
-          )
-      )}
-      <AddItemContainer disabled={isFormLoading} message="Add new spotlight" onClick={addSpotlight} />{' '}
-    </div>
-  </>
+    {form.spotlightsAttributes.map(
+      (spotlight, index) =>
+        !spotlight._destroy && (
+          // eslint-disable-next-line react/no-array-index-key
+          <Section key={index}>
+            <FormSection
+              actions={
+                form.spotlightsAttributes.length > 1 && (
+                  <Cancel disabled={isFormLoading} index={index} onClick={deleteSpotlight} />
+                )
+              }
+              foldable
+              hideTop
+              title={`Spotlight #${index + 1}`}
+            >
+              <Spotlight
+                deleteSpotlight={deleteSpotlight}
+                form={form}
+                index={index}
+                isFormLoading={isFormLoading}
+                onChange={editSpotlightValue}
+                personas={personas}
+                setForm={setForm}
+              />
+            </FormSection>
+          </Section>
+        )
+    )}
+    <AddItemContainer disabled={isFormLoading} message="Add new spotlight" onClick={addSpotlight} />
+  </Form>
 )
 
 export default compose(

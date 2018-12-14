@@ -21,7 +21,7 @@ const Spotlight = ({
       <TextField
         disabled={isFormLoading}
         fullWidth
-        label="Spotlight Text"
+        label="Text"
         margin="normal"
         name="text"
         onChange={editSpotlightValue}
@@ -42,7 +42,7 @@ const Spotlight = ({
       />
     </Grid>
     <div style={{ marginTop: '24px' }}>
-      <FormSection foldable title="Spotlight Product Picks">
+      <FormSection foldable title="Product Picks">
         {form.spotlightsAttributes[index].productPicksAttributes &&
           form.spotlightsAttributes[index].productPicksAttributes.map(
             (productPick, productPickIndex) =>
@@ -59,13 +59,11 @@ const Spotlight = ({
                     hideTop={productPickIndex === 0}
                     title={`Product Pick #${productPickIndex + 1}`}
                   >
-                    <div>
-                      <ProductPick
-                        form={form.spotlightsAttributes[index]}
-                        index={productPickIndex}
-                        onChange={editProductPickValue}
-                      />
-                    </div>
+                    <ProductPick
+                      form={form.spotlightsAttributes[index]}
+                      index={productPickIndex}
+                      onChange={editProductPickValue}
+                    />
                   </FormSection>
                 </div>
               )
