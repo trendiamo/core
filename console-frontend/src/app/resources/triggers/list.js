@@ -156,9 +156,7 @@ const TriggerList = ({
         isSelectAll={isSelectAll}
         leftColumns={
           <React.Fragment>
-            <TableCell>
-              <ReorderIcon />
-            </TableCell>
+            <TableCell>{'Sort'}</TableCell>
             <TableCell>
               <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
             </TableCell>
