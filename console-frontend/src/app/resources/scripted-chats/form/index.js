@@ -20,6 +20,7 @@ const ScriptedChatForm = ({
   editChatStepAttribute,
   errors,
   form,
+  formRef,
   isFormLoading,
   isFormPristine,
   onFormSubmit,
@@ -30,7 +31,7 @@ const ScriptedChatForm = ({
   title,
 }) => (
   <Section title={title}>
-    <Form errors={errors} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <TextField
         disabled={isFormLoading}
         fullWidth
@@ -72,6 +73,7 @@ const ScriptedChatForm = ({
 )
 
 export default compose(
+  withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withHandlers({
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
@@ -99,7 +101,8 @@ export default compose(
         personaId: value.id,
       })
     },
-    onFormSubmit: ({ form, history, onFormSubmit, setForm }) => async event => {
+    onFormSubmit: ({ form, formRef, history, onFormSubmit, setForm }) => async event => {
+      if (!formRef.current.reportValidity()) return
       const result = form.id ? await apiScriptedChatUpdate(form.id, { scripted_chat: form }) : await onFormSubmit(event)
       if (result.error || result.errors) return
       if (!form.id) {
