@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         put "/users/password", to: "users/passwords#update"
         post "/users/sign_in", to: "users/sessions#create"
         delete "/users/sign_out", to: "users/sessions#destroy"
+        put "/users/onboarding", to: "mes#update_onboarding"
       end
 
       get "/personas/autocomplete", to: "autocompletes#personas_autocomplete"

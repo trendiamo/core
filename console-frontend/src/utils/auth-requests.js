@@ -14,6 +14,7 @@ const WEBSITES_URL = `${BASE_API_URL}/websites`
 const FLOWS_URL = `${BASE_API_URL}/flows`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
 const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
+const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
@@ -163,6 +164,7 @@ export const apiWebsiteUpdate = (id, body) => apiUpdateRequest(`${WEBSITES_URL}/
 
 export const apiMe = () => apiGetRequest(ME_URL)
 export const apiMeUpdate = body => apiUpdateRequest(ME_URL, body)
+export const apiOnboardingSet = body => apiUpdateRequest(ONBOARDING_URL, body)
 
 export const apiPersonaList = query => apiListRequest(`${PERSONAS_URL}/?${stringify(query)}`)
 export const apiPersonaSimpleList = query => apiGetRequest(`${PERSONAS_URL}/?${stringify(query)}`)
