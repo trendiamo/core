@@ -1,11 +1,12 @@
 import CircularProgress from 'shared/circular-progress'
 import React from 'react'
 import routes from 'app/routes'
+import Section from 'shared/section'
 import Select from 'shared/select'
 import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemContainer, Cancel, Form, FormContainer, Section } from 'shared/form-elements'
+import { Actions, AddItemContainer, Cancel, Form, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid, TextField } from '@material-ui/core'
@@ -28,7 +29,7 @@ const CurationForm = ({
   title,
 }) => (
   <>
-    <FormContainer title={title}>
+    <Section title={title}>
       <Grid item sm={6}>
         <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
           <TextField
@@ -70,14 +71,14 @@ const CurationForm = ({
           />
         </Form>
       </Grid>
-    </FormContainer>
+    </Section>
     <div>
       {form.spotlightsAttributes.map(
         (spotlight, index) =>
           !spotlight._destroy && (
             // eslint-disable-next-line react/no-array-index-key
-            <FormContainer key={index}>
-              <Section
+            <Section key={index}>
+              <FormSection
                 actions={
                   form.spotlightsAttributes.length > 1 && (
                     <Cancel disabled={isFormLoading} index={index} onClick={deleteSpotlight} />
@@ -96,8 +97,8 @@ const CurationForm = ({
                   personas={personas}
                   setForm={setForm}
                 />
-              </Section>
-            </FormContainer>
+              </FormSection>
+            </Section>
           )
       )}
       <AddItemContainer disabled={isFormLoading} message="Add new spotlight" onClick={addSpotlight} />{' '}

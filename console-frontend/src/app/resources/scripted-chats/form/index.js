@@ -1,18 +1,18 @@
 import ChatStep from './chat-step'
 import CircularProgress from 'shared/circular-progress'
 import Notification from 'shared/notification'
-import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
 import sanitizeProps from 'shared/sanitize-props'
 import SaveIcon from '@material-ui/icons/Save'
+import Section from 'shared/section'
 import Select from 'shared/select'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { apiPersonasAutocomplete } from 'utils'
 import { apiScriptedChatUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Button, TextField, Typography } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core'
 import { Prompt, withRouter } from 'react-router'
 
 const Actions = ({ isFormLoading, onFormSubmit }) => (
@@ -37,8 +37,7 @@ const ScriptedChatForm = ({
   showChildSteps,
   title,
 }) => (
-  <PaperContainer>
-    <Typography variant="subtitle1">{title}</Typography>
+  <Section title={title}>
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <Notification data={errors} />
@@ -79,7 +78,7 @@ const ScriptedChatForm = ({
         showChildSteps={showChildSteps}
       />
     </form>
-  </PaperContainer>
+  </Section>
 )
 
 export default compose(

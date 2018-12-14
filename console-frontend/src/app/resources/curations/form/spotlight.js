@@ -1,7 +1,7 @@
 import ProductPick from './product-pick'
 import React from 'react'
 import Select from 'shared/select'
-import { AddItemButton, Cancel, Section } from 'shared/form-elements'
+import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { compose, withHandlers } from 'recompose'
 import { Grid, TextField } from '@material-ui/core'
@@ -42,14 +42,14 @@ const Spotlight = ({
       />
     </Grid>
     <div style={{ marginTop: '24px' }}>
-      <Section foldable title="Spotlight Product Picks">
+      <FormSection foldable title="Spotlight Product Picks">
         {form.spotlightsAttributes[index].productPicksAttributes &&
           form.spotlightsAttributes[index].productPicksAttributes.map(
             (productPick, productPickIndex) =>
               !productPick._destroy && (
                 // eslint-disable-next-line react/no-array-index-key
                 <div key={productPickIndex}>
-                  <Section
+                  <FormSection
                     actions={
                       form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
                         <Cancel disabled={isFormLoading} index={productPickIndex} onClick={deleteProductPick} />
@@ -66,11 +66,11 @@ const Spotlight = ({
                         onChange={editProductPickValue}
                       />
                     </div>
-                  </Section>
+                  </FormSection>
                 </div>
               )
           )}
-      </Section>
+      </FormSection>
     </div>
     <AddItemButton disabled={isFormLoading} index={index} message="Add Another Product Pick" onClick={addProductPick} />{' '}
   </React.Fragment>

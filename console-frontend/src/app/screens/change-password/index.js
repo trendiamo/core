@@ -3,10 +3,9 @@ import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Notification from 'shared/notification'
-import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
-import Typography from '@material-ui/core/Typography'
+import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiPasswordChange } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
@@ -19,8 +18,7 @@ const Actions = ({ onFormSubmit }) => (
 )
 
 const ChangePassword = ({ info, passwordForm, onFormSubmit, setFieldValue }) => (
-  <PaperContainer>
-    <Typography variant="subtitle1">{'Change Password'}</Typography>
+  <Section title="Change Password">
     <form onSubmit={onFormSubmit}>
       <Notification data={info} />
       <FormControl fullWidth margin="normal" required>
@@ -49,7 +47,7 @@ const ChangePassword = ({ info, passwordForm, onFormSubmit, setFieldValue }) => 
         />
       </FormControl>
     </form>
-  </PaperContainer>
+  </Section>
 )
 
 export default compose(

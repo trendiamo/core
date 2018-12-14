@@ -5,12 +5,11 @@ import Cancel from './cancel'
 import Divider from './divider'
 import FlexBar from './flex-bar'
 import Form from './form'
-import FormContainer from './form-container'
+import FormSection from './form-section'
 import Header from './header'
 import InlineTypography from './inline-typography'
 import Prompt from './prompt'
 import SaveButton from './save-button'
-import Section from './section'
 
 export {
   Actions,
@@ -19,11 +18,10 @@ export {
   Cancel,
   Divider,
   Form,
-  FormContainer,
+  FormSection,
+  FlexBar,
   Header,
   InlineTypography,
   Prompt,
   SaveButton,
-  Section,
-  FlexBar,
 }

@@ -5,10 +5,10 @@ import Chip from '@material-ui/core/Chip'
 import CircularProgress from 'shared/circular-progress'
 import EditIcon from '@material-ui/icons/EditOutlined'
 import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
-import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import ReorderIcon from '@material-ui/icons/Reorder'
 import routes from 'app/routes'
+import Section from 'shared/section'
 import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -145,7 +145,7 @@ const TriggerList = ({
   setSelectedIds,
   isSelectAll,
 }) => (
-  <PaperContainer>
+  <Section>
     <TableToolbar deleteTriggers={deleteTriggers} label="Triggers" selectedIds={selectedIds} />
     <Table aria-labelledby="Triggers">
       <TriggerRowStyle />
@@ -178,7 +178,7 @@ const TriggerList = ({
         useWindowAsScrollContainer
       />
     </Table>
-  </PaperContainer>
+  </Section>
 )
 
 export default compose(

@@ -1,12 +1,11 @@
 import CircularProgress from 'shared/circular-progress'
 import Grid from '@material-ui/core/Grid'
 import Label from 'shared/label'
-import PaperContainer from 'app/layout/paper-container'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
+import Section from 'shared/section'
 import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
@@ -29,8 +28,7 @@ const PersonaForm = ({
   title,
   setProfilePicUrl,
 }) => (
-  <PaperContainer>
-    <Typography variant="subtitle1">{title}</Typography>
+  <Section title={title}>
     <Grid item sm={6}>
       <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
         <Label>{'Picture'}</Label>
@@ -65,7 +63,7 @@ const PersonaForm = ({
         {progress && <ProgressBar progress={progress} />}
       </Form>
     </Grid>
-  </PaperContainer>
+  </Section>
 )
 
 export default compose(

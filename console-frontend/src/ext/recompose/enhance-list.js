@@ -2,8 +2,8 @@ import AppBarButton from 'shared/app-bar-button'
 import Checkbox from '@material-ui/core/Checkbox'
 import CircularProgress from 'shared/circular-progress'
 import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
-import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
+import Section from 'shared/section'
 import styled from 'styled-components'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -120,7 +120,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
       selectedIds,
       setSelectedIds,
     }) => (
-      <PaperContainer>
+      <Section>
         <TableToolbar
           createRoute={routes.create()}
           deleteRecords={deleteRecords}
@@ -170,7 +170,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[]}
         />
-      </PaperContainer>
+      </Section>
     )
   )
 

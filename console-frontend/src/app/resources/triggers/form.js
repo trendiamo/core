@@ -2,13 +2,12 @@ import CircularProgress from 'shared/circular-progress'
 import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
 import InputLabel from '@material-ui/core/InputLabel'
-import PaperContainer from 'app/layout/paper-container'
 import React from 'react'
 import routes from 'app/routes'
+import Section from 'shared/section'
 import Select from 'shared/select'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
@@ -51,8 +50,7 @@ const TriggerForm = ({
   title,
   selectFlow,
 }) => (
-  <PaperContainer>
-    <Typography variant="subtitle1">{title}</Typography>
+  <Section title={title}>
     <Grid item sm={6}>
       <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
         <FormControl disabled={isFormLoading} fullWidth>
@@ -93,7 +91,7 @@ const TriggerForm = ({
         <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
       </Form>
     </Grid>
-  </PaperContainer>
+  </Section>
 )
 
 export default compose(

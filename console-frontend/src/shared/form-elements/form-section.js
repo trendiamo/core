@@ -23,7 +23,7 @@ const Content = styled.div`
   margin: 0px 0 16px;
 `
 
-const Section = ({ title, children, folded, foldable, toggleFolded, actions, hideTop, hideBottom }) => (
+const FormSection = ({ title, children, folded, foldable, toggleFolded, actions, hideTop, hideBottom }) => (
   <SectionContainer>
     {!hideTop && <Divider />}
     <FlexBar>
@@ -49,4 +49,4 @@ export default compose(
       setFolded(!folded)
     },
   })
-)(Section)
+)(FormSection)

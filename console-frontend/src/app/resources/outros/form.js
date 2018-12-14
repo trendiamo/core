@@ -1,11 +1,10 @@
 import CircularProgress from 'shared/circular-progress'
-import PaperContainer from 'app/layout/paper-container'
 import PluginPreviewFrame from 'shared/plugin-preview-frame'
 import React from 'react'
 import routes from 'app/routes'
+import Section from 'shared/section'
 import Select from 'shared/select'
 import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
@@ -41,8 +40,7 @@ const OutroForm = ({
   previewOutro,
   title,
 }) => (
-  <PaperContainer>
-    <Typography variant="subtitle1">{title}</Typography>
+  <Section title={title}>
     <Grid container spacing={24}>
       <Grid item sm={6}>
         <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
@@ -69,7 +67,7 @@ const OutroForm = ({
         <PluginPreview persona={previewOutro.persona} />
       </Grid>
     </Grid>
-  </PaperContainer>
+  </Section>
 )
 
 const emptyPreviewOutro = {
