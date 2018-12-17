@@ -15,7 +15,7 @@ class MesController < RestController
   end
 
   def update_onboarding
-    user_params = params.require(:user).permit(:show_onboarding)
+    user_params = params.require(:user).permit(:onboarding_stage)
     if current_user.update(user_params)
       render json: current_user
     else

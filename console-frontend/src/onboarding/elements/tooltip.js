@@ -1,25 +1,38 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Body, Header, SmallHeader } from './typography'
-import { ButtonCreate, ButtonNext } from './buttons'
+import { Button } from './button'
 import { compose, lifecycle } from 'recompose'
 
 const Container = styled.div`
-  width: ${({ width }) => width || '200px'};
+  min-width: 200px;
   margin: 20px;
   text-align: ${({ align }) => align};
 `
 
-const Tooltip = ({ align, body, create, title, width, smallHeader, nextRoute, index, primaryProps, setRun }) => (
-  <Container align={align || 'left'} width={width}>
+const Tooltip = ({
+  align,
+  body,
+  create,
+  title,
+  smallHeader,
+  nextRoute,
+  index,
+  primaryProps,
+  setOnboarding,
+  onboarding,
+}) => (
+  <Container align={align || 'left'}>
     <SmallHeader variant="overline">{smallHeader || `Step ${index + 1}`}</SmallHeader>
     <Header variant="h4">{title}</Header>
     <Body variant="body2">{body}</Body>
-    {create ? (
-      <ButtonCreate config={primaryProps} nextRoute={nextRoute} setRun={setRun} />
-    ) : (
-      <ButtonNext config={primaryProps} nextRoute={nextRoute} setRun={setRun} />
-    )}
+    <Button
+      config={primaryProps}
+      create={create}
+      nextRoute={nextRoute}
+      onboarding={onboarding}
+      setOnboarding={setOnboarding}
+    />
   </Container>
 )
 

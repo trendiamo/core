@@ -7,7 +7,7 @@ import React from 'react'
 import Sidebar from './sidebar'
 import withClasses from 'ext/recompose/with-classes'
 import withOnboarding from 'ext/recompose/with-onboarding'
-import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { styles } from './layout-styles'
 import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles'
@@ -17,16 +17,15 @@ const Layout = ({
   children,
   classes,
   history,
+  onboarding,
   logout,
+  setOnboarding,
   sidebarOpen,
   toggleOpen,
-  runOnboarding,
-  setRunOnboarding,
-  onboardingCallback,
 }) => (
   <div className={classes.root}>
     <div className={classes.appFrame}>
-      <Onboarding callback={onboardingCallback} history={history} run={runOnboarding} setRun={setRunOnboarding} />
+      <Onboarding history={history} onboarding={onboarding} setOnboarding={setOnboarding} />
       <CssBaseline />
       <AppBar
         appBarContent={appBarContent}
@@ -58,37 +57,16 @@ const EmptyLayout = ({ classes, children }) => (
 
 const EnhancedLayout = compose(
   withState('sidebarOpen', 'setSidebarOpen', true),
-  withState('runOnboarding', 'setRunOnboarding', false),
-  withState('onboardingCallback', 'setOnboardingCallback', null),
-  withProps(({ runOnboarding, setRunOnboarding, onboardingCallback, setOnboardingCallback }) => ({
-    onboarding: {
-      run: runOnboarding,
-      setRun: setRunOnboarding,
-      callback: onboardingCallback,
-      setCallback: setOnboardingCallback,
-    },
-  })),
   withOnboarding,
   withRouter,
   withHandlers({
     toggleOpen: ({ sidebarOpen, setSidebarOpen }) => () => setSidebarOpen(!sidebarOpen),
-    setOnboard: ({ setRunOnboarding }) => () => {
-      setRunOnboarding(true)
-    },
   }),
   withStyles(styles, { index: 1 }),
   withProps(() => ({
     isLoggedIn: auth.isLoggedIn(),
   })),
   withClasses,
-  lifecycle({
-    componentDidMount() {
-      const { setRunOnboarding } = this.props
-      setTimeout(() => {
-        setRunOnboarding(() => auth.getUser().showOnboarding)
-      }, 0)
-    },
-  }),
   branch(({ isLoggedIn }) => !isLoggedIn, renderComponent(props => <EmptyLayout {...props} />))
 )(Layout)
 

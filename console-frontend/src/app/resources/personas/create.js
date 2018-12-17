@@ -8,6 +8,7 @@ import { uploadImage } from 'shared/picture-uploader'
 export default compose(
   withProps({
     breadcrumbs: [{ text: 'Personas', route: routes.personasList() }, { text: 'Create Persona' }],
+    onboardingCreate: true,
   }),
   withHandlers({
     saveFormObject: () => async (form, { setProgress, profilePic, setErrors }) => {
