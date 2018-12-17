@@ -10,6 +10,7 @@ import { Actions, AddItemContainer, Cancel, Form, FormSection } from 'shared/for
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid, TextField } from '@material-ui/core'
+import { uploadImage } from 'shared/picture-uploader'
 import { withRouter } from 'react-router'
 
 const CurationForm = ({
@@ -115,8 +116,30 @@ export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
+  withState('productPicksPictures', 'setProductPicksPictures', []),
   withHandlers({
-    saveFormObject: ({ saveFormObject, setErrors }) => form => {
+    saveFormObject: ({ saveFormObject, setErrors, productPicksPictures }) => async form => {
+      await Promise.all(
+        productPicksPictures.map(async productPicksPicture => {
+          const productPickPhotoUrl = await uploadImage({
+            blob: productPicksPicture.blob,
+            setProgress: productPicksPicture.setProgress,
+            type: 'products-pics',
+            defaultValue:
+              form.spotlightsAttributes[productPicksPicture.spotlightIndex].productPicksAttributes[
+                productPicksPicture.productPickIndex
+              ],
+          })
+          form.spotlightsAttributes[productPicksPicture.spotlightIndex].productPicksAttributes[
+            productPicksPicture.productPickIndex
+          ] = {
+            ...form.spotlightsAttributes[productPicksPicture.spotlightIndex].productPicksAttributes[
+              productPicksPicture.productPickIndex
+            ],
+            picUrl: productPickPhotoUrl,
+          }
+        })
+      )
       return saveFormObject(form, { setErrors })
     },
   }),
