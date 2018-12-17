@@ -1,4 +1,5 @@
 import Avatar from 'shared/table-elements/avatar'
+import BlankStateTemplate from 'shared/blank-state'
 import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
@@ -7,6 +8,15 @@ import { apiPersonaDestroy, apiPersonaList } from 'utils'
 import { compose } from 'recompose'
 
 const columns = [{ name: 'name', label: 'name', sortable: true }, { name: 'description', label: 'description' }]
+
+const BlankState = () => (
+  <BlankStateTemplate
+    description={"You don't have any personas yet. Let's create a first one?"}
+    imageSource="/img/background/img-empty-02.png"
+    route={routes.personaCreate()}
+    title="Create a new persona"
+  />
+)
 
 const PersonasRow = ({ record }) => (
   <React.Fragment>
@@ -21,6 +31,7 @@ const PersonasRow = ({ record }) => (
 export default compose(
   enhanceList({
     breadcrumbs: [{ text: 'Personas' }],
+    blankState: BlankState,
     columns,
     api: { fetch: apiPersonaList, destroy: apiPersonaDestroy },
     routes: { create: routes.personaCreate, edit: routes.personaEdit },

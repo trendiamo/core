@@ -23,7 +23,7 @@ const Actions = ({ createRoute }) => (
   </AppBarButton>
 )
 
-const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
+const enhanceList = ({ api, columns, breadcrumbs, routes, blankState }) => ResourceRow =>
   compose(
     withAppBarContent(() => ({
       Actions: <Actions createRoute={routes.create()} />,
@@ -79,6 +79,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes }) => ResourceRow =>
       },
     }),
     branch(({ isLoading }) => isLoading, renderComponent(CircularProgress)),
+    branch(({ recordsCount }) => recordsCount === 0, renderComponent(blankState)),
     withHandlers({
       deleteRecords: ({ selectedIds, fetchRecords, setSelectedIds, setIsSelectAll }) => async () => {
         await api.destroy({ ids: selectedIds })

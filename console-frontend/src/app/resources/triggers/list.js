@@ -1,4 +1,5 @@
 import AppBarButton from 'shared/app-bar-button'
+import BlankStateTemplate from 'shared/blank-state'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import Chip from '@material-ui/core/Chip'
@@ -22,6 +23,15 @@ import { camelize } from 'inflected'
 import { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
+
+const BlankState = () => (
+  <BlankStateTemplate
+    description={"You don't have any triggers yet. Let's create a first one?"}
+    imageSource="/img/background/img-welcome.png"
+    route={routes.triggerCreate()}
+    title="Create a new trigger"
+  />
+)
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
@@ -215,5 +225,6 @@ export default compose(
       setIsLoading(false)
     },
   }),
-  branch(({ isLoading }) => isLoading, renderComponent(CircularProgress))
+  branch(({ isLoading }) => isLoading, renderComponent(CircularProgress)),
+  branch(({ triggers }) => triggers.length === 0, renderComponent(BlankState))
 )(TriggerList)
