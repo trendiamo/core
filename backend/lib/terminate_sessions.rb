@@ -1,40 +1,36 @@
-# Initialize Redis.
-redis = Redis.new
+# call with: TerminateSessions.perform(10)
+class TerminateSessions
+  AUTH_CACHE_KEY = "warden.user.user.key".freeze
+  REDIS_SESSION_PATTERN = "_session_id:*".freeze
+  attr_reader :user_id, :redis
 
-# Important: change this value to the ID of the user whose sessions you want to terminate.
-user_id = 0
+  def self.perform(user_id)
+    new(user_id).perform
+  end
 
-# Initialize sessions array.
-sessions = []
+  def initialize(user_id)
+    @user_id = user_id
+    @redis = Redis.new
+  end
 
-# Pattern to match sessions.
-pattern = "session_id:*"
+  def perform
+    sessions = scan_sessions
+    sessions.each do |item|
+      cache_item = Rails.cache.fetch(item)
+      Rails.cache.delete(item) if cache_item.key?(AUTH_CACHE_KEY) && cache_item[AUTH_CACHE_KEY][0][0] == user_id
+    end
+  end
 
-auth_cache_key = "warden.user.user.key"
+  private
 
-# Initial cursor position for Redis SCAN method.
-current_cursor = 0
-
-# Loop through iterations of Redis SCAN method.
-iterations_finished = false
-until iterations_finished
-  # Scan the first set at the given cursor.
-  items = redis.scan(current_cursor, match: pattern)
-  # Reset current_cursor to the new one.
-  current_cursor = items[0]
-  # Add session keys without duplicates
-  sessions |= items[1]
-  # If this cursor isn't 0 then we have more iterations to make. (Read redis docs)
-  current_cursor == "0" && iterations_finished = true
-end
-
-# Loop through the sessions and check user ID.
-sessions.each do |item|
-  # Get the session data from cache.
-  cache_item = Rails.cache.fetch(item)
-  # If session data contains user_id and it matches
-  if cache_item.key?(auth_cache_key) && cache_item[auth_cache_key][0][0] == user_id
-    # Then delete the session.
-    Rails.cache.delete(item)
+  def scan_sessions
+    sessions = []
+    cursor = 0
+    loop do
+      cursor, new_sessions = redis.scan(cursor, match: REDIS_SESSION_PATTERN)
+      sessions |= new_sessions
+      break if cursor == "0"
+    end
+    sessions
   end
 end
