@@ -10,6 +10,7 @@ import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -76,8 +77,14 @@ export default compose(
     loadFormObject: ({ loadFormObject }) => async () => {
       return loadFormObject()
     },
-    saveFormObject: ({ saveFormObject, setProgress, profilePic, setErrors }) => form => {
-      return saveFormObject(form, { setProgress, profilePic, setErrors })
+    saveFormObject: ({ saveFormObject, setProgress, profilePic, setErrors }) => async form => {
+      const profilePicUrl = await uploadImage({
+        blob: profilePic,
+        setProgress,
+        type: 'personas-profile-pics',
+        defaultValue: form.profilePicUrl,
+      })
+      return saveFormObject({ ...form, profilePicUrl }, { setErrors })
     },
   }),
   withForm({
