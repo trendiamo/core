@@ -1,6 +1,6 @@
 import auth from 'auth'
 import omitDeep from 'ext/lodash/omit-deep'
-import { BASE_API_URL, convertToInfo } from './shared'
+import { BASE_API_URL } from './shared'
 import { stringify } from 'query-string'
 
 const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
@@ -113,20 +113,10 @@ const apiListRequest = async url => {
   }
 }
 
-const apiSignoutSaga = async url => {
-  const json = await apiDestroyRequest(url)
-  const info = convertToInfo(json)
-  if (info.status === 'success') return auth.clear()
+export const apiSignOut = async () => {
+  const json = await apiDestroyRequest(SIGNOUT_URL)
+  if (!json.errors && !json.error) return auth.clear()
   console.error('Error on Logout!')
-}
-
-const apiPasswordChangeSaga = async (url, body, setInfo) => {
-  const json = await apiUpdateRequest(url, body)
-  const info = convertToInfo(json)
-  if (info.status === 'error') {
-    setInfo(info)
-  }
-  return info.status !== 'error'
 }
 
 export const apiGetSignedUrlFactory = type => (file, callback) =>
@@ -156,8 +146,7 @@ export const apiGetSignedUrlFactory = type => (file, callback) =>
     })
     .then(callback)
 
-export const apiPasswordChange = (body, setInfo) => apiPasswordChangeSaga(PASSWORD_CHANGE_URL, body, setInfo)
-export const apiSignOut = () => apiSignoutSaga(SIGNOUT_URL)
+export const apiPasswordChange = body => apiUpdateRequest(PASSWORD_CHANGE_URL, body)
 
 export const apiWebsiteShow = id => apiGetRequest(`${WEBSITES_URL}/${id}`)
 export const apiWebsiteUpdate = (id, body) => apiUpdateRequest(`${WEBSITES_URL}/${id}`, body)

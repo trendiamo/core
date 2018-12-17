@@ -1,5 +1,5 @@
 import auth from 'auth'
-import { BASE_API_URL, convertToInfo } from './shared'
+import { BASE_API_URL } from './shared'
 
 const CSRF_TOKEN_URL = `${BASE_API_URL}/csrf_token`
 const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
@@ -50,11 +50,7 @@ export const apiPasswordReset = async body => {
   return json
 }
 
-export const apiPasswordEmailLink = async (body, setInfo) => {
-  const json = await apiPostRequest(PASSWORD_FORM_URL, body)
-  setInfo(convertToInfo(json, 'Email sent!'))
-  return json
-}
+export const apiPasswordEmailLink = body => apiPostRequest(PASSWORD_FORM_URL, body)
 
 export const apiSignIn = async body => {
   const json = await apiPostRequest(SIGNIN_URL, body)

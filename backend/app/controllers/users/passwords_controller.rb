@@ -6,14 +6,12 @@ module Users
       self.resource = resource_class.send_reset_password_instructions(resource_params)
       yield resource if block_given?
 
-      if successfully_sent?(resource)
-        # respond_with({}, location: after_sending_reset_password_instructions_path_for(resource_name))
-        render json: { resource: resource }
-      else
-        # respond_with(resource)
-        errors = resource.errors.full_messages.map { |string| { title: string } }
-        render json: { errors: errors }
-      end
+      # if successfully_sent?(resource)
+      #   respond_with({}, location: after_sending_reset_password_instructions_path_for(resource_name))
+      # else
+      #   respond_with(resource)
+      # end
+      render json: {}
     end
 
     # GET /resource/password/edit?reset_password_token=abcdef

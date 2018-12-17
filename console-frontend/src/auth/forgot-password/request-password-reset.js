@@ -29,13 +29,13 @@ const AuthMessage = () => (
   </React.Fragment>
 )
 
-const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, info }) => (
+const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, success }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <form onSubmit={passwordChangeSubmit}>
       <Typography variant="body2">
         {'We can help you reset your password using your email address linked to your account.'}
       </Typography>
-      <Notification data={info} />
+      <Notification data={{ status: 'success', message: success }} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'Email'}</InputLabel>
         <Input
@@ -66,15 +66,17 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
 
 export default compose(
   withState('passwordForm', 'setPasswordForm', { email: '' }),
-  withState('info', 'setInfo', null),
+  withState('success', 'setSuccess', null),
   withHandlers({
     onBackToLogin: () => event => {
       event.preventDefault()
       window.location.href = routes.login()
     },
-    passwordChangeSubmit: ({ passwordForm, setInfo }) => async event => {
+    passwordChangeSubmit: ({ passwordForm, setSuccess }) => async event => {
       event.preventDefault()
-      await apiPasswordEmailLink({ user: { email: passwordForm.email } }, setInfo)
+      const json = await apiPasswordEmailLink({ user: { email: passwordForm.email } })
+      setSuccess('Email sent!')
+      return json
     },
     setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>
       setPasswordForm({

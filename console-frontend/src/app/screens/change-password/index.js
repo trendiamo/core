@@ -9,6 +9,7 @@ import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiPasswordChange } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
+import { extractErrors } from 'utils/shared'
 import { withRouter } from 'react-router'
 
 const Actions = ({ onFormSubmit }) => (
@@ -17,10 +18,10 @@ const Actions = ({ onFormSubmit }) => (
   </Button>
 )
 
-const ChangePassword = ({ info, passwordForm, onFormSubmit, setFieldValue }) => (
+const ChangePassword = ({ errors, passwordForm, onFormSubmit, setFieldValue }) => (
   <Section title="Change Password">
     <form onSubmit={onFormSubmit}>
-      <Notification data={info} />
+      <Notification data={errors} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
         <Input
@@ -56,25 +57,23 @@ export default compose(
     password: '',
     passwordConfirmation: '',
   }),
-  withState('info', 'setInfo', null),
+  withState('errors', 'setErrors', null),
   withRouter,
   withHandlers({
-    onFormSubmit: ({ passwordForm, setInfo, history }) => async event => {
+    onFormSubmit: ({ passwordForm, setErrors, history }) => async event => {
       event.preventDefault()
-      if (passwordForm.password === passwordForm.passwordConfirmation) {
-        const success = await apiPasswordChange(
-          {
-            user: {
-              current_password: passwordForm.currentPassword,
-              password: passwordForm.password,
-              password_confirmation: passwordForm.passwordConfirmation,
-            },
-          },
-          setInfo
-        )
-        if (success) history.push(routes.root())
+      if (passwordForm.password !== passwordForm.passwordConfirmation) {
+        setErrors({ message: "New passwords don't match", status: 'error' })
+        return
+      }
+      const json = await apiPasswordChange({
+        user: passwordForm,
+      })
+      const errors = extractErrors(json)
+      if (errors) {
+        setErrors(errors)
       } else {
-        setInfo({ message: "New passwords don't match", status: 'error' })
+        history.push(routes.root())
       }
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
