@@ -95,9 +95,14 @@ export default compose(
   withRouter,
   withOnboardingConsumer,
   withHandlers({
-    onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ formRef, history, onFormSubmit, onboarding, setOnboarding, onboardingCreate }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
+      setTimeout(() => {
+        if (onboardingCreate && (onboarding.stageIndex < 2 && !onboarding.run)) {
+          setOnboarding({ ...onboarding, stageIndex: 1, run: true })
+        }
+      }, 0)
       if (!result.error && !result.errors) history.push(routes.personasList())
       return result
     },

@@ -7,6 +7,7 @@ import { extractErrors } from 'utils/shared'
 export default compose(
   withProps({
     breadcrumbs: [{ text: 'Personas', route: routes.personasList() }, { text: 'Create Persona' }],
+    onboardingCreate: true,
   }),
   withHandlers({
     saveFormObject: () => async (form, { setErrors }) => {
