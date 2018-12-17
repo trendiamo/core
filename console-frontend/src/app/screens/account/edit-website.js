@@ -94,7 +94,7 @@ const EditWebsite = ({
       disabled={isFormLoading}
       label="Live"
     />
-    <FormHelperText>{'Dangerous: this controls wether or not the plugin appears on your website'}</FormHelperText>
+    <FormHelperText>{'Dangerous: this controls whether or not the plugin appears on your website'}</FormHelperText>
     <LabelContainer>
       <InputLabel>{'Hostnames'}</InputLabel>
     </LabelContainer>
