@@ -51,7 +51,7 @@ const ListItem = compose(
   cursor: pointer;
   color: ${({ isClicked }) => (isClicked ? 'white' : '#4a4a4a')};
   transition: background-color 0.4s linear;
-  background-color: ${({ isClicked }) => (isClicked ? '#00adef' : 'transparent')};
+  background-color: ${({ isClicked }) => (isClicked ? '#00adef' : 'white')};
 `)
 
 export { List, ListChevron, ListContent, ListItem, ListImg }
