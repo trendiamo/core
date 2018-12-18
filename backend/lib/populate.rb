@@ -47,7 +47,7 @@ class Populate
   end
 
   def create_personas
-    60.times do |i|
+    22.times do |i|
       persona_attrs = {
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
@@ -58,7 +58,7 @@ class Populate
   end
 
   def create_outros
-    30.times do
+    3.times do
       outro_attrs = {
         name: "#{Faker::Lorem.word} Outro",
         persona: Persona.order("RANDOM()").first,
@@ -68,7 +68,7 @@ class Populate
   end
 
   def create_scripted_chats
-    30.times do
+    9.times do
       scripted_chat_attrs = {
         name: "#{Faker::Lorem.word} Chat",
         persona: Persona.order("RANDOM()").first,
@@ -79,7 +79,7 @@ class Populate
   end
 
   def create_curations
-    30.times do
+    3.times do
       curation_attrs = {
         name: "#{Faker::Lorem.word} Curation",
         persona: Persona.order("RANDOM()").first,
@@ -91,7 +91,7 @@ class Populate
   end
 
   def create_triggers
-    8.times do |i|
+    11.times do |i|
       trigger_attrs = {
         order: i + 1,
         flow: [Curation, ScriptedChat, Outro].sample.all.sample,
