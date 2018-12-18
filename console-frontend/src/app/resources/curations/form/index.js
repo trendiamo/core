@@ -6,7 +6,7 @@ import Select from 'shared/select'
 import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemContainer, Cancel, Form, FormSection } from 'shared/form-elements'
+import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid, TextField } from '@material-ui/core'
@@ -24,11 +24,10 @@ const CurationForm = ({
   onFormSubmit,
   setFieldValue,
   deleteSpotlight,
-  editSpotlightValue,
+  setSpotlightForm,
   addSpotlight,
   productPicksPictures,
   setProductPicksPictures,
-  setForm,
   isCropping,
   setIsCropping,
   title,
@@ -76,38 +75,24 @@ const CurationForm = ({
         />
       </Grid>
     </Section>
-    {form.spotlightsAttributes.map(
-      (spotlight, index) =>
-        !spotlight._destroy && (
-          // eslint-disable-next-line react/no-array-index-key
-          <Section key={index}>
-            <FormSection
-              actions={
-                form.spotlightsAttributes.length > 1 && (
-                  <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />
-                )
-              }
-              foldable
-              hideTop
-              title={`Spotlight #${index + 1}`}
-            >
-              <Spotlight
-                deleteSpotlight={deleteSpotlight}
-                form={form}
-                index={index}
-                isCropping={isCropping}
-                isFormLoading={isFormLoading}
-                onChange={editSpotlightValue}
-                personas={personas}
-                productPicksPictures={productPicksPictures}
-                setForm={setForm}
-                setIsCropping={setIsCropping}
-                setProductPicksPictures={setProductPicksPictures}
-              />
-            </FormSection>
-          </Section>
-        )
-    )}
+    {form.spotlightsAttributes.map((spotlight, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <React.Fragment key={index}>
+        <Spotlight
+          allowDelete={form.spotlightsAttributes.length > 1}
+          deleteSpotlight={deleteSpotlight}
+          index={index}
+          isCropping={isCropping}
+          isFormLoading={isFormLoading}
+          onChange={setSpotlightForm}
+          personas={personas}
+          productPicksPictures={productPicksPictures}
+          setIsCropping={setIsCropping}
+          setProductPicksPictures={setProductPicksPictures}
+          spotlight={spotlight}
+        />
+      </React.Fragment>
+    ))}
     <AddItemContainer disabled={isCropping || isFormLoading} message="Add new spotlight" onClick={addSpotlight} />
   </Form>
 )
@@ -118,28 +103,34 @@ export default compose(
   withState('isCropping', 'setIsCropping', false),
   withState('productPicksPictures', 'setProductPicksPictures', []),
   withHandlers({
-    saveFormObject: ({ saveFormObject, setErrors, productPicksPictures }) => async form => {
-      await Promise.all(
-        productPicksPictures.map(async productPicksPicture => {
-          const productPickPhotoUrl = await uploadImage({
-            blob: productPicksPicture.blob,
-            setProgress: productPicksPicture.setProgress,
-            type: 'products-pics',
-            defaultValue:
-              form.spotlightsAttributes[productPicksPicture.spotlightIndex].productPicksAttributes[
-                productPicksPicture.productPickIndex
-              ],
-          })
-          form.spotlightsAttributes[productPicksPicture.spotlightIndex].productPicksAttributes[
-            productPicksPicture.productPickIndex
-          ] = {
-            ...form.spotlightsAttributes[productPicksPicture.spotlightIndex].productPicksAttributes[
-              productPicksPicture.productPickIndex
-            ],
-            picUrl: productPickPhotoUrl,
-          }
+    uploadSubImage: () => async ({ blob, setProgress, subform }) => {
+      const productPickPhotoUrl = await uploadImage({
+        blob,
+        setProgress,
+        type: 'products-pics',
+        defaultValue: subform.picUrl,
+      })
+      return {
+        ...subform,
+        picUrl: productPickPhotoUrl,
+      }
+    },
+  }),
+  withHandlers({
+    uploadSubImages: ({ productPicksPictures, uploadSubImage }) => form => {
+      return productPicksPictures.map(async ({ blob, productPickIndex, setProgress, spotlightIndex }) => {
+        const { productPicksAttributes } = form.spotlightsAttributes[spotlightIndex]
+        productPicksAttributes[productPickIndex] = await uploadSubImage({
+          subform: productPicksAttributes[productPickIndex],
+          blob,
+          setProgress,
         })
-      )
+      })
+    },
+  }),
+  withHandlers({
+    saveFormObject: ({ saveFormObject, setErrors, uploadSubImages }) => async form => {
+      await Promise.all(uploadSubImages(form))
       return saveFormObject(form, { setErrors })
     },
   }),
@@ -185,19 +176,10 @@ export default compose(
         ],
       })
     },
-    editSpotlightValue: ({ form, setForm }) => (index, newValue) => {
-      const newSpotlights = [...form.spotlightsAttributes]
-      newSpotlights[index][newValue.name] = newValue.value
-      setForm({ ...form, spotlightsAttributes: newSpotlights })
-    },
-    deleteSpotlight: ({ form, setForm }) => index => {
-      const spotlightToDelete = {
-        id: form.spotlightsAttributes[index].id,
-        _destroy: true,
-      }
-      let newSpotlights = [...form.spotlightsAttributes]
-      newSpotlights[index] = spotlightToDelete
-      setForm({ ...form, spotlightsAttributes: newSpotlights })
+    setSpotlightForm: ({ form, setForm }) => (spotlight, index) => {
+      const newSpotlightsAttributes = [...form.spotlightsAttributes]
+      newSpotlightsAttributes[index] = spotlight
+      setForm({ ...form, spotlightsAttributes: newSpotlightsAttributes })
     },
   }),
   withRouter,

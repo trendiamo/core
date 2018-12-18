@@ -1,152 +1,143 @@
 import ProductPick from './product-pick'
 import React from 'react'
+import Section from 'shared/section'
 import Select from 'shared/select'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
-import { compose, withHandlers } from 'recompose'
+import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { Grid, TextField } from '@material-ui/core'
 
 const Spotlight = ({
   addProductPick,
-  index,
-  deleteProductPick,
+  allowDelete,
   selectPersona,
-  form,
-  editProductPickValue,
+  spotlight,
   isFormLoading,
+  deleteSpotlight,
   editSpotlightValue,
-  setProductPicks,
+  setProductPickForm,
   setProductPicture,
   setIsCropping,
+  index,
   isCropping,
 }) => (
-  <React.Fragment>
-    <Grid item sm={6}>
-      <TextField
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Text"
-        margin="normal"
-        name="text"
-        onChange={editSpotlightValue}
-        required
-        value={form.spotlightsAttributes[index].text}
-      />
-      <Select
-        autocomplete={apiPersonasAutocomplete}
-        defaultValue={
-          form.spotlightsAttributes[index].__persona && {
-            value: form.spotlightsAttributes[index].__persona.id,
-            label: form.spotlightsAttributes[index].__persona.name,
+  <Section>
+    <FormSection
+      actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />}
+      foldable
+      hideTop
+      title={`Spotlight #${index + 1}`}
+    >
+      <Grid item sm={6}>
+        <TextField
+          disabled={isCropping || isFormLoading}
+          fullWidth
+          label="Text"
+          margin="normal"
+          name="spotlight_text"
+          onChange={editSpotlightValue}
+          required
+          value={spotlight.text}
+        />
+        <Select
+          autocomplete={apiPersonasAutocomplete}
+          defaultValue={
+            spotlight.__persona && {
+              value: spotlight.__persona.id,
+              label: spotlight.__persona.name,
+            }
           }
-        }
-        isDisabled={isCropping || isFormLoading}
-        name="personaId"
-        onChange={selectPersona}
-        placeholder="Persona *"
-      />
-    </Grid>
-    <div style={{ marginTop: '24px' }}>
-      <FormSection foldable title="Product Picks">
-        {form.spotlightsAttributes[index].productPicksAttributes &&
-          form.spotlightsAttributes[index].productPicksAttributes.map(
-            (productPick, productPickIndex) =>
-              !productPick._destroy && (
-                // eslint-disable-next-line react/no-array-index-key
-                <div key={productPickIndex}>
-                  <FormSection
-                    actions={
-                      form.spotlightsAttributes[index].productPicksAttributes.length > 1 && (
-                        <Cancel
-                          disabled={isCropping || isFormLoading}
-                          index={productPickIndex}
-                          onClick={deleteProductPick}
-                        />
-                      )
-                    }
-                    hideBottom
-                    hideTop={productPickIndex === 0}
-                    title={`Product Pick #${productPickIndex + 1}`}
-                  >
-                    <ProductPick
-                      form={form.spotlightsAttributes[index]}
-                      index={productPickIndex}
-                      isCropping={isCropping}
-                      onChange={editProductPickValue}
-                      setIsCropping={setIsCropping}
-                      setProductPicks={setProductPicks}
-                      setProductPicture={setProductPicture}
-                    />
-                  </FormSection>
-                </div>
-              )
-          )}
-      </FormSection>
-    </div>
-    <AddItemButton
-      disabled={isCropping || isFormLoading}
-      index={index}
-      message="Add Another Product Pick"
-      onClick={addProductPick}
-    />{' '}
-  </React.Fragment>
+          isDisabled={isCropping || isFormLoading}
+          name="spotlight_personaId"
+          onChange={selectPersona}
+          placeholder="Persona *"
+        />
+      </Grid>
+      <div style={{ marginTop: '24px' }}>
+        <FormSection foldable title="Product Picks">
+          {spotlight.productPicksAttributes &&
+            spotlight.productPicksAttributes.map((productPick, productPickIndex) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <React.Fragment key={productPickIndex}>
+                <ProductPick
+                  allowDelete={spotlight.productPicksAttributes.length > 1}
+                  index={productPickIndex}
+                  isCropping={isCropping}
+                  onChange={setProductPickForm}
+                  productPick={productPick}
+                  setIsCropping={setIsCropping}
+                  setProductPicture={setProductPicture}
+                />
+              </React.Fragment>
+            ))}
+        </FormSection>
+      </div>
+      <AddItemButton
+        disabled={isCropping || isFormLoading}
+        message="Add Another Product Pick"
+        onClick={addProductPick}
+      />{' '}
+    </FormSection>
+  </Section>
 )
 
 export default compose(
+  branch(({ spotlight }) => spotlight._destroy, renderNothing),
   withHandlers({
-    editSpotlightValue: ({ index, onChange }) => event => {
-      onChange(index, event.target)
+    editSpotlightValue: ({ spotlight, index, onChange }) => event => {
+      const name = event.target.name.replace('spotlight_', '')
+      spotlight[name] = event.target.value
+      onChange(spotlight, index)
     },
-    selectPersona: ({ form, setForm, index }) => ({ value }) => {
-      const newSpotlightAttributes = {
-        ...form.spotlightsAttributes[index],
-        personaId: value.id,
-        __persona: value,
-      }
-      form.spotlightsAttributes[index] = newSpotlightAttributes
-      setForm(form)
-    },
-    addProductPick: ({ form, index, setForm }) => () => {
-      const newProductPicks = [
-        ...form.spotlightsAttributes[index].productPicksAttributes,
+    selectPersona: ({ spotlight, index, onChange }) => ({ value }) => {
+      onChange(
         {
-          url: '',
-          name: '',
-          description: '',
-          displayPrice: '',
-          picUrl: '',
+          ...spotlight,
+          personaId: value.id,
+          __persona: value,
         },
-      ]
-      form.spotlightsAttributes[index].productPicksAttributes = newProductPicks
-      setForm(form)
+        index
+      )
     },
-    deleteProductPick: ({ index, form, setForm }) => productPickIndex => {
-      const productPickToDelete = {
-        id: form.spotlightsAttributes[index].productPicksAttributes[productPickIndex].id,
-        _destroy: true,
-      }
-      let newProductPicks = [...form.spotlightsAttributes[index].productPicksAttributes]
-      newProductPicks[productPickIndex] = productPickToDelete
-      form.spotlightsAttributes[index].productPicksAttributes = newProductPicks
-      setForm(form)
+    addProductPick: ({ spotlight, index, onChange }) => () => {
+      onChange(
+        {
+          ...spotlight,
+          productPicksAttributes: [
+            ...spotlight.productPicksAttributes,
+            {
+              url: '',
+              name: '',
+              description: '',
+              displayPrice: '',
+              picUrl: '',
+            },
+          ],
+        },
+        index
+      )
     },
-    setProductPicks: ({ form, setForm }) => productPicks => {
-      setForm({ ...form, productPicksAttributes: productPicks })
+    deleteSpotlight: ({ spotlight, index, onChange }) => () => {
+      onChange(
+        {
+          id: spotlight.id,
+          _destroy: true,
+        },
+        index
+      )
     },
-    setProductPicture: ({ index, productPicksPictures, setProductPicksPictures }) => (
+    setProductPickForm: ({ spotlight, index, onChange }) => (productPick, productPickIndex) => {
+      let newProductPicksAttributes = [...spotlight.productPicksAttributes]
+      newProductPicksAttributes[productPickIndex] = productPick
+      onChange({ ...spotlight, productPicksAttributes: newProductPicksAttributes }, index)
+    },
+    setProductPicture: ({ productPicksPictures, setProductPicksPictures, index }) => (
       productPickIndex,
       blob,
       setProgress
     ) => {
       productPicksPictures.push({ spotlightIndex: index, productPickIndex, blob, setProgress })
       setProductPicksPictures(productPicksPictures)
-    },
-  }),
-  withHandlers({
-    editProductPickValue: ({ setForm, index, form }) => (productPickIndex, newValue) => {
-      const newProductPicks = [...form.spotlightsAttributes[index].productPicksAttributes]
-      newProductPicks[productPickIndex][newValue.name] = newValue.value
-      setForm({ ...form, productPicksAttributes: newProductPicks })
     },
   })
 )(Spotlight)
