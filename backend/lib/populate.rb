@@ -1,3 +1,91 @@
+class PopulateCurations
+  def self.process
+    new.process
+  end
+
+  def process
+    create_curations
+  end
+
+  private
+
+  def create_curations
+    Array.new(3) do
+      curation_attrs = {
+        name: "#{Faker::Lorem.word.capitalize} Curation",
+        persona: Persona.order("RANDOM()").first,
+        title: Faker::Lorem.sentence,
+        subtitle: Faker::Lorem.sentence,
+        spotlights_attributes: Array.new(3) { spotlights_attributes },
+      }
+      Curation.create!(curation_attrs)
+    end
+  end
+
+  def spotlights_attributes
+    {
+      text: Faker::Lorem.sentence,
+      product_picks_attributes: Array.new(3) { product_picks_attributes },
+      persona: Persona.order("RANDOM()").first,
+    }
+  end
+
+  def product_picks_attributes
+    {
+      url: Faker::Internet.url,
+      name: Faker::Lorem.words.join(" ").capitalize,
+      description: Faker::Lorem.sentence,
+      display_price: "€#{Faker::Number.decimal(2)}",
+      pic_url: Faker::LoremPixel.image,
+    }
+  end
+end
+
+class PopulateScriptedChats
+  def self.process
+    new.process
+  end
+
+  def process
+    create_scripted_chats
+  end
+
+  private
+
+  def create_scripted_chats
+    Array.new(9) do
+      scripted_chat_attrs = {
+        name: "#{Faker::Lorem.word.capitalize} Chat",
+        persona: Persona.order("RANDOM()").first,
+        title: "Hello there",
+        chat_step_attributes: chat_step_attributes(1),
+      }
+      ScriptedChat.create!(scripted_chat_attrs)
+    end
+  end
+
+  def chat_step_attributes(height)
+    {
+      chat_messages_attributes: [
+        {
+          delay: 800,
+          text: Faker::Lorem.paragraph,
+        },
+      ],
+      chat_options_attributes: height.positive? ? chat_options_attributes(height) : [],
+    }
+  end
+
+  def chat_options_attributes(height)
+    Array.new(3) do
+      {
+        text: "#{Faker::Lorem.sentence}?",
+        destination_chat_step_attributes: chat_step_attributes(height - 1),
+      }
+    end
+  end
+end
+
 class Populate
   def self.process
     new.process
@@ -47,7 +135,7 @@ class Populate
   end
 
   def create_personas
-    22.times do |i|
+    Array.new(22) do |i|
       persona_attrs = {
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
@@ -58,9 +146,9 @@ class Populate
   end
 
   def create_outros
-    3.times do
+    Array.new(3) do
       outro_attrs = {
-        name: "#{Faker::Lorem.word} Outro",
+        name: "#{Faker::Lorem.word.capitalize} Outro",
         persona: Persona.order("RANDOM()").first,
       }
       Outro.create!(outro_attrs)
@@ -68,34 +156,19 @@ class Populate
   end
 
   def create_scripted_chats
-    9.times do
-      scripted_chat_attrs = {
-        name: "#{Faker::Lorem.word} Chat",
-        persona: Persona.order("RANDOM()").first,
-        title: "Hello there",
-      }
-      ScriptedChat.create!(scripted_chat_attrs)
-    end
+    PopulateScriptedChats.process
   end
 
   def create_curations
-    3.times do
-      curation_attrs = {
-        name: "#{Faker::Lorem.word} Curation",
-        persona: Persona.order("RANDOM()").first,
-        title: Faker::Lorem.sentence,
-        subtitle: Faker::Lorem.sentence,
-      }
-      Curation.create!(curation_attrs)
-    end
+    PopulateCurations.process
   end
 
   def create_triggers
-    11.times do |i|
+    Array.new(11) do |i|
       trigger_attrs = {
         order: i + 1,
-        flow: [Curation, ScriptedChat, Outro].sample.all.sample,
-        url_matchers: Array.new(rand(1...5)).map { "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-")) },
+        flow: [Curation, ScriptedChat, Outro, Navigation].sample.all.sample,
+        url_matchers: Array.new(rand(1...5)) { "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-")) },
       }
       Trigger.create!(trigger_attrs)
     end
