@@ -10,24 +10,13 @@ const auth = {
     localStorage.removeItem('loggedIn')
     window.location.href = routes.login()
   },
-  getDisplayName() {
-    const user = this.getUser()
-    if (!user.firstName || !user.lastName) return null
-    return `${user.firstName} ${user.lastName}`
-  },
   getHeaders() {
     return {
-      'X-CSRF-TOKEN': this.getToken(),
+      'X-CSRF-TOKEN': localStorage.getItem('CSRF-TOKEN'),
     }
   },
-  getToken() {
-    return localStorage.getItem('CSRF-TOKEN')
-  },
-  setToken(token) {
-    localStorage.setItem('CSRF-TOKEN', token)
-  },
   setCsrfToken(json) {
-    this.setToken(json.token)
+    localStorage.setItem('CSRF-TOKEN', json.token)
     localStorage.setItem('loggedIn', json.loggedIn)
   },
   getUser() {
@@ -41,10 +30,8 @@ const auth = {
   removeListener(fn) {
     this.listeners = this.listeners.filter(e => e !== fn)
   },
-  setAuth({ user }) {
-    this.setUser(user)
-  },
   setUser(user) {
+    this.user = user
     this.listeners.forEach(fn => fn(user))
     localStorage.setItem('authUser', JSON.stringify(user))
     localStorage.setItem('loggedIn', true)

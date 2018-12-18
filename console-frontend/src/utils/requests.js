@@ -46,7 +46,7 @@ const apiPutRequest = async (url, body) => {
 
 export const apiPasswordReset = async body => {
   const json = await apiPutRequest(PASSWORD_RESET_URL, body)
-  if (!json.errors && !json.error) auth.setAuth({ user: json.user })
+  if (!json.errors && !json.error) auth.setUser(json.user)
   return json
 }
 
@@ -54,7 +54,7 @@ export const apiPasswordEmailLink = body => apiPostRequest(PASSWORD_FORM_URL, bo
 
 export const apiSignIn = async body => {
   const json = await apiPostRequest(SIGNIN_URL, body)
-  if (!json.errors && !json.error) auth.setAuth({ user: json.user })
+  if (!json.errors && !json.error) auth.setUser(json.user)
   return json
 }
 
