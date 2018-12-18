@@ -276,8 +276,8 @@ const uploadImage = async ({ blob, setProgress, type, defaultValue }) => {
     })
     setProgress(null)
     return fileUrl
-  } catch (status) {
-    console.error(status)
+  } catch (error) {
+    console.error(error)
     alert('Error uploading file, please try again or contact us')
     window.location.reload()
   }

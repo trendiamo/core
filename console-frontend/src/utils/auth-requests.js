@@ -22,7 +22,7 @@ const authFetch = async (url, params) => {
   const result = await fetch(url, params)
   if (result.status === 403 || result.status === 401) {
     auth.clear()
-    return { error: 'Invalid Credentials' }
+    throw new Error('Invalid Credentials')
   }
   return result
 }
