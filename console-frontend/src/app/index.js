@@ -11,6 +11,7 @@ import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
 import theme from 'app/theme'
+import WelcomePage from 'app/screens/welcome'
 import { apiGetCsrfToken } from 'utils'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
@@ -77,7 +78,11 @@ const Routes = () => (
     <ExternalRoute component={LoginPage} path={routes.login()} />
     <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
     <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
-    <Route component={RedirectRoot} exact path={routes.root()} />
+    <Route
+      component={auth.isLoggedIn() && auth.getUser().onboardingStage === 0 ? WelcomePage : RedirectRoot}
+      exact
+      path={routes.root()}
+    />
     <Route component={NotFound} />
   </Switch>
 )

@@ -54,8 +54,8 @@ const EmptyLayout = ({ classes, children }) => (
 
 const EnhancedLayout = compose(
   withState('sidebarOpen', 'setSidebarOpen', true),
-  withOnboarding,
   withRouter,
+  withOnboarding,
   withHandlers({
     toggleOpen: ({ sidebarOpen, setSidebarOpen }) => () => setSidebarOpen(!sidebarOpen),
   }),
