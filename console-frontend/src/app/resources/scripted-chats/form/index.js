@@ -9,7 +9,6 @@ import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
-import { apiScriptedChatUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { TextField } from '@material-ui/core'
 import { withRouter } from 'react-router'
@@ -101,29 +100,12 @@ export default compose(
         personaId: value.id,
       })
     },
-    onFormSubmit: ({ form, formRef, history, onFormSubmit, setForm }) => async event => {
+    onFormSubmit: ({ location, formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
-      const result = form.id ? await apiScriptedChatUpdate(form.id, { scripted_chat: form }) : await onFormSubmit(event)
+      const result = await onFormSubmit(event)
       if (result.error || result.errors) return
-      if (!form.id) {
+      if (location.pathname !== routes.scriptedChatEdit(result.id)) {
         history.push(routes.scriptedChatEdit(result.id))
-      } else {
-        setForm({
-          id: result.id || '',
-          name: result.name || '',
-          title: result.title || '',
-          personaId: result.persona.id || '',
-          chatStepAttributes: {
-            id: result.chatStepAttributes.id,
-            chatMessagesAttributes: result.chatStepAttributes.chatMessagesAttributes || [
-              {
-                delay: '',
-                text: '',
-              },
-            ],
-            chatOptionsAttributes: result.chatStepAttributes.chatOptionsAttributes,
-          },
-        })
       }
     },
   }),
