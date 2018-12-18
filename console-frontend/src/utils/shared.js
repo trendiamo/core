@@ -6,7 +6,7 @@ const mapErrors = json => {
 
 const errorMessages = json => {
   if (json.error) {
-    return 'Invalid Credentials'
+    return json.error
   } else {
     return typeof json === 'object' && Array.isArray(json.errors) ? mapErrors(json) : 'Something went wrong!'
   }
