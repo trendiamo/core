@@ -18,8 +18,15 @@ const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
-const authFetch = async (url, params) => {
-  const result = await fetch(url, params)
+const authFetch = async (url, options) => {
+  const result = await fetch(url, {
+    credentials: 'include',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      ...auth.getHeaders(),
+    }),
+    ...options,
+  })
   if (result.status === 403 || result.status === 401) {
     auth.clear()
     throw new Error('Invalid Credentials')
@@ -29,11 +36,6 @@ const authFetch = async (url, params) => {
 
 const apiDestroyRequest = async url => {
   const res = await authFetch(url, {
-    credentials: 'include',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-      ...auth.getHeaders(),
-    }),
     method: 'delete',
   })
   return res.json()
@@ -42,11 +44,6 @@ const apiDestroyRequest = async url => {
 const apiDestroyMultipleRequest = async (url, body) => {
   const res = await authFetch(url, {
     body: JSON.stringify(filterBody(body)),
-    credentials: 'include',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-      ...auth.getHeaders(),
-    }),
     method: 'delete',
   })
   return res.json()
@@ -55,11 +52,6 @@ const apiDestroyMultipleRequest = async (url, body) => {
 const apiCreateRequest = async (url, body) => {
   const res = await authFetch(url, {
     body: JSON.stringify(filterBody(body)),
-    credentials: 'include',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-      ...auth.getHeaders(),
-    }),
     method: 'post',
   })
   return res.json()
@@ -68,11 +60,6 @@ const apiCreateRequest = async (url, body) => {
 const apiUpdateRequest = async (url, body) => {
   const res = await authFetch(url, {
     body: JSON.stringify(filterBody(body)),
-    credentials: 'include',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-      ...auth.getHeaders(),
-    }),
     method: 'put',
   })
   return res.json()
@@ -80,11 +67,6 @@ const apiUpdateRequest = async (url, body) => {
 
 const apiGetRequest = async url => {
   const res = await authFetch(url, {
-    credentials: 'include',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-      ...auth.getHeaders(),
-    }),
     method: 'get',
   })
   return res.json()
@@ -92,11 +74,6 @@ const apiGetRequest = async url => {
 
 const apiListRequest = async url => {
   const res = await authFetch(url, {
-    credentials: 'include',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-      ...auth.getHeaders(),
-    }),
     method: 'get',
   })
   const json = await res.json()
@@ -127,10 +104,6 @@ export const apiGetSignedUrlFactory = type => (file, callback) =>
       type,
     })}`,
     {
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        ...auth.getHeaders(),
-      }),
       redirect: 'error',
     }
   )
