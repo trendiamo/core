@@ -4,13 +4,13 @@ import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Link from 'shared/link'
-import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import Typography from '@material-ui/core/Typography'
 import { apiPasswordEmailLink } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { compose, withHandlers, withState } from 'recompose'
+import { withSnackbar } from 'notistack'
 
 const AuthMessage = () => (
   <React.Fragment>
@@ -29,13 +29,12 @@ const AuthMessage = () => (
   </React.Fragment>
 )
 
-const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue, success }) => (
+const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <form onSubmit={passwordChangeSubmit}>
       <Typography variant="body2">
         {'We can help you reset your password using your email address linked to your account.'}
       </Typography>
-      <Notification data={{ status: 'success', message: success }} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'Email'}</InputLabel>
         <Input
@@ -66,16 +65,16 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
 
 export default compose(
   withState('passwordForm', 'setPasswordForm', { email: '' }),
-  withState('success', 'setSuccess', null),
+  withSnackbar,
   withHandlers({
     onBackToLogin: () => event => {
       event.preventDefault()
       window.location.href = routes.login()
     },
-    passwordChangeSubmit: ({ passwordForm, setSuccess }) => async event => {
+    passwordChangeSubmit: ({ enqueueSnackbar, passwordForm }) => async event => {
       event.preventDefault()
       const json = await apiPasswordEmailLink({ user: { email: passwordForm.email } })
-      setSuccess('Email sent!')
+      enqueueSnackbar('Email sent!', { variant: 'info' })
       return json
     },
     setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>

@@ -1,6 +1,5 @@
 import AppBar from './app-bar'
 import auth from 'auth'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import Menu from './menu'
 import Onboarding from 'onboarding'
 import React from 'react'
@@ -26,7 +25,6 @@ const Layout = ({
   <div className={classes.root}>
     <div className={classes.appFrame}>
       <Onboarding history={history} onboarding={onboarding} setOnboarding={setOnboarding} />
-      <CssBaseline />
       <AppBar
         appBarContent={appBarContent}
         classes={classes}
@@ -48,7 +46,6 @@ const Layout = ({
 
 const EmptyLayout = ({ classes, children }) => (
   <div className={classes.root}>
-    <CssBaseline />
     <div className={classes.content}>
       <div className={classes.contentInnerDiv}>{children}</div>
     </div>

@@ -23,6 +23,7 @@ import { camelize } from 'inflected'
 import { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
+import { withSnackbar } from 'notistack'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -197,6 +198,7 @@ export default compose(
   withState('isLoading', 'setIsLoading', true),
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
+  withSnackbar,
   withHandlers({
     deleteTriggers: ({ setIsSelectAll, selectedIds, setIsLoading, setSelectedIds, setTriggers }) => async () => {
       await apiTriggerDestroy({ ids: selectedIds })
@@ -210,11 +212,12 @@ export default compose(
       setSelectedIds(event.target.checked ? triggers.map(trigger => trigger.id) : [])
       setIsSelectAll(event.target.checked)
     },
-    onSortEnd: ({ setTriggers, triggers }) => async ({ oldIndex, newIndex }) => {
+    onSortEnd: ({ enqueueSnackbar, setTriggers, triggers }) => async ({ oldIndex, newIndex }) => {
       const orderedTriggers = arrayMove(triggers, oldIndex, newIndex)
       const orderedIds = orderedTriggers.map(trigger => trigger.id)
       setTriggers(orderedTriggers)
       await apiTriggerSort({ ids: orderedIds })
+      enqueueSnackbar('Sorted!', { variant: 'success' })
     },
   }),
   lifecycle({
