@@ -11,7 +11,7 @@ const columns = [{ name: 'name', label: 'name', sortable: true }, { name: 'descr
 
 const BlankState = () => (
   <BlankStateTemplate
-    description={"You don't have any personas yet. Let's create a first one?"}
+    description={"You don't have any personas yet. Let's create the first one?"}
     imageSource="/img/background/img-empty-02.png"
     route={routes.personaCreate()}
     title="Create a new persona"

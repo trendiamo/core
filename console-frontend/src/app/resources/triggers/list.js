@@ -26,7 +26,7 @@ import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
 
 const BlankState = () => (
   <BlankStateTemplate
-    description={"You don't have any triggers yet. Let's create a first one?"}
+    description={"You don't have any triggers yet. Let's create the first one?"}
     imageSource="/img/background/img-welcome.png"
     route={routes.triggerCreate()}
     title="Create a new trigger"

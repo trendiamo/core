@@ -8,7 +8,7 @@ import { compose } from 'recompose'
 
 const BlankState = () => (
   <BlankStateTemplate
-    description={"You have no outros yet. Let's create a first one?"}
+    description={"You have no outros yet. Let's create the first one?"}
     imageSource="/img/background/img-empty-03.png"
     route={routes.outroCreate()}
     title="Create a new outro"

@@ -8,9 +8,6 @@ import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 
 const ActionsTemplate = ({ handleClose }) => (
   <>
-    <Button color="default" onClick={handleClose} variant="text">
-      {'Later'}
-    </Button>
     <Button color="primary" onClick={handleClose} variant="text">
       {'Ok, lets go!'}
     </Button>
@@ -41,7 +38,7 @@ const DialogContent = () => (
     <Typography variant="h4">{"Congrats, it's done!"}</Typography>
     <Typography variant="h6">{"Your first persona is created. Let's keep going?"}</Typography>
     <ContentBody>
-      <Typography variant="body1">{'This persona will appear in your plugin.'}</Typography>
+      <Typography variant="body1">{'You can now use this persona in your flows.'}</Typography>
     </ContentBody>
   </ContentContainer>
 )

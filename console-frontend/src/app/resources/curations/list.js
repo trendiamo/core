@@ -8,7 +8,7 @@ import { compose } from 'recompose'
 
 const BlankState = () => (
   <BlankStateTemplate
-    description={"You don't have any curations yet. Let's create a first one?"}
+    description={"You don't have any curations yet. Let's create the first one?"}
     imageSource="/img/background/img-empty-02.png"
     route={routes.curationCreate()}
     title="Create a new curation"
