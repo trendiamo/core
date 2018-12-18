@@ -11,17 +11,42 @@ const StyledSelect = styled(AsyncSelect).attrs({
   .react-select__control {
     color: #372727;
     padding: 0px;
-    border-width: 0px 0px 1px;
-    border-radius: 0px;
-    border-color: #949494;
     margin-top: 15px;
     box-shadow: none;
-    &: hover {
-      border-color: #212121;
-      cursor: text;
-      border-width: 0px 0px 2px;
+    border: none;
+    border-radius: 0;
+    cursor: text;
+    &:before {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: '';
+      position: absolute;
+      transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+      pointer-events: none;
+    }
+    &:not(.react-select__control--is-focused):hover:before {
+      border-bottom: 2px solid rgba(0, 0, 0, 0.87);
+    }
+    &:after {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: '';
+      position: absolute;
+      transform: scaleX(0);
+      transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+      border-bottom: 2px solid rgb(3, 67, 178);
+      pointer-events: none;
     }
   }
+  .react-select__control--is-focused {
+    &:after {
+      transform: scaleX(1);
+    }
+  }
+
   .react-select__value-container {
     padding: 0px;
   }
