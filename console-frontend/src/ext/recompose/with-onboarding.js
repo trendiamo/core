@@ -1,6 +1,7 @@
 import auth from 'auth'
 import omit from 'lodash.omit'
 import React from 'react'
+import routes from 'app/routes'
 import { compose, createSink, lifecycle, mapProps, withProps, withState } from 'recompose'
 import { isEqual } from 'lodash'
 import { withStoreConsumer } from './with-store'
@@ -20,10 +21,14 @@ const withOnboarding = BaseComponent =>
     }),
     lifecycle({
       componentDidMount() {
-        const { setOnboarding, onboarding } = this.props
+        const { setOnboarding, onboarding, location } = this.props
         const onboardingStageIndex = auth.getUser().onboardingStage
         setTimeout(() => {
-          setOnboarding({ ...onboarding, stageIndex: onboardingStageIndex, run: onboardingStageIndex === 0 })
+          setOnboarding({
+            ...onboarding,
+            stageIndex: onboardingStageIndex,
+            run: !(location.pathname === routes.root()) && onboardingStageIndex === 0,
+          })
         }, 0)
       },
     })

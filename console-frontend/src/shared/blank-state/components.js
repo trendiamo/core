@@ -1,5 +1,3 @@
-import Link from 'shared/link'
-import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { Button, Typography } from '@material-ui/core'
 
@@ -46,6 +44,8 @@ const Image = styled.img`
   opacity: 0;
   animation-fill-mode: forwards;
   max-width: 100%;
+  pointer-events: none;
+  user-select: none;
 `
 
 const Header = styled(Typography)`
@@ -86,17 +86,19 @@ const StyledButton = styled(Button)`
   }
 `
 
-const BlankState = ({ title, imageSource, description, route }) => (
-  <Container>
-    <Image alt="" src={imageSource} />
-    <Header variant="h4">{title}</Header>
-    <Description variant="body1">{description}</Description>
-    <Link to={route}>
-      <StyledButton color="primary" variant="contained">
-        {'Create New'}
-      </StyledButton>
-    </Link>
-  </Container>
-)
+const OutlinedButton = styled(Button)`
+  text-decoration: underline;
+  animation: ${ease} 1s ease-out;
+  opacity: 0;
+  animation-delay: 0.8s;
+  animation-fill-mode: forwards;
+  display: block;
+  margin: 10px auto 0;
+  color: #777;
+  letter-spacing: 2px;
+  &:hover {
+    text-decoration: underline;
+  }
+`
 
-export default BlankState
+export { StyledButton, Description, Header, Image, Container, OutlinedButton }
