@@ -19,7 +19,7 @@ const i18n = {
     if (location.hostname === 'www.shoptimao.com.br') {
       return 'Conheça produtos que eu uso:'
     } else if (location.hostname == 'www.shopinfo.com.br') {
-      return 'Produtos selecionados pelo:'
+      return `Produtos selecionados por ${firstName}:`
     } else {
       return `Products selected by ${firstName}`
     }
