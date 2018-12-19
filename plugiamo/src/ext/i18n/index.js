@@ -18,6 +18,8 @@ const i18n = {
   productsSelectedBy: firstName => {
     if (location.hostname === 'www.shoptimao.com.br') {
       return 'Conheça produtos que eu uso:'
+    } else if (location.hostname == 'www.shopinfo.com.br') {
+      return 'Produtos selecionados pelo:'
     } else {
       return `Products selected by ${firstName}`
     }
