@@ -13,6 +13,7 @@ import { branch, compose, renderComponent, withHandlers, withProps, withState } 
 import { Grid } from '@material-ui/core'
 import { Outro } from 'plugin-base'
 import { TextField } from '@material-ui/core'
+import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
 const PluginPreview = styled(({ className, persona }) => (
@@ -80,6 +81,7 @@ const emptyPreviewOutro = {
 }
 
 export default compose(
+  withOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('previewOutro', 'setPreviewOutro', emptyPreviewOutro),

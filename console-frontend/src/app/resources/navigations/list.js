@@ -36,5 +36,6 @@ export default compose(
     blankState: BlankState,
     api: { fetch: apiNavigationList, destroy: apiNavigationDestroy },
     routes: { create: routes.navigationCreate, edit: routes.navigationEdit },
+    help: { single: true, stepName: 'navigations', stageName: 'initial' },
   })
 )(NavigationsRow)

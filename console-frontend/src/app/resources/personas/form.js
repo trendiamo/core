@@ -12,6 +12,7 @@ import { Actions, Form } from 'shared/form-elements'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
+import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
 const PersonaForm = ({
@@ -68,6 +69,7 @@ const PersonaForm = ({
 )
 
 export default compose(
+  withOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),

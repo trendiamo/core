@@ -11,6 +11,7 @@ import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { TextField } from '@material-ui/core'
+import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
 const ScriptedChatForm = ({
@@ -72,6 +73,7 @@ const ScriptedChatForm = ({
 )
 
 export default compose(
+  withOnboardingHelp({ single: true, stepName: 'scriptedChats', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withHandlers({

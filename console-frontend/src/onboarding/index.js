@@ -2,8 +2,9 @@ import Joyride from 'react-joyride'
 import Portal from '@material-ui/core/Portal'
 import React from 'react'
 import SkipButton from './elements/skip-button'
-import stages from './stages'
 import { branch, compose, renderNothing } from 'recompose'
+import { stages, stagesArray } from './stages'
+import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 
 const floaterProps = {
   hideArrow: true,
@@ -22,19 +23,33 @@ const styles = {
   },
 }
 
+const stepsToArray = stage => stage.order.map(i => stage.steps[i])
+
+const getOnboardingConfig = onboarding => {
+  if (onboarding.help.run && onboarding.help.stageName && onboarding.help.stepName) {
+    const stage = stages[onboarding.help.stageName]
+    return {
+      stepIndex: stage.order.indexOf(stage.order[stage.order.indexOf(onboarding.help.stepName)]),
+      steps: stepsToArray(stage),
+    }
+  }
+  const stage = stagesArray[onboarding.stageIndex]
+  return { stepIndex: onboarding.stepIndex, steps: stepsToArray(stage) }
+}
+
 const DummyContainer = ({ content, ...props }) => <div>{content && React.cloneElement(content, props)}</div>
 
-const Onboarding = ({ onboarding, setOnboarding }) => (
+const Onboarding = ({ onboarding }) => (
   <>
     <Joyride
       continuous
       disableOverlayClose
       floaterProps={floaterProps}
-      run={onboarding.run}
-      stepIndex={onboarding.stepIndex}
-      steps={stages[onboarding.stageIndex].steps}
+      run={onboarding.run || onboarding.help.run}
+      stepIndex={getOnboardingConfig(onboarding).stepIndex}
+      steps={getOnboardingConfig(onboarding).steps}
       styles={styles}
-      tooltipComponent={<DummyContainer onboarding={onboarding} setOnboarding={setOnboarding} />}
+      tooltipComponent={<DummyContainer onboarding={onboarding} />}
     />
     <Portal>
       <SkipButton />
@@ -42,6 +57,10 @@ const Onboarding = ({ onboarding, setOnboarding }) => (
   </>
 )
 
-export default compose(branch(({ onboarding }) => !stages[onboarding.stageIndex] || !onboarding.run, renderNothing))(
-  Onboarding
-)
+export default compose(
+  withOnboardingConsumer,
+  branch(
+    ({ onboarding }) => (!onboarding.run || !stagesArray[onboarding.stageIndex]) && !onboarding.help.run,
+    renderNothing
+  )
+)(Onboarding)

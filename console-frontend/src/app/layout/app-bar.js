@@ -1,12 +1,14 @@
 import Breadcrumbs from 'shared/breadcrumbs'
 import classNames from 'classnames'
+import HelpOutline from '@material-ui/icons/HelpOutline'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import MuiAppBar from '@material-ui/core/AppBar'
 import React from 'react'
 import styled from 'styled-components'
 import Toolbar from '@material-ui/core/Toolbar'
-import { branch, compose, renderNothing, withProps } from 'recompose'
+import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
+import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withStoreConsumer } from 'ext/recompose/with-store'
 
 const ButtonsContainer = styled.div`
@@ -14,7 +16,30 @@ const ButtonsContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   flex-flow: row wrap;
+  align-items: center;
 `
+
+const StyledHelp = styled(IconButton)`
+  & + * {
+    margin-left: 10px;
+  }
+`
+
+const OnboardingButtonTemplate = ({ handleClick }) => (
+  <StyledHelp onClick={handleClick}>
+    <HelpOutline />
+  </StyledHelp>
+)
+
+const OnboardingButton = compose(
+  withOnboardingConsumer,
+  withHandlers({
+    handleClick: ({ onboarding, setOnboarding }) => () => {
+      setOnboarding({ ...onboarding, help: { ...onboarding.help, run: true } })
+    },
+  }),
+  branch(({ location, onboarding }) => location.pathname !== onboarding.help.pathname, renderNothing)
+)(OnboardingButtonTemplate)
 
 const AppBarContent = compose(
   withStoreConsumer,
@@ -26,7 +51,12 @@ const AppBarContent = compose(
 )(({ Actions, breadcrumbs, classes }) => (
   <React.Fragment>
     <Breadcrumbs breadcrumbs={breadcrumbs} classes={classes} />
-    {Actions && <ButtonsContainer>{Actions}</ButtonsContainer>}
+    {Actions && (
+      <ButtonsContainer>
+        {<OnboardingButton />}
+        {Actions}
+      </ButtonsContainer>
+    )}
   </React.Fragment>
 ))
 

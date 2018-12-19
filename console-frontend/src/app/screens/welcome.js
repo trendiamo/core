@@ -2,7 +2,7 @@ import auth from 'auth'
 import React from 'react'
 import routes from 'app/routes'
 import { changeStage } from 'onboarding/scenario-actions'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { compose, withHandlers } from 'recompose'
 import { Container, Description, Header, Image, OutlinedButton, StyledButton } from 'shared/blank-state/components'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -30,25 +30,15 @@ const WelcomePage = ({ getStarted, skipOnboarding }) => (
 export default compose(
   withRouter,
   withOnboardingConsumer,
-  withState('shouldSkip', 'setShouldSkip', false),
-  lifecycle({
-    componentWillUnmount() {
-      const { onboarding, setOnboarding, shouldSkip, history } = this.props
-      setOnboarding({ ...onboarding, run: !shouldSkip })
-      history.push(routes.triggersList())
-    },
-  }),
   withHandlers({
-    getStarted: ({ history }) => () => {
+    getStarted: ({ history, onboarding, setOnboarding }) => () => {
+      setOnboarding({ ...onboarding, run: true })
       history.push(routes.triggersList())
     },
-    skipOnboarding: ({ history, onboarding, setOnboarding, setShouldSkip }) => () => {
-      setShouldSkip(true)
+    skipOnboarding: ({ history, onboarding, setOnboarding }) => () => {
       changeStage(1)()
       setOnboarding({ ...onboarding, run: false, stageIndex: 1 })
-      setTimeout(() => {
-        history.push(routes.triggersList())
-      }, 0)
+      history.push(routes.triggersList())
     },
   })
 )(WelcomePage)
