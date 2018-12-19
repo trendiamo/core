@@ -114,7 +114,7 @@ export default compose(
   withStoreProvider,
   withState('loading', 'setLoading', true),
   lifecycle({
-    componentWillMount() {
+    componentDidMount() {
       const { setLoading } = this.props
       apiGetCsrfToken().then(() => {
         setLoading(false)

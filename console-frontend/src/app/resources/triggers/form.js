@@ -13,6 +13,7 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
 import { apiFlowsAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
 const LabelContainer = styled.div`
@@ -95,6 +96,7 @@ const TriggerForm = ({
 )
 
 export default compose(
+  withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('flows', 'setFlows', []),

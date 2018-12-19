@@ -11,6 +11,7 @@ import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid, TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
+import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
 const CurationForm = ({
@@ -97,6 +98,7 @@ const CurationForm = ({
 
 export default compose(
   withProps({ formRef: React.createRef() }),
+  withOnboardingHelp({ single: true, stepName: 'curations', stageName: 'initial' }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('productPicksPictures', 'setProductPicksPictures', []),

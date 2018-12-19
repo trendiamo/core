@@ -12,6 +12,7 @@ import withAppBarContent from './with-app-bar-content'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Link } from 'react-router-dom'
 import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
+import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
@@ -23,8 +24,9 @@ const Actions = ({ createRoute }) => (
   </AppBarButton>
 )
 
-const enhanceList = ({ api, columns, breadcrumbs, routes, blankState }) => ResourceRow =>
+const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) => ResourceRow =>
   compose(
+    withOnboardingHelp(help),
     withAppBarContent(() => ({
       Actions: <Actions createRoute={routes.create()} />,
       breadcrumbs,

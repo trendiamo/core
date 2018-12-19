@@ -27,6 +27,10 @@ export default compose(
   withOnboardingConsumer,
   withHandlers({
     handleClick: ({ onboarding, setOnboarding }) => () => {
+      if (onboarding.help.run) {
+        setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
+        return false
+      }
       setOnboarding({ ...onboarding, stageIndex: 1, stepIndex: 0, run: false })
       changeStage(1)()
     },

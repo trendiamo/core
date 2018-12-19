@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { Button as MuiButton } from '@material-ui/core'
-import { withRouter } from 'react-router'
+import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 
 const Icon = styled.img`
   padding-left: 5px;
@@ -34,9 +34,13 @@ const ButtonTemplate = ({ config, handleClick, create }) => (
 )
 
 const Button = compose(
-  withRouter,
+  withOnboardingConsumer,
   withHandlers({
     handleClick: ({ history, nextRoute, create, config, onboarding, setOnboarding }) => event => {
+      if (onboarding.help.run && onboarding.help.single) {
+        setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
+        return false
+      }
       history.push(nextRoute)
       if (!create) {
         setOnboarding({ ...onboarding, stepIndex: onboarding.stepIndex + 1 })

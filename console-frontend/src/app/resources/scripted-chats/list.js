@@ -36,5 +36,6 @@ export default compose(
     blankState: BlankState,
     api: { fetch: apiScriptedChatList, destroy: apiScriptedChatDestroy },
     routes: { create: routes.scriptedChatCreate, edit: routes.scriptedChatEdit },
+    help: { single: true, stepName: 'scriptedChats', stageName: 'initial' },
   })
 )(ScriptedChatsRow)

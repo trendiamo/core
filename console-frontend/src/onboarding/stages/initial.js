@@ -3,6 +3,8 @@ import routes from 'app/routes'
 import { changeStage } from 'onboarding/scenario-actions'
 import { Tooltip } from 'onboarding/elements'
 
+const order = ['triggers', 'curations', 'navigations', 'scriptedChats', 'outros', 'personas']
+
 const steps = {
   triggers: {
     target: '.onboard-triggers',
@@ -50,4 +52,4 @@ const steps = {
   },
 }
 
-export default [steps.triggers, steps.curations, steps.navigations, steps.scriptedChats, steps.outros, steps.personas]
+export default { steps, order }

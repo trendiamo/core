@@ -23,6 +23,7 @@ import { camelize } from 'inflected'
 import { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
+import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withSnackbar } from 'notistack'
 
 const BlankState = () => (
@@ -193,6 +194,7 @@ const TriggerList = ({
 )
 
 export default compose(
+  withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
   withAppBarContent({ Actions: <Actions />, breadcrumbs: [{ text: 'Triggers' }] }),
   withState('triggers', 'setTriggers', []),
   withState('isLoading', 'setIsLoading', true),

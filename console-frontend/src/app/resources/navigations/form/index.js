@@ -12,6 +12,7 @@ import { branch, compose, renderComponent, withHandlers, withProps, withState } 
 import { Grid } from '@material-ui/core'
 import { TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
+import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
 const NavigationForm = ({
@@ -80,6 +81,7 @@ const NavigationForm = ({
 )
 
 export default compose(
+  withOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),

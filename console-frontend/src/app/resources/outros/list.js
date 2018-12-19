@@ -36,5 +36,6 @@ export default compose(
     blankState: BlankState,
     api: { fetch: apiOutroList, destroy: apiOutroDestroy },
     routes: { create: routes.outroCreate, edit: routes.outroEdit },
+    help: { single: true, stepName: 'outros', stageName: 'initial' },
   })
 )(OutrosRow)

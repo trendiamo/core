@@ -1,6 +1,8 @@
 import React from 'react'
 import { ModalPersonaCreate } from 'onboarding/elements'
 
+const order = ['personaCreated']
+
 const steps = {
   personaCreated: {
     target: 'body',
@@ -11,4 +13,4 @@ const steps = {
   },
 }
 
-export default [steps.personaCreated]
+export default { steps, order }

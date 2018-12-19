@@ -8,23 +8,12 @@ import withClasses from 'ext/recompose/with-classes'
 import withOnboarding from 'ext/recompose/with-onboarding'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { styles } from './layout-styles'
-import { withRouter } from 'react-router'
 import { withStyles } from '@material-ui/core/styles'
 
-const Layout = ({
-  appBarContent,
-  children,
-  classes,
-  history,
-  onboarding,
-  logout,
-  setOnboarding,
-  sidebarOpen,
-  toggleOpen,
-}) => (
+const Layout = ({ appBarContent, children, classes, logout, sidebarOpen, toggleOpen }) => (
   <div className={classes.root}>
     <div className={classes.appFrame}>
-      <Onboarding history={history} onboarding={onboarding} setOnboarding={setOnboarding} />
+      <Onboarding />
       <AppBar
         appBarContent={appBarContent}
         classes={classes}
@@ -54,7 +43,6 @@ const EmptyLayout = ({ classes, children }) => (
 
 const EnhancedLayout = compose(
   withState('sidebarOpen', 'setSidebarOpen', true),
-  withRouter,
   withOnboarding,
   withHandlers({
     toggleOpen: ({ sidebarOpen, setSidebarOpen }) => () => setSidebarOpen(!sidebarOpen),

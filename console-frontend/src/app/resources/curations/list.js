@@ -36,5 +36,6 @@ export default compose(
     blankState: BlankState,
     api: { fetch: apiCurationList, destroy: apiCurationDestroy },
     routes: { create: routes.curationCreate, edit: routes.curationEdit },
+    help: { single: true, stepName: 'curations', stageName: 'initial' },
   })
 )(CurationsRow)
