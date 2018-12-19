@@ -99,8 +99,8 @@ const Container = styled.div`
   }
 `
 
-const Tile = ({ title, Icon, imageUrl }) => (
-  <Container>
+const Tile = ({ title, Icon, imageUrl, onClick }) => (
+  <Container onClick={onClick}>
     <Box imageUrl={imageUrl}>
       {imageUrl && <Background imageUrl={imageUrl} />}
       {Icon && <Icon />}

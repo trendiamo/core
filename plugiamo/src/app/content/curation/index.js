@@ -78,7 +78,7 @@ const GhostLayer = styled.div`
   right: 0;
 `
 
-const FlexDiv = styled.div`
+const ColFlexDiv = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -94,7 +94,7 @@ export const CurationBase = ({
   subtitle,
   title,
 }) => (
-  <FlexDiv>
+  <ColFlexDiv>
     <Cover>
       <Router history={history} onChange={onRouteChange}>
         <CoverCuration path="/curation/:id" subtitle={subtitle} title={title} />
@@ -108,7 +108,7 @@ export const CurationBase = ({
       </Router>
     </BelowCover>
     <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />
-  </FlexDiv>
+  </ColFlexDiv>
 )
 
 const Curation = compose(

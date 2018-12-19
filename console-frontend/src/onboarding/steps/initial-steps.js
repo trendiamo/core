@@ -13,10 +13,17 @@ const steps = {
   },
   curations: {
     target: '.onboard-curations',
-    content: <Tooltip body="Create your Curations here." nextRoute={routes.scriptedChatsList()} />,
+    content: <Tooltip body="Create your Curations here." nextRoute={routes.navigationsList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Curations',
+  },
+  navigations: {
+    target: '.onboard-navigations',
+    content: <Tooltip body="Create your Navigations here." nextRoute={routes.scriptedChatsList()} />,
+    placement: 'right',
+    disableBeacon: true,
+    title: 'Navigations',
   },
   scriptedChats: {
     target: '.onboard-scripted-chats',
@@ -43,4 +50,4 @@ const steps = {
   },
 }
 
-export default [steps.triggers, steps.curations, steps.scriptedChats, steps.outros, steps.personas]
+export default [steps.triggers, steps.curations, steps.navigations, steps.scriptedChats, steps.outros, steps.personas]

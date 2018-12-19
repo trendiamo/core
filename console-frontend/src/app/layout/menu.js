@@ -12,6 +12,7 @@ import {
   AccountCircleOutlined,
   AssignmentTurnedInOutlined,
   ViewList as DefaultIcon,
+  DirectionsOutlined,
   PersonPinOutlined,
   SmsOutlined,
   TuneOutlined,
@@ -29,6 +30,12 @@ const resources = {
     route: routes.scriptedChatsList(),
   },
   outros: { icon: AssignmentTurnedInOutlined, label: 'Outros', class: 'outros', route: routes.outrosList() },
+  navigations: {
+    icon: DirectionsOutlined,
+    label: 'Navigations',
+    class: 'navigations',
+    route: routes.navigationsList(),
+  },
   personas: { icon: AccountCircleOutlined, label: 'Personas', class: 'personas', route: routes.personasList() },
 }
 
@@ -41,7 +48,7 @@ const resourceGroups = {
   flows: {
     name: 'Flows',
     showTitle: true,
-    resources: [resources.curations, resources.scriptedChats, resources.outros],
+    resources: [resources.curations, resources.navigations, resources.scriptedChats, resources.outros],
   },
   basic: {
     name: 'Basic',

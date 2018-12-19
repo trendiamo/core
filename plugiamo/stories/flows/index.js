@@ -1,5 +1,6 @@
 import Curation from './curation'
+import Navigation from './navigation'
 import Outro from './outro'
 import ScriptedChat from './scripted-chat'
 
-export { Curation, Outro, ScriptedChat }
+export { Curation, Navigation, Outro, ScriptedChat }

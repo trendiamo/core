@@ -41,6 +41,37 @@ class PopulateCurations
   end
 end
 
+class PopulateNavigations
+  def self.process
+    new.process
+  end
+
+  def process
+    create_navigations
+  end
+
+  private
+
+  def create_navigations
+    Array.new(3) do
+      navigation_attrs = {
+        name: "#{Faker::Lorem.word.capitalize} Navigation",
+        persona: Persona.order("RANDOM()").first,
+        navigation_items_attributes: Array.new(6) { navigation_item_attributes },
+      }
+      Navigation.create!(navigation_attrs)
+    end
+  end
+
+  def navigation_item_attributes
+    {
+      text: Faker::Lorem.word.capitalize,
+      url: Faker::Internet.url,
+      pic_url: Faker::LoremPixel.image,
+    }
+  end
+end
+
 class PopulateScriptedChats
   def self.process
     new.process
@@ -99,6 +130,7 @@ class Populate
     create_outros
     create_scripted_chats
     create_curations
+    create_navigations
     create_triggers
   end
 
@@ -161,6 +193,10 @@ class Populate
 
   def create_curations
     PopulateCurations.process
+  end
+
+  def create_navigations
+    PopulateNavigations.process
   end
 
   def create_triggers

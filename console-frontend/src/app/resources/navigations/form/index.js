@@ -1,34 +1,35 @@
 import CircularProgress from 'shared/circular-progress'
+import NavigationItem from './navigation-item'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import Select from 'shared/select'
-import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
 import { withRouter } from 'react-router'
 
-const CurationForm = ({
-  selectPersona,
-  personas,
-  form,
+const NavigationForm = ({
+  addNavigationItem,
   formRef,
+  form,
+  setFieldValue,
+  selectPersona,
   errors,
+  isCropping,
   isFormLoading,
   isFormPristine,
+  navigationItemsPictures,
   onFormSubmit,
-  setFieldValue,
-  setSpotlightForm,
-  addSpotlight,
-  productPicksPictures,
-  setProductPicksPictures,
-  isCropping,
   setIsCropping,
+  setNavigationItemForm,
+  setNavigationItemsPictures,
+  setPicture,
   title,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
@@ -36,7 +37,7 @@ const CurationForm = ({
       <Grid item sm={6}>
         <TextField
           autoFocus
-          disabled={isCropping || isFormLoading}
+          disabled={isFormLoading}
           fullWidth
           label="Name"
           margin="normal"
@@ -48,50 +49,33 @@ const CurationForm = ({
         <Select
           autocomplete={apiPersonasAutocomplete}
           defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
-          isDisabled={isCropping || isFormLoading}
           onChange={selectPersona}
           placeholder="Persona *"
         />
-        <TextField
-          disabled={isCropping || isFormLoading}
-          fullWidth
-          label="Title"
-          margin="normal"
-          name="title"
-          onChange={setFieldValue}
-          required
-          value={form.title}
-        />
-        <TextField
-          disabled={isCropping || isFormLoading}
-          fullWidth
-          label="Subtitle"
-          margin="normal"
-          name="subtitle"
-          onChange={setFieldValue}
-          required
-          value={form.subtitle}
-        />
       </Grid>
     </Section>
-    {form.spotlightsAttributes.map((spotlight, index) => (
+    {form.navigationItemsAttributes.map((navigationItem, index) => (
       // eslint-disable-next-line react/no-array-index-key
       <React.Fragment key={index}>
-        <Spotlight
-          allowDelete={form.spotlightsAttributes.length > 1}
+        <NavigationItem
+          allowDelete={form.navigationItemsAttributes.length > 1}
           index={index}
           isCropping={isCropping}
           isFormLoading={isFormLoading}
-          onChange={setSpotlightForm}
-          personas={personas}
-          productPicksPictures={productPicksPictures}
+          navigationItem={navigationItem}
+          navigationItemsPictures={navigationItemsPictures}
+          onChange={setNavigationItemForm}
           setIsCropping={setIsCropping}
-          setProductPicksPictures={setProductPicksPictures}
-          spotlight={spotlight}
+          setNavigationItemsPictures={setNavigationItemsPictures}
+          setPicture={setPicture}
         />
       </React.Fragment>
     ))}
-    <AddItemContainer disabled={isCropping || isFormLoading} message="Add new spotlight" onClick={addSpotlight} />
+    <AddItemContainer
+      disabled={isCropping || isFormLoading}
+      message="Add new Navigation Item"
+      onClick={addNavigationItem}
+    />
   </Form>
 )
 
@@ -99,27 +83,26 @@ export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
-  withState('productPicksPictures', 'setProductPicksPictures', []),
+  withState('navigationItemsPictures', 'setNavigationItemsPictures', []),
   withHandlers({
     uploadSubImage: () => async ({ blob, setProgress, subform }) => {
-      const productPickPhotoUrl = await uploadImage({
+      const picUrl = await uploadImage({
         blob,
         setProgress,
-        type: 'products-pics',
+        type: 'navigation-items-pics',
         defaultValue: subform.picUrl,
       })
       return {
         ...subform,
-        picUrl: productPickPhotoUrl,
+        picUrl,
       }
     },
   }),
   withHandlers({
-    uploadSubImages: ({ productPicksPictures, uploadSubImage }) => form => {
-      return productPicksPictures.map(async ({ blob, productPickIndex, setProgress, spotlightIndex }) => {
-        const { productPicksAttributes } = form.spotlightsAttributes[spotlightIndex]
-        productPicksAttributes[productPickIndex] = await uploadSubImage({
-          subform: productPicksAttributes[productPickIndex],
+    uploadSubImages: ({ navigationItemsPictures, uploadSubImage }) => form => {
+      return navigationItemsPictures.map(async ({ blob, index, setProgress }) => {
+        form.navigationItemsAttributes[index] = await uploadSubImage({
+          subform: form.navigationItemsAttributes[index],
           blob,
           setProgress,
         })
@@ -134,50 +117,33 @@ export default compose(
   }),
   withForm({
     personaId: '',
-    title: '',
-    subtitle: '',
-    spotlightsAttributes: [
+    name: '',
+    navigationItemsAttributes: [
       {
         text: '',
-        personaId: '',
-        productPicksAttributes: [
-          {
-            url: '',
-            name: '',
-            description: '',
-            displayPrice: '',
-            picUrl: '',
-          },
-        ],
+        url: '',
+        picUrl: '',
       },
     ],
   }),
   withHandlers({
-    addSpotlight: ({ form, setForm }) => () => {
+    addNavigationItem: ({ form, setForm }) => () => {
       setForm({
         ...form,
-        spotlightsAttributes: [
-          ...form.spotlightsAttributes,
+        navigationItemsAttributes: [
+          ...form.navigationItemsAttributes,
           {
             text: '',
-            personaId: '',
-            productPicksAttributes: [
-              {
-                url: '',
-                name: '',
-                description: '',
-                displayPrice: '',
-                picUrl: '',
-              },
-            ],
+            url: '',
+            picUrl: '',
           },
         ],
       })
     },
-    setSpotlightForm: ({ form, setForm }) => (spotlight, index) => {
-      const newSpotlightsAttributes = [...form.spotlightsAttributes]
-      newSpotlightsAttributes[index] = spotlight
-      setForm({ ...form, spotlightsAttributes: newSpotlightsAttributes })
+    setNavigationItemForm: ({ form, setForm }) => (navigationItem, index) => {
+      const newNavigationItemsAttributes = [...form.navigationItemsAttributes]
+      newNavigationItemsAttributes[index] = navigationItem
+      setForm({ ...form, navigationItemsAttributes: newNavigationItemsAttributes })
     },
   }),
   withRouter,
@@ -191,8 +157,12 @@ export default compose(
     onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      if (!result.error && !result.errors) history.push(routes.curationsList())
+      if (!result.error && !result.errors) history.push(routes.navigationsList())
       return result
+    },
+    setPicture: ({ navigationItemsPictures, setNavigationItemsPictures }) => (index, blob, setProgress) => {
+      navigationItemsPictures.push({ index, blob, setProgress })
+      setNavigationItemsPictures(navigationItemsPictures)
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
@@ -203,4 +173,4 @@ export default compose(
   withProps(({ breadcrumbs }) => ({
     title: breadcrumbs.slice(-1)[0].text,
   }))
-)(CurationForm)
+)(NavigationForm)
