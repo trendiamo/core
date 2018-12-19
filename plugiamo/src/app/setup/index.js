@@ -34,9 +34,9 @@ const getFlowFromPath = (triggers, path) => {
 }
 
 const getFlowIdFromPath = path => {
-  const match = path.match(/\/(.+)\/(.+)/)
-  if (match && match.length < 3) return null
-  return path.match(/\/(.+)\/(.+)/)[2]
+  const match = path.match(/\/(.+?)\/(.+?)/)
+  if (!match || match.length < 3) return null
+  return match[2]
 }
 
 const getFlowFromTriggers = triggers => {
