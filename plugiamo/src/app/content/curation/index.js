@@ -175,7 +175,7 @@ const Curation = compose(
             }
           }
         `,
-    ({ id }) => ({ id })
+    ({ id }) => ({ id: id.replace(/\/.+/, '') })
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
