@@ -35,7 +35,7 @@ const EditUser = ({
       disabled={isCropping}
       onChange={setProfilePicUrl}
       setDisabled={setIsCropping}
-      setProfilePic={setProfilePic}
+      setPic={setProfilePic}
       value={form.profilePicUrl}
     />
     <TextField disabled fullWidth id="email" label="Email" margin="normal" required value={form.email} />

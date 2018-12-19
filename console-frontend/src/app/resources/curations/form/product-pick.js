@@ -14,9 +14,9 @@ const ProductPick = ({
   index,
   productPick,
   progress,
-  setProductPicture,
-  setIsCropping,
   setPicture,
+  setIsCropping,
+  setPictureUrl,
 }) => (
   <FormSection
     actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteProductPick} />}
@@ -68,9 +68,9 @@ const ProductPick = ({
       <Label>{'Picture'}</Label>
       <PictureUploader
         disabled={isCropping}
-        onChange={setPicture}
+        onChange={setPictureUrl}
         setDisabled={setIsCropping}
-        setProfilePic={setProductPicture}
+        setPic={setPicture}
         square
         value={productPick.picUrl}
       />
@@ -97,10 +97,10 @@ export default compose(
         index
       )
     },
-    setPicture: ({ index, productPick, onChange }) => picUrl => {
+    setPictureUrl: ({ index, productPick, onChange }) => picUrl => {
       onChange({ ...productPick, picUrl }, index)
     },
-    setProductPicture: ({ index, setProductPicture, setProgress }) => blob => {
+    setPicture: ({ index, setProductPicture, setProgress }) => blob => {
       setProductPicture(index, blob, setProgress)
     },
   })

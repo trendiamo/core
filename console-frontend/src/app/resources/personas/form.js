@@ -37,7 +37,7 @@ const PersonaForm = ({
           disabled={isCropping}
           onChange={setProfilePicUrl}
           setDisabled={setIsCropping}
-          setProfilePic={setProfilePic}
+          setPic={setProfilePic}
           value={form.profilePicUrl}
         />
         <TextField

@@ -38,6 +38,15 @@ const routes = {
   outroEdit(id) {
     return `/outros/${id}/edit`
   },
+  navigationsList() {
+    return '/navigations'
+  },
+  navigationCreate() {
+    return '/navigations/create'
+  },
+  navigationEdit(id) {
+    return `/navigations/${id}/edit`
+  },
   curationsList() {
     return '/curations'
   },

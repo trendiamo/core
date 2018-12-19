@@ -25,7 +25,7 @@ class S3Controller < RestController
   end
 
   def folder
-    if %w[personas-profile-pics users-profile-pics products-pics].include?(params[:type])
+    if %w[personas-profile-pics users-profile-pics products-pics navigation-items-pics].include?(params[:type])
       params[:type]
     else
       "unknown"

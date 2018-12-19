@@ -310,11 +310,11 @@ const PictureUploader = compose(
       }
       setPreviewCrop({ image: imagePreviewRef.current, pixelCrop, setCroppedImage })
     },
-    onDoneClick: ({ crop, image, imagePreviewRef, setDoneCropping, setProfilePic }) => async () => {
+    onDoneClick: ({ crop, image, imagePreviewRef, setDoneCropping, setPic }) => async () => {
       setDoneCropping(true)
       const blob = await resultingCrop(imagePreviewRef.current, getPixelCrop(imagePreviewRef.current, crop))
       blob.name = image.name
-      setProfilePic(blob)
+      setPic(blob)
       URL.revokeObjectURL(image.preview)
     },
     onDrop: ({ onChange, setDoneCropping, setImage, setPreviousValue, value }) => files => {
@@ -335,10 +335,10 @@ const PictureUploader = compose(
       setCrop(crop)
       setPreviewCrop({ image: imagePreviewRef.current, pixelCrop: getPixelCrop(image, crop), setCroppedImage })
     },
-    onRemove: ({ onChange, setImage, setCroppedImage, setProfilePic }) => () => {
+    onRemove: ({ onChange, setImage, setCroppedImage, setPic }) => () => {
       setImage(null)
       onChange('')
-      setProfilePic(null)
+      setPic(null)
       setCroppedImage(null)
     },
   }),

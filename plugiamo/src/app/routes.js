@@ -2,6 +2,9 @@ const routes = {
   curation(curationId) {
     return `/curation/${curationId}`
   },
+  navigation(navigationId) {
+    return `/navigation/${navigationId}`
+  },
   isCuration(path) {
     return path.match(/\/curation\/([^/]+)/)
   },

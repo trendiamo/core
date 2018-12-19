@@ -8,6 +8,7 @@ const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/curations`
 const SCRIPTED_CHATS_URL = `${BASE_API_URL}/scripted_chats`
+const NAVIGATIONS_URL = `${BASE_API_URL}/navigations`
 const TRIGGERS_URL = `${BASE_API_URL}/triggers`
 const ME_URL = `${BASE_API_URL}/me`
 const WEBSITES_URL = `${BASE_API_URL}/websites`
@@ -152,6 +153,12 @@ export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED
 export const apiScriptedChatCreate = body => apiCreateRequest(SCRIPTED_CHATS_URL, body)
 export const apiScriptedChatShow = id => apiGetRequest(`${SCRIPTED_CHATS_URL}/${id}`)
 export const apiScriptedChatUpdate = (id, body) => apiUpdateRequest(`${SCRIPTED_CHATS_URL}/${id}`, body)
+
+export const apiNavigationList = query => apiListRequest(`${NAVIGATIONS_URL}/?${stringify(query)}`)
+export const apiNavigationDestroy = body => apiDestroyMultipleRequest(NAVIGATIONS_URL, body)
+export const apiNavigationCreate = body => apiCreateRequest(NAVIGATIONS_URL, body)
+export const apiNavigationShow = id => apiGetRequest(`${NAVIGATIONS_URL}/${id}`)
+export const apiNavigationUpdate = (id, body) => apiUpdateRequest(`${NAVIGATIONS_URL}/${id}`, body)
 
 export const apiTriggerList = () => apiGetRequest(TRIGGERS_URL)
 export const apiTriggerDestroy = body => apiDestroyMultipleRequest(TRIGGERS_URL, body)

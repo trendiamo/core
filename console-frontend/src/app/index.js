@@ -18,6 +18,7 @@ import { create } from 'jss'
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles'
 import { CurationCreate, CurationEdit, CurationsList } from './resources/curations'
 import { MuiThemeProvider } from '@material-ui/core/styles'
+import { NavigationCreate, NavigationEdit, NavigationsList } from './resources/navigations'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
@@ -70,6 +71,9 @@ const Routes = () => (
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={OutroCreate} exact path={routes.outroCreate()} />
     <PrivateRoute component={OutroEdit} exact path={routes.outroEdit(':outroId')} />
+    <PrivateRoute component={NavigationsList} exact path={routes.navigationsList()} />
+    <PrivateRoute component={NavigationCreate} exact path={routes.navigationCreate()} />
+    <PrivateRoute component={NavigationEdit} exact path={routes.navigationEdit(':navigationId')} />
     <PrivateRoute component={TriggersList} exact path={routes.triggersList()} />
     <PrivateRoute component={TriggerCreate} exact path={routes.triggerCreate()} />
     <PrivateRoute component={TriggerEdit} exact path={routes.triggerEdit(':triggerId')} />
