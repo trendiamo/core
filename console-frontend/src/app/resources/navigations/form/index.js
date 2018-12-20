@@ -168,8 +168,8 @@ export default compose(
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading} />,
+  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, onFormSubmit }) => ({
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isCropping || isFormLoading} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({
