@@ -68,12 +68,12 @@ export default compose(
   branch(({ navigationItem }) => navigationItem._destroy, renderNothing),
   withState('progress', 'setProgress', null),
   withHandlers({
-    editProductPickValue: ({ navigationItem, index, onChange }) => event => {
+    editNavigationItemValue: ({ navigationItem, index, onChange }) => event => {
       const name = event.target.name.replace('navigationItem_', '')
       navigationItem[name] = event.target.value
       onChange(navigationItem, index)
     },
-    deleteProductPick: ({ navigationItem, index, onChange }) => () => {
+    deleteNavigationItem: ({ navigationItem, index, onChange }) => () => {
       onChange(
         {
           id: navigationItem.id,
