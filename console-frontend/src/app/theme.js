@@ -75,7 +75,7 @@ const customPalette = {
 }
 
 const theme = createMuiTheme({
-  // These colors are not in MUI definitions, but we use it for our own purposes
+  // These colors are not in Mui definitions, but we use it for our own purposes
   customButtons,
   customPalette,
   palette,

@@ -1,8 +1,8 @@
 import Joyride from 'react-joyride'
-import Portal from '@material-ui/core/Portal'
 import React from 'react'
 import SkipButton from './elements/skip-button'
 import { branch, compose, renderNothing } from 'recompose'
+import { Portal } from '@material-ui/core'
 import { stages, stagesArray } from './stages'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 

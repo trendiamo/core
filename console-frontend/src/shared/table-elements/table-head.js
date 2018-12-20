@@ -1,13 +1,10 @@
-import MUITableHead from '@material-ui/core/TableHead'
-import MUITableSortLabel from '@material-ui/core/TableSortLabel'
 import React from 'react'
 import styled from 'styled-components'
 import TableCell from './table-cell'
-import TableRow from '@material-ui/core/TableRow'
-import Tooltip from '@material-ui/core/Tooltip'
 import { compose, withHandlers } from 'recompose'
+import { TableHead as MuiTableHead, TableSortLabel as MuiTableSortLabel, TableRow, Tooltip } from '@material-ui/core'
 
-const StyledTableHead = styled(MUITableHead)`
+const StyledTableHead = styled(MuiTableHead)`
   background-color: #fafafa;
   border-top: 1px solid #dfe0df;
   font-size: 14px;
@@ -23,7 +20,7 @@ const TableSortLabel = compose(
       onClick(value)
     },
   })
-)(({ handleRequestSort, ...props }) => <MUITableSortLabel {...props} onClick={handleRequestSort} />)
+)(({ handleRequestSort, ...props }) => <MuiTableSortLabel {...props} onClick={handleRequestSort} />)
 
 const TableHead = ({ leftColumns, handleRequestSort, orderBy, orderDirection, columns }) => (
   <StyledTableHead>

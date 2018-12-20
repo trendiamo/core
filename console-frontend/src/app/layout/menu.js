@@ -1,13 +1,10 @@
 import classNames from 'classnames'
 import DummyMenu from './dummy-menu'
 import Link from 'shared/link'
-import MenuItem from '@material-ui/core/MenuItem'
 import omit from 'lodash.omit'
 import React from 'react'
 import routes from 'app/routes'
 import styled, { keyframes } from 'styled-components'
-import SvgIcon from '@material-ui/core/SvgIcon'
-import Typography from '@material-ui/core/Typography'
 import UserMenu from './user-menu'
 import {
   AccountCircleOutlined,
@@ -19,6 +16,7 @@ import {
   TuneOutlined,
 } from '@material-ui/icons'
 import { branch, compose, renderComponent, withProps } from 'recompose'
+import { MenuItem, SvgIcon, Typography } from '@material-ui/core'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 
 const resources = {

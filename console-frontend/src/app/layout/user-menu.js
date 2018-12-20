@@ -1,17 +1,13 @@
 import AccountCircleOutlined from '@material-ui/icons/AccountCircleOutlined'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'auth'
-import Avatar from '@material-ui/core/Avatar'
 import classNames from 'classnames'
-import Divider from '@material-ui/core/Divider'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import Link from 'shared/link'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
 import React from 'react'
 import routes from 'app/routes'
-import Typography from '@material-ui/core/Typography'
 import { apiSignOut } from 'utils'
+import { Avatar, Divider, Menu, MenuItem, Typography } from '@material-ui/core'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 
 const MenuItemThemed = ({ classes, icon, text, ...props }) => {

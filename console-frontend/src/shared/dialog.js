@@ -1,9 +1,5 @@
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import MuiDialog from '@material-ui/core/Dialog'
 import React from 'react'
+import { DialogActions, DialogContent, DialogContentText, DialogTitle, Dialog as MuiDialog } from '@material-ui/core'
 
 const Dialog = ({ open, handleClose, dialogActions, title, content }) => (
   <MuiDialog aria-labelledby="form-dialog-title" onClose={handleClose} open={open}>

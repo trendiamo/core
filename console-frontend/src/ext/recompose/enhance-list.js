@@ -1,22 +1,19 @@
 import AppBarButton from 'shared/app-bar-button'
-import Checkbox from '@material-ui/core/Checkbox'
 import CircularProgress from 'shared/circular-progress'
-import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
+import MuiCheckBoxIcon from '@material-ui/icons/CheckBox'
 import React from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TablePagination from '@material-ui/core/TablePagination'
 import withAppBarContent from './with-app-bar-content'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { Checkbox, Table, TableBody, TablePagination } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { parse, stringify } from 'query-string'
 import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const CheckBoxIcon = styled(MUICheckBoxIcon)`
+const CheckBoxIcon = styled(MuiCheckBoxIcon)`
   color: blue;
 `
 

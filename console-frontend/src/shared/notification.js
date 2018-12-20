@@ -1,6 +1,6 @@
 import React from 'react'
 import theme from 'app/theme'
-import Typography from '@material-ui/core/Typography'
+import { Typography } from '@material-ui/core'
 
 const styles = {
   error: {

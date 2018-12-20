@@ -1,7 +1,7 @@
-import MuiDivider from '@material-ui/core/Divider'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
+import { Divider as MuiDivider } from '@material-ui/core'
 
 const Divider = styled(props => <MuiDivider {...omit(props, ['folded'])} />)`
   height: ${({ folded }) => (folded ? '0' : '1px')};

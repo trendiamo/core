@@ -1,7 +1,7 @@
-import Avatar from '@material-ui/core/Avatar'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
+import { Avatar } from '@material-ui/core'
 
 const FilteredAvatar = props => <Avatar {...omit(props, ['small'])} />
 

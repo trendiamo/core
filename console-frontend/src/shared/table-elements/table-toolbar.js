@@ -1,10 +1,9 @@
-import MUIToolbar from '@material-ui/core/Toolbar'
 import React from 'react'
 import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography'
 import { BulkActions } from 'shared/list-actions'
+import { Toolbar as MuiToolbar, Typography } from '@material-ui/core'
 
-const SimpleToolbar = styled(MUIToolbar)`
+const SimpleToolbar = styled(MuiToolbar)`
   display: flex;
   justify-content: space-between;
 `

@@ -1,7 +1,7 @@
 import classnames from 'classnames'
-import MuiButton from '@material-ui/core/Button'
 import React from 'react'
 import { compose } from 'recompose'
+import { Button as MuiButton } from '@material-ui/core'
 import { withClassesConsumer } from 'ext/recompose/with-classes'
 
 const Button = ({ children, classes, disabled, ...props }) => (

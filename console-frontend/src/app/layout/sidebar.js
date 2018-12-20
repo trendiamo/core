@@ -1,9 +1,7 @@
 import classNames from 'classnames'
-import Drawer from '@material-ui/core/Drawer'
-import Hidden from '@material-ui/core/Hidden'
 import React from 'react'
-import withWidth from '@material-ui/core/withWidth'
 import { compose, lifecycle, withState } from 'recompose'
+import { Drawer, Hidden, withWidth } from '@material-ui/core'
 
 const Sidebar = ({ children, classes, sidebarOpen, toggleOpen, menuLoaded }) => (
   <React.Fragment>

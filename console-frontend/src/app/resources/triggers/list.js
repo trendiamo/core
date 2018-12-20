@@ -1,24 +1,18 @@
 import AppBarButton from 'shared/app-bar-button'
 import BlankStateTemplate from 'shared/blank-state'
-import Button from '@material-ui/core/Button'
-import Checkbox from '@material-ui/core/Checkbox'
-import Chip from '@material-ui/core/Chip'
 import CircularProgress from 'shared/circular-progress'
 import EditIcon from '@material-ui/icons/EditOutlined'
-import MUICheckBoxIcon from '@material-ui/icons/CheckBox'
+import MuiCheckBoxIcon from '@material-ui/icons/CheckBox'
 import React from 'react'
 import ReorderIcon from '@material-ui/icons/Reorder'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
 import { arrayMove, SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
+import { Button, Checkbox, Chip, Table, TableBody, TableRow, Typography } from '@material-ui/core'
 import { camelize } from 'inflected'
 import { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -35,7 +29,7 @@ const BlankState = () => (
   />
 )
 
-const CheckBoxIcon = styled(MUICheckBoxIcon)`
+const CheckBoxIcon = styled(MuiCheckBoxIcon)`
   color: blue;
 `
 

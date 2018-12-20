@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import Link from 'shared/link'
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
+import { Typography } from '@material-ui/core'
 
 const Title = ({ text, classes, responsive, highlight }) => (
   <Typography

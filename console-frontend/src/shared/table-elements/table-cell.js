@@ -1,6 +1,6 @@
-import MuiTableCell from '@material-ui/core/TableCell'
 import React from 'react'
 import styled from 'styled-components'
+import { TableCell as MuiTableCell } from '@material-ui/core'
 
 const StyledCell = styled(MuiTableCell)`
   width: ${({ width }) => width};

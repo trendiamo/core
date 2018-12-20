@@ -1,10 +1,9 @@
-import Button from '@material-ui/core/Button'
 import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import theme from 'app/theme'
-import Typography from '@material-ui/core/Typography'
+import { Button, Typography } from '@material-ui/core'
 import { styles } from 'app/layout/layout-styles'
 
 const Fullscreen = styled.div`

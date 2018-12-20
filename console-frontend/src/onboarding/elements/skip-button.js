@@ -1,6 +1,6 @@
-import Button from '@material-ui/core/Button'
 import React from 'react'
 import styled from 'styled-components'
+import { Button } from '@material-ui/core'
 import { changeStage } from 'onboarding/scenario-actions'
 import { compose, withHandlers } from 'recompose'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'

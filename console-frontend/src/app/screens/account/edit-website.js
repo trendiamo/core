@@ -1,21 +1,23 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import auth from 'auth'
-import Button from '@material-ui/core/Button'
-import Checkbox from '@material-ui/core/Checkbox'
 import CircularProgress from 'shared/circular-progress'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import IconButton from '@material-ui/core/IconButton'
-import InputLabel from '@material-ui/core/InputLabel'
 import MuiCancel from '@material-ui/icons/Cancel'
 import Notification from 'shared/notification'
 import React from 'react'
 import styled from 'styled-components'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
 import withForm from 'ext/recompose/with-form'
 import { apiWebsiteShow, apiWebsiteUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormHelperText,
+  IconButton,
+  InputLabel,
+  TextField,
+  Typography,
+} from '@material-ui/core'
 import { extractErrors } from 'utils/shared'
 import { Prompt } from 'react-router'
 

@@ -1,10 +1,9 @@
 import AsyncSelect from 'react-select/lib/Async'
 import debounce from 'debounce-promise'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
 import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
+import { FormControl, InputLabel } from '@material-ui/core'
 
 const StyledSelect = styled(AsyncSelect).attrs({
   singleValueColor: ({ shouldBlurText }) => (shouldBlurText ? '#77777f' : '#372727'),

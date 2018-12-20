@@ -1,6 +1,5 @@
-import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography'
+import { Button, Typography } from '@material-ui/core'
 
 const AuthButton = styled(Button)`
   background-color: rgba(255, 255, 255, 0.12);

@@ -1,7 +1,7 @@
-import Paper from '@material-ui/core/Paper'
 import React from 'react'
 import styled from 'styled-components'
 import { Divider, FlexBar, Header } from 'shared/form-elements'
+import { Paper } from '@material-ui/core'
 
 const StyledDiv = styled.div`
   height: 100%;
