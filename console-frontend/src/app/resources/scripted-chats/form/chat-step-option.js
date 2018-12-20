@@ -1,8 +1,11 @@
 import ChatStep from './chat-step'
 import React from 'react'
 import sanitizeProps from 'shared/sanitize-props'
+import Select from 'shared/select'
+import Switch from '@material-ui/core/Switch'
+import { apiChatStepsAutocomplete } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
-import { FormControl, Input, InputLabel, ListItem, MenuItem, Select, TextField, Typography } from '@material-ui/core'
+import { FormControl, InputLabel, ListItem, TextField, Typography } from '@material-ui/core'
 
 const ChatStepOption = ({
   editChatStepAttribute,
@@ -11,8 +14,10 @@ const ChatStepOption = ({
   editChatOptionAttribute,
   isFormLoading,
   form,
+  isNewChatStep,
   showNewChatStep,
   setForm,
+  handleChatStepSwitch,
   chatStepIndex,
   chatStepType,
   addAction,
@@ -36,64 +41,65 @@ const ChatStepOption = ({
       />
     </ListItem>
     <ListItem>
+      <Switch onChange={handleChatStepSwitch} />
       <FormControl disabled={isFormLoading} fullWidth>
         <InputLabel htmlFor="destination-step-label-placeholder" shrink>
           {'Destination Step'}
         </InputLabel>
-        <Select
-          displayEmpty
-          input={<Input id="destination-step-placeholder" name="destinationStep" />}
-          name="id"
-          onChange={selectDestinationStep}
-          value={
-            form[chatStepType].chatOptionsAttributes[index].destinationChatStepId === form[chatStepType].id
-              ? form[chatStepType].chatOptionsAttributes[index].destinationChatStepId
-              : 'selectPlaceholder'
-          }
-        >
-          <MenuItem disabled value="selectPlaceholder">
-            {'Choose a destination Chat Step'}
-          </MenuItem>
-          <MenuItem name="destinationChatStepId" value={form[chatStepType].id}>
-            {form[chatStepType].id}
-          </MenuItem>
-          <MenuItem value="newChatStep">{'Add destination chat step'}</MenuItem>
-        </Select>
+        {isNewChatStep ? (
+          <React.Fragment>
+            {(showNewChatStep || showChildSteps) &&
+              (form[chatStepType].chatOptionsAttributes[index].destinationChatStepAttributes && (
+                // form[chatStepType].id !== form[chatStepType].chatOptionsAttributes[index].destinationChatStepId &&
+                <ListItem>
+                  <ChatStep
+                    addAction={addAction}
+                    chatOptionIndex={index}
+                    chatStepType="destinationChatStepAttributes"
+                    deleteAction={deleteAction}
+                    form={form[chatStepType].chatOptionsAttributes[index]}
+                    index={chatStepIndex + 1}
+                    onChange={editChatStepAttribute}
+                    setForm={setForm}
+                    showChildSteps={showChildSteps}
+                  />
+                </ListItem>
+              ))}
+          </React.Fragment>
+        ) : (
+          <Select
+            autocomplete={apiChatStepsAutocomplete}
+            // defaultValue={
+            //   form[chatStepType].chatOptionsAttributes[index] && {
+            //     value: form[chatStepType].chatOptionsAttributes[index].destinationChatStepId,
+            //     label: form[chatStepType].chatOptionsAttributes[index].destinationChatStepAttributes.label,
+            //   }
+            // }
+            name="destinationChatStepId"
+            onChange={selectDestinationStep}
+            placeholder="Chat-Step *"
+          />
+        )}
       </FormControl>
     </ListItem>
-    {(showNewChatStep || showChildSteps) &&
-      (form[chatStepType].chatOptionsAttributes[index].destinationChatStepAttributes &&
-        form[chatStepType].id !== form[chatStepType].chatOptionsAttributes[index].destinationChatStepId && (
-          <ListItem>
-            <ChatStep
-              addAction={addAction}
-              chatOptionIndex={index}
-              chatStepType="destinationChatStepAttributes"
-              deleteAction={deleteAction}
-              form={form[chatStepType].chatOptionsAttributes[index]}
-              index={chatStepIndex + 1}
-              onChange={editChatStepAttribute}
-              setForm={setForm}
-              showChildSteps={showChildSteps}
-            />
-          </ListItem>
-        ))}
   </React.Fragment>
 )
 
 export default compose(
   withState('showNewChatStep', 'setShowNewChatStep', false),
+  withState('isNewChatStep', 'setIsNewChatStep', false),
   withHandlers({
     editChatOptionAttribute: ({ index, onChange }) => event => {
       onChange(index, event.target)
     },
   }),
   withHandlers({
-    selectDestinationStep: ({ addAction, chatStepType, onChange, setShowNewChatStep, index, form }) => (
-      _index,
-      newValue
+    handleChatStepSwitch: ({ setIsNewChatStep, addAction, chatStepType, onChange, index, form }) => (
+      event,
+      checked
     ) => {
-      if (newValue.props.value === 'newChatStep') {
+      setIsNewChatStep(checked)
+      if (checked) {
         // we need to add a destinationChatStepAttributes object with a new message and clean destinationChatStepId
         // if it was already there
         form[chatStepType].chatOptionsAttributes[index].destinationChatStepAttributes = {
@@ -109,18 +115,18 @@ export default compose(
           'destinationChatStepAttributes'
         )
         onChange(index, { name: 'destinationChatStepId', value: '' })
-        setShowNewChatStep(true)
-      } else {
-        setShowNewChatStep(false)
-        // we need to go back to a "pristine" state if the user adds a destinationChatStep and later decides
-        // to choose the parent chatstep option on the select, removing the destinationChatStepAttributes hash
-        if (form[chatStepType].chatOptionsAttributes[index].destinationChatStepAttributes) {
-          const filteredObject = form[chatStepType].chatOptionsAttributes[index]
-          const newObject = sanitizeProps(filteredObject, ['destinationChatStepAttributes'])
-          form[chatStepType].chatOptionsAttributes[index] = newObject
-        }
-        onChange(index, newValue.props)
       }
+    },
+    selectDestinationStep: ({ chatStepType, onChange, setShowNewChatStep, index, form }) => selected => {
+      setShowNewChatStep(false)
+      // we need to go back to a "pristine" state if the user adds a destinationChatStep and later decides
+      // to choose the parent chatstep option on the select, removing the destinationChatStepAttributes hash
+      if (form[chatStepType].chatOptionsAttributes[index].destinationChatStepAttributes) {
+        const filteredObject = form[chatStepType].chatOptionsAttributes[index]
+        const newObject = sanitizeProps(filteredObject, ['destinationChatStepAttributes'])
+        form[chatStepType].chatOptionsAttributes[index] = newObject
+      }
+      onChange(index, { name: selected.name, value: selected.value.id })
     },
   })
 )(ChatStepOption)

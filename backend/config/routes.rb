@@ -40,6 +40,8 @@ Rails.application.routes.draw do
       resources :flows, only: %i[index]
       get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
 
+      get "/chat_steps/autocomplete", to: "autocompletes#chat_steps_autocomplete"
+
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end

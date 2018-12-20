@@ -78,7 +78,7 @@ const Select = compose(
         if (0 < defaultOptions.length) return
         const rawOptions = await autocomplete('')
         const options = rawOptions.map(option => {
-          return { value: option, label: option.name, name }
+          return { value: option, label: option.label, name }
         })
         setDefaultOptions(options)
       },
@@ -87,7 +87,7 @@ const Select = compose(
         setMenuIsOpen(true)
         const rawOptions = await debouncedAutocomplete({ searchQuery })
         const options = rawOptions.map(option => {
-          return { value: option, label: option.name, name }
+          return { value: option, label: option.label, name }
         })
         return options
       },

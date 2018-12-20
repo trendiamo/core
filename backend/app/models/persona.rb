@@ -12,4 +12,10 @@ class Persona < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
   validates :profile_pic_url, presence: true
+
+  def as_json(_options = {})
+    attributes
+      .slice("id", "name", "description", "profile_pic_url", "created_at", "updated_at")
+      .merge(label: name)
+  end
 end

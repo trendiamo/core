@@ -14,8 +14,9 @@ const WEBSITES_URL = `${BASE_API_URL}/websites`
 const FLOWS_URL = `${BASE_API_URL}/flows`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
 const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
+const CHAT_STEPS_URL = `${BASE_API_URL}/chat_steps`
 
-const filterBody = body => omitDeep(body, key => key.startsWith('__'))
+const filterBody = body => omitDeep(body, key => key.startsWith('__') || key === 'label')
 
 const authFetch = async (url, params) => {
   const result = await fetch(url, params)
@@ -198,3 +199,5 @@ export const apiTriggerSort = body => apiCreateRequest(`${TRIGGERS_URL}/sort`, b
 
 export const apiFlowsList = () => apiGetRequest(FLOWS_URL)
 export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocomplete/?${stringify(query)}`)
+
+export const apiChatStepsAutocomplete = query => apiGetRequest(`${CHAT_STEPS_URL}/autocomplete/?${stringify(query)}`)

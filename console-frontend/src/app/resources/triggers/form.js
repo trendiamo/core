@@ -61,7 +61,7 @@ const TriggerForm = ({
           </InputLabel>
           <Select
             autocomplete={apiFlowsAutocomplete}
-            defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}
+            defaultValue={form.flowId && { value: form.flowId, label: form.flowLabel }}
             onChange={selectFlow}
             placeholder="Flow *"
           />

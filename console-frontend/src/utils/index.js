@@ -1,4 +1,5 @@
 import {
+  apiChatStepsAutocomplete,
   apiCurationCreate,
   apiCurationDestroy,
   apiCurationList,
@@ -76,4 +77,5 @@ export {
   apiTriggerSort,
   apiWebsiteShow,
   apiWebsiteUpdate,
+  apiChatStepsAutocomplete,
 }

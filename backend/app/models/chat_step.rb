@@ -7,4 +7,19 @@ class ChatStep < ApplicationRecord
 
   accepts_nested_attributes_for :chat_messages, allow_destroy: true
   accepts_nested_attributes_for :chat_options, allow_destroy: true
+
+  def as_json(options = {})
+    result = attributes.slice("id", "created_at", "updated_at")
+    result[:label] = label
+    unless options[:shallow]
+      result[:chat_messages_attributes] = chat_messages
+      result[:chat_options_attributes] = chat_options
+    end
+    result
+  end
+
+  def label
+    first_message = chat_messages.first.text
+    "#{first_message}: ChatStep ##{id}"
+  end
 end

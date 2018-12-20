@@ -4,6 +4,19 @@ import { apiScriptedChatShow, apiScriptedChatUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
 
+const convertNestedLabel = destinationChatStepAttributes => {
+  // if (destinationChatStepAttributes.chatOptionsAttributes.length === 0) return
+  let convertedDestinationChatStep = Object.defineProperty(
+    destinationChatStepAttributes,
+    '__label',
+    Object.getOwnPropertyDescriptor(destinationChatStepAttributes, 'label')
+  )
+  delete convertedDestinationChatStep['label']
+  console.log(convertedDestinationChatStep)
+  // if (!convertedDestinationChatStep.chatOptionsAttributes) return
+  return convertNestedLabel(convertedDestinationChatStep.chatOptionsAttributes[0].destinationChatStepAttributes)
+}
+
 export default compose(
   withProps({
     breadcrumbs: [{ text: 'Scripted Chats', route: routes.scriptedChatsList() }, { text: 'Edit Scripted Chat' }],
@@ -27,6 +40,7 @@ export default compose(
         personaId: response.persona.id || '',
         __persona: response.persona,
         chatStepAttributes: {
+          __label: response.chatStepAttributes.label,
           id: response.chatStepAttributes.id,
           chatMessagesAttributes: response.chatStepAttributes.chatMessagesAttributes || [
             {
@@ -34,7 +48,9 @@ export default compose(
               text: '',
             },
           ],
-          chatOptionsAttributes: response.chatStepAttributes.chatOptionsAttributes,
+          chatOptionsAttributes: convertNestedLabel(
+            response.chatStepAttributes.chatOptionsAttributes[0].destinationChatStepAttributes
+          ),
         },
       }
     },

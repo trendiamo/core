@@ -145,6 +145,7 @@ export default compose(
     ) => {
       const newChatStepAttributes = [...childForm[chatStepType][chatStepAttribute]]
       newChatStepAttributes[chatStepAttributeIndex][newValue.name] = newValue.value
+      console.log(newChatStepAttributes)
       setForm(chatStepType === 'chatStepAttributes' ? { ...form, ...childForm } : { ...form })
     },
     addChatStepAttribute: ({ setForm, form }) => (newValue, chatStepAttribute, childForm, chatStepType) => {
