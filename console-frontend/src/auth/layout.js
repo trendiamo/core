@@ -30,6 +30,7 @@ const AuthMain = styled.main`
   display: block;
   padding: 0 20px;
   margin: 20px auto 120px;
+  width: 100%;
 
   @media (min-width: 900px) {
     padding: 0px 40px;
@@ -87,6 +88,7 @@ const BackgroundImage = styled.div`
 const LogotypeContainer = styled.div`
   display: none;
   position: relative;
+  width: 100%;
 
   @media (min-width: 900px) {
     display: block;
