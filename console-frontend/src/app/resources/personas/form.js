@@ -1,6 +1,5 @@
 import CircularProgress from 'shared/circular-progress'
 import Grid from '@material-ui/core/Grid'
-import Label from 'shared/label'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
@@ -33,10 +32,11 @@ const PersonaForm = ({
   <Section title={title}>
     <Grid item sm={6}>
       <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-        <Label>{'Picture'}</Label>
         <PictureUploader
           disabled={isCropping}
+          label="Picture"
           onChange={setProfilePicUrl}
+          required
           setDisabled={setIsCropping}
           setPic={setProfilePic}
           value={form.profilePicUrl}

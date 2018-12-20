@@ -1,4 +1,3 @@
-import Label from 'shared/label'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import Section from 'shared/section'
@@ -49,10 +48,11 @@ const NavigationItem = ({
           required
           value={navigationItem.text}
         />
-        <Label>{'Picture'}</Label>
         <PictureUploader
           disabled={isCropping}
+          label="Picture"
           onChange={setPictureUrl}
+          required
           setDisabled={setIsCropping}
           setPic={setPicture}
           square

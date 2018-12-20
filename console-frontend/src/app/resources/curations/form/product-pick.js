@@ -1,4 +1,3 @@
-import Label from 'shared/label'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
@@ -65,10 +64,11 @@ const ProductPick = ({
         required
         value={productPick.displayPrice}
       />
-      <Label>{'Picture'}</Label>
       <PictureUploader
         disabled={isCropping}
+        label="Picture"
         onChange={setPictureUrl}
+        required
         setDisabled={setIsCropping}
         setPic={setPicture}
         square

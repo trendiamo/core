@@ -1,5 +1,7 @@
 import Button from '@material-ui/core/Button'
 import CloudUpload from '@material-ui/icons/CloudUpload'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import omit from 'lodash.omit'
 import React from 'react'
@@ -8,6 +10,7 @@ import ReactDropzone from 'react-dropzone'
 import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
+import TextField from '@material-ui/core/TextField'
 import theme from 'app/theme'
 import { apiGetSignedUrlFactory } from 'utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
@@ -46,6 +49,7 @@ const StyledDropzone = styled(FilteredReactDropzone)`
   position: relative;
   height: 150px;
   width: 150px;
+  margin-top: 25px;
   margin-bottom: 0.4rem;
   color: ${({ isDragging, previewImage }) => (previewImage ? '#fff' : isDragging ? '#0560ff' : '#7f8086')};
 
@@ -159,17 +163,21 @@ const BarebonesPictureUploader = ({
   onImageLoaded,
   onRemove,
   square,
+  label,
+  required = false,
 }) => (
   <Container>
-    <Dropzone
-      accept="image/*"
-      disabled={disabled}
-      multiple={false}
-      onDrop={onDrop}
-      previewImage={previewImage}
-      square={square}
-    />
-
+    <FormControl disabled={disabled} fullWidth margin="normal">
+      <InputLabel shrink>{`${label}${required ? ' *' : ''}`}</InputLabel>
+      <Dropzone
+        accept="image/*"
+        disabled={disabled}
+        multiple={false}
+        onDrop={onDrop}
+        previewImage={previewImage}
+        square={square}
+      />
+    </FormControl>
     {(image || previewImage) && (image ? doneCropping : true) && (
       <RemoveButtonContainer>
         <Button disabled={disabled} mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
