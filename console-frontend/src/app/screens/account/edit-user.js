@@ -1,7 +1,6 @@
 import auth from 'auth'
 import Button from '@material-ui/core/Button'
 import CircularProgress from 'shared/circular-progress'
-import Label from 'shared/label'
 import Link from 'shared/link'
 import Notification from 'shared/notification'
 import PictureUploader, { ProgressBar, uploadImage } from 'shared/picture-uploader'
