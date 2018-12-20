@@ -4,9 +4,9 @@ import { compose, createSink } from 'recompose'
 import { isEqual } from 'lodash'
 import { withStoreConsumer } from './with-store'
 
-const setPageTitle = appBarContent => {
-  if (!appBarContent.breadcrumbs || !appBarContent.breadcrumbs.length) return
-  const title = appBarContent.breadcrumbs[appBarContent.breadcrumbs.length - 1].text
+const setPageTitle = ({ breadcrumbs }) => {
+  if (!breadcrumbs || !breadcrumbs.length) return
+  const title = breadcrumbs[breadcrumbs.length - 1].text
   document.title = `${title} - Trendiamo Console`
 }
 
