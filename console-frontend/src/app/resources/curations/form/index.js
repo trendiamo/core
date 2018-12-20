@@ -9,7 +9,7 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Grid, TextField } from '@material-ui/core'
+import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -46,6 +46,7 @@ const CurationForm = ({
           required
           value={form.name}
         />
+        <FormHelperText>{'The name is useful for you to reference this flow in a trigger.'}</FormHelperText>
         <Select
           autocomplete={apiPersonasAutocomplete}
           defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
@@ -55,6 +56,7 @@ const CurationForm = ({
           placeholder="Choose a persona"
           required
         />
+        <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
         <TextField
           disabled={isCropping || isFormLoading}
           fullWidth
@@ -65,6 +67,7 @@ const CurationForm = ({
           required
           value={form.title}
         />
+        <FormHelperText>{'The title is shown in the cover.'}</FormHelperText>
         <TextField
           disabled={isCropping || isFormLoading}
           fullWidth
@@ -75,6 +78,7 @@ const CurationForm = ({
           required
           value={form.subtitle}
         />
+        <FormHelperText>{'The subtitle is shown in the cover, below the title.'}</FormHelperText>
       </Grid>
     </Section>
     {form.spotlightsAttributes.map((spotlight, index) => (

@@ -10,9 +10,8 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Grid } from '@material-ui/core'
+import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { Outro } from 'plugin-base'
-import { TextField } from '@material-ui/core'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -56,6 +55,7 @@ const OutroForm = ({
             required
             value={form.name}
           />
+          <FormHelperText>{'The name is useful for you to reference this flow in a trigger.'}</FormHelperText>
           <Select
             autocomplete={apiPersonasAutocomplete}
             defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
@@ -65,6 +65,7 @@ const OutroForm = ({
             placeholder="Choose a persona..."
             required
           />
+          <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
         </Form>
       </Grid>
       <Grid item sm={6} style={{ display: 'flex', justifyContent: 'center' }}>

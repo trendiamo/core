@@ -9,8 +9,7 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Grid } from '@material-ui/core'
-import { TextField } from '@material-ui/core'
+import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -47,6 +46,7 @@ const NavigationForm = ({
           required
           value={form.name}
         />
+        <FormHelperText>{'The name is useful for you to reference this flow in a trigger.'}</FormHelperText>
         <Select
           autocomplete={apiPersonasAutocomplete}
           defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
@@ -56,6 +56,7 @@ const NavigationForm = ({
           placeholder="Choose a persona..."
           required
         />
+        <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
       </Grid>
     </Section>
     {form.navigationItemsAttributes.map((navigationItem, index) => (

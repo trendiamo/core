@@ -1,18 +1,15 @@
 import CircularProgress from 'shared/circular-progress'
-import FormControl from '@material-ui/core/FormControl'
-import Grid from '@material-ui/core/Grid'
-import InputLabel from '@material-ui/core/InputLabel'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import Select from 'shared/select'
 import styled from 'styled-components'
-import TextField from '@material-ui/core/TextField'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
 import { apiFlowsAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { FormControl, FormHelperText, Grid, InputLabel, TextField } from '@material-ui/core'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -59,9 +56,10 @@ const TriggerForm = ({
           placeholder="Choose a flow..."
           required
         />
+        <FormHelperText>{'Choose between Curations, Navigations, etc.'}</FormHelperText>
         <FormControl fullWidth margin="normal">
           <InputLabel shrink>{'Url Matchers'}</InputLabel>
-          <div>
+          <div style={{ marginTop: '11px' }}>
             {form.urlMatchers.length === 0 ? (
               <FlexDiv>
                 <StyledUrlTextField
@@ -92,6 +90,7 @@ const TriggerForm = ({
           </div>
           <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
         </FormControl>
+        <FormHelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</FormHelperText>
       </Form>
     </Grid>
   </Section>
