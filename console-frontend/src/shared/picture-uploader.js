@@ -119,7 +119,9 @@ const StyledLinearProgress = styled(LinearProgress)`
 const StatusMessage = styled.div`
   font-size: 14px;
   letter-spacing: 0.3px;
-  color: #7f8086;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1.4;
 `
 
 const RemoveButtonContainer = styled.div`
