@@ -11,25 +11,26 @@ const Icon = styled.img`
   -webkit-user-drag: none;
 `
 
-const StyledButton = styled(({ ...props }) => <MuiButton {...omit(props, ['create'])} />)`
-  ${({ create }) =>
-    !create &&
+const StyledButton = styled(({ ...props }) => <MuiButton {...omit(props, ['create', 'helpRun'])} />)`
+  ${({ create, helpRun }) =>
+    (!create || helpRun) &&
     `background: #fff;
     &:hover {
       background: #fff;
     }`}
 `
 
-const ButtonTemplate = ({ config, handleClick, create }) => (
+const ButtonTemplate = ({ config, handleClick, create, onboarding }) => (
   <StyledButton
     aria-label={config['ariaLabel']}
-    color={create ? 'primary' : 'default'}
+    color={create && !onboarding.help.run ? 'primary' : 'default'}
     create={create}
+    helpRun={onboarding.help.run}
     onClick={handleClick}
     variant="contained"
   >
-    {create ? 'Create New' : 'Next'}
-    <Icon alt="" src={`/img/icons/${create ? 'ic_emoji_done' : 'ic_emoji_next'}.png`} />
+    {onboarding.help.run ? 'Ok' : create ? 'Create New' : 'Next'}
+    <Icon alt="" src={`/img/icons/${create || onboarding.help.run ? 'ic_emoji_done' : 'ic_emoji_next'}.png`} />
   </StyledButton>
 )
 
