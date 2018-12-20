@@ -114,7 +114,9 @@ export const styles = theme => ({
     width: drawerWidthClosed,
   },
   contentInnerDiv: {
-    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
   },
   contentWithSidebar: {
     display: 'flex',

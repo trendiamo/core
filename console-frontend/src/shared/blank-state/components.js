@@ -26,12 +26,10 @@ const spark = keyframes`
 `
 
 const Container = styled.div`
-  text-align: center;
-  width: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   flex-direction: column;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
