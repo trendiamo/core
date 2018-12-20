@@ -1,10 +1,11 @@
 import classNames from 'classnames'
+import DummyMenu from './dummy-menu'
 import Link from 'shared/link'
 import MenuItem from '@material-ui/core/MenuItem'
 import omit from 'lodash.omit'
 import React from 'react'
 import routes from 'app/routes'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import SvgIcon from '@material-ui/core/SvgIcon'
 import Typography from '@material-ui/core/Typography'
 import UserMenu from './user-menu'
@@ -17,8 +18,8 @@ import {
   SmsOutlined,
   TuneOutlined,
 } from '@material-ui/icons'
-import { compose, withProps } from 'recompose'
-import { withRouter } from 'react-router'
+import { branch, compose, renderComponent, withProps } from 'recompose'
+import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 
 const resources = {
   triggers: { icon: TuneOutlined, label: 'Triggers', class: 'triggers', route: routes.triggersList() },
@@ -57,10 +58,20 @@ const resourceGroups = {
   },
 }
 
+const fade = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  animation: ${fade} 1s;
 `
 
 const GroupText = styled(({ ...props }) => <Typography {...omit(props, ['sidebarOpen'])} />)`
@@ -130,7 +141,7 @@ const Item = compose(
 ))
 
 const Menu = ({ classes, sidebarOpen, ...rest }) => (
-  <Container {...rest}>
+  <Container {...omit(rest, ['onboarding'])}>
     <UserMenu classes={classes} sidebarOpen={sidebarOpen} />
     {Object.keys(resourceGroups).map(group => (
       <div key={group}>
@@ -147,4 +158,11 @@ const Menu = ({ classes, sidebarOpen, ...rest }) => (
   </Container>
 )
 
-export default compose(withRouter)(Menu)
+export default compose(
+  withOnboardingConsumer,
+  branch(
+    ({ location, onboarding, menuLoaded }) =>
+      !menuLoaded && onboarding.stageIndex === 0 && location.pathname === routes.root(),
+    renderComponent(DummyMenu)
+  )
+)(Menu)

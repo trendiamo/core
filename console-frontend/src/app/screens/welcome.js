@@ -13,7 +13,7 @@ const description =
 
 const WelcomePage = ({ getStarted, skipOnboarding }) => (
   <Container>
-    <div style={{ maxWidth: '500px' }}>
+    <div style={{ maxWidth: '500px', textAlign: 'center' }}>
       <Image alt="" src="/img/background/img-welcome.png" />
       <Header variant="h4">{title}</Header>
       <Description variant="body1">{description}</Description>
