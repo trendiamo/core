@@ -6,7 +6,7 @@ import { compose, withHandlers, withProps, withState } from 'recompose'
 import { FormControl, InputLabel } from '@material-ui/core'
 
 const StyledSelect = styled(AsyncSelect).attrs({
-  singleValueColor: ({ shouldBlurText }) => (shouldBlurText ? '#77777f' : '#372727'),
+  singleValueColor: ({ isFocussed }) => (isFocussed ? '#77777f' : '#372727'),
 })`
   font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
   .react-select__control {
@@ -85,43 +85,54 @@ const Select = compose(
     debouncedAutocomplete: debounce(autocomplete, 250),
   })),
   withState('defaultOptions', 'setDefaultOptions', []),
-  withState('menuIsOpen', 'setMenuIsOpen', false),
-  withState('shouldBlurText', 'setShouldBlurText', false),
+  withState('isMenuOpen', 'setIsMenuOpen', false),
+  withState('isFocussed', 'setIsFocussed', false),
   withHandlers(() => {
-    let hasTyped = false
+    let skipMenuOpen = false
+    let hasBlurred = false
     return {
-      onInputChange: ({ setMenuIsOpen, setShouldBlurText }) => (searchQuery, event) => {
-        hasTyped = true
-        setShouldBlurText(event.action === 'set-value')
-        setMenuIsOpen(!(0 < searchQuery.length || searchQuery.length <= 2))
+      onInputChange: ({ setIsFocussed, setIsMenuOpen }) => (searchQuery, event) => {
+        skipMenuOpen = event.action === 'menu-close' ? false : !hasBlurred || searchQuery.length === 0
+        if (event.action === 'menu-close') {
+          setIsMenuOpen(false)
+          setIsFocussed(false)
+        }
       },
-      onMenuOpen: ({ setMenuIsOpen, setDefaultOptions, name, autocomplete, defaultOptions }) => async () => {
-        if (hasTyped) {
-          hasTyped = false
+      onMenuOpen: ({
+        setIsFocussed,
+        setIsMenuOpen,
+        setDefaultOptions,
+        name,
+        autocomplete,
+        defaultOptions,
+      }) => async () => {
+        if (skipMenuOpen) {
+          skipMenuOpen = false
           return
         }
-        setMenuIsOpen(true)
-        if (0 < defaultOptions.length) return
+        setIsMenuOpen(true)
+        setIsFocussed(true)
+        if (defaultOptions.length > 0) return
         const rawOptions = await autocomplete('')
         const options = rawOptions.map(option => {
           return { value: option, label: option.name, name }
         })
         setDefaultOptions(options)
       },
-      loadOptions: ({ name, setMenuIsOpen, debouncedAutocomplete }) => async searchQuery => {
-        if (searchQuery.length <= 2) return setMenuIsOpen(false)
-        setMenuIsOpen(true)
+      loadOptions: ({ name, setIsMenuOpen, debouncedAutocomplete }) => async searchQuery => {
+        if (searchQuery.length <= 2) return setIsMenuOpen(false)
+        setIsMenuOpen(true)
         const rawOptions = await debouncedAutocomplete({ searchQuery })
         const options = rawOptions.map(option => {
           return { value: option, label: option.name, name }
         })
         return options
       },
-      onFocus: ({ setShouldBlurText }) => () => {
-        setShouldBlurText(true)
-      },
-      onBlur: ({ setShouldBlurText }) => () => {
-        setShouldBlurText(false)
+      onFocus: ({ setIsFocussed }) => () => setIsFocussed(true),
+      onBlur: ({ setIsFocussed, setIsMenuOpen }) => () => {
+        hasBlurred = true
+        setIsMenuOpen(false)
+        setIsFocussed(false)
       },
     }
   })
@@ -136,11 +147,11 @@ const Select = compose(
     label,
     onBlur,
     onMenuOpen,
-    menuIsOpen,
+    isMenuOpen,
     onFocus,
     disabled,
     required,
-    shouldBlurText,
+    isFocussed,
   }) => (
     <FormControl disabled={disabled} fullWidth margin="normal">
       <InputLabel shrink>{`${label}${required ? ' *' : ''}`}</InputLabel>
@@ -150,8 +161,9 @@ const Select = compose(
         defaultOptions={defaultOptions}
         defaultValue={defaultValue}
         isDisabled={disabled}
+        isFocussed={isFocussed}
         loadOptions={loadOptions}
-        menuIsOpen={menuIsOpen}
+        menuIsOpen={isMenuOpen}
         onBlur={onBlur}
         onChange={onChange}
         onFocus={onFocus}
@@ -159,7 +171,6 @@ const Select = compose(
         onMenuOpen={onMenuOpen}
         openMenuOnClick={false}
         placeholder={placeholder}
-        shouldBlurText={shouldBlurText}
       />
     </FormControl>
   )
