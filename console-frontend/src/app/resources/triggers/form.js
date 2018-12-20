@@ -16,10 +16,6 @@ import { branch, compose, renderComponent, withHandlers, withProps, withState } 
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const LabelContainer = styled.div`
-  margin-top: 1rem;
-`
-
 const FlexDiv = styled.div`
   display: flex;
   align-items: center;
@@ -54,42 +50,48 @@ const TriggerForm = ({
   <Section title={title}>
     <Grid item sm={6}>
       <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-        <FormControl disabled={isFormLoading} fullWidth>
-          <InputLabel htmlFor="flow-label-placeholder" shrink>
-            {'Flow'}
-          </InputLabel>
-          <Select
-            autocomplete={apiFlowsAutocomplete}
-            defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}
-            onChange={selectFlow}
-            placeholder="Flow *"
-          />
+        <Select
+          autocomplete={apiFlowsAutocomplete}
+          defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}
+          disabled={isFormLoading}
+          label="Flow"
+          onChange={selectFlow}
+          placeholder="Choose a flow..."
+          required
+        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel shrink>{'Url Matchers'}</InputLabel>
+          <div>
+            {form.urlMatchers.length === 0 ? (
+              <FlexDiv>
+                <StyledUrlTextField
+                  disabled={isFormLoading}
+                  index={0}
+                  onChange={editUrlValue}
+                  required
+                  value={form.urlMatchers[0]}
+                />
+              </FlexDiv>
+            ) : (
+              form.urlMatchers.map((url, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <FlexDiv key={index}>
+                  <StyledUrlTextField
+                    disabled={isFormLoading}
+                    index={index}
+                    onChange={editUrlValue}
+                    required
+                    value={url}
+                  />
+                  {form.urlMatchers.length > 1 && (
+                    <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
+                  )}
+                </FlexDiv>
+              ))
+            )}
+          </div>
+          <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
         </FormControl>
-        <LabelContainer>
-          <InputLabel>{'Url Matchers'}</InputLabel>
-        </LabelContainer>
-        {form.urlMatchers.length === 0 ? (
-          <FlexDiv>
-            <StyledUrlTextField
-              disabled={isFormLoading}
-              index={0}
-              onChange={editUrlValue}
-              required
-              value={form.urlMatchers[0]}
-            />
-          </FlexDiv>
-        ) : (
-          form.urlMatchers.map((url, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <FlexDiv key={index}>
-              <StyledUrlTextField disabled={isFormLoading} index={index} onChange={editUrlValue} required value={url} />
-              {form.urlMatchers.length > 1 && (
-                <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
-              )}
-            </FlexDiv>
-          ))
-        )}
-        <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
       </Form>
     </Grid>
   </Section>

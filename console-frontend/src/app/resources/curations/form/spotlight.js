@@ -47,10 +47,12 @@ const Spotlight = ({
               label: spotlight.__persona.name,
             }
           }
-          isDisabled={isCropping || isFormLoading}
+          disabled={isCropping || isFormLoading}
+          label="Persona"
           name="spotlight_personaId"
           onChange={selectPersona}
-          placeholder="Persona *"
+          placeholder="Choose a persona"
+          required
         />
       </Grid>
       <div style={{ marginTop: '24px' }}>

@@ -1,5 +1,7 @@
 import AsyncSelect from 'react-select/lib/Async'
 import debounce from 'debounce-promise'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
 import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
@@ -132,30 +134,35 @@ const Select = compose(
     defaultValue,
     onInputChange,
     defaultOptions,
+    label,
     onBlur,
     onMenuOpen,
     menuIsOpen,
     onFocus,
-    isDisabled,
+    disabled,
+    required,
     shouldBlurText,
   }) => (
-    <StyledSelect
-      cacheOptions
-      classNamePrefix="react-select"
-      defaultOptions={defaultOptions}
-      defaultValue={defaultValue}
-      isDisabled={isDisabled}
-      loadOptions={loadOptions}
-      menuIsOpen={menuIsOpen}
-      onBlur={onBlur}
-      onChange={onChange}
-      onFocus={onFocus}
-      onInputChange={onInputChange}
-      onMenuOpen={onMenuOpen}
-      openMenuOnClick={false}
-      placeholder={placeholder}
-      shouldBlurText={shouldBlurText}
-    />
+    <FormControl disabled={disabled} fullWidth margin="normal">
+      <InputLabel shrink>{`${label}${required ? ' *' : ''}`}</InputLabel>
+      <StyledSelect
+        cacheOptions
+        classNamePrefix="react-select"
+        defaultOptions={defaultOptions}
+        defaultValue={defaultValue}
+        isDisabled={disabled}
+        loadOptions={loadOptions}
+        menuIsOpen={menuIsOpen}
+        onBlur={onBlur}
+        onChange={onChange}
+        onFocus={onFocus}
+        onInputChange={onInputChange}
+        onMenuOpen={onMenuOpen}
+        openMenuOnClick={false}
+        placeholder={placeholder}
+        shouldBlurText={shouldBlurText}
+      />
+    </FormControl>
   )
 )
 

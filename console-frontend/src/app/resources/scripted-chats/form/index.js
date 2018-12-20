@@ -55,8 +55,11 @@ const ScriptedChatForm = ({
       <Select
         autocomplete={apiPersonasAutocomplete}
         defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+        disabled={isFormLoading}
+        label="Persona"
         onChange={selectPersona}
-        placeholder="Persona *"
+        placeholder="Choose a persona..."
+        required
       />
       <ChatStep
         addAction={addChatStepAttribute}

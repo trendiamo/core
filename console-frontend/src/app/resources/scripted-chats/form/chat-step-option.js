@@ -2,7 +2,7 @@ import ChatStep from './chat-step'
 import omit from 'lodash.omit'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
-import { FormControl, Input, InputLabel, ListItem, MenuItem, Select, TextField, Typography } from '@material-ui/core'
+import { Input, ListItem, MenuItem, Select, TextField, Typography } from '@material-ui/core'
 
 const ChatStepOption = ({
   editChatStepAttribute,
@@ -36,30 +36,28 @@ const ChatStepOption = ({
       />
     </ListItem>
     <ListItem>
-      <FormControl disabled={isFormLoading} fullWidth>
-        <InputLabel htmlFor="destination-step-label-placeholder" shrink>
-          {'Destination Step'}
-        </InputLabel>
-        <Select
-          displayEmpty
-          input={<Input id="destination-step-placeholder" name="destinationStep" />}
-          name="id"
-          onChange={selectDestinationStep}
-          value={
-            form[chatStepType].chatOptionsAttributes[index].destinationChatStepId === form[chatStepType].id
-              ? form[chatStepType].chatOptionsAttributes[index].destinationChatStepId
-              : 'selectPlaceholder'
-          }
-        >
-          <MenuItem disabled value="selectPlaceholder">
-            {'Choose a destination Chat Step'}
-          </MenuItem>
-          <MenuItem name="destinationChatStepId" value={form[chatStepType].id}>
-            {form[chatStepType].id}
-          </MenuItem>
-          <MenuItem value="newChatStep">{'Add destination chat step'}</MenuItem>
-        </Select>
-      </FormControl>
+      <Select
+        disabled={isFormLoading}
+        displayEmpty
+        input={<Input name="destinationStep" />}
+        label="Destination Step"
+        name="id"
+        onChange={selectDestinationStep}
+        placeholder="Choose a destination step..."
+        value={
+          form[chatStepType].chatOptionsAttributes[index].destinationChatStepId === form[chatStepType].id
+            ? form[chatStepType].chatOptionsAttributes[index].destinationChatStepId
+            : 'selectPlaceholder'
+        }
+      >
+        <MenuItem disabled value="selectPlaceholder">
+          {'Choose a destination Chat Step'}
+        </MenuItem>
+        <MenuItem name="destinationChatStepId" value={form[chatStepType].id}>
+          {form[chatStepType].id}
+        </MenuItem>
+        <MenuItem value="newChatStep">{'Add destination chat step'}</MenuItem>
+      </Select>
     </ListItem>
     {(showNewChatStep || showChildSteps) &&
       (form[chatStepType].chatOptionsAttributes[index].destinationChatStepAttributes &&

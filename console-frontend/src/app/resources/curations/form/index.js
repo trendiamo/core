@@ -49,9 +49,11 @@ const CurationForm = ({
         <Select
           autocomplete={apiPersonasAutocomplete}
           defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
-          isDisabled={isCropping || isFormLoading}
+          disabled={isCropping || isFormLoading}
+          label="Persona"
           onChange={selectPersona}
-          placeholder="Persona *"
+          placeholder="Choose a persona"
+          required
         />
         <TextField
           disabled={isCropping || isFormLoading}
