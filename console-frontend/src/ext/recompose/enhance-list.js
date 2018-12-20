@@ -11,8 +11,10 @@ import TablePagination from '@material-ui/core/TablePagination'
 import withAppBarContent from './with-app-bar-content'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Link } from 'react-router-dom'
+import { parse, stringify } from 'query-string'
 import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { withRouter } from 'react-router'
 
 const CheckBoxIcon = styled(MUICheckBoxIcon)`
   color: blue;
@@ -27,10 +29,20 @@ const Actions = ({ createRoute }) => (
 const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) => ResourceRow =>
   compose(
     withOnboardingHelp(help),
-    withAppBarContent(() => ({
-      Actions: <Actions createRoute={routes.create()} />,
-      breadcrumbs,
-    })),
+    withRouter,
+    withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
+    withState('rowsPerPage', 'setRowsPerPage', 10),
+    withAppBarContent(({ page }) => {
+      const newBreadcrumbs = JSON.parse(JSON.stringify(breadcrumbs)) // deep clone
+      if (page !== 0) {
+        const lastBreadcrumb = newBreadcrumbs[breadcrumbs.length - 1]
+        lastBreadcrumb.text = `${lastBreadcrumb.text} pp. ${page + 1}`
+      }
+      return {
+        Actions: <Actions createRoute={routes.create()} />,
+        breadcrumbs: newBreadcrumbs,
+      }
+    }),
     withProps({ label: breadcrumbs && breadcrumbs[0].text }),
     withState('records', 'setRecords', []),
     withState('recordsCount', 'setRecordsCount', 0),
@@ -38,8 +50,6 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
     withState('orderBy', 'setOrderBy', 'id'),
     withState('selectedIds', 'setSelectedIds', []),
     withState('isSelectAll', 'setIsSelectAll', false),
-    withState('page', 'setPage', 0),
-    withState('rowsPerPage', 'setRowsPerPage', 10),
     withState('isLoading', 'setIsLoading', true),
     withProps(({ rowsPerPage, page, orderDirection, orderBy }) => ({
       query: {
@@ -99,7 +109,14 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
         setOrderDirection(newDirection)
       },
       handleChangeRowsPerPage: ({ setRowsPerPage }) => event => setRowsPerPage(event.target.value),
-      handleChangePage: ({ setPage }) => (event, page) => setPage(page),
+      handleChangePage: ({ location, history }) => (event, page) => {
+        let currentSearch = parse(location.search)
+        delete currentSearch.page
+        const newSearch = page === 0 ? currentSearch : { ...currentSearch, page: page + 1 }
+        const uri =
+          Object.keys(newSearch).length === 0 ? location.pathname : `${location.pathname}?${stringify(newSearch)}`
+        history.push(uri)
+      },
       setSelectedIds: ({ records, setIsSelectAll, setSelectedIds }) => selectedIds => {
         setIsSelectAll(selectedIds.length === records.length)
         setSelectedIds(selectedIds)
