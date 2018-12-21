@@ -1,23 +1,48 @@
 import ChatStep from './chat-step'
 import CircularProgress from 'shared/circular-progress'
-import omit from 'lodash.omit'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import Select from 'shared/select'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
+import withScriptedChatsForm from './with-scripted-chats-form'
 import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
-import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { TextField } from '@material-ui/core'
+import { branch, compose, createSink, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import { isEqual } from 'lodash'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
+const Sink = createSink(({ newChatSteps, destinationChatStepsRefs, setDestinationChatStepRefs }) => {
+  const newDestinationChatStepRefs = newChatSteps.map(e => e.__ref)
+  if (isEqual(newDestinationChatStepRefs, destinationChatStepsRefs)) return
+  setDestinationChatStepRefs(newDestinationChatStepRefs)
+})
+
+const DestinationChatSteps = compose(withScriptedChatsForm.consumer)(
+  ({ destinationChatStepsRefs, newChatSteps, persistedChatSteps, setDestinationChatStepRefs }) => (
+    <React.Fragment>
+      <Sink
+        destinationChatStepsRefs={destinationChatStepsRefs}
+        newChatSteps={newChatSteps}
+        setDestinationChatStepRefs={setDestinationChatStepRefs}
+      />
+      {persistedChatSteps.slice(1).map((persistedChatStep, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={index} ref={persistedChatStep.__ref} />
+      ))}
+      {newChatSteps.map((newChatStep, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={index} ref={newChatStep.__ref} />
+      ))}
+    </React.Fragment>
+  )
+)
+
 const ScriptedChatForm = ({
-  addChatStepAttribute,
-  deleteChatStepAttribute,
-  editChatStepAttribute,
+  destinationChatStepsRefs,
   errors,
   form,
   formRef,
@@ -25,59 +50,60 @@ const ScriptedChatForm = ({
   isFormPristine,
   onFormSubmit,
   selectPersona,
+  setDestinationChatStepRefs,
+  setChatStepForm,
   setFieldValue,
-  setForm,
-  showChildSteps,
   title,
 }) => (
-  <Section title={title}>
-    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
-      />
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
-        label="Title"
-        margin="normal"
-        name="title"
-        onChange={setFieldValue}
-        required
-        value={form.title}
-      />
-      <Select
-        autocomplete={apiPersonasAutocomplete}
-        defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
-        disabled={isFormLoading}
-        label="Persona"
-        onChange={selectPersona}
-        placeholder="Choose a persona..."
-        required
-      />
-      <ChatStep
-        addAction={addChatStepAttribute}
-        chatStepType="chatStepAttributes"
-        deleteAction={deleteChatStepAttribute}
-        form={form}
-        index={0}
-        onChange={editChatStepAttribute}
-        setForm={setForm}
-        showChildSteps={showChildSteps}
-      />
-    </Form>
-  </Section>
+  <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+    <Section title={title}>
+      <Grid item sm={6}>
+        <TextField
+          disabled={isFormLoading}
+          fullWidth
+          label="Name"
+          margin="normal"
+          name="name"
+          onChange={setFieldValue}
+          required
+          value={form.name}
+        />
+        <FormHelperText>{'The name is useful for you to reference this flow in a trigger.'}</FormHelperText>
+        <Select
+          autocomplete={apiPersonasAutocomplete}
+          defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+          disabled={isFormLoading}
+          label="Persona"
+          onChange={selectPersona}
+          placeholder="Choose a persona..."
+          required
+        />
+        <FormHelperText>{'The persona that will appear for this chat.'}</FormHelperText>
+        <TextField
+          disabled={isFormLoading}
+          fullWidth
+          label="Title"
+          margin="normal"
+          name="title"
+          onChange={setFieldValue}
+          required
+          value={form.title}
+        />
+        <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
+      </Grid>
+    </Section>
+    {form.chatStepAttributes && <ChatStep chatStep={form.chatStepAttributes} index={0} onChange={setChatStepForm} />}
+    <DestinationChatSteps
+      destinationChatStepsRefs={destinationChatStepsRefs}
+      setDestinationChatStepRefs={setDestinationChatStepRefs}
+    />
+  </Form>
 )
 
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'scriptedChats', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
+  withState('destinationChatStepsRefs', 'setDestinationChatStepRefs', []),
   withState('errors', 'setErrors', null),
   withHandlers({
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
@@ -97,6 +123,12 @@ export default compose(
       ],
     },
   }),
+  withScriptedChatsForm.provider,
+  withHandlers({
+    setChatStepForm: ({ form, setForm }) => chatStep => {
+      setForm({ ...form, chatStepAttributes: chatStep })
+    },
+  }),
   withRouter,
   withHandlers({
     selectPersona: ({ form, setForm }) => ({ value }) => {
@@ -112,65 +144,6 @@ export default compose(
       if (location.pathname !== routes.scriptedChatEdit(result.id)) {
         history.push(routes.scriptedChatEdit(result.id))
       }
-    },
-  }),
-  withHandlers({
-    editChatStepAttribute: ({ setForm, form }) => (
-      chatStepAttributeIndex,
-      newValue,
-      chatStepAttribute,
-      childForm,
-      chatStepType
-    ) => {
-      const newChatStepAttributes = [...childForm[chatStepType][chatStepAttribute]]
-      newChatStepAttributes[chatStepAttributeIndex][newValue.name] = newValue.value
-      setForm(chatStepType === 'chatStepAttributes' ? { ...form, ...childForm } : { ...form })
-    },
-    addChatStepAttribute: ({ setForm, form }) => (newValue, chatStepAttribute, childForm, chatStepType) => {
-      childForm[chatStepType][chatStepAttribute] = [...childForm[chatStepType][chatStepAttribute], newValue]
-      setForm(chatStepType === 'chatStepAttributes' ? { ...form, ...childForm } : { ...form })
-    },
-    deleteChatStepAttribute: ({ setForm, form }) => (
-      chatStepAttributeIndex,
-      chatStepAttribute,
-      childForm,
-      chatStepType
-    ) => {
-      // we need to destroy the record and remove its reference from the messages/options array in destinationChatStepAttributes
-      if (childForm[chatStepType][chatStepAttribute]) {
-        //remove unwanted fields in object we want to delete
-        let newObject
-        let filteredObject = childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex]
-        if (chatStepAttribute === 'chatMessagesAttributes') {
-          newObject = omit(filteredObject, ['delay', 'text'])
-        } else {
-          // filteredObject = childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex]
-          newObject = omit(filteredObject, ['text'])
-        }
-        //if the object we want to delete has an id, it means it's in the db, we need to destroy it in the backend
-        //if not, we just remove it from the form
-        if (childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex].id) {
-          childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex] = { ...newObject, _destroy: true }
-          //update the form to show the change
-          if (childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex].destinationChatStepAttributes) {
-            Object.assign(
-              childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex].destinationChatStepAttributes[
-                chatStepAttribute
-              ].splice(chatStepAttributeIndex, 1),
-              childForm[chatStepType][chatStepAttribute][chatStepAttributeIndex].destinationChatStepAttributes[
-                chatStepAttribute
-              ]
-            )
-          }
-        } else {
-          //update the form to show the change
-          Object.assign(
-            childForm[chatStepType].chatOptionsAttributes.splice(chatStepAttributeIndex, 1),
-            childForm[chatStepType].chatOptionsAttributes[chatStepAttributeIndex]
-          )
-        }
-      }
-      setForm(chatStepType === 'chatStepAttributes' ? { ...form, ...childForm } : { ...form })
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),

@@ -74,11 +74,7 @@ const Spotlight = ({
             ))}
         </FormSection>
       </div>
-      <AddItemButton
-        disabled={isCropping || isFormLoading}
-        message="Add Another Product Pick"
-        onClick={addProductPick}
-      />{' '}
+      <AddItemButton disabled={isCropping || isFormLoading} message="Add Product Pick" onClick={addProductPick} />{' '}
     </FormSection>
   </Section>
 )
