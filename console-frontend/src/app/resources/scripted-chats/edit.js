@@ -1,8 +1,32 @@
 import CurationForm from './form'
+import React from 'react'
 import routes from 'app/routes'
 import { apiScriptedChatShow, apiScriptedChatUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
+
+const newEmptyChatMessage = () => ({
+  delay: '',
+  text: '',
+})
+
+const treatChatSteps = (chatStep, ids) => ({
+  id: chatStep.id,
+  chatMessagesAttributes: chatStep.chatMessagesAttributes || [newEmptyChatMessage()],
+  chatOptionsAttributes: chatStep.chatOptionsAttributes.map(chatOptionAttributes =>
+    chatOptionAttributes.destinationChatStepAttributes
+      ? {
+          ...chatOptionAttributes,
+          destinationChatStepAttributes: treatChatSteps(chatOptionAttributes.destinationChatStepAttributes, {
+            ...ids,
+            [chatStep.id]: true,
+          }),
+        }
+      : chatOptionAttributes
+  ),
+  __index: Object.keys(ids).length,
+  __ref: React.createRef(),
+})
 
 export default compose(
   withProps({
@@ -21,22 +45,19 @@ export default compose(
     loadFormObject: ({ match }) => async () => {
       const id = match.params.scriptedChatId
       const response = await apiScriptedChatShow(id)
-      return {
+      let result = {
         name: response.name || '',
         title: response.title || '',
         personaId: response.persona.id || '',
         __persona: response.persona,
-        chatStepAttributes: {
-          id: response.chatStepAttributes.id,
-          chatMessagesAttributes: response.chatStepAttributes.chatMessagesAttributes || [
-            {
-              delay: '',
-              text: '',
-            },
-          ],
-          chatOptionsAttributes: response.chatStepAttributes.chatOptionsAttributes,
-        },
       }
+      if (response.chatStepAttributes) {
+        result = {
+          ...result,
+          chatStepAttributes: treatChatSteps(response.chatStepAttributes, {}),
+        }
+      }
+      return result
     },
   }),
   withProps({

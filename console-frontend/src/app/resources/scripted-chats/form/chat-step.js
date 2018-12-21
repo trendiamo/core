@@ -1,171 +1,105 @@
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
-import Cancel from './shared/cancel'
-import ChatStepMessage from './chat-step-message'
-import ChatStepOption from './chat-step-option'
+import ChatMessage from './chat-message'
+import ChatOption from './chat-option'
 import React from 'react'
-import styled from 'styled-components'
-import { Button, Card, CardContent, Divider, IconButton, List, ListItem, Typography } from '@material-ui/core'
-import { compose, withHandlers, withProps } from 'recompose'
-
-const StyledList = styled(List)`
-  margin-top: 1rem;
-`
-
-const StyledTypography = styled(Typography)`
-  display: inline-block;
-  margin-left: 20px;
-`
-
-const StyledAddCircleOutline = styled(AddCircleOutline)`
-  color: #6c6c6c;
-`
-
-const AddButton = ({ disabled, addAction, objectName }) => (
-  <Button disabled={disabled} onClick={addAction} size="small">
-    <StyledAddCircleOutline />
-    <StyledTypography>{`Add ${objectName}`}</StyledTypography>
-  </Button>
-)
+import Section from 'shared/section'
+import { AddItemButton, FormSection } from 'shared/form-elements'
+import { compose, withHandlers } from 'recompose'
 
 const ChatStep = ({
-  addChatStepMessage,
+  addChatMessage,
   deleteAction,
   index,
   isFormLoading,
-  addChatStepOption,
-  form,
-  editChatMessageAttribute,
-  editChatOptionAttribute,
-  deleteChatMessage,
-  deleteChatStepOption,
+  addChatOption,
+  chatStep,
+  setChatMessageForm,
+  setChatOptionForm,
   onChange,
   chatStepType,
-  setForm,
   addAction,
-  showChildSteps,
 }) => (
-  <Card>
-    <CardContent>
-      <StyledList>
-        {' '}
-        <Divider component="li" />
-        <li>
-          <Typography variant="h6">{`Chat Step #${index + 1}`}</Typography>
-        </li>
-        <ListItem>
-          <Typography variant="h6">{'Messages'}</Typography>
-        </ListItem>
-        {form[chatStepType] &&
-          form[chatStepType].chatMessagesAttributes.map(
-            (chatMessage, chatMessageIndex) =>
-              //if there's a _destroy key in chatMessage object we don't want to show it, it will be destroyed on save
-              !chatMessage._destroy && (
-                // eslint-disable-next-line react/no-array-index-key
-                <div key={chatMessageIndex}>
-                  <ChatStepMessage
-                    chatStepType={chatStepType}
-                    form={form}
-                    index={chatMessageIndex}
-                    isFormLoading={isFormLoading}
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={`chat-step-${index}-message-${chatMessageIndex}}`}
-                    onChange={editChatMessageAttribute}
-                  />
-                  {form[chatStepType].chatMessagesAttributes.length > 1 && (
-                    <ListItem>
-                      <IconButton>
-                        <Cancel disabled={isFormLoading} index={chatMessageIndex} onClick={deleteChatMessage} />
-                      </IconButton>
-                    </ListItem>
-                  )}
-                </div>
-              )
-          )}
-        <ListItem>
-          <AddButton addAction={addChatStepMessage} disabled={isFormLoading} index={index} objectName="Chat Message" />{' '}
-        </ListItem>
-        {form[chatStepType] && form[chatStepType].chatOptionsAttributes && (
-          <React.Fragment>
-            <ListItem>
-              <Typography variant="h6">{'Options'}</Typography>
-            </ListItem>
-            {form[chatStepType].chatOptionsAttributes.map(
-              (chatOption, chatOptionIndex) =>
-                //if there's a _destroy key in chaOption object we don't want to show it, it will be destroyed on save
-                !chatOption._destroy && (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <div key={chatOptionIndex}>
-                    <ChatStepOption
-                      addAction={addAction}
-                      addChatStepMessage={addChatStepMessage}
-                      chatStepIndex={index}
-                      chatStepType={chatStepType}
-                      deleteAction={deleteAction}
-                      editChatStepAttribute={onChange}
-                      form={form}
-                      index={chatOptionIndex}
-                      isFormLoading={isFormLoading}
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={`chat-step-${index}-option-${chatOptionIndex}}`}
-                      onChange={editChatOptionAttribute}
-                      setForm={setForm}
-                      showChildSteps={showChildSteps}
-                    />
-                    {form[chatStepType].chatOptionsAttributes.length > 1 && (
-                      <ListItem>
-                        <IconButton>
-                          <Cancel disabled={isFormLoading} index={chatOptionIndex} onClick={deleteChatStepOption} />
-                        </IconButton>
-                      </ListItem>
-                    )}
-                  </div>
-                )
-            )}
-            <ListItem>
-              <AddButton
-                addAction={addChatStepOption}
-                disabled={isFormLoading}
-                index={index}
-                objectName="Chat Option"
-              />{' '}
-            </ListItem>
-          </React.Fragment>
-        )}
-      </StyledList>
-    </CardContent>
-  </Card>
+  <Section>
+    <FormSection foldable hideTop title={`Step #${index + 1}`}>
+      <div style={{ marginTop: '-1px' }}>
+        <FormSection foldable title="Messages">
+          {chatStep.chatMessagesAttributes.map((chatMessage, chatMessageIndex) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <React.Fragment key={chatMessageIndex}>
+              <ChatMessage
+                allowDelete={chatStep.chatMessagesAttributes.length > 1}
+                chatMessage={chatMessage}
+                chatStepType={chatStepType}
+                index={chatMessageIndex}
+                isFormLoading={isFormLoading}
+                onChange={setChatMessageForm}
+              />
+            </React.Fragment>
+          ))}
+        </FormSection>
+      </div>
+      <AddItemButton disabled={isFormLoading} message="Add Message" onClick={addChatMessage} />
+      {chatStep.chatOptionsAttributes && (
+        <div style={{ marginTop: '24px' }}>
+          <FormSection foldable title="Options">
+            {chatStep.chatOptionsAttributes.map((chatOption, chatOptionIndex) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <React.Fragment key={chatOptionIndex}>
+                <ChatOption
+                  addAction={addAction}
+                  addChatMessage={addChatMessage}
+                  chatOption={chatOption}
+                  chatStepType={chatStepType}
+                  deleteAction={deleteAction}
+                  editChatStepAttribute={onChange}
+                  index={chatOptionIndex}
+                  isFormLoading={isFormLoading}
+                  onChange={setChatOptionForm}
+                />
+              </React.Fragment>
+            ))}
+          </FormSection>
+          <AddItemButton disabled={isFormLoading} message="Add Option" onClick={addChatOption} />
+        </div>
+      )}
+    </FormSection>
+  </Section>
 )
 
 export default compose(
-  withProps(({ chatStepType }) => ({
-    chatStepType,
-  })),
   withHandlers({
-    editChatMessageAttribute: ({ chatStepType, onChange, form }) => (chatMessageIndex, newValue) => {
-      onChange(chatMessageIndex, newValue, 'chatMessagesAttributes', form, chatStepType)
+    setChatMessageForm: ({ onChange, chatStep }) => (chatMessage, chatMessageIndex) => {
+      let newChatMessagesAttributes = [...chatStep.chatMessagesAttributes]
+      newChatMessagesAttributes[chatMessageIndex] = chatMessage
+      onChange({ ...chatStep, chatMessagesAttributes: newChatMessagesAttributes })
     },
-    editChatOptionAttribute: ({ chatStepType, onChange, form }) => (chatOptionIndex, newValue) => {
-      onChange(chatOptionIndex, newValue, 'chatOptionsAttributes', form, chatStepType)
+    addChatMessage: ({ onChange, chatStep }) => () => {
+      onChange({
+        ...chatStep,
+        chatMessagesAttributes: [
+          ...chatStep.chatMessagesAttributes,
+          {
+            delay: '',
+            text: '',
+          },
+        ],
+      })
     },
-    addChatStepMessage: ({ addAction, chatStepType, form }) => () => {
-      const newMessage = {
-        delay: '',
-        text: '',
-      }
-      addAction(newMessage, 'chatMessagesAttributes', form, chatStepType)
+    addChatOption: ({ onChange, chatStep }) => () => {
+      onChange({
+        ...chatStep,
+        chatOptionsAttributes: [
+          ...chatStep.chatOptionsAttributes,
+          {
+            text: '',
+            destinationChatStepId: '',
+          },
+        ],
+      })
     },
-    addChatStepOption: ({ addAction, chatStepType, form }) => () => {
-      const newOption = {
-        text: '',
-        destinationChatStepId: '',
-      }
-      addAction(newOption, 'chatOptionsAttributes', form, chatStepType)
-    },
-    deleteChatMessage: ({ deleteAction, chatStepType, form }) => chatMessageIndex => {
-      deleteAction(chatMessageIndex, 'chatMessagesAttributes', form, chatStepType)
-    },
-    deleteChatStepOption: ({ deleteAction, chatStepType, form }) => chatOptionIndex => {
-      deleteAction(chatOptionIndex, 'chatOptionsAttributes', form, chatStepType)
+    setChatOptionForm: ({ onChange, chatStep }) => (chatOption, chatOptionIndex) => {
+      let newChatOptionsAttributes = [...chatStep.chatOptionsAttributes]
+      newChatOptionsAttributes[chatOptionIndex] = chatOption
+      onChange({ ...chatStep, chatOptionsAttributes: newChatOptionsAttributes })
     },
   })
 )(ChatStep)
