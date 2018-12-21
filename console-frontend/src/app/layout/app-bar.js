@@ -5,7 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
-import { IconButton, AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
+import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withStoreConsumer } from 'ext/recompose/with-store'
 
@@ -24,9 +24,11 @@ const StyledHelp = styled(IconButton)`
 `
 
 const OnboardingButtonTemplate = ({ handleClick }) => (
-  <StyledHelp onClick={handleClick}>
-    <HelpOutline />
-  </StyledHelp>
+  <Hidden smDown>
+    <StyledHelp onClick={handleClick}>
+      <HelpOutline />
+    </StyledHelp>
+  </Hidden>
 )
 
 const OnboardingButton = compose(

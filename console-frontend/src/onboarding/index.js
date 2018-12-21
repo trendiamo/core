@@ -2,7 +2,7 @@ import Joyride from 'react-joyride'
 import React from 'react'
 import SkipButton from './elements/skip-button'
 import { branch, compose, renderNothing } from 'recompose'
-import { Portal } from '@material-ui/core'
+import { Hidden, Portal } from '@material-ui/core'
 import { stages, stagesArray } from './stages'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 
@@ -40,7 +40,7 @@ const getOnboardingConfig = onboarding => {
 const DummyContainer = ({ content, ...props }) => <div>{content && React.cloneElement(content, props)}</div>
 
 const Onboarding = ({ onboarding }) => (
-  <>
+  <Hidden smDown>
     <Joyride
       continuous
       disableOverlayClose
@@ -54,7 +54,7 @@ const Onboarding = ({ onboarding }) => (
     <Portal>
       <SkipButton />
     </Portal>
-  </>
+  </Hidden>
 )
 
 export default compose(
