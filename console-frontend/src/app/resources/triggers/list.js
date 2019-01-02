@@ -7,7 +7,7 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import { apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
+import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
 import { arrayMove, SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import {
@@ -179,18 +179,19 @@ const SortableTriggerRow = SortableElement(
 const SortableTriggerRows = SortableContainer(
   ({ triggers, handleSelectAll, selectedIds, setSelectedIds, testerUrl }) => (
     <TableBody>
-      {triggers.map((trigger, index) => (
-        <SortableTriggerRow
-          handleSelectAll={handleSelectAll}
-          highlight={triggerMatches(trigger, testerUrl)}
-          index={index}
-          key={trigger.id}
-          selectedIds={selectedIds}
-          setSelectedIds={setSelectedIds}
-          testerUrl={testerUrl}
-          trigger={trigger}
-        />
-      ))}
+      {triggers &&
+        triggers.map((trigger, index) => (
+          <SortableTriggerRow
+            handleSelectAll={handleSelectAll}
+            highlight={triggerMatches(trigger, testerUrl)}
+            index={index}
+            key={trigger.id}
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
+            testerUrl={testerUrl}
+            trigger={trigger}
+          />
+        ))}
     </TableBody>
   )
 )
@@ -291,13 +292,25 @@ export default compose(
   withState('isSelectAll', 'setIsSelectAll', false),
   withSnackbar,
   withHandlers({
-    deleteTriggers: ({ setIsSelectAll, selectedIds, setIsLoading, setSelectedIds, setTriggers }) => async () => {
-      await apiTriggerDestroy({ ids: selectedIds })
-      const triggersResponse = await apiTriggerList()
-      setTriggers(triggersResponse)
+    deleteTriggers: ({
+      enqueueSnackbar,
+      setIsSelectAll,
+      selectedIds,
+      setIsLoading,
+      setSelectedIds,
+      setTriggers,
+    }) => async () => {
+      await apiRequest(apiTriggerDestroy, [{ ids: selectedIds }], {
+        enqueueSnackbar,
+      })
+      const triggersResponse = await apiRequest(apiTriggerList, [], {
+        enqueueSnackbar,
+      })
       setIsLoading(false)
       setSelectedIds([])
       setIsSelectAll(false)
+      if (triggersResponse.error || triggersResponse.errors) return
+      setTriggers(triggersResponse)
     },
     handleSelectAll: ({ setSelectedIds, triggers, setIsSelectAll }) => event => {
       setSelectedIds(event.target.checked ? triggers.map(trigger => trigger.id) : [])
@@ -307,14 +320,20 @@ export default compose(
       const orderedTriggers = arrayMove(triggers, oldIndex, newIndex)
       const orderedIds = orderedTriggers.map(trigger => trigger.id)
       setTriggers(orderedTriggers)
-      await apiTriggerSort({ ids: orderedIds })
-      enqueueSnackbar('Sorted!', { variant: 'success' })
+      await apiRequest(apiTriggerSort, [{ ids: orderedIds }], {
+        enqueueSnackbar,
+        successMessage: 'Sorted!',
+        successVariant: 'success',
+      })
     },
   }),
   lifecycle({
     async componentDidMount() {
-      const { setIsLoading, setTriggers } = this.props
-      const triggersResponse = await apiTriggerList()
+      const { enqueueSnackbar, setIsLoading, setTriggers } = this.props
+      const triggersResponse = await apiRequest(apiTriggerList, [], {
+        enqueueSnackbar,
+      })
+      if (triggersResponse.error || triggersResponse.errors) return
       setTriggers(triggersResponse)
       setIsLoading(false)
     },

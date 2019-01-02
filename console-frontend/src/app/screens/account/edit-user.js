@@ -6,11 +6,12 @@ import PictureUploader, { ProgressBar, uploadImage } from 'shared/picture-upload
 import React from 'react'
 import routes from 'app/routes'
 import withForm from 'ext/recompose/with-form'
-import { apiMe, apiMeUpdate } from 'utils'
+import { apiMe, apiMeUpdate, apiRequest } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Button, TextField } from '@material-ui/core'
 import { extractErrors } from 'utils/shared'
 import { Prompt } from 'react-router'
+import { withSnackbar } from 'notistack'
 
 const EditUser = ({
   errors,
@@ -78,8 +79,9 @@ export default compose(
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
   withState('progress', 'setProgress', null),
+  withSnackbar,
   withHandlers({
-    saveFormObject: ({ setErrors, setProgress, profilePic }) => async form => {
+    saveFormObject: ({ enqueueSnackbar, setErrors, setProgress, profilePic }) => async form => {
       // upload the image
       const profilePicUrl = await uploadImage({
         blob: profilePic,
@@ -89,7 +91,11 @@ export default compose(
       })
       // update user data
       const data = { ...form, profilePicUrl }
-      const response = await apiMeUpdate({ user: data })
+      const response = await apiRequest(apiMeUpdate, [{ user: data }], {
+        enqueueSnackbar,
+        successMessage: 'Successfully Updated Personal Info',
+        successVariant: 'success',
+      })
       const errors = extractErrors(response)
       if (errors) {
         setErrors(errors)
@@ -100,8 +106,10 @@ export default compose(
     },
   }),
   withHandlers({
-    loadFormObject: () => async () => {
-      const user = await apiMe()
+    loadFormObject: ({ enqueueSnackbar }) => async () => {
+      const user = await apiRequest(apiMe, [], {
+        enqueueSnackbar,
+      })
       const userObject = {
         email: user.email || '',
         firstName: user.firstName || '',

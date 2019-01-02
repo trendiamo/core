@@ -4,11 +4,12 @@ import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
 import routes from 'app/routes'
-import { apiPasswordReset } from 'utils'
+import { apiPasswordReset, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
 import { extractErrors } from 'utils/shared'
+import { withSnackbar } from 'notistack'
 
 const AuthMessage = () => (
   <React.Fragment>
@@ -70,19 +71,33 @@ export default compose(
     fieldTwo: '',
   }),
   withState('errors', 'setErrors', null),
+  withSnackbar,
   withHandlers({
-    passwordResetSubmit: ({ passwordForm, setErrors }) => async event => {
+    passwordResetSubmit: ({ enqueueSnackbar, passwordForm, setErrors }) => async event => {
       event.preventDefault()
       const parsedUrl = queryString.parse(window.location.search)
       if (passwordForm.fieldOne === passwordForm.fieldTwo) {
-        const response = await apiPasswordReset({
-          user: {
-            password: passwordForm.fieldTwo,
-            reset_password_token: parsedUrl.reset_password_token,
-          },
-        })
+        const response = await apiRequest(
+          apiPasswordReset,
+          [
+            {
+              user: {
+                password: passwordForm.fieldTwo,
+                reset_password_token: parsedUrl.reset_password_token,
+              },
+            },
+          ],
+          {
+            enqueueSnackbar,
+          }
+        )
         const errors = extractErrors(response)
-        if (errors) setErrors(errors)
+        if (!response.errors && !response.error)
+          if (errors) {
+            setErrors(errors)
+          } else {
+            auth.setUser(response.user)
+          }
         if (auth.isLoggedIn()) {
           window.location.href = routes.root()
         }

@@ -6,7 +6,7 @@ import Notification from 'shared/notification'
 import React from 'react'
 import styled from 'styled-components'
 import withForm from 'ext/recompose/with-form'
-import { apiWebsiteShow, apiWebsiteUpdate } from 'utils'
+import { apiRequest, apiWebsiteShow, apiWebsiteUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import {
   Button,
@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core'
 import { extractErrors } from 'utils/shared'
 import { Prompt } from 'react-router'
+import { withSnackbar } from 'notistack'
 
 const StyledTypography = styled(Typography)`
   margin-left: 10px;
@@ -131,16 +132,23 @@ export default compose(
   withProps(() => ({
     websiteId: auth.getUser().account.websiteIds[0],
   })),
+  withSnackbar,
   withHandlers({
-    loadFormObject: ({ websiteId }) => async () => {
-      const json = await apiWebsiteShow(websiteId)
+    loadFormObject: ({ enqueueSnackbar, websiteId }) => async () => {
+      const json = await apiRequest(apiWebsiteShow, [websiteId], {
+        enqueueSnackbar,
+      })
       return {
         hostnames: json.hostnames || [''],
         name: json.name || '',
       }
     },
-    saveFormObject: ({ websiteId, setErrors }) => async form => {
-      const response = await apiWebsiteUpdate(websiteId, { website: form })
+    saveFormObject: ({ enqueueSnackbar, websiteId, setErrors }) => async form => {
+      const response = await apiRequest(apiWebsiteUpdate, [websiteId, { website: form }], {
+        enqueueSnackbar,
+        successMessage: 'Successfully Updated Account Info',
+        successVariant: 'success',
+      })
       const errors = extractErrors(response)
       if (errors) setErrors(errors)
       return response
