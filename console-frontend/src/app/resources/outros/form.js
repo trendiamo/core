@@ -10,15 +10,26 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import { FormHelperText, Grid, TextField, withWidth } from '@material-ui/core'
 import { Outro } from 'plugin-base'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const PluginPreview = styled(({ className, persona }) => (
-  <PluginPreviewFrame className={className}>
-    <Outro persona={persona} />
-  </PluginPreviewFrame>
+const PreviewContainer = styled.div`
+  ${({ width }) =>
+    width === 'xs' || width === 'sm'
+      ? ''
+      : `position: sticky;
+  top: 50%;
+  margin-bottom: 45px;`}
+`
+
+const PluginPreviewTemplate = styled(({ className, persona, width }) => (
+  <PreviewContainer width={width}>
+    <PluginPreviewFrame className={className}>
+      <Outro persona={persona} />
+    </PluginPreviewFrame>
+  </PreviewContainer>
 ))`
   border: 0;
   overflow: hidden;
@@ -26,7 +37,13 @@ const PluginPreview = styled(({ className, persona }) => (
   width: 320px;
   height: 500px;
   box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+  position: absolute;
+  right: 50%;
+  transform: ${({ width }) => (width === 'xs' || width === 'sm' ? 'translate(50%)' : 'translate(50%, -50%)')};
+  margin-bottom: 30px;
 `
+
+const PluginPreview = withWidth()(PluginPreviewTemplate)
 
 const OutroForm = ({
   formRef,
@@ -40,9 +57,9 @@ const OutroForm = ({
   previewOutro,
   title,
 }) => (
-  <Section title={title}>
-    <Grid container spacing={24}>
-      <Grid item sm={6}>
+  <Grid container spacing={24}>
+    <Grid item md={6} xs={12}>
+      <Section title={title}>
         <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
           <TextField
             autoFocus
@@ -67,12 +84,12 @@ const OutroForm = ({
           />
           <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
         </Form>
-      </Grid>
-      <Grid item sm={6} style={{ display: 'flex', justifyContent: 'center' }}>
-        <PluginPreview persona={previewOutro.persona} />
-      </Grid>
+      </Section>
     </Grid>
-  </Section>
+    <Grid item md={6} xs={12}>
+      <PluginPreview persona={previewOutro.persona} />
+    </Grid>
+  </Grid>
 )
 
 const emptyPreviewOutro = {
