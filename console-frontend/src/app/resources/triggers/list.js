@@ -127,6 +127,7 @@ const TriggerRow = compose(
     <TableCell>
       <Checkbox
         checked={selectedIds.includes(trigger.id)}
+        color="primary"
         onChange={handleSelect}
         style={{ color: highlight.enabled ? '#fff' : '' }}
       />
