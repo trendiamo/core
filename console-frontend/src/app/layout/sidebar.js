@@ -46,5 +46,5 @@ export default compose(
       }, 2000)
     },
   }),
-  withWidth({ resizeInterval: Infinity }) // used to initialize the visibility on first render
+  withWidth({ resizeInterval: Infinity, noSSR: true }) // used to initialize the visibility on first render
 )(Sidebar)
