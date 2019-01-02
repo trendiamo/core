@@ -44,8 +44,8 @@ const resourceGroups = {
     showTitle: false,
     resources: [resources.triggers],
   },
-  flows: {
-    name: 'Flows',
+  modules: {
+    name: 'Modules',
     showTitle: true,
     resources: [resources.showcases, resources.navigations, resources.scriptedChats, resources.outros],
   },

@@ -76,7 +76,7 @@ const Actions = () => (
 )
 
 const columns = [
-  { name: 'flow', padding: 'none', label: 'flow' },
+  { name: 'module', padding: 'none', label: 'module' },
   { name: 'urlMatchers', padding: 'none', label: 'Url Matchers' },
 ]
 
@@ -147,7 +147,7 @@ const TriggerRow = compose(
         to={routes[`${camelize(trigger.flowType, false)}Edit`](trigger.flowId)}
         variant="outlined"
       >
-        {'Edit flow'}
+        {'Edit module'}
       </Button>
     </TableCell>
     <TableCell width="50%">

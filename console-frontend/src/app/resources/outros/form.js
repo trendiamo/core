@@ -72,7 +72,7 @@ const OutroForm = ({
             required
             value={form.name}
           />
-          <FormHelperText>{'The name is useful for you to reference this flow in a trigger.'}</FormHelperText>
+          <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
           <Select
             autocomplete={apiPersonasAutocomplete}
             defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}

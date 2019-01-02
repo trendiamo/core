@@ -1,10 +1,5 @@
 import auth from 'auth'
 import {
-  apiShowcaseCreate,
-  apiShowcaseDestroy,
-  apiShowcaseList,
-  apiShowcaseShow,
-  apiShowcaseUpdate,
   apiFlowsAutocomplete,
   apiFlowsList,
   apiGetSignedUrlFactory,
@@ -32,6 +27,11 @@ import {
   apiScriptedChatList,
   apiScriptedChatShow,
   apiScriptedChatUpdate,
+  apiShowcaseCreate,
+  apiShowcaseDestroy,
+  apiShowcaseList,
+  apiShowcaseShow,
+  apiShowcaseUpdate,
   apiSignOut,
   apiTriggerCreate,
   apiTriggerDestroy,

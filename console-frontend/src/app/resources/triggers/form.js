@@ -51,9 +51,9 @@ const TriggerForm = ({
           autocomplete={apiFlowsAutocomplete}
           defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}
           disabled={isFormLoading}
-          label="Flow"
+          label="Module"
           onChange={selectFlow}
-          placeholder="Choose a flow..."
+          placeholder="Choose a module..."
           required
         />
         <FormHelperText>{'Choose between Showcases, Navigations, etc.'}</FormHelperText>

@@ -1,6 +1,6 @@
-import ShowcaseForm from './form'
 import routes from 'app/routes'
-import { apiShowcaseCreate, apiRequest } from 'utils'
+import ShowcaseForm from './form'
+import { apiRequest, apiShowcaseCreate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
 import { withSnackbar } from 'notistack'

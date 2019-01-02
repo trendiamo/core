@@ -4,7 +4,7 @@ import Welcome from './welcome'
 import { action } from '@storybook/addon-actions'
 import { Basics, CoverFixedPositionLogic, PulsatingEffect } from './layout'
 import { Card, CardContent, CardImg, CardsContainer, CardsWrapper } from 'shared/card'
-import { Showcase, Navigation, Outro, ScriptedChat } from './flows'
+import { Showcase, Navigation, Outro, ScriptedChat } from './modules'
 import { h } from 'preact'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose } from 'icons'
 import { List, ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
@@ -26,7 +26,7 @@ storiesOf('Layout', module)
   .add('Cover fixed position logic', CoverFixedPositionLogic)
   .add('Pulsating Launcher', PulsatingEffect)
 
-storiesOf('Flows', module)
+storiesOf('Modules', module)
   .add('Showcase', Showcase)
   .add('Navigation', Navigation)
   .add('Scripted Chat', ScriptedChat)

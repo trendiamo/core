@@ -38,7 +38,7 @@ const DialogContent = () => (
     <Typography variant="h4">{"Congrats, it's done!"}</Typography>
     <Typography variant="h6">{"Your first persona is created. Let's keep going?"}</Typography>
     <ContentBody>
-      <Typography variant="body1">{'You can now use this persona in your flows.'}</Typography>
+      <Typography variant="body1">{'You can now use this persona in your modules.'}</Typography>
     </ContentBody>
   </ContentContainer>
 )
