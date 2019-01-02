@@ -1,26 +1,32 @@
 import CurationForm from './form'
 import routes from 'app/routes'
-import { apiCurationShow, apiCurationUpdate } from 'utils'
+import { apiCurationShow, apiCurationUpdate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
+import { withSnackbar } from 'notistack'
 
 export default compose(
   withProps({
     breadcrumbs: [{ text: 'Curations', route: routes.curationsList() }, { text: 'Edit Curation' }],
   }),
+  withSnackbar,
   withHandlers({
-    saveFormObject: ({ match }) => async (form, { setErrors }) => {
+    saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.curationId
-      const response = await apiCurationUpdate(id, { curation: form })
+      const response = await apiRequest(apiCurationUpdate, [id, { curation: form }], {
+        enqueueSnackbar,
+      })
       const errors = extractErrors(response)
       if (errors) setErrors(errors)
       return response
     },
   }),
   withHandlers({
-    loadFormObject: ({ match }) => async () => {
+    loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.curationId
-      const response = await apiCurationShow(id)
+      const response = await apiRequest(apiCurationShow, [id], {
+        enqueueSnackbar,
+      })
       return {
         name: response.name || '',
         personaId: response.persona.id || '',

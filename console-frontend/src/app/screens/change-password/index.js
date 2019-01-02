@@ -3,11 +3,12 @@ import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import { apiPasswordChange } from 'utils'
+import { apiPasswordChange, apiRequest } from 'utils'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
 import { extractErrors } from 'utils/shared'
 import { withRouter } from 'react-router'
+import { withSnackbar } from 'notistack'
 
 const Actions = ({ onFormSubmit }) => (
   <Button color="primary" onClick={onFormSubmit} type="submit" variant="contained">
@@ -56,15 +57,18 @@ export default compose(
   }),
   withState('errors', 'setErrors', null),
   withRouter,
+  withSnackbar,
   withHandlers({
-    onFormSubmit: ({ passwordForm, setErrors, history }) => async event => {
+    onFormSubmit: ({ enqueueSnackbar, passwordForm, setErrors, history }) => async event => {
       event.preventDefault()
       if (passwordForm.password !== passwordForm.passwordConfirmation) {
         setErrors({ message: "New passwords don't match", status: 'error' })
         return
       }
-      const json = await apiPasswordChange({
-        user: passwordForm,
+      const json = await apiRequest(apiPasswordChange, [{ user: passwordForm }], {
+        enqueueSnackbar,
+        successMessage: 'Changed Password',
+        successVariant: 'Info',
       })
       const errors = extractErrors(json)
       if (errors) {

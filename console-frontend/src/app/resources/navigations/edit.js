@@ -1,6 +1,6 @@
 import NavigationForm from './form'
 import routes from 'app/routes'
-import { apiNavigationShow, apiNavigationUpdate } from 'utils'
+import { apiNavigationShow, apiNavigationUpdate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
 
@@ -9,18 +9,22 @@ export default compose(
     breadcrumbs: [{ text: 'Navigations', route: routes.navigationsList() }, { text: 'Edit Navigation' }],
   }),
   withHandlers({
-    saveFormObject: ({ match }) => async (form, { setErrors }) => {
+    saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.navigationId
-      const response = await apiNavigationUpdate(id, { navigation: form })
+      const response = await apiRequest(apiNavigationUpdate, [id, { navigation: form }], {
+        enqueueSnackbar,
+      })
       const errors = extractErrors(response)
       if (errors) setErrors(errors)
       return response
     },
   }),
   withHandlers({
-    loadFormObject: ({ match }) => async () => {
+    loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.navigationId
-      const response = await apiNavigationShow(id)
+      const response = await apiRequest(apiNavigationShow, [id], {
+        enqueueSnackbar,
+      })
       return {
         personaId: response.persona.id || '',
         name: response.name || '',

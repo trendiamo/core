@@ -5,6 +5,7 @@ import React from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import withAppBarContent from './with-app-bar-content'
+import { apiRequest } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Checkbox, Table, TableBody, TablePagination } from '@material-ui/core'
 import { Link } from 'react-router-dom'
@@ -12,6 +13,7 @@ import { parse, stringify } from 'query-string'
 import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
+import { withSnackbar } from 'notistack'
 
 const CheckBoxIcon = styled(MuiCheckBoxIcon)`
   color: blue;
@@ -54,6 +56,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
         sort: JSON.stringify([orderBy, orderDirection]),
       },
     })),
+    withSnackbar,
     withHandlers({
       fetchRecords: ({
         setIsLoading,
@@ -62,9 +65,13 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
         setRecordsCount,
         setSelectedIds,
         query,
+        enqueueSnackbar,
       }) => async () => {
         setIsLoading(true)
-        const resourceResponse = await api.fetch(query)
+        const resourceResponse = await apiRequest(api.fetch, [query], {
+          enqueueSnackbar,
+        })
+        if (resourceResponse.error || resourceResponse.errors) return
         setSelectedIds([])
         setIsSelectAll(false)
         setRecords(resourceResponse.json)
@@ -90,8 +97,10 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
     branch(({ isLoading }) => isLoading, renderComponent(CircularProgress)),
     branch(({ recordsCount }) => recordsCount === 0, renderComponent(blankState)),
     withHandlers({
-      deleteRecords: ({ selectedIds, fetchRecords, setSelectedIds, setIsSelectAll }) => async () => {
-        await api.destroy({ ids: selectedIds })
+      deleteRecords: ({ enqueueSnackbar, selectedIds, fetchRecords, setSelectedIds, setIsSelectAll }) => async () => {
+        await apiRequest(api.destroy, [{ ids: selectedIds }], {
+          enqueueSnackbar,
+        })
         await fetchRecords()
         setSelectedIds([])
         setIsSelectAll(false)
@@ -157,19 +166,20 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
             orderDirection={orderDirection}
           />
           <TableBody>
-            {records.map((record, index) => (
-              <TableRow
-                handleSelectAll={handleSelectAll}
-                index={index}
-                key={record.id}
-                resource={record}
-                resourceEditPath={routes.edit(record.id)}
-                selectedIds={selectedIds}
-                setSelectedIds={setSelectedIds}
-              >
-                <ResourceRow record={record} />
-              </TableRow>
-            ))}
+            {records &&
+              records.map((record, index) => (
+                <TableRow
+                  handleSelectAll={handleSelectAll}
+                  index={index}
+                  key={record.id}
+                  resource={record}
+                  resourceEditPath={routes.edit(record.id)}
+                  selectedIds={selectedIds}
+                  setSelectedIds={setSelectedIds}
+                >
+                  <ResourceRow record={record} />
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
         <TablePagination

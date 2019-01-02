@@ -2,7 +2,7 @@ import AuthLayout from 'auth/layout'
 import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
-import { apiPasswordEmailLink } from 'utils'
+import { apiPasswordEmailLink, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Button, FormControl, Input, InputLabel, Typography } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
@@ -69,8 +69,11 @@ export default compose(
     },
     passwordChangeSubmit: ({ enqueueSnackbar, passwordForm }) => async event => {
       event.preventDefault()
-      const json = await apiPasswordEmailLink({ user: { email: passwordForm.email } })
-      enqueueSnackbar('Email sent!', { variant: 'info' })
+      const json = await apiRequest(apiPasswordEmailLink, [{ user: { email: passwordForm.email } }], {
+        enqueueSnackbar,
+        successMessage: 'Email sent!',
+        successVariant: 'info',
+      })
       return json
     },
     setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>

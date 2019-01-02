@@ -2,6 +2,7 @@ import AsyncSelect from 'react-select/lib/Async'
 import debounce from 'debounce-promise'
 import React from 'react'
 import styled from 'styled-components'
+import { apiRequest } from 'utils'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { FormControl, InputLabel } from '@material-ui/core'
 
@@ -113,7 +114,7 @@ const Select = compose(
         setIsMenuOpen(true)
         setIsFocussed(true)
         if (defaultOptions.length > 0) return
-        const rawOptions = await autocomplete('')
+        const rawOptions = await apiRequest(autocomplete, [''])
         const options = rawOptions.map(option => {
           return { value: option, label: option.name, name }
         })
@@ -122,7 +123,7 @@ const Select = compose(
       loadOptions: ({ name, setIsMenuOpen, debouncedAutocomplete }) => async searchQuery => {
         if (searchQuery.length <= 2) return setIsMenuOpen(false)
         setIsMenuOpen(true)
-        const rawOptions = await debouncedAutocomplete({ searchQuery })
+        const rawOptions = await apiRequest(debouncedAutocomplete, [{ searchQuery }])
         const options = rawOptions.map(option => {
           return { value: option, label: option.name, name }
         })

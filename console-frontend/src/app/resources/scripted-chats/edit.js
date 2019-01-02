@@ -1,9 +1,10 @@
-import CurationForm from './form'
 import React from 'react'
 import routes from 'app/routes'
-import { apiScriptedChatShow, apiScriptedChatUpdate } from 'utils'
+import ScriptedChatForm from './form'
+import { apiRequest, apiScriptedChatShow, apiScriptedChatUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
+import { withSnackbar } from 'notistack'
 
 const newEmptyChatMessage = () => ({
   delay: '',
@@ -32,19 +33,26 @@ export default compose(
   withProps({
     breadcrumbs: [{ text: 'Scripted Chats', route: routes.scriptedChatsList() }, { text: 'Edit Scripted Chat' }],
   }),
+  withSnackbar,
   withHandlers({
-    saveFormObject: ({ match }) => async (form, { setErrors }) => {
+    saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.scriptedChatId
-      const response = await apiScriptedChatUpdate(id, { scripted_chat: form })
+      const response = await apiRequest(apiScriptedChatUpdate, [id, { scriptedChat: form }], {
+        enqueueSnackbar,
+        successMessage: 'Successfully Updated Scripted Chat',
+        successVariant: 'success',
+      })
       const errors = extractErrors(response)
       if (errors) setErrors(errors)
       return response
     },
   }),
   withHandlers({
-    loadFormObject: ({ match }) => async () => {
+    loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.scriptedChatId
-      const response = await apiScriptedChatShow(id)
+      const response = await apiRequest(apiScriptedChatShow, [id], {
+        enqueueSnackbar,
+      })
       let result = {
         name: response.name || '',
         title: response.title || '',
@@ -63,4 +71,4 @@ export default compose(
   withProps({
     showChildSteps: true,
   })
-)(CurationForm)
+)(ScriptedChatForm)

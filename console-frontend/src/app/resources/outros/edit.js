@@ -1,26 +1,32 @@
 import OutroForm from './form'
 import routes from 'app/routes'
-import { apiOutroShow, apiOutroUpdate } from 'utils'
+import { apiOutroShow, apiOutroUpdate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
+import { withSnackbar } from 'notistack'
 
 export default compose(
   withProps({
     breadcrumbs: [{ text: 'Outros', route: routes.outrosList() }, { text: 'Edit Outro' }],
   }),
+  withSnackbar,
   withHandlers({
-    saveFormObject: ({ match }) => async (form, { setErrors }) => {
+    saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.outroId
-      const response = await apiOutroUpdate(id, { outro: form })
+      const response = await apiRequest(apiOutroUpdate, [id, { outro: form }], {
+        enqueueSnackbar,
+      })
       const errors = extractErrors(response)
       if (errors) setErrors(errors)
       return response
     },
   }),
   withHandlers({
-    loadFormObject: ({ match }) => async () => {
+    loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.outroId
-      const response = await apiOutroShow(id)
+      const response = await apiRequest(apiOutroShow, [id], {
+        enqueueSnackbar,
+      })
       return {
         personaId: response.persona.id || '',
         name: response.name || '',

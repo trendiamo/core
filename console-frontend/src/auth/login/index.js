@@ -4,11 +4,12 @@ import Link from 'shared/link'
 import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
-import { apiSignIn } from 'utils'
+import { apiRequest, apiSignIn } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
 import { extractErrors } from 'utils/shared'
+import { withSnackbar } from 'notistack'
 
 const AuthMessage = () => (
   <React.Fragment>
@@ -73,12 +74,23 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
 export default compose(
   withState('loginForm', 'setLoginForm', { email: '', password: '' }),
   withState('errors', 'setErrors', null),
+  withSnackbar,
   withHandlers({
-    loginSubmit: ({ loginForm, setErrors }) => async event => {
+    loginSubmit: ({ enqueueSnackbar, loginForm, setErrors }) => async event => {
       event.preventDefault()
-      const response = await apiSignIn({ user: { email: loginForm.email, password: loginForm.password } })
+      const response = await apiRequest(
+        apiSignIn,
+        [{ user: { email: loginForm.email, password: loginForm.password } }],
+        {
+          enqueueSnackbar,
+        }
+      )
       const errors = extractErrors(response)
-      if (errors) setErrors(errors)
+      if (errors) {
+        setErrors(errors)
+      } else {
+        response && auth.setUser(response.user)
+      }
       if (auth.isLoggedIn()) {
         window.location.href = routes.root()
       }

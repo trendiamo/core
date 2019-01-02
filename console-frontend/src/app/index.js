@@ -11,7 +11,7 @@ import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
 import theme from 'app/theme'
 import WelcomePage from 'app/screens/welcome'
-import { apiGetCsrfToken } from 'utils'
+import { apiGetCsrfToken, apiRequest } from 'utils'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset, MuiThemeProvider } from '@material-ui/core/styles'
@@ -24,6 +24,7 @@ import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { ScriptedChatCreate, ScriptedChatEdit, ScriptedChatsList } from './resources/scripted-chats'
 import { SnackbarProvider } from 'notistack'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
+import { withSnackbar } from 'notistack'
 import { withStoreProvider } from 'ext/recompose/with-store'
 import 'assets/css/fonts.css'
 
@@ -90,18 +91,37 @@ const Routes = () => (
   </Switch>
 )
 
+const AppBase = compose(
+  withState('loading', 'setLoading', true),
+  withSnackbar,
+  lifecycle({
+    componentDidMount() {
+      const { enqueueSnackbar, setLoading } = this.props
+      apiRequest(apiGetCsrfToken, [], {
+        enqueueSnackbar,
+      }).then(response => {
+        setLoading(false)
+        response && auth.setCsrfToken(response)
+      })
+    },
+  }),
+  branch(({ loading }) => loading, renderNothing)
+)(() => (
+  <>
+    <CssBaseline />
+    <Layout>
+      <Routes />
+    </Layout>
+  </>
+))
+
 /* eslint-disable react/jsx-max-depth */
 export const App = ({ history }) => (
   <Router history={history}>
     <JssProvider generateClassName={generateClassName} jss={jss}>
       <MuiThemeProvider theme={theme}>
         <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }} maxSnack={3}>
-          <>
-            <CssBaseline />
-            <Layout>
-              <Routes />
-            </Layout>
-          </>
+          <AppBase />
         </SnackbarProvider>
       </MuiThemeProvider>
     </JssProvider>
@@ -109,16 +129,4 @@ export const App = ({ history }) => (
 )
 /* eslint-enable react/jsx-max-depth */
 
-export default compose(
-  withStoreProvider,
-  withState('loading', 'setLoading', true),
-  lifecycle({
-    componentDidMount() {
-      const { setLoading } = this.props
-      apiGetCsrfToken().then(() => {
-        setLoading(false)
-      })
-    },
-  }),
-  branch(({ loading }) => loading, renderNothing)
-)(App)
+export default compose(withStoreProvider)(App)

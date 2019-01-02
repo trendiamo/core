@@ -19,8 +19,8 @@ const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
-const authFetch = async (url, options) => {
-  const result = await fetch(url, {
+const authFetch = async (url, options) =>
+  await fetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -28,71 +28,43 @@ const authFetch = async (url, options) => {
     }),
     ...options,
   })
-  if (result.status === 403 || result.status === 401) {
-    auth.clear()
-    throw new Error('Invalid Credentials')
-  }
-  return result
-}
 
-const apiDestroyRequest = async url => {
-  const res = await authFetch(url, {
+const apiDestroyRequest = async url =>
+  await authFetch(url, {
     method: 'delete',
   })
-  return res.json()
-}
 
-const apiDestroyMultipleRequest = async (url, body) => {
-  const res = await authFetch(url, {
+const apiDestroyMultipleRequest = async (url, body) =>
+  await authFetch(url, {
     body: JSON.stringify(filterBody(body)),
     method: 'delete',
   })
-  return res.json()
-}
 
-const apiCreateRequest = async (url, body) => {
-  const res = await authFetch(url, {
+const apiCreateRequest = async (url, body) =>
+  await authFetch(url, {
     body: JSON.stringify(filterBody(body)),
     method: 'post',
   })
-  return res.json()
-}
 
-const apiUpdateRequest = async (url, body) => {
-  const res = await authFetch(url, {
+const apiUpdateRequest = async (url, body) =>
+  await authFetch(url, {
     body: JSON.stringify(filterBody(body)),
     method: 'put',
   })
-  return res.json()
-}
 
-const apiGetRequest = async url => {
-  const res = await authFetch(url, {
+const apiGetRequest = async url =>
+  await authFetch(url, {
     method: 'get',
   })
-  return res.json()
-}
 
-const apiListRequest = async url => {
-  const res = await authFetch(url, {
+const apiListRequest = async url =>
+  await authFetch(url, {
     method: 'get',
   })
-  const json = await res.json()
-  const count = parseInt(
-    res.headers
-      .get('content-range')
-      .split('/')
-      .pop(),
-    10
-  )
-  return {
-    json,
-    count,
-  }
-}
 
 export const apiSignOut = async () => {
-  const json = await apiDestroyRequest(SIGNOUT_URL)
+  const result = await apiDestroyRequest(SIGNOUT_URL)
+  const json = await result.json()
   if (!json.errors && !json.error) return auth.clear()
   console.error('Error on Logout!')
 }

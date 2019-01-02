@@ -6,8 +6,8 @@ const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
 const PASSWORD_FORM_URL = `${BASE_API_URL}/users/password`
 const PASSWORD_RESET_URL = `${BASE_API_URL}/users/password`
 
-const apiGetRequest = async url => {
-  const res = await fetch(url, {
+const apiGetRequest = async url =>
+  await fetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
@@ -15,11 +15,9 @@ const apiGetRequest = async url => {
     }),
     method: 'get',
   })
-  return res.json()
-}
 
-const apiPostRequest = async (url, body) => {
-  const res = await fetch(url, {
+const apiPostRequest = async (url, body) =>
+  await fetch(url, {
     body: JSON.stringify(body),
     credentials: 'include',
     headers: new Headers({
@@ -28,11 +26,9 @@ const apiPostRequest = async (url, body) => {
     }),
     method: 'post',
   })
-  return res.json()
-}
 
-const apiPutRequest = async (url, body) => {
-  const res = await fetch(url, {
+const apiPutRequest = async (url, body) =>
+  await fetch(url, {
     body: JSON.stringify(body),
     credentials: 'include',
     headers: new Headers({
@@ -41,25 +37,11 @@ const apiPutRequest = async (url, body) => {
     }),
     method: 'put',
   })
-  return res.json()
-}
 
-export const apiPasswordReset = async body => {
-  const json = await apiPutRequest(PASSWORD_RESET_URL, body)
-  if (!json.errors && !json.error) auth.setUser(json.user)
-  return json
-}
+export const apiPasswordReset = body => apiPutRequest(PASSWORD_RESET_URL, body)
 
 export const apiPasswordEmailLink = body => apiPostRequest(PASSWORD_FORM_URL, body)
 
-export const apiSignIn = async body => {
-  const json = await apiPostRequest(SIGNIN_URL, body)
-  if (!json.errors && !json.error) auth.setUser(json.user)
-  return json
-}
+export const apiSignIn = body => apiPostRequest(SIGNIN_URL, body)
 
-export const apiGetCsrfToken = async () => {
-  const json = await apiGetRequest(CSRF_TOKEN_URL)
-  auth.setCsrfToken(json)
-  return json
-}
+export const apiGetCsrfToken = () => apiGetRequest(CSRF_TOKEN_URL)
