@@ -24,7 +24,7 @@ export default compose(
       mixpanel.track(
         'Clicked Product',
         {
-          flowType: 'curation',
+          flowType: 'showcase',
           personaName: spotlight.persona.name,
           personaRef: spotlight.persona.id,
           hostname: location.hostname,

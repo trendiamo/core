@@ -1,18 +1,18 @@
-import CurationForm from './form'
+import ShowcaseForm from './form'
 import routes from 'app/routes'
-import { apiCurationCreate, apiRequest } from 'utils'
+import { apiShowcaseCreate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { extractErrors } from 'utils/shared'
 import { withSnackbar } from 'notistack'
 
 export default compose(
   withProps({
-    breadcrumbs: [{ text: 'Curations', route: routes.curationsList() }, { text: 'Create Curation' }],
+    breadcrumbs: [{ text: 'Showcases', route: routes.showcasesList() }, { text: 'Create Showcase' }],
   }),
   withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar }) => async (form, { setErrors }) => {
-      const response = await apiRequest(apiCurationCreate, [{ curation: form }], {
+      const response = await apiRequest(apiShowcaseCreate, [{ showcase: form }], {
         enqueueSnackbar,
       })
       const errors = extractErrors(response)
@@ -45,4 +45,4 @@ export default compose(
       }
     },
   })
-)(CurationForm)
+)(ShowcaseForm)

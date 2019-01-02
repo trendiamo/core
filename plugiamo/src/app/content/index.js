@@ -27,7 +27,7 @@ export default compose(
   withHandlers({
     onRouteChange: ({ setIsTransitioning }) => (previousRoute, route) => {
       const exitDuration = 300
-      if (routes.isCuration(previousRoute) && routes.isSpotlight(route)) {
+      if (routes.isShowcase(previousRoute) && routes.isSpotlight(route)) {
         setIsTransitioning(true)
         transition.liftElements()
         setTimeout(() => {

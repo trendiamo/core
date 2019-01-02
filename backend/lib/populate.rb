@@ -1,24 +1,24 @@
-class PopulateCurations
+class PopulateShowcases
   def self.process
     new.process
   end
 
   def process
-    create_curations
+    create_showcases
   end
 
   private
 
-  def create_curations
+  def create_showcases
     Array.new(3) do
-      curation_attrs = {
-        name: "#{Faker::Lorem.word.capitalize} Curation",
+      showcase_attrs = {
+        name: "#{Faker::Lorem.word.capitalize} Showcase",
         persona: Persona.order("RANDOM()").first,
         title: Faker::Lorem.sentence,
         subtitle: Faker::Lorem.sentence,
         spotlights_attributes: Array.new(3) { spotlights_attributes },
       }
-      Curation.create!(curation_attrs)
+      Showcase.create!(showcase_attrs)
     end
   end
 
@@ -129,7 +129,7 @@ class Populate
     create_personas
     create_outros
     create_scripted_chats
-    create_curations
+    create_showcases
     create_navigations
     create_triggers
   end
@@ -191,8 +191,8 @@ class Populate
     PopulateScriptedChats.process
   end
 
-  def create_curations
-    PopulateCurations.process
+  def create_showcases
+    PopulateShowcases.process
   end
 
   def create_navigations
@@ -203,7 +203,7 @@ class Populate
     Array.new(11) do |i|
       trigger_attrs = {
         order: i + 1,
-        flow: [Curation, ScriptedChat, Outro, Navigation].sample.all.sample,
+        flow: [Showcase, ScriptedChat, Outro, Navigation].sample.all.sample,
         url_matchers: Array.new(rand(1...5)) { "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-")) },
       }
       Trigger.create!(trigger_attrs)

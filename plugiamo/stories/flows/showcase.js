@@ -1,7 +1,7 @@
 /* eslint-disable local-rules/no-relative-parent-imports */
 import history from 'ext/history'
 import Plugin from '../plugin'
-import { CurationBase } from 'app/content/curation'
+import { ShowcaseBase } from 'app/content/showcase'
 import { h } from 'preact'
 import { Main } from '../components'
 
@@ -88,9 +88,9 @@ const spotlights = [
   },
 ]
 
-// If we want navigation, we'll need onRouteChange, routeToCuration, isTransitioning
-history.location = '/curation/1'
-const routeToSpotlight = () => (history.location = '/curation/1/spotlight/1')
+// If we want navigation, we'll need onRouteChange, routeToShowcase, isTransitioning
+history.location = '/showcase/1'
+const routeToSpotlight = () => (history.location = '/showcase/1/spotlight/1')
 
 const Outro = () => (
   <div>
@@ -99,7 +99,7 @@ const Outro = () => (
     </Main>
     <Plugin
       Component={
-        <CurationBase
+        <ShowcaseBase
           history={history}
           routeToSpotlight={routeToSpotlight}
           spotlights={spotlights}

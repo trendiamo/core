@@ -7,7 +7,7 @@ class AutocompletesController < RestController
 
   def flows_autocomplete
     authorize :autocomplete
-    @flows = [ScriptedChat, Outro, Curation, Navigation].map do |type|
+    @flows = [ScriptedChat, Outro, Showcase, Navigation].map do |type|
       type.where("name ILIKE ?", "#{params[:searchQuery]}%")
     end.flatten
     render json: @flows

@@ -21,7 +21,7 @@ import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 
 const resources = {
   triggers: { icon: TuneOutlined, label: 'Triggers', class: 'triggers', route: routes.triggersList() },
-  curations: { icon: PersonPinOutlined, label: 'Curations', class: 'curations', route: routes.curationsList() },
+  showcases: { icon: PersonPinOutlined, label: 'Showcases', class: 'showcases', route: routes.showcasesList() },
   scriptedChats: {
     icon: SmsOutlined,
     label: 'Scripted Chats',
@@ -47,7 +47,7 @@ const resourceGroups = {
   flows: {
     name: 'Flows',
     showTitle: true,
-    resources: [resources.curations, resources.navigations, resources.scriptedChats, resources.outros],
+    resources: [resources.showcases, resources.navigations, resources.scriptedChats, resources.outros],
   },
   basic: {
     name: 'Basic',

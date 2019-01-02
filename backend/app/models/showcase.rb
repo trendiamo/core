@@ -1,4 +1,4 @@
-class Curation < ApplicationRecord
+class Showcase < ApplicationRecord
   acts_as_tenant
   belongs_to :persona
   has_many :spotlights, dependent: :destroy
@@ -15,7 +15,7 @@ class Curation < ApplicationRecord
       .slice("id", "title", "subtitle", "name", "created_at", "updated_at")
       .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
              spotlights_attributes: spotlights_attributes(spotlights),
-             type: "Curation")
+             type: "Showcase")
   end
 
   def spotlights_attributes(spotlights)

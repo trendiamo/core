@@ -6,11 +6,12 @@ Base components used in both the plugiamo project and console-frontend (for prev
 
 ```
 yarn
-yarn add -P react recompose
+yarn add -P react recompose styled-components
 ```
 
 ## Build
 
 ```
 yarn build && cp dist/plugin-base.js ../console-frontend/plugin-base/
+# then go to console-frontend and run `yarn add ./plugin-base`
 ```

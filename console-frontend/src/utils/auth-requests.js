@@ -6,7 +6,7 @@ import { stringify } from 'query-string'
 const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
-const CURATIONS_URL = `${BASE_API_URL}/curations`
+const CURATIONS_URL = `${BASE_API_URL}/showcases`
 const SCRIPTED_CHATS_URL = `${BASE_API_URL}/scripted_chats`
 const NAVIGATIONS_URL = `${BASE_API_URL}/navigations`
 const TRIGGERS_URL = `${BASE_API_URL}/triggers`
@@ -114,11 +114,11 @@ export const apiOutroCreate = body => apiCreateRequest(OUTROS_URL, body)
 export const apiOutroShow = id => apiGetRequest(`${OUTROS_URL}/${id}`)
 export const apiOutroUpdate = (id, body) => apiUpdateRequest(`${OUTROS_URL}/${id}`, body)
 
-export const apiCurationList = query => apiListRequest(`${CURATIONS_URL}/?${stringify(query)}`)
-export const apiCurationDestroy = body => apiDestroyMultipleRequest(CURATIONS_URL, body)
-export const apiCurationCreate = body => apiCreateRequest(CURATIONS_URL, body)
-export const apiCurationShow = id => apiGetRequest(`${CURATIONS_URL}/${id}`)
-export const apiCurationUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL}/${id}`, body)
+export const apiShowcaseList = query => apiListRequest(`${CURATIONS_URL}/?${stringify(query)}`)
+export const apiShowcaseDestroy = body => apiDestroyMultipleRequest(CURATIONS_URL, body)
+export const apiShowcaseCreate = body => apiCreateRequest(CURATIONS_URL, body)
+export const apiShowcaseShow = id => apiGetRequest(`${CURATIONS_URL}/${id}`)
+export const apiShowcaseUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL}/${id}`, body)
 
 export const apiScriptedChatList = query => apiListRequest(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`)
 export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED_CHATS_URL, body)

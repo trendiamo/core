@@ -3,8 +3,8 @@ class FlowsController < RestController
     authorize :flow
     @scripted_chats = ScriptedChat.all
     @outros = Outro.all
-    @curations = Curation.all
+    @showcases = Showcase.all
     @navigations = Navigation.all
-    render json: @scripted_chats + @outros + @curations + @navigations
+    render json: @scripted_chats + @outros + @showcases + @navigations
   end
 end

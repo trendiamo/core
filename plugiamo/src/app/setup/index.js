@@ -25,7 +25,7 @@ const getFlowFromPath = (triggers, path) => {
   if (!idFromPath) return
   for (let i = 0; i < triggers.length; i++) {
     const trigger = triggers[i]
-    if (trigger.curation && trigger.curation.id === idFromPath) return { flow: trigger.curation, type: 'curation' }
+    if (trigger.showcase && trigger.showcase.id === idFromPath) return { flow: trigger.showcase, type: 'showcase' }
     if (trigger.scriptedChat && trigger.scriptedChat.id === idFromPath)
       return { flow: trigger.scriptedChat, type: 'scriptedChat' }
     if (trigger.outro && trigger.outro.id === idFromPath) return { flow: trigger.outro, type: 'outro' }
@@ -48,7 +48,7 @@ const getFlowFromTriggers = triggers => {
       )
     )
   if (!trigger) return {}
-  if (trigger.curation) return { flow: trigger.curation, type: 'curation' }
+  if (trigger.showcase) return { flow: trigger.showcase, type: 'showcase' }
   if (trigger.scriptedChat) return { flow: trigger.scriptedChat, type: 'scriptedChat' }
   if (trigger.outro) return { flow: trigger.outro, type: 'outro' }
 }

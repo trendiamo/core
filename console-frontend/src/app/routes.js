@@ -47,14 +47,14 @@ const routes = {
   navigationEdit(id) {
     return `/navigations/${id}/edit`
   },
-  curationsList() {
-    return '/curations'
+  showcasesList() {
+    return '/showcases'
   },
-  curationCreate() {
-    return '/curations/create'
+  showcaseCreate() {
+    return '/showcases/create'
   },
-  curationEdit(id) {
-    return `/curations/${id}/edit`
+  showcaseEdit(id) {
+    return `/showcases/${id}/edit`
   },
   scriptedChatsList() {
     return '/scripted-chats'

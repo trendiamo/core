@@ -1,4 +1,4 @@
-class CurationPolicy < ApplicationPolicy
+class ShowcasePolicy < ApplicationPolicy
   def index?
     user
   end

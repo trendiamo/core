@@ -4,8 +4,8 @@ def flow_class_by_type(type)
     ScriptedChat
   when "outro"
     Outro
-  when "curation"
-    Curation
+  when "showcase"
+    Showcase
   end
 end
 

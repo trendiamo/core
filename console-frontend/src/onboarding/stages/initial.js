@@ -3,22 +3,22 @@ import routes from 'app/routes'
 import { changeStage } from 'onboarding/scenario-actions'
 import { Tooltip } from 'onboarding/elements'
 
-const order = ['triggers', 'curations', 'navigations', 'scriptedChats', 'outros', 'personas']
+const order = ['triggers', 'showcases', 'navigations', 'scriptedChats', 'outros', 'personas']
 
 const steps = {
   triggers: {
     target: '.onboard-triggers',
-    content: <Tooltip body="Create your Triggers here." nextRoute={routes.curationsList()} />,
+    content: <Tooltip body="Create your Triggers here." nextRoute={routes.showcasesList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Triggers',
   },
-  curations: {
-    target: '.onboard-curations',
-    content: <Tooltip body="Create your Curations here." nextRoute={routes.navigationsList()} />,
+  showcases: {
+    target: '.onboard-showcases',
+    content: <Tooltip body="Create your Showcases here." nextRoute={routes.navigationsList()} />,
     placement: 'right',
     disableBeacon: true,
-    title: 'Curations',
+    title: 'Showcases',
   },
   navigations: {
     target: '.onboard-navigations',
