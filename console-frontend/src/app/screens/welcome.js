@@ -31,7 +31,7 @@ const WelcomePage = ({ getStarted, skipOnboarding }) => (
 export default compose(
   withRouter,
   withOnboardingConsumer,
-  withWidth(),
+  withWidth({ noSSR: true }),
   lifecycle({
     componentDidMount() {
       const { width, history } = this.props

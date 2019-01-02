@@ -43,7 +43,7 @@ const PluginPreviewTemplate = styled(({ className, persona, width }) => (
   margin-bottom: 30px;
 `
 
-const PluginPreview = withWidth()(PluginPreviewTemplate)
+const PluginPreview = withWidth({ noSSR: true })(PluginPreviewTemplate)
 
 const OutroForm = ({
   formRef,
