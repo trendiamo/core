@@ -2,9 +2,8 @@ class OutrosController < RestController
   def index
     @outros = Outro.includes(:persona).all
     authorize @outros
-    fresh_when(etag: @outros)
-    chain = sorting(pagination(@outros)) # makes it so headers are sent even if stale
-    render json: chain if stale?(@outros)
+    chain = sorting(pagination(@outros))
+    render json: chain
   end
 
   def create
@@ -20,8 +19,7 @@ class OutrosController < RestController
   def show
     @outro = Outro.find(params[:id])
     authorize @outro
-    fresh_when(etag: @outro)
-    render json: @outro if stale?(@outro)
+    render json: @outro
   end
 
   def update

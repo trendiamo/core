@@ -2,16 +2,14 @@ class PersonasController < RestController
   def index
     @personas = Persona.all
     authorize @personas
-    fresh_when(etag: @personas)
-    chain = sorting(pagination(@personas)) # makes it so headers are sent even if stale
-    render json: chain if stale?(@personas)
+    chain = sorting(pagination(@personas))
+    render json: chain
   end
 
   def show
     @persona = Persona.find(params[:id])
     authorize @persona
-    fresh_when(etag: @persona)
-    render json: @persona if stale?(@personas)
+    render json: @persona
   end
 
   def update

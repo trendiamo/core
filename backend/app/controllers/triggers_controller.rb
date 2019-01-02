@@ -2,8 +2,7 @@ class TriggersController < RestController
   def index
     @triggers = Trigger.all.order(:order)
     authorize @triggers
-    fresh_when(etag: @triggers)
-    render json: @triggers if stale?(@triggers)
+    render json: @triggers
   end
 
   def create
@@ -19,8 +18,7 @@ class TriggersController < RestController
   def show
     @trigger = Trigger.find(params[:id])
     authorize @trigger
-    fresh_when(etag: @trigger)
-    render json: @trigger if stale?(@trigger)
+    render json: @trigger
   end
 
   def update

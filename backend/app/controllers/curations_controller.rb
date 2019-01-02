@@ -2,9 +2,8 @@ class CurationsController < RestController
   def index
     @curations = Curation.all
     authorize @curations
-    fresh_when(etag: @curations)
-    chain = sorting(pagination(@curations)) # makes it so headers are sent even if stale
-    render json: chain if stale?(@curations)
+    chain = sorting(pagination(@curations))
+    render json: chain
   end
 
   def create
@@ -20,8 +19,7 @@ class CurationsController < RestController
   def show
     @curation = Curation.find(params[:id])
     authorize @curation
-    fresh_when(etag: @curation)
-    render json: @curation.as_json if stale?(@curation)
+    render json: @curation.as_json
   end
 
   def update

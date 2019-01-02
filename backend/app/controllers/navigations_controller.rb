@@ -2,9 +2,8 @@ class NavigationsController < RestController
   def index
     @navigations = Navigation.includes(:persona).all
     authorize @navigations
-    fresh_when(etag: @navigations)
-    chain = sorting(pagination(@navigations)) # makes it so headers are sent even if stale
-    render json: chain if stale?(@navigations)
+    chain = sorting(pagination(@navigations))
+    render json: chain
   end
 
   def create
@@ -20,8 +19,7 @@ class NavigationsController < RestController
   def show
     @navigation = Navigation.find(params[:id])
     authorize @navigation
-    fresh_when(etag: @navigation)
-    render json: @navigation if stale?(@navigation)
+    render json: @navigation
   end
 
   def update
