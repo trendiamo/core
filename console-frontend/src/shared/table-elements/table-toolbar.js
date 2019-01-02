@@ -16,7 +16,7 @@ const Spacer = styled.div`
   flex: 1 1 100%;
 `
 
-const TableToolbar = ({ selectedIds, deleteRecords, label }) => (
+const TableToolbar = ({ selectedIds, deleteRecords, label, defaultActions }) => (
   <SimpleToolbar>
     <Title>
       {selectedIds.length > 0 ? (
@@ -28,7 +28,9 @@ const TableToolbar = ({ selectedIds, deleteRecords, label }) => (
       )}
     </Title>
     <Spacer />
-    <div>{selectedIds.length > 0 && <BulkActions deleteBulk={deleteRecords} selectedIds={selectedIds} />}</div>
+    <div>
+      {selectedIds.length > 0 ? <BulkActions deleteBulk={deleteRecords} selectedIds={selectedIds} /> : defaultActions}
+    </div>
   </SimpleToolbar>
 )
 
