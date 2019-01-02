@@ -33,7 +33,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
       const newBreadcrumbs = JSON.parse(JSON.stringify(breadcrumbs)) // deep clone
       if (page !== 0) {
         const lastBreadcrumb = newBreadcrumbs[breadcrumbs.length - 1]
-        lastBreadcrumb.text = `${lastBreadcrumb.text} pp. ${page + 1}`
+        lastBreadcrumb.text = `${lastBreadcrumb.text} p.${page + 1}`
       }
       return {
         Actions: <Actions createRoute={routes.create()} />,
