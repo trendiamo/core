@@ -1,10 +1,10 @@
 import auth from 'auth'
 import {
-  apiCurationCreate,
-  apiCurationDestroy,
-  apiCurationList,
-  apiCurationShow,
-  apiCurationUpdate,
+  apiShowcaseCreate,
+  apiShowcaseDestroy,
+  apiShowcaseList,
+  apiShowcaseShow,
+  apiShowcaseUpdate,
   apiFlowsAutocomplete,
   apiFlowsList,
   apiGetSignedUrlFactory,
@@ -47,11 +47,11 @@ import { includes } from 'lodash'
 
 export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn }
 export {
-  apiCurationCreate,
-  apiCurationDestroy,
-  apiCurationList,
-  apiCurationShow,
-  apiCurationUpdate,
+  apiShowcaseCreate,
+  apiShowcaseDestroy,
+  apiShowcaseList,
+  apiShowcaseShow,
+  apiShowcaseUpdate,
   apiFlowsList,
   apiGetSignedUrlFactory,
   apiMe,
@@ -138,7 +138,7 @@ export const apiRequest = async (request, args, options) => {
   const listRequestsExceptions = [
     'apiNavigationList',
     'apiScriptedChatList',
-    'apiCurationList',
+    'apiShowcaseList',
     'apiOutroList',
     'apiPersonaList',
   ]

@@ -32,8 +32,8 @@ oscar = Persona.create!(oscar_params)
 
 # flows:
 
-main_curation_params = {
-  name: "Main Curation",
+main_showcase_params = {
+  name: "Main Showcase",
   title: "Need advice from our models?",
   subtitle: "Ask our models",
   persona_id: adam.id,
@@ -122,7 +122,7 @@ main_curation_params = {
   ],
   graphcms_ref: "cjofphjnosyvr0932002rowou",
 }
-main_curation = Curation.create!(main_curation_params)
+main_showcase = Showcase.create!(main_showcase_params)
 
 purchase_outro_params = {
   name: "Purchase Outro",
@@ -576,7 +576,7 @@ oscar_bw_chat_params = {
 oscar_bw_chat = ScriptedChat.create!(oscar_bw_chat_params)
 
 # triggers:
-Trigger.create!(order: 1, url_matchers: %w[/], flow: main_curation)
+Trigger.create!(order: 1, url_matchers: %w[/], flow: main_showcase)
 Trigger.create!(order: 2, url_matchers: %w[/:id/checkouts/:checkoutId/thank_you], flow: purchase_outro)
 Trigger.create!(order: 3, url_matchers: %w[/collections/:collectionName/products/elephant-brief-white-organic-cotton /products/elephant-brief-white-organic-cotton], flow: adam_ebw_chat)
 Trigger.create!(order: 4, url_matchers: %w[/collections/:collectionName/products/orangutan-brief-red-organic-cotton /products/orangutan-brief-red-organic-cotton], flow: adam_obr_chat)

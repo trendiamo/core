@@ -16,7 +16,7 @@ import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset, MuiThemeProvider } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
-import { CurationCreate, CurationEdit, CurationsList } from './resources/curations'
+import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from './resources/showcases'
 import { NavigationCreate, NavigationEdit, NavigationsList } from './resources/navigations'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
@@ -62,9 +62,9 @@ const Routes = () => (
     <PrivateRoute component={PersonasList} exact path={routes.personasList()} />
     <PrivateRoute component={PersonaCreate} exact path={routes.personaCreate()} />
     <PrivateRoute component={PersonaEdit} exact path={routes.personaEdit(':personaId')} />
-    <PrivateRoute component={CurationsList} exact path={routes.curationsList()} />
-    <PrivateRoute component={CurationCreate} exact path={routes.curationCreate()} />
-    <PrivateRoute component={CurationEdit} exact path={routes.curationEdit(':curationId')} />
+    <PrivateRoute component={ShowcasesList} exact path={routes.showcasesList()} />
+    <PrivateRoute component={ShowcaseCreate} exact path={routes.showcaseCreate()} />
+    <PrivateRoute component={ShowcaseEdit} exact path={routes.showcaseEdit(':showcaseId')} />
     <PrivateRoute component={ScriptedChatsList} exact path={routes.scriptedChatsList()} />
     <PrivateRoute component={ScriptedChatCreate} exact path={routes.scriptedChatCreate()} />
     <PrivateRoute component={ScriptedChatEdit} exact path={routes.scriptedChatEdit(':scriptedChatId')} />

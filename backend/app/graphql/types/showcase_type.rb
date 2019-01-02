@@ -1,5 +1,5 @@
-Types::CurationType = GraphQL::ObjectType.define do
-  name "Curation"
+Types::ShowcaseType = GraphQL::ObjectType.define do
+  name "Showcase"
 
   field :id, !types.ID
   field :title, !types.String

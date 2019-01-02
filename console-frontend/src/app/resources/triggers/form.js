@@ -56,7 +56,7 @@ const TriggerForm = ({
           placeholder="Choose a flow..."
           required
         />
-        <FormHelperText>{'Choose between Curations, Navigations, etc.'}</FormHelperText>
+        <FormHelperText>{'Choose between Showcases, Navigations, etc.'}</FormHelperText>
         <FormControl fullWidth margin="normal">
           <InputLabel shrink>{'Url Matchers'}</InputLabel>
           <div style={{ marginTop: '11px' }}>

@@ -29,8 +29,8 @@ jadson = Persona.create!(jadson_params)
 
 # flows:
 
-main_curation_params = {
-  name: "Main Curation",
+main_showcase_params = {
+  name: "Main Showcase",
   title: "Precisa de Ajuda?",
   subtitle: "Conheça o time",
   persona_id: cassio.id,
@@ -118,7 +118,7 @@ main_curation_params = {
     },
   ],
 }
-main_curation = Curation.create!(main_curation_params)
+main_showcase = Showcase.create!(main_showcase_params)
 
 chat_step_attributes = {
   chat_messages_attributes: [
@@ -187,7 +187,7 @@ jadson_chat_params = {
 jadson_chat = ScriptedChat.create!(jadson_chat_params)
 
 # triggers:
-Trigger.create!(order: 1, url_matchers: %w[/], flow: main_curation)
+Trigger.create!(order: 1, url_matchers: %w[/], flow: main_showcase)
 Trigger.create!(order: 2, url_matchers: %w[/camiseta-corinthians-cassio-logo-masculina-branco-D65-1724-014 /calcao-corinthians-nike-masculino-preto+branco-D12-9825-026 /luva-de-goleiro-nike-match-masculina-azul-HZM-0281-008], flow: cassio_chat)
 Trigger.create!(order: 3, url_matchers: %w[/camisa-corinthians-ii-1819-n-38-pedrinho-torcedor-nike-masculina-preto-D12-9947-006 /camiseta-corinthians-pedrinho-logo-masculina-branco-D65-1726-014 /camisa-corinthians-i-1819-n-38-pedrinho-torcedor-nike-masculina-branco+preto-D12-9944-028], flow: pedrinho_chat)
 Trigger.create!(order: 4, url_matchers: %w[/camisa-corinthians-ii-1819-n-10-jadson-torcedor-nike-masculina-preto-D12-9937-006 /camisa-corinthians-iii-1718-n-10-jadson-torcedor-nike-masculina-grafite+laranja-D12-9027-236 /camisa-corinthians-i-1819-n-10-jadson-torcedor-nike-masculina-branco+preto-D12-9948-028], flow: jadson_chat)

@@ -28,8 +28,8 @@ Rails.application.routes.draw do
       resources :personas, only: %i[index show update create]
       delete "/personas", to: "personas#destroy"
 
-      resources :curations, only: %i[index show update create]
-      delete "/curations", to: "curations#destroy"
+      resources :showcases, only: %i[index show update create]
+      delete "/showcases", to: "showcases#destroy"
       resources :scripted_chats, only: %i[index show update create]
       delete "/scripted_chats", to: "scripted_chats#destroy"
       resources :outros, only: %i[index show update create]

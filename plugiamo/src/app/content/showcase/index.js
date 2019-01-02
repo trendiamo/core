@@ -40,7 +40,7 @@ const SubTitle = styled.div`
   font-size: 14px;
 `
 
-const CoverCuration = ({ isLeaving, subtitle, title }) => (
+const CoverShowcase = ({ isLeaving, subtitle, title }) => (
   <div>
     <TopSlideAnimation isLeaving={isLeaving} timeout={250 * 0}>
       <Title>{title}</Title>
@@ -57,7 +57,7 @@ const Container = styled.div`
   padding: 1rem;
 `
 
-const ContentCuration = ({ isLeaving, routeToSpotlight, spotlights }) => (
+const ContentShowcase = ({ isLeaving, routeToSpotlight, spotlights }) => (
   <Container>
     <TopSlideAnimation isLeaving={isLeaving} timeout={250 * 1}>
       <List>
@@ -84,10 +84,10 @@ const ColFlexDiv = styled.div`
   flex-direction: column;
 `
 
-export const CurationBase = ({
+export const ShowcaseBase = ({
   history,
   onRouteChange,
-  routeToCuration,
+  routeToShowcase,
   routeToSpotlight,
   isTransitioning,
   spotlights,
@@ -97,27 +97,27 @@ export const CurationBase = ({
   <ColFlexDiv>
     <Cover>
       <Router history={history} onChange={onRouteChange}>
-        <CoverCuration path="/curation/:id" subtitle={subtitle} title={title} />
-        <CoverSpotlight path="/curation/:id/spotlight/:id" routeToCuration={routeToCuration} spotlights={spotlights} />
+        <CoverShowcase path="/showcase/:id" subtitle={subtitle} title={title} />
+        <CoverSpotlight path="/showcase/:id/spotlight/:id" routeToShowcase={routeToShowcase} spotlights={spotlights} />
       </Router>
     </Cover>
     <BelowCover>
       <Router history={history} onChange={onRouteChange}>
-        <ContentCuration path="/curation/:id" routeToSpotlight={routeToSpotlight} spotlights={spotlights} />
-        <ContentSpotlight path="/curation/:id/spotlight/:id" spotlights={spotlights} />
+        <ContentShowcase path="/showcase/:id" routeToSpotlight={routeToSpotlight} spotlights={spotlights} />
+        <ContentSpotlight path="/showcase/:id/spotlight/:id" spotlights={spotlights} />
       </Router>
     </BelowCover>
     <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />
   </ColFlexDiv>
 )
 
-const Curation = compose(
+const Showcase = compose(
   withProps({ history }),
   graphql(
     isGraphCMS
       ? gql`
           query($id: ID!) {
-            curation(where: { id: $id }) {
+            showcase(where: { id: $id }) {
               id
               title
               subtitle
@@ -147,7 +147,7 @@ const Curation = compose(
         `
       : gql`
           query($id: ID!) {
-            curation(id: $id) {
+            showcase(id: $id) {
               id
               title
               subtitle
@@ -179,15 +179,15 @@ const Curation = compose(
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
-    curation: data.curation,
-    spotlights: data.curation && data.curation.spotlights,
-    subtitle: data.curation && data.curation.subtitle,
-    title: data.curation && data.curation.title,
+    showcase: data.showcase,
+    spotlights: data.showcase && data.showcase.spotlights,
+    subtitle: data.showcase && data.showcase.subtitle,
+    title: data.showcase && data.showcase.title,
   })),
   withHandlers({
-    routeToCuration: ({ curation }) => () => history.replace(routes.curation(curation.id)),
-    routeToSpotlight: ({ curation }) => spotlight => history.replace(routes.spotlight(curation.id, spotlight.id)),
+    routeToShowcase: ({ showcase }) => () => history.replace(routes.showcase(showcase.id)),
+    routeToSpotlight: ({ showcase }) => spotlight => history.replace(routes.spotlight(showcase.id, spotlight.id)),
   })
-)(CurationBase)
+)(ShowcaseBase)
 
-export default Curation
+export default Showcase

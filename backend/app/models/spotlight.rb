@@ -1,6 +1,6 @@
 class Spotlight < ApplicationRecord
   acts_as_tenant
-  belongs_to :curation
+  belongs_to :showcase
   belongs_to :persona
   has_many :product_picks, dependent: :destroy
 

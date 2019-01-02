@@ -47,7 +47,7 @@ const CoverSpotlight = compose(
   withProps(({ id, spotlights }) => ({
     spotlight: spotlights.find(e => e.id === id),
   }))
-)(({ isLeaving, routeToCuration, setImgRef, setNameRef, spotlight }) => (
+)(({ isLeaving, routeToShowcase, setImgRef, setNameRef, spotlight }) => (
   <FlexDiv>
     <CoverImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
     <PaddedCover>
@@ -56,7 +56,7 @@ const CoverSpotlight = compose(
         <PersonaDescription>{spotlight.text}</PersonaDescription>
       </TopSlideAnimation>
     </PaddedCover>
-    <BackButton isLeaving={isLeaving} onClick={routeToCuration} />
+    <BackButton isLeaving={isLeaving} onClick={routeToShowcase} />
   </FlexDiv>
 ))
 

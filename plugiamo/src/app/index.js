@@ -71,7 +71,7 @@ export default compose(
                       }
                     }
                   }
-                  curation {
+                  showcase {
                     id
                     persona {
                       id

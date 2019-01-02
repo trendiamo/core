@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181218172551) do
+ActiveRecord::Schema.define(version: 20190102144357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,19 +51,6 @@ ActiveRecord::Schema.define(version: 20181218172551) do
     t.bigint "account_id"
     t.index ["account_id"], name: "index_chat_steps_on_account_id"
     t.index ["scripted_chat_id"], name: "index_chat_steps_on_scripted_chat_id"
-  end
-
-  create_table "curations", force: :cascade do |t|
-    t.bigint "account_id"
-    t.bigint "persona_id"
-    t.string "title", null: false
-    t.string "subtitle", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "graphcms_ref"
-    t.string "name", null: false
-    t.index ["account_id"], name: "index_curations_on_account_id"
-    t.index ["persona_id"], name: "index_curations_on_persona_id"
   end
 
   create_table "navigation_items", force: :cascade do |t|
@@ -136,16 +123,29 @@ ActiveRecord::Schema.define(version: 20181218172551) do
     t.index ["persona_id"], name: "index_scripted_chats_on_persona_id"
   end
 
+  create_table "showcases", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "persona_id"
+    t.string "title", null: false
+    t.string "subtitle", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "graphcms_ref"
+    t.string "name", null: false
+    t.index ["account_id"], name: "index_showcases_on_account_id"
+    t.index ["persona_id"], name: "index_showcases_on_persona_id"
+  end
+
   create_table "spotlights", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "persona_id"
     t.string "text", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "curation_id"
+    t.bigint "showcase_id"
     t.index ["account_id"], name: "index_spotlights_on_account_id"
-    t.index ["curation_id"], name: "index_spotlights_on_curation_id"
     t.index ["persona_id"], name: "index_spotlights_on_persona_id"
+    t.index ["showcase_id"], name: "index_spotlights_on_showcase_id"
   end
 
   create_table "triggers", force: :cascade do |t|
@@ -210,8 +210,6 @@ ActiveRecord::Schema.define(version: 20181218172551) do
   add_foreign_key "chat_options", "chat_steps", column: "destination_chat_step_id"
   add_foreign_key "chat_steps", "accounts"
   add_foreign_key "chat_steps", "scripted_chats"
-  add_foreign_key "curations", "accounts"
-  add_foreign_key "curations", "personas"
   add_foreign_key "navigation_items", "accounts"
   add_foreign_key "navigation_items", "navigations"
   add_foreign_key "navigations", "accounts"
@@ -223,9 +221,11 @@ ActiveRecord::Schema.define(version: 20181218172551) do
   add_foreign_key "product_picks", "spotlights"
   add_foreign_key "scripted_chats", "accounts"
   add_foreign_key "scripted_chats", "personas"
+  add_foreign_key "showcases", "accounts"
+  add_foreign_key "showcases", "personas"
   add_foreign_key "spotlights", "accounts"
-  add_foreign_key "spotlights", "curations"
   add_foreign_key "spotlights", "personas"
+  add_foreign_key "spotlights", "showcases"
   add_foreign_key "triggers", "accounts"
   add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"

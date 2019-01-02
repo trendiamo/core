@@ -2,16 +2,16 @@ import BlankStateTemplate from 'shared/blank-state'
 import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
-import { apiCurationDestroy, apiCurationList } from 'utils'
+import { apiShowcaseDestroy, apiShowcaseList } from 'utils'
 import { Avatar, TableCell } from 'shared/table-elements'
 import { compose } from 'recompose'
 
 const BlankState = () => (
   <BlankStateTemplate
-    description={"You don't have any curations yet. Let's create the first one?"}
+    description={"You don't have any showcases yet. Let's create the first one?"}
     imageSource="/img/background/img-empty-02.png"
-    route={routes.curationCreate()}
-    title="Create a new curation"
+    route={routes.showcaseCreate()}
+    title="Create a new showcase"
   />
 )
 
@@ -20,7 +20,7 @@ const columns = [
   { name: 'name', sortable: true, label: 'name' },
 ]
 
-const CurationsRow = ({ record }) => (
+const ShowcasesRow = ({ record }) => (
   <React.Fragment>
     <TableCell width="20%">
       <Avatar alt="" src={record.persona.profilePicUrl} />
@@ -31,11 +31,11 @@ const CurationsRow = ({ record }) => (
 
 export default compose(
   enhanceList({
-    breadcrumbs: [{ text: 'Curations' }],
+    breadcrumbs: [{ text: 'Showcases' }],
     columns,
     blankState: BlankState,
-    api: { fetch: apiCurationList, destroy: apiCurationDestroy },
-    routes: { create: routes.curationCreate, edit: routes.curationEdit },
-    help: { single: true, stepName: 'curations', stageName: 'initial' },
+    api: { fetch: apiShowcaseList, destroy: apiShowcaseDestroy },
+    routes: { create: routes.showcaseCreate, edit: routes.showcaseEdit },
+    help: { single: true, stepName: 'showcases', stageName: 'initial' },
   })
-)(CurationsRow)
+)(ShowcasesRow)

@@ -32,7 +32,7 @@ export default compose(
     return {
       onListItemClick: ({ routeToSpotlight, spotlight }) => () => {
         mixpanel.track('Clicked Persona', {
-          flowType: 'curation',
+          flowType: 'showcase',
           hostname: location.hostname,
           personaName: spotlight.persona.name,
           personaRef: spotlight.persona.id,

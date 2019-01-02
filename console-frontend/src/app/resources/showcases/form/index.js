@@ -14,7 +14,7 @@ import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const CurationForm = ({
+const ShowcaseForm = ({
   selectPersona,
   personas,
   form,
@@ -104,7 +104,7 @@ const CurationForm = ({
 
 export default compose(
   withProps({ formRef: React.createRef() }),
-  withOnboardingHelp({ single: true, stepName: 'curations', stageName: 'initial' }),
+  withOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial' }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('productPicksPictures', 'setProductPicksPictures', []),
@@ -199,7 +199,7 @@ export default compose(
     onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      if (!result.error && !result.errors) history.push(routes.curationsList())
+      if (!result.error && !result.errors) history.push(routes.showcasesList())
       return result
     },
   }),
@@ -211,4 +211,4 @@ export default compose(
   withProps(({ breadcrumbs }) => ({
     title: breadcrumbs.slice(-1)[0].text,
   }))
-)(CurationForm)
+)(ShowcaseForm)
