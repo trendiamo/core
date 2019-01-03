@@ -1,49 +1,18 @@
 import CircularProgress from 'shared/circular-progress'
-import PluginPreviewFrame from 'shared/plugin-preview-frame'
+import PluginPreview from 'shared/plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import Select from 'shared/select'
-import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormHelperText, Grid, TextField, withWidth } from '@material-ui/core'
+import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { Outro } from 'plugin-base'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
-
-const PreviewContainer = styled.div`
-  ${({ width }) =>
-    width === 'xs' || width === 'sm'
-      ? ''
-      : `position: sticky;
-  top: 50%;
-  margin-bottom: 45px;`}
-`
-
-const PluginPreviewTemplate = styled(({ className, persona, width }) => (
-  <PreviewContainer width={width}>
-    <PluginPreviewFrame className={className}>
-      <Outro persona={persona} />
-    </PluginPreviewFrame>
-  </PreviewContainer>
-))`
-  border: 0;
-  overflow: hidden;
-  border-radius: 8px;
-  width: 320px;
-  height: 500px;
-  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
-  position: absolute;
-  right: 50%;
-  transform: ${({ width }) => (width === 'xs' || width === 'sm' ? 'translate(50%)' : 'translate(50%, -50%)')};
-  margin-bottom: 30px;
-`
-
-const PluginPreview = withWidth({ noSSR: true })(PluginPreviewTemplate)
 
 const OutroForm = ({
   formRef,
@@ -87,7 +56,9 @@ const OutroForm = ({
       </Section>
     </Grid>
     <Grid item md={6} xs={12}>
-      <PluginPreview persona={previewOutro.persona} />
+      <PluginPreview>
+        <Outro persona={previewOutro.persona} />
+      </PluginPreview>
     </Grid>
   </Grid>
 )
