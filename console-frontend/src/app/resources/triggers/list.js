@@ -32,6 +32,7 @@ import {
   Reorder as ReorderIcon,
 } from '@material-ui/icons'
 import { createGlobalStyle } from 'styled-components'
+import { isEqual } from 'lodash'
 import { Link } from 'react-router-dom'
 import { matchUrl } from 'plugin-base'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
@@ -92,14 +93,19 @@ const DragHandle = SortableHandle(styled(props => <StyledReorderIcon {...omit(pr
   color: ${({ highlight }) => (highlight ? '#fff' : '')};
 `)
 
-const triggerMatches = (trigger, referenceUrl) => {
-  let enabled = false
-  const array = trigger.urlMatchers.map(url => {
-    const urlMatches = matchUrl(referenceUrl, url)
-    enabled = enabled || urlMatches
-    return urlMatches
+const matchTriggers = (triggers, referenceUrl) => {
+  let result = false
+  triggers.map((trigger, index) => {
+    if (!result) {
+      trigger.urlMatchers.map((url, urlIndex) => {
+        const matches = matchUrl(referenceUrl, url)
+        if (matches) {
+          result = { index, urlIndex }
+        }
+      })
+    }
   })
-  return { enabled, array }
+  return result
 }
 
 const TableRowStyled = styled(props => <TableRow {...omit(props, ['highlight'])} />)`
@@ -119,21 +125,21 @@ const TriggerRow = compose(
       }
     },
   })
-)(({ trigger, handleSelect, selectedIds, highlight }) => (
-  <TableRowStyled highlight={highlight.enabled} hover role="checkbox" tabIndex={-1}>
+)(({ trigger, handleSelect, selectedIds, highlightEnabled, highlightUrl }) => (
+  <TableRowStyled highlight={highlightEnabled} hover role="checkbox" tabIndex={-1}>
     <TableCell>
-      <DragHandle highlight={highlight.enabled} />
+      <DragHandle highlight={highlightEnabled} />
     </TableCell>
     <TableCell>
       <Checkbox
         checked={selectedIds.includes(trigger.id)}
         color="primary"
         onChange={handleSelect}
-        style={{ color: highlight.enabled ? '#fff' : '' }}
+        style={{ color: highlightEnabled ? '#fff' : '' }}
       />
     </TableCell>
     <TableCell width="50%">
-      <InlineTypography highlight={highlight.enabled} variant="subtitle2">{`${trigger.flowType} #${trigger.flowId}: '${
+      <InlineTypography highlight={highlightEnabled} variant="subtitle2">{`${trigger.flowType} #${trigger.flowId}: '${
         trigger.flow.name
       }'`}</InlineTypography>
       <Button
@@ -141,8 +147,8 @@ const TriggerRow = compose(
         size="small"
         style={{
           marginLeft: '0.5rem',
-          color: highlight.enabled ? '#fff' : '',
-          borderColor: highlight.enabled && 'rgba(255,255,255,0.3)',
+          color: highlightEnabled ? '#fff' : '',
+          borderColor: highlightEnabled && 'rgba(255,255,255,0.3)',
         }}
         to={routes[`${camelize(trigger.flowType, false)}Edit`](trigger.flowId)}
         variant="outlined"
@@ -153,11 +159,11 @@ const TriggerRow = compose(
     <TableCell width="50%">
       {trigger.urlMatchers.map((url, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <StyledChip enabled={highlight.enabled} highlight={highlight.array[index]} key={`url${index}`} label={url} />
+        <StyledChip enabled={highlightEnabled} highlight={highlightUrl === index} key={`url${index}`} label={url} />
       ))}
     </TableCell>
     <TableCell>
-      <Button component={Link} style={{ color: highlight.enabled ? '#fff' : '' }} to={routes.triggerEdit(trigger.id)}>
+      <Button component={Link} style={{ color: highlightEnabled ? '#fff' : '' }} to={routes.triggerEdit(trigger.id)}>
         <EditIcon />
       </Button>
     </TableCell>
@@ -165,10 +171,11 @@ const TriggerRow = compose(
 ))
 
 const SortableTriggerRow = SortableElement(
-  ({ trigger, index, handleSelectAll, selectedIds, setSelectedIds, highlight }) => (
+  ({ trigger, index, handleSelectAll, selectedIds, setSelectedIds, highlightEnabled, highlightUrl }) => (
     <TriggerRow
       handleSelectAll={handleSelectAll}
-      highlight={highlight}
+      highlightEnabled={highlightEnabled}
+      highlightUrl={highlightUrl}
       index={index}
       selectedIds={selectedIds}
       setSelectedIds={setSelectedIds}
@@ -184,12 +191,12 @@ const SortableTriggerRows = SortableContainer(
         triggers.map((trigger, index) => (
           <SortableTriggerRow
             handleSelectAll={handleSelectAll}
-            highlight={triggerMatches(trigger, testerUrl)}
+            highlightEnabled={testerUrl.matches && testerUrl.matches.index === index}
+            highlightUrl={testerUrl.matches && testerUrl.matches.index === index && testerUrl.matches.urlIndex}
             index={index}
             key={trigger.id}
             selectedIds={selectedIds}
             setSelectedIds={setSelectedIds}
-            testerUrl={testerUrl}
             trigger={trigger}
           />
         ))}
@@ -203,7 +210,7 @@ const UrlTesterTemplate = ({ changeValue, testerUrl, resetUrl }) => (
     <Input
       endAdornment={
         <InputAdornment position="end">
-          {testerUrl && (
+          {testerUrl.value && (
             <IconButton aria-label="Clear url tester" onClick={resetUrl} style={{ padding: '4px' }}>
               <Close fontSize="small" />
             </IconButton>
@@ -214,17 +221,18 @@ const UrlTesterTemplate = ({ changeValue, testerUrl, resetUrl }) => (
       label=""
       onChange={changeValue}
       style={{ minWidth: '250px' }}
-      value={testerUrl}
+      value={testerUrl.value}
     />
   </FormControl>
 )
 const UrlTester = compose(
   withHandlers({
     changeValue: ({ setTesterUrl }) => event => {
-      setTesterUrl(event.target.value)
+      const url = event.target.value
+      setTesterUrl({ value: url, matches: false })
     },
     resetUrl: ({ setTesterUrl }) => () => {
-      setTesterUrl('')
+      setTesterUrl({ value: '', matches: false })
     },
   })
 )(UrlTesterTemplate)
@@ -288,7 +296,7 @@ export default compose(
   withAppBarContent({ Actions: <Actions />, breadcrumbs: [{ text: 'Triggers' }] }),
   withState('triggers', 'setTriggers', []),
   withState('isLoading', 'setIsLoading', true),
-  withState('testerUrl', 'setTesterUrl', ''),
+  withState('testerUrl', 'setTesterUrl', { value: '', matches: false }),
   withState('selectedIds', 'setSelectedIds', []),
   withState('isSelectAll', 'setIsSelectAll', false),
   withSnackbar,
@@ -337,6 +345,15 @@ export default compose(
       if (triggersResponse.error || triggersResponse.errors) return
       setTriggers(triggersResponse)
       setIsLoading(false)
+    },
+    componentDidUpdate() {
+      const { testerUrl, setTesterUrl, triggers } = this.props
+      if (testerUrl.value) {
+        const matchesUrl = matchTriggers(triggers, testerUrl.value)
+        if (!isEqual(testerUrl.matches, matchesUrl)) {
+          setTesterUrl({ ...testerUrl, matches: matchesUrl })
+        }
+      }
     },
   }),
   branch(({ isLoading }) => isLoading, renderComponent(CircularProgress)),
