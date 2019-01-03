@@ -95,15 +95,13 @@ const DragHandle = SortableHandle(styled(props => <StyledReorderIcon {...omit(pr
 
 const matchTriggers = (triggers, referenceUrl) => {
   let result = false
-  triggers.map((trigger, index) => {
-    if (!result) {
-      trigger.urlMatchers.map((url, urlIndex) => {
-        const matches = matchUrl(referenceUrl, url)
-        if (matches) {
-          result = { index, urlIndex }
-        }
-      })
-    }
+  triggers.forEach((trigger, index) => {
+    if (result) return result
+    trigger.urlMatchers.map((url, urlIndex) => {
+      const matches = matchUrl(referenceUrl, url)
+      if (matches) result = { index, urlIndex }
+      return result
+    })
   })
   return result
 }
