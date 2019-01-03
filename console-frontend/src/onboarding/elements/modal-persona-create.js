@@ -44,7 +44,13 @@ const DialogContent = () => (
 )
 
 const ModalTemplate = ({ open, setOpen }) => (
-  <Dialog content={<DialogContent />} dialogActions={<DialogActions setOpen={setOpen} />} open={open} title="" />
+  <Dialog
+    content={<DialogContent />}
+    dialogActions={<DialogActions setOpen={setOpen} />}
+    hideBackdrop
+    open={open}
+    title=""
+  />
 )
 
 export default compose(

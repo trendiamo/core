@@ -1,7 +1,7 @@
 import Joyride from 'react-joyride'
 import React from 'react'
 import SkipButton from './elements/skip-button'
-import { branch, compose, renderNothing } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers } from 'recompose'
 import { Hidden, Portal } from '@material-ui/core'
 import { stages, stagesArray } from './stages'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
@@ -43,7 +43,9 @@ const Onboarding = ({ onboarding }) => (
   <Hidden smDown>
     <Joyride
       continuous
+      disableCloseOnEsc
       disableOverlayClose
+      disableScrolling
       floaterProps={floaterProps}
       run={onboarding.run || onboarding.help.run}
       stepIndex={getOnboardingConfig(onboarding).stepIndex}
@@ -62,5 +64,22 @@ export default compose(
   branch(
     ({ onboarding }) => (!onboarding.run || !stagesArray[onboarding.stageIndex]) && !onboarding.help.run,
     renderNothing
-  )
+  ),
+  withHandlers({
+    handleClose: ({ setOnboarding, onboarding }) => event => {
+      if (event.keyCode === 27) {
+        setOnboarding({ ...onboarding, run: false, help: { ...onboarding.help, run: false } })
+      }
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { handleClose } = this.props
+      document.addEventListener('keydown', handleClose)
+    },
+    componentWillUnmount() {
+      const { handleClose } = this.props
+      document.removeEventListener('keydown', handleClose)
+    },
+  })
 )(Onboarding)
