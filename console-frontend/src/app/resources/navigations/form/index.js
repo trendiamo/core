@@ -9,6 +9,7 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { find } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
@@ -89,7 +90,7 @@ export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
-  withState('navigationItemsPictures', 'setNavigationItemsPictures', []),
+  withState('navigationItemsPictures', 'setNavigationItemsPictures', () => []),
   withHandlers({
     uploadSubImage: () => async ({ blob, setProgress, subform }) => {
       const picUrl = await uploadImage({
@@ -167,7 +168,10 @@ export default compose(
       return result
     },
     setPicture: ({ navigationItemsPictures, setNavigationItemsPictures }) => (index, blob, setProgress) => {
-      navigationItemsPictures.push({ index, blob, setProgress })
+      const picture = { index, blob, setProgress }
+      find(navigationItemsPictures, { index })
+        ? navigationItemsPictures.splice(index, 1, picture)
+        : navigationItemsPictures.push(picture)
       setNavigationItemsPictures(navigationItemsPictures)
     },
   }),
