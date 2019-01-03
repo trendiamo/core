@@ -1,8 +1,8 @@
 /* eslint-disable local-rules/no-relative-parent-imports */
 import BackButton from 'shared/back-button'
-import Cover, { BelowCover } from 'app/content/cover'
 import Plugin from '../plugin'
 import { action } from '@storybook/addon-actions'
+import { BelowCover, Cover } from 'plugin-base'
 import { h } from 'preact'
 import { InlineCode, Main, Note } from '../components'
 

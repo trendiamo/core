@@ -1,6 +1,6 @@
 /* eslint-disable local-rules/no-relative-parent-imports */
-import Cover, { BelowCover } from 'app/content/cover'
 import Plugin from '../plugin'
+import { BelowCover, Cover } from 'plugin-base'
 import { ChatBackground, ChatMessage, ChatOptions } from 'app/content/scripted-chat/shared'
 import { CoverScriptedChat } from 'app/content/scripted-chat'
 import { h } from 'preact'

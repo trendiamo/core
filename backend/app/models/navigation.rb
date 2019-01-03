@@ -10,7 +10,8 @@ class Navigation < ApplicationRecord
 
   def as_json(_options = {})
     extra_attributes = {
-      persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
+      persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name,
+                 description: persona.description, },
       navigation_items_attributes: navigation_items.map(&:as_json),
       type: "Navigation",
     }

@@ -3,7 +3,7 @@ import React from 'react'
 import Section from 'shared/section'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
-import { Grid, TextField } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 
 const NavigationItem = ({
   allowDelete,
@@ -27,39 +27,37 @@ const NavigationItem = ({
       hideTop
       title={`Navigation Item #${index + 1}`}
     >
-      <Grid item sm={6}>
-        <TextField
-          disabled={isCropping || isFormLoading}
-          fullWidth
-          label="Url"
-          margin="normal"
-          name="navigationItem_url"
-          onChange={editNavigationItemValue}
-          required
-          value={navigationItem.url}
-        />
-        <TextField
-          disabled={isCropping || isFormLoading}
-          fullWidth
-          label="Text"
-          margin="normal"
-          name="navigationItem_text"
-          onChange={editNavigationItemValue}
-          required
-          value={navigationItem.text}
-        />
-        <PictureUploader
-          disabled={isCropping}
-          label="Picture"
-          onChange={setPictureUrl}
-          required
-          setDisabled={setIsCropping}
-          setPic={setPicture}
-          square
-          value={navigationItem.picUrl}
-        />
-        {progress && <ProgressBar progress={progress} />}
-      </Grid>
+      <TextField
+        disabled={isCropping || isFormLoading}
+        fullWidth
+        label="Url"
+        margin="normal"
+        name="navigationItem_url"
+        onChange={editNavigationItemValue}
+        required
+        value={navigationItem.url}
+      />
+      <TextField
+        disabled={isCropping || isFormLoading}
+        fullWidth
+        label="Text"
+        margin="normal"
+        name="navigationItem_text"
+        onChange={editNavigationItemValue}
+        required
+        value={navigationItem.text}
+      />
+      <PictureUploader
+        disabled={isCropping}
+        label="Picture"
+        onChange={setPictureUrl}
+        required
+        setDisabled={setIsCropping}
+        setPic={setPicture}
+        square
+        value={navigationItem.picUrl}
+      />
+      {progress && <ProgressBar progress={progress} />}
     </FormSection>
   </Section>
 )

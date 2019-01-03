@@ -4,12 +4,11 @@ import Welcome from './welcome'
 import { action } from '@storybook/addon-actions'
 import { Basics, CoverFixedPositionLogic, PulsatingEffect } from './layout'
 import { Card, CardContent, CardImg, CardsContainer, CardsWrapper } from 'shared/card'
-import { Showcase, Navigation, Outro, ScriptedChat } from './modules'
 import { h } from 'preact'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose } from 'icons'
 import { List, ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
+import { Navigation, Outro, ScriptedChat, Showcase } from './modules'
 import { storiesOf } from '@storybook/react'
-import { Tile, TilesWrapper } from 'shared/tiles'
 import './styles.css'
 
 const PluginContainer = styled.div`
@@ -72,26 +71,6 @@ storiesOf('Basic Components', module)
           <ListChevron />
         </ListItem>
       </List>
-    </PluginContainer>
-  ))
-  // .add('Tiles w/ icon', () => (
-  //   <PluginContainer>
-  //     <TilesWrapper>
-  //       <Tile Icon={IconSchool} title="Study" />
-  //       <Tile Icon={IconPortfolio} title="Work" />
-  //       <Tile Icon={IconFamily} title="Family" />
-  //       <Tile Icon={IconTree} title="Leisure" />
-  //     </TilesWrapper>
-  //   </PluginContainer>
-  // ))
-  .add('Tiles', () => (
-    <PluginContainer>
-      <TilesWrapper>
-        <Tile imageUrl="https://placeimg.com/300/300/arch?1" title="Lisbon" />
-        <Tile imageUrl="https://placeimg.com/300/300/arch?2" title="Barcelona" />
-        <Tile imageUrl="https://placeimg.com/300/300/arch?3" title="Madrid" />
-        <Tile imageUrl="https://placeimg.com/300/300/arch?4" title="Berlin" />
-      </TilesWrapper>
     </PluginContainer>
   ))
 

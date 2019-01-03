@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { animate } from 'shared/animate'
+import { animate } from 'plugin-base'
 import { h } from 'preact'
 import { IconChevronLeft } from 'icons'
 

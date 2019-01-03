@@ -2,7 +2,7 @@
 import Plugin from '../plugin'
 import { h } from 'preact'
 import { Main } from '../components'
-import { NavigationBase } from 'app/content/navigation'
+import { Navigation as NavigationComp } from 'plugin-base'
 
 const navigationItems = [
   {
@@ -44,7 +44,7 @@ const Navigation = () => (
     <Main>
       <p>{'Show some tiles which take the user to other pages - this could be used to apply filters in some cases.'}</p>
     </Main>
-    <Plugin Component={<NavigationBase navigationItems={navigationItems} />} />
+    <Plugin Component={<NavigationComp navigationItems={navigationItems} />} />
   </div>
 )
 

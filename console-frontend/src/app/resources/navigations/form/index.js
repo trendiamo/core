@@ -1,5 +1,6 @@
 import CircularProgress from 'shared/circular-progress'
 import NavigationItem from './navigation-item'
+import PluginPreview from 'shared/plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
@@ -11,6 +12,7 @@ import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { find } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import { Navigation } from 'plugin-base'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -35,30 +37,28 @@ const NavigationForm = ({
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
-      <Grid item sm={6}>
-        <TextField
-          autoFocus
-          disabled={isFormLoading}
-          fullWidth
-          label="Name"
-          margin="normal"
-          name="name"
-          onChange={setFieldValue}
-          required
-          value={form.name}
-        />
-        <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
-        <Select
-          autocomplete={apiPersonasAutocomplete}
-          defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
-          disabled={isFormLoading}
-          label="Persona"
-          onChange={selectPersona}
-          placeholder="Choose a persona..."
-          required
-        />
-        <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
-      </Grid>
+      <TextField
+        autoFocus
+        disabled={isFormLoading}
+        fullWidth
+        label="Name"
+        margin="normal"
+        name="name"
+        onChange={setFieldValue}
+        required
+        value={form.name}
+      />
+      <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
+      <Select
+        autocomplete={apiPersonasAutocomplete}
+        defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+        disabled={isFormLoading}
+        label="Persona"
+        onChange={selectPersona}
+        placeholder="Choose a persona..."
+        required
+      />
+      <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
     </Section>
     {form.navigationItemsAttributes.map((navigationItem, index) => (
       // eslint-disable-next-line react/no-array-index-key
@@ -85,12 +85,58 @@ const NavigationForm = ({
   </Form>
 )
 
+const transform = navigationItems =>
+  navigationItems.map(e => ({
+    id: e.id || 'new',
+    text: e.text,
+    url: e.url,
+    picture: { url: e.picUrl },
+  }))
+
+const NavigationSuperForm = compose(
+  withHandlers({
+    onTileClick: () => ({ url }) => window.open(url, '_blank'),
+  })
+)(({ form, onTileClick, persona, ...props }) => (
+  <Grid container spacing={24}>
+    <Grid item md={6} xs={12}>
+      <NavigationForm form={form} {...props} />
+    </Grid>
+    <Grid item md={6} xs={12}>
+      <PluginPreview>
+        <Navigation
+          navigationItems={transform(form.navigationItemsAttributes)}
+          onTileClick={onTileClick}
+          persona={persona}
+        />
+      </PluginPreview>
+    </Grid>
+  </Grid>
+))
+
+const emptyPersona = {
+  name: '',
+  profilePic: {
+    url: '',
+  },
+}
+
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('navigationItemsPictures', 'setNavigationItemsPictures', () => []),
+  withState('persona', 'setPersona', emptyPersona),
+  withHandlers({
+    convertPersona: () => persona => ({
+      name: persona ? persona.name : '',
+      description: persona ? persona.description : '',
+      profilePic: {
+        url: persona ? persona.profilePicUrl : '',
+      },
+    }),
+  }),
   withHandlers({
     uploadSubImage: () => async ({ blob, setProgress, subform }) => {
       const picUrl = await uploadImage({
@@ -117,6 +163,11 @@ export default compose(
     },
   }),
   withHandlers({
+    loadFormObject: ({ convertPersona, loadFormObject, setPersona }) => async () => {
+      const result = await loadFormObject()
+      setPersona(convertPersona(result.__persona))
+      return result
+    },
     saveFormObject: ({ saveFormObject, setErrors, uploadSubImages }) => async form => {
       await Promise.all(uploadSubImages(form))
       return saveFormObject(form, { setErrors })
@@ -155,11 +206,12 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    selectPersona: ({ form, setForm }) => ({ value }) => {
+    selectPersona: ({ convertPersona, form, setForm, setPersona }) => ({ value }) => {
       setForm({
         ...form,
         personaId: value.id,
       })
+      setPersona(convertPersona(value))
     },
     onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
@@ -183,4 +235,4 @@ export default compose(
   withProps(({ breadcrumbs }) => ({
     title: breadcrumbs.slice(-1)[0].text,
   }))
-)(NavigationForm)
+)(NavigationSuperForm)

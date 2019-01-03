@@ -1,5 +1,5 @@
+import React from 'react'
 import styled from 'styled-components'
-import { h } from 'preact'
 
 const TilesWrapper = styled.div`
   align-content: baseline;

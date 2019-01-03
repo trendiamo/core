@@ -1,14 +1,12 @@
 import ChatLogUi from './chat-log-ui'
-import Cover, { BelowCover } from 'app/content/cover'
 import styled from 'styled-components'
+import { BelowCover, Cover, CoverImg, PaddedCover, PersonaDescription, TopSlideAnimation } from 'plugin-base'
 import { branch, compose, renderNothing, withProps } from 'recompose'
 import { ChatBackground } from './shared'
 import { Consumer } from 'ext/graphql-context'
-import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { isGraphCMS } from 'config'
-import { TopSlideAnimation } from 'shared/animate'
 
 const FlexDiv = styled.div`
   display: flex;

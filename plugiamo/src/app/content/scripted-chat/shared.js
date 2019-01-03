@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 import { IconAnimatedEllipsis, IconChevronRight } from 'icons'
-import { TopSlideAnimation } from 'shared/animate'
+import { TopSlideAnimation } from 'plugin-base'
 
 const AnimatedEllipsis = styled(IconAnimatedEllipsis)`
   width: 15px;
