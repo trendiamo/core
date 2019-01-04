@@ -1,4 +1,3 @@
-import LiveTimestamp from 'shared/live-timestamp'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
@@ -57,9 +56,6 @@ const ChatMessage = ({ log, isMessageShown }) => (
     {isMessageShown && <MessageContent dangerouslySetInnerHTML={{ __html: snarkdown(log.message.text) }} />}
     <MessageMetadata>
       {isMessageShown || <AnimatedEllipsis />} <span>{log.from}</span>
-      {isMessageShown && ' ('}
-      {isMessageShown && <LiveTimestamp timestamp={log.timestamp} />}
-      {isMessageShown && ')'}
     </MessageMetadata>
   </MessageContainer>
 )
