@@ -10,7 +10,7 @@ const Cover = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 
   @media (min-height: 500px) {
     position: fixed;
