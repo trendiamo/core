@@ -11,6 +11,7 @@ const CardsWrapper = styled.div`
 const CardsContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   padding-right: 1rem;
 `
 
