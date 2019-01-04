@@ -7,7 +7,7 @@ import { Card, CardContent, CardImg, CardsContainer, CardsWrapper } from 'shared
 import { h } from 'preact'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose } from 'icons'
 import { List, ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
-import { Navigation, Outro, ScriptedChat, Showcase } from './modules'
+import { Navigation, Outro, ScriptedChat, Showcase, Spotahome } from './modules'
 import { storiesOf } from '@storybook/react'
 import './styles.css'
 
@@ -30,6 +30,7 @@ storiesOf('Modules', module)
   .add('Navigation', Navigation)
   .add('Scripted Chat', ScriptedChat)
   .add('Outro', Outro)
+  .add('Spotahome', Spotahome)
 
 storiesOf('Basic Components', module)
   .add('Arrow', () => <Arrow />)
