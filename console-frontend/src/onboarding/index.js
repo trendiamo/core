@@ -45,9 +45,9 @@ const Onboarding = ({ onboarding }) => (
       continuous
       disableCloseOnEsc
       disableOverlayClose
-      disableScrolling
       floaterProps={floaterProps}
       run={onboarding.run || onboarding.help.run}
+      scrollToFirstStep
       stepIndex={getOnboardingConfig(onboarding).stepIndex}
       steps={getOnboardingConfig(onboarding).steps}
       styles={styles}
@@ -71,11 +71,29 @@ export default compose(
         setOnboarding({ ...onboarding, run: false, help: { ...onboarding.help, run: false } })
       }
     },
+    setStyleToPortal: () => () => {
+      // There's currently no other way to fix scrolling bug on elements with position:fixed.
+      const portal = document.querySelector("[id^='react-joyride:']")
+      if (portal && portal.style) {
+        portal.style.position = 'absolute'
+        portal.style.top = '0'
+      }
+    },
   }),
   lifecycle({
     componentDidMount() {
-      const { handleClose } = this.props
-      document.addEventListener('keydown', handleClose)
+      const { handleClose, setStyleToPortal } = this.props
+      // Was set to act after the JoyRide's scroll timeout of 100ms. (Joyride src: src/components/Overlay.js line 76)
+      setTimeout(() => {
+        setStyleToPortal()
+        document.addEventListener('keydown', handleClose)
+      }, 200)
+    },
+    componentDidUpdate() {
+      const { setStyleToPortal } = this.props
+      setTimeout(() => {
+        setStyleToPortal()
+      }, 200)
     },
     componentWillUnmount() {
       const { handleClose } = this.props
