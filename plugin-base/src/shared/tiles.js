@@ -56,7 +56,7 @@ const Box = styled.div`
 `
 
 const Background = styled.div`
-  background-image: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl})` : 'none')};
+  background-image: ${({ imageUrl }) => (imageUrl ? `url('${imageUrl}')` : 'none')};
   background-size: cover;
   transition: transform 0.2s linear;
 
