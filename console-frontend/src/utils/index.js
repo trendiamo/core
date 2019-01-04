@@ -43,7 +43,6 @@ import {
   apiWebsiteUpdate,
 } from './auth-requests'
 import { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn } from './requests'
-import { includes } from 'lodash'
 
 export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn }
 export {
@@ -133,15 +132,16 @@ const listRequestsExceptions = [
   'apiPersonaList',
 ]
 
-export const apiRequest = async (request, args, options) => {
-  const promise = args.length === 0 ? request() : request(...args)
-  const response = await promise.catch(() => ({ error: 'network error' }))
+export const apiRequest = async (requestMethod, args, options) => {
+  const promise = args.length === 0 ? requestMethod() : requestMethod(...args)
+  const response = await promise.catch(() => ({ json: () => ({ error: 'network error' }) }))
   console.log('response', response)
   const success = handleStatus(response, options)
   console.log('success', success)
   const json = success ? await response.json() : { error: 'Bad Request' }
   console.log('json', json)
-  const result = includes(listRequestsExceptions, request.name)
+  console.log('requestMethod.name', requestMethod.name, listRequestsExceptions.includes(requestMethod.name))
+  const result = listRequestsExceptions.includes(requestMethod.name)
     ? { json, count: success ? extractCountFromHeaders(response.headers) : 0 }
     : json
   console.log('result', result)
