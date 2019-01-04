@@ -93,7 +93,7 @@ const EditWebsite = ({
       value={form.name}
     />
     <FormControlLabel
-      control={<Checkbox checked={!form.previewMode} onChange={setPreviewMode} />}
+      control={<Checkbox checked={!form.previewMode} color="primary" onChange={setPreviewMode} />}
       disabled={isFormLoading}
       label="Live"
     />

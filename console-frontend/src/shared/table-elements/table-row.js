@@ -1,15 +1,10 @@
+import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import EditIcon from '@material-ui/icons/EditOutlined'
-import MuiCheckBoxIcon from '@material-ui/icons/CheckBox'
 import React from 'react'
-import styled from 'styled-components'
 import TableCell from './table-cell'
 import { Button, Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
 import { compose, withHandlers } from 'recompose'
 import { Link } from 'react-router-dom'
-
-const CheckBoxIcon = styled(MuiCheckBoxIcon)`
-  color: blue;
-`
 
 const TableRow = compose(
   withHandlers({
@@ -26,7 +21,12 @@ const TableRow = compose(
 )(({ resource, handleSelect, selectedIds, resourceEditPath, children }) => (
   <MuiTableRow hover role="checkbox" tabIndex={-1}>
     <TableCell>
-      <Checkbox checked={selectedIds.includes(resource.id)} checkedIcon={<CheckBoxIcon />} onChange={handleSelect} />
+      <Checkbox
+        checked={selectedIds.includes(resource.id)}
+        checkedIcon={<CheckBoxIcon />}
+        color="primary"
+        onChange={handleSelect}
+      />
     </TableCell>
     {children}
     <TableCell
