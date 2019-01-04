@@ -180,7 +180,7 @@ export const styles = theme => ({
     display: 'inline-block',
     position: 'fixed',
     textAlign: 'center',
-    top: 0,
+    top: '64px',
   },
   loadingMessage: {
     position: 'relative',
