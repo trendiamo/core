@@ -92,24 +92,26 @@ export {
 
 const handleStatus = (response, options) => {
   if (!response.status) {
-    options.enqueueSnackbar('Network Error', { variant: 'error' })
+    if (options && options.enqueueSnackbar) options.enqueueSnackbar('Network Error', { variant: 'error' })
     return false
   }
   if (response.status === 403 || response.status === 401) {
     auth.clear()
     throw new Error('Invalid Credentials')
   }
-  const exceptionsStatusCodes = [400, 401, 403, 422]
-  if (options && options.enqueueSnackbar && !includes(exceptionsStatusCodes, response.status)) {
-    if (response.status >= 500) {
-      options.enqueueSnackbar('Server Error', { variant: 'error' })
-      return false
-    } else if (response.status >= 400 && response.status < 500) {
-      options.enqueueSnackbar('Bad Request', { variant: 'error' })
-      return false
-    } else if (response.status >= 200 && response.status < 400 && options.successMessage && options.successVariant) {
-      options.enqueueSnackbar(options.successMessage, { variant: options.successVariant })
+  if (response.status >= 500) {
+    if (options && options.enqueueSnackbar) options.enqueueSnackbar('Server Error', { variant: 'error' })
+    return false
+  }
+  if (response.status >= 400) {
+    if (response.status !== 422) {
+      // not displaying snackbar for 422, as it'll be handled via error forms
+      if (options && options.enqueueSnackbar) options.enqueueSnackbar('Bad Request', { variant: 'error' })
     }
+    return false
+  }
+  if (options && options.successMessage && options.successVariant && options.enqueueSnackbar) {
+    options.enqueueSnackbar(options.successMessage, { variant: options.successVariant })
   }
   return true
 }
@@ -134,9 +136,14 @@ const listRequestsExceptions = [
 export const apiRequest = async (request, args, options) => {
   const promise = args.length === 0 ? request() : request(...args)
   const response = await promise.catch(() => ({ error: 'network error' }))
+  console.log('response', response)
   const success = handleStatus(response, options)
+  console.log('success', success)
   const json = success ? await response.json() : { error: 'Bad Request' }
-  return includes(listRequestsExceptions, request.name)
+  console.log('json', json)
+  const result = includes(listRequestsExceptions, request.name)
     ? { json, count: success ? extractCountFromHeaders(response.headers) : 0 }
     : json
+  console.log('result', result)
+  return result
 }
