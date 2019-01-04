@@ -66,12 +66,16 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
         const resourceResponse = await apiRequest(api.fetch, [query], {
           enqueueSnackbar,
         })
-        if (resourceResponse.error || resourceResponse.errors) return
         setSelectedIds([])
         setIsSelectAll(false)
-        setRecords(resourceResponse.json)
-        setRecordsCount(resourceResponse.count)
         setIsLoading(false)
+        if (resourceResponse.json.error || resourceResponse.json.errors) {
+          setRecords([])
+          setRecordsCount(0)
+        } else {
+          setRecords(resourceResponse.json)
+          setRecordsCount(resourceResponse.count)
+        }
         return resourceResponse
       },
     }),

@@ -90,27 +90,26 @@ export {
   apiWebsiteUpdate,
 }
 
-const handleStatus = (result, options) => {
-  if (!result.status) {
+const handleStatus = (response, options) => {
+  if (!response.status) {
     options.enqueueSnackbar('Network Error', { variant: 'error' })
     return false
   }
-  if (result.status === 403 || result.status === 401) {
+  if (response.status === 403 || response.status === 401) {
     auth.clear()
     throw new Error('Invalid Credentials')
   }
   const exceptionsStatusCodes = [400, 401, 403, 422]
-  if (options && options.enqueueSnackbar && !includes(exceptionsStatusCodes, result.status)) {
-    if (result.status >= 500) {
+  if (options && options.enqueueSnackbar && !includes(exceptionsStatusCodes, response.status)) {
+    if (response.status >= 500) {
       options.enqueueSnackbar('Server Error', { variant: 'error' })
       return false
-    } else if (result.status >= 400 && result.status < 500) {
+    } else if (response.status >= 400 && response.status < 500) {
       options.enqueueSnackbar('Bad Request', { variant: 'error' })
       return false
-    } else if (result.status >= 200 && result.status < 400 && options.successMessage && options.successVariant) {
+    } else if (response.status >= 200 && response.status < 400 && options.successMessage && options.successVariant) {
       options.enqueueSnackbar(options.successMessage, { variant: options.successVariant })
     }
-    return true
   }
   return true
 }
@@ -136,9 +135,8 @@ export const apiRequest = async (request, args, options) => {
   const promise = args.length === 0 ? request() : request(...args)
   const response = await promise.catch(() => ({ error: 'network error' }))
   const success = handleStatus(response, options)
-  if (!success) return { error: 'Bad Request' }
-  const json = await response.json()
+  const json = success ? await response.json() : { error: 'Bad Request' }
   return includes(listRequestsExceptions, request.name)
-    ? { json, count: extractCountFromHeaders(response.headers) }
+    ? { json, count: success ? extractCountFromHeaders(response.headers) : 0 }
     : json
 }
