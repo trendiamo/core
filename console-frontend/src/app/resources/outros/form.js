@@ -67,7 +67,7 @@ const emptyPreviewOutro = {
   persona: {
     name: '',
     profilePic: {
-      url: '',
+      url: '/img/icons/placeholder_avatar.png',
     },
   },
 }
@@ -81,7 +81,7 @@ export default compose(
     convertPersona: () => persona => ({
       name: persona ? persona.name : '',
       profilePic: {
-        url: persona ? persona.profilePicUrl : '',
+        url: persona ? persona.profilePicUrl : emptyPreviewOutro.persona.profilePic.url,
       },
     }),
   }),

@@ -90,7 +90,7 @@ const transform = navigationItems =>
     id: e.id || 'new',
     text: e.text,
     url: e.url,
-    picture: { url: e.picUrl },
+    picture: { url: e.picUrl || '/img/icons/placeholder_product.png' },
   }))
 
 const NavigationSuperForm = compose(
@@ -117,7 +117,7 @@ const NavigationSuperForm = compose(
 const emptyPersona = {
   name: '',
   profilePic: {
-    url: '',
+    url: '/img/icons/placeholder_avatar.png',
   },
 }
 
@@ -133,7 +133,7 @@ export default compose(
       name: persona ? persona.name : '',
       description: persona ? persona.description : '',
       profilePic: {
-        url: persona ? persona.profilePicUrl : '',
+        url: persona ? persona.profilePicUrl : emptyPersona.profilePic.url,
       },
     }),
   }),
