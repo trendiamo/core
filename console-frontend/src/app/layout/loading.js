@@ -1,5 +1,7 @@
 import React from 'react'
 import { CircularProgress } from '@material-ui/core'
+import { compose } from 'recompose'
+import { withClassesConsumer } from 'ext/recompose/with-classes'
 
 const Loading = ({ classes }) => (
   <div className={classes.loadingContainer}>
@@ -11,4 +13,4 @@ const Loading = ({ classes }) => (
   </div>
 )
 
-export default Loading
+export default compose(withClassesConsumer)(Loading)

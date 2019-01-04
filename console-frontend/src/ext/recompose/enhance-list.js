@@ -1,5 +1,5 @@
 import AppBarButton from 'shared/app-bar-button'
-import CircularProgress from 'shared/circular-progress'
+import CircularProgress from 'app/layout/loading'
 import MuiCheckBoxIcon from '@material-ui/icons/CheckBox'
 import React from 'react'
 import Section from 'shared/section'
