@@ -107,7 +107,7 @@ const handleStatus = (result, options) => {
     } else if (result.status >= 400 && result.status < 500) {
       options.enqueueSnackbar('Bad Request', { variant: 'error' })
       return false
-    } else if (result.status >= 200 && result.status < 300 && options.successMessage && options.successVariant) {
+    } else if (result.status >= 200 && result.status < 400 && options.successMessage && options.successVariant) {
       options.enqueueSnackbar(options.successMessage, { variant: options.successVariant })
       return false
     }
@@ -115,20 +115,14 @@ const handleStatus = (result, options) => {
   return true
 }
 
-const listRequest = async result => {
-  const json = await result.json()
-  const count = parseInt(
-    result.headers
+const extractCountFromHeaders = headers =>
+  parseInt(
+    headers
       .get('content-range')
       .split('/')
       .pop(),
     10
   )
-  return {
-    json,
-    count,
-  }
-}
 
 export const apiRequest = async (request, args, options) => {
   const method = args.length === 0 ? request() : request(...args)
@@ -142,5 +136,8 @@ export const apiRequest = async (request, args, options) => {
     'apiOutroList',
     'apiPersonaList',
   ]
-  return includes(listRequestsExceptions, request.name) ? listRequest(result) : await result.json()
+  const json = await result.json()
+  return includes(listRequestsExceptions, request.name)
+    ? { json, count: extractCountFromHeaders(result.headers) }
+    : json
 }
