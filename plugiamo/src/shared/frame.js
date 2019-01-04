@@ -24,6 +24,7 @@ const style = `
 body, html {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   margin: 0;
+  height: 100%;
 }
 `
 
