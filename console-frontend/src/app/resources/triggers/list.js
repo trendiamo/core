@@ -25,12 +25,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { camelize } from 'inflected'
-import {
-  Close,
-  EditOutlined as EditIcon,
-  CheckBox as MuiCheckBoxIcon,
-  Reorder as ReorderIcon,
-} from '@material-ui/icons'
+import { CheckBox as CheckBoxIcon, Close, EditOutlined as EditIcon, Reorder as ReorderIcon } from '@material-ui/icons'
 import { createGlobalStyle } from 'styled-components'
 import { isEqual } from 'lodash'
 import { Link } from 'react-router-dom'
@@ -47,10 +42,6 @@ const BlankState = () => (
     title="Create a new trigger"
   />
 )
-
-const CheckBoxIcon = styled(MuiCheckBoxIcon)`
-  color: blue;
-`
 
 const InlineTypography = styled(({ ...props }) => <Typography {...omit(props, ['highlight'])} />)`
   display: inline-block;
@@ -265,7 +256,12 @@ const TriggerList = ({
           <React.Fragment>
             <TableCell>{'Sort'}</TableCell>
             <TableCell>
-              <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
+              <Checkbox
+                checked={isSelectAll}
+                checkedIcon={<CheckBoxIcon />}
+                color="primary"
+                onClick={handleSelectAll}
+              />
             </TableCell>
           </React.Fragment>
         }

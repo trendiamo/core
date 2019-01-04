@@ -1,9 +1,8 @@
 import AppBarButton from 'shared/app-bar-button'
+import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CircularProgress from 'app/layout/loading'
-import MuiCheckBoxIcon from '@material-ui/icons/CheckBox'
 import React from 'react'
 import Section from 'shared/section'
-import styled from 'styled-components'
 import withAppBarContent from './with-app-bar-content'
 import { apiRequest } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -14,10 +13,6 @@ import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-eleme
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 import { withSnackbar } from 'notistack'
-
-const CheckBoxIcon = styled(MuiCheckBoxIcon)`
-  color: blue;
-`
 
 const Actions = ({ createRoute }) => (
   <AppBarButton color="primary" component={Link} to={createRoute} variant="contained">
@@ -159,7 +154,12 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
             handleRequestSort={handleRequestSort}
             leftColumns={
               <TableCell>
-                <Checkbox checked={isSelectAll} checkedIcon={<CheckBoxIcon />} onClick={handleSelectAll} />
+                <Checkbox
+                  checked={isSelectAll}
+                  checkedIcon={<CheckBoxIcon />}
+                  color="primary"
+                  onClick={handleSelectAll}
+                />
               </TableCell>
             }
             orderBy={orderBy}
