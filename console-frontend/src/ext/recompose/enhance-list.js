@@ -20,6 +20,15 @@ const Actions = ({ createRoute }) => (
   </AppBarButton>
 )
 
+const extractCountFromHeaders = headers =>
+  parseInt(
+    headers
+      .get('content-range')
+      .split('/')
+      .pop(),
+    10
+  )
+
 const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) => ResourceRow =>
   compose(
     withOnboardingHelp(help),
@@ -63,20 +72,19 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
         enqueueSnackbar,
       }) => async () => {
         setIsLoading(true)
-        const { json, count } = await apiRequest(api.fetch, [query], {
-          enqueueSnackbar,
-        })
+        const { json, response, errors, requestError, ...rest } = await apiRequest(api.fetch, [query])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         setSelectedIds([])
         setIsSelectAll(false)
         setIsLoading(false)
-        if (json.error || json.errors) {
+        if (requestError || errors) {
           setRecords([])
           setRecordsCount(0)
         } else {
           setRecords(json)
-          setRecordsCount(count)
+          setRecordsCount(extractCountFromHeaders(response.headers))
         }
-        return { json, count }
+        return { json, response, errors, requestError, ...rest }
       },
     }),
     lifecycle({
@@ -97,9 +105,8 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
     branch(({ recordsCount }) => recordsCount === 0, renderComponent(blankState)),
     withHandlers({
       deleteRecords: ({ enqueueSnackbar, selectedIds, fetchRecords, setSelectedIds, setIsSelectAll }) => async () => {
-        await apiRequest(api.destroy, [{ ids: selectedIds }], {
-          enqueueSnackbar,
-        })
+        const { requestError } = await apiRequest(api.destroy, [{ ids: selectedIds }])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         await fetchRecords()
         setSelectedIds([])
         setIsSelectAll(false)

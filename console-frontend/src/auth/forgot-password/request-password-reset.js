@@ -69,11 +69,9 @@ export default compose(
     },
     passwordChangeSubmit: ({ enqueueSnackbar, passwordForm }) => async event => {
       event.preventDefault()
-      const json = await apiRequest(apiPasswordEmailLink, [{ user: { email: passwordForm.email } }], {
-        enqueueSnackbar,
-        successMessage: 'Email sent!',
-        successVariant: 'info',
-      })
+      const { json, requestError } = await apiRequest(apiPasswordEmailLink, [{ user: { email: passwordForm.email } }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (!requestError) enqueueSnackbar('Email sent!', { variant: 'info' })
       return json
     },
     setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>

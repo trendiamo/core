@@ -16,7 +16,6 @@ import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset, MuiThemeProvider } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
-import { extractErrors } from 'utils/shared'
 import { NavigationCreate, NavigationEdit, NavigationsList } from './resources/navigations'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
@@ -98,12 +97,10 @@ const AppBase = compose(
   lifecycle({
     componentDidMount() {
       const { enqueueSnackbar, setLoading } = this.props
-      apiRequest(apiGetCsrfToken, [], {
-        enqueueSnackbar,
-      }).then(json => {
+      apiRequest(apiGetCsrfToken, []).then(({ json, errors, requestError }) => {
         setLoading(false)
-        const errors = extractErrors(json)
-        if (!errors) auth.setCsrfToken(json)
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (!requestError && !errors) auth.setCsrfToken(json)
       })
     },
   }),

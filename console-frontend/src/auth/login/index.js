@@ -8,7 +8,6 @@ import { apiRequest, apiSignIn } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
-import { extractErrors } from 'utils/shared'
 import { withSnackbar } from 'notistack'
 
 const AuthMessage = () => (
@@ -78,22 +77,13 @@ export default compose(
   withHandlers({
     loginSubmit: ({ enqueueSnackbar, loginForm, setErrors }) => async event => {
       event.preventDefault()
-      const response = await apiRequest(
-        apiSignIn,
-        [{ user: { email: loginForm.email, password: loginForm.password } }],
-        {
-          enqueueSnackbar,
-        }
-      )
-      const errors = extractErrors(response)
-      if (errors) {
-        setErrors(errors)
-      } else {
-        response && auth.setUser(response.user)
-      }
-      if (auth.isLoggedIn()) {
-        window.location.href = routes.root()
-      }
+      const { json, errors, requestError } = await apiRequest(apiSignIn, [
+        { user: { email: loginForm.email, password: loginForm.password } },
+      ])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) setErrors(errors)
+      if (!requestError && !errors) auth.setUser(json.user)
+      if (auth.isLoggedIn()) window.location.href = routes.root()
     },
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),

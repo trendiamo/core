@@ -114,8 +114,8 @@ const Select = compose(
         setIsMenuOpen(true)
         setIsFocussed(true)
         if (defaultOptions.length > 0) return
-        const rawOptions = await apiRequest(autocomplete, [''])
-        const options = rawOptions.map(option => {
+        const { json } = await apiRequest(autocomplete, [''])
+        const options = json.map(option => {
           return { value: option, label: option.name, name }
         })
         setDefaultOptions(options)
@@ -123,8 +123,8 @@ const Select = compose(
       loadOptions: ({ name, setIsMenuOpen, debouncedAutocomplete }) => async searchQuery => {
         if (searchQuery.length <= 2) return setIsMenuOpen(false)
         setIsMenuOpen(true)
-        const rawOptions = await apiRequest(debouncedAutocomplete, [{ searchQuery }])
-        const options = rawOptions.map(option => {
+        const { json } = await apiRequest(debouncedAutocomplete, [{ searchQuery }])
+        const options = json.map(option => {
           return { value: option, label: option.name, name }
         })
         return options

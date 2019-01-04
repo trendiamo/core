@@ -303,17 +303,15 @@ export default compose(
       setSelectedIds,
       setTriggers,
     }) => async () => {
-      await apiRequest(apiTriggerDestroy, [{ ids: selectedIds }], {
-        enqueueSnackbar,
-      })
-      const triggersResponse = await apiRequest(apiTriggerList, [], {
-        enqueueSnackbar,
-      })
+      const { requestError } = await apiRequest(apiTriggerDestroy, [{ ids: selectedIds }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      const { json, errors, requestError: requestError2 } = await apiRequest(apiTriggerList, [])
+      if (requestError2) enqueueSnackbar(requestError2, { variant: 'error' })
       setIsLoading(false)
       setSelectedIds([])
       setIsSelectAll(false)
-      if (triggersResponse.error || triggersResponse.errors) return
-      setTriggers(triggersResponse)
+      if (errors) return
+      setTriggers(json)
     },
     handleSelectAll: ({ setSelectedIds, triggers, setIsSelectAll }) => event => {
       setSelectedIds(event.target.checked ? triggers.map(trigger => trigger.id) : [])
@@ -323,21 +321,18 @@ export default compose(
       const orderedTriggers = arrayMove(triggers, oldIndex, newIndex)
       const orderedIds = orderedTriggers.map(trigger => trigger.id)
       setTriggers(orderedTriggers)
-      await apiRequest(apiTriggerSort, [{ ids: orderedIds }], {
-        enqueueSnackbar,
-        successMessage: 'Sorted!',
-        successVariant: 'success',
-      })
+      const { errors, requestError } = await apiRequest(apiTriggerSort, [{ ids: orderedIds }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (!errors && !requestError) enqueueSnackbar('Sorted!', { variant: 'success' })
     },
   }),
   lifecycle({
     async componentDidMount() {
       const { enqueueSnackbar, setIsLoading, setTriggers } = this.props
-      const triggersResponse = await apiRequest(apiTriggerList, [], {
-        enqueueSnackbar,
-      })
-      if (triggersResponse.error || triggersResponse.errors) return
-      setTriggers(triggersResponse)
+      const { json, errors, requestError } = await apiRequest(apiTriggerList, [])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (requestError || errors) return
+      setTriggers(json)
       setIsLoading(false)
     },
     componentDidUpdate() {

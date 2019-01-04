@@ -2,7 +2,6 @@ import routes from 'app/routes'
 import ShowcaseForm from './form'
 import { apiRequest, apiShowcaseShow, apiShowcaseUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { extractErrors } from 'utils/shared'
 import { withSnackbar } from 'notistack'
 
 export default compose(
@@ -13,27 +12,24 @@ export default compose(
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.showcaseId
-      const response = await apiRequest(apiShowcaseUpdate, [id, { showcase: form }], {
-        enqueueSnackbar,
-      })
-      const errors = extractErrors(response)
+      const { json, errors, requestError } = await apiRequest(apiShowcaseUpdate, [id, { showcase: form }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
-      return response
+      return json
     },
   }),
   withHandlers({
     loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.showcaseId
-      const response = await apiRequest(apiShowcaseShow, [id], {
-        enqueueSnackbar,
-      })
+      const { json, requestError } = await apiRequest(apiShowcaseShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       return {
-        name: response.name || '',
-        personaId: response.persona.id || '',
-        title: response.title || '',
-        subtitle: response.subtitle || '',
-        __persona: response.persona,
-        spotlightsAttributes: response.spotlightsAttributes.map(spotlight => ({
+        name: json.name || '',
+        personaId: json.persona.id || '',
+        title: json.title || '',
+        subtitle: json.subtitle || '',
+        __persona: json.persona,
+        spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
           id: spotlight.id || '',
           text: spotlight.text || '',
           personaId: spotlight.persona.id || '',

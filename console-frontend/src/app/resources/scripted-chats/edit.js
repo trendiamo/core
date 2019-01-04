@@ -3,7 +3,6 @@ import routes from 'app/routes'
 import ScriptedChatForm from './form'
 import { apiRequest, apiScriptedChatShow, apiScriptedChatUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { extractErrors } from 'utils/shared'
 import { withSnackbar } from 'notistack'
 
 const newEmptyChatMessage = () => ({
@@ -37,32 +36,28 @@ export default compose(
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.scriptedChatId
-      const response = await apiRequest(apiScriptedChatUpdate, [id, { scriptedChat: form }], {
-        enqueueSnackbar,
-        successMessage: 'Successfully Updated Scripted Chat',
-        successVariant: 'success',
-      })
-      const errors = extractErrors(response)
+      const { json, errors, requestError } = await apiRequest(apiScriptedChatUpdate, [id, { scriptedChat: form }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
-      return response
+      if (!errors && !requestError) enqueueSnackbar('Successfully updated scripted chat', { variant: 'success' })
+      return json
     },
   }),
   withHandlers({
     loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.scriptedChatId
-      const response = await apiRequest(apiScriptedChatShow, [id], {
-        enqueueSnackbar,
-      })
+      const { json, requestError } = await apiRequest(apiScriptedChatShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       let result = {
-        name: response.name || '',
-        title: response.title || '',
-        personaId: response.persona.id || '',
-        __persona: response.persona,
+        name: json.name || '',
+        title: json.title || '',
+        personaId: json.persona.id || '',
+        __persona: json.persona,
       }
-      if (response.chatStepAttributes) {
+      if (json.chatStepAttributes) {
         result = {
           ...result,
-          chatStepAttributes: treatChatSteps(response.chatStepAttributes, {}),
+          chatStepAttributes: treatChatSteps(json.chatStepAttributes, {}),
         }
       }
       return result

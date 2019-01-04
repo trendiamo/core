@@ -8,7 +8,6 @@ import { apiPasswordReset, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
-import { extractErrors } from 'utils/shared'
 import { withSnackbar } from 'notistack'
 
 const AuthMessage = () => (
@@ -75,35 +74,23 @@ export default compose(
   withHandlers({
     passwordResetSubmit: ({ enqueueSnackbar, passwordForm, setErrors }) => async event => {
       event.preventDefault()
-      const parsedUrl = queryString.parse(window.location.search)
-      if (passwordForm.fieldOne === passwordForm.fieldTwo) {
-        const response = await apiRequest(
-          apiPasswordReset,
-          [
-            {
-              user: {
-                password: passwordForm.fieldTwo,
-                reset_password_token: parsedUrl.reset_password_token,
-              },
-            },
-          ],
-          {
-            enqueueSnackbar,
-          }
-        )
-        const errors = extractErrors(response)
-        if (!response.errors && !response.error)
-          if (errors) {
-            setErrors(errors)
-          } else {
-            auth.setUser(response.user)
-          }
-        if (auth.isLoggedIn()) {
-          window.location.href = routes.root()
-        }
-      } else {
+      if (passwordForm.fieldOne !== passwordForm.fieldTwo) {
         setErrors({ status: 'error', message: "Passwords don't match" })
+        return
       }
+      const parsedUrl = queryString.parse(window.location.search)
+      const { json, errors, requestError } = await apiRequest(apiPasswordReset, [
+        {
+          user: {
+            password: passwordForm.fieldTwo,
+            reset_password_token: parsedUrl.reset_password_token,
+          },
+        },
+      ])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) setErrors(errors)
+      if (!requestError && !errors) auth.setUser(json.user)
+      if (auth.isLoggedIn()) window.location.href = routes.root()
     },
     setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
       event.preventDefault()

@@ -2,7 +2,6 @@ import NavigationForm from './form'
 import routes from 'app/routes'
 import { apiNavigationShow, apiNavigationUpdate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { extractErrors } from 'utils/shared'
 
 export default compose(
   withProps({
@@ -11,25 +10,22 @@ export default compose(
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.navigationId
-      const response = await apiRequest(apiNavigationUpdate, [id, { navigation: form }], {
-        enqueueSnackbar,
-      })
-      const errors = extractErrors(response)
+      const { json, errors, requestError } = await apiRequest(apiNavigationUpdate, [id, { navigation: form }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
-      return response
+      return json
     },
   }),
   withHandlers({
     loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.navigationId
-      const response = await apiRequest(apiNavigationShow, [id], {
-        enqueueSnackbar,
-      })
+      const { json, requestError } = await apiRequest(apiNavigationShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       return {
-        personaId: response.persona.id || '',
-        name: response.name || '',
-        __persona: response.persona,
-        navigationItemsAttributes: response.navigationItemsAttributes.map(navigationItem => ({
+        personaId: json.persona.id || '',
+        name: json.name || '',
+        __persona: json.persona,
+        navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
           id: navigationItem.id || '',
           text: navigationItem.text || '',
           url: navigationItem.url || '',

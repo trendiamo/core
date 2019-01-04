@@ -9,7 +9,6 @@ import withForm from 'ext/recompose/with-form'
 import { apiMe, apiMeUpdate, apiRequest } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Button, TextField } from '@material-ui/core'
-import { extractErrors } from 'utils/shared'
 import { Prompt } from 'react-router'
 import { withSnackbar } from 'notistack'
 
@@ -91,32 +90,30 @@ export default compose(
       })
       // update user data
       const data = { ...form, profilePicUrl }
-      const response = await apiRequest(apiMeUpdate, [{ user: data }], {
-        enqueueSnackbar,
-        successMessage: 'Successfully Updated Personal Info',
-        successVariant: 'success',
-      })
-      const errors = extractErrors(response)
-      if (errors) {
-        setErrors(errors)
-      } else {
-        auth.setUser(response)
+      const { json, errors, requestError } = await apiRequest(apiMeUpdate, [{ user: data }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) setErrors(errors)
+      if (!errors && !requestError) {
+        enqueueSnackbar('Successfully updated personal info', { variant: 'success' })
+        auth.setUser(json)
       }
-      return response
+      return json
     },
   }),
   withHandlers({
     loadFormObject: ({ enqueueSnackbar }) => async () => {
-      const user = await apiRequest(apiMe, [], {
-        enqueueSnackbar,
-      })
-      const userObject = {
-        email: user.email || '',
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        profilePicUrl: user.profilePicUrl || '',
+      const { json, requestError } = await apiRequest(apiMe, [])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+        return {}
       }
-      auth.setUser(user)
+      auth.setUser(json)
+      const userObject = {
+        email: json.email || '',
+        firstName: json.firstName || '',
+        lastName: json.lastName || '',
+        profilePicUrl: json.profilePicUrl || '',
+      }
       return userObject
     },
   }),

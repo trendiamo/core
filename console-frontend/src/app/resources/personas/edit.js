@@ -2,7 +2,6 @@ import PersonaForm from './form'
 import routes from 'app/routes'
 import { apiPersonaShow, apiPersonaUpdate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { extractErrors } from 'utils/shared'
 import { withSnackbar } from 'notistack'
 
 export default compose(
@@ -13,24 +12,21 @@ export default compose(
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.personaId
-      const response = await apiRequest(apiPersonaUpdate, [id, { persona: form }], {
-        enqueueSnackbar,
-      })
-      const errors = extractErrors(response)
+      const { json, errors, requestError } = await apiRequest(apiPersonaUpdate, [id, { persona: form }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
-      return response
+      return json
     },
   }),
   withHandlers({
     loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.personaId
-      const result = await apiRequest(apiPersonaShow, [id], {
-        enqueueSnackbar,
-      })
+      const { json, requestError } = await apiRequest(apiPersonaShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       const resultObject = {
-        name: result.name || '',
-        description: result.description || '',
-        profilePicUrl: result.profilePicUrl || '',
+        name: json.name || '',
+        description: json.description || '',
+        profilePicUrl: json.profilePicUrl || '',
       }
       return resultObject
     },

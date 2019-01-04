@@ -6,7 +6,6 @@ import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiPasswordChange, apiRequest } from 'utils'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
-import { extractErrors } from 'utils/shared'
 import { withRouter } from 'react-router'
 import { withSnackbar } from 'notistack'
 
@@ -65,15 +64,11 @@ export default compose(
         setErrors({ message: "New passwords don't match", status: 'error' })
         return
       }
-      const json = await apiRequest(apiPasswordChange, [{ user: passwordForm }], {
-        enqueueSnackbar,
-        successMessage: 'Changed Password',
-        successVariant: 'Info',
-      })
-      const errors = extractErrors(json)
-      if (errors) {
-        setErrors(errors)
-      } else {
+      const { errors, requestError } = await apiRequest(apiPasswordChange, [{ user: passwordForm }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) setErrors(errors)
+      if (!requestError && !errors) {
+        enqueueSnackbar('Changed Password', { variant: 'Info' })
         history.push(routes.root())
       }
     },

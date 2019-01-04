@@ -2,7 +2,6 @@ import routes from 'app/routes'
 import TriggerForm from './form'
 import { apiRequest, apiTriggerShow, apiTriggerUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { extractErrors } from 'utils/shared'
 import { withRouter } from 'react-router'
 import { withSnackbar } from 'notistack'
 
@@ -15,25 +14,22 @@ export default compose(
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
       const id = match.params.triggerId
-      const response = await apiRequest(apiTriggerUpdate, [id, { trigger: form }], {
-        enqueueSnackbar,
-      })
-      const errors = extractErrors(response)
+      const { json, errors, requestError } = await apiRequest(apiTriggerUpdate, [id, { trigger: form }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
-      return response
+      return json
     },
   }),
   withHandlers({
     loadFormObject: ({ enqueueSnackbar, match }) => async () => {
       const id = match.params.triggerId
-      const response = await apiRequest(apiTriggerShow, [id], {
-        enqueueSnackbar,
-      })
+      const { json, requestError } = await apiRequest(apiTriggerShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       return {
-        flowId: response.flowId || '',
-        flowType: response.flowType || '',
-        urlMatchers: response.urlMatchers || [''],
-        flowLabel: response.flow.name,
+        flowId: json.flowId || '',
+        flowType: json.flowType || '',
+        urlMatchers: json.urlMatchers || [''],
+        flowLabel: json.flow.name,
       }
     },
   })

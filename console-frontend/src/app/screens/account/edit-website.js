@@ -18,7 +18,6 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
-import { extractErrors } from 'utils/shared'
 import { Prompt } from 'react-router'
 import { withSnackbar } from 'notistack'
 
@@ -135,23 +134,19 @@ export default compose(
   withSnackbar,
   withHandlers({
     loadFormObject: ({ enqueueSnackbar, websiteId }) => async () => {
-      const json = await apiRequest(apiWebsiteShow, [websiteId], {
-        enqueueSnackbar,
-      })
+      const { json, requestError } = await apiRequest(apiWebsiteShow, [websiteId])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       return {
         hostnames: json.hostnames || [''],
         name: json.name || '',
       }
     },
     saveFormObject: ({ enqueueSnackbar, websiteId, setErrors }) => async form => {
-      const response = await apiRequest(apiWebsiteUpdate, [websiteId, { website: form }], {
-        enqueueSnackbar,
-        successMessage: 'Successfully Updated Account Info',
-        successVariant: 'success',
-      })
-      const errors = extractErrors(response)
+      const { json, errors, requestError } = await apiRequest(apiWebsiteUpdate, [websiteId, { website: form }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
-      return response
+      if (!requestError && !errors) enqueueSnackbar('Successfully updated account info', { variant: 'success' })
+      return json
     },
   }),
   withForm({
