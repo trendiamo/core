@@ -109,8 +109,8 @@ const handleStatus = (result, options) => {
       return false
     } else if (result.status >= 200 && result.status < 400 && options.successMessage && options.successVariant) {
       options.enqueueSnackbar(options.successMessage, { variant: options.successVariant })
-      return false
     }
+    return true
   }
   return true
 }
@@ -124,20 +124,21 @@ const extractCountFromHeaders = headers =>
     10
   )
 
+const listRequestsExceptions = [
+  'apiNavigationList',
+  'apiScriptedChatList',
+  'apiShowcaseList',
+  'apiOutroList',
+  'apiPersonaList',
+]
+
 export const apiRequest = async (request, args, options) => {
-  const method = args.length === 0 ? request() : request(...args)
-  const result = await method.catch(() => ({ error: 'network error' }))
-  const success = handleStatus(result, options)
-  if (!success) return result
-  const listRequestsExceptions = [
-    'apiNavigationList',
-    'apiScriptedChatList',
-    'apiShowcaseList',
-    'apiOutroList',
-    'apiPersonaList',
-  ]
-  const json = await result.json()
+  const promise = args.length === 0 ? request() : request(...args)
+  const response = await promise.catch(() => ({ error: 'network error' }))
+  const success = handleStatus(response, options)
+  if (!success) return { error: 'Bad Request' }
+  const json = await response.json()
   return includes(listRequestsExceptions, request.name)
-    ? { json, count: extractCountFromHeaders(result.headers) }
+    ? { json, count: extractCountFromHeaders(response.headers) }
     : json
 }
