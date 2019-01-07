@@ -31,11 +31,11 @@ const DestinationChatSteps = compose(withScriptedChatsForm.consumer)(
       />
       {persistedChatSteps.slice(1).map((persistedChatStep, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <div key={index} ref={persistedChatStep.__ref} />
+        <div key={index} ref={persistedChatStep.__ref} style={{ marginTop: '10px' }} />
       ))}
       {newChatSteps.map((newChatStep, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <div key={index} ref={newChatStep.__ref} />
+        <div key={index} ref={newChatStep.__ref} style={{ marginTop: '10px' }} />
       ))}
     </React.Fragment>
   )
