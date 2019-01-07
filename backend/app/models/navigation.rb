@@ -7,16 +7,19 @@ class Navigation < ApplicationRecord
   accepts_nested_attributes_for :navigation_items, allow_destroy: true
 
   validates :name, presence: true
-
   def as_json(_options = {})
-    extra_attributes = {
+    attributes
+      .slice("id", "name", "created_at", "updated_at")
+      .merge(extra_attributes)
+  end
+
+  def extra_attributes
+    {
       persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name,
                  description: persona.description, },
       navigation_items_attributes: navigation_items.map(&:as_json),
       type: "Navigation",
+      trigger_ids: triggers.ids,
     }
-    attributes
-      .slice("id", "name", "created_at", "updated_at")
-      .merge(extra_attributes)
   end
 end

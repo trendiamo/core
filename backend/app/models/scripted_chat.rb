@@ -23,6 +23,7 @@ class ScriptedChat < ApplicationRecord
         id: persona.id, name: persona.name, profile_pic_url: persona.profile_pic_url,
       },
       type: "ScriptedChat",
+      trigger_ids: triggers.ids,
     }
     result[:chat_step_attributes] = chat_step.as_json if chat_step
     result
