@@ -1,0 +1,24 @@
+.tingle-modal__close {
+  font-family: Roboto,sans-serif;
+}
+
+.tingle-modal__closeIcon,
+.tingle-modal__closeLabel {
+  vertical-align: top;
+}
+
+.tingle-modal__closeIcon {
+  font-size: 2.4rem;
+}
+
+.tingle-modal__closeLabel {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+@media (max-width: 540px) {
+  .tingle-modal-box__content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
