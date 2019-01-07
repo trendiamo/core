@@ -7,6 +7,7 @@ import withAppBarContent from './with-app-bar-content'
 import { apiRequest } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Checkbox, Table, TableBody, TablePagination } from '@material-ui/core'
+import { isEmpty } from 'lodash'
 import { Link } from 'react-router-dom'
 import { parse, stringify } from 'query-string'
 import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
@@ -29,7 +30,7 @@ const extractCountFromHeaders = headers =>
     10
   )
 
-const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) => ResourceRow =>
+const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help, highlightInactive }) => ResourceRow =>
   compose(
     withOnboardingHelp(help),
     withRouter,
@@ -60,6 +61,10 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
         sort: JSON.stringify([orderBy, orderDirection]),
       },
     })),
+    withProps(({ records }) => {
+      const inactiveRows = records.map(record => record[highlightInactive] && isEmpty(record[highlightInactive]))
+      return { inactiveRows }
+    }),
     withSnackbar,
     withHandlers({
       fetchRecords: ({
@@ -151,6 +156,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
       rowsPerPage,
       selectedIds,
       setSelectedIds,
+      inactiveRows,
     }) => (
       <Section>
         <TableToolbar
@@ -181,6 +187,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help }) =>
               records.map((record, index) => (
                 <TableRow
                   handleSelectAll={handleSelectAll}
+                  highlightInactive={inactiveRows[index]}
                   index={index}
                   key={record.id}
                   resource={record}

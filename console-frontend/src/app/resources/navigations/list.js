@@ -3,7 +3,7 @@ import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
 import { apiNavigationDestroy, apiNavigationList } from 'utils'
-import { Avatar, TableCell } from 'shared/table-elements'
+import { Avatar, TableCell, Text } from 'shared/table-elements'
 import { compose } from 'recompose'
 
 const BlankState = () => (
@@ -20,12 +20,14 @@ const columns = [
   { name: 'name', sortable: true, label: 'name' },
 ]
 
-const NavigationsRow = ({ record }) => (
+const NavigationsRow = ({ record, highlightInactive }) => (
   <React.Fragment>
     <TableCell width="20%">
-      <Avatar alt="" src={record.persona.profilePicUrl} />
+      <Avatar alt="" disabled={highlightInactive} src={record.persona.profilePicUrl} />
     </TableCell>
-    <TableCell width="80%">{record.name}</TableCell>
+    <TableCell width="80%">
+      <Text disabled={highlightInactive}>{record.name}</Text>
+    </TableCell>
   </React.Fragment>
 )
 
@@ -37,5 +39,6 @@ export default compose(
     api: { fetch: apiNavigationList, destroy: apiNavigationDestroy },
     routes: { create: routes.navigationCreate, edit: routes.navigationEdit },
     help: { single: true, stepName: 'navigations', stageName: 'initial' },
+    highlightInactive: 'triggerIds',
   })
 )(NavigationsRow)

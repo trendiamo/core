@@ -18,8 +18,8 @@ const TableRow = compose(
       }
     },
   })
-)(({ resource, handleSelect, selectedIds, resourceEditPath, children }) => (
-  <MuiTableRow hover role="checkbox" tabIndex={-1}>
+)(({ resource, handleSelect, selectedIds, resourceEditPath, children, highlightInactive }) => (
+  <MuiTableRow hover role="checkbox" style={{ background: highlightInactive ? '#f7f7f7' : '' }} tabIndex={-1}>
     <TableCell>
       <Checkbox
         checked={selectedIds.includes(resource.id)}
@@ -28,7 +28,7 @@ const TableRow = compose(
         onChange={handleSelect}
       />
     </TableCell>
-    {children}
+    {React.cloneElement(children, { highlightInactive })}
     <TableCell
       style={{
         whiteSpace: 'nowrap',

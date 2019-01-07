@@ -15,7 +15,8 @@ class Showcase < ApplicationRecord
       .slice("id", "title", "subtitle", "name", "created_at", "updated_at")
       .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
              spotlights_attributes: spotlights_attributes(spotlights),
-             type: "Showcase")
+             type: "Showcase",
+             trigger_ids: triggers.ids)
   end
 
   def spotlights_attributes(spotlights)

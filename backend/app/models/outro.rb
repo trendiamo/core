@@ -9,6 +9,7 @@ class Outro < ApplicationRecord
     attributes
       .slice("id", "name", "created_at", "updated_at")
       .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
-             type: "Outro")
+             type: "Outro",
+             trigger_ids: triggers.ids)
   end
 end
