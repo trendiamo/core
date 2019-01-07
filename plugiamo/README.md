@@ -55,8 +55,8 @@ yarn deploy
 
 ```html
 <script>
-  !(function(t, r, e, n, d, i, a, m, o) {
-    t.addEventListener('load', function() {
+  !(function(f, r, e, k, k, l, s) {
+    f.addEventListener('load', function() {
       var s1 = r.createElement('script'),
         s2 = r.getElementsByTagName('script')[0]
       s1.src = '//plugiamo.s3.eu-central-1.amazonaws.com/plugin.js'
