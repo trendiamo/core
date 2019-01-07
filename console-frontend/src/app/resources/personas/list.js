@@ -7,7 +7,11 @@ import TableCell from 'shared/table-elements/table-cell'
 import { apiPersonaDestroy, apiPersonaList } from 'utils'
 import { compose } from 'recompose'
 
-const columns = [{ name: 'name', label: 'name', sortable: true }, { name: 'description', label: 'description' }]
+const columns = [
+  { name: 'avatar' },
+  { name: 'name', label: 'name', sortable: true },
+  { name: 'description', label: 'description' },
+]
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -20,10 +24,10 @@ const BlankState = () => (
 
 const PersonasRow = ({ record }) => (
   <React.Fragment>
-    <TableCell width="30%">
+    <TableCell>
       <Avatar alt={record.name} src={record.profilePicUrl} style={{ marginRight: '0.5rem' }} />
-      {record.name}
     </TableCell>
+    <TableCell width="30%">{record.name}</TableCell>
     <TableCell width="70%">{record.description}</TableCell>
   </React.Fragment>
 )
