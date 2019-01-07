@@ -91,6 +91,9 @@ const TriggerForm = ({
           <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
         </FormControl>
         <FormHelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</FormHelperText>
+        <FormHelperText>
+          {'ℹ️ You can use a matching pattern such as /products/:id to match all urls in that form.'}
+        </FormHelperText>
       </Form>
     </Grid>
   </Section>
