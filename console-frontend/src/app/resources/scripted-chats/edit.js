@@ -10,21 +10,25 @@ const newEmptyChatMessage = () => ({
   text: '',
 })
 
-const treatChatSteps = (chatStep, ids) => ({
+const treatChatSteps = (chatStep, ids, extraIndex = 0) => ({
   id: chatStep.id,
   chatMessagesAttributes: chatStep.chatMessagesAttributes || [newEmptyChatMessage()],
-  chatOptionsAttributes: chatStep.chatOptionsAttributes.map(chatOptionAttributes =>
+  chatOptionsAttributes: chatStep.chatOptionsAttributes.map((chatOptionAttributes, i) =>
     chatOptionAttributes.destinationChatStepAttributes
       ? {
           ...chatOptionAttributes,
-          destinationChatStepAttributes: treatChatSteps(chatOptionAttributes.destinationChatStepAttributes, {
-            ...ids,
-            [chatStep.id]: true,
-          }),
+          destinationChatStepAttributes: treatChatSteps(
+            chatOptionAttributes.destinationChatStepAttributes,
+            {
+              ...ids,
+              [chatStep.id]: true,
+            },
+            i
+          ),
         }
       : chatOptionAttributes
   ),
-  __index: Object.keys(ids).length,
+  __index: Object.keys(ids).length + extraIndex,
   __ref: React.createRef(),
 })
 
