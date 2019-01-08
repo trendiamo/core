@@ -10,6 +10,7 @@ import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
 import theme from 'app/theme'
+import UrlGenerator from 'app/screens/url-generator'
 import WelcomePage from 'app/screens/welcome'
 import { apiGetCsrfToken, apiRequest } from 'utils'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
@@ -79,6 +80,7 @@ const Routes = () => (
     <PrivateRoute component={TriggerEdit} exact path={routes.triggerEdit(':triggerId')} />
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
+    <PrivateRoute component={UrlGenerator} exact path={routes.urlGenerator()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
     <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
     <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />

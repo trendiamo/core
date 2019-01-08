@@ -74,6 +74,9 @@ const routes = {
   triggerEdit(id) {
     return `/triggers/${id}/edit`
   },
+  urlGenerator() {
+    return '/url-generator'
+  },
 }
 
 export default routes

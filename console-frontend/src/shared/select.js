@@ -153,8 +153,9 @@ const Select = compose(
     disabled,
     required,
     isFocussed,
+    noMargin,
   }) => (
-    <FormControl disabled={disabled} fullWidth margin="normal">
+    <FormControl disabled={disabled} fullWidth margin={noMargin ? 'none' : 'normal'}>
       <InputLabel shrink>{`${label}${required ? ' *' : ''}`}</InputLabel>
       <StyledSelect
         cacheOptions
