@@ -1,0 +1,324 @@
+.home-main {
+  background-color: #92a2af;
+  overflow: hidden;
+  height: 85vh;
+}
+
+.main-left-third {
+  display: flex;
+  justify-content: center;
+}
+
+.main-info-section {
+  position: relative;
+  top: 220px;
+  z-index: 1;
+  width: 250px;
+  line-height: 1.1;
+  font-size: 44px;
+  color: #ffffff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main-info-textbox {
+  font-size: 12px;
+  width: 110px;
+  height: 35px;
+  font-weight: bold;
+  background-color: #6b727b;
+  color: #ffffff;
+  align-self: center;
+}
+
+.main-info-button {
+  font-size: 15px;
+  width: 222px;
+  font-weight: bold;
+  color: #ffffff;
+  border: solid;
+  border-color: #E4D0D3;
+}
+
+.main-right-third {
+  position: relative;
+  bottom: 450px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 795px) {
+  .home-main {
+    display: flex;
+    height: auto;
+  }
+  .main-left-third {
+    flex: 1;
+  }
+  .main-right-third {
+    position: static;
+    flex: 2;
+  }
+  .main-info-section {
+    position: static;
+    margin-left: 100px;
+    margin-right: 20%;
+  }
+}
+
+.body {
+  width: 100%;
+  margin: 0px;
+  background-color: #aeb8c0;
+}
+
+.products-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.product-card-1 {
+  height: 360px;
+  width: 264px;
+  background-color: #f3f3f1;
+  flex-shrink: 3;
+  display: flex;
+}
+
+.product-card-1:hover {
+  opacity: 0.9;
+}
+
+.product-card-2 {
+  height: 360px;
+  width: 263px;
+  flex-shrink: 1;
+  background-color: #f3f3f1;
+}
+
+.product-card-2:hover {
+  opacity: 0.9;
+}
+
+.product-card-3 {
+  flex-shrink: 3;
+  width: 263px;
+  height: 360px;
+  background-color: #f3f3f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-card-3:hover {
+  opacity: 0.9;
+}
+
+#surboard-card {
+  display: flex;
+}
+
+.surfboard-left-half {
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+}
+
+.surfboard-right-half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#surfboard-card p {
+  width: 102px;
+  height: 42px;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+}
+
+#surfboard-card #price {
+  width: 87px;
+ height: 29px;
+ font-size: 24px;
+ font-weight: 300;
+ color: #000000;
+}
+
+#bike-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+#bike-card p {
+  width: 474px;
+  font-weight: bold;
+  line-height: 0.8;
+  color: #000000;
+}
+
+#bike-card-info {
+  z-index: 1;
+  padding-top: 30px;
+}
+
+#bike-card-image {
+  max-height: 95%;
+}
+
+@media (min-width: 1201px) {
+  .main-left-third{
+    justify-content: flex-end;
+  }
+  .main-info-section {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .product-card-1 {
+    height: 458px;
+  }
+  .product-card-2 {
+    width: 555px;
+    height: 458px;
+  }
+  .surfboard-left-half {
+    margin-top: 22px;
+  }
+  #bike-card p {
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  #bike-card-image {
+    max-height: 110%;
+  }
+}
+
+#glasses-card {
+  flex-direction: column;
+  background-color: #ffffff;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#glasses-card p {
+  width: 122px;
+  height: 42px;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+}
+
+#glasses-card #price {
+  width: 87px;
+  height: 29px;
+  font-size: 24px;
+  font-weight: 300;
+  color: #000000;
+}
+
+#guitar-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #eefafc;
+  text-align: center;
+  align-items: center;
+}
+
+#guitar-card p {
+  width: 176px;
+  height: 42px;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+  display: inline-block;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+#guitar-card p:before {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 1px;
+  bottom: 0;
+  left: 34%;
+  border-bottom: 1.5px solid black;
+}
+
+#shirt-card {
+  background-color: #f3f3f1;
+  text-align: center;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#shirt-card p {
+  width: 154px;
+  height: 21px;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+}
+
+#shoes-card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  background-color: #f4e6dc;
+  text-align: center;
+}
+
+#shoes-card p {
+  width: 116px;
+  height: 42px;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+  display: inline-block;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+#shoes-card p:before {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 1px;
+  bottom: 0;
+  left: 30%;
+  border-bottom: 1.5px solid black;
+}
+
+#bag-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f3f1;
+  text-align: center;
+  align-items: center;
+}
+
+#bag-card p {
+  width: 109px;
+  height: 21px;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+}
+
+.product-link {
+  text-decoration: none;
+  margin: 20px;
+}

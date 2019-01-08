@@ -1,0 +1,28 @@
+<extends src="layout.html">
+  <block name="content">
+    <div class="pdp-main white-pdp-main">
+      <div class="main-left-half white-pdp-image-div">
+        <img class="pdp-img" id="bike-img-lg" alt="" src="/img/pdp-images/lg-bike.jpg" />
+      </div>
+      <div class="main-right-half">
+        <div class="product-details pdp-big-screen">
+          <div class="product-info">
+            <include src="../product-details/bike.html"></include>
+            <include src="../shared/buy-button.html"></include>
+          </div>
+          <div class="miniature-images">
+            <img class="shopping-icon" alt="" src="/img/miniature-images/miniature-bike-1.png" />
+            <img class="shopping-icon" alt="" src="/img/miniature-images/miniature-bike-2.png" />
+            <img class="shopping-icon" alt="" src="/img/miniature-images/miniature-bike-3.png" />
+          </div>
+        </div>
+        <div class="product-details pdp-small-screen">
+          <div class="product-info">
+            <include src="../shared/buy-button.html"></include>
+            <include src="../product-details/bike.html"></include>
+          </div>
+        </div>
+      </div>
+    </div>
+  </block>
+</extends>

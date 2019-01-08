@@ -1,0 +1,264 @@
+.pdp-main {
+  background-color: #92a2af;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.banner {
+  background-color: #5a6f80;
+  height: 98px;
+  display: flex;
+}
+
+.banner-left {
+  flex: 1;
+  font-size: 18px;
+  padding-left: 3%;
+  font-weight: bold;
+  letter-spacing: 2.2px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.header-big-screen {
+  display: none;
+}
+
+.header-small-screen {
+  display: flex;
+}
+
+.pdp-image {
+  position: absolute;
+  right: 30px;
+  height: 23px;
+  width: 23px;
+}
+
+.menu-icon {
+  max-height: 25%;
+}
+
+.pdp-big-screen {
+  display: none;
+}
+
+.pdp-small-screen {
+  display: block;
+}
+
+.main-left-half {
+  flex: 1;
+  background-color: #F2F3F0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-right-half {
+  flex: 1;
+  background-color: #FFFDFB;
+  display: flex;
+}
+
+.product-details {
+  background-color: #F4F5F7;
+  width: 100%;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10%;
+  align-items: flex-end;
+  margin-right: 20px;
+  padding-bottom: 20px;
+}
+
+.product-info p {
+  margin: 0;
+}
+
+.price {
+  color: #4A4A4A;
+  height: 30px;
+  opacity: 0.76;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.name {
+  height: 50px;
+  opacity: 0.64;
+  font-size: 40px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.product-icons {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
+
+.description {
+  color: #4A4A4A;
+  text-align: right;
+  font-weight: 500;
+}
+
+.buy-button {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  height: 52px;
+  border-radius: 6px;
+  background-color: #1bb086;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.buy-button-link {
+  text-decoration: none;
+  width: 80%;
+}
+
+@media (min-width: 330px) {
+  .description {
+    align-self: center;
+    text-align: right;
+
+  }
+  .buy-button-link {
+    width: 288px;
+  }
+}
+
+@media (min-width: 795px) {
+  .pdp-main {
+    flex-direction: row;
+  }
+  .banner {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    letter-spacing: 2.2px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 24px;
+  }
+  .pdp-big-screen {
+    display: flex;
+  }
+  .pdp-small-screen {
+    display: none;
+  }
+  .header-big-screen {
+    display: flex;
+  }
+
+  .header-small-screen {
+    display: none;
+  }
+  .product-details {
+    text-align: left;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    padding-top: 10%;
+    width: 90%;
+    background-blend-mode: multiply;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .price {
+    width: 82px;
+    font-size: 36px;
+  }
+  .name {
+    font-size: 42px;
+    width: 215px;
+  }
+  .description {
+    width: 288px;
+    text-align: left;
+  }
+  .product-info {
+    padding-left: 0px;
+    margin-left: 10%;
+    width: 288px;
+    display: block;
+    margin-bottom: 0px;
+    margin-right: 0px;
+  }
+  .buy-button {
+    width: 100%;
+  }
+  .buy-button-link {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+.shopping-icon {
+  margin-right: 5px;
+}
+
+.miniature-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+.white-pdp-image-div {
+  background-color: #FFFFFF;
+}
+
+.white-pdp-main {
+  background-color: #FFFFFF;
+}
+
+.beige-pdp-main {
+  background-color: #F1F3EF;
+}
+
+.grey-background {
+  flex: 1;
+  background-color: #F0F0F2;
+  font-size: 25px;
+  text-align: center;
+  margin: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.grey-background p {
+  margin: 0px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.checkmark {
+  padding-bottom: 4%;
+}
+
+.main-text {
+  font-weight: bold;
+}
