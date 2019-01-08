@@ -1,0 +1,48 @@
+.light-beige-pdp-main {
+  background-color: #ECEDEA;
+}
+
+.light-beige-pdp-main {
+  background-color: #ECEDEA;
+}
+
+.pdp-img {
+  max-height: 40vh;
+  object-fit: contain;
+}
+
+.portrait {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#bike-img-lg {
+  max-width: 95%;
+}
+
+@media (min-width: 550px) {
+  .pdp-img {
+    max-height: 70vh;
+  }
+  .portrait {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  #bike-img-lg {
+    max-width: 70%;
+  }
+}
+
+@media (min-width: 795px) {
+  .pdp-img {
+    max-height: 100vh;
+    max-width: 80%;
+  }
+  .portrait {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  #bike-img-lg {
+    max-width: 90%;
+  }
+}
