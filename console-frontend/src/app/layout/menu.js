@@ -11,6 +11,7 @@ import {
   AssignmentTurnedInOutlined,
   ViewList as DefaultIcon,
   DirectionsOutlined,
+  Link as LinkIcon,
   PersonPinOutlined,
   SmsOutlined,
   TuneOutlined,
@@ -36,6 +37,12 @@ const resources = {
     route: routes.navigationsList(),
   },
   personas: { icon: AccountCircleOutlined, label: 'Personas', class: 'personas', route: routes.personasList() },
+  urlGenerator: {
+    icon: LinkIcon,
+    label: 'Url Generator',
+    class: 'urlGenerator',
+    route: routes.urlGenerator(),
+  },
 }
 
 const resourceGroups = {
@@ -53,6 +60,11 @@ const resourceGroups = {
     name: 'Basic',
     showTitle: true,
     resources: [resources.personas],
+  },
+  tools: {
+    name: 'Tools',
+    showTitle: true,
+    resources: [resources.urlGenerator],
   },
 }
 
