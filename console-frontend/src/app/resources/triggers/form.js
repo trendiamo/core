@@ -103,7 +103,6 @@ export default compose(
   withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
-  withState('flows', 'setFlows', []),
   withHandlers({
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
