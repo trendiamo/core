@@ -5,6 +5,7 @@ import Select from 'shared/select'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
+import { findIndex } from 'lodash'
 import { Grid, TextField } from '@material-ui/core'
 
 const Spotlight = ({
@@ -134,8 +135,13 @@ export default compose(
       blob,
       setProgress
     ) => {
-      productPicksPictures.push({ spotlightIndex: index, productPickIndex, blob, setProgress })
-      setProductPicksPictures(productPicksPictures)
+      const picture = { spotlightIndex: index, productPickIndex, blob, setProgress }
+      let newProductPicksPictures = [...productPicksPictures]
+      const productPickPictureIndex = findIndex(newProductPicksPictures, { spotlightIndex: index, productPickIndex })
+      productPickPictureIndex >= 0
+        ? newProductPicksPictures.splice(productPickPictureIndex, 1, picture)
+        : newProductPicksPictures.push(picture)
+      setProductPicksPictures(newProductPicksPictures)
     },
   })
 )(Spotlight)
