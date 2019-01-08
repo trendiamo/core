@@ -162,8 +162,8 @@
 #bike-card p {
   width: 474px;
   font-weight: bold;
-  line-height: 0.8;
   color: #000000;
+  margin: 0px;
 }
 
 #bike-card-info {
@@ -241,7 +241,6 @@
   text-align: center;
   color: #000000;
   display: inline-block;
-  padding-bottom: 10px;
   position: relative;
 }
 
@@ -282,13 +281,12 @@
 }
 
 #shoes-card p {
-  width: 116px;
+  width: 140px;
   height: 42px;
   font-weight: bold;
   text-align: center;
   color: #000000;
   display: inline-block;
-  padding-bottom: 10px;
   position: relative;
 }
 
