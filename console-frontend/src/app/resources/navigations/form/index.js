@@ -10,7 +10,7 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { find } from 'lodash'
+import { findIndex } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
 import { uploadImage } from 'shared/picture-uploader'
@@ -126,7 +126,7 @@ export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
-  withState('navigationItemsPictures', 'setNavigationItemsPictures', () => []),
+  withState('navigationItemsPictures', 'setNavigationItemsPictures', []),
   withState('persona', 'setPersona', emptyPersona),
   withHandlers({
     convertPersona: () => persona => ({
@@ -221,10 +221,12 @@ export default compose(
     },
     setPicture: ({ navigationItemsPictures, setNavigationItemsPictures }) => (index, blob, setProgress) => {
       const picture = { index, blob, setProgress }
-      find(navigationItemsPictures, { index })
-        ? navigationItemsPictures.splice(index, 1, picture)
-        : navigationItemsPictures.push(picture)
-      setNavigationItemsPictures(navigationItemsPictures)
+      let newNavigationItemsPictures = [...navigationItemsPictures]
+      const navigationItemsPictureIndex = findIndex(newNavigationItemsPictures, { index })
+      navigationItemsPictureIndex >= 0
+        ? newNavigationItemsPictures.splice(navigationItemsPictureIndex, 1, picture)
+        : newNavigationItemsPictures.push(picture)
+      setNavigationItemsPictures(newNavigationItemsPictures)
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
