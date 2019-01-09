@@ -271,7 +271,126 @@ button {
   border-radius: 100%;
 }
 
+/* PRESS PAGE */
+
+#header-press {
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  background: white;
+  z-index: 999;
+}
+
+#after-header {
+  height: 124px;
+}
+
+#spacer {
+  width: 100%;
+  height: 2px;
+  background: #EBEBEB;
+}
+
+#press-section {
+  padding-top: 0;
+}
+
+.press-post {
+  width: 70%;
+  margin: 0 auto;
+  text-align: left;
+  border-top: 2px solid #EBEBEB;
+  padding-top: 40px;
+}
+
+.press-post h1 {
+  font-family: 'Roboto Slab', sans-serif;
+  font-size: 2em;
+  line-height: 1.3em;
+}
+
+.press-post h2 {
+  margin-top: 14px;
+  color: #565656;
+}
+
+.press-post-meta-img {
+  float: left;
+  width: 60px;
+  border-radius: 100%;
+  border: 2px solid #ff7966;
+  padding: 2px;
+  margin-right: 10px;
+}
+
+.press-post-meta-author {
+  font-size: 0.8em;
+  font-weight: bold;
+  padding-top: 14px;
+}
+
+.press-post-meta-date {
+  font-size: 0.8em;
+  color: #A5A5A5;
+  padding-top: 4px;
+}
+
+.press-post-img {
+  width: 100%;
+  margin-top: 18px;
+  border-radius: 10px;
+}
+
+.press-post-img-meta {
+  font-size: 12px;
+  text-transform: uppercase;
+  padding-top: 10px;
+}
+
+.press-post-img-meta a {
+  color: inherit;
+}
+
+.press-post-spacer {
+  width: 50%;
+  height: 2px;
+  margin: 0 auto;
+  margin-top: 30px;
+  background: #EBEBEB;
+}
+
+.press-post-text {
+  margin-top: 30px;
+  font-family: 'Roboto Slab', sans-serif;
+  color: #333333;
+}
+
+.press-post-text-drop {
+  float: left;
+  font-size: 2.7em;
+  line-height: 1;
+  padding-top: 2px;
+  padding-right: 6px;
+}
+
+.press-post-text-img {
+  width: 100%;
+}
+
+.press-post-text-img-credit {
+  font-size: 12px;
+  text-transform: uppercase;
+  padding-top: 10px;
+}
+
+.press-post-text-img-credit a {
+  color: inherit;
+}
+
 @media (max-width:900px) {
+
+  /* about us */
+
   #aboutus-text {
     font-size: 0.7em;
   }
@@ -290,5 +409,58 @@ button {
   .aboutus-portrait p {
     text-align: left;
     font-size: 0.8em;
+  }
+
+  /* press */
+
+  #after-header {
+    height: 106px;
+  }
+
+  .press-post {
+    width: 100%;
+  }
+
+  .press-post h1 {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width:530px) {
+  #after-header {
+    height: 96px;
+  }
+
+  .press-post {
+    font-size: 0.9em;
+  }
+
+  .press-post h1 {
+    font-size: 1.2em;
+  }
+
+  .press-post h2 {
+    font-size: 0.8em;
+  }
+
+  .press-post-meta-img {
+    width: 50px;
+  }
+
+  .press-post-meta-author {
+    font-size: 0.6em;
+    padding-top: 12px;
+  }
+
+  .press-post-meta-date{
+    font-size: 0.6em;
+  }
+
+  .press-post-img-meta {
+    font-size: 10px;
+  }
+
+  .press-post-text-img-credit {
+    font-size: 10px;
   }
 }

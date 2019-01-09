@@ -9,6 +9,7 @@ window.document.body.classList.remove('no-js')
 
 WebFont.load({ google: { families: ['Roboto:400,500,700'] } })
 WebFont.load({ google: { families: ['Dosis:700'] } })
+WebFont.load({ google: { families: ['Roboto+Slab:400'] } })
 lazySizes.init()
 
 window.requestAnimationFrame(() => {
