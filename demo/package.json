@@ -1,12 +1,12 @@
 {
   "name": "demo",
-  "description": "used to show how the plugin works",
+  "description": "Used to show how the plugin works",
   "version": "0.0.1",
   "author": "danielbugge",
   "ava": {
     "verbose": "true"
   },
-  "bugs": "https://github.com/danielbugge/demo/issues",
+  "bugs": "",
   "dependencies": {
     "reshape": "^1.0.0",
     "reshape-layouts": "^1.0.0",
@@ -23,7 +23,7 @@
     "snazzy": "^7.0.0",
     "standard": "^10.0.2"
   },
-  "homepage": "https://github.com/danielbugge/demo",
+  "homepage": "https://demo.frekkls.com/",
   "main": "app.js",
   "private": true,
   "repository": "",
@@ -34,6 +34,7 @@
     "test": "NODE_ENV=test ava",
     "start": "spike watch",
     "build": "spike compile",
-    "prod": "NODE_ENV=production spike compile -e production"
+    "prod": "NODE_ENV=production spike compile -e production",
+    "deploy": "rm -rf public/* && yarn lint && yarn prod && rsync -azh -e ssh --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/demo.frekkls.com/html"
   }
 }

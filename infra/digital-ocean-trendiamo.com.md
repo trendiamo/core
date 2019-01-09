@@ -17,8 +17,15 @@ apt install apache2
 # There was some manual configuration of apache rewrites and expires:
 a2enmod rewrite
 a2enmod expires
-vi /etc/apache2/sites-enabled/000-default.conf
-vi /etc/apache2/sites-enabled/000-default-le-ssl.conf
+
+vi /etc/apache2/sites-available/000-default.conf
+vi /etc/apache2/sites-available/000-default-le-ssl.conf
+
+vi /etc/apache2/sites-available/001-demo.frekkls.com.conf
+vi /etc/apache2/sites-available/001-demo.frekkls.com-le-ssl.conf
+a2ensite 001-demo.frekkls.com.conf
+a2ensite 001-demo.frekkls.com-le-ssl.conf
+
 sudo systemctl reload apache2
 
 # firewall:
@@ -30,5 +37,5 @@ ufw enable
 add-apt-repository ppa:certbot/certbot
 apt-get update
 apt-get install python-certbot-apache
-certbot --apache -d trendiamo.com -d www.trendiamo.com
+certbot --apache -d trendiamo.com -d www.trendiamo.com -d demo.frekkls.com
 ```
