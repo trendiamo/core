@@ -205,6 +205,27 @@
   }
 }
 
+@media (min-width: 1505px) {
+  .products-container{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media (min-width: 1882px) {
+  .products-container{
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+@media (min-width: 2150px) {
+  .products-container{
+    padding-left: 22%;
+    padding-right: 22%;
+  }
+}
+
 #glasses-card {
   flex-direction: column;
   background-color: #ffffff;
