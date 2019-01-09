@@ -301,6 +301,8 @@ button {
   text-align: left;
   border-top: 2px solid #EBEBEB;
   padding-top: 40px;
+  line-height: 1.58;
+  letter-spacing: -0.3px;
 }
 
 .press-post h1 {
