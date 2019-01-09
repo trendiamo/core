@@ -139,6 +139,7 @@ export default compose(
       return {
         hostnames: json.hostnames || [''],
         name: json.name || '',
+        previewMode: json.previewMode,
       }
     },
     saveFormObject: ({ enqueueSnackbar, websiteId, setErrors }) => async form => {
