@@ -2,17 +2,17 @@ import React from 'react'
 import Select from 'shared/select'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
-import { apiPersonasAutocomplete } from 'utils'
+import { apiPathAutocomplete, apiPersonasAutocomplete } from 'utils'
 import {
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   IconButton,
   Input,
   InputAdornment,
   InputLabel,
   Switch,
-  TextField,
   Typography,
 } from '@material-ui/core'
 import { compose, withHandlers, withProps, withState } from 'recompose'
@@ -73,7 +73,7 @@ const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
 
 const UrlGeneratorForm = ({
   showPersonaSelector,
-  showPathSelector,
+  showStepSelector,
   formRef,
   onFormSubmit,
   selectPersona,
@@ -83,29 +83,30 @@ const UrlGeneratorForm = ({
   toggleAutoOpen,
   showOption,
   isDisabled,
+  selectStep,
 }) => (
   <React.Fragment>
-    <Form formRef={formRef} onSubmit={onFormSubmit}>
+    <Form formRef={formRef} isFormPristine onSubmit={onFormSubmit}>
       <Option>
         <UrlTextField form={form} resetUrl={resetUrl} setFieldValue={setFieldValue} />
       </Option>
       <Option>
-        {showPathSelector ? (
-          <TextField
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            label="Path"
-            name="moduleId"
-            onChange={setFieldValue}
-            placeholder="Choose a Module"
-            value={form.moduleId}
-          />
+        {showStepSelector ? (
+          <React.Fragment>
+            <Select
+              autocomplete={apiPathAutocomplete}
+              defaultValue=""
+              label="Step"
+              onChange={selectStep}
+              placeholder="Choose a step..."
+            />
+            <FormHelperText>{'Show a specific step of a module.'}</FormHelperText>
+          </React.Fragment>
         ) : (
-          <AddOptionButton option="path" optionLabel="Add Path" showOption={showOption} />
+          <AddOptionButton option="step" optionLabel="Add Step" showOption={showOption} />
         )}
       </Option>
+
       <Option>
         {showPersonaSelector ? (
           <StyledSelect
@@ -126,6 +127,7 @@ const UrlGeneratorForm = ({
           control={<Switch color="primary" name="autoOpen" onChange={toggleAutoOpen} value={form.autoOpen} />}
           label="Auto Open"
         />
+        <FormHelperText>{'Whether the plugin should auto-open when the generated url is clicked.'}</FormHelperText>
       </Option>
       <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
         <Button color="primary" disabled={isDisabled} style={{ width: '50%' }} type="submit" variant="contained">
@@ -139,22 +141,27 @@ const UrlGeneratorForm = ({
 const generateUrl = form => {
   const fragments = []
   if (form.autoOpen) fragments.push('open:1')
-  if (form.moduleId) fragments.push(`path:${form.moduleId}`)
+  if (form.step) fragments.push(`path:${form.step}`)
   if (form.personaId) fragments.push(`persona:${form.personaId}`)
   return `${form.url}#trnd:${fragments.join(',')}`
 }
 
 export default compose(
   withProps({ formRef: React.createRef() }),
-  withState('form', 'setForm', { personaId: '', url: '', autoOpen: false, moduleId: '' }),
-  withState('showPathSelector', 'setShowPathSelector', false),
+  withState('form', 'setForm', {
+    personaId: '',
+    url: '',
+    autoOpen: false,
+    step: '',
+  }),
+  withState('showStepSelector', 'setShowStepSelector', false),
   withState('showPersonaSelector', 'setShowPersonaSelector', false),
   withProps(({ form }) => ({
-    isDisabled: !(form.url && (form.autoOpen || form.moduleId || form.personaId)),
+    isDisabled: !(form.url && (form.autoOpen || form.step || form.personaId)),
   })),
   withHandlers({
-    showOption: ({ setShowPathSelector, setShowPersonaSelector }) => option => {
-      if (option === 'path') setShowPathSelector(true)
+    showOption: ({ setShowStepSelector, setShowPersonaSelector }) => option => {
+      if (option === 'step') setShowStepSelector(true)
       if (option === 'persona') setShowPersonaSelector(true)
     },
     resetUrl: ({ form, setForm }) => () => {
@@ -167,6 +174,12 @@ export default compose(
       setForm({
         ...form,
         personaId: value.id,
+      })
+    },
+    selectStep: ({ form, setForm }) => ({ value }) => {
+      setForm({
+        ...form,
+        step: value.path,
       })
     },
     toggleAutoOpen: ({ form, setForm }) => () => {

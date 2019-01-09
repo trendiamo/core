@@ -6,4 +6,8 @@ class AutocompletePolicy < ApplicationPolicy
   def flows_autocomplete?
     user
   end
+
+  def path_autocomplete?
+    user
+  end
 end

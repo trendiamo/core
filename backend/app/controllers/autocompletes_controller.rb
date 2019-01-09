@@ -12,4 +12,12 @@ class AutocompletesController < RestController
     end.flatten
     render json: @flows
   end
+
+  def path_autocomplete
+    authorize :autocomplete
+    @steps = [ScriptedChat, Outro, Showcase, Navigation].map do |type|
+      type.where("name ILIKE ?", "#{params[:searchQuery]}%")
+    end.flatten
+    render json: @steps.map(&:paths).flatten
+  end
 end

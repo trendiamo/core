@@ -42,4 +42,15 @@ class Showcase < ApplicationRecord
       }
     end
   end
+
+  def paths
+    paths = []
+    new_step = attributes.slice("id", "name")
+    new_step[:path] = "/#{self.class.name.underscore.tr('_', '-')}/#{id}"
+    paths.push(new_step)
+    spotlights.each_with_index do |spotlight, index|
+      paths.push(spotlight.paths(index))
+    end
+    paths
+  end
 end
