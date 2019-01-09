@@ -23,7 +23,6 @@ const DialogActions = compose(
 
 const ContentContainer = styled.div`
   text-align: center;
-  width: 40vw;
 `
 
 const ContentBody = styled.div`
@@ -52,7 +51,9 @@ const CopyButton = styled(FilteredStyledButton)`
   height: 40px;
 `
 
-const Url = styled(Input)`
+const FilteredInput = props => <Input {...omit(props, ['isCopied'])} />
+
+const Url = styled(FilteredInput)`
   flex: 4;
   margin-left: 0.8rem;
 `
@@ -115,6 +116,8 @@ const ModalTemplate = compose(
   <Dialog
     content={<DialogContent url={url} />}
     dialogActions={<DialogActions setOpen={setOpen} />}
+    fullWidth
+    maxWidth="sm"
     onClose={handleClose}
     open={open}
     title=""

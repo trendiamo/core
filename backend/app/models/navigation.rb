@@ -22,4 +22,10 @@ class Navigation < ApplicationRecord
       trigger_ids: triggers.ids,
     }
   end
+
+  def paths
+    new_step = attributes.slice("id", "name")
+    new_step[:path] = "/#{self.class.name.underscore.tr('_', '-')}/#{id}"
+    [new_step]
+  end
 end

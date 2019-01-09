@@ -5,4 +5,11 @@ class Spotlight < ApplicationRecord
   has_many :product_picks, dependent: :destroy
 
   accepts_nested_attributes_for :product_picks, allow_destroy: true
+
+  def paths(spotlight_index)
+    new_step = attributes.slice("id", "name")
+    new_step[:name] = "#{showcase.name}: Spotlight ##{spotlight_index}"
+    new_step[:path] = "/showcase/#{showcase.id}/#{self.class.name.underscore.tr('_', '-')}/#{id}"
+    [new_step]
+  end
 end

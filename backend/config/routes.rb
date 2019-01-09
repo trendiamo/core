@@ -42,7 +42,8 @@ Rails.application.routes.draw do
       delete "/triggers", to: "triggers#destroy"
       resources :flows, only: %i[index]
       get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
-
+      get "/path/autocomplete", to: "autocompletes#path_autocomplete"
+      
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end
