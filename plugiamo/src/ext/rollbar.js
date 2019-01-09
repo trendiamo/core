@@ -94,13 +94,15 @@ export default () => {
         c = function(r, e) {
           return new t(r, e)
         },
-        p = d.bind(null, c)
+        p = function(r) {
+          return new d(c, r)
+        }
       ;(t.prototype.loadFull = function(r, e, o, t, a) {
         var l = function() {
             var e
             if (void 0 === r._rollbarDidLoad) {
               e = new Error('rollbar.js did not load')
-              for (var i = 0, l, n, o, t; (o = r._rollbarShims[i++]); )
+              for (var o, n, t, l, i = 0; (o = r._rollbarShims[i++]); )
                 for (o = o.messages || []; (n = o.shift()); )
                   for (t = n.args || [], i = 0; i < t.length; ++i)
                     if (((l = t[i]), 'function' == typeof l)) {
@@ -183,14 +185,16 @@ export default () => {
       function o(r, e, o) {
         if (r) {
           var t
-          'function' == typeof e._rollbarOldOnError
-            ? (t = e._rollbarOldOnError)
-            : r.onerror && !r.onerror.belongsToShim && ((t = r.onerror), (e._rollbarOldOnError = t))
+          if ('function' == typeof e._rollbarOldOnError) t = e._rollbarOldOnError
+          else if (r.onerror) {
+            for (t = r.onerror; t._rollbarOldOnError; ) t = t._rollbarOldOnError
+            e._rollbarOldOnError = t
+          }
           var a = function() {
             var o = Array.prototype.slice.call(arguments, 0)
             n(r, e, t, o)
           }
-          ;(a.belongsToShim = o), (r.onerror = a)
+          o && (a._rollbarOldOnError = t), (r.onerror = a)
         }
       }
       function n(r, e, o, n) {
@@ -207,7 +211,7 @@ export default () => {
             r._rollbarURH.belongsToShim &&
             r.removeEventListener('unhandledrejection', r._rollbarURH)
           var n = function(r) {
-            var n, o, t
+            var o, n, t
             try {
               o = r.reason
             } catch (r) {
@@ -279,7 +283,7 @@ export default () => {
       }
       ;(o.prototype._swapAndProcessMessages = function(r, e) {
         this.impl = r(this.options)
-        for (var n, o, t; (o = e.shift()); )
+        for (var o, n, t; (o = e.shift()); )
           (n = o.method),
             (t = o.args),
             this[n] &&
