@@ -11,6 +11,11 @@
   display: flex;
 }
 
+.banner-link {
+  text-decoration: none;
+  color: #ffffff;
+}
+
 .banner-left {
   flex: 1;
   font-size: 18px;
@@ -156,6 +161,7 @@
   .banner {
     display: flex;
     justify-content: center;
+    align-items: center;
     font-weight: bold;
     letter-spacing: 2.2px;
     color: #ffffff;
