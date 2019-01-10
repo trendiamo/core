@@ -43,7 +43,9 @@ Rails.application.routes.draw do
       resources :flows, only: %i[index]
       get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
       get "/path/autocomplete", to: "autocompletes#path_autocomplete"
-      
+
+      post "/navigation_items/sort", to: "navigation_items#sort"
+
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end

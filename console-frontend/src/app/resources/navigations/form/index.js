@@ -5,17 +5,74 @@ import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import Select from 'shared/select'
+import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
-import { apiPersonasAutocomplete } from 'utils'
+import { apiNavigationItemSort, apiPersonasAutocomplete } from 'utils'
+import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { createGlobalStyle } from 'styled-components'
 import { findIndex } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
+
+const NavigationItemsList = styled.ul`
+  padding: 0;
+`
+
+const SortableNavigationItem = SortableElement(({ navigationItemIndex, ...props }) => (
+  <NavigationItem index={navigationItemIndex} {...props} />
+))
+
+const NavigationItemsContainer = compose(
+  withProps(() => ({
+    lockAxis: 'y',
+    lockToContainerEdges: true,
+    lockOffset: '0%',
+  }))
+)(
+  SortableContainer(
+    ({
+      isFormLoading,
+      setNavigationItemForm,
+      navigationItemsPictures,
+      setNavigationItemsPictures,
+      isCropping,
+      setIsCropping,
+      setPicture,
+      form,
+    }) => (
+      <NavigationItemsList>
+        {form.navigationItemsAttributes.map((navigationItem, index) => (
+          <SortableNavigationItem
+            allowDelete={form.navigationItemsAttributes.length > 1}
+            index={index}
+            isCropping={isCropping}
+            isFormLoading={isFormLoading}
+            key={navigationItem.id}
+            navigationItem={navigationItem}
+            navigationItemIndex={index}
+            navigationItemsPictures={navigationItemsPictures}
+            onChange={setNavigationItemForm}
+            setIsCropping={setIsCropping}
+            setNavigationItemsPictures={setNavigationItemsPictures}
+            setPicture={setPicture}
+          />
+        ))}
+      </NavigationItemsList>
+    )
+  )
+)
+
+const TriggerRowStyle = createGlobalStyle`
+  .sortable-trigger-row {
+    z-index: 1;
+  }
+`
 
 const NavigationForm = ({
   addNavigationItem,
@@ -33,10 +90,12 @@ const NavigationForm = ({
   setNavigationItemForm,
   setNavigationItemsPictures,
   setPicture,
+  onSortEnd,
   title,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
+      <TriggerRowStyle />
       <TextField
         autoFocus
         disabled={isFormLoading}
@@ -60,23 +119,19 @@ const NavigationForm = ({
       />
       <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
     </Section>
-    {form.navigationItemsAttributes.map((navigationItem, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <React.Fragment key={index}>
-        <NavigationItem
-          allowDelete={form.navigationItemsAttributes.length > 1}
-          index={index}
-          isCropping={isCropping}
-          isFormLoading={isFormLoading}
-          navigationItem={navigationItem}
-          navigationItemsPictures={navigationItemsPictures}
-          onChange={setNavigationItemForm}
-          setIsCropping={setIsCropping}
-          setNavigationItemsPictures={setNavigationItemsPictures}
-          setPicture={setPicture}
-        />
-      </React.Fragment>
-    ))}
+    <NavigationItemsContainer
+      form={form}
+      helperClass="sortable-trigger-row"
+      isCropping={isCropping}
+      isFormLoading={isFormLoading}
+      navigationItemsPictures={navigationItemsPictures}
+      onSortEnd={onSortEnd}
+      setIsCropping={setIsCropping}
+      setNavigationItemForm={setNavigationItemForm}
+      setNavigationItemsPictures={setNavigationItemsPictures}
+      setPicture={setPicture}
+      useDragHandle
+    />
     <AddItemContainer
       disabled={isCropping || isFormLoading}
       message="Add new Navigation Item"
@@ -227,6 +282,12 @@ export default compose(
         ? newNavigationItemsPictures.splice(navigationItemsPictureIndex, 1, picture)
         : newNavigationItemsPictures.push(picture)
       setNavigationItemsPictures(newNavigationItemsPictures)
+    },
+    onSortEnd: ({ setForm, form }) => async ({ oldIndex, newIndex }) => {
+      const orderedNavigationItems = arrayMove(form.navigationItemsAttributes, oldIndex, newIndex)
+      const orderedIds = orderedNavigationItems.map(item => item.id)
+      setForm({ ...form, navigationItemsAttributes: orderedNavigationItems })
+      await apiNavigationItemSort({ ids: orderedIds })
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
