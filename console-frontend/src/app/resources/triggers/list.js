@@ -128,7 +128,7 @@ const TriggerRow = compose(
       />
     </TableCell>
     <TableCell width="50%">
-      <InlineTypography highlight={highlightEnabled} variant="subtitle2">{`${trigger.flowType} #${trigger.flowId}: '${
+      <InlineTypography highlight={highlightEnabled} variant="subtitle2">{`${trigger.flowType}: '${
         trigger.flow.name
       }'`}</InlineTypography>
       <Button
