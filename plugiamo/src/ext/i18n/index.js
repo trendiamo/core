@@ -2,14 +2,14 @@ import { location } from 'config'
 
 const i18n = {
   imDone: () => {
-    if (location.hostname === 'www.shoptimao.com.br') {
+    if (location.hostname === 'www.shoptimao.com.br' || location.hostname === 'www.impressorajato.com.br') {
       return 'Legal'
     } else {
       return "I'm done"
     }
   },
   iStillNeedHelp: () => {
-    if (location.hostname === 'www.shoptimao.com.br') {
+    if (location.hostname === 'www.shoptimao.com.br' || location.hostname === 'www.impressorajato.com.br') {
       return 'Me mostre outras sugestões'
     } else {
       return 'I still need help'
@@ -18,7 +18,7 @@ const i18n = {
   productsSelectedBy: firstName => {
     if (location.hostname === 'www.shoptimao.com.br') {
       return 'Conheça produtos que eu uso:'
-    } else if (location.hostname == 'www.shopinfo.com.br') {
+    } else if (location.hostname === 'www.shopinfo.com.br' || location.hostname === 'www.impressorajato.com.br') {
       return `Produtos selecionados por ${firstName}:`
     } else {
       return `Products selected by ${firstName}`
