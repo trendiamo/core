@@ -9,6 +9,7 @@ const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/showcases`
 const SCRIPTED_CHATS_URL = `${BASE_API_URL}/scripted_chats`
 const NAVIGATIONS_URL = `${BASE_API_URL}/navigations`
+const NAVIGATION_ITEMS_URL = `${BASE_API_URL}/navigation_items`
 const TRIGGERS_URL = `${BASE_API_URL}/triggers`
 const ME_URL = `${BASE_API_URL}/me`
 const WEBSITES_URL = `${BASE_API_URL}/websites`
@@ -17,7 +18,6 @@ const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
 const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
 const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
 const PATH_URL = `${BASE_API_URL}/path`
-
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
 const authFetch = async (url, options) =>
@@ -132,6 +132,8 @@ export const apiNavigationDestroy = body => apiDestroyMultipleRequest(NAVIGATION
 export const apiNavigationCreate = body => apiCreateRequest(NAVIGATIONS_URL, body)
 export const apiNavigationShow = id => apiGetRequest(`${NAVIGATIONS_URL}/${id}`)
 export const apiNavigationUpdate = (id, body) => apiUpdateRequest(`${NAVIGATIONS_URL}/${id}`, body)
+
+export const apiNavigationItemSort = body => apiCreateRequest(`${NAVIGATION_ITEMS_URL}/sort`, body)
 
 export const apiTriggerList = () => apiGetRequest(TRIGGERS_URL)
 export const apiTriggerDestroy = body => apiDestroyMultipleRequest(TRIGGERS_URL, body)

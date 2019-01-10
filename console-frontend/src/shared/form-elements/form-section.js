@@ -23,10 +23,11 @@ const Content = styled.div`
   margin: 0px 0 16px;
 `
 
-const FormSection = ({ title, children, folded, foldable, toggleFolded, actions, hideTop, hideBottom }) => (
+const FormSection = ({ dragHandle, title, children, folded, foldable, toggleFolded, actions, hideTop, hideBottom }) => (
   <SectionContainer>
     {!hideTop && <Divider />}
     <FlexBar>
+      {dragHandle}
       <Header variant="subtitle1">{title}</Header>
       {actions}
       {foldable && (
