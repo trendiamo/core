@@ -1,6 +1,7 @@
 import AppBarButton from 'shared/app-bar-button'
 import BlankStateTemplate from 'shared/blank-state'
 import CircularProgress from 'shared/circular-progress'
+import EditButton from 'shared/edit-button'
 import omit from 'lodash.omit'
 import React from 'react'
 import routes from 'app/routes'
@@ -152,9 +153,13 @@ const TriggerRow = compose(
       ))}
     </TableCell>
     <TableCell>
-      <Button component={Link} style={{ color: highlightEnabled ? '#fff' : '' }} to={routes.triggerEdit(trigger.id)}>
+      <EditButton
+        component={Link}
+        style={{ color: highlightEnabled ? '#fff' : '' }}
+        to={routes.triggerEdit(trigger.id)}
+      >
         <EditIcon />
-      </Button>
+      </EditButton>
     </TableCell>
   </TableRowStyled>
 ))
