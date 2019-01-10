@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190102144357) do
+ActiveRecord::Schema.define(version: 20190110103147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20190102144357) do
     t.string "pic_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order", default: 1, null: false
     t.index ["account_id"], name: "index_navigation_items_on_account_id"
     t.index ["navigation_id"], name: "index_navigation_items_on_navigation_id"
   end
@@ -107,6 +108,7 @@ ActiveRecord::Schema.define(version: 20190102144357) do
     t.string "display_price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order", default: 1, null: false
     t.index ["account_id"], name: "index_product_picks_on_account_id"
     t.index ["spotlight_id"], name: "index_product_picks_on_spotlight_id"
   end
@@ -143,6 +145,7 @@ ActiveRecord::Schema.define(version: 20190102144357) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "showcase_id"
+    t.integer "order", default: 1, null: false
     t.index ["account_id"], name: "index_spotlights_on_account_id"
     t.index ["persona_id"], name: "index_spotlights_on_persona_id"
     t.index ["showcase_id"], name: "index_spotlights_on_showcase_id"
