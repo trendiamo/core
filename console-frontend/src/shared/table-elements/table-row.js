@@ -1,8 +1,9 @@
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
+import EditButton from 'shared/edit-button'
 import EditIcon from '@material-ui/icons/EditOutlined'
 import React from 'react'
 import TableCell from './table-cell'
-import { Button, Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
+import { Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
 import { compose, withHandlers } from 'recompose'
 import { Link } from 'react-router-dom'
 
@@ -35,9 +36,9 @@ const TableRow = compose(
       }}
     >
       {resourceEditPath && (
-        <Button color="primary" component={Link} to={resourceEditPath}>
+        <EditButton component={Link} to={resourceEditPath}>
           <EditIcon />
-        </Button>
+        </EditButton>
       )}
     </TableCell>
   </MuiTableRow>
