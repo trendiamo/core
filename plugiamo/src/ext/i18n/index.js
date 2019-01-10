@@ -1,18 +1,18 @@
 import { location } from 'config'
 
 const i18n = {
-  imDone: () => {
-    if (location.hostname === 'www.shoptimao.com.br' || location.hostname === 'www.impressorajato.com.br') {
-      return 'Legal'
-    } else {
-      return "I'm done"
-    }
-  },
   iStillNeedHelp: () => {
     if (location.hostname === 'www.shoptimao.com.br' || location.hostname === 'www.impressorajato.com.br') {
       return 'Me mostre outras sugestões'
     } else {
       return 'I still need help'
+    }
+  },
+  okCool: () => {
+    if (location.hostname === 'www.shoptimao.com.br' || location.hostname === 'www.impressorajato.com.br') {
+      return 'Legal'
+    } else {
+      return 'Ok, cool'
     }
   },
   productsSelectedBy: firstName => {

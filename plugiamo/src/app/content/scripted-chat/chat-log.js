@@ -49,7 +49,7 @@ const finalOptions = () => [
   },
   {
     id: 'stop',
-    text: i18n.imDone(),
+    text: i18n.okCool(),
   },
 ]
 
