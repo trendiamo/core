@@ -4,7 +4,7 @@ Types::NavigationType = GraphQL::ObjectType.define do
   field :id, !types.ID
   field :navigationItems, types[Types::NavigationItemType] do
     resolve ->(obj, _args, _ctx) {
-      obj.navigation_items
+      obj.navigation_items.order(:order)
     }
   end
 end

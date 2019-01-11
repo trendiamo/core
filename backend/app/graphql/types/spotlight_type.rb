@@ -10,7 +10,7 @@ Types::SpotlightType = GraphQL::ObjectType.define do
   end
   field :productPicks, types[Types::ProductPickType] do
     resolve ->(obj, _args, _ctx) {
-      obj.product_picks
+      obj.product_picks.order(:order)
     }
   end
 end

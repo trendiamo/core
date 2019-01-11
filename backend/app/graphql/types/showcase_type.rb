@@ -6,7 +6,7 @@ Types::ShowcaseType = GraphQL::ObjectType.define do
   field :subtitle, !types.String
   field :spotlights, types[Types::SpotlightType] do
     resolve ->(obj, _args, _ctx) {
-      obj.spotlights
+      obj.spotlights.order(:order)
     }
   end
 end
