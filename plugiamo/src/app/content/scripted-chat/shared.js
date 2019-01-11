@@ -23,6 +23,7 @@ const MessageContainer = styled.div`
 
 const MessageContent = styled.div`
   background-color: #fff;
+  overflow: hidden;
   border-radius: 0 12px 12px 12px;
   padding: 1rem;
   font-size: 14px;
