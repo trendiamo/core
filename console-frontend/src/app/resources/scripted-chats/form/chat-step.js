@@ -78,7 +78,6 @@ export default compose(
         chatMessagesAttributes: [
           ...chatStep.chatMessagesAttributes,
           {
-            delay: '',
             text: '',
           },
         ],

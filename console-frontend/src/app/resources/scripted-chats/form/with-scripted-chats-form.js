@@ -38,7 +38,6 @@ const withScriptedChatsFormProvider = BaseComponent =>
         const newChatStep = {
           chatMessagesAttributes: [
             {
-              delay: '',
               text: '',
             },
           ],

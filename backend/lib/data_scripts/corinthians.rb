@@ -123,7 +123,6 @@ main_showcase = Showcase.create!(main_showcase_params)
 chat_step_attributes = {
   chat_messages_attributes: [
     {
-      delay: 800,
       text: "Existe mais alguma dúvida que posso te ajudar com esse produto?",
     },
   ],
@@ -133,7 +132,6 @@ chat_step_attributes = {
       destination_chat_step_attributes: {
         chat_messages_attributes: [
           {
-            delay: 800,
             text: "Nosso produtos são feitos de Poliéster com tecnologia Dri-Fit, que é um tecido de desempenho que afasta o suor da pele 💦 e mantém você seco e confortável. 👍",
           },
         ],
@@ -144,7 +142,6 @@ chat_step_attributes = {
       destination_chat_step_attributes: {
         chat_messages_attributes: [
           {
-            delay: 800,
             text: "Nós temos 3 formas de entrega. Entrega Express, em até 48h para região de São Paulo. Entrega Normal, em até 7 dias e entrega Agendada, que você pode escolher a data que deseja receber o produto. 🚚",
           },
         ],
@@ -155,7 +152,6 @@ chat_step_attributes = {
       destination_chat_step_attributes: {
         chat_messages_attributes: [
           {
-            delay: 800,
             text: "O pagamento das suas compras podem ser feitas por Boleto Bancário, Cartão de Crédito ou Paypal. No Cartão de Crédito você pode parcelar em até 10x. 👍",
           },
         ],

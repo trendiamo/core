@@ -5,10 +5,7 @@ import { apiRequest, apiScriptedChatShow, apiScriptedChatUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
 import { withSnackbar } from 'notistack'
 
-const newEmptyChatMessage = () => ({
-  delay: '',
-  text: '',
-})
+const newEmptyChatMessage = () => ({ text: '' })
 
 const treatChatSteps = (chatStep, ids, extraIndex = 0) => ({
   id: chatStep.id,

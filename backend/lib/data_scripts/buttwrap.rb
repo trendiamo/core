@@ -138,7 +138,6 @@ adam_ebw_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -148,7 +147,6 @@ adam_ebw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "They feel like silk on your body. Openly speaking it just keeps stuff where it belongs while maintaing class 🙂",
             },
           ],
@@ -159,7 +157,6 @@ adam_ebw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Buttwrap always ships for free if you are in Germany or if your order is above 59€. Otherwise you'll pay 9.90 for shipping to EU and 19.90€ for shipping around the globe. I always prefer to order 3 or 5 pairs so that I can get a discount up to 20% and shipping for free 🙂",
             },
           ],
@@ -170,7 +167,6 @@ adam_ebw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],
@@ -187,7 +183,6 @@ adam_obr_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -197,7 +192,6 @@ adam_obr_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Who says underwear has to have a boring color? I like to wear some strong colors every now and then!",
             },
           ],
@@ -208,7 +202,6 @@ adam_obr_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Buttwrap always ships for free if you are in Germany or if your order is above 59€. Otherwise you'll pay 9.90 for shipping to EU and 19.90€ for shipping around the globe. I always prefer to order 3 or 5 pairs so that I can get a discount up to 20% and shipping for free 🙂",
             },
           ],
@@ -219,7 +212,6 @@ adam_obr_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],
@@ -236,7 +228,6 @@ adam_bgm_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -246,7 +237,6 @@ adam_bgm_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "The quality is just really good and they are perfect for every day! By the way if you buy 3 of them you get a 15% discount!",
             },
           ],
@@ -257,7 +247,6 @@ adam_bgm_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Buttwrap always ships for free if you are in Germany or if your order is above 59€. Otherwise you'll pay 9.90 for shipping to EU and 19.90€ for shipping around the globe. I always prefer to order 3 or 5 pairs so that I can get a discount up to 20% and shipping for free 🙂",
             },
           ],
@@ -268,7 +257,6 @@ adam_bgm_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],
@@ -285,7 +273,6 @@ james_obr_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -295,7 +282,6 @@ james_obr_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Buying this specific pair, you can support the preservation of one of the most endangered species, the orangutans, while looking sexy as hell",
             },
           ],
@@ -306,7 +292,6 @@ james_obr_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Unfortunately, Buttwrap ships always for free only in Germany. If you want to order a single pair in other EU countries, the shipping cost is 9.90€. If you are outside the EU you will pay 19.90€. I usually avoid paying the delivery costs by completing an order over 59€ and getting free shipping and a brand new set of underwears 😉",
             },
           ],
@@ -317,7 +302,6 @@ james_obr_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],
@@ -335,7 +319,6 @@ james_bg_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -345,7 +328,6 @@ james_bg_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "I love how bold these boxers are! You would expect most underwear to be white or black but this one has a very special color that can be suprising 😉",
             },
           ],
@@ -356,7 +338,6 @@ james_bg_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Unfortunately, Buttwrap ships always for free only in Germany. If you want to order a single pair in other EU countries, the shipping cost is 9.90€. If you are outside the EU you will pay 19.90€. I usually avoid paying the delivery costs by completing an order over 59€ and getting free shipping and a brand new set of underwears 😉",
             },
           ],
@@ -367,7 +348,6 @@ james_bg_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],
@@ -384,7 +364,6 @@ james_bgm_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -394,7 +373,6 @@ james_bgm_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Someone would say this pair is very traditional. I would say that it is very classy. You cannot go wrong with class.",
             },
           ],
@@ -405,7 +383,6 @@ james_bgm_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "Unfortunately, Buttwrap ships always for free only in Germany. If you want to order a single pair in other EU countries, the shipping cost is 9.90€. If you are outside the EU you will pay 19.90€. I usually avoid paying the delivery costs by completing an order over 59€ and getting free shipping and a brand new set of underwears 😉",
             },
           ],
@@ -416,7 +393,6 @@ james_bgm_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],
@@ -434,7 +410,6 @@ oscar_gbb_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -444,7 +419,6 @@ oscar_gbb_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "That might sound odd but I like how the waistband feels like. Sometimes they almost cut into your body. These ones really charm your body! 🙂",
             },
           ],
@@ -455,7 +429,6 @@ oscar_gbb_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "When I am on Buttwrap, I can't control myself, and I always end up ordering 5 pairs at the time. If you are like me and make orders over 59€, doesn't matter where you are, the shipping is free. Shipping is also always free in Germany, no matter what! If you are in other EU countries and want to make smaller orders, you will pay 9.90€ of shipping cost. For small orders outside EU you will pay 19.90€",
             },
           ],
@@ -466,7 +439,6 @@ oscar_gbb_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],
@@ -483,7 +455,6 @@ oscar_ebw_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -493,7 +464,6 @@ oscar_ebw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "There is something about white boxer that just makes me connect with my masculinity. This pair is great if you are looking for something that highlights your body in a different way",
             },
           ],
@@ -504,7 +474,6 @@ oscar_ebw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "When I am on Buttwrap, I can't control myself, and I always end up ordering 5 pairs at the time. If you are like me and make orders over 59€, doesn't matter where you are, the shipping is free. Shipping is also always free in Germany, no matter what! If you are in other EU countries and want to make smaller orders, you will pay 9.90€ of shipping cost. For small orders outside EU you will pay 19.90€",
             },
           ],
@@ -515,7 +484,6 @@ oscar_ebw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],
@@ -532,7 +500,6 @@ oscar_bw_chat_params = {
   chat_step_attributes: {
     chat_messages_attributes: [
       {
-        delay: 800,
         text: "Any questions about the product? I tried it, maybe I can help you.",
       },
     ],
@@ -542,7 +509,6 @@ oscar_bw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "I like brief boxers! They just keep stuff where it belongs and feel super comfortable, especially when working out!",
             },
           ],
@@ -553,7 +519,6 @@ oscar_bw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "When I am on Buttwrap, I can't control myself, and I always end up ordering 5 pairs at the time. If you are like me and make orders over 59€, doesn't matter where you are, the shipping is free. Shipping is also always free in Germany, no matter what! If you are in other EU countries and want to make smaller orders, you will pay 9.90€ of shipping cost. For small orders outside EU you will pay 19.90€",
             },
           ],
@@ -564,7 +529,6 @@ oscar_bw_chat_params = {
         destination_chat_step_attributes: {
           chat_messages_attributes: [
             {
-              delay: 800,
               text: "This pair is made of fine and soft cotton-stretch fabric (95% cotton, 5% elastane) with a soft waistband for a better fit.",
             },
           ],

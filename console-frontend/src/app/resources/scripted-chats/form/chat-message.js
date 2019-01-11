@@ -21,16 +21,6 @@ const ChatStepMessage = ({
       <TextField
         disabled={isFormLoading}
         fullWidth
-        label="Delay"
-        margin="normal"
-        name="chatMessage_delay"
-        onChange={editChatMessageValue}
-        required
-        value={chatMessage.delay}
-      />
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
         label="Text"
         margin="normal"
         name="chatMessage_text"

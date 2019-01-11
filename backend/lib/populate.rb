@@ -102,7 +102,6 @@ class PopulateScriptedChats
     {
       chat_messages_attributes: [
         {
-          delay: 800,
           text: Faker::Lorem.paragraph,
         },
       ],

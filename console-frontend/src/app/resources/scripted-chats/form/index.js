@@ -117,7 +117,6 @@ export default compose(
     chatStepAttributes: {
       chatMessagesAttributes: [
         {
-          delay: '',
           text: '',
         },
       ],
