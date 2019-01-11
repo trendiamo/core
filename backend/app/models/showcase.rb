@@ -20,7 +20,7 @@ class Showcase < ApplicationRecord
   end
 
   def spotlights_attributes(spotlights)
-    spotlights.map do |spotlight|
+    spotlights.sort_by { |spotlight| spotlight[:order] }.map do |spotlight|
       {
         id: spotlight.id,
         text: spotlight.text,
