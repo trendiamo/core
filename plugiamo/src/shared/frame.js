@@ -65,6 +65,7 @@ export default compose(
           loadCss(iframeRef.contentDocument.head, 'https://fonts.googleapis.com/css?family=Roboto:400,500,700')
           addCss(iframeRef.contentDocument.head, style)
           addBase(iframeRef.contentDocument.head)
+          iframeRef.contentDocument.body.classList.add(navigator.platform)
           setIsLoaded(true)
         }
         if (iframeRef.contentDocument.readyState === 'complete') {

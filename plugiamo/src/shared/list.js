@@ -17,11 +17,14 @@ const ListChevron = styled(IconChevronRight)`
 // 101px makes it so 3 lines of text fit with no need for scroll
 const ListContent = styled.div`
   height: 101px;
-  padding: 8px 12px;
+  padding: 8px 0 8px 10px;
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  .Win32 & {
+    letter-spacing: -0.6px;
+  }
 `
 
 // 101px makes it so 3 lines of text fit with no need for scroll
