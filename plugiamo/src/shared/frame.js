@@ -47,6 +47,13 @@ const addCss = (head, css) => {
   head.appendChild(element)
 }
 
+// so that links open in parent by default
+const addBase = head => {
+  const element = document.createElement('base')
+  element.setAttribute('target', '_parent')
+  head.appendChild(element)
+}
+
 export default compose(
   withState('iframeRef', 'setIframeRef', null),
   withState('isLoaded', 'setIsLoaded', false),
@@ -57,6 +64,7 @@ export default compose(
         const load = () => {
           loadCss(iframeRef.contentDocument.head, 'https://fonts.googleapis.com/css?family=Roboto:400,500,700')
           addCss(iframeRef.contentDocument.head, style)
+          addBase(iframeRef.contentDocument.head)
           setIsLoaded(true)
         }
         if (iframeRef.contentDocument.readyState === 'complete') {
