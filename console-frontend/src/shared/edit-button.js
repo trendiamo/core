@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const EditButton = styled(MUIButton)`
   color: black;
   &:hover {
-    color: #3b07ff;
+    color: #0560ff;
   }
 `
 
