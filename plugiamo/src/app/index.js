@@ -18,27 +18,39 @@ const Gradient = animateOnMount(styled.div`
   width: 500px;
   height: 500px;
   bottom: 0;
-  right: 0;
+  ${({ position }) => (position === 'left' ? 'left: 0;' : 'right: 0;')}
   pointer-events: none;
-  background: radial-gradient(ellipse at bottom right, rgba(29, 39, 54, 0.16) 0, rgba(29, 39, 54, 0) 72%);
+  background: radial-gradient(
+    ellipse at bottom ${({ position }) => (position === 'left' ? 'left' : 'right')},
+    rgba(29, 39, 54, 0.16) 0,
+    rgba(29, 39, 54, 0) 72%
+  );
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-export const AppBase = styled(({ className, Component, Launcher, onToggleContent, persona, showingContent }) => (
-  <div className={className}>
-    {showingContent && (
-      <Content
-        Component={Component}
+export const AppBase = styled(
+  ({ className, Component, Launcher, onToggleContent, persona, position, showingContent }) => (
+    <div className={className}>
+      {showingContent && (
+        <Content
+          Component={Component}
+          onToggleContent={onToggleContent}
+          persona={persona}
+          position={position}
+          showingContent={showingContent}
+        />
+      )}
+      <Launcher
         onToggleContent={onToggleContent}
         persona={persona}
+        position={position}
         showingContent={showingContent}
       />
-    )}
-    <Launcher onToggleContent={onToggleContent} persona={persona} showingContent={showingContent} />
-    {showingContent && <Gradient />}
-  </div>
-))`
+      {showingContent && <Gradient position={position} />}
+    </div>
+  )
+)`
   display: none;
   @media (min-height: ${HEIGHT_BREAKPOINT}px) {
     display: block;
@@ -109,6 +121,7 @@ export default compose(
       : gql`
           query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
             website {
+              name
               previewMode
             }
             flow(pathname: $pathname, pluginPath: $pluginPath) {
@@ -147,6 +160,9 @@ export default compose(
     infoMsgHof(`no data found for hostname ${location.hostname}`)
   ),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
+  withProps(({ data }) => ({
+    position: data.website.name === 'Impressorajato' ? 'left' : 'right',
+  })),
   withState('persona', 'setPersona'),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({

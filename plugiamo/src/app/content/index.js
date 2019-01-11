@@ -8,8 +8,8 @@ import { cloneElement } from 'preact'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 
-const Content = ({ Component, onToggleContent }) => (
-  <ContentFrame onToggleContent={onToggleContent}>
+const Content = ({ Component, onToggleContent, position }) => (
+  <ContentFrame onToggleContent={onToggleContent} position={position}>
     <Wrapper>{Component}</Wrapper>
   </ContentFrame>
 )

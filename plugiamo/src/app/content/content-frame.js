@@ -24,6 +24,7 @@ const ContentFrameContainer = animateOnMount(styled.div`
   @media (min-width: ${MAIN_BREAKPOINT}px) {
     border-radius: 8px;
     bottom: 100px;
+    ${({ position }) => (position === 'left' ? 'left: 30px;' : 'right: 30px;')}
     right: 30px;
     width: ${WIDTH}px;
     height: calc(100vh - 150px);
@@ -62,8 +63,8 @@ const CloseContent = styled(IconClose)`
   }
 `
 
-const ContentFrame = ({ children, onToggleContent }) => (
-  <ContentFrameContainer>
+const ContentFrame = ({ children, onToggleContent, position }) => (
+  <ContentFrameContainer position={position}>
     <IFrame onToggleContent={onToggleContent} showingContent>
       {children}
     </IFrame>

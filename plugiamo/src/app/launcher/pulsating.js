@@ -17,7 +17,7 @@ const TrendiamoLauncherFrame = animateOnMount(styled(Frame).attrs({
   position: fixed;
   bottom: 10px;
   overflow: hidden;
-  right: 10px;
+  ${({ position }) => (position === 'left' ? 'left: 10px;' : 'right: 10px;')}
   width: 100px;
   height: 100px;
   opacity: ${({ entry }) => (entry ? 0 : 1)};
@@ -50,8 +50,8 @@ const Container = styled.div`
   }
 `
 
-const Launcher = ({ optimizelyToggleContent, personaPicUrl, showingContent }) => (
-  <TrendiamoLauncherFrame>
+const Launcher = ({ optimizelyToggleContent, personaPicUrl, position, showingContent }) => (
+  <TrendiamoLauncherFrame position={position}>
     <div>
       <PulsateEffect active={!showingContent} />
       <Container active={!showingContent} onClick={optimizelyToggleContent}>
