@@ -54,6 +54,11 @@ const addBase = head => {
   head.appendChild(element)
 }
 
+const addPlatformClass = body => {
+  const platformClass = encodeURIComponent(navigator.platform).replace(/%[0-9A-F]{2}/gi, '-')
+  body.classList.add(platformClass)
+}
+
 export default compose(
   withState('iframeRef', 'setIframeRef', null),
   withState('isLoaded', 'setIsLoaded', false),
@@ -65,7 +70,7 @@ export default compose(
           loadCss(iframeRef.contentDocument.head, 'https://fonts.googleapis.com/css?family=Roboto:400,500,700')
           addCss(iframeRef.contentDocument.head, style)
           addBase(iframeRef.contentDocument.head)
-          iframeRef.contentDocument.body.classList.add(navigator.platform)
+          addPlatformClass(iframeRef.contentDocument.body)
           setIsLoaded(true)
         }
         if (iframeRef.contentDocument.readyState === 'complete') {
