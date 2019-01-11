@@ -21,12 +21,9 @@ const SpotlightsList = styled.ul`
   padding: 0;
 `
 
-const SortableSpotlight = compose(
-  withState('isSortable', 'setIsSortable', false),
-  withProps(({ isSortable }) => ({
-    disabled: !isSortable,
-  }))
-)(SortableElement(({ spotlightIndex, ...props }) => <Spotlight index={spotlightIndex} {...props} />))
+const SortableSpotlight = SortableElement(({ spotlightIndex, ...props }) => (
+  <Spotlight index={spotlightIndex} {...props} />
+))
 
 const SpotlightsContainer = compose(
   withProps(() => ({

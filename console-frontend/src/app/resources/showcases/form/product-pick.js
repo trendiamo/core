@@ -30,6 +30,7 @@ const ProductPick = ({
 }) => (
   <FormSection
     actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteProductPick} />}
+    backgroundColor="#FFFFFF"
     dragHandle={<DragHandle />}
     hideBottom
     hideTop={index === 0}

@@ -48,6 +48,8 @@ Rails.application.routes.draw do
 
       post "/spotlights/sort", to: "spotlights#sort"
 
+      post "/product_picks/sort", to: "product_picks#sort"
+
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end

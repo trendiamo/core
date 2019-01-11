@@ -8,6 +8,7 @@ const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/showcases`
 const SPOTLIGHTS_URL = `${BASE_API_URL}/spotlights`
+const PRODUCT_PICKS_URL = `${BASE_API_URL}/product_picks`
 const SCRIPTED_CHATS_URL = `${BASE_API_URL}/scripted_chats`
 const NAVIGATIONS_URL = `${BASE_API_URL}/navigations`
 const NAVIGATION_ITEMS_URL = `${BASE_API_URL}/navigation_items`
@@ -124,6 +125,8 @@ export const apiShowcaseShow = id => apiGetRequest(`${CURATIONS_URL}/${id}`)
 export const apiShowcaseUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL}/${id}`, body)
 
 export const apiSpotlightSort = body => apiCreateRequest(`${SPOTLIGHTS_URL}/sort`, body)
+
+export const apiProductPickSort = body => apiCreateRequest(`${PRODUCT_PICKS_URL}/sort`, body)
 
 export const apiScriptedChatList = query => apiListRequest(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`)
 export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED_CHATS_URL, body)
