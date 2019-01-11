@@ -64,6 +64,11 @@ const Container = styled.div`
   padding: 1rem;
 `
 
+const H2 = styled.h2`
+  margin: 0;
+  font-size: 18px;
+`
+
 const ContentSpotlight = compose(
   withProps(({ id, spotlights }) => ({
     spotlight: spotlights.find(e => e.id === id),
@@ -73,7 +78,7 @@ const ContentSpotlight = compose(
   }))
 )(({ firstName, isLeaving, spotlight }) => (
   <Container>
-    <span>{i18n.productsSelectedBy(firstName)}</span>
+    <H2>{i18n.productsSelectedBy(firstName)}</H2>
     <AnimatedBlackArrow isLeaving={isLeaving} timeout={250 * 2} />
     <TopSlideAnimation isLeaving={isLeaving}>
       <List>
