@@ -16,27 +16,29 @@ class PopulateShowcases
         persona: Persona.order("RANDOM()").first,
         title: Faker::Lorem.sentence,
         subtitle: Faker::Lorem.sentence,
-        spotlights_attributes: Array.new(3) { spotlights_attributes },
+        spotlights_attributes: Array.new(3) { |index| spotlights_attributes(index) },
       }
       Showcase.create!(showcase_attrs)
     end
   end
 
-  def spotlights_attributes
+  def spotlights_attributes(spotlight_index)
     {
       text: Faker::Lorem.sentence,
-      product_picks_attributes: Array.new(3) { product_picks_attributes },
+      product_picks_attributes: Array.new(3) { |index| product_picks_attributes(index) },
       persona: Persona.order("RANDOM()").first,
+      order: spotlight_index + 1,
     }
   end
 
-  def product_picks_attributes
+  def product_picks_attributes(product_pick_index)
     {
       url: Faker::Internet.url,
       name: Faker::Lorem.words.join(" ").capitalize,
       description: Faker::Lorem.sentence,
       display_price: "€#{Faker::Number.decimal(2)}",
       pic_url: Faker::LoremPixel.image,
+      order: product_pick_index + 1,
     }
   end
 end
@@ -57,17 +59,18 @@ class PopulateNavigations
       navigation_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Navigation",
         persona: Persona.order("RANDOM()").first,
-        navigation_items_attributes: Array.new(6) { navigation_item_attributes },
+        navigation_items_attributes: Array.new(6) { |index| navigation_item_attributes(index) },
       }
       Navigation.create!(navigation_attrs)
     end
   end
 
-  def navigation_item_attributes
+  def navigation_item_attributes(navigation_item_index)
     {
       text: Faker::Lorem.word.capitalize,
       url: Faker::Internet.url,
       pic_url: Faker::LoremPixel.image,
+      order: navigation_item_index + 1,
     }
   end
 end
