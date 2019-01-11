@@ -23,7 +23,7 @@ const ListContent = styled.div`
   display: flex;
   flex-direction: column;
   .Win32 & {
-    letter-spacing: -0.6px;
+    letter-spacing: -0.2px;
   }
 `
 

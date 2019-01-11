@@ -9,10 +9,12 @@ import { location } from 'config'
 const PersonaName = styled.span`
   font-weight: 500;
   font-size: 18px;
+  line-height: 21px;
 `
 
 const PersonaDescription = styled.div`
   font-size: 14px;
+  line-height: 16px;
 `
 
 const SpotlightItem = ({ onListItemClick, setImgRef, setNameRef, spotlight }) => (
