@@ -2,11 +2,22 @@ import ProductPick from './product-pick'
 import React from 'react'
 import Section from 'shared/section'
 import Select from 'shared/select'
+import styled from 'styled-components'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { findIndex } from 'lodash'
 import { Grid, TextField } from '@material-ui/core'
+import { Reorder as ReorderIcon } from '@material-ui/icons'
+import { SortableHandle } from 'react-sortable-hoc'
+
+const StyledReorderIcon = styled(ReorderIcon)`
+  cursor: ns-resize;
+  color: rgba(0, 0, 0, 0.54);
+  margin-right: 1rem;
+`
+
+const DragHandle = SortableHandle(({ ...props }) => <StyledReorderIcon {...props} />)
 
 const Spotlight = ({
   addProductPick,
@@ -21,13 +32,16 @@ const Spotlight = ({
   setIsCropping,
   index,
   isCropping,
+  setIsSortable,
 }) => (
   <Section>
     <FormSection
       actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />}
+      dragHandle={<DragHandle />}
       foldable
       hideTop
       title={`Spotlight #${index + 1}`}
+      toggleIsSortable={setIsSortable}
     >
       <Grid item sm={6}>
         <TextField

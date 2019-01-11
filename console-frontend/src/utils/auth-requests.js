@@ -7,6 +7,7 @@ const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/showcases`
+const SPOTLIGHTS_URL = `${BASE_API_URL}/spotlights`
 const SCRIPTED_CHATS_URL = `${BASE_API_URL}/scripted_chats`
 const NAVIGATIONS_URL = `${BASE_API_URL}/navigations`
 const NAVIGATION_ITEMS_URL = `${BASE_API_URL}/navigation_items`
@@ -18,6 +19,7 @@ const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
 const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
 const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
 const PATH_URL = `${BASE_API_URL}/path`
+
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
 const authFetch = async (url, options) =>
@@ -120,6 +122,8 @@ export const apiShowcaseDestroy = body => apiDestroyMultipleRequest(CURATIONS_UR
 export const apiShowcaseCreate = body => apiCreateRequest(CURATIONS_URL, body)
 export const apiShowcaseShow = id => apiGetRequest(`${CURATIONS_URL}/${id}`)
 export const apiShowcaseUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL}/${id}`, body)
+
+export const apiSpotlightSort = body => apiCreateRequest(`${SPOTLIGHTS_URL}/sort`, body)
 
 export const apiScriptedChatList = query => apiListRequest(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`)
 export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED_CHATS_URL, body)

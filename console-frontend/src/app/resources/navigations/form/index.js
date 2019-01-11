@@ -68,8 +68,8 @@ const NavigationItemsContainer = compose(
   )
 )
 
-const TriggerRowStyle = createGlobalStyle`
-  .sortable-trigger-row {
+const NavigationsRowStyle = createGlobalStyle`
+  .sortable-navigation-row {
     z-index: 1;
   }
 `
@@ -95,7 +95,7 @@ const NavigationForm = ({
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
-      <TriggerRowStyle />
+      <NavigationsRowStyle />
       <TextField
         autoFocus
         disabled={isFormLoading}
@@ -121,7 +121,7 @@ const NavigationForm = ({
     </Section>
     <NavigationItemsContainer
       form={form}
-      helperClass="sortable-trigger-row"
+      helperClass="sortable-navigation-row"
       isCropping={isCropping}
       isFormLoading={isFormLoading}
       navigationItemsPictures={navigationItemsPictures}

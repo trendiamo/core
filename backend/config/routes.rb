@@ -46,6 +46,8 @@ Rails.application.routes.draw do
 
       post "/navigation_items/sort", to: "navigation_items#sort"
 
+      post "/spotlights/sort", to: "spotlights#sort"
+
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end

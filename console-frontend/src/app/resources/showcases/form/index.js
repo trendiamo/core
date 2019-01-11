@@ -4,15 +4,75 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import Select from 'shared/select'
 import Spotlight from './spotlight'
+import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
-import { apiPersonasAutocomplete } from 'utils'
+import { apiPersonasAutocomplete, apiSpotlightSort } from 'utils'
+import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { createGlobalStyle } from 'styled-components'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
+
+const SpotlightsList = styled.ul`
+  padding: 0;
+`
+
+const SortableSpotlight = compose(
+  withState('isSortable', 'setIsSortable', false),
+  withProps(({ isSortable }) => ({
+    disabled: !isSortable,
+  }))
+)(SortableElement(({ spotlightIndex, ...props }) => <Spotlight index={spotlightIndex} {...props} />))
+
+const SpotlightsContainer = compose(
+  withProps(() => ({
+    lockAxis: 'y',
+    lockToContainerEdges: true,
+    lockOffset: '0%',
+  }))
+)(
+  SortableContainer(
+    ({
+      isFormLoading,
+      isCropping,
+      setIsCropping,
+      form,
+      personas,
+      setProductPicksPictures,
+      productPicksPictures,
+      setSpotlightForm,
+    }) => (
+      <SpotlightsList>
+        {form.spotlightsAttributes.map((spotlight, index) => (
+          <SortableSpotlight
+            allowDelete={form.spotlightsAttributes.length > 1}
+            index={index}
+            isCropping={isCropping}
+            isFormLoading={isFormLoading}
+            key={spotlight.id}
+            onChange={setSpotlightForm}
+            personas={personas}
+            productPicksPictures={productPicksPictures}
+            setIsCropping={setIsCropping}
+            setProductPicksPictures={setProductPicksPictures}
+            spotlight={spotlight}
+            spotlightIndex={index}
+          />
+        ))}
+      </SpotlightsList>
+    )
+  )
+)
+
+const SpotlightsRowStyle = createGlobalStyle`
+  .sortable-spotlight-row {
+    z-index: 1;
+  }
+`
 
 const ShowcaseForm = ({
   selectPersona,
@@ -31,9 +91,11 @@ const ShowcaseForm = ({
   isCropping,
   setIsCropping,
   title,
+  onSortEnd,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
+      <SpotlightsRowStyle />
       <Grid item sm={6}>
         <TextField
           autoFocus
@@ -81,23 +143,19 @@ const ShowcaseForm = ({
         <FormHelperText>{'The subtitle is shown in the cover, below the title.'}</FormHelperText>
       </Grid>
     </Section>
-    {form.spotlightsAttributes.map((spotlight, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <React.Fragment key={index}>
-        <Spotlight
-          allowDelete={form.spotlightsAttributes.length > 1}
-          index={index}
-          isCropping={isCropping}
-          isFormLoading={isFormLoading}
-          onChange={setSpotlightForm}
-          personas={personas}
-          productPicksPictures={productPicksPictures}
-          setIsCropping={setIsCropping}
-          setProductPicksPictures={setProductPicksPictures}
-          spotlight={spotlight}
-        />
-      </React.Fragment>
-    ))}
+    <SpotlightsContainer
+      form={form}
+      helperClass="sortable-spotlight-row"
+      isCropping={isCropping}
+      isFormLoading={isFormLoading}
+      onSortEnd={onSortEnd}
+      personas={personas}
+      productPicksPictures={productPicksPictures}
+      setIsCropping={setIsCropping}
+      setProductPicksPictures={setProductPicksPictures}
+      setSpotlightForm={setSpotlightForm}
+      useDragHandle
+    />
     <AddItemContainer disabled={isCropping || isFormLoading} message="Add new spotlight" onClick={addSpotlight} />
   </Form>
 )
@@ -201,6 +259,12 @@ export default compose(
       const result = await onFormSubmit(event)
       if (!result.error && !result.errors) history.push(routes.showcasesList())
       return result
+    },
+    onSortEnd: ({ setForm, form }) => async ({ oldIndex, newIndex }) => {
+      const orderedSpotlights = arrayMove(form.spotlightsAttributes, oldIndex, newIndex)
+      const orderedIds = orderedSpotlights.map(spotlight => spotlight.id)
+      setForm({ ...form, spotlightsAttributes: orderedSpotlights })
+      await apiSpotlightSort({ ids: orderedIds })
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
