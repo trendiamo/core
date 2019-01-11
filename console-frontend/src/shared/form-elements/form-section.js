@@ -17,14 +17,26 @@ const ExpandButton = styled(IconButton)`
 
 const SectionContainer = styled.div`
   margin: 0;
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `
 
 const Content = styled.div`
   margin: 0px 0 16px;
 `
 
-const FormSection = ({ dragHandle, title, children, folded, foldable, toggleFolded, actions, hideTop, hideBottom }) => (
-  <SectionContainer>
+const FormSection = ({
+  backgroundColor,
+  dragHandle,
+  title,
+  children,
+  folded,
+  foldable,
+  toggleFolded,
+  actions,
+  hideTop,
+  hideBottom,
+}) => (
+  <SectionContainer backgroundColor={backgroundColor}>
     {!hideTop && <Divider />}
     <FlexBar>
       {dragHandle}

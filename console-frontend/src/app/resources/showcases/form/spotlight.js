@@ -4,12 +4,55 @@ import Section from 'shared/section'
 import Select from 'shared/select'
 import styled from 'styled-components'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
-import { apiPersonasAutocomplete } from 'utils'
-import { branch, compose, renderNothing, withHandlers } from 'recompose'
+import { apiPersonasAutocomplete, apiProductPickSort } from 'utils'
+import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
+import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
+import { createGlobalStyle } from 'styled-components'
 import { findIndex } from 'lodash'
 import { Grid, TextField } from '@material-ui/core'
 import { Reorder as ReorderIcon } from '@material-ui/icons'
 import { SortableHandle } from 'react-sortable-hoc'
+
+const ProductPicksList = styled.ul`
+  padding: 0;
+`
+
+const SortableProductPick = SortableElement(({ productPickIndex, ...props }) => (
+  <ProductPick index={productPickIndex} {...props} />
+))
+
+const ProductPicksContainer = compose(
+  withProps(() => ({
+    lockAxis: 'y',
+    lockToContainerEdges: true,
+    lockOffset: '0%',
+  }))
+)(
+  SortableContainer(({ isFormLoading, isCropping, setIsCropping, spotlight, onChange, setProductPicture }) => (
+    <ProductPicksList>
+      {spotlight.productPicksAttributes.map((productPick, productPickIndex) => (
+        <SortableProductPick
+          allowDelete={spotlight.productPicksAttributes.length > 1}
+          index={productPickIndex}
+          isCropping={isCropping}
+          isFormLoading={isFormLoading}
+          key={productPick.id}
+          onChange={onChange}
+          productPick={productPick}
+          productPickIndex={productPickIndex}
+          setIsCropping={setIsCropping}
+          setProductPicture={setProductPicture}
+        />
+      ))}
+    </ProductPicksList>
+  ))
+)
+
+const ProductPicksRowStyle = createGlobalStyle`
+  .sortable-product-pick-row {
+    z-index: 1;
+  }
+`
 
 const StyledReorderIcon = styled(ReorderIcon)`
   cursor: ns-resize;
@@ -32,7 +75,7 @@ const Spotlight = ({
   setIsCropping,
   index,
   isCropping,
-  setIsSortable,
+  onSortEnd,
 }) => (
   <Section>
     <FormSection
@@ -41,7 +84,6 @@ const Spotlight = ({
       foldable
       hideTop
       title={`Spotlight #${index + 1}`}
-      toggleIsSortable={setIsSortable}
     >
       <Grid item sm={6}>
         <TextField
@@ -72,21 +114,19 @@ const Spotlight = ({
       </Grid>
       <div style={{ marginTop: '24px' }}>
         <FormSection foldable title="Product Picks">
-          {spotlight.productPicksAttributes &&
-            spotlight.productPicksAttributes.map((productPick, productPickIndex) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <React.Fragment key={productPickIndex}>
-                <ProductPick
-                  allowDelete={spotlight.productPicksAttributes.length > 1}
-                  index={productPickIndex}
-                  isCropping={isCropping}
-                  onChange={setProductPickForm}
-                  productPick={productPick}
-                  setIsCropping={setIsCropping}
-                  setProductPicture={setProductPicture}
-                />
-              </React.Fragment>
-            ))}
+          <ProductPicksRowStyle />
+          {spotlight.productPicksAttributes && (
+            <ProductPicksContainer
+              helperClass="sortable-product-pick-row"
+              isCropping={isCropping}
+              onChange={setProductPickForm}
+              onSortEnd={onSortEnd}
+              setIsCropping={setIsCropping}
+              setProductPicture={setProductPicture}
+              spotlight={spotlight}
+              useDragHandle
+            />
+          )}
         </FormSection>
       </div>
       <AddItemButton disabled={isCropping || isFormLoading} message="Add Product Pick" onClick={addProductPick} />{' '}
@@ -156,6 +196,12 @@ export default compose(
         ? newProductPicksPictures.splice(productPickPictureIndex, 1, picture)
         : newProductPicksPictures.push(picture)
       setProductPicksPictures(newProductPicksPictures)
+    },
+    onSortEnd: ({ onChange, index, spotlight }) => async ({ oldIndex, newIndex }) => {
+      const orderedProductPicks = arrayMove(spotlight.productPicksAttributes, oldIndex, newIndex)
+      const orderedIds = orderedProductPicks.map(productPick => productPick.id)
+      onChange({ ...spotlight, productPicksAttributes: orderedProductPicks }, index)
+      await apiProductPickSort({ ids: orderedIds })
     },
   })
 )(Spotlight)

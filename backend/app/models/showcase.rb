@@ -31,7 +31,7 @@ class Showcase < ApplicationRecord
   end
 
   def product_picks_attributes(product_picks)
-    product_picks.map do |product_pick|
+    product_picks.sort_by { |product_pick| product_pick[:order] }.map do |product_pick|
       {
         id: product_pick.id,
         url: product_pick.url,
