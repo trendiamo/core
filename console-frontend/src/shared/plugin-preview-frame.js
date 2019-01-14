@@ -24,6 +24,8 @@ const style = `
 }
 body, html {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
   margin: 0;
   height: 100%;
 }
