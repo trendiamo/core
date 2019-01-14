@@ -2,6 +2,7 @@ class TriggersController < RestController
   def index
     @triggers = Trigger.all.order(:order)
     authorize @triggers
+    add_hostnames_header
     render json: @triggers
   end
 
@@ -60,5 +61,11 @@ class TriggersController < RestController
   def render_error
     errors = @trigger.errors.full_messages.map { |string| { title: string } }
     render json: { errors: errors }, status: :unprocessable_entity
+  end
+
+  def add_hostnames_header
+    @hostnames = current_user.account.websites.first.hostnames
+    response.headers["Hostnames"] = JSON.generate(@hostnames)
+    response.headers["Access-Control-Expose-Headers"] = "Hostnames"
   end
 end

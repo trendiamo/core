@@ -85,16 +85,39 @@ const DragHandle = SortableHandle(styled(props => <StyledReorderIcon {...omit(pr
   color: ${({ highlight }) => (highlight ? '#fff' : '')};
 `)
 
-const matchTriggers = (triggers, referenceUrl) => {
-  let result = false
+const iterateTriggers = (triggers, input, result) => {
   triggers.forEach((trigger, index) => {
-    if (result) return result
+    if (result) return false
     trigger.urlMatchers.map((url, urlIndex) => {
-      const matches = matchUrl(referenceUrl, url)
+      const matches = matchUrl(input, url)
       if (matches) result = { index, urlIndex }
       return result
     })
   })
+  return result
+}
+
+const isValidUrl = referenceUrl => {
+  const regexp = /https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!-]))?/
+  return regexp.test(referenceUrl)
+}
+
+const matchTriggers = (triggers, referenceUrl, hostnames) => {
+  let result = false
+  let input = referenceUrl
+  if (referenceUrl.charAt(0) === '/') {
+    result = iterateTriggers(triggers, input, result)
+    return result
+  } else {
+    const parsedReferenceUrl = isValidUrl(referenceUrl) ? new URL(`${referenceUrl}`) : false
+    input = parsedReferenceUrl.pathname
+    hostnames.forEach(hostname => {
+      if (parsedReferenceUrl.hostname === hostname) {
+        result = iterateTriggers(triggers, input, result)
+        return result
+      }
+    })
+  }
   return result
 }
 
@@ -297,6 +320,7 @@ export default compose(
   withState('isLoading', 'setIsLoading', true),
   withState('testerUrl', 'setTesterUrl', { value: '', matches: false }),
   withState('selectedIds', 'setSelectedIds', []),
+  withState('hostnames', 'setHostnames', []),
   withState('isSelectAll', 'setIsSelectAll', false),
   withSnackbar,
   withHandlers({
@@ -333,17 +357,18 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { enqueueSnackbar, setIsLoading, setTriggers } = this.props
-      const { json, errors, requestError } = await apiRequest(apiTriggerList, [])
+      const { enqueueSnackbar, setIsLoading, setTriggers, setHostnames } = this.props
+      const { json, response, errors, requestError } = await apiRequest(apiTriggerList, [])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (requestError || errors) return
       setTriggers(json)
+      setHostnames(JSON.parse(response.headers.get('hostnames')))
       setIsLoading(false)
     },
     componentDidUpdate() {
-      const { testerUrl, setTesterUrl, triggers } = this.props
+      const { testerUrl, setTesterUrl, triggers, hostnames } = this.props
       if (testerUrl.value) {
-        const matchesUrl = matchTriggers(triggers, testerUrl.value)
+        const matchesUrl = matchTriggers(triggers, testerUrl.value, hostnames)
         if (!isEqual(testerUrl.matches, matchesUrl)) {
           setTesterUrl({ ...testerUrl, matches: matchesUrl })
         }
