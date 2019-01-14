@@ -12,10 +12,10 @@ const ChatStepSelect = ({
   selectValue,
 }) => (
   <FormControl disabled={disabled || hasNewDestinationChatStep} fullWidth margin="normal">
-    <InputLabel shrink>{'Destination Step *'}</InputLabel>
+    <InputLabel shrink>{'Next Step *'}</InputLabel>
     <Select disabled={disabled} displayEmpty onChange={selectDestinationChatStep} value={selectValue}>
       <MenuItem disabled value="">
-        {'Choose a destination step...'}
+        {'Choose the next step...'}
       </MenuItem>
       {persistedChatSteps.map(chatStep => (
         <MenuItem key={chatStep.__index} value={chatStep.__index}>{`Step #${chatStep.__index + 1}`}</MenuItem>
@@ -26,7 +26,7 @@ const ChatStepSelect = ({
           value={destinationChatStep.__index}
         >{`Step #${destinationChatStep.__index + 1}`}</MenuItem>
       )}
-      <MenuItem value="newChatStep">{'Add chat step...'}</MenuItem>
+      <MenuItem value="newChatStep">{'Add step...'}</MenuItem>
     </Select>
   </FormControl>
 )

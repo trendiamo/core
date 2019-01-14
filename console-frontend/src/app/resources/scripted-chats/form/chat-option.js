@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
-import { Grid, TextField } from '@material-ui/core'
+import { FormHelperText, Grid, TextField } from '@material-ui/core'
 
 const ChatStepPortal = compose(branch(({ target }) => !target || !target.current, renderNothing))(
   ({ children, target }) => ReactDOM.createPortal(children, target.current)
@@ -38,6 +38,7 @@ const ChatStepOption = ({
         value={chatOption.text}
       />
       <ChatStepSelect chatOption={chatOption} disabled={isFormLoading} index={index} onChange={onChange} />
+      <FormHelperText>{'How this chat proceeds after someone clicks this option.'}</FormHelperText>
       {chatStep && (
         <ChatStepPortal target={chatStep.__ref}>
           <ChatStep chatStep={chatStep} index={chatStep.__index} onChange={setChatStepForm} />

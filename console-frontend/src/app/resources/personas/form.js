@@ -7,7 +7,7 @@ import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Form } from 'shared/form-elements'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { Grid, TextField } from '@material-ui/core'
+import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
@@ -61,6 +61,7 @@ const PersonaForm = ({
           required
           value={form.description}
         />
+        <FormHelperText>{"A short text that is shown near the persona's name."}</FormHelperText>
         {progress && <ProgressBar progress={progress} />}
       </Form>
     </Grid>
