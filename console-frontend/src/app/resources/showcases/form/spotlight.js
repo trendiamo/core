@@ -9,9 +9,9 @@ import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-ho
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { createGlobalStyle } from 'styled-components'
 import { findIndex } from 'lodash'
-import { Grid, TextField } from '@material-ui/core'
 import { Reorder as ReorderIcon } from '@material-ui/icons'
 import { SortableHandle } from 'react-sortable-hoc'
+import { TextField } from '@material-ui/core'
 
 const ProductPicksList = styled.ul`
   padding: 0;
@@ -28,7 +28,7 @@ const ProductPicksContainer = compose(
     lockOffset: '0%',
   }))
 )(
-  SortableContainer(({ isFormLoading, isCropping, setIsCropping, spotlight, onChange, setProductPicture }) => (
+  SortableContainer(({ isFormLoading, isCropping, setIsCropping, spotlight, onChange, setProductPicture, onFocus }) => (
     <ProductPicksList>
       {spotlight.productPicksAttributes.map((productPick, productPickIndex) => (
         <SortableProductPick
@@ -38,6 +38,7 @@ const ProductPicksContainer = compose(
           isFormLoading={isFormLoading}
           key={productPick.id}
           onChange={onChange}
+          onFocus={onFocus}
           productPick={productPick}
           productPickIndex={productPickIndex}
           setIsCropping={setIsCropping}
@@ -76,6 +77,7 @@ const Spotlight = ({
   index,
   isCropping,
   onSortEnd,
+  onFocus,
 }) => (
   <Section>
     <FormSection
@@ -85,33 +87,33 @@ const Spotlight = ({
       hideTop
       title={`Spotlight #${index + 1}`}
     >
-      <Grid item sm={6}>
-        <TextField
-          disabled={isCropping || isFormLoading}
-          fullWidth
-          label="Text"
-          margin="normal"
-          name="spotlight_text"
-          onChange={editSpotlightValue}
-          required
-          value={spotlight.text}
-        />
-        <Select
-          autocomplete={apiPersonasAutocomplete}
-          defaultValue={
-            spotlight.__persona && {
-              value: spotlight.__persona.id,
-              label: spotlight.__persona.name,
-            }
+      <TextField
+        disabled={isCropping || isFormLoading}
+        fullWidth
+        label="Text"
+        margin="normal"
+        name="spotlight_text"
+        onChange={editSpotlightValue}
+        onFocus={onFocus}
+        required
+        value={spotlight.text}
+      />
+      <Select
+        autocomplete={apiPersonasAutocomplete}
+        defaultValue={
+          spotlight.__persona && {
+            value: spotlight.__persona.id,
+            label: spotlight.__persona.name,
           }
-          disabled={isCropping || isFormLoading}
-          label="Persona"
-          name="spotlight_personaId"
-          onChange={selectPersona}
-          placeholder="Choose a persona"
-          required
-        />
-      </Grid>
+        }
+        disabled={isCropping || isFormLoading}
+        label="Persona"
+        name="spotlight_personaId"
+        onChange={selectPersona}
+        onFocus={onFocus}
+        placeholder="Choose a persona"
+        required
+      />
       <div style={{ marginTop: '24px' }}>
         <FormSection foldable title="Product Picks">
           <ProductPicksRowStyle />
@@ -120,6 +122,7 @@ const Spotlight = ({
               helperClass="sortable-product-pick-row"
               isCropping={isCropping}
               onChange={setProductPickForm}
+              onFocus={onFocus}
               onSortEnd={onSortEnd}
               setIsCropping={setIsCropping}
               setProductPicture={setProductPicture}
@@ -173,6 +176,7 @@ export default compose(
     deleteSpotlight: ({ spotlight, index, onChange }) => () => {
       onChange(
         {
+          ...spotlight,
           id: spotlight.id,
           _destroy: true,
         },

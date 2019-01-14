@@ -3,9 +3,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
-import { Grid, TextField } from '@material-ui/core'
 import { Reorder as ReorderIcon } from '@material-ui/icons'
 import { SortableHandle } from 'react-sortable-hoc'
+import { TextField } from '@material-ui/core'
 
 const StyledReorderIcon = styled(ReorderIcon)`
   cursor: ns-resize;
@@ -24,6 +24,7 @@ const ProductPick = ({
   index,
   productPick,
   progress,
+  onFocus,
   setPicture,
   setIsCropping,
   setPictureUrl,
@@ -36,59 +37,61 @@ const ProductPick = ({
     hideTop={index === 0}
     title={`Product Pick #${index + 1}`}
   >
-    <Grid item sm={6}>
-      <TextField
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Url"
-        margin="normal"
-        name="productPick_url"
-        onChange={editProductPickValue}
-        required
-        value={productPick.url}
-      />
-      <TextField
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="productPick_name"
-        onChange={editProductPickValue}
-        required
-        value={productPick.name}
-      />
-      <TextField
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Description"
-        margin="normal"
-        name="productPick_description"
-        onChange={editProductPickValue}
-        required
-        value={productPick.description}
-      />
-      <TextField
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Display Price"
-        margin="normal"
-        name="productPick_displayPrice"
-        onChange={editProductPickValue}
-        required
-        value={productPick.displayPrice}
-      />
-      <PictureUploader
-        disabled={isCropping}
-        label="Picture"
-        onChange={setPictureUrl}
-        required
-        setDisabled={setIsCropping}
-        setPic={setPicture}
-        square
-        value={productPick.picUrl}
-      />
-      {progress && <ProgressBar progress={progress} />}
-    </Grid>
+    <TextField
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Url"
+      margin="normal"
+      name="productPick_url"
+      onChange={editProductPickValue}
+      onFocus={onFocus}
+      required
+      value={productPick.url}
+    />
+    <TextField
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Name"
+      margin="normal"
+      name="productPick_name"
+      onChange={editProductPickValue}
+      onFocus={onFocus}
+      required
+      value={productPick.name}
+    />
+    <TextField
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Description"
+      margin="normal"
+      name="productPick_description"
+      onChange={editProductPickValue}
+      onFocus={onFocus}
+      required
+      value={productPick.description}
+    />
+    <TextField
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Display Price"
+      margin="normal"
+      name="productPick_displayPrice"
+      onChange={editProductPickValue}
+      onFocus={onFocus}
+      required
+      value={productPick.displayPrice}
+    />
+    <PictureUploader
+      disabled={isCropping}
+      label="Picture"
+      onChange={setPictureUrl}
+      required
+      setDisabled={setIsCropping}
+      setPic={setPicture}
+      square
+      value={productPick.picUrl}
+    />
+    {progress && <ProgressBar progress={progress} />}
   </FormSection>
 )
 
@@ -104,13 +107,15 @@ export default compose(
     deleteProductPick: ({ productPick, index, onChange }) => () => {
       onChange(
         {
+          ...productPick,
           id: productPick.id,
           _destroy: true,
         },
         index
       )
     },
-    setPictureUrl: ({ index, productPick, onChange }) => picUrl => {
+    setPictureUrl: ({ index, productPick, onChange, onFocus }) => picUrl => {
+      onFocus()
       onChange({ ...productPick, picUrl }, index)
     },
     setPicture: ({ index, setProductPicture, setProgress }) => blob => {

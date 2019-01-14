@@ -56,8 +56,8 @@ const OutroForm = ({
       </Section>
     </Grid>
     <Grid item md={6} xs={12}>
-      <PluginPreview>
-        <Outro persona={previewOutro.persona} />
+      <PluginPreview persona={previewOutro.persona}>
+        <Outro />
       </PluginPreview>
     </Grid>
   </Grid>

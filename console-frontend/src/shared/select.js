@@ -129,7 +129,10 @@ const Select = compose(
         })
         return options
       },
-      onFocus: ({ setIsFocussed }) => () => setIsFocussed(true),
+      onFocus: ({ setIsFocussed, onFocus }) => () => {
+        onFocus && onFocus()
+        setIsFocussed(true)
+      },
       onBlur: ({ setIsFocussed, setIsMenuOpen }) => () => {
         hasBlurred = true
         setIsMenuOpen(false)

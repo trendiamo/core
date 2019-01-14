@@ -24,10 +24,18 @@ class Showcase < ApplicationRecord
       {
         id: spotlight.id,
         text: spotlight.text,
-        persona: { id: spotlight.persona.id, name: spotlight.persona.name },
+        persona: persona_attributes(spotlight),
         product_picks_attributes: product_picks_attributes(spotlight.product_picks),
       }
     end
+  end
+
+  def persona_attributes(spotlight)
+    {
+      id: spotlight.persona.id,
+      name: spotlight.persona.name,
+      profile_pic: spotlight.persona.profile_pic_url,
+    }
   end
 
   def product_picks_attributes(product_picks)

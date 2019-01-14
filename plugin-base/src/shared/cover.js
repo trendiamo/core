@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { animate } from './animate'
+import { animate } from 'shared/animate'
 
 const Cover = styled.div`
   background-color: #232323;

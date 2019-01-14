@@ -1,13 +1,21 @@
 import styled from 'styled-components'
 import { compose, lifecycle, withState } from 'recompose'
+import { timeout } from 'ext'
 
 const animate = component =>
   compose(
     withState('isEntering', 'setIsEntering', true),
+    withState('timeoutName', 'setTimeoutName'),
     lifecycle({
       componentDidMount() {
-        const { setIsEntering, timeout } = this.props
-        setTimeout(() => setIsEntering(false), timeout || 10)
+        const { setIsEntering, setTimeoutName, delay } = this.props
+        const name = timeout.generateTimeoutName()
+        setTimeoutName(name)
+        timeout.set(name, () => setIsEntering(false), delay || 10)
+      },
+      componentWillUnmount() {
+        const { timeoutName } = this.props
+        timeout.clear(timeoutName)
       },
     })
   )(component)

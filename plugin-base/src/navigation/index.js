@@ -27,7 +27,7 @@ const NavigationCover = ({ persona }) => (
     <CoverImg src={persona.profilePic.url} />
     <PaddedCover>
       <span>{persona.name}</span>
-      <TopSlideAnimation timeout={250 * 0}>
+      <TopSlideAnimation delay={250 * 0}>
         <PersonaDescription>{persona.description}</PersonaDescription>
       </TopSlideAnimation>
     </PaddedCover>
@@ -41,7 +41,7 @@ const Navigation = ({ navigationItems, onTileClick, persona }) => (
     </Cover>
     <BelowCover>
       <Container>
-        <TopSlideAnimation timeout={250 * 1}>
+        <TopSlideAnimation delay={250 * 1}>
           <TilesWrapper>
             {navigationItems.map(navigationItem => (
               <Tile
