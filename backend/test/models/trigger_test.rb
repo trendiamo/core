@@ -44,4 +44,24 @@ class TriggerTest < ActiveSupport::TestCase
 
     assert_nil result
   end
+
+  test "triggers sorted after create" do
+    ActsAsTenant.default_tenant = Account.create!
+
+    2.times { create(:trigger) }
+    result = Trigger.pluck(:order)
+
+    assert_equal [1, 2], result
+  end
+
+  test "triggers sorted after deleting trigger and creating two new ones" do
+    ActsAsTenant.default_tenant = Account.create!
+
+    3.times { create(:trigger) }
+    Trigger.first.destroy
+    2.times { create(:trigger) }
+    result = Trigger.pluck(:order)
+
+    assert_equal [2, 3, 4, 5], result
+  end
 end
