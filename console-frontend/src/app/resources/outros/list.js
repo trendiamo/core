@@ -2,8 +2,8 @@ import BlankStateTemplate from 'shared/blank-state'
 import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
+import { ActiveColumn, Avatar, columns, TableCell, Text } from 'shared/table-elements'
 import { apiOutroDestroy, apiOutroList } from 'utils'
-import { Avatar, columns, TableCell, Text } from 'shared/table-elements'
 import { compose } from 'recompose'
 
 const BlankState = () => (
@@ -23,6 +23,7 @@ const OutrosRow = ({ record, highlightInactive }) => (
     <TableCell width="80%">
       <Text disabled={highlightInactive}>{record.name}</Text>
     </TableCell>
+    <ActiveColumn highlightInactive={highlightInactive} />
   </React.Fragment>
 )
 

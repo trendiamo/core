@@ -1,3 +1,4 @@
+import ActiveColumn from './active-column'
 import Avatar from './avatar'
 import columns from './columns'
 import TableCell from './table-cell'
@@ -6,4 +7,4 @@ import TableRow from './table-row'
 import TableToolbar from './table-toolbar'
 import Text from './text'
 
-export { columns, TableHead, TableRow, TableToolbar, TableCell, Avatar, Text }
+export { ActiveColumn, columns, TableHead, TableRow, TableToolbar, TableCell, Avatar, Text }
