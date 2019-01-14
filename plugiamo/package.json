@@ -9,6 +9,7 @@
     "detect-browser": "^3.0.1",
     "graphql-request": "^1.8.2",
     "jsonp-p": "^2.0.0",
+    "lodash.isequal": "^4.5.0",
     "lodash.omit": "^4.5.0",
     "mixpanel-browser": "^2.22.4",
     "plugin-base": "./plugin-base",

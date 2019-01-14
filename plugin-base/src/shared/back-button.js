@@ -1,6 +1,6 @@
+import React from 'react'
 import styled from 'styled-components'
-import { animate } from 'plugin-base'
-import { h } from 'preact'
+import { animate } from 'shared/animate'
 import { IconChevronLeft } from 'icons'
 
 const Chevron = styled(IconChevronLeft)`

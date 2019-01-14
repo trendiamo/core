@@ -2,9 +2,10 @@ import omit from 'lodash.omit'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { compose, lifecycle, withProps, withState } from 'recompose'
+import { ContentWrapper } from 'plugin-base'
 import { StyleSheetManager } from 'styled-components'
 
-const PluginPreviewFrame = ({ children, iframeRef, isLoaded, title, ...rest }) => (
+const PluginPreviewFrame = ({ children, iframeRef, isLoaded, title, persona, ...rest }) => (
   <iframe {...omit(rest, ['setIsLoaded'])} ref={iframeRef} tabIndex="-1" title={title}>
     {isLoaded &&
       iframeRef &&
@@ -12,7 +13,9 @@ const PluginPreviewFrame = ({ children, iframeRef, isLoaded, title, ...rest }) =
       iframeRef.current.contentDocument &&
       iframeRef.current.contentDocument.body &&
       ReactDOM.createPortal(
-        <StyleSheetManager target={iframeRef.current.contentDocument.head}>{children}</StyleSheetManager>,
+        <StyleSheetManager target={iframeRef.current.contentDocument.head}>
+          <ContentWrapper persona={persona}>{children}</ContentWrapper>
+        </StyleSheetManager>,
         iframeRef.current.contentDocument.body
       )}
   </iframe>

@@ -1,17 +1,18 @@
 import styled from 'styled-components'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { IconChevronRight } from 'icons'
-
-const List = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding: 0;
-`
+import { timeout } from 'ext'
 
 const ListChevron = styled(IconChevronRight)`
   height: 16px;
   width: 16px;
   margin: 10px;
+`
+
+const List = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
 `
 
 // 101px makes it so 3 lines of text fit with no need for scroll
@@ -38,10 +39,15 @@ const ListImg = styled.img`
 
 const ListItem = compose(
   withState('isClicked', 'setIsClicked', false),
+  lifecycle({
+    componentWillUnmount() {
+      timeout.clear('listItem')
+    },
+  }),
   withHandlers({
     onClick: ({ onClick, setIsClicked }) => event => {
       setIsClicked(true)
-      setTimeout(() => setIsClicked(false), 300)
+      timeout.set('listItem', () => setIsClicked(false), 300)
       return onClick(event)
     },
   })
@@ -57,4 +63,4 @@ const ListItem = compose(
   background-color: ${({ isClicked }) => (isClicked ? '#00adef' : 'white')};
 `)
 
-export { List, ListChevron, ListContent, ListItem, ListImg }
+export { List, ListContent, ListImg, ListChevron, ListItem }

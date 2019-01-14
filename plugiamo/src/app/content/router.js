@@ -1,10 +1,8 @@
-import history from 'ext/history'
 import Navigation from './navigation'
 import ScriptedChat from './scripted-chat'
 import Showcase from './showcase'
 import { h } from 'preact'
-import { Outro } from 'plugin-base'
-import { Router as SimpleRouter } from 'ext/simple-router'
+import { history, Outro, Router as SimpleRouter } from 'plugin-base'
 
 const Router = ({ persona, isTransitioning, onRouteChange, onToggleContent }) => (
   <SimpleRouter history={history} onChange={onRouteChange}>

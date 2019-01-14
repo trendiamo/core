@@ -24,6 +24,7 @@ export default compose(
       const { json, requestError } = await apiRequest(apiShowcaseShow, [id])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       return {
+        id: json.id || '',
         name: json.name || '',
         personaId: json.persona.id || '',
         title: json.title || '',

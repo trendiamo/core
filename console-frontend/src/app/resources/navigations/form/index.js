@@ -141,12 +141,26 @@ const NavigationForm = ({
   </Form>
 )
 
+const defaults = {
+  persona: {
+    name: "Persona's Name",
+    description: "Persona's description",
+    profilePic: {
+      url: '/img/icons/placeholder_avatar.png',
+    },
+  },
+  product: {
+    text: 'Product Text',
+    pictureUrl: '/img/icons/placeholder_product.png',
+  },
+}
+
 const transform = navigationItems =>
   navigationItems.map(e => ({
     id: e.id || 'new',
-    text: e.text,
+    text: e.text || defaults.product.text,
     url: e.url,
-    picture: { url: e.picUrl || '/img/icons/placeholder_product.png' },
+    picture: { url: e.picUrl || defaults.product.pictureUrl },
   }))
 
 const NavigationSuperForm = compose(
@@ -159,23 +173,12 @@ const NavigationSuperForm = compose(
       <NavigationForm form={form} {...props} />
     </Grid>
     <Grid item md={6} xs={12}>
-      <PluginPreview>
-        <Navigation
-          navigationItems={transform(form.navigationItemsAttributes)}
-          onTileClick={onTileClick}
-          persona={persona}
-        />
+      <PluginPreview persona={persona}>
+        <Navigation navigationItems={transform(form.navigationItemsAttributes)} onTileClick={onTileClick} />
       </PluginPreview>
     </Grid>
   </Grid>
 ))
-
-const emptyPersona = {
-  name: '',
-  profilePic: {
-    url: '/img/icons/placeholder_avatar.png',
-  },
-}
 
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }),
@@ -183,13 +186,13 @@ export default compose(
   withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('navigationItemsPictures', 'setNavigationItemsPictures', []),
-  withState('persona', 'setPersona', emptyPersona),
+  withState('persona', 'setPersona', defaults.persona),
   withHandlers({
     convertPersona: () => persona => ({
-      name: persona ? persona.name : '',
-      description: persona ? persona.description : '',
+      name: persona ? persona.name : defaults.persona.name,
+      description: persona ? persona.description : defaults.persona.description,
       profilePic: {
-        url: persona ? persona.profilePicUrl : emptyPersona.profilePic.url,
+        url: persona ? persona.profilePicUrl : defaults.persona.profilePic.url,
       },
     }),
   }),

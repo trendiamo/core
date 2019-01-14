@@ -12,15 +12,17 @@ const PreviewContainer = styled.div`
   margin-bottom: 45px;`}
 `
 
-const PluginPreview = styled(({ className, children, width }) => (
+const PluginPreview = styled(({ className, children, width, persona }) => (
   <PreviewContainer width={width}>
-    <PluginPreviewFrame className={className}>{children}</PluginPreviewFrame>
+    <PluginPreviewFrame className={className} persona={persona}>
+      {children}
+    </PluginPreviewFrame>
   </PreviewContainer>
 ))`
   border: 0;
   overflow: hidden;
   border-radius: 8px;
-  width: 320px;
+  width: 360px;
   height: 500px;
   box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
   position: absolute;

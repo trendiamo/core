@@ -62,12 +62,12 @@ const transition = {
       this.elements[k].liftedElement = liftedElement
       setTimeout(() => {
         // doing it directly, or even using requestAnimationFrame results in a flickering element, so we use setTimeout
-        element.style.visibility = 'hidden'
+        if (element && element.style) element.style.visibility = 'hidden'
       }, 20)
     })
   },
   setGhostRef(ref) {
-    this.ghostElement = ref.base
+    if (ref) this.ghostElement = ref.base || ref
   },
 }
 
