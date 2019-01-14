@@ -4,7 +4,9 @@ import { animate } from 'shared/animate'
 const Cover = styled.div`
   background-color: #232323;
   color: #fff;
-  padding: 35px 20px 20px 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
   height: 100px;
   min-height: 100px;
   width: 100%;

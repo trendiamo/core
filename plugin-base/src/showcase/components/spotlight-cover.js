@@ -8,6 +8,7 @@ import { transition } from 'ext'
 
 const FlexDiv = styled.div`
   display: flex;
+  padding-top: 14px;
 `
 
 const SpotlightCover = compose(
