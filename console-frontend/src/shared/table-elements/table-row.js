@@ -2,10 +2,24 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import EditButton from 'shared/edit-button'
 import EditIcon from '@material-ui/icons/EditOutlined'
 import React from 'react'
+import styled from 'styled-components'
 import TableCell from './table-cell'
 import { Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
 import { compose, withHandlers } from 'recompose'
 import { Link } from 'react-router-dom'
+
+const ActiveSymbol = styled.div`
+  background-color: ${({ highlightInactive }) => (highlightInactive ? '#9D9C9D' : '#51b165')};
+  height: 25px;
+  font-size: 10px;
+  border-radius: 4px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  justify-content: center;
+  font-size: 12px;
+`
 
 const TableRow = compose(
   withHandlers({
@@ -30,6 +44,9 @@ const TableRow = compose(
       />
     </TableCell>
     {React.cloneElement(children, { highlightInactive })}
+    <TableCell>
+      <ActiveSymbol highlightInactive={highlightInactive}>{highlightInactive ? 'Draft' : 'Active'}</ActiveSymbol>
+    </TableCell>
     <TableCell
       style={{
         whiteSpace: 'nowrap',

@@ -3,7 +3,7 @@ import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
 import { apiOutroDestroy, apiOutroList } from 'utils'
-import { Avatar, TableCell, Text } from 'shared/table-elements'
+import { Avatar, columns, TableCell, Text } from 'shared/table-elements'
 import { compose } from 'recompose'
 
 const BlankState = () => (
@@ -14,11 +14,6 @@ const BlankState = () => (
     title="Create a new outro"
   />
 )
-
-const columns = [
-  { name: 'persona', padding: 'none', label: 'persona' },
-  { name: 'name', sortable: true, label: 'name' },
-]
 
 const OutrosRow = ({ record, highlightInactive }) => (
   <React.Fragment>
