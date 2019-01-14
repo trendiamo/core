@@ -59,9 +59,18 @@ cat keycert.tar | dokku certs:add console-backend
 cat keycert.tar | dokku certs:add console-frontend
 rm keycert.tar keycert/certificate.crt keycert/key.key
 rmdir keycert
-# To test renew: `certbot renew --dry-run`
-# To renew: `certbot renew` or `certbot certonly`
 service nginx start
+
+
+# To renew
+
+# To test renew: `certbot renew --dry-run`
+certbot renew
+cp /etc/letsencrypt/live/console.trendiamo.com/fullchain.pem /home/dokku/console-backend/tls/server.crt
+cp /etc/letsencrypt/live/console.trendiamo.com/privkey.pem /home/dokku/console-backend/tls/server.key
+cp /etc/letsencrypt/live/console.trendiamo.com/fullchain.pem /home/dokku/console-frontend/tls/server.crt
+cp /etc/letsencrypt/live/console.trendiamo.com/privkey.pem /home/dokku/console-frontend/tls/server.key
+service nginx restart
 
 # Backups:
 
