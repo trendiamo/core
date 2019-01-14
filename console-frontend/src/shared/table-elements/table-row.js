@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/EditOutlined'
 import React from 'react'
 import styled from 'styled-components'
 import TableCell from './table-cell'
-import { Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
+import { Checkbox, TableRow as MuiTableRow, Tooltip } from '@material-ui/core'
 import { compose, withHandlers } from 'recompose'
 import { Link } from 'react-router-dom'
 
@@ -19,6 +19,8 @@ const ActiveSymbol = styled.div`
   color: #ffffff;
   justify-content: center;
   font-size: 12px;
+  cursor: default;
+  user-select: none;
 `
 
 const TableRow = compose(
@@ -45,7 +47,9 @@ const TableRow = compose(
     </TableCell>
     {React.cloneElement(children, { highlightInactive })}
     <TableCell>
-      <ActiveSymbol highlightInactive={highlightInactive}>{highlightInactive ? 'Draft' : 'Active'}</ActiveSymbol>
+      <Tooltip placement="left-end" title={highlightInactive ? 'Not yet used in Triggers' : 'Already used in Triggers'}>
+        <ActiveSymbol highlightInactive={highlightInactive}>{highlightInactive ? 'Draft' : 'Active'}</ActiveSymbol>
+      </Tooltip>
     </TableCell>
     <TableCell
       style={{
