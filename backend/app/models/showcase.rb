@@ -23,7 +23,6 @@ class Showcase < ApplicationRecord
     spotlights.sort_by { |spotlight| spotlight[:order] }.map do |spotlight|
       {
         id: spotlight.id,
-        text: spotlight.text,
         persona: persona_attributes(spotlight),
         product_picks_attributes: product_picks_attributes(spotlight.product_picks),
       }
@@ -34,6 +33,7 @@ class Showcase < ApplicationRecord
     {
       id: spotlight.persona.id,
       name: spotlight.persona.name,
+      description: spotlight.persona.description,
       profile_pic: spotlight.persona.profile_pic_url,
     }
   end

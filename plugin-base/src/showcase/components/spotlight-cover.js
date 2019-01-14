@@ -38,7 +38,7 @@ const SpotlightCover = compose(
     <PaddedCover>
       <span ref={setNameRef}>{spotlight.persona.name}</span>
       <TopSlideAnimation delay={250 * 1}>
-        <PersonaDescription>{spotlight.text}</PersonaDescription>
+        <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
       </TopSlideAnimation>
     </PaddedCover>
     <BackButton isLeaving={isLeaving} onClick={routeToShowcase} />

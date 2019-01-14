@@ -36,7 +36,6 @@ main_showcase_params = {
   persona_id: cassio.id,
   spotlights_attributes: [
     {
-      text: "Quero te mostrar minhas peças favoritas para você usar em campo!",
       product_picks_attributes: [
         {
           url: "https://www.shoptimao.com.br/camiseta-corinthians-cassio-logo-masculina-branco-D65-1724-014",
@@ -63,7 +62,6 @@ main_showcase_params = {
       persona: cassio,
     },
     {
-      text: "Dá uma olhada nos produtos que eu mais uso e selecionei para você...",
       product_picks_attributes: [
         {
           url: "https://www.shoptimao.com.br/camisa-corinthians-ii-1819-n-38-pedrinho-torcedor-nike-masculina-preto-D12-9947-006",
@@ -90,7 +88,6 @@ main_showcase_params = {
       persona: pedrinho,
     },
     {
-      text: "Se você é um jogador, a camisa nº 10 é pra você! Dá uma olhada 😉",
       product_picks_attributes: [
         {
           url: "https://www.shoptimao.com.br/camisa-corinthians-ii-1819-n-10-jadson-torcedor-nike-masculina-preto-D12-9937-006",

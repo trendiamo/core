@@ -31,7 +31,7 @@ const SpotlightItem = compose(
     <ListImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
     <ListContent>
       <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>
-      <PersonaDescription>{spotlight.text}</PersonaDescription>
+      <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
     </ListContent>
     <ListChevron />
   </ListItem>

@@ -32,7 +32,6 @@ export default compose(
         __persona: json.persona,
         spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
           id: spotlight.id || '',
-          text: spotlight.text || '',
           personaId: spotlight.persona.id || '',
           __persona: spotlight.persona,
           productPicksAttributes: spotlight.productPicksAttributes
