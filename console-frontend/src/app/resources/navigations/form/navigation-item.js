@@ -4,9 +4,9 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
+import { FormHelperText, TextField } from '@material-ui/core'
 import { Reorder as ReorderIcon } from '@material-ui/icons'
 import { SortableHandle } from 'react-sortable-hoc'
-import { TextField } from '@material-ui/core'
 
 const StyledReorderIcon = styled(ReorderIcon)`
   cursor: ns-resize;
@@ -49,6 +49,11 @@ const NavigationItem = ({
         required
         value={navigationItem.url}
       />
+      <FormHelperText>
+        {
+          'Use the whole url, eg: https://www.example.com/page1 - you can test it by clicking on the item in the preview.'
+        }
+      </FormHelperText>
       <TextField
         disabled={isCropping || isFormLoading}
         fullWidth
