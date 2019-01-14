@@ -53,7 +53,8 @@ const NavigationItemsContainer = compose(
             index={index}
             isCropping={isCropping}
             isFormLoading={isFormLoading}
-            key={navigationItem.id}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
             navigationItem={navigationItem}
             navigationItemIndex={index}
             navigationItemsPictures={navigationItemsPictures}
