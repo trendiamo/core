@@ -39,7 +39,6 @@ main_showcase_params = {
   persona_id: adam.id,
   spotlights_attributes: [
     {
-      text: "Hi! I'm a Polish model and I can show you my favorite underwear",
       product_picks_attributes: [
         {
           url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/elephant-brief-white-organic-cotton#trnd:open:1,picture:UgTAk9HBS4S8WZpFS75x",
@@ -66,7 +65,6 @@ main_showcase_params = {
       persona: adam,
     },
     {
-      text: "I'm a Wyoming guy based in the Bay area; here to help you pick the best pair of underwear for you.",
       product_picks_attributes: [
         {
           url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/orangutan-brief-red-organic-cotton#trnd:open:1,path:/scripted-chat/cjoil854ibb1c0932ws1n93yf,picture:UZHAMbRTSOl8bOsgFj5g",
@@ -93,7 +91,6 @@ main_showcase_params = {
       persona: james,
     },
     {
-      text: "I'm a 20 years old model from Barcelona. I love to party and to go to the gym.",
       product_picks_attributes: [
         {
           url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton#trnd:open:1,picture:KNYtfFxoQhqPchSkSCKU",

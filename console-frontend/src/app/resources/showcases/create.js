@@ -26,7 +26,6 @@ export default compose(
         subtitle: '',
         spotlightsAttributes: [
           {
-            text: '',
             personaId: '',
             productPicksAttributes: [
               {

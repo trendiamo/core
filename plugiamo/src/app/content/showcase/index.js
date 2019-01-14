@@ -24,7 +24,6 @@ const Showcase = compose(
               subtitle
               spotlights {
                 id
-                text
                 persona {
                   id
                   name
@@ -54,7 +53,6 @@ const Showcase = compose(
               subtitle
               spotlights {
                 id
-                text
                 persona {
                   id
                   name

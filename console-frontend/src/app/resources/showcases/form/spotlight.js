@@ -11,7 +11,6 @@ import { createGlobalStyle } from 'styled-components'
 import { findIndex } from 'lodash'
 import { Reorder as ReorderIcon } from '@material-ui/icons'
 import { SortableHandle } from 'react-sortable-hoc'
-import { TextField } from '@material-ui/core'
 
 const ProductPicksList = styled.ul`
   padding: 0;
@@ -70,7 +69,6 @@ const Spotlight = ({
   spotlight,
   isFormLoading,
   deleteSpotlight,
-  editSpotlightValue,
   setProductPickForm,
   setProductPicture,
   setIsCropping,
@@ -87,17 +85,6 @@ const Spotlight = ({
       hideTop
       title={`Spotlight #${index + 1}`}
     >
-      <TextField
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Text"
-        margin="normal"
-        name="spotlight_text"
-        onChange={editSpotlightValue}
-        onFocus={onFocus}
-        required
-        value={spotlight.text}
-      />
       <Select
         autocomplete={apiPersonasAutocomplete}
         defaultValue={
@@ -140,11 +127,6 @@ const Spotlight = ({
 export default compose(
   branch(({ spotlight }) => spotlight._destroy, renderNothing),
   withHandlers({
-    editSpotlightValue: ({ spotlight, index, onChange }) => event => {
-      const name = event.target.name.replace('spotlight_', '')
-      spotlight[name] = event.target.value
-      onChange(spotlight, index)
-    },
     selectPersona: ({ spotlight, index, onChange }) => ({ value }) => {
       onChange(
         {

@@ -24,7 +24,6 @@ class PopulateShowcases
 
   def spotlights_attributes(spotlight_index)
     {
-      text: Faker::Lorem.sentence,
       product_picks_attributes: Array.new(3) { |index| product_picks_attributes(index) },
       persona: Persona.order("RANDOM()").first,
       order: spotlight_index + 1,

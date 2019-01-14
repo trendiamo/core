@@ -170,7 +170,7 @@ const defaults = {
   avatarPic: '/img/icons/placeholder_avatar.png',
   productPic: '/img/icons/placeholder_product.png',
   spotlightName: 'Persona Name',
-  spotlightText: 'Spotlight text',
+  spotlightDescription: 'Persona Description',
   productName: 'Product Name',
   productDescription: 'Product Description',
   productPrice: '$0.00',
@@ -184,14 +184,15 @@ const preview = {
       const productPicks = this.productPicks(spotlight)
       const profilePic = spotlight.__persona && (spotlight.__persona.profilePic || spotlight.__persona.profilePicUrl)
       const personaName = spotlight.__persona && spotlight.__persona.name
+      const personaDescription = spotlight.__persona && spotlight.__persona.description
       return {
         ...spotlight,
         id: spotlight.id || spotlightId,
         productPicks,
-        text: spotlight.text || defaults.spotlightText,
         persona: {
           ...spotlight.__persona,
           name: personaName || defaults.spotlightName,
+          description: personaDescription || defaults.spotlightDescription,
           profilePic: { url: profilePic || defaults.avatarPic },
         },
         translation: {
@@ -281,7 +282,6 @@ export default compose(
     subtitle: '',
     spotlightsAttributes: [
       {
-        text: '',
         personaId: '',
         productPicksAttributes: [
           {
@@ -302,7 +302,6 @@ export default compose(
         spotlightsAttributes: [
           ...form.spotlightsAttributes,
           {
-            text: '',
             personaId: '',
             productPicksAttributes: [
               {
