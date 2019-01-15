@@ -16,6 +16,7 @@ import { createGlobalStyle } from 'styled-components'
 import { findIndex } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
+import { OptionWithAvatar } from 'shared/select-option'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -111,6 +112,7 @@ const NavigationForm = ({
       <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
       <Select
         autocomplete={apiPersonasAutocomplete}
+        components={{ Option: OptionWithAvatar }}
         defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
         disabled={isFormLoading}
         label="Persona"

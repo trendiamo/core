@@ -9,6 +9,7 @@ import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-ho
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { createGlobalStyle } from 'styled-components'
 import { findIndex } from 'lodash'
+import { OptionWithAvatar } from 'shared/select-option'
 import { Reorder as ReorderIcon } from '@material-ui/icons'
 import { SortableHandle } from 'react-sortable-hoc'
 
@@ -87,6 +88,7 @@ const Spotlight = ({
     >
       <Select
         autocomplete={apiPersonasAutocomplete}
+        components={{ Option: OptionWithAvatar }}
         defaultValue={
           spotlight.__persona && {
             value: spotlight.__persona.id,
