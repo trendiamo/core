@@ -7,16 +7,12 @@ import { withStoreConsumer } from 'ext/recompose/with-store'
 // we only want the persisted chat steps for use in selects
 const extractPersistedChatSteps = (chatStepAttributes, results, hash) => {
   const { id } = chatStepAttributes
-  if (hash[id]) return results
+  if (!id || hash[id]) return results
   hash[id] = true
   results.push({ id, __index: results.length, __ref: chatStepAttributes.__ref })
   if (!chatStepAttributes.chatOptionsAttributes) return results
   chatStepAttributes.chatOptionsAttributes.forEach(chatOptionAttributes => {
-    const id = chatOptionAttributes.destinationChatStepId
-    if (!id) return
-    if (hash[id]) return
-    hash[id] = true
-    results.push({ id, __index: results.length, __ref: chatOptionAttributes.destinationChatStepAttributes.__ref })
+    extractPersistedChatSteps(chatOptionAttributes.destinationChatStepAttributes, results, hash)
   })
   return results
 }
