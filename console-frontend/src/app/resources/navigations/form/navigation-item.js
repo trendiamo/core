@@ -36,6 +36,7 @@ const NavigationItem = ({
       }
       dragHandle={<DragHandle />}
       foldable
+      folded
       hideTop
       title={`Navigation Item #${index + 1}`}
     >
