@@ -142,6 +142,7 @@ const Select = compose(
   })
 )(
   ({
+    components,
     placeholder,
     loadOptions,
     onChange,
@@ -163,6 +164,7 @@ const Select = compose(
       <StyledSelect
         cacheOptions
         classNamePrefix="react-select"
+        components={components}
         defaultOptions={defaultOptions}
         defaultValue={defaultValue}
         isDisabled={disabled}
