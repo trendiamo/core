@@ -18,6 +18,7 @@
   font-size: 44px;
   color: #ffffff;
   text-align: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -189,7 +190,7 @@
     height: 458px;
   }
   .product-card-2 {
-    width: 555px;
+    width: 566px;
     height: 458px;
   }
   .surfboard-left-half {
