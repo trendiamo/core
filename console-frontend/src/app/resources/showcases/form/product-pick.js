@@ -33,6 +33,8 @@ const ProductPick = ({
     actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteProductPick} />}
     backgroundColor="#FFFFFF"
     dragHandle={<DragHandle />}
+    foldable
+    folded
     hideBottom
     hideTop={index === 0}
     title={`Product Pick #${index + 1}`}

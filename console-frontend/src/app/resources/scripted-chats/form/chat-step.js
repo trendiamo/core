@@ -19,7 +19,7 @@ const ChatStep = ({
   addAction,
 }) => (
   <Section>
-    <FormSection foldable hideTop title={`Step #${index + 1}`}>
+    <FormSection foldable folded hideTop title={`Step #${index + 1}`}>
       <div style={{ marginTop: '-1px' }}>
         <FormSection foldable title="Messages">
           {chatStep.chatMessagesAttributes.map((chatMessage, chatMessageIndex) => (
@@ -35,9 +35,9 @@ const ChatStep = ({
               />
             </React.Fragment>
           ))}
+          <AddItemButton disabled={isFormLoading} message="Add Message" onClick={addChatMessage} />
         </FormSection>
       </div>
-      <AddItemButton disabled={isFormLoading} message="Add Message" onClick={addChatMessage} />
       {chatStep.chatOptionsAttributes && (
         <div style={{ marginTop: '24px' }}>
           <FormSection foldable title="Options">
@@ -57,8 +57,8 @@ const ChatStep = ({
                 />
               </React.Fragment>
             ))}
+            <AddItemButton disabled={isFormLoading} message="Add Option" onClick={addChatOption} />
           </FormSection>
-          <AddItemButton disabled={isFormLoading} message="Add Option" onClick={addChatOption} />
         </div>
       )}
     </FormSection>
