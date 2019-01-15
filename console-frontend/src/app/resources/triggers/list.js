@@ -52,7 +52,6 @@ const InlineTypography = styled(({ ...props }) => <Typography {...omit(props, ['
 const TriggerRowStyle = createGlobalStyle`
   .sortable-trigger-row {
     pointer-events: auto !important;
-    z-index: 1;
     background: #fff !important;
     box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.24);
   }
@@ -299,7 +298,7 @@ const TriggerList = ({
       <SortableTriggerRows
         distance={1}
         handleSelectAll={handleSelectAll}
-        helperClass="sortable-trigger-row"
+        helperClass="sortable-element sortable-trigger-row"
         lockAxis="y"
         onSortEnd={onSortEnd}
         selectedIds={selectedIds}

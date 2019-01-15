@@ -12,7 +12,6 @@ import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete, apiSpotlightSort } from 'utils'
 import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { createGlobalStyle } from 'styled-components'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { OptionWithAvatar } from 'shared/select-option'
 import { history as pluginHistory, routes as pluginRoutes, Showcase as ShowcaseBase } from 'plugin-base'
@@ -70,12 +69,6 @@ const SpotlightsContainer = compose(
   )
 )
 
-const SpotlightsRowStyle = createGlobalStyle`
-  .sortable-spotlight-row {
-    z-index: 1;
-  }
-`
-
 const ShowcaseForm = ({
   selectPersona,
   onSpotlightClick,
@@ -99,7 +92,6 @@ const ShowcaseForm = ({
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
-      <SpotlightsRowStyle />
       <TextField
         autoFocus
         disabled={isCropping || isFormLoading}
@@ -152,7 +144,7 @@ const ShowcaseForm = ({
     </Section>
     <SpotlightsContainer
       form={form}
-      helperClass="sortable-spotlight-row"
+      helperClass="sortable-element"
       isCropping={isCropping}
       isFormLoading={isFormLoading}
       onFocus={onSpotlightClick}

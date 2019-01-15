@@ -12,7 +12,6 @@ import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiNavigationItemSort, apiPersonasAutocomplete } from 'utils'
 import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { createGlobalStyle } from 'styled-components'
 import { findIndex } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
@@ -70,12 +69,6 @@ const NavigationItemsContainer = compose(
   )
 )
 
-const NavigationsRowStyle = createGlobalStyle`
-  .sortable-navigation-row {
-    z-index: 1;
-  }
-`
-
 const NavigationForm = ({
   addNavigationItem,
   formRef,
@@ -97,7 +90,6 @@ const NavigationForm = ({
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
-      <NavigationsRowStyle />
       <TextField
         autoFocus
         disabled={isFormLoading}
@@ -124,7 +116,7 @@ const NavigationForm = ({
     </Section>
     <NavigationItemsContainer
       form={form}
-      helperClass="sortable-navigation-row"
+      helperClass="sortable-element"
       isCropping={isCropping}
       isFormLoading={isFormLoading}
       navigationItemsPictures={navigationItemsPictures}

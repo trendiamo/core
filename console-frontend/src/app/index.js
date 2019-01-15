@@ -16,6 +16,7 @@ import { apiGetCsrfToken, apiRequest } from 'utils'
 import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset, MuiThemeProvider } from '@material-ui/core/styles'
+import { createGlobalStyle } from 'styled-components'
 import { CssBaseline } from '@material-ui/core'
 import { NavigationCreate, NavigationEdit, NavigationsList } from './resources/navigations'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
@@ -93,6 +94,12 @@ const Routes = () => (
   </Switch>
 )
 
+const SortableStyle = createGlobalStyle`
+  .sortable-element {
+    z-index: 1;
+  }
+`
+
 const AppBase = compose(
   withState('loading', 'setLoading', true),
   withSnackbar,
@@ -110,6 +117,7 @@ const AppBase = compose(
 )(() => (
   <>
     <CssBaseline />
+    <SortableStyle />
     <Layout>
       <Routes />
     </Layout>

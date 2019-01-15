@@ -7,7 +7,6 @@ import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete, apiProductPickSort } from 'utils'
 import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
-import { createGlobalStyle } from 'styled-components'
 import { findIndex } from 'lodash'
 import { OptionWithAvatar } from 'shared/select-option'
 import { Reorder as ReorderIcon } from '@material-ui/icons'
@@ -48,12 +47,6 @@ const ProductPicksContainer = compose(
     </ProductPicksList>
   ))
 )
-
-const ProductPicksRowStyle = createGlobalStyle`
-  .sortable-product-pick-row {
-    z-index: 1;
-  }
-`
 
 const StyledReorderIcon = styled(ReorderIcon)`
   cursor: ns-resize;
@@ -105,10 +98,9 @@ const Spotlight = ({
       />
       <div style={{ marginTop: '24px' }}>
         <FormSection foldable title="Product Picks">
-          <ProductPicksRowStyle />
           {spotlight.productPicksAttributes && (
             <ProductPicksContainer
-              helperClass="sortable-product-pick-row"
+              helperClass="sortable-element"
               isCropping={isCropping}
               onChange={setProductPickForm}
               onFocus={onFocus}
