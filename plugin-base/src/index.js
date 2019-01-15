@@ -1,3 +1,4 @@
+import BackButton from 'shared/back-button'
 import ContentWrapper from 'content-wrapper'
 import Cover, { BelowCover, CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
 import Navigation from 'navigation'
@@ -15,6 +16,7 @@ export {
   CoverImg,
   matchUrl,
   Navigation,
+  BackButton,
   Outro,
   PaddedCover,
   PersonaDescription,

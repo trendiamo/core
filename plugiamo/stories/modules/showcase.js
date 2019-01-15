@@ -1,9 +1,8 @@
 /* eslint-disable local-rules/no-relative-parent-imports */
-import history from 'ext/history'
 import Plugin from '../plugin'
 import { h } from 'preact'
+import { history, ShowcaseBase } from 'plugin-base'
 import { Main } from '../components'
-import { ShowcaseBase } from 'app/content/showcase'
 
 const spotlights = [
   {
