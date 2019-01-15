@@ -13,6 +13,7 @@ const ChatStepMessage = ({
 }) => (
   <FormSection
     actions={allowDelete && <Cancel disabled={isFormLoading} index={index} onClick={deleteChatMessage} />}
+    foldable
     hideBottom
     hideTop={index === 0}
     title={`Message #${index + 1}`}

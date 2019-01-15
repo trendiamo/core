@@ -22,6 +22,8 @@ const ChatStepOption = ({
 }) => (
   <FormSection
     actions={<Cancel disabled={isFormLoading} index={index} onClick={deleteChatOption} />}
+    foldable
+    folded
     hideBottom
     hideTop={index === 0}
     title={`Option #${index + 1}`}

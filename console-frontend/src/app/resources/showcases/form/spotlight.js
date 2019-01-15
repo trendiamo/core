@@ -76,6 +76,7 @@ const Spotlight = ({
       actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />}
       dragHandle={<DragHandle />}
       foldable
+      folded
       hideTop
       title={`Spotlight #${index + 1}`}
     >
@@ -111,9 +112,9 @@ const Spotlight = ({
               useDragHandle
             />
           )}
+          <AddItemButton disabled={isCropping || isFormLoading} message="Add Product Pick" onClick={addProductPick} />{' '}
         </FormSection>
       </div>
-      <AddItemButton disabled={isCropping || isFormLoading} message="Add Product Pick" onClick={addProductPick} />{' '}
     </FormSection>
   </Section>
 )
