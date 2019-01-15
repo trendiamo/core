@@ -8,8 +8,9 @@ import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
 import { apiFlowsAutocomplete } from 'utils'
+import { AssignmentTurnedInOutlined, DirectionsOutlined, PersonPinOutlined, SmsOutlined } from '@material-ui/icons'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormControl, FormHelperText, Grid, InputLabel, TextField } from '@material-ui/core'
+import { FormControl, FormHelperText, Grid, InputLabel, TextField, Typography } from '@material-ui/core'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -31,6 +32,45 @@ const StyledUrlTextField = styled(UrlTextField)`
   margin: 8px 0;
 `
 
+const StyledSelectLabel = styled.div`
+  display: flex;
+  padding: 8px 12px;
+  &:hover {
+    background-color: #deebff;
+    cursor: pointer;
+  }
+  svg {
+    color: #9ea1a6;
+  }
+`
+
+const SelectLabelText = styled(Typography)`
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  padding-left: 15px;
+  color: #372727
+  font-size: 16px;
+`
+
+const optionIcon = moduleTtype => {
+  switch (moduleTtype) {
+    case 'Showcase':
+      return <PersonPinOutlined />
+    case 'Outro':
+      return <AssignmentTurnedInOutlined />
+    case 'ScriptedChat':
+      return <SmsOutlined />
+    case 'Navigation':
+      return <DirectionsOutlined />
+  }
+}
+
+const optionWithIcon = option => (
+  <StyledSelectLabel ref={option.innerRef} {...option.innerProps}>
+    {optionIcon(option.value.type)}
+    <SelectLabelText>{option.value.name}</SelectLabelText>
+  </StyledSelectLabel>
+)
+
 const TriggerForm = ({
   addUrlSelect,
   deleteUrlMatcher,
@@ -49,6 +89,7 @@ const TriggerForm = ({
       <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
         <Select
           autocomplete={apiFlowsAutocomplete}
+          components={{ Option: optionWithIcon }}
           defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}
           disabled={isFormLoading}
           label="Module"
