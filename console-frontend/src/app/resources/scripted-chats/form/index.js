@@ -10,6 +10,7 @@ import withScriptedChatsForm from './with-scripted-chats-form'
 import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, createSink, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { filter } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { isEqual } from 'lodash'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
@@ -100,6 +101,22 @@ const ScriptedChatForm = ({
   </Form>
 )
 
+const addIdToChatStepAttributes = (form, result) => {
+  const chatAttributes = ['chatOptionsAttributes', 'chatMessagesAttributes']
+  chatAttributes.forEach(chatAttribute => {
+    if (form.chatStepAttributes[chatAttribute] && form.chatStepAttributes[chatAttribute].length > 0) {
+      form.chatStepAttributes[chatAttribute] = filter(
+        form.chatStepAttributes[chatAttribute],
+        attribute => !attribute._destroy
+      ).map((attribute, index) => ({
+        ...attribute,
+        id: result.chatStepAttributes[chatAttribute][index].id,
+      }))
+    }
+  })
+  return form
+}
+
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'scriptedChats', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
@@ -136,13 +153,14 @@ export default compose(
         personaId: value.id,
       })
     },
-    onFormSubmit: ({ location, formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ form, location, formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return
       if (location.pathname !== routes.scriptedChatEdit(result.id)) {
         history.push(routes.scriptedChatEdit(result.id))
       }
+      addIdToChatStepAttributes(form, result)
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
