@@ -10,6 +10,7 @@ import { Actions, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import { OptionWithAvatar } from 'shared/select-option'
 import { Outro } from 'plugin-base'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -44,6 +45,7 @@ const OutroForm = ({
           <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
           <Select
             autocomplete={apiPersonasAutocomplete}
+            components={{ Option: OptionWithAvatar }}
             defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
             disabled={isFormLoading}
             label="Persona"

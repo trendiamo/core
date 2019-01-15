@@ -14,6 +14,7 @@ import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-ho
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { createGlobalStyle } from 'styled-components'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import { OptionWithAvatar } from 'shared/select-option'
 import { history as pluginHistory, routes as pluginRoutes, Showcase as ShowcaseBase } from 'plugin-base'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
@@ -114,6 +115,7 @@ const ShowcaseForm = ({
       <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
       <Select
         autocomplete={apiPersonasAutocomplete}
+        components={{ Option: OptionWithAvatar }}
         defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
         disabled={isCropping || isFormLoading}
         label="Persona"
