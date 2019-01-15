@@ -60,12 +60,13 @@ const getMatchedPersona = ({ flow, data }) => {
 }
 
 const setup = data => {
-  const { /* persona,*/ open, path, picture } = optionsFromHash()
+  const { /* persona,*/ open: openOpt, path, picture } = optionsFromHash()
   const { flow, type: flowType } = isGraphCMS
     ? path
       ? getFlowFromPath(data.hostname.website.triggers, path)
       : getFlowFromTriggers(data.hostname.website.triggers)
     : { flow: data.flow, type: data.flow.flowType }
+  const open = isSmall() ? false : (openOpt && openOpt.match(/1|true/)) || flowType === 'outro'
 
   if (picture) addPicture(picture)
 
@@ -73,7 +74,7 @@ const setup = data => {
 
   return {
     flowType,
-    open: !!(open && open.match(/1|true/) && !isSmall()),
+    open,
     persona: getMatchedPersona({ flow, data }),
   }
 }
