@@ -61,6 +61,8 @@ const optionIcon = moduleTtype => {
       return <SmsOutlined />
     case 'Navigation':
       return <DirectionsOutlined />
+    default:
+      return null
   }
 }
 
