@@ -44,6 +44,52 @@
   display: flex;
 }
 
+.footer {
+  background-color: #92a2af;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer p {
+  font-size: 15px;
+}
+
+.footer h2 {
+  font-size: 20px;
+}
+
+.footer-main {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.footer-section-big {
+  margin: 10px;
+}
+
+.footer-section-small {
+  margin: 10px;
+}
+
+.footer-disclaimer {
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+@media (min-width: 538px) {
+  .footer-main {
+    text-align: left;
+  }
+}
+
 .pdp-image {
   position: absolute;
   right: 30px;
@@ -244,6 +290,7 @@
 
 .grey-background {
   flex: 1;
+  height: 90vh;
   background-color: #f0f0f2;
   font-size: 25px;
   text-align: center;
