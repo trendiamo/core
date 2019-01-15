@@ -14,7 +14,7 @@ const TrendiamoLauncherFrame = animateOnMount(styled(Frame).attrs({
   border: 0;
   z-index: 2147482999;
   position: fixed;
-  bottom: 30px;
+  bottom: ${({ position }) => (position === 'right-elevated' ? '56px' : '30px')};
   ${({ position }) => (position === 'left' ? 'left: 30px;' : 'right: 30px;')}
   width: 60px;
   height: 60px;

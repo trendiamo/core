@@ -161,7 +161,8 @@ export default compose(
   ),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
   withProps(({ data }) => ({
-    position: data.website.name === 'Impressorajato' ? 'left' : 'right',
+    position:
+      data.website.name === 'Impressorajato' ? 'left' : data.website.name === 'Shopinfo' ? 'right-elevated' : 'right',
   })),
   withState('persona', 'setPersona'),
   withState('showingContent', 'setShowingContent', false),
