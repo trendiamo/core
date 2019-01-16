@@ -4,7 +4,6 @@ import routes from 'app/routes'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
-import { isGraphCMS } from 'config'
 
 const convertSpotlights = spotlights => {
   return spotlights.map(spotlight => {
@@ -15,65 +14,35 @@ const convertSpotlights = spotlights => {
 const Showcase = compose(
   withProps({ history }),
   graphql(
-    isGraphCMS
-      ? gql`
-          query($id: ID!) {
-            showcase(where: { id: $id }) {
+    gql`
+      query($id: ID!) {
+        showcase(id: $id) {
+          id
+          title
+          subtitle
+          spotlights {
+            id
+            persona {
               id
-              title
-              subtitle
-              spotlights {
-                id
-                persona {
-                  id
-                  name
-                  description
-                  profilePic {
-                    url
-                  }
-                }
-                productPicks {
-                  url
-                  name
-                  description
-                  displayPrice
-                  picture {
-                    url
-                  }
-                }
+              name
+              description
+              profilePic {
+                url
+              }
+            }
+            productPicks {
+              url
+              name
+              description
+              displayPrice
+              picture {
+                url
               }
             }
           }
-        `
-      : gql`
-          query($id: ID!) {
-            showcase(id: $id) {
-              id
-              title
-              subtitle
-              spotlights {
-                id
-                persona {
-                  id
-                  name
-                  description
-                  profilePic {
-                    url
-                  }
-                }
-                productPicks {
-                  url
-                  name
-                  description
-                  displayPrice
-                  picture {
-                    url
-                  }
-                }
-              }
-            }
-          }
-        `,
+        }
+      }
+    `,
     ({ id }) => ({ id: id.replace(/\/.+/, '') })
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),

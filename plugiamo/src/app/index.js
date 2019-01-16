@@ -9,7 +9,7 @@ import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
-import { HEIGHT_BREAKPOINT, isGraphCMS, location } from 'config'
+import { HEIGHT_BREAKPOINT, location } from 'config'
 import { infoMsgHof } from 'shared/info-msg'
 
 const Gradient = animateOnMount(styled.div`
@@ -62,105 +62,44 @@ export default compose(
   withProps({ Component: <Router /> }),
   withProps({ Launcher }),
   graphql(
-    isGraphCMS
-      ? gql`
-          query($hasPersona: Boolean!, $hostname: String!, $personaId: ID) {
-            hostname(where: { hostname: $hostname }) {
-              website {
-                triggers {
-                  id
-                  order
-                  urlMatchers {
-                    regexp
-                  }
-                  scriptedChat {
-                    id
-                    persona {
-                      id
-                      name
-                      description
-                      profilePic {
-                        url
-                      }
-                    }
-                  }
-                  showcase {
-                    id
-                    persona {
-                      id
-                      name
-                      description
-                      profilePic {
-                        url
-                      }
-                    }
-                  }
-                  outro {
-                    id
-                    persona {
-                      id
-                      name
-                      description
-                      profilePic {
-                        url
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            persona(where: { id: $personaId }) @include(if: $hasPersona) {
-              id
-              name
-              description
-              profilePic {
-                url
-              }
+    gql`
+      query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
+        website {
+          name
+          previewMode
+        }
+        flow(pathname: $pathname, pluginPath: $pluginPath) {
+          id
+          flowType
+          chatBubbleText
+          persona {
+            id
+            name
+            description
+            profilePic {
+              url
             }
           }
-        `
-      : gql`
-          query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
-            website {
-              name
-              previewMode
-            }
-            flow(pathname: $pathname, pluginPath: $pluginPath) {
-              id
-              flowType
-              chatBubbleText
-              persona {
-                id
-                name
-                description
-                profilePic {
-                  url
-                }
-              }
-            }
-            persona(id: $personaId) @include(if: $hasPersona) {
-              id
-              name
-              description
-              profilePic {
-                url
-              }
-            }
+        }
+        persona(id: $personaId) @include(if: $hasPersona) {
+          id
+          name
+          description
+          profilePic {
+            url
           }
-        `,
+        }
+      }
+    `,
     {
       hasPersona: !!optionsFromHash().persona,
       pathname: location.pathname,
       personaId: optionsFromHash().persona,
       pluginPath: optionsFromHash().path,
-      ...(isGraphCMS ? { hostname: location.hostname } : {}),
     }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
-  branch(
-    ({ data }) => (isGraphCMS ? !data.hostname || !data.hostname.website : !data.flow),
-    infoMsgHof(`no data found for hostname ${location.hostname}`)
-  ),
+  branch(({ data }) => !data.flow, infoMsgHof(`no data found for hostname ${location.hostname}`)),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
   withProps(({ data }) => ({
     position:

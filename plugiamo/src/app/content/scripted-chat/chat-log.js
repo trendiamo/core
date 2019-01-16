@@ -1,46 +1,26 @@
 import i18n from 'ext/i18n'
 import { gql } from 'ext/recompose/graphql'
-import { isGraphCMS } from 'config'
 
 const STEP_DELAY = 250
 
-const query = isGraphCMS
-  ? gql`
-      query($id: ID!) {
-        chatStep(where: { id: $id }) {
-          chatMessages {
-            id
-            delay
-            text
-          }
-          chatOptions {
-            id
-            text
-            destinationChatStep {
-              id
-            }
-          }
+const query = gql`
+  query($id: ID!) {
+    chatStep(id: $id) {
+      chatMessages {
+        id
+        delay
+        text
+      }
+      chatOptions {
+        id
+        text
+        destinationChatStep {
+          id
         }
       }
-    `
-  : gql`
-      query($id: ID!) {
-        chatStep(id: $id) {
-          chatMessages {
-            id
-            delay
-            text
-          }
-          chatOptions {
-            id
-            text
-            destinationChatStep {
-              id
-            }
-          }
-        }
-      }
-    `
+    }
+  }
+`
 
 const finalOptions = () => [
   {
