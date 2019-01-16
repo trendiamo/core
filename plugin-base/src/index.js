@@ -7,6 +7,7 @@ import routes from './routes'
 import Showcase from 'showcase'
 import { animate, TopSlideAnimation } from 'shared/animate'
 import { history, Router, transition } from 'ext'
+import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose } from 'icons'
 import { matchUrl } from 'tools'
 
 export {
@@ -27,4 +28,8 @@ export {
   Router,
   routes,
   ContentWrapper,
+  IconAnimatedEllipsis,
+  IconChevronLeft,
+  IconChevronRight,
+  IconClose,
 }

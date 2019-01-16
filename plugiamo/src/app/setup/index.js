@@ -2,7 +2,7 @@ import addPicture from './add-picture'
 import routes from 'app/routes'
 import { isGraphCMS, location } from 'config'
 import { isSmall } from 'utils'
-import { matchUrl } from 'ext/simple-router'
+import { matchUrl } from 'plugin-base'
 
 export const optionsFromHash = () => {
   if (!window.__trendiamoOptionsFromHash) {

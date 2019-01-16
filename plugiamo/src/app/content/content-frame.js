@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose } from 'recompose'
 import { h } from 'preact'
-import { IconClose } from 'icons'
+import { IconClose } from 'plugin-base'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 
 const ContentFrameContainer = animateOnMount(styled.div`
