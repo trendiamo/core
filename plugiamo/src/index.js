@@ -33,6 +33,8 @@ const main = () => {
   initRollbar()
   mixpanel.init(mixpanelToken)
 
+  mixpanel.track('Visited Page', { hostname: location.hostname })
+
   const Component = location.hostname === 'www.spotahome.com' ? SpotAHome : initRootComponent()
 
   const trendiamoContainer = document.createElement('div')
