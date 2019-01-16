@@ -1,12 +1,12 @@
 import React from 'react'
-import { ModalPersonaCreate } from 'onboarding/elements'
+import { ModalFirstPersona } from 'onboarding/elements'
 
 const order = ['personaCreated']
 
 const steps = {
   personaCreated: {
     target: 'body',
-    content: <ModalPersonaCreate />,
+    content: <ModalFirstPersona />,
     placement: 'center',
     disableBeacon: true,
     showSpotlight: false,

@@ -3,7 +3,7 @@ import Dialog from 'shared/dialog'
 import React from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 
-const DeleteActions = ({ handleClose, handleDelete }) => (
+const DialogActions = ({ handleClose, handleDelete }) => (
   <React.Fragment>
     <Button color="primary" onClick={handleClose}>
       {'Cancel'}
@@ -25,7 +25,8 @@ const BulkActionButtons = ({ handleOpen, showDialog, handleClose, handleDelete, 
       content={`Are you sure that you want to delete ${selectedIds.length} ${
         selectedIds.length > 1 ? 'elements' : 'element'
       }?`}
-      dialogActions={<DeleteActions handleClose={handleClose} handleDelete={handleDelete} />}
+      dialogActions={<DialogActions handleClose={handleClose} handleDelete={handleDelete} />}
+      handleClose={handleClose}
       open={showDialog}
       title="Are you sure?"
     />

@@ -6,24 +6,6 @@ import { changeStage } from 'onboarding/scenario-actions'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 
-const ActionsTemplate = ({ handleClose }) => (
-  <>
-    <Button color="primary" onClick={handleClose} variant="text">
-      {'Ok, lets go!'}
-    </Button>
-  </>
-)
-
-const DialogActions = compose(
-  withOnboardingConsumer,
-  withHandlers({
-    handleClose: ({ setOpen, setOnboarding, onboarding }) => () => {
-      setOnboarding({ ...onboarding, stageIndex: 2, run: false })
-      setOpen(false)
-    },
-  })
-)(ActionsTemplate)
-
 const ContentContainer = styled.div`
   text-align: center;
 `
@@ -33,7 +15,7 @@ const ContentBody = styled.div`
 `
 
 const DialogContent = () => (
-  <ContentContainer style={{ textAlign: 'center' }}>
+  <ContentContainer>
     <img alt="" src="/img/icons/ic_emoji_clap.png" />
     <Typography variant="h4">{"Congrats, it's done!"}</Typography>
     <Typography variant="h6">{"Your first persona is created. Let's keep going?"}</Typography>
@@ -43,21 +25,35 @@ const DialogContent = () => (
   </ContentContainer>
 )
 
-const ModalTemplate = ({ open, setOpen }) => (
-  <Dialog
-    content={<DialogContent />}
-    dialogActions={<DialogActions setOpen={setOpen} />}
-    hideBackdrop
-    open={open}
-    title=""
-  />
+const DialogActions = ({ handleClose }) => (
+  <Button color="primary" onClick={handleClose} variant="text">
+    {'Ok, lets go!'}
+  </Button>
 )
 
-export default compose(
+const ModalFirstPersona = compose(
   withState('open', 'setOpen', true),
+  withOnboardingConsumer,
+  withHandlers({
+    handleClose: ({ setOpen, setOnboarding, onboarding }) => () => {
+      setOnboarding({ ...onboarding, stageIndex: 2, run: false })
+      setOpen(false)
+    },
+  }),
   lifecycle({
     componentDidMount() {
       changeStage(2)()
     },
   })
-)(ModalTemplate)
+)(({ handleClose, open }) => (
+  <Dialog
+    content={<DialogContent />}
+    dialogActions={<DialogActions handleClose={handleClose} />}
+    handleClose={handleClose}
+    hideBackdrop
+    open={open}
+    title=""
+  />
+))
+
+export default ModalFirstPersona
