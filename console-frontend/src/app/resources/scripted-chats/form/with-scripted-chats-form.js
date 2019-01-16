@@ -12,6 +12,7 @@ const extractPersistedChatSteps = (chatStepAttributes, results, hash) => {
   results.push({ id, __index: results.length, __ref: chatStepAttributes.__ref })
   if (!chatStepAttributes.chatOptionsAttributes) return results
   chatStepAttributes.chatOptionsAttributes.forEach(chatOptionAttributes => {
+    if (!chatOptionAttributes.destinationChatStepAttributes) return
     extractPersistedChatSteps(chatOptionAttributes.destinationChatStepAttributes, results, hash)
   })
   return results
