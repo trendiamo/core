@@ -1,0 +1,42 @@
+.tingle-modal__closeIcon,
+.tingle-modal__closeLabel {
+  vertical-align: top;
+}
+
+.tingle-modal__closeIcon {
+  font-size: 2.4rem;
+}
+
+.tingle-modal__closeLabel {
+  text-transform: uppercase;
+}
+
+.disclaimer-heading {
+  text-align: center;
+}
+
+
+@media (min-width: 535px) {
+  .disclaimer-heading {
+    font-size: 26px;
+  }
+  .disclaimer-modal-content {
+    padding: 20px 30px 30px 30px;
+    font-size: 16px;
+  }
+  .disclaimer-secondary-text {
+    font-size: 12px;
+  }
+  .tingle-modal-box {
+    border-radius: 15px;
+    width: 500px;
+  }
+  .tingle-modal__close {
+    position: fixed;
+    top: 20px;
+    right: 0px;
+  }
+  .tingle-modal-box__content {
+    padding: 0px;
+  }
+}
