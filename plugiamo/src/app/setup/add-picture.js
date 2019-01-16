@@ -1,10 +1,9 @@
 // Note: this method only supports www.buttwrap.com for now
 // run `theme.Product` in website for access to theme code on this
 import { infoMsg } from 'shared/info-msg'
-import { location } from 'config'
 
 const addPictures = {
-  'www.buttwrap.com': picture => {
+  Buttwrap: picture => {
     const sectionId = window.ShopifyAnalytics.meta.product.id
     const productThumbs = window.$(`#ProductThumbs-${sectionId}`)
     const productPhotos = window.$(`#ProductPhotos-${sectionId}`)
@@ -41,7 +40,8 @@ const addPictures = {
 }
 
 const addPicture = picture => {
-  const method = addPictures[location.hostname]
+  const account = localStorage.getItem('trnd-plugin-account')
+  const method = addPictures[account]
   if (method) {
     try {
       method(picture)
@@ -49,7 +49,7 @@ const addPicture = picture => {
       infoMsg('addPicture failed', e)
     }
   } else {
-    infoMsg(`addPicture not implemented for ${location.hostname}`)
+    infoMsg(`addPicture not implemented for ${account}`)
   }
 }
 

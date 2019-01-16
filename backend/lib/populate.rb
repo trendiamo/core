@@ -147,11 +147,11 @@ class Populate
   end
 
   def create_account
-    ActsAsTenant.default_tenant = Account.create!(name: "Trendiamo")
+    ActsAsTenant.default_tenant = Account.create!(name: "Trendiamo Demo")
   end
 
   def create_websites
-    Website.create!(name: "Demo", hostnames: %w[demo.trendiamo.com])
+    Website.create!(name: "Trendiamo Demo", hostnames: %w[demo.frekkls.com])
   end
 
   def create_users

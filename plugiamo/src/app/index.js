@@ -101,10 +101,6 @@ export default compose(
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   branch(({ data }) => !data.flow, infoMsgHof(`no data found for hostname ${location.hostname}`)),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
-  withProps(({ data }) => ({
-    position:
-      data.website.name === 'Impressorajato' ? 'left' : data.website.name === 'Shopinfo' ? 'right-elevated' : 'right',
-  })),
   withState('persona', 'setPersona'),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
@@ -121,6 +117,9 @@ export default compose(
         personaRef: persona.id,
       })
 
+      // we could store this in the store, but for ease of access for now, just in localStorage
+      localStorage.setItem('trnd-plugin-account', data.website.name)
+
       if (autoOpen) {
         setShowingContent(true)
       } else {
@@ -129,6 +128,12 @@ export default compose(
     },
   }),
   branch(({ persona }) => !persona, renderNothing),
+  withProps(() => {
+    const account = localStorage.getItem('trnd-plugin-account')
+    return {
+      position: account === 'Impressorajato' ? 'left' : account === 'Shopinfo' ? 'right-elevated' : 'right',
+    }
+  }),
   withHandlers({
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })

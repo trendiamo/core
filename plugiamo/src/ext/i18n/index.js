@@ -1,30 +1,25 @@
-import { location } from 'config'
-
 const i18n = {
   iStillNeedHelp: () => {
-    if (
-      ['www.shoptimao.com.br', 'www.impressorajato.com.br', 'ia.luanda.supercopy.com.br'].includes(location.hostname)
-    ) {
+    const account = localStorage.getItem('trnd-plugin-account')
+    if (['Corinthians', 'Impressorajato'].includes(account)) {
       return 'Me mostre outras sugestões'
     } else {
       return 'I still need help'
     }
   },
   okCool: () => {
-    if (
-      ['www.shoptimao.com.br', 'www.impressorajato.com.br', 'ia.luanda.supercopy.com.br'].includes(location.hostname)
-    ) {
+    const account = localStorage.getItem('trnd-plugin-account')
+    if (['Corinthians', 'Impressorajato'].includes(account)) {
       return 'Legal'
     } else {
       return 'Ok, cool'
     }
   },
   productsSelectedBy: firstName => {
-    if (location.hostname === 'www.shoptimao.com.br') {
+    const account = localStorage.getItem('trnd-plugin-account')
+    if (account === 'Corinthians') {
       return 'Conheça produtos que eu uso:'
-    } else if (
-      ['www.shopinfo.com.br', 'www.impressorajato.com.br', 'ia.luanda.supercopy.com.br'].includes(location.hostname)
-    ) {
+    } else if (['Shopinfo', 'Impressorajato'].includes(account)) {
       return `Produtos selecionados por ${firstName}:`
     } else {
       return `Products selected by ${firstName}`
