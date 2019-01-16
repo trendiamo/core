@@ -11,7 +11,7 @@ class ScriptedChat < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "title", "name", "created_at", "updated_at")
+      .slice("id", "title", "name", "chat_bubble_text", "created_at", "updated_at")
       .merge(extra_attributes)
   end
 

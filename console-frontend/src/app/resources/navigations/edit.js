@@ -24,6 +24,7 @@ export default compose(
       return {
         personaId: json.persona.id || '',
         name: json.name || '',
+        chatBubbleText: json.chatBubbleText || '',
         __persona: json.persona,
         navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
           id: navigationItem.id || '',

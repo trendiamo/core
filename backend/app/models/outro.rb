@@ -7,7 +7,7 @@ class Outro < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "name", "created_at", "updated_at")
+      .slice("id", "name", "chat_bubble_text", "created_at", "updated_at")
       .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
              type: "Outro",
              trigger_ids: triggers.ids)

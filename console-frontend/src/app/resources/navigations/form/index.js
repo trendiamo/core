@@ -113,6 +113,16 @@ const NavigationForm = ({
         required
       />
       <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
+      <TextField
+        disabled={isFormLoading}
+        fullWidth
+        label="Chat Bubble Text"
+        margin="normal"
+        name="chatBubbleText"
+        onChange={setFieldValue}
+        value={form.chatBubbleText}
+      />
+      <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
     </Section>
     <NavigationItemsContainer
       form={form}
@@ -229,6 +239,7 @@ export default compose(
   withForm({
     personaId: '',
     name: '',
+    chatBubbleText: '',
     navigationItemsAttributes: [
       {
         text: '',

@@ -45,7 +45,7 @@ class ScriptedChatsController < RestController
   private
 
   def scripted_chat_params
-    params.require(:scripted_chat).permit(:id, :name, :title, :persona_id, chat_step_attributes: {})
+    params.require(:scripted_chat).permit(:id, :name, :title, :chat_bubble_text, :persona_id, chat_step_attributes: {})
   end
 
   def render_error

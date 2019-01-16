@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190114141323) do
+ActiveRecord::Schema.define(version: 20190115165449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20190114141323) do
     t.bigint "persona_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "chat_bubble_text"
     t.index ["account_id"], name: "index_navigations_on_account_id"
     t.index ["persona_id"], name: "index_navigations_on_persona_id"
   end
@@ -82,6 +83,7 @@ ActiveRecord::Schema.define(version: 20190114141323) do
     t.datetime "updated_at", null: false
     t.string "graphcms_ref"
     t.string "name", null: false
+    t.string "chat_bubble_text"
     t.index ["account_id"], name: "index_outros_on_account_id"
     t.index ["persona_id"], name: "index_outros_on_persona_id"
   end
@@ -120,6 +122,7 @@ ActiveRecord::Schema.define(version: 20190114141323) do
     t.bigint "account_id"
     t.string "graphcms_ref"
     t.string "name", null: false
+    t.string "chat_bubble_text"
     t.index ["account_id"], name: "index_scripted_chats_on_account_id"
     t.index ["persona_id"], name: "index_scripted_chats_on_persona_id"
   end
@@ -133,6 +136,7 @@ ActiveRecord::Schema.define(version: 20190114141323) do
     t.datetime "updated_at", null: false
     t.string "graphcms_ref"
     t.string "name", null: false
+    t.string "chat_bubble_text"
     t.index ["account_id"], name: "index_showcases_on_account_id"
     t.index ["persona_id"], name: "index_showcases_on_persona_id"
   end

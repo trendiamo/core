@@ -141,6 +141,16 @@ const ShowcaseForm = ({
         value={form.subtitle}
       />
       <FormHelperText>{'The subtitle is shown in the cover, below the title.'}</FormHelperText>
+      <TextField
+        disabled={isFormLoading}
+        fullWidth
+        label="Chat Bubble Text"
+        margin="normal"
+        name="chatBubbleText"
+        onChange={setFieldValue}
+        value={form.chatBubbleText}
+      />
+      <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
     </Section>
     <SpotlightsContainer
       form={form}

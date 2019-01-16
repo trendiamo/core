@@ -29,6 +29,7 @@ export default compose(
         personaId: json.persona.id || '',
         title: json.title || '',
         subtitle: json.subtitle || '',
+        chatBubbleText: json.chatBubbleText || '',
         __persona: json.persona,
         spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
           id: spotlight.id || '',

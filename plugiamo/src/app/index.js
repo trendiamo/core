@@ -30,7 +30,7 @@ const Gradient = animateOnMount(styled.div`
 `)
 
 export const AppBase = styled(
-  ({ className, Component, Launcher, onToggleContent, persona, position, showingContent }) => (
+  ({ className, Component, Launcher, onToggleContent, persona, position, showingContent, data }) => (
     <div className={className}>
       {showingContent && (
         <Content
@@ -42,6 +42,7 @@ export const AppBase = styled(
         />
       )}
       <Launcher
+        bubbleText={data && data.flow && data.flow.chatBubbleText}
         onToggleContent={onToggleContent}
         persona={persona}
         position={position}
@@ -127,6 +128,7 @@ export default compose(
             flow(pathname: $pathname, pluginPath: $pluginPath) {
               id
               flowType
+              chatBubbleText
               persona {
                 id
                 name

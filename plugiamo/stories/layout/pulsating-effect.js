@@ -18,14 +18,13 @@ const InnerContent = styled.div`
   color: #fff;
 `
 
-const PulsatingLauncher = ({ persona, onToggleContent, showingContent }) => (
+const PulsatingLauncherComp = ({ persona, onToggleContent, showingContent }) => (
   <Launcher onToggleContent={onToggleContent} persona={persona} showingContent={showingContent} />
 )
 
-const ScriptedChat = () => (
+const PulsatingLauncher = () => (
   <div>
     <Main>
-      <h2>{'Pulsating effect.'}</h2>
       <p>
         {'This effect is created to make our plugin more visible and call for attention.'}
         <br />
@@ -55,8 +54,8 @@ const ScriptedChat = () => (
         <li>{'The effect disappears when the content of the plugin opens.'}</li>
       </ul>
     </Main>
-    <Plugin Component={<InnerContent>{'plugin content goes here'}</InnerContent>} Launcher={PulsatingLauncher} />
+    <Plugin Component={<InnerContent>{'plugin content goes here'}</InnerContent>} Launcher={PulsatingLauncherComp} />
   </div>
 )
 
-export default ScriptedChat
+export default PulsatingLauncher
