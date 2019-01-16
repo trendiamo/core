@@ -1,4 +1,5 @@
 import animateOnMount from 'shared/animate-on-mount'
+import Bubble from 'app/bubble'
 import CloseIcon from 'shared/close-icon'
 import Frame from 'shared/frame'
 import mixpanel from 'ext/mixpanel'
@@ -50,16 +51,19 @@ const Container = styled.div`
   }
 `
 
-const Launcher = ({ optimizelyToggleContent, personaPicUrl, position, showingContent }) => (
-  <TrendiamoLauncherFrame position={position}>
-    <div>
-      <PulsateEffect active={!showingContent} />
-      <Container active={!showingContent} onClick={optimizelyToggleContent}>
-        <PersonaPic active={!showingContent} url={personaPicUrl} />
-        <CloseIcon active={showingContent} />
-      </Container>
-    </div>
-  </TrendiamoLauncherFrame>
+const Launcher = ({ optimizelyToggleContent, personaPicUrl, position, showingContent, bubbleText }) => (
+  <div>
+    <Bubble bubble={{ message: bubbleText }} position={position} pulsating showingContent={showingContent} />
+    <TrendiamoLauncherFrame position={position}>
+      <div>
+        <PulsateEffect active={!showingContent} />
+        <Container active={!showingContent} onClick={optimizelyToggleContent}>
+          <PersonaPic active={!showingContent} url={personaPicUrl} />
+          <CloseIcon active={showingContent} />
+        </Container>
+      </div>
+    </TrendiamoLauncherFrame>
+  </div>
 )
 
 export default compose(

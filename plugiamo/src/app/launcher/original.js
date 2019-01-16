@@ -1,4 +1,5 @@
 import animateOnMount from 'shared/animate-on-mount'
+import Bubble from 'app/bubble'
 import CloseIcon from 'shared/close-icon'
 import Frame from 'shared/frame'
 import mixpanel from 'ext/mixpanel'
@@ -8,7 +9,7 @@ import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose, withHandlers, withProps } from 'recompose'
 import { h } from 'preact'
 
-const TrendiamoLauncherFrame = animateOnMount(styled(Frame).attrs({
+const LauncherFrame = animateOnMount(styled(Frame).attrs({
   title: 'Trendiamo Launcher',
 })`
   border: 0;
@@ -34,13 +35,16 @@ const Container = styled.div`
   left: 0;
 `
 
-const Launcher = ({ optimizelyToggleContent, personaPicUrl, position, showingContent }) => (
-  <TrendiamoLauncherFrame position={position}>
-    <Container onClick={optimizelyToggleContent}>
-      <PersonaPic active={!showingContent} url={personaPicUrl} />
-      <CloseIcon active={showingContent} />
-    </Container>
-  </TrendiamoLauncherFrame>
+const Launcher = ({ optimizelyToggleContent, personaPicUrl, position, showingContent, bubbleText }) => (
+  <div>
+    <Bubble bubble={{ message: bubbleText }} position={position} showingContent={showingContent} />
+    <LauncherFrame position={position}>
+      <Container onClick={optimizelyToggleContent}>
+        <PersonaPic active={!showingContent} url={personaPicUrl} />
+        <CloseIcon active={showingContent} />
+      </Container>
+    </LauncherFrame>
+  </div>
 )
 
 export default compose(

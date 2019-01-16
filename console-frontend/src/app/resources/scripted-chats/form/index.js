@@ -92,6 +92,16 @@ const ScriptedChatForm = ({
           value={form.title}
         />
         <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
+        <TextField
+          disabled={isFormLoading}
+          fullWidth
+          label="Chat Bubble Text"
+          margin="normal"
+          name="chatBubbleText"
+          onChange={setFieldValue}
+          value={form.chatBubbleText}
+        />
+        <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       </Grid>
     </Section>
     {form.chatStepAttributes && <ChatStep chatStep={form.chatStepAttributes} index={0} onChange={setChatStepForm} />}

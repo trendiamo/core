@@ -52,6 +52,7 @@ export default compose(
       let result = {
         name: json.name || '',
         title: json.title || '',
+        chatBubbleText: json.chatBubbleText || '',
         personaId: json.persona.id || '',
         __persona: json.persona,
       }

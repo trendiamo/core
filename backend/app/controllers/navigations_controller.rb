@@ -45,7 +45,7 @@ class NavigationsController < RestController
   private
 
   def navigation_params
-    params.require(:navigation).permit(:persona_id, :name, navigation_items_attributes:
+    params.require(:navigation).permit(:persona_id, :name, :chat_bubble_text, navigation_items_attributes:
       %i[id text url pic_url _destroy])
   end
 

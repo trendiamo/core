@@ -15,9 +15,10 @@ const Plugin = compose(
   withHandlers({
     onToggleContent: ({ setShowingContent, showingContent }) => () => setShowingContent(!showingContent),
   })
-)(({ Component, onToggleContent, persona, showingContent, Launcher }) => (
+)(({ Component, onToggleContent, persona, showingContent, Launcher, data }) => (
   <AppBase
     Component={Component}
+    data={data}
     Launcher={Launcher || DefaultLauncher}
     onToggleContent={onToggleContent}
     persona={persona}

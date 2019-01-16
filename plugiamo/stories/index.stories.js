@@ -1,6 +1,6 @@
 import Welcome from './welcome'
 // import { action } from '@storybook/addon-actions'
-import { Basics, CoverFixedPositionLogic, PulsatingEffect } from './layout'
+import { Basics, ChatBubble, CoverFixedPositionLogic, PulsatingEffect } from './layout'
 import { h } from 'preact'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose } from 'plugin-base'
 import { Navigation, Outro, ScriptedChat, Showcase, Spotahome } from './modules'
@@ -13,6 +13,7 @@ storiesOf('Layout', module)
   .add('Basics', Basics)
   .add('Cover fixed position logic', CoverFixedPositionLogic)
   .add('Pulsating Launcher', PulsatingEffect)
+  .add('Launcher Chat Bubble', ChatBubble)
 
 storiesOf('Modules', module)
   .add('Showcase', Showcase)
