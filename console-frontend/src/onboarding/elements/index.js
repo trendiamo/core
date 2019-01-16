@@ -1,4 +1,4 @@
-import ModalPersonaCreate from './modal-persona-create'
+import ModalFirstPersona from './modal-first-persona'
 import Tooltip from './tooltip'
 
-export { Tooltip, ModalPersonaCreate }
+export { Tooltip, ModalFirstPersona }

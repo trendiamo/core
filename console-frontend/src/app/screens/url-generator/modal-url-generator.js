@@ -7,20 +7,6 @@ import theme from 'app/theme'
 import { Button, Input, Tooltip, Typography } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
 
-const ActionsTemplate = ({ handleClose }) => (
-  <Button color="primary" onClick={handleClose} variant="text">
-    {'Close'}
-  </Button>
-)
-
-const DialogActions = compose(
-  withHandlers({
-    handleClose: ({ setOpen }) => () => {
-      setOpen(false)
-    },
-  })
-)(ActionsTemplate)
-
 const ContentContainer = styled.div`
   text-align: center;
 `
@@ -106,22 +92,28 @@ const DialogContent = ({ url }) => (
   </ContentContainer>
 )
 
-const ModalTemplate = compose(
+const DialogActions = ({ handleClose }) => (
+  <Button color="primary" onClick={handleClose} variant="text">
+    {'Done'}
+  </Button>
+)
+
+const ModalUrlGenerator = compose(
   withHandlers({
     handleClose: ({ setOpen }) => () => {
       setOpen(false)
     },
   })
-)(({ handleClose, url, open, setOpen }) => (
+)(({ handleClose, url, open }) => (
   <Dialog
     content={<DialogContent url={url} />}
-    dialogActions={<DialogActions setOpen={setOpen} />}
+    dialogActions={<DialogActions handleClose={handleClose} />}
     fullWidth
+    handleClose={handleClose}
     maxWidth="sm"
-    onClose={handleClose}
     open={open}
     title=""
   />
 ))
 
-export default ModalTemplate
+export default ModalUrlGenerator
