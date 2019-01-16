@@ -1,11 +1,10 @@
 class GraphqlController < ApplicationController
   set_current_tenant_through_filter
   before_action :ensure_hash_variables
-  before_action :ensure_website
+  before_action :set_tenant
 
   def execute
     options = {
-      context: { website: @website },
       operation_name: params[:operationName],
       variables: @variables,
     }
@@ -16,20 +15,21 @@ class GraphqlController < ApplicationController
 
   private
 
-  def ensure_website
-    @website = website_from_request
-    return render json: { error: "no website found for hostname #{hostname}" }, status: :bad_request unless @website
-    set_current_tenant(@website.account)
+  def set_tenant
+    account = find_account_from_override || find_account_from_request
+    return render json: { error: "no content found for" }, status: :bad_request unless account
+    set_current_tenant(account)
   end
 
-  def hostname
+  def find_account_from_override
+    override_account_name = request.headers["Override-Account"]
+    return unless override_account_name
+    Account.find_by(name: override_account_name)
+  end
+
+  def find_account_from_request
     hostname = (request.origin || "").gsub(%r{https?://|:\d+}, "")
-    hostname = request.headers["Override-Hostname"] if !Rails.env.production? && request.headers["Override-Hostname"]
-    @hostname ||= hostname
-  end
-
-  def website_from_request
-    hostname.present? ? Website.find_by_hostname(hostname) : nil
+    hostname.present? ? Website.find_by_hostname(hostname)&.account : nil
   end
 
   def ensure_hash_variables

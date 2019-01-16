@@ -4,7 +4,7 @@ import mixpanel from 'ext/mixpanel'
 import SpotAHome from 'special/spotahome'
 import { detect } from 'detect-browser'
 import { GraphQLClient } from 'graphql-request'
-import { graphQlUrl, location, mixpanelToken, production } from './config'
+import { graphQlUrl, location, mixpanelToken, overrideAccount } from './config'
 import { h, render } from 'preact'
 import { Provider } from 'ext/graphql-context'
 import './styles.css'
@@ -12,7 +12,7 @@ import './styles.css'
 const initRootComponent = () => {
   const client = new GraphQLClient(
     graphQlUrl,
-    production ? undefined : { headers: { 'Override-Hostname': location.hostname } }
+    overrideAccount ? { headers: { 'Override-Account': overrideAccount } } : undefined
   )
 
   const RootComponent = () => (
@@ -35,6 +35,7 @@ const main = () => {
 
   mixpanel.track('Visited Page', { hostname: location.hostname })
 
+  // here we haven't requested info yet, so we do need to base this off of location.hostname
   const Component = location.hostname === 'www.spotahome.com' ? SpotAHome : initRootComponent()
 
   const trendiamoContainer = document.createElement('div')

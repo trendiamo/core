@@ -8,14 +8,27 @@ const WIDTH = 360
 const location = {
   ...window.location,
 }
-if (!production && process.env.HOSTNAME) location.hostname = process.env.HOSTNAME
+
+const overrideAccount =
+  localStorage.getItem('trnd-plugin-override-account') || (production ? undefined : process.env.ACCOUNT)
 
 // export as both a default object and indivudal items
-export { graphQlUrl, location, mixpanelToken, production, rollbarToken, MAIN_BREAKPOINT, HEIGHT_BREAKPOINT, WIDTH }
+export {
+  graphQlUrl,
+  location,
+  mixpanelToken,
+  overrideAccount,
+  production,
+  rollbarToken,
+  MAIN_BREAKPOINT,
+  HEIGHT_BREAKPOINT,
+  WIDTH,
+}
 export default {
   graphQlUrl,
   location,
   mixpanelToken,
+  overrideAccount,
   production,
   rollbarToken,
   MAIN_BREAKPOINT,
