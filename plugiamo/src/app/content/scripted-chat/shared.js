@@ -40,6 +40,10 @@ const MessageContent = styled.div`
     border-left: 10px solid transparent;
     border-right: 10px solid #fff;
   }
+
+  img {
+    max-width: 100%;
+  }
 `
 
 const MessageMetadata = styled.div`
