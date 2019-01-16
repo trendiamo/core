@@ -6,7 +6,9 @@ import { h } from 'preact'
 
 const Content = ({ Component, onToggleContent, position, persona }) => (
   <ContentFrame onToggleContent={onToggleContent} position={position}>
-    <ContentWrapper persona={persona}>{Component}</ContentWrapper>
+    <ContentWrapper onToggleContent={onToggleContent} persona={persona}>
+      {Component}
+    </ContentWrapper>
   </ContentFrame>
 )
 
