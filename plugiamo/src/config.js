@@ -1,5 +1,4 @@
 const graphQlUrl = process.env.GRAPHQL_URL
-const isGraphCMS = graphQlUrl.includes('graphcms.com')
 const mixpanelToken = process.env.MIXPANEL_TOKEN
 const rollbarToken = process.env.ROLLBAR_TOKEN
 const production = process.env.NODE_ENV === 'production'
@@ -12,19 +11,8 @@ const location = {
 if (!production && process.env.HOSTNAME) location.hostname = process.env.HOSTNAME
 
 // export as both a default object and indivudal items
-export {
-  isGraphCMS,
-  graphQlUrl,
-  location,
-  mixpanelToken,
-  production,
-  rollbarToken,
-  MAIN_BREAKPOINT,
-  HEIGHT_BREAKPOINT,
-  WIDTH,
-}
+export { graphQlUrl, location, mixpanelToken, production, rollbarToken, MAIN_BREAKPOINT, HEIGHT_BREAKPOINT, WIDTH }
 export default {
-  isGraphCMS,
   graphQlUrl,
   location,
   mixpanelToken,
