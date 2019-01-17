@@ -1,6 +1,8 @@
-.trnd-open > body {
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-  position: fixed;
+@media (max-width: 599px) {
+  .trnd-open > body {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+  }
 }
