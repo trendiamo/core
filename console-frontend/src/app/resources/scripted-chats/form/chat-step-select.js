@@ -39,13 +39,14 @@ export default compose(
   withProps(({ destinationChatStep }) => ({
     hasNewDestinationChatStep: destinationChatStep && !destinationChatStep.id,
   })),
-  withProps(({ chatOption, hasNewDestinationChatStep, destinationChatStep, persistedChatSteps }) => ({
-    selectValue: chatOption.destinationChatStepId
-      ? persistedChatSteps.find(e => e.id === chatOption.destinationChatStepId)['__index']
-      : hasNewDestinationChatStep
-      ? destinationChatStep.__index
-      : '',
-  })),
+  withProps(({ chatOption, hasNewDestinationChatStep, destinationChatStep, persistedChatSteps }) => {
+    const chatStep = chatOption.destinationChatStepId
+      ? persistedChatSteps.find(e => e.id === chatOption.destinationChatStepId)
+      : undefined
+    return {
+      selectValue: chatStep ? chatStep['__index'] : hasNewDestinationChatStep ? destinationChatStep.__index : '',
+    }
+  }),
   withHandlers({
     getNewChatStep: ({ chatOption, addNewChatStep }) => () => {
       const newChatOption = {
