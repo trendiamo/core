@@ -1,5 +1,6 @@
 <extends src="layout.html">
   <block name="content">
+    <include src="../shared/header.html"></include>
     <div class="pdp-main white-pdp-main">
       <div class="main-left-half white-pdp-image-div">
         <img class="pdp-img portrait" alt="" src="/img/pdp-images/lg-guitar.jpg" />
@@ -8,7 +9,9 @@
         <div class="product-details pdp-big-screen">
           <div class="product-info">
             <include src="../product-details/guitar.html"></include>
-            <include src="../shared/buy-button.html"></include>
+            <a class="buy-button-link" href="/purchased_tom_bright.html">
+              <include src="../shared/buy-button.html"></include>
+            </a>
           </div>
           <div class="miniature-images">
             <img class="shopping-icon" alt="" src="/img/miniature-images/miniature-guitar-1.png" />
@@ -18,7 +21,9 @@
         </div>
         <div class="product-details pdp-small-screen">
           <div class="product-info">
-            <include src="../shared/buy-button.html"></include>
+            <a class="buy-button-link" href="/purchased_tom_bright.html">
+              <include src="../shared/buy-button.html"></include>
+            </a>
             <include src="../product-details/guitar.html"></include>
           </div>
         </div>

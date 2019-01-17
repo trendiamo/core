@@ -1,5 +1,6 @@
 <extends src="layout.html">
   <block name="content">
+    <include src="../shared/header.html"></include>
     <div class="pdp-main beige-pdp-main">
       <div class="main-left-half">
         <img class="pdp-img" alt="" src="/img/pdp-images/lg-shirt.jpg" />
@@ -8,7 +9,9 @@
         <div class="product-details pdp-big-screen">
           <div class="product-info">
             <include src="../product-details/shirt.html"></include>
-            <include src="../shared/buy-button.html"></include>
+            <a class="buy-button-link" href="/purchased_linda_beige.html">
+              <include src="../shared/buy-button.html"></include>
+            </a>
           </div>
           <div class="miniature-images">
             <img class="shopping-icon" alt="" src="/img/miniature-images/miniature-shirt-1.png" />
@@ -18,7 +21,9 @@
         </div>
         <div class="product-details pdp-small-screen">
           <div class="product-info">
-            <include src="../shared/buy-button.html"></include>
+            <a class="buy-button-link" href="/purchased_linda_beige.html">
+              <include src="../shared/buy-button.html"></include>
+            </a>
             <include src="../product-details/shirt.html"></include>
           </div>
         </div>
