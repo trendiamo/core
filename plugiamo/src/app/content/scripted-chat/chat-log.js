@@ -33,6 +33,18 @@ const finalOptions = () => [
   },
 ]
 
+const processChatOptions = chatOptions => {
+  const account = localStorage.getItem('trnd-plugin-account')
+  if (account !== 'Impressorajato') return chatOptions
+  return [
+    ...chatOptions,
+    {
+      id: 'reset',
+      text: i18n.iStillNeedHelp(),
+    },
+  ]
+}
+
 const chatLog = {
   addListener(fn) {
     this.listeners.push(fn)
@@ -57,7 +69,8 @@ const chatLog = {
           message,
           type: 'message',
         }))
-        const options = data.chatStep.chatOptions.length > 0 ? data.chatStep.chatOptions : finalOptions()
+        const options =
+          data.chatStep.chatOptions.length > 0 ? processChatOptions(data.chatStep.chatOptions) : finalOptions()
         const optionsLog = { options, type: 'options' }
         const logs = [...messageLogs, optionsLog]
         this.addNextLog(logs, this.timestamp)

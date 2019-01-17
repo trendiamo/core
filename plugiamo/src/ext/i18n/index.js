@@ -4,7 +4,7 @@ const i18n = {
     if (['Corinthians', 'Shopinfo', 'Shopinfo2'].includes(account)) {
       return 'Me mostre outras sugestões'
     } else if (account === 'Impressorajato') {
-      return 'Quero falar com um atendente'
+      return 'Quero falar com um consultor'
     } else if (account === 'RiHappy') {
       return 'Preciso saber mais'
     } else {
