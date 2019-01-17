@@ -21,6 +21,6 @@ class WebsitesController < RestController
   private
 
   def website_params
-    params.require(:website).permit(:name, :preview_mode, hostnames: [])
+    params.require(:website).permit(:preview_mode, hostnames: [])
   end
 end

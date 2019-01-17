@@ -75,22 +75,12 @@ const EditWebsite = ({
   isFormPristine,
   form,
   onFormSubmit,
-  setFieldValue,
   setPreviewMode,
 }) => (
   <form onSubmit={onFormSubmit}>
     <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
     <Notification data={errors} />
-    <TextField
-      disabled={isFormLoading}
-      fullWidth
-      label="Name"
-      margin="normal"
-      name="name"
-      onChange={setFieldValue}
-      required
-      value={form.name}
-    />
+    <TextField disabled fullWidth label="Name" margin="normal" name="name" required value={form.name} />
     <FormControlLabel
       control={<Checkbox checked={!form.previewMode} color="primary" onChange={setPreviewMode} />}
       disabled={isFormLoading}
