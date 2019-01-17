@@ -25,12 +25,20 @@ const withForm = initialForm => BaseComponent =>
     }),
     lifecycle({
       async componentDidMount() {
-        const { formObjectTransformer, loadFormObject, setForm, setInitialForm, setIsFormLoading } = this.props
+        const {
+          afterFormMount,
+          formObjectTransformer,
+          loadFormObject,
+          setForm,
+          setInitialForm,
+          setIsFormLoading,
+        } = this.props
         const json = await loadFormObject()
         const formObject = formObjectTransformer(json)
         setInitialForm(formObject)
         setForm(formObject)
         setIsFormLoading(false)
+        if (afterFormMount) afterFormMount(formObject)
       },
     })
   )(BaseComponent)

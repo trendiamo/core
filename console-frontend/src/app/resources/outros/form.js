@@ -107,16 +107,14 @@ export default compose(
         __persona: json.persona,
       }
     },
-    loadFormObject: ({ convertPersona, loadFormObject, previewOutro, setPreviewOutro }) => async () => {
-      const result = await loadFormObject()
-      setPreviewOutro({
-        ...previewOutro,
-        persona: convertPersona(result.__persona),
-      })
-      return result
-    },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
+    },
+    afterFormMount: ({ convertPersona, previewOutro, setPreviewOutro }) => formObject => {
+      setPreviewOutro({
+        ...previewOutro,
+        persona: convertPersona(formObject.__persona),
+      })
     },
   }),
   withForm({

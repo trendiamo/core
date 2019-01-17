@@ -241,14 +241,12 @@ export default compose(
         })),
       }
     },
-    loadFormObject: ({ convertPersona, loadFormObject, setPersona }) => async () => {
-      const result = await loadFormObject()
-      setPersona(convertPersona(result.__persona))
-      return result
-    },
     saveFormObject: ({ saveFormObject, setErrors, uploadSubImages }) => async form => {
       await Promise.all(uploadSubImages(form))
       return saveFormObject(form, { setErrors })
+    },
+    afterFormMount: ({ convertPersona, setPersona }) => formObject => {
+      setPersona(convertPersona(formObject.__persona))
     },
   }),
   withForm({
