@@ -1,5 +1,6 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
+import init from './setup/init'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
 import Router from './content/router'
@@ -119,6 +120,8 @@ export default compose(
 
       // we could store this in the store, but for ease of access for now, just in localStorage
       localStorage.setItem('trnd-plugin-account', data.website.name)
+
+      init()
 
       if (autoOpen) {
         setShowingContent(true)

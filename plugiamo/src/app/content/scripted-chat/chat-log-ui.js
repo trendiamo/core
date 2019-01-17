@@ -16,9 +16,16 @@ const ChatLogUi = compose(
   })),
   withState('logs', 'setLogs', []),
   withHandlers({
-    onResetChat: ({ initialChatStep }) => () => {
-      chatLog.resetLogs()
-      chatLog.fetchStep(initialChatStep.id)
+    onResetChat: ({ initialChatStep, onToggleContent }) => () => {
+      const account = localStorage.getItem('trnd-plugin-account')
+      if (account === 'Impressorajato') {
+        onToggleContent()
+        document.querySelector('#livechat-compact-container').style.visibility = 'visible'
+        window.LC_API.open_chat_window({ source: 'trendiamo' })
+      } else {
+        chatLog.resetLogs()
+        chatLog.fetchStep(initialChatStep.id)
+      }
     },
     updateLogs: ({ setLogs }) => chatLog => setLogs(chatLog.logs),
   }),
