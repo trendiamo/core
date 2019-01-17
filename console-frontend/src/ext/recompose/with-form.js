@@ -10,11 +10,14 @@ const withForm = initialForm => BaseComponent =>
       isFormPristine: isEqual(form, initialForm),
     })),
     withHandlers({
-      onFormSubmit: ({ form, saveFormObject, setInitialForm }) => async event => {
+      onFormSubmit: ({ formObjectTransformer, setForm, form, saveFormObject, setInitialForm }) => async event => {
         event.preventDefault()
-        const result = await saveFormObject(form)
-        setInitialForm(form)
-        return result
+        const json = await saveFormObject(form)
+        if (json.error || json.errors) return json
+        const formObject = formObjectTransformer(json)
+        setInitialForm(formObject)
+        setForm(formObject)
+        return formObject
       },
       setFieldValue: ({ form, setForm }) => event => {
         setForm({ ...form, [event.target.name]: event.target.value })
@@ -22,8 +25,9 @@ const withForm = initialForm => BaseComponent =>
     }),
     lifecycle({
       async componentDidMount() {
-        const { loadFormObject, setForm, setInitialForm, setIsFormLoading } = this.props
-        const formObject = await loadFormObject()
+        const { formObjectTransformer, loadFormObject, setForm, setInitialForm, setIsFormLoading } = this.props
+        const json = await loadFormObject()
+        const formObject = formObjectTransformer(json)
         setInitialForm(formObject)
         setForm(formObject)
         setIsFormLoading(false)

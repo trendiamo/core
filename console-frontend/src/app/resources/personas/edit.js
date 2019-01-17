@@ -23,12 +23,7 @@ export default compose(
       const id = match.params.personaId
       const { json, requestError } = await apiRequest(apiPersonaShow, [id])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      const resultObject = {
-        name: json.name || '',
-        description: json.description || '',
-        profilePicUrl: json.profilePicUrl || '',
-      }
-      return resultObject
+      return json
     },
   })
 )(PersonaForm)

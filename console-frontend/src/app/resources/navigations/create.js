@@ -22,6 +22,7 @@ export default compose(
       return {
         personaId: '',
         name: '',
+        chatBubbleText: '',
         navigationItemsAttributes: [
           {
             text: '',

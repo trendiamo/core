@@ -76,6 +76,13 @@ export default compose(
   withState('profilePic', 'setProfilePic', null),
   withState('progress', 'setProgress', null),
   withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        name: json.name || '',
+        description: json.description || '',
+        profilePicUrl: json.profilePicUrl || '',
+      }
+    },
     loadFormObject: ({ loadFormObject }) => async () => {
       return loadFormObject()
     },

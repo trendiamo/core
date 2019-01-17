@@ -112,12 +112,55 @@ const ScriptedChatForm = ({
   </Form>
 )
 
+const newEmptyChatMessage = () => ({ text: '' })
+
+const treatChatSteps = (chatStep, ids, extraIndex = 0) => ({
+  id: chatStep.id,
+  chatMessagesAttributes: chatStep.chatMessagesAttributes || [newEmptyChatMessage()],
+  chatOptionsAttributes:
+    chatStep.chatOptionsAttribute &&
+    chatStep.chatOptionsAttributes.map((chatOptionAttributes, i) =>
+      chatOptionAttributes.destinationChatStepAttributes
+        ? {
+            ...chatOptionAttributes,
+            destinationChatStepAttributes: treatChatSteps(
+              chatOptionAttributes.destinationChatStepAttributes,
+              {
+                ...ids,
+                [chatStep.id]: true,
+              },
+              i
+            ),
+          }
+        : chatOptionAttributes
+    ),
+  __index: Object.keys(ids).length + extraIndex,
+  __ref: React.createRef(),
+})
+
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'scriptedChats', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('destinationChatStepsRefs', 'setDestinationChatStepRefs', []),
   withState('errors', 'setErrors', null),
   withHandlers({
+    formObjectTransformer: () => json => {
+      let result = {
+        id: json.id || '',
+        name: json.name || '',
+        title: json.title || '',
+        chatBubbleText: json.chatBubbleText || '',
+        personaId: (json.persona && json.persona.id) || '',
+        __persona: json.persona,
+      }
+      if (json.chatStepAttributes) {
+        result = {
+          ...result,
+          chatStepAttributes: treatChatSteps(json.chatStepAttributes, {}),
+        }
+      }
+      return result
+    },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
     },
@@ -152,9 +195,8 @@ export default compose(
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return
-      if (location.pathname !== routes.scriptedChatEdit(result.id)) {
-        history.push(routes.scriptedChatEdit(result.id))
-      }
+      if (location.pathname !== routes.scriptedChatEdit(result.id)) history.push(routes.scriptedChatEdit(result.id))
+      return result
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),

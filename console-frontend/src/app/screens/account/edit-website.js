@@ -123,14 +123,19 @@ export default compose(
   })),
   withSnackbar,
   withHandlers({
-    loadFormObject: ({ enqueueSnackbar, websiteId }) => async () => {
-      const { json, requestError } = await apiRequest(apiWebsiteShow, [websiteId])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    formObjectTransformer: () => json => {
       return {
         hostnames: json.hostnames || [''],
         name: json.name || '',
         previewMode: json.previewMode,
       }
+    },
+  }),
+  withHandlers({
+    loadFormObject: ({ enqueueSnackbar, websiteId }) => async () => {
+      const { json, requestError } = await apiRequest(apiWebsiteShow, [websiteId])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      return json
     },
     saveFormObject: ({ enqueueSnackbar, websiteId, setErrors }) => async form => {
       const { json, errors, requestError } = await apiRequest(apiWebsiteUpdate, [websiteId, { website: form }])

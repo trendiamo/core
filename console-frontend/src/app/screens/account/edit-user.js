@@ -80,6 +80,16 @@ export default compose(
   withState('progress', 'setProgress', null),
   withSnackbar,
   withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        email: json.email || '',
+        firstName: json.firstName || '',
+        lastName: json.lastName || '',
+        profilePicUrl: json.profilePicUrl || '',
+      }
+    },
+  }),
+  withHandlers({
     saveFormObject: ({ enqueueSnackbar, setErrors, setProgress, profilePic }) => async form => {
       // upload the image
       const profilePicUrl = await uploadImage({
@@ -108,13 +118,7 @@ export default compose(
         return {}
       }
       auth.setUser(json)
-      const userObject = {
-        email: json.email || '',
-        firstName: json.firstName || '',
-        lastName: json.lastName || '',
-        profilePicUrl: json.profilePicUrl || '',
-      }
-      return userObject
+      return json
     },
   }),
   withForm({

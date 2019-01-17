@@ -129,6 +129,14 @@ export default compose(
   withProps({ formRef: React.createRef() }),
   withState('errors', 'setErrors', null),
   withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        flowId: json.flowId || '',
+        flowType: json.flowType || '',
+        urlMatchers: json.urlMatchers || [''],
+        flowLabel: (json.flow && json.flow.name) || '',
+      }
+    },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
     },

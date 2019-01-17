@@ -25,12 +25,7 @@ export default compose(
       const id = match.params.triggerId
       const { json, requestError } = await apiRequest(apiTriggerShow, [id])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      return {
-        flowId: json.flowId || '',
-        flowType: json.flowType || '',
-        urlMatchers: json.urlMatchers || [''],
-        flowLabel: json.flow.name,
-      }
+      return json
     },
   })
 )(TriggerForm)
