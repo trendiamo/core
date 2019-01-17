@@ -1,7 +1,7 @@
 import React from 'react'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
-import { Grid, TextField } from '@material-ui/core'
+import { FormHelperText, Grid, TextField } from '@material-ui/core'
 
 const ChatStepMessage = ({
   allowDelete,
@@ -24,11 +24,18 @@ const ChatStepMessage = ({
         fullWidth
         label="Text"
         margin="normal"
+        multiline
         name="chatMessage_text"
         onChange={editChatMessageValue}
         required
         value={chatMessage.text}
       />
+      <FormHelperText>
+        {'ℹ️ You can format text using '}
+        <a href="https://www.markdownguide.org/cheat-sheet" rel="noopener noreferrer" target="_blank">
+          {'markdown'}
+        </a>
+      </FormHelperText>
     </Grid>
   </FormSection>
 )
