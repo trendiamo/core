@@ -150,7 +150,7 @@ const TriggerRow = compose(
         style={{ color: highlightEnabled ? '#fff' : '' }}
       />
     </TableCell>
-    <TableCell width="50%">
+    <TableCell style={{ whiteSpace: 'nowrap' }} width="50%">
       <InlineTypography highlight={highlightEnabled} variant="subtitle2">{`${trigger.flowType}: '${
         trigger.flow.name
       }'`}</InlineTypography>
