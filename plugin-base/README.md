@@ -12,9 +12,7 @@ yarn add -P react@^16.0.0 styled-components@^3.4.0 recompose@^0.28.2 lodash.iseq
 ## Build
 
 ```
-yarn build && cp dist/plugin-base.js ../console-frontend/plugin-base/ && cp dist/plugin-base.js ../plugiamo/plugin-base/
-# then go to console-frontend and run `yarn add ./plugin-base`
-# then go to plugiamo and run `yarn add ./plugin-base`
+yarn build && cp dist/plugin-base.js ../console-frontend/plugin-base/ && cp dist/plugin-base.js ../plugiamo/plugin-base/ && cd ../console-frontend && yarn add ./plugin-base && cd ../plugiamo && yarn add ./plugin-base && cd ../plugin-base
 ```
 
 ## Linking Yarn
