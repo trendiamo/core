@@ -57,7 +57,8 @@
 }
 
 .card p {
-  width: 120px;
+  width: 130px;
+  letter-spacing: 1.5px;
 }
 
 @media (min-width: 795px) {
@@ -171,6 +172,13 @@
   padding-top: 30px;
 }
 
+#bike-price {
+  font-weight: normal !important;
+  font-size: 20px;
+  padding-top: 15px;
+  text-align: left;
+}
+
 #bike-card-image {
   max-height: 95%;
 }
@@ -255,8 +263,8 @@
   position: absolute;
   width: 50px;
   height: 1px;
-  top: 55px;
-  left: 34px;
+  top: 71px;
+  left: 39px;
   border-bottom: 1.5px solid black;
 }
 

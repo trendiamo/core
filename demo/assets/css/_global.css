@@ -45,7 +45,8 @@
 }
 
 .footer {
-  background-color: #92a2af;
+  background-color: #647a8b;
+  color: #ffffff;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -143,8 +144,9 @@
 }
 
 .price {
-  color: #4a4a4a;
+  color: #1bb086;
   height: 30px;
+  padding-bottom: 10px;
   opacity: 0.76;
   font-size: 32px;
   font-weight: bold;
