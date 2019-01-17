@@ -118,7 +118,7 @@ const treatChatSteps = (chatStep, ids, extraIndex = 0) => ({
   id: chatStep.id,
   chatMessagesAttributes: chatStep.chatMessagesAttributes || [newEmptyChatMessage()],
   chatOptionsAttributes:
-    chatStep.chatOptionsAttribute &&
+    chatStep.chatOptionsAttributes &&
     chatStep.chatOptionsAttributes.map((chatOptionAttributes, i) =>
       chatOptionAttributes.destinationChatStepAttributes
         ? {
@@ -146,7 +146,7 @@ export default compose(
   withHandlers({
     formObjectTransformer: () => json => {
       let result = {
-        id: json.id || '',
+        id: json.id,
         name: json.name || '',
         title: json.title || '',
         chatBubbleText: json.chatBubbleText || '',

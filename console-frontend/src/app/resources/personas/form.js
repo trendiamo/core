@@ -78,6 +78,7 @@ export default compose(
   withHandlers({
     formObjectTransformer: () => json => {
       return {
+        id: json.id,
         name: json.name || '',
         description: json.description || '',
         profilePicUrl: json.profilePicUrl || '',
@@ -104,7 +105,15 @@ export default compose(
   withRouter,
   withOnboardingConsumer,
   withHandlers({
-    onFormSubmit: ({ formRef, history, onFormSubmit, onboarding, setOnboarding, onboardingCreate }) => async event => {
+    onFormSubmit: ({
+      location,
+      formRef,
+      history,
+      onFormSubmit,
+      onboarding,
+      setOnboarding,
+      onboardingCreate,
+    }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return
@@ -113,7 +122,7 @@ export default compose(
           setOnboarding({ ...onboarding, stageIndex: 1, run: true })
         }
       }, 0)
-      history.push(routes.personasList())
+      if (location.pathname !== routes.personaEdit(result.id)) history.push(routes.personaEdit(result.id))
       return result
     },
     setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {

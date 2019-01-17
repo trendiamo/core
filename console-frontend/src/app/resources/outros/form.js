@@ -100,6 +100,7 @@ export default compose(
   withHandlers({
     formObjectTransformer: () => json => {
       return {
+        id: json.id,
         personaId: (json.persona && json.persona.id) || '',
         name: json.name || '',
         chatBubbleText: json.chatBubbleText || '',
@@ -134,10 +135,11 @@ export default compose(
         persona: convertPersona(value),
       })
     },
-    onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ location, formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      if (!result.error && !result.errors) history.push(routes.outrosList())
+      if (result.error || result.errors) return
+      if (location.pathname !== routes.outroEdit(result.id)) history.push(routes.outroEdit(result.id))
       return result
     },
   }),

@@ -15,6 +15,7 @@ export default compose(
       const { json, errors, requestError } = await apiRequest(apiPersonaUpdate, [id, { persona: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
+      if (!errors && !requestError) enqueueSnackbar('Successfully updated persona', { variant: 'success' })
       return json
     },
   }),

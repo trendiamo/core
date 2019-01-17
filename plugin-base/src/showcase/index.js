@@ -34,7 +34,11 @@ export const Showcase = ({
     <Cover>
       <Router history={history} onChange={onRouteChange}>
         <ShowcaseCover path="/showcase/:id" subtitle={subtitle} title={title} />
-        <SpotlightCover path="/showcase/:id/spotlight/:id" routeToShowcase={routeToShowcase} spotlights={spotlights} />
+        <SpotlightCover
+          path="/showcase/:showcaseId/spotlight/:spotlightId"
+          routeToShowcase={routeToShowcase}
+          spotlights={spotlights}
+        />
       </Router>
     </Cover>
     <BelowCover>
@@ -45,7 +49,11 @@ export const Showcase = ({
           routeToSpotlight={routeToSpotlight}
           spotlights={spotlights}
         />
-        <SpotlightContent callbacks={callbacks} path="/showcase/:id/spotlight/:id" spotlights={spotlights} />
+        <SpotlightContent
+          callbacks={callbacks}
+          path="/showcase/:showcaseId/spotlight/:spotlightId"
+          spotlights={spotlights}
+        />
       </Router>
     </BelowCover>
     <GhostLayer isTransitioning={isTransitioning} ref={transition.setGhostRef} />

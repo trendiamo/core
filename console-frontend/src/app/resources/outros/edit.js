@@ -15,6 +15,7 @@ export default compose(
       const { json, errors, requestError } = await apiRequest(apiOutroUpdate, [id, { outro: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
+      if (!errors && !requestError) enqueueSnackbar('Successfully updated outro', { variant: 'success' })
       return json
     },
   }),
