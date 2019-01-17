@@ -105,15 +105,7 @@ export default compose(
   withRouter,
   withOnboardingConsumer,
   withHandlers({
-    onFormSubmit: ({
-      location,
-      formRef,
-      history,
-      onFormSubmit,
-      onboarding,
-      setOnboarding,
-      onboardingCreate,
-    }) => async event => {
+    onFormSubmit: ({ formRef, history, onFormSubmit, onboarding, setOnboarding, onboardingCreate }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return
@@ -122,7 +114,7 @@ export default compose(
           setOnboarding({ ...onboarding, stageIndex: 1, run: true })
         }
       }, 0)
-      if (location.pathname !== routes.personaEdit(result.id)) history.push(routes.personaEdit(result.id))
+      history.push(routes.personasList())
       return result
     },
     setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
