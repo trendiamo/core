@@ -267,8 +267,6 @@ const resultingCrop = (image, pixelCrop) => {
   return new Promise(resolve => canvas.toBlob(resolve, 'image/png'))
 }
 
-const setPreviewCrop = ({ image, pixelCrop, setCroppedImage }) => setCroppedImage(previewCrop(image, pixelCrop))
-
 const uploadImage = async ({ blob, setProgress, type, defaultValue }) => {
   if (!blob) return defaultValue
   try {
@@ -308,13 +306,15 @@ const PictureUploader = compose(
       URL.revokeObjectURL(image.preview)
     },
     onCropChange: ({ setCrop }) => crop => setCrop(crop),
-    onCropComplete: ({ setCrop, imagePreviewRef, setCroppedImage }) => (_crop, pixelCrop) => {
+    onCropComplete: ({ imagePreviewRef, onChange, setCrop, setCroppedImage }) => (_crop, pixelCrop) => {
       if (pixelCrop.height === 0 || pixelCrop.width === 0) {
         const crop = defaultCrop(imagePreviewRef.current)
         setCrop(crop)
         pixelCrop = getPixelCrop(imagePreviewRef.current, crop)
       }
-      setPreviewCrop({ image: imagePreviewRef.current, pixelCrop, setCroppedImage })
+      const previewUrl = previewCrop(imagePreviewRef.current, pixelCrop)
+      setCroppedImage(previewUrl)
+      onChange(previewUrl)
     },
     onDoneClick: ({ crop, image, imagePreviewRef, setDoneCropping, setPic }) => async () => {
       setDoneCropping(true)
@@ -336,10 +336,13 @@ const PictureUploader = compose(
         type: file.type,
       })
     },
-    onImageLoaded: ({ imagePreviewRef, setCrop, setCroppedImage }) => image => {
+    onImageLoaded: ({ imagePreviewRef, onChange, setCrop, setCroppedImage }) => image => {
       const crop = defaultCrop(image)
       setCrop(crop)
-      setPreviewCrop({ image: imagePreviewRef.current, pixelCrop: getPixelCrop(image, crop), setCroppedImage })
+      const pixelCrop = getPixelCrop(image, crop)
+      const previewUrl = previewCrop(imagePreviewRef.current, pixelCrop)
+      setCroppedImage(previewUrl)
+      onChange(previewUrl)
     },
     onRemove: ({ onChange, setImage, setCroppedImage, setPic }) => () => {
       setImage(null)
