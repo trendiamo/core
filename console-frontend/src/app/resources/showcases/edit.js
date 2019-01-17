@@ -23,38 +23,7 @@ export default compose(
       const id = match.params.showcaseId
       const { json, requestError } = await apiRequest(apiShowcaseShow, [id])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      return {
-        id: json.id || '',
-        name: json.name || '',
-        personaId: json.persona.id || '',
-        title: json.title || '',
-        subtitle: json.subtitle || '',
-        chatBubbleText: json.chatBubbleText || '',
-        __persona: json.persona,
-        spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
-          id: spotlight.id || '',
-          personaId: spotlight.persona.id || '',
-          __persona: spotlight.persona,
-          productPicksAttributes: spotlight.productPicksAttributes
-            ? spotlight.productPicksAttributes.map(productPick => ({
-                id: productPick.id || '',
-                url: productPick.url || '',
-                name: productPick.name || '',
-                description: productPick.description || '',
-                displayPrice: productPick.displayPrice || '',
-                picUrl: productPick.picUrl || '',
-              }))
-            : [
-                {
-                  url: '',
-                  name: '',
-                  description: '',
-                  displayPrice: '',
-                  picUrl: '',
-                },
-              ],
-        })),
-      }
+      return json
     },
   })
 )(ShowcaseForm)

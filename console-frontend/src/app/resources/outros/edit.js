@@ -23,12 +23,7 @@ export default compose(
       const id = match.params.outroId
       const { json, requestError } = await apiRequest(apiOutroShow, [id])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      return {
-        personaId: json.persona.id || '',
-        name: json.name || '',
-        chatBubbleText: json.chatBubbleText || '',
-        __persona: json.persona,
-      }
+      return json
     },
   })
 )(OutroForm)

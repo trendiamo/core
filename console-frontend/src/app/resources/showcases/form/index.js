@@ -275,12 +275,45 @@ export default compose(
     },
   }),
   withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        name: json.name || '',
+        personaId: (json.persona && json.persona.id) || '',
+        title: json.title || '',
+        subtitle: json.subtitle || '',
+        chatBubbleText: json.chatBubbleText || '',
+        __persona: json.persona,
+        spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
+          personaId: (spotlight.persona && spotlight.persona.id) || '',
+          __persona: spotlight.persona,
+          productPicksAttributes: spotlight.productPicksAttributes
+            ? spotlight.productPicksAttributes.map(productPick => ({
+                url: productPick.url || '',
+                name: productPick.name || '',
+                description: productPick.description || '',
+                displayPrice: productPick.displayPrice || '',
+                picUrl: productPick.picUrl || '',
+              }))
+            : [
+                {
+                  url: '',
+                  name: '',
+                  description: '',
+                  displayPrice: '',
+                  picUrl: '',
+                },
+              ],
+        })),
+      }
+    },
     saveFormObject: ({ saveFormObject, setErrors, uploadSubImages }) => async form => {
       await Promise.all(uploadSubImages(form))
       return saveFormObject(form, { setErrors })
     },
   }),
   withForm({
+    name: '',
+    chatBubbleText: '',
     personaId: '',
     title: '',
     subtitle: '',

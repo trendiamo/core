@@ -226,6 +226,20 @@ export default compose(
     },
   }),
   withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        personaId: (json.persona && json.persona.id) || '',
+        name: json.name || '',
+        chatBubbleText: json.chatBubbleText || '',
+        __persona: json.persona,
+        navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
+          id: navigationItem.id || '',
+          text: navigationItem.text || '',
+          url: navigationItem.url || '',
+          picUrl: navigationItem.picUrl || '',
+        })),
+      }
+    },
     loadFormObject: ({ convertPersona, loadFormObject, setPersona }) => async () => {
       const result = await loadFormObject()
       setPersona(convertPersona(result.__persona))

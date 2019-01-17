@@ -98,6 +98,14 @@ export default compose(
     }),
   }),
   withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        personaId: (json.persona && json.persona.id) || '',
+        name: json.name || '',
+        chatBubbleText: json.chatBubbleText || '',
+        __persona: json.persona,
+      }
+    },
     loadFormObject: ({ convertPersona, loadFormObject, previewOutro, setPreviewOutro }) => async () => {
       const result = await loadFormObject()
       setPreviewOutro({

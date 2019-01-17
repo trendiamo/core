@@ -21,18 +21,7 @@ export default compose(
       const id = match.params.navigationId
       const { json, requestError } = await apiRequest(apiNavigationShow, [id])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      return {
-        personaId: json.persona.id || '',
-        name: json.name || '',
-        chatBubbleText: json.chatBubbleText || '',
-        __persona: json.persona,
-        navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
-          id: navigationItem.id || '',
-          text: navigationItem.text || '',
-          url: navigationItem.url || '',
-          picUrl: navigationItem.picUrl || '',
-        })),
-      }
+      return json
     },
   })
 )(NavigationForm)
