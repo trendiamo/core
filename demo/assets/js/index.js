@@ -10,14 +10,17 @@ const requestDemoContent = `
   </div>
 `
 
-const modal = new tingle.modal({
-  closeMethods: ["overlay", "button", "escape"],
+const Modal = tingle.modal
+
+const modal = new Modal({
+  closeMethods: ['overlay', 'button', 'escape']
 })
 
 modal.setContent(requestDemoContent)
 
 window.onload = (event) => {
-  const url = new URL(location.href)
-  if (sessionStorage.getItem("firtVisit") !== "true" && url.pathname === "/") modal.open()
-  if (url.pathname === "/") sessionStorage.setItem("firtVisit", "true")
+  // eslint-disable-next-line no-undef
+  const url = new URL(event.target.body.baseURI)
+  if (window.sessionStorage.getItem('firtVisit') !== 'true' && url.pathname === '/') modal.open()
+  if (url.pathname === '/') window.sessionStorage.setItem('firtVisit', 'true')
 }
