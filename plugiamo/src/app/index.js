@@ -134,11 +134,7 @@ export default compose(
   withProps(() => {
     const account = localStorage.getItem('trnd-plugin-account')
     return {
-      position: ['Impressorajato', 'Shopinfo2'].includes(account)
-        ? 'left'
-        : account === 'Shopinfo'
-        ? 'right-elevated'
-        : 'right',
+      position: ['Shopinfo2'].includes(account) ? 'left' : account === 'Shopinfo' ? 'right-elevated' : 'right',
     }
   }),
   withHandlers({

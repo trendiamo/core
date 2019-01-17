@@ -1,8 +1,10 @@
 const i18n = {
   iStillNeedHelp: () => {
     const account = localStorage.getItem('trnd-plugin-account')
-    if (['Corinthians', 'Impressorajato', 'Shopinfo', 'Shopinfo2'].includes(account)) {
+    if (['Corinthians', 'Shopinfo', 'Shopinfo2'].includes(account)) {
       return 'Me mostre outras sugestões'
+    } else if (account === 'Impressorajato') {
+      return 'Quero falar com um atendente'
     } else if (account === 'RiHappy') {
       return 'Preciso saber mais'
     } else {
