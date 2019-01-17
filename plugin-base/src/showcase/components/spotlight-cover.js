@@ -1,7 +1,7 @@
 import BackButton from 'shared/back-button'
 import React from 'react'
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withProps } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
 import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
 import { TopSlideAnimation } from 'shared/animate'
 import { transition } from 'ext'
@@ -30,9 +30,11 @@ const SpotlightCover = compose(
       landElements()
     },
   }),
-  withProps(({ id, spotlights }) => ({
-    spotlight: spotlights.find(e => e.id == id),
-  }))
+  // branch is useful for showcase preview
+  withProps(({ spotlightId, spotlights }) => ({
+    spotlight: spotlights.find(e => e.id == spotlightId),
+  })),
+  branch(({ spotlight }) => !spotlight, renderNothing)
 )(({ isLeaving, routeToShowcase, setImgRef, setNameRef, spotlight }) => (
   <FlexDiv>
     <CoverImg ref={setImgRef} src={spotlight.persona.profilePic.url} />

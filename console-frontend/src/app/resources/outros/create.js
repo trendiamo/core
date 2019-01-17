@@ -9,7 +9,6 @@ export default compose(
     breadcrumbs: [{ text: 'Outros', route: routes.outrosList() }, { text: 'Create Outro' }],
   }),
   withSnackbar,
-  withHandlers({}),
   withHandlers({
     saveFormObject: ({ enqueueSnackbar }) => async (form, { setErrors }) => {
       const { json, errors, requestError } = await apiRequest(apiOutroCreate, [{ outro: form }])

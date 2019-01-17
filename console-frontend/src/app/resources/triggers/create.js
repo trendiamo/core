@@ -10,7 +10,6 @@ export default compose(
   }),
   withSnackbar,
   withHandlers({
-    formObjectTransformer: () => json => json,
     saveFormObject: ({ enqueueSnackbar }) => async (form, { setErrors }) => {
       const { json, errors, requestError } = await apiRequest(apiTriggerCreate, [{ trigger: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })

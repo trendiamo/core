@@ -53,9 +53,9 @@ const SpotlightsContainer = compose(
             index={index}
             isCropping={isCropping}
             isFormLoading={isFormLoading}
-            key={spotlight.id}
+            key={spotlight.id || `new-${index}`}
             onChange={setSpotlightForm}
-            onFocus={onFocus({ spotlight: { ...spotlight, id: spotlight.id || index } })}
+            onFocus={onFocus({ spotlight: { ...spotlight, id: spotlight.id || `new-${index}` } })}
             personas={personas}
             productPicksPictures={productPicksPictures}
             setIsCropping={setIsCropping}
@@ -184,20 +184,21 @@ const defaults = {
 
 const preview = {
   spotlights(showcase) {
-    const newSpotlights = showcase.spotlightsAttributes.map((spotlight, spotlightId) => {
+    const newSpotlights = showcase.spotlightsAttributes.map((spotlight, i) => {
       const productPicks = this.productPicks(spotlight)
       const profilePic = spotlight.__persona && (spotlight.__persona.profilePic || spotlight.__persona.profilePicUrl)
       const personaName = spotlight.__persona && spotlight.__persona.name
       const personaDescription = spotlight.__persona && spotlight.__persona.description
       return {
         ...spotlight,
-        id: spotlight.id || spotlightId,
+        id: spotlight.id || `new-${i}`,
         productPicks,
         persona: {
           ...spotlight.__persona,
           name: personaName || defaults.spotlightName,
           description: personaDescription || defaults.spotlightDescription,
           profilePic: { url: profilePic || defaults.avatarPic },
+          profilePicUrl: profilePic || defaults.avatarPic,
         },
         translation: {
           selectedBy: `Products selected by ${personaName && personaName.split(' ')[0]}`,
@@ -207,10 +208,10 @@ const preview = {
     return { ...showcase, spotlights: newSpotlights }
   },
   productPicks(spotlight) {
-    return spotlight.productPicksAttributes.map((product, productId) => {
+    return spotlight.productPicksAttributes.map((product, i) => {
       return {
         ...product,
-        id: product.id || productId,
+        id: product.id || `new-${i}`,
         name: product.name || defaults.productName,
         description: product.description || defaults.productDescription,
         displayPrice: product.displayPrice || defaults.productPrice,
@@ -277,6 +278,7 @@ export default compose(
   withHandlers({
     formObjectTransformer: () => json => {
       return {
+        id: json.id,
         name: json.name || '',
         personaId: (json.persona && json.persona.id) || '',
         title: json.title || '',
@@ -284,10 +286,12 @@ export default compose(
         chatBubbleText: json.chatBubbleText || '',
         __persona: json.persona,
         spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
+          id: spotlight.id,
           personaId: (spotlight.persona && spotlight.persona.id) || '',
           __persona: spotlight.persona,
           productPicksAttributes: spotlight.productPicksAttributes
             ? spotlight.productPicksAttributes.map(productPick => ({
+                id: productPick.id,
                 url: productPick.url || '',
                 name: productPick.name || '',
                 description: productPick.description || '',
@@ -367,10 +371,12 @@ export default compose(
         personaId: value.id,
       })
     },
-    onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ location, formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      if (!result.error && !result.errors) history.push(routes.showcasesList())
+      if (result.error || result.errors) return
+      pluginHistory.replace(pluginRoutes.showcase(result.id))
+      if (location.pathname !== routes.showcaseEdit(result.id)) history.push(routes.showcaseEdit(result.id))
       return result
     },
     onSortEnd: ({ setForm, form }) => async ({ oldIndex, newIndex }) => {

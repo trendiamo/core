@@ -228,12 +228,13 @@ export default compose(
   withHandlers({
     formObjectTransformer: () => json => {
       return {
+        id: json.id,
         personaId: (json.persona && json.persona.id) || '',
         name: json.name || '',
         chatBubbleText: json.chatBubbleText || '',
         __persona: json.persona,
         navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
-          id: navigationItem.id || '',
+          id: navigationItem.id,
           text: navigationItem.text || '',
           url: navigationItem.url || '',
           picUrl: navigationItem.picUrl || '',
@@ -291,10 +292,11 @@ export default compose(
       })
       setPersona(convertPersona(value))
     },
-    onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ location, formRef, history, onFormSubmit }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      if (!result.error && !result.errors) history.push(routes.navigationsList())
+      if (result.error || result.errors) return
+      if (location.pathname !== routes.navigationEdit(result.id)) history.push(routes.navigationEdit(result.id))
       return result
     },
     setPicture: ({ navigationItemsPictures, setNavigationItemsPictures }) => (index, blob, setProgress) => {

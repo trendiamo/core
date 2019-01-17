@@ -1,7 +1,7 @@
 import ProductItem from './product-item'
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withProps } from 'recompose'
+import { branch, compose, renderNothing, withProps } from 'recompose'
 import { List } from 'shared/list'
 import { TopSlideAnimation } from 'shared/animate'
 
@@ -17,9 +17,11 @@ const H2 = styled.h2`
 `
 
 const SpotlightContent = compose(
-  withProps(({ id, spotlights }) => ({
-    spotlight: spotlights.find(e => e.id == id),
-  }))
+  // branch is useful for showcase preview
+  withProps(({ spotlightId, spotlights }) => ({
+    spotlight: spotlights.find(e => e.id == spotlightId),
+  })),
+  branch(({ spotlight }) => !spotlight, renderNothing)
 )(({ isLeaving, spotlight, callbacks }) => (
   <Container>
     <H2>{spotlight.translation.selectedBy}</H2>
