@@ -2,7 +2,9 @@ import { infoMsg } from 'shared/info-msg'
 
 const inits = {
   Impressorajato: () => {
-    document.querySelector('#livechat-compact-container').style.visibility = 'hidden'
+    const liveChatContainer = document.querySelector('#livechat-compact-container')
+    if (!liveChatContainer) return
+    liveChatContainer.style.visibility = 'hidden'
   },
 }
 
