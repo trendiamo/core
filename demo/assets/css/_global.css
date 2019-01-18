@@ -5,6 +5,38 @@
   overflow: hidden;
 }
 
+.breadcrumbs {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  color: #5a6f80;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 5px;
+  justify-content: space-around;
+}
+
+.breadcrumbs-container-beige {
+  background-color: #ecedea;
+}
+
+.breadcrumbs-container-light-beige {
+  background-color: #f1f3ef;
+}
+
+@media (min-width: 400px) {
+  .breadcrumbs {
+    font-size: 14px;
+    width: 300px;
+    margin-left: 50px;
+    margin-top: 10px;
+  }
+}
+
+.arrow-icon {
+  margin: 0px 5px 0px 5px;
+}
+
 .banner {
   background-color: #5a6f80;
   height: 98px;
@@ -79,6 +111,20 @@
   margin: 10px;
 }
 
+.social-media-div {
+  display: flex;
+  align-items: center;
+  height: 35px;
+}
+
+.social-media-div p {
+  padding-left: 10px;
+}
+
+.social-media-div img {
+  height: 20px;
+}
+
 .footer-disclaimer {
   margin-left: 10px;
   margin-right: 10px;
@@ -140,6 +186,7 @@
 }
 
 .product-info p {
+  text-align: right;
   margin: 0;
 }
 
@@ -200,19 +247,68 @@
   }
 }
 
-@media (min-width: 795px) {
+@media (min-width: 950px) {
   .pdp-main {
     flex-direction: row;
   }
+  .breadcrumbs-container-beige {
+    width: 50%;
+  }
+  .breadcrumbs-container-light-beige {
+    width: 50%;
+  }
+  .breadcrumbs {
+    font-size: 16px;
+  }
   .banner {
+    display: flex;
+    flex-direction: row;
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 2.0px;
+  }
+  .banner-link {
+    background-color: #647889;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    letter-spacing: 2.2px;
-    color: #ffffff;
     text-align: center;
     font-size: 24px;
+  }
+  .banner-link p {
+    padding: 0px 20px 0px 20px;
+  }
+  .banner-catrgories {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+    flex: 2;
+    font-size: 18px;
+  }
+  .banner-categories-text {
+    padding: 20px;
+    font-weight: normal;
+  }
+  .banner-categories-text:hover {
+    cursor: default;
+    user-select: none;
+  }
+  .banner-icons-div {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .header-icon {
+    padding: 0px 10px 0px 10px;
+    height: 30px;
+  }
+  .banner-icons {
+    font-size: 50px;
+    color: #B9C2CA;
   }
   .pdp-big-screen {
     display: flex;
@@ -223,7 +319,6 @@
   .header-big-screen {
     display: flex;
   }
-
   .header-small-screen {
     display: none;
   }
@@ -255,6 +350,9 @@
     display: block;
     margin-bottom: 0px;
     margin-right: 0px;
+  }
+  .product-info p {
+    text-align: left;
   }
   .buy-button {
     width: 100%;

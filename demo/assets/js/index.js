@@ -21,6 +21,7 @@ modal.setContent(requestDemoContent)
 window.onload = (event) => {
   // eslint-disable-next-line no-undef
   const url = new URL(event.target.body.baseURI)
-  if (window.sessionStorage.getItem('firtVisit') !== 'true' && url.pathname === '/') modal.open()
-  if (url.pathname === '/') window.sessionStorage.setItem('firtVisit', 'true')
+  const disclaimerPaths = ['/', '/guitars_home']
+  if (window.sessionStorage.getItem('firtVisit') !== 'true' && disclaimerPaths.includes(url.pathname)) modal.open()
+  if (disclaimerPaths.includes(url.pathname)) window.sessionStorage.setItem('firtVisit', 'true')
 }
