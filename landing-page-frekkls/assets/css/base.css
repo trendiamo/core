@@ -389,6 +389,111 @@ button {
   color: inherit;
 }
 
+/* DEMO PAGE */
+
+.stage {
+  width: 100%;
+  height: calc(100vh - 120px);
+  margin-bottom: 60px;
+}
+
+.stage-one-third {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+  width: 33.33%;
+  height: 100%;
+  background: pink;
+  border-right: 4px solid white;
+}
+
+.stage-one-third:last-child {
+  border: none;
+}
+
+.demo-showcase {
+  background-image: url("../img/demo/background_blur_showcase.png");
+  background-size: cover;
+  background-position: bottom;
+}
+
+.demo-navigation {
+  background-image: url("../img/demo/background_blur_navigation.png");
+  background-size: cover;
+  background-position: bottom;
+}
+
+.demo-chat {
+  background-image: url("../img/demo/background_blur_chat.png");
+  background-size: cover;
+  background-position: bottom;
+}
+
+.feature-card {
+  position: relative;
+  width: 70%;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, .16);
+  max-height: 580px;
+}
+
+.pill-left {
+  position: absolute;
+  left: 20px;
+}
+
+.feature-card h1 {
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.feature-card p {
+  text-align: left;
+  margin-bottom: 10px;
+  min-height: 140px;
+}
+
+.feature-card a {
+  text-decoration: none;
+}
+
+.feature-card-icon {
+  margin-top: 70px;
+  margin-bottom: 40px;
+  width: 60px;
+  height: 60px;
+}
+
+.feature-card-button {
+  font-family: 'Dosis', sans-serif;
+  width: 200px;
+}
+
+/* RESPONSIVE STUFF */
+
+@media (max-width:1280px) {
+
+  /* demo page */
+
+  .stage {
+    height: auto;
+  }
+
+  .stage-one-third {
+    float: none;
+    width: 100%;
+    height: 100vh;
+    border-right: none;
+    border-bottom: 4px solid white;
+  }
+
+}
+
 @media (max-width:900px) {
 
   /* about us */
@@ -429,6 +534,9 @@ button {
 }
 
 @media (max-width:530px) {
+
+  /* press */
+
   #after-header {
     height: 96px;
   }
@@ -465,4 +573,20 @@ button {
   .press-post-text-img-credit {
     font-size: 10px;
   }
+
+  /* demo page */
+
+  .stage {
+    margin-bottom: 0;
+  }
+
+  .feature-card-icon {
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+
+  .feature-card p {
+    font-size: 0.8em;
+  }
+
 }

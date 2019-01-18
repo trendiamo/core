@@ -10,9 +10,10 @@
   appearance: none;
   font-size: 24px;
   font-weight: 500;
-  padding: 16px 30px 16px 30px;
+  padding: 16px 20px 16px 20px;
   border-radius: 80px;
-  border: solid 2px #ff543c;
+  border: none;
+  background: #f1f1f1;
   width: 100%;
   outline: none;
 }
