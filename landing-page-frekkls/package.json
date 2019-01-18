@@ -1,6 +1,6 @@
 {
   "name": "landing-page",
-  "description": "The Frekkls landing page",
+  "description": "The portuguese Frekkls landing page",
   "version": "0.0.1",
   "author": "Frekkls Team",
   "ava": {
@@ -24,7 +24,7 @@
     "snazzy": "^7.0.0",
     "standard": "^10.0.2"
   },
-  "homepage": "https://frekkls.com/",
+  "homepage": "https://frekkls.com.br/",
   "main": "app.js",
   "private": true,
   "repository": "",

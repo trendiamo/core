@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="541px" viewBox="0 0 1440 541" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>bg_top@3x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="96.6692816%" id="linearGradient-1">
+            <stop stop-color="#F4F4F4" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing_Page_Desktop" transform="translate(0.000000, -130.000000)" fill="url(#linearGradient-1)">
+            <g id="background" transform="translate(-23.000000, 122.000000)">
+                <path d="M11,220.507812 C139.703962,246.636921 229.323753,257.707181 279.859375,253.718592 C607.758365,227.838742 682.929688,8 1017.07813,8 C1239.84375,8 1392.15104,89.9061974 1474,253.718592 L1474,548.1875 L11,548.1875 L11,220.507812 Z" id="bg_top" transform="translate(742.500000, 278.093750) scale(-1, -1) translate(-742.500000, -278.093750) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
