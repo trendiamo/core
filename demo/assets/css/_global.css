@@ -191,7 +191,7 @@
 }
 
 .price {
-  color: #1bb086;
+  color: #008eff;
   height: 30px;
   padding-bottom: 10px;
   opacity: 0.76;
@@ -224,7 +224,7 @@
   color: #ffffff;
   height: 52px;
   border-radius: 6px;
-  background-color: #1bb086;
+  background-color: #008eff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -291,6 +291,15 @@
   .banner-categories-text {
     padding: 20px;
     font-weight: normal;
+  }
+  #banner-hyperlink {
+    text-decoration: none;
+    color: white;
+    font-weight: normal;
+    padding: 0px 10px 0px 10px;
+  }
+  .banner-hyperlink:hover {
+    cursor: pointer;
   }
   .banner-categories-text:hover {
     cursor: default;
