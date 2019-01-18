@@ -67,7 +67,7 @@ const ListItem = compose(
   lifecycle({
     componentWillUnmount() {
       timeout.clear('listItem')
-      timeout.clear('plugin_click_item')
+      timeout.clear('pluginClickItem')
     },
     componentDidUpdate() {
       const { listSelected, isClicked, setIsClicked } = this.props
