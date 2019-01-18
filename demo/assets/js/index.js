@@ -1,5 +1,22 @@
 import tingle from 'tingle.js'
 
+if (!String.prototype.includes) {
+  // eslint-disable-next-line no-extend-native
+  Object.defineProperty(String.prototype, 'includes', {
+    value: (search, start) => {
+      if (typeof start !== 'number') {
+        start = 0
+      }
+
+      if (start + search.length > this.length) {
+        return false
+      } else {
+        return this.indexOf(search, start) !== -1
+      }
+    }
+  })
+}
+
 const requestDemoContent = `
   <div class="disclaimer-modal-content">
     <h1 class="disclaimer-heading">Let's start your demo!</h1>
@@ -19,30 +36,14 @@ const modal = new Modal({
 
 modal.setContent(requestDemoContent)
 
-modal.addFooterBtn('Start Demo', 'tingle-btn tingle-btn--primary', function() {
-    modal.close();
-});
+modal.addFooterBtn('Start Demo', 'tingle-btn tingle-btn--primary', () => {
+  modal.close()
+})
 
 window.onload = (event) => {
   // eslint-disable-next-line no-undef
   const url = new URL(event.target.body.baseURI)
   const disclaimerPaths = ['/', '/guitars_home']
-  // if (window.sessionStorage.getItem('firtVisit') !== 'true' && disclaimerPaths.includes(url.pathname)) modal.open()
-  modal.open()
-  if (!String.prototype.includes) {
-      Object.defineProperty(String.prototype, 'includes', {
-        value: function(search, start) {
-          if (typeof start !== 'number') {
-            start = 0
-          }
-
-          if (start + search.length > this.length) {
-            return false
-          } else {
-            return this.indexOf(search, start) !== -1
-          }
-        }
-      })
-    }
+  if (window.sessionStorage.getItem('firtVisit') !== 'true' && disclaimerPaths.includes(url.pathname)) modal.open()
   if (disclaimerPaths.includes(url.pathname)) window.sessionStorage.setItem('firtVisit', 'true')
 }
