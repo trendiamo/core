@@ -5,69 +5,53 @@ import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import Select from 'shared/select'
-import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiNavigationItemSort, apiPersonasAutocomplete } from 'utils'
-import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
+import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { findIndex } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
 import { OptionWithAvatar } from 'shared/select-option'
+import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const NavigationItemsList = styled.ul`
-  padding: 0;
-`
-
-const SortableNavigationItem = SortableElement(({ navigationItemIndex, ...props }) => (
-  <NavigationItem index={navigationItemIndex} {...props} />
-))
-
-const NavigationItemsContainer = compose(
-  withProps(() => ({
-    lockAxis: 'y',
-    lockToContainerEdges: true,
-    lockOffset: '0%',
-  }))
-)(
-  SortableContainer(
-    ({
-      isFormLoading,
-      setNavigationItemForm,
-      navigationItemsPictures,
-      setNavigationItemsPictures,
-      isCropping,
-      setIsCropping,
-      setPicture,
-      form,
-    }) => (
-      <NavigationItemsList>
-        {form.navigationItemsAttributes.map((navigationItem, index) => (
-          <SortableNavigationItem
-            allowDelete={form.navigationItemsAttributes.length > 1}
-            index={index}
-            isCropping={isCropping}
-            isFormLoading={isFormLoading}
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-            navigationItem={navigationItem}
-            navigationItemIndex={index}
-            navigationItemsPictures={navigationItemsPictures}
-            onChange={setNavigationItemForm}
-            setIsCropping={setIsCropping}
-            setNavigationItemsPictures={setNavigationItemsPictures}
-            setPicture={setPicture}
-          />
-        ))}
-      </NavigationItemsList>
-    )
-  )
+const NavigationItems = ({
+  isFormLoading,
+  setNavigationItemForm,
+  navigationItemsPictures,
+  setNavigationItemsPictures,
+  isCropping,
+  setIsCropping,
+  setPicture,
+  form,
+}) => (
+  <div>
+    {form.navigationItemsAttributes.map((navigationItem, index) => (
+      <SortableNavigationItem
+        allowDelete={form.navigationItemsAttributes.length > 1}
+        index={index}
+        isCropping={isCropping}
+        isFormLoading={isFormLoading}
+        key={navigationItem.id || `new-${index}`}
+        navigationItem={navigationItem}
+        navigationItemsPictures={navigationItemsPictures}
+        onChange={setNavigationItemForm}
+        setIsCropping={setIsCropping}
+        setNavigationItemsPictures={setNavigationItemsPictures}
+        setPicture={setPicture}
+        sortIndex={index}
+      />
+    ))}
+  </div>
 )
+
+const SortableNavigationItem = SortableElement(NavigationItem)
+const NavigationItemsContainer = SortableContainer(NavigationItems)
 
 const NavigationForm = ({
   addNavigationItem,

@@ -5,69 +5,54 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import Select from 'shared/select'
 import Spotlight from './spotlight'
-import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete, apiSpotlightSort } from 'utils'
-import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
+import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { OptionWithAvatar } from 'shared/select-option'
 import { history as pluginHistory, routes as pluginRoutes, Showcase as ShowcaseBase } from 'plugin-base'
+import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const SpotlightsList = styled.ul`
-  padding: 0;
-`
-
-const SortableSpotlight = SortableElement(({ spotlightIndex, ...props }) => (
-  <Spotlight index={spotlightIndex} {...props} />
-))
-
-const SpotlightsContainer = compose(
-  withProps(() => ({
-    lockAxis: 'y',
-    lockToContainerEdges: true,
-    lockOffset: '0%',
-  }))
-)(
-  SortableContainer(
-    ({
-      isFormLoading,
-      isCropping,
-      setIsCropping,
-      form,
-      personas,
-      setProductPicksPictures,
-      productPicksPictures,
-      setSpotlightForm,
-      onFocus,
-    }) => (
-      <SpotlightsList>
-        {form.spotlightsAttributes.map((spotlight, index) => (
-          <SortableSpotlight
-            allowDelete={form.spotlightsAttributes.length > 1}
-            index={index}
-            isCropping={isCropping}
-            isFormLoading={isFormLoading}
-            key={spotlight.id || `new-${index}`}
-            onChange={setSpotlightForm}
-            onFocus={onFocus({ spotlight: { ...spotlight, id: spotlight.id || `new-${index}` } })}
-            personas={personas}
-            productPicksPictures={productPicksPictures}
-            setIsCropping={setIsCropping}
-            setProductPicksPictures={setProductPicksPictures}
-            spotlight={spotlight}
-            spotlightIndex={index}
-          />
-        ))}
-      </SpotlightsList>
-    )
-  )
+const Spotlights = ({
+  isFormLoading,
+  isCropping,
+  setIsCropping,
+  form,
+  personas,
+  setProductPicksPictures,
+  productPicksPictures,
+  setSpotlightForm,
+  onFocus,
+}) => (
+  <div>
+    {form.spotlightsAttributes.map((spotlight, index) => (
+      <SortableSpotlight
+        allowDelete={form.spotlightsAttributes.length > 1}
+        index={index}
+        isCropping={isCropping}
+        isFormLoading={isFormLoading}
+        key={spotlight.id || `new-${index}`}
+        onChange={setSpotlightForm}
+        onFocus={onFocus({ spotlight: { ...spotlight, id: spotlight.id || `new-${index}` } })}
+        personas={personas}
+        productPicksPictures={productPicksPictures}
+        setIsCropping={setIsCropping}
+        setProductPicksPictures={setProductPicksPictures}
+        sortIndex={index}
+        spotlight={spotlight}
+      />
+    ))}
+  </div>
 )
+
+const SortableSpotlight = SortableElement(Spotlight)
+const SpotlightsContainer = SortableContainer(Spotlights)
 
 const ShowcaseForm = ({
   selectPersona,

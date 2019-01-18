@@ -4,6 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
+import { DragHandle } from 'shared/sortable-elements'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 
 const ChatStepPortal = compose(branch(({ target }) => !target || !target.current, renderNothing))(
@@ -22,6 +23,8 @@ const ChatStepOption = ({
 }) => (
   <FormSection
     actions={<Cancel disabled={isFormLoading} index={index} onClick={deleteChatOption} />}
+    backgroundColor="#fff"
+    dragHandle={<DragHandle />}
     foldable
     folded
     hideBottom

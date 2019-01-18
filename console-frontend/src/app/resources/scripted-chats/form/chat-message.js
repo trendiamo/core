@@ -1,6 +1,7 @@
 import React from 'react'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
+import { DragHandle } from 'shared/sortable-elements'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 
 const ChatStepMessage = ({
@@ -13,6 +14,8 @@ const ChatStepMessage = ({
 }) => (
   <FormSection
     actions={allowDelete && <Cancel disabled={isFormLoading} index={index} onClick={deleteChatMessage} />}
+    backgroundColor="#fff"
+    dragHandle={<DragHandle />}
     foldable
     hideBottom
     hideTop={index === 0}

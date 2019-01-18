@@ -1,19 +1,9 @@
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
-import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
+import { DragHandle } from 'shared/sortable-elements'
 import { FormHelperText, TextField } from '@material-ui/core'
-import { Reorder as ReorderIcon } from '@material-ui/icons'
-import { SortableHandle } from 'react-sortable-hoc'
-
-const StyledReorderIcon = styled(ReorderIcon)`
-  cursor: ns-resize;
-  color: rgba(0, 0, 0, 0.54);
-  margin-right: 1rem;
-`
-
-const DragHandle = SortableHandle(() => <StyledReorderIcon />)
 
 const ProductPick = ({
   allowDelete,
@@ -31,7 +21,7 @@ const ProductPick = ({
 }) => (
   <FormSection
     actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteProductPick} />}
-    backgroundColor="#FFFFFF"
+    backgroundColor="#fff"
     dragHandle={<DragHandle />}
     foldable
     folded

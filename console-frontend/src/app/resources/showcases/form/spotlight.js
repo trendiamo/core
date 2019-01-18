@@ -2,59 +2,44 @@ import ProductPick from './product-pick'
 import React from 'react'
 import Section from 'shared/section'
 import Select from 'shared/select'
-import styled from 'styled-components'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete, apiProductPickSort } from 'utils'
-import { arrayMove, SortableContainer, SortableElement } from 'react-sortable-hoc'
-import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
+import { arrayMove } from 'react-sortable-hoc'
+import { branch, compose, renderNothing, withHandlers } from 'recompose'
+import { DragHandle, SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { findIndex } from 'lodash'
 import { OptionWithAvatar } from 'shared/select-option'
-import { Reorder as ReorderIcon } from '@material-ui/icons'
-import { SortableHandle } from 'react-sortable-hoc'
 
-const ProductPicksList = styled.ul`
-  padding: 0;
-`
-
-const SortableProductPick = SortableElement(({ productPickIndex, ...props }) => (
-  <ProductPick index={productPickIndex} {...props} />
-))
-
-const ProductPicksContainer = compose(
-  withProps(() => ({
-    lockAxis: 'y',
-    lockToContainerEdges: true,
-    lockOffset: '0%',
-  }))
-)(
-  SortableContainer(({ isFormLoading, isCropping, setIsCropping, spotlight, onChange, setProductPicture, onFocus }) => (
-    <ProductPicksList>
-      {spotlight.productPicksAttributes.map((productPick, productPickIndex) => (
-        <SortableProductPick
-          allowDelete={spotlight.productPicksAttributes.length > 1}
-          index={productPickIndex}
-          isCropping={isCropping}
-          isFormLoading={isFormLoading}
-          key={productPick.id || `new-${productPickIndex}`}
-          onChange={onChange}
-          onFocus={onFocus}
-          productPick={productPick}
-          productPickIndex={productPickIndex}
-          setIsCropping={setIsCropping}
-          setProductPicture={setProductPicture}
-        />
-      ))}
-    </ProductPicksList>
-  ))
+const ProductPicks = ({
+  isFormLoading,
+  isCropping,
+  setIsCropping,
+  spotlight,
+  onChange,
+  setProductPicture,
+  onFocus,
+}) => (
+  <div>
+    {spotlight.productPicksAttributes.map((productPick, index) => (
+      <SortableProductPick
+        allowDelete={spotlight.productPicksAttributes.length > 1}
+        index={index}
+        isCropping={isCropping}
+        isFormLoading={isFormLoading}
+        key={productPick.id || `new-${index}`}
+        onChange={onChange}
+        onFocus={onFocus}
+        productPick={productPick}
+        setIsCropping={setIsCropping}
+        setProductPicture={setProductPicture}
+        sortIndex={index}
+      />
+    ))}
+  </div>
 )
 
-const StyledReorderIcon = styled(ReorderIcon)`
-  cursor: ns-resize;
-  color: rgba(0, 0, 0, 0.54);
-  margin-right: 1rem;
-`
-
-const DragHandle = SortableHandle(({ ...props }) => <StyledReorderIcon {...props} />)
+const SortableProductPick = SortableElement(ProductPick)
+const ProductPicksContainer = SortableContainer(ProductPicks)
 
 const Spotlight = ({
   addProductPick,

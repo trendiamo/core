@@ -3,7 +3,59 @@ import ChatOption from './chat-option'
 import React from 'react'
 import Section from 'shared/section'
 import { AddItemButton, FormSection } from 'shared/form-elements'
+import { arrayMove } from 'react-sortable-hoc'
 import { compose, withHandlers } from 'recompose'
+import { SortableContainer, SortableElement } from 'shared/sortable-elements'
+
+const SortableChatMessage = SortableElement(ChatMessage)
+const ChatMessages = ({ isFormLoading, chatStep, chatStepType, setChatMessageForm }) => (
+  <div>
+    {chatStep.chatMessagesAttributes.map((chatMessage, index) => (
+      <SortableChatMessage
+        allowDelete={chatStep.chatMessagesAttributes.length > 1}
+        chatMessage={chatMessage}
+        chatStepType={chatStepType}
+        index={index}
+        isFormLoading={isFormLoading}
+        key={chatMessage.id || `new-${index}`}
+        onChange={setChatMessageForm}
+        sortIndex={index}
+      />
+    ))}
+  </div>
+)
+const ChatMessagesContainer = SortableContainer(ChatMessages)
+
+const SortableChatOption = SortableElement(ChatOption)
+const ChatOptions = ({
+  chatStep,
+  addAction,
+  addChatMessage,
+  chatStepType,
+  deleteAction,
+  onChange,
+  isFormLoading,
+  setChatOptionForm,
+}) => (
+  <div>
+    {chatStep.chatOptionsAttributes.map((chatOption, index) => (
+      <SortableChatOption
+        addAction={addAction}
+        addChatMessage={addChatMessage}
+        chatOption={chatOption}
+        chatStepType={chatStepType}
+        deleteAction={deleteAction}
+        editChatStepAttribute={onChange}
+        index={index}
+        isFormLoading={isFormLoading}
+        key={chatOption.id || `new-${index}`}
+        onChange={setChatOptionForm}
+        sortIndex={index}
+      />
+    ))}
+  </div>
+)
+const ChatOptionsContainer = SortableContainer(ChatOptions)
 
 const ChatStep = ({
   addChatMessage,
@@ -15,6 +67,8 @@ const ChatStep = ({
   setChatMessageForm,
   setChatOptionForm,
   onChange,
+  onChatMessagesSortEnd,
+  onChatOptionsSortEnd,
   chatStepType,
   addAction,
 }) => (
@@ -22,41 +76,35 @@ const ChatStep = ({
     <FormSection foldable folded hideTop title={`Step #${index + 1}`}>
       <div style={{ marginTop: '-1px' }}>
         <FormSection foldable title="Messages">
-          {chatStep.chatMessagesAttributes.map((chatMessage, chatMessageIndex) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <React.Fragment key={chatMessageIndex}>
-              <ChatMessage
-                allowDelete={chatStep.chatMessagesAttributes.length > 1}
-                chatMessage={chatMessage}
-                chatStepType={chatStepType}
-                index={chatMessageIndex}
-                isFormLoading={isFormLoading}
-                onChange={setChatMessageForm}
-              />
-            </React.Fragment>
-          ))}
+          {chatStep.chatMessagesAttributes && (
+            <ChatMessagesContainer
+              chatStep={chatStep}
+              chatStepType={chatStepType}
+              helperClass="sortable-element"
+              onSortEnd={onChatMessagesSortEnd}
+              setChatMessageForm={setChatMessageForm}
+              useDragHandle
+            />
+          )}
           <AddItemButton disabled={isFormLoading} message="Add Message" onClick={addChatMessage} />
         </FormSection>
       </div>
       {chatStep.chatOptionsAttributes && (
         <div style={{ marginTop: '24px' }}>
           <FormSection foldable title="Options">
-            {chatStep.chatOptionsAttributes.map((chatOption, chatOptionIndex) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <React.Fragment key={chatOptionIndex}>
-                <ChatOption
-                  addAction={addAction}
-                  addChatMessage={addChatMessage}
-                  chatOption={chatOption}
-                  chatStepType={chatStepType}
-                  deleteAction={deleteAction}
-                  editChatStepAttribute={onChange}
-                  index={chatOptionIndex}
-                  isFormLoading={isFormLoading}
-                  onChange={setChatOptionForm}
-                />
-              </React.Fragment>
-            ))}
+            {chatStep.chatOptionsAttributes && (
+              <ChatOptionsContainer
+                addAction={addAction}
+                chatStep={chatStep}
+                chatStepType={chatStepType}
+                deleteAction={deleteAction}
+                helperClass="sortable-element"
+                onChange={onChange}
+                onSortEnd={onChatOptionsSortEnd}
+                setChatOptionForm={setChatOptionForm}
+                useDragHandle
+              />
+            )}
             <AddItemButton disabled={isFormLoading} message="Add Option" onClick={addChatOption} />
           </FormSection>
         </div>
@@ -99,6 +147,14 @@ export default compose(
       let newChatOptionsAttributes = [...chatStep.chatOptionsAttributes]
       newChatOptionsAttributes[chatOptionIndex] = chatOption
       onChange({ ...chatStep, chatOptionsAttributes: newChatOptionsAttributes })
+    },
+    onChatMessagesSortEnd: ({ onChange, index, chatStep }) => async ({ oldIndex, newIndex }) => {
+      const orderedChatMessages = arrayMove(chatStep.chatMessagesAttributes, oldIndex, newIndex)
+      onChange({ ...chatStep, chatMessagesAttributes: orderedChatMessages }, index)
+    },
+    onChatOptionsSortEnd: ({ onChange, index, chatStep }) => async ({ oldIndex, newIndex }) => {
+      const orderedChatOptions = arrayMove(chatStep.chatOptionsAttributes, oldIndex, newIndex)
+      onChange({ ...chatStep, chatOptionsAttributes: orderedChatOptions }, index)
     },
   })
 )(ChatStep)
