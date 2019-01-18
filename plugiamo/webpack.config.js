@@ -12,6 +12,8 @@ module.exports = {
     historyApiFallback: {
       index: 'index.html',
     },
+    host: '0.0.0.0',
+    proxy: { '/graphql': 'http://localhost:5000' },
   },
   // entry: ['babel-polyfill', './src/index.js'],
   entry: ['./src/index.js'],

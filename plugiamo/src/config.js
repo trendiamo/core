@@ -1,4 +1,4 @@
-const graphQlUrl = process.env.GRAPHQL_URL
+const graphQlUrl = process.env.GRAPHQL_URL || '/graphql'
 const mixpanelToken = process.env.MIXPANEL_TOKEN
 const rollbarToken = process.env.ROLLBAR_TOKEN
 const production = process.env.NODE_ENV === 'production'
