@@ -145,21 +145,15 @@ export default compose(
   withState('errors', 'setErrors', null),
   withHandlers({
     formObjectTransformer: () => json => {
-      let result = {
+      return {
         id: json.id,
         name: json.name || '',
         title: json.title || '',
         chatBubbleText: json.chatBubbleText || '',
         personaId: (json.persona && json.persona.id) || '',
         __persona: json.persona,
+        chatStepAttributes: json.chatStepAttributes ? treatChatSteps(json.chatStepAttributes, {}) : undefined,
       }
-      if (json.chatStepAttributes) {
-        result = {
-          ...result,
-          chatStepAttributes: treatChatSteps(json.chatStepAttributes, {}),
-        }
-      }
-      return result
     },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })

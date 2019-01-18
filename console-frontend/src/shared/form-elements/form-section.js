@@ -17,7 +17,7 @@ const ExpandButton = styled(IconButton)`
 
 const SectionContainer = styled.div`
   margin: 0;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  ${({ backgroundColor }) => (backgroundColor ? `background-color: ${backgroundColor};` : null)}
 `
 
 const Content = styled.div`

@@ -45,7 +45,22 @@ class ScriptedChatsController < RestController
   private
 
   def scripted_chat_params
-    params.require(:scripted_chat).permit(:id, :name, :title, :chat_bubble_text, :persona_id, chat_step_attributes: {})
+    result = params.require(:scripted_chat).permit(:id, :name, :title, :chat_bubble_text, :persona_id,
+                                                   chat_step_attributes: {})
+    add_order_fields(result[:chat_step_attributes])
+    result
+  end
+
+  # add order fields to chat_step_attributes' messages and options, based on received order
+  def add_order_fields(chat_step_attributes)
+    return unless chat_step_attributes
+    chat_step_attributes[:chat_messages_attributes]&.each_with_index do |chat_message_attributes, i|
+      chat_message_attributes[:order] = i + 1
+    end
+    chat_step_attributes[:chat_options_attributes]&.each_with_index do |chat_option_attributes, i|
+      chat_option_attributes[:order] = i + 1
+      add_order_fields(chat_option_attributes[:destination_chat_step_attributes])
+    end
   end
 
   def render_error

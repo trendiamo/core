@@ -5,12 +5,12 @@ Types::ChatStepType = GraphQL::ObjectType.define do
   field :status, Types::StatusType
   field :chatMessages, types[Types::ChatMessageType] do
     resolve ->(obj, _args, _ctx) {
-      obj.chat_messages
+      obj.chat_messages.order(:order)
     }
   end
   field :chatOptions, types[Types::ChatOptionType] do
     resolve ->(obj, _args, _ctx) {
-      obj.chat_options
+      obj.chat_options.order(:order)
     }
   end
   field :referringChatOptions, types[Types::ChatOptionType] do

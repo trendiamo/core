@@ -20,7 +20,7 @@ class Showcase < ApplicationRecord
   end
 
   def spotlights_attributes(spotlights)
-    spotlights.sort_by { |spotlight| spotlight[:order] }.map do |spotlight|
+    spotlights.order(:order).map do |spotlight|
       {
         id: spotlight.id,
         persona: persona_attributes(spotlight),
@@ -39,7 +39,7 @@ class Showcase < ApplicationRecord
   end
 
   def product_picks_attributes(product_picks)
-    product_picks.sort_by { |product_pick| product_pick[:order] }.map do |product_pick|
+    product_picks.order(:order).map do |product_pick|
       {
         id: product_pick.id,
         url: product_pick.url,
@@ -56,7 +56,7 @@ class Showcase < ApplicationRecord
     new_step = attributes.slice("id", "name")
     new_step[:path] = "/#{self.class.name.underscore.tr('_', '-')}/#{id}"
     paths.push(new_step)
-    spotlights.each_with_index do |spotlight, index|
+    spotlights.order(:order).each_with_index do |spotlight, index|
       paths.push(spotlight.paths(index))
     end
     paths

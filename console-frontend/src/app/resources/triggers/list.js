@@ -186,20 +186,7 @@ const TriggerRow = compose(
   </TableRowStyled>
 ))
 
-const SortableTriggerRow = SortableElement(
-  ({ trigger, index, handleSelectAll, selectedIds, setSelectedIds, highlightEnabled, highlightUrl }) => (
-    <TriggerRow
-      handleSelectAll={handleSelectAll}
-      highlightEnabled={highlightEnabled}
-      highlightUrl={highlightUrl}
-      index={index}
-      selectedIds={selectedIds}
-      setSelectedIds={setSelectedIds}
-      trigger={trigger}
-    />
-  )
-)
-
+const SortableTriggerRow = SortableElement(TriggerRow)
 const SortableTriggerRows = SortableContainer(
   ({ triggers, handleSelectAll, selectedIds, setSelectedIds, testerUrl }) => (
     <TableBody>
