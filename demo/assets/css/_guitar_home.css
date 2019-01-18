@@ -1,11 +1,10 @@
 .guitar-card {
   display: flex;
   background-color: #ffffff;
-  flex-direction: column;
-  text-align: center;
   border-radius: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px 0px 10px 10px;
   align-items: center;
   border: 1px solid black;
 }
