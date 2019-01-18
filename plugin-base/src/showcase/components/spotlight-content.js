@@ -26,11 +26,12 @@ const SpotlightContent = compose(
   <Container>
     <H2>{spotlight.translation.selectedBy}</H2>
     <TopSlideAnimation isLeaving={isLeaving} name="content">
-      <List>
+      <List objectForResetCheck={spotlight}>
         {spotlight.productPicks.map(
           (product, index) =>
             !product._destroy && (
               <ProductItem
+                highlight
                 key={product.url || index}
                 onClick={callbacks.onProductClick}
                 product={product}
