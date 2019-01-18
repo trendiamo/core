@@ -16,15 +16,19 @@ const ChatLogUi = compose(
   })),
   withState('logs', 'setLogs', []),
   withHandlers({
-    onResetChat: ({ initialChatStep, onToggleContent }) => () => {
+    onResetChat: ({ initialChatStep }) => () => {
+      chatLog.resetLogs()
+      chatLog.fetchStep(initialChatStep.id)
+    },
+    onStopChat: ({ onToggleContent }) => () => {
       const account = localStorage.getItem('trnd-plugin-account')
       if (account === 'Impressorajato') {
         onToggleContent()
-        document.querySelector('#livechat-compact-container').style.visibility = 'visible'
-        window.LC_API.open_chat_window({ source: 'trendiamo' })
+        const liveChatContainer = document.querySelector('#livechat-compact-container')
+        if (liveChatContainer) liveChatContainer.style.visibility = 'visible'
+        if (window.LC_API && window.LC_API.open_chat_window) window.LC_API.open_chat_window({ source: 'trendiamo' })
       } else {
-        chatLog.resetLogs()
-        chatLog.fetchStep(initialChatStep.id)
+        onToggleContent()
       }
     },
     updateLogs: ({ setLogs }) => chatLog => setLogs(chatLog.logs),
@@ -39,13 +43,13 @@ const ChatLogUi = compose(
       chatLog.fetchStep(initialChatStep.id)
     },
   })
-)(({ logs, onResetChat, onToggleContent, persona }) => (
+)(({ logs, onResetChat, onStopChat, persona }) => (
   <FlexDiv>
     {logs.map(log =>
       log.type === 'message' ? (
         <ChatMessage log={log} />
       ) : (
-        <ChatOptions log={log} onResetChat={onResetChat} onStopChat={onToggleContent} persona={persona} />
+        <ChatOptions log={log} onResetChat={onResetChat} onStopChat={onStopChat} persona={persona} />
       )
     )}
   </FlexDiv>

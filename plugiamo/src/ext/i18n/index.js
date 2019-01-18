@@ -4,7 +4,7 @@ const i18n = {
     if (['Corinthians', 'Shopinfo', 'Shopinfo2'].includes(account)) {
       return 'Me mostre outras sugestões'
     } else if (account === 'Impressorajato') {
-      return 'Quero falar com um consultor'
+      return 'Legal! Quero saber mais!'
     } else if (account === 'Eotica') {
       return 'Quero saber mais'
     } else if (account === 'RiHappy') {
@@ -15,8 +15,10 @@ const i18n = {
   },
   okCool: () => {
     const account = localStorage.getItem('trnd-plugin-account')
-    if (['Corinthians', 'Impressorajato', 'Shopinfo', 'Shopinfo2'].includes(account)) {
+    if (['Corinthians', 'Shopinfo', 'Shopinfo2'].includes(account)) {
       return 'Legal'
+    } else if (account === 'Impressorajato') {
+      return 'Quero falar com um consultor'
     } else if (account === 'Eotica') {
       return 'Legal, gostei!'
     } else if (account === 'RiHappy') {
