@@ -26,6 +26,7 @@ export default compose(
     componentWillUnmount() {
       history.removeListeners()
       timeout.clear('contentWrapper')
+      transition.clear()
     },
   }),
   withHandlers({

@@ -7,8 +7,11 @@ const transition = {
   },
   clear() {
     Object.keys(this.elements).forEach(k => {
-      this.elements[k].element.style.visibility = 'visible'
-      this.elements[k].landingElement.style.visibility = 'visible'
+      const item = this.elements[k]
+      if (item) {
+        if (item.element) item.element.style.visibility = 'visible'
+        if (item.landingElement) item.landingElement.style.visibility = 'visible'
+      }
     })
     this.isLiftingElements = false
     this.elements = {}
