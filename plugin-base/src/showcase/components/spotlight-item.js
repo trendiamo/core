@@ -26,8 +26,8 @@ const SpotlightItem = compose(
       },
     }
   })
-)(({ setImgRef, setNameRef, spotlight, handleClick }) => (
-  <ListItem onClick={handleClick}>
+)(({ setImgRef, setNameRef, spotlight, handleClick, selectInList, listSelected }) => (
+  <ListItem listSelected={listSelected} onClick={handleClick} selectInList={selectInList}>
     <ListImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
     <ListContent>
       <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>

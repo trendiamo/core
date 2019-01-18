@@ -28,8 +28,8 @@ const DisplayPrice = styled.div`
   font-weight: bold;
 `
 
-const ProductItem = ({ spotlight, product, onClick }) => (
-  <ListItem onClick={onClick({ product, spotlight })}>
+const ProductItem = ({ spotlight, product, onClick, ...props }) => (
+  <ListItem onClick={onClick({ product, spotlight })} {...props}>
     <ListImg src={product.picture.url} />
     <ListContent>
       <Content>
