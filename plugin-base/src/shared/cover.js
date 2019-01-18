@@ -16,6 +16,7 @@ const Cover = styled.div`
 
   @media (min-height: 500px) {
     position: fixed;
+    top: 0;
   }
 `
 
