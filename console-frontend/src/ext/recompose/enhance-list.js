@@ -35,7 +35,7 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help, high
     withOnboardingHelp(help),
     withRouter,
     withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
-    withState('rowsPerPage', 'setRowsPerPage', 10),
+    withState('rowsPerPage', 'setRowsPerPage', 25),
     withAppBarContent(({ page }) => {
       const newBreadcrumbs = JSON.parse(JSON.stringify(breadcrumbs)) // deep clone
       if (page !== 0) {
