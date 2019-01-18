@@ -1,17 +1,10 @@
 import chatLog from './chat-log'
 import mixpanel from 'ext/mixpanel'
 import { ChatOptions as ChatOptionsBase } from './shared'
-import { compose, lifecycle, withHandlers } from 'recompose'
+import { compose, withHandlers } from 'recompose'
 import { location } from 'config'
 
 const ChatOptions = compose(
-  lifecycle({
-    componentDidMount() {
-      requestAnimationFrame(() => {
-        this.base.scrollIntoView({ behavior: 'smooth' })
-      })
-    },
-  }),
   withHandlers({
     onOptionClick: ({ log, onResetChat, onStopChat, persona }) => chatOption => {
       mixpanel.track('Clicked Chat Option', {
