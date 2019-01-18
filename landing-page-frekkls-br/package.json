@@ -1,6 +1,6 @@
 {
   "name": "landing-page",
-  "description": "The Frekkls landing page",
+  "description": "The br-pt Frekkls landing page",
   "version": "0.0.1",
   "author": "Frekkls Team",
   "ava": {
@@ -24,7 +24,7 @@
     "snazzy": "^7.0.0",
     "standard": "^10.0.2"
   },
-  "homepage": "https://frekkls.com/",
+  "homepage": "https://frekkls.com.br/",
   "main": "app.js",
   "private": true,
   "repository": "",
@@ -36,6 +36,6 @@
     "start": "spike watch",
     "build": "spike compile",
     "prod": "NODE_ENV=production spike compile -e production",
-    "deploy": "rm -rf public/* && yarn lint && yarn prod && rsync -azh -e ssh --delete-after --ignore-errors public/ root@46.101.164.83:/var/www/frekkls.com.br/html"
+    "deploy": "rm -rf public/* && yarn lint && yarn prod && rsync -azh -e ssh --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com.br/html"
   }
 }
