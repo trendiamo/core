@@ -13,12 +13,16 @@ const AnimatedEllipsis = styled(IconAnimatedEllipsis)`
 
 const ChatBackground = styled.div`
   background-color: #ebeef2;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
   flex: 1;
 `
 
 const MessageContainer = styled.div`
   width: 70%;
+
+  & + & {
+    margin-top: 0.3rem;
+  }
 `
 
 const MessageContent = styled.div`
@@ -58,10 +62,13 @@ const MessageMetadata = styled.div`
 `
 const ChatMessage = ({ log, isMessageShown }) => (
   <MessageContainer>
-    {isMessageShown && <MessageContent dangerouslySetInnerHTML={{ __html: snarkdown(log.message.text) }} />}
-    <MessageMetadata>
-      {isMessageShown || <AnimatedEllipsis />} <span>{log.from}</span>
-    </MessageMetadata>
+    {isMessageShown ? (
+      <MessageContent dangerouslySetInnerHTML={{ __html: snarkdown(log.message.text) }} />
+    ) : (
+      <MessageMetadata>
+        <AnimatedEllipsis />
+      </MessageMetadata>
+    )}
   </MessageContainer>
 )
 
@@ -94,6 +101,7 @@ const ChatOptionsInner = styled.div`
   font-size: 14px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 
   ${Option}:last-child {
