@@ -15,9 +15,17 @@
   text-align: center;
 }
 
+.disclaimer-heading {
+  font-size: 24px;
+}
+
+.tingle-btn {
+  font-size: 20px;
+}
+
 @media (min-width: 535px) {
   .disclaimer-heading {
-    font-size: 26px;
+    font-size: 30px;
   }
   .disclaimer-modal-content {
     padding: 20px 30px 30px 30px;
@@ -27,8 +35,10 @@
     font-size: 12px;
   }
   .tingle-modal-box {
-    border-radius: 15px;
     width: 500px;
+    text-align: center;
+    position: relative;
+
   }
   .tingle-modal__close {
     position: fixed;

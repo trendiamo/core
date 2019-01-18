@@ -2,7 +2,7 @@ import tingle from 'tingle.js'
 
 const requestDemoContent = `
   <div class="disclaimer-modal-content">
-    <h2 class="disclaimer-heading">Disclaimer</h2>
+    <h1 class="disclaimer-heading">Let's start your demo!</h1>
     <p class="disclaimer-main-text">On this test site you can preview a configuration of our plugin for several types of products, showcasing some of our features.</p>
     <p class="disclaimer-main-text">Get in touch with us and we'll prepare a live demo for your store!</p>
     <hr>
@@ -13,15 +13,36 @@ const requestDemoContent = `
 const Modal = tingle.modal
 
 const modal = new Modal({
+  footer: true,
   closeMethods: ['overlay', 'button', 'escape']
 })
 
 modal.setContent(requestDemoContent)
 
+modal.addFooterBtn('Start Demo', 'tingle-btn tingle-btn--primary', function() {
+    modal.close();
+});
+
 window.onload = (event) => {
   // eslint-disable-next-line no-undef
   const url = new URL(event.target.body.baseURI)
   const disclaimerPaths = ['/', '/guitars_home']
-  if (window.sessionStorage.getItem('firtVisit') !== 'true' && disclaimerPaths.includes(url.pathname)) modal.open()
+  // if (window.sessionStorage.getItem('firtVisit') !== 'true' && disclaimerPaths.includes(url.pathname)) modal.open()
+  modal.open()
+  if (!String.prototype.includes) {
+      Object.defineProperty(String.prototype, 'includes', {
+        value: function(search, start) {
+          if (typeof start !== 'number') {
+            start = 0
+          }
+
+          if (start + search.length > this.length) {
+            return false
+          } else {
+            return this.indexOf(search, start) !== -1
+          }
+        }
+      })
+    }
   if (disclaimerPaths.includes(url.pathname)) window.sessionStorage.setItem('firtVisit', 'true')
 }
