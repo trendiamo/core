@@ -2,16 +2,151 @@
   display: flex;
   background-color: #ffffff;
   border-radius: 10px;
-  flex-direction: row;
-  justify-content: flex-start;
-  padding: 10px 0px 10px 10px;
-  align-items: center;
+  flex-direction: column;
   border: 1px solid black;
 }
 
 .guitar-image {
   object-fit: contain;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 75%;
+  padding-bottom: 10px;
   margin-top: 10px;
+}
+
+.guitar-card-details {
+  border-top: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.guitar-card-name {
+  font-weight: normal;
+  font-size: 14px;
+  max-width: 50%;
+  padding-left: 20px;
+}
+
+.guitar-card-price {
+  font-weight: normal;
+  font-size: 24px;
+}
+
+.pdp-guitars {
+  max-width: 100%;
+}
+
+.guitar-banner {
+  background-color: black;
+}
+
+.guitar-breadcrumbs {
+  width: auto !important;
+  margin-left: 0px !important;
+}
+
+@media (min-width: 600px) {
+.guitar-breadcrumbs {
+    margin-left: 50px !important;
+    width: 400px !important;
+  }
+}
+
+.guitar-footer {
+  background-color: black;
+}
+
+.guitar-home-main {
+  background-color: white;
+}
+
+.guitar-main-info-section {
+  color: black;
+}
+
+.guitar-main-info-textbox {
+  background-color: #FF4842;
+}
+
+
+.gibson-header-main-text p {
+  margin-left: 0px;
+}
+
+
+.gibson-guitars {
+  margin-bottom: 0px;
+}
+
+.discount {
+  margin-top: 15px;
+}
+
+.guitar-main-info-button {
+  border-color: #FF4842;
+  color: #FF4842;
+}
+
+.guitar-banner-photo {
+  position: absolute;
+  top: 300px;
+  right: 200px;
+}
+
+.guitar-products-container {
+  background-color: #5b5b5b;
+}
+
+.guitar-image-big-screen {
+  display: none;
+}
+
+.guitar-image-small-screen {
+  display: flex;
+}
+
+.guitar-main-info-section {
+  position: absolute;
+  top: 130px;
+}
+
+.guitar-banner-photo {
+  position: absolute;
+  top: 720px;
+  left: -120px;
+}
+
+@media (min-width: 430px) {
+  .guitar-header-main-text p {
+    width: 400px;
+    margin-left: 30px;
+  }
+  .discount {
+    margin-top: 0px;
+  }
+  .guitar-banner-photo {
+    top: 650px;
+  }
+}
+
+@media (min-width: 795px) {
+  .guitar-banner-photo {
+    position: absolute;
+    top: 600px;
+    left: -120px;
+  }
+}
+
+@media (min-width: 795px) {
+  .guitar-image-small-screen {
+    display: none;
+  }
+  .guitar-image-big-screen {
+    display: block;
+  }
+  .guitar-main-info-section {
+    position: static;
+  }
 }

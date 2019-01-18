@@ -1,9 +1,16 @@
 <extends src="layout.html">
   <block name="content">
     <include src="../shared/navigational-section/header.html"></include>
+    <div class="breadcrumbs guitar-breadcrumbs">
+      <p>Guitars</p>
+      <img class="arrow-icon" alt="" src="/img/Icons/ic-card-arrow.svg" />
+      <p>Acoustic</p>
+      <img class="arrow-icon" alt="" src="/img/Icons/ic-card-arrow.svg" />
+      <p>Takamine EF250TK</p>
+    </div>
     <div class="pdp-main white-pdp-main">
       <div class="main-left-half white-pdp-main">
-        <img class="pdp-img" alt="" src="/img/navigational-section/pdp-images/Takamine-EF250TK.jpg" />
+        <img class="pdp-img pdp-guitars" alt="" src="/img/navigational-section/pdp-images/Takamine-EF250TK.jpg" />
       </div>
       <div class="main-right-half">
         <div class="product-details pdp-big-screen">
@@ -29,6 +36,6 @@
         </div>
       </div>
     </div>
-    <include src="../shared/footer.html"></include>
+    <include src="../shared/navigational-section/footer.html"></include>
   </block>
 </extends>
