@@ -25,15 +25,14 @@ const initRootComponent = () => {
 }
 
 const main = () => {
+  initRollbar()
+  mixpanel.init(mixpanelToken)
+  mixpanel.track('Visited Page', { hostname: location.hostname })
+
   const browser = detect()
   const supportedBrowsers = ['chrome', 'firefox', 'safari', 'edge', 'opera', 'ios', 'ios-webview', 'crios', 'fxios']
 
   if (!browser || !supportedBrowsers.includes(browser.name)) return
-
-  initRollbar()
-  mixpanel.init(mixpanelToken)
-
-  mixpanel.track('Visited Page', { hostname: location.hostname })
 
   // here we haven't requested info yet, so we do need to base this off of location.hostname
   const Component = location.hostname === 'www.spotahome.com' ? SpotAHome : initRootComponent()
