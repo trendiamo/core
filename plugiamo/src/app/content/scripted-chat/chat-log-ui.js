@@ -43,7 +43,7 @@ const ChatLogUi = compose(
       chatLog.fetchStep(initialChatStep.id)
     },
   })
-)(({ logs, onResetChat, onStopChat, persona }) => (
+)(({ logs, onResetChat, onStopChat, onToggleContent, persona }) => (
   <FlexDiv>
     {logs.map(log =>
       log.type === 'message' ? (
