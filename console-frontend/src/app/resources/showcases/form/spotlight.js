@@ -23,6 +23,7 @@ const ProductPicks = ({
     {spotlight.productPicksAttributes.map((productPick, index) => (
       <SortableProductPick
         allowDelete={spotlight.productPicksAttributes.length > 1}
+        folded={productPick.id}
         index={index}
         isCropping={isCropping}
         isFormLoading={isFormLoading}
@@ -49,6 +50,7 @@ const Spotlight = ({
   isFormLoading,
   deleteSpotlight,
   setProductPickForm,
+  folded,
   setProductPicture,
   setIsCropping,
   index,
@@ -61,7 +63,7 @@ const Spotlight = ({
       actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />}
       dragHandle={<DragHandle />}
       foldable
-      folded
+      folded={folded}
       hideTop
       title={`Spotlight #${index + 1}`}
     >

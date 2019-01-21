@@ -13,6 +13,7 @@ const NavigationItem = ({
   isCropping,
   isFormLoading,
   index,
+  folded,
   navigationItem,
   progress,
   setPictureUrl,
@@ -26,7 +27,7 @@ const NavigationItem = ({
       }
       dragHandle={<DragHandle />}
       foldable
-      folded
+      folded={folded}
       hideTop
       title={`Navigation Item #${index + 1}`}
     >

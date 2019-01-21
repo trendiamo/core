@@ -46,6 +46,7 @@ const ChatOptions = ({
         chatStepType={chatStepType}
         deleteAction={deleteAction}
         editChatStepAttribute={onChange}
+        folded={chatOption.id}
         index={index}
         isFormLoading={isFormLoading}
         key={chatOption.id || `new-${index}`}
@@ -73,7 +74,7 @@ const ChatStep = ({
   addAction,
 }) => (
   <Section>
-    <FormSection foldable folded hideTop title={`Step #${index + 1}`}>
+    <FormSection foldable folded={chatStep.id} hideTop title={`Step #${index + 1}`}>
       <div style={{ marginTop: '-1px' }}>
         <FormSection foldable title="Messages">
           {chatStep.chatMessagesAttributes && (
