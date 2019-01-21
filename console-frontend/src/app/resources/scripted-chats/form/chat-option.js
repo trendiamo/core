@@ -16,6 +16,7 @@ const ChatStepOption = ({
   chatStep,
   deleteChatOption,
   editChatOptionValue,
+  folded,
   index,
   isFormLoading,
   onChange,
@@ -26,7 +27,7 @@ const ChatStepOption = ({
     backgroundColor="#fff"
     dragHandle={<DragHandle />}
     foldable
-    folded
+    folded={folded}
     hideBottom
     hideTop={index === 0}
     title={`Option #${index + 1}`}

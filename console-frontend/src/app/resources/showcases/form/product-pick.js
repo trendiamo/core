@@ -12,6 +12,7 @@ const ProductPick = ({
   isCropping,
   isFormLoading,
   index,
+  folded,
   productPick,
   progress,
   onFocus,
@@ -24,7 +25,7 @@ const ProductPick = ({
     backgroundColor="#fff"
     dragHandle={<DragHandle />}
     foldable
-    folded
+    folded={folded}
     hideBottom
     hideTop={index === 0}
     title={`Product Pick #${index + 1}`}

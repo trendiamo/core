@@ -34,6 +34,7 @@ const NavigationItems = ({
     {form.navigationItemsAttributes.map((navigationItem, index) => (
       <SortableNavigationItem
         allowDelete={form.navigationItemsAttributes.length > 1}
+        folded={navigationItem.id}
         index={index}
         isCropping={isCropping}
         isFormLoading={isFormLoading}

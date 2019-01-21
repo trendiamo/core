@@ -34,6 +34,7 @@ const Spotlights = ({
     {form.spotlightsAttributes.map((spotlight, index) => (
       <SortableSpotlight
         allowDelete={form.spotlightsAttributes.length > 1}
+        folded={spotlight.id}
         index={index}
         isCropping={isCropping}
         isFormLoading={isFormLoading}
