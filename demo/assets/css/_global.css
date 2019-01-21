@@ -5,6 +5,7 @@
   overflow: hidden;
 }
 
+
 .breadcrumbs {
   height: 30px;
   display: flex;
@@ -14,6 +15,11 @@
   font-weight: 600;
   margin-top: 5px;
   justify-content: space-around;
+}
+
+.breadcrumb-link {
+  text-decoration: none;
+  color: #5a6f80;
 }
 
 .breadcrumbs-container-beige {
@@ -247,7 +253,7 @@
   }
 }
 
-@media (min-width: 950px) {
+@media (min-width: 980px) {
   .pdp-main {
     flex-direction: row;
   }
@@ -292,14 +298,18 @@
     padding: 20px;
     font-weight: normal;
   }
-  #banner-hyperlink {
+  .banner-hyperlink {
     text-decoration: none;
     color: white;
     font-weight: normal;
-    padding: 0px 10px 0px 10px;
+    margin: 0px 10px;
   }
   .banner-hyperlink:hover {
     cursor: pointer;
+  }
+  .nav-selected {
+    font-weight: bold;
+    border-bottom: solid 3px white;
   }
   .banner-categories-text:hover {
     cursor: default;

@@ -40,10 +40,21 @@ modal.addFooterBtn('Start Demo', 'tingle-btn tingle-btn--primary', () => {
   modal.close()
 })
 
+const disclaimerPaths = ['/', '/guitars_home']
+const guitarNavPaths = ['/guitars_filtered_electric', '/guitars_filtered_classic', '/guitars_filtered_acoustic', '/guitars_filtered_semi_acoustic']
+
+const findNavElementIndex = (path, pathsArray) => {
+  return pathsArray.findIndex((element) => {
+    return element === path
+  })
+}
+
 window.onload = (event) => {
   // eslint-disable-next-line no-undef
   const url = new URL(event.target.body.baseURI)
-  const disclaimerPaths = ['/', '/guitars_home']
+  const guitarNavElements = document.querySelectorAll('.banner-hyperlink')
   if (window.sessionStorage.getItem('firtVisit') !== 'true' && disclaimerPaths.includes(url.pathname)) modal.open()
   if (disclaimerPaths.includes(url.pathname)) window.sessionStorage.setItem('firtVisit', 'true')
+  const navItemIndex = findNavElementIndex(url.pathname, guitarNavPaths)
+  guitarNavElements[navItemIndex] && guitarNavElements[navItemIndex].classList.add('nav-selected')
 }
