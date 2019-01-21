@@ -2,10 +2,10 @@ class ProductPick < ApplicationRecord
   acts_as_tenant
   belongs_to :spotlight
 
-  before_create :update_order
+  before_create :assign_order
 
-  def update_order
-    return if self.class.where(spotlight_id: spotlight_id).empty?
-    self.order = self.class.where(spotlight_id: spotlight_id).order(:order).pluck(:order).last + 1
+  def assign_order
+    current_value = self.class.where(spotlight_id: spotlight_id).order(:order).pluck(:order).last || 0
+    self.order = current_value + 1
   end
 end

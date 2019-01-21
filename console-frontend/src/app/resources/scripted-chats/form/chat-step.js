@@ -148,11 +148,11 @@ export default compose(
       newChatOptionsAttributes[chatOptionIndex] = chatOption
       onChange({ ...chatStep, chatOptionsAttributes: newChatOptionsAttributes })
     },
-    onChatMessagesSortEnd: ({ onChange, index, chatStep }) => async ({ oldIndex, newIndex }) => {
+    onChatMessagesSortEnd: ({ onChange, index, chatStep }) => ({ oldIndex, newIndex }) => {
       const orderedChatMessages = arrayMove(chatStep.chatMessagesAttributes, oldIndex, newIndex)
       onChange({ ...chatStep, chatMessagesAttributes: orderedChatMessages }, index)
     },
-    onChatOptionsSortEnd: ({ onChange, index, chatStep }) => async ({ oldIndex, newIndex }) => {
+    onChatOptionsSortEnd: ({ onChange, index, chatStep }) => ({ oldIndex, newIndex }) => {
       const orderedChatOptions = arrayMove(chatStep.chatOptionsAttributes, oldIndex, newIndex)
       onChange({ ...chatStep, chatOptionsAttributes: orderedChatOptions }, index)
     },

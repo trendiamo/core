@@ -3,7 +3,7 @@ import React from 'react'
 import Section from 'shared/section'
 import Select from 'shared/select'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
-import { apiPersonasAutocomplete, apiProductPickSort } from 'utils'
+import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { DragHandle, SortableContainer, SortableElement } from 'shared/sortable-elements'
@@ -163,11 +163,9 @@ export default compose(
         : newProductPicksPictures.push(picture)
       setProductPicksPictures(newProductPicksPictures)
     },
-    onSortEnd: ({ onChange, index, spotlight }) => async ({ oldIndex, newIndex }) => {
+    onSortEnd: ({ onChange, index, spotlight }) => ({ oldIndex, newIndex }) => {
       const orderedProductPicks = arrayMove(spotlight.productPicksAttributes, oldIndex, newIndex)
-      const orderedIds = orderedProductPicks.map(productPick => productPick.id)
       onChange({ ...spotlight, productPicksAttributes: orderedProductPicks }, index)
-      await apiProductPickSort({ ids: orderedIds })
     },
   })
 )(Spotlight)

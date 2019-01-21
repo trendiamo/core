@@ -4,7 +4,7 @@ class ChatMessage < ApplicationRecord
 
   validates :text, presence: true
 
-  before_create :update_order
+  before_create :assign_order
 
   def as_json(_options = {})
     attributes.slice("id", "delay", "text", "created_at", "updated_at")
@@ -15,8 +15,8 @@ class ChatMessage < ApplicationRecord
     [800, 120 + text.length * 2].min
   end
 
-  def update_order
-    return if self.class.where(chat_step_id: chat_step_id).empty?
-    self.order = self.class.where(chat_step_id: chat_step_id).order(:order).pluck(:order).last + 1
+  def assign_order
+    current_value = self.class.where(chat_step_id: chat_step_id).order(:order).pluck(:order).last || 0
+    self.order = current_value + 1
   end
 end

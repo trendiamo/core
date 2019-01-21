@@ -6,7 +6,7 @@ class Spotlight < ApplicationRecord
 
   accepts_nested_attributes_for :product_picks, allow_destroy: true
 
-  before_create :update_order
+  before_create :assign_order
 
   def paths(spotlight_index)
     new_step = attributes.slice("id", "name")
@@ -15,8 +15,8 @@ class Spotlight < ApplicationRecord
     [new_step]
   end
 
-  def update_order
-    return if self.class.where(showcase_id: showcase_id).empty?
-    self.order = self.class.where(showcase_id: showcase_id).order(:order).pluck(:order).last + 1
+  def assign_order
+    current_value = self.class.where(showcase_id: showcase_id).order(:order).pluck(:order).last || 0
+    self.order = current_value + 1
   end
 end
