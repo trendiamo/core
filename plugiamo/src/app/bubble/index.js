@@ -15,8 +15,8 @@ const defaultBubble = {
   startTypingAfter: 0.135,
 }
 
-const ChatBubble = ({ position, bubble, message, animation, bar, setTextWidthRef, setTextWidth, ...props }) => (
-  <ChatBubbleFrame animation={animation} bubble={bubble} position={position} textWidth={setTextWidth()} {...props}>
+const ChatBubble = ({ position, bubble, message, animation, bar, setTextWidthRef, textWidth, ...props }) => (
+  <ChatBubbleFrame animation={animation} bubble={bubble} position={position} textWidth={textWidth} {...props}>
     <Container>
       <ChatBubbleBase animation={animation} bubble={bubble}>
         {message}
@@ -31,6 +31,7 @@ export default compose(
   withState('animation', 'setAnimation', null),
   withState('message', 'setMessage', ''),
   withState('bar', 'setBar', false),
+  withState('textWidth', 'setTextWidth', 0),
   withProps(({ bubble }) => ({
     bubble: { ...defaultBubble, ...bubble },
   })),
@@ -55,21 +56,20 @@ export default compose(
     },
   }),
   withHandlers(() => {
-    let textWidth, textWidthRef
+    let textWidthRef
     return {
       setTextWidthRef: () => ref => (textWidthRef = ref),
-      setTextWidth: ({ bubble }) => () => {
-        if (!textWidth && textWidthRef) {
+      changeTextWidth: ({ bubble, setTextWidth }) => () => {
+        if (textWidthRef) {
           textWidthRef.base.innerHTML = bubble.message
-          textWidth = textWidthRef.base.offsetWidth
+          setTextWidth(textWidthRef.base.offsetWidth)
         }
-        return textWidth
       },
     }
   }),
   lifecycle({
     componentDidMount() {
-      const { setAnimation, bubble, writeText, setTextWidth, setMessage, setBar } = this.props
+      const { setAnimation, bubble, writeText, changeTextWidth, setBar } = this.props
       if (!bubble.message) return false
       const timeStart = bubble.timeStart * 1000
       const timeEnd = bubble.timeEnd * 1000
@@ -78,11 +78,11 @@ export default compose(
       const timeEndDuration = bubble.timeEndDuration * 1000
       setTimeout(() => {
         setAnimation('roll')
+        changeTextWidth()
       }, timeStart)
       setTimeout(() => {
-        setMessage('')
-        setTextWidth()
-      }, timeStart + 20)
+        changeTextWidth()
+      }, timeStart + 25)
       setTimeout(() => {
         setBar(true)
       }, timeStart + timeStartDuration)
