@@ -15,7 +15,7 @@ const transition = {
     })
     this.isLiftingElements = false
     this.elements = {}
-    this.ghostElement.innerHTML = ''
+    if (this.ghostElement) this.ghostElement.innerHTML = ''
   },
   duration: 300,
   elements: {},
