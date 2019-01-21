@@ -1,6 +1,7 @@
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
+import VideoMessage from './video-message'
+import { compose, withHandlers, withProps } from 'recompose'
 import { h } from 'preact'
 import { IconAnimatedEllipsis, IconChevronRight } from 'plugin-base'
 import { TopSlideAnimation } from 'plugin-base'
@@ -25,7 +26,7 @@ const MessageContainer = styled.div`
   }
 `
 
-const MessageContent = styled.div`
+const TextMessage = styled.div`
   background-color: #fff;
   overflow: hidden;
   border-radius: 0 12px 12px 12px;
@@ -60,10 +61,28 @@ const MessageMetadata = styled.div`
     vertical-align: middle;
   }
 `
-const ChatMessage = ({ log, isMessageShown }) => (
+
+const Message = compose(
+  withProps(({ message }) => {
+    const regExp = /^\S*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/
+    const match = message.match(regExp)
+    const youtubeId = match && match[2].length === 11 && match[2]
+    return {
+      youtubeId,
+    }
+  })
+)(({ message, onToggleContent, youtubeId }) =>
+  youtubeId ? (
+    <VideoMessage onToggleContent={onToggleContent} youtubeId={youtubeId} />
+  ) : (
+    <TextMessage dangerouslySetInnerHTML={{ __html: snarkdown(message) }} />
+  )
+)
+
+const ChatMessage = ({ log, isMessageShown, onToggleContent }) => (
   <MessageContainer>
     {isMessageShown ? (
-      <MessageContent dangerouslySetInnerHTML={{ __html: snarkdown(log.message.text) }} />
+      <Message message={log.message.text} onToggleContent={onToggleContent} />
     ) : (
       <MessageMetadata>
         <AnimatedEllipsis />
