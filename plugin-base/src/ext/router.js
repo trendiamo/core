@@ -3,6 +3,7 @@ import isEqual from 'lodash.isequal'
 import { cloneElement } from 'react'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { matchUrl } from 'tools'
+import { timeout } from 'ext'
 
 function assign(obj, props) {
   for (let i in props) {
@@ -46,20 +47,17 @@ const Router = compose(
       if (!isFirstTime && route === previousRoute) return
       const newComponent = getNewComponent(route)
       if (onChange) {
-        const result = onChange(previousRoute, route)
-        if (result === false) return
-        if (result && result.then) {
-          if (Component) {
-            setComponent(cloneElement(Component, { isLeaving: true }))
-          }
-          result.then(() => {
-            routeTo(route, newComponent)
-          })
-        } else {
-          routeTo(route, newComponent)
+        const duration = onChange(previousRoute, route)
+        if (Component) {
+          setComponent(cloneElement(Component, { isLeaving: true }))
         }
-      } else {
-        routeTo(route, newComponent)
+        timeout.set(
+          'routeChange',
+          () => {
+            routeTo(route, newComponent)
+          },
+          duration || 10
+        )
       }
     },
   }),

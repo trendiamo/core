@@ -26,6 +26,7 @@ export default compose(
     componentWillUnmount() {
       history.removeListeners()
       timeout.clear('contentWrapper')
+      timeout.clear('routeChange')
       transition.clear()
     },
   }),
@@ -45,7 +46,7 @@ export default compose(
           exitDuration + transition.duration
         )
       }
-      return new Promise(resolve => timeout.set('contentWrapper', resolve, exitDuration)) // delay new page so the exit animation is seen
+      return exitDuration
     },
   })
 )(ContentWrapper)

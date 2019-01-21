@@ -2,8 +2,9 @@ import animateOnMount from 'shared/animate-on-mount'
 import Frame from 'shared/frame'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { compose } from 'recompose'
+import { compose, lifecycle } from 'recompose'
 import { h } from 'preact'
+import { history, timeout, transition } from 'plugin-base'
 import { IconClose } from 'plugin-base'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 
@@ -37,6 +38,14 @@ const IFrame = compose(
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()
+    },
+  }),
+  lifecycle({
+    componentWillUnmount() {
+      history.removeListeners()
+      timeout.clear('contentWrapper')
+      timeout.clear('routeChange')
+      transition.clear()
     },
   })
 )(styled(Frame).attrs({
