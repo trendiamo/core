@@ -24,13 +24,12 @@ const ChatBubbleFrame = styled(Frame).attrs({
   background-color: #fbfbfb;
   box-sizing: border-box;
   padding: 11px 16px;
-  width: ${({ textWidth }) => textWidth + 48}px;
+  width: 100%;
+  max-width: ${({ textWidth }) => textWidth + 48}px;
   overflow: hidden;
   animation-name: ${({ animation }) => (animation === 'roll' ? '_frekkls_bubble_roll' : '_frekkls_bubble_unroll')};
   animation-duration: ${({ animation, bubble }) =>
     animation === 'roll' ? bubble.timeStartDuration : bubble.timeEndDuration}s;
-  animation-fill-mode: forwards;
-  animation-timing-function: linear;
   cursor: pointer;
   ${({ position }) => keyframes({ position })}
 `

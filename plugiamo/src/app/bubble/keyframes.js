@@ -3,13 +3,13 @@ export default ({ position }) =>
   @keyframes _frekkls_bubble_roll {
     0%{
        border-radius: 50%;
-       width: 0px;
+       max-width: 0px;
        height: 0px;
        padding: 0;
        animation-timing-function: ease-in;
      }
      50%{
-       width: 30px;
+       max-width: 30px;
        height: 30px;
        border-radius: ${position === 'left' ? '50% 50% 50% 1px' : '50% 50% 1px'};
        animation-timing-function: cubic-bezier(0.38, 0.29, 0.49, 1.8);
@@ -27,7 +27,7 @@ export default ({ position }) =>
       border-radius: ${position === 'left' ? '20px 40px 40px 1px' : '40px 20px 1px 40px'};
     }
     70% {
-      width: 50px;
+      max-width: 50px;
       height: 15px;
       border-radius: ${position === 'left' ? '50% 50% 50% 1px' : '50% 50% 1px'};
       animation-timing-function: ease-out;
@@ -36,7 +36,7 @@ export default ({ position }) =>
     }
     100% {
       border-radius: 50%;
-      width: 0px;
+      max-width: 0px;
       height: 0px;
       padding: 0;
       opacity: 0;
