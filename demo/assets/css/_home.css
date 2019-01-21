@@ -168,13 +168,15 @@
 }
 
 #bike-card-info {
+  align-self: flex-start;
   z-index: 1;
   padding-top: 30px;
+  margin-left: 50px;
 }
 
 #bike-price {
   font-weight: normal !important;
-  font-size: 20px;
+  font-size: 16px !important;
   padding-top: 15px;
   text-align: left;
 }
