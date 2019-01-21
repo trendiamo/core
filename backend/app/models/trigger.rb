@@ -7,7 +7,7 @@ class Trigger < ApplicationRecord
   validates :url_matchers, presence: true
   validate :url_matchers_cannot_be_blank
 
-  before_create :update_order
+  before_create :assign_order
 
   def self.find_matching(pathname)
     Trigger.order(:order).find do |trigger|
@@ -23,9 +23,9 @@ class Trigger < ApplicationRecord
       .merge(flow: { id: flow.id, name: flow.name })
   end
 
-  def update_order
-    return unless self.class.any?
-    self.order = self.class.order(:order).pluck(:order).last + 1
+  def assign_order
+    current_value = self.class.order(:order).pluck(:order).last || 0
+    self.order = current_value + 1
   end
 
   private

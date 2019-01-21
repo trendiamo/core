@@ -8,7 +8,7 @@ import Select from 'shared/select'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
-import { apiNavigationItemSort, apiPersonasAutocomplete } from 'utils'
+import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { findIndex } from 'lodash'
@@ -290,11 +290,9 @@ export default compose(
         : newNavigationItemsPictures.push(picture)
       setNavigationItemsPictures(newNavigationItemsPictures)
     },
-    onSortEnd: ({ setForm, form }) => async ({ oldIndex, newIndex }) => {
+    onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
       const orderedNavigationItems = arrayMove(form.navigationItemsAttributes, oldIndex, newIndex)
-      const orderedIds = orderedNavigationItems.map(item => item.id)
       setForm({ ...form, navigationItemsAttributes: orderedNavigationItems })
-      await apiNavigationItemSort({ ids: orderedIds })
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),

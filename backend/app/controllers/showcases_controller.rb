@@ -45,7 +45,7 @@ class ShowcasesController < RestController
   private
 
   def showcase_params
-    params.require(:showcase).permit(
+    result = params.require(:showcase).permit(
       :name, :title, :subtitle, :chat_bubble_text, :persona_id,
       spotlights_attributes: [
         :id, :persona_id, :_destroy,
@@ -54,6 +54,19 @@ class ShowcasesController < RestController
         ],
       ]
     )
+    add_order_fields(result)
+  end
+
+  # add order fields to showcase_attributes' spotlights and product_picks, based on received order
+  def add_order_fields(showcase_attributes)
+    return unless showcase_attributes
+    showcase_attributes[:spotlights_attributes]&.each_with_index do |spotlight_attributes, i|
+      spotlight_attributes[:order] = i + 1
+      spotlight_attributes[:product_picks_attributes]&.each_with_index do |product_pick_attributes, j|
+        product_pick_attributes[:order] = j + 1
+      end
+    end
+    showcase_attributes
   end
 
   def render_error

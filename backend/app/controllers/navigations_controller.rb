@@ -45,8 +45,18 @@ class NavigationsController < RestController
   private
 
   def navigation_params
-    params.require(:navigation).permit(:persona_id, :name, :chat_bubble_text, navigation_items_attributes:
+    result = params.require(:navigation).permit(:persona_id, :name, :chat_bubble_text, navigation_items_attributes:
       %i[id text url pic_url _destroy])
+    add_order_fields(result)
+  end
+
+  # add order fields to navigation_attributes' navigation_items, based on received order
+  def add_order_fields(navigation_attributes)
+    return unless navigation_attributes
+    navigation_attributes[:navigation_items_attributes]&.each_with_index do |navigation_item_attributes, i|
+      navigation_item_attributes[:order] = i + 1
+    end
+    navigation_attributes
   end
 
   def render_error

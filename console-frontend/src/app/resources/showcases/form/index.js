@@ -8,7 +8,7 @@ import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
-import { apiPersonasAutocomplete, apiSpotlightSort } from 'utils'
+import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
@@ -364,11 +364,9 @@ export default compose(
       if (location.pathname !== routes.showcaseEdit(result.id)) history.push(routes.showcaseEdit(result.id))
       return result
     },
-    onSortEnd: ({ setForm, form }) => async ({ oldIndex, newIndex }) => {
+    onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
       const orderedSpotlights = arrayMove(form.spotlightsAttributes, oldIndex, newIndex)
-      const orderedIds = orderedSpotlights.map(spotlight => spotlight.id)
       setForm({ ...form, spotlightsAttributes: orderedSpotlights })
-      await apiSpotlightSort({ ids: orderedIds })
     },
     routeToShowcase: ({ form }) => () => pluginHistory.replace(pluginRoutes.showcase(form.id)),
     routeToSpotlight: ({ form }) => spotlight => pluginHistory.replace(pluginRoutes.spotlight(form.id, spotlight.id)),

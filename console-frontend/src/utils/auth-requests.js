@@ -7,11 +7,8 @@ const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/showcases`
-const SPOTLIGHTS_URL = `${BASE_API_URL}/spotlights`
-const PRODUCT_PICKS_URL = `${BASE_API_URL}/product_picks`
 const SCRIPTED_CHATS_URL = `${BASE_API_URL}/scripted_chats`
 const NAVIGATIONS_URL = `${BASE_API_URL}/navigations`
-const NAVIGATION_ITEMS_URL = `${BASE_API_URL}/navigation_items`
 const TRIGGERS_URL = `${BASE_API_URL}/triggers`
 const ME_URL = `${BASE_API_URL}/me`
 const WEBSITES_URL = `${BASE_API_URL}/websites`
@@ -124,10 +121,6 @@ export const apiShowcaseCreate = body => apiCreateRequest(CURATIONS_URL, body)
 export const apiShowcaseShow = id => apiGetRequest(`${CURATIONS_URL}/${id}`)
 export const apiShowcaseUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL}/${id}`, body)
 
-export const apiSpotlightSort = body => apiCreateRequest(`${SPOTLIGHTS_URL}/sort`, body)
-
-export const apiProductPickSort = body => apiCreateRequest(`${PRODUCT_PICKS_URL}/sort`, body)
-
 export const apiScriptedChatList = query => apiListRequest(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`)
 export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED_CHATS_URL, body)
 export const apiScriptedChatCreate = body => apiCreateRequest(SCRIPTED_CHATS_URL, body)
@@ -139,8 +132,6 @@ export const apiNavigationDestroy = body => apiDestroyMultipleRequest(NAVIGATION
 export const apiNavigationCreate = body => apiCreateRequest(NAVIGATIONS_URL, body)
 export const apiNavigationShow = id => apiGetRequest(`${NAVIGATIONS_URL}/${id}`)
 export const apiNavigationUpdate = (id, body) => apiUpdateRequest(`${NAVIGATIONS_URL}/${id}`, body)
-
-export const apiNavigationItemSort = body => apiCreateRequest(`${NAVIGATION_ITEMS_URL}/sort`, body)
 
 export const apiTriggerList = () => apiGetRequest(TRIGGERS_URL)
 export const apiTriggerDestroy = body => apiDestroyMultipleRequest(TRIGGERS_URL, body)

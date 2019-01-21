@@ -44,12 +44,6 @@ Rails.application.routes.draw do
       get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
       get "/path/autocomplete", to: "autocompletes#path_autocomplete"
 
-      post "/navigation_items/sort", to: "navigation_items#sort"
-
-      post "/spotlights/sort", to: "spotlights#sort"
-
-      post "/product_picks/sort", to: "product_picks#sort"
-
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end
