@@ -38,6 +38,7 @@ const ChatStepMessage = ({
         <a href="https://www.markdownguide.org/cheat-sheet" rel="noopener noreferrer" target="_blank">
           {'markdown'}
         </a>
+        {'. If you just paste a youtube link, the video will be shown.'}
       </FormHelperText>
     </Grid>
   </FormSection>
