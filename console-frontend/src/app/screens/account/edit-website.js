@@ -21,6 +21,9 @@ import {
 import { Prompt } from 'react-router'
 import { withSnackbar } from 'notistack'
 
+const hostnamePattern =
+  '(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z]|[A-Za-z][A-Za-z0-9-]*[A-Za-z0-9])'
+
 const StyledTypography = styled(Typography)`
   margin-left: 10px;
 `
@@ -96,6 +99,7 @@ const EditWebsite = ({
         <StyledHostnameTextField
           disabled={isFormLoading}
           index={index}
+          inputProps={{ pattern: hostnamePattern }}
           onChange={editHostnameValue}
           required
           value={hostname}

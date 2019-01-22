@@ -15,6 +15,8 @@ import { SelectLabelText, StyledSelectLabel } from 'shared/select-option'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
+const pathPattern = '/[^?#]*'
+
 const FlexDiv = styled.div`
   display: flex;
   align-items: center;
@@ -85,33 +87,22 @@ const TriggerForm = ({
         <FormControl fullWidth margin="normal">
           <InputLabel shrink>{'Url Matchers'}</InputLabel>
           <div style={{ marginTop: '11px' }}>
-            {form.urlMatchers.length === 0 ? (
-              <FlexDiv>
+            {form.urlMatchers.map((url, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <FlexDiv key={index}>
                 <StyledUrlTextField
                   disabled={isFormLoading}
-                  index={0}
+                  index={index}
+                  inputProps={{ pattern: pathPattern }}
                   onChange={editUrlValue}
                   required
-                  value={form.urlMatchers[0]}
+                  value={url}
                 />
+                {form.urlMatchers.length > 1 && (
+                  <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
+                )}
               </FlexDiv>
-            ) : (
-              form.urlMatchers.map((url, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <FlexDiv key={index}>
-                  <StyledUrlTextField
-                    disabled={isFormLoading}
-                    index={index}
-                    onChange={editUrlValue}
-                    required
-                    value={url}
-                  />
-                  {form.urlMatchers.length > 1 && (
-                    <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
-                  )}
-                </FlexDiv>
-              ))
-            )}
+            ))}
           </div>
           <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
         </FormControl>

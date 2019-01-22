@@ -40,6 +40,7 @@ const NavigationItem = ({
         name="navigationItem_url"
         onChange={editNavigationItemValue}
         required
+        type="URL"
         value={navigationItem.url}
       />
       <FormHelperText>

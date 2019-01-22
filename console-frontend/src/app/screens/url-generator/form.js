@@ -66,6 +66,7 @@ const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
       name="url"
       onChange={setFieldValue}
       placeholder="Paste Page URL"
+      type="URL"
       value={form.url}
     />
   </FormControl>

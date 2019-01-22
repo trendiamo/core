@@ -40,6 +40,7 @@ const ProductPick = ({
       onChange={editProductPickValue}
       onFocus={onFocus}
       required
+      type="URL"
       value={productPick.url}
     />
     <FormHelperText>
