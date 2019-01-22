@@ -73,13 +73,7 @@ const ChatStep = ({
   addAction,
 }) => (
   <Section>
-    <FormSection
-      ellipsize
-      foldable
-      folded={chatStep.id}
-      hideTop
-      title={chatStep.id ? chatStep.chatMessagesAttributes[0].text : 'New Step'}
-    >
+    <FormSection ellipsize foldable folded={chatStep.id} hideTop title={`Step #${chatStep.__index + 1}`}>
       <div style={{ marginTop: '-1px' }}>
         <FormSection foldable title="Messages">
           {chatStep.chatMessagesAttributes && (
