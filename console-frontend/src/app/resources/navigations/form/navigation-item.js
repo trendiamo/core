@@ -26,10 +26,11 @@ const NavigationItem = ({
         allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteNavigationItem} />
       }
       dragHandle={<DragHandle />}
+      ellipsize
       foldable
       folded={folded}
       hideTop
-      title={`Navigation Item #${index + 1}`}
+      title={navigationItem.id ? navigationItem.text : 'New Navigation Item'}
     >
       <TextField
         disabled={isCropping || isFormLoading}

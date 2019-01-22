@@ -1,10 +1,15 @@
+import omit from 'lodash.omit'
+import React from 'react'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 
-const Header = styled(Typography)`
+// The width is specified because without it, the ellipsis wouldn't work in the scripted chats and showcases
+const Header = styled(props => <Typography {...omit(props, ['ellipsize'])} />)`
+  width: 200px;
+  white-space: ${({ ellipsize }) => (ellipsize ? 'nowrap' : 'normal')};
+  overflow: ${({ ellipsize }) => (ellipsize ? 'hidden' : 'none')};
+  text-overflow: ${({ ellipsize }) => (ellipsize ? 'ellipsis' : 'none')};
   flex: 1;
-  display: flex;
-  align-items: center;
   & + * {
     margin-left: 10px;
   }

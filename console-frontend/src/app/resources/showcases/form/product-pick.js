@@ -24,11 +24,12 @@ const ProductPick = ({
     actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteProductPick} />}
     backgroundColor="#fff"
     dragHandle={<DragHandle />}
+    ellipsize
     foldable
     folded={folded}
     hideBottom
     hideTop={index === 0}
-    title={`Product Pick #${index + 1}`}
+    title={productPick.id ? productPick.name : 'New Product Pick'}
   >
     <TextField
       disabled={isCropping || isFormLoading}

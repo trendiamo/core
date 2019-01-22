@@ -26,11 +26,12 @@ const ChatStepOption = ({
     actions={<Cancel disabled={isFormLoading} index={index} onClick={deleteChatOption} />}
     backgroundColor="#fff"
     dragHandle={<DragHandle />}
+    ellipsize
     foldable
     folded={folded}
     hideBottom
     hideTop={index === 0}
-    title={`Option #${index + 1}`}
+    title={chatOption.id ? chatOption.text : 'New Option'}
   >
     <Grid item sm={6}>
       <TextField

@@ -61,7 +61,6 @@ const ChatOptionsContainer = SortableContainer(ChatOptions)
 const ChatStep = ({
   addChatMessage,
   deleteAction,
-  index,
   isFormLoading,
   addChatOption,
   chatStep,
@@ -74,7 +73,13 @@ const ChatStep = ({
   addAction,
 }) => (
   <Section>
-    <FormSection foldable folded={chatStep.id} hideTop title={`Step #${index + 1}`}>
+    <FormSection
+      ellipsize
+      foldable
+      folded={chatStep.id}
+      hideTop
+      title={chatStep.id ? chatStep.chatMessagesAttributes[0].text : 'New Step'}
+    >
       <div style={{ marginTop: '-1px' }}>
         <FormSection foldable title="Messages">
           {chatStep.chatMessagesAttributes && (

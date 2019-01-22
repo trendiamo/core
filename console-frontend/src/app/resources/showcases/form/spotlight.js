@@ -61,10 +61,11 @@ const Spotlight = ({
     <FormSection
       actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />}
       dragHandle={<DragHandle />}
+      ellipsize
       foldable
       folded={folded}
       hideTop
-      title={`Spotlight #${index + 1}`}
+      title={spotlight.id ? `${spotlight.__persona.name}'s Spotlight` : 'New Spotlight'}
     >
       <Select
         autocomplete={apiPersonasAutocomplete}
