@@ -1,7 +1,7 @@
+import Autocomplete from 'shared/autocomplete'
 import ProductPick from './product-pick'
 import React from 'react'
 import Section from 'shared/section'
-import Select from 'shared/select'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
@@ -67,7 +67,7 @@ const Spotlight = ({
       hideTop
       title={spotlight.id ? `${spotlight.__persona.name}'s Spotlight` : 'New Spotlight'}
     >
-      <Select
+      <Autocomplete
         autocomplete={apiPersonasAutocomplete}
         components={{ Option: OptionWithAvatar }}
         defaultValue={

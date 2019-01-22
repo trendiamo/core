@@ -1,9 +1,9 @@
+import Autocomplete from 'shared/autocomplete'
 import CircularProgress from 'shared/circular-progress'
 import PluginPreview from 'shared/plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
-import Select from 'shared/select'
 import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
@@ -90,7 +90,7 @@ const ShowcaseForm = ({
         value={form.name}
       />
       <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
-      <Select
+      <Autocomplete
         autocomplete={apiPersonasAutocomplete}
         components={{ Option: OptionWithAvatar }}
         defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}

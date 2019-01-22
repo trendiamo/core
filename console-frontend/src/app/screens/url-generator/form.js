@@ -1,5 +1,5 @@
+import Autocomplete from 'shared/autocomplete'
 import React from 'react'
-import Select from 'shared/select'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
 import { apiPathAutocomplete, apiPersonasAutocomplete } from 'utils'
@@ -24,7 +24,7 @@ const Option = styled.div`
   justify-content: left;
 `
 
-const StyledSelect = styled(Select)`
+const StyledAutocomplete = styled(Autocomplete)`
   margin-top: 0px;
   margin-bottom: 0px;
 `
@@ -94,7 +94,7 @@ const UrlGeneratorForm = ({
       <Option>
         {showStep ? (
           <React.Fragment>
-            <Select
+            <Autocomplete
               autocomplete={apiPathAutocomplete}
               defaultValue=""
               label="Step"
@@ -109,8 +109,8 @@ const UrlGeneratorForm = ({
       </Option>
 
       <Option>
-          <StyledSelect
         {showPersona ? (
+          <StyledAutocomplete
             autocomplete={apiPersonasAutocomplete}
             defaultValue={form.personaId}
             label="Persona"

@@ -1,4 +1,4 @@
-import AsyncSelect from 'react-select/lib/Async'
+import Async from 'react-select/lib/Async'
 import debounce from 'debounce-promise'
 import React from 'react'
 import styled from 'styled-components'
@@ -6,7 +6,7 @@ import { apiRequest } from 'utils'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { FormControl, InputLabel } from '@material-ui/core'
 
-const StyledSelect = styled(AsyncSelect).attrs({
+const StyledAsync = styled(Async).attrs({
   singleValueColor: ({ isFocussed }) => (isFocussed ? '#77777f' : '#372727'),
 })`
   font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
@@ -81,7 +81,7 @@ const StyledSelect = styled(AsyncSelect).attrs({
   }
 `
 
-const Select = compose(
+const Autocomplete = compose(
   withProps(({ autocomplete }) => ({
     debouncedAutocomplete: debounce(autocomplete, 250),
   })),
@@ -161,7 +161,7 @@ const Select = compose(
   }) => (
     <FormControl disabled={disabled} fullWidth margin={noMargin ? 'none' : 'normal'}>
       <InputLabel shrink>{`${label}${required ? ' *' : ''}`}</InputLabel>
-      <StyledSelect
+      <StyledAsync
         cacheOptions
         classNamePrefix="react-select"
         components={components}
@@ -178,9 +178,10 @@ const Select = compose(
         onMenuOpen={onMenuOpen}
         openMenuOnClick={false}
         placeholder={placeholder}
+        selectProps={{ required }}
       />
     </FormControl>
   )
 )
 
-export default Select
+export default Autocomplete

@@ -1,8 +1,8 @@
+import Autocomplete from 'shared/autocomplete'
 import CircularProgress from 'shared/circular-progress'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
-import Select from 'shared/select'
 import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
@@ -73,7 +73,7 @@ const TriggerForm = ({
   <Section title={title}>
     <Grid item sm={6}>
       <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-        <Select
+        <Autocomplete
           autocomplete={apiFlowsAutocomplete}
           components={{ Option: OptionWithIcon }}
           defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}

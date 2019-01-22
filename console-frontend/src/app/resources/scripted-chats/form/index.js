@@ -1,9 +1,9 @@
+import Autocomplete from 'shared/autocomplete'
 import ChatStep from './chat-step'
 import CircularProgress from 'shared/circular-progress'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
-import Select from 'shared/select'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import withScriptedChatsForm from './with-scripted-chats-form'
@@ -70,7 +70,7 @@ const ScriptedChatForm = ({
           value={form.name}
         />
         <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
-        <Select
+        <Autocomplete
           autocomplete={apiPersonasAutocomplete}
           components={{ Option: OptionWithAvatar }}
           defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
