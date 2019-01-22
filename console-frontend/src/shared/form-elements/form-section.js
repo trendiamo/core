@@ -11,10 +11,6 @@ const FoldIcon = styled(props => <ExpandMore {...omit(props, ['folded'])} />)`
   transition: transform 0.6s;
 `
 
-const ExpandButton = styled(IconButton)`
-  margin-left: auto;
-`
-
 const SectionContainer = styled.div`
   margin: 0;
   ${({ backgroundColor }) => (backgroundColor ? `background-color: ${backgroundColor};` : null)}
@@ -30,6 +26,7 @@ const FormSection = ({
   title,
   children,
   folded,
+  ellipsize,
   foldable,
   toggleFolded,
   actions,
@@ -40,12 +37,14 @@ const FormSection = ({
     {!hideTop && <Divider />}
     <FlexBar>
       {dragHandle}
-      <Header variant="subtitle1">{title}</Header>
+      <Header ellipsize={ellipsize} variant="subtitle1">
+        {title}
+      </Header>
       {actions}
       {foldable && (
-        <ExpandButton aria-expanded={folded} aria-label="Show more" onClick={toggleFolded}>
+        <IconButton aria-expanded={folded} aria-label="Show more" onClick={toggleFolded}>
           <FoldIcon folded={folded} />
-        </ExpandButton>
+        </IconButton>
       )}
     </FlexBar>
     {!hideBottom && <Divider folded={folded} />}

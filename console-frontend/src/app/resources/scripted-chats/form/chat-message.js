@@ -16,10 +16,11 @@ const ChatStepMessage = ({
     actions={allowDelete && <Cancel disabled={isFormLoading} index={index} onClick={deleteChatMessage} />}
     backgroundColor="#fff"
     dragHandle={<DragHandle />}
+    ellipsize
     foldable
     hideBottom
     hideTop={index === 0}
-    title={`Message #${index + 1}`}
+    title={chatMessage.id ? chatMessage.text : 'New Message'}
   >
     <Grid item sm={6}>
       <TextField
