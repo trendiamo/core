@@ -73,8 +73,8 @@ const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
 )
 
 const UrlGeneratorForm = ({
-  showPersonaSelector,
-  showStepSelector,
+  showPersona,
+  showStep,
   formRef,
   onFormSubmit,
   selectPersona,
@@ -92,7 +92,7 @@ const UrlGeneratorForm = ({
         <UrlTextField form={form} resetUrl={resetUrl} setFieldValue={setFieldValue} />
       </Option>
       <Option>
-        {showStepSelector ? (
+        {showStep ? (
           <React.Fragment>
             <Select
               autocomplete={apiPathAutocomplete}
@@ -104,13 +104,13 @@ const UrlGeneratorForm = ({
             <FormHelperText>{'Show a specific step of a module.'}</FormHelperText>
           </React.Fragment>
         ) : (
-          <AddOptionButton option="step" optionLabel="Add Step" showOption={showOption} />
+          <AddOptionButton option="step" optionLabel="Set Step" showOption={showOption} />
         )}
       </Option>
 
       <Option>
-        {showPersonaSelector ? (
           <StyledSelect
+        {showPersona ? (
             autocomplete={apiPersonasAutocomplete}
             defaultValue={form.personaId}
             label="Persona"
@@ -120,7 +120,7 @@ const UrlGeneratorForm = ({
             placeholder="Choose a Persona"
           />
         ) : (
-          <AddOptionButton option="persona" optionLabel="Add Persona" showOption={showOption} />
+          <AddOptionButton option="persona" optionLabel="Set Persona" showOption={showOption} />
         )}
       </Option>
       <Option style={{ paddingLeft: '6px' }}>
@@ -155,15 +155,15 @@ export default compose(
     autoOpen: false,
     step: '',
   }),
-  withState('showStepSelector', 'setShowStepSelector', false),
-  withState('showPersonaSelector', 'setShowPersonaSelector', false),
+  withState('showStep', 'setShowStep', false),
+  withState('showPersona', 'setShowPersona', false),
   withProps(({ form }) => ({
     isDisabled: !(form.url && (form.autoOpen || form.step || form.personaId)),
   })),
   withHandlers({
-    showOption: ({ setShowStepSelector, setShowPersonaSelector }) => option => {
-      if (option === 'step') setShowStepSelector(true)
-      if (option === 'persona') setShowPersonaSelector(true)
+    showOption: ({ setShowStep, setShowPersona }) => option => {
+      if (option === 'step') setShowStep(true)
+      if (option === 'persona') setShowPersona(true)
     },
     resetUrl: ({ form, setForm }) => () => {
       setForm({
