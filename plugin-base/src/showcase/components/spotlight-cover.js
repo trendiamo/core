@@ -17,8 +17,8 @@ const SpotlightCover = compose(
     return {
       landElements: () => () => {
         if (!transition.isLiftingElements) return
-        transition.landElement('img', imgRef.base || imgRef)
-        transition.landElement('name', nameRef)
+        if (imgRef) transition.landElement('img', imgRef.base || imgRef)
+        if (nameRef) transition.landElement('name', nameRef)
       },
       setImgRef: () => ref => (imgRef = ref),
       setNameRef: () => ref => (nameRef = ref),
@@ -30,7 +30,6 @@ const SpotlightCover = compose(
       landElements()
     },
   }),
-  // branch is useful for showcase preview
   withProps(({ spotlightId, spotlights }) => ({
     spotlight: spotlights.find(e => e.id == spotlightId),
   })),

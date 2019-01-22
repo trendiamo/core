@@ -43,10 +43,10 @@ const Navigation = ({ navigationItems, onTileClick, persona }) => (
       <Container>
         <TopSlideAnimation delay={250 * 1}>
           <TilesWrapper>
-            {navigationItems.map(navigationItem => (
+            {navigationItems.map((navigationItem, index) => (
               <Tile
                 imageUrl={navigationItem.picture.url}
-                key={navigationItem.id}
+                key={navigationItem.id || `new-${index}`}
                 onClick={() => onTileClick(navigationItem)}
                 title={navigationItem.text}
               />

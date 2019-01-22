@@ -10,6 +10,7 @@ import { DragHandle, SortableContainer, SortableElement } from 'shared/sortable-
 import { findIndex } from 'lodash'
 import { OptionWithAvatar } from 'shared/select-option'
 
+const SortableProductPick = SortableElement(ProductPick)
 const ProductPicks = ({
   isFormLoading,
   isCropping,
@@ -38,8 +39,6 @@ const ProductPicks = ({
     ))}
   </div>
 )
-
-const SortableProductPick = SortableElement(ProductPick)
 const ProductPicksContainer = SortableContainer(ProductPicks)
 
 const Spotlight = ({

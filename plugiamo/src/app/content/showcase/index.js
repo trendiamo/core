@@ -31,6 +31,7 @@ const Showcase = compose(
               }
             }
             productPicks {
+              id
               url
               name
               description

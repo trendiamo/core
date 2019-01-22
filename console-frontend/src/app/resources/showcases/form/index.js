@@ -19,6 +19,7 @@ import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
+const SortableSpotlight = SortableElement(Spotlight)
 const Spotlights = ({
   isFormLoading,
   isCropping,
@@ -51,8 +52,6 @@ const Spotlights = ({
     ))}
   </div>
 )
-
-const SortableSpotlight = SortableElement(Spotlight)
 const SpotlightsContainer = SortableContainer(Spotlights)
 
 const ShowcaseForm = ({
@@ -170,40 +169,46 @@ const defaults = {
 
 const preview = {
   spotlights(showcase) {
-    const newSpotlights = showcase.spotlightsAttributes.map((spotlight, i) => {
-      const productPicks = this.productPicks(spotlight)
-      const profilePic = spotlight.__persona && (spotlight.__persona.profilePic || spotlight.__persona.profilePicUrl)
-      const personaName = spotlight.__persona && spotlight.__persona.name
-      const personaDescription = spotlight.__persona && spotlight.__persona.description
-      return {
-        ...spotlight,
-        id: spotlight.id || `new-${i}`,
-        productPicks,
-        persona: {
-          ...spotlight.__persona,
-          name: personaName || defaults.spotlightName,
-          description: personaDescription || defaults.spotlightDescription,
-          profilePic: { url: profilePic || defaults.avatarPic },
-          profilePicUrl: profilePic || defaults.avatarPic,
-        },
-        translation: {
-          selectedBy: `Products selected by ${personaName && personaName.split(' ')[0]}`,
-        },
-      }
-    })
-    return { ...showcase, spotlights: newSpotlights }
+    const spotlights = showcase.spotlightsAttributes
+      .map((spotlight, i) => {
+        const productPicks = this.productPicks(spotlight)
+        const profilePic = spotlight.__persona && (spotlight.__persona.profilePic || spotlight.__persona.profilePicUrl)
+        const personaName = spotlight.__persona && spotlight.__persona.name
+        const personaDescription = spotlight.__persona && spotlight.__persona.description
+        if (spotlight._destroy) return null
+        return {
+          ...spotlight,
+          id: spotlight.id || `new-${i}`,
+          productPicks,
+          persona: {
+            ...spotlight.__persona,
+            name: personaName || defaults.spotlightName,
+            description: personaDescription || defaults.spotlightDescription,
+            profilePic: { url: profilePic || defaults.avatarPic },
+            profilePicUrl: profilePic || defaults.avatarPic,
+          },
+          translation: {
+            selectedBy: `Products selected by ${personaName && personaName.split(' ')[0]}`,
+          },
+        }
+      })
+      .filter(e => e)
+    return { ...showcase, spotlights }
   },
   productPicks(spotlight) {
-    return spotlight.productPicksAttributes.map((product, i) => {
-      return {
-        ...product,
-        id: product.id || `new-${i}`,
-        name: product.name || defaults.productName,
-        description: product.description || defaults.productDescription,
-        displayPrice: product.displayPrice || defaults.productPrice,
-        picture: { url: product.picUrl || defaults.productPic },
-      }
-    })
+    return spotlight.productPicksAttributes
+      .map((productPick, i) => {
+        if (productPick._destroy) return null
+        return {
+          ...productPick,
+          id: productPick.id || `new-${i}`,
+          name: productPick.name || defaults.productName,
+          description: productPick.description || defaults.productDescription,
+          displayPrice: productPick.displayPrice || defaults.productPrice,
+          picture: { url: productPick.picUrl || defaults.productPic },
+        }
+      })
+      .filter(e => e)
   },
 }
 

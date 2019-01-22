@@ -20,6 +20,7 @@ import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
+const SortableNavigationItem = SortableElement(NavigationItem)
 const NavigationItems = ({
   isFormLoading,
   setNavigationItemForm,
@@ -50,8 +51,6 @@ const NavigationItems = ({
     ))}
   </div>
 )
-
-const SortableNavigationItem = SortableElement(NavigationItem)
 const NavigationItemsContainer = SortableContainer(NavigationItems)
 
 const NavigationForm = ({
@@ -146,7 +145,7 @@ const defaults = {
 
 const transform = navigationItems =>
   navigationItems.map(e => ({
-    id: e.id || 'new',
+    id: e.id,
     text: e.text || defaults.product.text,
     url: e.url,
     picture: { url: e.picUrl || defaults.product.pictureUrl },

@@ -13,17 +13,14 @@ const ShowcaseContent = ({ isLeaving, routeToSpotlight, spotlights, callbacks })
   <Container>
     <TopSlideAnimation delay={250 * 1} isLeaving={isLeaving}>
       <List>
-        {spotlights.map(
-          (spotlight, index) =>
-            !spotlight._destroy && (
-              <SpotlightItem
-                key={spotlight.id || index}
-                onClick={callbacks.onSpotlightClick({ spotlight })}
-                routeToSpotlight={routeToSpotlight}
-                spotlight={spotlight}
-              />
-            )
-        )}
+        {spotlights.map((spotlight, index) => (
+          <SpotlightItem
+            key={spotlight.id || `new-${index}`}
+            onClick={callbacks.onSpotlightClick({ spotlight })}
+            routeToSpotlight={routeToSpotlight}
+            spotlight={spotlight}
+          />
+        ))}
       </List>
     </TopSlideAnimation>
   </Container>
