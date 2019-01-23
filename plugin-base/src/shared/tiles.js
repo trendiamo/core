@@ -1,7 +1,10 @@
+import isEqual from 'lodash.isequal'
 import React from 'react'
 import styled from 'styled-components'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { timeout } from 'ext'
 
-const TilesWrapper = styled.div`
+const TilesWrapperDiv = styled.div`
   align-content: baseline;
   display: flex;
   flex-wrap: wrap;
@@ -9,10 +12,63 @@ const TilesWrapper = styled.div`
   margin-right: -0.5rem;
 `
 
+const TilesWrapper = compose(
+  withState('listSelected', 'setListSelected', false),
+  withState('currentObject', 'setCurrentObject', null),
+  withHandlers({
+    selectInList: ({ setListSelected }) => () => {
+      setListSelected(true)
+    },
+  }),
+  lifecycle({
+    componentDidUpdate() {
+      const { currentObject, objectForResetCheck, setListSelected, setCurrentObject } = this.props
+      if (objectForResetCheck !== undefined && !isEqual(currentObject, objectForResetCheck)) {
+        setListSelected(false)
+        setCurrentObject(objectForResetCheck)
+      }
+    },
+  })
+)(({ children, selectInList, listSelected }) => (
+  <TilesWrapperDiv>
+    {React.Children.map(children, (child, index) => React.cloneElement(child, { selectInList, listSelected, index }))}
+  </TilesWrapperDiv>
+))
+
 const Title = styled.div`
   font-size: 14px;
   text-align: center;
   user-select: none;
+  color: ${({ imageUrl }) => (imageUrl ? '#f0f0f0' : '#000')};
+  ${({ isClicked }) => isClicked && ' color: #fff '}
+  z-index: 1;
+  letter-spacing: 0.6px;
+  font-weight: 500;
+`
+
+const Background = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-image: ${({ imageUrl }) => (imageUrl ? `url('${imageUrl}')` : 'none')};
+  background-size: cover;
+  transition: transform 0.2s linear;
+  backface-visibility: hidden;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #000;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
 `
 
 const Box = styled.div`
@@ -20,51 +76,78 @@ const Box = styled.div`
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.11);
   background-color: #fff;
   height: 120px;
-  padding: 0.75rem;
   cursor: pointer;
-
-  display: flex;
-  flex-direction: column;
-  align-items: ${({ imageUrl }) => (imageUrl ? 'start' : 'center')};
-  justify-content: ${({ imageUrl }) => (imageUrl ? 'flex-end' : 'space-evenly')};
 
   position: relative;
   transition: background-color 0.4s linear;
 
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    border-radius: 15px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: ${({ imageUrl }) =>
-      imageUrl
-        ? 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.7) 100%)'
-        : 'none'};
+  @keyframes _frekkls_selected_nav_item_highlight {
+    0% {
+      box-shadow: 0 1px 15px 1px #00adef;
+      opacity: 0.5;
+    }
+    25% {
+      box-shadow: 0 1px 25px 1px #00adef;
+      opacity: 1;
+    }
+    35% {
+      box-shadow: 0 1px 25px 1px #00adef;
+      opacity: 1;
+    }
+    100% {
+      box-shadow: 0 1px 15px 1px #00adef;
+      opacity: 0.5;
+    }
   }
+  ${({ listSelected, isClicked, highlight }) =>
+    !isClicked &&
+    listSelected &&
+    highlight &&
+    `
+    transform: translate(-140px, 0);
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.89, -0.47, 0.63, 0.79);
+  `}
+  ${({ isClicked, highlight }) =>
+    isClicked &&
+    highlight &&
+    `
+    transition: 0.6s all;
+    z-index: 5;
+    &:after{
+      content: '';
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      bottom: 0px;
+      right: 0px;
+      z-index: 5;
+      border-radius: 15px;
+      animation: _frekkls_selected_nav_item_highlight 1.2s linear infinite;
+      animation-delay: 0.125s;
+    }`}
 
-  ${Title} {
-    color: ${({ imageUrl }) => (imageUrl ? '#f0f0f0' : '#000')};
-    z-index: 1;
-    letter-spacing: 0.6px;
-    font-weight: 500;
+  ${({ isClicked, imageUrl }) =>
+    isClicked &&
+    `
+      background-color: #00adef;
+      color: white;
+      svg {
+        fill: ${!imageUrl && '#fff'};
+      }
+  `}
+
+  :hover {
+    ${Background} {
+      transform: ${({ isClicked }) => !isClicked && 'scale(1.1)'};
+      &:after {
+        opacity: ${({ isClicked }) => !isClicked && '0.2'};
+      }
+    }
+    ${Title} {
+      color: ${({ imageUrl }) => imageUrl && '#fff'};
+    }
   }
-`
-
-const Background = styled.div`
-  background-image: ${({ imageUrl }) => (imageUrl ? `url('${imageUrl}')` : 'none')};
-  background-size: cover;
-  transition: transform 0.2s linear;
-
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 `
 
 const Container = styled.div`
@@ -78,36 +161,87 @@ const Container = styled.div`
     width: 50px;
     fill: #00adef;
   }
-
-  :active {
-    ${Box} {
-      background-color: #00adef;
-      color: white;
-    }
-
-    ${Background} {
-      transform: scale(1.2);
-    }
-
-    svg {
-      fill: #fff;
-    }
-
-    ${Title} {
-      color: #fff;
-    }
-  }
 `
 
-const Tile = ({ title, Icon, imageUrl, onClick }) => (
-  <Container onClick={onClick}>
-    <Box imageUrl={imageUrl}>
-      {imageUrl && <Background imageUrl={imageUrl} />}
-      {Icon && <Icon />}
-      <Title>{title}</Title>
+const Content = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  border-radius: 15px;
+  padding: 0.75rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: ${({ imageUrl }) => (imageUrl ? 'start' : 'center')};
+  justify-content: ${({ imageUrl }) => (imageUrl ? 'flex-end' : 'space-evenly')};
+  ${({ imageUrl }) =>
+    imageUrl &&
+    `
+  &:after {
+    content: '';
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.7) 100%);
+  }
+  `}
+`
+
+const TileDiv = ({ title, Icon, imageUrl, handleClick, isClicked, listSelected, highlight }) => (
+  <Container>
+    <Box
+      highlight={highlight}
+      imageUrl={imageUrl}
+      isClicked={isClicked}
+      listSelected={listSelected}
+      onClick={handleClick}
+    >
+      <Content imageUrl={imageUrl}>
+        {imageUrl && <Background imageUrl={imageUrl} isClicked={isClicked} />}
+        {Icon && <Icon />}
+        <Title imageUrl={imageUrl} isClicked={isClicked}>
+          {title}
+        </Title>
+      </Content>
     </Box>
   </Container>
 )
+
+const Tile = compose(
+  withState('isClicked', 'setIsClicked', false),
+  withHandlers({
+    handleClick: ({ setIsClicked, listSelected, selectInList, onClick, highlight }) => () => {
+      if (!listSelected) {
+        setIsClicked(true)
+        selectInList()
+        timeout.set(
+          'pluginClickItem',
+          () => {
+            return onClick()
+          },
+          highlight ? 300 : 10
+        )
+      }
+    },
+  }),
+  lifecycle({
+    componentWillUnmount() {
+      timeout.clear('pluginClickItem')
+    },
+    componentDidUpdate() {
+      const { listSelected, isClicked, setIsClicked } = this.props
+      if (isClicked && !listSelected) {
+        setIsClicked(false)
+      }
+    },
+  })
+)(TileDiv)
 
 export { Tile, TilesWrapper }
 export default Tile
