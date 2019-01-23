@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190117202310) do
+ActiveRecord::Schema.define(version: 20190122140751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(version: 20190117202310) do
     t.bigint "account_id"
     t.index ["account_id"], name: "index_chat_steps_on_account_id"
     t.index ["scripted_chat_id"], name: "index_chat_steps_on_scripted_chat_id"
+  end
+
+  create_table "generated_urls", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_generated_urls_on_user_id"
   end
 
   create_table "navigation_items", force: :cascade do |t|
@@ -217,6 +225,7 @@ ActiveRecord::Schema.define(version: 20190117202310) do
   add_foreign_key "chat_options", "chat_steps", column: "destination_chat_step_id"
   add_foreign_key "chat_steps", "accounts"
   add_foreign_key "chat_steps", "scripted_chats"
+  add_foreign_key "generated_urls", "users"
   add_foreign_key "navigation_items", "accounts"
   add_foreign_key "navigation_items", "navigations"
   add_foreign_key "navigations", "accounts"

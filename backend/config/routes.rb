@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
       get "/path/autocomplete", to: "autocompletes#path_autocomplete"
 
+      resources :generated_urls, only: %i[index create]
+
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
     end

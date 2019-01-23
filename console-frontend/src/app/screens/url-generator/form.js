@@ -2,7 +2,7 @@ import Autocomplete from 'shared/autocomplete'
 import React from 'react'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
-import { apiPathAutocomplete, apiPersonasAutocomplete } from 'utils'
+import { apiGeneratedUrlCreate, apiPathAutocomplete, apiPersonasAutocomplete, apiRequest } from 'utils'
 import {
   Button,
   FormControl,
@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { Form } from 'shared/form-elements'
+import { withSnackbar } from 'notistack'
 
 const Option = styled.div`
   margin: 12px 0px;
@@ -160,6 +161,7 @@ export default compose(
   withProps(({ form }) => ({
     isDisabled: !(form.url && (form.autoOpen || form.step || form.personaId)),
   })),
+  withSnackbar,
   withHandlers({
     showOption: ({ setShowStep, setShowPersona }) => option => {
       if (option === 'step') setShowStep(true)
@@ -189,10 +191,21 @@ export default compose(
     setFieldValue: ({ form, setForm }) => event => {
       setForm({ ...form, [event.target.name]: event.target.value })
     },
-    onFormSubmit: ({ setIsModalOpened, setGeneratedUrl, form, formRef }) => event => {
+    onFormSubmit: ({
+      setIsModalOpened,
+      setGeneratedUrl,
+      form,
+      formRef,
+      urlHistory,
+      setUrlHistory,
+      enqueueSnackbar,
+    }) => async event => {
       event.preventDefault()
+      const url = generateUrl(form)
+      const { json, requestError } = await apiRequest(apiGeneratedUrlCreate, [{ url }])
+      requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setUrlHistory([json, ...urlHistory])
       if (!formRef.current.reportValidity()) return
-      setGeneratedUrl(generateUrl(form))
+      setGeneratedUrl(url)
       setIsModalOpened(true)
     },
   })

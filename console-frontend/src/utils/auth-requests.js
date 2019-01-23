@@ -16,6 +16,7 @@ const FLOWS_URL = `${BASE_API_URL}/flows`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
 const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
 const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
+const GENERATED_URLS_URL = `${BASE_API_URL}/generated_urls`
 const PATH_URL = `${BASE_API_URL}/path`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
@@ -139,6 +140,9 @@ export const apiTriggerCreate = body => apiCreateRequest(TRIGGERS_URL, body)
 export const apiTriggerShow = id => apiGetRequest(`${TRIGGERS_URL}/${id}`)
 export const apiTriggerUpdate = (id, body) => apiUpdateRequest(`${TRIGGERS_URL}/${id}`, body)
 export const apiTriggerSort = body => apiCreateRequest(`${TRIGGERS_URL}/sort`, body)
+
+export const apiGeneratedUrlList = () => apiGetRequest(GENERATED_URLS_URL)
+export const apiGeneratedUrlCreate = body => apiCreateRequest(GENERATED_URLS_URL, body)
 
 export const apiFlowsList = () => apiGetRequest(FLOWS_URL)
 export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocomplete/?${stringify(query)}`)
