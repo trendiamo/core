@@ -31,6 +31,7 @@ export default compose(
   enhanceList({
     breadcrumbs: [{ text: 'Showcases' }],
     columns,
+    defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,
     api: { fetch: apiShowcaseList, destroy: apiShowcaseDestroy },
     routes: { create: routes.showcaseCreate, edit: routes.showcaseEdit },

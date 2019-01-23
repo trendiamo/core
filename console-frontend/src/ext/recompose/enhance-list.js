@@ -30,7 +30,16 @@ const extractCountFromHeaders = headers =>
     10
   )
 
-const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help, highlightInactive }) => ResourceRow =>
+const enhanceList = ({
+  api,
+  columns,
+  defaultSorting = {},
+  breadcrumbs,
+  routes,
+  blankState,
+  help,
+  highlightInactive,
+}) => ResourceRow =>
   compose(
     withOnboardingHelp(help),
     withRouter,
@@ -50,8 +59,8 @@ const enhanceList = ({ api, columns, breadcrumbs, routes, blankState, help, high
     withProps({ label: breadcrumbs && breadcrumbs[0].text }),
     withState('records', 'setRecords', []),
     withState('recordsCount', 'setRecordsCount', 0),
-    withState('orderDirection', 'setOrderDirection', 'desc'),
-    withState('orderBy', 'setOrderBy', 'id'),
+    withState('orderDirection', 'setOrderDirection', defaultSorting.direction || 'desc'),
+    withState('orderBy', 'setOrderBy', defaultSorting.column || 'id'),
     withState('selectedIds', 'setSelectedIds', []),
     withState('isSelectAll', 'setIsSelectAll', false),
     withState('isLoading', 'setIsLoading', true),
