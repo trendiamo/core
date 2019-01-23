@@ -31,6 +31,7 @@ export default compose(
   enhanceList({
     breadcrumbs: [{ text: 'Navigations' }],
     columns,
+    defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,
     api: { fetch: apiNavigationList, destroy: apiNavigationDestroy },
     routes: { create: routes.navigationCreate, edit: routes.navigationEdit },

@@ -31,6 +31,7 @@ export default compose(
   enhanceList({
     breadcrumbs: [{ text: 'Outros' }],
     columns,
+    defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,
     api: { fetch: apiOutroList, destroy: apiOutroDestroy },
     routes: { create: routes.outroCreate, edit: routes.outroEdit },

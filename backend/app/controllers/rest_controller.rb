@@ -51,8 +51,14 @@ class RestController < ApplicationController
       return chain
     end
     column, direction = *sort_params
-    column = ActiveRecord::Base.connection.quote_column_name(column.underscore)
     direction = direction.match?(/asc/i) ? "asc" : "desc"
+    return sorting_by_active_state(chain, direction) if column.underscore == "active"
+    column = ActiveRecord::Base.connection.quote_column_name(column.underscore)
     chain.order("#{column} #{direction}")
+  end
+
+  def sorting_by_active_state(chain, direction)
+    direction = direction == "desc" ? "asc" : "desc"
+    chain.left_joins(:triggers).group(:id).order("count(triggers.id) #{direction}")
   end
 end

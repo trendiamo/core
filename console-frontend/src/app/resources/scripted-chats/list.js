@@ -31,6 +31,7 @@ export default compose(
   enhanceList({
     breadcrumbs: [{ text: 'Scripted Chats' }],
     columns,
+    defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,
     api: { fetch: apiScriptedChatList, destroy: apiScriptedChatDestroy },
     routes: { create: routes.scriptedChatCreate, edit: routes.scriptedChatEdit },
