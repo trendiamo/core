@@ -2,6 +2,8 @@ import auth from 'auth'
 import {
   apiFlowsAutocomplete,
   apiFlowsList,
+  apiGeneratedUrlCreate,
+  apiGeneratedUrlList,
   apiGetSignedUrlFactory,
   apiMe,
   apiMeUpdate,
@@ -88,6 +90,8 @@ export {
   apiTriggerShow,
   apiTriggerUpdate,
   apiTriggerSort,
+  apiGeneratedUrlCreate,
+  apiGeneratedUrlList,
   apiWebsiteShow,
   apiWebsiteUpdate,
 }

@@ -6,6 +6,7 @@ class User < ApplicationRecord
   acts_as_tenant
 
   belongs_to :account
+  has_many :generated_urls, dependent: :destroy
 
   def as_json(_options = {})
     attributes
