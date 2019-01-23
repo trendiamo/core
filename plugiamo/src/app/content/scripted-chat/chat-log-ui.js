@@ -16,10 +16,7 @@ const ChatLogUi = compose(
   })),
   withState('logs', 'setLogs', []),
   withHandlers({
-    onResetChat: ({ initialChatStep }) => () => {
-      chatLog.resetLogs()
-      chatLog.fetchStep(initialChatStep.id)
-    },
+    onResetChat: ({ initialChatStep }) => () => chatLog.fetchStep(initialChatStep.id),
     onStopChat: ({ onToggleContent }) => () => {
       const account = localStorage.getItem('trnd-plugin-account')
       if (account === 'Impressorajato') {
