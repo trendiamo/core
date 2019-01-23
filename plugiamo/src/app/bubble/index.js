@@ -6,7 +6,7 @@ import { h } from 'preact'
 // All time values are in seconds
 const defaultBubble = {
   message: 'Hi, welcome to Trendiamo!',
-  timeStart: 2,
+  timeStart: 0.5,
   timeEnd: 20,
   typingSpeed: 0.04,
   timeStartDuration: 0.4,
