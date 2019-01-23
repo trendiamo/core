@@ -40,8 +40,8 @@ modal.addFooterBtn('Start Demo', 'tingle-btn tingle-btn--primary', () => {
   modal.close()
 })
 
-const disclaimerPaths = ['/', '/guitars_home']
-const guitarNavPaths = ['/guitars_filtered_electric', '/guitars_filtered_classic', '/guitars_filtered_acoustic', '/guitars_filtered_semi_acoustic']
+const disclaimerPaths = ['/', '/guitars_home.html']
+const guitarNavPaths = ['/guitars_filtered_electric.html', '/guitars_filtered_classic.html', '/guitars_filtered_acoustic.html', '/guitars_filtered_semi_acoustic.html']
 
 const findNavElementIndex = (path, pathsArray) => {
   return pathsArray.findIndex((element) => {
