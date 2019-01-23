@@ -42,9 +42,10 @@ const Navigation = ({ navigationItems, onTileClick, persona }) => (
     <BelowCover>
       <Container>
         <TopSlideAnimation delay={250 * 1}>
-          <TilesWrapper>
+          <TilesWrapper objectForResetCheck={{ ...navigationItems, persona }}>
             {navigationItems.map((navigationItem, index) => (
               <Tile
+                highlight
                 imageUrl={navigationItem.picture.url}
                 key={navigationItem.id || `new-${index}`}
                 onClick={() => onTileClick(navigationItem)}
