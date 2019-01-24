@@ -1,0 +1,47 @@
+<extends src="layout.html">
+  <block name="content">
+    <include src="../shared/header.html"></include>
+    <div class="breadcrumbs-container-beige">
+      <div class="breadcrumbs">
+        <a class="breadcrumb-link" href="/">
+          <p>Home</p>
+        </a>
+        <img class="arrow-icon" alt="" src="/img/Icons/ic-card-arrow.svg" />
+        <a class="breadcrumb-link" href="/wetsuits">
+          <p>Wetsuits</p>
+        </a>
+        <img class="arrow-icon" alt="" src="/img/Icons/ic-card-arrow.svg" />
+        <p>Wetsuit 1</p>
+      </div>
+    </div>
+    <div class="pdp-main light-beige-pdp-main">
+      <div class="main-left-half light-beige-pdp-main">
+        <img class="pdp-img portrait" alt="" src="/img/pdp-images/lg-surfboard-full-length.png" />
+      </div>
+      <div class="main-right-half">
+        <div class="product-details pdp-big-screen">
+          <div class="product-info">
+            <include src="../product-details/wetsuit_1.html"></include>
+            <a class="buy-button-link" href="/purchased_jane_george.html">
+              <include src="../shared/buy-button.html"></include>
+            </a>
+          </div>
+          <div class="miniature-images">
+            <img class="shopping-icon" alt="" src="/img/miniature-images/miniature-surfboard-1.png" />
+            <img class="shopping-icon" alt="" src="/img/miniature-images/miniature-surfboard-2.png" />
+            <img class="shopping-icon" alt="" src="/img/miniature-images/miniature-surfboard-3.png" />
+          </div>
+        </div>
+        <div class="product-details pdp-small-screen">
+          <div class="product-info">
+            <a class="buy-button-link" href="/purchased_jane_george.html">
+              <include src="../shared/buy-button.html"></include>
+            </a>
+            <include src="../product-details/wetsuit_1.html"></include>
+          </div>
+        </div>
+      </div>
+    </div>
+    <include src="../shared/footer.html"></include>
+  </block>
+</extends>
