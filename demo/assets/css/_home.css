@@ -1,53 +1,56 @@
 .home-main {
-  background-color: #92a2af;
   overflow: hidden;
   height: 85vh;
 }
 
-.main-left-third {
-  display: flex;
-  justify-content: center;
-}
-
 .main-info-section {
-  position: relative;
-  top: 220px;
-  z-index: 1;
-  width: 250px;
+  background-image: url('../img/home-page-images/img-header.png');
+  background-size: cover;
+  padding-left: 100px;
+  height: 400px;
+  width: 100%;
   line-height: 1.1;
   font-size: 44px;
   color: #ffffff;
-  text-align: center;
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
+.main-info-text p {
+  margin: 0px;
+}
+
+.banner-text-top {
+  font-weight: bold;
+  font-size: 42px;
+}
+
+.banner-text-bottom {
+  font-size: 30px;
+}
+
 .main-info-textbox {
   font-size: 12px;
-  width: 110px;
+  margin-bottom: 20px;
+  width: 200px;
   height: 35px;
+  text-align: center;
   font-weight: bold;
-  background-color: #6b727b;
+  background-color: #ff7d31;
   color: #ffffff;
-  align-self: center;
 }
 
 .main-info-button {
+  margin-top: 20px;
   font-size: 15px;
+  text-align: center;
   width: 222px;
   font-weight: bold;
   color: #ffffff;
   border: solid;
   border-color: #e4d0d3;
-}
-
-.main-right-third {
-  position: relative;
-  bottom: 450px;
-  display: flex;
-  justify-content: center;
 }
 
 .card {
@@ -66,24 +69,11 @@
     display: flex;
     height: auto;
   }
-  .main-left-third {
-    flex: 1;
-  }
-  .main-right-third {
-    position: static;
-    flex: 2;
-  }
-  .main-info-section {
-    position: static;
-    margin-left: 100px;
-    margin-right: 20%;
-  }
 }
 
 .body {
   width: 100%;
   margin: 0px;
-  background-color: #aeb8c0;
 }
 
 .products-container {
@@ -95,7 +85,7 @@
 .product-card-1 {
   height: 360px;
   width: 264px;
-  background-color: #f3f3f1;
+  border: 1px solid black;
   flex-shrink: 3;
   display: flex;
 }
@@ -108,7 +98,7 @@
   height: 360px;
   width: 263px;
   flex-shrink: 1;
-  background-color: #f3f3f1;
+  border: 1px solid black;
 }
 
 .product-card-2:hover {
@@ -119,7 +109,7 @@
   flex-shrink: 3;
   width: 263px;
   height: 360px;
-  background-color: #f3f3f1;
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,13 +129,6 @@
   overflow: hidden;
 }
 
-.surfboard-right-half {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 #surfboard-price {
   font-size: 24px;
   font-weight: normal !important;
@@ -157,7 +140,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #ffffff;
   overflow: hidden;
 }
 
@@ -186,13 +168,6 @@
 }
 
 @media (min-width: 1201px) {
-  .main-left-third {
-    justify-content: flex-end;
-  }
-  .main-info-section {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
   .product-card-1 {
     height: 458px;
   }
@@ -234,32 +209,6 @@
   }
 }
 
-#glasses-card {
-  flex-direction: column;
-  background-color: #ffffff;
-  align-items: center;
-  justify-content: space-around;
-}
-
-#glasses-price {
-  font-size: 24px;
-  font-weight: normal !important;
-  color: #000000;
-}
-
-#guitar-card {
-  display: flex;
-  flex-direction: column;
-  background-color: #eefafc;
-  text-align: center;
-  align-items: center;
-}
-
-#guitar-card p {
-  display: inline-block;
-  position: relative;
-}
-
 #guitar-card p:before {
   content: "";
   position: absolute;
@@ -268,29 +217,6 @@
   top: 71px;
   left: 39px;
   border-bottom: 1.5px solid black;
-}
-
-#shirt-card {
-  background-color: #f3f3f1;
-  text-align: center;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
-
-#shoes-card {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  background-color: #f4e6dc;
-  text-align: center;
-}
-
-#shoes-card p {
-  display: inline-block;
-  position: relative;
 }
 
 #shoes-card p:before {
@@ -302,14 +228,6 @@
   left: 37px;
   left: 30%;
   border-bottom: 1.5px solid black;
-}
-
-#bag-card {
-  display: flex;
-  flex-direction: column;
-  background-color: #f3f3f1;
-  text-align: center;
-  align-items: center;
 }
 
 .product-link {
