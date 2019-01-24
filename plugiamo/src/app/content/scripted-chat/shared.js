@@ -1,3 +1,4 @@
+import ProductMessage from './product-message'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
 import VideoMessage from './video-message'
@@ -62,18 +63,35 @@ const MessageMetadata = styled.div`
   }
 `
 
+const extractYoutubeId = message => {
+  const regExp = /^\S*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/
+  const match = message.match(regExp)
+  return match && match[2].length === 11 && match[2]
+}
+
+const extractJson = message => {
+  if (message[0] !== '{') return
+  try {
+    return JSON.parse(message)
+  } catch (e) {
+    return null
+  }
+}
+
 const Message = compose(
   withProps(({ message }) => {
-    const regExp = /^\S*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/
-    const match = message.match(regExp)
-    const youtubeId = match && match[2].length === 11 && match[2]
+    const youtubeId = extractYoutubeId(message)
+    const product = extractJson(message)
     return {
       youtubeId,
+      product,
     }
   })
-)(({ message, onToggleContent, youtubeId }) =>
+)(({ message, onToggleContent, youtubeId, product }) =>
   youtubeId ? (
     <VideoMessage onToggleContent={onToggleContent} youtubeId={youtubeId} />
+  ) : product ? (
+    <ProductMessage product={product} />
   ) : (
     <TextMessage dangerouslySetInnerHTML={{ __html: snarkdown(message) }} />
   )
