@@ -23,23 +23,6 @@ const InnerContent = styled.div`
   flex-direction: column;
 `
 
-const PoweredBy = styled(({ className }) => (
-  <div className={className}>
-    {'Trusted by '}
-    <a href="https://trendiamo.com" rel="noopener noreferrer" target="_blank">
-      {'Trendiamo'}
-    </a>
-  </div>
-))`
-  color: #999;
-  font-size: small;
-  text-align: center;
-  a {
-    color: #5d69b9;
-    text-decoration: none;
-  }
-`
-
 const Name = styled.div`
   font-size: 18px;
   font-weight: bold;
@@ -51,11 +34,6 @@ const PersonaImg = styled.img`
   height: 80px;
   width: 80px;
   object-fit: cover;
-`
-
-const Footer = styled.div`
-  display: flex;
-  width: 100%;
 `
 
 const Hr = styled.hr`
@@ -73,10 +51,6 @@ const Outro = ({ persona }) => (
       <Hr />
       <p>{'Enjoy and let me know what you think! 🙌'}</p>
     </InnerContent>
-    <Footer>
-      <div style={{ flex: 1 }} />
-      <PoweredBy />
-    </Footer>
   </Wrapper>
 )
 
