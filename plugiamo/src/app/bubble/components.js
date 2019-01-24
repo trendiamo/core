@@ -77,7 +77,7 @@ const Container = styled.div`
   align-items: center;
 `
 
-const TextWidthMeasure = styled.span`
+const TextWidthMeasure = styled.div`
   font-size: 14px;
   font-weight: 700;
   top: 0;
