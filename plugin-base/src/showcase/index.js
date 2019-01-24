@@ -20,6 +20,7 @@ const ColFlexDiv = styled.div`
 `
 
 export const Showcase = ({
+  FlowBackButton,
   history,
   onRouteChange,
   routeToShowcase,
@@ -33,7 +34,7 @@ export const Showcase = ({
   <ColFlexDiv>
     <Cover>
       <Router history={history} onChange={onRouteChange}>
-        <ShowcaseCover path="/showcase/:id" subtitle={subtitle} title={title} />
+        <ShowcaseCover FlowBackButton={FlowBackButton} path="/showcase/:id" subtitle={subtitle} title={title} />
         <SpotlightCover
           path="/showcase/:showcaseId/spotlight/:spotlightId"
           routeToShowcase={routeToShowcase}

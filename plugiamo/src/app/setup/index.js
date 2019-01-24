@@ -1,5 +1,6 @@
 import addPicture from './add-picture'
 import routes from 'app/routes'
+import setupFlowHistory, { pushPath } from './flow-history'
 import { isSmall } from 'utils'
 import { location } from 'config'
 
@@ -25,13 +26,21 @@ const getMatchedPersona = ({ flow, data }) => {
 }
 
 const setup = data => {
-  const { /* persona,*/ open: openOpt, path, picture } = optionsFromHash()
+  const { /* persona,*/ open: openOpt, path: pathOpt, picture } = optionsFromHash()
   const { flow, type: flowType } = { flow: data.flow, type: data.flow.flowType }
-  const open = isSmall() ? false : (openOpt && openOpt.match(/1|true/)) || flowType === 'outro'
+  const pathFromNav = setupFlowHistory()
+  const open = pathFromNav ? true : isSmall() ? false : (openOpt && openOpt.match(/1|true/)) || flowType === 'outro'
 
   if (picture) addPicture(picture)
 
-  window.__trndInitialPath = path ? path : flow ? routes[flowType](flow.id) : undefined
+  window.__trndInitialPath = pathFromNav
+    ? pathFromNav
+    : pathOpt
+    ? pathOpt
+    : flow
+    ? routes[flowType](flow.id)
+    : undefined
+  if (window.__trndInitialPath && !pathFromNav) pushPath(window.__trndInitialPath)
 
   return {
     flowType,

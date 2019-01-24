@@ -4,7 +4,7 @@ import { animate } from 'shared/animate'
 const Cover = styled.div`
   background-color: #232323;
   color: #fff;
-  padding: 20px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   height: 100px;
@@ -17,6 +17,12 @@ const Cover = styled.div`
   @media (min-height: 500px) {
     position: fixed;
   }
+`
+
+const CoverInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `
 
 const BelowCover = styled.div`
@@ -50,6 +56,6 @@ const PersonaDescription = animate(
   250 * 2
 )
 
-export { BelowCover, CoverImg, PersonaDescription, PaddedCover }
+export { BelowCover, CoverImg, CoverInner, PersonaDescription, PaddedCover }
 
 export default Cover

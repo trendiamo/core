@@ -27,14 +27,11 @@ const BackButton = animate(
     font-size: 14px;
     font-weight: 500;
 
-    position: absolute;
-    left: 10px;
-    top: 10px;
-
     background: transparent;
     outline: none;
     border: none;
     padding: 0;
+    margin-bottom: 5px;
 
     transform: ${({ isEntering, isLeaving }) => (isEntering || isLeaving ? 'translateY(-200px)' : 'none')};
     transition: transform 0.6s ease;

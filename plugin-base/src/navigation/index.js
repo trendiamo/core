@@ -1,7 +1,7 @@
 import Cover, { BelowCover } from 'shared/cover'
 import React from 'react'
 import styled from 'styled-components'
-import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
+import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
 import { Tile, TilesWrapper } from 'shared/tiles'
 import { TopSlideAnimation } from 'shared/animate'
 
@@ -22,22 +22,25 @@ const Container = styled.div`
   background-color: #ebeef2;
 `
 
-const NavigationCover = ({ persona }) => (
-  <FlexDiv>
-    <CoverImg src={persona.profilePic.url} />
-    <PaddedCover>
-      <span>{persona.name}</span>
-      <TopSlideAnimation delay={250 * 0}>
-        <PersonaDescription>{persona.description}</PersonaDescription>
-      </TopSlideAnimation>
-    </PaddedCover>
-  </FlexDiv>
+const NavigationCover = ({ FlowBackButton, persona }) => (
+  <CoverInner>
+    <FlowBackButton />
+    <FlexDiv>
+      <CoverImg src={persona.profilePic.url} />
+      <PaddedCover>
+        <span>{persona.name}</span>
+        <TopSlideAnimation delay={250 * 0}>
+          <PersonaDescription>{persona.description}</PersonaDescription>
+        </TopSlideAnimation>
+      </PaddedCover>
+    </FlexDiv>
+  </CoverInner>
 )
 
-const Navigation = ({ navigationItems, onTileClick, persona }) => (
+const Navigation = ({ FlowBackButton, navigationItems, onTileClick, persona }) => (
   <ColFlexDiv>
     <Cover>
-      <NavigationCover persona={persona} />
+      <NavigationCover FlowBackButton={FlowBackButton} persona={persona} />
     </Cover>
     <BelowCover>
       <Container>
