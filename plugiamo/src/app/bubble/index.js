@@ -22,7 +22,7 @@ const ChatBubble = ({ position, bubble, message, animation, bar, setTextWidthRef
         {message}
       </ChatBubbleBase>
       {bar && <TextBar />}
-      <TextWidthMeasure ref={setTextWidthRef} />
+      <TextWidthMeasure ref={setTextWidthRef}>{bubble.message}</TextWidthMeasure>
     </Container>
   </ChatBubbleFrame>
 )
@@ -59,9 +59,8 @@ export default compose(
     let textWidthRef
     return {
       setTextWidthRef: () => ref => (textWidthRef = ref),
-      changeTextWidth: ({ bubble, setTextWidth }) => () => {
+      changeTextWidth: ({ setTextWidth }) => () => {
         if (textWidthRef) {
-          textWidthRef.base.innerHTML = bubble.message
           setTextWidth(textWidthRef.base.offsetWidth)
         }
       },
@@ -81,16 +80,14 @@ export default compose(
         changeTextWidth()
       }, timeStart)
       setTimeout(() => {
-        changeTextWidth()
-      }, timeStart + 25)
-      setTimeout(() => {
         setBar(true)
       }, timeStart + timeStartDuration)
       setTimeout(() => {
         writeText({ that: this })
       }, timeStart + timeStartDuration + startTypingAfter)
       setTimeout(() => {
-        setAnimation('unroll')
+        const { animation } = this.props
+        if (animation === 'roll') setAnimation('unroll')
       }, timeStart + timeStartDuration + timeEnd)
       setTimeout(() => {
         setAnimation(null)
@@ -103,5 +100,5 @@ export default compose(
       }
     },
   }),
-  branch(({ animation, showingContent, bubble }) => !bubble.message || (!animation || showingContent), renderNothing)
+  branch(({ showingContent, bubble }) => !bubble.message || showingContent, renderNothing)
 )(ChatBubble)

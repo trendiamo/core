@@ -27,7 +27,16 @@ const ChatBubbleFrame = styled(Frame).attrs({
   width: 100%;
   max-width: ${({ textWidth }) => textWidth + 48}px;
   overflow: hidden;
-  animation-name: ${({ animation }) => (animation === 'roll' ? '_frekkls_bubble_roll' : '_frekkls_bubble_unroll')};
+  ${({ animation }) =>
+    !animation &&
+    `
+    width: 0;
+    height: 0;
+    border-radius:0;
+    padding: 0;
+  `}
+  animation-name: ${({ animation }) =>
+    animation === 'roll' ? '_frekkls_bubble_roll' : animation === 'unroll' && '_frekkls_bubble_unroll'};
   animation-duration: ${({ animation, bubble }) =>
     animation === 'roll' ? bubble.timeStartDuration : bubble.timeEndDuration}s;
   cursor: pointer;
