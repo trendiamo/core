@@ -2,13 +2,12 @@ import BackButton from 'shared/back-button'
 import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
-import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
+import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
 import { TopSlideAnimation } from 'shared/animate'
 import { transition } from 'ext'
 
 const FlexDiv = styled.div`
   display: flex;
-  padding-top: 14px;
 `
 
 const SpotlightCover = compose(
@@ -35,16 +34,18 @@ const SpotlightCover = compose(
   })),
   branch(({ spotlight }) => !spotlight, renderNothing)
 )(({ isLeaving, routeToShowcase, setImgRef, setNameRef, spotlight }) => (
-  <FlexDiv>
-    <CoverImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
-    <PaddedCover>
-      <span ref={setNameRef}>{spotlight.persona.name}</span>
-      <TopSlideAnimation delay={250 * 1}>
-        <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
-      </TopSlideAnimation>
-    </PaddedCover>
+  <CoverInner>
     <BackButton isLeaving={isLeaving} onClick={routeToShowcase} />
-  </FlexDiv>
+    <FlexDiv>
+      <CoverImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
+      <PaddedCover>
+        <span ref={setNameRef}>{spotlight.persona.name}</span>
+        <TopSlideAnimation delay={250 * 1}>
+          <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
+        </TopSlideAnimation>
+      </PaddedCover>
+    </FlexDiv>
+  </CoverInner>
 ))
 
 export default SpotlightCover

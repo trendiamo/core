@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { CoverInner } from 'shared/cover'
 import { TopSlideAnimation } from 'shared/animate'
 
 const Title = styled.div`
@@ -11,11 +12,14 @@ const SubTitle = styled.div`
   font-size: 14px;
 `
 
-const ShowcaseCover = ({ isLeaving, subtitle, title }) => (
-  <TopSlideAnimation delay={250 * 0} isLeaving={isLeaving}>
-    <Title>{title}</Title>
-    <SubTitle>{subtitle}</SubTitle>
-  </TopSlideAnimation>
+const ShowcaseCover = ({ FlowBackButton, isLeaving, subtitle, title }) => (
+  <CoverInner>
+    <FlowBackButton />
+    <TopSlideAnimation delay={250 * 0} isLeaving={isLeaving}>
+      <Title>{title}</Title>
+      <SubTitle>{subtitle}</SubTitle>
+    </TopSlideAnimation>
+  </CoverInner>
 )
 
 export default ShowcaseCover

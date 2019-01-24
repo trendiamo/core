@@ -1,6 +1,15 @@
 import ChatLogUi from './chat-log-ui'
+import FlowBackButton from 'shared/flow-back-button'
 import styled from 'styled-components'
-import { BelowCover, Cover, CoverImg, PaddedCover, PersonaDescription, TopSlideAnimation } from 'plugin-base'
+import {
+  BelowCover,
+  Cover,
+  CoverImg,
+  CoverInner,
+  PaddedCover,
+  PersonaDescription,
+  TopSlideAnimation,
+} from 'plugin-base'
 import { branch, compose, renderNothing, withProps } from 'recompose'
 import { ChatBackground } from './shared'
 import { Consumer } from 'ext/graphql-context'
@@ -12,15 +21,18 @@ const FlexDiv = styled.div`
 `
 
 export const CoverScriptedChat = ({ persona }) => (
-  <FlexDiv>
-    <CoverImg src={persona.profilePic.url} />
-    <PaddedCover>
-      <span>{persona.name}</span>
-      <TopSlideAnimation timeout={250 * 1}>
-        <PersonaDescription>{persona.description}</PersonaDescription>
-      </TopSlideAnimation>
-    </PaddedCover>
-  </FlexDiv>
+  <CoverInner>
+    <FlowBackButton />
+    <FlexDiv>
+      <CoverImg src={persona.profilePic.url} />
+      <PaddedCover>
+        <span>{persona.name}</span>
+        <TopSlideAnimation timeout={250 * 1}>
+          <PersonaDescription>{persona.description}</PersonaDescription>
+        </TopSlideAnimation>
+      </PaddedCover>
+    </FlexDiv>
+  </CoverInner>
 )
 
 const H2 = styled.h2`

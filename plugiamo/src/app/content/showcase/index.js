@@ -1,9 +1,11 @@
+import FlowBackButton from 'shared/flow-back-button'
 import i18n from 'ext/i18n'
 import mixpanel from 'ext/mixpanel'
 import routes from 'app/routes'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
+import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
 
 const convertSpotlights = spotlights => {
   return spotlights.map(spotlight => {
@@ -12,7 +14,7 @@ const convertSpotlights = spotlights => {
 }
 
 const Showcase = compose(
-  withProps({ history }),
+  withProps({ history, FlowBackButton }),
   graphql(
     gql`
       query($id: ID!) {
@@ -54,8 +56,16 @@ const Showcase = compose(
     title: data.showcase && data.showcase.title,
   })),
   withHandlers({
-    routeToShowcase: ({ showcase }) => () => history.replace(routes.showcase(showcase.id)),
-    routeToSpotlight: ({ showcase }) => spotlight => history.replace(routes.spotlight(showcase.id, spotlight.id)),
+    routeToShowcase: ({ showcase }) => () => {
+      const newRoute = routes.showcase(showcase.id)
+      replaceLastPath(newRoute)
+      history.replace(newRoute)
+    },
+    routeToSpotlight: ({ showcase }) => spotlight => {
+      const newRoute = routes.spotlight(showcase.id, spotlight.id)
+      replaceLastPath(newRoute)
+      history.replace(newRoute)
+    },
   }),
   withHandlers({
     onSpotlightClick: ({ routeToSpotlight }) => ({ spotlight }) => () => {
@@ -78,6 +88,7 @@ const Showcase = compose(
           productName: product.name,
         },
         () => {
+          markGoFwd()
           window.location = product.url
         }
       )
