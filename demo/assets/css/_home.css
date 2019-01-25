@@ -4,7 +4,7 @@
 }
 
 .main-info-section {
-  background-image: url('../img/home-page-images/Mobile.png');
+  background-image: url("../img/home-page-images/Mobile.png");
   background-size: cover;
   padding-left: 10%;
   padding-right: 10%;
@@ -75,10 +75,9 @@
     width: 100%;
     padding-left: 100px;
     height: 400px;
-    background-image: url('../img/home-page-images/img-header.png');
+    background-image: url("../img/home-page-images/img-header.png");
   }
 }
-
 
 .body {
   width: 100%;
@@ -93,10 +92,11 @@
 
 .product-card-1 {
   width: 263px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, 0.16);
   height: 360px;
   flex-shrink: 3;
   display: flex;
+  border-radius: 6px;
 }
 
 .product-card-1:hover {
@@ -108,12 +108,13 @@
   color: #000000;
   height: 458px;
   width: 264px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, 0.16);
   margin: 0px;
   font-size: 16px;
   flex-shrink: 1;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius: 6px;
 }
 
 .product-card-2:hover {
@@ -123,7 +124,7 @@
 .product-card-3 {
   flex-shrink: 3;
   width: 263px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, 0.16);
   height: 360px;
   display: flex;
   flex-direction: column;
@@ -150,11 +151,11 @@
 }
 
 #category-card-surfboards {
-  background-image: url('/img/home-page-images/categories/surboards.png');
+  background-image: url("/img/home-page-images/categories/surboards.png");
 }
 
 #category-card-wetsuits {
-  background-image: url('/img/home-page-images/categories/wetsuits.png');
+  background-image: url("/img/home-page-images/categories/wetsuits.png");
 }
 
 #home-surfboard-first {

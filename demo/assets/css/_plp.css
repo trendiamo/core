@@ -15,6 +15,7 @@
   display: flex;
   background-color: #ffffff;
   flex-direction: column;
+  border-radius: 6px;
 }
 
 .plp-image {
