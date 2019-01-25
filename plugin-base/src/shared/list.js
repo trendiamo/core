@@ -8,7 +8,10 @@ import { timeout } from 'ext'
 const ListChevron = styled(IconChevronRight)`
   height: 16px;
   width: 16px;
-  margin: 10px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 `
 
 const Ul = styled.ul`
@@ -43,11 +46,8 @@ const List = compose(
 // 101px makes it so 3 lines of text fit with no need for scroll
 const ListContent = styled.div`
   height: 101px;
-  padding: 8px 0 8px 10px;
-  flex: 1;
+  padding: 8px 36px 8px 10px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
   .Win32 & {
     letter-spacing: -0.2px;
   }
