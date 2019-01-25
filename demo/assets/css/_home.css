@@ -55,6 +55,12 @@
   border-color: #e4d0d3;
 }
 
+.main-info-button:hover {
+  color: black;
+  background-color: #e4d0d3;
+  transition: 0.3s;
+}
+
 .card {
   font-weight: bold;
   text-align: center;
