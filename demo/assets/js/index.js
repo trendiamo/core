@@ -40,7 +40,7 @@ modal.addFooterBtn('Start Demo', 'tingle-btn tingle-btn--primary', () => {
   modal.close()
 })
 
-const disclaimerPaths = ['/', '/guitars_home.html']
+// const disclaimerPaths = ['/', '/guitars_home.html']
 const guitarNavPaths = ['/surfboards.html', '/wetsuits.html']
 
 const findNavElementIndex = (path, pathsArray) => {
