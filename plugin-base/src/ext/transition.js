@@ -31,12 +31,11 @@ const transition = {
     const liftedElement = this.elements[key].liftedElement
     const liftedRect = liftedElement.getBoundingClientRect()
     const landingRect = landingElement.getBoundingClientRect()
-    const liftedSize = Math.sqrt(liftedRect.width * liftedRect.height)
-    const landingSize = Math.sqrt(landingRect.width * landingRect.height)
     const topOffest = landingRect.top - liftedRect.top - (liftedRect.height - landingRect.height) / 2
     const leftOffest = landingRect.left - liftedRect.left - (liftedRect.width - landingRect.width) / 2
-    const scaleOffset = landingSize / liftedSize
-    liftedElement.style.transform = `translateY(${topOffest}px) translateX(${leftOffest}px) scale(${scaleOffset})`
+    const scaleOffsetX = landingRect.width / liftedRect.width
+    const scaleOffsetY = landingRect.height / liftedRect.height
+    liftedElement.style.transform = `translateY(${topOffest}px) translateX(${leftOffest}px) scale(${scaleOffsetX},${scaleOffsetY})`
 
     // reflect some of the unoptimized props as well:
     const style = getComputedStyle(landingElement)
