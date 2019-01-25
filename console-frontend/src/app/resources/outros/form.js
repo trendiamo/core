@@ -81,6 +81,7 @@ const emptyPreviewOutro = {
     profilePic: {
       url: '/img/icons/placeholder_avatar.png',
     },
+    instagramUrl: '',
   },
 }
 
@@ -95,6 +96,7 @@ export default compose(
       profilePic: {
         url: persona ? persona.profilePicUrl : emptyPreviewOutro.persona.profilePic.url,
       },
+      instagramUrl: persona ? persona.instagramUrl : null,
     }),
   }),
   withHandlers({

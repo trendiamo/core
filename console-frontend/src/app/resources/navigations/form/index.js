@@ -136,6 +136,7 @@ const defaults = {
     profilePic: {
       url: '/img/icons/placeholder_avatar.png',
     },
+    instagramUrl: '',
   },
   product: {
     text: 'Product Text',
@@ -182,6 +183,7 @@ export default compose(
       profilePic: {
         url: persona ? persona.profilePicUrl : defaults.persona.profilePic.url,
       },
+      instagramUrl: persona ? persona.instagramUrl : '',
     }),
   }),
   withHandlers({

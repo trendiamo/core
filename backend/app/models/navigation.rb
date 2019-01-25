@@ -16,7 +16,7 @@ class Navigation < ApplicationRecord
   def extra_attributes
     {
       persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name,
-                 description: persona.description, },
+                 description: persona.description, instagram_url: persona.instagram_url, },
       navigation_items_attributes: navigation_items.order(:order).map(&:as_json),
       type: "Navigation",
       trigger_ids: triggers.ids,

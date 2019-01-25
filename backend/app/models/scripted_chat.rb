@@ -27,6 +27,7 @@ class ScriptedChat < ApplicationRecord
     result = {
       persona: {
         id: persona.id, name: persona.name, profile_pic_url: persona.profile_pic_url,
+        instagram_url: persona.instagram_url,
       },
       type: "ScriptedChat",
       trigger_ids: triggers.ids,

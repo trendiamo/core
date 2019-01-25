@@ -62,6 +62,16 @@ const PersonaForm = ({
           value={form.description}
         />
         <FormHelperText>{"A short text that is shown near the persona's name."}</FormHelperText>
+        <TextField
+          disabled={isFormLoading || isCropping}
+          fullWidth
+          label="Instagram Profile URL"
+          margin="normal"
+          name="instagramUrl"
+          onChange={setFieldValue}
+          value={form.instagramUrl}
+        />
+        <FormHelperText>{"Instagram link icon will appear near the persona's name."}</FormHelperText>
         {progress && <ProgressBar progress={progress} />}
       </Form>
     </Grid>
@@ -82,6 +92,7 @@ export default compose(
         name: json.name || '',
         description: json.description || '',
         profilePicUrl: json.profilePicUrl || '',
+        instagramUrl: json.instagramUrl || '',
       }
     },
     loadFormObject: ({ loadFormObject }) => async () => {
@@ -101,6 +112,7 @@ export default compose(
     name: '',
     description: '',
     profilePicUrl: '',
+    instagramUrl: '',
   }),
   withRouter,
   withOnboardingConsumer,

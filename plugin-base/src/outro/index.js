@@ -1,3 +1,4 @@
+import PersonaInstagram from 'shared/persona-instagram'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -26,6 +27,7 @@ const InnerContent = styled.div`
 const Name = styled.div`
   font-size: 18px;
   font-weight: bold;
+  display: inline-block;
 `
 
 const PersonaImg = styled.img`
@@ -46,7 +48,10 @@ const Outro = ({ persona }) => (
   <Wrapper>
     <InnerContent>
       <PersonaImg src={persona.profilePic.url} />
-      <Name>{persona.name}</Name>
+      <Name>
+        <span style={{ verticalAlign: 'top' }}>{persona.name}</span>
+        <PersonaInstagram color="black" size="20px" url={persona.instagramUrl} />
+      </Name>
       <p>{'Thanks for buying my recommendation.'}</p>
       <Hr />
       <p>{'Enjoy and let me know what you think! 🙌'}</p>
