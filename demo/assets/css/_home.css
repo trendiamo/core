@@ -4,11 +4,12 @@
 }
 
 .main-info-section {
-  background-image: url('../img/home-page-images/img-header.png');
+  background-image: url('../img/home-page-images/Mobile.png');
   background-size: cover;
-  padding-left: 100px;
-  height: 400px;
-  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  height: 100%;
+  width: 80%;
   line-height: 1.1;
   font-size: 44px;
   color: #ffffff;
@@ -68,6 +69,12 @@
   .home-main {
     display: flex;
     height: auto;
+  }
+  .main-info-section {
+    width: 100%;
+    padding-left: 100px;
+    height: 400px;
+    background-image: url('../img/home-page-images/img-header.png');
   }
 }
 

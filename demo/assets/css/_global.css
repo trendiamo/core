@@ -195,7 +195,7 @@
 }
 
 .price {
-  color: #008eff;
+  color: #ff7d31;
   height: 30px;
   padding-bottom: 10px;
   opacity: 0.76;
@@ -228,7 +228,7 @@
   color: #ffffff;
   height: 52px;
   border-radius: 6px;
-  background-color: #008eff;
+  background-color: #ff7d31;
   display: flex;
   justify-content: center;
   align-items: center;
