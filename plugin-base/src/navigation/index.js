@@ -27,7 +27,7 @@ const NavigationCover = ({ FlowBackButton, persona }) => (
   <CoverInner>
     {FlowBackButton && <FlowBackButton />}
     <FlexDiv>
-      <CoverImg picture={persona.profilePic.url} />
+      <CoverImg src={persona.profilePic.url} />
       <PaddedCover>
         <span>{persona.name}</span>
         <PersonaInstagram url={persona.instagramUrl} />
