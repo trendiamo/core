@@ -1,4 +1,5 @@
 import Cover, { BelowCover } from 'shared/cover'
+import PersonaInstagram from 'shared/persona-instagram'
 import React from 'react'
 import styled from 'styled-components'
 import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
@@ -29,6 +30,7 @@ const NavigationCover = ({ FlowBackButton, persona }) => (
       <CoverImg src={persona.profilePic.url} />
       <PaddedCover>
         <span>{persona.name}</span>
+        <PersonaInstagram url={persona.instagramUrl} />
         <TopSlideAnimation delay={250 * 0}>
           <PersonaDescription>{persona.description}</PersonaDescription>
         </TopSlideAnimation>

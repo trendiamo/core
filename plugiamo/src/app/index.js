@@ -80,6 +80,7 @@ export default compose(
             profilePic {
               url
             }
+            instagramUrl
           }
         }
         persona(id: $personaId) @include(if: $hasPersona) {

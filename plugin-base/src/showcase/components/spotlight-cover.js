@@ -1,4 +1,5 @@
 import BackButton from 'shared/back-button'
+import PersonaInstagram from 'shared/persona-instagram'
 import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
@@ -40,6 +41,7 @@ const SpotlightCover = compose(
       <CoverImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
       <PaddedCover>
         <span ref={setNameRef}>{spotlight.persona.name}</span>
+        <PersonaInstagram url={spotlight.persona.instagramUrl} />
         <TopSlideAnimation delay={250 * 1}>
           <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
         </TopSlideAnimation>

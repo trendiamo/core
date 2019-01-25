@@ -24,6 +24,7 @@ export default compose(
         name: '',
         description: '',
         profilePicUrl: '',
+        instagramUrl: '',
       }
     },
   })

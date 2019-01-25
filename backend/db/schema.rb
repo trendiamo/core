@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190122140751) do
+ActiveRecord::Schema.define(version: 20190124175533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20190122140751) do
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
     t.string "graphcms_ref"
+    t.string "instagram_url"
     t.index ["account_id"], name: "index_personas_on_account_id"
   end
 

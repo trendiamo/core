@@ -8,6 +8,7 @@ import {
   CoverInner,
   PaddedCover,
   PersonaDescription,
+  PersonaInstagram,
   TopSlideAnimation,
 } from 'plugin-base'
 import { branch, compose, renderNothing, withProps } from 'recompose'
@@ -27,6 +28,7 @@ export const CoverScriptedChat = ({ persona }) => (
       <CoverImg src={persona.profilePic.url} />
       <PaddedCover>
         <span>{persona.name}</span>
+        <PersonaInstagram url={persona.instagramUrl} />
         <TopSlideAnimation timeout={250 * 1}>
           <PersonaDescription>{persona.description}</PersonaDescription>
         </TopSlideAnimation>
