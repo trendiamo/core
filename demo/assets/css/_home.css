@@ -137,9 +137,6 @@
   width: 263px;
   box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, 0.16);
   height: 360px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .product-card-3:hover {
