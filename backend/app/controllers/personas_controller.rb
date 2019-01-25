@@ -45,7 +45,7 @@ class PersonasController < RestController
   private
 
   def persona_params
-    params.require(:persona).permit(:name, :description, :profile_pic_url, :instagram_url)
+    params.require(:persona).permit(:name, :description, :profile_pic_url, :instagram_url, :profile_pic_animation_url)
   end
 
   def render_error

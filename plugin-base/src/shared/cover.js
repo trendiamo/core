@@ -1,5 +1,7 @@
+import React from 'react'
 import styled from 'styled-components'
 import { animate } from 'shared/animate'
+import { SingleImage } from 'shared/list'
 
 const Cover = styled.div`
   background-color: #232323;
@@ -35,14 +37,21 @@ const BelowCover = styled.div`
   }
 `
 
-const CoverImg = styled.img`
+const CoverImgContainer = styled.div`
   border-radius: 50%;
   height: 45px;
   min-height: 45px;
   width: 45px;
   min-width: 45px;
-  object-fit: cover;
+  position: relative;
+  overflow: hidden;
 `
+
+const CoverImg = ({ src, imgRef }) => (
+  <CoverImgContainer ref={imgRef}>
+    <SingleImage src={src} />
+  </CoverImgContainer>
+)
 
 const PaddedCover = styled.div`
   padding-left: 10px;

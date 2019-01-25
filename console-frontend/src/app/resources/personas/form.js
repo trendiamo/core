@@ -72,6 +72,16 @@ const PersonaForm = ({
           value={form.instagramUrl}
         />
         <FormHelperText>{"Instagram link icon will appear near the persona's name."}</FormHelperText>
+        <TextField
+          disabled={isFormLoading || isCropping}
+          fullWidth
+          label="Animated picture URL"
+          margin="normal"
+          name="profilePicAnimationUrl"
+          onChange={setFieldValue}
+          value={form.profilePicAnimationUrl}
+        />
+        <FormHelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</FormHelperText>
         {progress && <ProgressBar progress={progress} />}
       </Form>
     </Grid>
@@ -93,6 +103,7 @@ export default compose(
         description: json.description || '',
         profilePicUrl: json.profilePicUrl || '',
         instagramUrl: json.instagramUrl || '',
+        profilePicAnimationUrl: json.profilePicAnimationUrl || '',
       }
     },
     loadFormObject: ({ loadFormObject }) => async () => {
@@ -113,6 +124,7 @@ export default compose(
     description: '',
     profilePicUrl: '',
     instagramUrl: '',
+    profilePicAnimationUrl: '',
   }),
   withRouter,
   withOnboardingConsumer,

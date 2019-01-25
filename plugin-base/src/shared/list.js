@@ -53,15 +53,6 @@ const ListContent = styled.div`
   }
 `
 
-// 101px makes it so 3 lines of text fit with no need for scroll
-const ListImg = styled.img`
-  width: 101px;
-  height: 101px;
-  display: block;
-  border-radius: 8px 0 0 8px;
-  object-fit: cover;
-`
-
 const ListItem = compose(
   withState('isClicked', 'setIsClicked', false),
   lifecycle({
@@ -95,6 +86,7 @@ const ListItem = compose(
   position: relative;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  padding-left: 100px;
   display: flex;
   margin-bottom: 1rem;
   align-items: center;
@@ -149,4 +141,58 @@ const ListItem = compose(
     }`}
 `)
 
-export { List, ListContent, ListImg, ListChevron, ListItem }
+const ImageContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100px;
+  overflow: hidden;
+  border-radius: 8px 0 0 8px;
+`
+const SingleImage = styled.img`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  object-fit: cover;
+`
+const AnimatedImage = styled.img`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s;
+  opacity: 1;
+  animation: _frekkls_item_img_shared_animation 1s;
+  animation-fill-mode: forwards;
+  li:hover & {
+    opacity: 1;
+  }
+  li & {
+    animation: none;
+    opacity: 0;
+  }
+  @keyframes _frekkls_item_img_shared_animation {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+`
+
+const ListImg = ({ picture, animation, imgRef }) => (
+  <ImageContainer ref={imgRef}>
+    <SingleImage src={picture} />
+    {animation && <AnimatedImage src={animation} />}
+  </ImageContainer>
+)
+
+export { List, ListContent, ListImg, ListChevron, ListItem, SingleImage, AnimatedImage }
