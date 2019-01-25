@@ -16,6 +16,10 @@
   justify-content: space-around;
 }
 
+.description {
+  text-transform: none;
+}
+
 .breadcrumb-link {
   text-decoration: none;
   color: #5a6f80;

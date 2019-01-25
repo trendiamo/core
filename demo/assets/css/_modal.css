@@ -15,6 +15,10 @@
   text-align: center;
 }
 
+.disclaimer-main-text {
+  text-transform: none;
+}
+
 .disclaimer-heading {
   font-size: 24px;
 }
@@ -38,7 +42,6 @@
     width: 500px;
     text-align: center;
     position: relative;
-
   }
   .tingle-modal__close {
     position: fixed;
