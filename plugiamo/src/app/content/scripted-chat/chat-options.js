@@ -1,15 +1,13 @@
 import chatLog from './chat-log'
 import mixpanel from 'ext/mixpanel'
-import { ChatOptions as ChatOptionsBase } from './shared'
+import { ChatOptions as ChatOptionsBase, scrollToInPlugin } from './shared'
 import { compose, lifecycle, withHandlers } from 'recompose'
 import { location } from 'config'
 
 const ChatOptions = compose(
   lifecycle({
     componentDidMount() {
-      setTimeout(() => {
-        this.base.scrollIntoView({ behavior: 'smooth', block: 'end' })
-      }, 120)
+      scrollToInPlugin(this.base)
     },
   }),
   withHandlers({

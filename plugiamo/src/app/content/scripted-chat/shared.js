@@ -178,4 +178,23 @@ const ChatOptions = ({ log, onOptionClick }) => (
   </ChatOptionsContainer>
 )
 
-export { ChatBackground, ChatMessage, ChatOptions }
+const scrollAllParents = node => {
+  if (!node) return
+  if (node.scroll) node.scroll({ top: node.scrollHeight, behavior: 'smooth' })
+  scrollAllParents(node.parentNode)
+}
+
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+const scrollToInPlugin = node => {
+  setTimeout(() => {
+    if (isSafari) {
+      // with scrollIntoView, Safari would scroll the main page rather than just the plugin.
+      // we don't actually need to scroll all parents, just the right one, but this is simpler.
+      scrollAllParents(node)
+    } else {
+      node.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    }
+  }, 120)
+}
+
+export { ChatBackground, ChatMessage, ChatOptions, scrollToInPlugin }

@@ -1,5 +1,5 @@
 import chatLog from './chat-log'
-import { ChatMessage as ChatMessageBase } from './shared'
+import { ChatMessage as ChatMessageBase, scrollToInPlugin } from './shared'
 import { compose, lifecycle, withState } from 'recompose'
 
 const ChatMessage = compose(
@@ -7,17 +7,13 @@ const ChatMessage = compose(
   lifecycle({
     componentDidMount() {
       const { log, setIsMessageShown } = this.props
-      setTimeout(() => {
-        this.base.scrollIntoView({ behavior: 'smooth', block: 'end' })
-      }, 120)
+      scrollToInPlugin(this.base)
       const timestamp = chatLog.timestamp
       setTimeout(() => {
         setIsMessageShown(true)
         chatLog.addNextLog(log.nextLogs, timestamp)
         log.timestamp = Date.now()
-        setTimeout(() => {
-          this.base.scrollIntoView({ behavior: 'smooth', block: 'end' })
-        }, 120)
+        scrollToInPlugin(this.base)
       }, log.message.delay)
     },
   })
