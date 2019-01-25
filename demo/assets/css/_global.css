@@ -30,7 +30,7 @@
 }
 
 .breadcrumbs-container-beige {
-  background-color: #ecedea;
+  background-color: #ffffff;
 }
 
 .breadcrumbs-container-light-beige {
@@ -213,7 +213,7 @@
 
 .name {
   opacity: 0.64;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
   color: #000000;
 }
@@ -379,7 +379,7 @@
     text-align: left;
   }
   .buy-button {
-    width: 100%;
+    width: 288px;
   }
   .buy-button-link {
     margin-left: 0px;
@@ -408,7 +408,7 @@
 }
 
 .beige-pdp-main {
-  background-color: #f1f3ef;
+  background-color: #ffffff;
 }
 
 .grey-background {

@@ -1,9 +1,5 @@
 .light-beige-pdp-main {
-  background-color: #ecedea;
-}
-
-.light-beige-pdp-main {
-  background-color: #ecedea;
+  background-color: #ffffff;
 }
 
 .pdp-img {
@@ -35,11 +31,13 @@
 
 @media (min-width: 795px) {
   .pdp-img {
-    max-height: 100vh;
-    max-width: 80%;
+    min-width: 80%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
   }
   .portrait {
-    margin-top: 0px;
+    margin-top: 10px;
     margin-bottom: 0px;
   }
   #bike-img-lg {
