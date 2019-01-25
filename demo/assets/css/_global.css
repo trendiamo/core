@@ -93,12 +93,13 @@
 }
 
 .footer {
-  background-color: #f9fafb;
+  background-color: #eaeef2;
   color: #000000;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 2%;
 }
 
 .footer p {
@@ -145,6 +146,10 @@
   margin-left: 10px;
   margin-right: 10px;
   text-align: center;
+}
+
+.footer-disclaimer p {
+  font-size: 10px;
 }
 
 @media (min-width: 538px) {
@@ -195,9 +200,8 @@
 .product-info {
   display: flex;
   flex-direction: column;
-  padding-left: 10%;
-  margin-right: 20px;
-  padding-bottom: 20px;
+  padding: 2% 5%;
+  margin: 0px 20px;
 }
 
 .product-info p {
@@ -224,6 +228,7 @@
 .product-icons {
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 20%;
   object-fit: contain;
 }
 
