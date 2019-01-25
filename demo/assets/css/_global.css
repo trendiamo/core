@@ -62,6 +62,16 @@
 .banner-link {
   text-decoration: none;
   color: #000000;
+  flex: 1;
+  display: flex;
+  margin-left: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.banner-link p {
+  padding-left: 15px;
 }
 
 .banner-left {
@@ -74,6 +84,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-size: 20px;
 }
 
 .banner-right {
@@ -294,6 +305,7 @@
   .banner-link {
     flex: 1;
     display: flex;
+    margin-left: 40px;
     justify-content: center;
     align-items: center;
     text-align: center;
