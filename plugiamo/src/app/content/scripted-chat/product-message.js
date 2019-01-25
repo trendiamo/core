@@ -30,6 +30,7 @@ const Desc = styled.div`
 `
 
 const Price = styled.div`
+  white-space: nowrap;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0.1px;
