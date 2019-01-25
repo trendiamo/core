@@ -14,9 +14,7 @@
 .plp-card {
   display: flex;
   background-color: #ffffff;
-  border-radius: 10px;
   flex-direction: column;
-  border: 1px solid black;
 }
 
 .plp-image {
