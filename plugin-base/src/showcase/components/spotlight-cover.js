@@ -38,7 +38,7 @@ const SpotlightCover = compose(
   <CoverInner>
     <BackButton isLeaving={isLeaving} onClick={routeToShowcase} />
     <FlexDiv>
-      <CoverImg ref={setImgRef} src={spotlight.persona.profilePic.url} />
+      <CoverImg imgRef={setImgRef} src={spotlight.persona.profilePic.url} />
       <PaddedCover>
         <span ref={setNameRef}>{spotlight.persona.name}</span>
         <PersonaInstagram url={spotlight.persona.instagramUrl} />

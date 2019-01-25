@@ -30,7 +30,7 @@ const DisplayPrice = styled.div`
 
 const ProductItem = ({ spotlight, product, onClick, ...props }) => (
   <ListItem onClick={onClick({ product, spotlight })} {...props}>
-    <ListImg src={product.picture.url} />
+    <ListImg picture={product.picture.url} />
     <ListContent>
       <Content>
         <Name>{product.name}</Name>

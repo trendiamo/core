@@ -32,6 +32,7 @@ const Showcase = compose(
                 url
               }
               instagramUrl
+              profilePicAnimationUrl
             }
             productPicks {
               id

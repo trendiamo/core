@@ -36,6 +36,7 @@ class Showcase < ApplicationRecord
       description: spotlight.persona.description,
       profile_pic: spotlight.persona.profile_pic_url,
       instagram_url: spotlight.persona.instagram_url,
+      profile_pic_animation_url: spotlight.persona.profile_pic_animation_url,
     }
   end
 
