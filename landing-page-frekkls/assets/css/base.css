@@ -35,7 +35,7 @@ button {
 
 .button {
   appearance: none;
-  background-color: #ff543c;
+  background-color: #ff6e5d;
   border: 0;
   border-radius: 80px;
   letter-spacing: 0.8px;
@@ -391,87 +391,83 @@ button {
 
 /* DEMO PAGE */
 
-.stage {
-  width: 100%;
-  height: calc(100vh - 120px);
-  margin-bottom: 60px;
+#demo-hero {
+  background-image: url("/img/demo/bg-top.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  padding-bottom: 40px;
 }
 
-.stage-one-third {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  float: left;
-  width: 33.33%;
-  height: 100%;
-  background: pink;
-  border-right: 4px solid white;
+#demo-hero h3 {
+  color: white;
+  padding-top: 60px;
+  margin-bottom: 6px;
+  font-weight: bold;
 }
 
-.stage-one-third:last-child {
-  border: none;
-}
-
-.demo-showcase {
-  background-image: url("../img/demo/background_blur_showcase.png");
-  background-size: cover;
-  background-position: bottom;
-}
-
-.demo-navigation {
-  background-image: url("../img/demo/background_blur_navigation.png");
-  background-size: cover;
-  background-position: bottom;
-}
-
-.demo-chat {
-  background-image: url("../img/demo/background_blur_chat.png");
-  background-size: cover;
-  background-position: bottom;
+#demo-hero p {
+  color: white;
+  margin-bottom: 44px;
 }
 
 .feature-card {
-  position: relative;
-  width: 70%;
-  background: white;
-  border-radius: 10px;
+  float: left;
+  width: calc(33.33% - 40px);
+  height: 680px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, 0.2);
+  background-color: #ffffff;
+  margin: 20px;
   padding: 20px;
-  box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, .16);
-  max-height: 580px;
 }
 
-.pill-left {
-  position: absolute;
-  left: 20px;
+.feature-card-image {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.feature-card-image-ad {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, 0.2);
+  padding: 6px;
 }
 
 .feature-card h1 {
-  text-align: left;
-  font-size: 1.2rem;
+  font-size: 1.2em;
   font-weight: bold;
-  margin-bottom: 20px;
+  padding: 10px;
+  text-align: left;
+  line-height: 1.2em;
 }
 
 .feature-card p {
+  font-size: 1em;
+  color: #393939 !important;
   text-align: left;
-  margin-bottom: 10px;
-  min-height: 140px;
+  padding: 10px;
+  margin-bottom: 20px !important;
 }
 
 .feature-card a {
   text-decoration: none;
 }
 
-.feature-card-icon {
-  margin-top: 70px;
-  margin-bottom: 40px;
-  width: 60px;
-  height: 60px;
+.feature-card a:hover {
+  cursor: pointer;
 }
 
-.feature-card-button {
-  font-family: 'Dosis', sans-serif;
-  width: 200px;
+.feature-card .button {
+  display: inline-block;
+  width: auto;
+  font-size: 0.9em;
+}
+
+.demo-cta {
+  margin-bottom: 100px;
 }
 
 /* RESPONSIVE STUFF */
