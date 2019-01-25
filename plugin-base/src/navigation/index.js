@@ -24,7 +24,7 @@ const Container = styled.div`
 
 const NavigationCover = ({ FlowBackButton, persona }) => (
   <CoverInner>
-    <FlowBackButton />
+    {FlowBackButton && <FlowBackButton />}
     <FlexDiv>
       <CoverImg src={persona.profilePic.url} />
       <PaddedCover>

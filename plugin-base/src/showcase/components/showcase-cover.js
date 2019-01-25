@@ -14,7 +14,7 @@ const SubTitle = styled.div`
 
 const ShowcaseCover = ({ FlowBackButton, isLeaving, subtitle, title }) => (
   <CoverInner>
-    <FlowBackButton />
+    {FlowBackButton && <FlowBackButton />}
     <TopSlideAnimation delay={250 * 0} isLeaving={isLeaving}>
       <Title>{title}</Title>
       <SubTitle>{subtitle}</SubTitle>
