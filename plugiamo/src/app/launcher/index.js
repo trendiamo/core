@@ -3,9 +3,8 @@ import OriginalLauncher from './original'
 import PulsatingLauncher from './pulsating'
 import Variant from 'shared/variant'
 import { h } from 'preact'
-import { production } from 'config'
 
-const ExperimentLauncher = ({ ...props }) => (
+export const ExperimentLauncher = ({ ...props }) => (
   <Experiment experimentName="PulsatingLauncher">
     <Variant variantName="original">
       <OriginalLauncher {...props} />
@@ -16,6 +15,6 @@ const ExperimentLauncher = ({ ...props }) => (
   </Experiment>
 )
 
-const Launcher = production ? ExperimentLauncher : OriginalLauncher
+const Launcher = PulsatingLauncher
 
 export default Launcher
