@@ -53,8 +53,8 @@ window.onload = (event) => {
   // eslint-disable-next-line no-undef
   const url = new URL(event.target.body.baseURI)
   const guitarNavElements = document.querySelectorAll('.banner-hyperlink')
-  if (window.sessionStorage.getItem('firtVisit') !== 'true' && disclaimerPaths.includes(url.pathname)) modal.open()
-  if (disclaimerPaths.includes(url.pathname)) window.sessionStorage.setItem('firtVisit', 'true')
+  // if (window.sessionStorage.getItem('firtVisit') !== 'true' && disclaimerPaths.includes(url.pathname)) modal.open()
+  // if (disclaimerPaths.includes(url.pathname)) window.sessionStorage.setItem('firtVisit', 'true')
   const navItemIndex = findNavElementIndex(url.pathname, guitarNavPaths)
   guitarNavElements[navItemIndex] && guitarNavElements[navItemIndex].classList.add('nav-selected')
 }
