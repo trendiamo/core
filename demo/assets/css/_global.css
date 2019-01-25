@@ -134,6 +134,11 @@
   height: 35px;
 }
 
+.social-media-link {
+  color: #000000;
+  text-decoration: none;
+}
+
 .social-media-div p {
   padding-left: 10px;
 }
