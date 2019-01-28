@@ -48,7 +48,7 @@ const FormSection = ({
       )}
     </FlexBar>
     {!hideBottom && <Divider folded={folded} />}
-    <Collapse in={!folded} timeout="auto" unmountOnExit>
+    <Collapse in={!folded} timeout="auto">
       <Content>{children}</Content>
     </Collapse>
   </SectionContainer>
