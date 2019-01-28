@@ -15,7 +15,6 @@ import 'react-image-crop/dist/ReactCrop.css'
 const Container = styled.div`
   margin-bottom: 1rem;
   max-width: 400px;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 `
 
 const InnerLabel = styled.div`
@@ -120,7 +119,6 @@ const StatusMessage = styled.div`
   font-size: 14px;
   letter-spacing: 0.3px;
   color: rgba(0, 0, 0, 0.87);
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   line-height: 1.4;
 `
 

@@ -17,7 +17,6 @@ const StyledSelectLabel = styled.div`
 `
 
 const SelectLabelText = styled(Typography)`
-  font-family: Roboto, Helvetica, Arial, sans-serif;
   padding-left: 15px;
   color: #372727
   font-size: 16px;

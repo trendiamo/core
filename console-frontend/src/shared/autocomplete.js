@@ -9,7 +9,6 @@ import { FormControl, InputLabel } from '@material-ui/core'
 const StyledAsync = styled(Async).attrs({
   singleValueColor: ({ isFocussed }) => (isFocussed ? '#77777f' : '#372727'),
 })`
-  font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
   .react-select__control {
     color: #372727;
     padding: 0px;
@@ -72,11 +71,9 @@ const StyledAsync = styled(Async).attrs({
     color: ${({ singleValueColor }) => singleValueColor};
   }
   #react-select-2-input {
-    font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
     color: #372727;
   }
   #react-select-3-input {
-    font-family: 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
     color: #372727;
   }
 `

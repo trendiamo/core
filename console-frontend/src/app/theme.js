@@ -24,7 +24,6 @@ const typography = {
     fontSize: '33.4px',
     letterSpacing: '0.3px',
   },
-  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
 }
 
 const palette = {
