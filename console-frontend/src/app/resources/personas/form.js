@@ -129,16 +129,26 @@ export default compose(
   withRouter,
   withOnboardingConsumer,
   withHandlers({
-    onFormSubmit: ({ formRef, history, onFormSubmit, onboarding, setOnboarding, onboardingCreate }) => async event => {
+    onFormSubmit: ({
+      formRef,
+      history,
+      onFormSubmit,
+      onboarding,
+      onboardingCreate,
+      setOnboarding,
+      setIsFormSubmitting,
+    }) => async event => {
       if (!formRef.current.reportValidity()) return
+      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
-      if (result.error || result.errors) return
+      if (result.error || result.errors) return setIsFormSubmitting(false)
       setTimeout(() => {
         if (onboardingCreate && (onboarding.stageIndex < 2 && !onboarding.run)) {
           setOnboarding({ ...onboarding, stageIndex: 1, run: true })
         }
       }, 0)
       history.push(routes.personasList())
+      setIsFormSubmitting(false)
       return result
     },
     setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
@@ -146,12 +156,12 @@ export default compose(
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, onFormSubmit, create }) => ({
+  withAppBarContent(({ breadcrumbs, create, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
     Actions: (
       <Actions
         onFormSubmit={onFormSubmit}
         saveClassName={create && 'onboard-create-persona'}
-        saveDisabled={isFormLoading || isCropping}
+        saveDisabled={isFormSubmitting || isFormLoading || isCropping}
       />
     ),
     breadcrumbs,
