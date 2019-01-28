@@ -2,6 +2,7 @@ import ChatBubbleFrame from './frame'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { ChatBubbleBase, Container, TextBar, TextWidthMeasure } from './components'
 import { h } from 'preact'
+import { typeText } from 'plugin-base'
 
 // All time values are in seconds
 const defaultBubble = {
@@ -37,21 +38,16 @@ export default compose(
   })),
   withHandlers({
     writeText: ({ bubble, setMessage, setBar }) => ({ that }) => {
-      return new Promise(function(resolve) {
-        var messageArray = bubble.message.split('')
-        var currentLetter = 0
-        var typingSpeed = bubble.typingSpeed * 1000
-        setInterval(function() {
-          const { message } = that.props
-          if (currentLetter < messageArray.length) {
-            setMessage(message + messageArray[currentLetter++])
-          } else {
-            resolve()
-            setTimeout(() => {
-              setBar(false)
-            }, bubble.hideBarAfter * 1000)
-          }
-        }, typingSpeed)
+      typeText({
+        addMessage: text => {
+          setMessage(that.props.message + text)
+        },
+        speed: bubble.typingSpeed,
+        callback: () =>
+          setTimeout(() => {
+            setBar(false)
+          }, bubble.hideBarAfter * 1000),
+        textReference: bubble.message,
       })
     },
   }),

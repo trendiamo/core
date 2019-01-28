@@ -3,14 +3,15 @@
 const timeout = {
   list: {},
   namesCount: 0,
-  set(name, callback, delay) {
+  set(name, callback, delay, isInterval) {
     if (!this.list[name]) this.list[name] = []
-    this.list[name].push(setTimeout(callback, delay))
+    const generate = () => (isInterval ? setInterval(callback, delay) : setTimeout(callback, delay))
+    this.list[name].push(generate())
   },
-  clear(name) {
+  clear(name, isInterval) {
     if (this.list[name]) {
       this.list[name].map(item => {
-        clearTimeout(item)
+        isInterval ? clearInterval(item) : clearTimeout(item)
       })
       delete this.list[name]
     }

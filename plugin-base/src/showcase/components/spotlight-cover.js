@@ -4,8 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
 import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
-import { TopSlideAnimation } from 'shared/animate'
-import { transition } from 'ext'
+import { transition, withTextTyping } from 'ext'
 
 const FlexDiv = styled.div`
   display: flex;
@@ -33,8 +32,9 @@ const SpotlightCover = compose(
   withProps(({ spotlightId, spotlights }) => ({
     spotlight: spotlights.find(e => e.id == spotlightId),
   })),
-  branch(({ spotlight }) => !spotlight, renderNothing)
-)(({ isLeaving, routeToShowcase, setImgRef, setNameRef, spotlight }) => (
+  branch(({ spotlight }) => !spotlight, renderNothing),
+  withTextTyping(({ spotlight }) => spotlight.persona.description, 500)
+)(({ isLeaving, routeToShowcase, setImgRef, setNameRef, spotlight, currentDescription }) => (
   <CoverInner>
     <BackButton isLeaving={isLeaving} onClick={routeToShowcase} />
     <FlexDiv>
@@ -42,9 +42,7 @@ const SpotlightCover = compose(
       <PaddedCover>
         <span ref={setNameRef}>{spotlight.persona.name}</span>
         <PersonaInstagram url={spotlight.persona.instagramUrl} />
-        <TopSlideAnimation delay={250 * 1}>
-          <PersonaDescription>{spotlight.persona.description}</PersonaDescription>
-        </TopSlideAnimation>
+        <PersonaDescription text={spotlight.persona.description} typingText={currentDescription} />
       </PaddedCover>
     </FlexDiv>
   </CoverInner>
