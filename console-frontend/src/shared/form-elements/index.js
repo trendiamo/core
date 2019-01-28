@@ -3,6 +3,7 @@ import AddItemButton from './add-item-button'
 import AddItemContainer from './add-item-container'
 import Cancel from './cancel'
 import Divider from './divider'
+import Field from './field'
 import FlexBar from './flex-bar'
 import Form from './form'
 import FormSection from './form-section'
@@ -24,4 +25,5 @@ export {
   InlineTypography,
   Prompt,
   SaveButton,
+  Field,
 }

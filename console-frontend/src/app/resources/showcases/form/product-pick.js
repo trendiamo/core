@@ -1,7 +1,8 @@
+import characterLimits from 'shared/character-limits'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
-import { Cancel, FormSection } from 'shared/form-elements'
+import { Cancel, FormSection, Field as LimitedField } from 'shared/form-elements'
 import { DragHandle } from 'shared/sortable-elements'
 import { FormHelperText, TextField } from '@material-ui/core'
 
@@ -48,22 +49,24 @@ const ProductPick = ({
         'Use the whole url, eg: https://www.example.com/page1 - you can test it by clicking on the item in the preview. Hint: you can copy/paste links from the URL Generator.'
       }
     </FormHelperText>
-    <TextField
+    <LimitedField
       disabled={isCropping || isFormLoading}
       fullWidth
       label="Name"
       margin="normal"
+      max={characterLimits.showcase.productName}
       name="productPick_name"
       onChange={editProductPickValue}
       onFocus={onFocus}
       required
       value={productPick.name}
     />
-    <TextField
+    <LimitedField
       disabled={isCropping || isFormLoading}
       fullWidth
       label="Description"
       margin="normal"
+      max={characterLimits.showcase.productDescription}
       name="productPick_description"
       onChange={editProductPickValue}
       onFocus={onFocus}
