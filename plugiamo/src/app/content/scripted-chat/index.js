@@ -9,7 +9,7 @@ import {
   PaddedCover,
   PersonaDescription,
   PersonaInstagram,
-  TopSlideAnimation,
+  withTextTyping,
 } from 'plugin-base'
 import { branch, compose, renderNothing, withProps } from 'recompose'
 import { ChatBackground } from './shared'
@@ -21,20 +21,20 @@ const FlexDiv = styled.div`
   display: flex;
 `
 
-export const CoverScriptedChat = ({ persona }) => (
-  <CoverInner>
-    <FlowBackButton />
-    <FlexDiv>
-      <CoverImg src={persona.profilePic.url} />
-      <PaddedCover>
-        <span>{persona.name}</span>
-        <PersonaInstagram url={persona.instagramUrl} />
-        <TopSlideAnimation timeout={250 * 1}>
-          <PersonaDescription>{persona.description}</PersonaDescription>
-        </TopSlideAnimation>
-      </PaddedCover>
-    </FlexDiv>
-  </CoverInner>
+export const CoverScriptedChat = compose(withTextTyping(({ persona }) => persona.description, 300))(
+  ({ persona, currentDescription }) => (
+    <CoverInner>
+      <FlowBackButton />
+      <FlexDiv>
+        <CoverImg src={persona.profilePic.url} />
+        <PaddedCover>
+          <span>{persona.name}</span>
+          <PersonaInstagram url={persona.instagramUrl} />
+          <PersonaDescription text={persona.description} typingText={currentDescription} />
+        </PaddedCover>
+      </FlexDiv>
+    </CoverInner>
+  )
 )
 
 const H2 = styled.h2`

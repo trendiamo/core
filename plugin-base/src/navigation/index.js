@@ -2,9 +2,11 @@ import Cover, { BelowCover } from 'shared/cover'
 import PersonaInstagram from 'shared/persona-instagram'
 import React from 'react'
 import styled from 'styled-components'
+import { compose } from 'recompose'
 import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
 import { Tile, TilesWrapper } from 'shared/tiles'
 import { TopSlideAnimation } from 'shared/animate'
+import { withTextTyping } from 'ext'
 
 const ColFlexDiv = styled.div`
   flex: 1;
@@ -23,20 +25,20 @@ const Container = styled.div`
   background-color: #ebeef2;
 `
 
-const NavigationCover = ({ FlowBackButton, persona }) => (
-  <CoverInner>
-    {FlowBackButton && <FlowBackButton />}
-    <FlexDiv>
-      <CoverImg src={persona.profilePic.url} />
-      <PaddedCover>
-        <span>{persona.name}</span>
-        <PersonaInstagram url={persona.instagramUrl} />
-        <TopSlideAnimation delay={250 * 0}>
-          <PersonaDescription>{persona.description}</PersonaDescription>
-        </TopSlideAnimation>
-      </PaddedCover>
-    </FlexDiv>
-  </CoverInner>
+const NavigationCover = compose(withTextTyping(({ persona }) => persona.description, 300))(
+  ({ FlowBackButton, persona, currentDescription }) => (
+    <CoverInner>
+      {FlowBackButton && <FlowBackButton />}
+      <FlexDiv>
+        <CoverImg src={persona.profilePic.url} />
+        <PaddedCover>
+          <span>{persona.name}</span>
+          <PersonaInstagram url={persona.instagramUrl} />
+          <PersonaDescription text={persona.description} typingText={currentDescription} />
+        </PaddedCover>
+      </FlexDiv>
+    </CoverInner>
+  )
 )
 
 const Navigation = ({ FlowBackButton, navigationItems, onTileClick, persona }) => (
