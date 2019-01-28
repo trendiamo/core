@@ -1,4 +1,5 @@
 import Autocomplete from 'shared/autocomplete'
+import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import PluginPreview from 'shared/plugin-preview'
 import React from 'react'
@@ -7,7 +8,7 @@ import Section from 'shared/section'
 import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemContainer, Form } from 'shared/form-elements'
+import { Actions, AddItemContainer, Form, Field as LimitedField } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -102,11 +103,12 @@ const ShowcaseForm = ({
         required
       />
       <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
-      <TextField
+      <LimitedField
         disabled={isCropping || isFormLoading}
         fullWidth
         label="Title"
         margin="normal"
+        max={characterLimits.main.title}
         name="title"
         onChange={setFieldValue}
         onFocus={onBackClick}
@@ -114,11 +116,12 @@ const ShowcaseForm = ({
         value={form.title}
       />
       <FormHelperText>{'The title is shown in the cover.'}</FormHelperText>
-      <TextField
+      <LimitedField
         disabled={isCropping || isFormLoading}
         fullWidth
         label="Subtitle"
         margin="normal"
+        max={characterLimits.main.subtitle}
         name="subtitle"
         onChange={setFieldValue}
         onFocus={onBackClick}
@@ -126,11 +129,12 @@ const ShowcaseForm = ({
         value={form.subtitle}
       />
       <FormHelperText>{'The subtitle is shown in the cover, below the title.'}</FormHelperText>
-      <TextField
+      <LimitedField
         disabled={isFormLoading}
         fullWidth
         label="Chat Bubble Text"
         margin="normal"
+        max={characterLimits.main.chatBubble}
         name="chatBubbleText"
         onChange={setFieldValue}
         value={form.chatBubbleText}

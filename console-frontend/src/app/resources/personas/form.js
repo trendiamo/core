@@ -1,3 +1,4 @@
+import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
@@ -5,7 +6,7 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, Form } from 'shared/form-elements'
+import { Actions, Form, Field as LimitedField } from 'shared/form-elements'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
@@ -40,22 +41,24 @@ const PersonaForm = ({
           setPic={setProfilePic}
           value={form.profilePicUrl}
         />
-        <TextField
+        <LimitedField
           autoFocus
           disabled={isFormLoading || isCropping}
           fullWidth
           label="Name"
           margin="normal"
+          max={characterLimits.persona.name}
           name="name"
           onChange={setFieldValue}
           required
           value={form.name}
         />
-        <TextField
+        <LimitedField
           disabled={isFormLoading || isCropping}
           fullWidth
           label="Description"
           margin="normal"
+          max={characterLimits.persona.description}
           name="description"
           onChange={setFieldValue}
           required

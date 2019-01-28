@@ -1,4 +1,5 @@
 import Autocomplete from 'shared/autocomplete'
+import characterLimits from 'shared/character-limits'
 import ChatStep from './chat-step'
 import CircularProgress from 'shared/circular-progress'
 import React from 'react'
@@ -7,7 +8,7 @@ import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import withScriptedChatsForm from './with-scripted-chats-form'
-import { Actions, Form } from 'shared/form-elements'
+import { Actions, Form, Field as LimitedField } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, createSink, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
@@ -81,22 +82,24 @@ const ScriptedChatForm = ({
           required
         />
         <FormHelperText>{'The persona that will appear for this chat.'}</FormHelperText>
-        <TextField
+        <LimitedField
           disabled={isFormLoading}
           fullWidth
           label="Title"
           margin="normal"
+          max={characterLimits.main.title}
           name="title"
           onChange={setFieldValue}
           required
           value={form.title}
         />
         <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
-        <TextField
+        <LimitedField
           disabled={isFormLoading}
           fullWidth
           label="Chat Bubble Text"
           margin="normal"
+          max={characterLimits.main.chatBubble}
           name="chatBubbleText"
           onChange={setFieldValue}
           value={form.chatBubbleText}

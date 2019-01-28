@@ -1,4 +1,5 @@
 import Autocomplete from 'shared/autocomplete'
+import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import NavigationItem from './navigation-item'
 import PluginPreview from 'shared/plugin-preview'
@@ -7,7 +8,7 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemContainer, Form } from 'shared/form-elements'
+import { Actions, AddItemContainer, Form, Field as LimitedField } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -97,11 +98,12 @@ const NavigationForm = ({
         required
       />
       <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
-      <TextField
+      <LimitedField
         disabled={isFormLoading}
         fullWidth
         label="Chat Bubble Text"
         margin="normal"
+        max={characterLimits.main.chatBubble}
         name="chatBubbleText"
         onChange={setFieldValue}
         value={form.chatBubbleText}
