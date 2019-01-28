@@ -6,6 +6,7 @@ const withForm = initialForm => BaseComponent =>
     withState('initialForm', 'setInitialForm', initialForm),
     withState('form', 'setForm', ({ initialForm }) => initialForm),
     withState('isFormLoading', 'setIsFormLoading', true),
+    withState('isFormSubmitting', 'setIsFormSubmitting', false),
     withProps(({ form, initialForm }) => ({
       isFormPristine: isEqual(form, initialForm),
     })),

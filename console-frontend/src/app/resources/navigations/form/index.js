@@ -276,11 +276,13 @@ export default compose(
       })
       setPersona(convertPersona(value))
     },
-    onFormSubmit: ({ location, formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
+      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
-      if (result.error || result.errors) return
+      if (result.error || result.errors) return setIsFormSubmitting(false)
       if (location.pathname !== routes.navigationEdit(result.id)) history.push(routes.navigationEdit(result.id))
+      setIsFormSubmitting(false)
       return result
     },
     setPicture: ({ navigationItemsPictures, setNavigationItemsPictures }) => (index, blob, setProgress) => {
@@ -298,8 +300,8 @@ export default compose(
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isCropping || isFormLoading} />,
+  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormSubmitting || isCropping || isFormLoading} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({

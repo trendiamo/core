@@ -185,17 +185,19 @@ export default compose(
         personaId: value.id,
       })
     },
-    onFormSubmit: ({ location, formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
+      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
-      if (result.error || result.errors) return
+      if (result.error || result.errors) return setIsFormSubmitting(false)
       if (location.pathname !== routes.scriptedChatEdit(result.id)) history.push(routes.scriptedChatEdit(result.id))
+      setIsFormSubmitting(false)
       return result
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading} />,
+  withAppBarContent(({ breadcrumbs, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormSubmitting || isFormLoading} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({

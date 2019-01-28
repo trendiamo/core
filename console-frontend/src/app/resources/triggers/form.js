@@ -154,10 +154,12 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    onFormSubmit: ({ formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
+      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
       if (!result.error && !result.errors) history.push(routes.triggersList())
+      setIsFormSubmitting(false)
       return result
     },
     selectFlow: ({ form, setForm }) => ({ value }) => {
@@ -169,8 +171,8 @@ export default compose(
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormLoading} />,
+  withAppBarContent(({ breadcrumbs, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormSubmitting || isFormLoading} />,
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({

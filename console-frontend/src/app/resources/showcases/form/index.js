@@ -362,12 +362,14 @@ export default compose(
         personaId: value.id,
       })
     },
-    onFormSubmit: ({ location, formRef, history, onFormSubmit }) => async event => {
+    onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
+      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
-      if (result.error || result.errors) return
+      if (result.error || result.errors) return setIsFormSubmitting(false)
       pluginHistory.replace(pluginRoutes.showcase(result.id))
       if (location.pathname !== routes.showcaseEdit(result.id)) history.push(routes.showcaseEdit(result.id))
+      setIsFormSubmitting(false)
       return result
     },
     onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
@@ -395,8 +397,8 @@ export default compose(
     },
   })),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, onFormSubmit }) => ({
-    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isCropping || isFormLoading} />,
+  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
+    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormSubmitting || isCropping || isFormLoading} />,
     breadcrumbs,
   })),
   lifecycle({
