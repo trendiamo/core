@@ -4,7 +4,7 @@
 }
 
 .main-info-section {
-  background-image: url("../img/home-page-images/Mobile.png");
+  background-image: url("/img/home-page-images/Mobile.png");
   background-size: cover;
   padding-left: 10%;
   padding-right: 10%;
@@ -81,7 +81,7 @@
     width: 100%;
     padding-left: 100px;
     height: 400px;
-    background-image: url("../img/home-page-images/img-header.png");
+    background-image: url("/img/home-page-images/img-header.png");
   }
 }
 
@@ -168,65 +168,17 @@
   background-image: url("/img/home-page-images/categories/wetsuits.png");
 }
 
-#flex-item-first {
-  order: 0;
-}
-
-#flex-item-second {
-  order: 0;
-}
-
 #flex-item-third {
   order: 2;
-}
-
-#flex-item-fourth {
-  order: 0;
-}
-
-#flex-item-fifth {
-  order: 0;
 }
 
 #flex-item-sixth {
   order: 1;
 }
 
-@media (min-width: 914px) {
-  .product-card-2 {
-    margin: 0px 50px 0px 50px;
-  }
-  #flex-item-first {
-    order: 0;
-  }
-
-  #flex-item-second {
-    order: 0;
-  }
-
-  #flex-item-third {
-    order: 1;
-  }
-
-  #flex-item-fourth {
-    order: 0;
-  }
-
-  #flex-item-fifth {
-    order: 0;
-  }
-
-  #flex-item-sixth {
-    order: 0;
-  }
-}
-
 @media (min-width: 980px) {
   #home-surfboard-first {
     order: -1;
-  }
-  #home-wetsuit-fourth {
-    order: 0;
   }
   .product-card-2 {
     margin: 0px;
@@ -234,25 +186,17 @@
   #flex-item-first {
     order: -3;
   }
-
   #flex-item-second {
     order: -2;
   }
-
   #flex-item-third {
     order: 0;
   }
-
   #flex-item-fourth {
     order: -4;
   }
-
   #flex-item-fifth {
     order: -1;
-  }
-
-  #flex-item-sixth {
-    order: 0;
   }
 }
 
@@ -263,24 +207,13 @@
   #flex-item-first {
     order: 0;
   }
-
   #flex-item-second {
     order: 0;
   }
-
-  #flex-item-third {
-    order: 0;
-  }
-
   #flex-item-fourth {
     order: 0;
   }
-
   #flex-item-fifth {
-    order: 0;
-  }
-
-  #flex-item-sixth {
     order: 0;
   }
 }
@@ -304,27 +237,6 @@
     padding-left: 22%;
     padding-right: 22%;
   }
-}
-
-#guitar-card p:before {
-  content: "";
-  position: absolute;
-  width: 50px;
-  height: 1px;
-  top: 71px;
-  left: 39px;
-  border-bottom: 1.5px solid black;
-}
-
-#shoes-card p:before {
-  content: "";
-  position: absolute;
-  width: 50px;
-  height: 1px;
-  top: 40px;
-  left: 37px;
-  left: 30%;
-  border-bottom: 1.5px solid black;
 }
 
 .product-link {
