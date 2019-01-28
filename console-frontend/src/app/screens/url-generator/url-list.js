@@ -1,3 +1,4 @@
+import BlankStateTemplate from 'shared/blank-state'
 import Divider from '@material-ui/core/Divider'
 import HistoryIcon from '@material-ui/icons/History'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -7,7 +8,7 @@ import MUIListItem from '@material-ui/core/ListItem'
 import React from 'react'
 import styled from 'styled-components'
 import Tooltip from '@material-ui/core/Tooltip'
-import { compose, withHandlers } from 'recompose'
+import { branch, compose, renderComponent, withHandlers } from 'recompose'
 import { Header } from 'shared/form-elements'
 
 const List = styled(MUIList)`
@@ -22,8 +23,14 @@ const ListItem = styled(MUIListItem)`
   }
 `
 
+const BlankState = () => (
+  <>
+    <BlankStateTemplate description="No URLs were generated yet." imageSource="/img/background/img-box-inactive.png" />
+  </>
+)
+
 const UrlListItems = ({ urlHistory, copyToClipboard }) => (
-  <React.Fragment>
+  <>
     {urlHistory &&
       urlHistory.map(generatedUrl => (
         <Tooltip key={generatedUrl.id} placement="top-end" title="Copy to Clipboard">
@@ -32,11 +39,11 @@ const UrlListItems = ({ urlHistory, copyToClipboard }) => (
           </ListItem>
         </Tooltip>
       ))}
-  </React.Fragment>
+  </>
 )
 
 const UrlList = ({ urlHistory, copyToClipboard }) => (
-  <React.Fragment>
+  <>
     <List component="nav">
       <Header variant="h6">{'Url History'}</Header>
       <ListItemIcon>
@@ -47,7 +54,7 @@ const UrlList = ({ urlHistory, copyToClipboard }) => (
     <MUIList component="nav">
       <UrlListItems copyToClipboard={copyToClipboard} urlHistory={urlHistory} />
     </MUIList>
-  </React.Fragment>
+  </>
 )
 
 export default compose(
@@ -55,5 +62,6 @@ export default compose(
     copyToClipboard: () => event => {
       navigator.clipboard.writeText(event.target.textContent)
     },
-  })
+  }),
+  branch(({ urlHistory }) => !(urlHistory && urlHistory.length), renderComponent(BlankState))
 )(UrlList)
