@@ -44,7 +44,7 @@ const Navigation = () => (
     <Main>
       <p>{'Show some tiles which take the user to other pages - this could be used to apply filters in some cases.'}</p>
     </Main>
-    <Plugin Component={<NavigationComp navigationItems={navigationItems} />} />
+    <Plugin Component={<NavigationComp navigationItems={navigationItems} title="Title" />} />
   </div>
 )
 

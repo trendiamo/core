@@ -11,6 +11,7 @@ const Navigation = compose(
       query($id: ID!) {
         navigation(id: $id) {
           id
+          title
           navigationItems {
             id
             text
@@ -26,6 +27,7 @@ const Navigation = compose(
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
+    title: data.navigation && data.navigation.title,
     navigationItems: data.navigation && data.navigation.navigationItems,
     FlowBackButton,
   })),
