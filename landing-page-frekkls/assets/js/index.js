@@ -57,7 +57,6 @@ window.requestAnimationFrame(() => {
   })
 
   const targets = ['.email-input-1', '.email-input-2']
-
   targets.forEach(target => {
     window.hbspt.forms.create({
       css: '',
