@@ -41,13 +41,20 @@ const NavigationCover = compose(withTextTyping(({ persona }) => persona.descript
   )
 )
 
-const Navigation = ({ FlowBackButton, navigationItems, onTileClick, persona }) => (
+const H2 = styled.h2`
+  margin: 0;
+  font-size: 18px;
+  margin-bottom: 12px;
+`
+
+const Navigation = ({ FlowBackButton, title, navigationItems, onTileClick, persona }) => (
   <ColFlexDiv>
     <Cover>
       <NavigationCover FlowBackButton={FlowBackButton} persona={persona} />
     </Cover>
     <BelowCover>
       <Container>
+        <H2>{title}</H2>
         <TopSlideAnimation delay={250 * 1}>
           <TilesWrapper objectForResetCheck={{ ...navigationItems, persona }}>
             {navigationItems.map((navigationItem, index) => (

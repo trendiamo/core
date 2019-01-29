@@ -87,6 +87,18 @@ const NavigationForm = ({
         value={form.name}
       />
       <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
+      <LimitedField
+        disabled={isFormLoading}
+        fullWidth
+        label="Title"
+        margin="normal"
+        max={characterLimits.main.title}
+        name="title"
+        onChange={setFieldValue}
+        required
+        value={form.title}
+      />
+      <FormHelperText>{'The title will appear at the top of the navigation.'}</FormHelperText>
       <Autocomplete
         autocomplete={apiPersonasAutocomplete}
         components={{ Option: OptionWithAvatar }}
@@ -165,7 +177,11 @@ const NavigationSuperForm = compose(
     </Grid>
     <Grid item md={6} xs={12}>
       <PluginPreview persona={persona}>
-        <Navigation navigationItems={transform(form.navigationItemsAttributes)} onTileClick={onTileClick} />
+        <Navigation
+          navigationItems={transform(form.navigationItemsAttributes)}
+          onTileClick={onTileClick}
+          title={form.title}
+        />
       </PluginPreview>
     </Grid>
   </Grid>
@@ -219,6 +235,7 @@ export default compose(
         id: json.id,
         personaId: (json.persona && json.persona.id) || '',
         name: json.name || '',
+        title: json.title || '',
         chatBubbleText: json.chatBubbleText || '',
         __persona: json.persona,
         navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
