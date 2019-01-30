@@ -15,7 +15,6 @@ import { branch, compose, renderComponent, withHandlers, withProps, withState } 
 import { findIndex } from 'lodash'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
-import { OptionWithAvatar } from 'shared/select-option'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
@@ -101,12 +100,13 @@ const NavigationForm = ({
       <FormHelperText>{'The title will appear at the top of the navigation.'}</FormHelperText>
       <Autocomplete
         autocomplete={apiPersonasAutocomplete}
-        components={{ Option: OptionWithAvatar }}
-        defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
-        disabled={isFormLoading}
+        defaultPlaceholder="Choose a persona"
+        disabled={isCropping || isFormLoading}
+        fullWidth
+        initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
         label="Persona"
         onChange={selectPersona}
-        placeholder="Choose a persona..."
+        options={{ suggestionItem: 'withAvatar' }}
         required
       />
       <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
@@ -288,12 +288,12 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    selectPersona: ({ convertPersona, form, setForm, setPersona }) => ({ value }) => {
+    selectPersona: ({ convertPersona, form, setForm, setPersona }) => selected => {
       setForm({
         ...form,
-        personaId: value.id,
+        personaId: selected && selected.value.id,
       })
-      setPersona(convertPersona(value))
+      selected && setPersona(convertPersona(selected.value))
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return

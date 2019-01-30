@@ -13,7 +13,6 @@ import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
-import { OptionWithAvatar } from 'shared/select-option'
 import { history as pluginHistory, routes as pluginRoutes, Showcase as ShowcaseBase } from 'plugin-base'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { uploadImage } from 'shared/picture-uploader'
@@ -93,13 +92,13 @@ const ShowcaseForm = ({
       <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
       <Autocomplete
         autocomplete={apiPersonasAutocomplete}
-        components={{ Option: OptionWithAvatar }}
-        defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+        defaultPlaceholder="Choose a persona"
         disabled={isCropping || isFormLoading}
+        fullWidth
+        initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
         label="Persona"
         onChange={selectPersona}
-        onFocus={onBackClick}
-        placeholder="Choose a persona"
+        options={{ suggestionItem: 'withAvatar' }}
         required
       />
       <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
@@ -360,10 +359,10 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    selectPersona: ({ form, setForm }) => ({ value }) => {
+    selectPersona: ({ form, setForm }) => selected => {
       setForm({
         ...form,
-        personaId: value.id,
+        personaId: selected && selected.value.id,
       })
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {

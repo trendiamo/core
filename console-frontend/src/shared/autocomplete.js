@@ -1,184 +1,190 @@
-import Async from 'react-select/lib/Async'
 import debounce from 'debounce-promise'
+import Downshift from 'downshift'
 import React from 'react'
 import styled from 'styled-components'
 import { apiRequest } from 'utils'
-import { compose, withHandlers, withProps, withState } from 'recompose'
-import { FormControl, InputLabel } from '@material-ui/core'
+import { ArrowDropDown } from '@material-ui/icons'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { FormControl, Input, InputAdornment, InputLabel, MenuItem, Paper } from '@material-ui/core'
+import { suggestionTypes } from 'shared/autocomplete-options'
 
-const StyledAsync = styled(Async).attrs({
-  singleValueColor: ({ isFocussed }) => (isFocussed ? '#77777f' : '#372727'),
-})`
-  .react-select__control {
-    color: #372727;
-    padding: 0px;
-    margin-top: 15px;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
-    cursor: text;
-    &:before {
-      left: 0;
-      right: 0;
-      bottom: 0;
-      content: '';
-      position: absolute;
-      transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.42);
-      pointer-events: none;
-    }
-    &:not(.react-select__control--is-focused):hover:before {
-      border-bottom: 2px solid rgba(0, 0, 0, 0.87);
-    }
-    &:after {
-      left: 0;
-      right: 0;
-      bottom: 0;
-      content: '';
-      position: absolute;
-      transform: scaleX(0);
-      transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-      border-bottom: 2px solid rgb(3, 67, 178);
-      pointer-events: none;
-    }
-  }
-  .react-select__control--is-focused {
-    &:after {
-      transform: scaleX(1);
-    }
-  }
-
-  .react-select__value-container {
-    padding: 0px;
-  }
-  .react-select__indicator {
-    &: hover {
-      color: #212121;
-      cursor: pointer;
-    }
-  }
-  .react-select__option--is-selected {
-    background-color: #f2f4f7;
-    color: #2f2f27;
-  }
-  .react-select__option--is-focused {
-    background-color: #deebff;
-  }
-  .react-select__placeholder {
-    color: #77777f;
-  }
-  .react-select__single-value {
-    color: ${({ singleValueColor }) => singleValueColor};
-  }
-  #react-select-2-input {
-    color: #372727;
-  }
-  #react-select-3-input {
-    color: #372727;
+const StyledArrowDropDown = styled(ArrowDropDown)`
+  &:hover {
+    cursor: pointer;
   }
 `
 
-const Autocomplete = compose(
-  withProps(({ autocomplete }) => ({
-    debouncedAutocomplete: debounce(autocomplete, 250),
-  })),
-  withState('defaultOptions', 'setDefaultOptions', []),
-  withState('isMenuOpen', 'setIsMenuOpen', false),
-  withState('isFocussed', 'setIsFocussed', false),
-  withHandlers(() => {
-    let skipMenuOpen = false
-    let hasBlurred = false
-    return {
-      onInputChange: ({ setIsFocussed, setIsMenuOpen }) => (searchQuery, event) => {
-        skipMenuOpen = event.action === 'menu-close' ? false : !hasBlurred || searchQuery.length === 0
-        if (event.action === 'menu-close') {
-          setIsMenuOpen(false)
-          setIsFocussed(false)
-        }
-      },
-      onMenuOpen: ({
-        setIsFocussed,
-        setIsMenuOpen,
-        setDefaultOptions,
-        name,
-        autocomplete,
-        defaultOptions,
-      }) => async () => {
-        if (skipMenuOpen) {
-          skipMenuOpen = false
-          return
-        }
-        setIsMenuOpen(true)
-        setIsFocussed(true)
-        if (defaultOptions.length > 0) return
-        const { json } = await apiRequest(autocomplete, [''])
-        const options = json.map(option => {
-          return { value: option, label: option.name, name }
-        })
-        setDefaultOptions(options)
-      },
-      loadOptions: ({ name, setIsMenuOpen, debouncedAutocomplete }) => async searchQuery => {
-        if (searchQuery.length <= 2) return setIsMenuOpen(false)
-        setIsMenuOpen(true)
-        const { json } = await apiRequest(debouncedAutocomplete, [{ searchQuery }])
-        const options = json.map(option => {
-          return { value: option, label: option.name, name }
-        })
-        return options
-      },
-      onFocus: ({ setIsFocussed, onFocus }) => () => {
-        onFocus && onFocus()
-        setIsFocussed(true)
-      },
-      onBlur: ({ setIsFocussed, setIsMenuOpen }) => () => {
-        hasBlurred = true
-        setIsMenuOpen(false)
-        setIsFocussed(false)
-      },
-    }
-  })
-)(
-  ({
-    components,
-    placeholder,
-    loadOptions,
-    onChange,
-    defaultValue,
-    onInputChange,
-    defaultOptions,
-    label,
-    onBlur,
-    onMenuOpen,
-    isMenuOpen,
-    onFocus,
-    disabled,
-    required,
-    isFocussed,
-    noMargin,
-  }) => (
-    <FormControl disabled={disabled} fullWidth margin={noMargin ? 'none' : 'normal'}>
-      <InputLabel shrink>{`${label}${required ? ' *' : ''}`}</InputLabel>
-      <StyledAsync
-        cacheOptions
-        classNamePrefix="react-select"
-        components={components}
-        defaultOptions={defaultOptions}
-        defaultValue={defaultValue}
-        isDisabled={disabled}
-        isFocussed={isFocussed}
-        loadOptions={loadOptions}
-        menuIsOpen={isMenuOpen}
-        onBlur={onBlur}
-        onChange={onChange}
-        onFocus={onFocus}
-        onInputChange={onInputChange}
-        onMenuOpen={onMenuOpen}
-        openMenuOnClick={false}
-        placeholder={placeholder}
-        selectProps={{ required }}
-      />
-    </FormControl>
-  )
+const DropdownButton = ({ loadAllOptions }) => (
+  <InputAdornment position="end">
+    <StyledArrowDropDown onClick={loadAllOptions} />
+  </InputAdornment>
 )
 
-export default Autocomplete
+const AutocompleteInput = ({ formControlProps, inputProps, label, name, loadAllOptions }) => (
+  <FormControl margin="normal" {...formControlProps}>
+    <InputLabel htmlFor={inputProps.id} id={inputProps['aria-labelledby']}>
+      {label}
+    </InputLabel>
+    <Input
+      fullWidth
+      name={name}
+      type="text"
+      {...inputProps}
+      endAdornment={<DropdownButton loadAllOptions={loadAllOptions} />}
+    />
+  </FormControl>
+)
+
+const ResultsDiv = styled.div`
+  width: 100%;
+  position: absolute;
+`
+
+const StyledPaper = styled(Paper)`
+  position: relative;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 2;
+`
+
+const StyledMenuItem = styled(MenuItem)`
+  overflow: hidden;
+  padding: ${({ options }) => (options.suggestionItem === 'withAvatar' ? '20px 10px 20px 10px' : 'auto')};
+`
+
+const AutocompleteSuggestion = ({ suggestion, index, itemProps, highlightedIndex, options }) => (
+  <StyledMenuItem
+    options={options}
+    {...itemProps}
+    component="div"
+    key={suggestion.label}
+    selected={highlightedIndex === index}
+  >
+    {options ? suggestionTypes(options.suggestionItem, { suggestion }) : suggestion.label}
+  </StyledMenuItem>
+)
+
+const Autocomplete = ({
+  disabled,
+  label,
+  required,
+  fullWidth,
+  name,
+  defaultPlaceholder,
+  onInputValueChange,
+  prevSelected,
+  onChange,
+  handleSelect,
+  loadAllOptions,
+  setPrevSelected,
+  options,
+  handleOuterClick,
+  menuIsOpen,
+  suggestions,
+  initialSelectedItem,
+}) => (
+  <Downshift
+    initialSelectedItem={initialSelectedItem}
+    isOpen={menuIsOpen}
+    itemToString={selected => {
+      return selected ? selected.label : ''
+    }}
+    onChange={onChange}
+    onInputValueChange={onInputValueChange}
+    onOuterClick={handleOuterClick}
+    onSelect={handleSelect}
+  >
+    {({
+      getInputProps,
+      getItemProps,
+      getMenuProps,
+      highlightedIndex,
+      selectedItem,
+      isOpen,
+      clearSelection,
+      selectItem,
+    }) => (
+      <div style={{ width: '100%', position: 'relative' }}>
+        <AutocompleteInput
+          formControlProps={{ disabled, required, fullWidth }}
+          inputProps={getInputProps({
+            placeholder: prevSelected ? prevSelected.label : defaultPlaceholder,
+            onFocus: () => {
+              clearSelection()
+              selectedItem && setPrevSelected(selectedItem)
+            },
+            onBlur: () => {
+              if (selectedItem === null) selectItem(prevSelected)
+            },
+          })}
+          label={label}
+          loadAllOptions={loadAllOptions}
+          name={name}
+        />
+        <ResultsDiv {...getMenuProps()}>
+          {isOpen ? (
+            <StyledPaper square>
+              {suggestions.map((suggestion, index) => (
+                <AutocompleteSuggestion
+                  highlightedIndex={highlightedIndex}
+                  index={index}
+                  itemProps={getItemProps({ item: suggestion })}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
+                  options={options}
+                  selectedItem={selectedItem}
+                  suggestion={suggestion}
+                />
+              ))}
+            </StyledPaper>
+          ) : null}
+        </ResultsDiv>
+      </div>
+    )}
+  </Downshift>
+)
+
+export default compose(
+  withProps(({ autocomplete }) => ({
+    debouncedAutocomplete: debounce(async searchQuery => await apiRequest(autocomplete, [{ searchQuery }]), 250),
+  })),
+  withState('menuIsOpen', 'setMenuIsOpen', false),
+  withState('suggestions', 'setSuggestions', []),
+  withState('prevSelected', 'setPrevSelected', null),
+  withHandlers({
+    loadAllOptions: ({ setSuggestions, autocomplete, setMenuIsOpen, menuIsOpen }) => async () => {
+      const { json } = await apiRequest(autocomplete, [''])
+      const suggestions = json.map(option => {
+        return { value: option, label: option.name }
+      })
+      setMenuIsOpen(!menuIsOpen)
+      setSuggestions(suggestions)
+    },
+    handleSelect: ({ setMenuIsOpen }) => () => {
+      setMenuIsOpen(false)
+    },
+    handleOuterClick: ({ setMenuIsOpen }) => () => {
+      setMenuIsOpen(false)
+    },
+    onInputValueChange: ({ debouncedAutocomplete, setMenuIsOpen, setSuggestions }) => async (
+      searchQuery,
+      stateAndHelpers
+    ) => {
+      if (searchQuery.length <= 2) return setMenuIsOpen(false)
+      const { json } = await debouncedAutocomplete(searchQuery)
+      const options = json.map(option => {
+        return { value: option, label: option.name }
+      })
+      if (stateAndHelpers.type === '__autocomplete_change_input__') {
+        setMenuIsOpen(true)
+      }
+      setSuggestions(options)
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { initialSelectedItem, setPrevSelected } = this.props
+      setPrevSelected(initialSelectedItem)
+    },
+  })
+)(Autocomplete)
