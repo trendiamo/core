@@ -7,31 +7,29 @@ const contentfulConfig = {
 }
 const { spaceId, accessToken } = contentfulConfig
 if (!spaceId || !accessToken) {
-  throw new Error(
-    'Contentful spaceId and the delivery token need to be provided.'
-  )
+  throw new Error('Contentful spaceId and the delivery token need to be provided.')
 }
 
 module.exports = {
   siteMetadata: {
-    title: `Frekkls`,
-    description: ``,
-    author: `@trendiamo`,
+    title: 'Frekkls',
+    description: '',
+    author: '@trendiamo',
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
+    'gatsby-plugin-react-helmet',
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `images`,
+        name: 'images',
         path: `${__dirname}/src/images`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-styled-components`,
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
+    'gatsby-plugin-styled-components',
     {
-      resolve: `@contentful/gatsby-transformer-contentful-richtext`,
+      resolve: '@contentful/gatsby-transformer-contentful-richtext',
       options: {
         renderOptions: {
           renderNode: {
@@ -48,6 +46,13 @@ module.exports = {
     {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
+    },
+    {
+      resolve: 'gatsby-plugin-google-tagmanager',
+      options: {
+        id: 'GTM-MDGF2B3',
+        includeInDevelopment: false,
+      },
     },
     // {
     //   resolve: `gatsby-plugin-manifest`,
