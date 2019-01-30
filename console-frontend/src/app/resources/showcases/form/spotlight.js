@@ -8,7 +8,6 @@ import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { DragHandle, SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { findIndex } from 'lodash'
-import { OptionWithAvatar } from 'shared/select-option'
 
 const SortableProductPick = SortableElement(ProductPick)
 const ProductPicks = ({
@@ -65,23 +64,17 @@ const Spotlight = ({
       foldable
       folded={folded}
       hideTop
-      title={spotlight.id ? `${spotlight.__persona.name}'s Spotlight` : 'New Spotlight'}
+      title={spotlight.id ? `${spotlight.__persona && spotlight.__persona.name}'s Spotlight` : 'New Spotlight'}
     >
       <Autocomplete
         autocomplete={apiPersonasAutocomplete}
-        components={{ Option: OptionWithAvatar }}
-        defaultValue={
-          spotlight.__persona && {
-            value: spotlight.__persona.id,
-            label: spotlight.__persona.name,
-          }
-        }
+        defaultPlaceholder="Choose a persona"
         disabled={isCropping || isFormLoading}
+        fullWidth
+        initialSelectedItem={spotlight.__persona && { value: spotlight.__persona, label: spotlight.__persona.name }}
         label="Persona"
-        name="spotlight_personaId"
         onChange={selectPersona}
-        onFocus={onFocus}
-        placeholder="Choose a persona"
+        options={{ suggestionItem: 'withAvatar' }}
         required
       />
       <div style={{ marginTop: '24px' }}>
@@ -109,12 +102,12 @@ const Spotlight = ({
 export default compose(
   branch(({ spotlight }) => spotlight._destroy, renderNothing),
   withHandlers({
-    selectPersona: ({ spotlight, index, onChange }) => ({ value }) => {
+    selectPersona: ({ spotlight, index, onChange }) => selected => {
       onChange(
         {
           ...spotlight,
-          personaId: value.id,
-          __persona: value,
+          personaId: selected && selected.value.id,
+          __persona: selected && selected.value,
         },
         index
       )

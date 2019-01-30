@@ -8,10 +8,8 @@ import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
 import { apiFlowsAutocomplete } from 'utils'
-import { AssignmentTurnedInOutlined, DirectionsOutlined, PersonPinOutlined, SmsOutlined } from '@material-ui/icons'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormControl, FormHelperText, Grid, InputLabel, TextField } from '@material-ui/core'
-import { SelectLabelText, StyledSelectLabel } from 'shared/select-option'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -35,28 +33,6 @@ const StyledUrlTextField = styled(UrlTextField)`
   margin: 8px 0;
 `
 
-const optionIcon = moduleTtype => {
-  switch (moduleTtype) {
-    case 'Showcase':
-      return <PersonPinOutlined />
-    case 'Outro':
-      return <AssignmentTurnedInOutlined />
-    case 'ScriptedChat':
-      return <SmsOutlined />
-    case 'Navigation':
-      return <DirectionsOutlined />
-    default:
-      return null
-  }
-}
-
-const OptionWithIcon = option => (
-  <StyledSelectLabel ref={option.innerRef} {...option.innerProps}>
-    {optionIcon(option.value.type)}
-    <SelectLabelText>{option.value.name}</SelectLabelText>
-  </StyledSelectLabel>
-)
-
 const TriggerForm = ({
   addUrlSelect,
   deleteUrlMatcher,
@@ -75,12 +51,13 @@ const TriggerForm = ({
       <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
         <Autocomplete
           autocomplete={apiFlowsAutocomplete}
-          components={{ Option: OptionWithIcon }}
-          defaultValue={form.flowId ? { value: form.flowId, label: form.flowLabel } : null}
+          defaultPlaceholder="Choose a Trigger"
           disabled={isFormLoading}
-          label="Module"
+          fullWidth
+          initialSelectedItem={form.flowId && { value: form.flowId, label: form.flowLabel }}
+          label="Persona"
           onChange={selectFlow}
-          placeholder="Choose a module..."
+          options={{ suggestionItem: 'withModuleIcon' }}
           required
         />
         <FormHelperText>{'Choose between Showcases, Navigations, etc.'}</FormHelperText>
@@ -162,11 +139,11 @@ export default compose(
       setIsFormSubmitting(false)
       return result
     },
-    selectFlow: ({ form, setForm }) => ({ value }) => {
+    selectFlow: ({ form, setForm }) => selected => {
       setForm({
         ...form,
-        flowId: value.id,
-        flowType: value.type,
+        flowId: selected && selected.value.id,
+        flowType: selected && selected.value.type,
       })
     },
   }),

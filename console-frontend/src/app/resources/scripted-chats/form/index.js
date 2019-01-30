@@ -13,7 +13,6 @@ import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, createSink, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { isEqual } from 'lodash'
-import { OptionWithAvatar } from 'shared/select-option'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -73,12 +72,13 @@ const ScriptedChatForm = ({
         <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
         <Autocomplete
           autocomplete={apiPersonasAutocomplete}
-          components={{ Option: OptionWithAvatar }}
-          defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+          defaultPlaceholder="Choose a persona"
           disabled={isFormLoading}
+          fullWidth
+          initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
           label="Persona"
           onChange={selectPersona}
-          placeholder="Choose a persona..."
+          options={{ suggestionItem: 'withAvatar' }}
           required
         />
         <FormHelperText>{'The persona that will appear for this chat.'}</FormHelperText>
@@ -182,10 +182,10 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    selectPersona: ({ form, setForm }) => ({ value }) => {
+    selectPersona: ({ form, setForm }) => selected => {
       setForm({
         ...form,
-        personaId: value.id,
+        personaId: selected && selected.value.id,
       })
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {

@@ -11,7 +11,6 @@ import { Actions, Form, Field as LimitedField } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
-import { OptionWithAvatar } from 'shared/select-option'
 import { Outro } from 'plugin-base'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -46,12 +45,13 @@ const OutroForm = ({
           <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
           <Autocomplete
             autocomplete={apiPersonasAutocomplete}
-            components={{ Option: OptionWithAvatar }}
-            defaultValue={form.__persona && { value: form.__persona.id, label: form.__persona.name }}
+            defaultPlaceholder="Choose a persona"
             disabled={isFormLoading}
+            fullWidth
+            initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
             label="Persona"
             onChange={selectPersona}
-            placeholder="Choose a persona..."
+            options={{ suggestionItem: 'withAvatar' }}
             required
           />
           <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
@@ -127,15 +127,16 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    selectPersona: ({ convertPersona, form, previewOutro, setForm, setPreviewOutro }) => ({ value }) => {
+    selectPersona: ({ convertPersona, form, previewOutro, setForm, setPreviewOutro }) => selected => {
       setForm({
         ...form,
-        personaId: value.id,
+        personaId: selected && selected.value.id,
       })
-      setPreviewOutro({
-        ...previewOutro,
-        persona: convertPersona(value),
-      })
+      selected &&
+        setPreviewOutro({
+          ...previewOutro,
+          persona: convertPersona(selected.value),
+        })
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
