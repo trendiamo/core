@@ -90,7 +90,7 @@ const DemoHero = styled(({ className, demoHero }) => (
     padding-bottom: 70px;
   }
 
-  p {
+  .description > p {
     color: #fff;
   }
 

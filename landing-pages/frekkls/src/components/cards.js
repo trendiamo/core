@@ -71,14 +71,19 @@ export const FeatureCard = styled.div`
 
   p {
     font-size: 1em;
-    color: #393939 !important;
+    color: #393939;
     text-align: left;
     padding: 10px;
-    margin-bottom: 20px !important;
+    margin-bottom: 20px;
   }
 
   a {
     text-decoration: none;
+  }
+
+  h1 p {
+    margin: 0;
+    padding: 0;
   }
 
   h1 b {
