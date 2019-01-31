@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const MetaImg = styled.img`
   float: left;
   width: 60px;
+  height: 60px;
   border-radius: 100%;
   border: 2px solid #ff7966;
   padding: 2px;
@@ -85,16 +86,16 @@ const BlogSpacer = styled.div`
   background: #ebebeb;
 `
 
-const BlogPost = ({ post }) => (
+const BlogPost = ({ imagesData, post }) => (
   <BlogPostBase>
     <h1>{post.title}</h1>
     <h2>{post.secondaryTitle}</h2>
     <div>
-      <MetaImg src={post.authorImage.fixed.src} />
+      <MetaImg src={imagesData.authorImage.fixed.src} />
       <MetaAuthor>{post.authorName}</MetaAuthor>
       <MetaDate>{post.publishingDate}</MetaDate>
     </div>
-    <TitleImg src={post.titleImage.fixed.src} />
+    <TitleImg src={imagesData.titleImage.fixed.src} />
     <TitleImgMeta dangerouslySetInnerHTML={{ __html: post.titleImageCredit.childContentfulRichText.html }} />
     <BlogSpacer />
     <BlogText className="blog-text" dangerouslySetInnerHTML={{ __html: post.text.childContentfulRichText.html }} />
