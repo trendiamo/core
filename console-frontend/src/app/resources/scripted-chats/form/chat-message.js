@@ -10,6 +10,7 @@ const ChatStepMessage = ({
   index,
   isFormLoading,
   chatMessage,
+  onFocus,
   editChatMessageValue,
 }) => (
   <FormSection
@@ -31,6 +32,7 @@ const ChatStepMessage = ({
         multiline
         name="chatMessage_text"
         onChange={editChatMessageValue}
+        onFocus={onFocus}
         required
         value={chatMessage.text}
       />

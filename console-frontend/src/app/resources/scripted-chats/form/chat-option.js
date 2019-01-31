@@ -20,7 +20,10 @@ const ChatStepOption = ({
   index,
   isFormLoading,
   onChange,
+  onFocus,
   setChatStepForm,
+  chatStepFoldHandlers,
+  setChatStepFoldHandlers,
 }) => (
   <FormSection
     actions={<Cancel disabled={isFormLoading} index={index} onClick={deleteChatOption} />}
@@ -41,6 +44,7 @@ const ChatStepOption = ({
         margin="normal"
         name="chatOption_text"
         onChange={editChatOptionValue}
+        onFocus={onFocus}
         required
         value={chatOption.text}
       />
@@ -48,7 +52,13 @@ const ChatStepOption = ({
       <FormHelperText>{'How this chat proceeds after someone clicks this option.'}</FormHelperText>
       {chatStep && (
         <ChatStepPortal target={chatStep.__ref}>
-          <ChatStep chatStep={chatStep} index={chatStep.__index} onChange={setChatStepForm} />
+          <ChatStep
+            chatStep={chatStep}
+            chatStepFoldHandlers={chatStepFoldHandlers}
+            index={chatStep.__index}
+            onChange={setChatStepForm}
+            setChatStepFoldHandlers={setChatStepFoldHandlers}
+          />
         </ChatStepPortal>
       )}
     </Grid>

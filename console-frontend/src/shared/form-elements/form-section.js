@@ -32,6 +32,7 @@ const FormSection = ({
   actions,
   hideTop,
   hideBottom,
+  isFoldedByLogic,
 }) => (
   <SectionContainer backgroundColor={backgroundColor}>
     {!hideTop && <Divider />}
@@ -42,13 +43,13 @@ const FormSection = ({
       </Header>
       {actions}
       {foldable && (
-        <IconButton aria-expanded={folded} aria-label="Show more" onClick={toggleFolded}>
-          <FoldIcon folded={folded} />
+        <IconButton aria-expanded={!(isFoldedByLogic || folded)} aria-label="Show more" onClick={toggleFolded}>
+          <FoldIcon folded={isFoldedByLogic || folded} />
         </IconButton>
       )}
     </FlexBar>
-    {!hideBottom && <Divider folded={folded} />}
-    <Collapse in={!folded} timeout="auto">
+    {!hideBottom && <Divider folded={isFoldedByLogic || folded} />}
+    <Collapse in={isFoldedByLogic !== undefined ? !isFoldedByLogic : !folded} timeout="auto">
       <Content>{children}</Content>
     </Collapse>
   </SectionContainer>
@@ -57,7 +58,8 @@ const FormSection = ({
 export default compose(
   withState('folded', 'setFolded', ({ folded }) => folded),
   withHandlers({
-    toggleFolded: ({ folded, setFolded }) => () => {
+    toggleFolded: ({ folded, setFolded, setIsFoldedByLogic }) => () => {
+      setIsFoldedByLogic && setIsFoldedByLogic(!folded)
       setFolded(!folded)
     },
   })
