@@ -1,3 +1,4 @@
+import auth from 'auth'
 import Autocomplete from 'shared/autocomplete'
 import CircularProgress from 'shared/circular-progress'
 import React from 'react'
@@ -7,9 +8,9 @@ import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
-import { apiFlowsAutocomplete } from 'utils'
-import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormControl, FormHelperText, Grid, InputLabel, TextField } from '@material-ui/core'
+import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow } from 'utils'
+import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { FormControl, FormHelperText, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -26,7 +27,20 @@ const UrlTextField = compose(
       onChange(index, event.target.value)
     },
   })
-)(({ editUrlValue, value, ...props }) => <TextField {...props} onChange={editUrlValue} value={value} />)
+)(({ editUrlValue, value, hostnames, ...props }) => (
+  <TextField
+    {...props}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment>
+          <Typography>{hostnames.length > 1 ? 'https://yourwebsite.com' : hostnames[0]}</Typography>
+        </InputAdornment>
+      ),
+    }}
+    onChange={editUrlValue}
+    value={value}
+  />
+))
 
 const StyledUrlTextField = styled(UrlTextField)`
   flex: 1;
@@ -41,6 +55,7 @@ const TriggerForm = ({
   formRef,
   errors,
   isFormLoading,
+  hostnames,
   isFormPristine,
   onFormSubmit,
   title,
@@ -68,7 +83,9 @@ const TriggerForm = ({
               // eslint-disable-next-line react/no-array-index-key
               <FlexDiv key={index}>
                 <StyledUrlTextField
+                  autoComplete="transaction-amount"
                   disabled={isFormLoading}
+                  hostnames={hostnames}
                   index={index}
                   inputProps={{ pattern: pathPattern }}
                   onChange={editUrlValue}
@@ -94,7 +111,8 @@ const TriggerForm = ({
 
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
-  withProps({ formRef: React.createRef() }),
+  withProps({ formRef: React.createRef(), websiteId: auth.getUser().account.websiteIds[0] }),
+  withState('hostnames', 'setHostnames', []),
   withState('errors', 'setErrors', null),
   withHandlers({
     formObjectTransformer: () => json => {
@@ -154,5 +172,13 @@ export default compose(
   })),
   withProps(({ breadcrumbs }) => ({
     title: breadcrumbs.slice(-1)[0].text,
-  }))
+  })),
+  lifecycle({
+    async componentDidMount() {
+      const { websiteId, setHostnames, enqueueSnackbar } = this.props
+      const { json, requestError } = await apiRequest(apiWebsiteShow, [websiteId])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      setHostnames(json.hostnames)
+    },
+  })
 )(TriggerForm)
