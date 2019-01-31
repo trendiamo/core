@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { BLOCKS, INLINES } = require('@contentful/rich-text-types')
 
 require('dotenv').config()
@@ -68,3 +69,4 @@ module.exports = {
     // },
   ],
 }
+/* eslint-enable no-undef */

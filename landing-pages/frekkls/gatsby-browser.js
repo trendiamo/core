@@ -13,7 +13,7 @@ const processEmailInputs = () => {
       css: '',
       portalId: '4568386',
       formId: '70b17e03-8153-4be3-ba4b-d3550a85e258',
-      target
+      target,
     })
   })
 }
@@ -53,7 +53,7 @@ const processModalTriggers = () => {
         css: '',
         portalId: '4568386',
         target: '.request-demo-form',
-        formId: 'c3b4b11b-fc3b-4aef-b24a-b23e5dcfff73'
+        formId: 'c3b4b11b-fc3b-4aef-b24a-b23e5dcfff73',
       })
       modal.open()
 

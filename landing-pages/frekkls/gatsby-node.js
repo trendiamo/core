@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const locales = require('./locales')
 
 exports.onCreatePage = ({ page, actions }) => {
@@ -12,11 +13,12 @@ exports.onCreatePage = ({ page, actions }) => {
         ...page,
         path,
         context: {
-          locale: lang
-        }
+          locale: lang,
+        },
       })
     })
 
     resolve()
   })
 }
+/* eslint-enable no-undef */

@@ -9,7 +9,5 @@ const hsforms = `
 
 export const onRenderBody = ({ setPostBodyComponents }) => {
   if (process.env.NODE_ENV !== 'production') return
-  setPostBodyComponents([
-    <div key="hsforms" dangerouslySetInnerHTML={{ __html: hsforms }} />
-  ])
+  setPostBodyComponents([<div dangerouslySetInnerHTML={{ __html: hsforms }} key="hsforms" />])
 }
