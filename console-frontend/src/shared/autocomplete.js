@@ -86,9 +86,7 @@ const Autocomplete = ({
   <Downshift
     initialSelectedItem={initialSelectedItem}
     isOpen={menuIsOpen}
-    itemToString={selected => {
-      return selected ? selected.label : ''
-    }}
+    itemToString={selected => (selected ? selected.label : '')}
     onChange={onChange}
     onInputValueChange={onInputValueChange}
     onOuterClick={handleOuterClick}
