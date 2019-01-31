@@ -1,18 +1,17 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
+import { graphql, StaticQuery } from 'gatsby'
 
 import BgTop from '../images/bg-top.svg'
 import Button from '../components/button'
 import Container from '../components/container'
-import HomeTop from '../images/home-top@2x.png'
 import Section from '../components/section'
 import { C50 } from '../components/grid'
 
-const StyledHomeTopImage = styled.img.attrs({
-  src: HomeTop,
-})`
-  object-fit: contain;
+const HomeTopImgContainer = styled.div`
   margin: 0 auto;
+  width: 715px;
   max-width: 100%;
   margin-bottom: 2rem;
 
@@ -22,21 +21,38 @@ const StyledHomeTopImage = styled.img.attrs({
 
   @media (min-width: 900px) {
     position: absolute;
-    height: 46vw;
-    max-height: 80%;
-    min-height: 50%;
-    max-width: none;
-    margin: 0;
-    width: auto;
-    right: -6%;
     top: 10px;
+    right: -6%;
+    margin: 0;
+
+    width: 58%;
+    max-width: none;
   }
 `
+
+const HomeTopImg = ({ alt }) => (
+  <StaticQuery
+    query={graphql`
+      query {
+        top: file(relativePath: { eq: "home-top.png" }) {
+          childImageSharp {
+            fluid(maxWidth: 715) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    `}
+    render={data => <Img alt={alt} fluid={data.top.childImageSharp.fluid} />}
+  />
+)
 
 const Hero = styled(({ className, hero }) => (
   <Section className={className}>
     <Container>
-      <StyledHomeTopImage />
+      <HomeTopImgContainer>
+        <HomeTopImg alt="" />
+      </HomeTopImgContainer>
       <C50>
         <h2>{hero.openerHeading}</h2>
         <h3>{hero.openerSubHeading}</h3>

@@ -1,35 +1,48 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
+import { graphql, StaticQuery } from 'gatsby'
 
 import BgBottom from '../images/bg-bottom.svg'
 import Container from '../components/container'
-import HomePlugin from '../images/home-plugin@2x.png'
 import Section from '../components/section'
 import { C50 } from '../components/grid'
 
-const StyledHomePluginImage = styled.img.attrs({
-  src: HomePlugin,
-})`
-  object-fit: contain;
+const HomePluginImgContainer = styled.div`
   margin: 0 auto;
+  width: 715px;
   max-width: 100%;
+  margin-bottom: 2rem;
 
   @media (min-width: 500px) {
-    max-width: 500px;
+    max-width: 320px;
   }
 
   @media (min-width: 900px) {
+    position: absolute;
     right: 20%;
     bottom: 0;
-    position: absolute;
-    height: 46vw;
-    max-height: 80%;
-    min-height: 50%;
-    max-width: none;
     margin: 0;
-    width: auto;
+    width: 29vw;
   }
 `
+
+const HomePluginImg = ({ alt }) => (
+  <StaticQuery
+    query={graphql`
+      query {
+        plugin: file(relativePath: { eq: "home-plugin.png" }) {
+          childImageSharp {
+            fluid(maxWidth: 320) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    `}
+    render={data => <Img alt={alt} fluid={data.plugin.childImageSharp.fluid} />}
+  />
+)
 
 const Bottom = styled(({ className, bottom }) => (
   <div className={className}>
@@ -43,7 +56,9 @@ const Bottom = styled(({ className, bottom }) => (
         <C50 />
       </Container>
     </Section>
-    <StyledHomePluginImage />
+    <HomePluginImgContainer>
+      <HomePluginImg />
+    </HomePluginImgContainer>
   </div>
 ))`
   ${Section} {
