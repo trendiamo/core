@@ -54,6 +54,8 @@ const ScriptedChatForm = ({
   setDestinationChatStepRefs,
   setChatStepForm,
   setFieldValue,
+  chatStepFoldHandlers,
+  setChatStepFoldHandlers,
   title,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
@@ -107,7 +109,15 @@ const ScriptedChatForm = ({
         <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       </Grid>
     </Section>
-    {form.chatStepAttributes && <ChatStep chatStep={form.chatStepAttributes} index={0} onChange={setChatStepForm} />}
+    {form.chatStepAttributes && (
+      <ChatStep
+        chatStep={form.chatStepAttributes}
+        chatStepFoldHandlers={chatStepFoldHandlers}
+        index={0}
+        onChange={setChatStepForm}
+        setChatStepFoldHandlers={setChatStepFoldHandlers}
+      />
+    )}
     <DestinationChatSteps
       destinationChatStepsRefs={destinationChatStepsRefs}
       setDestinationChatStepRefs={setDestinationChatStepRefs}
@@ -145,6 +155,7 @@ export default compose(
   withOnboardingHelp({ single: true, stepName: 'scriptedChats', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('destinationChatStepsRefs', 'setDestinationChatStepRefs', []),
+  withState('chatStepFoldHandlers', 'setChatStepFoldHandlers', []),
   withState('errors', 'setErrors', null),
   withHandlers({
     formObjectTransformer: () => json => {

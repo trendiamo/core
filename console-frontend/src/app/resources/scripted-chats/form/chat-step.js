@@ -4,11 +4,11 @@ import React from 'react'
 import Section from 'shared/section'
 import { AddItemButton, FormSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
-import { compose, withHandlers } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const SortableChatMessage = SortableElement(ChatMessage)
-const ChatMessages = ({ isFormLoading, chatStep, chatStepType, setChatMessageForm }) => (
+const ChatMessages = ({ onFocus, isFormLoading, chatStep, chatStepType, setChatMessageForm }) => (
   <div>
     {chatStep.chatMessagesAttributes.map((chatMessage, index) => (
       <SortableChatMessage
@@ -19,6 +19,7 @@ const ChatMessages = ({ isFormLoading, chatStep, chatStepType, setChatMessageFor
         isFormLoading={isFormLoading}
         key={chatMessage.id || `new-${index}`}
         onChange={setChatMessageForm}
+        onFocus={onFocus}
         sortIndex={index}
       />
     ))}
@@ -36,6 +37,10 @@ const ChatOptions = ({
   onChange,
   isFormLoading,
   setChatOptionForm,
+  setChatStepFoldHandlers,
+  chatStepFoldHandlers,
+  onFocus,
+  scrollToStep,
 }) => (
   <div>
     {chatStep.chatOptionsAttributes.map((chatOption, index) => (
@@ -43,6 +48,7 @@ const ChatOptions = ({
         addAction={addAction}
         addChatMessage={addChatMessage}
         chatOption={chatOption}
+        chatStepFoldHandlers={chatStepFoldHandlers}
         chatStepType={chatStepType}
         deleteAction={deleteAction}
         editChatStepAttribute={onChange}
@@ -51,6 +57,9 @@ const ChatOptions = ({
         isFormLoading={isFormLoading}
         key={chatOption.id || `new-${index}`}
         onChange={setChatOptionForm}
+        onFocus={onFocus}
+        scrollToStep={scrollToStep}
+        setChatStepFoldHandlers={setChatStepFoldHandlers}
         sortIndex={index}
       />
     ))}
@@ -71,9 +80,22 @@ const ChatStep = ({
   onChatOptionsSortEnd,
   chatStepType,
   addAction,
+  collapseOtherChatSteps,
+  chatStepFoldHandlers,
+  setChatStepFoldHandlers,
+  isFolded,
+  setIsFolded,
 }) => (
   <Section>
-    <FormSection ellipsize foldable folded={chatStep.id} hideTop title={`Step #${chatStep.__index + 1}`}>
+    <FormSection
+      ellipsize
+      foldable
+      folded={isFolded}
+      hideTop
+      isFoldedByLogic={isFolded}
+      setIsFoldedByLogic={setIsFolded}
+      title={`Step #${chatStep.__index + 1}`}
+    >
       <div style={{ marginTop: '-1px' }}>
         <FormSection foldable title="Messages">
           {chatStep.chatMessagesAttributes && (
@@ -81,6 +103,7 @@ const ChatStep = ({
               chatStep={chatStep}
               chatStepType={chatStepType}
               helperClass="sortable-element"
+              onFocus={collapseOtherChatSteps}
               onSortEnd={onChatMessagesSortEnd}
               setChatMessageForm={setChatMessageForm}
               useDragHandle
@@ -96,12 +119,15 @@ const ChatStep = ({
               <ChatOptionsContainer
                 addAction={addAction}
                 chatStep={chatStep}
+                chatStepFoldHandlers={chatStepFoldHandlers}
                 chatStepType={chatStepType}
                 deleteAction={deleteAction}
                 helperClass="sortable-element"
                 onChange={onChange}
+                onFocus={collapseOtherChatSteps}
                 onSortEnd={onChatOptionsSortEnd}
                 setChatOptionForm={setChatOptionForm}
+                setChatStepFoldHandlers={setChatStepFoldHandlers}
                 useDragHandle
               />
             )}
@@ -114,7 +140,12 @@ const ChatStep = ({
 )
 
 export default compose(
+  withState('isFolded', 'setIsFolded', ({ chatStep }) => !!chatStep.id),
   withHandlers({
+    collapseOtherChatSteps: ({ chatStep, chatStepFoldHandlers }) => event => {
+      event.stopPropagation()
+      chatStepFoldHandlers.forEach(handler => chatStep.__index !== handler.index && handler.setIsFolded(true))
+    },
     setChatMessageForm: ({ onChange, chatStep }) => (chatMessage, chatMessageIndex) => {
       let newChatMessagesAttributes = [...chatStep.chatMessagesAttributes]
       newChatMessagesAttributes[chatMessageIndex] = chatMessage
@@ -155,6 +186,15 @@ export default compose(
     onChatOptionsSortEnd: ({ onChange, index, chatStep }) => ({ oldIndex, newIndex }) => {
       const orderedChatOptions = arrayMove(chatStep.chatOptionsAttributes, oldIndex, newIndex)
       onChange({ ...chatStep, chatOptionsAttributes: orderedChatOptions }, index)
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { chatStepFoldHandlers, setIsFolded, setChatStepFoldHandlers, chatStep } = this.props
+      let newChatStepFoldHandlers = chatStepFoldHandlers
+      if (newChatStepFoldHandlers.some(handler => handler.index === chatStep.__index)) return
+      newChatStepFoldHandlers.push({ setIsFolded, index: chatStep.__index })
+      setChatStepFoldHandlers(newChatStepFoldHandlers)
     },
   })
 )(ChatStep)
