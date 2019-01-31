@@ -10,7 +10,7 @@ import { OutlineButton } from './button'
 const Header = styled(({ className, layout, locale, siteTitle }) => (
   <header className={className}>
     <Container>
-      <Link id="header-logo" to="/">
+      <Link id="header-logo" to={`${locales[locale].path}/`}>
         <Logo alt={siteTitle} />
       </Link>
       <nav>
