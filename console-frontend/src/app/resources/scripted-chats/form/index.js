@@ -10,7 +10,7 @@ import withForm from 'ext/recompose/with-form'
 import withScriptedChatsForm from './with-scripted-chats-form'
 import { Actions, Form, Field as LimitedField } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
-import { branch, compose, createSink, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, createSink, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormHelperText, Grid, TextField } from '@material-ui/core'
 import { isEqual } from 'lodash'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
@@ -22,8 +22,29 @@ const Sink = createSink(({ newChatSteps, destinationChatStepsRefs, setDestinatio
   setDestinationChatStepRefs(newDestinationChatStepRefs)
 })
 
+const NewChatSteps = compose(
+  lifecycle({
+    componentDidUpdate() {
+      const { scrollToStep, newChatSteps } = this.props
+      if (
+        newChatSteps.length > 0 &&
+        newChatSteps[newChatSteps.length - 1].__ref.current &&
+        newChatSteps[newChatSteps.length - 1].__ref.current.hasChildNodes()
+      )
+        scrollToStep(newChatSteps[newChatSteps.length - 1])
+    },
+  })
+)(({ newChatSteps }) => (
+  <React.Fragment>
+    {newChatSteps.map((newChatStep, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <div key={index} ref={newChatStep.__ref} style={{ marginTop: '10px' }} />
+    ))}
+  </React.Fragment>
+))
+
 const DestinationChatSteps = compose(withScriptedChatsForm.consumer)(
-  ({ destinationChatStepsRefs, newChatSteps, persistedChatSteps, setDestinationChatStepRefs }) => (
+  ({ scrollToStep, destinationChatStepsRefs, newChatSteps, persistedChatSteps, setDestinationChatStepRefs }) => (
     <React.Fragment>
       <Sink
         destinationChatStepsRefs={destinationChatStepsRefs}
@@ -34,10 +55,7 @@ const DestinationChatSteps = compose(withScriptedChatsForm.consumer)(
         // eslint-disable-next-line react/no-array-index-key
         <div key={index} ref={persistedChatStep.__ref} style={{ marginTop: '10px' }} />
       ))}
-      {newChatSteps.map((newChatStep, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <div key={index} ref={newChatStep.__ref} style={{ marginTop: '10px' }} />
-      ))}
+      <NewChatSteps newChatSteps={newChatSteps} scrollToStep={scrollToStep} />
     </React.Fragment>
   )
 )
@@ -57,6 +75,7 @@ const ScriptedChatForm = ({
   chatStepFoldHandlers,
   setChatStepFoldHandlers,
   title,
+  scrollToStep,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
@@ -115,11 +134,13 @@ const ScriptedChatForm = ({
         chatStepFoldHandlers={chatStepFoldHandlers}
         index={0}
         onChange={setChatStepForm}
+        scrollToStep={scrollToStep}
         setChatStepFoldHandlers={setChatStepFoldHandlers}
       />
     )}
     <DestinationChatSteps
       destinationChatStepsRefs={destinationChatStepsRefs}
+      scrollToStep={scrollToStep}
       setDestinationChatStepRefs={setDestinationChatStepRefs}
     />
   </Form>
@@ -189,6 +210,15 @@ export default compose(
   withHandlers({
     setChatStepForm: ({ form, setForm }) => chatStep => {
       setForm({ ...form, chatStepAttributes: chatStep })
+    },
+  }),
+  withHandlers({
+    scrollToStep: ({ chatStepFoldHandlers }) => chatStep => {
+      if (!chatStep.__ref.current) return
+      chatStepFoldHandlers
+        .find(chatStepFoldHandler => chatStep.__index === chatStepFoldHandler.index)
+        .setIsFolded(false)
+      chatStep.__ref.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' })
     },
   }),
   withRouter,

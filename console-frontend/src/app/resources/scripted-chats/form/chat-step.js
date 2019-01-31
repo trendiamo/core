@@ -85,6 +85,7 @@ const ChatStep = ({
   setChatStepFoldHandlers,
   isFolded,
   setIsFolded,
+  scrollToStep,
 }) => (
   <Section>
     <FormSection
@@ -126,6 +127,7 @@ const ChatStep = ({
                 onChange={onChange}
                 onFocus={collapseOtherChatSteps}
                 onSortEnd={onChatOptionsSortEnd}
+                scrollToStep={scrollToStep}
                 setChatOptionForm={setChatOptionForm}
                 setChatStepFoldHandlers={setChatStepFoldHandlers}
                 useDragHandle
