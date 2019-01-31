@@ -6,7 +6,7 @@ import Section from '../components/section'
 import { FeatureButton } from '../components/button'
 import { FeatureCard, FeatureCards } from '../components/cards'
 
-import BgTop from '../images/demo/bg-top.svg'
+import BgTop from '../images/demo-bg-top.svg'
 
 const Cards = ({ demoHero }) => (
   <FeatureCards>
