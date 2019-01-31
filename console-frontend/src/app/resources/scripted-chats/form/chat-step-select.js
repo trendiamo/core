@@ -1,7 +1,14 @@
+import DeleteIcon from '@material-ui/icons/FindInPage'
 import React from 'react'
+import styled from 'styled-components'
 import withScripedChatsForm from './with-scripted-chats-form'
 import { compose, withHandlers, withProps } from 'recompose'
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import { FormControl, IconButton, InputLabel, MenuItem, Select } from '@material-ui/core'
+
+const SelectContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 const ChatStepSelect = ({
   destinationChatStep,
@@ -10,25 +17,33 @@ const ChatStepSelect = ({
   persistedChatSteps,
   selectDestinationChatStep,
   selectValue,
+  scrollToStep,
 }) => (
-  <FormControl disabled={disabled || hasNewDestinationChatStep} fullWidth margin="normal">
-    <InputLabel shrink>{'Next Step *'}</InputLabel>
-    <Select disabled={disabled} displayEmpty onChange={selectDestinationChatStep} value={selectValue}>
-      <MenuItem disabled value="">
-        {'Choose the next step...'}
-      </MenuItem>
-      {persistedChatSteps.map(chatStep => (
-        <MenuItem key={chatStep.__index} value={chatStep.__index}>{`Step #${chatStep.__index + 1}`}</MenuItem>
-      ))}
-      {hasNewDestinationChatStep && (
-        <MenuItem
-          key={destinationChatStep.__index}
-          value={destinationChatStep.__index}
-        >{`Step #${destinationChatStep.__index + 1}`}</MenuItem>
-      )}
-      <MenuItem value="newChatStep">{'Add step...'}</MenuItem>
-    </Select>
-  </FormControl>
+  <SelectContainer>
+    <FormControl disabled={disabled || hasNewDestinationChatStep} fullWidth margin="normal">
+      <InputLabel shrink>{'Next Step *'}</InputLabel>
+      <Select disabled={disabled} displayEmpty onChange={selectDestinationChatStep} value={selectValue}>
+        <MenuItem disabled value="">
+          {'Choose the next step...'}
+        </MenuItem>
+        {persistedChatSteps.map(chatStep => (
+          <MenuItem key={chatStep.__index} value={chatStep.__index}>{`Step #${chatStep.__index + 1}`}</MenuItem>
+        ))}
+        {hasNewDestinationChatStep && (
+          <MenuItem
+            key={destinationChatStep.__index}
+            value={destinationChatStep.__index}
+          >{`Step #${destinationChatStep.__index + 1}`}</MenuItem>
+        )}
+        <MenuItem value="newChatStep">{'Add step...'}</MenuItem>
+      </Select>
+    </FormControl>
+    {destinationChatStep && (
+      <IconButton aria-label="Find" onClick={() => scrollToStep(destinationChatStep)}>
+        <DeleteIcon />
+      </IconButton>
+    )}
+  </SelectContainer>
 )
 
 export default compose(

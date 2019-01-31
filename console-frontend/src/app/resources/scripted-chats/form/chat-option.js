@@ -24,6 +24,7 @@ const ChatStepOption = ({
   setChatStepForm,
   chatStepFoldHandlers,
   setChatStepFoldHandlers,
+  scrollToStep,
 }) => (
   <FormSection
     actions={<Cancel disabled={isFormLoading} index={index} onClick={deleteChatOption} />}
@@ -48,7 +49,13 @@ const ChatStepOption = ({
         required
         value={chatOption.text}
       />
-      <ChatStepSelect chatOption={chatOption} disabled={isFormLoading} index={index} onChange={onChange} />
+      <ChatStepSelect
+        chatOption={chatOption}
+        disabled={isFormLoading}
+        index={index}
+        onChange={onChange}
+        scrollToStep={scrollToStep}
+      />
       <FormHelperText>{'How this chat proceeds after someone clicks this option.'}</FormHelperText>
       {chatStep && (
         <ChatStepPortal target={chatStep.__ref}>
@@ -57,6 +64,7 @@ const ChatStepOption = ({
             chatStepFoldHandlers={chatStepFoldHandlers}
             index={chatStep.__index}
             onChange={setChatStepForm}
+            scrollToStep={scrollToStep}
             setChatStepFoldHandlers={setChatStepFoldHandlers}
           />
         </ChatStepPortal>
