@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 
 import Container from './container'
+import LangSelector from './lang-selector'
 import locales from '../../locales'
 import Logo from './logo'
 import { OutlineButton } from './button'
@@ -27,6 +28,7 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
         <OutlineButton className="js-request-demo">{layout.tryNow}</OutlineButton>
       </nav>
     </Container>
+    <LangSelector locale={locale} />
   </header>
 ))`
   padding: 1.5rem 1rem;
@@ -82,6 +84,9 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
     ${OutlineButton} {
       font-size: 20px;
       padding: 20px 30px;
+    }
+    ${Container} {
+      margin-right: 45px;
     }
   }
 `
