@@ -117,6 +117,7 @@ export default compose(
   withHandlers({
     formObjectTransformer: () => json => {
       return {
+        id: json.id,
         flowId: json.flowId || '',
         flowType: json.flowType || '',
         urlMatchers: json.urlMatchers || [''],
@@ -149,11 +150,12 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    onFormSubmit: ({ formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
+    onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
       setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
-      if (!result.error && !result.errors) history.push(routes.triggersList())
+      if (result.error || result.errors) return setIsFormSubmitting(false)
+      if (location.pathname !== routes.triggerEdit(result.id)) history.push(routes.triggerEdit(result.id))
       setIsFormSubmitting(false)
       return result
     },

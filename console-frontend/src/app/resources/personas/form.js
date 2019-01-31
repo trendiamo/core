@@ -135,6 +135,7 @@ export default compose(
     onFormSubmit: ({
       formRef,
       history,
+      location,
       onFormSubmit,
       onboarding,
       onboardingCreate,
@@ -150,7 +151,7 @@ export default compose(
           setOnboarding({ ...onboarding, stageIndex: 1, run: true })
         }
       }, 0)
-      history.push(routes.personasList())
+      if (location.pathname !== routes.personaEdit(result.id)) history.push(routes.personaEdit(result.id))
       setIsFormSubmitting(false)
       return result
     },

@@ -16,6 +16,7 @@ export default compose(
       const id = match.params.triggerId
       const { json, errors, requestError } = await apiRequest(apiTriggerUpdate, [id, { trigger: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (!errors && !requestError) enqueueSnackbar('Successfully updated trigger', { variant: 'success' })
       if (errors) setErrors(errors)
       return json
     },
