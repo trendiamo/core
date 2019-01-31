@@ -55,6 +55,8 @@ const ScriptedChatForm = ({
   setChatStepForm,
   setFieldValue,
   title,
+  setPreviousActionText,
+  previousActionText,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <Section title={title}>
@@ -107,7 +109,15 @@ const ScriptedChatForm = ({
         <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       </Grid>
     </Section>
-    {form.chatStepAttributes && <ChatStep chatStep={form.chatStepAttributes} index={0} onChange={setChatStepForm} />}
+    {form.chatStepAttributes && (
+      <ChatStep
+        chatStep={form.chatStepAttributes}
+        index={0}
+        onChange={setChatStepForm}
+        previousActionText={previousActionText}
+        setPreviousActionText={setPreviousActionText}
+      />
+    )}
     <DestinationChatSteps
       destinationChatStepsRefs={destinationChatStepsRefs}
       setDestinationChatStepRefs={setDestinationChatStepRefs}
@@ -141,11 +151,25 @@ const treatChatSteps = (chatStep, ids, extraIndex = 0) => ({
   __ref: React.createRef(),
 })
 
+const actionTextDefaults = {
+  reset: 'I still need help',
+  stop: 'Ok, cool',
+}
+
+const checkForActionTexts = ({ form }) => {
+  const actionTexts = actionTextDefaults
+  form.chatStepAttributes.chatOptionsAttributes.some(chatOption => {
+    return chatOption.actionType !== 'simple' && (actionTexts[chatOption.actionType] = chatOption.text)
+  })
+  return actionTexts
+}
+
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'scriptedChats', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('destinationChatStepsRefs', 'setDestinationChatStepRefs', []),
   withState('errors', 'setErrors', null),
+  withState('previousActionText', 'setPreviousActionText', {}),
   withHandlers({
     formObjectTransformer: () => json => {
       return {
@@ -160,6 +184,9 @@ export default compose(
     },
     saveFormObject: ({ saveFormObject, setErrors }) => form => {
       return saveFormObject(form, { setErrors })
+    },
+    afterFormMount: ({ setPreviousActionText }) => form => {
+      if (form) setPreviousActionText(checkForActionTexts({ form }))
     },
   }),
   withForm({

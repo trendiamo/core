@@ -9,6 +9,11 @@ Types::ChatOptionType = GraphQL::ObjectType.define do
       obj.chat_step
     }
   end
+  field :actionType, types.String do
+    resolve ->(obj, _args, _ctx) {
+      obj.action_type
+    }
+  end
   field :destinationChatStep, Types::ChatStepType do
     resolve ->(obj, _args, _ctx) {
       obj.destination_chat_step

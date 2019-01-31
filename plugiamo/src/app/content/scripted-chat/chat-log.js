@@ -1,4 +1,3 @@
-import i18n from 'ext/i18n'
 import { gql } from 'ext/recompose/graphql'
 
 const STEP_DELAY = 250
@@ -14,6 +13,7 @@ const query = gql`
       chatOptions {
         id
         text
+        actionType
         destinationChatStep {
           id
         }
@@ -22,42 +22,15 @@ const query = gql`
   }
 `
 
-const finalOptions = () => {
-  const account = localStorage.getItem('trnd-plugin-account')
-  if (account === 'Impressorajato' && !document.querySelector('#livechat-compact-container')) {
-    return [
-      {
-        id: 'reset',
-        text: i18n.iStillNeedHelp(),
-      },
-    ]
-  } else {
-    return [
-      {
-        id: 'reset',
-        text: i18n.iStillNeedHelp(),
-      },
-      {
-        id: 'stop',
-        text: i18n.okCool(),
-      },
-    ]
-  }
-}
-
 const processChatOptions = chatOptions => {
   const account = localStorage.getItem('trnd-plugin-account')
-  if (account === 'Impressorajato' && document.querySelector('#livechat-compact-container')) {
-    return [
-      ...chatOptions,
-      {
-        id: 'stop',
-        text: i18n.okCool(),
-      },
-    ]
-  } else {
-    return chatOptions
-  }
+  return chatOptions.filter(chatOption => {
+    return !(
+      account === 'Impressorajato' &&
+      chatOption.actionType !== 'simple' &&
+      !document.querySelector('#livechat-compact-container')
+    )
+  })
 }
 
 const chatLog = {
@@ -84,8 +57,7 @@ const chatLog = {
           message,
           type: 'message',
         }))
-        const options =
-          data.chatStep.chatOptions.length > 0 ? processChatOptions(data.chatStep.chatOptions) : finalOptions()
+        const options = processChatOptions(data.chatStep.chatOptions)
         const optionsLog = { options, type: 'options' }
         const logs = [...messageLogs, optionsLog]
         this.addNextLog(logs, this.timestamp)

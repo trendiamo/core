@@ -21,12 +21,12 @@ const ChatOptions = compose(
       })
       if (log.selected) return
       chatLog.selectOption(log, chatOption)
-      if (chatOption.destinationChatStep) {
-        chatLog.fetchStep(chatOption.destinationChatStep.id)
-      } else if (chatOption.id === 'reset') {
-        onResetChat()
-      } else if (chatOption.id === 'stop') {
+      if (chatOption.actionType === 'stop') {
         onStopChat()
+      } else if (chatOption.actionType === 'reset') {
+        onResetChat()
+      } else if (chatOption.destinationChatStep) {
+        chatLog.fetchStep(chatOption.destinationChatStep.id)
       } else {
         console.error('No destination chat step for option', chatOption)
       }

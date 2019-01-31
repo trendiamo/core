@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190129160633) do
+ActiveRecord::Schema.define(version: 20190129165208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,10 +37,12 @@ ActiveRecord::Schema.define(version: 20190129160633) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "chat_step_id"
-    t.bigint "destination_chat_step_id"
+    t.integer "destination_chat_step_id"
     t.bigint "account_id"
     t.integer "order", default: 1, null: false
+    t.integer "action_type", limit: 2, default: 0, null: false
     t.index ["account_id"], name: "index_chat_options_on_account_id"
+    t.index ["action_type"], name: "index_chat_options_on_action_type"
     t.index ["chat_step_id"], name: "index_chat_options_on_chat_step_id"
     t.index ["destination_chat_step_id"], name: "index_chat_options_on_destination_chat_step_id"
   end

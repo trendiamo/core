@@ -3,8 +3,7 @@
 const omitDeep = (input, excludesFn) => {
   return Object.entries(input).reduce((nextInput, [key, value]) => {
     const shouldExclude = excludesFn(key)
-    if (shouldExclude) return nextInput
-
+    if (shouldExclude || value === null) return nextInput
     if (Array.isArray(value)) {
       const arrValue = value
       const nextValue = arrValue.map(arrItem => {

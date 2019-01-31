@@ -36,6 +36,8 @@ const ChatOptions = ({
   onChange,
   isFormLoading,
   setChatOptionForm,
+  setPreviousActionText,
+  previousActionText,
 }) => (
   <div>
     {chatStep.chatOptionsAttributes.map((chatOption, index) => (
@@ -51,6 +53,8 @@ const ChatOptions = ({
         isFormLoading={isFormLoading}
         key={chatOption.id || `new-${index}`}
         onChange={setChatOptionForm}
+        previousActionText={previousActionText}
+        setPreviousActionText={setPreviousActionText}
         sortIndex={index}
       />
     ))}
@@ -71,6 +75,8 @@ const ChatStep = ({
   onChatOptionsSortEnd,
   chatStepType,
   addAction,
+  previousActionText,
+  setPreviousActionText,
 }) => (
   <Section>
     <FormSection ellipsize foldable folded={chatStep.id} hideTop title={`Step #${chatStep.__index + 1}`}>
@@ -101,11 +107,13 @@ const ChatStep = ({
                 helperClass="sortable-element"
                 onChange={onChange}
                 onSortEnd={onChatOptionsSortEnd}
+                previousActionText={previousActionText}
                 setChatOptionForm={setChatOptionForm}
+                setPreviousActionText={setPreviousActionText}
                 useDragHandle
               />
             )}
-            <AddItemButton disabled={isFormLoading} message="Add Option" onClick={addChatOption} />
+            <AddItemButton disabled={isFormLoading} message="Add Option" onClick={addChatOption('simple')} />
           </FormSection>
         </div>
       )}
@@ -131,14 +139,15 @@ export default compose(
         ],
       })
     },
-    addChatOption: ({ onChange, chatStep }) => () => {
+    addChatOption: ({ onChange, chatStep }) => type => () => {
       onChange({
         ...chatStep,
         chatOptionsAttributes: [
           ...chatStep.chatOptionsAttributes,
           {
             text: '',
-            destinationChatStepId: '',
+            actionType: type,
+            destinationChatStepId: null,
           },
         ],
       })

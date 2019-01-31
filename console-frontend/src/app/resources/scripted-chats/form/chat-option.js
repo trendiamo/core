@@ -1,3 +1,4 @@
+import ActionTypeSelect from './action-type-select'
 import ChatStep from './chat-step'
 import ChatStepSelect from './chat-step-select'
 import React from 'react'
@@ -44,9 +45,15 @@ const ChatStepOption = ({
         required
         value={chatOption.text}
       />
-      <ChatStepSelect chatOption={chatOption} disabled={isFormLoading} index={index} onChange={onChange} />
+      <ActionTypeSelect onChange={editChatOptionValue} value={chatOption.actionType} />
       <FormHelperText>{'How this chat proceeds after someone clicks this option.'}</FormHelperText>
-      {chatStep && (
+      {chatOption.actionType === 'simple' && (
+        <>
+          <ChatStepSelect chatOption={chatOption} disabled={isFormLoading} index={index} onChange={onChange} />
+          <FormHelperText>{'Chat will proceed to the selected step after click'}</FormHelperText>
+        </>
+      )}
+      {chatStep && chatOption.actionType === 'simple' && (
         <ChatStepPortal target={chatStep.__ref}>
           <ChatStep chatStep={chatStep} index={chatStep.__index} onChange={setChatStepForm} />
         </ChatStepPortal>
@@ -61,9 +68,16 @@ export default compose(
     chatStep: chatOption.destinationChatStepAttributes,
   })),
   withHandlers({
-    editChatOptionValue: ({ chatOption, index, onChange }) => event => {
+    editChatOptionValue: ({ chatOption, index, onChange, previousActionText, setPreviousActionText }) => event => {
       const name = event.target.name.replace('chatOption_', '')
-      chatOption[name] = event.target.value
+      const value = event.target.value
+      if (name === 'actionType' && chatOption.text === '' && value !== 'simple') {
+        chatOption.text = previousActionText[value] || ''
+      }
+      if (name === 'text' && chatOption.actionType !== 'simple') {
+        setPreviousActionText({ ...previousActionText, [chatOption.actionType]: value })
+      }
+      chatOption[name] = value
       onChange(chatOption, index)
     },
     deleteChatOption: ({ chatOption, index, onChange }) => () => {
