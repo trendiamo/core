@@ -20,7 +20,6 @@ a2enmod expires
 
 mkdir -p /var/www/demo.frekkls.com/html
 mkdir -p /var/www/frekkls.com/html
-mkdir -p /var/www/frekkls.com.br/html
 
 vi /etc/apache2/sites-available/000-default.conf
 vi /etc/apache2/sites-available/000-default-le-ssl.conf
