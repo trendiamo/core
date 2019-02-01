@@ -289,10 +289,11 @@ export default compose(
   withRouter,
   withHandlers({
     selectPersona: ({ convertPersona, form, setForm, setPersona }) => selected => {
-      setForm({
-        ...form,
-        personaId: selected && selected.value.id,
-      })
+      selected &&
+        setForm({
+          ...form,
+          personaId: selected.value.id,
+        })
       selected && setPersona(convertPersona(selected.value))
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {

@@ -70,7 +70,7 @@ const TriggerForm = ({
           disabled={isFormLoading}
           fullWidth
           initialSelectedItem={form.flowId && { value: form.flowId, label: form.flowLabel }}
-          label="Persona"
+          label="Flow"
           onChange={selectFlow}
           options={{ suggestionItem: 'withModuleIcon' }}
           required
@@ -158,11 +158,12 @@ export default compose(
       return result
     },
     selectFlow: ({ form, setForm }) => selected => {
-      setForm({
-        ...form,
-        flowId: selected && selected.value.id,
-        flowType: selected && selected.value.type,
-      })
+      selected &&
+        setForm({
+          ...form,
+          flowId: selected.value.id,
+          flowType: selected.value.type,
+        })
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),

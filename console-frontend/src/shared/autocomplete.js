@@ -26,11 +26,11 @@ const AutocompleteInput = ({ formControlProps, inputProps, label, name, loadAllO
       {label}
     </InputLabel>
     <Input
+      endAdornment={<DropdownButton loadAllOptions={loadAllOptions} />}
       fullWidth
       name={name}
       type="text"
       {...inputProps}
-      endAdornment={<DropdownButton loadAllOptions={loadAllOptions} />}
     />
   </FormControl>
 )

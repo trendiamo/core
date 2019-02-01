@@ -128,10 +128,11 @@ export default compose(
   withRouter,
   withHandlers({
     selectPersona: ({ convertPersona, form, previewOutro, setForm, setPreviewOutro }) => selected => {
-      setForm({
-        ...form,
-        personaId: selected && selected.value.id,
-      })
+      selected &&
+        setForm({
+          ...form,
+          personaId: selected.value.id,
+        })
       selected &&
         setPreviewOutro({
           ...previewOutro,
