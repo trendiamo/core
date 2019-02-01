@@ -103,14 +103,15 @@ export default compose(
   branch(({ spotlight }) => spotlight._destroy, renderNothing),
   withHandlers({
     selectPersona: ({ spotlight, index, onChange }) => selected => {
-      onChange(
-        {
-          ...spotlight,
-          personaId: selected && selected.value.id,
-          __persona: selected && selected.value,
-        },
-        index
-      )
+      selected &&
+        onChange(
+          {
+            ...spotlight,
+            personaId: selected.value.id,
+            __persona: selected.value,
+          },
+          index
+        )
     },
     addProductPick: ({ spotlight, index, onChange }) => () => {
       onChange(

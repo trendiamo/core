@@ -360,10 +360,11 @@ export default compose(
   withRouter,
   withHandlers({
     selectPersona: ({ form, setForm }) => selected => {
-      setForm({
-        ...form,
-        personaId: selected && selected.value.id,
-      })
+      selected &&
+        setForm({
+          ...form,
+          personaId: selected.value.id,
+        })
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
