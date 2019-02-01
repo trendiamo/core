@@ -35,9 +35,21 @@ const Container = styled.div`
   left: 0;
 `
 
-const Launcher = ({ optimizelyToggleContent, personaPicUrl, position, showingContent, bubbleText }) => (
+const Launcher = ({
+  optimizelyToggleContent,
+  personaPicUrl,
+  position,
+  showingContent,
+  bubbleText,
+  onToggleContent,
+}) => (
   <div>
-    <Bubble bubble={{ message: bubbleText }} position={position} showingContent={showingContent} />
+    <Bubble
+      bubble={{ message: bubbleText }}
+      onToggleContent={onToggleContent}
+      position={position}
+      showingContent={showingContent}
+    />
     <LauncherFrame position={position}>
       <Container onClick={optimizelyToggleContent}>
         <PersonaPic active={!showingContent} url={personaPicUrl} />

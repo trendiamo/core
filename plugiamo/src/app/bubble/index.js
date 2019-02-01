@@ -16,9 +16,19 @@ const defaultBubble = {
   startTypingAfter: 0.135,
 }
 
-const ChatBubble = ({ position, bubble, message, animation, bar, setTextWidthRef, textWidth, ...props }) => (
+const ChatBubble = ({
+  position,
+  bubble,
+  message,
+  animation,
+  bar,
+  setTextWidthRef,
+  textWidth,
+  onToggleContent,
+  ...props
+}) => (
   <ChatBubbleFrame animation={animation} bubble={bubble} position={position} textWidth={textWidth} {...props}>
-    <Container>
+    <Container onClick={onToggleContent}>
       <ChatBubbleBase animation={animation} bubble={bubble}>
         {message}
       </ChatBubbleBase>
