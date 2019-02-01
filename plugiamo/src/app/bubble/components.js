@@ -44,7 +44,6 @@ const ChatBubbleBase = styled.div`
     animation === 'roll' ? bubble.timeStartDuration : bubble.timeEndDuration}s;
   animation-fill-mode: both;
   position: relative;
-  user-events: none;
   user-select: none;
   @keyframes _frekkls_bubble_text_start {
     0% {
@@ -75,6 +74,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `
 
 const TextWidthMeasure = styled.div`

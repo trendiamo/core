@@ -23,7 +23,6 @@ const ChatBubbleFrame = styled(Frame).attrs({
   box-shadow: 2px 7px 40px 2px rgba(64, 67, 77, 0.28), 0px 2px 4px 0px rgba(0, 0, 0, 0.17);
   background-color: #fbfbfb;
   box-sizing: border-box;
-  padding: 11px 16px;
   width: 100%;
   max-width: ${({ textWidth }) => textWidth + 48}px;
   overflow: hidden;
@@ -40,6 +39,9 @@ const ChatBubbleFrame = styled(Frame).attrs({
   animation-duration: ${({ animation, bubble }) =>
     animation === 'roll' ? bubble.timeStartDuration : bubble.timeEndDuration}s;
   cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
   ${({ position }) => keyframes({ position })}
 `
 
