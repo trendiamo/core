@@ -111,7 +111,7 @@ const TriggerForm = ({
 
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
-  withProps({ formRef: React.createRef(), websiteId: auth.getUser().account.websiteIds[0] }),
+  withProps({ formRef: React.createRef() }),
   withState('hostnames', 'setHostnames', []),
   withState('errors', 'setErrors', null),
   withHandlers({
@@ -175,8 +175,8 @@ export default compose(
   })),
   lifecycle({
     async componentDidMount() {
-      const { websiteId, setHostnames, enqueueSnackbar } = this.props
-      const { json, requestError } = await apiRequest(apiWebsiteShow, [websiteId])
+      const { setHostnames, enqueueSnackbar } = this.props
+      const { json, requestError } = await apiRequest(apiWebsiteShow, [auth.getUser().account.websiteIds[0]])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       setHostnames(json.hostnames)
     },
