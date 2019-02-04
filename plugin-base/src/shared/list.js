@@ -85,16 +85,18 @@ const ListItem = compose(
 )(styled.li`
   position: relative;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: ${({ isClicked, highlight }) =>
+    isClicked && !highlight ? '0 3px 25px rgba(0, 0, 0, 0.3)' : '0 2px 12px rgba(0, 0, 0, 0.26)'};
   padding-left: 100px;
+  ${({ listSelected, highlight, isClicked }) => listSelected && !highlight && !isClicked && 'opacity: 0;'}
   display: flex;
   margin-bottom: 1rem;
   align-items: center;
   cursor: pointer;
-  color: ${({ isClicked, highlight }) => (isClicked && !highlight ? 'white' : '#4a4a4a')};
-  transition: background-color 0.4s linear;
-  background-color: ${({ isClicked, highlight }) => (isClicked && !highlight ? '#00adef' : 'white')};
+  color: #4a4a4a;
+  background-color: #fff;
   backface-visibility: hidden;
+  transition: all 0.3s ease-out;
   @keyframes _frekkls_selected_item_highlight {
     0% {
       box-shadow: 0 1px 15px 1px #00adef;
