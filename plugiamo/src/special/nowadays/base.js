@@ -1,5 +1,5 @@
 import CartIcon from 'icons/cart.svg'
-import ChatMessages from './chat-messages'
+import ChatLogUi from './chat-log-ui'
 import data from './data'
 import styled from 'styled-components'
 import { addMainProductToCart } from './cart'
@@ -38,7 +38,7 @@ const NowadaysBase = () => (
   <ColFlexDiv>
     <Cover persona={data.persona} product={data.product} />
     <BelowCover>
-      <ChatMessages chatMessages={data.chatMessages} />
+      <ChatLogUi />
       <CheckoutButton />
     </BelowCover>
   </ColFlexDiv>

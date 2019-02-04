@@ -23,6 +23,7 @@ export const BelowCover = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-bottom: 56px;
 
   @media (min-height: 500px) {
     overflow-y: auto;
