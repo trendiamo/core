@@ -16,6 +16,10 @@ const data = {
     },
     // separate field for gif?
   },
+  flow: {
+    chatBubbleText: 'Have a look 👀',
+    extraBubbleText: "Hey! 👋Cool that you're interested!",
+  },
   chatMessages: [
     {
       type: 'text',

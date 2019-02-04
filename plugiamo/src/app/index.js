@@ -44,6 +44,7 @@ export const AppBase = styled(
       )}
       <Launcher
         bubbleText={data && data.flow && data.flow.chatBubbleText}
+        extraBubbleText={data && data.flow && data.flow.extraBubbleText}
         onToggleContent={onToggleContent}
         persona={persona}
         position={position}

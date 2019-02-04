@@ -52,6 +52,7 @@ const Container = styled.div`
 `
 
 const Launcher = ({
+  extraBubbleText,
   optimizelyToggleContent,
   personaPicUrl,
   position,
@@ -67,6 +68,16 @@ const Launcher = ({
       pulsating
       showingContent={showingContent}
     />
+    {extraBubbleText && (
+      <Bubble
+        bubble={{ message: extraBubbleText }}
+        extraBubble
+        onToggleContent={onToggleContent}
+        position={position}
+        pulsating
+        showingContent={showingContent}
+      />
+    )}
     <TrendiamoLauncherFrame position={position}>
       <div>
         <PulsateEffect active={!showingContent} />
