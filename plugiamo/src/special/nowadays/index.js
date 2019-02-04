@@ -11,6 +11,7 @@ import { optionsFromHash } from 'app/setup'
 const Nowadays = ({ onToggleContent, showingContent }) => (
   <AppBase
     Component={<NowadaysBase />}
+    data={data}
     Launcher={Launcher}
     onToggleContent={onToggleContent}
     persona={data.persona}
