@@ -1,6 +1,7 @@
 import ProductMessage from './product-message'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
+import TextMessage from './text-message'
 import VideoMessage from './video-message'
 import { compose, withHandlers, withProps } from 'recompose'
 import { h } from 'preact'
@@ -24,31 +25,6 @@ const MessageContainer = styled.div`
 
   & + & {
     margin-top: 0.3rem;
-  }
-`
-
-const TextMessage = styled.div`
-  background-color: #fff;
-  overflow: hidden;
-  border-radius: 0 12px 12px 12px;
-  padding: 1rem;
-  font-size: 14px;
-  position: relative;
-
-  &&:after {
-    content: ' ';
-    position: absolute;
-    top: 0;
-    left: -20px;
-    width: 10px;
-    height: 15px;
-    border-bottom: 15px solid transparent;
-    border-left: 10px solid transparent;
-    border-right: 10px solid #fff;
-  }
-
-  img {
-    max-width: 100%;
   }
 `
 

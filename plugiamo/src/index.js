@@ -1,6 +1,7 @@
 import App from 'app'
 import initRollbar from 'ext/rollbar'
 import mixpanel from 'ext/mixpanel'
+import Nowadays from 'special/nowadays'
 import SpotAHome from 'special/spotahome'
 import { detect } from 'detect-browser'
 import { GraphQLClient } from 'graphql-request'
@@ -35,7 +36,12 @@ const main = () => {
   if (!browser || !supportedBrowsers.includes(browser.name)) return
 
   // here we haven't requested info yet, so we do need to base this off of location.hostname
-  const Component = location.hostname === 'www.spotahome.com' ? SpotAHome : initRootComponent()
+  const Component =
+    location.hostname === 'nowadays.com' || process.env.HACKATHON
+      ? Nowadays
+      : location.hostname === 'www.spotahome.com'
+      ? SpotAHome
+      : initRootComponent()
 
   const trendiamoContainer = document.createElement('div')
   trendiamoContainer.classList.add('trendiamo-container')
