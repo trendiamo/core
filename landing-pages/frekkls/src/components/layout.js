@@ -19,6 +19,18 @@ import favicon from '../images/favicon.png'
 
 const Main = styled.main`
   overflow: hidden;
+  position: relative;
+`
+
+const MainContent = styled.div`
+  body.mobile-menu-open & {
+    position: relative;
+    overflow: hidden;
+    padding-top: 50px;
+    height: calc(100vh - 130px);
+    min-height: calc(100vh - 130px);
+    pointer-events: none;
+  }
 `
 
 const Layout = ({ children, className, layout, locale }) => (
@@ -40,9 +52,11 @@ const Layout = ({ children, className, layout, locale }) => (
           <meta name="hbspt-locale" value={locales[locale].hbspt} />
         </Helmet>
         <Header layout={layout} locale={locale} siteTitle={data.site.siteMetadata.title} />
-        {children}
-        <Footer layout={layout} locale={locale} />
-        <ModalContents layout={layout} />
+        <MainContent>
+          {children}
+          <Footer layout={layout} locale={locale} />
+          <ModalContents layout={layout} />
+        </MainContent>
       </Main>
     )}
   />

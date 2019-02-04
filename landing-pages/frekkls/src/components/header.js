@@ -7,6 +7,43 @@ import Container from './container'
 import LangSelector from './lang-selector'
 import locales from '../../locales'
 import Logo from '../images/logo'
+import MobileMenu from './mobile-menu'
+import { OutlineButton } from './button'
+
+import menuIcon from '../images/mobile-hamburger.svg'
+
+const StyledMenuIcon = styled.img.attrs({
+  src: menuIcon,
+})`
+  fill: #ff6e5c;
+  @media (min-width: 530px) {
+    display: none;
+  }
+`
+
+const StyledLangSelector = styled(LangSelector)`
+  position: absolute;
+  width: 40px;
+  top: 52px;
+  right: 10px;
+  display: none;
+  @media (min-width: 900px) {
+    display: flex;
+  }
+`
+
+const StyledOutlineButton = styled(OutlineButton)`
+  font-size: 12px;
+  padding: 10px;
+  @media (min-width: 900px) {
+    font-size: 20px;
+    padding: 20px 30px;
+  }
+`
+
+const toggleMobileMenu = () => {
+  document.body.classList.toggle('mobile-menu-open')
+}
 
 const Header = styled(({ className, layout, locale, siteTitle }) => (
   <header className={className}>
@@ -23,8 +60,10 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
         </Link>
         <Button className="js-request-demo">{layout.tryNow}</Button>
         <LangSelector locale={locale} />
+        <StyledMenuIcon onClick={toggleMobileMenu} />
       </nav>
     </Container>
+    <MobileMenu layout={layout} locale={locale} toggleMobileMenu={toggleMobileMenu} />
   </header>
 ))`
   padding: 1.5rem 1rem;
