@@ -14,7 +14,7 @@ const ColFlexDiv = styled.div`
 
 const CheckoutButton = styled(({ className }) => (
   <button className={className} onClick={addMainProductToCart} type="button">
-    <CartIcon height="24" style={{ verticalAlign: 'bottom', marginRight: '0.4rem' }} width="24" />
+    <CartIcon fill="#fff" height="24" style={{ verticalAlign: 'bottom', marginRight: '0.4rem' }} width="24" />
     {'Add to Cart'}
   </button>
 ))`
