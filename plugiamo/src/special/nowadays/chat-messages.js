@@ -21,7 +21,7 @@ const MessageContainer = styled.div`
 `
 
 const ChatMessages = ({ chatMessages }) => (
-  <ChatBackground>
+  <ChatBackground style={{ paddingBottom: '63px' }}>
     {chatMessages.map(chatMessage =>
       chatMessage.type === 'text' ? (
         <MessageContainer>

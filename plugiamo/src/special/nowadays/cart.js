@@ -12,7 +12,7 @@ const updateCartSummaries = () => {
 }
 
 export const addToCart = serializedForm => {
-  window.$.post('/cart/add.js', serializedForm, updateCartSummaries)
+  window.$.post('/cart/add.js', serializedForm, updateCartSummaries, 'text')
 }
 
 export const addMainProductToCart = () => {
