@@ -1,5 +1,6 @@
 const data = {
   product: {
+    id: '13018965049397',
     name: 'Bold Stripe Shortsleeve Shirt',
     pathname: '/collections/the-botanical-green/products/nu0112d2',
   },
@@ -43,7 +44,7 @@ const data = {
     {
       type: 'product',
       product: {
-        id: 'nu1202d2-3',
+        id: '',
         url: 'https://nowadays.com/collections/new-in/products/nu1202d2-3',
         picUrl: '//cdn.shopify.com/s/files/1/0230/7513/products/NU1202D2_151_2.jpg?v=1548946725',
         title: 'Stand-Up Collar Piqué Polo grey melange',
