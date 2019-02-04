@@ -1,4 +1,6 @@
+import CartIcon from 'icons/cart.svg'
 import styled from 'styled-components'
+import { addToCart } from './cart'
 import { Card, CardContent, CardImg } from 'shared/card'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
@@ -28,22 +30,40 @@ const Price = styled.div`
   letter-spacing: 0.1px;
 `
 
+const AddToCart = styled.div`
+  font-weight: 500;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  border-top: 2px solid #e9e9e9;
+  text-align: center;
+`
+
 const ProductMessage = compose(
   withHandlers({
     onClick: ({ product }) => () => {
       markGoFwd()
       window.location = product.url
     },
+    handleAddToCart: ({ product }) => () => {
+      addToCart(product.serializedForm)
+    },
   })
-)(({ product, onClick }) => (
-  <Card onClick={onClick} style={{ minWidth: '260px', cursor: 'pointer' }}>
-    <CardImg src={product.picUrl} style={{ height: '180px', objectFit: 'cover' }} />
-    <CardContent>
+)(({ product, onClick, handleAddToCart }) => (
+  <Card style={{ minWidth: '260px', cursor: 'pointer' }}>
+    <CardImg onClick={onClick} src={product.picUrl} style={{ height: '180px', objectFit: 'cover' }} />
+    <CardContent onClick={onClick}>
       <TitleAndPrice>
         <Title>{product.title}</Title>
         <Price>{product.displayPrice}</Price>
       </TitleAndPrice>
     </CardContent>
+    <AddToCart onClick={handleAddToCart}>
+      <CartIcon height="14" width="24" />
+      {'Add to Cart'}
+    </AddToCart>
   </Card>
 ))
 

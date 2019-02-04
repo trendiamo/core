@@ -76,11 +76,12 @@ const data = {
       {
         type: 'product',
         product: {
-          id: '',
+          id: '13019007877173',
           url: 'https://nowadays.com/collections/new-in/products/nu1202d2-3',
           picUrl: '//cdn.shopify.com/s/files/1/0230/7513/products/NU1202D2_151_2.jpg?v=1548946725',
           title: 'Stand-Up Collar Piqué Polo grey melange',
           displayPrice: '€59.95',
+          serializedForm: 'id=13019007877173&option-0=151&option-1=S&quantity=1',
         },
       },
     ],
