@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 
 import Globe from '../images/globe.svg'
+import GlobeOrange from '../images/globe-orange.svg'
 import locales from '../../locales'
 
 const StyledLink = styled(Link)`
@@ -19,6 +20,12 @@ const StyledLink = styled(Link)`
   &:hover {
     background-color: #eee;
   }
+`
+
+const StyledGlobe = styled.img.attrs({
+  src: ({ orange }) => (orange ? GlobeOrange : Globe),
+})`
+  margin-right: 3px;
 `
 
 const SelectContainer = styled.div`
@@ -68,14 +75,29 @@ const SelectContainer = styled.div`
   }
 `
 
+const StyledLink = styled(Link)`
+  font-size: 14px;
+  line-height: 1.71;
+  display: block;
+  color: #393939;
+  font-weight: ${({ selecteditem, item }) => (item.value.locale === selecteditem.locale ? 'bold' : 'normal')};
+  text-decoration: none;
+`
+
+const Container = styled.div`
+  display: inline-block;
+`
+
 const localesArray = Object.keys(locales).map(e => ({ value: locales[e], label: locales[e].label }))
 
 const purePath = (item, locale) => `${item.value.path}${location.pathname.replace(locales[locale].path, '')}`
 
+// to={`${item.value.path}${purePath(new URL(window.location.href), locales[locale].path)}`}
 const LangSelector = ({ locale }) => (
   <Downshift initialSelectedItem={locales[locale]} itemToString={item => item.label}>
     {({ getRootProps, getInputProps, getItemProps, getMenuProps, isOpen, selectedItem, toggleMenu }) => (
       <SelectContainer {...getRootProps()}>
+        {/* <StyledGlobe orange={orange} /> */}
         <button onClick={toggleMenu} type="button">
           <img alt="" src={Globe} />
           <input {...getInputProps()} readOnly value={selectedItem && selectedItem.label} />
