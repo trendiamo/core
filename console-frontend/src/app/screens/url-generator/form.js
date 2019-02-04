@@ -97,10 +97,11 @@ const UrlGeneratorForm = ({
           <React.Fragment>
             <Autocomplete
               autocomplete={apiPathAutocomplete}
-              defaultValue=""
+              defaultPlaceholder="Choose a step"
               label="Step"
+              noMargin
               onChange={selectStep}
-              placeholder="Choose a step..."
+              options={{}}
             />
             <FormHelperText>{'Show a specific step of a module.'}</FormHelperText>
           </React.Fragment>
@@ -113,12 +114,11 @@ const UrlGeneratorForm = ({
         {showPersona ? (
           <StyledAutocomplete
             autocomplete={apiPersonasAutocomplete}
-            defaultValue={form.personaId}
+            defaultPlaceholder="Choose a persona"
             label="Persona"
-            name="personaId"
             noMargin
             onChange={selectPersona}
-            placeholder="Choose a Persona"
+            options={{ suggestionItem: 'withAvatar' }}
           />
         ) : (
           <AddOptionButton option="persona" optionLabel="Set Persona" showOption={showOption} />
@@ -173,17 +173,19 @@ export default compose(
         url: '',
       })
     },
-    selectPersona: ({ form, setForm }) => ({ value }) => {
-      setForm({
-        ...form,
-        personaId: value.id,
-      })
+    selectPersona: ({ form, setForm }) => selected => {
+      selected &&
+        setForm({
+          ...form,
+          personaId: selected.value.id,
+        })
     },
-    selectStep: ({ form, setForm }) => ({ value }) => {
-      setForm({
-        ...form,
-        step: value.path,
-      })
+    selectStep: ({ form, setForm }) => selected => {
+      selected &&
+        setForm({
+          ...form,
+          step: selected.value.path,
+        })
     },
     toggleAutoOpen: ({ form, setForm }) => () => {
       setForm({ ...form, autoOpen: !form.autoOpen })
