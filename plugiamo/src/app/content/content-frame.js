@@ -14,8 +14,8 @@ const ContentFrameContainer = animateOnMount(styled.div`
   overflow-x: hidden;
   background-color: #fff;
   opacity: ${({ entry }) => (entry ? 0 : 1)};
-  transform: ${({ entry }) => (entry ? 'translateY(20px)' : 'none')};
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: ${({ entry }) => (entry ? 'translateY(100%)' : 'none')};
+  transition: opacity 0.25s ease, transform 0.4s ease;
 
   bottom: 0;
   right: 0;
@@ -31,6 +31,8 @@ const ContentFrameContainer = animateOnMount(styled.div`
     height: calc(100vh - 150px);
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
     max-height: 500px;
+    transform: ${({ entry }) => (entry ? 'translateY(20px)' : 'none')};
+    transition: opacity 0.25s ease, transform 0.25s ease;
   }
 `)
 
