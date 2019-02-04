@@ -1,3 +1,4 @@
+import ImgCarouselMessage from './carousel'
 import ProductMessage from './product-message'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
@@ -34,6 +35,10 @@ const ChatMessages = ({ chatMessages }) => (
       ) : chatMessage.type === 'product' ? (
         <MessageContainer>
           <ProductMessage product={chatMessage.product} />
+        </MessageContainer>
+      ) : chatMessage.type === 'imageCarousel' ? (
+        <MessageContainer style={{ width: 'auto' }}>
+          <ImgCarouselMessage imageCarousel={chatMessage.imageCarousel} />
         </MessageContainer>
       ) : null
     )}
