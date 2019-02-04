@@ -26,9 +26,9 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
           {layout.contact}
         </a>
         <OutlineButton className="js-request-demo">{layout.tryNow}</OutlineButton>
+        <LangSelector locale={locale} />
       </nav>
     </Container>
-    <LangSelector locale={locale} />
   </header>
 ))`
   padding: 1.5rem 1rem;
@@ -86,7 +86,7 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
       padding: 20px 30px;
     }
     ${Container} {
-      margin-right: 45px;
+      margin-right: 0 auto;
     }
   }
 `

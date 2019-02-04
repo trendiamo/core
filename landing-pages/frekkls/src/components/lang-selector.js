@@ -13,7 +13,8 @@ const StyledGlobe = styled.img.attrs({
 `
 
 const SelectContainer = styled.div`
-  position: absolute;
+  ${'' /* position: absolute; */}
+  margin-left: 20px;
   width: 40px;
   top: 52px;
   right: 10px;
