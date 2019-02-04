@@ -1,8 +1,8 @@
 const data = {
   product: {
-    id: '13018965049397',
-    name: 'Bold Stripe Shortsleeve Shirt',
-    pathname: '/collections/the-botanical-green/products/nu0112d2',
+    id: '45542966343',
+    name: 'Whale Brief blue',
+    pathname: '/collections/organic-cotton-collection/products/whale-brief-blue-organic-cotton',
   },
   persona: {
     id: 'aaron_kane',
@@ -24,7 +24,7 @@ const data = {
     default: [
       {
         type: 'text',
-        text: 'I find myself buying from **nowadays** a lot lately. Their shirts are just so comfortable.',
+        text: 'I find myself buying from **buttwrap** a lot lately. Their shorts are just so comfortable.',
       },
       {
         type: 'text',
@@ -60,7 +60,7 @@ const data = {
       {
         type: 'text',
         text:
-          'Usually shirts are pretty standard 🙄 and if you wear something special it’s sometimes hard to combine it with other pieces.',
+          'Usually shorts are pretty standard 🙄 and if you wear something special it’s sometimes hard to combine it with other pieces.',
       },
       {
         type: 'text',
@@ -68,20 +68,22 @@ const data = {
           'But this one keeps it kind of low key so it still goes well with lots of outfits while not being boring. 👍',
       },
     ],
-    'Show me other shirts': [
+    'Show me other shorts': [
       {
         type: 'text',
-        text: 'Here are some outfits that go well with it:',
+        text: 'Here are some other choices I like:',
       },
       {
         type: 'product',
         product: {
-          id: '13019007877173',
-          url: 'https://nowadays.com/collections/new-in/products/nu1202d2-3',
-          picUrl: '//cdn.shopify.com/s/files/1/0230/7513/products/NU1202D2_151_2.jpg?v=1548946725',
-          title: 'Stand-Up Collar Piqué Polo grey melange',
-          displayPrice: '€59.95',
-          serializedForm: 'id=13019007877173&option-0=151&option-1=S&quantity=1',
+          id: '45542646599',
+          url:
+            'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+          picUrl:
+            'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+          title: 'Gorilla Boxer black',
+          displayPrice: '€27.50',
+          serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
         },
       },
     ],
