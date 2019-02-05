@@ -7,6 +7,7 @@ import { detect } from 'detect-browser'
 import { GraphQLClient } from 'graphql-request'
 import { graphQlUrl, location, mixpanelToken, overrideAccount } from './config'
 import { h, render } from 'preact'
+import { optionsFromHash } from 'app/setup'
 import { Provider } from 'ext/graphql-context'
 import './styles.css'
 
@@ -25,6 +26,12 @@ const initRootComponent = () => {
   return RootComponent
 }
 
+const detectAndMarkHackathon = () => {
+  if (location.hostname !== 'www.buttwrap.com' && !process.env.HACKATHON) return false
+  if ((optionsFromHash().hckt || '').match(/1|true/)) sessionStorage.setItem('trnd-hackathon', 1)
+  return !!sessionStorage.getItem('trnd-hackathon')
+}
+
 const main = () => {
   initRollbar()
   mixpanel.init(mixpanelToken)
@@ -36,12 +43,11 @@ const main = () => {
   if (!browser || !supportedBrowsers.includes(browser.name)) return
 
   // here we haven't requested info yet, so we do need to base this off of location.hostname
-  const Component =
-    (location.hostname === 'www.buttwrap.com' && localStorage.getItem('trnd-hackathon')) || process.env.HACKATHON
-      ? Hackathon
-      : location.hostname === 'www.spotahome.com'
-      ? SpotAHome
-      : initRootComponent()
+  const Component = detectAndMarkHackathon()
+    ? Hackathon
+    : location.hostname === 'www.spotahome.com'
+    ? SpotAHome
+    : initRootComponent()
 
   const trendiamoContainer = document.createElement('div')
   trendiamoContainer.classList.add('trendiamo-container')
