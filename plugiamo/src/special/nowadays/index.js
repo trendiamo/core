@@ -11,6 +11,7 @@ import { matchUrl } from 'plugin-base'
 const Nowadays = ({ module, onToggleContent, showingContent }) => (
   <AppBase
     Component={<NowadaysBase module={module} />}
+    darkClose
     Launcher={Launcher}
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}

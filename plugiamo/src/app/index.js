@@ -31,11 +31,12 @@ const Gradient = animateOnMount(styled.div`
 `)
 
 export const AppBase = styled(
-  ({ className, Component, Launcher, onToggleContent, persona, position, showingContent, data }) => (
+  ({ className, Component, darkClose, Launcher, onToggleContent, persona, position, showingContent, data }) => (
     <div className={className}>
       {showingContent && (
         <Content
           Component={Component}
+          darkClose={darkClose}
           onToggleContent={onToggleContent}
           persona={persona}
           position={position}

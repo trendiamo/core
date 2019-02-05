@@ -65,7 +65,7 @@ const CloseContent = styled(IconClose)`
   position: absolute;
   top: 8px;
   right: 8px;
-  fill: #aaa;
+  fill: ${({ darkClose }) => (darkClose ? '#000' : '#aaa')};
   height: 20px;
   width: 20px;
 
@@ -74,12 +74,12 @@ const CloseContent = styled(IconClose)`
   }
 `
 
-const ContentFrame = ({ children, onToggleContent, position }) => (
+const ContentFrame = ({ children, darkClose, onToggleContent, position }) => (
   <ContentFrameContainer position={position}>
     <IFrame onToggleContent={onToggleContent} showingContent>
       {children}
     </IFrame>
-    <CloseContent onClick={onToggleContent} />
+    <CloseContent darkClose={darkClose} onClick={onToggleContent} />
   </ContentFrameContainer>
 )
 
