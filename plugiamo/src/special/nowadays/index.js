@@ -27,7 +27,7 @@ export default compose(
   withProps(({ trigger }) => ({
     module: trigger && trigger.module,
   })),
-  branch(({ module }) => console.log(module) || !module, renderNothing),
+  branch(({ module }) => !module, renderNothing),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
