@@ -6,16 +6,10 @@ const ChatBubbleFrame = styled(Frame).attrs({
   title: 'Trendiamo Chat Bubble',
 })`
   border: 0;
-  z-index: ${({ extraBubble }) => (extraBubble ? 2147483000 : 2147483001)};
+  z-index: ${({ extraBubble }) => (extraBubble ? 2147483001 : 2147483000)};
   position: fixed;
-  bottom: ${({ extraBubble, position }) =>
-    extraBubble
-      ? position === 'right-elevated'
-        ? '148px'
-        : '123px'
-      : position === 'right-elevated'
-      ? '103px'
-      : '77px'};
+  bottom: ${({ position, elevation }) => (position === 'right-elevated' ? 103 : 77) + (elevation ? 50 : 0)}px;
+  transition: bottom 0.4s cubic-bezier(0.43, 0.21, 0.35, 1.7);
   ${({ position }) =>
     position === 'left'
       ? `

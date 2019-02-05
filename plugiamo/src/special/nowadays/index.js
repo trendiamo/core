@@ -12,6 +12,7 @@ const Nowadays = ({ module, onToggleContent, showingContent }) => (
   <AppBase
     Component={<NowadaysBase module={module} />}
     darkClose
+    data={module}
     Launcher={Launcher}
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}

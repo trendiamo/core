@@ -43,6 +43,7 @@ export default compose(
   withState('message', 'setMessage', ''),
   withState('bar', 'setBar', false),
   withState('textWidth', 'setTextWidth', 0),
+  withState('elevation', 'setElevation', false),
   withProps(({ bubble }) => ({
     bubble: { ...defaultBubble, ...bubble },
   })),
@@ -74,13 +75,14 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { setAnimation, bubble, writeText, changeTextWidth, setBar } = this.props
+      const { setAnimation, bubble, writeText, changeTextWidth, setBar, setElevation } = this.props
       if (!bubble.message) return false
       const timeStart = bubble.timeStart * 1000
       const timeEnd = bubble.timeEnd * 1000
       const startTypingAfter = bubble.startTypingAfter * 1000
       const timeStartDuration = bubble.timeStartDuration * 1000
       const timeEndDuration = bubble.timeEndDuration * 1000
+      const timeOfElevation = bubble.timeOfElevation && bubble.timeOfElevation * 1000
       setTimeout(() => {
         setAnimation('roll')
         changeTextWidth()
@@ -98,6 +100,11 @@ export default compose(
       setTimeout(() => {
         setAnimation(null)
       }, timeStart + timeStartDuration + timeEnd + timeEndDuration)
+      if (timeOfElevation) {
+        setTimeout(() => {
+          setElevation(true)
+        }, timeStart + timeStartDuration + timeOfElevation)
+      }
     },
     componentDidUpdate() {
       const { showingContent, setAnimation, animation } = this.props

@@ -44,8 +44,10 @@ export const AppBase = styled(
         />
       )}
       <Launcher
-        bubbleText={data && data.flow && data.flow.chatBubbleText}
-        extraBubbleText={data && data.flow && data.flow.extraBubbleText}
+        bubble={
+          process.env.HACKATHON ? data.launcher.chatBubble : { message: data && data.flow && data.flow.chatBubbleText }
+        }
+        extraBubble={data && data.launcher && data.launcher.chatBubbleExtra}
         onToggleContent={onToggleContent}
         persona={persona}
         position={position}

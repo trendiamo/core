@@ -52,25 +52,25 @@ const Container = styled.div`
 `
 
 const Launcher = ({
-  extraBubbleText,
+  extraBubble,
   optimizelyToggleContent,
   personaPicUrl,
   position,
   showingContent,
-  bubbleText,
+  bubble,
   onToggleContent,
 }) => (
   <div>
     <Bubble
-      bubble={{ message: bubbleText }}
+      bubble={bubble}
       onToggleContent={onToggleContent}
       position={position}
       pulsating
       showingContent={showingContent}
     />
-    {extraBubbleText && (
+    {extraBubble && (
       <Bubble
-        bubble={{ message: extraBubbleText }}
+        bubble={extraBubble}
         extraBubble
         onToggleContent={onToggleContent}
         position={position}
