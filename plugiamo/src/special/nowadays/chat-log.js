@@ -23,30 +23,36 @@ const chatLog = {
     this.listeners.forEach(fn => fn(this))
   },
   timestamp: null,
+  addLogs(chatMessages, chatOptions) {
+    const messageLogs = chatMessages.map(chatMessage => ({ type: 'message', chatMessage }))
+    const optionLogs = chatOptions.map(chatOption => ({ type: 'option', chatOption }))
+    const logs = messageLogs.concat(optionLogs)
+    this.addNextLog(logs, this.timestamp)
+  },
   addLog(log, timestampParam) {
     if (timestampParam !== this.timestamp) return // prevent duplicates if user opens & closes repeatedly and fast
     this.logs.push(log)
     this.listeners.forEach(fn => fn(this))
+  },
+  addNextLog(logs, timestampParam) {
+    const [nextLog, ...otherLogs] = logs
+    if (!nextLog) return
+    if (nextLog.type === 'message') {
+      nextLog.nextLogs = otherLogs
+      setTimeout(() => this.addLog(nextLog, timestampParam), STEP_DELAY)
+    } else {
+      setTimeout(() => {
+        this.addLog(nextLog, timestampParam)
+        otherLogs.forEach(otherLog => this.addLog(otherLog, timestampParam))
+      }, STEP_DELAY)
+    }
   },
   run() {
     const chatMessages = this.module.logs.default
     const chatOptions = Object.keys(this.module.logs)
       .filter(e => e !== 'default')
       .map(chatOptionKey => ({ text: chatOptionKey, chatMessages: this.module.logs[chatOptionKey] }))
-    this.addChatMessages(chatMessages, chatOptions)
-  },
-  addChatMessages(chatMessages, chatOptions) {
-    let timeout = 0
-    chatMessages.forEach(chatMessage => {
-      const log = { type: 'message', chatMessage }
-      timeout += STEP_DELAY
-      setTimeout(() => this.addLog(log, this.timestamp), timeout)
-    })
-    timeout += STEP_DELAY
-    chatOptions.forEach(chatOption => {
-      const log = { type: 'option', chatOption }
-      setTimeout(() => this.addLog(log, this.timestamp), timeout)
-    })
+    this.addLogs(chatMessages, chatOptions)
   },
   setLogs(logs) {
     this.logs = logs

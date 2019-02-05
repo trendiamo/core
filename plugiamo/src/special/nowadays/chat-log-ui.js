@@ -22,6 +22,7 @@ const ChatMessageContainer = styled.div`
 const ChatMessage = compose(
   lifecycle({
     componentDidMount() {
+      const { log } = this.props
       if (
         document.activeElement &&
         document.activeElement.tagName.toLowerCase() === 'iframe' &&
@@ -29,18 +30,21 @@ const ChatMessage = compose(
       ) {
         scrollToInPlugin(this.base)
       }
+      const timestamp = chatLog.timestamp
+      chatLog.addNextLog(log.nextLogs, timestamp)
+      log.timestamp = Date.now()
     },
   })
-)(({ chatMessage }) => (
-  <ChatMessageContainer chatMessage={chatMessage}>
-    {chatMessage.type === 'text' ? (
-      <TextMessage dangerouslySetInnerHTML={{ __html: snarkdown(chatMessage.text) }} />
-    ) : chatMessage.type === 'videoUrl' ? (
-      <VideoMessage youtubeId={extractYoutubeId(chatMessage.videoUrl)} />
-    ) : chatMessage.type === 'product' ? (
-      <ProductMessage product={chatMessage.product} />
-    ) : chatMessage.type === 'imageCarousel' ? (
-      <ImgCarouselMessage imageCarousel={chatMessage.imageCarousel} />
+)(({ log }) => (
+  <ChatMessageContainer chatMessage={log.chatMessage}>
+    {log.chatMessage.type === 'text' ? (
+      <TextMessage dangerouslySetInnerHTML={{ __html: snarkdown(log.chatMessage.text) }} />
+    ) : log.chatMessage.type === 'videoUrl' ? (
+      <VideoMessage youtubeId={extractYoutubeId(log.chatMessage.videoUrl)} />
+    ) : log.chatMessage.type === 'product' ? (
+      <ProductMessage product={log.chatMessage.product} />
+    ) : log.chatMessage.type === 'imageCarousel' ? (
+      <ImgCarouselMessage imageCarousel={log.chatMessage.imageCarousel} />
     ) : null}
   </ChatMessageContainer>
 ))
@@ -126,7 +130,7 @@ const ChatLogUi = compose(
         .filter(e => e)
       chatLog.setLogs(newLogs)
       setLogs(newLogs)
-      chatLog.addChatMessages(chatOption.chatMessages, unexpandedChatOptions)
+      chatLog.addLogs(chatOption.chatMessages, unexpandedChatOptions)
     },
   }),
   lifecycle({
@@ -140,7 +144,7 @@ const ChatLogUi = compose(
     <ChatContainer>
       {logs.map(log =>
         log.type === 'message' ? (
-          <ChatMessage chatMessage={log.chatMessage} />
+          <ChatMessage log={log} />
         ) : log.type === 'option' ? (
           <ChatOption chatOption={log.chatOption} onClick={clickChatOption} />
         ) : null
