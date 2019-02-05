@@ -7,7 +7,6 @@ import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { matchUrl } from 'plugin-base'
-import { optionsFromHash } from 'app/setup'
 
 const Nowadays = ({ module, onToggleContent, showingContent }) => (
   <AppBase
@@ -30,24 +29,20 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
-      const { setShowingContent } = this.props
-      const autoOpen = optionsFromHash().open
-      mixpanel.track('ht Loaded Plugin', {
+      const { module, setShowingContent } = this.props
+      const autoOpen = module.flowType === 'ht-chat'
+      mixpanel.track('Loaded Plugin', {
         autoOpen,
-        flowType: 'ht',
+        flowType: module.flowType,
         hash: location.hash,
         hostname: location.hostname,
       })
-
-      if (autoOpen) {
-        setShowingContent(true)
-      } else {
-        mixpanel.time_event('Toggled Plugin')
-      }
+      if (autoOpen) setShowingContent(true)
     },
   }),
   withHandlers({
-    onToggleContent: ({ setShowingContent, showingContent }) => () => {
+    onToggleContent: ({ module, setShowingContent, showingContent }) => () => {
+      if (module.flowType !== 'ht-chat') return
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
       if (!showingContent) {

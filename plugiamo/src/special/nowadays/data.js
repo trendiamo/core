@@ -3,6 +3,7 @@ const data = {
     {
       pathname: '/collections/organic-cotton-collection/products/whale-brief-blue-organic-cotton',
       module: {
+        flowType: 'ht-chat',
         launcher: {
           extraBubbleText: "Hey! 👋Cool that you're interested!",
           chatBubbleText: 'Have a look 👀',
@@ -97,6 +98,7 @@ const data = {
     {
       pathname: '/cart',
       module: {
+        flowType: 'ht-chat',
         launcher: {
           extraBubbleText: "I'm glad that you like it! 🎉",
           chatBubbleText: 'Have a look at other shorts',
@@ -148,6 +150,7 @@ const data = {
     {
       pathname: '/:id/checkouts/:checkoutId/thank_you',
       module: {
+        flowType: 'ht-outro',
         launcher: {
           persona: {
             name: 'Aaron',
