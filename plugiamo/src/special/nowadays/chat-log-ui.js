@@ -22,7 +22,13 @@ const ChatMessageContainer = styled.div`
 const ChatMessage = compose(
   lifecycle({
     componentDidMount() {
-      scrollToInPlugin(this.base)
+      if (
+        document.activeElement &&
+        document.activeElement.tagName.toLowerCase() === 'iframe' &&
+        document.activeElement.title === 'Trendiamo Content'
+      ) {
+        scrollToInPlugin(this.base)
+      }
     },
   })
 )(({ chatMessage }) => (
@@ -63,7 +69,13 @@ const ChatOption = styled(
     }),
     lifecycle({
       componentDidMount() {
-        scrollToInPlugin(this.base)
+        if (
+          document.activeElement &&
+          document.activeElement.tagName.toLowerCase() === 'iframe' &&
+          document.activeElement.title === 'Trendiamo Content'
+        ) {
+          scrollToInPlugin(this.base)
+        }
       },
     })
   )(({ chatOption, className, onClick }) => (
