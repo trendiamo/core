@@ -34,19 +34,24 @@ const SelectContainer = styled.div`
   }
   ul {
     position: absolute;
-    right: 0px;
-    width: 90px;
+    left: 0px;
+    width: auto;
     background-color: white;
     box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
     z-index: 4000;
+    border-radius: 10px;
   }
   li {
     text-align: center;
     cursor: pointer;
-    margin: 5px 0px;
   }
   li:hover {
     background-color: #eee;
+  }
+  li a {
+    margin: 0 !important;
+    padding: 10px;
+    font-size: 1em !important;
   }
 `
 
@@ -64,8 +69,8 @@ const purePath = (location, localePath) => {
   return location.pathname.replace(localePath, '')
 }
 
-const LangSelector = ({ locale }) => (
-  <div>
+const LangSelector = styled(({ className, locale }) => (
+  <div className={className}>
     <Downshift initialSelectedItem={locales[locale]} itemToString={item => item.label}>
       {({ getRootProps, getInputProps, getItemProps, getMenuProps, isOpen, selectedItem, toggleMenu }) => (
         <SelectContainer {...getRootProps()}>
@@ -98,6 +103,8 @@ const LangSelector = ({ locale }) => (
       )}
     </Downshift>
   </div>
-)
+))`
+  position: relative;
+`
 
 export default LangSelector
