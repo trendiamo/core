@@ -6,6 +6,7 @@ import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
+import { isSmall } from 'utils'
 import { matchUrl } from 'plugin-base'
 
 const Nowadays = ({ module, onToggleContent, showingContent }) => (
@@ -32,7 +33,7 @@ export default compose(
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent } = this.props
-      const autoOpen = module.flowType === 'ht-chat'
+      const autoOpen = isSmall() ? false : module.flowType === 'ht-chat'
       mixpanel.track('Loaded Plugin', {
         autoOpen,
         flowType: module.flowType,
