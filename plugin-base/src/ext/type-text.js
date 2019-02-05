@@ -1,8 +1,9 @@
+import runes from 'ext/runes'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { timeout } from 'ext'
 
 const typeText = ({ addMessage, textReference, callback, speed }) => {
-  var messageArray = textReference.split('')
+  var messageArray = runes(textReference)
   var currentLetter = 0
   var typingSpeed = speed * 1000
   timeout.set(
