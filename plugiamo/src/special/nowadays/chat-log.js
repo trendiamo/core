@@ -29,25 +29,22 @@ const chatLog = {
     this.listeners.forEach(fn => fn(this))
   },
   run() {
+    const chatMessages = this.module.logs.default
+    const chatOptions = Object.keys(this.module.logs)
+      .filter(e => e !== 'default')
+      .map(chatOptionKey => ({ text: chatOptionKey, chatMessages: this.module.logs[chatOptionKey] }))
+    this.addChatMessages(chatMessages, chatOptions)
+  },
+  addChatMessages(chatMessages, chatOptions) {
     let timeout = 0
-    this.module.logs.default.forEach(chatMessage => {
+    chatMessages.forEach(chatMessage => {
       const log = { type: 'message', chatMessage }
       timeout += STEP_DELAY
       setTimeout(() => this.addLog(log, this.timestamp), timeout)
     })
     timeout += STEP_DELAY
-    const chatOptions = Object.keys(this.module.logs).filter(e => e !== 'default')
-    chatOptions.forEach(chatOptionKey => {
-      const chatOption = { text: chatOptionKey, chatMessages: this.module.logs[chatOptionKey] }
+    chatOptions.forEach(chatOption => {
       const log = { type: 'option', chatOption }
-      setTimeout(() => this.addLog(log, this.timestamp), timeout)
-    })
-  },
-  addChatMessages(chatMessages) {
-    let timeout = 0
-    chatMessages.forEach(chatMessage => {
-      const log = { type: 'message', chatMessage }
-      timeout += STEP_DELAY
       setTimeout(() => this.addLog(log, this.timestamp), timeout)
     })
   },

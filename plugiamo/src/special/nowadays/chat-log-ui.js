@@ -99,15 +99,22 @@ const ChatLogUi = compose(
     },
     clickChatOption: ({ logs, setLogs }) => chatOption => {
       chatOption.expanded = true
-      const newLogs = logs.map(log => {
-        if (log.type === 'option' && chatOption.text === log.chatOption.text) {
-          return { ...log, expanded: true }
-        }
-        return log
-      })
-      setLogs(newLogs)
+      let unexpandedChatOptions = []
+      const newLogs = logs
+        .map(log => {
+          if (log.type === 'option' && chatOption.text === log.chatOption.text) {
+            return { ...log, expanded: true }
+          }
+          if (log.type === 'option' && !log.chatOption.expanded) {
+            unexpandedChatOptions.push(log.chatOption)
+            return null
+          }
+          return log
+        })
+        .filter(e => e)
       chatLog.setLogs(newLogs)
-      chatLog.addChatMessages(chatOption.chatMessages)
+      setLogs(newLogs)
+      chatLog.addChatMessages(chatOption.chatMessages, unexpandedChatOptions)
     },
   }),
   lifecycle({
