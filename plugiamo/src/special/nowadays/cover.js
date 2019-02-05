@@ -20,9 +20,10 @@ export const BelowCover = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-bottom: 56px;
+  margin-bottom: 0;
 
   @media (min-height: 500px) {
+    margin-bottom: 56px;
     overflow-y: auto;
   }
 `

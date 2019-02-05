@@ -160,16 +160,12 @@ const scrollAllParents = node => {
   scrollAllParents(node.parentNode)
 }
 
-const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
 const scrollToInPlugin = node => {
   setTimeout(() => {
-    if (isSafari) {
-      // with scrollIntoView, Safari would scroll the main page rather than just the plugin.
-      // we don't actually need to scroll all parents, just the right one, but this is simpler.
-      scrollAllParents(node)
-    } else {
-      node.scrollIntoView({ behavior: 'smooth', block: 'end' })
-    }
+    // doing a simple `node.scrollIntoView`, Safari would scroll the main page rather than just the plugin.
+    // also, in other browsers, the simple `node.scrollIntoView` does not go well with the height-under-500px case.
+    // note we don't actually need to scroll all parents, just the right one - but coding it like this is simpler.
+    scrollAllParents(node)
   }, 120)
 }
 

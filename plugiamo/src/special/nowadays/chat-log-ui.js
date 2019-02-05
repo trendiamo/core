@@ -138,6 +138,11 @@ const ChatLogUi = compose(
 ))
 
 export default styled(ChatLogUi)`
+  margin-bottom: 56px;
+  @media (min-height: 500px) {
+    margin-bottom: 0;
+  }
+
   ${ChatMessageContainer} + ${ChatOption} {
     padding-top: 2rem;
   }
