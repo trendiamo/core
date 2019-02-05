@@ -5,8 +5,20 @@ const data = {
       module: {
         flowType: 'ht-chat',
         launcher: {
-          extraBubbleText: "Hey! 👋Cool that you're interested!",
-          chatBubbleText: 'Have a look 👀',
+          chatBubble: {
+            message: "Hey! 👋Cool that you're interested!",
+            timeStart: 0.5,
+            timeEnd: 20,
+            hideBarAfter: 0.2,
+            timeOfElevation: 1.6,
+          },
+          chatBubbleExtra: {
+            message: 'Have a look 👀',
+            timeStart: 2.5,
+            timeEnd: 18.2,
+            hideBarAfter: 3.4,
+            timeStartDuration: 0.4,
+          },
           persona: {
             name: 'Aaron',
             profilePic: {
@@ -100,8 +112,20 @@ const data = {
       module: {
         flowType: 'ht-chat',
         launcher: {
-          extraBubbleText: "I'm glad that you like it! 🎉",
-          chatBubbleText: 'Have a look at other shorts',
+          chatBubble: {
+            message: "I'm glad that you like it! 🎉",
+            timeStart: 0.5,
+            timeEnd: 20,
+            hideBarAfter: 0.2,
+            timeOfElevation: 1.6,
+          },
+          chatBubbleExtra: {
+            message: 'Have a look at other shorts',
+            timeStart: 2.5,
+            timeEnd: 18.2,
+            hideBarAfter: 3.4,
+            timeStartDuration: 0.4,
+          },
           persona: {
             name: 'Aaron',
             profilePic: {
