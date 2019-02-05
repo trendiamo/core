@@ -4,12 +4,14 @@ import data from './data'
 import styled from 'styled-components'
 import { addMainProductToCart } from './cart'
 import { BelowCover, Cover } from './cover'
+import { compose, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 
 const ColFlexDiv = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-content: flex-end;
 `
 
 const CheckoutButton = styled(({ className }) => (
@@ -34,14 +36,27 @@ const CheckoutButton = styled(({ className }) => (
   cursor: pointer;
 `
 
-const NowadaysBase = () => (
+const NowadaysBaseTemplate = ({ handleScroll, scrolled }) => (
   <ColFlexDiv>
-    <Cover persona={data.persona} product={data.product} />
-    <BelowCover>
+    <Cover persona={data.persona} product={data.product} scrolled={scrolled} />
+    <BelowCover onScroll={handleScroll}>
       <ChatLogUi />
       <CheckoutButton />
     </BelowCover>
   </ColFlexDiv>
 )
+
+const NowadaysBase = compose(
+  withState('scrolled', 'setScrolled', false),
+  withHandlers({
+    handleScroll: ({ setScrolled, scrolled }) => () => {
+      if (event.target.scrollTop === 0) {
+        setScrolled(false)
+      } else {
+        !scrolled && setScrolled(true)
+      }
+    },
+  })
+)(NowadaysBaseTemplate)
 
 export default NowadaysBase

@@ -10,7 +10,7 @@ import { optionsFromHash } from 'app/setup'
 
 const Nowadays = ({ onToggleContent, showingContent }) => (
   <AppBase
-    Component={<NowadaysBase />}
+    Component={<NowadaysBase showingContent={showingContent} />}
     data={data}
     Launcher={Launcher}
     onToggleContent={onToggleContent}
