@@ -20,19 +20,16 @@ const cart = {
     },
   },
   'www.buttwrap.com': {
+    updateCartSummaries() {
+      if (window.$('.cart-link__bubble--visible').length) return
+      const newCartLink = window.$('<span />').attr('class', 'cart-link__bubble cart-link__bubble--visible')
+      window.$('.cart-link').append(newCartLink)
+    },
     addToCart(serializedForm) {
-      // const $form = window.$('form.product-single__form')
-      // // TODO: change some form values here!!
-      // window.$(':input[name="id"]', $form)
-      // console.log(serializedForm)
-      // // $form.unserializeForm(serializedForm)
-      // $form
-      // $form.submit()
-      console.log('Frekkls: not supported', { serializedForm })
+      window.$.post('/cart/add.js', serializedForm, this.updateCartSummaries, 'text')
     },
     addMainProductToCart() {
-      const $form = window.$('form.product-single__form')
-      $form.submit()
+      this.addToCart(window.$('.product-single__form').serialize())
     },
   },
 }
