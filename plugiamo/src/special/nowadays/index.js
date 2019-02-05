@@ -4,35 +4,39 @@ import mixpanel from 'ext/mixpanel'
 import NowadaysBase from './base'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withState } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
+import { matchUrl } from 'plugin-base'
 import { optionsFromHash } from 'app/setup'
 
-const Nowadays = ({ onToggleContent, showingContent }) => (
+const Nowadays = ({ module, onToggleContent, showingContent }) => (
   <AppBase
-    Component={<NowadaysBase showingContent={showingContent} />}
-    data={data}
+    Component={<NowadaysBase module={module} />}
     Launcher={Launcher}
     onToggleContent={onToggleContent}
-    persona={data.persona}
+    persona={module.launcher.persona}
     showingContent={showingContent}
   />
 )
 
 export default compose(
-  branch(() => location.pathname !== data.product.pathname, renderNothing),
+  withProps({
+    trigger: data.triggers.find(e => matchUrl(location.pathname, e.pathname)),
+  }),
+  withProps(({ trigger }) => ({
+    module: trigger && trigger.module,
+  })),
+  branch(({ module }) => console.log(module) || !module, renderNothing),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
       const { setShowingContent } = this.props
       const autoOpen = optionsFromHash().open
-      mixpanel.track('Loaded Plugin', {
+      mixpanel.track('ht Loaded Plugin', {
         autoOpen,
-        flowType: 'Nowadays',
+        flowType: 'ht',
         hash: location.hash,
         hostname: location.hostname,
-        personaName: data.persona.name,
-        personaRef: data.persona.id,
       })
 
       if (autoOpen) {

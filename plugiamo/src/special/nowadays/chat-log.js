@@ -1,16 +1,16 @@
-import data from './data'
-
 const STEP_DELAY = 250
 
 const chatLog = {
   addListener(fn) {
     this.listeners.push(fn)
   },
-  init() {
+  init(module) {
+    this.module = module
     this.timestamp = Date.now()
     this.logs = []
     this.listeners = []
   },
+  module: null,
   listeners: [],
   removeListener(fn) {
     this.listeners = this.listeners.filter(e => e !== fn)
@@ -30,15 +30,15 @@ const chatLog = {
   },
   run() {
     let timeout = 0
-    data.logs.default.forEach(chatMessage => {
+    this.module.logs.default.forEach(chatMessage => {
       const log = { type: 'message', chatMessage }
       timeout += STEP_DELAY
       setTimeout(() => this.addLog(log, this.timestamp), timeout)
     })
     timeout += STEP_DELAY
-    const chatOptions = Object.keys(data.logs).filter(e => e !== 'default')
+    const chatOptions = Object.keys(this.module.logs).filter(e => e !== 'default')
     chatOptions.forEach(chatOptionKey => {
-      const chatOption = { text: chatOptionKey, chatMessages: data.logs[chatOptionKey] }
+      const chatOption = { text: chatOptionKey, chatMessages: this.module.logs[chatOptionKey] }
       const log = { type: 'option', chatOption }
       setTimeout(() => this.addLog(log, this.timestamp), timeout)
     })

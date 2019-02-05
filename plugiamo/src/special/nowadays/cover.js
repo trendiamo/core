@@ -113,21 +113,19 @@ const ImageContainer = styled.div`
   }
 `
 
-export const Cover = ({ persona, product, scrolled }) => (
+export const Cover = ({ header, scrolled }) => (
   <CoverBase scrolled={scrolled}>
     <ImageContainer scrolled={scrolled}>
-      <CoverAnimation image={persona.header.animationUrl} scrolled={scrolled} />
-      <CoverImage image={persona.header.imageUrl} scrolled={scrolled} />
+      <CoverAnimation image={header.animationUrl} scrolled={scrolled} />
+      <CoverImage image={header.imageUrl} scrolled={scrolled} />
     </ImageContainer>
     <TextContainer scrolled={scrolled}>
-      <Name scrolled={scrolled}>{product.name}</Name>
-      <NameScrolled scrolled={scrolled}>{product.name}</NameScrolled>
+      <Name scrolled={scrolled}>{header.productTitle}</Name>
+      <NameScrolled scrolled={scrolled}>{header.productTitle}</NameScrolled>
       <PresentedBy scrolled={scrolled}>
         {'presented by '}
-        <b>{persona.instagramHandle}</b>
+        <b>{header.personaInstagramHandle}</b>
       </PresentedBy>
     </TextContainer>
   </CoverBase>
 )
-
-// <CoverImg src={persona.profilePic.url} />

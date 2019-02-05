@@ -90,8 +90,8 @@ const ChatLogUi = compose(
     updateChatLog: ({ setLogs }) => chatLog => setLogs(chatLog.logs),
   }),
   withHandlers({
-    initChatLog: ({ updateChatLog }) => () => {
-      chatLog.init()
+    initChatLog: ({ module, updateChatLog }) => () => {
+      chatLog.init(module)
       // we don't remove this listener in componentWillUnmount because preact doesn't fire it inside iframes
       // instead we do a check for chatLog.timestamp in the chatLog logic, to prevent duplicates
       chatLog.addListener(updateChatLog)
