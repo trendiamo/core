@@ -24,6 +24,12 @@ const TextMessage = styled.div`
   img {
     max-width: 100%;
   }
+
+  table {
+    width: 100%;
+    text-align: left;
+    font-size: 1em;
+  }
 `
 
 export default TextMessage
