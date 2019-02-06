@@ -6,6 +6,7 @@ const TextMessage = styled.div`
   border-radius: 0 12px 12px 12px;
   padding: 1rem;
   font-size: 14px;
+  line-height: 1.4;
   position: relative;
 
   &&:after {

@@ -31,6 +31,7 @@ const TextBar = styled.div`
 
 const ChatBubbleBase = styled.div`
   font-size: 14px;
+  line-height: 1.4;
   font-weight: bold;
   color: #333;
   text-align: center;
