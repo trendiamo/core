@@ -1,6 +1,8 @@
+import LeftArrowIcon from 'icons/left-arrow.svg'
 import Modal from 'shared/modal'
+import RightArrowIcon from 'icons/right-arrow.svg'
 import styled from 'styled-components'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 
 const Carousel = styled.div`
@@ -41,6 +43,12 @@ const CarouselPic = styled.div`
 const ImgCarouselMessage = compose(
   withState('selectedImage', 'setSelectedImage', false),
   withState('isOpen', 'setIsOpen', false),
+  withProps(({ imageCarousel }) => ({
+    urlsArray: imageCarousel.map(image => image.picUrl),
+  })),
+  withProps(({ selectedImage, urlsArray }) => ({
+    selectedImageIndex: urlsArray.indexOf(selectedImage),
+  })),
   withHandlers({
     closeModal: ({ setIsOpen }) => () => {
       setIsOpen(false)
@@ -49,42 +57,120 @@ const ImgCarouselMessage = compose(
       setSelectedImage(event.target.src)
       setIsOpen(true)
     },
+    onLeftArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImage }) => () => {
+      0 < selectedImageIndex && setSelectedImage(urlsArray[selectedImageIndex - 1])
+    },
+    onRightArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImage }) => () => {
+      selectedImageIndex < urlsArray.length - 1 && setSelectedImage(urlsArray[selectedImageIndex + 1])
+    },
   })
-)(({ openModal, isOpen, closeModal, imageCarousel, selectedImage }) => (
-  <div>
-    <Modal closeModal={closeModal} isOpen={isOpen}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '50px',
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-        }}
-      >
-        <img
-          alt=""
-          src={selectedImage}
+)(
+  ({
+    selectedImageIndex,
+    urlsArray,
+    onRightArrowClick,
+    onLeftArrowClick,
+    openModal,
+    isOpen,
+    closeModal,
+    selectedImage,
+  }) => (
+    <div>
+      <Modal allowBackgroundClose={false} closeModal={closeModal} isOpen={isOpen}>
+        <button
+          onClick={onLeftArrowClick}
           style={{
-            width: '80%',
-            height: '80%',
-            objectFit: 'contain',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100vh',
+            width: '50%',
+            zIndex: '1234000000',
+            border: 'none',
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            outline: 0,
+            cursor: 0 < selectedImageIndex ? 'pointer' : 'default',
           }}
-        />
-      </div>
-    </Modal>
-    <Carousel>
-      {imageCarousel.map(imgObj => (
-        <CarouselPic key={imgObj.picUrl} onClick={openModal}>
-          <img alt="" src={imgObj.picUrl} />
-        </CarouselPic>
-      ))}
-    </Carousel>
-  </div>
-))
+          type="button"
+        >
+          <LeftArrowIcon
+            onClick={onLeftArrowClick}
+            style={{
+              display: 0 < selectedImageIndex ? 'block' : 'none',
+              fill: '#fff',
+              width: '42px',
+              height: '42px',
+              position: 'absolute',
+              left: '40px',
+              top: '50vh',
+              zIndex: '12340000004',
+              cursor: 'pointer',
+            }}
+          />
+        </button>
+        <button
+          onClick={onRightArrowClick}
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            height: '100vh',
+            width: '50%',
+            border: 'none',
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            outline: 0,
+            zIndex: '1234000000',
+            cursor: 0 < selectedImageIndex < urlsArray.length - 1 ? 'pointer' : 'default',
+          }}
+          type="button"
+        >
+          <RightArrowIcon
+            onClick={onRightArrowClick}
+            style={{
+              display: 0 < selectedImageIndex < urlsArray.length - 1 ? 'block' : 'none',
+              fill: '#fff',
+              width: '42px',
+              height: '42px',
+              position: 'absolute',
+              right: '40px',
+              top: '50vh',
+              zIndex: '12340000004',
+              cursor: 'pointer',
+            }}
+          />
+        </button>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          }}
+        >
+          <img
+            alt=""
+            src={selectedImage}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+            }}
+          />
+        </div>
+      </Modal>
+      <Carousel>
+        {urlsArray.map(imgUrl => (
+          <CarouselPic key={imgUrl} onClick={openModal}>
+            <img alt="" src={imgUrl} />
+          </CarouselPic>
+        ))}
+      </Carousel>
+    </div>
+  )
+)
 
 export default ImgCarouselMessage
