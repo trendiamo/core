@@ -135,7 +135,7 @@ const data = {
           },
         },
         header: {
-          productTitle: 'Whale Brief blue',
+          productTitle: 'Get the full package',
           personaName: 'Aaron Kane',
           personaInstagramHandle: '@aaron_kane',
           personaInstagramUrl: 'https://www.instagram.com/aaron_kane/',

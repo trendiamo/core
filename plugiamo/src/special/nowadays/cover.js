@@ -29,48 +29,73 @@ export const BelowCover = styled.div`
 `
 
 const Name = styled.div`
+  color: #333;
   position: absolute;
-  bottom: 25px;
   font-size: 20px;
   font-weight: 700;
-  margin: 0 0 3px 0;
-  transition: opacity 0.3s ease-in-out;
-  width: 200px;
-  transition-delay: ${({ scrolled }) => (scrolled ? 0 : 0.2)}s;
-  color: #333;
-  opacity: ${({ scrolled }) => (scrolled ? 0 : 1)};
   backface-visibility: hidden;
+  opacity: 1;
+  transition: 1s opacity;
+  top: 0;
+  transition-delay: 0.4s;
+  ${({ scrolled }) =>
+    scrolled &&
+    `
+    transition: 0.4s all ease-out;
+    opacity: 0;
+    top: -10px;
+  `}
+`
+
+const NameHelper = styled.div`
+  color: #333;
+  font-size: 20px;
+  font-weight: 700;
+  max-height: 50px;
+  opacity: 0;
+  transition: max-height 0.8s ease-out, margin-bottom 0.4s;
+  user-select: none;
+  margin-bottom: 5px;
+  ${({ scrolled }) =>
+    scrolled &&
+    `
+    margin-bottom: 0;
+    max-height: 0px;
+    transition: 0.4s all;
+  `}
 `
 
 const NameScrolled = styled.div`
-  position: absolute;
-  top: 18px;
+  color: #333;
   font-size: 16px;
   font-weight: 700;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  transition-delay: ${({ scrolled }) => (scrolled ? 0.2 : 0)}s;
-  width: 250px;
-  opacity: ${({ scrolled }) => (scrolled ? 1 : 0)};
   backface-visibility: hidden;
+  max-height: 0;
+  transition: 0.4s all;
+  opacity: 0;
+  ${({ scrolled }) =>
+    scrolled &&
+    `
+    max-height: 50px;
+    opacity: 1;
+    transition: 1s all;
+    transition-delay: 0.0s;
+  `}
 `
 
 const PresentedBy = styled.div`
-  position: absolute;
-  bottom: ${({ scrolled }) => (scrolled ? 20 : 5)}px;
   font-size: 14px;
-  width: 200px;
-  transition: all 0.3s ease-in-out;
   backface-visibility: hidden;
 `
 
 const TextContainer = styled.div`
-  position: absolute;
-  z-index: 15;
-  top: ${({ scrolled }) => (scrolled ? 10 : 33)}px;
-  left: 15px;
-  height: 75px;
-  transition: top 0.3s ease-in-out;
+  width: 200px;
+  left: 20px;
+  z-index: 100;
+`
+
+const Header = styled.div`
+  position: relative;
 `
 
 const CoverAnimation = styled.div`
@@ -121,8 +146,11 @@ export const Cover = ({ header, scrolled }) => (
       <CoverImage image={header.imageUrl} scrolled={scrolled} />
     </ImageContainer>
     <TextContainer scrolled={scrolled}>
-      <Name scrolled={scrolled}>{header.productTitle}</Name>
-      <NameScrolled scrolled={scrolled}>{header.productTitle}</NameScrolled>
+      <Header>
+        <NameScrolled scrolled={scrolled}>{header.productTitle}</NameScrolled>
+        <Name scrolled={scrolled}>{header.productTitle}</Name>
+        <NameHelper scrolled={scrolled}>{header.productTitle}</NameHelper>
+      </Header>
       <PresentedBy scrolled={scrolled}>
         {'presented by '}
         <b>{header.personaInstagramHandle}</b>
