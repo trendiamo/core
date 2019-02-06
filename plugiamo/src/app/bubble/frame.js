@@ -1,8 +1,12 @@
 import Frame from 'shared/frame'
 import keyframes from './keyframes'
+import omit from 'lodash.omit'
 import styled from 'styled-components'
+import { h } from 'preact'
 
-const ChatBubbleFrame = styled(Frame).attrs({
+const ChatBubbleFrame = styled(props => (
+  <Frame {...omit(props, ['bubble', 'textWidth', 'animation', 'elevation'])} />
+)).attrs({
   title: 'Trendiamo Chat Bubble',
 })`
   border: 0;
