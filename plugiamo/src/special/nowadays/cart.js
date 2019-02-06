@@ -18,6 +18,7 @@ const cart = {
     addMainProductToCart() {
       this.addToCart(window.$('.product-form').serialize())
     },
+    proceedToCheckout() {},
   },
   'www.buttwrap.com': {
     updateCartSummaries() {
@@ -31,8 +32,14 @@ const cart = {
     addMainProductToCart() {
       this.addToCart(window.$('.product-single__form').serialize())
     },
+    proceedToCheckout() {
+      if (!window.$('#CartPageAgree').is(':checked')) return false
+      window.$('.btn.cart__checkout.cart__checkout--page').click()
+      return true
+    },
   },
 }
 
 export const addToCart = serializedForm => cart[window.location.hostname].addToCart(serializedForm)
 export const addMainProductToCart = () => cart[window.location.hostname].addMainProductToCart()
+export const proceedToCheckout = () => cart[window.location.hostname].proceedToCheckout()
