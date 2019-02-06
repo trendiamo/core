@@ -8,9 +8,9 @@ const ModalComp = compose(
   withHotkeys({
     [escapeKey]: ({ closeModal }) => closeModal,
   })
-)(({ closeModal, children }) => (
+)(({ allowBackgroundClose, closeModal, children }) => (
   <div
-    onClick={closeModal}
+    onClick={allowBackgroundClose && closeModal}
     role="presentation"
     style={{
       position: 'fixed',
@@ -27,6 +27,7 @@ const ModalComp = compose(
     tabIndex="-1"
   >
     <IconClose
+      onClick={closeModal}
       style={{
         position: 'absolute',
         top: '10px',
@@ -35,6 +36,7 @@ const ModalComp = compose(
         width: '32px',
         height: '32px',
         cursor: 'pointer',
+        zIndex: '12340000005',
       }}
     />
     <div role="dialog" style={{ backgroundColor: 'white', width: '80%', maxWidth: '60em' }}>
@@ -43,10 +45,12 @@ const ModalComp = compose(
   </div>
 ))
 
-const Modal = ({ closeModal, isOpen, into = 'body', children }) =>
+const Modal = ({ allowBackgroundClose, closeModal, isOpen, into = 'body', children }) =>
   isOpen ? (
     <Portal into={into}>
-      <ModalComp closeModal={closeModal}>{children}</ModalComp>
+      <ModalComp allowBackgroundClose={allowBackgroundClose} closeModal={closeModal}>
+        {children}
+      </ModalComp>
     </Portal>
   ) : null
 

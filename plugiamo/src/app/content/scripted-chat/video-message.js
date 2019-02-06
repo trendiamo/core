@@ -41,7 +41,7 @@ const VideoMessage = compose(
     <IconContainer>
       <IconPlayButton />
     </IconContainer>
-    <Modal closeModal={closeModal} isOpen={isOpen}>
+    <Modal allowBackgroundClose closeModal={closeModal} isOpen={isOpen}>
       <div style={{ width: '100%', paddingBottom: '56.25%', position: 'relative' }}>
         <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
           <iframe
