@@ -23,7 +23,9 @@ const Plugin = ({ module, onToggleContent, showingContent }) => (
 
 export default compose(
   withProps({
-    trigger: data.triggers.find(e => matchUrl(location.pathname, e.pathname)),
+    trigger: data.triggers.find(trigger =>
+      trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
+    ),
   }),
   withProps(({ trigger }) => ({
     module: trigger && trigger.module,

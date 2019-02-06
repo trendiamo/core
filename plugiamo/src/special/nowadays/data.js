@@ -1,7 +1,10 @@
 const data = {
   triggers: [
     {
-      pathname: '/collections/organic-cotton-collection/products/whale-brief-blue-organic-cotton',
+      urlMatchers: [
+        '/collections/:collectionName/products/whale-brief-blue-organic-cotton',
+        '/products/whale-brief-blue-organic-cotton',
+      ],
       module: {
         flowType: 'ht-chat',
         launcher: {
@@ -108,7 +111,7 @@ const data = {
       },
     },
     {
-      pathname: '/cart',
+      urlMatchers: ['/cart'],
       module: {
         flowType: 'ht-chat',
         launcher: {
@@ -172,7 +175,7 @@ const data = {
       },
     },
     {
-      pathname: '/:id/checkouts/:checkoutId/thank_you',
+      urlMatchers: ['/:id/checkouts/:checkoutId/thank_you'],
       module: {
         flowType: 'ht-outro',
         launcher: {
