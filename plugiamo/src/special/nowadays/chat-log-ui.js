@@ -154,7 +154,7 @@ const ChatLogUi = compose(
 ))
 
 export default styled(ChatLogUi)`
-  margin-bottom: 56px;
+  margin-bottom: 50px;
   @media (min-height: 500px) {
     margin-bottom: 0;
   }

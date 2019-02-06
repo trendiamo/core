@@ -1,6 +1,7 @@
 const data = {
   triggers: [
     {
+      state: 'default',
       urlMatchers: [
         '/collections/:collectionName/products/whale-brief-blue-organic-cotton',
         '/products/whale-brief-blue-organic-cotton',
@@ -107,7 +108,68 @@ const data = {
             },
           ],
         },
-        cartButton: 'add',
+        ctaButton: { label: 'I want it', action: 'want' },
+      },
+    },
+    {
+      state: 'size-help',
+      urlMatchers: [
+        '/collections/:collectionName/products/whale-brief-blue-organic-cotton',
+        '/products/whale-brief-blue-organic-cotton',
+      ],
+      module: {
+        flowType: 'ht-chat',
+        launcher: {
+          chatBubble: {
+            message: 'Need help with the sizes?',
+            timeStart: 0.5,
+            timeEnd: 20,
+            hideBarAfter: 0.2,
+            timeOfElevation: 1.6,
+          },
+          chatBubbleExtra: {
+            message: "I'll show you everything",
+            timeStart: 2.5,
+            timeEnd: 18.2,
+            hideBarAfter: 3.4,
+            timeStartDuration: 0.4,
+          },
+          persona: {
+            name: 'Aaron',
+            profilePic: {
+              url:
+                'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+            },
+          },
+        },
+        header: {
+          productTitle: 'Whale Brief blue',
+          personaName: 'Aaron Kane',
+          personaInstagramHandle: '@aaron_kane',
+          personaInstagramUrl: 'https://www.instagram.com/aaron_kane/',
+          animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
+          imageUrl:
+            'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
+        },
+        logs: {
+          default: [
+            {
+              type: 'text',
+              text: 'What you need is size XXXL 😉',
+            },
+          ],
+        },
+        ctaButton: { label: 'Ok, got it', action: 'ok-size' },
+      },
+    },
+    {
+      state: 'nothing',
+      urlMatchers: [
+        '/collections/:collectionName/products/whale-brief-blue-organic-cotton',
+        '/products/whale-brief-blue-organic-cotton',
+      ],
+      module: {
+        flowType: 'ht-nothing',
       },
     },
     {
@@ -171,7 +233,7 @@ const data = {
             },
           ],
         },
-        cartButton: 'go',
+        ctaButton: { label: 'Proceed to checkout', action: 'checkout' },
       },
     },
     {

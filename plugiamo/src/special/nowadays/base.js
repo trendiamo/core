@@ -1,5 +1,5 @@
-import CartButton from './cart-button'
 import ChatLogUi from './chat-log-ui'
+import CtaButton from './cta-button'
 import styled from 'styled-components'
 import { BelowCover, Cover } from './cover'
 import { compose, withHandlers, withState } from 'recompose'
@@ -12,12 +12,12 @@ const ColFlexDiv = styled.div`
   align-content: flex-end;
 `
 
-const Base = ({ handleScroll, module, onToggleContent, scrolled }) => (
+const Base = ({ handleScroll, module, onToggleContent, scrolled, setPluginState }) => (
   <ColFlexDiv>
     <Cover header={module.header} scrolled={scrolled} />
     <BelowCover onScroll={handleScroll}>
       <ChatLogUi module={module} onToggleContent={onToggleContent} />
-      <CartButton buttonType={module.cartButton} />
+      <CtaButton ctaButton={module.ctaButton} onToggleContent={onToggleContent} setPluginState={setPluginState} />
     </BelowCover>
   </ColFlexDiv>
 )

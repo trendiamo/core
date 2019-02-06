@@ -1,22 +1,22 @@
-import CartIcon from 'icons/cart.svg'
 import styled from 'styled-components'
-import { addMainProductToCart } from './cart'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 
-const CartButton = styled(
+const CtaButton = styled(
   compose(
     withHandlers({
-      onClick: ({ buttonType }) => () => {
-        if (buttonType === 'add') {
-          addMainProductToCart()
+      onClick: ({ ctaButton, onToggleContent, setPluginState }) => () => {
+        onToggleContent()
+        if (ctaButton.action === 'want') {
+          setPluginState('size-help')
+        } else if (ctaButton.action === 'ok-size') {
+          setPluginState('nothing')
         }
       },
     })
-  )(({ buttonType, className, onClick }) => (
+  )(({ ctaButton, className, onClick }) => (
     <button className={className} onClick={onClick} type="button">
-      <CartIcon fill="#fff" height="24" style={{ verticalAlign: 'bottom', marginRight: '0.4rem' }} width="24" />
-      {buttonType === 'add' ? 'Add to Cart' : 'Proceed to checkout'}
+      {ctaButton.label}
     </button>
   ))
 )`
@@ -32,8 +32,9 @@ const CartButton = styled(
   color: white;
   padding: 1rem;
   font-size: 18px;
+  line-height: 1;
   text-transform: uppercase;
   cursor: pointer;
 `
 
-export default CartButton
+export default CtaButton

@@ -9,9 +9,9 @@ import { h } from 'preact'
 import { isSmall } from 'utils'
 import { matchUrl } from 'plugin-base'
 
-const Plugin = ({ module, onToggleContent, showingContent }) => (
+const Plugin = ({ module, onToggleContent, setPluginState, showingContent }) => (
   <AppBase
-    Component={<Base module={module} />}
+    Component={<Base module={module} setPluginState={setPluginState} />}
     darkClose
     data={module}
     Launcher={Launcher}
@@ -22,26 +22,23 @@ const Plugin = ({ module, onToggleContent, showingContent }) => (
 )
 
 export default compose(
-  withProps({
-    trigger: data.triggers.find(trigger =>
-      trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
+  withState('pluginState', 'setPluginState', 'default'),
+  withProps(({ pluginState }) => ({
+    trigger: data.triggers.find(
+      trigger =>
+        trigger.state === pluginState && trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
     ),
-  }),
+  })),
   withProps(({ trigger }) => ({
     module: trigger && trigger.module,
   })),
   branch(({ module }) => !module, renderNothing),
+  branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent } = this.props
       const autoOpen = isSmall() ? false : module.flowType === 'ht-chat'
-      mixpanel.track('Loaded Plugin', {
-        autoOpen,
-        flowType: module.flowType,
-        hash: location.hash,
-        hostname: location.hostname,
-      })
       if (autoOpen) setShowingContent(true)
     },
   }),

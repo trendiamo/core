@@ -23,7 +23,7 @@ export const BelowCover = styled.div`
   margin-bottom: 0;
 
   @media (min-height: 500px) {
-    margin-bottom: 56px;
+    margin-bottom: 50px;
     overflow-y: auto;
   }
 `
