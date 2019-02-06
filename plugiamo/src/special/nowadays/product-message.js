@@ -1,4 +1,4 @@
-import CartIcon from 'icons/cart.svg'
+import EyeIcon from 'icons/eye.svg'
 import styled from 'styled-components'
 import { addToCart } from './cart'
 import { Card, CardContent, CardImg } from 'shared/card'
@@ -30,7 +30,7 @@ const Price = styled.div`
   letter-spacing: 0.1px;
 `
 
-const AddToCart = styled.div`
+const CtaTextContainer = styled.div`
   font-weight: 500;
   font-size: 12px;
   display: flex;
@@ -51,19 +51,19 @@ const ProductMessage = compose(
       addToCart(product.serializedForm)
     },
   })
-)(({ product, onClick, handleAddToCart }) => (
-  <Card style={{ minWidth: '260px', cursor: 'pointer' }}>
-    <CardImg onClick={onClick} src={product.picUrl} style={{ height: '180px', objectFit: 'cover' }} />
-    <CardContent onClick={onClick}>
+)(({ product, onClick }) => (
+  <Card onClick={onClick} style={{ minWidth: '260px', cursor: 'pointer' }}>
+    <CardImg src={product.picUrl} style={{ height: '180px', objectFit: 'cover' }} />
+    <CardContent>
       <TitleAndPrice>
         <Title>{product.title}</Title>
         <Price>{product.displayPrice}</Price>
       </TitleAndPrice>
     </CardContent>
-    <AddToCart onClick={handleAddToCart}>
-      <CartIcon height="14" width="24" />
-      {'Add to Cart'}
-    </AddToCart>
+    <CtaTextContainer>
+      <EyeIcon height="18" width="24" />
+      {product.cardCta}
+    </CtaTextContainer>
   </Card>
 ))
 
