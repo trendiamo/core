@@ -1,6 +1,5 @@
-import LeftArrowIcon from 'icons/left-arrow.svg'
+import CarouselModalArrows from './carousel-modal-arrows'
 import Modal from 'shared/modal'
-import RightArrowIcon from 'icons/right-arrow.svg'
 import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
@@ -40,9 +39,29 @@ const CarouselPic = styled.div`
   }
 `
 
+let touchstartX = 0
+let touchstartY = 0
+let touchendX = 0
+let touchendY = 0
+
+const handleGesure = (touchstartX, touchstartY, touchendX, touchendY) => {
+  if (touchendX < touchstartX) {
+    return 'right'
+  }
+  if (touchendX > touchstartX) {
+    return 'left'
+  }
+  if (touchendY === touchstartY) {
+    return 'Tap'
+  }
+}
+
 const ImgCarouselMessage = compose(
   withState('selectedImage', 'setSelectedImage', false),
   withState('isOpen', 'setIsOpen', false),
+  withState('isTouch', 'setIsTouch', false),
+  withState('isTwoFingerScroll', 'setIsTwoFingerScroll', false),
+  withState('originalWindowWidth', 'setOriginalWindowWidth', window.innerWidth),
   withProps(({ imageCarousel }) => ({
     urlsArray: imageCarousel.map(image => image.picUrl),
   })),
@@ -53,7 +72,8 @@ const ImgCarouselMessage = compose(
     closeModal: ({ setIsOpen }) => () => {
       setIsOpen(false)
     },
-    openModal: ({ setIsOpen, setSelectedImage }) => event => {
+    openModal: ({ setOriginalWindowWidth, setIsOpen, setSelectedImage }) => event => {
+      setOriginalWindowWidth(window.innerWidth)
       setSelectedImage(event.target.src)
       setIsOpen(true)
     },
@@ -63,6 +83,35 @@ const ImgCarouselMessage = compose(
     onRightArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImage }) => () => {
       selectedImageIndex < urlsArray.length - 1 && setSelectedImage(urlsArray[selectedImageIndex + 1])
     },
+    handleIsTouch: ({ setIsTouch }) => () => {
+      setIsTouch(true)
+    },
+    onTouchStart: ({ setIsTwoFingerScroll }) => event => {
+      setIsTwoFingerScroll(1 < event.touches.length)
+      touchstartX = event.changedTouches[0].screenX
+      touchstartY = event.changedTouches[0].screenY
+    },
+    onTouchEnd: ({
+      originalWindowWidth,
+      isTwoFingerScroll,
+      selectedImageIndex,
+      urlsArray,
+      setSelectedImage,
+    }) => event => {
+      if (isTwoFingerScroll || originalWindowWidth > window.innerWidth) return
+      touchendX = event.changedTouches[0].screenX
+      touchendY = event.changedTouches[0].screenY
+      switch (handleGesure(touchstartX, touchstartY, touchendX, touchendY)) {
+        case 'right':
+          {
+            selectedImageIndex < urlsArray.length - 1 && setSelectedImage(urlsArray[selectedImageIndex + 1])
+          }
+          break
+        case 'left': {
+          0 < selectedImageIndex && setSelectedImage(urlsArray[selectedImageIndex - 1])
+        }
+      }
+    },
   })
 )(
   ({
@@ -70,76 +119,28 @@ const ImgCarouselMessage = compose(
     urlsArray,
     onRightArrowClick,
     onLeftArrowClick,
+    handleIsTouch,
+    isTouch,
+    onTouchStart,
     openModal,
     isOpen,
     closeModal,
     selectedImage,
+    onTouchEnd,
   }) => (
     <div>
       <Modal allowBackgroundClose={false} closeModal={closeModal} isOpen={isOpen}>
-        <button
-          onClick={onLeftArrowClick}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            height: '100vh',
-            width: '50%',
-            zIndex: '1234000000',
-            border: 'none',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            outline: 0,
-            cursor: 0 < selectedImageIndex ? 'pointer' : 'default',
-          }}
-          type="button"
-        >
-          <LeftArrowIcon
-            onClick={onLeftArrowClick}
-            style={{
-              display: 0 < selectedImageIndex ? 'block' : 'none',
-              fill: '#fff',
-              width: '42px',
-              height: '42px',
-              position: 'absolute',
-              left: '40px',
-              top: '50vh',
-              zIndex: '12340000004',
-              cursor: 'pointer',
-            }}
+        {!isTouch && (
+          <CarouselModalArrows
+            onLeftArrowClick={onLeftArrowClick}
+            onRightArrowClick={onRightArrowClick}
+            selectedImageIndex={selectedImageIndex}
+            urlsArray={urlsArray}
           />
-        </button>
-        <button
-          onClick={onRightArrowClick}
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            height: '100vh',
-            width: '50%',
-            border: 'none',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            outline: 0,
-            zIndex: '1234000000',
-            cursor: 0 < selectedImageIndex < urlsArray.length - 1 ? 'pointer' : 'default',
-          }}
-          type="button"
-        >
-          <RightArrowIcon
-            onClick={onRightArrowClick}
-            style={{
-              display: 0 < selectedImageIndex < urlsArray.length - 1 ? 'block' : 'none',
-              fill: '#fff',
-              width: '42px',
-              height: '42px',
-              position: 'absolute',
-              right: '40px',
-              top: '50vh',
-              zIndex: '12340000004',
-              cursor: 'pointer',
-            }}
-          />
-        </button>
+        )}
         <div
+          onTouchEnd={onTouchEnd}
+          onTouchStart={onTouchStart}
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -164,7 +165,7 @@ const ImgCarouselMessage = compose(
       </Modal>
       <Carousel>
         {urlsArray.map(imgUrl => (
-          <CarouselPic key={imgUrl} onClick={openModal}>
+          <CarouselPic key={imgUrl} onClick={openModal} onTouchEnd={handleIsTouch}>
             <img alt="" src={imgUrl} />
           </CarouselPic>
         ))}
