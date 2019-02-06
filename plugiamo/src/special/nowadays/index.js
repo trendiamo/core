@@ -1,7 +1,7 @@
+import Base from './base'
 import data from './data'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
-import NowadaysBase from './base'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
@@ -9,9 +9,9 @@ import { h } from 'preact'
 import { isSmall } from 'utils'
 import { matchUrl } from 'plugin-base'
 
-const Nowadays = ({ module, onToggleContent, showingContent }) => (
+const Plugin = ({ module, onToggleContent, showingContent }) => (
   <AppBase
-    Component={<NowadaysBase module={module} />}
+    Component={<Base module={module} />}
     darkClose
     data={module}
     Launcher={Launcher}
@@ -61,4 +61,4 @@ export default compose(
       if (showingContent) onToggleContent()
     },
   })
-)(Nowadays)
+)(Plugin)

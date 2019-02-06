@@ -12,17 +12,17 @@ const ColFlexDiv = styled.div`
   align-content: flex-end;
 `
 
-const NowadaysBaseTemplate = ({ handleScroll, module, scrolled }) => (
+const Base = ({ handleScroll, module, onToggleContent, scrolled }) => (
   <ColFlexDiv>
     <Cover header={module.header} scrolled={scrolled} />
     <BelowCover onScroll={handleScroll}>
-      <ChatLogUi module={module} />
+      <ChatLogUi module={module} onToggleContent={onToggleContent} />
       <CartButton buttonType={module.cartButton} />
     </BelowCover>
   </ColFlexDiv>
 )
 
-const NowadaysBase = compose(
+export default compose(
   withState('scrolled', 'setScrolled', false),
   withHandlers({
     handleScroll: ({ setScrolled, scrolled }) => () => {
@@ -33,6 +33,4 @@ const NowadaysBase = compose(
       }
     },
   })
-)(NowadaysBaseTemplate)
-
-export default NowadaysBase
+)(Base)

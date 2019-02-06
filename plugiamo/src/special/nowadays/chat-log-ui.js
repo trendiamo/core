@@ -35,12 +35,12 @@ const ChatMessage = compose(
       log.timestamp = Date.now()
     },
   })
-)(({ log }) => (
+)(({ log, onToggleContent }) => (
   <ChatMessageContainer chatMessage={log.chatMessage}>
     {log.chatMessage.type === 'text' ? (
       <TextMessage dangerouslySetInnerHTML={{ __html: snarkdown(log.chatMessage.text) }} />
     ) : log.chatMessage.type === 'videoUrl' ? (
-      <VideoMessage youtubeId={extractYoutubeId(log.chatMessage.videoUrl)} />
+      <VideoMessage onToggleContent={onToggleContent} youtubeId={extractYoutubeId(log.chatMessage.videoUrl)} />
     ) : log.chatMessage.type === 'product' ? (
       <ProductMessage product={log.chatMessage.product} />
     ) : log.chatMessage.type === 'imageCarousel' ? (
@@ -139,12 +139,12 @@ const ChatLogUi = compose(
       initChatLog()
     },
   })
-)(({ className, clickChatOption, logs }) => (
+)(({ className, clickChatOption, logs, onToggleContent }) => (
   <ChatBackground className={className}>
     <ChatContainer>
       {logs.map(log =>
         log.type === 'message' ? (
-          <ChatMessage log={log} />
+          <ChatMessage log={log} onToggleContent={onToggleContent} />
         ) : log.type === 'option' ? (
           <ChatOption chatOption={log.chatOption} onClick={clickChatOption} />
         ) : null
