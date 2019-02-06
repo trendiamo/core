@@ -17,7 +17,7 @@ const data = {
             timeOfElevation: 1.6,
           },
           chatBubbleExtra: {
-            message: 'Have a look 👀',
+            message: 'Let me show you more! 👀',
             timeStart: 2.5,
             timeEnd: 18.2,
             hideBarAfter: 3.4,
@@ -44,11 +44,16 @@ const data = {
           default: [
             {
               type: 'text',
-              text: 'I find myself buying from **buttwrap** a lot lately. Their shorts are just so comfortable.',
+              text: 'Buttwraps are made of the best cotton, very soft and extremely comfortable to wear.',
             },
             {
               type: 'text',
-              text: 'Here is a video of me explaining it all:',
+              text:
+                'The one I like the most is dark blue. It gives a great shape and you even support whales with it! 🐳 🔥',
+            },
+            {
+              type: 'text',
+              text: 'Here is a video of me:',
             },
             {
               type: 'videoUrl',
@@ -56,7 +61,7 @@ const data = {
             },
             {
               type: 'text',
-              text: 'And this is me wearing the stuff:',
+              text: 'Check out my pictures in my favourite boxer brief!',
             },
             {
               type: 'imageCarousel',
@@ -75,23 +80,79 @@ const data = {
           'Why are you recommending this?': [
             {
               type: 'text',
-              text: 'Well… I find this to be the perfect balance between artsy and casual.👌',
+              text: 'I feel really good wearing them! They are soft, flexible and perfect for working out.',
             },
             {
               type: 'text',
               text:
-                'Usually shorts are pretty standard 🙄 and if you wear something special it’s sometimes hard to combine it with other pieces.',
+                'Plus, I like the concept that every color reflects the support of an animal. And I just love whales 🐋',
             },
             {
               type: 'text',
               text:
-                'But this one keeps it kind of low key so it still goes well with lots of outfits while not being boring. 👍',
+                'So whenever somebody asks what to give me for my b-day or x-mas, I tell them „get me a pair of buttwraps!“ 😉',
             },
           ],
-          'Show me other shorts': [
+          'Show me other stuff': [
             {
               type: 'text',
-              text: 'Here are some other choices I like:',
+              text: "Here's the same boxer brief in other colors:",
+            },
+            {
+              type: 'product',
+              product: {
+                id: '45542646599',
+                url:
+                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+                picUrl:
+                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                title: 'Gorilla Boxer black',
+                displayPrice: '€27.50',
+                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
+              },
+            },
+            {
+              type: 'product',
+              product: {
+                id: '45542646599',
+                url:
+                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+                picUrl:
+                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                title: 'Gorilla Boxer black',
+                displayPrice: '€27.50',
+                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
+              },
+            },
+            {
+              type: 'product',
+              product: {
+                id: '45542646599',
+                url:
+                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+                picUrl:
+                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                title: 'Gorilla Boxer black',
+                displayPrice: '€27.50',
+                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
+              },
+            },
+            {
+              type: 'text',
+              text: 'And this is the other style:',
+            },
+            {
+              type: 'product',
+              product: {
+                id: '45542646599',
+                url:
+                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+                picUrl:
+                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                title: 'Gorilla Boxer black',
+                displayPrice: '€27.50',
+                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
+              },
             },
             {
               type: 'product',
@@ -108,7 +169,7 @@ const data = {
             },
           ],
         },
-        ctaButton: { label: 'I want it', action: 'want' },
+        ctaButton: { label: 'I want the blue one!', action: 'want' },
       },
     },
     {
@@ -121,14 +182,14 @@ const data = {
         flowType: 'ht-chat',
         launcher: {
           chatBubble: {
-            message: 'Need help with the sizes?',
+            message: 'Choose size and Add to Cart',
             timeStart: 0.5,
             timeEnd: 20,
             hideBarAfter: 0.2,
             timeOfElevation: 1.6,
           },
           chatBubbleExtra: {
-            message: "I'll show you everything",
+            message: 'Or: need help with the sizes?',
             timeStart: 2.5,
             timeEnd: 18.2,
             hideBarAfter: 3.4,
@@ -155,7 +216,16 @@ const data = {
           default: [
             {
               type: 'text',
-              text: 'What you need is size XXXL 😉',
+              text: 'I am 1,80 with, weigh 74kg and wear a Buttwrap M. My jeans size is usually 31.',
+            },
+            {
+              type: 'text',
+              text: 'Here is an overview which size I would recommend to you:',
+            },
+            {
+              type: 'text',
+              text:
+                '<table><tr><td>Jeans Size</td><td>Buttwrap Size</td></tr><tr><td>30</td><td>S</td></tr><tr><td>31 or 32</td><td>M</td></tr><tr><td>33 - 34</td><td>L</td></tr><tr><td>35 - 36</td><td>XL</td></tr><tr><td>36+</td><td>XXL</td></tr></table>',
             },
           ],
         },
