@@ -26,7 +26,8 @@ export default compose(
   withProps(({ pluginState }) => ({
     trigger: data.triggers.find(
       trigger =>
-        trigger.state === pluginState && trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
+        (trigger.state || 'default') === pluginState &&
+        trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
     ),
   })),
   withProps(({ trigger }) => ({
