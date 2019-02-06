@@ -6,7 +6,6 @@ import { typeText } from 'plugin-base'
 
 // All time values are in seconds
 const defaultBubble = {
-  message: 'Hi, welcome to Trendiamo!',
   timeStart: 0.5,
   timeEnd: 20,
   typingSpeed: 0.04,
