@@ -1,21 +1,25 @@
-const cart = {
+const cartFactory = {
   'www.buttwrap.com': {
     scrollToCart() {
-      window.$('.btn.btn--full.add-to-cart')[0].scrollIntoView({ block: 'end', inline: 'nearest' })
-      window.scrollBy({
-        top: 200,
-        behavior: 'smooth',
-      })
+      window.$('html, body').animate(
+        {
+          scrollTop: window.$('form.product-single__form').offset().top - (20 + window.$('.site-header').outerHeight()),
+        },
+        500
+      )
     },
     scrollToCheckout() {
-      window.$('.btn.cart__checkout.cart__checkout--page')[0].scrollIntoView({ block: 'end', inline: 'nearest' })
-      window.scrollBy({
-        top: 100,
-        behavior: 'smooth',
-      })
+      window.$('html, body').animate(
+        {
+          scrollTop: window.$('form.cart').offset().top - (20 + window.$('.site-header').outerHeight()),
+        },
+        500
+      )
     },
   },
 }
 
-export const scrollToCart = () => cart[window.location.hostname].scrollToCart()
-export const scrollToCheckout = () => cart[window.location.hostname].scrollToCheckout()
+const cart = cartFactory[window.location.hostname]
+
+export const scrollToCart = () => cart && cart.scrollToCart()
+export const scrollToCheckout = () => cart && cart.scrollToCheckout()
