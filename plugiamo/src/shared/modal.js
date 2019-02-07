@@ -39,7 +39,7 @@ const ModalComp = compose(
         zIndex: '12340000005',
       }}
     />
-    <div role="dialog" style={{ backgroundColor: 'white', width: '80%', maxWidth: '60em' }}>
+    <div role="dialog" style={{ backgroundColor: 'white', width: '100%', maxWidth: '60em' }}>
       {children}
     </div>
   </div>
