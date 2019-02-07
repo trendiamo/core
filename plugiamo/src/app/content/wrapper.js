@@ -8,7 +8,8 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   color: #333;
 `
 

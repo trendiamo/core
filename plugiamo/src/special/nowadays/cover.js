@@ -23,8 +23,9 @@ export const BelowCover = styled.div`
   margin-bottom: 0;
 
   @media (min-height: 500px) {
-    overflow-y: auto;
     margin-bottom: 50px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 `
 
