@@ -282,6 +282,7 @@ const data = {
           animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
           imageUrl:
             'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
+          minimized: true,
         },
         logs: {
           default: [
