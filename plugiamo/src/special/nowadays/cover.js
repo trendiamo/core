@@ -7,7 +7,7 @@ const CoverBase = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: ${({ scrolled }) => (scrolled ? 90 : 140)}px;
+  height: ${({ minimized }) => (minimized ? 90 : 140)}px;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -39,8 +39,8 @@ const Name = styled.div`
   transition: 1s opacity;
   top: 0;
   transition-delay: 0.4s;
-  ${({ scrolled }) =>
-    scrolled &&
+  ${({ minimized }) =>
+    minimized &&
     `
     transition: 0.4s all ease-out;
     opacity: 0;
@@ -57,8 +57,8 @@ const NameHelper = styled.div`
   transition: max-height 0.8s ease-out, margin-bottom 0.4s;
   user-select: none;
   margin-bottom: 5px;
-  ${({ scrolled }) =>
-    scrolled &&
+  ${({ minimized }) =>
+    minimized &&
     `
     margin-bottom: 0;
     max-height: 0px;
@@ -66,7 +66,7 @@ const NameHelper = styled.div`
   `}
 `
 
-const NameScrolled = styled.div`
+const NameMinimized = styled.div`
   color: #333;
   font-size: 16px;
   font-weight: 700;
@@ -74,8 +74,8 @@ const NameScrolled = styled.div`
   max-height: 0;
   transition: 0.4s all;
   opacity: 0;
-  ${({ scrolled }) =>
-    scrolled &&
+  ${({ minimized }) =>
+    minimized &&
     `
     max-height: 50px;
     opacity: 1;
@@ -105,12 +105,12 @@ const CoverAnimation = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  left: ${({ scrolled }) => (scrolled ? 200 : 140)}px;
+  left: ${({ minimized }) => (minimized ? 200 : 140)}px;
   height: 100%;
   background-size: cover;
   transition: all 0.3s ease-in-out;
   z-index: 10;
-  opacity: ${({ scrolled }) => (scrolled ? 0 : 1)};
+  opacity: ${({ minimized }) => (minimized ? 0 : 1)};
 `
 
 const CoverImage = styled.div`
@@ -119,11 +119,11 @@ const CoverImage = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  left: ${({ scrolled }) => (scrolled ? 200 : 140)}px;
+  left: ${({ minimized }) => (minimized ? 200 : 140)}px;
   height: 100%;
   background-size: cover;
   transition: all 0.3s ease-in-out;
-  opacity: ${({ scrolled }) => (scrolled ? 1 : 0)};
+  opacity: ${({ minimized }) => (minimized ? 1 : 0)};
 `
 
 const ImageContainer = styled.div`
@@ -133,26 +133,26 @@ const ImageContainer = styled.div`
     top: 0;
     bottom: 0;
     right: 50px;
-    left: ${({ scrolled }) => (scrolled ? 200 : 140)}px;
+    left: ${({ minimized }) => (minimized ? 200 : 140)}px;
     background: linear-gradient(90deg, rgb(255, 255, 255), rgba(255, 255, 255, 0));
     z-index: 11;
     transition: all 0.3s ease-in-out;
   }
 `
 
-export const Cover = ({ header, scrolled }) => (
-  <CoverBase scrolled={scrolled}>
-    <ImageContainer scrolled={scrolled}>
-      <CoverAnimation image={header.animationUrl} scrolled={scrolled} />
-      <CoverImage image={header.imageUrl} scrolled={scrolled} />
+export const Cover = ({ header, minimized }) => (
+  <CoverBase minimized={minimized}>
+    <ImageContainer minimized={minimized}>
+      <CoverAnimation image={header.animationUrl} minimized={minimized} />
+      <CoverImage image={header.imageUrl} minimized={minimized} />
     </ImageContainer>
-    <TextContainer scrolled={scrolled}>
+    <TextContainer minimized={minimized}>
       <Header>
-        <NameScrolled scrolled={scrolled}>{header.productTitle}</NameScrolled>
-        <Name scrolled={scrolled}>{header.productTitle}</Name>
-        <NameHelper scrolled={scrolled}>{header.productTitle}</NameHelper>
+        <NameMinimized minimized={minimized}>{header.productTitle}</NameMinimized>
+        <Name minimized={minimized}>{header.productTitle}</Name>
+        <NameHelper minimized={minimized}>{header.productTitle}</NameHelper>
       </Header>
-      <PresentedBy scrolled={scrolled}>
+      <PresentedBy minimized={minimized}>
         {'presented by '}
         <b>{header.personaInstagramHandle}</b>
       </PresentedBy>

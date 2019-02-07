@@ -11,10 +11,10 @@ const ColFlexDiv = styled.div`
   flex-direction: column;
 `
 
-const Base = ({ handleScroll, module, onToggleContent, scrolled, setPluginState }) => (
+const Base = ({ handleScroll, module, onToggleContent, minimized, setPluginState }) => (
   <ColFlexDiv>
     <ColFlexDiv>
-      <Cover header={module.header} scrolled={scrolled} />
+      <Cover header={module.header} minimized={minimized} />
       <BelowCover onScroll={!module.header.minimized && handleScroll}>
         <ChatLogUi module={module} />
       </BelowCover>
@@ -24,13 +24,13 @@ const Base = ({ handleScroll, module, onToggleContent, scrolled, setPluginState 
 )
 
 export default compose(
-  withState('scrolled', 'setScrolled', ({ module }) => module.header.minimized),
+  withState('minimized', 'setMinimized', ({ module }) => module.header.minimized),
   withHandlers({
-    handleScroll: ({ setScrolled, scrolled }) => () => {
+    handleScroll: ({ setMinimized, minimized }) => () => {
       if (event.target.scrollTop === 0) {
-        setScrolled(false)
+        setMinimized(false)
       } else {
-        !scrolled && setScrolled(true)
+        !minimized && setMinimized(true)
       }
     },
   })
