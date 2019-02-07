@@ -20,14 +20,17 @@ const CtaButton = styled(
     </button>
   ))
 )`
-  font-family: Roboto, sans-serif;
-  z-index: 1;
+  appearance: none;
+  margin: 0;
+  border: 0;
+  outline: 0;
+
   position: fixed;
   bottom: 0;
   width: 100%;
-  appearance: none;
-  border: 0;
-  outline: 0;
+
+  font-family: Roboto, sans-serif;
+  z-index: 1;
   background-color: #ff7840;
   color: white;
   padding: 1rem;
