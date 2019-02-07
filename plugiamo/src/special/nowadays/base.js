@@ -15,7 +15,7 @@ const Base = ({ handleScroll, module, onToggleContent, scrolled, setPluginState 
   <ColFlexDiv>
     <ColFlexDiv>
       <Cover header={module.header} scrolled={scrolled} />
-      <BelowCover onScroll={handleScroll}>
+      <BelowCover onScroll={!module.header.minimized && handleScroll}>
         <ChatLogUi module={module} />
       </BelowCover>
     </ColFlexDiv>
@@ -24,7 +24,7 @@ const Base = ({ handleScroll, module, onToggleContent, scrolled, setPluginState 
 )
 
 export default compose(
-  withState('scrolled', 'setScrolled', false),
+  withState('scrolled', 'setScrolled', ({ module }) => module.header.minimized),
   withHandlers({
     handleScroll: ({ setScrolled, scrolled }) => () => {
       if (event.target.scrollTop === 0) {
