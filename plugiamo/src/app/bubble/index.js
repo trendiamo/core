@@ -12,8 +12,24 @@ const defaultBubble = {
   timeEndDuration: 0.4,
 }
 
-const ChatBubble = ({ position, bubble, animation, setTextWidthRef, textWidth, onToggleContent, ...props }) => (
-  <ChatBubbleFrame animation={animation} bubble={bubble} position={position} textWidth={textWidth} {...props}>
+const ChatBubble = ({
+  position,
+  disappear,
+  bubble,
+  animation,
+  setTextWidthRef,
+  textWidth,
+  onToggleContent,
+  ...props
+}) => (
+  <ChatBubbleFrame
+    animation={animation}
+    bubble={bubble}
+    disappear={disappear}
+    position={position}
+    textWidth={textWidth}
+    {...props}
+  >
     <Container onClick={onToggleContent}>
       <ChatBubbleBase animation={animation} bubble={bubble}>
         {bubble.message}
@@ -66,14 +82,15 @@ export default compose(
         },
         bubble.timeStart * 1000
       )
-      timeout.set(
-        bubbleTimeoutId,
-        () => {
-          setAnimation('unroll')
-        },
-        (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd) * 1000
-      )
-      if (bubble.timeOfElevation) {
+      if (bubble.timeEnd != null)
+        timeout.set(
+          bubbleTimeoutId,
+          () => {
+            setAnimation('unroll')
+          },
+          (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd) * 1000
+        )
+      if (bubble.timeOfElevation != null) {
         timeout.set(
           bubbleTimeoutId,
           () => {
@@ -82,13 +99,14 @@ export default compose(
           (bubble.timeStart + bubble.timeStartDuration + bubble.timeOfElevation) * 1000
         )
       }
-      timeout.set(
-        bubbleTimeoutId,
-        () => {
-          setHidden(true)
-        },
-        (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd + bubble.timeEndDuration) * 1000
-      )
+      if (bubble.timeEnd != null)
+        timeout.set(
+          bubbleTimeoutId,
+          () => {
+            setHidden(true)
+          },
+          (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd + bubble.timeEndDuration) * 1000
+        )
     },
   }),
   lifecycle({

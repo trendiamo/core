@@ -318,6 +318,30 @@ const data = {
       module: {
         flowType: 'ht-outro',
         launcher: {
+          chatBubble: {
+            message: 'Awesome! 🤩 Was I helpful?',
+            timeStart: 0.5,
+            timeEnd: null,
+            hideBarAfter: 0.2,
+            timeOfElevation: 1.6,
+          },
+          chatBubbleExtra: {
+            buttons: [
+              {
+                message: 'Not really.',
+                value: 'no',
+                appearsAfter: 0,
+              },
+              {
+                message: 'Yes, thanks!',
+                value: 'yes',
+                appearsAfter: 0.2,
+              },
+            ],
+            timeStart: 2.5,
+            timeEnd: null,
+            timeStartDuration: 0.4,
+          },
           persona: {
             name: 'Aaron',
             profilePic: {

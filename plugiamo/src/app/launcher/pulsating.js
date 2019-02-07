@@ -1,5 +1,6 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Bubble from 'app/bubble'
+import BubbleButtons from 'app/bubble/buttons'
 import CloseIcon from 'shared/close-icon'
 import Frame from 'shared/frame'
 import mixpanel from 'ext/mixpanel'
@@ -7,10 +8,10 @@ import PersonaPic from 'shared/persona-pic'
 import PulsateEffect from './pulsate-effect'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { compose, withHandlers, withProps } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 
-const TrendiamoLauncherFrame = animateOnMount(styled(Frame).attrs({
+const LauncherFrame = animateOnMount(styled(Frame).attrs({
   title: 'Trendiamo Launcher',
 })`
   border: 0;
@@ -59,26 +60,31 @@ const Launcher = ({
   showingContent,
   bubble,
   onToggleContent,
+  setDisappear,
+  disappear,
 }) => (
   <div>
     <Bubble
       bubble={bubble}
+      disappear={disappear}
       onToggleContent={onToggleContent}
       position={position}
-      pulsating
       showingContent={showingContent}
     />
-    {extraBubble && (
+    {extraBubble && extraBubble.message && (
       <Bubble
         bubble={extraBubble}
+        disappear={disappear}
         extraBubble
         onToggleContent={onToggleContent}
         position={position}
-        pulsating
         showingContent={showingContent}
       />
     )}
-    <TrendiamoLauncherFrame position={position}>
+    {extraBubble && extraBubble.buttons && (
+      <BubbleButtons bubble={extraBubble} position={position} setDisappear={setDisappear} />
+    )}
+    <LauncherFrame disappear={disappear} position={position}>
       <div>
         <PulsateEffect active={!showingContent} />
         <Container active={!showingContent} onClick={optimizelyToggleContent}>
@@ -86,11 +92,12 @@ const Launcher = ({
           <CloseIcon active={showingContent} />
         </Container>
       </div>
-    </TrendiamoLauncherFrame>
+    </LauncherFrame>
   </div>
 )
 
 export default compose(
+  withState('disappear', 'setDisappear', false),
   withProps(({ persona }) => ({
     personaPicUrl: persona.profilePic.url,
   })),
