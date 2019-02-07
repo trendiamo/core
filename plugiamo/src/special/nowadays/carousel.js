@@ -8,8 +8,8 @@ const Carousel = styled.div`
   display: flex;
   overflow: hidden;
   overflow-x: scroll;
-  margin-left: -13px;
-  margin-right: -13px;
+  margin-left: -16px;
+  margin-right: -16px;
   margin-bottom: 5px;
   min-height: 260px;
 `
