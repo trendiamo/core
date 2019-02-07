@@ -9,13 +9,14 @@ import { h } from 'preact'
 import { isSmall } from 'utils'
 import { matchUrl, timeout } from 'plugin-base'
 
-const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showingContent }) => (
+const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showingContent, launcherType }) => (
   <AppBase
     Component={<Base module={module} setPluginState={setPluginState} />}
     darkClose
     data={module}
     isUnmounting={isUnmounting}
     Launcher={Launcher}
+    launcherType={launcherType}
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
     showingContent={showingContent}
@@ -48,6 +49,9 @@ export default compose(
       timeout.clear('exitOnMobile')
     },
   }),
+  withProps(({ module }) => ({
+    launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
+  })),
   withHandlers({
     onToggleContent: ({ module, setShowingContent, setIsUnmounting, showingContent }) => () => {
       if (module.flowType !== 'ht-chat') return

@@ -1,12 +1,13 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Bubble from 'app/bubble'
+import BubbleButtons from 'app/bubble/buttons'
 import CloseIcon from 'shared/close-icon'
 import Frame from 'shared/frame'
 import mixpanel from 'ext/mixpanel'
 import PersonaPic from 'shared/persona-pic'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { compose, withHandlers, withProps } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 
 const LauncherFrame = animateOnMount(styled(Frame).attrs({
@@ -24,6 +25,13 @@ const LauncherFrame = animateOnMount(styled(Frame).attrs({
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06), 0 2px 32px 0 rgba(0, 0, 0, 0.16);
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transition: opacity 0.25s ease;
+  ${({ disappear }) =>
+    disappear &&
+    `
+      transition: all 1s;
+      visibility: hidden;
+      opacity: 0;
+  `}
 `)
 
 const Container = styled.div`
@@ -36,21 +44,44 @@ const Container = styled.div`
 `
 
 const Launcher = ({
+  extraBubble,
   optimizelyToggleContent,
   personaPicUrl,
   position,
   showingContent,
-  bubbleText,
+  bubble,
   onToggleContent,
+  setDisappear,
+  disappear,
 }) => (
   <div>
     <Bubble
-      bubble={{ message: bubbleText }}
+      bubble={bubble}
+      disappear={disappear}
       onToggleContent={onToggleContent}
       position={position}
       showingContent={showingContent}
     />
-    <LauncherFrame position={position}>
+    {extraBubble && extraBubble.message && (
+      <Bubble
+        bubble={extraBubble}
+        disappear={disappear}
+        extraBubble
+        onToggleContent={onToggleContent}
+        position={position}
+        showingContent={showingContent}
+      />
+    )}
+    {extraBubble && extraBubble.buttons && (
+      <BubbleButtons
+        bubble={extraBubble}
+        disappear={disappear}
+        position={position}
+        setDisappear={setDisappear}
+        showingContent={showingContent}
+      />
+    )}
+    <LauncherFrame disappear={disappear} position={position}>
       <Container onClick={optimizelyToggleContent}>
         <PersonaPic active={!showingContent} url={personaPicUrl} />
         <CloseIcon active={showingContent} />
@@ -60,6 +91,7 @@ const Launcher = ({
 )
 
 export default compose(
+  withState('disappear', 'setDisappear', false),
   withProps(({ persona }) => ({
     personaPicUrl: persona.profilePic.url,
   })),

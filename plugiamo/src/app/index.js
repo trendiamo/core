@@ -37,6 +37,7 @@ export const AppBase = styled(
     darkClose,
     Launcher,
     isUnmounting,
+    launcherType,
     onToggleContent,
     persona,
     position,
@@ -59,7 +60,9 @@ export const AppBase = styled(
         bubble={
           data && data.launcher ? data.launcher.chatBubble : { message: data && data.flow && data.flow.chatBubbleText }
         }
+        data={data}
         extraBubble={data && data.launcher && data.launcher.chatBubbleExtra}
+        launcherType={launcherType}
         onToggleContent={onToggleContent}
         persona={persona}
         position={position}

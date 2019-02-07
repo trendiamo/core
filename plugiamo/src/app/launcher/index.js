@@ -15,6 +15,7 @@ export const ExperimentLauncher = ({ ...props }) => (
   </Experiment>
 )
 
-const Launcher = PulsatingLauncher
+const Launcher = ({ launcherType, ...props }) =>
+  launcherType === 'original' ? <OriginalLauncher {...props} /> : <PulsatingLauncher {...props} />
 
 export default Launcher

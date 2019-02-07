@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { h } from 'preact'
 
 const ChatBubbleFrame = styled(props => (
-  <Frame {...omit(props, ['bubble', 'textWidth', 'animation', 'elevation'])} />
+  <Frame {...omit(props, ['bubble', 'textWidth', 'animation', 'elevation', 'disappear'])} />
 )).attrs({
   title: 'Trendiamo Chat Bubble',
 })`
@@ -47,6 +47,13 @@ const ChatBubbleFrame = styled(props => (
   outline: none;
   user-select: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  ${({ disappear }) =>
+    disappear &&
+    `
+    transition: all 1s;
+    opacity: 0;
+    visibility: hidden;
+  `}
   ${({ position }) => keyframes({ position })}
 `
 
