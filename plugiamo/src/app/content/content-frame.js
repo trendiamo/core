@@ -16,6 +16,7 @@ const ContentFrameContainer = animateOnMount(styled.div`
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transform: ${({ entry, isUnmounting }) => (entry || isUnmounting ? 'translateY(100%)' : 'none')};
   transition: opacity 0.25s ease, transform 0.4s ease;
+  overscroll-behavior: contain;
 
   bottom: 0;
   right: 0;
