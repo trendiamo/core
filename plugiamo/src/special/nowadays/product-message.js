@@ -1,6 +1,5 @@
 import EyeIcon from 'icons/eye.svg'
 import styled from 'styled-components'
-import { addToCart } from './cart'
 import { Card, CardContent, CardImg } from 'shared/card'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
@@ -46,9 +45,6 @@ const ProductMessage = compose(
     onClick: ({ product }) => () => {
       markGoFwd()
       window.location = product.url
-    },
-    handleAddToCart: ({ product }) => () => {
-      addToCart(product.serializedForm)
     },
   })
 )(({ product, onClick }) => (
