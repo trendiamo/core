@@ -101,43 +101,27 @@ const data = {
             {
               type: 'product',
               product: {
-                id: '45542646599',
+                id: 'brief-red',
                 url:
-                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/orangutan-brief-red-organic-cotton',
                 picUrl:
-                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                title: 'Gorilla Boxer black',
+                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_360x.jpg?v=1516105114',
+                title: 'Orangutan Brief red',
                 displayPrice: '€27.50',
                 cardCta: 'I want this one instead',
-                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
               },
             },
             {
               type: 'product',
               product: {
-                id: '45542646599',
+                id: 'brief-green',
                 url:
-                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/sea-turtle-brief-green-organic-cotton',
                 picUrl:
-                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                title: 'Gorilla Boxer black',
+                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR7-brief-green-front-web_360x.jpg?v=1498311704',
+                title: 'Sea Turtle Brief green',
                 displayPrice: '€27.50',
                 cardCta: 'I want this one instead',
-                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
-              },
-            },
-            {
-              type: 'product',
-              product: {
-                id: '45542646599',
-                url:
-                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
-                picUrl:
-                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                title: 'Gorilla Boxer black',
-                displayPrice: '€27.50',
-                cardCta: 'I want this one instead',
-                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
               },
             },
             {
@@ -147,21 +131,20 @@ const data = {
             {
               type: 'product',
               product: {
-                id: '45542646599',
+                id: 'boxer-blue',
                 url:
-                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/whale-boxer-blue-organic-cotton',
                 picUrl:
-                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                title: 'Gorilla Boxer black',
+                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR6-boxer-blue-front-web_360x.jpg?v=1498311392',
+                title: 'Whale Boxer blue',
                 displayPrice: '€27.50',
                 cardCta: 'I want this one instead',
-                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
               },
             },
             {
               type: 'product',
               product: {
-                id: '45542646599',
+                id: 'boxer-black',
                 url:
                   'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
                 picUrl:
@@ -169,7 +152,6 @@ const data = {
                 title: 'Gorilla Boxer black',
                 displayPrice: '€27.50',
                 cardCta: 'I want this one instead',
-                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
               },
             },
           ],
@@ -301,7 +283,6 @@ const data = {
                 title: 'Gorilla Boxer black',
                 displayPrice: '€27.50',
                 cardCta: 'I want this one instead',
-                serializedForm: 'form_type=product&utf8=%E2%9C%93&Size=M&id=45542646599&quantity=1',
               },
             },
             {
