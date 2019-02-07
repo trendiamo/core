@@ -90,6 +90,15 @@ export default compose(
 
       fetchResults()
     },
+    componentDidUpdate(prevProps) {
+      const { showingContent } = this.props
+      if (showingContent === prevProps.showingContent) return
+      if (showingContent) {
+        document.documentElement.classList.add('trnd-open')
+      } else {
+        document.documentElement.classList.remove('trnd-open')
+      }
+    },
   }),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
@@ -99,11 +108,6 @@ export default compose(
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
-      if (!showingContent) {
-        document.documentElement.classList.add('trnd-open')
-      } else {
-        document.documentElement.classList.remove('trnd-open')
-      }
       return setShowingContent(!showingContent)
     },
   }),

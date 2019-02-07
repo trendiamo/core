@@ -1,6 +1,6 @@
 import ChatBubbleFrame from './frame'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
-import { ChatBubbleBase, Container, TextWidthMeasure } from './components'
+import { ChatBubbleBase, Container } from './components'
 import { h } from 'preact'
 import { timeout } from 'plugin-base'
 
@@ -31,10 +31,7 @@ const ChatBubble = ({
     {...props}
   >
     <Container onClick={onToggleContent}>
-      <ChatBubbleBase animation={animation} bubble={bubble}>
-        {bubble.message}
-      </ChatBubbleBase>
-      <TextWidthMeasure ref={setTextWidthRef}>{bubble.message}</TextWidthMeasure>
+      <ChatBubbleBase ref={setTextWidthRef}>{bubble.message}</ChatBubbleBase>
     </Container>
   </ChatBubbleFrame>
 )
@@ -54,11 +51,7 @@ export default compose(
     let textWidthRef
     return {
       setTextWidthRef: () => ref => (textWidthRef = ref),
-      changeTextWidth: ({ setTextWidth }) => () => {
-        if (textWidthRef) {
-          setTextWidth(textWidthRef.base.offsetWidth)
-        }
-      },
+      changeTextWidth: ({ setTextWidth }) => () => textWidthRef && setTextWidth(textWidthRef.base.offsetWidth),
     }
   }),
   withHandlers({

@@ -35,35 +35,8 @@ const ChatBubbleBase = styled.div`
   font-weight: bold;
   color: #333;
   text-align: center;
-  overflow: hidden;
   white-space: nowrap;
-  display: inline-block;
-  opacity: 0;
-  animation-name: ${({ animation }) =>
-    animation === 'roll' ? '_frekkls_bubble_text_start' : '_frekkls_bubble_text_end'};
-  animation-duration: ${({ animation, bubble }) =>
-    animation === 'roll' ? bubble.timeStartDuration : bubble.timeEndDuration}s;
-  animation-fill-mode: both;
-  position: relative;
   user-select: none;
-  @keyframes _frekkls_bubble_text_start {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  @keyframes _frekkls_bubble_text_end {
-    0% {
-      opacity: 1;
-      width: 100%;
-    }
-    50% {
-      opacity: 0;
-      width: 0%;
-    }
-  }
 `
 
 const Container = styled.div`
@@ -79,18 +52,4 @@ const Container = styled.div`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `
 
-const TextWidthMeasure = styled.div`
-  font-size: 14px;
-  font-weight: 700;
-  top: 0;
-  padding: 0;
-  margin: 0;
-  display: block;
-  position: fixed;
-  height: auto;
-  width: auto;
-  white-space: nowrap;
-  visibility: hidden;
-`
-
-export { TextBar, TextWidthMeasure, Container, ChatBubbleBase }
+export { TextBar, Container, ChatBubbleBase }

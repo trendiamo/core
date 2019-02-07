@@ -48,16 +48,10 @@ export default compose(
     componentWillUnmount() {
       timeout.clear('exitOnMobile')
     },
-  }),
-  withProps(({ module }) => ({
-    launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
-  })),
-  withHandlers({
-    onToggleContent: ({ module, setShowingContent, setIsUnmounting, showingContent }) => () => {
-      if (module.flowType !== 'ht-chat') return
-      mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
-      mixpanel.time_event('Toggled Plugin')
-      if (showingContent && isSmall()) {
+    componentDidUpdate(prevProps) {
+      const { setShowingContent, setIsUnmounting, showingContent } = this.props
+      if (showingContent === prevProps.showingContent) return
+      if (!showingContent && isSmall()) {
         setIsUnmounting(true)
         return timeout.set(
           'exitOnMobile',
@@ -68,6 +62,16 @@ export default compose(
           400
         )
       }
+    },
+  }),
+  withProps(({ module }) => ({
+    launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
+  })),
+  withHandlers({
+    onToggleContent: ({ module, setShowingContent, showingContent }) => () => {
+      if (module.flowType !== 'ht-chat') return
+      mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
+      mixpanel.time_event('Toggled Plugin')
       return setShowingContent(!showingContent)
     },
   }),
