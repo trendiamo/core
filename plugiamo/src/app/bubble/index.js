@@ -2,6 +2,7 @@ import ChatBubbleFrame from './frame'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { ChatBubbleBase, Container, TextWidthMeasure } from './components'
 import { h } from 'preact'
+import { timeout } from 'plugin-base'
 
 // All time values are in seconds
 const defaultBubble = {
@@ -23,11 +24,15 @@ const ChatBubble = ({ position, bubble, animation, setTextWidthRef, textWidth, o
 )
 
 export default compose(
+  withState('hidden', 'setHidden', false),
   withState('animation', 'setAnimation', null),
   withState('textWidth', 'setTextWidth', 0),
   withState('elevation', 'setElevation', false),
   withProps(({ bubble }) => ({
     bubble: { ...defaultBubble, ...bubble },
+  })),
+  withProps(({ extraBubble }) => ({
+    bubbleTimeoutId: `chatBubble${extraBubble && 'Extra'}`,
   })),
   withHandlers(() => {
     let textWidthRef
@@ -41,25 +46,49 @@ export default compose(
     }
   }),
   withHandlers({
-    animateThis: ({ animation, bubble, changeTextWidth, setAnimation, setElevation, setTextWidth }) => () => {
+    reset: ({ setHidden, setAnimation, setTextWidth, setElevation, bubbleTimeoutId }) => () => {
+      setHidden(false)
+      setAnimation(null)
+      setTextWidth(0)
+      setElevation(false)
+      timeout.clear(bubbleTimeoutId)
+    },
+  }),
+  withHandlers({
+    animateThis: ({ bubble, bubbleTimeoutId, reset, changeTextWidth, setAnimation, setElevation, setHidden }) => () => {
       if (!bubble.message) return false
-      setTimeout(() => {
-        setAnimation('roll')
-        changeTextWidth()
-      }, bubble.timeStart * 1000)
-      setTimeout(() => {
-        if (animation === 'roll') setAnimation('unroll')
-      }, (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd) * 1000)
+      reset()
+      timeout.set(
+        bubbleTimeoutId,
+        () => {
+          setAnimation('roll')
+          changeTextWidth()
+        },
+        bubble.timeStart * 1000
+      )
+      timeout.set(
+        bubbleTimeoutId,
+        () => {
+          setAnimation('unroll')
+        },
+        (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd) * 1000
+      )
       if (bubble.timeOfElevation) {
-        setTimeout(() => {
-          setElevation(true)
-        }, (bubble.timeStart + bubble.timeStartDuration + bubble.timeOfElevation) * 1000)
+        timeout.set(
+          bubbleTimeoutId,
+          () => {
+            setElevation(true)
+          },
+          (bubble.timeStart + bubble.timeStartDuration + bubble.timeOfElevation) * 1000
+        )
       }
-      setTimeout(() => {
-        setAnimation(null)
-        setTextWidth(0)
-        setElevation(false)
-      }, (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd + bubble.timeEndDuration) * 1000)
+      timeout.set(
+        bubbleTimeoutId,
+        () => {
+          setHidden(true)
+        },
+        (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd + bubble.timeEndDuration) * 1000
+      )
     },
   }),
   lifecycle({
@@ -68,10 +97,10 @@ export default compose(
       animateThis()
     },
     componentDidUpdate(prevProps) {
-      const { animateThis, showingContent, setAnimation, animation } = this.props
+      const { animateThis, showingContent, hidden, setHidden } = this.props
       if (prevProps.bubble.message !== this.props.bubble.message) animateThis()
-      if (showingContent && animation) setAnimation(null)
+      if (showingContent && !hidden) setHidden(true)
     },
   }),
-  branch(({ showingContent, bubble }) => !bubble.message || showingContent, renderNothing)
+  branch(({ hidden, bubble }) => !bubble.message || hidden, renderNothing)
 )(ChatBubble)
