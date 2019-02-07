@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
+import { scrollToCart, scrollToCheckout } from './cart'
 
 const CtaButton = styled.button.attrs({
   type: 'button',
@@ -30,9 +31,13 @@ export default compose(
     onClick: ({ ctaButton, onToggleContent, setPluginState }) => () => {
       onToggleContent()
       if (ctaButton.action === 'want') {
+        scrollToCart()
         setPluginState('size-help')
       } else if (ctaButton.action === 'ok-size') {
+        scrollToCart()
         setPluginState('nothing')
+      } else if (ctaButton.action === 'checkout') {
+        scrollToCheckout()
       }
     },
   })
