@@ -14,7 +14,7 @@ const ContentFrameContainer = animateOnMount(styled.div`
   overflow-x: hidden;
   background-color: #fff;
   opacity: ${({ entry }) => (entry ? 0 : 1)};
-  transform: ${({ entry }) => (entry ? 'translateY(100%)' : 'none')};
+  transform: ${({ entry, isUnmounting }) => (entry || isUnmounting ? 'translateY(100%)' : 'none')};
   transition: opacity 0.25s ease, transform 0.4s ease;
 
   bottom: 0;
@@ -74,8 +74,8 @@ const CloseContent = styled(IconClose)`
   }
 `
 
-const ContentFrame = ({ children, darkClose, onToggleContent, position }) => (
-  <ContentFrameContainer position={position}>
+const ContentFrame = ({ children, darkClose, isUnmounting, onToggleContent, position }) => (
+  <ContentFrameContainer isUnmounting={isUnmounting} position={position}>
     <IFrame onToggleContent={onToggleContent} showingContent>
       {children}
     </IFrame>

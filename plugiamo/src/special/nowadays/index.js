@@ -7,13 +7,14 @@ import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { isSmall } from 'utils'
-import { matchUrl } from 'plugin-base'
+import { matchUrl, timeout } from 'plugin-base'
 
-const Plugin = ({ module, onToggleContent, setPluginState, showingContent }) => (
+const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showingContent }) => (
   <AppBase
     Component={<Base module={module} setPluginState={setPluginState} />}
     darkClose
     data={module}
+    isUnmounting={isUnmounting}
     Launcher={Launcher}
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
@@ -35,6 +36,7 @@ export default compose(
   })),
   branch(({ module }) => !module, renderNothing),
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
+  withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
@@ -42,12 +44,26 @@ export default compose(
       const autoOpen = isSmall() ? false : module.flowType === 'ht-chat'
       if (autoOpen) setShowingContent(true)
     },
+    componentWillUnmount() {
+      timeout.clear('exitOnMobile')
+    },
   }),
   withHandlers({
-    onToggleContent: ({ module, setShowingContent, showingContent }) => () => {
+    onToggleContent: ({ module, setShowingContent, setIsUnmounting, showingContent }) => () => {
       if (module.flowType !== 'ht-chat') return
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
+      if (showingContent && isSmall()) {
+        setIsUnmounting(true)
+        return timeout.set(
+          'exitOnMobile',
+          () => {
+            setIsUnmounting(false)
+            setShowingContent(false)
+          },
+          400
+        )
+      }
       return setShowingContent(!showingContent)
     },
   }),

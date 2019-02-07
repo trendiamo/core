@@ -4,8 +4,8 @@ import { compose, lifecycle } from 'recompose'
 import { ContentWrapper, history } from 'plugin-base'
 import { h } from 'preact'
 
-const Content = ({ Component, darkClose, onToggleContent, position, persona }) => (
-  <ContentFrame darkClose={darkClose} onToggleContent={onToggleContent} position={position}>
+const Content = ({ Component, darkClose, isUnmounting, onToggleContent, position, persona }) => (
+  <ContentFrame darkClose={darkClose} isUnmounting={isUnmounting} onToggleContent={onToggleContent} position={position}>
     <ContentWrapper onToggleContent={onToggleContent} persona={persona}>
       {Component}
     </ContentWrapper>
