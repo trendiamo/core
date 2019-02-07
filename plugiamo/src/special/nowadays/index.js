@@ -48,11 +48,6 @@ export default compose(
       if (module.flowType !== 'ht-chat') return
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
-      if (!showingContent) {
-        document.documentElement.classList.add('trnd-open')
-      } else {
-        document.documentElement.classList.remove('trnd-open')
-      }
       return setShowingContent(!showingContent)
     },
   }),
