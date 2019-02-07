@@ -28,8 +28,8 @@ const initRootComponent = () => {
 
 const detectAndMarkHackathon = () => {
   if (location.hostname !== 'www.buttwrap.com' && !process.env.HACKATHON) return false
-  if ((optionsFromHash().hckt || '').match(/1|true/)) sessionStorage.setItem('trnd-hackathon', 1)
-  return !!sessionStorage.getItem('trnd-hackathon')
+  if ((optionsFromHash().hckt || '').match(/1|true/)) localStorage.setItem('trnd-hackathon', 1)
+  return !!localStorage.getItem('trnd-hackathon')
 }
 
 const main = () => {
