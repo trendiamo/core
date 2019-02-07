@@ -2,24 +2,9 @@ import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 
-const CtaButton = styled(
-  compose(
-    withHandlers({
-      onClick: ({ ctaButton, onToggleContent, setPluginState }) => () => {
-        onToggleContent()
-        if (ctaButton.action === 'want') {
-          setPluginState('size-help')
-        } else if (ctaButton.action === 'ok-size') {
-          setPluginState('nothing')
-        }
-      },
-    })
-  )(({ ctaButton, className, onClick }) => (
-    <button className={className} onClick={onClick} type="button">
-      {ctaButton.label}
-    </button>
-  ))
-)`
+const CtaButton = styled.button.attrs({
+  type: 'button',
+})`
   appearance: none;
   margin: 0;
   border: 0;
@@ -40,4 +25,15 @@ const CtaButton = styled(
   cursor: pointer;
 `
 
-export default CtaButton
+export default compose(
+  withHandlers({
+    onClick: ({ ctaButton, onToggleContent, setPluginState }) => () => {
+      onToggleContent()
+      if (ctaButton.action === 'want') {
+        setPluginState('size-help')
+      } else if (ctaButton.action === 'ok-size') {
+        setPluginState('nothing')
+      }
+    },
+  })
+)(({ ctaButton, onClick }) => <CtaButton onClick={onClick}>{ctaButton.label}</CtaButton>)

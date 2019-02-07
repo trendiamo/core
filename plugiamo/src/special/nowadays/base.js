@@ -9,16 +9,17 @@ const ColFlexDiv = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-content: flex-end;
 `
 
 const Base = ({ handleScroll, module, onToggleContent, scrolled, setPluginState }) => (
   <ColFlexDiv>
-    <Cover header={module.header} scrolled={scrolled} />
-    <BelowCover onScroll={handleScroll}>
-      <ChatLogUi module={module} onToggleContent={onToggleContent} />
-      <CtaButton ctaButton={module.ctaButton} onToggleContent={onToggleContent} setPluginState={setPluginState} />
-    </BelowCover>
+    <ColFlexDiv>
+      <Cover header={module.header} scrolled={scrolled} />
+      <BelowCover onScroll={handleScroll}>
+        <ChatLogUi module={module} onToggleContent={onToggleContent} />
+      </BelowCover>
+    </ColFlexDiv>
+    <CtaButton ctaButton={module.ctaButton} onToggleContent={onToggleContent} setPluginState={setPluginState} />
   </ColFlexDiv>
 )
 
