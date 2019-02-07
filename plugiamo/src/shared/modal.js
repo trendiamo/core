@@ -1,3 +1,4 @@
+import FocusLock from 'react-focus-lock'
 import Portal from 'preact-portal'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose } from 'recompose'
@@ -40,7 +41,7 @@ const ModalComp = compose(
       }}
     />
     <div role="dialog" style={{ backgroundColor: 'white', width: '100%', maxWidth: '60em' }}>
-      {children}
+      <FocusLock>{children}</FocusLock>
     </div>
   </div>
 ))

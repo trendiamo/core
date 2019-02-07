@@ -18,12 +18,10 @@ const IconContainer = styled.div`
 const VideoMessage = compose(
   withState('isOpen', 'setIsOpen', false),
   withHandlers({
-    closeModal: ({ onToggleContent, setIsOpen }) => () => {
+    closeModal: ({ setIsOpen }) => () => {
       setIsOpen(false)
-      onToggleContent()
     },
-    openModal: ({ onToggleContent, setIsOpen }) => () => {
-      onToggleContent()
+    openModal: ({ setIsOpen }) => () => {
       setIsOpen(true)
     },
   }),

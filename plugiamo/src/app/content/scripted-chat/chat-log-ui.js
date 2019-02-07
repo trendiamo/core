@@ -40,11 +40,11 @@ const ChatLogUi = compose(
       chatLog.fetchStep(initialChatStep.id)
     },
   })
-)(({ logs, onResetChat, onStopChat, onToggleContent, persona }) => (
+)(({ logs, onResetChat, onStopChat, persona }) => (
   <FlexDiv>
     {logs.map(log =>
       log.type === 'message' ? (
-        <ChatMessage log={log} onToggleContent={onToggleContent} />
+        <ChatMessage log={log} />
       ) : (
         <ChatOptions log={log} onResetChat={onResetChat} onStopChat={onStopChat} persona={persona} />
       )

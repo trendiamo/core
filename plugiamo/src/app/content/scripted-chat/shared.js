@@ -63,9 +63,9 @@ const Message = compose(
       product,
     }
   })
-)(({ message, onToggleContent, youtubeId, product }) =>
+)(({ message, youtubeId, product }) =>
   youtubeId ? (
-    <VideoMessage onToggleContent={onToggleContent} youtubeId={youtubeId} />
+    <VideoMessage youtubeId={youtubeId} />
   ) : product ? (
     <ProductMessage product={product} />
   ) : (
@@ -73,10 +73,10 @@ const Message = compose(
   )
 )
 
-const ChatMessage = ({ log, isMessageShown, onToggleContent }) => (
+const ChatMessage = ({ log, isMessageShown }) => (
   <MessageContainer>
     {isMessageShown ? (
-      <Message message={log.message.text} onToggleContent={onToggleContent} />
+      <Message message={log.message.text} />
     ) : (
       <MessageMetadata>
         <AnimatedEllipsis />

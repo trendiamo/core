@@ -20,13 +20,19 @@ const withHotkeys = (handlers, useCapture = false) =>
         displayName = wrapDisplayName(BaseComponent, 'withHotkeys')
 
         componentDidMount() {
-          const { contentWindow } = BaseComponent.hotkeysRef.base
-          ;(contentWindow || window).addEventListener('keydown', this.handleKeyDown, useCapture)
+          // we listen for the event in both the element itself and on its containing window. This allows modals to work
+          const { base } = BaseComponent.hotkeysRef
+          const target = base.contentWindow || window
+          base.addEventListener('keyup', this.handleKeyDown, useCapture)
+          target.addEventListener('keyup', this.handleKeyDown, useCapture)
         }
 
         componentWillUnmount() {
-          const { contentWindow } = BaseComponent.hotkeysRef.base
-          ;(contentWindow || window).removeEventListener('keydown', this.handleKeyDown, useCapture)
+          // we listen for the event in both the element itself and on its containing window. This allows modals to work
+          const { base } = BaseComponent.hotkeysRef
+          const target = base.contentWindow || window
+          base.removeEventListener('keyup', this.handleKeyDown, useCapture)
+          target.removeEventListener('keyup', this.handleKeyDown, useCapture)
         }
 
         setRef(ref) {

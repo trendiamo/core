@@ -16,7 +16,7 @@ const Base = ({ handleScroll, module, onToggleContent, scrolled, setPluginState 
     <ColFlexDiv>
       <Cover header={module.header} scrolled={scrolled} />
       <BelowCover onScroll={handleScroll}>
-        <ChatLogUi module={module} onToggleContent={onToggleContent} />
+        <ChatLogUi module={module} />
       </BelowCover>
     </ColFlexDiv>
     <CtaButton ctaButton={module.ctaButton} onToggleContent={onToggleContent} setPluginState={setPluginState} />
