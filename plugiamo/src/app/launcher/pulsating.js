@@ -11,7 +11,7 @@ import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 
-const LauncherFrame = animateOnMount(styled(Frame).attrs({
+const StyledLauncherFrame = animateOnMount(styled(Frame).attrs({
   title: 'Trendiamo Launcher',
 })`
   border: 0;
@@ -52,6 +52,14 @@ const Container = styled.div`
   }
 `
 
+const LauncherFrame = compose(
+  withHotkeys({
+    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
+      if (showingContent) onToggleContent()
+    },
+  })
+)(StyledLauncherFrame)
+
 const Launcher = ({
   extraBubble,
   optimizelyToggleContent,
@@ -84,7 +92,12 @@ const Launcher = ({
     {extraBubble && extraBubble.buttons && (
       <BubbleButtons bubble={extraBubble} position={position} setDisappear={setDisappear} />
     )}
-    <LauncherFrame disappear={disappear} position={position}>
+    <LauncherFrame
+      disappear={disappear}
+      onToggleContent={onToggleContent}
+      position={position}
+      showingContent={showingContent}
+    >
       <div>
         <PulsateEffect active={!showingContent} />
         <Container active={!showingContent} onClick={optimizelyToggleContent}>
