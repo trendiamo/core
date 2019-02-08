@@ -556,7 +556,7 @@ const data = {
             {
               type: 'text',
               text:
-                '<table><tr><th>Jeans Size</th><th>Buttwrap Size</th></tr><tr><td>30</td><td>S</td></tr><tr><td>31 or 32</td><td>M</td></tr><tr><td>33 - 34</td><td>L</td></tr><tr><td>35 - 36</td><td>XL</td></tr><tr><td>36+</td><td>XXL</td></tr></table>',
+                '<table><tr><th>Minimum Qty</th><th>Discount</th></tr><tr><td>3+</td><td>15% off</td></tr><tr><td>5+</td><td>20% off</td></tr></table>',
             },
           ],
         },
