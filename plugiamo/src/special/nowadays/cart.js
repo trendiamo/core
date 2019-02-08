@@ -22,6 +22,7 @@ const cartFactory = {
       return {
         name: 'Add To Cart',
         data: {
+          hostname: location.hostname,
           withPlugin: !!window.$('.trendiamo-container')[0],
           productId: window
             .$('form.product-single__form')
@@ -59,6 +60,7 @@ const cartFactory = {
       return {
         name: 'Proceed To Checkout',
         data: {
+          hostname: location.hostname,
           withPlugin: !!window.$('.trendiamo-container')[0],
           products: this.getProductsFromCart(),
           currency: window.$('.lion-cart-total > span.money').attr('data-currency') || 'EUR',
