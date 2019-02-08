@@ -1,3 +1,4 @@
+import mixpanel from 'ext/mixpanel'
 import Modal from 'shared/modal'
 import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
@@ -17,22 +18,26 @@ const IconContainer = styled.div`
 
 const VideoMessage = compose(
   withState('isOpen', 'setIsOpen', false),
+  withProps(({ youtubeId }) => ({
+    youtubeEmbedUrl: `https://www.youtube.com/embed/${youtubeId}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
+    youtubePreviewImageUrl: `https://img.youtube.com/vi/${youtubeId}/0.jpg`,
+    youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
+  })),
   withHandlers({
-    closeModal: ({ setIsOpen }) => () => {
+    closeModal: ({ setIsOpen, youtubeUrl }) => event => {
+      event.stopPropagation()
       setIsOpen(false)
+      mixpanel.track('Closed Video', { hostname: location.hostname, url: youtubeUrl })
     },
-    openModal: ({ setIsOpen }) => () => {
+    openModal: ({ setIsOpen, youtubeUrl }) => () => {
       setIsOpen(true)
+      mixpanel.track('Open Video', { hostname: location.hostname, url: youtubeUrl })
     },
   }),
   withHandlers({
     onClick: ({ openModal }) => openModal,
     onKeyUp: ({ openModal }) => event => (event.key === 'Enter' ? openModal() : undefined),
-  }),
-  withProps(({ youtubeId }) => ({
-    youtubeEmbedUrl: `https://www.youtube.com/embed/${youtubeId}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
-    youtubePreviewImageUrl: `https://img.youtube.com/vi/${youtubeId}/0.jpg`,
-  }))
+  })
 )(styled(({ className, closeModal, isOpen, onClick, onKeyUp, youtubeEmbedUrl, youtubePreviewImageUrl }) => (
   <div className={className} onClick={onClick} onKeyUp={onKeyUp} role="button" tabIndex={0}>
     <img alt="" src={youtubePreviewImageUrl} style={{ maxWidth: '100%' }} />

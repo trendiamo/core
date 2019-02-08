@@ -1,3 +1,4 @@
+import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
@@ -39,6 +40,7 @@ export default compose(
       } else if (ctaButton.action === 'checkout') {
         scrollToCheckout()
       }
+      mixpanel.track('Clicked Button', { hostname: location.hostname, type: 'CTA', action: ctaButton.action })
     },
   })
 )(({ ctaButton, onClick }) => <CtaButton onClick={onClick}>{ctaButton.label}</CtaButton>)

@@ -1,4 +1,5 @@
 import EyeIcon from 'icons/eye.svg'
+import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import { Card, CardContent, CardImg } from 'shared/card'
 import { compose, withHandlers } from 'recompose'
@@ -43,8 +44,10 @@ const CtaTextContainer = styled.div`
 const ProductMessage = compose(
   withHandlers({
     onClick: ({ product }) => () => {
-      markGoFwd()
-      window.location = product.url
+      mixpanel.track('Clicked Product', { hostname: location.hostname, url: product.url }, () => {
+        markGoFwd()
+        window.location = product.url
+      })
     },
   })
 )(({ product, onClick }) => (

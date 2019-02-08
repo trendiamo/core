@@ -1,4 +1,5 @@
 import Frame from 'shared/frame'
+import mixpanel from 'ext/mixpanel'
 import omit from 'lodash.omit'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withState } from 'recompose'
@@ -131,6 +132,7 @@ const Buttons = compose(
     handleClick: ({ setDisappear, setClicked }) => value => () => {
       setDisappear(true)
       setClicked(value)
+      mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
     },
   }),
   lifecycle({

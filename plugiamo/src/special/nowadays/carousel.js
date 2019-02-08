@@ -1,4 +1,5 @@
 import CarouselModalArrows from './carousel-modal-arrows'
+import mixpanel from 'ext/mixpanel'
 import Modal from 'shared/modal'
 import styled from 'styled-components'
 import { compose, withHandlers, withProps, withState } from 'recompose'
@@ -69,21 +70,36 @@ const ImgCarouselMessage = compose(
     selectedImageIndex: urlsArray.indexOf(selectedImage),
   })),
   withHandlers({
-    closeModal: ({ setIsOpen }) => () => {
+    closeModal: ({ setIsOpen, selectedImage }) => () => {
+      mixpanel.track('Closed Carousel Gallery', { hostname: location.hostname, imageUrl: selectedImage })
       setIsOpen(false)
     },
     openModal: ({ setOriginalWindowWidth, setIsOpen, setSelectedImage }) => event => {
+      mixpanel.track('Opened Carousel Gallery', { hostname: location.hostname, imageUrl: event.target.src })
       setOriginalWindowWidth(window.innerWidth)
       setSelectedImage(event.target.src)
       setIsOpen(true)
     },
-    onLeftArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImage }) => () => {
-      0 < selectedImageIndex && setSelectedImage(urlsArray[selectedImageIndex - 1])
+    onLeftArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImage, selectedImage }) => () => {
+      if (selectedImageIndex === 0) return
+      setSelectedImage(urlsArray[selectedImageIndex - 1])
+      mixpanel.track('Carousel Image Switch', {
+        hostname: location.hostname,
+        urlFrom: selectedImage,
+        urlTo: urlsArray[selectedImageIndex - 1],
+      })
     },
-    onRightArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImage }) => () => {
-      selectedImageIndex < urlsArray.length - 1 && setSelectedImage(urlsArray[selectedImageIndex + 1])
+    onRightArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImage, selectedImage }) => () => {
+      if (selectedImageIndex >= urlsArray.length - 1) return
+      setSelectedImage(urlsArray[selectedImageIndex + 1])
+      mixpanel.track('Carousel Image Switch', {
+        hostname: location.hostname,
+        urlFrom: selectedImage,
+        urlTo: urlsArray[selectedImageIndex + 1],
+      })
     },
     handleIsTouch: ({ setIsTouch }) => () => {
+      mixpanel.track('Touched Carousel', { hostname: location.hostname })
       setIsTouch(true)
     },
     onTouchStart: ({ setIsTwoFingerScroll }) => event => {
