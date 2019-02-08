@@ -9,6 +9,7 @@ const ColFlexDiv = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  max-height: 100%;
 `
 
 const Base = ({ handleScroll, module, onToggleContent, minimized, setPluginState }) => (
