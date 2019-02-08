@@ -1,4 +1,4 @@
-const STEP_DELAY = 250
+const STEP_DELAY = 320
 
 const chatLog = {
   addListener(fn) {
@@ -37,14 +37,15 @@ const chatLog = {
   addNextLog(logs, timestampParam) {
     const [nextLog, ...otherLogs] = logs
     if (!nextLog) return
+    const delay = STEP_DELAY + Math.floor(Math.random() * 320)
     if (nextLog.type === 'message') {
       nextLog.nextLogs = otherLogs
-      setTimeout(() => this.addLog(nextLog, timestampParam), STEP_DELAY)
+      setTimeout(() => this.addLog(nextLog, timestampParam), delay)
     } else {
       setTimeout(() => {
         this.addLog(nextLog, timestampParam)
         otherLogs.forEach(otherLog => this.addLog(otherLog, timestampParam))
-      }, STEP_DELAY)
+      }, delay)
     }
   },
   run() {
