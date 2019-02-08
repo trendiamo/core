@@ -12,8 +12,8 @@ const CloseIconContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   cursor: pointer;
   display: flex;
   align-items: center;
