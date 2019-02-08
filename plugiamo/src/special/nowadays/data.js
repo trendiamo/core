@@ -33,9 +33,8 @@ const data = {
         },
         header: {
           productTitle: 'Whale Brief blue',
-          personaName: 'Aaron Kane',
-          personaInstagramHandle: '@aaron_kane',
-          personaInstagramUrl: 'https://www.instagram.com/aaron_kane/',
+          personaName: 'Rodrigo',
+          personaInstagramHandle: '@rodrigo_king',
           animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
           imageUrl:
             'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
@@ -77,15 +76,34 @@ const data = {
               ],
             },
           ],
+          'Tell me about Buttwrap 📹': [
+            {
+              type: 'text',
+              text: 'Check out the video of me and Maggie telling you more!',
+            },
+            {
+              type: 'videoUrl',
+              videoUrl: 'https://www.youtube.com/watch?v=5GdrKhhfJQw',
+            },
+          ],
           'Why are you recommending this?': [
             {
               type: 'text',
-              text: 'I feel really good wearing them! They are soft, flexible and perfect for working out.',
+              text:
+                'I feel really good wearing them! They are soft, flexible and perfect for working out. Check out the video of Maggie and myself:',
             },
             {
-              type: 'text',
-              text:
-                'Plus, I like the concept that every color reflects the support of an animal. And I just love whales 🐋',
+              type: 'imageCarousel',
+              imageCarousel: [
+                {
+                  picUrl:
+                    'https://instagram.flis5-1.fna.fbcdn.net/vp/98252f85cdae6d41f1eef915ad66ca61/5CF8BECB/t51.2885-15/e35/43303467_1861207097302088_6896764744952893298_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+                },
+                {
+                  picUrl:
+                    'https://instagram.flis5-1.fna.fbcdn.net/vp/da969acffb849aa4cceaf5a48186241d/5CFE4F45/t51.2885-15/e35/44371536_445280922668357_3800682731002251899_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net&se=7',
+                },
+              ],
             },
             {
               type: 'text',
@@ -190,9 +208,8 @@ const data = {
         },
         header: {
           productTitle: 'Whale Brief blue',
-          personaName: 'Aaron Kane',
-          personaInstagramHandle: '@aaron_kane',
-          personaInstagramUrl: 'https://www.instagram.com/aaron_kane/',
+          personaName: 'Rodrigo',
+          personaInstagramHandle: '@rodrigo_king',
           animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
           imageUrl:
             'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
@@ -201,7 +218,7 @@ const data = {
           default: [
             {
               type: 'text',
-              text: 'I am 1,80 with, weigh 74kg and wear a Buttwrap M. My jeans size is usually 31.',
+              text: 'I am 1,80m, weigh 74kg and wear a Buttwrap M. My jeans size is usually 31.',
             },
             {
               type: 'text',
@@ -240,7 +257,7 @@ const data = {
             timeOfElevation: 1.6,
           },
           chatBubbleExtra: {
-            message: 'Have a look at other shorts',
+            message: 'Anything else?',
             timeStart: 2.5,
             timeEnd: 18.2,
             hideBarAfter: 3.4,
@@ -255,10 +272,9 @@ const data = {
           },
         },
         header: {
-          productTitle: 'Get the full package',
-          personaName: 'Aaron Kane',
-          personaInstagramHandle: '@aaron_kane',
-          personaInstagramUrl: 'https://www.instagram.com/aaron_kane/',
+          productTitle: 'Get the full package!',
+          personaName: 'Rodrigo',
+          personaInstagramHandle: '@rodrigo_king',
           animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
           imageUrl:
             'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
@@ -268,7 +284,11 @@ const data = {
           default: [
             {
               type: 'text',
-              text: 'I always buy in pairs. Here are a few other shorts I like:',
+              text: 'I always buy in pairs, plus you get a discount if you buy 3 or more.',
+            },
+            {
+              type: 'text',
+              text: 'Here are a few other buttwraps I like:',
             },
             {
               type: 'product',
@@ -280,12 +300,19 @@ const data = {
                   'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
                 title: 'Gorilla Boxer black',
                 displayPrice: '€27.50',
-                cardCta: 'I want this one instead',
+                cardCta: 'I want this one!',
               },
+            },
+          ],
+          'Tell me about the discounts!': [
+            {
+              type: 'text',
+              text: 'Here is an overview of what you can save:',
             },
             {
               type: 'text',
-              text: 'Great that I was able to help.',
+              text:
+                '<table><tr><th>Jeans Size</th><th>Buttwrap Size</th></tr><tr><td>30</td><td>S</td></tr><tr><td>31 or 32</td><td>M</td></tr><tr><td>33 - 34</td><td>L</td></tr><tr><td>35 - 36</td><td>XL</td></tr><tr><td>36+</td><td>XXL</td></tr></table>',
             },
           ],
         },
