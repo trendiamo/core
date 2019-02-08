@@ -12,11 +12,11 @@ const ColFlexDiv = styled.div`
   max-height: 100%;
 `
 
-const Base = ({ handleScroll, module, onToggleContent, minimized, setPluginState }) => (
+const Base = ({ handleScroll, module, onToggleContent, minimized, setPluginState, touch }) => (
   <ColFlexDiv>
     <ColFlexDiv>
       <Cover header={module.header} minimized={minimized} />
-      <BelowCover onScroll={!module.header.minimized && handleScroll}>
+      <BelowCover onScroll={!module.header.minimized && handleScroll} touch={touch}>
         <ChatLogUi module={module} />
       </BelowCover>
     </ColFlexDiv>
@@ -26,12 +26,19 @@ const Base = ({ handleScroll, module, onToggleContent, minimized, setPluginState
 
 export default compose(
   withState('minimized', 'setMinimized', ({ module }) => module.header.minimized),
+  withState('touch', 'setTouch', true),
   withHandlers({
-    handleScroll: ({ setMinimized, minimized }) => () => {
-      if (event.target.scrollTop === 0) {
+    handleScroll: ({ setMinimized, minimized, setTouch, touch }) => event => {
+      if (event.target.scrollTop <= 0 && minimized) {
         setMinimized(false)
       } else {
-        !minimized && setMinimized(true)
+        touch && setMinimized(true)
+      }
+      if (event.target.scrollTop <= 0 && minimized) {
+        setTouch(false)
+        setTimeout(() => {
+          setTouch(true)
+        }, 50)
       }
     },
   })

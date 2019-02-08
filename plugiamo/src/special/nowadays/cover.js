@@ -7,12 +7,13 @@ const CoverBase = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: ${({ minimized }) => (minimized ? 90 : 140)}px;
+  height: 140px;
+  max-height: ${({ minimized }) => (minimized ? 90 : 140)}px;
   width: 100%;
   position: relative;
   overflow: hidden;
   z-index: 2;
-  transition: height 0.3s ease-in-out;
+  transition: max-height 0.4s ease-in-out;
   box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
 `
 
@@ -25,7 +26,7 @@ export const BelowCover = styled.div`
   @media (min-height: 500px) {
     margin-bottom: 50px;
     overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: ${({ touch }) => (touch ? 'touch' : 'auto')};
   }
 `
 
