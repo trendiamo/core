@@ -26,8 +26,7 @@ const data = {
           persona: {
             name: 'Rodrigo',
             profilePic: {
-              url:
-                'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+              url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/launcher.png',
             },
           },
         },
@@ -35,9 +34,8 @@ const data = {
           productTitle: 'Elephant Brief white',
           personaName: 'Rodrigo',
           personaInstagramHandle: '@_rodrigo_pires_',
-          animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
-          imageUrl:
-            'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
+          animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
+          imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
         },
         logs: {
           default: [
@@ -52,11 +50,11 @@ const data = {
             },
             {
               type: 'text',
-              text: 'Here is a video of me:',
+              text: 'Check out my video!',
             },
             {
               type: 'videoUrl',
-              videoUrl: 'https://www.youtube.com/watch?v=5GdrKhhfJQw',
+              videoUrl: 'https://youtu.be/x9AAdO7ufHg',
             },
             {
               type: 'text',
@@ -66,12 +64,10 @@ const data = {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl:
-                    'https://instagram.flis5-1.fna.fbcdn.net/vp/98252f85cdae6d41f1eef915ad66ca61/5CF8BECB/t51.2885-15/e35/43303467_1861207097302088_6896764744952893298_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White1.jpg',
                 },
                 {
-                  picUrl:
-                    'https://instagram.flis5-1.fna.fbcdn.net/vp/da969acffb849aa4cceaf5a48186241d/5CFE4F45/t51.2885-15/e35/44371536_445280922668357_3800682731002251899_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net&se=7',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Green3.jpg',
                 },
               ],
             },
@@ -79,29 +75,26 @@ const data = {
           'Tell me about Buttwrap 📹': [
             {
               type: 'text',
-              text: 'Check out the video of me and Maggie telling you more!',
+              text: 'Check out the video of me and Maggie!',
             },
             {
               type: 'videoUrl',
-              videoUrl: 'https://www.youtube.com/watch?v=5GdrKhhfJQw',
+              videoUrl: 'https://youtu.be/JEYX07rCmuM',
             },
           ],
           'Why are you recommending this?': [
             {
               type: 'text',
-              text:
-                'I feel really good wearing them! They are soft, flexible and perfect for working out. Check out the video of Maggie and myself:',
+              text: 'I feel really good wearing them! They are soft, flexible and perfect for working out.',
             },
             {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl:
-                    'https://instagram.flis5-1.fna.fbcdn.net/vp/98252f85cdae6d41f1eef915ad66ca61/5CF8BECB/t51.2885-15/e35/43303467_1861207097302088_6896764744952893298_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red1.jpg',
                 },
                 {
-                  picUrl:
-                    'https://instagram.flis5-1.fna.fbcdn.net/vp/da969acffb849aa4cceaf5a48186241d/5CFE4F45/t51.2885-15/e35/44371536_445280922668357_3800682731002251899_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net&se=7',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Black2.jpg',
                 },
               ],
             },
@@ -201,8 +194,7 @@ const data = {
           persona: {
             name: 'Rodrigo',
             profilePic: {
-              url:
-                'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+              url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/launcher.png',
             },
           },
         },
@@ -210,9 +202,8 @@ const data = {
           productTitle: 'Elephant Brief white',
           personaName: 'Rodrigo',
           personaInstagramHandle: '@_rodrigo_pires_',
-          animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
-          imageUrl:
-            'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
+          animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
+          imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
         },
         logs: {
           default: [
@@ -270,8 +261,7 @@ const data = {
           persona: {
             name: 'Rodrigo',
             profilePic: {
-              url:
-                'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+              url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/launcher.png',
             },
           },
         },
@@ -279,9 +269,8 @@ const data = {
           productTitle: 'Orangutan Brief red',
           personaName: 'Rodrigo',
           personaInstagramHandle: '@_rodrigo_pires_',
-          animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
-          imageUrl:
-            'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
+          animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/red.gif',
+          imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_red.png',
         },
         logs: {
           default: [
@@ -296,11 +285,11 @@ const data = {
             },
             {
               type: 'text',
-              text: 'Here is a video of me:',
+              text: 'Check out my video!',
             },
             {
               type: 'videoUrl',
-              videoUrl: 'https://www.youtube.com/watch?v=5GdrKhhfJQw',
+              videoUrl: 'https://youtu.be/-Inx1Tv6Fko',
             },
             {
               type: 'text',
@@ -310,12 +299,10 @@ const data = {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl:
-                    'https://instagram.flis5-1.fna.fbcdn.net/vp/98252f85cdae6d41f1eef915ad66ca61/5CF8BECB/t51.2885-15/e35/43303467_1861207097302088_6896764744952893298_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red1.jpg',
                 },
                 {
-                  picUrl:
-                    'https://instagram.flis5-1.fna.fbcdn.net/vp/da969acffb849aa4cceaf5a48186241d/5CFE4F45/t51.2885-15/e35/44371536_445280922668357_3800682731002251899_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net&se=7',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red2.jpg',
                 },
               ],
             },
@@ -323,29 +310,26 @@ const data = {
           'Tell me about Buttwrap 📹': [
             {
               type: 'text',
-              text: 'Check out the video of me and Maggie telling you more!',
+              text: 'Check out the video of me and Maggie!',
             },
             {
               type: 'videoUrl',
-              videoUrl: 'https://www.youtube.com/watch?v=5GdrKhhfJQw',
+              videoUrl: 'https://youtu.be/JEYX07rCmuM',
             },
           ],
           'Why are you recommending this?': [
             {
               type: 'text',
-              text:
-                'I feel really good wearing them! They are soft, flexible and perfect for working out. Check out the video of Maggie and myself:',
+              text: 'I feel really good wearing them! They are soft, flexible and perfect for working out.',
             },
             {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl:
-                    'https://instagram.flis5-1.fna.fbcdn.net/vp/98252f85cdae6d41f1eef915ad66ca61/5CF8BECB/t51.2885-15/e35/43303467_1861207097302088_6896764744952893298_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Green3.jpg',
                 },
                 {
-                  picUrl:
-                    'https://instagram.flis5-1.fna.fbcdn.net/vp/da969acffb849aa4cceaf5a48186241d/5CFE4F45/t51.2885-15/e35/44371536_445280922668357_3800682731002251899_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net&se=7',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Blue2.jpg',
                 },
               ],
             },
@@ -445,8 +429,7 @@ const data = {
           persona: {
             name: 'Rodrigo',
             profilePic: {
-              url:
-                'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+              url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/launcher.png',
             },
           },
         },
@@ -454,9 +437,8 @@ const data = {
           productTitle: 'Orangutan Brief red',
           personaName: 'Rodrigo',
           personaInstagramHandle: '@_rodrigo_pires_',
-          animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
-          imageUrl:
-            'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
+          animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/red.gif',
+          imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_red.png',
         },
         logs: {
           default: [
@@ -510,8 +492,7 @@ const data = {
           persona: {
             name: 'Rodrigo',
             profilePic: {
-              url:
-                'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+              url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/launcher.png',
             },
           },
         },
@@ -519,9 +500,8 @@ const data = {
           productTitle: 'Get the full package!',
           personaName: 'Rodrigo',
           personaInstagramHandle: '@_rodrigo_pires_',
-          animationUrl: 'https://media.giphy.com/media/3otPowjINZoVFXwzM4/giphy.gif',
-          imageUrl:
-            'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/08/24/Pictures/_8cc15858-a77e-11e8-8937-8a80aaa2408c.jpg',
+          animationUrl: '',
+          imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
           minimized: true,
         },
         logs: {
@@ -595,8 +575,7 @@ const data = {
           persona: {
             name: 'Rodrigo',
             profilePic: {
-              url:
-                'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
+              url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/launcher.png',
             },
           },
         },

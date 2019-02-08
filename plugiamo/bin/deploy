@@ -6,15 +6,15 @@ yarn build
 gzip -9 -c build/plugin.js | aws s3 cp - s3://plugiamo/plugin.js --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600'
 rm build/plugin.js
 # begin notify rollbar
-ROLLBAR_DEPLOY_TOKEN=$(grep ROLLBAR_DEPLOY_TOKEN .env | xargs)
-IFS='=' read -ra ROLLBAR_DEPLOY_TOKEN <<< "$ROLLBAR_DEPLOY_TOKEN"
-ROLLBAR_DEPLOY_TOKEN=${ROLLBAR_DEPLOY_TOKEN[1]}
-LOCAL_USERNAME=`whoami`
-REVISION=`git rev-parse --verify HEAD`
-curl https://api.rollbar.com/api/1/deploy/ \
-  -F access_token=$ROLLBAR_DEPLOY_TOKEN \
-  -F environment=production \
-  -F revision=$REVISION \
-  -F local_username=$LOCAL_USERNAME
+# ROLLBAR_DEPLOY_TOKEN=$(grep ROLLBAR_DEPLOY_TOKEN .env | xargs)
+# IFS='=' read -ra ROLLBAR_DEPLOY_TOKEN <<< "$ROLLBAR_DEPLOY_TOKEN"
+# ROLLBAR_DEPLOY_TOKEN=${ROLLBAR_DEPLOY_TOKEN[1]}
+# LOCAL_USERNAME=`whoami`
+# REVISION=`git rev-parse --verify HEAD`
+# curl https://api.rollbar.com/api/1/deploy/ \
+#   -F access_token=$ROLLBAR_DEPLOY_TOKEN \
+#   -F environment=production \
+#   -F revision=$REVISION \
+#   -F local_username=$LOCAL_USERNAME
 # end notify rollbar
 mv .env~ .env

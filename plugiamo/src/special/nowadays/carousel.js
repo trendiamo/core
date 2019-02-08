@@ -31,7 +31,7 @@ const CarouselElement = styled.div`
   img {
     border-radius: ${({ carouselType }) => (carouselType === 'productCarousel' ? '0' : '12px')};
     width: 100%;
-    max-height: 260px;
+    height: 260px;
     object-fit: cover;
   }
 `
