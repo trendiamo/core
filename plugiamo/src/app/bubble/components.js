@@ -30,13 +30,17 @@ const TextBar = styled.div`
 `
 
 const ChatBubbleBase = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.4;
   font-weight: bold;
   color: #333;
   text-align: center;
   white-space: nowrap;
   user-select: none;
+
+  @media (min-device-width: 360px) {
+    font-size: 14px;
+  }
 `
 
 const Container = styled.div`

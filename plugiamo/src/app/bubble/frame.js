@@ -29,7 +29,10 @@ const ChatBubbleFrame = styled(props => (
   background-color: #fbfbfb;
   box-sizing: border-box;
   width: 100%;
-  max-width: ${({ textWidth }) => textWidth + 48}px;
+  max-width: ${({ textWidth }) => textWidth + 24}px;
+  @media (min-device-width: 360px) {
+    max-width: ${({ textWidth }) => textWidth + 48}px;
+  }
   overflow: hidden;
   ${({ animation }) =>
     !animation &&

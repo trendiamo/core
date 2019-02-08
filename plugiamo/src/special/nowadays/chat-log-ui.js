@@ -58,14 +58,17 @@ const ChatOptionText = styled.button.attrs({
 })`
   font-family: Roboto, sans-serif;
   appearance: none;
+  outline: 0;
+  margin: 0;
   padding: 8px 15px;
   border-radius: 20px;
-  border: 1px solid #2f2f2f;
-  background: ${({ expanded }) => (expanded ? '#000' : '#fff')};
-  color: ${({ expanded }) => (expanded ? '#fff' : '#000')};
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  font-weight: ${({ expanded }) => (expanded ? 'normal' : '500')};
+  background: ${({ expanded }) => (expanded ? '#222' : '#fff')};
+  color: ${({ expanded }) => (expanded ? '#fff' : '#222')};
   cursor: ${({ expanded }) => (expanded ? 'default' : 'pointer')};
-  outline: 0;
   font-size: 14px;
+  line-height: 1.4;
 `
 
 const ChatOption = styled(
