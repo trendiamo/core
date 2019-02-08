@@ -49,7 +49,7 @@ export default compose(
       timeout.clear('exitOnMobile')
     },
     componentDidUpdate(prevProps) {
-      const { setShowingContent, setIsUnmounting, showingContent } = this.props
+      const { showingContent } = this.props
       if (showingContent === prevProps.showingContent) return
 
       if (getScrollbarWidth() > 0) {
@@ -59,8 +59,21 @@ export default compose(
           document.documentElement.classList.remove('trnd-open')
         }
       }
-
-      if (!showingContent && isSmall()) {
+    },
+  }),
+  withProps(({ module }) => ({
+    launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
+  })),
+  withHandlers({
+    onToggleContent: ({ module, setIsUnmounting, setShowingContent, showingContent, pluginState }) => () => {
+      if (module.flowType !== 'ht-chat') return
+      mixpanel.track('Toggled Plugin', {
+        hostname: location.hostname,
+        action: showingContent ? 'close' : 'open',
+        pluginState,
+      })
+      mixpanel.time_event('Toggled Plugin')
+      if (showingContent && isSmall()) {
         setIsUnmounting(true)
         return timeout.set(
           'exitOnMobile',
@@ -71,20 +84,6 @@ export default compose(
           400
         )
       }
-    },
-  }),
-  withProps(({ module }) => ({
-    launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
-  })),
-  withHandlers({
-    onToggleContent: ({ module, setShowingContent, showingContent, pluginState }) => () => {
-      if (module.flowType !== 'ht-chat') return
-      mixpanel.track('Toggled Plugin', {
-        hostname: location.hostname,
-        action: showingContent ? 'close' : 'open',
-        pluginState,
-      })
-      mixpanel.time_event('Toggled Plugin')
       return setShowingContent(!showingContent)
     },
   }),
