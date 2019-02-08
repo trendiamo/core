@@ -5,8 +5,8 @@ import mixpanel from 'ext/mixpanel'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
-import { isSmall } from 'utils'
 import { matchUrl, timeout } from 'plugin-base'
 
 const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showingContent, launcherType }) => (
@@ -51,6 +51,15 @@ export default compose(
     componentDidUpdate(prevProps) {
       const { setShowingContent, setIsUnmounting, showingContent } = this.props
       if (showingContent === prevProps.showingContent) return
+
+      if (getScrollbarWidth() > 0) {
+        if (showingContent) {
+          document.documentElement.classList.add('trnd-open')
+        } else {
+          document.documentElement.classList.remove('trnd-open')
+        }
+      }
+
       if (!showingContent && isSmall()) {
         setIsUnmounting(true)
         return timeout.set(
