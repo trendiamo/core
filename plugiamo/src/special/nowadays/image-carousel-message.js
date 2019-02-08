@@ -86,23 +86,25 @@ const ImgCarouselMessage = compose(
       switch (handleGesure(touchstartX, touchstartY, touchendX, touchendY)) {
         case 'right':
           {
-            if (selectedImageIndex < urlsArray.length - 1) return
-            setSelectedImage(urlsArray[selectedImageIndex + 1])
-            mixpanel.track('Touch Carousel Image Switch', {
-              hostname: location.hostname,
-              urlFrom: selectedImage,
-              urlTo: urlsArray[selectedImageIndex + 1],
-            })
+            if (selectedImageIndex < urlsArray.length - 1) {
+              setSelectedImage(urlsArray[selectedImageIndex + 1])
+              mixpanel.track('Touch Carousel Image Switch', {
+                hostname: location.hostname,
+                urlFrom: selectedImage,
+                urlTo: urlsArray[selectedImageIndex + 1],
+              })
+            }
           }
           break
         case 'left': {
-          if (0 < selectedImageIndex) return
-          setSelectedImage(urlsArray[selectedImageIndex - 1])
-          mixpanel.track('Touch Carousel Image Switch', {
-            hostname: location.hostname,
-            urlFrom: selectedImage,
-            urlTo: urlsArray[selectedImageIndex - 1],
-          })
+          if (0 < selectedImageIndex) {
+            setSelectedImage(urlsArray[selectedImageIndex - 1])
+            mixpanel.track('Touch Carousel Image Switch', {
+              hostname: location.hostname,
+              urlFrom: selectedImage,
+              urlTo: urlsArray[selectedImageIndex - 1],
+            })
+          }
         }
       }
     },
