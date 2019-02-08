@@ -10,6 +10,15 @@ const ColFlexDiv = styled.div`
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  @keyframes _frekkls_message_appear {
+    0% {
+      opacity: 0;
+      transform: translate(-40px, 0);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `
 
 const Base = ({ handleScroll, module, onToggleContent, minimized, setPluginState, touch }) => (

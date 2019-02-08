@@ -37,6 +37,10 @@ const Price = styled.div`
   color: #25997e;
 `
 
+const ProductCard = styled(Card)`
+  animation: _frekkls_message_appear 0.6s ease-out;
+`
+
 const ProductMessage = compose(
   withHandlers({
     onClick: ({ product }) => () => {
@@ -45,7 +49,7 @@ const ProductMessage = compose(
     },
   })
 )(({ product, onClick }) => (
-  <Card onClick={onClick} style={{ minWidth: '230px', cursor: 'pointer' }}>
+  <ProductCard onClick={onClick} style={{ minWidth: '230px', cursor: 'pointer' }}>
     <CardImg src={product.picUrl} style={{ height: '170px', objectFit: 'cover' }} />
     <CardContent>
       <Title>{product.title}</Title>
@@ -54,7 +58,7 @@ const ProductMessage = compose(
         <Price>{product.displayPrice}</Price>
       </DescAndPrice>
     </CardContent>
-  </Card>
+  </ProductCard>
 ))
 
 export default ProductMessage
