@@ -1,6 +1,7 @@
 import chatLog from './chat-log'
-import ImgCarouselMessage from './carousel'
+import ImgCarouselMessage from './image-carousel-message'
 import mixpanel from 'ext/mixpanel'
+import ProductCarouselMessage from './product-carousel-message'
 import ProductMessage from './product-message'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
@@ -17,7 +18,7 @@ const extractYoutubeId = message => {
 }
 
 const ChatMessageContainer = styled.div`
-  width: ${({ chatMessage }) => (chatMessage.type === 'imageCarousel' ? 'auto' : '260px')};
+  width: ${({ chatMessage }) => (['productCarousel', 'imageCarousel'].includes(chatMessage.type) ? 'auto' : '260px')};
 `
 
 const ChatMessage = compose(
@@ -44,8 +45,10 @@ const ChatMessage = compose(
       <VideoMessage youtubeId={extractYoutubeId(log.chatMessage.videoUrl)} />
     ) : log.chatMessage.type === 'product' ? (
       <ProductMessage product={log.chatMessage.product} />
+    ) : log.chatMessage.type === 'productCarousel' ? (
+      <ProductCarouselMessage carouselType={log.chatMessage.type} productCarousel={log.chatMessage.productCarousel} />
     ) : log.chatMessage.type === 'imageCarousel' ? (
-      <ImgCarouselMessage imageCarousel={log.chatMessage.imageCarousel} />
+      <ImgCarouselMessage carouselType={log.chatMessage.type} imageCarousel={log.chatMessage.imageCarousel} />
     ) : null}
   </ChatMessageContainer>
 ))
