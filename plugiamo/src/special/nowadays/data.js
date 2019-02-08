@@ -24,7 +24,7 @@ const data = {
             timeStartDuration: 0.4,
           },
           persona: {
-            name: 'Aaron',
+            name: 'Rodrigo',
             profilePic: {
               url:
                 'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
@@ -199,7 +199,7 @@ const data = {
             timeStartDuration: 0.4,
           },
           persona: {
-            name: 'Aaron',
+            name: 'Rodrigo',
             profilePic: {
               url:
                 'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
@@ -264,7 +264,7 @@ const data = {
             timeStartDuration: 0.4,
           },
           persona: {
-            name: 'Aaron',
+            name: 'Rodrigo',
             profilePic: {
               url:
                 'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
@@ -349,7 +349,7 @@ const data = {
             timeStartDuration: 0.4,
           },
           persona: {
-            name: 'Aaron',
+            name: 'Rodrigo',
             profilePic: {
               url:
                 'https://instagram.flis5-1.fna.fbcdn.net/vp/bfa29cf105de11feef14dcb4b8830892/5CFDBD7A/t51.2885-19/s150x150/43914435_279225136257865_1981274005692219392_n.jpg?_nc_ht=instagram.flis5-1.fna.fbcdn.net',
