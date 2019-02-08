@@ -17,6 +17,7 @@ const CtaButton = styled.button.attrs({
   width: 100%;
 
   font-family: Roboto, sans-serif;
+  font-weight: 500;
   z-index: 1;
   background-color: #ff6b02;
   color: white;
