@@ -19,25 +19,17 @@ const cartFactory = {
       )
     },
     addToCartObject() {
+      const formFields = window.$('form.product-single__form').serializeArray()
       return {
         name: 'Add To Cart',
         data: {
           hostname: location.hostname,
           withPlugin: !!window.$('.trendiamo-container')[0],
-          productId: window
-            .$('form.product-single__form')
-            .serializeArray()
-            .find(element => element.name === 'id').value,
-          productName: window.$('.product-single__title')[0].innerHTML,
-          productPrice: window.$('span.money')[0].innerHTML,
-          productSize: window
-            .$('form.product-single__form')
-            .serializeArray()
-            .find(element => element.name === 'Size').value,
-          productQuantity: window
-            .$('form.product-single__form')
-            .serializeArray()
-            .find(element => element.name === 'quantity').value,
+          productId: formFields.find(element => element.name === 'id').value,
+          productName: window.$('.product-single__title').html(),
+          productPrice: window.$('span.money').html(),
+          productSize: formFields.find(element => element.name === 'Size').value,
+          productQuantity: formFields.find(element => element.name === 'quantity').value,
         },
       }
     },
@@ -57,14 +49,15 @@ const cartFactory = {
       return products
     },
     checkoutObject() {
+      const moneySpans = window.$('span.money').last()
       return {
         name: 'Proceed To Checkout',
         data: {
           hostname: location.hostname,
           withPlugin: !!window.$('.trendiamo-container')[0],
           products: this.getProductsFromCart(),
-          currency: window.$('.lion-cart-total > span.money').attr('data-currency') || 'EUR',
-          subTotal: window.$('.lion-cart-total > span.money')[0].innerText,
+          currency: moneySpans.attr('data-currency') || 'EUR',
+          subTotal: moneySpans.text(),
         },
       }
     },
