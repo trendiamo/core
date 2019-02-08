@@ -68,9 +68,13 @@ export default compose(
     launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
   })),
   withHandlers({
-    onToggleContent: ({ module, setShowingContent, showingContent }) => () => {
+    onToggleContent: ({ module, setShowingContent, showingContent, pluginState }) => () => {
       if (module.flowType !== 'ht-chat') return
-      mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
+      mixpanel.track('Toggled Plugin', {
+        hostname: location.hostname,
+        action: showingContent ? 'close' : 'open',
+        pluginState,
+      })
       mixpanel.time_event('Toggled Plugin')
       return setShowingContent(!showingContent)
     },

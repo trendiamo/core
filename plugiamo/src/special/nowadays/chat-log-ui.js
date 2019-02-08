@@ -1,5 +1,6 @@
 import chatLog from './chat-log'
 import ImgCarouselMessage from './carousel'
+import mixpanel from 'ext/mixpanel'
 import ProductMessage from './product-message'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
@@ -68,6 +69,7 @@ const ChatOption = styled(
   compose(
     withHandlers({
       onClick: ({ chatOption, onClick }) => () => {
+        mixpanel.track('Clicked Option', { hostname: location.hostname, text: chatOption.text })
         if (!chatOption.expanded) onClick(chatOption)
       },
     }),
