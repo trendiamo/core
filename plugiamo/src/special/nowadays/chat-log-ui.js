@@ -65,6 +65,7 @@ const ChatOptionText = styled.button.attrs({
   color: ${({ expanded }) => (expanded ? '#fff' : '#222')};
   cursor: ${({ expanded }) => (expanded ? 'default' : 'pointer')};
   font-size: 14px;
+  line-height: 1.4;
 `
 
 const ChatOption = styled(
