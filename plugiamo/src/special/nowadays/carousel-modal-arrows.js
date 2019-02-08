@@ -3,7 +3,7 @@ import RightArrowIcon from 'icons/right-arrow.svg'
 import { h } from 'preact'
 
 const CarouselModalArrows = ({ selectedImageIndex, onLeftArrowClick, onRightArrowClick, urlsArray }) => (
-  <h.Fragment>
+  <div>
     <button
       onClick={onLeftArrowClick}
       style={{
@@ -64,7 +64,7 @@ const CarouselModalArrows = ({ selectedImageIndex, onLeftArrowClick, onRightArro
         }}
       />
     </button>
-  </h.Fragment>
+  </div>
 )
 
 export default CarouselModalArrows
