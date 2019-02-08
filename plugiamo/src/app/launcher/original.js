@@ -16,10 +16,10 @@ const StyledLauncherFrame = animateOnMount(styled(Frame).attrs({
   border: 0;
   z-index: 2147482999;
   position: fixed;
-  bottom: ${({ position }) => (position === 'right-elevated' ? '56px' : '30px')};
-  ${({ position }) => (position === 'left' ? 'left: 30px;' : 'right: 30px;')}
-  width: 60px;
-  height: 60px;
+  bottom: ${({ position }) => (position === 'right-elevated' ? '56px' : '20px')};
+  ${({ position }) => (position === 'left' ? 'left: 30px;' : 'right: 20px;')}
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: #232323;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06), 0 2px 32px 0 rgba(0, 0, 0, 0.16);
@@ -44,8 +44,8 @@ const LauncherFrame = compose(
 
 const Container = styled.div`
   overflow: hidden;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   position: absolute;
   top: 0;
   left: 0;

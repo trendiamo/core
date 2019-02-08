@@ -26,8 +26,7 @@ const ContentFrameContainer = animateOnMount(styled.div`
   @media (min-width: ${MAIN_BREAKPOINT}px) {
     border-radius: 8px;
     bottom: ${({ position }) => (position === 'right-elevated' ? '126px' : '100px')};
-    ${({ position }) => (position === 'left' ? 'left: 30px;' : 'right: 30px;')}
-    right: 30px;
+    ${({ position }) => (position === 'left' ? 'left: 20px;' : 'right: 20px;')}
     width: ${WIDTH}px;
     height: calc(100vh - 150px);
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);

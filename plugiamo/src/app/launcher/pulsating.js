@@ -27,12 +27,12 @@ const StyledLauncherFrame = animateOnMount(styled(Frame).attrs({
 `)
 
 const Container = styled.div`
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   position: absolute;
-  top: 20%;
-  left: 20%;
+  top: 15%;
+  left: 15%;
   background: #232323;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06), 0 2px 32px 0 rgba(0, 0, 0, 0.16);
   animation: ${({ active }) => (active ? 'pulsationScaling 1.5s infinite' : 'none')};
