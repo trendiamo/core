@@ -67,7 +67,7 @@ const data = {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White1.jpg',
                 },
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Green3.jpg',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White2.jpg',
                 },
               ],
             },
@@ -91,10 +91,10 @@ const data = {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red1.jpg',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White3.jpg',
                 },
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Black2.jpg',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White4.jpg',
                 },
               ],
             },
@@ -326,10 +326,10 @@ const data = {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Green3.jpg',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red3.jpg',
                 },
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Blue2.jpg',
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red4.jpg',
                 },
               ],
             },
@@ -348,12 +348,12 @@ const data = {
               type: 'productCarousel',
               productCarousel: [
                 {
-                  id: 'brief-red',
+                  id: 'brief-white',
                   url:
-                    'https://www.buttwrap.com/collections/organic-cotton-collection/products/orangutan-brief-red-organic-cotton',
+                    'https://www.buttwrap.com/collections/organic-cotton-collection/products/elephant-brief-white-organic-cotton',
                   picUrl:
-                    'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_360x.jpg?v=1516105114',
-                  title: 'Orangutan Brief red',
+                    'https://cdn.shopify.com/s/files/1/2094/0433/products/PR1-brief-white-front-web_360x.jpg?v=1498311868',
+                  title: 'Elephant Brief white',
                   displayPrice: '€27.50',
                   cardCta: 'I want this one instead',
                 },
@@ -515,17 +515,39 @@ const data = {
               text: 'Here are a few other buttwraps I like:',
             },
             {
-              type: 'product',
-              product: {
-                id: '45542646599',
-                url:
-                  'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
-                picUrl:
-                  'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                title: 'Gorilla Boxer black',
-                displayPrice: '€27.50',
-                cardCta: 'I want this one!',
-              },
+              type: 'productCarousel',
+              productCarousel: [
+                {
+                  id: '45542646599',
+                  url:
+                    'https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton',
+                  picUrl:
+                    'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                  title: 'Gorilla Boxer black',
+                  displayPrice: '€27.50',
+                  cardCta: 'I want this one!',
+                },
+                {
+                  id: 'brief-green',
+                  url:
+                    'https://www.buttwrap.com/collections/organic-cotton-collection/products/sea-turtle-brief-green-organic-cotton',
+                  picUrl:
+                    'https://cdn.shopify.com/s/files/1/2094/0433/products/PR7-brief-green-front-web_360x.jpg?v=1498311704',
+                  title: 'Sea Turtle Brief green',
+                  displayPrice: '€27.50',
+                  cardCta: 'I want this one instead',
+                },
+                {
+                  id: 'boxer-blue',
+                  url:
+                    'https://www.buttwrap.com/collections/organic-cotton-collection/products/whale-boxer-blue-organic-cotton',
+                  picUrl:
+                    'https://cdn.shopify.com/s/files/1/2094/0433/products/PR6-boxer-blue-front-web_360x.jpg?v=1498311392',
+                  title: 'Whale Boxer blue',
+                  displayPrice: '€27.50',
+                  cardCta: 'I want this one instead',
+                },
+              ],
             },
           ],
           'Tell me about the discounts!': [
