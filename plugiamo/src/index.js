@@ -11,6 +11,7 @@ import { optionsFromHash } from 'app/setup'
 import { Provider } from 'ext/graphql-context'
 import { triggerMixpanelPageEvents } from 'special/nowadays/cart'
 import './styles.css'
+
 const initRootComponent = () => {
   const client = new GraphQLClient(
     graphQlUrl,
