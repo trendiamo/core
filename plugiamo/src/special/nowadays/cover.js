@@ -109,7 +109,7 @@ const CoverAnimation = styled.div`
   left: ${({ minimized }) => (minimized ? 200 : 140)}px;
   height: 100%;
   background-size: cover;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.4s ease-in-out;
   z-index: 10;
   opacity: ${({ minimized }) => (minimized ? 0 : 1)};
 `
@@ -123,7 +123,7 @@ const CoverImage = styled.div`
   left: ${({ minimized }) => (minimized ? 200 : 140)}px;
   height: 100%;
   background-size: cover;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.4s ease-in-out;
   opacity: ${({ minimized }) => (minimized ? 1 : 0)};
 `
 
@@ -137,7 +137,7 @@ const ImageContainer = styled.div`
     left: ${({ minimized }) => (minimized ? 199 : 139)}px;
     background: linear-gradient(90deg, rgb(255, 255, 255), rgba(255, 255, 255, 0));
     z-index: 11;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s ease-in-out;
   }
 `
 
