@@ -45,9 +45,12 @@ const List = compose(
 
 // 101px makes it so 3 lines of text fit with no need for scroll
 const ListContent = styled.div`
-  height: 101px;
-  padding: 8px 36px 8px 10px;
   overflow-y: auto;
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 110px;
+  right: 30px;
   .Win32 & {
     letter-spacing: -0.2px;
   }
@@ -93,6 +96,7 @@ const ListItem = compose(
   margin-bottom: 1rem;
   align-items: center;
   cursor: pointer;
+  height: 101px;
   color: #4a4a4a;
   background-color: #fff;
   backface-visibility: hidden;
