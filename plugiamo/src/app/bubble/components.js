@@ -37,6 +37,10 @@ const ChatBubbleBase = styled.div`
   text-align: center;
   white-space: nowrap;
   user-select: none;
+  left: 50%;
+  opacity: 0;
+  transition: opacity 0.6s 0.4s;
+  backface-visibility: hidden;
 
   @media (min-device-width: 360px) {
     font-size: 14px;
@@ -54,6 +58,7 @@ const Container = styled.div`
   align-items: center;
   outline: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
 `
 
 export { TextBar, Container, ChatBubbleBase }
