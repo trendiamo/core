@@ -62,6 +62,7 @@ const LauncherFrame = compose(
 
 const Launcher = ({
   extraBubble,
+  isUnmounting,
   optimizelyToggleContent,
   personaPicUrl,
   position,
@@ -75,6 +76,7 @@ const Launcher = ({
     <Bubble
       bubble={bubble}
       disappear={disappear}
+      isUnmounting={isUnmounting}
       onToggleContent={onToggleContent}
       position={position}
       showingContent={showingContent}
@@ -84,6 +86,7 @@ const Launcher = ({
         bubble={extraBubble}
         disappear={disappear}
         extraBubble
+        isUnmounting={isUnmounting}
         onToggleContent={onToggleContent}
         position={position}
         showingContent={showingContent}

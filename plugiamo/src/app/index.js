@@ -62,6 +62,7 @@ export const AppBase = styled(
         }
         data={data}
         extraBubble={data && data.launcher && data.launcher.chatBubbleExtra}
+        isUnmounting={isUnmounting}
         launcherType={launcherType}
         onToggleContent={onToggleContent}
         persona={persona}
