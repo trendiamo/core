@@ -134,7 +134,7 @@ const ImageContainer = styled.div`
     top: 0;
     bottom: 0;
     right: 50px;
-    left: ${({ minimized }) => (minimized ? 200 : 140)}px;
+    left: ${({ minimized }) => (minimized ? 199 : 139)}px;
     background: linear-gradient(90deg, rgb(255, 255, 255), rgba(255, 255, 255, 0));
     z-index: 11;
     transition: all 0.3s ease-in-out;
