@@ -100,15 +100,17 @@ const Header = styled.div`
   position: relative;
 `
 
-const CoverAnimation = styled.div`
-  background-image: url('${({ image }) => image}');
+const CoverAnimation = styled.img`
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
+  max-width: calc(100% - ${({ minimized }) => (minimized ? 200 : 140)}px);
   left: ${({ minimized }) => (minimized ? 200 : 140)}px;
+  max-height: ${({ minimized }) => (minimized ? 90 : 140)}px;
   height: 100%;
-  background-size: cover;
+  object-fit: cover;
   transition: all 0.4s ease-in-out;
   z-index: 10;
   opacity: ${({ minimized }) => (minimized ? 0 : 1)};
@@ -144,7 +146,7 @@ const ImageContainer = styled.div`
 export const Cover = ({ header, minimized }) => (
   <CoverBase minimized={minimized}>
     <ImageContainer minimized={minimized}>
-      <CoverAnimation image={header.animationUrl} minimized={minimized} />
+      <CoverAnimation minimized={minimized} src={header.animationUrl} />
       <CoverImage image={header.imageUrl} minimized={minimized} />
     </ImageContainer>
     <TextContainer minimized={minimized}>
