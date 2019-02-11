@@ -43,6 +43,12 @@ export default compose(
     componentDidMount() {
       const { module, setShowingContent } = this.props
       const autoOpen = isSmall() ? false : module.flowType === 'ht-chat'
+      mixpanel.track('Loaded Plugin', {
+        autoOpen,
+        flowType: module.flowType,
+        hash: location.hash,
+        hostname: location.hostname,
+      })
       if (autoOpen) setShowingContent(true)
     },
     componentWillUnmount() {
