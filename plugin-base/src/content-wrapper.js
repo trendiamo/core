@@ -12,16 +12,23 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  @media (min-height: 500px) {
-    overflow-y: hidden;
-  }
   color: #333;
+  ${({ disableScroll }) =>
+    disableScroll
+      ? null
+      : `
+          overflow-y: scroll;
+          -webkit-overflow-scrolling: touch;
+          @media (min-height: 500px) {
+            overflow-y: hidden;
+          }
+  `}
 `
 
-const ContentWrapper = ({ children, onRouteChange, onToggleContent, persona, isTransitioning }) => (
-  <Wrapper>{React.cloneElement(children, { onRouteChange, onToggleContent, persona, isTransitioning })}</Wrapper>
+const ContentWrapper = ({ children, disableScroll, onRouteChange, onToggleContent, persona, isTransitioning }) => (
+  <Wrapper disableScroll={disableScroll}>
+    {React.cloneElement(children, { onRouteChange, onToggleContent, persona, isTransitioning })}
+  </Wrapper>
 )
 
 export default compose(

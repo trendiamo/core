@@ -4,9 +4,9 @@ import { compose, lifecycle } from 'recompose'
 import { ContentWrapper, history } from 'plugin-base'
 import { h } from 'preact'
 
-const Content = ({ Component, isUnmounting, onToggleContent, position, persona }) => (
+const Content = ({ Component, disableScroll, isUnmounting, onToggleContent, position, persona }) => (
   <ContentFrame isUnmounting={isUnmounting} onToggleContent={onToggleContent} position={position}>
-    <ContentWrapper onToggleContent={onToggleContent} persona={persona}>
+    <ContentWrapper disableScroll={disableScroll} onToggleContent={onToggleContent} persona={persona}>
       {Component}
     </ContentWrapper>
   </ContentFrame>

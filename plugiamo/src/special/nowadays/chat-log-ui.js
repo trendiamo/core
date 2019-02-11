@@ -149,23 +149,26 @@ const ChatLogUi = compose(
     },
   })
 )(({ className, clickChatOption, logs }) => (
-  <ChatBackground className={className}>
-    <ChatContainer>
-      {logs.map(log =>
-        log.type === 'message' ? (
-          <ChatMessage log={log} />
-        ) : log.type === 'option' ? (
-          <ChatOption chatOption={log.chatOption} onClick={clickChatOption} />
-        ) : null
-      )}
-    </ChatContainer>
-  </ChatBackground>
+  <div className={className}>
+    <ChatBackground>
+      <ChatContainer>
+        {logs.map(log =>
+          log.type === 'message' ? (
+            <ChatMessage log={log} />
+          ) : log.type === 'option' ? (
+            <ChatOption chatOption={log.chatOption} onClick={clickChatOption} />
+          ) : null
+        )}
+      </ChatContainer>
+    </ChatBackground>
+  </div>
 ))
 
 export default styled(ChatLogUi)`
-  margin-bottom: 50px;
+  padding-bottom: 50px;
+
   @media (min-height: 500px) {
-    margin-bottom: 0;
+    padding-top: ${({ coverMinimized }) => (coverMinimized ? '90px' : '140px')};
   }
 
   ${ChatMessageContainer} + ${ChatOption} {

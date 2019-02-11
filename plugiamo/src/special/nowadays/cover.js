@@ -15,18 +15,10 @@ const CoverBase = styled.div`
   z-index: 2;
   transition: max-height 0.4s ease-in-out;
   box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
-`
-
-export const BelowCover = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0;
 
   @media (min-height: 500px) {
-    margin-bottom: 50px;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: ${({ touch }) => (touch ? 'touch' : 'auto')};
+    position: fixed;
+    top: 0;
   }
 `
 
