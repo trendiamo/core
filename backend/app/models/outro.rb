@@ -16,7 +16,7 @@ class Outro < ApplicationRecord
 
   def paths
     new_step = attributes.slice("id", "name")
-    new_step[:path] = "/#{name.underscore.tr('_', '-')}/#{id}"
+    new_step[:path] = "/#{self.class.name.underscore.tr('_', '-')}/#{id}"
     [new_step]
   end
 end
