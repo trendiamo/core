@@ -29,15 +29,16 @@ const FieldTemplate = ({
 }) => (
   <Container>
     <TextField
-      inputProps={{
-        maxLength: max,
-      }}
       {...omit(props, ['setTextLength', 'setIsOutsideLimits', 'setFocused'])}
       onBlur={handleBlur}
       onChange={handleChange}
       onFocus={handleFocus}
     />
-    {focused && max && <Counter isOutsideLimits={isOutsideLimits}>{`${max - textLength}`}</Counter>}
+    {focused && max && (
+      <Counter isOutsideLimits={isOutsideLimits}>
+        {isOutsideLimits ? 'Might be too long to display correctly' : max - textLength}
+      </Counter>
+    )}
   </Container>
 )
 
