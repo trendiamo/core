@@ -168,11 +168,11 @@ export default styled(ChatLogUi)`
   }
 
   ${ChatMessageContainer} + ${ChatOption} {
-    padding-top: 2rem;
+    padding-top: 16px;
   }
 
   ${ChatOption} + ${ChatMessageContainer} {
-    padding-top: 10px;
+    padding-top: 16px;
   }
 
   ${ChatOption} + ${ChatOption},

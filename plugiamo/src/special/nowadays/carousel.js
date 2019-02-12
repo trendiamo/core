@@ -6,7 +6,6 @@ const Carousel = styled.div`
   overflow-x: scroll;
   margin-left: -16px;
   margin-right: -16px;
-  margin-bottom: 5px;
   min-height: ${({ carouselType }) => (carouselType === 'productCarousel' ? '270px' : '260px')};
   animation: _frekkls_message_appear 0.6s ease-out;
 `
