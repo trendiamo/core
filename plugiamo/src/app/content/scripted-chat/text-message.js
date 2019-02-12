@@ -8,6 +8,9 @@ const TextMessage = styled.div`
   font-size: 14px;
   line-height: 1.4;
   position: relative;
+  max-width: 100%;
+  display: inline-block;
+  overflow-wrap: break-word;
   animation: _frekkls_message_appear 0.6s ease-out;
 
   &&:after {

@@ -21,7 +21,7 @@ const ChatBackground = styled.div`
 `
 
 const MessageContainer = styled.div`
-  width: 70%;
+  width: 260px;
 
   & + & {
     margin-top: 0.3rem;

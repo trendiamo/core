@@ -18,7 +18,8 @@ const extractYoutubeId = message => {
 }
 
 const ChatMessageContainer = styled.div`
-  width: ${({ chatMessage }) => (['productCarousel', 'imageCarousel'].includes(chatMessage.type) ? 'auto' : '260px')};
+  max-width: ${({ chatMessage }) =>
+    ['productCarousel', 'imageCarousel'].includes(chatMessage.type) ? 'auto' : '260px'};
 `
 
 const ChatMessage = compose(
