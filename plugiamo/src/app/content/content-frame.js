@@ -69,23 +69,35 @@ const IFrame = compose(
   width: 100%;
 `)
 
-const CloseContent = styled(IconClose)`
+const CloseContentContainer = styled.div`
   position: absolute;
   top: 8px;
   right: 8px;
-  fill: ${({ darkClose }) => (darkClose ? '#000' : '#aaa')};
-  height: 20px;
-  width: 20px;
+  background-color: #fff;
+  opacity: 0.6;
+  border-radius: 4px;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (min-width: ${MAIN_BREAKPOINT}px) {
     display: none;
   }
 `
 
-const ContentFrame = ({ children, darkClose, isUnmounting, onToggleContent, position }) => (
+const CloseContent = styled(IconClose)`
+  height: 20px;
+  width: 20px;
+`
+
+const ContentFrame = ({ children, isUnmounting, onToggleContent, position }) => (
   <ContentFrameContainer isUnmounting={isUnmounting} position={position}>
     <IFrame onToggleContent={onToggleContent}>{children}</IFrame>
-    <CloseContent darkClose={darkClose} onClick={onToggleContent} />
+    <CloseContentContainer onClick={onToggleContent}>
+      <CloseContent />
+    </CloseContentContainer>
   </ContentFrameContainer>
 )
 

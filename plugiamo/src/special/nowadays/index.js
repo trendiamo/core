@@ -12,7 +12,6 @@ import { matchUrl, timeout } from 'plugin-base'
 const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showingContent, launcherType }) => (
   <AppBase
     Component={<Base module={module} setPluginState={setPluginState} />}
-    darkClose
     data={module}
     isUnmounting={isUnmounting}
     Launcher={Launcher}
