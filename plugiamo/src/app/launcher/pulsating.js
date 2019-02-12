@@ -4,6 +4,7 @@ import BubbleButtons from 'app/bubble/buttons'
 import CloseIcon from 'shared/close-icon'
 import Frame from 'shared/frame'
 import mixpanel from 'ext/mixpanel'
+import omit from 'lodash.omit'
 import PersonaPic from 'shared/persona-pic'
 import PulsateEffect from './pulsate-effect'
 import styled from 'styled-components'
@@ -58,7 +59,7 @@ const LauncherFrame = compose(
       if (showingContent) onToggleContent()
     },
   })
-)(StyledLauncherFrame)
+)(props => <StyledLauncherFrame {...omit(props, ['showingContent'])} />)
 
 const Launcher = ({
   extraBubble,

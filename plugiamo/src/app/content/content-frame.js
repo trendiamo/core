@@ -48,9 +48,7 @@ const ContentFrameContainer = animateOnMount(styled.div`
 
 const IFrame = compose(
   withHotkeys({
-    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
-      if (showingContent) onToggleContent()
-    },
+    [escapeKey]: ({ onToggleContent }) => onToggleContent,
   }),
   lifecycle({
     componentWillUnmount() {
@@ -86,9 +84,7 @@ const CloseContent = styled(IconClose)`
 
 const ContentFrame = ({ children, darkClose, isUnmounting, onToggleContent, position }) => (
   <ContentFrameContainer isUnmounting={isUnmounting} position={position}>
-    <IFrame onToggleContent={onToggleContent} showingContent>
-      {children}
-    </IFrame>
+    <IFrame onToggleContent={onToggleContent}>{children}</IFrame>
     <CloseContent darkClose={darkClose} onClick={onToggleContent} />
   </ContentFrameContainer>
 )

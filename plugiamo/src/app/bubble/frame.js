@@ -5,7 +5,9 @@ import styled from 'styled-components'
 import { h } from 'preact'
 
 const ChatBubbleFrame = styled(props => (
-  <Frame {...omit(props, ['bubble', 'textWidth', 'animation', 'elevation', 'disappear'])} />
+  <Frame
+    {...omit(props, ['bubble', 'bubbleTimeoutId', 'extraBubble', 'textWidth', 'animation', 'elevation', 'disappear'])}
+  />
 )).attrs({
   title: 'Trendiamo Chat Bubble',
 })`
