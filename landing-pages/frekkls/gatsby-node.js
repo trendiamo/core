@@ -35,6 +35,10 @@ exports.createPages = ({ graphql, actions }) => {
             id
             title
             secondaryTitle
+            description {
+              description
+            }
+            keywords
             authorName
             publishingDate
             titleImageCredit {
