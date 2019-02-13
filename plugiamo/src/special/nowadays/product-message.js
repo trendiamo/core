@@ -1,4 +1,3 @@
-import EyeIcon from 'icons/eye.svg'
 import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import { Card, CardContent, CardImg } from 'shared/card'
@@ -63,10 +62,7 @@ const ProductMessage = compose(
         <Price>{product.displayPrice}</Price>
       </TitleAndPrice>
     </CardContent>
-    <CtaTextContainer>
-      <EyeIcon height="18" width="24" />
-      {product.cardCta}
-    </CtaTextContainer>
+    <CtaTextContainer>{product.cardCta}</CtaTextContainer>
   </ProductCard>
 ))
 
