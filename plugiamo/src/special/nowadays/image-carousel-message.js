@@ -4,6 +4,7 @@ import Modal from 'shared/modal'
 import { Carousel, CarouselElement } from './carousel'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
+import { parse, stringify } from 'query-string'
 
 let touchstartX = 0
 let touchstartY = 0
@@ -20,6 +21,17 @@ const handleGesure = (touchstartX, touchstartY, touchendX, touchendY) => {
   if (touchendY === touchstartY) {
     return 'Tap'
   }
+}
+
+const imgixUrl = imgUrl => {
+  const urlArray = imgUrl.split('?')
+  const paramsToAdd = {
+    fit: 'crop',
+    'max-w': 260,
+    'max-h': 260,
+  }
+  if (urlArray.length < 2) return `${urlArray[0]}?${stringify(paramsToAdd)}`
+  return `${urlArray[0]}?${stringify({ ...parse(urlArray[1]), ...paramsToAdd })}`
 }
 
 const ImgCarouselMessage = compose(
@@ -39,10 +51,10 @@ const ImgCarouselMessage = compose(
       mixpanel.track('Closed Carousel Gallery', { hostname: location.hostname, imageUrl: selectedImage })
       setIsOpen(false)
     },
-    openModal: ({ setOriginalWindowWidth, setIsOpen, setSelectedImage }) => event => {
-      mixpanel.track('Opened Carousel Gallery', { hostname: location.hostname, imageUrl: event.target.src })
+    openModal: ({ setOriginalWindowWidth, setIsOpen, setSelectedImage, urlsArray }) => index => () => {
+      mixpanel.track('Opened Carousel Gallery', { hostname: location.hostname, imageUrl: urlsArray[index] })
       setOriginalWindowWidth(window.innerWidth)
-      setSelectedImage(event.target.src)
+      setSelectedImage(urlsArray[index])
       setIsOpen(true)
     },
     onLeftArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImage, selectedImage }) => () => {
@@ -161,9 +173,14 @@ const ImgCarouselMessage = compose(
         </div>
       </Modal>
       <Carousel carouselType={carouselType}>
-        {urlsArray.map(imgUrl => (
-          <CarouselElement carouselType={carouselType} key={imgUrl} onClick={openModal} onTouchEnd={handleIsTouch}>
-            <img alt="" src={imgUrl} />
+        {urlsArray.map((imgUrl, index) => (
+          <CarouselElement
+            carouselType={carouselType}
+            key={imgUrl}
+            onClick={openModal(index)}
+            onTouchEnd={handleIsTouch}
+          >
+            <img alt="" src={imgixUrl(imgUrl)} />
           </CarouselElement>
         ))}
       </Carousel>
