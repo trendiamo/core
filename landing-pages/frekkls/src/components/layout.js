@@ -34,7 +34,7 @@ const Layout = ({ children, className, layout, locale }) => (
     `}
     render={data => (
       <Main className={className}>
-        <Seo keywords={[]} lang={locale} meta={[]} title="Frekkls" />
+        <Seo keywords={[]} lang={locale} meta={[]} />
         <Helmet link={[{ rel: 'shortcut icon', type: 'image/png', href: `${favicon}` }]} />
         <Header layout={layout} locale={locale} siteTitle={data.site.siteMetadata.title} />
         {children}

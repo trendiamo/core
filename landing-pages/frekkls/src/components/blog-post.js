@@ -3,6 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
+import Seo from './seo'
+
 const MetaImg = styled.img`
   float: left;
   width: 60px;
@@ -90,6 +92,14 @@ const BlogSpacer = styled.div`
 
 const BlogPost = ({ pageContext, data }) => (
   <Layout layout={data.layout} locale={pageContext.locale}>
+    <Seo
+      description={pageContext.post.node.description.description}
+      imageSrc={pageContext.post.node.titleImage.fixed.src}
+      keywords={pageContext.post.node.keywords}
+      lang={pageContext.locale}
+      meta={[]}
+      title={pageContext.post.node.title}
+    />
     <BlogPostBase>
       <h1>{pageContext.post.node.title}</h1>
       <h2>{pageContext.post.node.secondaryTitle}</h2>
@@ -98,7 +108,7 @@ const BlogPost = ({ pageContext, data }) => (
         <MetaAuthor>{pageContext.post.node.authorName}</MetaAuthor>
         <MetaDate>{pageContext.post.node.publishingDate}</MetaDate>
       </div>
-      <TitleImg src={pageContext.post.node.titleImage.fixed.src} />
+      <TitleImg alt={pageContext.post.node.description.description} src={pageContext.post.node.titleImage.fixed.src} />
       <TitleImgMeta
         dangerouslySetInnerHTML={{
           __html: pageContext.post.node.titleImageCredit.childContentfulRichText.html,
