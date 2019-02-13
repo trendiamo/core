@@ -61,16 +61,10 @@ const IFrame = compose(
 
 const CloseContentContainer = styled.div`
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background-color: #fff;
-  opacity: 0.6;
-  border-radius: 4px;
-  height: 35px;
-  width: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  top: 0;
+  right: 0;
+  opacity: 0.8;
+  padding: 8px;
 
   @media (min-width: ${MAIN_BREAKPOINT}px) {
     display: none;
@@ -78,8 +72,13 @@ const CloseContentContainer = styled.div`
 `
 
 const CloseContent = styled(IconClose)`
-  height: 20px;
-  width: 20px;
+  display: block;
+  height: 16px;
+  width: 16px;
+  fill: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 4px;
+  border-radius: 8px;
 `
 
 const ContentFrame = ({ children, isUnmounting, onToggleContent, position }) => (
