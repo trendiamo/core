@@ -40,10 +40,6 @@ const CtaTextContainer = styled.div`
   text-align: center;
 `
 
-const ProductCard = styled(Card)`
-  animation: _frekkls_message_appear 0.6s ease-out;
-`
-
 const ProductMessage = compose(
   withHandlers({
     onClick: ({ product }) => () => {
@@ -54,7 +50,7 @@ const ProductMessage = compose(
     },
   })
 )(({ product, onClick }) => (
-  <ProductCard onClick={onClick} style={{ minWidth: '260px', cursor: 'pointer' }}>
+  <Card onClick={onClick} style={{ minWidth: '260px', cursor: 'pointer' }}>
     <CardImg src={product.picUrl} style={{ height: '180px', objectFit: 'cover' }} />
     <CardContent>
       <TitleAndPrice>
@@ -63,7 +59,7 @@ const ProductMessage = compose(
       </TitleAndPrice>
     </CardContent>
     <CtaTextContainer>{product.cardCta}</CtaTextContainer>
-  </ProductCard>
+  </Card>
 ))
 
 export default ProductMessage
