@@ -7,7 +7,13 @@ import { location } from 'config'
 const ChatOptions = compose(
   lifecycle({
     componentDidMount() {
-      scrollToInPlugin(this.base)
+      if (
+        document.activeElement &&
+        document.activeElement.tagName.toLowerCase() === 'iframe' &&
+        document.activeElement.title === 'Trendiamo Content'
+      ) {
+        scrollToInPlugin(this.base)
+      }
     },
   }),
   withHandlers({

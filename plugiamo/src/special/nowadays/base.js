@@ -15,7 +15,7 @@ const ColFlexDiv = styled.div`
   @keyframes _frekkls_message_appear {
     0% {
       opacity: 0;
-      transform: translate(-40px, 0);
+      transform: translate(-20px, 0);
     }
     100% {
       opacity: 1;

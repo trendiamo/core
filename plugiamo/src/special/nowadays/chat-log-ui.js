@@ -20,6 +20,7 @@ const extractYoutubeId = message => {
 const ChatMessageContainer = styled.div`
   max-width: ${({ chatMessage }) =>
     ['productCarousel', 'imageCarousel'].includes(chatMessage.type) ? 'auto' : '260px'};
+  animation: _frekkls_message_appear 0.3s ease-out;
 `
 
 const ChatMessage = compose(

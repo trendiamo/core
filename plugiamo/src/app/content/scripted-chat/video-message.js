@@ -66,7 +66,6 @@ const VideoMessage = compose(
   border-radius: 12px;
   overflow: hidden;
   outline: 0;
-  animation: _frekkls_message_appear 0.6s ease-out;
 
   svg {
     width: 50px;

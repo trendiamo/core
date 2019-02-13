@@ -34,16 +34,6 @@ const ContentFrameContainer = animateOnMount(styled.div`
     transform: ${({ entry }) => (entry ? 'translateY(20px)' : 'none')};
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
-
-  @keyframes _frekkls_message_appear {
-    0% {
-      opacity: 0;
-      transform: translate(-40px, 0);
-    }
-    100% {
-      opacity: 1;
-    }
-  }
 `)
 
 const IFrame = compose(

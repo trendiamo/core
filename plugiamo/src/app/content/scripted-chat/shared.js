@@ -5,14 +5,7 @@ import TextMessage from './text-message'
 import VideoMessage from './video-message'
 import { compose, withHandlers, withProps } from 'recompose'
 import { h } from 'preact'
-import { IconAnimatedEllipsis, IconChevronRight } from 'plugin-base'
 import { TopSlideAnimation } from 'plugin-base'
-
-const AnimatedEllipsis = styled(IconAnimatedEllipsis)`
-  width: 15px;
-  fill: #9b9b9b;
-  height: 15px;
-`
 
 const ChatBackground = styled.div`
   background-color: #ebeef2;
@@ -24,18 +17,17 @@ const MessageContainer = styled.div`
   width: 260px;
 
   & + & {
-    margin-top: 0.3rem;
+    margin-top: 5px;
   }
-`
-
-const MessageMetadata = styled.div`
-  font-size: 10px;
-  font-weight: 500;
-  line-height: 2;
-  color: #9b9b9b;
-  svg,
-  span {
-    vertical-align: middle;
+  animation: _frekkls_message_appear 0.3s ease-out;
+  @keyframes _frekkls_message_appear {
+    0% {
+      opacity: 0;
+      transform: translate(-20px, 0);
+    }
+    100% {
+      opacity: 1;
+    }
   }
 `
 
@@ -73,57 +65,40 @@ const Message = compose(
   )
 )
 
-const ChatMessage = ({ log, isMessageShown }) => (
+const ChatMessage = ({ log }) => (
   <MessageContainer>
-    {isMessageShown ? (
-      <Message message={log.message.text} />
-    ) : (
-      <MessageMetadata>
-        <AnimatedEllipsis />
-      </MessageMetadata>
-    )}
+    <Message message={log.message.text} />
   </MessageContainer>
 )
 
 const Option = styled.div`
-  border-bottom: 1px solid #ddd;
-  padding: 0.75rem;
-  color: ${({ highlighted }) => (highlighted ? 'white' : '#0599ff')};
-  background-color: ${({ highlighted }) => (highlighted ? '#0599ff' : 'white')};
-  cursor: ${({ active }) => (active ? 'pointer' : 'default')};
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`
-
-const Chevron = styled(IconChevronRight)`
-  width: 10px;
-  height: 10px;
-  fill: ${({ highlighted }) => (highlighted ? 'white' : '#0599ff')};
-  margin-left: 0.5rem;
-`
-
-const ChatOptionsContainer = styled.div`
-  width: 70%;
+  max-width: 260px;
   align-self: flex-end;
-`
-
-const ChatOptionsInner = styled.div`
-  background-color: #fff;
-  border-radius: 12px;
-  font-size: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
-  ${Option}:last-child {
-    border-bottom: 0;
+  text-align: right;
+  & + * {
+    padding-top: 5px;
   }
 `
 
-const AlignRight = styled.div`
-  text-align: right;
+const ChatOptionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0 16px;
+`
+
+const ChatOptionText = styled.div`
+  appearance: none;
+  outline: 0;
+  margin: 0;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  font-weight: ${({ highlighted }) => (highlighted ? 'normal' : '500')};
+  background: ${({ highlighted }) => (highlighted ? '#222' : '#fff')};
+  color: ${({ highlighted }) => (highlighted ? '#fff' : '#222')};
+  cursor: ${({ highlighted }) => (highlighted ? 'default' : 'pointer')};
+  font-size: 14px;
+  line-height: 1.4;
 `
 
 const ChatOption = compose(
@@ -131,27 +106,19 @@ const ChatOption = compose(
     onClick: ({ chatOption, onOptionClick }) => () => onOptionClick(chatOption),
   })
 )(({ active, chatOption, onClick }) => (
-  <Option active={active} highlighted={chatOption.selected} key={chatOption.id} onClick={onClick}>
-    <AlignRight>{chatOption.text}</AlignRight>
-    <Chevron highlighted={chatOption.selected} />
+  <Option active={active} key={chatOption.id} onClick={onClick}>
+    <ChatOptionText highlighted={chatOption.selected}>{chatOption.text}</ChatOptionText>
   </Option>
 ))
 
 const ChatOptions = ({ log, onOptionClick }) => (
-  <ChatOptionsContainer>
-    <TopSlideAnimation timeout={250}>
-      <ChatOptionsInner>
-        {log.options.map(chatOption => (
-          <ChatOption
-            active={!log.selected}
-            chatOption={chatOption}
-            key={chatOption.id}
-            onOptionClick={onOptionClick}
-          />
-        ))}
-      </ChatOptionsInner>
-    </TopSlideAnimation>
-  </ChatOptionsContainer>
+  <TopSlideAnimation timeout={250}>
+    <ChatOptionsContainer>
+      {log.options.map(chatOption => (
+        <ChatOption active={!log.selected} chatOption={chatOption} key={chatOption.id} onOptionClick={onOptionClick} />
+      ))}
+    </ChatOptionsContainer>
+  </TopSlideAnimation>
 )
 
 const scrollAllParents = node => {

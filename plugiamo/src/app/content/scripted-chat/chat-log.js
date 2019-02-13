@@ -1,7 +1,7 @@
 import i18n from 'ext/i18n'
 import { gql } from 'ext/recompose/graphql'
 
-const STEP_DELAY = 250
+const STEP_DELAY = 320
 
 const query = gql`
   query($id: ID!) {
@@ -72,7 +72,8 @@ const chatLog = {
   addNextLog(logs, timestampParam) {
     const [nextLog, ...otherLogs] = logs
     nextLog.nextLogs = otherLogs
-    setTimeout(() => this.addLog(nextLog, timestampParam), STEP_DELAY)
+    const delay = STEP_DELAY + Math.floor(Math.random() * 320)
+    setTimeout(() => this.addLog(nextLog, timestampParam), delay)
   },
   client: null,
   fetchStep(id) {
