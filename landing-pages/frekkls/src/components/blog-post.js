@@ -1,5 +1,7 @@
+import Layout from '../components/layout'
 import React from 'react'
 import styled from 'styled-components'
+import { graphql } from 'gatsby'
 
 const MetaImg = styled.img`
   float: left;
@@ -86,20 +88,39 @@ const BlogSpacer = styled.div`
   background: #ebebeb;
 `
 
-const BlogPost = ({ imagesData, post }) => (
-  <BlogPostBase>
-    <h1>{post.title}</h1>
-    <h2>{post.secondaryTitle}</h2>
-    <div>
-      <MetaImg src={imagesData.authorImage.fixed.src} />
-      <MetaAuthor>{post.authorName}</MetaAuthor>
-      <MetaDate>{post.publishingDate}</MetaDate>
-    </div>
-    <TitleImg src={imagesData.titleImage.fixed.src} />
-    <TitleImgMeta dangerouslySetInnerHTML={{ __html: post.titleImageCredit.childContentfulRichText.html }} />
-    <BlogSpacer />
-    <BlogText className="blog-text" dangerouslySetInnerHTML={{ __html: post.text.childContentfulRichText.html }} />
-  </BlogPostBase>
+const BlogPost = ({ pageContext, data }) => (
+  <Layout layout={data.layout} locale={pageContext.locale}>
+    <BlogPostBase>
+      <h1>{pageContext.post.node.title}</h1>
+      <h2>{pageContext.post.node.secondaryTitle}</h2>
+      <div>
+        <MetaImg src={pageContext.post.node.authorImage.fixed.src} />
+        <MetaAuthor>{pageContext.post.node.authorName}</MetaAuthor>
+        <MetaDate>{pageContext.post.node.publishingDate}</MetaDate>
+      </div>
+      <TitleImg src={pageContext.post.node.titleImage.fixed.src} />
+      <TitleImgMeta
+        dangerouslySetInnerHTML={{
+          __html: pageContext.post.node.titleImageCredit.childContentfulRichText.html,
+        }}
+      />
+      <BlogSpacer />
+      <BlogText
+        className="blog-text"
+        dangerouslySetInnerHTML={{
+          __html: pageContext.post.node.text.childContentfulRichText.html,
+        }}
+      />
+    </BlogPostBase>
+  </Layout>
 )
 
 export default BlogPost
+
+export const query = graphql`
+  query BlogPost($locale: String) {
+    layout: contentfulLayout(name: { eq: "Layout" }, node_locale: { eq: $locale }) {
+      ...Layout
+    }
+  }
+`
