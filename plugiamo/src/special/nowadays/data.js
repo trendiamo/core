@@ -64,10 +64,10 @@ const data = {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White1.jpg',
+                  picUrl: 'https://trendiamo-assets.imgix.net/manual/buttwrap/White1.jpg',
                 },
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White2.jpg',
+                  picUrl: 'https://trendiamo-assets.imgix.net/manual/buttwrap/White2.jpg',
                 },
               ],
             },
@@ -91,10 +91,10 @@ const data = {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White3.jpg',
+                  picUrl: 'https://trendiamo-assets.imgix.net/manual/buttwrap/White3.jpg',
                 },
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White4.jpg',
+                  picUrl: 'https://trendiamo-assets.imgix.net/manual/buttwrap/White4.jpg',
                 },
               ],
             },
@@ -299,10 +299,10 @@ const data = {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red1.jpg',
+                  picUrl: 'https://trendiamo-assets.imgix.net/manual/buttwrap/Red1.jpg',
                 },
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red2.jpg',
+                  picUrl: 'https://trendiamo-assets.imgix.net/manual/buttwrap/Red2.jpg',
                 },
               ],
             },
@@ -326,10 +326,10 @@ const data = {
               type: 'imageCarousel',
               imageCarousel: [
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red3.jpg',
+                  picUrl: 'https://trendiamo-assets.imgix.net/manual/buttwrap/Red3.jpg',
                 },
                 {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red4.jpg',
+                  picUrl: 'https://trendiamo-assets.imgix.net/manual/buttwrap/Red4.jpg',
                 },
               ],
             },
