@@ -150,8 +150,8 @@ const ChatLogUi = compose(
       initChatLog()
     },
   })
-)(({ className, clickChatOption, logs }) => (
-  <div className={className}>
+)(({ className, clickChatOption, logs, onScroll, touch }) => (
+  <div className={className} onScroll={onScroll} touch={touch}>
     <ChatBackground>
       <ChatContainer>
         {logs.map(log =>
@@ -167,11 +167,10 @@ const ChatLogUi = compose(
 ))
 
 export default styled(ChatLogUi)`
-  padding-bottom: 50px;
-
-  @media (min-height: 500px) {
-    padding-top: ${({ coverMinimized }) => (coverMinimized ? '90px' : '140px')};
-  }
+  flex-grow: 1;
+  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: ${({ touch }) => (touch ? 'touch' : 'auto')};
 
   ${ChatMessageContainer} + ${ChatOption} {
     padding-top: 16px;

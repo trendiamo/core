@@ -16,10 +16,7 @@ const CoverBase = styled.div`
   transition: max-height 0.4s ease-in-out;
   box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
 
-  @media (min-height: 500px) {
-    position: fixed;
-    top: 0;
-  }
+  flex-shrink: 0;
 `
 
 const Name = styled.div`
