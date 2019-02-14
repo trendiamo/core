@@ -19,6 +19,9 @@ const MessageContainer = styled.div`
   & + & {
     margin-top: 5px;
   }
+  &:last-child {
+    margin-bottom: 15px;
+  }
   animation: _frekkls_message_appear 0.3s ease-out;
   @keyframes _frekkls_message_appear {
     0% {
