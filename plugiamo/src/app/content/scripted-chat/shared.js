@@ -81,6 +81,7 @@ const Option = styled.div`
   & + * {
     padding-top: 5px;
   }
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 `
 
 const ChatOptionsContainer = styled.div`

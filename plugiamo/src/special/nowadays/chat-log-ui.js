@@ -103,6 +103,7 @@ const ChatOption = styled(
   max-width: 260px;
   align-self: flex-end;
   text-align: right;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 `
 
 const ChatContainer = styled.div`
