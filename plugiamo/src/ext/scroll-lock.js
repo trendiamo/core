@@ -25,7 +25,9 @@ const ScrollContainer = styled.div`
 `
 
 const ScrollElement = styled.div`
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `
 
 const isIos = () => /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
@@ -45,6 +47,9 @@ const ScrollLock = compose(
       setElementRef: () => ref => (elementRef = ref),
       setInitialScroll: ({ isEnabled }) => () => {
         if (isEnabled) containerRef.base.scrollTop = PADDING_TOP
+        if (!isEnabled && window.innerWidth < 600) {
+          document.body.style.overflow = 'hidden'
+        }
       },
       handleScroll: ({ isEnabled, onScroll }) => event => {
         if (event.target.scrollTop <= (isEnabled ? PADDING_TOP : 0)) {

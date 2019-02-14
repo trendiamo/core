@@ -19,6 +19,7 @@ export default compose(
     },
     componentWillUnmount() {
       history.removeListeners()
+      document.body.style.overflow = ''
     },
   }),
   withHotkeys({

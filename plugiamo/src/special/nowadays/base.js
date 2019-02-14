@@ -23,11 +23,11 @@ const ColFlexDiv = styled.div`
   }
 `
 
-const Base = ({ handleScroll, module, onToggleContent, coverMinimized, setPluginState }) => (
+const Base = ({ handleScroll, module, onToggleContent, coverMinimized, setPluginState, touch }) => (
   <ColFlexDiv>
-    <ScrollLock onScroll={handleScroll}>
+    <ScrollLock>
       <Cover header={module.header} minimized={coverMinimized} />
-      <ChatLogUi coverMinimized={coverMinimized} module={module} />
+      <ChatLogUi coverMinimized={coverMinimized} module={module} onScroll={handleScroll} touch={touch} />
       <CtaButton ctaButton={module.ctaButton} onToggleContent={onToggleContent} setPluginState={setPluginState} />
     </ScrollLock>
   </ColFlexDiv>
@@ -35,10 +35,18 @@ const Base = ({ handleScroll, module, onToggleContent, coverMinimized, setPlugin
 
 export default compose(
   withState('coverMinimized', 'setCoverMinimized', ({ module }) => !!module.header.minimized),
+  withState('touch', 'setTouch', true),
   withHandlers({
-    handleScroll: ({ setCoverMinimized, coverMinimized }) => (event, scrollLockInfo) => {
-      if (scrollLockInfo.at === 'top' && coverMinimized) return setCoverMinimized(false)
-      if (scrollLockInfo.at !== 'top' && !coverMinimized) return setCoverMinimized(true)
+    handleScroll: ({ setCoverMinimized, coverMinimized, setTouch, touch }) => event => {
+      const scrollTop = event.target.scrollTop
+      if (scrollTop <= 0 && coverMinimized) {
+        setTouch(false)
+        setTimeout(() => {
+          setTouch(true)
+        }, 50)
+        return setCoverMinimized(false)
+      }
+      if (scrollTop > 0 && !coverMinimized && touch) return setCoverMinimized(true)
     },
   })
 )(Base)
