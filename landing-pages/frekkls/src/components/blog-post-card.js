@@ -4,23 +4,24 @@ import { FeatureButton } from '../components/button'
 import { FeatureCard } from '../components/cards'
 import { Link } from 'gatsby'
 
-const StyledFeatureButton = styled(FeatureCard)`
-  overflow: hidden;
-`
-
-const Styledlink = styled(Link)`
-  align-self: center;
+const StyledFeatureCard = styled(FeatureCard)`
+  width: 300px;
+  height: 480px;
+  @media (min-width: 900px) {
+    width: 450px;
+    height: 580px;
+  }
 `
 
 const BlogPostCard = ({ to, imagesData, post }) => (
-  <StyledFeatureButton>
+  <StyledFeatureCard>
     <img alt="" src={imagesData.titleImage.fixed.src} />
     <h1>{post.title}</h1>
     <p>{post.secondaryTitle}</p>
-    <Styledlink to={to}>
+    <Link to={to}>
       <FeatureButton>{post.cardCta}</FeatureButton>
-    </Styledlink>
-  </StyledFeatureButton>
+    </Link>
+  </StyledFeatureCard>
 )
 
 export default BlogPostCard
