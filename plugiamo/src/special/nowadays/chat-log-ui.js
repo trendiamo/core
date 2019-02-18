@@ -101,20 +101,93 @@ const ChatOption = styled(
   ))
 )`
   max-width: 260px;
-  align-self: flex-end;
   text-align: right;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  opacity: 1;
+  margin-left: auto;
+  & + div {
+    margin-top: 5px;
+  }
+  ${({ hide }) =>
+    hide &&
+    ` animation: _frekkls_option_hide 0.8s;
+      animation-fill-mode: forwards;
+  `}
+  @keyframes _frekkls_option_hide {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      visibility: hidden;
+      transform: translateX(20px);
+      max-height: 60px;
+      opacity: 0;
+    }
+    100% {
+      max-height: 0px;
+      visibility: hidden;
+      opacity: 0;
+      margin-top: 0;
+    }
+  }
 `
 
-const ChatContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+const convertLogs = logs => {
+  var newLog = []
+  var currentType
+  var currentList = []
+  logs.map((log, index) => {
+    const nextLog = logs[index + 1]
+    currentList.push(log)
+    currentType = log.type
+    if (nextLog) {
+      if (nextLog.type !== currentType) {
+        newLog.push({ type: currentType, logs: currentList })
+        currentList = []
+      }
+      return
+    }
+    newLog.push({ type: currentType, logs: currentList })
+  })
+  return newLog
+}
+
+const ItemDivTemplate = styled.div`
+  text-align: ${({ type }) => (type === 'option' ? 'right' : 'left')};
+  & + & {
+    margin-top: 16px;
+  }
+  &:last-child {
+    margin-bottom: 16px;
+  }
 `
+
+const ItemDiv = compose(
+  withState('hide', 'setHide', false),
+  withHandlers({
+    onClick: ({ clickChatOption, setHide }) => chatOption => {
+      clickChatOption(chatOption)
+      setHide(true)
+    },
+  })
+)(({ logs, onClick, hide }) => (
+  <ItemDivTemplate hide={hide}>
+    {logs.map(log =>
+      log.type === 'message' ? (
+        <ChatMessage log={log} />
+      ) : log.type === 'option' ? (
+        <ChatOption chatOption={log.chatOption} hide={log.hide} onClick={onClick} />
+      ) : null
+    )}
+  </ItemDivTemplate>
+))
 
 const ChatLogUi = compose(
   withState('logs', 'setLogs', []),
   withHandlers({
-    updateChatLog: ({ setLogs }) => chatLog => setLogs(chatLog.logs),
+    updateChatLog: ({ setLogs }) => chatLog => {
+      setLogs(convertLogs(chatLog.logs))
+    },
   }),
   withHandlers({
     initChatLog: ({ module, updateChatLog }) => () => {
@@ -127,20 +200,22 @@ const ChatLogUi = compose(
     clickChatOption: ({ logs, setLogs }) => chatOption => {
       chatOption.expanded = true
       let unexpandedChatOptions = []
-      const newLogs = logs
-        .map(log => {
+      let newLogs = []
+      logs.map(logSection => {
+        logSection.logs.map(log => {
+          if (log.hide) return
           if (log.type === 'option' && chatOption.text === log.chatOption.text) {
-            return { ...log, expanded: true }
+            return newLogs.push({ ...log, expanded: true })
           }
           if (log.type === 'option' && !log.chatOption.expanded) {
             unexpandedChatOptions.push(log.chatOption)
-            return null
+            return newLogs.push({ ...log, hide: true })
           }
-          return log
+          newLogs.push(log)
         })
-        .filter(e => e)
+      })
       chatLog.setLogs(newLogs)
-      setLogs(newLogs)
+      setLogs(convertLogs(newLogs))
       chatLog.addLogs(chatOption.chatMessages, unexpandedChatOptions)
     },
   }),
@@ -153,15 +228,9 @@ const ChatLogUi = compose(
 )(({ className, clickChatOption, logs, onScroll, touch }) => (
   <div className={className} onScroll={onScroll} touch={touch}>
     <ChatBackground>
-      <ChatContainer>
-        {logs.map(log =>
-          log.type === 'message' ? (
-            <ChatMessage log={log} />
-          ) : log.type === 'option' ? (
-            <ChatOption chatOption={log.chatOption} onClick={clickChatOption} />
-          ) : null
-        )}
-      </ChatContainer>
+      {logs.map((logSection, index) => (
+        <ItemDiv clickChatOption={clickChatOption} key={index} logs={logSection.logs} type={logSection.type} />
+      ))}
     </ChatBackground>
   </div>
 ))
@@ -180,12 +249,7 @@ export default styled(ChatLogUi)`
     padding-top: 16px;
   }
 
-  ${ChatOption} + ${ChatOption},
   ${ChatMessageContainer} + ${ChatMessageContainer} {
     padding-top: 5px;
-  }
-
-  ${ChatContainer} > :last-child {
-    padding-bottom: 16px;
   }
 `
