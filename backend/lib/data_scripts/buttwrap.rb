@@ -41,21 +41,21 @@ main_showcase_params = {
     {
       product_picks_attributes: [
         {
-          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/elephant-brief-white-organic-cotton#trnd:open:1,picture:UgTAk9HBS4S8WZpFS75x",
+          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/elephant-brief-white-organic-cotton#trnd:open:1,picture://trendiamo-assets.imgix.net/manual/buttwrap/adam-pdp1.jpg",
           name: "Elephant Brief white",
           description: "I love the sporty and masculine Elephant-Brief",
           display_price: "€27.50",
           pic_url: "https://media.graphcms.com/UgTAk9HBS4S8WZpFS75x",
         },
         {
-          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/orangutan-brief-red-organic-cotton#trnd:open:1,picture:pJWrHD5EQ5WMl0aQ1Aqq",
+          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/orangutan-brief-red-organic-cotton#trnd:open:1,picture://trendiamo-assets.imgix.net/manual/buttwrap/adam-pdp2.jpg",
           name: "Orangutan Brief red",
           description: "Usually I am a \"boxer guy\", but I simply love how this model fits me.",
           display_price: "€27.50",
           pic_url: "https://media.graphcms.com/pJWrHD5EQ5WMl0aQ1Aqq",
         },
         {
-          url: "https://www.buttwrap.com/collections/finest-cotton-collection/products/brief-cottonstretch-tight-grey-melange#trnd:open:1,picture:qxryE89DRTeuCiZ4fPDl",
+          url: "https://www.buttwrap.com/collections/finest-cotton-collection/products/brief-cottonstretch-tight-grey-melange#trnd:open:1,picture://trendiamo-assets.imgix.net/manual/buttwrap/adam-pdp3.jpg",
           name: "Brief grey melange",
           description: "Use your butt for something bigger, help to save animals.",
           display_price: "€27.50",
@@ -67,7 +67,7 @@ main_showcase_params = {
     {
       product_picks_attributes: [
         {
-          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/orangutan-brief-red-organic-cotton#trnd:open:1,path:/scripted-chat/cjoil854ibb1c0932ws1n93yf,picture:UZHAMbRTSOl8bOsgFj5g",
+          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/orangutan-brief-red-organic-cotton#trnd:open:1,path:/scripted-chat/cjoil854ibb1c0932ws1n93yf,picture://trendiamo-assets.imgix.net/manual/buttwrap/james-pdp1.jpg",
           name: "Orangutan Brief Red",
           description: "Save the Orangutans and receive amazing quality product…",
           display_price: "€27.50",
@@ -93,14 +93,14 @@ main_showcase_params = {
     {
       product_picks_attributes: [
         {
-          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton#trnd:open:1,picture:KNYtfFxoQhqPchSkSCKU",
+          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/gorilla-boxer-black-organic-cotton#trnd:open:1,picture://trendiamo-assets.imgix.net/manual/buttwrap/oscar-pdp1.jpg",
           name: "Gorilla Boxer black",
           description: "Perfect boxer to put after a hot shower and feel sexier than ever",
           display_price: "€27.50",
           pic_url: "https://media.graphcms.com/KNYtfFxoQhqPchSkSCKU",
         },
         {
-          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/elephant-boxer-white-organic-cotton#trnd:trnd:open:1,picture:EQc3p9qsRXrgbm1jpz2c",
+          url: "https://www.buttwrap.com/collections/organic-cotton-collection/products/elephant-boxer-white-organic-cotton#trnd:trnd:open:1,picture://trendiamo-assets.imgix.net/manual/buttwrap/oscar-pdp2.jpg",
           name: "Elephant Boxer White",
           description: "The definition of comfort. The soft materials adapt perfectly to my body",
           display_price: "€27.50",
