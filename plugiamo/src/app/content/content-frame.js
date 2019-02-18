@@ -1,11 +1,11 @@
 import animateOnMount from 'shared/animate-on-mount'
+import CloseButton from './close-button'
 import Frame from 'shared/frame'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose, lifecycle } from 'recompose'
 import { h } from 'preact'
 import { history, timeout, transition } from 'plugin-base'
-import { IconClose } from 'plugin-base'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 
 const ContentFrameContainer = animateOnMount(styled.div`
@@ -59,34 +59,14 @@ const IFrame = compose(
   width: 100%;
 `)
 
-const CloseContentContainer = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  opacity: 0.8;
-  padding: 8px;
-
-  @media (min-width: ${MAIN_BREAKPOINT}px) {
-    display: none;
-  }
-`
-
-const CloseContent = styled(IconClose)`
-  display: block;
-  height: 16px;
-  width: 16px;
-  fill: #fff;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 4px;
-  border-radius: 8px;
-`
-
 const ContentFrame = ({ children, isUnmounting, onToggleContent, position }) => (
   <ContentFrameContainer isUnmounting={isUnmounting} position={position}>
-    <IFrame onToggleContent={onToggleContent}>{children}</IFrame>
-    <CloseContentContainer onClick={onToggleContent}>
-      <CloseContent />
-    </CloseContentContainer>
+    <IFrame onToggleContent={onToggleContent}>
+      <div>
+        {children}
+        <CloseButton onToggleContent={onToggleContent} />
+      </div>
+    </IFrame>
   </ContentFrameContainer>
 )
 
