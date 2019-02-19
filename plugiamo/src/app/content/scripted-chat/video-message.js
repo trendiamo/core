@@ -66,6 +66,7 @@ const VideoMessage = compose(
   border-radius: 12px;
   overflow: hidden;
   outline: 0;
+  min-height: 195px;
 
   svg {
     width: 50px;
