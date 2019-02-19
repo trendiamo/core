@@ -118,6 +118,10 @@ export default compose(
       const { animateThis, isUnmounting, showingContent, hidden, setHidden } = this.props
       if (prevProps.bubble.message !== this.props.bubble.message) animateThis()
       if (!isUnmounting && showingContent && !hidden) setHidden(true)
+      if (hidden && !showingContent && isUnmounting) {
+        animateThis()
+        setHidden(false)
+      }
     },
   }),
   branch(({ hidden, bubble }) => !bubble.message || hidden, renderNothing)
