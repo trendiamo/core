@@ -9,6 +9,8 @@ const i18n = {
       return 'Quero saber mais'
     } else if (account === 'RiHappy') {
       return 'Preciso saber mais'
+    } else if (account === 'PierreCardinGermany') {
+      return 'Ich benötige weitere Hilfe'
     } else {
       return 'I still need help'
     }
@@ -23,6 +25,8 @@ const i18n = {
       return 'Legal, gostei!'
     } else if (account === 'RiHappy') {
       return 'Ok, otimo'
+    } else if (account === 'PierreCardinGermany') {
+      return 'Alles klar!'
     } else {
       return 'Ok, cool'
     }
@@ -37,6 +41,8 @@ const i18n = {
       return `Produtos escolhidos por ${firstName}:`
     } else if (['Shopinfo', 'Shopinfo2', 'Impressorajato', 'RiHappy'].includes(account)) {
       return `Produtos selecionados por ${firstName}:`
+    } else if (account === 'PierreCardinGermany') {
+      return `Die Lieblingsprodukte von ${firstName}`
     } else {
       return `Products selected by ${firstName}`
     }
