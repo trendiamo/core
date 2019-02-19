@@ -3,11 +3,12 @@ import ImgCarouselMessage from './image-carousel-message'
 import mixpanel from 'ext/mixpanel'
 import ProductCarouselMessage from './product-carousel-message'
 import ProductMessage from './product-message'
+import scrollToInPlugin from 'ext/scroll-it'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
 import TextMessage from 'app/content/scripted-chat/text-message'
 import VideoMessage from 'app/content/scripted-chat/video-message'
-import { ChatBackground, scrollToInPlugin } from 'app/content/scripted-chat/shared'
+import { ChatBackground } from 'app/content/scripted-chat/shared'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 
@@ -23,16 +24,20 @@ const ChatMessageContainer = styled.div`
   animation: _frekkls_message_appear 0.3s ease-out;
 `
 
+const isFrameActive = () => {
+  return (
+    document.activeElement &&
+    document.activeElement.tagName.toLowerCase() === 'iframe' &&
+    document.activeElement.title === 'Trendiamo Content'
+  )
+}
+
 const ChatMessage = compose(
   lifecycle({
     componentDidMount() {
-      const { log } = this.props
-      if (
-        document.activeElement &&
-        document.activeElement.tagName.toLowerCase() === 'iframe' &&
-        document.activeElement.title === 'Trendiamo Content'
-      ) {
-        scrollToInPlugin(this.base)
+      const { log, contentRef } = this.props
+      if (isFrameActive()) {
+        scrollToInPlugin(contentRef, this.base.offsetTop)
       }
       const timestamp = chatLog.timestamp
       chatLog.addNextLog(log.nextLogs, timestamp)
@@ -80,17 +85,6 @@ const ChatOption = styled(
         mixpanel.track('Clicked Option', { hostname: location.hostname, text: chatOption.text })
         if (!chatOption.expanded) onClick(chatOption)
       },
-    }),
-    lifecycle({
-      componentDidMount() {
-        if (
-          document.activeElement &&
-          document.activeElement.tagName.toLowerCase() === 'iframe' &&
-          document.activeElement.title === 'Trendiamo Content'
-        ) {
-          scrollToInPlugin(this.base)
-        }
-      },
     })
   )(({ chatOption, className, onClick }) => (
     <div className={className}>
@@ -106,18 +100,20 @@ const ChatOption = styled(
   opacity: 1;
   margin-left: auto;
   & + div {
-    margin-top: 5px;
+    ${ChatOptionText} {
+      margin-top: 5px;
+    }
   }
   ${({ hide }) =>
     hide &&
-    ` animation: _frekkls_option_hide 0.8s;
+    ` animation: _frekkls_option_hide 0.5s;
       animation-fill-mode: forwards;
   `}
   @keyframes _frekkls_option_hide {
     0% {
       opacity: 1;
     }
-    50% {
+    30% {
       visibility: hidden;
       transform: translateX(20px);
       max-height: 60px;
@@ -127,7 +123,6 @@ const ChatOption = styled(
       max-height: 0px;
       visibility: hidden;
       opacity: 0;
-      margin-top: 0;
     }
   }
 `
@@ -169,12 +164,20 @@ const ItemDiv = compose(
       clickChatOption(chatOption)
       setHide(true)
     },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { contentRef } = this.props
+      if (isFrameActive()) {
+        scrollToInPlugin(contentRef, this.base.offsetTop)
+      }
+    },
   })
-)(({ logs, onClick, hide }) => (
+)(({ logs, onClick, hide, contentRef }) => (
   <ItemDivTemplate hide={hide}>
     {logs.map(log =>
       log.type === 'message' ? (
-        <ChatMessage log={log} />
+        <ChatMessage contentRef={contentRef} log={log} />
       ) : log.type === 'option' ? (
         <ChatOption chatOption={log.chatOption} hide={log.hide} onClick={onClick} />
       ) : null
@@ -184,10 +187,21 @@ const ItemDiv = compose(
 
 const ChatLogUi = compose(
   withState('logs', 'setLogs', []),
+  withState('minHeight', 'setMinHeight', 0),
   withHandlers({
     updateChatLog: ({ setLogs }) => chatLog => {
       setLogs(convertLogs(chatLog.logs))
     },
+  }),
+  withHandlers(() => {
+    let contentRef
+    let backgroundRef
+    return {
+      setContentRef: () => ref => (contentRef = ref),
+      getContentRef: () => () => contentRef,
+      setBackgroundRef: () => ref => (backgroundRef = ref),
+      getBackgroundRef: () => () => backgroundRef,
+    }
   }),
   withHandlers({
     initChatLog: ({ module, updateChatLog }) => () => {
@@ -196,6 +210,11 @@ const ChatLogUi = compose(
       // instead we do a check for chatLog.timestamp in the chatLog logic, to prevent duplicates
       chatLog.addListener(updateChatLog)
       chatLog.run()
+    },
+    configMinHeight: ({ setMinHeight, getBackgroundRef, minHeight }) => () => {
+      if (getBackgroundRef().base.clientHeight !== minHeight) {
+        setMinHeight(getBackgroundRef().base.clientHeight)
+      }
     },
     clickChatOption: ({ logs, setLogs }) => chatOption => {
       chatOption.expanded = true
@@ -226,17 +245,39 @@ const ChatLogUi = compose(
       const { initChatLog } = this.props
       initChatLog()
     },
+    componentDidUpdate() {
+      const { configMinHeight } = this.props
+      configMinHeight()
+    },
   })
-)(({ className, clickChatOption, logs, onScroll, touch }) => (
-  <div className={className} onScroll={onScroll} touch={touch}>
-    <ChatBackground>
-      {logs.map((logSection, index) => (
-        /* eslint-disable react/no-array-index-key */
-        <ItemDiv clickChatOption={clickChatOption} key={index} logs={logSection.logs} type={logSection.type} />
-      ))}
-    </ChatBackground>
-  </div>
-))
+)(
+  ({
+    className,
+    clickChatOption,
+    logs,
+    onScroll,
+    setContentRef,
+    getContentRef,
+    setBackgroundRef,
+    touch,
+    minHeight,
+  }) => (
+    <div className={className} onScroll={onScroll} ref={setContentRef} touch={touch}>
+      <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
+        {logs.map((logSection, index) => (
+          /* eslint-disable react/no-array-index-key */
+          <ItemDiv
+            clickChatOption={clickChatOption}
+            contentRef={getContentRef()}
+            key={index}
+            logs={logSection.logs}
+            type={logSection.type}
+          />
+        ))}
+      </ChatBackground>
+    </div>
+  )
+)
 
 export default styled(ChatLogUi)`
   flex-grow: 1;
