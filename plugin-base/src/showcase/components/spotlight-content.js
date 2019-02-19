@@ -1,3 +1,4 @@
+import emojify from 'ext/emojify'
 import ProductItem from './product-item'
 import React from 'react'
 import styled from 'styled-components'
@@ -24,7 +25,7 @@ const SpotlightContent = compose(
   branch(({ spotlight }) => !spotlight, renderNothing)
 )(({ isLeaving, spotlight, callbacks }) => (
   <Container>
-    <H2>{spotlight.translation.selectedBy}</H2>
+    <H2 dangerouslySetInnerHTML={{ __html: emojify(spotlight.translation.selectedBy) }} />
     <TopSlideAnimation isLeaving={isLeaving} name="content">
       <List objectForResetCheck={spotlight}>
         {spotlight.productPicks.map((product, index) => (

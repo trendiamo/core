@@ -9,6 +9,7 @@ import TextMessage from 'app/content/scripted-chat/text-message'
 import VideoMessage from 'app/content/scripted-chat/video-message'
 import { ChatBackground, scrollToInPlugin } from 'app/content/scripted-chat/shared'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { emojify } from 'plugin-base'
 import { h } from 'preact'
 
 const extractYoutubeId = message => {
@@ -42,7 +43,7 @@ const ChatMessage = compose(
 )(({ log }) => (
   <ChatMessageContainer chatMessage={log.chatMessage}>
     {log.chatMessage.type === 'text' ? (
-      <TextMessage dangerouslySetInnerHTML={{ __html: snarkdown(log.chatMessage.text) }} />
+      <TextMessage dangerouslySetInnerHTML={{ __html: emojify(snarkdown(log.chatMessage.text)) }} />
     ) : log.chatMessage.type === 'videoUrl' ? (
       <VideoMessage youtubeId={extractYoutubeId(log.chatMessage.videoUrl)} />
     ) : log.chatMessage.type === 'product' ? (
@@ -94,9 +95,11 @@ const ChatOption = styled(
     })
   )(({ chatOption, className, onClick }) => (
     <div className={className}>
-      <ChatOptionText expanded={chatOption.expanded} onClick={onClick}>
-        {chatOption.text}
-      </ChatOptionText>
+      <ChatOptionText
+        dangerouslySetInnerHTML={{ __html: emojify(chatOption.text) }}
+        expanded={chatOption.expanded}
+        onClick={onClick}
+      />
     </div>
   ))
 )`

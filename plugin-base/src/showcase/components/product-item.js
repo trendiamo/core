@@ -1,3 +1,4 @@
+import emojify from 'ext/emojify'
 import React from 'react'
 import styled from 'styled-components'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
@@ -41,7 +42,7 @@ const ProductItem = ({ spotlight, product, onClick, ...props }) => (
     <ListContent>
       <Content>
         <Name>{product.name}</Name>
-        <Description>{product.description}</Description>
+        <Description dangerouslySetInnerHTML={{ __html: emojify(product.description) }} />
         <DisplayPrice>{product.displayPrice}</DisplayPrice>
       </Content>
     </ListContent>

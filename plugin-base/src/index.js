@@ -7,7 +7,7 @@ import PersonaInstagram from 'shared/persona-instagram'
 import routes from './routes'
 import Showcase from 'showcase'
 import { animate, TopSlideAnimation } from 'shared/animate'
-import { history, Router, timeout, transition, typeText, withTextTyping } from 'ext'
+import { emojify, emojifyStyles, history, Router, timeout, transition, typeText, withTextTyping } from 'ext'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose, IconPlayButton } from 'icons'
 import { matchUrl } from 'tools'
 
@@ -16,6 +16,8 @@ export {
   BelowCover,
   Cover,
   CoverImg,
+  emojify,
+  emojifyStyles,
   matchUrl,
   Navigation,
   BackButton,

@@ -1,8 +1,8 @@
 import ChatBubbleFrame from './frame'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { ChatBubbleBase, Container } from './components'
+import { emojify, timeout } from 'plugin-base'
 import { h } from 'preact'
-import { timeout } from 'plugin-base'
 
 // All time values are in seconds
 const defaultBubble = {
@@ -31,7 +31,7 @@ const ChatBubble = ({
     {...props}
   >
     <Container onClick={onToggleContent}>
-      <ChatBubbleBase ref={setTextWidthRef}>{bubble.message}</ChatBubbleBase>
+      <ChatBubbleBase dangerouslySetInnerHTML={{ __html: emojify(bubble.message) }} ref={setTextWidthRef} />
     </Container>
   </ChatBubbleFrame>
 )
