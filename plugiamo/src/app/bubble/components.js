@@ -41,6 +41,7 @@ const ChatBubbleBase = styled.div`
   opacity: 0;
   transition: opacity 0.6s 0.4s;
   backface-visibility: hidden;
+  position: absolute;
 
   @media (min-device-width: 360px) {
     font-size: 14px;

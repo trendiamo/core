@@ -54,9 +54,7 @@ export default compose(
       changeTextWidth: ({ setTextWidth }) => () => {
         if (!textWidthRef || !textWidthRef.base) return
         setTextWidth(textWidthRef.base.offsetWidth)
-        textWidthRef.base.style.transform = `translate(-${textWidthRef.base.offsetWidth / 2}px, 0px)`
-        textWidthRef.base.style.width = 0
-        textWidthRef.base.style.position = 'absolute'
+        textWidthRef.base.style.transform = `translate(-${textWidthRef.base.offsetWidth / 2}px, 0)`
         textWidthRef.base.style.opacity = 1
       },
     }
