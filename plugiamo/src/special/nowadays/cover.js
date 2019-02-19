@@ -51,7 +51,7 @@ const NameHelper = styled.div`
     minimized &&
     `
     margin-bottom: 0;
-    max-height: 0px;
+    max-height: 0;
     transition: 0.4s all;
   `}
 `

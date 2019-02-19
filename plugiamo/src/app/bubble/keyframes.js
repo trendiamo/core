@@ -3,8 +3,8 @@ export default ({ position }) =>
   @keyframes _frekkls_bubble_roll {
     0%{
        border-radius: 50%;
-       max-width: 0px;
-       height: 0px;
+       max-width: 0;
+       height: 0;
        padding: 0;
        animation-timing-function: ease-in;
      }
@@ -36,8 +36,8 @@ export default ({ position }) =>
     }
     100% {
       border-radius: 50%;
-      max-width: 0px;
-      height: 0px;
+      max-width: 0;
+      height: 0;
       padding: 0;
       opacity: 0;
     }

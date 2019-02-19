@@ -123,7 +123,7 @@ const ChatOption = styled(
       opacity: 0;
     }
     100% {
-      max-height: 0px;
+      max-height: 0;
       visibility: hidden;
       opacity: 0;
     }
