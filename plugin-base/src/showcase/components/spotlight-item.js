@@ -7,10 +7,18 @@ import { transition } from 'ext'
 const PersonaName = styled.span`
   font-weight: 500;
   font-size: 18px;
+  .Win32 & {
+    font-weight: 600;
+  }
 `
 
 const PersonaDescription = styled.div`
   font-size: 14px;
+  .Win32 & {
+    letter-spacing: -0.1px;
+    font-size: 13.1px;
+    font-weight: 500;
+  }
 `
 
 const SpotlightItem = compose(

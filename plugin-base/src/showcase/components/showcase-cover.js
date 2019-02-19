@@ -6,10 +6,16 @@ import { TopSlideAnimation } from 'shared/animate'
 const Title = styled.div`
   font-size: 22px;
   line-height: 1.4;
+  .Win32 & {
+    font-weight: 500;
+  }
 `
 
 const SubTitle = styled.div`
   font-size: 14px;
+  .Win32 & {
+    font-weight: 500;
+  }
 `
 
 const ShowcaseCover = ({ FlowBackButton, isLeaving, subtitle, title }) => (
