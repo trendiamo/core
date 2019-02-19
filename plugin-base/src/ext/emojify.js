@@ -4,10 +4,12 @@ const emoji = new Emoji()
 emoji.img_sets.apple.sheet = 'https://plugin-assets.ams3.cdn.digitaloceanspaces.com/sheet_apple_32.png'
 emoji.use_sheet = true
 
+const isLinux = navigator.platform === 'Linux x86_64'
+const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+
 // In Linux, at least the distro that we've tested, if we use emoji.replace_unified it actually breaks it, and not
 // doing anything works well.
-const emojify =
-  navigator.platform === 'Linux x86_64' ? e => e : (...args) => Reflect.apply(emoji.replace_unified, emoji, args)
+const emojify = isLinux || isIos ? e => e : (...args) => Reflect.apply(emoji.replace_unified, emoji, args)
 
 // copied from https://github.com/iamcal/js-emoji/blob/master/demo/emoji.css
 export const emojifyStyles = `
