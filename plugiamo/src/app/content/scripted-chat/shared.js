@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import TextMessage from './text-message'
 import VideoMessage from './video-message'
 import { compose, withHandlers, withProps } from 'recompose'
+import { emojify, TopSlideAnimation } from 'plugin-base'
 import { h } from 'preact'
-import { TopSlideAnimation } from 'plugin-base'
 
 const ChatBackground = styled.div`
   background-color: #ebeef2;
@@ -64,7 +64,7 @@ const Message = compose(
   ) : product ? (
     <ProductMessage product={product} />
   ) : (
-    <TextMessage dangerouslySetInnerHTML={{ __html: snarkdown(message) }} />
+    <TextMessage dangerouslySetInnerHTML={{ __html: emojify(snarkdown(message)) }} />
   )
 )
 
@@ -111,7 +111,7 @@ const ChatOption = compose(
   })
 )(({ active, chatOption, onClick }) => (
   <Option active={active} key={chatOption.id} onClick={onClick}>
-    <ChatOptionText highlighted={chatOption.selected}>{chatOption.text}</ChatOptionText>
+    <ChatOptionText dangerouslySetInnerHTML={{ __html: emojify(chatOption.text) }} highlighted={chatOption.selected} />
   </Option>
 ))
 

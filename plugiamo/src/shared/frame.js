@@ -1,6 +1,7 @@
 import omit from 'lodash.omit'
 import ReactDOM from 'preact-compat'
 import { compose, lifecycle, withState } from 'recompose'
+import { emojifyStyles } from 'plugin-base'
 import { h } from 'preact'
 import { StyleSheetManager } from 'styled-components'
 
@@ -26,6 +27,7 @@ body, html {
   margin: 0;
   height: 100%;
 }
+${emojifyStyles}
 `
 
 const loadCss = (head, href) => {

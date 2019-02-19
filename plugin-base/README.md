@@ -6,7 +6,7 @@ Base components used in both the plugiamo project and console-frontend (for prev
 
 ```
 yarn
-yarn add -P react@^16.0.0 styled-components@^3.4.0 recompose@^0.28.2 lodash.isequal@^4.5.0
+yarn add -P react@^16.0.0 styled-components@^3.4.0 recompose@^0.28.2 lodash.isequal@^4.5.0 emoji-js@^3.4.1
 ```
 
 ## Build

@@ -1,3 +1,4 @@
+import emojify from 'ext/emojify'
 import PersonaInstagram from 'shared/persona-instagram'
 import React from 'react'
 import styled from 'styled-components'
@@ -54,7 +55,7 @@ const Outro = ({ persona }) => (
       </Name>
       <p>{'Thanks for buying my recommendation.'}</p>
       <Hr />
-      <p>{'Enjoy and let me know what you think! 🙌'}</p>
+      <p dangerouslySetInnerHTML={{ __html: emojify('Enjoy and let me know what you think! 🙌') }} />
     </InnerContent>
   </Wrapper>
 )
