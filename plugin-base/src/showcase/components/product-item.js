@@ -17,11 +17,17 @@ const Name = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  .Win32 & {
+    font-weight: 600;
+  }
 `
 
 const Description = styled.div`
   flex: 1;
   font-size: 12px;
+  .Win32 & {
+    letter-spacing: -0.4px;
+  }
 `
 
 const DisplayPrice = styled.div`
