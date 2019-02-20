@@ -2,11 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
 
+import Button from './button'
 import Container from './container'
 import LangSelector from './lang-selector'
 import locales from '../../locales'
 import Logo from './logo'
-import { OutlineButton } from './button'
 
 const Header = styled(({ className, layout, locale, siteTitle }) => (
   <header className={className}>
@@ -27,7 +27,7 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
         <a className="header-link header-link-hide-s" href="mailto:hello@trendiamo.com">
           {layout.contact}
         </a>
-        <OutlineButton className="js-request-demo">{layout.tryNow}</OutlineButton>
+        <Button className="js-request-demo">{layout.tryNow}</Button>
         <LangSelector locale={locale} />
       </nav>
     </Container>
@@ -62,22 +62,22 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
     white-space: nowrap;
   }
 
-  @media (min-width: 950px) {
+  @media (min-width: 900px) {
     nav .header-link {
       margin-right: 40px;
       font-size: 20px;
     }
   }
 
-  ${OutlineButton} {
+  ${Button} {
     font-size: 12px;
     padding: 10px;
   }
 
-  @media (min-width: 950px) {
-    ${OutlineButton} {
+  @media (min-width: 900px) {
+    ${Button} {
       font-size: 20px;
-      padding: 20px 30px;
+      padding: 13px 20px;
     }
     ${Container} {
       margin-right: 0 auto;

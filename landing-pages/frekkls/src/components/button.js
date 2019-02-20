@@ -4,15 +4,12 @@ const Button = styled.button.attrs({
   type: 'button',
 })`
   appearance: none;
-  background-color: #ff543c;
   border: 0;
-  border-radius: 80px;
+  border-radius: 12px;
   letter-spacing: 0.8px;
   color: #fff;
   font-size: 24px;
-  font-weight: 700;
-  padding: 20px 30px;
-  text-transform: uppercase;
+  padding: 13px 20px;
   margin: 0 auto;
   outline: none;
   line-height: 1;
@@ -20,29 +17,9 @@ const Button = styled.button.attrs({
   overflow: hidden;
   white-space: nowrap;
   font-family: Roboto, sans-serif;
-`
-
-export const OutlineButton = styled.button.attrs({
-  type: 'button',
-})`
-  background-color: transparent;
-  border: 2px solid #ff6e5c;
-  border-radius: 80px;
-  letter-spacing: 0.8px;
-  color: #ff6e5c;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.7px;
-  padding: 20px 30px;
-  text-transform: uppercase;
-  margin: 0 auto;
-  outline: none;
-  line-height: 1;
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-  font-family: Roboto, sans-serif;
+  box-shadow: 0 5px 14px 0 rgba(255, 104, 63, 0.25);
+  background-color: #ff543c;
+  background-image: linear-gradient(127deg, #ff843e, #ff683f 100%);
 `
 
 export const NoOutlineButton = styled.button.attrs({

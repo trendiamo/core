@@ -25,7 +25,7 @@ const SelectContainer = styled.div`
   margin-left: 20px;
   display: none;
   position: relative;
-  @media (min-width: 950px) {
+  @media (min-width: 900px) {
     display: flex;
   }
   button {

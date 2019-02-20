@@ -8,14 +8,18 @@
 
 .hs-form .hs-input {
   appearance: none;
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 18px;
   padding: 16px 20px 16px 20px;
-  border-radius: 80px;
+  border-radius: 12px;
   border: none;
-  background: #f1f1f1;
+  background: #fff;
   width: 100%;
   outline: none;
+  box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.05), 0 11px 14px 0 rgba(255, 91, 46, 0.23);
+}
+
+.hs-form .hs-input::placeholder {
+  color: #474747;
 }
 
 .submitted-message {
@@ -43,27 +47,16 @@
 .email-input .hs-button {
   appearance: none;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 500;
   color: #fff;
-  border-radius: 80px;
-  background-color: #ff6e5d;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  border: 0;
+  border-radius: 0 12px 12px 0;
+  background-image: linear-gradient(137deg, #ff843e, #ff683f 100%);
+  padding-left: 30px;
+  padding-right: 30px;
   cursor: pointer;
   outline: none;
   min-width: 100px;
-  border: 2px solid #ff6e5d;
-  text-transform: uppercase;
-}
-
-.email-input .hs-button:hover {
-  background-color: #da4d3d;
-  border-color: #da4d3d;
-}
-
-.email-input .hs-button:active {
-  background-color: #c03a2a;
-  border-color: #c03a2a;
 }
 
 .email-input .submitted-message {
@@ -87,15 +80,15 @@
 
 .request-demo-form .hs-button {
   appearance: none;
-  background-color: #ff543c;
   border: 0;
-  border-radius: 80px;
+  border-radius: 12px;
   letter-spacing: 0.8px;
+  background-image: linear-gradient(137deg, #ff843e, #ff683f 100%);
+  box-shadow: 0 5px 14px 0 rgba(255, 104, 63, 0.25);
   color: #fff;
   font-size: 24px;
-  font-weight: bold;
-  padding: 20px 30px;
-  text-transform: uppercase;
+  font-weight: 500;
+  padding: 13px 20px;
   margin: 0 auto;
   outline: none;
   line-height: 1;
