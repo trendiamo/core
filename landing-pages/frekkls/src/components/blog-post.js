@@ -39,12 +39,13 @@ const TitleImgMeta = styled.div`
   padding-top: 10px;
 `
 
-const BlogPostBase = styled.div`
+const BlogPostBase = styled.article`
   width: 70%;
   margin: 0 auto;
   text-align: left;
   border-top: 2px solid #ebebeb;
   padding-top: 40px;
+  padding-bottom: 3rem;
   line-height: 1.58;
   letter-spacing: -0.3px;
 
