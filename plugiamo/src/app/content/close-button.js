@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { h } from 'preact'
 import { IconClose } from 'plugin-base'
-import { MAIN_BREAKPOINT } from 'config'
+import { isSmall } from 'utils'
 
 const Container = styled.div`
   position: fixed;
@@ -10,10 +10,7 @@ const Container = styled.div`
   opacity: 0.8;
   padding: 8px;
   z-index: 12;
-
-  @media (min-width: ${MAIN_BREAKPOINT}px) {
-    display: none;
-  }
+  ${() => !isSmall() && 'display: none;'}
 `
 
 const CloseContent = styled(IconClose)`
