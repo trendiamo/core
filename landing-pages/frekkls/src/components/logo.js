@@ -8,14 +8,16 @@ const Logo = ({ alt }) => (
       query {
         logo: file(relativePath: { eq: "logo.png" }) {
           childImageSharp {
-            fluid(maxWidth: 180) {
-              ...GatsbyImageSharpFluid_withWebp_noBase64
+            fixed(width: 135) {
+              ...GatsbyImageSharpFixed_withWebp_noBase64
             }
           }
         }
       }
     `}
-    render={data => <Img alt={alt} fluid={data.logo.childImageSharp.fluid} />}
+    render={data => (
+      <Img alt={alt} fixed={data.logo.childImageSharp.fixed} style={{ width: '135px', height: '33px' }} />
+    )}
   />
 )
 

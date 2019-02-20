@@ -19,7 +19,7 @@ const Button = styled.button.attrs({
   cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
-  font-family: Dosis, sans-serif;
+  font-family: Roboto, sans-serif;
 `
 
 export const OutlineButton = styled.button.attrs({
@@ -42,7 +42,7 @@ export const OutlineButton = styled.button.attrs({
   cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
-  font-family: Dosis, sans-serif;
+  font-family: Roboto, sans-serif;
 `
 
 export const NoOutlineButton = styled.button.attrs({
@@ -59,7 +59,7 @@ export const NoOutlineButton = styled.button.attrs({
   outline: none;
   background-color: #fff;
   cursor: pointer;
-  font-family: Dosis, sans-serif;
+  font-family: Roboto, sans-serif;
 `
 
 export const FeatureButton = styled.button.attrs({

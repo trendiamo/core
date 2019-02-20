@@ -2,11 +2,11 @@ module.exports = {
   'en-US': {
     path: '',
     locale: 'English',
-    label: 'EN',
+    label: 'En',
   },
   'pt-BR': {
     path: '/pt-br',
     locale: 'Português',
-    label: 'PT',
+    label: 'Pt',
   },
 }

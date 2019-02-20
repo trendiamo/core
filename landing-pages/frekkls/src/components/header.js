@@ -11,18 +11,20 @@ import { OutlineButton } from './button'
 const Header = styled(({ className, layout, locale, siteTitle }) => (
   <header className={className}>
     <Container>
-      <Link id="header-logo" to={`${locales[locale].path}/`}>
+      <Link to={`${locales[locale].path}/`}>
         <Logo alt={siteTitle} />
       </Link>
       <nav>
-        <Link to={`${locales[locale].path}/demo`}>{layout.demo}</Link>
-        <Link className="header-link-hide-s" to={`${locales[locale].path}/about`}>
+        <Link className="header-link" to={`${locales[locale].path}/demo`}>
+          {layout.demo}
+        </Link>
+        <Link className="header-link header-link-hide-s" to={`${locales[locale].path}/about`}>
           {layout.about}
         </Link>
-        <Link className="header-link-hide-s" to={`${locales[locale].path}/blog`}>
+        <Link className="header-link header-link-hide-s" to={`${locales[locale].path}/blog`}>
           {layout.blog}
         </Link>
-        <a className="header-link-hide-s" href="mailto:hello@trendiamo.com">
+        <a className="header-link header-link-hide-s" href="mailto:hello@trendiamo.com">
           {layout.contact}
         </a>
         <OutlineButton className="js-request-demo">{layout.tryNow}</OutlineButton>
@@ -32,13 +34,7 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
   </header>
 ))`
   padding: 1.5rem 1rem;
-  font-family: Dosis, sans-serif;
-
-  #header-logo {
-    width: 15%;
-    min-width: 150px;
-    max-width: 40%;
-  }
+  font-family: Roboto, sans-serif;
 
   nav,
   ${Container} {
@@ -56,20 +52,18 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
     }
   }
 
-  nav a {
+  nav .header-link {
     font-size: 12px;
     line-height: 3;
-    font-weight: 700;
     letter-spacing: 0.7px;
     color: #393939;
     text-decoration: none;
-    text-transform: uppercase;
     margin-right: 10px;
     white-space: nowrap;
   }
 
-  @media (min-width: 900px) {
-    nav a {
+  @media (min-width: 950px) {
+    nav .header-link {
       margin-right: 40px;
       font-size: 20px;
     }
@@ -80,7 +74,7 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
     padding: 10px;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 950px) {
     ${OutlineButton} {
       font-size: 20px;
       padding: 20px 30px;

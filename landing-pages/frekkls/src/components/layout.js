@@ -8,7 +8,6 @@ import Header from './header'
 import ModalContents from './modal-contents'
 import Seo from './seo'
 
-import 'typeface-dosis'
 import 'typeface-roboto'
 import 'typeface-roboto-slab'
 
