@@ -197,11 +197,11 @@ const ChatLogUi = compose(
     },
   }),
   withHandlers(() => {
-    let contentRef
     let backgroundRef
     return {
-      setContentRef: () => ref => (contentRef = ref),
-      getContentRef: () => () => contentRef,
+      setContentRef: ({ setContentRef }) => ref => {
+        setContentRef(ref)
+      },
       setBackgroundRef: () => ref => (backgroundRef = ref),
       getBackgroundRef: () => () => backgroundRef,
     }
@@ -253,34 +253,22 @@ const ChatLogUi = compose(
       configMinHeight()
     },
   })
-)(
-  ({
-    className,
-    clickChatOption,
-    logs,
-    onScroll,
-    setContentRef,
-    getContentRef,
-    setBackgroundRef,
-    touch,
-    minHeight,
-  }) => (
-    <div className={className} onScroll={onScroll} ref={setContentRef} touch={touch}>
-      <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
-        {logs.map((logSection, index) => (
-          /* eslint-disable react/no-array-index-key */
-          <ItemDiv
-            clickChatOption={clickChatOption}
-            contentRef={getContentRef()}
-            key={index}
-            logs={logSection.logs}
-            type={logSection.type}
-          />
-        ))}
-      </ChatBackground>
-    </div>
-  )
-)
+)(({ className, clickChatOption, logs, onScroll, setContentRef, contentRef, setBackgroundRef, touch, minHeight }) => (
+  <div className={className} onScroll={onScroll} ref={setContentRef} touch={touch}>
+    <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
+      {logs.map((logSection, index) => (
+        /* eslint-disable react/no-array-index-key */
+        <ItemDiv
+          clickChatOption={clickChatOption}
+          contentRef={contentRef}
+          key={index}
+          logs={logSection.logs}
+          type={logSection.type}
+        />
+      ))}
+    </ChatBackground>
+  </div>
+))
 
 export default styled(ChatLogUi)`
   flex-grow: 1;
