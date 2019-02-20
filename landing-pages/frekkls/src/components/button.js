@@ -18,8 +18,17 @@ const Button = styled.button.attrs({
   white-space: nowrap;
   font-family: Roboto, sans-serif;
   box-shadow: 0 5px 14px 0 rgba(255, 104, 63, 0.25);
-  background-color: #ff543c;
   background-image: linear-gradient(127deg, #ff843e, #ff683f 100%);
+  &:hover {
+    background-color: #ff683f;
+    box-shadow: none;
+    background-image: none;
+  }
+  &:active {
+    background-color: #ff8240;
+    box-shadow: none;
+    background-image: none;
+  }
 `
 
 export const NoOutlineButton = styled.button.attrs({

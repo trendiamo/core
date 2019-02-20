@@ -59,6 +59,16 @@
   min-width: 100px;
 }
 
+.email-input .hs-button:hover {
+  background-color: #ff683f;
+  background-image: none;
+}
+
+.email-input .hs-button:active {
+  background-color: #ff8240;
+  background-image: none;
+}
+
 .email-input .submitted-message {
   line-height: 64px;
 }
@@ -97,16 +107,18 @@
   white-space: nowrap;
 }
 
-#btn-opener-demo {
-  margin-top: 10px;
-}
-
 .request-demo-form .hs-button:hover {
-  background-color: #da4d3d;
+  background-color: #ff683f;
+  background-image: none;
 }
 
 .request-demo-form .hs-button:active {
-  background-color: #c03a2a;
+  background-color: #ff8240;
+  background-image: none;
+}
+
+#btn-opener-demo {
+  margin-top: 10px;
 }
 
 .request-demo-modal .tingle-modal-box {
