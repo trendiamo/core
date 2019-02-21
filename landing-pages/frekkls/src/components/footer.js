@@ -1,3 +1,4 @@
+import Container from './container'
 import locales from '../../locales'
 import Logo from '../images/logo-grey.svg'
 import React from 'react'
@@ -10,13 +11,11 @@ const FooterFlex = styled.div`
   text-align: center;
   flex-direction: column;
   align-items: center;
-  margin: 1rem 0rem 1rem 0rem;
 
   @media (min-width: 900px) {
     justify-content: space-between;
     text-align: left;
     flex-direction: row;
-    margin: 2rem 4rem 0 7rem;
     padding: 2rem 2rem 1rem 2rem;
     align-items: end;
   }
@@ -82,45 +81,46 @@ const MailTo = styled.a`
 `
 
 const FooterContent = ({ layout, locale }) => (
-  <FooterFlex>
-    <FooterSection flex="1">
-      <FooterColumn>
-        <Link to={`${locales[locale].path}/`}>
-          <img alt="siteTitle" src={Logo} />
-        </Link>
-        <ContactUsHeader>{layout.contact}</ContactUsHeader>
-        <MailTo href="mailto:hello@trendiamo.com">{'hello@trendiamo.com'}</MailTo>
-      </FooterColumn>
-    </FooterSection>
-    <FooterSection flex="2">
-      <FooterColumn>
-        <Link to={`${locales[locale].path}/about`}>{layout.about}</Link>
-        <Link to={`${locales[locale].path}/blog`}>{layout.blog}</Link>
-      </FooterColumn>
-      <FooterColumn>
-        <Link to={`${locales[locale].path}/demo`}>{layout.demo}</Link>
-        <Link className="js-request-demo" to="#demo">
-          {layout.demo2}
-        </Link>
-        <Link className="js-legal-notice" to="#legal-notice">
-          {layout.legal}
-        </Link>
-        <Link className="js-privacy-cookies" to="#privacy-cookies">
-          {layout.privacy}
-        </Link>
-      </FooterColumn>
-      <FooterColumn>
-        <FollowUsHeader>{'Follow Us'}</FollowUsHeader>
-        <a href="https://www.facebook.com/frekklsapp/">{'Facebook'}</a>
-        <a href="https://www.instagram.com/frekkls.app/">{'Instagram'}</a>
-        <a href="https://www.linkedin.com/company/frekkls/">{'Linkedin'}</a>
-      </FooterColumn>
-    </FooterSection>
-  </FooterFlex>
+  <Container>
+    <FooterFlex>
+      <FooterSection flex="1">
+        <FooterColumn>
+          <Link to={`${locales[locale].path}/`}>
+            <img alt="siteTitle" src={Logo} />
+          </Link>
+          <ContactUsHeader>{layout.contact}</ContactUsHeader>
+          <MailTo href="mailto:hello@trendiamo.com">{'hello@trendiamo.com'}</MailTo>
+        </FooterColumn>
+      </FooterSection>
+      <FooterSection flex="2">
+        <FooterColumn>
+          <Link to={`${locales[locale].path}/about`}>{layout.about}</Link>
+          <Link to={`${locales[locale].path}/blog`}>{layout.blog}</Link>
+        </FooterColumn>
+        <FooterColumn>
+          <Link to={`${locales[locale].path}/demo`}>{layout.demo}</Link>
+          <Link className="js-request-demo" to="#demo">
+            {layout.demo2}
+          </Link>
+          <Link className="js-legal-notice" to="#legal-notice">
+            {layout.legal}
+          </Link>
+          <Link className="js-privacy-cookies" to="#privacy-cookies">
+            {layout.privacy}
+          </Link>
+        </FooterColumn>
+        <FooterColumn>
+          <FollowUsHeader>{'Follow Us'}</FollowUsHeader>
+          <a href="https://www.facebook.com/frekklsapp/">{'Facebook'}</a>
+          <a href="https://www.instagram.com/frekkls.app/">{'Instagram'}</a>
+          <a href="https://www.linkedin.com/company/frekkls/">{'Linkedin'}</a>
+        </FooterColumn>
+      </FooterSection>
+    </FooterFlex>
+  </Container>
 )
 
-const Copyright = styled.div`
-  background-color: #f2f4f7;
+const CopyrightDiv = styled.div`
   height: 6rem;
   display: flex;
   justify-content: center;
@@ -146,18 +146,32 @@ const Copyright = styled.div`
   }
 `
 
+const CopyrightContent = () => (
+  <CopyrightDiv>
+    <p>
+      {`Frekkls © Copyright ${new Date().getFullYear()}`}
+      <strong>{' frekkls.com '}</strong>
+      {'All rights reserved. Powered by '}
+      <a href="https://trendiamo.com/">{'Trendiamo GmbH'}</a>
+      {'.'}
+    </p>
+  </CopyrightDiv>
+)
+
+const ContainerBackground = styled.div`
+  background-color: #f2f4f7;
+`
+
 const Footer = styled(({ className, layout, locale }) => (
   <footer className={className}>
-    <FooterContent layout={layout} locale={locale} />
-    <Copyright>
-      <p>
-        {`Frekkls © Copyright ${new Date().getFullYear()}`}
-        <strong>{' frekkls.com '}</strong>
-        {'All rights reserved. Powered by '}
-        <a href="https://trendiamo.com/">{'Trendiamo GmbH'}</a>
-        {'.'}
-      </p>
-    </Copyright>
+    <Container>
+      <FooterContent layout={layout} locale={locale} />
+    </Container>
+    <ContainerBackground>
+      <Container>
+        <CopyrightContent />
+      </Container>
+    </ContainerBackground>
   </footer>
 ))`
   padding-top: 2rem;
