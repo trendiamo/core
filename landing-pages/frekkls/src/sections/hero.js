@@ -49,7 +49,7 @@ const Video = () => (
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
         frameBorder="0"
-        src="https://www.youtube.com/embed/5GdrKhhfJQw"
+        src="https://www.youtube.com/embed/5GdrKhhfJQw?controls=1&modestbranding=1"
         title="Frekkls Video"
       />
     </AspectRatio>
