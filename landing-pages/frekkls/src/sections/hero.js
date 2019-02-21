@@ -1,78 +1,95 @@
-import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
-import { graphql, StaticQuery } from 'gatsby'
 
-import BgTop from '../images/bg-top.svg'
-import Button from '../components/button'
 import Container from '../components/container'
 import Section from '../components/section'
-import { C50 } from '../components/grid'
 
-const HomeTopImgContainer = styled.div`
-  margin: 0 auto;
-  width: 715px;
-  max-width: 100%;
-  margin-bottom: 2rem;
+const VideoContainer = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 20px 0 20px;
+`
 
-  @media (min-width: 500px) {
-    max-width: 500px;
-  }
+const ScreenContainer = styled.div`
+  max-width: 800px;
+  flex: 1;
+  position: relative;
+  width: 100%;
 
   @media (min-width: 900px) {
-    position: absolute;
-    top: 10px;
-    right: -6%;
-    margin: 0;
-
-    width: 58%;
-    max-width: none;
+    width: 80%;
   }
 `
 
-const HomeTopImg = ({ alt }) => (
-  <StaticQuery
-    query={graphql`
-      query {
-        top: file(relativePath: { eq: "home-top.png" }) {
-          childImageSharp {
-            fluid(maxWidth: 715) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
-      }
-    `}
-    render={data => <Img alt={alt} fluid={data.top.childImageSharp.fluid} />}
-  />
+const Screen = styled.div`
+  border: 4px solid #aaa;
+  border-radius: 30px 30px 0 0;
+  background-color: #000;
+  border-bottom-width: 0;
+  width: 100%;
+  padding-bottom: 56.25%;
+  position: absolute;
+  bottom: 0;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+`
+
+const Video = () => (
+  <ScreenContainer>
+    <Screen>
+      <VideoContainer>
+        <iframe
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          frameBorder="0"
+          height="315"
+          src="https://www.youtube.com/embed/5GdrKhhfJQw"
+          title="Frekkls Video"
+          width="560"
+        />
+      </VideoContainer>
+    </Screen>
+  </ScreenContainer>
 )
 
 const Hero = styled(({ className, hero }) => (
   <Section className={className}>
     <Container>
-      <HomeTopImgContainer>
-        <HomeTopImg alt="" />
-      </HomeTopImgContainer>
-      <C50>
-        <h2>{hero.openerHeading}</h2>
-        <h3>{hero.openerSubHeading}</h3>
-        <Button className="js-request-demo" type="button">
-          {hero.openerCta}
-        </Button>
-      </C50>
-      <C50 />
+      <h2>{hero.openerHeading}</h2>
+      <p>{hero.openerSubHeading}</p>
+      <div className="email-input email-input-1" />
+      <Video />
     </Container>
   </Section>
 ))`
-  background-image: url('${BgTop}');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 25% bottom;
-  background-origin: content-box;
+  padding-top: 0;
+  padding-bottom: 0;
+  @media (min-width: 900px) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 
   ${Container} {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 96px);
+    padding-top: 3rem;
+    padding-bottom: 0;
+
+    @media (min-width: 900px) {
+      min-height: calc(100vh - 120px);
+    }
+  }
+
+  .email-input {
+    width: 100%;
   }
 
   h2 {
@@ -80,40 +97,16 @@ const Hero = styled(({ className, hero }) => (
     line-height: 1.13;
   }
 
-  h3 {
-    font-size: 20px;
-    line-height: 1.2;
+  p {
+    font-size: 21px;
+    line-height: 1.67;
     color: #565656;
-  }
-
-  ${Button} {
-    margin-top: 10px;
+    max-width: 945px;
   }
 
   @media (min-width: 900px) {
-    text-align: left;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-origin: border-box;
-
-    ${Container} {
-      flex-direction: row;
-      padding-top: 130px;
-      padding-bottom: 200px;
-      position: relative;
-    }
-
-    ${C50} {
-      z-index: 1;
-    }
-
     h2 {
-      font-size: 53px;
-    }
-
-    h3 {
-      font-size: 26px;
-      line-height: 34px;
+      font-size: 36px;
     }
   }
 `

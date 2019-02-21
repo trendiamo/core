@@ -15,8 +15,7 @@ const TopCta = styled(({ className, topCta }) => (
     </Container>
   </Section>
 ))`
-  margin-top: 40px;
-  background-color: #f9fafb;
+  background-color: #f2f4f7;
 `
 
 export default TopCta

@@ -23,16 +23,16 @@ export const query = graphql`
     layout: contentfulLayout(name: { eq: "Layout" }, node_locale: { eq: $locale }) {
       ...Layout
     }
-    hero: contentfulHomepage(name: { eq: "Homepage" }, node_locale: { eq: $locale }) {
+    hero: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       openerHeading
       openerSubHeading
       openerCta
     }
-    topCta: contentfulHomepage(name: { eq: "Homepage" }, node_locale: { eq: $locale }) {
+    topCta: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       signupHeading
       signupSubHeading
     }
-    depth: contentfulHomepage(name: { eq: "Homepage" }, node_locale: { eq: $locale }) {
+    depth: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       featuresHeading
       featuresSubText
       feature1Pill
@@ -48,7 +48,7 @@ export const query = graphql`
       feature3Text
       feature3Cta
     }
-    bottom: contentfulHomepage(name: { eq: "Homepage" }, node_locale: { eq: $locale }) {
+    bottom: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       signup2Heading
       signup2Text
     }
