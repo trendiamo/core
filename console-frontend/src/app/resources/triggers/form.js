@@ -174,7 +174,7 @@ export default compose(
     breadcrumbs,
   })),
   withProps(({ breadcrumbs }) => ({
-    title: breadcrumbs.slice(-1)[0].text,
+    title: breadcrumbs[breadcrumbs.length - 1].text,
   })),
   lifecycle({
     async componentDidMount() {
