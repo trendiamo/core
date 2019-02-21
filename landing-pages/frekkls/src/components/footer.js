@@ -1,9 +1,11 @@
-import Container from './container'
-import locales from '../../locales'
-import Logo from '../images/logo-grey.svg'
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
+
+import Container from './container'
+import locales from '../../locales'
+import Logo from '../images/logo-grey.svg'
+import Section from './section'
 
 const FooterFlex = styled.div`
   display: flex;
@@ -156,30 +158,39 @@ const CopyrightContent = () => (
   </CopyrightDiv>
 )
 
-const ContainerBackground = styled.div`
-  background-color: #f2f4f7;
-`
-
 const Footer = styled(({ className, layout, locale }) => (
-  <footer className={className}>
-    <Container>
-      <FooterContent layout={layout} locale={locale} />
-    </Container>
-    <ContainerBackground>
+  <div className={className}>
+    <Section>
+      <Container>
+        <FooterContent layout={layout} locale={locale} />
+      </Container>
+    </Section>
+    <footer>
       <Container>
         <CopyrightContent />
       </Container>
-    </ContainerBackground>
-  </footer>
+    </footer>
+  </div>
 ))`
-  padding-top: 2rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: #f2f4f7;
+  }
 
-  @media (min-width: 900px) {
-    padding-top: 0;
-    text-align: left;
-    background-image: none;
+  ${Section} {
+    padding-top: 2rem;
+    padding-bottom: 0;
+
+    @media (min-width: 900px) {
+      padding-top: 0;
+      text-align: left;
+      background-image: none;
+    }
+  }
+
+  ${Container} {
+    width: 100%;
   }
 
   h3 {
