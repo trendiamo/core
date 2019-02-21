@@ -25,24 +25,14 @@ const query = gql`
 const finalOptions = () => {
   const account = localStorage.getItem('trnd-plugin-account')
   if (account === 'Impressorajato' && !document.querySelector('#livechat-compact-container')) {
-    return [
-      {
-        id: 'reset',
-        text: i18n.iStillNeedHelp(),
-      },
-    ]
-  } else {
-    return [
-      {
-        id: 'reset',
-        text: i18n.iStillNeedHelp(),
-      },
-      {
-        id: 'stop',
-        text: i18n.okCool(),
-      },
-    ]
+    return []
   }
+  return [
+    {
+      id: 'stop',
+      text: i18n.okCool(),
+    },
+  ]
 }
 
 const processChatOptions = chatOptions => {
