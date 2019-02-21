@@ -52,6 +52,7 @@ export const layoutFragment = graphql`
   fragment Layout on ContentfulLayout {
     about
     blog
+    contactPrompt
     tryNow
     footerInfo
     demo2

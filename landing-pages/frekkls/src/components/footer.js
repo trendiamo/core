@@ -16,7 +16,7 @@ const FooterFlex = styled.div`
     justify-content: space-between;
     text-align: left;
     flex-direction: row;
-    padding: 2rem 2rem 1rem 2rem;
+    padding-top: 2rem;
     align-items: end;
   }
 `
@@ -62,7 +62,7 @@ const FooterColumn = styled.div`
 `
 
 const ContactUsHeader = styled.p`
-  color: rgba(0, 0, 0, 0.6);
+  color: #707070;
   font-size: 20px;
   margin-top: 1rem;
   margin-bottom: 0;
@@ -81,43 +81,41 @@ const MailTo = styled.a`
 `
 
 const FooterContent = ({ layout, locale }) => (
-  <Container>
-    <FooterFlex>
-      <FooterSection flex="1">
-        <FooterColumn>
-          <Link to={`${locales[locale].path}/`}>
-            <img alt="siteTitle" src={Logo} />
-          </Link>
-          <ContactUsHeader>{layout.contact}</ContactUsHeader>
-          <MailTo href="mailto:hello@trendiamo.com">{'hello@trendiamo.com'}</MailTo>
-        </FooterColumn>
-      </FooterSection>
-      <FooterSection flex="2">
-        <FooterColumn>
-          <Link to={`${locales[locale].path}/about`}>{layout.about}</Link>
-          <Link to={`${locales[locale].path}/blog`}>{layout.blog}</Link>
-        </FooterColumn>
-        <FooterColumn>
-          <Link to={`${locales[locale].path}/demo`}>{layout.demo}</Link>
-          <Link className="js-request-demo" to="#demo">
-            {layout.demo2}
-          </Link>
-          <Link className="js-legal-notice" to="#legal-notice">
-            {layout.legal}
-          </Link>
-          <Link className="js-privacy-cookies" to="#privacy-cookies">
-            {layout.privacy}
-          </Link>
-        </FooterColumn>
-        <FooterColumn>
-          <FollowUsHeader>{'Follow Us'}</FollowUsHeader>
-          <a href="https://www.facebook.com/frekklsapp/">{'Facebook'}</a>
-          <a href="https://www.instagram.com/frekkls.app/">{'Instagram'}</a>
-          <a href="https://www.linkedin.com/company/frekkls/">{'Linkedin'}</a>
-        </FooterColumn>
-      </FooterSection>
-    </FooterFlex>
-  </Container>
+  <FooterFlex>
+    <FooterSection flex="1">
+      <FooterColumn>
+        <Link to={`${locales[locale].path}/`}>
+          <img alt="siteTitle" src={Logo} />
+        </Link>
+        <ContactUsHeader>{layout.contactPrompt}</ContactUsHeader>
+        <MailTo href="mailto:hello@trendiamo.com">{'hello@trendiamo.com'}</MailTo>
+      </FooterColumn>
+    </FooterSection>
+    <FooterSection flex="2">
+      <FooterColumn>
+        <Link to={`${locales[locale].path}/about`}>{layout.about}</Link>
+        <Link to={`${locales[locale].path}/blog`}>{layout.blog}</Link>
+      </FooterColumn>
+      <FooterColumn>
+        <Link to={`${locales[locale].path}/demo`}>{layout.demo}</Link>
+        <Link className="js-request-demo" to="#demo">
+          {layout.demo2}
+        </Link>
+        <Link className="js-legal-notice" to="#legal-notice">
+          {layout.legal}
+        </Link>
+        <Link className="js-privacy-cookies" to="#privacy-cookies">
+          {layout.privacy}
+        </Link>
+      </FooterColumn>
+      <FooterColumn>
+        <FollowUsHeader>{'Follow Us'}</FollowUsHeader>
+        <a href="https://www.facebook.com/frekklsapp/">{'Facebook'}</a>
+        <a href="https://www.instagram.com/frekkls.app/">{'Instagram'}</a>
+        <a href="https://www.linkedin.com/company/frekkls/">{'Linkedin'}</a>
+      </FooterColumn>
+    </FooterSection>
+  </FooterFlex>
 )
 
 const CopyrightDiv = styled.div`
