@@ -72,6 +72,7 @@ const Hero = styled(({ className, hero }) => (
 ))`
   padding-top: 0;
   padding-bottom: 0;
+  text-align: center;
   @media (min-width: 900px) {
     padding-top: 0;
     padding-bottom: 0;
@@ -95,8 +96,8 @@ const Hero = styled(({ className, hero }) => (
   }
 
   h2 {
-    font-size: 30px;
-    line-height: 1.13;
+    font-size: 32px;
+    line-height: 42px;
   }
 
   p {

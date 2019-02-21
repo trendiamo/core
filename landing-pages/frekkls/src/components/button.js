@@ -9,7 +9,7 @@ const Button = styled.button.attrs({
   letter-spacing: 0.8px;
   color: #fff;
   font-size: 24px;
-  padding: 13px 20px;
+  padding: 13px 18px;
   margin: 0 auto;
   outline: none;
   line-height: 1;
@@ -28,6 +28,9 @@ const Button = styled.button.attrs({
     background-color: #ff8240;
     box-shadow: none;
     background-image: none;
+  }
+  @media (min-width: 900px) {
+    padding: 13px 20px;
   }
 `
 

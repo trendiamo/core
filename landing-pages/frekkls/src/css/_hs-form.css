@@ -8,7 +8,7 @@
 
 .hs-form .hs-input {
   appearance: none;
-  font-size: 18px;
+  font-size: 16px;
   padding: 16px 20px 16px 20px;
   border-radius: 12px;
   border: none;
@@ -16,6 +16,11 @@
   width: 100%;
   outline: none;
   box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.05), 0 11px 14px 0 rgba(255, 91, 46, 0.23);
+}
+@media (min-width: 900px) {
+  .hs-form .hs-input {
+    font-size: 18px;
+  }
 }
 
 .hs-form .hs-input::placeholder {
@@ -46,17 +51,24 @@
 
 .email-input .hs-button {
   appearance: none;
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 18px;
   color: #fff;
   border: 0;
   border-radius: 0 12px 12px 0;
   background-image: linear-gradient(137deg, #ff843e, #ff683f 100%);
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 18px;
+  padding-right: 18px;
   cursor: pointer;
   outline: none;
   min-width: 100px;
+}
+@media (min-width: 900px) {
+  .email-input .hs-button {
+    font-size: 24px;
+    font-weight: 500;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
 
 .email-input .hs-button:hover {

@@ -30,6 +30,7 @@ const SelectContainer = styled.div`
   }
   button {
     appearance: none;
+    background-color: transparent;
     border: 0;
     outline: 0;
     margin: 0;
