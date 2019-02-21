@@ -7,13 +7,28 @@ const Modal = tingle.modal
 const processEmailInputs = () => {
   if (!window.hbspt) return
   const targets = ['.email-input-1', '.email-input-2']
+  window.jQuery = () => ({ each: () => [] }) // mock jquery so we can use the onFormReady option below
   targets.forEach(target => {
-    if (!document.querySelector(target)) return
+    const element = document.querySelector(target)
+    if (!element) return
+    const metaHbspt = document.querySelector('meta[name="hbspt-locale"]')
+    const locale = metaHbspt ? metaHbspt.getAttribute('value') : 'en'
     window.hbspt.forms.create({
       css: '',
       portalId: '4568386',
       formId: '70b17e03-8153-4be3-ba4b-d3550a85e258',
       target,
+      locale,
+      translations: {
+        [locale]: {
+          submitText: element.dataset.submitText,
+        },
+      },
+      onFormReady: () => {
+        const input = element.querySelector('.hs-input[name="email"]')
+        if (!input || !element.dataset.emailLabel) return
+        input.placeholder = element.dataset.emailLabel
+      },
     })
   })
 }

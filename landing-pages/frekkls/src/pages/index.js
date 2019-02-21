@@ -26,7 +26,8 @@ export const query = graphql`
     hero: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       openerHeading
       openerSubHeading
-      openerCta
+      openerEmailLabel
+      openerEmailCta
     }
     topCta: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       signupHeading

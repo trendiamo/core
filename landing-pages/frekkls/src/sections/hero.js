@@ -61,7 +61,11 @@ const Hero = styled(({ className, hero }) => (
     <Container>
       <h2>{hero.openerHeading}</h2>
       <p>{hero.openerSubHeading}</p>
-      <div className="email-input email-input-1" />
+      <div
+        className="email-input email-input-1"
+        data-email-label={hero.openerEmailLabel}
+        data-submit-text={hero.openerEmailCta}
+      />
       <Video />
     </Container>
   </Section>

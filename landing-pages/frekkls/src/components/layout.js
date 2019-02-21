@@ -1,4 +1,5 @@
 import Helmet from 'react-helmet'
+import locales from '../../locales'
 import React from 'react'
 import styled from 'styled-components'
 import { graphql, StaticQuery } from 'gatsby'
@@ -34,7 +35,10 @@ const Layout = ({ children, className, layout, locale }) => (
     render={data => (
       <Main className={className}>
         <Seo keywords={[]} lang={locale} meta={[]} title="Frekkls" />
-        <Helmet link={[{ rel: 'shortcut icon', type: 'image/png', href: `${favicon}` }]} />
+        <Helmet>
+          <link href={favicon} rel="shortcut icon" type="image/png" />
+          <meta name="hbspt-locale" value={locales[locale].hbspt} />
+        </Helmet>
         <Header layout={layout} locale={locale} siteTitle={data.site.siteMetadata.title} />
         {children}
         <Footer layout={layout} locale={locale} />
