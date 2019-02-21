@@ -4,57 +4,55 @@ import styled from 'styled-components'
 import Container from '../components/container'
 import Section from '../components/section'
 
-const VideoContainer = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px 20px 0 20px;
-`
-
 const ScreenContainer = styled.div`
+  margin-top: 2rem;
   max-width: 800px;
   flex: 1;
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: flex-end;
 
   @media (min-width: 900px) {
     width: 80%;
   }
 `
 
-const Screen = styled.div`
-  border: 4px solid #aaa;
-  border-radius: 30px 30px 0 0;
-  background-color: #000;
-  border-bottom-width: 0;
+const AspectRatio = styled.div`
+  height: 0;
   width: 100%;
   padding-bottom: 56.25%;
-  position: absolute;
-  bottom: 0;
+  position: relative;
 
   iframe {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    border: 4px solid #aaa;
+    border-bottom-width: 0;
+    border-radius: 30px 30px 0 0;
+    background-color: #000;
+    padding: 20px 20px 0 20px;
   }
 `
 
 const Video = () => (
   <ScreenContainer>
-    <Screen>
-      <VideoContainer>
-        <iframe
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          frameBorder="0"
-          height="315"
-          src="https://www.youtube.com/embed/5GdrKhhfJQw"
-          title="Frekkls Video"
-          width="560"
-        />
-      </VideoContainer>
-    </Screen>
+    <AspectRatio>
+      <iframe
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        frameBorder="0"
+        src="https://www.youtube.com/embed/5GdrKhhfJQw"
+        title="Frekkls Video"
+      />
+    </AspectRatio>
   </ScreenContainer>
 )
 
