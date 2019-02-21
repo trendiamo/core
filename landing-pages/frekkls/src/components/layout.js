@@ -73,6 +73,10 @@ export const layoutFragment = graphql`
         html
       }
     }
+    buzzHeading
+    buzzText
+    buzzEmailLabel
+    buzzEmailCta
   }
 `
 
