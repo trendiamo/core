@@ -1,5 +1,3 @@
-const STEP_DELAY = 320
-
 const chatLog = {
   addListener(fn) {
     this.listeners.push(fn)
@@ -27,26 +25,14 @@ const chatLog = {
     const messageLogs = chatMessages.map(chatMessage => ({ type: 'message', chatMessage }))
     const optionLogs = chatOptions.map(chatOption => ({ type: 'option', chatOption }))
     const logs = messageLogs.concat(optionLogs)
-    this.addNextLog(logs, this.timestamp)
+    logs.map(log => {
+      this.addLog(log, this.timestamp)
+    })
   },
   addLog(log, timestampParam) {
     if (timestampParam !== this.timestamp) return // prevent duplicates if user opens & closes repeatedly and fast
     this.logs.push(log)
     this.listeners.forEach(fn => fn(this))
-  },
-  addNextLog(logs, timestampParam) {
-    const [nextLog, ...otherLogs] = logs
-    if (!nextLog) return
-    const delay = STEP_DELAY + Math.floor(Math.random() * 320)
-    if (nextLog.type === 'message') {
-      nextLog.nextLogs = otherLogs
-      setTimeout(() => this.addLog(nextLog, timestampParam), delay)
-    } else {
-      setTimeout(() => {
-        this.addLog(nextLog, timestampParam)
-        otherLogs.forEach(otherLog => this.addLog(otherLog, timestampParam))
-      }, delay)
-    }
   },
   run() {
     const chatMessages = this.module.logs.default
