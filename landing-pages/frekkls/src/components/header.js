@@ -15,18 +15,12 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
         <Logo alt={siteTitle} />
       </Link>
       <nav>
-        <Link className="header-link" to={`${locales[locale].path}/demo`}>
-          {layout.demo}
-        </Link>
-        <Link className="header-link header-link-hide-s" to={`${locales[locale].path}/about`}>
+        <Link className="header-link" to={`${locales[locale].path}/about`}>
           {layout.about}
         </Link>
-        <Link className="header-link header-link-hide-s" to={`${locales[locale].path}/blog`}>
+        <Link className="header-link" to={`${locales[locale].path}/blog`}>
           {layout.blog}
         </Link>
-        <a className="header-link header-link-hide-s" href="mailto:hello@trendiamo.com">
-          {layout.contact}
-        </a>
         <Button className="js-request-demo">{layout.tryNow}</Button>
         <LangSelector locale={locale} />
       </nav>
@@ -43,16 +37,16 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
     justify-content: space-between;
   }
 
-  .header-link-hide-s {
+  .header-link {
     display: none;
   }
   @media (min-width: 530px) {
-    .header-link-hide-s {
+    .header-link {
       display: block;
     }
   }
 
-  nav .header-link {
+  .header-link {
     font-size: 12px;
     line-height: 3;
     letter-spacing: 0.7px;
@@ -63,7 +57,7 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
   }
 
   @media (min-width: 900px) {
-    nav .header-link {
+    .header-link {
       margin-right: 40px;
       font-size: 20px;
     }

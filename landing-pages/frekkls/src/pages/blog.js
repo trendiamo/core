@@ -34,7 +34,7 @@ export default BlogPage
 
 export const query = graphql`
   query BlogPage($locale: String) {
-    layout: contentfulLayout(name: { eq: "Layout" }, node_locale: { eq: $locale }) {
+    layout: contentfulLayout(name: { eq: "Layout-v2" }, node_locale: { eq: $locale }) {
       ...Layout
     }
     imagesData: allContentfulBlogPost(filter: { node_locale: { eq: "en-US" } }) {

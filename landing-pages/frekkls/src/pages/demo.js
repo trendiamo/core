@@ -21,7 +21,7 @@ export default DemoPage
 
 export const query = graphql`
   query DemoPage($locale: String) {
-    layout: contentfulLayout(name: { eq: "Layout" }, node_locale: { eq: $locale }) {
+    layout: contentfulLayout(name: { eq: "Layout-v2" }, node_locale: { eq: $locale }) {
       ...Layout
     }
     demoHero: contentfulDemoPage(name: { eq: "Demo Page" }, node_locale: { eq: $locale }) {

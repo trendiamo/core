@@ -50,10 +50,8 @@ const Layout = ({ children, className, layout, locale }) => (
 
 export const layoutFragment = graphql`
   fragment Layout on ContentfulLayout {
-    demo
     about
     blog
-    contact
     tryNow
     footerInfo
     demo2

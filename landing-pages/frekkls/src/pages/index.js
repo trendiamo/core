@@ -20,7 +20,7 @@ export default IndexPage
 
 export const query = graphql`
   query Homepage($locale: String) {
-    layout: contentfulLayout(name: { eq: "Layout" }, node_locale: { eq: $locale }) {
+    layout: contentfulLayout(name: { eq: "Layout-v2" }, node_locale: { eq: $locale }) {
       ...Layout
     }
     hero: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
