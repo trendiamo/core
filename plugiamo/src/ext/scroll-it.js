@@ -80,7 +80,7 @@ const scrollIt = (element, destination, duration = 660, easing = 'easeOutQuad', 
 
     // Stop requesting animation when element reached its destination
     // And run a callback function
-    if (element.scrollTop === destinationOffsetToScroll) {
+    if (Math.ceil(element.scrollTop) === destinationOffsetToScroll) {
       if (callback) {
         callback()
       }

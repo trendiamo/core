@@ -22,7 +22,13 @@ const extractYoutubeId = message => {
 const ChatMessageContainer = styled.div`
   max-width: ${({ chatMessage }) =>
     ['productCarousel', 'imageCarousel'].includes(chatMessage.type) ? 'auto' : '260px'};
-  animation: _frekkls_message_appear 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  ${({ show }) =>
+    !show &&
+    `
+    opacity: 0;
+    transform: translate(-20px, 0);
+  `}
 `
 
 const isFrameActive = () => {
@@ -33,20 +39,21 @@ const isFrameActive = () => {
   )
 }
 
+const MESSAGE_INTERVAL = 320
+const MESSAGE_RANDOMIZER = 320
+
 const ChatMessage = compose(
+  withState('show', 'setShow', false),
   lifecycle({
     componentDidMount() {
-      const { log, contentRef } = this.props
-      if (isFrameActive()) {
-        scrollToInPlugin(contentRef, this.base.offsetTop)
-      }
-      const timestamp = chatLog.timestamp
-      chatLog.addNextLog(log.nextLogs, timestamp)
-      log.timestamp = Date.now()
+      const { setShow, index } = this.props
+      setTimeout(() => {
+        setShow(true)
+      }, index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER))
     },
   })
-)(({ log }) => (
-  <ChatMessageContainer chatMessage={log.chatMessage}>
+)(({ log, show }) => (
+  <ChatMessageContainer chatMessage={log.chatMessage} show={show}>
     {log.chatMessage.type === 'text' ? (
       <TextMessage dangerouslySetInnerHTML={{ __html: emojify(snarkdown(log.chatMessage.text)) }} />
     ) : log.chatMessage.type === 'videoUrl' ? (
@@ -82,9 +89,9 @@ const ChatOptionText = styled.button.attrs({
 const ChatOption = styled(
   compose(
     withHandlers({
-      onClick: ({ chatOption, onClick }) => () => {
+      onClick: ({ chatOption, onClick, hide }) => () => {
         mixpanel.track('Clicked Option', { hostname: location.hostname, text: chatOption.text })
-        if (!chatOption.expanded) onClick(chatOption)
+        if (!chatOption.expanded && !hide) onClick(chatOption)
       },
     })
   )(({ chatOption, className, onClick }) => (
@@ -100,7 +107,9 @@ const ChatOption = styled(
   max-width: 260px;
   text-align: right;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  opacity: 1;
+  opacity: ${({ animate }) => (animate ? 1 : 0)};
+  transform: ${({ animate }) => (animate ? 'none' : 'translateY(20px)')};
+  transition: opacity 0.4s, transform 0.4s;
   margin-left: auto;
   & + div {
     ${ChatOptionText} {
@@ -132,26 +141,23 @@ const ChatOption = styled(
 
 const convertLogs = logs => {
   let newLog = []
-  let currentType
   let currentList = []
   logs.map((log, index) => {
     const nextLog = logs[index + 1]
     currentList.push(log)
-    currentType = log.type
     if (nextLog) {
-      if (nextLog.type !== currentType) {
-        newLog.push({ type: currentType, logs: currentList })
+      if (nextLog.type !== log.type) {
+        newLog.push({ ...log, logs: currentList })
         currentList = []
       }
       return
     }
-    newLog.push({ type: currentType, logs: currentList })
+    newLog.push({ ...log, logs: currentList })
   })
   return newLog
 }
 
 const ItemDivTemplate = styled.div`
-  text-align: ${({ type }) => (type === 'option' ? 'right' : 'left')};
   & + & {
     margin-top: 16px;
   }
@@ -170,19 +176,28 @@ const ItemDiv = compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { contentRef } = this.props
-      if (isFrameActive()) {
-        scrollToInPlugin(contentRef, this.base.offsetTop)
+      const { contentRef, logSection, callback } = this.props
+      if (logSection.type === 'message') {
+        if (isFrameActive()) {
+          setTimeout(() => {
+            scrollToInPlugin(contentRef, this.base.offsetTop - 15)
+          }, 600)
+        }
+        if (callback) {
+          setTimeout(() => {
+            callback()
+          }, MESSAGE_INTERVAL * logSection.logs.length + MESSAGE_RANDOMIZER)
+        }
       }
     },
   })
-)(({ logs, onClick, hide, contentRef }) => (
+)(({ logSection, onClick, hide }) => (
   <ItemDivTemplate hide={hide}>
-    {logs.map(log =>
+    {logSection.logs.map((log, index) =>
       log.type === 'message' ? (
-        <ChatMessage contentRef={contentRef} log={log} />
+        <ChatMessage index={index} log={log} />
       ) : log.type === 'option' ? (
-        <ChatOption chatOption={log.chatOption} hide={log.hide} onClick={onClick} />
+        <ChatOption animate={log.animate} chatOption={log.chatOption} hide={log.hide} index={index} onClick={onClick} />
       ) : null
     )}
   </ItemDivTemplate>
@@ -207,6 +222,13 @@ const ChatLogUi = compose(
     }
   }),
   withHandlers({
+    configMinHeight: ({ setMinHeight, getBackgroundRef, minHeight }) => () => {
+      if (getBackgroundRef().base.clientHeight !== minHeight) {
+        setMinHeight(getBackgroundRef().base.clientHeight)
+      }
+    },
+  }),
+  withHandlers({
     initChatLog: ({ module, updateChatLog }) => () => {
       chatLog.init(module)
       // we don't remove this listener in componentWillUnmount because preact doesn't fire it inside iframes
@@ -214,12 +236,16 @@ const ChatLogUi = compose(
       chatLog.addListener(updateChatLog)
       chatLog.run()
     },
-    configMinHeight: ({ setMinHeight, getBackgroundRef, minHeight }) => () => {
-      if (getBackgroundRef().base.clientHeight !== minHeight) {
-        setMinHeight(getBackgroundRef().base.clientHeight)
+    animateNewOptions: ({ logs, setLogs }) => () => {
+      const newOptions = logs[logs.length - 1]
+      if (newOptions && newOptions.type === 'option') {
+        logs[logs.length - 1].logs.map(log => {
+          log.animate = true
+        })
+        setLogs(logs)
       }
     },
-    clickChatOption: ({ logs, setLogs }) => chatOption => {
+    clickChatOption: ({ logs, setLogs, configMinHeight }) => chatOption => {
       chatOption.expanded = true
       let unexpandedChatOptions = []
       let newLogs = []
@@ -241,6 +267,7 @@ const ChatLogUi = compose(
       chatLog.setLogs(newLogs)
       setLogs(convertLogs(newLogs))
       chatLog.addLogs(chatOption.chatMessages, unexpandedChatOptions)
+      configMinHeight()
     },
   }),
   lifecycle({
@@ -248,33 +275,43 @@ const ChatLogUi = compose(
       const { initChatLog } = this.props
       initChatLog()
     },
-    componentDidUpdate() {
-      const { configMinHeight } = this.props
-      configMinHeight()
-    },
   })
-)(({ className, clickChatOption, logs, onScroll, setContentRef, contentRef, setBackgroundRef, touch, minHeight }) => (
-  <div className={className} onScroll={onScroll} ref={setContentRef} touch={touch}>
-    <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
-      {logs.map((logSection, index) => (
-        /* eslint-disable react/no-array-index-key */
-        <ItemDiv
-          clickChatOption={clickChatOption}
-          contentRef={contentRef}
-          key={index}
-          logs={logSection.logs}
-          type={logSection.type}
-        />
-      ))}
-    </ChatBackground>
-  </div>
-))
+)(
+  ({
+    className,
+    clickChatOption,
+    logs,
+    onScroll,
+    setContentRef,
+    contentRef,
+    animateNewOptions,
+    setBackgroundRef,
+    touch,
+    minHeight,
+  }) => (
+    <div className={className} onScroll={onScroll} ref={setContentRef} touch={touch}>
+      <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
+        {logs.map((logSection, index) => (
+          /* eslint-disable react/no-array-index-key */
+          <ItemDiv
+            callback={logSection.type === 'message' && animateNewOptions}
+            clickChatOption={clickChatOption}
+            contentRef={contentRef}
+            key={index}
+            logSection={logSection}
+          />
+        ))}
+      </ChatBackground>
+    </div>
+  )
+)
 
 export default styled(ChatLogUi)`
   flex-grow: 1;
   overflow: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: ${({ touch }) => (touch ? 'touch' : 'auto')};
+  position: relative;
 
   ${ChatMessageContainer} + ${ChatOption} {
     padding-top: 16px;
