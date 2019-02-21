@@ -173,9 +173,11 @@ const Footer = styled(({ className, layout, locale }) => (
   </footer>
 ))`
   padding-top: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 
   @media (min-width: 900px) {
-    padding: 0;
+    padding-top: 0;
     text-align: left;
     background-image: none;
   }
