@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
 const slugify = require('slugify')
+const locales = require('../../locales')
 
-const blogPostUrl = (blogPostTitle, locale) => {
-  const slugedBlogPosTitle = slugify(blogPostTitle, {
+const blogPostUrl = (blogPost, locale) => {
+  const slugedBlogPosTitle = slugify(blogPost.title, {
     replacement: '-',
     lower: true,
   })
-  return `${locale.path}/blog/${slugedBlogPosTitle}`
+  return `${locales[locale].path}/blog/${slugedBlogPosTitle}`
 }
 
 module.exports = blogPostUrl

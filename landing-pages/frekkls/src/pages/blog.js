@@ -2,14 +2,11 @@ import React from 'react'
 import { graphql } from 'gatsby'
 
 import BlogPostCard from '../components/blog-post-card'
+import blogPostUrl from '../utils/index.js'
 import Container from '../components/container'
 import Layout from '../components/layout'
-import locales from '../../locales'
 import Section from '../components/section'
 import { FeatureCards } from '../components/cards'
-
-/* eslint-disable no-undef */
-const blogPostUrl = require('../utils/index.js')
 
 const BlogPage = ({ className, pageContext, data }) => (
   <Layout className={className} layout={data.layout} locale={pageContext.locale}>
@@ -21,7 +18,7 @@ const BlogPage = ({ className, pageContext, data }) => (
               imagesData={data.imagesData.edges[index].node}
               key={blog.node.id}
               post={blog.node}
-              to={blogPostUrl(blog.node.title, locales[pageContext.locale])}
+              to={blogPostUrl(blog.node, pageContext.locale)}
             />
           ))}
         </FeatureCards>

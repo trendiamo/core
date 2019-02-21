@@ -5,6 +5,7 @@ import Buzz from '../sections/buzz'
 import Depth from '../sections/depth'
 import Hero from '../sections/hero'
 import Layout from '../components/layout'
+import RecentBlog from '../sections/recent-blog'
 import TopCta from '../sections/top-cta'
 
 const IndexPage = ({ className, pageContext, data }) => (
@@ -12,6 +13,7 @@ const IndexPage = ({ className, pageContext, data }) => (
     <Hero hero={data.hero} />
     <TopCta topCta={data.topCta} />
     <Depth depth={data.depth} />
+    <RecentBlog blogPost={data.recentBlogs.edges[0].node} locale={pageContext.locale} />
     <Buzz layout={data.layout} />
   </Layout>
 )
@@ -48,6 +50,23 @@ export const query = graphql`
       feature3Heading
       feature3Text
       feature3Cta
+    }
+    recentBlogs: allContentfulBlogPost(
+      limit: 1
+      sort: { fields: publishingDate }
+      filter: { node_locale: { eq: "en-US" } }
+    ) {
+      edges {
+        node {
+          title
+          titleImage {
+            fixed(width: 1280) {
+              src
+            }
+          }
+          cardCta
+        }
+      }
     }
   }
 `

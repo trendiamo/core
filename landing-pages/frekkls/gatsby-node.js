@@ -72,7 +72,7 @@ exports.createPages = ({ graphql, actions }) => {
     response.data.allContentfulBlogPost.edges.forEach(blog => {
       Object.keys(locales).forEach(locale => {
         createPage({
-          path: blogPostUrl(blog.node.title, locales[locale]),
+          path: blogPostUrl(blog.node, locale),
           component: BlogPost,
           context: {
             post: blog,
