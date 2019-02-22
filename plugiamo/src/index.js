@@ -51,6 +51,13 @@ const main = () => {
     ? SpotAHome
     : initRootComponent()
 
+  // trustbadge fix for Pierre Cardin
+  if (location.hostname === 'www.pierre-cardin.de') {
+    const tmc = document.querySelector('div[data-tb-element="trustbadge_minimised_container"]')
+    if (!tmc || !tmc.parentElement) return
+    tmc.parentElement.style.cssText += ';z-index:2147482999 !important;'
+  }
+
   const trendiamoContainer = document.createElement('div')
   trendiamoContainer.classList.add('trendiamo-container')
   document.body.appendChild(trendiamoContainer)
