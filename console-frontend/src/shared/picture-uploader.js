@@ -227,13 +227,13 @@ const defaultCrop = image => {
   }
 }
 
-const previewCrop = (image, pixelCrop) => {
+const previewCrop = (image, imageElement, pixelCrop) => {
   const canvas = document.createElement('canvas')
   canvas.width = pixelCrop.width
   canvas.height = pixelCrop.height
   const ctx = canvas.getContext('2d')
   ctx.drawImage(
-    image,
+    imageElement,
     pixelCrop.x,
     pixelCrop.y,
     pixelCrop.width,
@@ -243,16 +243,16 @@ const previewCrop = (image, pixelCrop) => {
     pixelCrop.width,
     pixelCrop.height
   )
-  return canvas.toDataURL('image/jpeg')
+  return canvas.toDataURL(image.type)
 }
 
-const resultingCrop = (image, pixelCrop) => {
+const resultingCrop = (image, imageElement, pixelCrop) => {
   const canvas = document.createElement('canvas')
   canvas.width = pixelCrop.width
   canvas.height = pixelCrop.height
   const ctx = canvas.getContext('2d')
   ctx.drawImage(
-    image,
+    imageElement,
     pixelCrop.x,
     pixelCrop.y,
     pixelCrop.width,
@@ -262,7 +262,7 @@ const resultingCrop = (image, pixelCrop) => {
     pixelCrop.width,
     pixelCrop.height
   )
-  return new Promise(resolve => canvas.toBlob(resolve, 'image/png'))
+  return new Promise(resolve => canvas.toBlob(resolve, image.type))
 }
 
 const uploadImage = async ({ blob, setProgress, type, defaultValue }) => {
@@ -304,19 +304,19 @@ const PictureUploader = compose(
       URL.revokeObjectURL(image.preview)
     },
     onCropChange: ({ setCrop }) => crop => setCrop(crop),
-    onCropComplete: ({ imagePreviewRef, onChange, setCrop, setCroppedImage }) => (_crop, pixelCrop) => {
+    onCropComplete: ({ image, imagePreviewRef, onChange, setCrop, setCroppedImage }) => (_crop, pixelCrop) => {
       if (pixelCrop.height === 0 || pixelCrop.width === 0) {
         const crop = defaultCrop(imagePreviewRef.current)
         setCrop(crop)
         pixelCrop = getPixelCrop(imagePreviewRef.current, crop)
       }
-      const previewUrl = previewCrop(imagePreviewRef.current, pixelCrop)
+      const previewUrl = previewCrop(image, imagePreviewRef.current, pixelCrop)
       setCroppedImage(previewUrl)
       onChange(previewUrl)
     },
     onDoneClick: ({ crop, image, imagePreviewRef, setDoneCropping, setPic }) => async () => {
       setDoneCropping(true)
-      const blob = await resultingCrop(imagePreviewRef.current, getPixelCrop(imagePreviewRef.current, crop))
+      const blob = await resultingCrop(image, imagePreviewRef.current, getPixelCrop(imagePreviewRef.current, crop))
       blob.name = image.name
       setPic(blob)
       URL.revokeObjectURL(image.preview)
@@ -334,11 +334,11 @@ const PictureUploader = compose(
         type: file.type,
       })
     },
-    onImageLoaded: ({ imagePreviewRef, onChange, setCrop, setCroppedImage }) => image => {
-      const crop = defaultCrop(image)
+    onImageLoaded: ({ image, imagePreviewRef, onChange, setCrop, setCroppedImage }) => imageElement => {
+      const crop = defaultCrop(imageElement)
       setCrop(crop)
-      const pixelCrop = getPixelCrop(image, crop)
-      const previewUrl = previewCrop(imagePreviewRef.current, pixelCrop)
+      const pixelCrop = getPixelCrop(imageElement, crop)
+      const previewUrl = previewCrop(image, imagePreviewRef.current, pixelCrop)
       setCroppedImage(previewUrl)
       onChange(previewUrl)
     },
