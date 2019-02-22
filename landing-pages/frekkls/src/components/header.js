@@ -6,7 +6,7 @@ import Button from './button'
 import Container from './container'
 import LangSelector from './lang-selector'
 import locales from '../../locales'
-import Logo from './logo'
+import Logo from '../images/logo'
 
 const Header = styled(({ className, layout, locale, siteTitle }) => (
   <header className={className}>

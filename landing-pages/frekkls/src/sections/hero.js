@@ -39,6 +39,7 @@ const AspectRatio = styled.div`
     border-radius: 30px 30px 0 0;
     background-color: #000;
     padding: 20px 20px 0 20px;
+    box-shadow: -1px 4px 20px 12px rgba(0, 0, 0, 0.2);
   }
 `
 
@@ -96,6 +97,7 @@ const Hero = styled(({ className, hero }) => (
   }
 
   h2 {
+    width: 100%;
     font-size: 32px;
     line-height: 42px;
   }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
+import Ads from '../sections/ads'
 import Buzz from '../sections/buzz'
 import Depth from '../sections/depth'
 import Hero from '../sections/hero'
@@ -12,6 +13,7 @@ const IndexPage = ({ className, pageContext, data }) => (
   <Layout className={className} layout={data.layout} locale={pageContext.locale}>
     <Hero hero={data.hero} />
     <TopCta topCta={data.topCta} />
+    <Ads ads={data.ads} />
     <Depth depth={data.depth} />
     <RecentBlog blogPost={data.recentBlogs.edges[0].node} locale={pageContext.locale} />
     <Buzz layout={data.layout} />
@@ -34,6 +36,14 @@ export const query = graphql`
     topCta: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       signupHeading
       signupSubHeading
+    }
+    ads: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
+      adsHeading
+      adsSubHeading
+      adsText {
+        adsText
+      }
+      adsCta
     }
     depth: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       featuresHeading
