@@ -13,6 +13,16 @@ const FooterFlex = styled.div`
   text-align: center;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1rem;
+
+  .footer-links a {
+    font-size: 16px;
+    line-height: 1.4;
+    text-decoration: none;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    color: #393939;
+  }
 
   @media (min-width: 900px) {
     justify-content: space-between;
@@ -29,10 +39,6 @@ const FooterSection = styled.div`
   flex-direction: column;
   margin-bottom: 2rem;
 
-  &:last-child {
-    margin-bottom: 1rem;
-  }
-
   @media (min-width: 900px) {
     flex-direction: row;
     margin: 0;
@@ -41,21 +47,16 @@ const FooterSection = styled.div`
 
 const FooterColumn = styled.div`
   flex: 1;
-
-  a {
-    font-size: 16px;
-    opacity: 0.8;
-    display: block;
-    color: rgba(0, 0, 0, 0.7);
-    text-decoration: none;
-    line-height: 2.19;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   &:last-child {
     margin-top: 1rem;
   }
 
   @media (min-width: 900px) {
+    align-items: flex-start;
     margin: 0;
     &:last-child {
       margin-top: 0rem;
@@ -71,10 +72,9 @@ const ContactUsHeader = styled.p`
 `
 
 const FollowUsHeader = styled.p`
-  opacity: 0.8;
-  line-height: 2.19;
   font-size: 16px;
-  margin-bottom: 0;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
 `
 
 const MailTo = styled.a`
@@ -93,13 +93,12 @@ const FooterContent = ({ layout, locale }) => (
         <MailTo href="mailto:hello@trendiamo.com">{'hello@trendiamo.com'}</MailTo>
       </FooterColumn>
     </FooterSection>
-    <FooterSection flex="2">
+    <FooterSection className="footer-links" flex="2">
       <FooterColumn>
         <Link to={`${locales[locale].path}/about`}>{layout.about}</Link>
         <Link to={`${locales[locale].path}/blog`}>{layout.blog}</Link>
       </FooterColumn>
       <FooterColumn>
-        <Link to={`${locales[locale].path}/demo`}>{layout.demo}</Link>
         <Link className="js-request-demo" to="#demo">
           {layout.demo2}
         </Link>
