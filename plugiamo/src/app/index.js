@@ -5,6 +5,7 @@ import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
 import Router from './content/router'
 import setup, { optionsFromHash } from './setup'
+import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
@@ -82,6 +83,7 @@ export const AppBase = styled(
 export default compose(
   withProps({ Component: <Router /> }),
   withProps({ Launcher }),
+  withProps({ pathFromNav: setupFlowHistory() }),
   graphql(
     gql`
       query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
@@ -127,8 +129,8 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
-      const { data, setPersona, setShowingContent } = this.props
-      const { flowType, open: autoOpen, persona } = setup(data)
+      const { data, pathFromNav, setPersona, setShowingContent } = this.props
+      const { flowType, open: autoOpen, persona } = setup(data, pathFromNav)
       setPersona(persona)
       mixpanel.track('Loaded Plugin', {
         autoOpen,

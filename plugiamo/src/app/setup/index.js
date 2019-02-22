@@ -1,8 +1,8 @@
 import addPicture from './add-picture'
 import routes from 'app/routes'
-import setupFlowHistory, { pushPath } from './flow-history'
 import { isSmall } from 'utils'
 import { location } from 'config'
+import { pushPath } from './flow-history'
 
 export const optionsFromHash = () => {
   if (!window.__trendiamoOptionsFromHash) {
@@ -25,10 +25,9 @@ const getMatchedPersona = ({ flow, data }) => {
   if (flow) return flow.persona
 }
 
-const setup = data => {
+const setup = (data, pathFromNav) => {
   const { /* persona,*/ open: openOpt, path: pathOpt, picture } = optionsFromHash()
   const { flow, type: flowType } = { flow: data.flow, type: data.flow.flowType }
-  const pathFromNav = setupFlowHistory()
   const open = pathFromNav ? true : isSmall() ? false : (openOpt && openOpt.match(/1|true/)) || flowType === 'outro'
 
   if (picture) addPicture(picture)
