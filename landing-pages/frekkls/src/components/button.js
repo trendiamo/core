@@ -34,23 +34,6 @@ const Button = styled.button.attrs({
   }
 `
 
-export const NoOutlineButton = styled.button.attrs({
-  type: 'button',
-})`
-  border: 0;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #323232;
-  text-transform: uppercase;
-  margin: 0;
-  padding: 0;
-  outline: none;
-  background-color: #fff;
-  cursor: pointer;
-  font-family: Roboto, sans-serif;
-`
-
 export const FeatureButton = styled.button.attrs({
   type: 'button',
 })`

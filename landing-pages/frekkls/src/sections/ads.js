@@ -86,7 +86,7 @@ const Ads = styled(({ ads, className }) => (
   background-color: #f2f4f7;
   text-align: left;
   padding-top: 100px;
-  padding-bottom: 160px;
+  padding-bottom: 100px;
 
   h2 {
     font-size: 18px;

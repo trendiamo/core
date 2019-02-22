@@ -46,17 +46,12 @@ export const query = graphql`
       adsCta
     }
     depth: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
-      featuresHeading
-      featuresSubText
-      feature1Pill
       feature1Heading
       feature1Text
       feature1Cta
-      feature2Pill
       feature2Heading
       feature2Text
       feature2Cta
-      feature3Pill
       feature3Heading
       feature3Text
       feature3Cta

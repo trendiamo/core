@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 const Cards = styled.div`
   @media (min-width: 900px) {
-    margin-top: 70px;
     display: flex;
   }
 `
@@ -11,12 +10,13 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 12px;
-  box-shadow: -1px 18px 33px 0 rgba(99, 122, 159, 0.16);
+  box-shadow: 3px 9px 26px 0 rgba(0, 0, 0, 0.13);
   margin-bottom: 30px;
   background-color: #fff;
-  padding: 60px 20px 40px;
-  text-align: left;
+  padding: 40px 30px;
   color: #4a4a4a;
+  display: flex;
+  align-items: center;
 
   @media (min-width: 900px) {
     margin-bottom: 0;
@@ -26,14 +26,17 @@ export const Card = styled.div`
   }
 
   h3 {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.15;
+    margin-top: 2rem;
+    font-size: 22px;
+    font-weight: 500;
+    color: #191919;
   }
 
   p {
     flex: 1;
-    line-height: 1.4;
+    line-height: 1.5;
+    font-size: 16px;
+    margin: 0;
   }
 `
 
