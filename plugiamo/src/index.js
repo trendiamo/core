@@ -1,6 +1,6 @@
 import App from 'app'
 import Hackathon from 'special/nowadays'
-import initRollbar from 'ext/rollbar'
+// import initRollbar from 'ext/rollbar'
 import mixpanel from 'ext/mixpanel'
 import SpotAHome from 'special/spotahome'
 import { detect } from 'detect-browser'
@@ -34,7 +34,7 @@ const detectAndMarkHackathon = () => {
 }
 
 const main = () => {
-  initRollbar()
+  // initRollbar()
   mixpanel.init(mixpanelToken)
   mixpanel.track('Visited Page', { hostname: location.hostname })
   triggerMixpanelPageEvents()
