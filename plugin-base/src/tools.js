@@ -1,3 +1,5 @@
+import { parse, stringify } from 'querystring'
+
 function segmentize(url) {
   return url.replace(/(^\/+|\/+$)/g, '').split('/')
 }
@@ -45,4 +47,12 @@ export const matchUrl = (url, route) => {
   }
   if (ret === false) return false
   return matches
+}
+
+export const imgixUrl = (url, imgixParams) => {
+  if (!process.env.PRODUCTION) return url
+  const urlObj = new URL(url)
+  const dpr = window.devicePixelRatio || 1
+  const search = { ...parse(urlObj.search.substr(1)), dpr, ...imgixParams }
+  return `//trendiamo-assets.imgix.net${urlObj.pathname}?${stringify(search)}`
 }

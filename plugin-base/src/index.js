@@ -9,7 +9,7 @@ import Showcase from 'showcase'
 import { animate, TopSlideAnimation } from 'shared/animate'
 import { emojify, emojifyStyles, history, Router, timeout, transition, typeText, withTextTyping } from 'ext'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose, IconPlayButton } from 'icons'
-import { matchUrl } from 'tools'
+import { imgixUrl, matchUrl } from 'tools'
 
 export {
   animate,
@@ -18,6 +18,7 @@ export {
   CoverImg,
   emojify,
   emojifyStyles,
+  imgixUrl,
   matchUrl,
   Navigation,
   BackButton,

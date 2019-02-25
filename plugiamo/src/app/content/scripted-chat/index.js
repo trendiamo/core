@@ -6,6 +6,7 @@ import {
   Cover,
   CoverImg,
   CoverInner,
+  imgixUrl,
   PaddedCover,
   PersonaDescription,
   PersonaInstagram,
@@ -26,7 +27,7 @@ export const CoverScriptedChat = compose(withTextTyping(({ persona }) => persona
     <CoverInner>
       <FlowBackButton />
       <FlexDiv>
-        <CoverImg src={persona.profilePic.url} />
+        <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 45, 'max-h': 45 })} />
         <PaddedCover>
           <span>{persona.name}</span>
           <PersonaInstagram url={persona.instagramUrl} />

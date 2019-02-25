@@ -1,6 +1,7 @@
 import emojify from 'ext/emojify'
 import React from 'react'
 import styled from 'styled-components'
+import { imgixUrl } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 
 const Content = styled.div`
@@ -38,7 +39,7 @@ const DisplayPrice = styled.div`
 
 const ProductItem = ({ spotlight, product, onClick, ...props }) => (
   <ListItem onClick={onClick({ product, spotlight })} {...props}>
-    <ListImg picture={product.picture.url} />
+    <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', 'max-w': 101, 'max-h': 101 })} />
     <ListContent>
       <Content>
         <Name>{product.name}</Name>

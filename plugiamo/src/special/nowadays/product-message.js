@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Card, CardContent, CardImg } from 'shared/card'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
+import { imgixUrl } from 'plugin-base'
 import { markGoFwd } from 'app/setup/flow-history'
 
 const TitleAndPrice = styled.div`
@@ -51,7 +52,10 @@ const ProductMessage = compose(
   })
 )(({ product, onClick }) => (
   <Card onClick={onClick} style={{ minWidth: '260px', cursor: 'pointer' }}>
-    <CardImg src={product.picUrl} style={{ height: '180px', objectFit: 'cover' }} />
+    <CardImg
+      src={imgixUrl(product.picUrl, { fit: 'crop', 'max-w': 180, 'max-h': 180 })}
+      style={{ height: '180px', objectFit: 'cover' }}
+    />
     <CardContent>
       <TitleAndPrice>
         <Title>{product.title}</Title>

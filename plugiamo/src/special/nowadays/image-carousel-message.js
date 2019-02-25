@@ -4,7 +4,7 @@ import Modal from 'shared/modal'
 import { Carousel, CarouselElement } from './carousel'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
-import { parse, stringify } from 'query-string'
+import { imgixUrl } from 'plugin-base'
 
 let touchstartX = 0
 let touchstartY = 0
@@ -21,17 +21,6 @@ const handleGesure = (touchstartX, touchstartY, touchendX, touchendY) => {
   if (touchendY === touchstartY) {
     return 'Tap'
   }
-}
-
-const imgixUrl = imgUrl => {
-  const urlArray = imgUrl.split('?')
-  const paramsToAdd = {
-    fit: 'crop',
-    'max-w': 260,
-    'max-h': 260,
-  }
-  if (urlArray.length < 2) return `${urlArray[0]}?${stringify(paramsToAdd)}`
-  return `${urlArray[0]}?${stringify({ ...parse(urlArray[1]), ...paramsToAdd })}`
 }
 
 const ImgCarouselMessage = compose(
@@ -180,7 +169,7 @@ const ImgCarouselMessage = compose(
             onClick={openModal(index)}
             onTouchEnd={handleIsTouch}
           >
-            <img alt="" src={imgixUrl(imgUrl)} />
+            <img alt="" src={imgixUrl(imgUrl, { fit: 'crop', 'max-w': 140, 'max-h': 140 })} />
           </CarouselElement>
         ))}
       </Carousel>
