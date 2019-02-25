@@ -2,7 +2,7 @@ import Img from 'gatsby-image'
 import React from 'react'
 import { graphql, StaticQuery } from 'gatsby'
 
-const Logo = ({ alt }) => (
+const Logo = ({ alt, style }) => (
   <StaticQuery
     query={graphql`
       query {
@@ -16,7 +16,11 @@ const Logo = ({ alt }) => (
       }
     `}
     render={data => (
-      <Img alt={alt} fixed={data.logo.childImageSharp.fixed} style={{ width: '135px', height: '33px' }} />
+      <Img
+        alt={alt}
+        fixed={data.logo.childImageSharp.fixed}
+        style={{ ...style, width: '136px', height: '33px' } || { width: '136px', height: '33px' }}
+      />
     )}
   />
 )

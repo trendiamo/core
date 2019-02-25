@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 
 import Globe from '../images/globe.svg'
-import GlobeOrange from '../images/globe-orange.svg'
 import locales from '../../locales'
 
 const StyledLink = styled(Link)`
@@ -22,15 +21,9 @@ const StyledLink = styled(Link)`
   }
 `
 
-const StyledGlobe = styled.img.attrs({
-  src: ({ orange }) => (orange ? GlobeOrange : Globe),
-})`
-  margin-right: 3px;
-`
-
 const SelectContainer = styled.div`
-  margin-left: 20px;
-  display: none;
+  margin-left: ${({ isMobileMenu }) => (isMobileMenu ? '0px' : '20px')};
+  display: ${({ isMobileMenu }) => (isMobileMenu ? 'flex' : 'none')};
   position: relative;
   @media (min-width: 900px) {
     display: flex;
@@ -47,24 +40,25 @@ const SelectContainer = styled.div`
   }
   img {
     padding-right: 3px;
-    height: 18px;
-    width: 18px;
+    height: ${({ isMobileMenu }) => (isMobileMenu ? '20px' : '18px')};
+    width: ${({ isMobileMenu }) => (isMobileMenu ? '20px' : '18px')};
   }
   input {
     appearance: none;
+    color: #393939;
     background: transparent;
     border: 0;
     outline: 0;
     cursor: pointer;
-    font-size: 14px;
+    font-size: ${({ isMobileMenu }) => (isMobileMenu ? '20px' : '14px')};
     font-weight: 500;
     font-family: Roboto, sans-serif;
-    width: 20px;
+    width: ${({ isMobileMenu }) => (isMobileMenu ? '100%' : '50px')};
   }
   ul {
     position: absolute;
     top: 28px;
-    right: 0px;
+    right: ${({ isMobileMenu }) => (isMobileMenu ? '-40px' : '0px')};
     width: auto;
     background-color: white;
     box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
@@ -75,29 +69,14 @@ const SelectContainer = styled.div`
   }
 `
 
-const StyledLink = styled(Link)`
-  font-size: 14px;
-  line-height: 1.71;
-  display: block;
-  color: #393939;
-  font-weight: ${({ selecteditem, item }) => (item.value.locale === selecteditem.locale ? 'bold' : 'normal')};
-  text-decoration: none;
-`
-
-const Container = styled.div`
-  display: inline-block;
-`
-
 const localesArray = Object.keys(locales).map(e => ({ value: locales[e], label: locales[e].label }))
 
 const purePath = (item, locale) => `${item.value.path}${location.pathname.replace(locales[locale].path, '')}`
 
-// to={`${item.value.path}${purePath(new URL(window.location.href), locales[locale].path)}`}
-const LangSelector = ({ locale }) => (
+const LangSelector = ({ locale, isMobileMenu }) => (
   <Downshift initialSelectedItem={locales[locale]} itemToString={item => item.label}>
     {({ getRootProps, getInputProps, getItemProps, getMenuProps, isOpen, selectedItem, toggleMenu }) => (
-      <SelectContainer {...getRootProps()}>
-        {/* <StyledGlobe orange={orange} /> */}
+      <SelectContainer isMobileMenu={isMobileMenu} {...getRootProps()}>
         <button onClick={toggleMenu} type="button">
           <img alt="" src={Globe} />
           <input {...getInputProps()} readOnly value={selectedItem && selectedItem.label} />
