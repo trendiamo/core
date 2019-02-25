@@ -1,8 +1,6 @@
 import { parse, stringify } from 'querystring'
 
-function segmentize(url) {
-  return url.replace(/(^\/+|\/+$)/g, '').split('/')
-}
+const segmentize = url => url.replace(/(^\/+|\/+$)/g, '').split('/')
 
 const EMPTY = {}
 
