@@ -64,6 +64,11 @@ const apiListRequest = async url =>
     method: 'get',
   })
 
+const apiPostRequest = async url =>
+  await authFetch(url, {
+    method: 'post',
+  })
+
 export const apiSignOut = async () => {
   const result = await apiDestroyRequest(SIGNOUT_URL)
   const json = await result.json()
@@ -115,12 +120,14 @@ export const apiOutroDestroy = body => apiDestroyMultipleRequest(OUTROS_URL, bod
 export const apiOutroCreate = body => apiCreateRequest(OUTROS_URL, body)
 export const apiOutroShow = id => apiGetRequest(`${OUTROS_URL}/${id}`)
 export const apiOutroUpdate = (id, body) => apiUpdateRequest(`${OUTROS_URL}/${id}`, body)
+export const apiOutroDuplicate = id => apiPostRequest(`${OUTROS_URL}/${id}/duplicate`)
 
 export const apiShowcaseList = query => apiListRequest(`${CURATIONS_URL}/?${stringify(query)}`)
 export const apiShowcaseDestroy = body => apiDestroyMultipleRequest(CURATIONS_URL, body)
 export const apiShowcaseCreate = body => apiCreateRequest(CURATIONS_URL, body)
 export const apiShowcaseShow = id => apiGetRequest(`${CURATIONS_URL}/${id}`)
 export const apiShowcaseUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL}/${id}`, body)
+export const apiShowcaseDuplicate = id => apiPostRequest(`${CURATIONS_URL}/${id}/duplicate`)
 
 export const apiScriptedChatList = query => apiListRequest(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`)
 export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED_CHATS_URL, body)
@@ -133,6 +140,7 @@ export const apiNavigationDestroy = body => apiDestroyMultipleRequest(NAVIGATION
 export const apiNavigationCreate = body => apiCreateRequest(NAVIGATIONS_URL, body)
 export const apiNavigationShow = id => apiGetRequest(`${NAVIGATIONS_URL}/${id}`)
 export const apiNavigationUpdate = (id, body) => apiUpdateRequest(`${NAVIGATIONS_URL}/${id}`, body)
+export const apiNavigationDuplicate = id => apiPostRequest(`${NAVIGATIONS_URL}/${id}/duplicate`)
 
 export const apiTriggerList = () => apiGetRequest(TRIGGERS_URL)
 export const apiTriggerDestroy = body => apiDestroyMultipleRequest(TRIGGERS_URL, body)

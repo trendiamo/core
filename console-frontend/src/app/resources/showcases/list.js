@@ -3,7 +3,7 @@ import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
 import { ActiveColumn, Avatar, columns, TableCell, Text } from 'shared/table-elements'
-import { apiShowcaseDestroy, apiShowcaseList } from 'utils'
+import { apiShowcaseDestroy, apiShowcaseDuplicate, apiShowcaseList } from 'utils'
 import { compose } from 'recompose'
 
 const BlankState = () => (
@@ -33,7 +33,7 @@ export default compose(
     columns,
     defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,
-    api: { fetch: apiShowcaseList, destroy: apiShowcaseDestroy },
+    api: { fetch: apiShowcaseList, destroy: apiShowcaseDestroy, duplicate: apiShowcaseDuplicate },
     routes: { create: routes.showcaseCreate, edit: routes.showcaseEdit },
     help: { single: true, stepName: 'showcases', stageName: 'initial' },
     highlightInactive: 'triggerIds',

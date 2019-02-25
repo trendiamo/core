@@ -22,7 +22,7 @@ const TableSortLabel = compose(
   })
 )(({ handleRequestSort, ...props }) => <MuiTableSortLabel {...props} onClick={handleRequestSort} />)
 
-const TableHead = ({ leftColumns, handleRequestSort, orderBy, orderDirection, columns }) => (
+const TableHead = ({ leftColumns, handleRequestSort, orderBy, orderDirection, columns, duplicate }) => (
   <StyledTableHead>
     <TableRow>
       {leftColumns}
@@ -59,6 +59,13 @@ const TableHead = ({ leftColumns, handleRequestSort, orderBy, orderDirection, co
           whiteSpace: 'nowrap',
         }}
       />
+      {duplicate && (
+        <TableCell
+          style={{
+            whiteSpace: 'nowrap',
+          }}
+        />
+      )}
     </TableRow>
   </StyledTableHead>
 )
