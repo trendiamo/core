@@ -1,20 +1,4 @@
 const i18n = {
-  iStillNeedHelp: () => {
-    const account = localStorage.getItem('trnd-plugin-account')
-    if (['Corinthians', 'Shopinfo', 'Shopinfo2'].includes(account)) {
-      return 'Me mostre outras sugestões'
-    } else if (account === 'Impressorajato') {
-      return 'Legal! Quero saber mais!'
-    } else if (account === 'Eotica') {
-      return 'Quero saber mais'
-    } else if (account === 'RiHappy') {
-      return 'Preciso saber mais'
-    } else if (account === 'PierreCardinGermany') {
-      return 'Ich benötige weitere Hilfe'
-    } else {
-      return 'I still need help'
-    }
-  },
   okCool: () => {
     const account = localStorage.getItem('trnd-plugin-account')
     if (['Corinthians', 'Shopinfo', 'Shopinfo2'].includes(account)) {
