@@ -62,13 +62,21 @@ const Logo = ({ file }) => (
   </LogoContainer>
 )
 
+const FixedWidthContainer = styled.div`
+  @media (min-width: 1200px) {
+    width: 1200px;
+  }
+`
+
 const ClientLogos = ({ clients }) =>
   clients.edges.length > 0 && (
-    <Slider {...sliderSettings}>
-      {clients.edges.map(client => (
-        <Logo file={client.node.logo.file} key={client.node.clientName} />
-      ))}
-    </Slider>
+    <FixedWidthContainer>
+      <Slider {...sliderSettings}>
+        {clients.edges.map(client => (
+          <Logo file={client.node.logo.file} key={client.node.clientName} />
+        ))}
+      </Slider>
+    </FixedWidthContainer>
   )
 
 const TestimonialContainer = styled.div`
