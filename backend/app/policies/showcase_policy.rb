@@ -18,4 +18,8 @@ class ShowcasePolicy < ApplicationPolicy
   def destroy?
     user
   end
+
+  def duplicate?
+    user
+  end
 end

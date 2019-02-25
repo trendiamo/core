@@ -42,6 +42,18 @@ class ShowcasesController < RestController
     end
   end
 
+  def duplicate
+    @showcase = Showcase.find(params[:id])
+    authorize @showcase
+    @cloned_showcase = @showcase.deep_clone include: { spotlights: :product_picks }
+    @cloned_showcase.name = "Copied from - " + @cloned_showcase.name
+    if @cloned_showcase.save
+      render json: @cloned_showcase, status: :created
+    else
+      render_error
+    end
+  end
+
   private
 
   def showcase_params

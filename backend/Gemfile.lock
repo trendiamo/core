@@ -75,6 +75,8 @@ GEM
     concurrent-ruby (1.0.5)
     crass (1.0.3)
     database_cleaner (1.7.0)
+    deep_cloneable (2.4.0)
+      activerecord (>= 3.1.0, < 6)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -276,6 +278,7 @@ DEPENDENCIES
   brakeman
   byebug
   database_cleaner
+  deep_cloneable (~> 2.4.0)
   devise
   dotenv-rails
   factory_bot_rails
@@ -304,4 +307,4 @@ RUBY VERSION
    ruby 2.4.3p205
 
 BUNDLED WITH
-   1.16.3
+   1.16.6
