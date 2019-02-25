@@ -8,6 +8,10 @@ import { transition } from 'ext'
 const PersonaName = styled.span`
   font-weight: 500;
   font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
   .Win32 & {
     font-weight: 600;
   }
