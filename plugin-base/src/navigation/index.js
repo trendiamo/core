@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { compose } from 'recompose'
 import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
+import { imgixUrl } from 'tools'
 import { Tile, TilesWrapper } from 'shared/tiles'
 import { TopSlideAnimation } from 'shared/animate'
 import { withTextTyping } from 'ext'
@@ -30,7 +31,7 @@ const NavigationCover = compose(withTextTyping(({ persona }) => persona.descript
     <CoverInner>
       {FlowBackButton && <FlowBackButton />}
       <FlexDiv>
-        <CoverImg src={persona.profilePic.url} />
+        <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 45, 'max-h': 45 })} />
         <PaddedCover>
           <span>{persona.name}</span>
           <PersonaInstagram url={persona.instagramUrl} />
@@ -60,7 +61,7 @@ const Navigation = ({ FlowBackButton, title, navigationItems, onTileClick, perso
             {navigationItems.map((navigationItem, index) => (
               <Tile
                 highlight
-                imageUrl={navigationItem.picture.url}
+                imageUrl={imgixUrl(navigationItem.picture.url, { fit: 'crop', 'max-w': 156, 'max-h': 120 })}
                 key={navigationItem.id || `new-${index}`}
                 onClick={() => onTileClick(navigationItem)}
                 title={navigationItem.text}

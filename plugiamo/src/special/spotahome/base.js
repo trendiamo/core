@@ -3,6 +3,7 @@ import { BelowCover, Cover, CoverImg, PaddedCover, PersonaDescription, TopSlideA
 import { Card, CardContent, CardImg, CardsContainer, CardsWrapper } from 'shared/card'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
+import { imgixUrl } from 'plugin-base'
 
 const ColFlexDiv = styled.div`
   flex: 1;
@@ -95,7 +96,7 @@ const HouseCard = compose(
 
 const SpotahomeCover = ({ persona }) => (
   <FlexDiv>
-    <CoverImg src={persona.profilePic.url} />
+    <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 45, 'max-h': 45 })} />
     <PaddedCover>
       <span>{persona.name}</span>
       <TopSlideAnimation timeout={250 * 0}>

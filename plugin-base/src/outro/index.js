@@ -2,6 +2,7 @@ import emojify from 'ext/emojify'
 import PersonaInstagram from 'shared/persona-instagram'
 import React from 'react'
 import styled from 'styled-components'
+import { imgixUrl } from 'tools'
 
 const Wrapper = styled.div`
   background: linear-gradient(to bottom, #f3fdff, #fff);
@@ -48,7 +49,7 @@ const Hr = styled.hr`
 const Outro = ({ persona }) => (
   <Wrapper>
     <InnerContent>
-      <PersonaImg src={persona.profilePic.url} />
+      <PersonaImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 80, 'max-h': 80 })} />
       <Name>
         <span style={{ verticalAlign: 'top' }}>{persona.name}</span>
         <PersonaInstagram color="black" size="20px" url={persona.instagramUrl} />

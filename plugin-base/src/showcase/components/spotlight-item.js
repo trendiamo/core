@@ -2,6 +2,7 @@ import emojify from 'ext/emojify'
 import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
+import { imgixUrl } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 import { transition } from 'ext'
 
@@ -44,7 +45,7 @@ const SpotlightItem = compose(
     <ListImg
       animation={spotlight.persona.profilePicAnimationUrl}
       imgRef={setImgRef}
-      picture={spotlight.persona.profilePic.url}
+      picture={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', 'max-w': 101, 'max-h': 101 })}
     />
     <ListContent>
       <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>

@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
+import { imgixUrl } from 'plugin-base'
 
 const StyledLauncherFrame = animateOnMount(styled(Frame).attrs({
   title: 'Trendiamo Launcher',
@@ -116,7 +117,7 @@ const Launcher = ({
 export default compose(
   withState('disappear', 'setDisappear', false),
   withProps(({ persona }) => ({
-    personaPicUrl: persona.profilePic.url,
+    personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 70, 'max-h': 70 }),
   })),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {

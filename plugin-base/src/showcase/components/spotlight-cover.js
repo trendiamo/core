@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
 import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
+import { imgixUrl } from 'tools'
 import { transition, withTextTyping } from 'ext'
 
 const FlexDiv = styled.div`
@@ -38,7 +39,10 @@ const SpotlightCover = compose(
   <CoverInner>
     <BackButton isLeaving={isLeaving} onClick={routeToShowcase} />
     <FlexDiv>
-      <CoverImg imgRef={setImgRef} src={spotlight.persona.profilePic.url} />
+      <CoverImg
+        imgRef={setImgRef}
+        src={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', 'max-w': 45, 'max-h': 45 })}
+      />
       <PaddedCover>
         <span ref={setNameRef}>{spotlight.persona.name}</span>
         <PersonaInstagram url={spotlight.persona.instagramUrl} />
