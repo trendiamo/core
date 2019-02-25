@@ -30,13 +30,15 @@ Rails.application.routes.draw do
 
       resources :showcases, only: %i[index show update create]
       delete "/showcases", to: "showcases#destroy"
+      post "/showcases/:id/duplicate", to: "showcases#duplicate"
       resources :scripted_chats, only: %i[index show update create]
       delete "/scripted_chats", to: "scripted_chats#destroy"
       resources :outros, only: %i[index show update create]
       delete "/outros", to: "outros#destroy"
+      post "/outros/:id/duplicate", to: "outros#duplicate"
       resources :navigations, only: %i[index show update create]
       delete "/navigations", to: "navigations#destroy"
-
+      post "/navigations/:id/duplicate", to: "navigations#duplicate"
       resources :triggers, only: %i[index show update create]
       post "/triggers/sort", to: "triggers#sort"
       delete "/triggers", to: "triggers#destroy"

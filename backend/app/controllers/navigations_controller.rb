@@ -42,6 +42,18 @@ class NavigationsController < RestController
     end
   end
 
+  def duplicate
+    @navigation = Navigation.find(params[:id])
+    authorize @navigation
+    @cloned_navigation = @navigation.deep_clone include: :navigation_items
+    @cloned_navigation.name = "Copied from - " + @cloned_navigation.name
+    if @cloned_navigation.save
+      render json: @cloned_navigation, status: :created
+    else
+      render_error
+    end
+  end
+
   private
 
   def navigation_params

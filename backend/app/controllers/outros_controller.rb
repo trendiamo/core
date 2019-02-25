@@ -42,6 +42,18 @@ class OutrosController < RestController
     end
   end
 
+  def duplicate
+    @outro = Outro.find(params[:id])
+    authorize @outro
+    @cloned_outro = @outro.deep_clone
+    @cloned_outro.name = "Copied from - " + @cloned_outro.name
+    if @cloned_outro.save
+      render json: @cloned_outro, status: :created
+    else
+      render_error
+    end
+  end
+
   private
 
   def outro_params
