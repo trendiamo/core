@@ -1,13 +1,19 @@
+import Button from 'shared/edit-button'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
-import EditButton from 'shared/edit-button'
+import CopyIcon from '@material-ui/icons/FileCopyOutlined'
 import EditIcon from '@material-ui/icons/EditOutlined'
 import React from 'react'
 import TableCell from './table-cell'
+import { apiRequest } from 'utils'
 import { Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
 import { compose, withHandlers } from 'recompose'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
+import { withSnackbar } from 'notistack'
 
 const TableRow = compose(
+  withSnackbar,
+  withRouter,
   withHandlers({
     handleSelect: ({ setSelectedIds, selectedIds, resource }) => event => {
       if (event.target.checked) {
@@ -18,8 +24,16 @@ const TableRow = compose(
         setSelectedIds(newSelectedIds)
       }
     },
+    duplicateResource: ({ api, enqueueSnackbar, history, resource, routes }) => async () => {
+      const { json, requestError } = await apiRequest(api.duplicate, [resource.id])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+        return
+      }
+      history.push(routes.edit(json.id))
+    },
   })
-)(({ resource, handleSelect, selectedIds, resourceEditPath, children, highlightInactive }) => (
+)(({ duplicateResource, resource, handleSelect, selectedIds, api, resourceEditPath, children, highlightInactive }) => (
   <MuiTableRow hover role="checkbox" style={{ background: highlightInactive ? '#f7f7f7' : '' }} tabIndex={-1}>
     <TableCell>
       <Checkbox
@@ -36,9 +50,14 @@ const TableRow = compose(
       }}
     >
       {resourceEditPath && (
-        <EditButton component={Link} to={resourceEditPath}>
+        <Button component={Link} to={resourceEditPath}>
           <EditIcon />
-        </EditButton>
+        </Button>
+      )}
+      {api.duplicate && (
+        <Button onClick={duplicateResource}>
+          <CopyIcon />
+        </Button>
       )}
     </TableCell>
   </MuiTableRow>

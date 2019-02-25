@@ -177,6 +177,7 @@ const enhanceList = ({
         <Table aria-labelledby={label}>
           <TableHead
             columns={columns}
+            duplicate={!!api.duplicate}
             handleRequestSort={handleRequestSort}
             leftColumns={
               <TableCell>
@@ -195,12 +196,14 @@ const enhanceList = ({
             {records &&
               records.map((record, index) => (
                 <TableRow
+                  api={api}
                   handleSelectAll={handleSelectAll}
                   highlightInactive={inactiveRows[index]}
                   index={index}
                   key={record.id}
                   resource={record}
                   resourceEditPath={routes.edit(record.id)}
+                  routes={routes}
                   selectedIds={selectedIds}
                   setSelectedIds={setSelectedIds}
                 >
