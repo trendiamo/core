@@ -33,7 +33,9 @@ const UrlTextField = compose(
     InputProps={{
       startAdornment: (
         <InputAdornment>
-          <Typography>{hostnames.length > 1 ? 'https://yourwebsite.com' : hostnames[0]}</Typography>
+          <Typography style={{ whiteSpace: 'nowrap' }}>
+            {hostnames.length > 1 ? 'https://yourwebsite.com' : hostnames[0]}
+          </Typography>
         </InputAdornment>
       ),
     }}
