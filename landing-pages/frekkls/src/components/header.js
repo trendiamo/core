@@ -8,36 +8,17 @@ import LangSelector from './lang-selector'
 import locales from '../../locales'
 import Logo from '../images/logo'
 import MobileMenu from './mobile-menu'
-import { OutlineButton } from './button'
 
-import menuIcon from '../images/mobile-hamburger.svg'
+import menuIcon from '../images/menu-icon.svg'
 
 const StyledMenuIcon = styled.img.attrs({
   src: menuIcon,
 })`
+  padding-left: 30px;
   fill: #ff6e5c;
-  @media (min-width: 530px) {
+  height: 35px;
+  @media (min-width: 900px) {
     display: none;
-  }
-`
-
-const StyledLangSelector = styled(LangSelector)`
-  position: absolute;
-  width: 40px;
-  top: 52px;
-  right: 10px;
-  display: none;
-  @media (min-width: 900px) {
-    display: flex;
-  }
-`
-
-const StyledOutlineButton = styled(OutlineButton)`
-  font-size: 12px;
-  padding: 10px;
-  @media (min-width: 900px) {
-    font-size: 20px;
-    padding: 20px 30px;
   }
 `
 
@@ -59,11 +40,11 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
           {layout.blog}
         </Link>
         <Button className="js-request-demo">{layout.tryNow}</Button>
-        <LangSelector locale={locale} />
         <StyledMenuIcon onClick={toggleMobileMenu} />
+        <LangSelector locale={locale} />
       </nav>
     </Container>
-    <MobileMenu layout={layout} locale={locale} toggleMobileMenu={toggleMobileMenu} />
+    <MobileMenu layout={layout} locale={locale} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
   </header>
 ))`
   padding: 1.5rem 1rem;
@@ -79,7 +60,7 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
   .header-link {
     display: none;
   }
-  @media (min-width: 530px) {
+  @media (min-width: 900px) {
     .header-link {
       display: block;
     }
@@ -103,12 +84,14 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
   }
 
   ${Button} {
+    display: none;
     font-size: 12px;
     padding: 10px;
   }
 
   @media (min-width: 900px) {
     ${Button} {
+      display: block;
       font-size: 20px;
       padding: 13px 20px;
     }
