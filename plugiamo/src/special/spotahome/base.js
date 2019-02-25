@@ -96,7 +96,7 @@ const HouseCard = compose(
 
 const SpotahomeCover = ({ persona }) => (
   <FlexDiv>
-    <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 45, 'max-h': 45 })} />
+    <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
     <PaddedCover>
       <span>{persona.name}</span>
       <TopSlideAnimation timeout={250 * 0}>

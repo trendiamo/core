@@ -31,7 +31,7 @@ const NavigationCover = compose(withTextTyping(({ persona }) => persona.descript
     <CoverInner>
       {FlowBackButton && <FlowBackButton />}
       <FlexDiv>
-        <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 45, 'max-h': 45 })} />
+        <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
         <PaddedCover>
           <span>{persona.name}</span>
           <PersonaInstagram url={persona.instagramUrl} />
@@ -61,7 +61,7 @@ const Navigation = ({ FlowBackButton, title, navigationItems, onTileClick, perso
             {navigationItems.map((navigationItem, index) => (
               <Tile
                 highlight
-                imageUrl={imgixUrl(navigationItem.picture.url, { fit: 'crop', 'max-w': 156, 'max-h': 120 })}
+                imageUrl={imgixUrl(navigationItem.picture.url, { fit: 'crop', w: 156, h: 120 })}
                 key={navigationItem.id || `new-${index}`}
                 onClick={() => onTileClick(navigationItem)}
                 title={navigationItem.text}

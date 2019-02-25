@@ -50,7 +50,6 @@ export const matchUrl = (url, route) => {
 }
 
 export const imgixUrl = (url, imgixParams) => {
-  if (!process.env.PRODUCTION) return url
   const urlObj = new URL(url)
   const dpr = window.devicePixelRatio || 1
   const search = { ...parse(urlObj.search.substr(1)), dpr, ...imgixParams }

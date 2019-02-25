@@ -117,7 +117,7 @@ const Launcher = ({
 export default compose(
   withState('disappear', 'setDisappear', false),
   withProps(({ persona }) => ({
-    personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 70, 'max-h': 70 }),
+    personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', w: 70, h: 70 }),
   })),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {

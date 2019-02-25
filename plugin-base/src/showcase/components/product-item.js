@@ -39,7 +39,7 @@ const DisplayPrice = styled.div`
 
 const ProductItem = ({ spotlight, product, onClick, ...props }) => (
   <ListItem onClick={onClick({ product, spotlight })} {...props}>
-    <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', 'max-w': 101, 'max-h': 101 })} />
+    <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', w: 101, h: 101 })} />
     <ListContent>
       <Content>
         <Name>{product.name}</Name>

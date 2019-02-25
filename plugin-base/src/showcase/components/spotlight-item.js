@@ -45,7 +45,7 @@ const SpotlightItem = compose(
     <ListImg
       animation={spotlight.persona.profilePicAnimationUrl}
       imgRef={setImgRef}
-      picture={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', 'max-w': 101, 'max-h': 101 })}
+      picture={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 101, h: 101 })}
     />
     <ListContent>
       <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>

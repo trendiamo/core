@@ -49,7 +49,7 @@ const Hr = styled.hr`
 const Outro = ({ persona }) => (
   <Wrapper>
     <InnerContent>
-      <PersonaImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', 'max-w': 80, 'max-h': 80 })} />
+      <PersonaImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', w: 80, h: 80 })} />
       <Name>
         <span style={{ verticalAlign: 'top' }}>{persona.name}</span>
         <PersonaInstagram color="black" size="20px" url={persona.instagramUrl} />

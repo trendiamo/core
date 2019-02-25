@@ -169,7 +169,7 @@ const ImgCarouselMessage = compose(
             onClick={openModal(index)}
             onTouchEnd={handleIsTouch}
           >
-            <img alt="" src={imgixUrl(imgUrl, { fit: 'crop', 'max-w': 140, 'max-h': 140 })} />
+            <img alt="" src={imgixUrl(imgUrl, { fit: 'crop', w: 140, h: 140 })} />
           </CarouselElement>
         ))}
       </Carousel>

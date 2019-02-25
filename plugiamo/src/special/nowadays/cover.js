@@ -137,7 +137,7 @@ export const Cover = ({ header, minimized }) => (
   <CoverBase minimized={minimized}>
     <ImageContainer minimized={minimized}>
       <CoverAnimation minimized={minimized} src={header.animationUrl} />
-      <CoverImage image={imgixUrl(header.imageUrl, { fit: 'crop', 'max-w': 160, 'max-h': 90 })} minimized={minimized} />
+      <CoverImage image={imgixUrl(header.imageUrl, { fit: 'crop', w: 160, h: 90 })} minimized={minimized} />
     </ImageContainer>
     <TextContainer minimized={minimized}>
       <Header>

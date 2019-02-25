@@ -39,10 +39,7 @@ const SpotlightCover = compose(
   <CoverInner>
     <BackButton isLeaving={isLeaving} onClick={routeToShowcase} />
     <FlexDiv>
-      <CoverImg
-        imgRef={setImgRef}
-        src={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', 'max-w': 45, 'max-h': 45 })}
-      />
+      <CoverImg imgRef={setImgRef} src={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
       <PaddedCover>
         <span ref={setNameRef}>{spotlight.persona.name}</span>
         <PersonaInstagram url={spotlight.persona.instagramUrl} />

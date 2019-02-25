@@ -48,7 +48,7 @@ const ProductMessage = compose(
 )(({ product, onClick }) => (
   <Card onClick={onClick} style={{ minWidth: '230px', cursor: 'pointer' }}>
     <CardImg
-      src={imgixUrl(product.picUrl, { fit: 'crop', 'max-w': 170, 'max-h': 170 })}
+      src={imgixUrl(product.picUrl, { fit: 'crop', w: 170, h: 170 })}
       style={{ height: '170px', objectFit: 'cover' }}
     />
     <CardContent>
