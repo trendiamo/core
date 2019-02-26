@@ -22,7 +22,7 @@ const chatLog = {
   },
   timestamp: null,
   addLogs(chatMessages, chatOptions) {
-    const messageLogs = chatMessages.map(chatMessage => ({ type: 'message', chatMessage }))
+    const messageLogs = chatMessages.map(message => ({ type: 'message', message }))
     const optionLogs = chatOptions.map(chatOption => ({ type: 'option', chatOption }))
     const logs = messageLogs.concat(optionLogs)
     logs.map(log => {

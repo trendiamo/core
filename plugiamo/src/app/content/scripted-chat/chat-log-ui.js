@@ -1,22 +1,62 @@
-import chatLog from './chat-log'
-import ChatMessage from './chat-message'
-import ChatOptions from './chat-options'
-import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import Chat from './components/chat'
+import ConsumerContent from './components/consumer-content'
+import { ChatBackground } from 'app/content/scripted-chat/shared'
+import { compose, withHandlers, withProps, withState } from 'recompose'
+import { Consumer } from 'ext/graphql-context'
 import { h } from 'preact'
 
-const FlexDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`
+const ChatLogUiTemplate = ({
+  setContentRef,
+  contentRef,
+  setBackgroundRef,
+  minHeight,
+  configMinHeight,
+  initialChatStep,
+  persona,
+  title,
+  onStopChat,
+}) => (
+  <Chat ref={setContentRef} touch>
+    <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
+      <Consumer>
+        {client => (
+          <ConsumerContent
+            client={client}
+            configMinHeight={configMinHeight}
+            contentRef={contentRef}
+            initialChatStep={initialChatStep}
+            onStopChat={onStopChat}
+            persona={persona}
+            title={title}
+          />
+        )}
+      </Consumer>
+    </ChatBackground>
+  </Chat>
+)
 
-const ChatLogUi = compose(
-  withProps(({ persona }) => ({
-    personName: persona.name.split(' ')[0],
+export default compose(
+  withState('minHeight', 'setMinHeight', 0),
+  withProps(({ data }) => ({
+    initialChatStep: data.scriptedChat.chatStep,
+    title: data.scriptedChat.title,
   })),
-  withState('logs', 'setLogs', []),
+  withHandlers(() => {
+    let backgroundRef
+    return {
+      setContentRef: ({ setContentRef }) => ref => {
+        setContentRef(ref)
+      },
+      setBackgroundRef: () => ref => (backgroundRef = ref),
+      getBackgroundRef: () => () => backgroundRef,
+    }
+  }),
   withHandlers({
-    onResetChat: ({ initialChatStep }) => () => chatLog.fetchStep(initialChatStep.id),
+    configMinHeight: ({ setMinHeight, getBackgroundRef, minHeight }) => () => {
+      if (getBackgroundRef().base.clientHeight !== minHeight) {
+        setMinHeight(getBackgroundRef().base.clientHeight)
+      }
+    },
     onStopChat: ({ onToggleContent }) => () => {
       const account = localStorage.getItem('trnd-plugin-account')
       if (account === 'Impressorajato') {
@@ -28,28 +68,5 @@ const ChatLogUi = compose(
         onToggleContent()
       }
     },
-    updateLogs: ({ setLogs }) => chatLog => setLogs(chatLog.logs),
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { client, initialChatStep, personName, updateLogs } = this.props
-      chatLog.init(client, personName)
-      // we don't remove this listener in componentWillUnmount because preact doesn't fire it inside iframes
-      // instead we do a check for chatLog.timestamp in the chatLog logic, to prevent duplicates
-      chatLog.addListener(updateLogs)
-      chatLog.fetchStep(initialChatStep.id)
-    },
   })
-)(({ logs, onResetChat, onStopChat, persona }) => (
-  <FlexDiv>
-    {logs.map(log =>
-      log.type === 'message' ? (
-        <ChatMessage log={log} />
-      ) : (
-        <ChatOptions log={log} onResetChat={onResetChat} onStopChat={onStopChat} persona={persona} />
-      )
-    )}
-  </FlexDiv>
-))
-
-export default ChatLogUi
+)(ChatLogUiTemplate)

@@ -9,10 +9,12 @@ import { markGoFwd } from 'app/setup/flow-history'
 const TitleAndPrice = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
 `
 
 const Title = styled.div`
-  font-size: 12px;
+  font-size: ${({ fontSize }) => fontSize}px;
   font-weight: 500;
   letter-spacing: 0.1px;
   color: #181818;
@@ -21,11 +23,12 @@ const Title = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1;
+  max-width: 200px;
 `
 
 const Price = styled.div`
   white-space: nowrap;
-  font-size: 16px;
+  font-size: ${({ fontSize }) => fontSize}px;
   font-weight: bold;
   letter-spacing: 0.1px;
 `
@@ -58,11 +61,13 @@ const ProductMessage = compose(
     />
     <CardContent>
       <TitleAndPrice>
-        <Title>{product.title}</Title>
-        <Price>{product.displayPrice}</Price>
+        <div>
+          <Title fontSize={localStorage.getItem('trnd-hackathon') ? 12 : 18}>{product.title}</Title>
+        </div>
+        <Price fontSize={localStorage.getItem('trnd-hackathon') ? 16 : 18}>{product.displayPrice}</Price>
       </TitleAndPrice>
     </CardContent>
-    <CtaTextContainer>{product.cardCta}</CtaTextContainer>
+    {product.cardCta && <CtaTextContainer>{product.cardCta}</CtaTextContainer>}
   </Card>
 ))
 

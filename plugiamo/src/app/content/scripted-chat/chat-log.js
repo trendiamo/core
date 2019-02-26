@@ -1,8 +1,6 @@
 import i18n from 'ext/i18n'
 import { gql } from 'ext/recompose/graphql'
 
-const STEP_DELAY = 320
-
 const query = gql`
   query($id: ID!) {
     chatStep(id: $id) {
@@ -59,12 +57,6 @@ const chatLog = {
     this.logs.push(log)
     this.listeners.forEach(fn => fn(this))
   },
-  addNextLog(logs, timestampParam) {
-    const [nextLog, ...otherLogs] = logs
-    nextLog.nextLogs = otherLogs
-    const delay = STEP_DELAY + Math.floor(Math.random() * 320)
-    setTimeout(() => this.addLog(nextLog, timestampParam), delay)
-  },
   client: null,
   fetchStep(id) {
     return this.client
@@ -77,9 +69,11 @@ const chatLog = {
         }))
         const options =
           data.chatStep.chatOptions.length > 0 ? processChatOptions(data.chatStep.chatOptions) : finalOptions()
-        const optionsLog = { options, type: 'options' }
-        const logs = [...messageLogs, optionsLog]
-        this.addNextLog(logs, this.timestamp)
+        const optionLogs = options.map(chatOption => ({ type: 'option', chatOption }))
+        const logs = messageLogs.concat(optionLogs)
+        logs.map(log => {
+          this.addLog(log, this.timestamp)
+        })
       })
       .catch(data => console.error(data))
   },
@@ -101,11 +95,6 @@ const chatLog = {
   },
   resetLogs() {
     this.logs = []
-    this.listeners.forEach(fn => fn(this))
-  },
-  selectOption(log, option) {
-    log.selected = true
-    option.selected = true
     this.listeners.forEach(fn => fn(this))
   },
   timestamp: null,
