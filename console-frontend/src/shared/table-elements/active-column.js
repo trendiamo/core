@@ -4,7 +4,7 @@ import TableCell from './table-cell'
 import { Tooltip } from '@material-ui/core'
 
 const ActiveSymbol = styled.div`
-  background-color: ${({ highlightInactive }) => (highlightInactive ? '#9D9C9D' : '#51b165')};
+  background-color: ${({ highlightInactive }) => (highlightInactive ? '#9D9C9D' : '#257c46')};
   height: 25px;
   font-size: 10px;
   border-radius: 4px;

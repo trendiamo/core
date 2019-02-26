@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core'
 
 const Container = styled.div`
   width: 100%;
-  border: 2px dashed #004cff;
+  border: 2px dashed #ff6f61;
   border-radius: 8px;
   padding: 65px 0;
   text-align: center;

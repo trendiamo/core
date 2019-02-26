@@ -76,7 +76,7 @@ const StyledChip = styled(({ ...props }) => <Chip {...omit(props, ['highlight', 
   margin: 0.25rem;
   margin-left: 0;
   background: ${({ highlight, enabled }) => (highlight ? '#fff' : enabled ? 'rgba(255,255,255,0.2)' : '')};
-  color: ${({ highlight }) => (highlight ? '#51b165' : '')};
+  color: ${({ highlight }) => (highlight ? '#257c46' : '')};
   transition: all 0.2s;
 `
 
@@ -121,7 +121,7 @@ const matchTriggers = (triggers, referenceUrl, hostnames) => {
 }
 
 const TableRowStyled = styled(props => <TableRow {...omit(props, ['highlight'])} />)`
-  background: ${({ highlight }) => (highlight ? '#51b165 !important' : '#fff')};
+  background: ${({ highlight }) => (highlight ? '#257c46 !important' : '#fff')};
   transition: all 0.2s;
 `
 

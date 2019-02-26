@@ -7,7 +7,7 @@ import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
 import { apiSignOut } from 'utils'
-import { Avatar, Divider, Menu, MenuItem, Typography } from '@material-ui/core'
+import { Avatar, Menu, MenuItem, Typography } from '@material-ui/core'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 
 const MenuItemThemed = ({ classes, icon, text, ...props }) => {
@@ -31,24 +31,22 @@ const UserMenu = ({
   profilePicUrl,
   userIdentifier,
 }) => (
-  <React.Fragment>
-    <div onClick={handleMenu} onKeyPress={handleMenu} role="presentation" style={{ cursor: 'pointer' }}>
-      <Avatar className={classNames(classes.avatar, !sidebarOpen && classes.avatarClosed)} src={profilePicUrl}>
-        {profilePicUrl ? null : initials ? initials : ''}
-      </Avatar>
-    </div>
+  <div>
     <MenuItem
       aria-haspopup="true"
       aria-owns={openMenu ? 'menu-appbar' : null}
-      className={classNames(classes.menuItem, !sidebarOpen && classes.menuItemHidden)}
+      className={classNames(classes.menuItem)}
       onClick={handleMenu}
+      style={{ height: 'auto', ...(!sidebarOpen ? { paddingLeft: '12px', paddingRight: '12px' } : {}) }}
     >
-      <Typography className={classes.menuTextActive} variant="body2">
+      <Avatar className={classNames(classes.avatar)} src={profilePicUrl}>
+        {profilePicUrl ? null : initials ? initials : ''}
+      </Avatar>
+      <Typography className={classNames(classes.menuText, !sidebarOpen && classes.menuTextHidden)} variant="body1">
         {userIdentifier}
       </Typography>
       <ArrowDropDown className={classNames(classes.accountArrow, !sidebarOpen && classes.accountArrowHidden)} />
     </MenuItem>
-    <Divider style={{ background: '#6c6c71' }} />
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
@@ -69,7 +67,7 @@ const UserMenu = ({
       </Link>
       <MenuItemThemed classes={classes} icon={<ExitIcon />} onClick={onLogoutButtonClick} text="Logout" />
     </Menu>
-  </React.Fragment>
+  </div>
 )
 
 export default compose(

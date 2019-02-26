@@ -20,7 +20,7 @@ const typography = {
     letterSpacing: '0.4px',
   },
   h4: {
-    color: '#32333d',
+    color: '#3a3a3a',
     fontSize: '33.4px',
     letterSpacing: '0.3px',
   },
@@ -28,14 +28,14 @@ const typography = {
 
 const palette = {
   background: {
-    default: '#f2f4f7',
+    default: '#f5f5f5',
   },
   error: {
-    main: '#b00020',
+    main: '#dc4343',
   },
   primary: {
     contrastText: '#fff',
-    main: '#0560ff',
+    main: '#ff6641',
   },
   secondary: {
     contrastText: '#fff',
@@ -53,7 +53,7 @@ const palette = {
 
 const customButtons = {
   error: {
-    backgroundColor: '#b00020',
+    backgroundColor: '#dc4343',
     color: '#fff',
   },
 }
@@ -63,10 +63,10 @@ const customPalette = {
     main: '#fff',
   },
   appBarMobile: {
-    main: '#32333d',
+    main: '#3a3a3a',
   },
   sidebar: {
-    main: '#32333d',
+    main: '#fff',
   },
   success: {
     main: '#14c29d',
@@ -79,9 +79,19 @@ const theme = createMuiTheme({
   customPalette,
   palette,
   shape: {
-    borderRadius: 8,
+    borderRadius: 4,
   },
   typography,
+  overrides: {
+    MuiFormHelperText: {
+      root: {
+        fontSize: '13px',
+        fontWeight: '100',
+        color: '#32333d',
+        marginTop: '4px',
+      },
+    },
+  },
 })
 
 export default theme

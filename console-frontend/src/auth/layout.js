@@ -74,7 +74,7 @@ const BackgroundImage = styled.div`
     bottom: 0;
     top: auto;
     background-image: url('${props => props.url}');
-    background-color: #f2f4f7;
+    background-color: #f5f5f5;
     background-repeat: no-repeat;
     background-position-x: right;
     background-position-y: bottom;
@@ -102,7 +102,7 @@ const LogotypeContainer = styled.div`
 
 const Logotype = ({ ...props }) => (
   <LogotypeContainer>
-    <img alt="" src="/img/trendiamo-logo.svg" {...props} />
+    <img alt="" src="/img/frekkls-logo.svg" {...props} />
   </LogotypeContainer>
 )
 

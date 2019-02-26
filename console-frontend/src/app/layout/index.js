@@ -23,7 +23,7 @@ const Layout = ({ appBarContent, children, classes, logout, sidebarOpen, toggleO
       />
       <main className={classes.contentWithSidebar}>
         <Sidebar classes={classes} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen}>
-          <Menu classes={classes} logout={logout} sidebarOpen={sidebarOpen} />
+          <Menu classes={classes} logout={logout} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
         </Sidebar>
         <div className={classes.content}>
           <div className={classes.contentInnerDiv}>{children}</div>

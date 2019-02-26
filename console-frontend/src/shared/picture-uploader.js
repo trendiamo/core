@@ -46,7 +46,7 @@ const StyledDropzone = styled(FilteredReactDropzone)`
   width: 150px;
   margin-top: 25px;
   margin-bottom: 0.4rem;
-  color: ${({ isDragging, previewImage }) => (previewImage ? '#fff' : isDragging ? '#0560ff' : '#7f8086')};
+  color: ${({ isDragging, previewImage }) => (previewImage ? '#fff' : isDragging ? '#ff6641' : '#7f8086')};
 
   ${InnerLabel} {
     visibility: ${({ isDragging, previewImage }) => (isDragging || !previewImage ? 'visible' : 'hidden')};
@@ -93,7 +93,7 @@ const Dropzone = compose(
 ))
 
 const Img = styled.img`
-  background-color: ${({ src }) => (src ? 'transparent' : '#f2f4f7')};
+  background-color: ${({ src }) => (src ? 'transparent' : '#f5f5f5')};
   border: ${({ src }) => (src ? 'none' : 'dashed 2px')};
   border-radius: ${({ square }) => (square ? 'none' : '50%')};
   display: block;

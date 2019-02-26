@@ -1,7 +1,6 @@
 export const drawerWidth = 256
 export const drawerWidthClosed = 70
-const avatarSize = 64
-const avatarSizeClosed = 48
+const avatarSize = 46
 
 // Add transitions with different params here and use it in createTransition by providing key as type attribute.
 const transitions = theme => ({
@@ -17,7 +16,7 @@ const createTransition = (theme, style, type = 'standard') => {
 
 export const styles = theme => ({
   accountArrow: {
-    color: '#fff',
+    color: '#757575',
     opacity: 1,
     position: 'absolute',
     right: '10px',
@@ -37,15 +36,13 @@ export const styles = theme => ({
     marginLeft: '10px',
   },
   appBar: {
-    backgroundColor: theme.customPalette.appBar.main,
-    boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.12)',
-    color: '333',
-    position: 'fixed',
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+    color: '#333',
     transition: createTransition(theme, ['width', 'margin', 'backgroundColor']),
     width: `calc(100% - ${drawerWidthClosed}px)`,
     zIndex: theme.zIndex.drawer + 1,
     [theme.breakpoints.down('sm')]: {
-      backgroundColor: theme.customPalette.appBarMobile.main,
       width: '100%',
     },
   },
@@ -73,14 +70,9 @@ export const styles = theme => ({
   },
   avatar: {
     height: avatarSize,
-    margin: '20px',
+    marginRight: '10px',
     transition: createTransition(theme, ['width', 'height', 'margin']),
     width: avatarSize,
-  },
-  avatarClosed: {
-    height: avatarSizeClosed,
-    margin: '9px 11px 7px',
-    width: avatarSizeClosed,
   },
   buttonLarge: {
     color: theme.palette.grey.A700,
@@ -94,9 +86,11 @@ export const styles = theme => ({
     flexGrow: 1,
     marginTop: '60px',
     padding: theme.spacing.unit * 2,
+    paddingTop: '4px',
     position: 'relative',
     [theme.breakpoints.up('xs')]: {
       padding: 14,
+      paddingTop: '4px',
     },
     [theme.breakpoints.down('xs')]: {
       padding: 0,
@@ -126,6 +120,16 @@ export const styles = theme => ({
   drawerPaper: {
     background: theme.customPalette.sidebar.main,
     border: 'none',
+    paddingLeft: '10px',
+    '&:before': {
+      content: '""',
+      backgroundImage: 'linear-gradient(to bottom, #ff843e, #ff6c40 52%, #ff5642);',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      width: '10px',
+    },
     boxShadow: '0 16px 16px 0 rgba(0, 0, 0, 0.24), 0 0 16px 0 rgba(0, 0, 0, 0.18)',
     flex: '1',
     marginTop: 0,
@@ -144,7 +148,7 @@ export const styles = theme => ({
     zIndex: 5000,
   },
   drawerPaperClose: {
-    background: theme.customPalette.sidebar.main,
+    backgroundImage: 'linear-gradient(178deg, #ff843e, #ff6c40 52%, #ff5642)',
     border: 'none',
     flex: '1',
     marginTop: 0,
@@ -188,41 +192,42 @@ export const styles = theme => ({
     transform: 'translateY(-50%)',
   },
   menuButton: {
-    color: theme.customPalette.sidebar.main,
-    marginRight: '6px',
+    display: 'none',
     [theme.breakpoints.down('sm')]: {
-      color: '#fff',
+      display: 'block',
     },
   },
   menuIcon: {
-    color: '#a0a3a7',
+    color: '#222',
     paddingRight: '20px',
   },
-  menuIconActive: {
+  menuIconClosed: {
+    color: 'rgba(255,255,255,0.6)',
+  },
+  menuIconClosedActive: {
     color: '#fff',
-    paddingRight: '20px',
   },
   menuItem: {
     flexShrink: 0,
     transition: createTransition(theme, ['padding', 'height', 'visibility']),
     visibility: 'visible',
   },
+  menuItemActive: {
+    backgroundColor: 'rgba(0, 0, 0, 0.03)',
+  },
   menuItemClosed: {
+    backgroundColor: 'transparent',
     paddingLeft: 22,
     paddingRight: 0,
   },
-  menuItemHidden: {
-    height: 0,
-    overflow: 'hidden',
-    paddingBottom: 0,
-    paddingTop: 0,
-    visibility: 'hidden',
-  },
   menuText: {
-    color: '#a0a3a7',
+    color: '#222',
   },
   menuTextActive: {
-    color: '#fff',
+    fontWeight: 'bold',
+  },
+  menuTextHidden: {
+    display: 'none',
   },
   notFoundTitle: {
     color: '#fb0',
@@ -238,18 +243,15 @@ export const styles = theme => ({
     zIndex: 1,
   },
   title: {
-    color: theme.customPalette.sidebar.main,
+    color: '#333',
     display: 'inline-block',
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-    fontSize: '14px',
+    fontWeight: 500,
+    letterSpacing: '0.3px',
+    fontSize: '24px',
     marginRight: '2px',
     [theme.breakpoints.down('sm')]: {
-      color: theme.palette.primary.contrastText,
       fontSize: '16px',
     },
-    transition: createTransition(theme, ['color']),
   },
   titleResponsive: {
     [theme.breakpoints.down('sm')]: {
