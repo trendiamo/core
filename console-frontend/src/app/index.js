@@ -129,7 +129,7 @@ export const App = ({ history }) => (
   <Router history={history}>
     <JssProvider generateClassName={generateClassName} jss={jss}>
       <MuiThemeProvider theme={theme}>
-        <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }} maxSnack={3}>
+        <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} maxSnack={3}>
           <AppBase />
         </SnackbarProvider>
       </MuiThemeProvider>
