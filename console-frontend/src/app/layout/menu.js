@@ -10,6 +10,7 @@ import UserMenu from './user-menu'
 import {
   AccountCircleOutlined,
   AssignmentTurnedInOutlined,
+  ChatBubbleOutline,
   ViewList as DefaultIcon,
   DirectionsOutlined,
   Link as LinkIcon,
@@ -29,6 +30,12 @@ const resources = {
     label: 'Scripted Chats',
     class: 'scripted-chats',
     route: routes.scriptedChatsList(),
+  },
+  simpleChats: {
+    icon: ChatBubbleOutline,
+    label: 'Simple Chats',
+    class: 'simple-chats',
+    route: routes.simpleChatsList(),
   },
   outros: { icon: AssignmentTurnedInOutlined, label: 'Outros', class: 'outros', route: routes.outrosList() },
   navigations: {
@@ -55,7 +62,13 @@ const resourceGroups = {
   modules: {
     name: 'Modules',
     showTitle: true,
-    resources: [resources.showcases, resources.navigations, resources.scriptedChats, resources.outros],
+    resources: [
+      resources.showcases,
+      resources.navigations,
+      resources.scriptedChats,
+      resources.simpleChats,
+      resources.outros,
+    ],
   },
   basic: {
     name: 'Basic',

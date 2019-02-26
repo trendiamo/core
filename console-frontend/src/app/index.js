@@ -24,6 +24,7 @@ import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { ScriptedChatCreate, ScriptedChatEdit, ScriptedChatsList } from './resources/scripted-chats'
 import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from './resources/showcases'
+import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from './resources/simple-chats'
 import { SnackbarProvider } from 'notistack'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
 import { withSnackbar } from 'notistack'
@@ -70,6 +71,9 @@ const Routes = () => (
     <PrivateRoute component={ScriptedChatsList} exact path={routes.scriptedChatsList()} />
     <PrivateRoute component={ScriptedChatCreate} exact path={routes.scriptedChatCreate()} />
     <PrivateRoute component={ScriptedChatEdit} exact path={routes.scriptedChatEdit(':scriptedChatId')} />
+    <PrivateRoute component={SimpleChatsList} exact path={routes.simpleChatsList()} />
+    <PrivateRoute component={SimpleChatCreate} exact path={routes.simpleChatCreate()} />
+    <PrivateRoute component={SimpleChatEdit} exact path={routes.simpleChatEdit(':simpleChatId')} />
     <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
     <PrivateRoute component={OutroCreate} exact path={routes.outroCreate()} />
     <PrivateRoute component={OutroEdit} exact path={routes.outroEdit(':outroId')} />

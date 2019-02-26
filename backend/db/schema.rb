@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190129160633) do
+ActiveRecord::Schema.define(version: 20190226120728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,40 @@ ActiveRecord::Schema.define(version: 20190129160633) do
     t.index ["persona_id"], name: "index_showcases_on_persona_id"
   end
 
+  create_table "simple_chat_messages", force: :cascade do |t|
+    t.string "text", null: false
+    t.integer "order", default: 1, null: false
+    t.bigint "simple_chat_step_id"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_simple_chat_messages_on_account_id"
+    t.index ["simple_chat_step_id"], name: "index_simple_chat_messages_on_simple_chat_step_id"
+  end
+
+  create_table "simple_chat_steps", force: :cascade do |t|
+    t.string "key", default: "default", null: false
+    t.integer "order", default: 1, null: false
+    t.bigint "simple_chat_id"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_simple_chat_steps_on_account_id"
+    t.index ["simple_chat_id"], name: "index_simple_chat_steps_on_simple_chat_id"
+  end
+
+  create_table "simple_chats", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "title", null: false
+    t.string "chat_bubble"
+    t.bigint "persona_id"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_simple_chats_on_account_id"
+    t.index ["persona_id"], name: "index_simple_chats_on_persona_id"
+  end
+
   create_table "spotlights", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "persona_id"
@@ -242,6 +276,12 @@ ActiveRecord::Schema.define(version: 20190129160633) do
   add_foreign_key "scripted_chats", "personas"
   add_foreign_key "showcases", "accounts"
   add_foreign_key "showcases", "personas"
+  add_foreign_key "simple_chat_messages", "accounts"
+  add_foreign_key "simple_chat_messages", "simple_chat_steps"
+  add_foreign_key "simple_chat_steps", "accounts"
+  add_foreign_key "simple_chat_steps", "simple_chats"
+  add_foreign_key "simple_chats", "accounts"
+  add_foreign_key "simple_chats", "personas"
   add_foreign_key "spotlights", "accounts"
   add_foreign_key "spotlights", "personas"
   add_foreign_key "spotlights", "showcases"

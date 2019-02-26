@@ -45,7 +45,9 @@ Rails.application.routes.draw do
       resources :flows, only: %i[index]
       get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
       get "/path/autocomplete", to: "autocompletes#path_autocomplete"
-
+      resources :simple_chats, only: %i[index show update create]
+      delete "/simple_chats", to: "simple_chats#destroy"
+      
       resources :generated_urls, only: %i[index create]
 
       resource :me, only: %i[show update]

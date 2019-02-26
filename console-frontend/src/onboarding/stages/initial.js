@@ -3,7 +3,7 @@ import routes from 'app/routes'
 import { changeStage } from 'onboarding/scenario-actions'
 import { Tooltip } from 'onboarding/elements'
 
-const order = ['triggers', 'showcases', 'navigations', 'scriptedChats', 'outros', 'personas']
+const order = ['triggers', 'showcases', 'navigations', 'scriptedChats', 'simpleChats', 'outros', 'personas']
 
 const steps = {
   triggers: {
@@ -34,9 +34,16 @@ const steps = {
     disableBeacon: true,
     title: 'Scripted Chats',
   },
+  simpleChats: {
+    target: '.onboard-simple-chats',
+    content: <Tooltip body="Create your Simple Chats here." nextRoute={routes.personasList()} />,
+    placement: 'right',
+    disableBeacon: true,
+    title: 'Simple Chats',
+  },
   outros: {
     target: '.onboard-outros',
-    content: <Tooltip body="Create your Outros here." nextRoute={routes.personasList()} />,
+    content: <Tooltip body="Create your Outros here." nextRoute={routes.simpleChatsList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Outros',
