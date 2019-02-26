@@ -15,6 +15,7 @@ const CoverBase = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   height: 140px;
   max-height: ${({ minimized }) => (minimized ? 90 : 140)}px;
   ${({ hackathon }) =>
@@ -29,7 +30,6 @@ const CoverBase = styled.div`
   z-index: 2;
   transition: max-height 0.4s ease-in-out;
   box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
-
   flex-shrink: 0;
 `
 
@@ -146,7 +146,7 @@ const ImageContainer = styled.div`
   }
 `
 
-const PersonaName = styled.div`
+const PersonaName = styled.span`
   color: #fff;
 `
 
