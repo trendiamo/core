@@ -61,7 +61,7 @@ const cartFactory = {
         },
       }
     },
-    triggerMixpanelPageEvents() {
+    setupMixpanelCartEvents() {
       const _this = this
       if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
         if (window.$('#CartPageAgree').is(':checked')) {
@@ -87,4 +87,4 @@ const cart = cartFactory[window.location.hostname]
 
 export const scrollToCart = () => cart && cart.scrollToCart()
 export const scrollToCheckout = () => cart && cart.scrollToCheckout()
-export const triggerMixpanelPageEvents = () => cart && cart.triggerMixpanelPageEvents()
+export const setupMixpanelCartEvents = () => cart && cart.setupMixpanelCartEvents()

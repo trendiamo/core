@@ -9,7 +9,7 @@ import { graphQlUrl, location, mixpanelToken, overrideAccount } from './config'
 import { h, render } from 'preact'
 import { optionsFromHash } from 'app/setup'
 import { Provider } from 'ext/graphql-context'
-import { triggerMixpanelPageEvents } from 'special/nowadays/cart'
+import { setupMixpanelCartEvents } from 'special/nowadays/cart'
 import './styles.css'
 
 const initRootComponent = () => {
@@ -37,7 +37,7 @@ const main = () => {
   // initRollbar()
   mixpanel.init(mixpanelToken)
   mixpanel.track('Visited Page', { hostname: location.hostname })
-  triggerMixpanelPageEvents()
+  setupMixpanelCartEvents()
 
   const browser = detect()
   const supportedBrowsers = ['chrome', 'firefox', 'safari', 'edge', 'opera', 'ios', 'ios-webview', 'crios', 'fxios']
