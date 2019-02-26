@@ -35,7 +35,6 @@ export const AppBase = styled(
   ({
     className,
     Component,
-    disableScroll,
     Launcher,
     isUnmounting,
     launcherType,
@@ -49,7 +48,6 @@ export const AppBase = styled(
       {showingContent && (
         <Content
           Component={Component}
-          disableScroll={disableScroll}
           isUnmounting={isUnmounting}
           onToggleContent={onToggleContent}
           persona={persona}

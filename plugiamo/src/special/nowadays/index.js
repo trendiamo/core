@@ -13,7 +13,6 @@ const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showing
   <AppBase
     Component={<Base module={module} setPluginState={setPluginState} />}
     data={module}
-    disableScroll
     isUnmounting={isUnmounting}
     Launcher={Launcher}
     launcherType={launcherType}
