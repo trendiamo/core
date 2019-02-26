@@ -1,18 +1,31 @@
+import FlowBackButton from 'shared/flow-back-button'
 import styled from 'styled-components'
+import { branch, compose, renderComponent } from 'recompose'
+import { CoverImg, PaddedCover, PersonaDescription, PersonaInstagram, withTextTyping } from 'plugin-base'
 import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
 
+const FlexDiv = styled.div`
+  display: flex;
+`
+
 const CoverBase = styled.div`
-  background-color: #fff;
+  background-color: ${({ hackathon }) => (hackathon ? '#fff' : '#232323')};
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 140px;
   max-height: ${({ minimized }) => (minimized ? 90 : 140)}px;
+  ${({ hackathon }) =>
+    !hackathon &&
+    `
+    height: 100px;
+    max-height: 100px;
+  `}
   width: 100%;
-  position: relative;
   overflow: hidden;
+  position: relative;
   z-index: 2;
   transition: max-height 0.4s ease-in-out;
   box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
@@ -133,8 +146,28 @@ const ImageContainer = styled.div`
   }
 `
 
-export const Cover = ({ header, minimized }) => (
-  <CoverBase minimized={minimized}>
+const PersonaName = styled.div`
+  color: #fff;
+`
+
+export const CoverScriptedChat = compose(withTextTyping(({ persona }) => persona.description, 300))(
+  ({ persona, currentDescription }) => (
+    <CoverBase>
+      <FlowBackButton />
+      <FlexDiv>
+        <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
+        <PaddedCover>
+          <PersonaName>{persona.name}</PersonaName>
+          <PersonaInstagram url={persona.instagramUrl} />
+          <PersonaDescription text={persona.description} typingText={currentDescription} />
+        </PaddedCover>
+      </FlexDiv>
+    </CoverBase>
+  )
+)
+
+export const CoverHackathon = ({ header, minimized }) => (
+  <CoverBase hackathon minimized={minimized}>
     <ImageContainer minimized={minimized}>
       <CoverAnimation minimized={minimized} src={header.animationUrl} />
       <CoverImage image={imgixUrl(header.imageUrl, { fit: 'crop', w: 160, h: 90 })} minimized={minimized} />
@@ -152,3 +185,5 @@ export const Cover = ({ header, minimized }) => (
     </TextContainer>
   </CoverBase>
 )
+
+export default compose(branch(({ hackathon }) => hackathon, renderComponent(CoverHackathon)))(CoverScriptedChat)
