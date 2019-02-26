@@ -74,6 +74,55 @@ class PopulateNavigations
   end
 end
 
+class PopulateSimpleChats
+  def self.process
+    new.process
+  end
+
+  def process
+    create_simple_chats
+  end
+
+  private
+
+  def create_simple_chats
+    Array.new(9) do
+      simple_chat_attrs = {
+        name: "#{Faker::Lorem.word.capitalize} Chat",
+        persona: Persona.order("RANDOM()").first,
+        title: "Hello there",
+        simple_chat_steps_attributes: chat_steps_attributes,
+      }
+      SimpleChat.create!(simple_chat_attrs)
+    end
+  end
+
+  def chat_steps_attributes
+    result = [
+      {
+        simple_chat_messages_attributes: simple_chat_messages_attributes,
+      },
+    ]
+    3.times { result.push(simple_chat_step) }
+    result
+  end
+
+  def simple_chat_step
+    {
+      key: Faker::Lorem.sentence,
+      simple_chat_messages_attributes: simple_chat_messages_attributes,
+    }
+  end
+
+  def simple_chat_messages_attributes
+    Array.new(3) do
+      {
+        text: Faker::Lorem.sentence,
+      }
+    end
+  end
+end
+
 class PopulateScriptedChats
   def self.process
     new.process
@@ -130,6 +179,7 @@ class Populate
     create_personas
     create_outros
     create_scripted_chats
+    create_simple_chats
     create_showcases
     create_navigations
     create_triggers
@@ -190,6 +240,10 @@ class Populate
 
   def create_scripted_chats
     PopulateScriptedChats.process
+  end
+
+  def create_simple_chats
+    PopulateSimpleChats.process
   end
 
   def create_showcases

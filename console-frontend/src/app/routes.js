@@ -65,6 +65,15 @@ const routes = {
   scriptedChatEdit(id) {
     return `/scripted-chats/${id}/edit`
   },
+  simpleChatsList() {
+    return '/simple-chats'
+  },
+  simpleChatCreate() {
+    return '/simple-chats/create'
+  },
+  simpleChatEdit(id) {
+    return `/simple-chats/${id}/edit`
+  },
   triggerCreate() {
     return '/triggers/create'
   },
