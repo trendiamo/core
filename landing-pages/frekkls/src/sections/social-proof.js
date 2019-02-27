@@ -1,83 +1,11 @@
 import React from 'react'
-import Slider from 'react-slick'
 import styled from 'styled-components'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 
 import Container from '../components/container'
 import Section from '../components/section'
-
-const sliderSettings = {
-  dots: false,
-  infinite: false,
-  arrows: false,
-  speed: 500,
-  slidesToShow: 5,
-  responsive: [
-    {
-      breakpoint: 900,
-      settings: {
-        slidesToShow: 3,
-        arrows: false,
-        slidesToScroll: 3,
-        infinite: false,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        arrows: false,
-        slidesToScroll: 2,
-        infinite: false,
-        dots: true,
-      },
-    },
-  ],
-}
-
-const LogoContainer = styled.div`
-  display: flex;
-  text-align: center;
-  align-items: center;
-  flex: 1;
-  height: 3rem;
-  margin: 0rem 1rem;
-  @media (min-width: 600px) {
-    margin: 0rem 3rem;
-  }
-  @media (min-width: 900px) {
-    margin: 0rem 2rem;
-  }
-`
-
-const Img = styled.img`
-  width: 100%;
-`
-
-const Logo = ({ file }) => (
-  <LogoContainer>
-    <Img alt={file.fileName} src={`https:${file.url}`} />
-  </LogoContainer>
-)
-
-const FixedWidthContainer = styled.div`
-  @media (min-width: 1200px) {
-    width: 1200px;
-  }
-`
-
-const ClientLogos = ({ clients }) =>
-  clients.edges.length > 0 && (
-    <FixedWidthContainer>
-      <Slider {...sliderSettings}>
-        {clients.edges.map(client => (
-          <Logo file={client.node.logo.file} key={client.node.clientName} />
-        ))}
-      </Slider>
-    </FixedWidthContainer>
-  )
+import StakeholderLogos from '../components/stakeholder-logos'
 
 const TestimonialContainer = styled.div`
   flex: 1;
@@ -136,7 +64,7 @@ const FlexDiv = styled.div`
 const SocialProof = styled(({ className, clients, testimonial }) => (
   <Section className={className}>
     <Container>
-      <ClientLogos clients={clients} />
+      <StakeholderLogos stakeholders={clients} />
     </Container>
     <Container>
       <FlexDiv>

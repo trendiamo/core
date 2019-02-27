@@ -2,8 +2,8 @@ import React from 'react'
 import { graphql } from 'gatsby'
 
 import AboutImg from '../sections/about-img'
-import AboutPortraits from '../sections/about-portraits'
-import AboutStory from '../sections/about-story'
+import AboutInvestors from '../sections/about-investors'
+import AboutTeam from '../sections/about-team'
 import AboutText from '../sections/about-text'
 import Layout from '../components/layout'
 
@@ -11,8 +11,8 @@ const AboutPage = ({ className, pageContext, data }) => (
   <Layout className={className} layout={data.layout} locale={pageContext.locale}>
     <AboutImg aboutImg={data.aboutImg} />
     <AboutText aboutText={data.aboutText} />
-    <AboutStory aboutStory={data.aboutStory} />
-    <AboutPortraits aboutPortraits={data.aboutPortraits} teamMembers={data.teamMembers} />
+    <AboutTeam aboutPortraits={data.aboutPortraits} teamMembers={data.teamMembers} />
+    <AboutInvestors aboutInvestors={data.aboutInvestors} investors={data.investors} />
   </Layout>
 )
 
@@ -32,6 +32,7 @@ export const query = graphql`
     }
     aboutText: contentfulAboutPage(name: { eq: "About Page" }, node_locale: { eq: $locale }) {
       openerHeading
+      openerSubHeading
       openerText
     }
     aboutStory: contentfulAboutPage(name: { eq: "About Page" }, node_locale: { eq: $locale }) {
@@ -39,6 +40,26 @@ export const query = graphql`
       textSectionText {
         childContentfulRichText {
           html
+        }
+      }
+    }
+    aboutInvestors: contentfulAboutPage(name: { eq: "About Page" }, node_locale: { eq: $locale }) {
+      investorSectionHeading
+      investorSectionSubHeading
+      investerSectionText {
+        investerSectionText
+      }
+    }
+    investors: allContentfulInvestor(filter: { node_locale: { eq: "en-US" } }) {
+      edges {
+        node {
+          name
+          logo {
+            file {
+              url
+              fileName
+            }
+          }
         }
       }
     }
