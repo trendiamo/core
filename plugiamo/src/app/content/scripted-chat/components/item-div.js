@@ -23,7 +23,7 @@ const ItemDivTemplate = ({ logSection, onClick, hide }) => (
       log.type === 'message' ? (
         <ChatMessage index={index} log={log} />
       ) : log.type === 'option' ? (
-        <ChatOption animate={log.animate} chatOption={log.chatOption} hide={hide} index={index} onClick={onClick} />
+        <ChatOption animate={log.animate} chatOption={log} hide={hide} index={index} onClick={onClick} />
       ) : null
     )}
   </Container>

@@ -10,10 +10,10 @@ const ChatOptionText = styled.div`
   padding: 8px 15px;
   border-radius: 20px;
   border: 2px solid rgba(0, 0, 0, 0.25);
-  font-weight: ${({ expanded }) => (expanded ? 'normal' : '500')};
-  background: ${({ expanded }) => (expanded ? '#222' : '#fff')};
-  color: ${({ expanded }) => (expanded ? '#fff' : '#222')};
-  cursor: ${({ expanded }) => (expanded ? 'default' : 'pointer')};
+  font-weight: ${({ clicked }) => (clicked ? 'normal' : '500')};
+  background: ${({ clicked }) => (clicked ? '#222' : '#fff')};
+  color: ${({ clicked }) => (clicked ? '#fff' : '#222')};
+  cursor: ${({ clicked }) => (clicked ? 'default' : 'pointer')};
   font-size: 14px;
   line-height: 1.4;
 `
@@ -31,19 +31,19 @@ const Container = styled.div`
       margin-top: 5px;
     }
   }
-  ${({ hide, expanded }) =>
+  ${({ hide, clicked }) =>
     hide &&
-    !expanded &&
+    !clicked &&
     ` animation: _frekkls_option_hide 0.5s;
       animation-fill-mode: forwards;
   `}
 `
 
-const ChatOption = ({ chatOption, onClick, animate, hide }) => (
-  <Container animate={animate} expanded={chatOption.expanded} hide={hide}>
+const ChatOption = ({ chatOption, onClick, animate, hide, clicked }) => (
+  <Container animate={animate} clicked={clicked} hide={hide}>
     <ChatOptionText
+      clicked={clicked}
       dangerouslySetInnerHTML={{ __html: emojify(chatOption.text) }}
-      expanded={chatOption.expanded}
       onClick={onClick}
     />
   </Container>
@@ -52,8 +52,11 @@ const ChatOption = ({ chatOption, onClick, animate, hide }) => (
 export default compose(
   withState('clicked', 'setClicked', false),
   withHandlers({
-    onClick: ({ chatOption, onClick, hide }) => () => {
-      if (!chatOption.expanded && !hide) onClick(chatOption)
+    onClick: ({ chatOption, onClick, hide, clicked, setClicked }) => () => {
+      if (!clicked && !hide) {
+        setClicked(true)
+        onClick(chatOption)
+      }
     },
   })
 )(ChatOption)

@@ -2,7 +2,7 @@ import chatLog from 'app/content/scripted-chat/chat-log'
 import ItemDiv from './item-div'
 import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { convertLogs } from 'app/content/scripted-chat/shared'
 import { h } from 'preact'
 
@@ -30,11 +30,8 @@ const ConsumerContentDiv = ({ logs, title, contentRef, onOptionClick, animateNew
 
 export default compose(
   withState('logs', 'setLogs', []),
-  withProps(({ persona }) => ({
-    personName: persona.name.split(' ')[0],
-  })),
   withHandlers({
-    updateLogs: ({ setLogs }) => chatLog => setLogs(convertLogs(chatLog.logs)),
+    updateLogs: ({ setLogs }) => ({ data }) => setLogs(convertLogs(data)),
   }),
   withHandlers({
     animateNewOptions: ({ logs, setLogs }) => () => {
@@ -55,24 +52,16 @@ export default compose(
         personaRef: persona.id,
         chatOptionText: chatOption.text,
       })
-      chatOption.expanded = true
-      if (chatOption.destinationChatStep) {
-        chatLog.fetchStep(chatOption.destinationChatStep.id)
-      } else if (chatOption.id === 'stop') {
-        onStopChat()
-      } else {
-        console.error('No destination chat step for option', chatOption)
+      if (chatOption.id === 'stop') {
+        return onStopChat()
       }
+      chatLog.selectOption(chatOption)
     },
   }),
   lifecycle({
     componentDidMount() {
-      const { client, initialChatStep, personName, updateLogs } = this.props
-      chatLog.init(client, personName)
-      // we don't remove this listener in componentWillUnmount because preact doesn't fire it inside iframes
-      // instead we do a check for chatLog.timestamp in the chatLog logic, to prevent duplicates
-      chatLog.addListener(updateLogs)
-      chatLog.fetchStep(initialChatStep.id)
+      const { client, initialChatStep, updateLogs } = this.props
+      chatLog.init({ client, listeners: [updateLogs], initialStepId: initialChatStep.id })
     },
   })
 )(ConsumerContentDiv)

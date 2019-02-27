@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { gql } from 'ext/recompose/graphql'
 
 export const ChatBackground = styled.div`
   background-color: #ebeef2;
@@ -45,6 +46,70 @@ export const convertLogs = logs => {
     newLog.push({ ...log, logs: currentList })
   })
   return newLog
+}
+
+export const listeners = {
+  list: [],
+  addMany(fns) {
+    fns.forEach(fn => {
+      this.add(fn)
+    })
+  },
+  reset(listeners) {
+    this.removeAll()
+    this.addMany(listeners)
+  },
+  add(fn) {
+    this.list.push(fn)
+  },
+  remove(fn) {
+    this.list = this.list.filter(e => e !== fn)
+  },
+  removeAll() {
+    this.list = []
+  },
+  fireAll(params) {
+    this.list.forEach(fn => fn(params))
+  },
+}
+
+export const chatDataProvider = {
+  fetchStep({ client, id, callback }) {
+    return client
+      .request(this.query, { id })
+      .then(data => {
+        callback(this.processData(data))
+      })
+      .catch(data => console.error(data))
+  },
+  processData(data) {
+    const messageLogs = data.chatStep.chatMessages.map(message => ({ message, type: 'message' }))
+    const options = this.processOptions(data.chatStep.chatOptions)
+    return messageLogs.concat(options)
+  },
+  processOptions(options) {
+    return options.map(option => {
+      return { type: 'option', id: option.id, text: option.text, messageId: option.destinationChatStep.id }
+    })
+  },
+  query: gql`
+    query($id: ID!) {
+      chatStep(id: $id) {
+        chatMessages {
+          id
+          delay
+          text
+        }
+        chatOptions {
+          id
+          text
+          destinationChatStep {
+            id
+          }
+        }
+      }
+    }
+  `,
 }
 
 export const MESSAGE_INTERVAL = 320

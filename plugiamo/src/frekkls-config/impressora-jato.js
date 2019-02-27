@@ -11,13 +11,10 @@ export default {
       ...chatOptions,
       {
         id: 'stop',
-        text: this.i18n.okCool,
+        type: 'option',
+        text: 'Quero falar com um consultor',
       },
     ]
-  },
-  getFinalChatOptions() {
-    if (!document.querySelector('#livechat-compact-container')) return []
-    return [{ id: 'stop', text: this.i18n.okCool }]
   },
   onChatStop: () => {
     const liveChatContainer = document.querySelector('#livechat-compact-container')
@@ -25,7 +22,6 @@ export default {
     if (window.LC_API && window.LC_API.open_chat_window) window.LC_API.open_chat_window({ source: 'trendiamo' })
   },
   i18n: {
-    okCool: 'Quero falar com um consultor',
     productsSelectedBy: firstName => `Produtos selecionados por ${firstName}:`,
   },
 }
