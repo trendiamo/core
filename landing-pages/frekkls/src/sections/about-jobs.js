@@ -79,6 +79,7 @@ const JobCard = styled.a`
     justify-content: space-between;
     h3 {
       font-size: 26px;
+      margin-top: 0px;
       margin-bottom: 0px;
       margin-left: 40px;
     }
