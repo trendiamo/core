@@ -160,7 +160,7 @@ export default compose(
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, create, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
+  withAppBarContent(({ backRoute, title, create, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
     Actions: (
       <Actions
         onFormSubmit={onFormSubmit}
@@ -168,9 +168,7 @@ export default compose(
         saveDisabled={isFormSubmitting || isFormLoading || isCropping}
       />
     ),
-    breadcrumbs,
-  })),
-  withProps(({ breadcrumbs }) => ({
-    title: breadcrumbs[breadcrumbs.length - 1].text,
+    backRoute,
+    title,
   }))
 )(PersonaForm)

@@ -29,7 +29,7 @@ const OutrosRow = ({ record, highlightInactive }) => (
 
 export default compose(
   enhanceList({
-    breadcrumbs: [{ text: 'Outros' }],
+    title: 'Outros',
     columns,
     defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,

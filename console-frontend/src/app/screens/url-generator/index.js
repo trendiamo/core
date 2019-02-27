@@ -42,7 +42,7 @@ export default compose(
   withState('generatedUrl', 'setGeneratedUrl', ''),
   withState('isModalOpened', 'setIsModalOpened', false),
   withState('urlHistory', 'setUrlHistory', []),
-  withAppBarContent({ breadcrumbs: [{ text: 'Url Generator' }] }),
+  withAppBarContent({ title: 'Url Generator' }),
   lifecycle({
     async componentDidMount() {
       const { setUrlHistory, enqueueSnackbar } = this.props

@@ -6,7 +6,8 @@ import { withSnackbar } from 'notistack'
 
 export default compose(
   withProps({
-    breadcrumbs: [{ text: 'Navigations', route: routes.navigationsList() }, { text: 'Create Navigation' }],
+    backRoute: routes.navigationsList(),
+    title: 'Create Navigation',
   }),
   withSnackbar,
   withHandlers({

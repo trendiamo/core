@@ -29,7 +29,7 @@ const ScriptedChatsRow = ({ record, highlightInactive }) => (
 
 export default compose(
   enhanceList({
-    breadcrumbs: [{ text: 'Scripted Chats' }],
+    title: 'Scripted Chats',
     columns,
     defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,

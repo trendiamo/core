@@ -79,6 +79,7 @@ export default compose(
   }),
   withAppBarContent(({ onFormSubmit }) => ({
     Actions: <Actions onFormSubmit={onFormSubmit} />,
-    breadcrumbs: [{ route: routes.account(), text: 'Account' }, { text: 'Change Password' }],
+    backRoute: routes.account(),
+    title: 'Change Password',
   }))
 )(ChangePassword)

@@ -1,11 +1,12 @@
-import Breadcrumbs from 'shared/breadcrumbs'
+import ArrowBack from '@material-ui/icons/ArrowBack'
 import classNames from 'classnames'
 import HelpOutline from '@material-ui/icons/HelpOutline'
+import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
-import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
+import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withStoreConsumer } from 'ext/recompose/with-store'
 
@@ -41,16 +42,31 @@ const OnboardingButton = compose(
   branch(({ location, onboarding }) => location.pathname !== onboarding.help.pathname, renderNothing)
 )(OnboardingButtonTemplate)
 
+const Title = ({ text, classes, responsive, highlight }) => (
+  <Typography
+    className={classNames(classes.title, highlight && classes.titleHighlight, responsive && classes.titleResponsive)}
+    variant="h6"
+  >
+    {text}
+  </Typography>
+)
+
 const AppBarContent = compose(
   withStoreConsumer,
   branch(({ store }) => !store.appBarContent, renderNothing),
   withProps(({ store }) => ({
     Actions: store.appBarContent.Actions,
-    breadcrumbs: store.appBarContent.breadcrumbs,
+    backRoute: store.appBarContent.backRoute,
+    title: store.appBarContent.title,
   }))
-)(({ Actions, breadcrumbs, classes }) => (
+)(({ Actions, backRoute, classes, title }) => (
   <React.Fragment>
-    <Breadcrumbs breadcrumbs={breadcrumbs} classes={classes} />
+    {backRoute && (
+      <Link to={backRoute}>
+        <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
+      </Link>
+    )}
+    <Title classes={classes} text={title} />
     {Actions && (
       <ButtonsContainer>
         {<OnboardingButton />}

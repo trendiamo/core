@@ -301,7 +301,7 @@ const TriggerList = ({
 
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
-  withAppBarContent({ Actions: <Actions />, breadcrumbs: [{ text: 'Triggers' }] }),
+  withAppBarContent({ Actions: <Actions />, title: 'Triggers' }),
   withState('triggers', 'setTriggers', []),
   withState('isLoading', 'setIsLoading', true),
   withState('testerUrl', 'setTesterUrl', { value: '', matches: false }),

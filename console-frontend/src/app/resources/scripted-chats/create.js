@@ -6,7 +6,8 @@ import { withSnackbar } from 'notistack'
 
 export default compose(
   withProps({
-    breadcrumbs: [{ text: 'Scripted Chats', route: routes.scriptedChatsList() }, { text: 'Create Scripted Chat' }],
+    backRoute: routes.scriptedChatsList(),
+    title: 'Create Scripted Chat',
   }),
   withSnackbar,
   withHandlers({
