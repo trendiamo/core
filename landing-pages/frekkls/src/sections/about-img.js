@@ -12,7 +12,7 @@ const AboutImg = styled(({ className, aboutImg }) => (
   </Section>
 ))`
   padding: 0;
-  background-image: linear-gradient(270deg, #fafafa, #f5f5f5);
+  background-color: #f5f5f5;
 
   img {
     margin-bottom: -4px;

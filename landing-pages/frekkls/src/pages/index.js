@@ -36,7 +36,7 @@ export const query = graphql`
     clients: allContentfulClient(filter: { node_locale: { eq: "en-US" } }) {
       edges {
         node {
-          clientName
+          name
           logo {
             file {
               url
