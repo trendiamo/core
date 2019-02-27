@@ -29,7 +29,7 @@ const NavigationsRow = ({ record, highlightInactive }) => (
 
 export default compose(
   enhanceList({
-    breadcrumbs: [{ text: 'Navigations' }],
+    title: 'Navigations',
     columns,
     defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,

@@ -171,12 +171,10 @@ export default compose(
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
+  withAppBarContent(({ backRoute, title, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
     Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormSubmitting || isFormLoading} />,
-    breadcrumbs,
-  })),
-  withProps(({ breadcrumbs }) => ({
-    title: breadcrumbs[breadcrumbs.length - 1].text,
+    backRoute,
+    title,
   })),
   lifecycle({
     async componentDidMount() {

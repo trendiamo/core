@@ -34,7 +34,7 @@ const PersonasRow = ({ record }) => (
 
 export default compose(
   enhanceList({
-    breadcrumbs: [{ text: 'Personas' }],
+    title: 'Personas',
     blankState: BlankState,
     columns,
     api: { fetch: apiPersonaList, destroy: apiPersonaDestroy },

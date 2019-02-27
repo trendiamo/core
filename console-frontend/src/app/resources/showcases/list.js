@@ -29,7 +29,7 @@ const ShowcasesRow = ({ record, highlightInactive }) => (
 
 export default compose(
   enhanceList({
-    breadcrumbs: [{ text: 'Showcases' }],
+    title: 'Showcases',
     columns,
     defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,

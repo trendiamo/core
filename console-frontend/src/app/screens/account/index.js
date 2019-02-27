@@ -16,4 +16,4 @@ const Account = () => (
   </>
 )
 
-export default compose(withAppBarContent({ breadcrumbs: [{ text: 'Account' }] }))(Account)
+export default compose(withAppBarContent({ title: 'Account' }))(Account)

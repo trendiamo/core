@@ -34,7 +34,7 @@ const enhanceList = ({
   api,
   columns,
   defaultSorting = {},
-  breadcrumbs,
+  title,
   routes,
   blankState,
   help,
@@ -45,18 +45,10 @@ const enhanceList = ({
     withRouter,
     withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
     withState('rowsPerPage', 'setRowsPerPage', 25),
-    withAppBarContent(({ page }) => {
-      const newBreadcrumbs = JSON.parse(JSON.stringify(breadcrumbs)) // deep clone
-      if (page !== 0) {
-        const lastBreadcrumb = newBreadcrumbs[breadcrumbs.length - 1]
-        lastBreadcrumb.text = `${lastBreadcrumb.text} p.${page + 1}`
-      }
-      return {
-        Actions: <Actions createRoute={routes.create()} />,
-        breadcrumbs: newBreadcrumbs,
-      }
-    }),
-    withProps({ label: breadcrumbs && breadcrumbs[0].text }),
+    withAppBarContent(({ page }) => ({
+      Actions: <Actions createRoute={routes.create()} />,
+      title: page === 0 ? title : `${title} p.${page + 1}`,
+    })),
     withState('records', 'setRecords', []),
     withState('recordsCount', 'setRecordsCount', 0),
     withState('orderDirection', 'setOrderDirection', defaultSorting.direction || 'desc'),
@@ -155,7 +147,7 @@ const enhanceList = ({
       handleRequestSort,
       handleSelectAll,
       isSelectAll,
-      label,
+      title,
       orderBy,
       orderDirection,
       handleChangeRowsPerPage,
@@ -171,10 +163,10 @@ const enhanceList = ({
         <TableToolbar
           createRoute={routes.create()}
           deleteRecords={deleteRecords}
-          label={label}
+          label={title}
           selectedIds={selectedIds}
         />
-        <Table aria-labelledby={label}>
+        <Table aria-labelledby={title}>
           <TableHead
             columns={columns}
             duplicate={!!api.duplicate}

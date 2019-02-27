@@ -401,17 +401,15 @@ export default compose(
     },
   })),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ breadcrumbs, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
+  withAppBarContent(({ backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
     Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormSubmitting || isCropping || isFormLoading} />,
-    breadcrumbs,
+    backRoute,
+    title,
   })),
   lifecycle({
     componentDidMount() {
       const { form } = this.props
       pluginHistory.replace(pluginRoutes.showcase(form.id))
     },
-  }),
-  withProps(({ breadcrumbs }) => ({
-    title: breadcrumbs[breadcrumbs.length - 1].text,
-  }))
+  })
 )(Showcase)
