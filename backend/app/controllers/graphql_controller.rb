@@ -17,7 +17,7 @@ class GraphqlController < ApplicationController
 
   def set_tenant
     account = find_account_from_override || find_account_from_request
-    return render json: { error: "no content found for" }, status: :bad_request unless account
+    return render json: { error: "no content found" }, status: :bad_request unless account
     set_current_tenant(account)
   end
 

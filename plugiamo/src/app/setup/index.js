@@ -1,4 +1,4 @@
-import addPicture from './add-picture'
+import getFrekklsConfig from 'frekkls-config'
 import routes from 'app/routes'
 import { isSmall } from 'utils'
 import { location } from 'config'
@@ -30,7 +30,7 @@ const setup = (data, pathFromNav) => {
   const { flow, type: flowType } = { flow: data.flow, type: data.flow.flowType }
   const open = pathFromNav ? true : isSmall() ? false : (openOpt && openOpt.match(/1|true/)) || flowType === 'outro'
 
-  if (picture) addPicture(picture)
+  if (picture) getFrekklsConfig().addPicture(picture)
 
   window.__trndInitialPath = pathFromNav
     ? pathFromNav

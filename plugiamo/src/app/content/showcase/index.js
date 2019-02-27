@@ -1,5 +1,5 @@
 import FlowBackButton from 'shared/flow-back-button'
-import i18n from 'ext/i18n'
+import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import routes from 'app/routes'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
@@ -9,7 +9,10 @@ import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
 
 const convertSpotlights = spotlights => {
   return spotlights.map(spotlight => {
-    return { ...spotlight, translation: { selectedBy: i18n.productsSelectedBy(spotlight.persona.name.split(' ')[0]) } }
+    return {
+      ...spotlight,
+      translation: { selectedBy: getFrekklsConfig().i18n.productsSelectedBy(spotlight.persona.name.split(' ')[0]) },
+    }
   })
 }
 

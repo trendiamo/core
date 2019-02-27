@@ -2,22 +2,6 @@ import mixpanel from 'ext/mixpanel'
 
 const cartFactory = {
   'www.buttwrap.com': {
-    scrollToCart() {
-      window.$('html, body').animate(
-        {
-          scrollTop: window.$('form.product-single__form').offset().top - (20 + window.$('.site-header').outerHeight()),
-        },
-        500
-      )
-    },
-    scrollToCheckout() {
-      window.$('html, body').animate(
-        {
-          scrollTop: window.$('form.cart').offset().top - (20 + window.$('.site-header').outerHeight()),
-        },
-        500
-      )
-    },
     addToCartObject() {
       const formFields = window.$('form.product-single__form').serializeArray()
       return {
@@ -85,6 +69,4 @@ const cartFactory = {
 
 const cart = cartFactory[window.location.hostname]
 
-export const scrollToCart = () => cart && cart.scrollToCart()
-export const scrollToCheckout = () => cart && cart.scrollToCheckout()
 export const setupMixpanelCartEvents = () => cart && cart.setupMixpanelCartEvents()
