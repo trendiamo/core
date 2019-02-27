@@ -43,7 +43,8 @@ export default compose(
     }
   }),
   withHandlers({
-    handleScroll: ({ setCoverMinimized, coverMinimized, setTouch, touch }) => event => {
+    handleScroll: ({ setCoverMinimized, coverMinimized, module, setTouch, touch }) => event => {
+      if (module.header.minimized) return
       const scrollTop = event.target.scrollTop
       if (scrollTop <= 0 && coverMinimized) {
         setTouch(false)
