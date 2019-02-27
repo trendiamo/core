@@ -1,32 +1,53 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import Button from '../components/button'
 import Container from '../components/container'
 import Section from '../components/section'
 
-const Hr = styled.hr`
-  border: 0;
-  width: 100px;
-  height: 2px;
-  background: #6b6b6b;
-  margin: 0 auto;
-  margin-bottom: 20px;
+const StyledContainer = styled(Container)`
+  box-shadow: 3px 7px 26px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 12px;
+  padding: 100px 80px;
+  position: relative;
+`
+
+const MailTo = styled.a`
+  position: static;
+  @media (min-width: 900px) {
+    position: absolute;
+    right: 30px;
+  }
+  @media (min-width: 1270px) {
+    position: absolute;
+    right: -30px;
+  }
 `
 
 const AboutStory = styled(({ className, aboutStory }) => (
   <Section className={className}>
-    <Container>
+    <StyledContainer>
       <h3>{aboutStory.textSectionHeading}</h3>
-      <Hr />
       <p
         className="fr-column"
         dangerouslySetInnerHTML={{ __html: aboutStory.textSectionText.childContentfulRichText.html }}
       />
-    </Container>
+      <MailTo href="mailto:hello@trendiamo.com">
+        <Button>{aboutStory.textSectionCta}</Button>
+      </MailTo>
+    </StyledContainer>
   </Section>
 ))`
   h3 {
-    margin-bottom: 20px;
+    font-size: 46px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    text-align: left;
+  }
+
+  p {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.7);
   }
 
   .fr-column {
@@ -37,7 +58,7 @@ const AboutStory = styled(({ className, aboutStory }) => (
 
   @media (min-width: 900px) {
     .fr-column {
-      column-count: 3;
+      column-count: 2;
       font-size: 1em;
     }
   }
