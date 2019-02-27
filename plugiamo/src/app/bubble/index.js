@@ -37,7 +37,8 @@ const ChatBubble = ({
 )
 
 export default compose(
-  withState('hidden', 'setHidden', false),
+  withState('timeEnded', 'setTimeEnded', false),
+  withState('hiddenForContent', 'setHiddenForContent', false),
   withState('animation', 'setAnimation', null),
   withState('textWidth', 'setTextWidth', 0),
   withState('elevation', 'setElevation', false),
@@ -60,8 +61,8 @@ export default compose(
     }
   }),
   withHandlers({
-    reset: ({ setHidden, setAnimation, setTextWidth, setElevation, bubbleTimeoutId }) => () => {
-      setHidden(false)
+    reset: ({ setTimeEnded, setAnimation, setTextWidth, setElevation, bubbleTimeoutId }) => () => {
+      setTimeEnded(false)
       setAnimation(null)
       setTextWidth(0)
       setElevation(false)
@@ -69,7 +70,15 @@ export default compose(
     },
   }),
   withHandlers({
-    animateThis: ({ bubble, bubbleTimeoutId, reset, changeTextWidth, setAnimation, setElevation, setHidden }) => () => {
+    animateThis: ({
+      bubble,
+      bubbleTimeoutId,
+      reset,
+      changeTextWidth,
+      setAnimation,
+      setElevation,
+      setTimeEnded,
+    }) => () => {
       if (!bubble.message) return false
       reset()
       timeout.set(
@@ -101,7 +110,7 @@ export default compose(
         timeout.set(
           bubbleTimeoutId,
           () => {
-            setHidden(true)
+            setTimeEnded(true)
           },
           (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd + bubble.timeEndDuration) * 1000
         )
@@ -113,14 +122,14 @@ export default compose(
       animateThis()
     },
     componentDidUpdate(prevProps) {
-      const { animateThis, isUnmounting, showingContent, hidden, setHidden } = this.props
+      const { animateThis, showingContent, hiddenForContent, setHiddenForContent } = this.props
       if (prevProps.bubble.message !== this.props.bubble.message) animateThis()
-      if (!isUnmounting && showingContent && !hidden) setHidden(true)
-      if (hidden && !showingContent && isUnmounting) {
+      if (showingContent && !hiddenForContent) setHiddenForContent(true)
+      if (!showingContent && hiddenForContent) {
         animateThis()
-        setHidden(false)
+        setHiddenForContent(false)
       }
     },
   }),
-  branch(({ hidden, bubble }) => !bubble.message || hidden, renderNothing)
+  branch(({ hiddenForContent, bubble, timeEnded }) => !bubble.message || hiddenForContent || timeEnded, renderNothing)
 )(ChatBubble)
