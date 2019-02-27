@@ -130,7 +130,7 @@ const JobsFooter = styled.div`
 `
 
 const AboutJobs = ({ aboutJobs, jobOpenings, layout }) => (
-  <StyledSection>
+  <StyledSection id="jobs">
     <StyledContainer>
       <div>
         <h3>{aboutJobs.jobSectionHeading}</h3>

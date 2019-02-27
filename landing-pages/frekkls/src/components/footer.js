@@ -97,6 +97,7 @@ const FooterContent = ({ layout, locale }) => (
       <FooterColumn>
         <Link to={`${locales[locale].path}/about`}>{layout.about}</Link>
         <Link to={`${locales[locale].path}/blog`}>{layout.blog}</Link>
+        <Link to={`${locales[locale].path}/about#jobs`}>{layout.careers}</Link>
       </FooterColumn>
       <FooterColumn>
         <Link className="js-request-demo" to="#demo">
