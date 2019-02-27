@@ -1,4 +1,4 @@
-import i18n from 'ext/i18n'
+import getFrekklsConfig from 'frekkls-config'
 import { gql } from 'ext/recompose/graphql'
 
 const query = gql`
@@ -20,34 +20,6 @@ const query = gql`
   }
 `
 
-const finalOptions = () => {
-  const account = localStorage.getItem('trnd-plugin-account')
-  if (account === 'Impressorajato' && !document.querySelector('#livechat-compact-container')) {
-    return []
-  }
-  return [
-    {
-      id: 'stop',
-      text: i18n.okCool(),
-    },
-  ]
-}
-
-const processChatOptions = chatOptions => {
-  const account = localStorage.getItem('trnd-plugin-account')
-  if (account === 'Impressorajato' && document.querySelector('#livechat-compact-container')) {
-    return [
-      ...chatOptions,
-      {
-        id: 'stop',
-        text: i18n.okCool(),
-      },
-    ]
-  } else {
-    return chatOptions
-  }
-}
-
 const chatLog = {
   addListener(fn) {
     this.listeners.push(fn)
@@ -68,7 +40,9 @@ const chatLog = {
           type: 'message',
         }))
         const options =
-          data.chatStep.chatOptions.length > 0 ? processChatOptions(data.chatStep.chatOptions) : finalOptions()
+          data.chatStep.chatOptions.length > 0
+            ? getFrekklsConfig().processChatOptions(data.chatStep.chatOptions)
+            : getFrekklsConfig().getFinalChatOptions()
         const optionLogs = options.map(chatOption => ({ type: 'option', chatOption }))
         const logs = messageLogs.concat(optionLogs)
         logs.map(log => {

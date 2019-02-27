@@ -1,5 +1,6 @@
 import Chat from './components/chat'
 import ConsumerContent from './components/consumer-content'
+import getFrekklsConfig from 'frekkls-config'
 import { ChatBackground } from 'app/content/scripted-chat/shared'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { Consumer } from 'ext/graphql-context'
@@ -58,15 +59,8 @@ export default compose(
       }
     },
     onStopChat: ({ onToggleContent }) => () => {
-      const account = localStorage.getItem('trnd-plugin-account')
-      if (account === 'Impressorajato') {
-        onToggleContent()
-        const liveChatContainer = document.querySelector('#livechat-compact-container')
-        if (liveChatContainer) liveChatContainer.style.visibility = 'visible'
-        if (window.LC_API && window.LC_API.open_chat_window) window.LC_API.open_chat_window({ source: 'trendiamo' })
-      } else {
-        onToggleContent()
-      }
+      onToggleContent()
+      getFrekklsConfig().onChatStop()
     },
   })
 )(ChatLogUiTemplate)

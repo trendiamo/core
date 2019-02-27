@@ -1,6 +1,6 @@
 import animateOnMount from 'shared/animate-on-mount'
 import Content from './content'
-import init from './setup/init'
+import getFrekklsConfig from 'frekkls-config'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
 import Router from './content/router'
@@ -142,7 +142,7 @@ export default compose(
       // we could store this in the store, but for ease of access for now, just in localStorage
       localStorage.setItem('trnd-plugin-account', data.website.name)
 
-      init()
+      getFrekklsConfig().onShow(autoOpen)
 
       if (autoOpen) {
         setShowingContent(true)
@@ -161,12 +161,7 @@ export default compose(
     },
   }),
   branch(({ persona }) => !persona, renderNothing),
-  withProps(() => {
-    const account = localStorage.getItem('trnd-plugin-account')
-    return {
-      position: account === 'Shopinfo' ? 'left' : account === 'Impressorajato' ? 'right-elevated' : 'right',
-    }
-  }),
+  withProps(() => ({ position: getFrekklsConfig().position })),
   withHandlers({
     onToggleContent: ({ setShowingContent, showingContent }) => () => {
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })

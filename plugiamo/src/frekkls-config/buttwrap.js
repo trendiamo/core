@@ -1,9 +1,23 @@
-// Note: this method only supports www.buttwrap.com for now
-// run `theme.Product` in website for access to theme code on this
-import { infoMsg } from 'shared/info-msg'
+const scrollToCart = () => {
+  window.$('html, body').animate(
+    {
+      scrollTop: window.$('form.product-single__form').offset().top - (20 + window.$('.site-header').outerHeight()),
+    },
+    500
+  )
+}
 
-const addPictures = {
-  Buttwrap: picture => {
+const scrollToCheckout = () => {
+  window.$('html, body').animate(
+    {
+      scrollTop: window.$('form.cart').offset().top - (20 + window.$('.site-header').outerHeight()),
+    },
+    500
+  )
+}
+
+export default {
+  addPicture: picture => {
     const sectionId = window.ShopifyAnalytics.meta.product.id
     const productThumbs = window.$(`#ProductThumbs-${sectionId}`)
     const productPhotos = window.$(`#ProductPhotos-${sectionId}`)
@@ -37,20 +51,11 @@ const addPictures = {
     productPhotos.append(window.$(photoTemplate))
     window.$('body').trigger('matchLarge') // this makes it so slicks are re-generated
   },
-}
-
-const addPicture = picture => {
-  const account = localStorage.getItem('trnd-plugin-account')
-  const method = addPictures[account]
-  if (method) {
-    try {
-      method(picture)
-    } catch (e) {
-      infoMsg('addPicture failed', e)
+  onCtaClick: action => {
+    if (action === 'want' || action === 'ok-size') {
+      scrollToCart()
+    } else if (action === 'checkout') {
+      scrollToCheckout()
     }
-  } else {
-    infoMsg(`addPicture not implemented for ${account}`)
-  }
+  },
 }
-
-export default addPicture
