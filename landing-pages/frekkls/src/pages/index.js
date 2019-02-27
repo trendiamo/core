@@ -64,13 +64,10 @@ export const query = graphql`
     depth: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
       feature1Heading
       feature1Text
-      feature1Cta
       feature2Heading
       feature2Text
-      feature2Cta
       feature3Heading
       feature3Text
-      feature3Cta
     }
     recentBlogs: allContentfulBlogPost(
       limit: 1
