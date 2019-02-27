@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 
 import AboutImg from '../sections/about-img'
 import AboutInvestors from '../sections/about-investors'
+import AboutJobs from '../sections/about-jobs'
 import AboutTeam from '../sections/about-team'
 import AboutText from '../sections/about-text'
 import Layout from '../components/layout'
@@ -13,6 +14,7 @@ const AboutPage = ({ className, pageContext, data }) => (
     <AboutText aboutText={data.aboutText} />
     <AboutTeam aboutPortraits={data.aboutPortraits} teamMembers={data.teamMembers} />
     <AboutInvestors aboutInvestors={data.aboutInvestors} investors={data.investors} />
+    <AboutJobs aboutJobs={data.aboutJobs} jobOpenings={data.jobOpenings} layout={data.layout} />
   </Layout>
 )
 
@@ -78,6 +80,26 @@ export const query = graphql`
               src
             }
           }
+        }
+      }
+    }
+    aboutJobs: contentfulAboutPage(name: { eq: "About Page" }, node_locale: { eq: $locale }) {
+      jobSectionHeading
+      jobSectionMainText {
+        jobSectionMainText
+      }
+      jobSectionSubHeading
+      jobSectionSubText {
+        jobSectionSubText
+      }
+    }
+    jobOpenings: allContentfulJobOpening(filter: { node_locale: { eq: "en-US" } }) {
+      edges {
+        node {
+          id
+          title
+          jobLink
+          jobType
         }
       }
     }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="23px" viewBox="0 0 15 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+    <title>Icon / Keyboard Arrow - Right / Filled</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="15.7483333 31.79 24.145 23.375 15.7483333 14.96 18.3333333 12.375 29.3333333 23.375 18.3333333 34.375"></polygon>
+    </defs>
+    <g id="LandingPage" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-About" transform="translate(-1094.000000, -3550.000000)">
+            <g id="product.1-copy-4" transform="translate(302.000000, 3293.000000)">
+                <g id="Group-3-Copy" transform="translate(7.000000, 210.000000)">
+                    <g id="Icon-/-Keyboard-Arrow---Right-/-Filled" transform="translate(770.000000, 35.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Mask" fill-rule="nonzero"></g>
+                        <g id="✱-/-Color-/-Icons-/-Orange-Main" mask="url(#mask-2)" fill="#FF8240" fill-rule="evenodd">
+                            <rect id="Rectangle" x="0" y="0" width="44" height="44"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
