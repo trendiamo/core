@@ -15,11 +15,7 @@ const defaultConfig = {
   onCtaClick: () => null, // action => null,
   onChatStop: () => null,
   processChatOptions: chatOptions => chatOptions,
-  getFinalChatOptions() {
-    return [{ id: 'stop', text: this.i18n.okCool }]
-  },
   i18n: {
-    okCool: 'Ok, cool',
     productsSelectedBy: firstName => `Products selected by ${firstName}`,
   },
 }

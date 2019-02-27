@@ -6,7 +6,6 @@ export default {
     tmc.parentElement.style.cssText += ';z-index:2147482999 !important;'
   },
   i18n: {
-    okCool: 'Alles klar!',
     productsSelectedBy: firstName => `Die Lieblingsprodukte von ${firstName}`,
   },
 }

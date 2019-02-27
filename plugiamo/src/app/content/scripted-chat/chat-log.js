@@ -1,77 +1,84 @@
 import getFrekklsConfig from 'frekkls-config'
-import { gql } from 'ext/recompose/graphql'
+import { chatDataProvider, listeners } from './shared'
 
-const query = gql`
-  query($id: ID!) {
-    chatStep(id: $id) {
-      chatMessages {
-        id
-        delay
-        text
-      }
-      chatOptions {
-        id
-        text
-        destinationChatStep {
-          id
-        }
-      }
+const chatOptions = {
+  list: null,
+  reset() {
+    this.list = null
+  },
+  get() {
+    return this.list
+  },
+  load({ option, data, hackathon = false }) {
+    if (!this.list) {
+      this.list = this.getFromData(data, hackathon)
+      this.postProcess()
     }
-  }
-`
+    this.filter(option)
+  },
+  filter(option) {
+    this.list = this.list.filter(e => (e.id ? e.id !== option.id : e.text !== option.text))
+  },
+  postProcess() {
+    this.list = getFrekklsConfig().processChatOptions(this.list)
+  },
+  getFromData(data, hackathon) {
+    if (!hackathon) {
+      return data.filter(e => e.type === 'option')
+    }
+    return Object.keys(data.logs).map(text => ({ type: 'option', text }))
+  },
+}
+
+const logs = {
+  list: [],
+  hackathon: false,
+  client: null,
+  init({ data, client, initialStepId }) {
+    this.list = []
+    this.hackathon = !!data
+    this.data = data
+    this.client = client
+    chatOptions.reset()
+    this.load(this.hackathon ? { text: 'default' } : { messageId: initialStepId })
+  },
+  load(option) {
+    if (!this.hackathon) {
+      return this.fetchRemote(option)
+    }
+    this.fetchLocal(option)
+  },
+  fetchRemote(option) {
+    if (!option.messageId) console.error('No destination chat step for option', option)
+    chatDataProvider.fetchStep({ client: this.client, id: option.messageId, callback: this.afterFetchRemote(option) })
+  },
+  fetchLocal(option) {
+    chatOptions.load({ option, data: this.data, hackathon: this.hackathon })
+    const messages = this.data.logs[option.text]
+    const messageLogs = messages.map(message => ({ type: 'message', message }))
+    this.add(messageLogs)
+  },
+  add(data) {
+    this.list = [...this.list, ...data, ...chatOptions.get()]
+    listeners.fireAll({ data: this.list })
+  },
+  afterFetchRemote(option) {
+    return data => {
+      chatOptions.load({ option, data })
+      data = data.filter(e => e.type === 'message')
+      this.add(data)
+    }
+  },
+}
 
 const chatLog = {
-  addListener(fn) {
-    this.listeners.push(fn)
+  init({ data, client, initialStepId, ...props }) {
+    listeners.reset(props.listeners)
+    logs.init({ data, client, initialStepId })
   },
-  addLog(log, timestampParam) {
-    if (timestampParam !== this.timestamp) return // prevent duplicates if user opens & closes repeatedly and fast
-    this.logs.push(log)
-    this.listeners.forEach(fn => fn(this))
+  selectOption(option) {
+    logs.load(option)
   },
-  client: null,
-  fetchStep(id) {
-    return this.client
-      .request(query, { id })
-      .then(data => {
-        const messageLogs = data.chatStep.chatMessages.map(message => ({
-          from: this.personName,
-          message,
-          type: 'message',
-        }))
-        const options =
-          data.chatStep.chatOptions.length > 0
-            ? getFrekklsConfig().processChatOptions(data.chatStep.chatOptions)
-            : getFrekklsConfig().getFinalChatOptions()
-        const optionLogs = options.map(chatOption => ({ type: 'option', chatOption }))
-        const logs = messageLogs.concat(optionLogs)
-        logs.map(log => {
-          this.addLog(log, this.timestamp)
-        })
-      })
-      .catch(data => console.error(data))
-  },
-  init(client, personName) {
-    this.timestamp = Date.now()
-    this.listeners = []
-    this.logs = []
-    this.client = client
-    this.personName = personName
-  },
-  listeners: [],
-  logs: [], // logs are messages from persona and options from end-user. They have a type:'message' or type:'options'
-  personName: null,
-  removeListener(fn) {
-    this.listeners = this.listeners.filter(e => e !== fn)
-  },
-  removeListeners() {
-    this.listeners = []
-  },
-  resetLogs() {
-    this.logs = []
-    this.listeners.forEach(fn => fn(this))
-  },
-  timestamp: null,
 }
 
 export default chatLog
