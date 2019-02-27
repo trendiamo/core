@@ -33,6 +33,9 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
         <Logo alt={siteTitle} />
       </Link>
       <nav>
+        <Link className="header-link" to={`${locales[locale].path}/features`}>
+          {layout.features}
+        </Link>
         <Link className="header-link" to={`${locales[locale].path}/about`}>
           {layout.about}
         </Link>
