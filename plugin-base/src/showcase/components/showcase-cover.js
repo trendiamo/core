@@ -4,6 +4,7 @@ import { CoverInner } from 'shared/cover'
 import { TopSlideAnimation } from 'shared/animate'
 
 const Title = styled.div`
+  color: #fff;
   font-size: 22px;
   line-height: 1.4;
   .Win32 & {
@@ -12,6 +13,7 @@ const Title = styled.div`
 `
 
 const SubTitle = styled.div`
+  color: #fff;
   font-size: 14px;
   .Win32 & {
     font-weight: 500;

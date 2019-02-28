@@ -3,21 +3,27 @@ import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 
 const Cover = styled.div`
-  background-color: #232323;
-  color: #fff;
+  background-color: ${({ hackathon }) => (hackathon ? '#fff' : '#232323')};
   padding: 10px 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 140px;
+  max-height: ${({ minimized }) => (minimized ? 90 : 140)}px;
+  ${({ hackathon }) =>
+    !hackathon &&
+    `
   height: 100px;
-  min-height: 100px;
+  max-height: 100px;
+`}
   width: 100%;
   overflow: hidden;
   position: relative;
   z-index: 2;
-
-  @media (min-height: 500px) {
-    position: fixed;
-  }
+  transition: max-height 0.4s ease-in-out;
+  box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
+  flex-shrink: 0;
 `
 
 const CoverInner = styled.div`
@@ -31,7 +37,6 @@ const BelowCover = styled.div`
   display: flex;
   flex-direction: column;
   @media (min-height: 500px) {
-    margin-top: 100px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
