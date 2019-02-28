@@ -13,6 +13,7 @@ const FlexDiv = styled.div`
 
 const PersonaName = styled.div`
   color: #fff;
+  display: inline-block;
 `
 
 const SpotlightCover = compose(
