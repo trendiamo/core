@@ -3,6 +3,7 @@ import Hackathon from 'special/nowadays'
 // import initRollbar from 'ext/rollbar'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
+import setupDataGathering from 'data-gathering'
 import SpotAHome from 'special/spotahome'
 import { detect } from 'detect-browser'
 import { GraphQLClient } from 'graphql-request'
@@ -10,7 +11,6 @@ import { graphQlUrl, location, mixpanelToken, overrideAccount } from './config'
 import { h, render } from 'preact'
 import { optionsFromHash } from 'app/setup'
 import { Provider } from 'ext/graphql-context'
-import { setupMixpanelCartEvents } from 'special/nowadays/cart'
 import './styles.css'
 
 const detectAndMarkHackathon = () => {
@@ -42,7 +42,7 @@ const main = () => {
   // initRollbar()
   mixpanel.init(mixpanelToken)
   mixpanel.track('Visited Page', { hostname: location.hostname })
-  setupMixpanelCartEvents()
+  setupDataGathering()
 
   const browser = detect()
   const supportedBrowsers = ['chrome', 'firefox', 'safari', 'edge', 'opera', 'ios', 'ios-webview', 'crios', 'fxios']
