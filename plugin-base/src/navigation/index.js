@@ -26,6 +26,10 @@ const Container = styled.div`
   background-color: #ebeef2;
 `
 
+const PersonaName = styled.div`
+  color: #fff;
+`
+
 const NavigationCover = compose(withTextTyping(({ persona }) => persona.description, 300))(
   ({ FlowBackButton, persona, currentDescription }) => (
     <CoverInner>
@@ -33,7 +37,7 @@ const NavigationCover = compose(withTextTyping(({ persona }) => persona.descript
       <FlexDiv>
         <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
         <PaddedCover>
-          <span>{persona.name}</span>
+          <PersonaName>{persona.name}</PersonaName>
           <PersonaInstagram url={persona.instagramUrl} />
           <PersonaDescription text={persona.description} typingText={currentDescription} />
         </PaddedCover>

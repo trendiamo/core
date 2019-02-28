@@ -1,36 +1,19 @@
 import FlowBackButton from 'shared/flow-back-button'
 import styled from 'styled-components'
 import { branch, compose, renderComponent } from 'recompose'
-import { CoverImg, PaddedCover, PersonaDescription, PersonaInstagram, withTextTyping } from 'plugin-base'
+import {
+  Cover as CoverBase,
+  CoverImg,
+  imgixUrl,
+  PaddedCover,
+  PersonaDescription,
+  PersonaInstagram,
+  withTextTyping,
+} from 'plugin-base'
 import { h } from 'preact'
-import { imgixUrl } from 'plugin-base'
 
 const FlexDiv = styled.div`
   display: flex;
-`
-
-const CoverBase = styled.div`
-  background-color: ${({ hackathon }) => (hackathon ? '#fff' : '#232323')};
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  height: 140px;
-  max-height: ${({ minimized }) => (minimized ? 90 : 140)}px;
-  ${({ hackathon }) =>
-    !hackathon &&
-    `
-    height: 100px;
-    max-height: 100px;
-  `}
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  z-index: 2;
-  transition: max-height 0.4s ease-in-out;
-  box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
-  flex-shrink: 0;
 `
 
 const Name = styled.div`
