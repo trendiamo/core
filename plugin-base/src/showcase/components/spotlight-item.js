@@ -12,7 +12,8 @@ const PersonaName = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: block;
+  display: inline-block;
+  max-width: 100%;
   .Win32 & {
     font-weight: 600;
   }
