@@ -1,6 +1,6 @@
+import autoScroll from 'ext/auto-scroll'
 import ChatMessage from './message'
 import ChatOption from './option'
-import scrollToInPlugin from 'ext/scroll-it'
 import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
@@ -42,9 +42,7 @@ export default compose(
       const { contentRef, logSection, callback } = this.props
       if (logSection.type === 'message') {
         if (isFrameActive()) {
-          setTimeout(() => {
-            scrollToInPlugin(contentRef().base, this.base.offsetTop - 15)
-          }, 600)
+          autoScroll.activate({ element: contentRef().base, destination: () => this.base.offsetTop - 15, delay: 600 })
         }
         if (callback) {
           setTimeout(() => {

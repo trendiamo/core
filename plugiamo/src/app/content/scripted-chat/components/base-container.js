@@ -1,3 +1,4 @@
+import autoScroll from 'ext/auto-scroll'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
@@ -35,11 +36,16 @@ const ContainerDiv = styled.div`
   }
 `
 
-const Container = ({ handleWheel, children }) => <ContainerDiv onWheel={handleWheel}>{children}</ContainerDiv>
+const Container = ({ handleWheel, handleTouch, children }) => (
+  <ContainerDiv onTouchMove={handleTouch} onWheel={handleWheel}>
+    {children}
+  </ContainerDiv>
+)
 
 export default compose(
   withHandlers({
     handleWheel: ({ contentRef }) => event => {
+      autoScroll.stop()
       const base = contentRef().base
       const delta = event.deltaY || event.detail || event.wheelDelta
 
@@ -50,6 +56,9 @@ export default compose(
       if (delta > 0 && base.scrollHeight - base.clientHeight - base.scrollTop <= 1) {
         event.preventDefault()
       }
+    },
+    handleTouch: () => () => {
+      autoScroll.stop()
     },
   })
 )(Container)
