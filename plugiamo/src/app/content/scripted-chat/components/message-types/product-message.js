@@ -14,7 +14,7 @@ const TitleAndPrice = styled.div`
 `
 
 const Title = styled.div`
-  font-size: ${({ fontSize }) => fontSize}px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.1px;
   color: #181818;
@@ -24,13 +24,15 @@ const Title = styled.div`
   text-overflow: ellipsis;
   flex: 1;
   max-width: 200px;
+  margin-right: 14px;
 `
 
 const Price = styled.div`
   white-space: nowrap;
-  font-size: ${({ fontSize }) => fontSize}px;
+  font-size: 16px;
   font-weight: bold;
   letter-spacing: 0.1px;
+  color: #25997e;
 `
 
 const CtaTextContainer = styled.div`
@@ -61,10 +63,8 @@ const ProductMessage = compose(
     />
     <CardContent>
       <TitleAndPrice>
-        <div>
-          <Title fontSize={localStorage.getItem('trnd-hackathon') ? 12 : 18}>{product.title}</Title>
-        </div>
-        <Price fontSize={localStorage.getItem('trnd-hackathon') ? 16 : 18}>{product.displayPrice}</Price>
+        <Title>{product.title}</Title>
+        <Price>{product.displayPrice}</Price>
       </TitleAndPrice>
     </CardContent>
     {product.cardCta && <CtaTextContainer>{product.cardCta}</CtaTextContainer>}
