@@ -15,10 +15,11 @@ const Content = styled.div`
 const Name = styled.div`
   font-size: 16px;
   font-weight: 500;
-  line-height: 1.4;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 1;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 0;
   .Win32 & {
     font-weight: 600;
   }

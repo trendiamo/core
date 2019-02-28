@@ -6,14 +6,16 @@ import { imgixUrl } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 import { transition } from 'ext'
 
-const PersonaName = styled.span`
-  font-weight: 500;
+const PersonaName = styled.div`
   font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
   max-width: 100%;
+  flex-shrink: 0;
   .Win32 & {
     font-weight: 600;
   }
