@@ -1,5 +1,5 @@
 import App from 'app'
-import Hackathon from 'special/nowadays'
+import Hackathon from 'special/hckt'
 // import initRollbar from 'ext/rollbar'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
