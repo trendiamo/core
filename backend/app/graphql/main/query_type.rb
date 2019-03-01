@@ -6,6 +6,7 @@ Main::QueryType = GraphQL::ObjectType.define do
   field :persona, Fields::PersonaField
   field :showcase, Fields::ShowcaseField
   field :scriptedChat, Fields::ScriptedChatField
+  field :simpleChat, Fields::SimpleChatField
   field :outro, Fields::OutroField
   field :navigation, Fields::NavigationField
   field :chatStep, Fields::ChatStepField
