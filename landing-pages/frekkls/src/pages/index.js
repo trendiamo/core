@@ -6,6 +6,7 @@ import Buzz from '../sections/buzz'
 import Depth from '../sections/depth'
 import Hero from '../sections/hero'
 import Layout from '../components/layout'
+import LevelUpSlider from '../sections/level-up-slider'
 import RecentBlog from '../sections/recent-blog'
 import SocialProof from '../sections/social-proof'
 
@@ -13,6 +14,7 @@ const IndexPage = ({ className, pageContext, data }) => (
   <Layout className={className} layout={data.layout} locale={pageContext.locale}>
     <Hero hero={data.hero} />
     <SocialProof clients={data.clients} testimonial={data.testimonial} />
+    <LevelUpSlider levelUp={data.levelUp} levelUpSliderContent={data.levelUpSliderContent} />
     <Ads ads={data.ads} />
     <Depth depth={data.depth} />
     <RecentBlog blogPost={data.recentBlogs.edges[0].node} locale={pageContext.locale} />
@@ -84,6 +86,29 @@ export const query = graphql`
             }
           }
           cardCta
+        }
+      }
+    }
+    levelUp: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
+      levelUpHeading
+      levelUpSubHeading
+    }
+    levelUpSliderContent: allContentfulLevelUpSlide(filter: { node_locale: { eq: $locale } }) {
+      edges {
+        node {
+          id
+          slideHeading
+          slideName
+          slideText {
+            slideText
+          }
+          slideImage {
+            file {
+              url
+              fileName
+            }
+          }
+          slideCta
         }
       }
     }
