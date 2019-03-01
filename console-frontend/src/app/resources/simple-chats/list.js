@@ -3,7 +3,7 @@ import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
 import { ActiveColumn, Avatar, columns, TableCell, Text } from 'shared/table-elements'
-import { apiSimpleChatDestroy, apiSimpleChatList } from 'utils'
+import { apiSimpleChatDestroy, apiSimpleChatDuplicate, apiSimpleChatList } from 'utils'
 import { compose } from 'recompose'
 
 const BlankState = () => (
@@ -33,7 +33,7 @@ export default compose(
     columns,
     defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,
-    api: { fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy },
+    api: { fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate },
     routes: { create: routes.simpleChatCreate, edit: routes.simpleChatEdit },
     help: { single: true, stepName: 'simpleChats', stageName: 'initial' },
     highlightInactive: 'triggerIds',
