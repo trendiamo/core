@@ -129,8 +129,9 @@ const ImageContainer = styled.div`
   }
 `
 
-const PersonaName = styled.span`
+const PersonaName = styled.div`
   color: #fff;
+  display: inline-block;
 `
 
 export const CoverScriptedChat = compose(withTextTyping(({ persona }) => persona.description, 300))(

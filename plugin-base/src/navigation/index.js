@@ -28,6 +28,7 @@ const Container = styled.div`
 
 const PersonaName = styled.div`
   color: #fff;
+  display: inline-block;
 `
 
 const NavigationCover = compose(withTextTyping(({ persona }) => persona.description, 300))(
