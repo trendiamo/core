@@ -57,7 +57,7 @@ class NavigationsController < RestController
   private
 
   def navigation_params
-    result = params.require(:navigation).permit(:persona_id, :name, :title, :chat_bubble_text,
+    result = params.require(:navigation).permit(:persona_id, :name, :title, :chat_bubble_text, :chat_bubble_extra_text,
                                                 navigation_items_attributes:
       %i[id text url pic_url _destroy])
     add_order_fields(result)

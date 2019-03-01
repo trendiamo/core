@@ -7,6 +7,11 @@ Types::FlowType = GraphQL::ObjectType.define do
       obj.chat_bubble_text
     }
   end
+  field :chatBubbleExtraText, types.String do
+    resolve ->(obj, _args, _ctx) {
+      obj.chat_bubble_extra_text
+    }
+  end
   field :flowType, !types.String do
     resolve ->(obj, _args, _ctx) {
       obj.class.name.camelize(:lower)

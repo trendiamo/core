@@ -60,7 +60,11 @@ export const AppBase = styled(
           data && data.launcher ? data.launcher.chatBubble : { message: data && data.flow && data.flow.chatBubbleText }
         }
         data={data}
-        extraBubble={data && data.launcher && data.launcher.chatBubbleExtra}
+        extraBubble={
+          data && data.launcher
+            ? data.launcher.chatBubbleExtra
+            : { message: data && data.flow && data.flow.chatBubbleExtraText }
+        }
         launcherType={launcherType}
         onToggleContent={onToggleContent}
         persona={persona}
@@ -92,6 +96,7 @@ export default compose(
           id
           flowType
           chatBubbleText
+          chatBubbleExtraText
           persona {
             id
             name

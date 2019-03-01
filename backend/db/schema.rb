@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20190301112322) do
     t.datetime "updated_at", null: false
     t.string "chat_bubble_text"
     t.string "title", default: "", null: false
+    t.string "chat_bubble_extra_text"
     t.index ["account_id"], name: "index_navigations_on_account_id"
     t.index ["persona_id"], name: "index_navigations_on_persona_id"
   end
@@ -95,6 +96,7 @@ ActiveRecord::Schema.define(version: 20190301112322) do
     t.string "graphcms_ref"
     t.string "name", null: false
     t.string "chat_bubble_text"
+    t.string "chat_bubble_extra_text"
     t.index ["account_id"], name: "index_outros_on_account_id"
     t.index ["persona_id"], name: "index_outros_on_persona_id"
   end
@@ -136,6 +138,7 @@ ActiveRecord::Schema.define(version: 20190301112322) do
     t.string "graphcms_ref"
     t.string "name", null: false
     t.string "chat_bubble_text"
+    t.string "chat_bubble_extra_text"
     t.index ["account_id"], name: "index_scripted_chats_on_account_id"
     t.index ["persona_id"], name: "index_scripted_chats_on_persona_id"
   end
@@ -150,6 +153,7 @@ ActiveRecord::Schema.define(version: 20190301112322) do
     t.string "graphcms_ref"
     t.string "name", null: false
     t.string "chat_bubble_text"
+    t.string "chat_bubble_extra_text"
     t.index ["account_id"], name: "index_showcases_on_account_id"
     t.index ["persona_id"], name: "index_showcases_on_persona_id"
   end
@@ -184,6 +188,7 @@ ActiveRecord::Schema.define(version: 20190301112322) do
     t.bigint "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "chat_bubble_extra_text"
     t.index ["account_id"], name: "index_simple_chats_on_account_id"
     t.index ["persona_id"], name: "index_simple_chats_on_persona_id"
   end

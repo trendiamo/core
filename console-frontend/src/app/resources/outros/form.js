@@ -66,6 +66,17 @@ const OutroForm = ({
             value={form.chatBubbleText}
           />
           <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
+          <LimitedField
+            disabled={isFormLoading}
+            fullWidth
+            label="Extra Chat Bubble Text"
+            margin="normal"
+            max={characterLimits.main.chatBubble}
+            name="chatBubbleExtraText"
+            onChange={setFieldValue}
+            value={form.chatBubbleExtraText}
+          />
+          <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
         </Form>
       </Section>
     </Grid>
@@ -108,6 +119,7 @@ export default compose(
         personaId: (json.persona && json.persona.id) || '',
         name: json.name || '',
         chatBubbleText: json.chatBubbleText || '',
+        chatBubbleExtraText: json.chatBubbleExtraText || '',
         __persona: json.persona,
       }
     },

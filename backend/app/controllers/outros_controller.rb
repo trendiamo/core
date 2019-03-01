@@ -57,7 +57,7 @@ class OutrosController < RestController
   private
 
   def outro_params
-    params.require(:outro).permit(:persona_id, :name, :chat_bubble_text)
+    params.require(:outro).permit(:persona_id, :name, :chat_bubble_text, :chat_bubble_extra_text)
   end
 
   def render_error
