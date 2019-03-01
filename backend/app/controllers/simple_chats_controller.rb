@@ -57,7 +57,7 @@ class SimpleChatsController < RestController
   private
 
   def simple_chat_params
-    result = params.require(:simple_chat).permit(:id, :name, :title, :chat_bubble, :persona_id, :_destroy,
+    result = params.require(:simple_chat).permit(:id, :name, :title, :chat_bubble_text, :persona_id, :_destroy,
                                                  simple_chat_steps_attributes:
                                                  [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
                                                   %i[id order text _destroy],])

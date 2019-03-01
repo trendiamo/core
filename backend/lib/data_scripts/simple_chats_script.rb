@@ -21,7 +21,7 @@ class PortScriptedChatsToSimpleChats
     {
       title: scripted_chat.title,
       name: scripted_chat.name,
-      chat_bubble: scripted_chat.chat_bubble_text,
+      chat_bubble_text: scripted_chat.chat_bubble_text,
       account: account,
       persona: Persona.find(scripted_chat.persona_id),
       simple_chat_steps_attributes: extract_simple_chat_step([], scripted_chat.chat_step, "default", account, 0),

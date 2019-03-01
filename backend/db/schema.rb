@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190226120728) do
+ActiveRecord::Schema.define(version: 20190301112322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(version: 20190226120728) do
   create_table "simple_chats", force: :cascade do |t|
     t.string "name", null: false
     t.string "title", null: false
-    t.string "chat_bubble"
+    t.string "chat_bubble_text"
     t.bigint "persona_id"
     t.bigint "account_id"
     t.datetime "created_at", null: false

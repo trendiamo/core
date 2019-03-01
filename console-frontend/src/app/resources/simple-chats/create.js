@@ -24,7 +24,7 @@ export default compose(
         name: '',
         title: '',
         personaId: '',
-        chatBubble: '',
+        chatBubbleText: '',
         simpleChatStepsAttributes: [
           {
             simpleChatMessagesAttributes: [{ text: '' }],

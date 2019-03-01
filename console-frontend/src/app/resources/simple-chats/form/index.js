@@ -97,10 +97,10 @@ const SimpleChatForm = ({
           fullWidth
           label="Chat Bubble"
           margin="normal"
-          max={characterLimits.main.chatBubble}
-          name="chatBubble"
+          max={characterLimits.main.chatBubbleText}
+          name="chatBubbleText"
           onChange={setFieldValue}
-          value={form.chatBubble}
+          value={form.chatBubbleText}
         />
         <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       </Grid>
@@ -128,7 +128,7 @@ export default compose(
         id: json.id,
         name: json.name || '',
         title: json.title || '',
-        chatBubble: json.chatBubble || '',
+        chatBubbleText: json.chatBubbleText || '',
         personaId: (json.persona && json.persona.id) || '',
         __persona: json.persona,
         simpleChatStepsAttributes: json.simpleChatStepsAttributes || [
@@ -146,7 +146,7 @@ export default compose(
     name: '',
     title: '',
     personaId: '',
-    chatBubble: '',
+    chatBubbleText: '',
     simpleChatStepsAttributes: [
       {
         simpleChatMessagesAttributes: [{ text: '' }],

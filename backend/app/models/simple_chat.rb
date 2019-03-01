@@ -11,7 +11,7 @@ class SimpleChat < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "title", "name", "chat_bubble")
+      .slice("id", "title", "name", "chat_bubble_text")
       .merge(extra_attributes)
   end
 
