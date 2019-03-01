@@ -141,6 +141,7 @@ export const apiSimpleChatDestroy = body => apiDestroyMultipleRequest(SIMPLE_CHA
 export const apiSimpleChatCreate = body => apiCreateRequest(SIMPLE_CHATS_URL, body)
 export const apiSimpleChatShow = id => apiGetRequest(`${SIMPLE_CHATS_URL}/${id}`)
 export const apiSimpleChatUpdate = (id, body) => apiUpdateRequest(`${SIMPLE_CHATS_URL}/${id}`, body)
+export const apiSimpleChatDuplicate = id => apiPostRequest(`${SIMPLE_CHATS_URL}/${id}/duplicate`)
 
 export const apiNavigationList = query => apiListRequest(`${NAVIGATIONS_URL}/?${stringify(query)}`)
 export const apiNavigationDestroy = body => apiDestroyMultipleRequest(NAVIGATIONS_URL, body)
