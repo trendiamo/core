@@ -2,7 +2,7 @@ import React from 'react'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
 import { DragHandle } from 'shared/sortable-elements'
-import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import { FormHelperText, TextField } from '@material-ui/core'
 
 const SimpleChatMessage = ({
   allowDelete,
@@ -28,26 +28,24 @@ const SimpleChatMessage = ({
     hideTop={index === 0}
     title={simpleChatMessage.id ? simpleChatMessage.text : 'New Message'}
   >
-    <Grid item sm={6}>
-      <TextField
-        disabled={isFormLoading}
-        fullWidth
-        label="Message"
-        margin="normal"
-        name="simpleChatMessage_text"
-        onChange={editSimpleChatMessageValue}
-        onFocus={onFocus}
-        required
-        value={simpleChatMessage.text}
-      />
-      <FormHelperText>
-        {'ℹ️ You can format text using '}
-        <a href="https://www.markdownguide.org/cheat-sheet" rel="noopener noreferrer" target="_blank">
-          {'markdown'}
-        </a>
-        {'. If you just paste a youtube link, the video will be shown.'}
-      </FormHelperText>
-    </Grid>
+    <TextField
+      disabled={isFormLoading}
+      fullWidth
+      label="Message"
+      margin="normal"
+      name="simpleChatMessage_text"
+      onChange={editSimpleChatMessageValue}
+      onFocus={onFocus}
+      required
+      value={simpleChatMessage.text}
+    />
+    <FormHelperText>
+      {'ℹ️ You can format text using '}
+      <a href="https://www.markdownguide.org/cheat-sheet" rel="noopener noreferrer" target="_blank">
+        {'markdown'}
+      </a>
+      {'. If you just paste a youtube link, the video will be shown.'}
+    </FormHelperText>
   </FormSection>
 )
 

@@ -25,12 +25,18 @@ class SimpleChat < ApplicationRecord
 
   def extra_attributes
     result = {
-      persona: {
-        id: persona.id, name: persona.name, profile_pic_url: persona.profile_pic_url,
-        instagram_url: persona.instagram_url,
-      },
+      persona: persona_attributes,
+      type: "SimpleChat",
+      trigger_ids: triggers.ids,
     }
     result[:simple_chat_steps_attributes] = simple_chat_steps.order(:order).map(&:as_json) if simple_chat_steps.any?
     result
+  end
+
+  def persona_attributes
+    {
+      id: persona.id, name: persona.name, profile_pic_url: persona.profile_pic_url,
+      instagram_url: persona.instagram_url,
+    }
   end
 end
