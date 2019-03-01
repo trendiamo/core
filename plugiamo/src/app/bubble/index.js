@@ -12,6 +12,13 @@ const defaultBubble = {
   timeEndDuration: 0.4,
 }
 
+const bubbleExtraDefault = {
+  timeStart: 2.5,
+  timeEnd: 18.2,
+  timeStartDuration: 0.4,
+  timeEndDuration: 0.4,
+}
+
 const ChatBubble = ({
   position,
   disappear,
@@ -42,8 +49,8 @@ export default compose(
   withState('animation', 'setAnimation', null),
   withState('textWidth', 'setTextWidth', 0),
   withState('elevation', 'setElevation', false),
-  withProps(({ bubble }) => ({
-    bubble: { ...defaultBubble, ...bubble },
+  withProps(({ bubble, extraBubble }) => ({
+    bubble: { ...(extraBubble ? bubbleExtraDefault : defaultBubble), ...bubble },
   })),
   withProps(({ extraBubble }) => ({
     bubbleTimeoutId: `chatBubble${extraBubble && 'Extra'}`,

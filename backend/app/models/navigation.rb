@@ -9,7 +9,7 @@ class Navigation < ApplicationRecord
   validates :name, presence: true
   def as_json(_options = {})
     attributes
-      .slice("id", "name", "title", "chat_bubble_text", "created_at", "updated_at")
+      .slice("id", "name", "title", "chat_bubble_text", "chat_bubble_extra_text", "created_at", "updated_at")
       .merge(extra_attributes)
   end
 

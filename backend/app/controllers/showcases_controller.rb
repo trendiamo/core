@@ -58,7 +58,7 @@ class ShowcasesController < RestController
 
   def showcase_params
     result = params.require(:showcase).permit(
-      :name, :title, :subtitle, :chat_bubble_text, :persona_id,
+      :name, :title, :subtitle, :chat_bubble_text, :chat_bubble_extra_text, :persona_id,
       spotlights_attributes: [
         :id, :persona_id, :_destroy,
         product_picks_attributes: %i[

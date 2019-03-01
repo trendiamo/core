@@ -103,6 +103,17 @@ const SimpleChatForm = ({
           value={form.chatBubbleText}
         />
         <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
+        <LimitedField
+          disabled={isFormLoading}
+          fullWidth
+          label="Extra Chat Bubble Text"
+          margin="normal"
+          max={characterLimits.main.chatBubble}
+          name="chatBubbleExtraText"
+          onChange={setFieldValue}
+          value={form.chatBubbleExtraText}
+        />
+        <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
       </Grid>
     </Section>
     <SimpleChatStepsContainer
@@ -129,6 +140,7 @@ export default compose(
         name: json.name || '',
         title: json.title || '',
         chatBubbleText: json.chatBubbleText || '',
+        chatBubbleExtraText: json.chatBubbleExtraText || '',
         personaId: (json.persona && json.persona.id) || '',
         __persona: json.persona,
         simpleChatStepsAttributes: json.simpleChatStepsAttributes || [
@@ -147,6 +159,7 @@ export default compose(
     title: '',
     personaId: '',
     chatBubbleText: '',
+    chatBubbleExtraText: '',
     simpleChatStepsAttributes: [
       {
         simpleChatMessagesAttributes: [{ text: '' }],

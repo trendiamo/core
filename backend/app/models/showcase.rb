@@ -12,7 +12,8 @@ class Showcase < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "title", "subtitle", "name", "chat_bubble_text", "created_at", "updated_at")
+      .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "created_at",
+             "updated_at")
       .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",

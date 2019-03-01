@@ -26,6 +26,7 @@ export default compose(
         title: '',
         subtitle: '',
         chatBubbleText: '',
+        chatBubbleExtraText: '',
         spotlightsAttributes: [
           {
             personaId: '',

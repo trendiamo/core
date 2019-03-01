@@ -139,6 +139,17 @@ const ShowcaseForm = ({
         value={form.chatBubbleText}
       />
       <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
+      <LimitedField
+        disabled={isFormLoading}
+        fullWidth
+        label="Extra Chat Bubble Text"
+        margin="normal"
+        max={characterLimits.main.chatBubble}
+        name="chatBubbleExtraText"
+        onChange={setFieldValue}
+        value={form.chatBubbleExtraText}
+      />
+      <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
     </Section>
     <SpotlightsContainer
       form={form}
@@ -278,6 +289,7 @@ export default compose(
         title: json.title || '',
         subtitle: json.subtitle || '',
         chatBubbleText: json.chatBubbleText || '',
+        chatBubbleExtraText: json.chatBubbleExtraText || '',
         __persona: json.persona,
         spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
           id: spotlight.id,
@@ -312,6 +324,7 @@ export default compose(
   withForm({
     name: '',
     chatBubbleText: '',
+    chatBubbleExtraText: '',
     personaId: '',
     title: '',
     subtitle: '',

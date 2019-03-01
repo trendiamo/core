@@ -45,8 +45,8 @@ class ScriptedChatsController < RestController
   private
 
   def scripted_chat_params
-    result = params.require(:scripted_chat).permit(:id, :name, :title, :chat_bubble_text, :persona_id,
-                                                   chat_step_attributes: {})
+    result = params.require(:scripted_chat).permit(:id, :name, :title, :chat_bubble_text, :chat_bubble_extra_text,
+                                                   :persona_id, chat_step_attributes: {})
     add_order_fields(result[:chat_step_attributes])
     result
   end

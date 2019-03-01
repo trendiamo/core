@@ -24,6 +24,7 @@ export default compose(
         personaId: '',
         name: '',
         chatBubbleText: '',
+        chatBubbleExtraText: '',
       }
     },
   })
