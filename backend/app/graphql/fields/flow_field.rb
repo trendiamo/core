@@ -1,7 +1,10 @@
+# rubocop:disable Metrics/MethodLength
 def flow_class_by_type(type)
   case type
   when "scripted-chat"
     ScriptedChat
+  when "simple-chat"
+    SimpleChat
   when "navigation"
     Navigation
   when "outro"
@@ -10,6 +13,7 @@ def flow_class_by_type(type)
     Showcase
   end
 end
+# rubocop:enable Metrics/MethodLength
 
 def flow_by_path(path)
   type, id = path[1..-1].split("/")
