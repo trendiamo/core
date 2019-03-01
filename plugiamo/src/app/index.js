@@ -13,6 +13,8 @@ import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { HEIGHT_BREAKPOINT, location } from 'config'
 import { infoMsgHof } from 'shared/info-msg'
+import { isSmall } from 'utils'
+import { timeout } from 'plugin-base'
 
 const Gradient = animateOnMount(styled.div`
   z-index: 2147482998;
@@ -128,6 +130,7 @@ export default compose(
   branch(({ data }) => !data.flow, infoMsgHof(`no data found for hostname ${location.hostname}`)),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
   withState('persona', 'setPersona'),
+  withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
   lifecycle({
     componentDidMount() {
@@ -163,13 +166,28 @@ export default compose(
         document.documentElement.classList.remove('trnd-open')
       }
     },
+    componentWillUnmount() {
+      timeout.clear('exitOnMobile')
+    },
   }),
   branch(({ persona }) => !persona, renderNothing),
   withProps(() => ({ position: getFrekklsConfig().position })),
   withHandlers({
-    onToggleContent: ({ setShowingContent, showingContent }) => () => {
+    onToggleContent: ({ setIsUnmounting, setShowingContent, showingContent }) => () => {
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
+
+      if (showingContent && isSmall()) {
+        setIsUnmounting(true)
+        return timeout.set(
+          'exitOnMobile',
+          () => {
+            setIsUnmounting(false)
+            setShowingContent(false)
+          },
+          400
+        )
+      }
       return setShowingContent(!showingContent)
     },
   }),
