@@ -27,6 +27,7 @@ export default compose(
         chatBubbleText: '',
         simpleChatStepsAttributes: [
           {
+            key: 'default',
             simpleChatMessagesAttributes: [{ text: '' }],
           },
         ],
