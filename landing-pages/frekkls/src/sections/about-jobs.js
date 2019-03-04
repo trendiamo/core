@@ -56,8 +56,14 @@ const JobCard = styled.a`
   justify-content: center;
   position: relative;
 
-  h3 {
+  h2 {
     font-size: 22px;
+    margin: 10px 10px 10px 10px;
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  h3 {
+    font-size: 18px;
     margin: 10px 30px 10px 10px;
     color: rgba(0, 0, 0, 0.9);
   }
@@ -77,11 +83,17 @@ const JobCard = styled.a`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    h3 {
+    h2 {
       font-size: 26px;
       margin-top: 0px;
       margin-bottom: 0px;
       margin-left: 40px;
+    }
+    h3 {
+      font-size: 22px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      margin-left: 0px;
     }
     h4 {
       font-size: 20px;
@@ -89,14 +101,24 @@ const JobCard = styled.a`
   }
 `
 
-const JobCardDetailsLarge = styled.div`
-  width: 100px;
+const JobCardDetailsLargeContainer = styled.div`
   display: none;
-  justify-content: space-between;
-  margin-right: 40px;
+  justify-content: flex-end;
+  flex: 1;
 
   @media (min-width: 900px) {
     display: flex;
+  }
+`
+
+const JobCardDetailsLarge = styled.div`
+  display: none;
+  margin-right: 40px;
+  width: 100px;
+
+  @media (min-width: 900px) {
+    display: flex;
+    justify-content: space-between;
   }
 `
 
@@ -138,15 +160,20 @@ const AboutJobs = ({ aboutJobs, jobOpenings, layout }) => (
       </div>
       <JobCardsContainer>
         {jobOpenings.edges.map(job => (
-          <JobCard href={job.node.jobLink} key={job.node.id}>
-            <h3>{`${job.node.title} (${job.node.jobType})`}</h3>
-            <JobCardDetailsLarge>
-              <h4>{'Lisbon'}</h4>
-              <OrangeArrow />
-            </JobCardDetailsLarge>
-            <LocationSmall>{'Lisbon'}</LocationSmall>
-            <OrangeArrowSmall />
-          </JobCard>
+          <div itemScope itemType="http://schema.org/JobPosting" key={job.node.id}>
+            <JobCard href={job.node.jobLink} itemProp="url">
+              <h2 itemProp="title">{`${job.node.title}`}</h2>
+              <h3 itemProp="employmentType">{`(${job.node.jobType})`}</h3>
+              <JobCardDetailsLargeContainer>
+                <JobCardDetailsLarge>
+                  <h4 itemProp="jobLocation">{'Lisbon'}</h4>
+                  <OrangeArrow />
+                </JobCardDetailsLarge>
+              </JobCardDetailsLargeContainer>
+              <LocationSmall itemProp="jobLocation">{'Lisbon'}</LocationSmall>
+              <OrangeArrowSmall />
+            </JobCard>
+          </div>
         ))}
       </JobCardsContainer>
       <JobsFooter>
