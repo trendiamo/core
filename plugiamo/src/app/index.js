@@ -105,9 +105,15 @@ export const AppBase = compose(
   withProps(({ data }) => {
     if (!data) return
     const extraBubble = data.launcher ? data.launcher.chatBubbleExtra : getExtraBubble(data.flow)
-    const bubble = data.launcher ? data.launcher.chatBubble : { message: data.flow.chatBubbleText }
+    let bubble = data.launcher ? data.launcher.chatBubble : { message: data.flow.chatBubbleText }
+    if (extraBubble.buttons || extraBubble.message) {
+      bubble.timeOfElevation = 1.6
+    }
+    if (extraBubble.buttons) {
+      bubble.timeEnd = null
+    }
     return {
-      bubble: extraBubble.buttons || extraBubble.message ? { ...bubble, timeOfElevation: 1.6, timeEnd: null } : bubble,
+      bubble,
       extraBubble,
       [extraBubble.buttons && 'launcherType']: 'original',
     }
