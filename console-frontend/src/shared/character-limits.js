@@ -3,6 +3,7 @@ export default {
     title: 20,
     subtitle: 80,
     chatBubble: 25,
+    chatBubbleButton: 16,
   },
   persona: {
     name: 25,
