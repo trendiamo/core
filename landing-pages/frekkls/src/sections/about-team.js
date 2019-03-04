@@ -5,32 +5,7 @@ import styled from 'styled-components'
 import Container from '../components/container'
 import Section from '../components/section'
 
-import leftArrow from '../images/about-arrow-left.svg'
-import rightArrow from '../images/about-arrow-right.svg'
-
-const LeftArrow = styled.img.attrs({
-  src: leftArrow,
-})`
-  height: 40px;
-  position: absolute;
-  top: 150px;
-  left: -250px;
-  &:hover {
-    cursor: pointer;
-  }
-`
-
-const RightArrow = styled.img.attrs({
-  src: rightArrow,
-})`
-  height: 40px;
-  position: absolute;
-  top: 150px;
-  left: -190px;
-  &:hover {
-    cursor: pointer;
-  }
-`
+import { LeftArrow, RightArrow } from '../components/arrows'
 
 const NextArrow = ({ onClick }) => <RightArrow onClick={onClick} />
 const PrevArrow = ({ onClick }) => <LeftArrow onClick={onClick} />

@@ -4,6 +4,7 @@ import { graphql } from 'gatsby'
 import Ads from '../sections/ads'
 import Buzz from '../sections/buzz'
 import Depth from '../sections/depth'
+import DiscoverProduct from '../sections/discover-product'
 import Hero from '../sections/hero'
 import Layout from '../components/layout'
 import LevelUpSlider from '../sections/level-up-slider'
@@ -14,6 +15,7 @@ const IndexPage = ({ className, pageContext, data }) => (
   <Layout className={className} layout={data.layout} locale={pageContext.locale}>
     <Hero hero={data.hero} />
     <SocialProof clients={data.clients} testimonial={data.testimonial} />
+    <DiscoverProduct discoverProductsSliderContent={data.discoverProductsSliderContent} />
     <LevelUpSlider levelUp={data.levelUp} levelUpSliderContent={data.levelUpSliderContent} />
     <Ads ads={data.ads} />
     <Depth depth={data.depth} />
@@ -109,6 +111,22 @@ export const query = graphql`
             }
           }
           slideCta
+        }
+      }
+    }
+    discoverProductsSliderContent: allContentfulDiscoverProductSlide(filter: { node_locale: { eq: $locale } }) {
+      edges {
+        node {
+          id
+          slideMainText
+          slideSecondaryText {
+            slideSecondaryText
+          }
+          slideImage {
+            file {
+              url
+            }
+          }
         }
       }
     }
