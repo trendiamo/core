@@ -6,10 +6,14 @@ import { Link } from 'gatsby'
 
 const StyledFeatureCard = styled(FeatureCard)`
   width: 300px;
-  height: 480px;
+  display: flex;
+  flex-direction: column;
   @media (min-width: 900px) {
     width: 450px;
-    height: 580px;
+  }
+
+  p {
+    flex: 1;
   }
 `
 
