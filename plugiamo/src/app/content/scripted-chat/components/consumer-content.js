@@ -46,7 +46,7 @@ export default compose(
     onOptionClick: ({ onStopChat, persona, configMinHeight }) => chatOption => {
       configMinHeight()
       mixpanel.track('Clicked Chat Option', {
-        flowType: 'scriptedChat',
+        flowType: 'simpleChat',
         hostname: location.hostname,
         personaName: persona.name,
         personaRef: persona.id,
@@ -60,8 +60,8 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { client, initialChatStep, updateLogs } = this.props
-      chatLog.init({ client, listeners: [updateLogs], initialStepId: initialChatStep.id })
+      const { updateLogs, data } = this.props
+      chatLog.init({ data, listeners: [updateLogs] })
     },
   })
 )(ConsumerContentDiv)

@@ -134,7 +134,7 @@ const PersonaName = styled.div`
   display: inline-block;
 `
 
-export const CoverScriptedChat = compose(withTextTyping(({ persona }) => persona.description, 300))(
+export const CoverSimpleChat = compose(withTextTyping(({ persona }) => persona.description, 300))(
   ({ persona, currentDescription }) => (
     <CoverBase>
       <FlowBackButton />
@@ -170,4 +170,4 @@ export const CoverHackathon = ({ header, minimized }) => (
   </CoverBase>
 )
 
-export default compose(branch(({ hackathon }) => hackathon, renderComponent(CoverHackathon)))(CoverScriptedChat)
+export default compose(branch(({ hackathon }) => hackathon, renderComponent(CoverHackathon)))(CoverSimpleChat)
