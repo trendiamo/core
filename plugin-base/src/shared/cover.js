@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 
 const Cover = styled.div`
-  background-color: ${({ hackathon }) => (hackathon ? '#fff' : '#232323')};
+  background-color: ${({ hackathon, backgroundColor = '#fff' }) => (hackathon ? backgroundColor : '#232323')};
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
