@@ -1,5 +1,5 @@
 import getFrekklsConfig from 'frekkls-config'
-import { chatDataProvider, listeners } from './shared'
+import { listeners } from './shared'
 
 const chatOptions = {
   list: null,
@@ -24,7 +24,10 @@ const chatOptions = {
   },
   getFromData(data, hackathon) {
     if (!hackathon) {
-      return data.filter(e => e.type === 'option')
+      return data.simpleChat.simpleChatSteps.map(chatStep => ({
+        text: chatStep.key,
+        type: 'option',
+      }))
     }
     return Object.keys(data.logs).map(text => ({ type: 'option', text }))
   },
@@ -34,35 +37,32 @@ const logs = {
   list: [],
   hackathon: false,
   client: null,
-  init({ data, client, initialStepId }) {
+  init({ data, client, hackathon }) {
     this.list = []
-    this.hackathon = !!data
+    this.hackathon = hackathon
     this.data = data
     this.client = client
     chatOptions.reset()
-    this.load(this.hackathon ? { text: 'default' } : { messageId: initialStepId })
+    this.load({ text: 'default' })
   },
   load(option) {
-    if (!this.hackathon) {
-      return this.fetchRemote(option)
-    }
-    this.fetchLocal(option)
-  },
-  fetchRemote(option) {
-    if (!option.messageId) console.error('No destination chat step for option', option)
-    chatDataProvider.fetchStep({ client: this.client, id: option.messageId, callback: this.afterFetchRemote(option) })
-  },
-  fetchLocal(option) {
     chatOptions.load({ option, data: this.data, hackathon: this.hackathon })
-    const messages = this.data.logs[option.text]
+    const messages = this.findMessages(option)
     const messageLogs = messages.map(message => ({ type: 'message', message }))
     this.add(messageLogs)
+    this.afterFetch(option)
+  },
+  findMessages(option) {
+    if (this.hackathon) {
+      return this.data.logs[option.text]
+    }
+    return this.data.simpleChat.simpleChatSteps.find(e => e.key === option.text).simpleChatMessages
   },
   add(data) {
     this.list = [...this.list, ...data, ...chatOptions.get()]
     listeners.fireAll({ data: this.list })
   },
-  afterFetchRemote(option) {
+  afterFetch(option) {
     return data => {
       chatOptions.load({ option, data })
       data = data.filter(e => e.type === 'message')
@@ -72,9 +72,9 @@ const logs = {
 }
 
 const chatLog = {
-  init({ data, client, initialStepId, ...props }) {
+  init(props) {
     listeners.reset(props.listeners)
-    logs.init({ data, client, initialStepId })
+    logs.init(props)
   },
   selectOption(option) {
     logs.load(option)

@@ -55,7 +55,7 @@ export default compose(
   }),
   withHandlers({
     initChatLog: ({ module, updateLogs }) => () => {
-      chatLog.init({ data: module, listeners: [updateLogs] })
+      chatLog.init({ data: module, listeners: [updateLogs], hackathon: true })
     },
     animateNewOptions: ({ logs, setLogs }) => () => {
       const newOptions = logs[logs.length - 1]

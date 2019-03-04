@@ -27,11 +27,17 @@ export default compose(
   graphql(
     gql`
       query($id: ID!) {
-        scriptedChat(id: $id) {
+        simpleChat(id: $id) {
           id
           title
-          chatStep {
+          name
+          simpleChatSteps {
             id
+            key
+            simpleChatMessages {
+              id
+              text
+            }
           }
         }
       }

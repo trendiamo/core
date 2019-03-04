@@ -3,7 +3,6 @@ import ConsumerContent from './components/consumer-content'
 import getFrekklsConfig from 'frekkls-config'
 import { ChatBackground } from 'app/content/scripted-chat/shared'
 import { compose, withHandlers, withProps, withState } from 'recompose'
-import { Consumer } from 'ext/graphql-context'
 import { h } from 'preact'
 
 const ChatLogUiTemplate = ({
@@ -16,22 +15,19 @@ const ChatLogUiTemplate = ({
   persona,
   title,
   onStopChat,
+  data,
 }) => (
   <Chat ref={setContentRef} touch>
     <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
-      <Consumer>
-        {client => (
-          <ConsumerContent
-            client={client}
-            configMinHeight={configMinHeight}
-            contentRef={contentRef}
-            initialChatStep={initialChatStep}
-            onStopChat={onStopChat}
-            persona={persona}
-            title={title}
-          />
-        )}
-      </Consumer>
+      <ConsumerContent
+        configMinHeight={configMinHeight}
+        contentRef={contentRef}
+        data={data}
+        initialChatStep={initialChatStep}
+        onStopChat={onStopChat}
+        persona={persona}
+        title={title}
+      />
     </ChatBackground>
   </Chat>
 )
@@ -39,8 +35,8 @@ const ChatLogUiTemplate = ({
 export default compose(
   withState('minHeight', 'setMinHeight', 0),
   withProps(({ data }) => ({
-    initialChatStep: data.scriptedChat.chatStep,
-    title: data.scriptedChat.title,
+    initialChatStep: data.simpleChat.simpleChatSteps.find(e => e.key === 'default'),
+    title: data.simpleChat.title,
   })),
   withHandlers(() => {
     let backgroundRef
