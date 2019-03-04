@@ -347,7 +347,7 @@ export default compose(
       const { json, response, errors, requestError } = await apiRequest(apiTriggerList, [])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (requestError || errors) return
-      setTriggers(json)
+      setTriggers(json.filter(e => e.flowType !== 'ScriptedChat'))
       setHostnames(JSON.parse(response.headers.get('hostnames')))
       setIsLoading(false)
     },

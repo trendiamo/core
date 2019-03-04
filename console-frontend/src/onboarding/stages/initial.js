@@ -3,7 +3,7 @@ import routes from 'app/routes'
 import { changeStage } from 'onboarding/scenario-actions'
 import { Tooltip } from 'onboarding/elements'
 
-const order = ['triggers', 'showcases', 'navigations', 'scriptedChats', 'simpleChats', 'outros', 'personas']
+const order = ['triggers', 'showcases', 'navigations', 'simpleChats', 'outros', 'personas']
 
 const steps = {
   triggers: {
@@ -22,28 +22,21 @@ const steps = {
   },
   navigations: {
     target: '.onboard-navigations',
-    content: <Tooltip body="Create your Navigations here." nextRoute={routes.scriptedChatsList()} />,
+    content: <Tooltip body="Create your Navigations here." nextRoute={routes.simpleChatsList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Navigations',
   },
-  scriptedChats: {
-    target: '.onboard-scripted-chats',
-    content: <Tooltip body="Create your Scripted Chats here." nextRoute={routes.outrosList()} />,
-    placement: 'right',
-    disableBeacon: true,
-    title: 'Scripted Chats',
-  },
   simpleChats: {
     target: '.onboard-simple-chats',
-    content: <Tooltip body="Create your Simple Chats here." nextRoute={routes.personasList()} />,
+    content: <Tooltip body="Create your Simple Chats here." nextRoute={routes.outrosList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Simple Chats',
   },
   outros: {
     target: '.onboard-outros',
-    content: <Tooltip body="Create your Outros here." nextRoute={routes.simpleChatsList()} />,
+    content: <Tooltip body="Create your Outros here." nextRoute={routes.personasList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Outros',

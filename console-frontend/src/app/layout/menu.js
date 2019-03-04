@@ -10,7 +10,6 @@ import UserMenu from './user-menu'
 import {
   AccountCircleOutlined,
   AssignmentTurnedInOutlined,
-  ChatBubbleOutline,
   ViewList as DefaultIcon,
   DirectionsOutlined,
   Link as LinkIcon,
@@ -25,14 +24,8 @@ import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 const resources = {
   triggers: { icon: TuneOutlined, label: 'Triggers', class: 'triggers', route: routes.triggersList() },
   showcases: { icon: PersonPinOutlined, label: 'Showcases', class: 'showcases', route: routes.showcasesList() },
-  scriptedChats: {
-    icon: SmsOutlined,
-    label: 'Scripted Chats',
-    class: 'scripted-chats',
-    route: routes.scriptedChatsList(),
-  },
   simpleChats: {
-    icon: ChatBubbleOutline,
+    icon: SmsOutlined,
     label: 'Simple Chats',
     class: 'simple-chats',
     route: routes.simpleChatsList(),
@@ -62,13 +55,7 @@ const resourceGroups = {
   modules: {
     name: 'Modules',
     showTitle: true,
-    resources: [
-      resources.showcases,
-      resources.navigations,
-      resources.scriptedChats,
-      resources.simpleChats,
-      resources.outros,
-    ],
+    resources: [resources.showcases, resources.navigations, resources.simpleChats, resources.outros],
   },
   basic: {
     name: 'Basic',

@@ -56,15 +56,6 @@ const routes = {
   showcaseEdit(id) {
     return `/showcases/${id}/edit`
   },
-  scriptedChatsList() {
-    return '/scripted-chats'
-  },
-  scriptedChatCreate() {
-    return '/scripted-chats/create'
-  },
-  scriptedChatEdit(id) {
-    return `/scripted-chats/${id}/edit`
-  },
   simpleChatsList() {
     return '/simple-chats'
   },

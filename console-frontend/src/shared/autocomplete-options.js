@@ -28,7 +28,7 @@ const optionIcon = moduleTtype => {
       return <PersonPinOutlined />
     case 'Outro':
       return <AssignmentTurnedInOutlined />
-    case 'ScriptedChat':
+    case 'SimpleChat':
       return <SmsOutlined />
     case 'Navigation':
       return <DirectionsOutlined />

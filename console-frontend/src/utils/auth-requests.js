@@ -7,7 +7,6 @@ const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/showcases`
-const SCRIPTED_CHATS_URL = `${BASE_API_URL}/scripted_chats`
 const SIMPLE_CHATS_URL = `${BASE_API_URL}/simple_chats`
 const NAVIGATIONS_URL = `${BASE_API_URL}/navigations`
 const TRIGGERS_URL = `${BASE_API_URL}/triggers`
@@ -129,12 +128,6 @@ export const apiShowcaseCreate = body => apiCreateRequest(CURATIONS_URL, body)
 export const apiShowcaseShow = id => apiGetRequest(`${CURATIONS_URL}/${id}`)
 export const apiShowcaseUpdate = (id, body) => apiUpdateRequest(`${CURATIONS_URL}/${id}`, body)
 export const apiShowcaseDuplicate = id => apiPostRequest(`${CURATIONS_URL}/${id}/duplicate`)
-
-export const apiScriptedChatList = query => apiListRequest(`${SCRIPTED_CHATS_URL}/?${stringify(query)}`)
-export const apiScriptedChatDestroy = body => apiDestroyMultipleRequest(SCRIPTED_CHATS_URL, body)
-export const apiScriptedChatCreate = body => apiCreateRequest(SCRIPTED_CHATS_URL, body)
-export const apiScriptedChatShow = id => apiGetRequest(`${SCRIPTED_CHATS_URL}/${id}`)
-export const apiScriptedChatUpdate = (id, body) => apiUpdateRequest(`${SCRIPTED_CHATS_URL}/${id}`, body)
 
 export const apiSimpleChatList = query => apiListRequest(`${SIMPLE_CHATS_URL}/?${stringify(query)}`)
 export const apiSimpleChatDestroy = body => apiDestroyMultipleRequest(SIMPLE_CHATS_URL, body)
