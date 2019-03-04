@@ -13,7 +13,8 @@ class PortScriptedChatsToSimpleChats
     SimpleChat.destroy_all
     ScriptedChat.all.each do |scripted_chat|
       account = Account.find(scripted_chat.account_id)
-      SimpleChat.create!(scripted_chat_data(scripted_chat, account))
+      simple_chat = SimpleChat.create!(scripted_chat_data(scripted_chat, account))
+      port_triggers(scripted_chat.triggers, simple_chat)
     end
   end
 
@@ -46,6 +47,12 @@ class PortScriptedChatsToSimpleChats
       end,
       account: account,
     }
+  end
+
+  def port_triggers(triggers, flow)
+    triggers.each do |trigger|
+      trigger.update!(flow: flow)
+    end
   end
 end
 
