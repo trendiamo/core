@@ -33,55 +33,86 @@ const Gradient = animateOnMount(styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `)
 
-export const AppBase = styled(
-  ({
-    className,
-    Component,
-    Launcher,
-    isUnmounting,
-    launcherType,
-    onToggleContent,
-    persona,
-    position,
-    showingContent,
-    data,
-  }) => (
-    <div className={className}>
-      {showingContent && (
-        <Content
-          Component={Component}
-          isUnmounting={isUnmounting}
-          onToggleContent={onToggleContent}
-          persona={persona}
-          position={position}
-          showingContent={showingContent}
-        />
-      )}
-      <Launcher
-        bubble={
-          data && data.launcher ? data.launcher.chatBubble : { message: data && data.flow && data.flow.chatBubbleText }
-        }
-        data={data}
-        extraBubble={
-          data && data.launcher
-            ? data.launcher.chatBubbleExtra
-            : { message: data && data.flow && data.flow.chatBubbleExtraText }
-        }
-        launcherType={launcherType}
-        onToggleContent={onToggleContent}
-        persona={persona}
-        position={position}
-        showingContent={showingContent}
-      />
-      {showingContent && <Gradient position={position} />}
-    </div>
-  )
-)`
+const AppBaseDiv = styled.div`
   display: none;
   @media (min-height: ${HEIGHT_BREAKPOINT}px) {
     display: block;
   }
 `
+
+const getExtraBubble = flow => {
+  if (flow.flowType === 'outro') {
+    return {
+      buttons: [
+        {
+          value: 'no',
+          message: flow.chatBubbleButtonNo,
+          appearsAfter: 0,
+        },
+        {
+          value: 'yes',
+          message: flow.chatBubbleButtonYes,
+          appearsAfter: 0.2,
+        },
+      ],
+      timeStart: 2.5,
+      timeEnd: null,
+      timeStartDuration: 0.4,
+    }
+  }
+  return { message: flow.chatBubbleExtraText }
+}
+
+const AppBaseTemplate = ({
+  Component,
+  Launcher,
+  isUnmounting,
+  launcherType,
+  onToggleContent,
+  persona,
+  position,
+  showingContent,
+  data,
+  bubble,
+  extraBubble,
+}) => (
+  <AppBaseDiv>
+    {showingContent && (
+      <Content
+        Component={Component}
+        isUnmounting={isUnmounting}
+        onToggleContent={onToggleContent}
+        persona={persona}
+        position={position}
+        showingContent={showingContent}
+      />
+    )}
+    <Launcher
+      bubble={bubble}
+      data={data}
+      extraBubble={extraBubble}
+      launcherType={launcherType}
+      onToggleContent={onToggleContent}
+      persona={persona}
+      position={position}
+      showingContent={showingContent}
+    />
+    {showingContent && <Gradient position={position} />}
+  </AppBaseDiv>
+)
+
+export const AppBase = compose(
+  withProps(({ data }) => {
+    if (!data) return
+    const extraBubble = data.launcher ? data.launcher.chatBubbleExtra : getExtraBubble(data.flow)
+    const bubble = data.launcher ? data.launcher.chatBubble : { message: data.flow.chatBubbleText }
+    return {
+      bubble: extraBubble.buttons || extraBubble.message ? { ...bubble, timeOfElevation: 1.6, timeEnd: null } : bubble,
+      extraBubble,
+      [extraBubble.buttons && 'launcherType']: 'original',
+    }
+  })
+)(AppBaseTemplate)
 
 export default compose(
   withProps({ Component: <Router /> }),
@@ -99,6 +130,8 @@ export default compose(
           flowType
           chatBubbleText
           chatBubbleExtraText
+          chatBubbleButtonYes
+          chatBubbleButtonNo
           persona {
             id
             name
@@ -173,7 +206,8 @@ export default compose(
   branch(({ persona }) => !persona, renderNothing),
   withProps(() => ({ position: getFrekklsConfig().position })),
   withHandlers({
-    onToggleContent: ({ setIsUnmounting, setShowingContent, showingContent }) => () => {
+    onToggleContent: ({ data, setIsUnmounting, setShowingContent, showingContent }) => () => {
+      if (data.flow.flowType === 'outro') return
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
 

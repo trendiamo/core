@@ -9,7 +9,17 @@ Types::FlowType = GraphQL::ObjectType.define do
   end
   field :chatBubbleExtraText, types.String do
     resolve ->(obj, _args, _ctx) {
-      obj.chat_bubble_extra_text
+      obj.chat_bubble_extra_text if obj.class.name.camelize(:lower) != "outro"
+    }
+  end
+  field :chatBubbleButtonYes, types.String do
+    resolve ->(obj, _args, _ctx) {
+      obj.chat_bubble_button_yes if obj.class.name.camelize(:lower) == "outro"
+    }
+  end
+  field :chatBubbleButtonNo, types.String do
+    resolve ->(obj, _args, _ctx) {
+      obj.chat_bubble_button_no if obj.class.name.camelize(:lower) == "outro"
     }
   end
   field :flowType, !types.String do

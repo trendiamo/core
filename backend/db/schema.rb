@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190301112322) do
+ActiveRecord::Schema.define(version: 20190304104641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,7 +96,8 @@ ActiveRecord::Schema.define(version: 20190301112322) do
     t.string "graphcms_ref"
     t.string "name", null: false
     t.string "chat_bubble_text"
-    t.string "chat_bubble_extra_text"
+    t.string "chat_bubble_button_yes"
+    t.string "chat_bubble_button_no"
     t.index ["account_id"], name: "index_outros_on_account_id"
     t.index ["persona_id"], name: "index_outros_on_persona_id"
   end

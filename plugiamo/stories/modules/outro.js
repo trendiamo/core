@@ -2,7 +2,36 @@
 import Plugin from '../plugin'
 import { h } from 'preact'
 import { Main } from '../components'
-import { Outro as OutroComp } from 'plugin-base'
+
+const data = {
+  flowType: 'outro',
+  launcher: {
+    chatBubble: {
+      message: 'Awesome! 🤩 Was I helpful?',
+      timeStart: 0.5,
+      timeEnd: null,
+      hideBarAfter: 0.2,
+      timeOfElevation: 1.6,
+    },
+    chatBubbleExtra: {
+      buttons: [
+        {
+          message: 'Not really.',
+          value: 'no',
+          appearsAfter: 0,
+        },
+        {
+          message: 'Yes, thanks!',
+          value: 'yes',
+          appearsAfter: 0.2,
+        },
+      ],
+      timeStart: 2.5,
+      timeEnd: null,
+      timeStartDuration: 0.4,
+    },
+  },
+}
 
 const Outro = () => (
   <div>
@@ -13,7 +42,7 @@ const Outro = () => (
         }
       </p>
     </Main>
-    <Plugin Component={<OutroComp />} />
+    <Plugin data={data} />
   </div>
 )
 

@@ -2,7 +2,6 @@ import BackButton from 'shared/back-button'
 import ContentWrapper from 'content-wrapper'
 import Cover, { BelowCover, CoverImg, PaddedCover, PersonaDescription } from 'shared/cover'
 import Navigation from 'navigation'
-import Outro from 'outro'
 import PersonaInstagram from 'shared/persona-instagram'
 import routes from './routes'
 import Showcase from 'showcase'
@@ -22,7 +21,6 @@ export {
   matchUrl,
   Navigation,
   BackButton,
-  Outro,
   PaddedCover,
   PersonaDescription,
   TopSlideAnimation,

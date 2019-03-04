@@ -65,7 +65,7 @@ const Launcher = ({
 }) => (
   <div>
     <Bubble
-      bubble={extraBubble && extraBubble.message ? { ...bubble, timeOfElevation: 1.6 } : bubble}
+      bubble={bubble}
       disappear={disappear}
       onToggleContent={onToggleContent}
       position={position}

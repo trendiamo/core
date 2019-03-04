@@ -13,7 +13,10 @@ const Plugin = compose(
   }),
   withState('showingContent', 'setShowingContent', false),
   withHandlers({
-    onToggleContent: ({ setShowingContent, showingContent }) => () => setShowingContent(!showingContent),
+    onToggleContent: ({ setShowingContent, showingContent, data }) => () => {
+      if (data && data.flowType === 'outro') return
+      setShowingContent(!showingContent)
+    },
   })
 )(({ Component, onToggleContent, persona, showingContent, Launcher, data }) => (
   <AppBase
