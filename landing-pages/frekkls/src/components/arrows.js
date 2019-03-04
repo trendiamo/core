@@ -8,9 +8,6 @@ const LeftArrow = styled.img.attrs({
 })`
   z-index: 1;
   height: 40px;
-  position: absolute;
-  top: 170px;
-  left: 0px;
   &:hover {
     cursor: pointer;
   }
@@ -21,9 +18,6 @@ const RightArrow = styled.img.attrs({
 })`
   z-index: 1;
   height: 40px;
-  position: absolute;
-  top: 170px;
-  right: 0px;
   &:hover {
     cursor: pointer;
   }

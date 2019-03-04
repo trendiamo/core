@@ -7,8 +7,20 @@ import Section from '../components/section'
 
 import { LeftArrow, RightArrow } from '../components/arrows'
 
-const NextArrow = ({ onClick }) => <RightArrow onClick={onClick} />
-const PrevArrow = ({ onClick }) => <LeftArrow onClick={onClick} />
+const StyledRightArrow = styled(RightArrow)`
+  position: absolute;
+  top: 170px;
+  right: 0px;
+`
+
+const StyledLeftArrow = styled(LeftArrow)`
+  position: absolute;
+  top: 170px;
+  left: 0px;
+`
+
+const NextArrow = ({ onClick }) => <StyledRightArrow onClick={onClick} />
+const PrevArrow = ({ onClick }) => <StyledLeftArrow onClick={onClick} />
 
 const sliderSettings = {
   dots: false,
