@@ -17,7 +17,7 @@ const FlexDiv = styled.div`
 `
 
 const Name = styled.div`
-  color: #333;
+  color: ${({ color }) => color || '#333'};
   position: absolute;
   font-size: 20px;
   font-weight: 700;
@@ -36,7 +36,6 @@ const Name = styled.div`
 `
 
 const NameHelper = styled.div`
-  color: #333;
   font-size: 20px;
   font-weight: 700;
   max-height: 50px;
@@ -54,7 +53,7 @@ const NameHelper = styled.div`
 `
 
 const NameMinimized = styled.div`
-  color: #333;
+  color: ${({ color }) => color || '#333'};
   font-size: 16px;
   font-weight: 700;
   backface-visibility: hidden;
@@ -72,6 +71,7 @@ const NameMinimized = styled.div`
 `
 
 const PresentedBy = styled.div`
+  color: ${({ color }) => color || '#333'}
   font-size: 14px;
   backface-visibility: hidden;
 `
@@ -123,7 +123,7 @@ const ImageContainer = styled.div`
     bottom: 0;
     right: 50px;
     left: ${({ minimized }) => (minimized ? 199 : 139)}px;
-    background: linear-gradient(90deg, rgb(255, 255, 255), rgba(255, 255, 255, 0));
+    background: linear-gradient(90deg, ${({ backgroundColor = '#fff' }) => backgroundColor}, rgba(255, 255, 255, 0));
     z-index: 11;
     transition: all 0.4s ease-in-out;
   }
@@ -151,18 +151,22 @@ export const CoverSimpleChat = compose(withTextTyping(({ persona }) => persona.d
 )
 
 export const CoverHackathon = ({ header, minimized }) => (
-  <CoverBase hackathon minimized={minimized}>
-    <ImageContainer minimized={minimized}>
+  <CoverBase backgroundColor={header.backgroundColor} hackathon minimized={minimized}>
+    <ImageContainer backgroundColor={header.backgroundColor} minimized={minimized}>
       <CoverAnimation minimized={minimized} src={header.animationUrl} />
       <CoverImage image={imgixUrl(header.imageUrl, { fit: 'crop', w: 160, h: 90 })} minimized={minimized} />
     </ImageContainer>
     <TextContainer minimized={minimized}>
       <Header>
-        <NameMinimized minimized={minimized}>{header.productTitle}</NameMinimized>
-        <Name minimized={minimized}>{header.productTitle}</Name>
+        <NameMinimized color={header.textColor} minimized={minimized}>
+          {header.productTitle}
+        </NameMinimized>
+        <Name color={header.textColor} minimized={minimized}>
+          {header.productTitle}
+        </Name>
         <NameHelper minimized={minimized}>{header.productTitle}</NameHelper>
       </Header>
-      <PresentedBy minimized={minimized}>
+      <PresentedBy color={header.textColor} minimized={minimized}>
         {'presented by '}
         <b>{header.personaInstagramHandle}</b>
       </PresentedBy>
