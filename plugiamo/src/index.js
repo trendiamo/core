@@ -1,4 +1,5 @@
 import App from 'app'
+import Assessment from 'special/assessment'
 import Hackathon from 'special/hckt'
 // import initRollbar from 'ext/rollbar'
 import data from 'special/hckt/data'
@@ -21,6 +22,7 @@ const detectAndMarkHackathon = () => {
 }
 
 const initRootComponent = () => {
+  if (process.env.HACKATHON && process.env.HACKATHON === 'www.pierre-cardin.de') return Assessment
   if (detectAndMarkHackathon()) return Hackathon
   // here we haven't requested info yet, so we do need to base this off of location.hostname
   if (location.hostname === 'www.spotahome.com') return SpotAHome

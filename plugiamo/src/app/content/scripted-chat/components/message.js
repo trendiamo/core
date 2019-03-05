@@ -1,13 +1,21 @@
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
+import {
+  AssessmentStepOptions,
+  ImgCarouselMessage,
+  ProductCarouselMessage,
+  ProductMessage,
+  TextMessage,
+  VideoMessage,
+} from './message-types'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { emojify } from 'plugin-base'
 import { extractJson, extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER } from 'app/content/scripted-chat/shared'
 import { h } from 'preact'
-import { ImgCarouselMessage, ProductCarouselMessage, ProductMessage, TextMessage, VideoMessage } from './message-types'
 
 const MessageContainer = styled.div`
-  max-width: ${({ type }) => (['productCarousel', 'imageCarousel'].includes(type) ? 'auto' : '260px')};
+  max-width: ${({ type }) =>
+    ['productCarousel', 'imageCarousel', 'assessmentStepOptions'].includes(type) ? 'auto' : '260px'};
   & + * {
     margin-top: 5px;
   }
@@ -20,7 +28,7 @@ const MessageContainer = styled.div`
   `}
 `
 
-const ChatMessageTemplate = ({ data, type, show }) => (
+const ChatMessageTemplate = ({ goToNextStep, data, type, show }) => (
   <MessageContainer show={show} type={type}>
     {type === 'text' ? (
       <TextMessage dangerouslySetInnerHTML={{ __html: emojify(snarkdown(data)) }} />
@@ -32,6 +40,8 @@ const ChatMessageTemplate = ({ data, type, show }) => (
       <ProductCarouselMessage carouselType={type} productCarousel={data} />
     ) : type === 'imageCarousel' ? (
       <ImgCarouselMessage carouselType={type} imageCarousel={data} />
+    ) : type === 'assessmentStepOptions' ? (
+      <AssessmentStepOptions goToNextStep={goToNextStep} options={data} />
     ) : null}
   </MessageContainer>
 )
