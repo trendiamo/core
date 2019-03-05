@@ -1,7 +1,7 @@
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
+import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { h } from 'preact'
 
 const CtaButton = styled.button.attrs({
@@ -28,6 +28,7 @@ const CtaButton = styled.button.attrs({
 `
 
 export default compose(
+  branch(({ ctaButton }) => !ctaButton, renderNothing),
   withHandlers({
     onClick: ({ ctaButton, onToggleContent, setPluginState }) => () => {
       onToggleContent()

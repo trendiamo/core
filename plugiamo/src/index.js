@@ -1,6 +1,7 @@
 import App from 'app'
 import Hackathon from 'special/hckt'
 // import initRollbar from 'ext/rollbar'
+import data from 'special/hckt/data'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import setupDataGathering from 'data-gathering'
@@ -14,7 +15,7 @@ import { Provider } from 'ext/graphql-context'
 import './styles.css'
 
 const detectAndMarkHackathon = () => {
-  if (location.hostname !== 'www.buttwrap.com' && !process.env.HACKATHON) return false
+  if (!Object.keys(data).includes(location.hostname) && !process.env.HACKATHON) return false
   if ((optionsFromHash().hckt || '').match(/1|true/)) localStorage.setItem('trnd-hackathon', 1)
   return !!localStorage.getItem('trnd-hackathon')
 }
