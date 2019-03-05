@@ -123,50 +123,6 @@ class PopulateSimpleChats
   end
 end
 
-class PopulateScriptedChats
-  def self.process
-    new.process
-  end
-
-  def process
-    create_scripted_chats
-  end
-
-  private
-
-  def create_scripted_chats
-    Array.new(9) do
-      scripted_chat_attrs = {
-        name: "#{Faker::Lorem.word.capitalize} Chat",
-        persona: Persona.order("RANDOM()").first,
-        title: "Hello there",
-        chat_step_attributes: chat_step_attributes(1),
-      }
-      ScriptedChat.create!(scripted_chat_attrs)
-    end
-  end
-
-  def chat_step_attributes(height)
-    {
-      chat_messages_attributes: [
-        {
-          text: Faker::Lorem.paragraph,
-        },
-      ],
-      chat_options_attributes: height.positive? ? chat_options_attributes(height) : [],
-    }
-  end
-
-  def chat_options_attributes(height)
-    Array.new(3) do
-      {
-        text: "#{Faker::Lorem.sentence}?",
-        destination_chat_step_attributes: chat_step_attributes(height - 1),
-      }
-    end
-  end
-end
-
 class Populate
   def self.process
     new.process
@@ -178,7 +134,6 @@ class Populate
     create_users
     create_personas
     create_outros
-    create_scripted_chats
     create_simple_chats
     create_showcases
     create_navigations
@@ -238,10 +193,6 @@ class Populate
     end
   end
 
-  def create_scripted_chats
-    PopulateScriptedChats.process
-  end
-
   def create_simple_chats
     PopulateSimpleChats.process
   end
@@ -258,7 +209,7 @@ class Populate
     Array.new(11) do |i|
       trigger_attrs = {
         order: i + 1,
-        flow: [Showcase, ScriptedChat, Outro, Navigation].sample.all.sample,
+        flow: [Showcase, SimpleChat, Outro, Navigation].sample.all.sample,
         url_matchers: Array.new(rand(1...5)) { "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-")) },
       }
       Trigger.create!(trigger_attrs)

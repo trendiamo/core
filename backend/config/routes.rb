@@ -31,8 +31,9 @@ Rails.application.routes.draw do
       resources :showcases, only: %i[index show update create]
       delete "/showcases", to: "showcases#destroy"
       post "/showcases/:id/duplicate", to: "showcases#duplicate"
-      resources :scripted_chats, only: %i[index show update create]
-      delete "/scripted_chats", to: "scripted_chats#destroy"
+      resources :simple_chats, only: %i[index show update create]
+      delete "/simple_chats", to: "simple_chats#destroy"
+      post "/simple_chats/:id/duplicate", to: "simple_chats#duplicate"
       resources :outros, only: %i[index show update create]
       delete "/outros", to: "outros#destroy"
       post "/outros/:id/duplicate", to: "outros#duplicate"
@@ -45,9 +46,6 @@ Rails.application.routes.draw do
       resources :flows, only: %i[index]
       get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
       get "/path/autocomplete", to: "autocompletes#path_autocomplete"
-      resources :simple_chats, only: %i[index show update create]
-      delete "/simple_chats", to: "simple_chats#destroy"
-      post "/simple_chats/:id/duplicate", to: "simple_chats#duplicate"
 
       resources :generated_urls, only: %i[index create]
 

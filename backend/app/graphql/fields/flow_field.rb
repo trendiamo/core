@@ -1,8 +1,6 @@
 # rubocop:disable Metrics/MethodLength
 def flow_class_by_type(type)
   case type
-  when "scripted-chat"
-    ScriptedChat
   when "simple-chat"
     SimpleChat
   when "navigation"
