@@ -65,6 +65,7 @@ const Layout = ({ children, className, layout, locale }) => (
 export const layoutFragment = graphql`
   fragment Layout on ContentfulLayout {
     features
+    pricing
     about
     blog
     careers
