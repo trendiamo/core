@@ -72,5 +72,5 @@ export const listeners = {
   },
 }
 
-export const MESSAGE_INTERVAL = 320
+export const MESSAGE_INTERVAL = 400
 export const MESSAGE_RANDOMIZER = 320
