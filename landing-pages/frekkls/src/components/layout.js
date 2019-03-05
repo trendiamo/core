@@ -73,6 +73,7 @@ export const layoutFragment = graphql`
     tryNow
     footerInfo
     demo2
+    demo
     legal
     privacy
     outro
