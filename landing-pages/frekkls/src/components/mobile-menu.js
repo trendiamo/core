@@ -87,6 +87,12 @@ const MobileMenu = ({ siteTitle, toggleMobileMenu, locale, layout }) => (
       <Link className="mobile-menu-link" onClick={removeMobileMenu} to={`${locales[locale].path}/about`}>
         {layout.about}
       </Link>
+      <Link className="mobile-menu-link" onClick={removeMobileMenu} to={`${locales[locale].path}/pricing`}>
+        {layout.pricing}
+      </Link>
+      <Link className="mobile-menu-link" onClick={removeMobileMenu} to={`${locales[locale].path}/features`}>
+        {layout.features}
+      </Link>
       <Link className="mobile-menu-link" onClick={removeMobileMenu} to={`${locales[locale].path}/blog`}>
         {layout.blog}
       </Link>
