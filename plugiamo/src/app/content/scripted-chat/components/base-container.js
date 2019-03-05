@@ -22,7 +22,7 @@ const ContainerDiv = styled.div`
     0% {
       opacity: 1;
     }
-    30% {
+    40% {
       visibility: hidden;
       transform: translateX(20px);
       max-height: 60px;

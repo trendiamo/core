@@ -22,8 +22,8 @@ const Container = styled.div`
   max-width: 260px;
   text-align: right;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  opacity: ${({ animate }) => (animate ? 1 : 0)};
-  transform: ${({ animate }) => (animate ? 'none' : 'translateY(20px)')};
+  opacity: ${({ animate, hide }) => (hide || animate ? 1 : 0)};
+  transform: ${({ animate, hide }) => (hide || animate ? 'none' : 'translateY(20px)')};
   transition: opacity 0.4s, transform 0.4s;
   margin-left: auto;
   & + div {
@@ -34,7 +34,7 @@ const Container = styled.div`
   ${({ hide, clicked }) =>
     hide &&
     !clicked &&
-    ` animation: _frekkls_option_hide 0.5s;
+    ` animation: _frekkls_option_hide 0.4s;
       animation-fill-mode: forwards;
   `}
 `
