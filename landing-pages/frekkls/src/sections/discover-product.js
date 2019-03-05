@@ -53,6 +53,7 @@ const DiscoverProductSlide = styled.div`
   h2 {
     font-size: 26px;
     font-weight: normal;
+    line-height: 1.2;
   }
 
   p {
