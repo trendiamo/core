@@ -4,7 +4,6 @@ import { Link } from 'gatsby'
 
 import Button from './button'
 import Container from './container'
-import LangSelector from './lang-selector'
 import locales from '../../locales'
 import Logo from '../images/logo'
 import MobileMenu from './mobile-menu'
@@ -47,7 +46,6 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
         </Link>
         <Button className="js-request-demo">{layout.tryNow}</Button>
         <StyledMenuIcon onClick={toggleMobileMenu} />
-        <LangSelector locale={locale} />
       </nav>
     </Container>
     <MobileMenu layout={layout} locale={locale} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
