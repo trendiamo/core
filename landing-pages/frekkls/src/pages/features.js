@@ -4,6 +4,7 @@ import { graphql } from 'gatsby'
 import Buzz from '../sections/buzz'
 import Depth from '../sections/depth'
 import FeaturesHero from '../sections/features-hero'
+import FeaturesSlider from '../sections/features-slider'
 import Layout from '../components/layout'
 import Steps from '../sections/steps'
 
@@ -11,6 +12,7 @@ const FeaturesPage = ({ className, pageContext, data }) => (
   <Layout className={className} layout={data.layout} locale={pageContext.locale}>
     <FeaturesHero featuresHero={data.featuresHero} />
     <Steps steps={data.steps} />
+    <FeaturesSlider featuresSlider={data.featuresSlider} featuresSliderContent={data.featuresSliderContent} />
     <Depth depth={data.depth} />
     <Buzz layout={data.layout} />
   </Layout>
@@ -56,6 +58,25 @@ export const query = graphql`
       feature2Text
       feature3Heading
       feature3Text
+    }
+    featuresSlider: contentfulFeaturesPage(name: { eq: "Features" }, node_locale: { eq: $locale }) {
+      featuresSliderHeading
+    }
+    featuresSliderContent: allContentfulFeaturesSlide(filter: { node_locale: { eq: $locale } }) {
+      edges {
+        node {
+          id
+          slideHeader
+          slideText {
+            slideText
+          }
+          slideImage {
+            file {
+              url
+            }
+          }
+        }
+      }
     }
   }
 `
