@@ -69,6 +69,11 @@ const SelectContainer = styled.div`
   }
 `
 
+const MobileLangContainer = styled.div`
+  width: 45px;
+  text-align: center;
+`
+
 const localesArray = Object.keys(locales).map(e => ({ value: locales[e], label: locales[e].label }))
 
 const purePath = (item, locale) => `${item.value.path}${location.pathname.replace(locales[locale].path, '')}`
@@ -94,4 +99,4 @@ const LangSelector = ({ locale, isMobileMenu }) => (
   </Downshift>
 )
 
-export default LangSelector
+export { LangSelector, MobileLangContainer }

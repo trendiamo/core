@@ -1,6 +1,5 @@
 import Button from './button'
 import CloseIcon from '../images/close-icon.svg'
-import LangSelector from './lang-selector'
 import locales from '../../locales'
 import Logo from '../images/logo'
 import React from 'react'
@@ -50,11 +49,6 @@ const StyledCloseIcon = styled.img.attrs({
   right: 20px;
 `
 
-const LangContainer = styled.div`
-  width: 45px;
-  text-align: center;
-`
-
 const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,9 +93,6 @@ const MobileMenu = ({ siteTitle, toggleMobileMenu, locale, layout }) => (
       <a className="mobile-menu-link" href="mailto:hello@trendiamo.com">
         {layout.contact}
       </a>
-      <LangContainer>
-        <LangSelector isMobileMenu locale={locale} orange />
-      </LangContainer>
       <StyledOutlineButton className="js-request-demo" style={{ fontSize: '20px', padding: '14px' }}>
         {layout.tryNow}
       </StyledOutlineButton>

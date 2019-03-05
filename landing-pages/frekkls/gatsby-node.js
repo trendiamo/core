@@ -1,26 +1,37 @@
 /* eslint-disable no-undef */
-const locales = require('./locales')
 const path = require('path')
 const blogPostUrl = require('./src/utils')
 
+// exports.onCreatePage = ({ page, actions }) => {
+//   const { createPage, deletePage } = actions
+//
+//   return new Promise(resolve => {
+//     deletePage(page)
+//
+//     Object.keys(locales).map(lang => {
+//       const path = locales[lang].path + page.path
+//       return createPage({
+//         ...page,
+//         path,
+//         context: {
+//           locale: lang,
+//         },
+//       })
+//     })
+//
+//     resolve()
+//   })
+// }
+
 exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions
+  const { createPage } = actions
 
-  return new Promise(resolve => {
-    deletePage(page)
-
-    Object.keys(locales).map(lang => {
-      const path = locales[lang].path + page.path
-      return createPage({
-        ...page,
-        path,
-        context: {
-          locale: lang,
-        },
-      })
-    })
-
-    resolve()
+  return createPage({
+    ...page,
+    path: page.path,
+    context: {
+      locale: 'en-US',
+    },
   })
 }
 
@@ -71,15 +82,13 @@ exports.createPages = ({ graphql, actions }) => {
       throw response.errors
     }
     response.data.allContentfulBlogPost.edges.forEach(blog => {
-      Object.keys(locales).forEach(locale => {
-        createPage({
-          path: blogPostUrl(blog.node, locale),
-          component: BlogPost,
-          context: {
-            post: blog,
-            locale,
-          },
-        })
+      createPage({
+        path: blogPostUrl(blog.node, 'en-US'),
+        component: BlogPost,
+        context: {
+          post: blog,
+          locale: 'en-US',
+        },
       })
     })
   })
