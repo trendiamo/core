@@ -116,7 +116,7 @@ export default compose(
       setStepIndex(0)
       return setShowingContent(!showingContent)
     },
-    goToNextStep: ({ stepIndex, setStepIndex, steps }) => option => {
+    goToNextStep: ({ stepIndex, setStepIndex, steps }) => () => {
       if (stepIndex >= steps.length - 1) return
       setStepIndex(stepIndex + 1)
       // TODO: Scoring system based on option
