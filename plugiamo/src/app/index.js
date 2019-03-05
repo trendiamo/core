@@ -191,7 +191,7 @@ export default compose(
       getFrekklsConfig().onShow(autoOpen)
 
       if (autoOpen) {
-        setShowingContent(true)
+        if (data.flow.flowType !== 'outro') setShowingContent(true)
       } else {
         mixpanel.time_event('Toggled Plugin')
       }
