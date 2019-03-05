@@ -17,6 +17,7 @@ const AboutImg = styled(({ className, aboutImg }) => (
   img {
     margin-bottom: -4px;
     width: 100%;
+    max-width: 1100px;
   }
 `
 

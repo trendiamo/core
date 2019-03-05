@@ -29,7 +29,7 @@ export const query = graphql`
     }
     aboutImg: contentfulAboutPage(name: { eq: "About Page" }, node_locale: { eq: $locale }) {
       teamPicture {
-        fixed(width: 1280) {
+        fixed(width: 1400) {
           src
         }
       }
