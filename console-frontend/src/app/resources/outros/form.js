@@ -58,6 +58,7 @@ const OutroForm = ({
         max={characterLimits.main.chatBubble}
         name="chatBubbleText"
         onChange={setFieldValue}
+        required
         value={form.chatBubbleText}
       />
       <FormHelperText>{'Question on whether users are satisfied with the help they got.'}</FormHelperText>
@@ -69,6 +70,7 @@ const OutroForm = ({
         max={characterLimits.main.chatBubbleButton}
         name="chatBubbleButtonYes"
         onChange={setFieldValue}
+        required
         value={form.chatBubbleButtonYes}
       />
       <FormHelperText>{'Button that indicates a positive user response.'}</FormHelperText>
@@ -80,6 +82,7 @@ const OutroForm = ({
         max={characterLimits.main.chatBubbleButton}
         name="chatBubbleButtonNo"
         onChange={setFieldValue}
+        required
         value={form.chatBubbleButtonNo}
       />
       <FormHelperText>{'Button that indicates a negative user response.'}</FormHelperText>
