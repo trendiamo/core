@@ -6,7 +6,7 @@ class Persona < ApplicationRecord
   paginates_per 10
 
   has_many :showcases, dependent: :destroy
-  has_many :scripted_chats, dependent: :destroy
+  has_many :simple_chats, dependent: :destroy
   has_many :outros, dependent: :destroy
 
   validates :name, presence: true

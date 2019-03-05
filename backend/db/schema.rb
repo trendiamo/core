@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190304104641) do
+ActiveRecord::Schema.define(version: 20190305121740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,39 +19,6 @@ ActiveRecord::Schema.define(version: 20190304104641) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
-  end
-
-  create_table "chat_messages", force: :cascade do |t|
-    t.text "text", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "chat_step_id"
-    t.bigint "account_id"
-    t.integer "order", default: 1, null: false
-    t.index ["account_id"], name: "index_chat_messages_on_account_id"
-    t.index ["chat_step_id"], name: "index_chat_messages_on_chat_step_id"
-  end
-
-  create_table "chat_options", force: :cascade do |t|
-    t.string "text", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "chat_step_id"
-    t.bigint "destination_chat_step_id"
-    t.bigint "account_id"
-    t.integer "order", default: 1, null: false
-    t.index ["account_id"], name: "index_chat_options_on_account_id"
-    t.index ["chat_step_id"], name: "index_chat_options_on_chat_step_id"
-    t.index ["destination_chat_step_id"], name: "index_chat_options_on_destination_chat_step_id"
-  end
-
-  create_table "chat_steps", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "scripted_chat_id"
-    t.bigint "account_id"
-    t.index ["account_id"], name: "index_chat_steps_on_account_id"
-    t.index ["scripted_chat_id"], name: "index_chat_steps_on_scripted_chat_id"
   end
 
   create_table "generated_urls", force: :cascade do |t|
@@ -128,20 +95,6 @@ ActiveRecord::Schema.define(version: 20190304104641) do
     t.integer "order", default: 1, null: false
     t.index ["account_id"], name: "index_product_picks_on_account_id"
     t.index ["spotlight_id"], name: "index_product_picks_on_spotlight_id"
-  end
-
-  create_table "scripted_chats", force: :cascade do |t|
-    t.string "title", null: false
-    t.bigint "persona_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "account_id"
-    t.string "graphcms_ref"
-    t.string "name", null: false
-    t.string "chat_bubble_text"
-    t.string "chat_bubble_extra_text"
-    t.index ["account_id"], name: "index_scripted_chats_on_account_id"
-    t.index ["persona_id"], name: "index_scripted_chats_on_persona_id"
   end
 
   create_table "showcases", force: :cascade do |t|
@@ -261,13 +214,6 @@ ActiveRecord::Schema.define(version: 20190304104641) do
     t.index ["hostnames"], name: "index_websites_on_hostnames", using: :gin
   end
 
-  add_foreign_key "chat_messages", "accounts"
-  add_foreign_key "chat_messages", "chat_steps"
-  add_foreign_key "chat_options", "accounts"
-  add_foreign_key "chat_options", "chat_steps"
-  add_foreign_key "chat_options", "chat_steps", column: "destination_chat_step_id"
-  add_foreign_key "chat_steps", "accounts"
-  add_foreign_key "chat_steps", "scripted_chats"
   add_foreign_key "generated_urls", "users"
   add_foreign_key "navigation_items", "accounts"
   add_foreign_key "navigation_items", "navigations"
@@ -278,8 +224,6 @@ ActiveRecord::Schema.define(version: 20190304104641) do
   add_foreign_key "personas", "accounts"
   add_foreign_key "product_picks", "accounts"
   add_foreign_key "product_picks", "spotlights"
-  add_foreign_key "scripted_chats", "accounts"
-  add_foreign_key "scripted_chats", "personas"
   add_foreign_key "showcases", "accounts"
   add_foreign_key "showcases", "personas"
   add_foreign_key "simple_chat_messages", "accounts"
