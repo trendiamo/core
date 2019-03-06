@@ -1,0 +1,49 @@
+{
+  "name": "improv",
+  "version": "0.1.0",
+  "private": true,
+  "browserslist": ">1%, not op_mini all, not IE <= 11",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "detect-browser": "^3.0.1",
+    "graphql-request": "^1.8.2",
+    "jsonp-p": "^2.0.0",
+    "lodash.isequal": "^4.5.0",
+    "lodash.omit": "^4.5.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "react-focus-lock": "^1.17.7",
+    "recompose": "^0.28.2",
+    "styled-components": "^4.1.3"
+  },
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack -p --progress --config webpack.prod.js",
+    "deploy": "bin/deploy",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-runtime": "^6.26.0",
+    "dotenv-webpack": "^1.5.7",
+    "eslint": "^5.8.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-local-rules": "^0.1.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.3.0",
+    "prettier": "^1.15.1",
+    "svg-loader": "^0.0.2",
+    "webpack": "^3.x",
+    "webpack-dev-server": "2.11.1",
+    "webpack-merge": "^4.1.4"
+  }
+}
