@@ -19,7 +19,7 @@ const FeaturesHeader = ({ alt, className }) => (
       <Img
         alt={alt}
         className={className}
-        fixed={data.featuresHeader.childImageSharp.fluid}
+        fluid={data.featuresHeader.childImageSharp.fluid}
         imgStyle={{ objectFit: 'contain', bottom: 0, height: 'auto', top: 'unset' }}
         style={{ position: 'absolute' }}
       />
