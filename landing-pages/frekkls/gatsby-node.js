@@ -40,7 +40,7 @@ exports.createPages = ({ graphql, actions }) => {
   const BlogPost = path.resolve('src/components/blog-post.js')
   return graphql(`
     {
-      allContentfulBlogPost {
+      allContentfulBlogPost(filter: { node_locale: { eq: "en-US" } }) {
         edges {
           node {
             id
