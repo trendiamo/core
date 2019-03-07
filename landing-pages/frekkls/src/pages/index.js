@@ -2,8 +2,10 @@ import React from 'react'
 import { graphql } from 'gatsby'
 
 import Ads from '../sections/ads'
+import BgWaveGrey from '../images/bg-wave-grey.svg'
 import Buzz from '../sections/buzz'
 import Depth from '../sections/depth'
+
 import DiscoverProduct from '../sections/discover-product'
 import Hero from '../sections/hero'
 import Layout from '../components/layout'
