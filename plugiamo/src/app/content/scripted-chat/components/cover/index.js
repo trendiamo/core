@@ -34,11 +34,11 @@ export const CoverSimpleChat = compose(withTextTyping(({ persona }) => persona.d
   )
 )
 
-export const CoverHackathon = ({ header, minimized }) => (
+export const CoverBridge = ({ header, minimized }) => (
   <CoverBase hackathon minimized={minimized}>
     <Background header={header} minimized={minimized} />
     <Content header={header} minimized={minimized} />
   </CoverBase>
 )
 
-export default compose(branch(({ hackathon }) => hackathon, renderComponent(CoverHackathon)))(CoverSimpleChat)
+export default compose(branch(({ hackathon }) => hackathon, renderComponent(CoverBridge)))(CoverSimpleChat)

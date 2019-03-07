@@ -1,8 +1,8 @@
 import App from 'app'
 import Assessment from 'special/assessment'
-import Hackathon from 'special/hckt'
+import Bridge from 'special/bridge'
 // import initRollbar from 'ext/rollbar'
-import data from 'special/hckt/data'
+import bridgeData from 'special/bridge/data'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import setupDataGathering from 'data-gathering'
@@ -15,15 +15,15 @@ import { optionsFromHash } from 'app/setup'
 import { Provider } from 'ext/graphql-context'
 import './styles.css'
 
-const detectAndMarkHackathon = () => {
-  if (!Object.keys(data).includes(location.hostname) && !process.env.HACKATHON) return false
+const detectAndMarkBridge = () => {
+  if (!Object.keys(bridgeData).includes(location.hostname) && !process.env.HACKATHON) return false
   if ((optionsFromHash().hckt || '').match(/1|true/)) localStorage.setItem('trnd-hackathon', 1)
   return !!localStorage.getItem('trnd-hackathon')
 }
 
 const initRootComponent = () => {
   if (process.env.HACKATHON && process.env.HACKATHON === 'www.pierre-cardin.de') return Assessment
-  if (detectAndMarkHackathon()) return Hackathon
+  if (detectAndMarkBridge()) return Bridge
   // here we haven't requested info yet, so we do need to base this off of location.hostname
   if (location.hostname === 'www.spotahome.com') return SpotAHome
 
