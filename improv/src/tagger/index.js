@@ -1,7 +1,7 @@
 import React from 'react'
 import Spinner from 'shared/loading-spinner'
 import styled from 'styled-components'
-import Tag from './tag'
+import TagsContainer from './tags-container'
 import withHotkeys from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { copyToClipboard, createClientRecord, getClient, parseProducts, updateClientRecords } from 'utils'
@@ -28,12 +28,6 @@ const ProductContainer = styled.div`
   padding-left: 0.5rem;
 `
 
-const TagsContainer = styled.div`
-  flex: 5;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-`
-
 const HelpText = styled.div`
   color: #444;
   font-size: 14px;
@@ -54,9 +48,14 @@ const Flex = styled.div`
   align-items: center;
 `
 
-const tags = ['Basics', 'Business', 'Casual', 'Classic']
+const tagsMatrix = [
+  ['Basics', 'Business', 'Casual', 'Classic'],
+  ['Shirts', 'Pants', 'Jackets', 'Accessories'],
+  ['Slim Fit', 'Regular Fit', 'Classic Fit', 'Modern Fit'],
+  ['Red', 'Blue', 'Yellow', 'Geen'],
+]
 
-const Tagger = ({ currentProduct, onClickTag, onCopyResult }) => (
+const Tagger = ({ currentProduct, onClickTag, onCopyResult, tagGroupIndex }) => (
   <Flex>
     <H1>{'Tag all these products, yo.'}</H1>
     <ProductAndTags>
@@ -65,11 +64,13 @@ const Tagger = ({ currentProduct, onClickTag, onCopyResult }) => (
         <p>{currentProduct.title}</p>
         <p>{currentProduct.displayPrice}</p>
       </ProductContainer>
-      <TagsContainer>
-        {tags.map((tag, index) => (
-          <Tag key={tag} keyCode={String(index + 1)} onClick={onClickTag} tag={tag} taggings={currentProduct.tags} />
-        ))}
-      </TagsContainer>
+      <TagsContainer
+        currentProduct={currentProduct}
+        onClickTag={onClickTag}
+        tagGroupIndex={tagGroupIndex}
+        tags={tagsMatrix[tagGroupIndex]}
+        tagsLength={tagsMatrix[tagGroupIndex].length}
+      />
     </ProductAndTags>
     <HelpText>{'Press the number keys to set/unset tags, then use j, k to navigate.'}</HelpText>
     <button onClick={onCopyResult} type="button">
@@ -81,14 +82,23 @@ const Tagger = ({ currentProduct, onClickTag, onCopyResult }) => (
 export default compose(
   withState('products', 'setProducts', () => parseProducts()),
   withState('productIndex', 'setProductIndex', 0),
+  withState('tagGroupIndex', 'setTagGroupIndex', 0),
   withState('isLoading', 'setIsLoading', true),
   withState('client', 'setClient', false),
   withHandlers({
-    nextProduct: ({ productIndex, products, setProductIndex }) => () => {
-      if (productIndex < products.length - 1) setProductIndex(productIndex + 1)
+    nextScreen: ({ productIndex, products, setProductIndex, tagGroupIndex, setTagGroupIndex }) => () => {
+      if (tagGroupIndex < tagsMatrix.length - 1) return setTagGroupIndex(tagGroupIndex + 1)
+      if (productIndex < products.length - 1) {
+        setTagGroupIndex(0)
+        setProductIndex(productIndex + 1)
+      }
     },
-    prevProduct: ({ productIndex, setProductIndex }) => () => {
-      if (productIndex > 0) setProductIndex(productIndex - 1)
+    prevScreen: ({ productIndex, setProductIndex, tagGroupIndex, setTagGroupIndex }) => () => {
+      if (tagGroupIndex > 0) return setTagGroupIndex(tagGroupIndex - 1)
+      if (productIndex > 0) {
+        setTagGroupIndex(tagsMatrix.length - 1)
+        setProductIndex(productIndex - 1)
+      }
     },
   }),
   withProps(({ productIndex, products }) => ({
@@ -111,8 +121,8 @@ export default compose(
   }),
   withHandlers({
     onClickTag: ({ toggleTag }) => toggleTag,
-    onPressTagKey: ({ toggleTag }) => tagKey => {
-      const tag = tags[Number(tagKey) - 1]
+    onPressTagKey: ({ toggleTag, tagGroupIndex }) => tagKey => {
+      const tag = tagsMatrix[tagGroupIndex][Number(tagKey) - 1]
       toggleTag(tag)
     },
     onCopyResult: ({ client, products, setIsLoading }) => async () => {
@@ -127,8 +137,8 @@ export default compose(
     },
   }),
   withHotkeys({
-    [jKey]: ({ nextProduct }) => nextProduct,
-    [kKey]: ({ prevProduct }) => prevProduct,
+    [jKey]: ({ nextScreen }) => nextScreen,
+    [kKey]: ({ prevScreen }) => prevScreen,
     49: ({ onPressTagKey }) => () => onPressTagKey(1),
     50: ({ onPressTagKey }) => () => onPressTagKey(2),
     51: ({ onPressTagKey }) => () => onPressTagKey(3),
