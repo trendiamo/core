@@ -1,9 +1,10 @@
 import React from 'react'
+import Spinner from 'shared/loading-spinner'
 import styled from 'styled-components'
 import Tag from './tag'
 import withHotkeys from 'ext/recompose/with-hotkeys'
-import { compose, withHandlers, withProps, withState } from 'recompose'
-import { copyToClipboard, parseProducts } from 'utils'
+import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { copyToClipboard, createClientRecord, getClient, parseProducts, updateClientRecords } from 'utils'
 
 const jKey = 74 // ascii code for j key
 const kKey = 75 // ascii code for k key
@@ -55,7 +56,7 @@ const Flex = styled.div`
 
 const tags = ['Basics', 'Business', 'Casual', 'Classic']
 
-const Tagger = ({ currentProduct, onClickTag, onCopyResult, taggings }) => (
+const Tagger = ({ currentProduct, onClickTag, onCopyResult }) => (
   <Flex>
     <H1>{'Tag all these products, yo.'}</H1>
     <ProductAndTags>
@@ -66,28 +67,22 @@ const Tagger = ({ currentProduct, onClickTag, onCopyResult, taggings }) => (
       </ProductContainer>
       <TagsContainer>
         {tags.map((tag, index) => (
-          <Tag
-            key={tag}
-            keyCode={String(index + 1)}
-            onClick={onClickTag}
-            tag={tag}
-            taggings={taggings[currentProduct.url]}
-          />
+          <Tag key={tag} keyCode={String(index + 1)} onClick={onClickTag} tag={tag} taggings={currentProduct.tags} />
         ))}
       </TagsContainer>
     </ProductAndTags>
-    <HelpText>
-      {'Press the number keys to set/unset tags, then use j, k to navigate. All changes are autosaved.'}
-    </HelpText>
+    <HelpText>{'Press the number keys to set/unset tags, then use j, k to navigate.'}</HelpText>
     <button onClick={onCopyResult} type="button">
-      {'copy result to clipboard'}
+      {'Update Products'}
     </button>
   </Flex>
 )
 
 export default compose(
-  withProps({ products: parseProducts() }),
+  withState('products', 'setProducts', () => parseProducts()),
   withState('productIndex', 'setProductIndex', 0),
+  withState('isLoading', 'setIsLoading', true),
+  withState('client', 'setClient', false),
   withHandlers({
     nextProduct: ({ productIndex, products, setProductIndex }) => () => {
       if (productIndex < products.length - 1) setProductIndex(productIndex + 1)
@@ -99,30 +94,37 @@ export default compose(
   withProps(({ productIndex, products }) => ({
     currentProduct: products && products[productIndex],
   })),
-  withState('taggings', 'setTaggings', ({ products }) =>
-    products.reduce((acc, product) => {
-      acc[product.url] = {}
-      return acc
-    }, {})
-  ),
   withHandlers({
-    toggleTagging: ({ currentProduct, taggings, setTaggings }) => tag => {
-      setTaggings({
-        ...taggings,
-        [currentProduct.url]: {
-          ...taggings[currentProduct.url],
-          [tag]: !taggings[currentProduct.url][tag],
-        },
-      })
+    toggleTag: ({ currentProduct, products, setProducts }) => tag => {
+      const product = products.find(product => product.url === currentProduct.url)
+      const productIndex = products.findIndex(product => product.url === currentProduct.url)
+      if (!product.tags) {
+        product.tags = { [tag]: true }
+        products[productIndex] = product
+        setProducts(products)
+      } else {
+        !product.tags[tag] ? (product.tags[tag] = true) : (product.tags[tag] = !product.tags[tag])
+        products[productIndex] = product
+        setProducts(products)
+      }
     },
   }),
   withHandlers({
-    onClickTag: ({ toggleTagging }) => toggleTagging,
-    onPressTagKey: ({ toggleTagging }) => tagKey => {
+    onClickTag: ({ toggleTag }) => toggleTag,
+    onPressTagKey: ({ toggleTag }) => tagKey => {
       const tag = tags[Number(tagKey) - 1]
-      toggleTagging(tag)
+      toggleTag(tag)
     },
-    onCopyResult: ({ taggings, products }) => () => copyToClipboard(JSON.stringify({ taggings, products })),
+    onCopyResult: ({ client, products, setIsLoading }) => async () => {
+      copyToClipboard(JSON.stringify({ products }))
+      setIsLoading(true)
+      if (client) {
+        await updateClientRecords(client._id, { products })
+      } else {
+        await createClientRecord({ hostname: location.hostname, products })
+      }
+      setIsLoading(false)
+    },
   }),
   withHotkeys({
     [jKey]: ({ nextProduct }) => nextProduct,
@@ -131,5 +133,21 @@ export default compose(
     50: ({ onPressTagKey }) => () => onPressTagKey(2),
     51: ({ onPressTagKey }) => () => onPressTagKey(3),
     52: ({ onPressTagKey }) => () => onPressTagKey(4),
-  })
+  }),
+  lifecycle({
+    async componentDidMount() {
+      const { setClient, setIsLoading, products, setProducts } = this.props
+      const client = await getClient(location.hostname)
+      if (client.length > 0) {
+        setClient(client[0])
+        products.forEach(product => {
+          const clientProduct = client[0].products.find(o => o.url === product.url)
+          if (clientProduct) product.tags = clientProduct.tags
+        })
+        setProducts(products)
+      }
+      setIsLoading(false)
+    },
+  }),
+  branch(({ isLoading }) => isLoading, renderComponent(Spinner))
 )(Tagger)
