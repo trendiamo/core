@@ -37,24 +37,33 @@ const Flex1 = styled.div`
   }
 `
 
-const Buzz = ({ layout }) => (
-  <Section>
+const Content = ({ layout }) => (
+  <Flex>
+    <Flex1>
+      <h3>{layout.buzzHeading}</h3>
+      <p>{layout.buzzText}</p>
+    </Flex1>
+    <Flex1>
+      <div
+        className="email-input email-input-2"
+        data-email-label={layout.buzzEmailLabel}
+        data-submit-text={layout.buzzEmailCta}
+      />
+    </Flex1>
+  </Flex>
+)
+
+const StyledSection = styled(Section)`
+  background-image: url(${({ BgWaveGrey }) => BgWaveGrey});
+  background-repeat: no-repeat;
+`
+
+const Buzz = ({ layout, BgWaveGrey }) => (
+  <StyledSection BgWaveGrey={BgWaveGrey}>
     <Container>
-      <Flex>
-        <Flex1>
-          <h3>{layout.buzzHeading}</h3>
-          <p>{layout.buzzText}</p>
-        </Flex1>
-        <Flex1>
-          <div
-            className="email-input email-input-2"
-            data-email-label={layout.buzzEmailLabel}
-            data-submit-text={layout.buzzEmailCta}
-          />
-        </Flex1>
-      </Flex>
+      <Content layout={layout} />
     </Container>
-  </Section>
+  </StyledSection>
 )
 
 export default Buzz
