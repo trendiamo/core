@@ -1,8 +1,9 @@
 import Background from './background'
 import Content, { PersonaName } from './content'
+import defaultConfig from './config'
 import FlowBackButton from 'shared/flow-back-button'
 import styled from 'styled-components'
-import { branch, compose, renderComponent } from 'recompose'
+import { branch, compose, renderComponent, withProps } from 'recompose'
 import {
   Cover as CoverBase,
   CoverImg,
@@ -19,8 +20,8 @@ const FlexDiv = styled.div`
 `
 
 export const CoverSimpleChat = compose(withTextTyping(({ persona }) => persona.description, 300))(
-  ({ persona, currentDescription }) => (
-    <CoverBase>
+  ({ persona, currentDescription, config }) => (
+    <CoverBase config={config}>
       <FlowBackButton />
       <FlexDiv>
         <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
@@ -34,11 +35,16 @@ export const CoverSimpleChat = compose(withTextTyping(({ persona }) => persona.d
   )
 )
 
-export const CoverBridge = ({ header, minimized }) => (
-  <CoverBase hackathon minimized={minimized}>
-    <Background header={header} minimized={minimized} />
-    <Content header={header} minimized={minimized} />
+export const CoverBridge = ({ header, minimized, config }) => (
+  <CoverBase backgroundColor={header.backgroundColor} config={config} hackathon minimized={minimized}>
+    <Background config={config} header={header} minimized={minimized} />
+    <Content config={config} header={header} minimized={minimized} />
   </CoverBase>
 )
 
-export default compose(branch(({ hackathon }) => hackathon, renderComponent(CoverBridge)))(CoverSimpleChat)
+export default compose(
+  withProps(({ config }) => ({
+    config: { ...defaultConfig, ...config },
+  })),
+  branch(({ hackathon }) => hackathon, renderComponent(CoverBridge))
+)(CoverSimpleChat)

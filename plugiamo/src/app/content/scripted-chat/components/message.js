@@ -1,6 +1,7 @@
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
 import {
+  AssessmentProducts,
   AssessmentStepOptions,
   ImgCarouselMessage,
   ProductCarouselMessage,
@@ -15,7 +16,9 @@ import { h } from 'preact'
 
 const MessageContainer = styled.div`
   max-width: ${({ type }) =>
-    ['productCarousel', 'imageCarousel', 'assessmentStepOptions'].includes(type) ? 'auto' : '260px'};
+    ['productCarousel', 'imageCarousel', 'assessmentStepOptions', 'assessmentProducts'].includes(type)
+      ? 'none'
+      : '260px'};
   & + * {
     margin-top: 5px;
   }
@@ -42,6 +45,8 @@ const ChatMessageTemplate = ({ goToNextStep, data, type, show }) => (
       <ImgCarouselMessage carouselType={type} imageCarousel={data} />
     ) : type === 'assessmentStepOptions' ? (
       <AssessmentStepOptions goToNextStep={goToNextStep} options={data} />
+    ) : type === 'assessmentProducts' ? (
+      <AssessmentProducts data={data} />
     ) : null}
   </MessageContainer>
 )

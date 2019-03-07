@@ -41,7 +41,7 @@ const ModalComp = compose(
         zIndex: '12340000005',
       }}
     />
-    <div role="dialog" style={{ backgroundColor: 'white', width: '100%', maxWidth: '60em' }}>
+    <div role="dialog" style={{ width: '100%', maxWidth: '60em' }}>
       <FocusLock>{children}</FocusLock>
     </div>
   </div>

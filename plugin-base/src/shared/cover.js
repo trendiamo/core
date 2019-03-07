@@ -9,8 +9,8 @@ const Cover = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  height: 140px;
-  max-height: ${({ minimized }) => (minimized ? 90 : 140)}px;
+  height: ${({ config }) => config.heights.max};
+  max-height: ${({ minimized, config }) => (minimized ? config.heights.min : config.heights.max)}px;
   ${({ hackathon }) =>
     !hackathon &&
     `

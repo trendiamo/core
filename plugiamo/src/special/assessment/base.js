@@ -1,26 +1,31 @@
-import ChatLogUi from './chat-log-ui'
 import Container from 'app/content/scripted-chat/components/base-container'
-import Cover from 'app/content/scripted-chat/components/cover'
-import ScrollLock from 'ext/scroll-lock'
-import StepsProgressBar from 'shared/progress-bar'
+import Steps from './steps'
+import Store from './store'
 import { compose, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 
 const Base = ({ handleScroll, setContentRef, step, steps, coverMinimized, touch, getContentRef, goToNextStep }) => (
   <Container contentRef={getContentRef}>
-    <ScrollLock>
-      <Cover hackathon header={step.header} minimized={coverMinimized} />
-      <StepsProgressBar stepIndex={step.index} steps={steps} />
-      <ChatLogUi
-        contentRef={getContentRef}
+    {step.type === 'store' ? (
+      <Store
         coverMinimized={coverMinimized}
-        goToNextStep={goToNextStep}
-        onScroll={handleScroll}
+        getContentRef={getContentRef}
+        handleScroll={handleScroll}
         setContentRef={setContentRef}
         step={step}
+      />
+    ) : (
+      <Steps
+        coverMinimized={coverMinimized}
+        getContentRef={getContentRef}
+        goToNextStep={goToNextStep}
+        handleScroll={handleScroll}
+        setContentRef={setContentRef}
+        step={step}
+        steps={steps}
         touch={touch}
       />
-    </ScrollLock>
+    )}
   </Container>
 )
 

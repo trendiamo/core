@@ -10,7 +10,7 @@ const CoverAnimation = styled.img`
   width: 100%;
   max-width: calc(100% - ${({ minimized }) => (minimized ? 200 : 140)}px);
   left: ${({ minimized }) => (minimized ? 200 : 140)}px;
-  max-height: ${({ minimized }) => (minimized ? 90 : 140)}px;
+  max-height: ${({ minimized, config }) => (minimized ? config.heights.min : config.heights.max)}px;
   height: 100%;
   object-fit: cover;
   transition: all 0.4s ease-in-out;
@@ -39,15 +39,19 @@ const ImageContainer = styled.div`
     bottom: 0;
     right: 50px;
     left: ${({ minimized }) => (minimized ? 199 : 139)}px;
-    background: linear-gradient(90deg, rgb(255, 255, 255), rgba(255, 255, 255, 0));
+    background: linear-gradient(
+      90deg,
+      ${({ header }) => header.backgroundColor || 'rgba(255, 255, 255, 255)'},
+      rgba(255, 255, 255, 0)
+    );
     z-index: 11;
     transition: all 0.4s ease-in-out;
   }
 `
 
-const Background = ({ minimized, header }) => (
-  <ImageContainer minimized={minimized}>
-    <CoverAnimation minimized={minimized} src={header.animationUrl} />
+const Background = ({ minimized, header, config }) => (
+  <ImageContainer header={header} minimized={minimized}>
+    <CoverAnimation config={config} minimized={minimized} src={header.animationUrl || header.imageUrl} />
     <CoverImage image={imgixUrl(header.imageUrl, { fit: 'crop', w: 160, h: 90 })} minimized={minimized} />
   </ImageContainer>
 )
