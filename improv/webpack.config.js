@@ -15,8 +15,8 @@ module.exports = {
     host: '0.0.0.0',
     proxy: { '/graphql': 'http://localhost:5000' },
   },
-  // entry: ['babel-polyfill', './src/index.js'],
-  entry: ['./src/index.js'],
+  entry: ['babel-polyfill', './src/index.js'],
+  // entry: ['./src/index.js'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'improv.js',

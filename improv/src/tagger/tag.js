@@ -42,7 +42,7 @@ const Tag = compose(
     onClick: ({ onClick, tag }) => () => onClick(tag),
   })
 )(({ keyCode, tag, taggings, onClick }) => (
-  <TagBase onClick={onClick} selected={taggings[tag]}>
+  <TagBase onClick={onClick} selected={taggings && taggings[tag]}>
     <Key>{keyCode}</Key>
     <Label>{tag}</Label>
   </TagBase>
