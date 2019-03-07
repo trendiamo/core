@@ -62,9 +62,7 @@ export default compose(
     animateNewOptions: ({ logs, setLogs }) => () => {
       const newOptions = logs[logs.length - 1]
       if (newOptions && newOptions.type === 'option') {
-        logs[logs.length - 1].logs.map(log => {
-          log.animate = true
-        })
+        logs[logs.length - 1].animate = true
         setLogs(logs)
       }
     },
