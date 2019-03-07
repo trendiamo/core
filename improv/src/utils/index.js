@@ -49,7 +49,7 @@ const implFactory = {
       return products
     },
   },
-  localhost: {
+  '0.0.0.0': {
     parseProducts() {
       return [
         {
