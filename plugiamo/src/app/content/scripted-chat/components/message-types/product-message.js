@@ -48,18 +48,23 @@ const CtaTextContainer = styled.div`
 
 const ProductMessage = compose(
   withHandlers({
-    onClick: ({ product }) => () => {
+    onClick: ({ product, onClick }) => () => {
+      if (onClick) return onClick()
       mixpanel.track('Clicked Product', { hostname: location.hostname, url: product.url }, () => {
         markGoFwd()
         window.location = product.url
       })
     },
   })
-)(({ product, onClick }) => (
-  <Card onClick={onClick} style={{ minWidth: '260px', cursor: 'pointer' }}>
+)(({ product, styleConfig, onClick }) => (
+  <Card
+    onClick={onClick}
+    style={{ minWidth: styleConfig ? styleConfig.minWidth + 'px' : '260px', cursor: 'pointer' }}
+    styleConfig={styleConfig}
+  >
     <CardImg
-      src={imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: 180 })}
-      style={{ height: '180px', objectFit: 'cover' }}
+      src={imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: styleConfig ? styleConfig.imageHeight : 180 })}
+      style={{ height: styleConfig ? styleConfig.imageHeight + 'px' : '180px', objectFit: 'cover' }}
     />
     <CardContent>
       <TitleAndPrice>

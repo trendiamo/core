@@ -5,7 +5,7 @@ const data = {
         state: 'default',
         urlMatchers: ['/'],
         module: {
-          flowType: 'ht-assessment-steps',
+          flowType: 'ht-assessment',
           launcher: {
             chatBubble: {
               message: 'Hey! 👋 Welcome to Pierre Cardin!',
@@ -134,6 +134,16 @@ const data = {
                     ],
                   },
                 ],
+              },
+            },
+            {
+              type: 'store',
+              header: {
+                title: 'Recommended pieces for your style',
+                imageUrl:
+                  'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/plugin_flow_header-4.png',
+                backgroundColor: '#111',
+                textColor: '#fff',
               },
             },
           ],

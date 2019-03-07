@@ -39,9 +39,9 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { contentRef, logSection, callback } = this.props
+      const { contentRef, logSection, callback, dontScroll } = this.props
       if (logSection.type === 'message') {
-        if (isFrameActive()) {
+        if (isFrameActive() && !dontScroll) {
           autoScroll.activate({ element: contentRef().base, destination: () => this.base.offsetTop - 15, delay: 600 })
         }
         if (callback) {

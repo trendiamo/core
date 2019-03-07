@@ -8,7 +8,7 @@ import { h } from 'preact'
 import { history, timeout, transition } from 'plugin-base'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 
-const ContentFrameContainer = animateOnMount(styled.div`
+export const ContentFrameContainerBase = styled.div`
   z-index: 2147483000;
   position: fixed;
   overflow-x: hidden;
@@ -22,7 +22,9 @@ const ContentFrameContainer = animateOnMount(styled.div`
   right: 0;
   width: 100%;
   height: 100%;
+`
 
+const ContentFrameContainer = animateOnMount(styled(ContentFrameContainerBase)`
   @media (min-width: ${MAIN_BREAKPOINT}px) {
     border-radius: 8px;
     bottom: ${({ position }) => (position === 'right-elevated' ? '126px' : '100px')};

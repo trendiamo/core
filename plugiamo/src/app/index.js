@@ -75,11 +75,13 @@ const AppBaseTemplate = ({
   data,
   bubble,
   extraBubble,
+  ContentFrame,
 }) => (
   <AppBaseDiv>
     {showingContent && (
       <Content
         Component={Component}
+        ContentFrame={ContentFrame}
         isUnmounting={isUnmounting}
         onToggleContent={onToggleContent}
         persona={persona}

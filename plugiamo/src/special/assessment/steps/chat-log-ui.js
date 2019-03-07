@@ -25,6 +25,7 @@ const ChatLogUiTemplate = ({
           callback={logSection.type === 'message' && animateNewOptions}
           clickChatOption={clickChatOption}
           contentRef={contentRef}
+          dontScroll
           goToNextStep={goToNextStep}
           key={index}
           logSection={logSection}

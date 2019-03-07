@@ -3,7 +3,7 @@ import VideoButton from './video-button'
 import { h } from 'preact'
 
 const Name = styled.div`
-  color: #333;
+  color: ${({ header }) => header.textColor || '#333'};
   position: absolute;
   font-size: 20px;
   font-weight: 700;
@@ -22,7 +22,6 @@ const Name = styled.div`
 `
 
 const NameHelper = styled.div`
-  color: #333;
   font-size: 20px;
   font-weight: 700;
   max-height: 50px;
@@ -40,7 +39,7 @@ const NameHelper = styled.div`
 `
 
 const NameMinimized = styled.div`
-  color: #333;
+  color: ${({ header }) => header.textColor || '#333'};
   font-size: 16px;
   font-weight: 700;
   backface-visibility: hidden;
@@ -66,6 +65,7 @@ const TextContainer = styled.div`
   width: 200px;
   left: 20px;
   z-index: 100;
+  position: absolute;
 `
 
 const Header = styled.div`
@@ -77,17 +77,23 @@ export const PersonaName = styled.div`
   display: inline-block;
 `
 
-const Content = ({ minimized, header }) => (
-  <TextContainer minimized={minimized}>
+const Content = ({ minimized, header, config }) => (
+  <TextContainer minimized={minimized} style={config && config.contentContainerStyle}>
     <Header>
-      <NameMinimized minimized={minimized}>{header.productTitle}</NameMinimized>
-      <Name minimized={minimized}>{header.productTitle}</Name>
-      <NameHelper minimized={minimized}>{header.productTitle}</NameHelper>
+      <NameMinimized header={header} minimized={minimized}>
+        {header.title || header.productTitle}
+      </NameMinimized>
+      <Name header={header} minimized={minimized} style={config && config.titleStyle}>
+        {header.title || header.productTitle}
+      </Name>
+      <NameHelper minimized={minimized}>{header.title || header.productTitle}</NameHelper>
     </Header>
-    <PresentedBy minimized={minimized}>
-      {'presented by '}
-      <b>{header.personaInstagramHandle}</b>
-    </PresentedBy>
+    {header.personaInstagramHandle && (
+      <PresentedBy header={header} minimized={minimized}>
+        {'presented by '}
+        <b>{header.personaInstagramHandle}</b>
+      </PresentedBy>
+    )}
     {header.video && <VideoButton video={header.video} />}
   </TextContainer>
 )

@@ -1,10 +1,17 @@
-import ContentFrame from './content-frame'
+import DefaultContentFrame from './content-frame'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose, lifecycle } from 'recompose'
 import { ContentWrapper, history } from 'plugin-base'
 import { h } from 'preact'
 
-const Content = ({ Component, isUnmounting, onToggleContent, position, persona }) => (
+const Content = ({
+  Component,
+  ContentFrame = DefaultContentFrame,
+  isUnmounting,
+  onToggleContent,
+  position,
+  persona,
+}) => (
   <ContentFrame isUnmounting={isUnmounting} onToggleContent={onToggleContent} position={position}>
     <ContentWrapper onToggleContent={onToggleContent} persona={persona}>
       {Component}

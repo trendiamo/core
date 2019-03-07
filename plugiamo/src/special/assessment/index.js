@@ -93,7 +93,7 @@ export default compose(
       showingContent,
       pluginState,
     }) => () => {
-      if (module.flowType !== 'ht-chat' && module.flowType !== 'ht-assessment-steps') return
+      if (module.flowType !== 'ht-chat' && module.flowType !== 'ht-assessment') return
       mixpanel.track('Toggled Plugin', {
         hostname: location.hostname,
         action: showingContent ? 'close' : 'open',
