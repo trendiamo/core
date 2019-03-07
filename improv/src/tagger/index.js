@@ -132,8 +132,6 @@ export default compose(
         await updateClientRecords(client._id, { products })
       } else {
         const json = await createClientRecord({ hostname: location.hostname, products })
-        console.log(json)
-        debugger
         setClient(json)
       }
       setIsLoading(false)
