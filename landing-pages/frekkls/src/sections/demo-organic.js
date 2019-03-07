@@ -48,6 +48,10 @@ const DetailsContainer = styled.div`
     margin-bottom: 20px;
   }
 
+  h1 b {
+    font-weight: bold;
+  }
+
   p {
     font-size: 24px;
   }
