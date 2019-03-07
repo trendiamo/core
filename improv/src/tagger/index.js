@@ -125,13 +125,16 @@ export default compose(
       const tag = tagsMatrix[tagGroupIndex][Number(tagKey) - 1]
       toggleTag(tag)
     },
-    onCopyResult: ({ client, products, setIsLoading }) => async () => {
+    onCopyResult: ({ client, products, setClient, setIsLoading }) => async () => {
       copyToClipboard(JSON.stringify({ products }))
       setIsLoading(true)
       if (client) {
         await updateClientRecords(client._id, { products })
       } else {
-        await createClientRecord({ hostname: location.hostname, products })
+        const json = await createClientRecord({ hostname: location.hostname, products })
+        console.log(json)
+        debugger
+        setClient(json)
       }
       setIsLoading(false)
     },
