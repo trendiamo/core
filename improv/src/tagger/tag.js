@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 
 const Key = styled.div``
 const Label = styled.div``
@@ -40,11 +40,18 @@ const TagBase = styled.div`
 const Tag = compose(
   withHandlers({
     onClick: ({ onClick, tag }) => () => onClick(tag),
+  }),
+  withProps(({ currentProduct, tag }) => {
+    const isSimple = typeof tag === 'string'
+    return {
+      selected: isSimple ? currentProduct.tags && currentProduct.tags[tag] : currentProduct[tag.key],
+      label: isSimple ? tag : tag.name,
+    }
   })
-)(({ keyCode, tag, taggings, onClick }) => (
-  <TagBase onClick={onClick} selected={taggings && taggings[tag]}>
+)(({ keyCode, label, onClick, selected }) => (
+  <TagBase onClick={onClick} selected={selected}>
     <Key>{keyCode}</Key>
-    <Label>{tag}</Label>
+    <Label>{label}</Label>
   </TagBase>
 ))
 

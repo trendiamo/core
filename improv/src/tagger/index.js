@@ -53,6 +53,7 @@ const tagsMatrix = [
   ['Shirts', 'Pants', 'Jackets', 'Accessories'],
   ['Slim Fit', 'Regular Fit', 'Classic Fit', 'Modern Fit'],
   ['Red', 'Blue', 'Yellow', 'Geen'],
+  [{ key: 'highlight', name: 'Highlight' }],
 ]
 
 const Tagger = ({ currentProduct, onClickTag, onCopyResult, tagGroupIndex }) => (
@@ -69,7 +70,7 @@ const Tagger = ({ currentProduct, onClickTag, onCopyResult, tagGroupIndex }) => 
         onClickTag={onClickTag}
         tagGroupIndex={tagGroupIndex}
         tags={tagsMatrix[tagGroupIndex]}
-        tagsLength={tagsMatrix[tagGroupIndex].length}
+        tagsLength={tagsMatrix.length}
       />
     </ProductAndTags>
     <HelpText>{'Press the number keys to set/unset tags, then use j, k to navigate.'}</HelpText>
@@ -100,23 +101,29 @@ export default compose(
         setProductIndex(productIndex - 1)
       }
     },
+    changeProduct: () => ({ tag, product }) => {
+      const tagIsSimple = typeof tag === 'string'
+      if (!tagIsSimple) {
+        product[tag.key] = !product[tag.key]
+        return product
+      }
+      if (!product.tags) {
+        product.tags = { [tag]: true }
+      } else {
+        !product.tags[tag] ? (product.tags[tag] = true) : (product.tags[tag] = !product.tags[tag])
+      }
+      return product
+    },
   }),
   withProps(({ productIndex, products }) => ({
     currentProduct: products && products[productIndex],
   })),
   withHandlers({
-    toggleTag: ({ currentProduct, products, setProducts }) => tag => {
+    toggleTag: ({ currentProduct, products, setProducts, changeProduct }) => tag => {
       const product = products.find(product => product.url === currentProduct.url)
       const productIndex = products.findIndex(product => product.url === currentProduct.url)
-      if (!product.tags) {
-        product.tags = { [tag]: true }
-        products[productIndex] = product
-        setProducts(products)
-      } else {
-        !product.tags[tag] ? (product.tags[tag] = true) : (product.tags[tag] = !product.tags[tag])
-        products[productIndex] = product
-        setProducts(products)
-      }
+      products[productIndex] = changeProduct({ product, tag })
+      setProducts(products)
     },
   }),
   withHandlers({
@@ -153,7 +160,10 @@ export default compose(
         setClient(client[0])
         products.forEach(product => {
           const clientProduct = client[0].products.find(o => o.url === product.url)
-          if (clientProduct) product.tags = clientProduct.tags
+          if (clientProduct) {
+            product.tags = clientProduct.tags
+            product.highlight = clientProduct.highlight
+          }
         })
         setProducts(products)
       }
