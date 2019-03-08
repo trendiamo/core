@@ -24,7 +24,7 @@ const HighlightContainer = styled.div`
   border: 3px solid ${({ highlight }) => highlight.backgroundColor};
   margin: 5px;
   border-radius: 7px;
-  cursor: pointer;
+  pointer-events: none;
 `
 
 const HighlightText = styled.div`
@@ -53,8 +53,9 @@ const AssessmentProductTemplate = ({ data, onClick, big }) => (
 
 const AssessmentProduct = compose(
   withHandlers({
-    onClick: () => () => {
-      // TODO: click product
+    onClick: ({ data }) => () => {
+      if (!data.url) return
+      window.location.href = data.url
     },
   })
 )(AssessmentProductTemplate)

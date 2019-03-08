@@ -4,6 +4,7 @@ const data = {
       id: '1',
       title: 'Business Jacket',
       description: 'Slim fit smoking suits are amazing for your style. Try that one out',
+      url: 'https://www.product.com',
       displayPrice: '$122.99',
       picUrl: 'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/product-business.png',
       highlight: {
@@ -16,6 +17,7 @@ const data = {
       id: '2',
       title: 'Black T-Shirt',
       description: 'Slim fit smoking suits are amazing for your style. Try that one out',
+      url: 'https://www.product.com',
       displayPrice: '$12.99',
       picUrl: 'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/product-urban.png',
       highlight: {
@@ -28,6 +30,7 @@ const data = {
       id: '3',
       title: 'Blue Shirt',
       description: 'Slim fit smoking suits are amazing for your style. Try that one out',
+      url: 'https://www.product.com',
       displayPrice: '$12.99',
       picUrl: 'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/product-basic.png',
       highlight: false,
@@ -36,6 +39,7 @@ const data = {
       id: '4',
       title: 'Red Jacket',
       description: 'Slim fit smoking suits are amazing for your style. Try that one out',
+      url: 'https://www.product.com',
       displayPrice: '$79.99',
       picUrl: 'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/product-jacket.png',
       highlight: false,
