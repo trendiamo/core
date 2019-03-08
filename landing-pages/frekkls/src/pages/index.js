@@ -38,6 +38,11 @@ export const query = graphql`
       openerSubHeading
       openerEmailLabel
       openerEmailCta
+      openerImage {
+        fixed(width: 1200) {
+          src
+        }
+      }
     }
     clients: allContentfulClient(filter: { node_locale: { eq: "en-US" } }) {
       edges {
