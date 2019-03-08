@@ -12,7 +12,7 @@ const TagsContainer = ({ tags, onClickTag, currentProduct, tagGroupIndex, tagsLe
   <Container>
     {`${tagGroupIndex + 1} / ${tagsLength}`}
     {tags.map((tag, index) => (
-      <Tag key={tag} keyCode={String(index + 1)} onClick={onClickTag} tag={tag} taggings={currentProduct.tags} />
+      <Tag currentProduct={currentProduct} key={tag} keyCode={String(index + 1)} onClick={onClickTag} tag={tag} />
     ))}
   </Container>
 )
