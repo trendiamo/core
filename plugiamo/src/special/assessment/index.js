@@ -35,7 +35,7 @@ const Plugin = ({
 export default compose(
   withState('pluginState', 'setPluginState', 'default'),
   withProps(({ pluginState }) => ({
-    trigger: data[process.env.HACKATHON || location.hostname].triggers.find(
+    trigger: data[process.env.ASSESSMENT || location.hostname].triggers.find(
       trigger =>
         (trigger.state || 'default') === pluginState &&
         trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
