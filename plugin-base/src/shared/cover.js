@@ -2,6 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 
+const defaultConfig = {
+  heights: { min: 90, max: 140 },
+}
+
 const Cover = styled.div`
   background-color: ${({ hackathon, backgroundColor = '#fff' }) => (hackathon ? backgroundColor : '#232323')};
   padding: 10px 20px;
@@ -9,8 +13,8 @@ const Cover = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  height: ${({ config }) => config.heights.max};
-  max-height: ${({ minimized, config }) => (minimized ? config.heights.min : config.heights.max)}px;
+  height: ${({ config = defaultConfig }) => config.heights.max};
+  max-height: ${({ minimized, config = defaultConfig }) => (minimized ? config.heights.min : config.heights.max)}px;
   ${({ hackathon }) =>
     !hackathon &&
     `
