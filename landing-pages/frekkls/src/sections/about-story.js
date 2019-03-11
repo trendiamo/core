@@ -8,8 +8,12 @@ import Section from '../components/section'
 const StyledContainer = styled(Container)`
   box-shadow: 3px 7px 26px 0 rgba(0, 0, 0, 0.24);
   border-radius: 12px;
-  padding: 100px 80px;
   position: relative;
+  padding: 40px;
+
+  @media (min-width: 900px) {
+    padding: 100px 80px;
+  }
 `
 
 const MailTo = styled.a`
