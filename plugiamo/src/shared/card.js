@@ -21,7 +21,7 @@ const Card = styled.div`
   overflow: hidden;
   min-width: 112px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  margin-right: ${({ styleConfig }) => (styleConfig ? styleConfig.margin : '1rem')};
+  margin-right: 1rem;
 `
 
 const CardContent = styled.div`

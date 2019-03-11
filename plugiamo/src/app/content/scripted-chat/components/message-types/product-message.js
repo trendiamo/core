@@ -46,6 +46,16 @@ const CtaTextContainer = styled.div`
   text-align: center;
 `
 
+const ProductCard = styled(Card)`
+  minwidth: 260px;
+  cursor: pointer;
+`
+
+const ProductImage = styled(CardImg)`
+  object-fit: cover;
+  height: 180px;
+`
+
 const ProductMessage = compose(
   withHandlers({
     onClick: ({ product, onClick }) => () => {
@@ -56,24 +66,20 @@ const ProductMessage = compose(
       })
     },
   })
-)(({ product, styleConfig, onClick }) => (
-  <Card
-    onClick={onClick}
-    style={{ minWidth: styleConfig ? styleConfig.minWidth + 'px' : '260px', cursor: 'pointer' }}
-    styleConfig={styleConfig}
-  >
-    <CardImg
-      src={imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: styleConfig ? styleConfig.imageHeight : 180 })}
-      style={{ height: styleConfig ? styleConfig.imageHeight + 'px' : '180px', objectFit: 'cover' }}
+)(({ product, styleConfig = { card: { minWidth: 260 } }, onClick }) => (
+  <ProductCard onClick={onClick} style={styleConfig.card}>
+    <ProductImage
+      src={imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: styleConfig.image ? styleConfig.image.height : 180 })}
+      style={styleConfig.image}
     />
-    <CardContent>
+    <CardContent style={styleConfig.details}>
       <TitleAndPrice>
-        <Title>{product.title}</Title>
-        <Price>{product.displayPrice}</Price>
+        <Title style={styleConfig.detailsText}>{product.title}</Title>
+        <Price style={styleConfig.detailsPrice}>{product.displayPrice}</Price>
       </TitleAndPrice>
     </CardContent>
     {product.cardCta && <CtaTextContainer>{product.cardCta}</CtaTextContainer>}
-  </Card>
+  </ProductCard>
 ))
 
 export default ProductMessage

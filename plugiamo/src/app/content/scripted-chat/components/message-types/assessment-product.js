@@ -3,15 +3,39 @@ import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 
-const styleConfig = {
-  imageHeight: 200,
-  minWidth: 120,
-  margin: 0,
+const styleConfigDefault = {
+  image: {
+    height: 200,
+  },
+  card: {
+    minWidth: 120,
+    margin: 0,
+    borderRadius: '6px',
+  },
+  details: {
+    padding: '8px 8px 9px',
+  },
+  detailsText: {
+    fontSize: '14px',
+  },
+  detailsPrice: {
+    fontSize: '14px',
+  },
+  highlight: {
+    borderWidth: '3px',
+    borderRadius: '6px',
+  },
+  highlightText: {
+    top: '65%',
+  },
+  container: {
+    padding: '0 5px 10px',
+  },
 }
 
 const Container = styled.div`
   width: ${({ cols }) => 100 / cols}%;
-  padding: 5px;
+  padding: 0 10px 20px;
   position: relative;
 `
 
@@ -21,16 +45,16 @@ const HighlightContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  border: 3px solid ${({ highlight }) => highlight.backgroundColor};
-  margin: 5px;
-  border-radius: 7px;
+  border: 4px solid ${({ highlight }) => highlight.backgroundColor};
+  border-radius: 10px;
   pointer-events: none;
 `
 
 const HighlightText = styled.div`
   position: absolute;
-  top: 65%;
+  top: 75%;
   left: 0;
+  font-weight: 500;
   background-color: ${({ highlight }) => highlight.backgroundColor};
   color: ${({ highlight }) => highlight.textColor};
   padding: 3px 12px 3px 10px;
@@ -38,16 +62,24 @@ const HighlightText = styled.div`
   user-select: none;
 `
 
-const Highlight = ({ highlight }) => (
-  <HighlightContainer highlight={highlight}>
-    <HighlightText highlight={highlight}>{highlight.text}</HighlightText>
+const InnerContainer = styled.div`
+  position: relative;
+`
+
+const Highlight = ({ highlight, styleConfig }) => (
+  <HighlightContainer highlight={highlight} style={styleConfig.highlight}>
+    <HighlightText highlight={highlight} style={styleConfig.highlightText}>
+      {highlight.text}
+    </HighlightText>
   </HighlightContainer>
 )
 
-const AssessmentProductTemplate = ({ data, onClick, big }) => (
-  <Container cols={big ? 3 : 2}>
-    {data.highlight && <Highlight highlight={data.highlight} />}
-    <ProductMessage onClick={onClick} product={data} styleConfig={styleConfig} />
+const AssessmentProductTemplate = ({ data, onClick, big, styleConfig = styleConfigDefault }) => (
+  <Container cols={big ? 3 : 2} style={styleConfig.container}>
+    <InnerContainer>
+      {data.highlight && <Highlight highlight={data.highlight} styleConfig={styleConfig} />}
+      <ProductMessage onClick={onClick} product={data} styleConfig={styleConfig} />
+    </InnerContainer>
   </Container>
 )
 

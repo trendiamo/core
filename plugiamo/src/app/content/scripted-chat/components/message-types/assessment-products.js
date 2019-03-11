@@ -9,10 +9,10 @@ const Container = styled.div`
   margin: 0 -10px;
 `
 
-const AssessmentProducts = ({ data, big }) => (
+const AssessmentProducts = ({ data, big, styleConfig }) => (
   <Container big={big}>
     {data.map(product => (
-      <AssessmentProduct big={big} data={product} key={product.id} />
+      <AssessmentProduct big={big} data={product} key={product.id} styleConfig={styleConfig} />
     ))}
   </Container>
 )
