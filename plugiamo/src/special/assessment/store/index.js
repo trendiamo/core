@@ -1,9 +1,8 @@
 import ChatLogUi from './chat-log-ui'
 import Cover from 'app/content/scripted-chat/components/cover'
 import Modal from './modal'
-import productsDB from 'special/assessment/products-db'
 import ScrollLock from 'ext/scroll-lock'
-import { compose, withProps } from 'recompose'
+import { compose, lifecycle, withState } from 'recompose'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 
@@ -33,8 +32,21 @@ const StoreTemplate = ({
 )
 
 const Store = compose(
-  withProps({
-    results: productsDB.products,
+  withState('results', 'setResults', []),
+  lifecycle({
+    componentDidMount() {
+      const _this = this
+      fetch('https://console-assets-frb.ams3.digitaloceanspaces.com/manual/improv-clients.js', {
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+      })
+        .then(response => response.json())
+        .then(results => {
+          const { setResults } = _this.props
+          const client = results.find(client => client.hostname === location.hostname)
+          // TODO: inference system || setResults(inferenceSystem(client.products))
+          setResults(client.products)
+        })
+    },
   })
 )(StoreTemplate)
 
