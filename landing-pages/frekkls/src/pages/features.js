@@ -1,7 +1,9 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
+import BridgeSlider from '../sections/bridge-slider'
 import Buzz from '../sections/buzz'
+import CustomerJourneySlider from '../sections/customer-journey-slider'
 import Depth from '../sections/depth'
 import FeaturesHero from '../sections/features-hero'
 import FeaturesSlider from '../sections/features-slider'
@@ -13,6 +15,11 @@ const FeaturesPage = ({ className, pageContext, data }) => (
     <FeaturesHero featuresHero={data.featuresHero} />
     <Steps steps={data.steps} />
     <FeaturesSlider featuresSlider={data.featuresSlider} featuresSliderContent={data.featuresSliderContent} />
+    <CustomerJourneySlider
+      customerJournerSlider={data.customerJournerSlider}
+      customerJourneySliderContent={data.customerJourneySliderContent}
+    />
+    <BridgeSlider bridgeSlider={data.bridgeSlider} bridgeSliderContent={data.bridgeSliderContent} />
     <Depth depth={data.depth} />
     <Buzz layout={data.layout} />
   </Layout>
@@ -71,6 +78,68 @@ export const query = graphql`
             slideText
           }
           slideImage {
+            file {
+              url
+            }
+          }
+        }
+      }
+    }
+    customerJournerSlider: contentfulFeaturesPage(node_locale: { eq: $locale }) {
+      customerJourneySliderHeading
+      customerJourneySliderSubHeading
+    }
+    customerJourneySliderContent: allContentfulFeaturesCustomerJourneySlide(filter: { node_locale: { eq: $locale } }) {
+      edges {
+        node {
+          id
+          icon {
+            file {
+              url
+            }
+          }
+          activeIcon {
+            file {
+              url
+            }
+          }
+          heading
+          subHeading
+          mainText {
+            mainText
+          }
+          image {
+            file {
+              url
+            }
+          }
+        }
+      }
+    }
+    bridgeSlider: contentfulFeaturesPage(node_locale: { eq: $locale }) {
+      bridgeSliderHeading
+      bridgeSliderSubHeading
+    }
+    bridgeSliderContent: allContentfulFeaturesBridgeSlide(filter: { node_locale: { eq: $locale } }) {
+      edges {
+        node {
+          id
+          icon {
+            file {
+              url
+            }
+          }
+          activeIcon {
+            file {
+              url
+            }
+          }
+          heading
+          subHeading
+          mainText {
+            mainText
+          }
+          image {
             file {
               url
             }
