@@ -31,15 +31,19 @@ const implFactory = {
         const url = e.querySelector('a').href
         const title = e.querySelector('.product-item-name').innerText
         const displayPrice = e.querySelector('.price-wrapper .price').innerText
+        const gender = location.pathname === '/damen' ? 'women' : location.pathname === '/herren' ? 'men' : null
         const priceInCents = e.querySelector('.price-wrapper').dataset.priceAmount * 100
         const images = Array.prototype.map.call(e.querySelectorAll('.product-image-photo'), img => ({
           alt: img.alt,
           src: img.dataset.src,
         }))
+        const picUrl = e.querySelectorAll('.product-image-photo')[0].dataset.src
         return {
           // id,
           url,
           title,
+          picUrl,
+          gender,
           images,
           displayPrice,
           priceInCents,
