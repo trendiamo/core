@@ -160,12 +160,14 @@ export default compose(
         setClient(client[0])
         products.forEach(product => {
           const clientProduct = client[0].products.find(o => o.url === product.url)
+          const clientProductIndex = client[0].products.findIndex(o => o.url === product.url)
           if (clientProduct) {
             product.tags = clientProduct.tags
             product.highlight = clientProduct.highlight
+            client[0].products.splice(clientProductIndex, 1)
           }
         })
-        setProducts(products)
+        setProducts([...products, ...client[0].products])
       }
       setIsLoading(false)
     },
