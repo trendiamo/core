@@ -6,6 +6,8 @@ const config = {
   titleStyle: {
     fontSize: '32px',
     maxWidth: '320px',
+    maxHeight: '100px',
+    marginBottom: '0',
   },
   contentContainerStyle: {
     width: '320px',

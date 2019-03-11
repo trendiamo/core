@@ -86,7 +86,9 @@ const Content = ({ minimized, header, config }) => (
       <Name header={header} minimized={minimized} style={config && config.titleStyle}>
         {header.title || header.productTitle}
       </Name>
-      <NameHelper minimized={minimized}>{header.title || header.productTitle}</NameHelper>
+      <NameHelper minimized={minimized} style={config && config.titleStyle}>
+        {header.title || header.productTitle}
+      </NameHelper>
     </Header>
     {header.personaInstagramHandle && (
       <PresentedBy header={header} minimized={minimized}>
