@@ -4,7 +4,18 @@ import Store from './store'
 import { compose, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 
-const Base = ({ handleScroll, setContentRef, step, steps, coverMinimized, touch, getContentRef, goToNextStep }) => (
+const Base = ({
+  handleScroll,
+  setContentRef,
+  step,
+  steps,
+  coverMinimized,
+  touch,
+  getContentRef,
+  goToNextStep,
+  setShowingLauncher,
+  setShowingContent,
+}) => (
   <Container contentRef={getContentRef}>
     {step.type === 'store' ? (
       <Store
@@ -12,6 +23,8 @@ const Base = ({ handleScroll, setContentRef, step, steps, coverMinimized, touch,
         getContentRef={getContentRef}
         handleScroll={handleScroll}
         setContentRef={setContentRef}
+        setShowingContent={setShowingContent}
+        setShowingLauncher={setShowingLauncher}
         step={step}
       />
     ) : (

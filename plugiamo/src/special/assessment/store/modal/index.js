@@ -2,7 +2,7 @@ import Content from './content'
 import Frame from 'shared/frame'
 import Header from './header'
 import Wrapper from 'shared/modal'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 
 const iframeStyle = {
@@ -33,8 +33,16 @@ const ModalTemplate = ({ closeModal, isOpen, results, header }) => (
 const Modal = compose(
   withState('isOpen', 'setIsOpen', true),
   withHandlers({
-    closeModal: ({ setIsOpen }) => () => {
+    closeModal: ({ setIsOpen, setShowingLauncher }) => () => {
       setIsOpen(false)
+      setShowingLauncher(true)
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { setShowingLauncher, setShowingContent } = this.props
+      setShowingContent(false)
+      setShowingLauncher(false)
     },
   })
 )(ModalTemplate)

@@ -15,6 +15,8 @@ const StoreTemplate = ({
   touch,
   step,
   results,
+  setShowingLauncher,
+  setShowingContent,
 }) => (
   <ScrollLock>
     <Cover hackathon header={step.header} minimized={coverMinimized} />
@@ -27,7 +29,14 @@ const StoreTemplate = ({
       setContentRef={setContentRef}
       touch={touch}
     />
-    {!isSmall() && <Modal header={step.header} results={results} />}
+    {!isSmall() && (
+      <Modal
+        header={step.header}
+        results={results}
+        setShowingContent={setShowingContent}
+        setShowingLauncher={setShowingLauncher}
+      />
+    )}
   </ScrollLock>
 )
 
