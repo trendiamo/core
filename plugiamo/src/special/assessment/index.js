@@ -10,21 +10,33 @@ import { h } from 'preact'
 import { matchUrl, timeout } from 'plugin-base'
 
 const Plugin = ({
+  showingLaucher,
   isUnmounting,
   step,
   steps,
   goToNextStep,
   module,
   onToggleContent,
+  setShowingLauncher,
   setPluginState,
+  setShowingContent,
   showingContent,
   launcherType,
 }) => (
   <AppBase
-    Component={<Base goToNextStep={goToNextStep} setPluginState={setPluginState} step={step} steps={steps} />}
+    Component={
+      <Base
+        goToNextStep={goToNextStep}
+        setPluginState={setPluginState}
+        setShowingContent={setShowingContent}
+        setShowingLauncher={setShowingLauncher}
+        step={step}
+        steps={steps}
+      />
+    }
     data={module}
     isUnmounting={isUnmounting}
-    Launcher={Launcher}
+    Launcher={showingLaucher && Launcher}
     launcherType={launcherType}
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
@@ -53,6 +65,7 @@ export default compose(
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
+  withState('showingLaucher', 'setShowingLauncher', true),
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent } = this.props
