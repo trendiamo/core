@@ -61,6 +61,8 @@ const implFactory = {
           url:
             'https://www.baldessarini.com/de/kleidung/specials/business-looks/sakko-aus-120-schurwolle-14015-000-07124-999',
           title: 'SAKKO AUS 120-SCHURWOLLE',
+          picUrl:
+            'https://www.baldessarini.com/media/catalog/product/cache/small_image/e9c3970ab036de70892d86c6d221abfe/f/r/front_4049364472067.jpg',
           images: [
             {
               alt: '',
@@ -76,7 +78,6 @@ const implFactory = {
           displayPrice: '349,00 €',
           priceInCents: 34900,
           currency: 'EUR',
-          // other info...
         },
       ]
     },
