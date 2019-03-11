@@ -9,7 +9,7 @@ const iframeStyle = {
   width: '100%',
   border: 0,
   background: '#fff',
-  borderRadius: '22px',
+  borderRadius: '6px',
   maxHeight: '80vh',
   height: '1000px',
   minHeight: '400px',
