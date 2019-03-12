@@ -56,10 +56,14 @@ const ModalComp = compose(
   </Background>
 ))
 
-const Modal = ({ appElement, allowBackgroundClose, onRequestClose, isOpen, children }) =>
+const Modal = ({ appElement, allowBackgroundClose, onRequestClose, isOpen, children, hotkeysDocument }) =>
   isOpen
     ? ReactDom.createPortal(
-        <ModalComp allowBackgroundClose={allowBackgroundClose} onRequestClose={onRequestClose}>
+        <ModalComp
+          allowBackgroundClose={allowBackgroundClose}
+          hotkeysDocument={hotkeysDocument}
+          onRequestClose={onRequestClose}
+        >
           {children}
         </ModalComp>,
         appElement

@@ -26,16 +26,22 @@ const withHotkeys = (handlers, useCapture = false) =>
 
         componentDidMount() {
           // we listen for the event in both the element itself and on its containing window. This allows modals to work
+          const { hotkeysDocument } = this.props
+          const contentDocument =
+            hotkeysDocument && (typeof hotkeysDocument === 'function' ? hotkeysDocument() : hotkeysDocument)
           const base = this.hotkeysRef.current
-          const target = base.contentWindow || window
+          const target = base.contentWindow || contentDocument || window
           base.addEventListener('keyup', this.handleKeyDown, useCapture)
           target.addEventListener('keyup', this.handleKeyDown, useCapture)
         }
 
         componentWillUnmount() {
           // we listen for the event in both the element itself and on its containing window. This allows modals to work
+          const { hotkeysDocument } = this.props
+          const contentDocument =
+            hotkeysDocument && (typeof hotkeysDocument === 'function' ? hotkeysDocument() : hotkeysDocument)
           const base = this.hotkeysRef.current
-          const target = base.contentWindow || window
+          const target = base.contentWindow || contentDocument || window
           base.removeEventListener('keyup', this.handleKeyDown, useCapture)
           target.removeEventListener('keyup', this.handleKeyDown, useCapture)
         }

@@ -22,12 +22,17 @@ const StyledIframe = styled(Iframe)`
   z-index: 12340000000;
 `
 
-const App = ({ closeModal, iframeRef, isModalOpen, getModalAppElement }) => (
+const App = ({ closeModal, iframeRef, isModalOpen, getModalState, getModalAppElement, iframeDocument }) => (
   <StyledIframe hidden={!isModalOpen} ref={iframeRef} title="Frekkls">
     {isModalOpen ? (
-      <Modal appElement={getModalAppElement()} isOpen={isModalOpen} onRequestClose={closeModal}>
+      <Modal
+        appElement={getModalAppElement()}
+        hotkeysDocument={iframeDocument()}
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+      >
         <ModalContent>
-          <Tagger />
+          <Tagger getModalState={getModalState} hotkeysDocument={iframeDocument()} />
         </ModalContent>
       </Modal>
     ) : (
@@ -40,13 +45,20 @@ export default compose(
   withProps({ iframeRef: React.createRef() }),
   withState('isModalOpen', 'setIsModalOpen', false),
   withHandlers({
-    openModal: ({ setIsModalOpen }) => () => setIsModalOpen(true),
+    openModal: ({ setIsModalOpen, iframeRef }) => () => {
+      setTimeout(() => {
+        iframeRef && iframeRef.current.focus()
+      }, 0)
+      setIsModalOpen(true)
+    },
     closeModal: ({ setIsModalOpen }) => () => setIsModalOpen(false),
-  }),
-  withHotkeys({
-    [tKey]: ({ openModal }) => openModal,
+    getModalState: ({ isModalOpen }) => () => isModalOpen,
   }),
   withHandlers({
     getModalAppElement: ({ iframeRef }) => () => iframeRef.current.contentDocument.body,
+    iframeDocument: ({ iframeRef }) => () => iframeRef && iframeRef.current && iframeRef.current.contentDocument,
+  }),
+  withHotkeys({
+    [tKey]: ({ openModal }) => openModal,
   })
 )(App)
