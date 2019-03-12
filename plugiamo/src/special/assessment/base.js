@@ -1,13 +1,14 @@
 import Container from 'app/content/scripted-chat/components/base-container'
 import Steps from './steps'
 import Store from './store'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 
 const Base = ({
   handleScroll,
   setContentRef,
   step,
+  currentStep,
   steps,
   coverMinimized,
   touch,
@@ -17,7 +18,7 @@ const Base = ({
   setShowingContent,
 }) => (
   <Container contentRef={getContentRef}>
-    {step.type === 'store' ? (
+    {currentStep.type === 'store' ? (
       <Store
         coverMinimized={coverMinimized}
         getContentRef={getContentRef}
@@ -30,6 +31,7 @@ const Base = ({
     ) : (
       <Steps
         coverMinimized={coverMinimized}
+        currentStep={currentStep}
         getContentRef={getContentRef}
         goToNextStep={goToNextStep}
         handleScroll={handleScroll}
@@ -45,6 +47,7 @@ const Base = ({
 export default compose(
   withState('coverMinimized', 'setCoverMinimized', ({ step }) => !!step.header.minimized),
   withState('touch', 'setTouch', true),
+  withState('currentStep', 'setCurrentStep', ({ step }) => step),
   withHandlers(() => {
     let contentRef
     return {
@@ -64,6 +67,23 @@ export default compose(
         return setCoverMinimized(false)
       }
       if (scrollTop > 0 && !coverMinimized && touch) return setCoverMinimized(true)
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { step, setCurrentStep } = this.props
+      setCurrentStep(step)
+    },
+    componentDidUpdate(prevProps) {
+      const { step, setCurrentStep } = this.props
+      if (prevProps.step !== step) {
+        setTimeout(
+          () => {
+            setCurrentStep(step)
+          },
+          prevProps.step ? 750 : 0
+        )
+      }
     },
   })
 )(Base)

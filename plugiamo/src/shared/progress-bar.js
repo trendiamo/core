@@ -2,23 +2,25 @@ import styled from 'styled-components'
 import { h } from 'preact'
 
 const Container = styled.div`
-  width: 100%;
-  display: flex;
-  height: 0.25rem;
+  position: relative;
+  flex-shrink: 0;
+  height: 3px;
   background-color: #d9d9d9;
 `
 
-const Step = styled.div`
-  flex: 1;
-  background-color: ${({ index, stepIndex }) => (index <= stepIndex ? '#fe5442' : '#d9d9d9')};
+const Bar = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: ${({ progress }) => progress}%;
+  background: #fe5442;
+  transition: width 0.6s ease-out;
 `
 
-const ProgressBar = ({ steps, stepIndex }) => (
+const ProgressBar = ({ progress }) => (
   <Container>
-    {steps.map((step, index) => (
-      /* eslint-disable react/no-array-index-key */
-      <Step index={index} key={index} stepIndex={stepIndex} />
-    ))}
+    <Bar progress={progress} />
   </Container>
 )
 export default ProgressBar

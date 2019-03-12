@@ -4,10 +4,20 @@ import ScrollLock from 'ext/scroll-lock'
 import StepsProgressBar from 'shared/progress-bar'
 import { h } from 'preact'
 
-const Steps = ({ step, coverMinimized, steps, getContentRef, goToNextStep, handleScroll, setContentRef, touch }) => (
+const Steps = ({
+  step,
+  currentStep,
+  coverMinimized,
+  steps,
+  getContentRef,
+  goToNextStep,
+  handleScroll,
+  setContentRef,
+  touch,
+}) => (
   <ScrollLock>
-    <Cover hackathon header={step.header} minimized={coverMinimized} />
-    <StepsProgressBar stepIndex={step.index} steps={steps} />
+    <Cover hackathon header={currentStep.header} minimized={coverMinimized} progressBar steps={steps} />
+    <StepsProgressBar progress={((step.index || 0) / Math.max(steps.length - 1, 1)) * 100} />
     <ChatLogUi
       contentRef={getContentRef}
       coverMinimized={coverMinimized}
@@ -15,6 +25,7 @@ const Steps = ({ step, coverMinimized, steps, getContentRef, goToNextStep, handl
       onScroll={handleScroll}
       setContentRef={setContentRef}
       step={step}
+      steps={steps}
       touch={touch}
     />
   </ScrollLock>

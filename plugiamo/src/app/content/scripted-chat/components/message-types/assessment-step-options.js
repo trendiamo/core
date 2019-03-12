@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Tile from './assessment-step-option'
-import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
 
@@ -12,24 +11,19 @@ const TilesWrapperDiv = styled.div`
   margin-right: -0.5rem;
 `
 
-const AssessmentStepOptions = ({ onTileClick, options }) => (
+const AssessmentStepOptions = ({ onClick, options, hideAll }) => (
   <TilesWrapperDiv>
     {options.map(option => (
       <Tile
+        hideAll={hideAll}
         highlight
         imageUrl={imgixUrl(option.picUrl, { fit: 'crop', w: 156, h: 120 })}
         key={`option-${option.title}`}
-        onClick={() => onTileClick(option)}
+        onClick={() => onClick(option)}
         title={option.title}
       />
     ))}
   </TilesWrapperDiv>
 )
 
-export default compose(
-  withHandlers({
-    onTileClick: ({ goToNextStep }) => option => {
-      goToNextStep(option)
-    },
-  })
-)(AssessmentStepOptions)
+export default AssessmentStepOptions

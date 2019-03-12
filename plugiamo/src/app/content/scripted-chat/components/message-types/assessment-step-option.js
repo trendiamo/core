@@ -53,22 +53,23 @@ const Box = styled.div`
 
   position: relative;
   transition: background-color 0.4s linear;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-  @keyframes _frekkls_selected_nav_item_highlight {
+  @keyframes _frekkls_selected_asmt_item_highlight {
     0% {
-      box-shadow: 0 1px 15px 1px #00adef;
+      box-shadow: 0 1px 15px 1px #ff6816;
       opacity: 0.5;
     }
     25% {
-      box-shadow: 0 1px 25px 1px #00adef;
+      box-shadow: 0 1px 25px 1px #ff6816;
       opacity: 1;
     }
     35% {
-      box-shadow: 0 1px 25px 1px #00adef;
+      box-shadow: 0 1px 25px 1px #ff6816;
       opacity: 1;
     }
     100% {
-      box-shadow: 0 1px 15px 1px #00adef;
+      box-shadow: 0 1px 15px 1px #ff6816;
       opacity: 0.5;
     }
   }
@@ -96,7 +97,7 @@ const Box = styled.div`
       right: 0px;
       z-index: 5;
       border-radius: 15px;
-      animation: _frekkls_selected_nav_item_highlight 1.2s linear infinite;
+      animation: _frekkls_selected_asmt_item_highlight 1.2s linear infinite;
       animation-delay: 0.125s;
     }`}
 
@@ -161,15 +162,9 @@ const Content = styled.div`
   `}
 `
 
-const TileDiv = ({ title, imageUrl, handleClick, isClicked, listSelected, highlight }) => (
+const TileDiv = ({ title, imageUrl, handleClick, isClicked, hideAll, highlight }) => (
   <Container>
-    <Box
-      highlight={highlight}
-      imageUrl={imageUrl}
-      isClicked={isClicked}
-      listSelected={listSelected}
-      onClick={handleClick}
-    >
+    <Box highlight={highlight} imageUrl={imageUrl} isClicked={isClicked} listSelected={hideAll} onClick={handleClick}>
       <Content imageUrl={imageUrl}>
         {imageUrl && <Background imageUrl={imageUrl} isClicked={isClicked} />}
         <Title imageUrl={imageUrl} isClicked={isClicked}>
@@ -183,16 +178,10 @@ const TileDiv = ({ title, imageUrl, handleClick, isClicked, listSelected, highli
 const Tile = compose(
   withState('isClicked', 'setIsClicked', false),
   withHandlers({
-    handleClick: ({ setIsClicked, listSelected, onClick, highlight }) => () => {
-      if (!listSelected) {
+    handleClick: ({ setIsClicked, hideAll, onClick }) => () => {
+      if (!hideAll) {
         setIsClicked(true)
-        timeout.set(
-          'pluginClickItem',
-          () => {
-            return onClick()
-          },
-          highlight ? 30 : 10
-        )
+        onClick()
       }
     },
   }),
@@ -201,8 +190,8 @@ const Tile = compose(
       timeout.clear('pluginClickItem')
     },
     componentDidUpdate() {
-      const { listSelected, isClicked, setIsClicked } = this.props
-      if (isClicked && !listSelected) {
+      const { hideAll, isClicked, setIsClicked } = this.props
+      if (isClicked && !hideAll) {
         setIsClicked(false)
       }
     },

@@ -17,11 +17,11 @@ const Container = styled.div`
   }
 `
 
-const ItemDivTemplate = ({ logSection, onClick, hide, goToNextStep }) => (
+const ItemDivTemplate = ({ logSection, onClick, hide, hideAll, onMessageClick }) => (
   <Container>
     {logSection.logs.map((log, index) =>
       log.type === 'message' ? (
-        <ChatMessage goToNextStep={goToNextStep} index={index} log={log} />
+        <ChatMessage hideAll={hideAll} index={index} log={log} onMessageClick={onMessageClick} />
       ) : log.type === 'option' ? (
         <ChatOption animate={logSection.animate} chatOption={log} hide={hide} index={index} onClick={onClick} />
       ) : null
@@ -35,6 +35,10 @@ export default compose(
     onClick: ({ clickChatOption, setHide }) => chatOption => {
       clickChatOption(chatOption)
       setHide(true)
+    },
+    onMessageClick: ({ goToNextStep, setHideAll }) => option => {
+      goToNextStep(option)
+      setHideAll(true)
     },
   }),
   lifecycle({

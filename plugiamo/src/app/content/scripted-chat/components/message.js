@@ -31,8 +31,8 @@ const MessageContainer = styled.div`
   `}
 `
 
-const ChatMessageTemplate = ({ goToNextStep, data, type, show }) => (
-  <MessageContainer show={show} type={type}>
+const ChatMessageTemplate = ({ onMessageClick, data, type, show, hideAll, onClick }) => (
+  <MessageContainer show={type === 'assessmentStepOptions' ? show : !hideAll && show} type={type}>
     {type === 'text' ? (
       <TextMessage dangerouslySetInnerHTML={{ __html: emojify(snarkdown(data)) }} />
     ) : type === 'videoUrl' ? (
@@ -44,9 +44,9 @@ const ChatMessageTemplate = ({ goToNextStep, data, type, show }) => (
     ) : type === 'imageCarousel' ? (
       <ImgCarouselMessage carouselType={type} imageCarousel={data} />
     ) : type === 'assessmentStepOptions' ? (
-      <AssessmentStepOptions goToNextStep={goToNextStep} options={data} />
+      <AssessmentStepOptions hideAll={hideAll} onClick={onMessageClick} options={data} />
     ) : type === 'assessmentProducts' ? (
-      <AssessmentProducts data={data} />
+      <AssessmentProducts data={data} onClick={onClick} />
     ) : null}
   </MessageContainer>
 )
