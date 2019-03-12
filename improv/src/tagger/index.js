@@ -161,8 +161,9 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { setClient, setIsLoading, products, setProducts } = this.props
+      const { setClient, setIsLoading, products, setProducts, getModalState } = this.props
       const client = await getClient(location.hostname)
+      if (client && !getModalState()) return
       if (client.length > 0) {
         setClient(client[0])
         products.forEach(product => {
