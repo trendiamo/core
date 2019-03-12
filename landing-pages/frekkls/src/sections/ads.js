@@ -89,6 +89,7 @@ const Ads = styled(({ ads, className }) => (
   padding-bottom: 100px;
 
   h2 {
+    align-self: flex-start;
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 1.5px;

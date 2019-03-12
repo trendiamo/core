@@ -3,10 +3,49 @@ import styled from 'styled-components'
 
 import Container from '../components/container'
 import Section from '../components/section'
-import Step01 from '../images/step-01'
-import Step02 from '../images/step-02'
-import Step03 from '../images/step-03'
+import step01 from '../images/step-01.png'
+import step02 from '../images/step-02.png'
+import step03 from '../images/step-03.png'
 import StepArrow from '../images/step-arrow.svg'
+
+const Step01 = styled.img.attrs({
+  src: step01,
+})``
+
+const Step02 = styled.img.attrs({
+  src: step02,
+})``
+
+const Step03 = styled.img.attrs({
+  src: step03,
+})``
+
+const StepImageContaier1 = styled.div`
+  width: 148px;
+  height: 235px;
+  max-width: 160px;
+  img {
+    width: 100%;
+  }
+`
+
+const StepImageContaier2 = styled.div`
+  width: 148px;
+  height: 235px;
+  max-width: 200px;
+  img {
+    width: 100%;
+  }
+`
+
+const StepImageContaier3 = styled.div`
+  width: 194px;
+  height: 235px;
+  max-width: 200px;
+  img {
+    width: 100%;
+  }
+`
 
 const Steps = styled.div`
   text-align: left;
@@ -60,17 +99,23 @@ const Step = styled.div`
 const StepsContent = ({ steps }) => (
   <Steps>
     <Step>
-      <Step01 alt="" />
+      <StepImageContaier1>
+        <Step01 alt="" />
+      </StepImageContaier1>
       <h3>{steps.step1Title}</h3>
       <div dangerouslySetInnerHTML={{ __html: steps.step1Text.childMarkdownRemark.html }} />
     </Step>
     <Step>
-      <Step02 alt="" />
+      <StepImageContaier2>
+        <Step02 alt="" />
+      </StepImageContaier2>
       <h3>{steps.step2Title}</h3>
       <div dangerouslySetInnerHTML={{ __html: steps.step2Text.childMarkdownRemark.html }} />
     </Step>
     <Step>
-      <Step03 alt="" />
+      <StepImageContaier3>
+        <Step03 alt="" />
+      </StepImageContaier3>
       <h3>{steps.step3Title}</h3>
       <div dangerouslySetInnerHTML={{ __html: steps.step3Text.childMarkdownRemark.html }} />
     </Step>

@@ -13,10 +13,10 @@ const StyledLink = styled(Link)`
 const StyledFeatureCard = styled.div`
   flex: 1;
   max-width: 450px;
-  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.16);
   text-align: left;
   padding: 10px;
   margin: 20px 0px;
+  background-color: #fff;
 
   img {
     object-fit: contain;
@@ -27,6 +27,10 @@ const StyledFeatureCard = styled.div`
     font-size: 30px;
     font-weight: normal;
     margin: 20px 10px 30px 10px;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.16);
   }
 
   @media (min-width: 700px) {

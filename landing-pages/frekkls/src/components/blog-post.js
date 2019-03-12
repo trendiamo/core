@@ -56,17 +56,27 @@ const BlogPostBase = styled.article`
 
   h1 {
     font-family: Roboto Slab, sans-serif;
-    font-size: 2em;
+    font-size: 30px;
     line-height: 1.3em;
   }
 
   h2 {
-    font-size: 30px;
+    font-size: 20px;
     margin-top: 14px;
   }
 
   a {
     color: inherit;
+  }
+
+  @media (min-width: 600px) {
+    h1 {
+      font-size: 2em;
+    }
+
+    h2 {
+      font-size: 24px;
+    }
   }
 `
 
@@ -75,6 +85,7 @@ const BlogText = styled.div`
     margin-top: 30px;
     font-family: Roboto Slab, sans-serif;
     color: #333;
+    font-size: 16px;
   }
 
   img {
@@ -85,6 +96,10 @@ const BlogText = styled.div`
     font-size: 12px;
     text-transform: uppercase;
     padding-top: 10px;
+  }
+
+  @media (min-width: 700px) {
+    font-size: 20px;
   }
 `
 

@@ -6,9 +6,8 @@ const Button = styled.button.attrs({
   appearance: none;
   border: 0;
   border-radius: 12px;
-  letter-spacing: 0.8px;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   padding: 13px 18px;
   margin: 0 auto;
   outline: none;

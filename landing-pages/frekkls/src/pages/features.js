@@ -89,7 +89,10 @@ export const query = graphql`
       customerJourneySliderHeading
       customerJourneySliderSubHeading
     }
-    customerJourneySliderContent: allContentfulFeaturesCustomerJourneySlide(filter: { node_locale: { eq: $locale } }) {
+    customerJourneySliderContent: allContentfulFeaturesCustomerJourneySlide(
+      sort: { fields: order }
+      filter: { node_locale: { eq: $locale } }
+    ) {
       edges {
         node {
           id
@@ -120,7 +123,10 @@ export const query = graphql`
       bridgeSliderHeading
       bridgeSliderSubHeading
     }
-    bridgeSliderContent: allContentfulFeaturesBridgeSlide(filter: { node_locale: { eq: $locale } }) {
+    bridgeSliderContent: allContentfulFeaturesBridgeSlide(
+      sort: { fields: order }
+      filter: { node_locale: { eq: $locale } }
+    ) {
       edges {
         node {
           id

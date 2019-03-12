@@ -32,7 +32,8 @@ const RecentBlog = styled(({ blogPost, className, locale }) => (
       <Flex>
         <Flex1>
           <h3>{'Blog'}</h3>
-          <p>{blogPost.title}</p>
+          <h2>{blogPost.title}</h2>
+          <p>{blogPost.description.description}</p>
           <Link to={blogPostUrl(blogPost, locale)}>{blogPost.cardCta}</Link>
         </Flex1>
         <Flex1 />
@@ -67,15 +68,20 @@ const RecentBlog = styled(({ blogPost, className, locale }) => (
     text-transform: uppercase;
   }
 
-  p,
+  h2,
   a {
     color: white;
   }
 
-  p {
+  h2 {
     font-size: 40px;
     line-height: 1.05;
-    margin-bottom: 70px;
+    margin-bottom: 30px;
+  }
+
+  p {
+    margin-bottom: 40px;
+    color: white;
   }
 
   a {

@@ -2,32 +2,30 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Container from '../components/container'
-import FeaturesHeader from '../images/features-header'
 import Section from '../components/section'
 
-const AspectRatio = styled.div`
-  height: 0;
+import featuresHeader from '../images/features-header.png'
+
+const FeaturesHeaderContainer = styled.div`
   width: 100%;
   max-width: 886px;
-  padding-bottom: 54.51%;
-  position: relative;
-
-  .gatsby-image-wrapper {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  img {
+    width: 100%;
   }
 `
+
+const FeaturesHeader = styled.img.attrs({
+  src: featuresHeader,
+})``
 
 const FeaturesHero = styled(({ className, featuresHero }) => (
   <Section className={className}>
     <Container>
       <h2>{featuresHero.featuresHeroHeading}</h2>
       <p>{featuresHero.featuresHeroSubHeading.featuresHeroSubHeading}</p>
-      <AspectRatio>
+      <FeaturesHeaderContainer>
         <FeaturesHeader alt="" />
-      </AspectRatio>
+      </FeaturesHeaderContainer>
     </Container>
   </Section>
 ))`

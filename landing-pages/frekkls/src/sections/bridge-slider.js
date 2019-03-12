@@ -265,10 +265,14 @@ const MobileIcon = styled.div`
   }
 `
 
+const StyledSection = styled(Section)`
+  padding-bottom: 0px !important;
+`
+
 const BridgeSlider = ({ bridgeSlider, bridgeSliderContent }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
   return (
-    <Section>
+    <StyledSection>
       <StyledContainer>
         <h3>{bridgeSlider.bridgeSliderHeading}</h3>
         <h2>{bridgeSlider.bridgeSliderSubHeading}</h2>
@@ -294,7 +298,7 @@ const BridgeSlider = ({ bridgeSlider, bridgeSliderContent }) => {
           </Slider>
         </SliderContainer>
       </StyledContainer>
-    </Section>
+    </StyledSection>
   )
 }
 

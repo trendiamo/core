@@ -9,13 +9,13 @@ import { LeftArrow, RightArrow } from '../components/arrows'
 
 const StyledRightArrow = styled(RightArrow)`
   position: absolute;
-  top: 170px;
+  top: 190px;
   left: -190px;
 `
 
 const StyledLeftArrow = styled(LeftArrow)`
   position: absolute;
-  top: 170px;
+  top: 190px;
   left: -260px;
 `
 
@@ -37,7 +37,7 @@ const sliderSettings = {
         slidesToScroll: 1,
         swipeToSlide: true,
         arrows: false,
-        infinite: false,
+        infinite: true,
         dots: true,
       },
     },
@@ -45,9 +45,10 @@ const sliderSettings = {
       breakpoint: 930,
       settings: {
         swipeToSlide: true,
+        arrows: false,
         slidesToShow: 2,
         slidesToScroll: 2,
-        infinite: false,
+        infinite: true,
         dots: true,
       },
     },
@@ -71,6 +72,7 @@ const StyledContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   h3 {
     white-space: nowrap;
   }
@@ -88,6 +90,7 @@ const Portrait = styled.div`
   width: 360px;
   padding: 6px;
   text-align: left;
+  outline: 0;
 
   img {
     width: 100%;
@@ -100,6 +103,14 @@ const Portrait = styled.div`
   h5 {
     font-size: 19px;
     color: #617283;
+  }
+
+  @media (min-width: 600px) {
+    height: 260px;
+  }
+
+  @media (min-width: 930px) {
+    height: auto;
   }
 `
 

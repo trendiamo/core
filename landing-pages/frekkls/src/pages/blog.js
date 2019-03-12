@@ -10,6 +10,10 @@ import Layout from '../components/layout'
 import Section from '../components/section'
 import styled from 'styled-components'
 
+const StyledSection = styled(Section)`
+  background-color: #f2f4f7;
+`
+
 const BlogPageContainer = styled(Container)`
   display: flex;
   flex-direction: row;
@@ -24,7 +28,7 @@ const BlogPageContainer = styled(Container)`
 const BlogPage = ({ className, pageContext, data }) => (
   <Layout className={className} layout={data.layout} locale={pageContext.locale}>
     <BlogHero blogHero={data.blogHero} />
-    <Section>
+    <StyledSection>
       <BlogPageContainer>
         {data.blogs.edges.map((blog, index) => (
           <BlogPostCard
@@ -35,7 +39,7 @@ const BlogPage = ({ className, pageContext, data }) => (
           />
         ))}
       </BlogPageContainer>
-    </Section>
+    </StyledSection>
   </Layout>
 )
 

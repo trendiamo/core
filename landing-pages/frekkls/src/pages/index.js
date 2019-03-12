@@ -2,7 +2,6 @@ import React from 'react'
 import { graphql } from 'gatsby'
 
 import Ads from '../sections/ads'
-import BgWaveGrey from '../images/bg-wave-grey.svg'
 import Buzz from '../sections/buzz'
 import Depth from '../sections/depth'
 
@@ -88,6 +87,9 @@ export const query = graphql`
       edges {
         node {
           title
+          description {
+            description
+          }
           slug
           titleImage {
             fixed(width: 1280) {
