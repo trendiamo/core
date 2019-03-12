@@ -28,6 +28,8 @@ const implFactory = {
   'www.pierre-cardin.de': {
     parseProducts() {
       const products = $$('.product-item', e => {
+        if (!e.querySelector('.price-wrapper .price')) return
+        const id = e.querySelector('.price-box').getAttribute('data-product-id')
         const url = e.querySelector('a').href
         const title = e.querySelector('.product-item-name').innerText
         const displayPrice = e.querySelector('.price-wrapper .price').innerText
@@ -39,7 +41,7 @@ const implFactory = {
         }))
         const picUrl = e.querySelectorAll('.product-image-photo')[0].dataset.src
         return {
-          // id,
+          id,
           url,
           title,
           picUrl,
@@ -50,7 +52,7 @@ const implFactory = {
           currency: 'EUR',
         }
       })
-      return products
+      return products.filter(product => !!product)
     },
   },
   '0.0.0.0': {
