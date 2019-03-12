@@ -4,6 +4,7 @@ import ItemDiv from 'app/content/scripted-chat/components/item-div'
 import { ChatBackground, convertLogs } from 'app/content/scripted-chat/shared'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
+import { timeout } from 'plugin-base'
 
 const ChatLogUiTemplate = ({
   clickChatOption,
@@ -16,6 +17,8 @@ const ChatLogUiTemplate = ({
   touch,
   minHeight,
   goToNextStep,
+  hideAll,
+  setHideAll,
 }) => (
   <Chat onScroll={onScroll} ref={setContentRef} touch={touch}>
     <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
@@ -27,8 +30,10 @@ const ChatLogUiTemplate = ({
           contentRef={contentRef}
           dontScroll
           goToNextStep={goToNextStep}
+          hideAll={hideAll}
           key={index}
           logSection={logSection}
+          setHideAll={setHideAll}
         />
       ))}
     </ChatBackground>
@@ -38,6 +43,7 @@ const ChatLogUiTemplate = ({
 export default compose(
   withState('logs', 'setLogs', []),
   withState('minHeight', 'setMinHeight', 0),
+  withState('hideAll', 'setHideAll', false),
   withHandlers(() => {
     let backgroundRef
     return {
@@ -58,7 +64,13 @@ export default compose(
   }),
   withHandlers({
     initChatLog: ({ step, updateLogs }) => () => {
-      chatLog.init({ data: step, listeners: [updateLogs], hackathon: true })
+      timeout.set(
+        'assessmentNextStep',
+        () => {
+          if (step.logs) chatLog.init({ data: step, listeners: [updateLogs], hackathon: true })
+        },
+        0
+      )
     },
     animateNewOptions: ({ logs, setLogs }) => () => {
       const newOptions = logs[logs.length - 1]
@@ -78,8 +90,19 @@ export default compose(
       initChatLog()
     },
     componentDidUpdate(prevProps) {
-      const { initChatLog, step } = this.props
-      if (prevProps.step !== step) initChatLog()
+      const { initChatLog, step, setHideAll, setLogs } = this.props
+      if (prevProps.step !== step) {
+        setHideAll(true)
+        timeout.set(
+          'assessmentNextStep',
+          () => {
+            setLogs([])
+            initChatLog()
+            setHideAll(false)
+          },
+          800
+        )
+      }
     },
   })
 )(ChatLogUiTemplate)
