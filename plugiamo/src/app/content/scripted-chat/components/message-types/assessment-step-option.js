@@ -45,7 +45,7 @@ const Background = styled.div`
 `
 
 const Box = styled.div`
-  border-radius: 15px;
+  border-radius: 6px;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.11);
   background-color: #fff;
   height: 150px;
@@ -123,9 +123,9 @@ const Box = styled.div`
 
 const Container = styled.div`
   width: 50%;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-bottom: 1rem;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 10px;
 
   svg {
     height: 50px;
@@ -141,7 +141,7 @@ const Content = styled.div`
   left: 0;
   right: 0;
   overflow: hidden;
-  border-radius: 15px;
+  border-radius: 6px;
 
   display: flex;
   flex-direction: column;
@@ -152,7 +152,7 @@ const Content = styled.div`
     `
   &:after {
     content: '';
-    border-radius: 15px;
+    border-radius: 6px;
     position: absolute;
     top: 0;
     left: 0;

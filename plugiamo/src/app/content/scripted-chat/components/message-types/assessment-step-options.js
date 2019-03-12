@@ -7,8 +7,8 @@ const TilesWrapperDiv = styled.div`
   align-content: baseline;
   display: flex;
   flex-wrap: wrap;
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
+  margin-left: -5px;
+  margin-right: -5px;
 `
 
 const AssessmentStepOptions = ({ onClick, options, hideAll }) => (
