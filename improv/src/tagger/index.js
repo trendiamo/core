@@ -151,6 +151,11 @@ export default compose(
     50: ({ onPressTagKey }) => () => onPressTagKey(2),
     51: ({ onPressTagKey }) => () => onPressTagKey(3),
     52: ({ onPressTagKey }) => () => onPressTagKey(4),
+    //  numpad keys
+    97: ({ onPressTagKey }) => () => onPressTagKey(1),
+    98: ({ onPressTagKey }) => () => onPressTagKey(2),
+    99: ({ onPressTagKey }) => () => onPressTagKey(3),
+    100: ({ onPressTagKey }) => () => onPressTagKey(4),
   }),
   lifecycle({
     async componentDidMount() {
