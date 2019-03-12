@@ -52,8 +52,8 @@ const ChatOption = ({ chatOption, onClick, animate, hide, clicked }) => (
 export default compose(
   withState('clicked', 'setClicked', false),
   withHandlers({
-    onClick: ({ chatOption, onClick, hide, clicked, setClicked }) => () => {
-      if (!clicked && !hide) {
+    onClick: ({ chatOption, onClick, hide, clicked, setClicked, animate }) => () => {
+      if (!clicked && !hide && animate) {
         setClicked(true)
         onClick(chatOption)
       }

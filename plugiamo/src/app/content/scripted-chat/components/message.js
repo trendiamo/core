@@ -29,10 +29,11 @@ const MessageContainer = styled.div`
     opacity: 0;
     transform: translate(-20px, 0);
   `}
+  ${({ clickable }) => !clickable && 'pointer-events: none;'}
 `
 
-const ChatMessageTemplate = ({ onMessageClick, data, type, show, hideAll, onClick }) => (
-  <MessageContainer show={type === 'assessmentStepOptions' ? show : !hideAll && show} type={type}>
+const ChatMessageTemplate = ({ onMessageClick, data, type, show, hideAll, onClick, clickable }) => (
+  <MessageContainer clickable={clickable} show={type === 'assessmentStepOptions' ? show : !hideAll && show} type={type}>
     {type === 'text' ? (
       <TextMessage dangerouslySetInnerHTML={{ __html: emojify(snarkdown(data)) }} />
     ) : type === 'videoUrl' ? (
@@ -53,6 +54,7 @@ const ChatMessageTemplate = ({ onMessageClick, data, type, show, hideAll, onClic
 
 const ChatMessage = compose(
   withState('show', 'setShow', false),
+  withState('clickable', 'setClickable', false),
   withHandlers({
     getDataWithoutType: ({ log }) => () => {
       const text = log.message.text
@@ -73,10 +75,14 @@ const ChatMessage = compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { setShow, index } = this.props
+      const { setShow, index, setClickable } = this.props
+      const delay = index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER)
       setTimeout(() => {
         setShow(true)
-      }, index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER))
+        setTimeout(() => {
+          setClickable(true)
+        }, 300)
+      }, delay)
     },
   })
 )(ChatMessageTemplate)
