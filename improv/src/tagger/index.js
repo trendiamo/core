@@ -56,7 +56,7 @@ const tagsMatrix = [
   [{ key: 'highlight', name: 'Highlight' }],
 ]
 
-const Tagger = ({ currentProduct, onClickTag, onCopyResult, tagGroupIndex }) => (
+const Tagger = ({ currentProduct, onClickTag, onCopyResult, nextScreen, prevScreen, tagGroupIndex }) => (
   <Flex>
     <H1>{'Tag all these products, yo.'}</H1>
     <ProductAndTags>
@@ -67,7 +67,9 @@ const Tagger = ({ currentProduct, onClickTag, onCopyResult, tagGroupIndex }) => 
       </ProductContainer>
       <TagsContainer
         currentProduct={currentProduct}
+        nextScreen={nextScreen}
         onClickTag={onClickTag}
+        prevScreen={prevScreen}
         tagGroupIndex={tagGroupIndex}
         tags={tagsMatrix[tagGroupIndex]}
         tagsLength={tagsMatrix.length}
