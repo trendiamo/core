@@ -37,7 +37,7 @@ const ImageContainer = styled.div`
   }
 
   .ads-desktop {
-    box-shadow: 0px 4px 15px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 9px 26px 0 rgba(0, 0, 0, 0.13);
     border-radius: 3px 3px 0 0;
   }
 

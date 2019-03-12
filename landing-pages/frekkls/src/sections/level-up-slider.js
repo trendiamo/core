@@ -133,13 +133,6 @@ const SliderContainer = styled.div`
   }
 `
 
-const SliderLabelContainer = styled.div`
-  align-self: center;
-  @media (min-width: 900px) {
-    display: none;
-  }
-`
-
 const StyledContainer = styled(Container)`
   text-align: center;
   h1 {
@@ -191,7 +184,7 @@ const Card = styled.div`
   text-align: left;
   padding: 30px;
 
-  box-shadow: 3px 7px 26px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 3px 9px 26px 0 rgba(0, 0, 0, 0.13);
   border-radius: 12px;
   position: relative;
   background: #fff;
@@ -271,9 +264,6 @@ const LevelUpSlider = ({ levelUp, levelUpSliderContent }) => {
         <h2>{levelUp.levelUpHeading}</h2>
         <h3>{levelUp.levelUpSubHeading}</h3>
         <SliderContainer>
-          <SliderLabelContainer>
-            <SlideLabel isSelected>{getSlideName(levelUpSliderContent, currentSlideIndex)}</SlideLabel>
-          </SliderLabelContainer>
           <Slider {...sliderSettings(levelUpSliderContent, setCurrentSlideIndex, currentSlideIndex)}>
             {levelUpSliderContent.edges.map(slide => (
               <div className="slide-container" key={slide.node.id}>
