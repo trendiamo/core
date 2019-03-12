@@ -1,3 +1,5 @@
+import Button from 'shared/button'
+import NavigationButtons from './navigation-buttons'
 import React from 'react'
 import Spinner from 'shared/loading-spinner'
 import styled from 'styled-components'
@@ -56,6 +58,12 @@ const tagsMatrix = [
   [{ key: 'highlight', name: 'Highlight' }],
 ]
 
+const ButtonsContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+`
+
 const Tagger = ({ currentProduct, onClickTag, onCopyResult, nextScreen, prevScreen, tagGroupIndex }) => (
   <Flex>
     <H1>{'Tag all these products, yo.'}</H1>
@@ -76,9 +84,12 @@ const Tagger = ({ currentProduct, onClickTag, onCopyResult, nextScreen, prevScre
       />
     </ProductAndTags>
     <HelpText>{'Press the number keys to set/unset tags, then use j, k to navigate.'}</HelpText>
-    <button onClick={onCopyResult} type="button">
-      {'Update Products'}
-    </button>
+    <ButtonsContainer>
+      <NavigationButtons nextScreen={nextScreen} prevScreen={prevScreen} />
+      <Button onClick={onCopyResult} type="button">
+        {'Update Products'}
+      </Button>
+    </ButtonsContainer>
   </Flex>
 )
 
