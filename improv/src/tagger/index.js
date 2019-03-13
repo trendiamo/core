@@ -1,5 +1,6 @@
 import Button from 'shared/button'
 import NavigationButtons from './navigation-buttons'
+import ProductsTable from './products-table'
 import React from 'react'
 import Spinner from 'shared/loading-spinner'
 import styled from 'styled-components'
@@ -22,6 +23,7 @@ const ProductAndTags = styled.div`
   justify-content: center;
   margin-left: -0.5rem;
   margin-right: -0.5rem;
+  width: 100%;
 `
 
 const ProductContainer = styled.div`
@@ -64,10 +66,29 @@ const ButtonsContainer = styled.div`
   justify-content: space-evenly;
 `
 
-const Tagger = ({ currentProduct, onClickTag, onCopyResult, nextScreen, prevScreen, tagGroupIndex }) => (
+const Tagger = ({
+  currentProduct,
+  onClickTag,
+  onCopyResult,
+  nextScreen,
+  prevScreen,
+  tagGroupIndex,
+  products,
+  setProductIndex,
+  setTagGroupIndex,
+  productIndex,
+  changedProducts,
+}) => (
   <Flex>
     <H1>{'Tag all these products, yo.'}</H1>
     <ProductAndTags>
+      <ProductsTable
+        changedProducts={changedProducts}
+        productIndex={productIndex}
+        products={products}
+        setProductIndex={setProductIndex}
+        setTagGroupIndex={setTagGroupIndex}
+      />
       <ProductContainer>
         <Img alt="" src={currentProduct.images[0].src} />
         <p>{currentProduct.title}</p>
@@ -99,6 +120,7 @@ export default compose(
   withState('tagGroupIndex', 'setTagGroupIndex', 0),
   withState('isLoading', 'setIsLoading', true),
   withState('client', 'setClient', false),
+  withState('changedProducts', 'setChangedProducts', []),
   withHandlers({
     nextScreen: ({ productIndex, products, setProductIndex, tagGroupIndex, setTagGroupIndex }) => () => {
       if (tagGroupIndex < tagsMatrix.length - 1) return setTagGroupIndex(tagGroupIndex + 1)
@@ -132,10 +154,21 @@ export default compose(
     currentProduct: products && products[productIndex],
   })),
   withHandlers({
-    toggleTag: ({ currentProduct, products, setProducts, changeProduct }) => tag => {
+    toggleTag: ({
+      changedProducts,
+      setChangedProducts,
+      currentProduct,
+      products,
+      setProducts,
+      changeProduct,
+    }) => tag => {
       const product = products.find(product => product.url === currentProduct.url)
       const productIndex = products.findIndex(product => product.url === currentProduct.url)
       products[productIndex] = changeProduct({ product, tag })
+      changedProducts[productIndex]
+        ? (changedProducts[productIndex][tag] = !changedProducts[productIndex][tag])
+        : (changedProducts[productIndex] = { [tag]: !!tag })
+      setChangedProducts(changedProducts)
       setProducts(products)
     },
   }),
@@ -145,14 +178,16 @@ export default compose(
       const tag = tagsMatrix[tagGroupIndex][Number(tagKey) - 1]
       toggleTag(tag)
     },
-    onCopyResult: ({ client, products, setClient, setIsLoading }) => async () => {
+    onCopyResult: ({ setChangedProducts, client, products, setClient, setIsLoading }) => async () => {
       copyToClipboard(JSON.stringify({ products }))
       setIsLoading(true)
       if (client) {
         await updateClientRecords(client._id, { products })
+        setChangedProducts([])
       } else {
         const json = await createClientRecord({ hostname: location.hostname, products })
         setClient(json)
+        setChangedProducts([])
       }
       setIsLoading(false)
     },
