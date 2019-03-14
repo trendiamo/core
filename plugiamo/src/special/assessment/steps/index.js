@@ -14,10 +14,11 @@ const Steps = ({
   handleScroll,
   setContentRef,
   touch,
+  depth,
 }) => (
   <ScrollLock>
     <Cover hackathon header={currentStep.header} minimized={coverMinimized} progressBar steps={steps} />
-    <StepsProgressBar progress={((step.index || 0) / Math.max(steps.length - 1, 1)) * 100} />
+    <StepsProgressBar progress={((step.index || 0) / (depth + 1)) * 100} />
     <ChatLogUi
       contentRef={getContentRef}
       coverMinimized={coverMinimized}
