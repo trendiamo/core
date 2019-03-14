@@ -24,6 +24,7 @@ const Plugin = ({
   launcherType,
   stepIndex,
   depth,
+  tags,
 }) => (
   <AppBase
     Component={
@@ -36,6 +37,7 @@ const Plugin = ({
         step={step}
         stepIndex={stepIndex}
         steps={steps}
+        tags={tags}
       />
     }
     data={module}
@@ -60,6 +62,7 @@ export default compose(
   withState('stepIndex', 'setStepIndex', 0),
   withState('assessmentDepth', 'setAssessmentDepth', 0),
   withState('currentStepKey', 'setCurrentStepKey', 'root'),
+  withState('tags', 'setTags', []),
   withProps(({ trigger }) => ({
     module: trigger && trigger.module,
   })),
@@ -114,6 +117,7 @@ export default compose(
       pluginState,
       setStepIndex,
       setAssessmentDepth,
+      setTags,
     }) => () => {
       if (module.flowType !== 'ht-chat' && module.flowType !== 'ht-assessment') return
       mixpanel.track('Toggled Plugin', {
@@ -135,13 +139,23 @@ export default compose(
         )
       }
       // reset assessment on plugin close
+      setTags([])
       setCurrentStepKey('root')
       setStepIndex(0)
       setAssessmentDepth(0)
       return setShowingContent(!showingContent)
     },
-    goToNextStep: ({ steps, setAssessmentDepth, setCurrentStepKey, setStepIndex, stepIndex }) => step => {
+    goToNextStep: ({
+      steps,
+      setAssessmentDepth,
+      setCurrentStepKey,
+      setStepIndex,
+      stepIndex,
+      setTags,
+      tags,
+    }) => step => {
       setStepIndex(stepIndex + 1)
+      setTags([...tags, step.title])
       if (step.endNode) return setCurrentStepKey('store')
       // if depth declared in the step, set depth. Used in progress bar
       if (steps[step.title].depth) setAssessmentDepth(steps[step.title].depth)

@@ -1,3 +1,4 @@
+import assessProducts from './assess-products'
 import ChatLogUi from './chat-log-ui'
 import Cover from 'app/content/scripted-chat/components/cover'
 import Modal from './modal'
@@ -50,10 +51,9 @@ const Store = compose(
       })
         .then(response => response.json())
         .then(results => {
-          const { setResults } = _this.props
+          const { setResults, tags } = _this.props
           const client = results.find(client => client.hostname === location.hostname)
-          // TODO: inference system || setResults(inferenceSystem(client.products))
-          setResults(client.products)
+          setResults(assessProducts(client.products, tags))
         })
     },
   })
