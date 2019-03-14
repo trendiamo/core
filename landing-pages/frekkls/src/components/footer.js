@@ -96,7 +96,6 @@ const FooterContent = ({ layout, locale }) => (
     <FooterSection className="footer-links" flex="2">
       <FooterColumn>
         <Link to={`${locales[locale].path}/about`}>{layout.about}</Link>
-        <Link to={`${locales[locale].path}/pricing`}>{layout.pricing}</Link>
         <Link to={`${locales[locale].path}/blog`}>{layout.blog}</Link>
         <Link to={`${locales[locale].path}/about#jobs`}>{layout.careers}</Link>
       </FooterColumn>
