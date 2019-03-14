@@ -17,6 +17,7 @@ const Base = ({
   goToNextStep,
   setShowingLauncher,
   setShowingContent,
+  tags,
 }) => (
   <Container contentRef={getContentRef}>
     {currentStep.type === 'store' ? (
@@ -28,6 +29,7 @@ const Base = ({
         setShowingContent={setShowingContent}
         setShowingLauncher={setShowingLauncher}
         step={step}
+        tags={tags}
       />
     ) : (
       <Steps
