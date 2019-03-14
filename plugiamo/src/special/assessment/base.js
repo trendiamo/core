@@ -5,6 +5,7 @@ import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 
 const Base = ({
+  depth,
   handleScroll,
   setContentRef,
   step,
@@ -32,6 +33,7 @@ const Base = ({
       <Steps
         coverMinimized={coverMinimized}
         currentStep={currentStep}
+        depth={depth}
         getContentRef={getContentRef}
         goToNextStep={goToNextStep}
         handleScroll={handleScroll}

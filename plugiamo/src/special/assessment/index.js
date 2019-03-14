@@ -22,15 +22,19 @@ const Plugin = ({
   setShowingContent,
   showingContent,
   launcherType,
+  stepIndex,
+  depth,
 }) => (
   <AppBase
     Component={
       <Base
+        depth={depth}
         goToNextStep={goToNextStep}
         setPluginState={setPluginState}
         setShowingContent={setShowingContent}
         setShowingLauncher={setShowingLauncher}
         step={step}
+        stepIndex={stepIndex}
         steps={steps}
       />
     }
@@ -54,12 +58,15 @@ export default compose(
     ),
   })),
   withState('stepIndex', 'setStepIndex', 0),
+  withState('assessmentDepth', 'setAssessmentDepth', 0),
+  withState('currentStepKey', 'setCurrentStepKey', 'root'),
   withProps(({ trigger }) => ({
     module: trigger && trigger.module,
   })),
-  withProps(({ module, stepIndex }) => ({
-    step: module && { ...module.steps[stepIndex], index: stepIndex },
+  withProps(({ assessmentDepth, module, currentStepKey, stepIndex }) => ({
+    step: module && { ...module.steps[currentStepKey], index: stepIndex },
     steps: module && module.steps,
+    depth: assessmentDepth,
   })),
   branch(({ module }) => !module, renderNothing),
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
@@ -99,12 +106,14 @@ export default compose(
   })),
   withHandlers({
     onToggleContent: ({
-      setStepIndex,
+      setCurrentStepKey,
       module,
       setIsUnmounting,
       setShowingContent,
       showingContent,
       pluginState,
+      setStepIndex,
+      setAssessmentDepth,
     }) => () => {
       if (module.flowType !== 'ht-chat' && module.flowType !== 'ht-assessment') return
       mixpanel.track('Toggled Plugin', {
@@ -126,13 +135,17 @@ export default compose(
         )
       }
       // reset assessment on plugin close
+      setCurrentStepKey('root')
       setStepIndex(0)
+      setAssessmentDepth(0)
       return setShowingContent(!showingContent)
     },
-    goToNextStep: ({ stepIndex, setStepIndex, steps }) => () => {
-      if (stepIndex >= steps.length - 1) return
+    goToNextStep: ({ steps, setAssessmentDepth, setCurrentStepKey, setStepIndex, stepIndex }) => step => {
       setStepIndex(stepIndex + 1)
-      // TODO: Scoring system based on option
+      if (step.endNode) return setCurrentStepKey('store')
+      // if depth declared in the step, set depth. Used in progress bar
+      if (steps[step.title].depth) setAssessmentDepth(steps[step.title].depth)
+      setCurrentStepKey(step.title)
     },
   }),
   withHotkeys({
