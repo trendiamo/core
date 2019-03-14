@@ -56,7 +56,7 @@ export const query = graphql`
         }
       }
     }
-    testimonial: contentfulTestimonial(author: { eq: "Luca Blight" }, node_locale: { eq: $locale }) {
+    testimonial: contentfulTestimonial(author: { eq: "Victoria Schlüter" }, node_locale: { eq: $locale }) {
       author
       authorDescription
       text {

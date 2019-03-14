@@ -9,6 +9,7 @@ import { FacebookLink, InstagramLink, TwitterLink, YoutubeLink } from './social-
 
 const MetaImg = styled.img`
   margin-top: 10px;
+  object-fit: cover;
   float: left;
   width: 60px;
   height: 60px;
@@ -48,6 +49,7 @@ const TitleImgMeta = styled.div`
 
 const BlogPostBase = styled.article`
   width: 70%;
+  max-width: 800px;
   margin: 0 auto;
   text-align: left;
   padding-bottom: 3rem;

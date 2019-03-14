@@ -106,7 +106,7 @@ const Portrait = styled.div`
   }
 
   @media (min-width: 600px) {
-    height: 260px;
+    height: 200px;
   }
 
   @media (min-width: 930px) {

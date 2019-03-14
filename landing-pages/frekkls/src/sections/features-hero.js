@@ -41,13 +41,8 @@ const FeaturesHero = styled(({ className, featuresHero }) => (
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: calc(100vh - 96px);
     padding-top: 3rem;
     padding-bottom: 0;
-
-    @media (min-width: 900px) {
-      min-height: calc(100vh - 120px);
-    }
   }
 
   h2 {

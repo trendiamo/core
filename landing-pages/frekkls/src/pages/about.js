@@ -2,7 +2,6 @@ import React from 'react'
 import { graphql } from 'gatsby'
 
 import AboutImg from '../sections/about-img'
-import AboutInvestors from '../sections/about-investors'
 import AboutJobs from '../sections/about-jobs'
 import AboutStory from '../sections/about-story'
 import AboutTeam from '../sections/about-team'
@@ -15,7 +14,6 @@ const AboutPage = ({ className, pageContext, data }) => (
     <AboutText aboutText={data.aboutText} />
     <AboutTeam aboutPortraits={data.aboutPortraits} teamMembers={data.teamMembers} />
     <AboutStory aboutStory={data.aboutStory} layout={data.layout} />
-    <AboutInvestors aboutInvestors={data.aboutInvestors} investors={data.investors} />
     <AboutJobs aboutJobs={data.aboutJobs} jobOpenings={data.jobOpenings} layout={data.layout} />
   </Layout>
 )
