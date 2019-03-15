@@ -1,35 +1,27 @@
-import Button from 'shared/button'
-import NavigationButtons from './navigation-buttons'
-import ProductsTable from './products-table'
+import Buttons from './components/buttons'
+import ProductsAndTags from './components/products-and-tags'
 import React from 'react'
 import Spinner from 'shared/loading-spinner'
 import styled from 'styled-components'
-import TagsContainer from './tags-container'
 import withHotkeys from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { copyToClipboard, createClientRecord, getClient, parseProducts, updateClientRecords } from 'utils'
 
-const jKey = 74 // ascii code for j key
-const kKey = 75 // ascii code for k key
+const keyboard = {
+  a: 65,
+  d: 68,
+  j: 74,
+  k: 75,
+  up: 38,
+  down: 40,
+  s: 83,
+  w: 87,
+}
 
 const H1 = styled.h1`
   width: 100%;
   margin: 0 0 1rem 0;
-`
-
-const ProductAndTags = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
-  width: 100%;
-`
-
-const ProductContainer = styled.div`
-  flex: 2;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+  text-align: center;
 `
 
 const HelpText = styled.div`
@@ -37,13 +29,6 @@ const HelpText = styled.div`
   font-size: 14px;
   text-align: center;
   margin-bottom: 1rem;
-`
-
-const Img = styled.img`
-  width: 100%;
-  min-width: 200px;
-  max-height: 200px;
-  object-fit: cover;
 `
 
 const Flex = styled.div`
@@ -60,57 +45,12 @@ const tagsMatrix = [
   [{ key: 'highlight', name: 'Highlight' }],
 ]
 
-const ButtonsContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-`
-
-const Tagger = ({
-  currentProduct,
-  onClickTag,
-  onCopyResult,
-  nextScreen,
-  prevScreen,
-  tagGroupIndex,
-  products,
-  setProductIndex,
-  setTagGroupIndex,
-  productIndex,
-  changedProducts,
-}) => (
+const Tagger = ({ onCopyResult, nextScreen, prevScreen, ...props }) => (
   <Flex>
-    <H1>{'Tag all these products, yo.'}</H1>
-    <ProductAndTags>
-      <ProductsTable
-        changedProducts={changedProducts}
-        productIndex={productIndex}
-        products={products}
-        setProductIndex={setProductIndex}
-        setTagGroupIndex={setTagGroupIndex}
-      />
-      <ProductContainer>
-        <Img alt="" src={currentProduct.images[0].src} />
-        <p>{currentProduct.title}</p>
-        <p>{currentProduct.displayPrice}</p>
-      </ProductContainer>
-      <TagsContainer
-        currentProduct={currentProduct}
-        nextScreen={nextScreen}
-        onClickTag={onClickTag}
-        prevScreen={prevScreen}
-        tagGroupIndex={tagGroupIndex}
-        tags={tagsMatrix[tagGroupIndex]}
-        tagsLength={tagsMatrix.length}
-      />
-    </ProductAndTags>
-    <HelpText>{'Press the number keys to set/unset tags, then use j, k to navigate.'}</HelpText>
-    <ButtonsContainer>
-      <NavigationButtons nextScreen={nextScreen} prevScreen={prevScreen} />
-      <Button onClick={onCopyResult} type="button">
-        {'Update Products'}
-      </Button>
-    </ButtonsContainer>
+    <H1>{'Products Tagger'}</H1>
+    <ProductsAndTags nextScreen={nextScreen} prevScreen={prevScreen} tagsMatrix={tagsMatrix} {...props} />
+    <HelpText>{'Hotkeys: 1-9: tagging; W|S: navigate products; A|D: navigate tabs'}</HelpText>
+    <Buttons nextScreen={nextScreen} onCopyResult={onCopyResult} prevScreen={prevScreen} />
   </Flex>
 )
 
@@ -121,62 +61,65 @@ export default compose(
   withState('isLoading', 'setIsLoading', true),
   withState('client', 'setClient', false),
   withState('changedProducts', 'setChangedProducts', []),
-  withHandlers({
-    nextScreen: ({ productIndex, products, setProductIndex, tagGroupIndex, setTagGroupIndex }) => () => {
-      if (tagGroupIndex < tagsMatrix.length - 1) return setTagGroupIndex(tagGroupIndex + 1)
-      if (productIndex < products.length - 1) {
-        setTagGroupIndex(0)
-        setProductIndex(productIndex + 1)
-      }
-    },
-    prevScreen: ({ productIndex, setProductIndex, tagGroupIndex, setTagGroupIndex }) => () => {
-      if (tagGroupIndex > 0) return setTagGroupIndex(tagGroupIndex - 1)
-      if (productIndex > 0) {
-        setTagGroupIndex(tagsMatrix.length - 1)
-        setProductIndex(productIndex - 1)
-      }
-    },
-    changeProduct: () => ({ tag, product }) => {
-      const tagIsSimple = typeof tag === 'string'
-      if (!tagIsSimple) {
-        product[tag.key] = !product[tag.key]
-        return product
-      }
-      if (!product.tags) {
-        product.tags = { [tag]: true }
-      } else {
-        !product.tags[tag] ? (product.tags[tag] = true) : (product.tags[tag] = !product.tags[tag])
-      }
-      return product
-    },
-  }),
+  withState('multipleSelect', 'setMultipleSelect', []),
   withProps(({ productIndex, products }) => ({
     currentProduct: products && products[productIndex],
   })),
   withHandlers({
-    toggleTag: ({
-      changedProducts,
-      setChangedProducts,
-      currentProduct,
-      products,
-      setProducts,
-      changeProduct,
-    }) => tag => {
-      const product = products.find(product => product.url === currentProduct.url)
-      const productIndex = products.findIndex(product => product.url === currentProduct.url)
-      products[productIndex] = changeProduct({ product, tag })
-      changedProducts[productIndex]
-        ? (changedProducts[productIndex][tag] = !changedProducts[productIndex][tag])
-        : (changedProducts[productIndex] = { [tag]: !!tag })
+    nextScreen: ({ tagGroupIndex, setTagGroupIndex }) => () => {
+      if (tagGroupIndex < tagsMatrix.length - 1) return setTagGroupIndex(tagGroupIndex + 1)
+    },
+    prevScreen: ({ tagGroupIndex, setTagGroupIndex }) => () => {
+      if (tagGroupIndex > 0) return setTagGroupIndex(tagGroupIndex - 1)
+    },
+    changeProduct: ({ productIndex, products }) => ({ tag, product, index }) => {
+      const tagIsSimple = typeof tag === 'string'
+      const cancelOut = index === undefined ? true : index <= productIndex
+      const currentProduct = products[productIndex]
+      let currentValue = false
+      if (tagIsSimple) {
+        currentValue = currentProduct.tags ? !!currentProduct.tags[tag] : false
+      } else {
+        currentValue = currentProduct ? !!currentProduct[tag.key] : false
+      }
+      const value = !cancelOut ? currentValue : !currentValue
+      if (tagIsSimple) {
+        if (!product.tags) {
+          product.tags = { [tag]: value }
+        } else {
+          product.tags[tag] = value
+        }
+      } else {
+        product[tag.key] = value
+      }
+      return product
+    },
+  }),
+  withHandlers({
+    toggleTag: ({ changedProducts, setChangedProducts, products, setProducts, changeProduct, productIndex }) => ({
+      tag,
+      index,
+    }) => {
+      const currentIndex = index !== undefined ? index : productIndex
+      const productToTag = products[currentIndex]
+      products[currentIndex] = changeProduct({ product: productToTag, tag, index })
+      changedProducts[currentIndex]
+        ? (changedProducts[currentIndex][tag] = !changedProducts[currentIndex][tag])
+        : (changedProducts[currentIndex] = { [tag]: !!tag })
       setChangedProducts(changedProducts)
       setProducts(products)
     },
   }),
   withHandlers({
-    onClickTag: ({ toggleTag }) => toggleTag,
-    onPressTagKey: ({ toggleTag, tagGroupIndex }) => tagKey => {
+    onPressTagKey: ({ toggleTag, tagGroupIndex, multipleSelect }) => tagKey => {
       const tag = tagsMatrix[tagGroupIndex][Number(tagKey) - 1]
-      toggleTag(tag)
+      if (multipleSelect.length > 0) {
+        multipleSelect.map(index => {
+          toggleTag({ tag, index })
+        })
+        return
+      }
+      toggleTag({ tag })
     },
     onCopyResult: ({ setChangedProducts, client, products, setClient, setIsLoading }) => async () => {
       copyToClipboard(JSON.stringify({ products }))
@@ -191,10 +134,59 @@ export default compose(
       }
       setIsLoading(false)
     },
+    goToProduct: ({ setProductIndex, productIndex, products, setMultipleSelect }) => index => {
+      let newIndex = index
+      setMultipleSelect([])
+      if (index === 'next') {
+        newIndex = Math.min(products.length - 1, productIndex + 1)
+      } else if (index === 'prev') {
+        newIndex = Math.max(0, productIndex - 1)
+      }
+      setProductIndex(newIndex)
+    },
+    selectMultiple: ({ setMultipleSelect, multipleSelect, productIndex, setProductIndex, products }) => ({
+      index,
+      bulk,
+    }) => {
+      if (bulk) {
+        const array = []
+        for (let i = Math.min(productIndex, index); i <= Math.max(productIndex, index); i++) {
+          array.push(i)
+        }
+        return setMultipleSelect(array)
+      }
+      const indexOfSelect = multipleSelect.indexOf(index)
+      if (indexOfSelect !== -1) {
+        if (indexOfSelect === 0 && products.length > index + 1) {
+          setProductIndex(index + 1)
+        }
+        multipleSelect.splice(indexOfSelect, 1)
+        return setMultipleSelect(multipleSelect)
+      }
+      setMultipleSelect([...new Set([...multipleSelect, index])])
+    },
   }),
   withHotkeys({
-    [jKey]: ({ nextScreen }) => nextScreen,
-    [kKey]: ({ prevScreen }) => prevScreen,
+    [keyboard.d]: ({ nextScreen }) => nextScreen,
+    [keyboard.a]: ({ prevScreen }) => prevScreen,
+
+    [keyboard.w]: ({ goToProduct, selectMultiple, multipleSelect, productIndex }) => event => {
+      if (event.shiftKey) {
+        const index = multipleSelect.length === 0 ? productIndex - 1 : multipleSelect[0] - 1
+        selectMultiple({ index, bulk: true })
+        return
+      }
+      goToProduct('prev', true)
+    },
+    [keyboard.s]: ({ goToProduct, selectMultiple, multipleSelect, productIndex }) => event => {
+      if (event.shiftKey) {
+        const index = multipleSelect.length === 0 ? productIndex + 1 : multipleSelect[multipleSelect.length - 1] + 1
+        selectMultiple({ index, bulk: true })
+        return
+      }
+      goToProduct('next', true)
+    },
+
     49: ({ onPressTagKey }) => () => onPressTagKey(1),
     50: ({ onPressTagKey }) => () => onPressTagKey(2),
     51: ({ onPressTagKey }) => () => onPressTagKey(3),
