@@ -48,7 +48,7 @@ const TitleImgMeta = styled.div`
 `
 
 const BlogPostBase = styled.article`
-  width: 70%;
+  width: 90%;
   max-width: 800px;
   margin: 0 auto;
   text-align: left;
@@ -72,6 +72,7 @@ const BlogPostBase = styled.article`
   }
 
   @media (min-width: 600px) {
+    width: 70%;
     h1 {
       font-size: 2em;
     }

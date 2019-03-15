@@ -1,5 +1,6 @@
 .tingle-modal__close {
-  font-family: Roboto,sans-serif;
+  font-family: Roboto, sans-serif;
+  background-color: black !important;
 }
 
 .tingle-modal__closeIcon,
@@ -7,8 +8,15 @@
   vertical-align: top;
 }
 
+.tingle-modal__closeLabel {
+  display: none !important;
+}
+
 .tingle-modal__closeIcon {
   font-size: 2.4rem;
+  position: absolute;
+  right: 10px;
+  top: 4px;
 }
 
 .tingle-modal__closeLabel {

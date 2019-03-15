@@ -9,13 +9,13 @@ import { LeftArrow, RightArrow } from '../components/arrows'
 
 const StyledRightArrow = styled(RightArrow)`
   position: absolute;
-  top: 190px;
+  top: 240px;
   left: -190px;
 `
 
 const StyledLeftArrow = styled(LeftArrow)`
   position: absolute;
-  top: 190px;
+  top: 240px;
   left: -260px;
 `
 
@@ -104,9 +104,14 @@ const Portrait = styled.div`
     font-size: 19px;
     color: #617283;
   }
+  p {
+    margin-top: 20px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.7);
+  }
 
   @media (min-width: 600px) {
-    height: 200px;
+    height: 260px;
   }
 
   @media (min-width: 930px) {
@@ -125,6 +130,7 @@ const AboutTeam = ({ aboutPortraits, teamMembers }) => (
               <img alt="" src={e.node.profilePicture.fixed.src} />
               <h4>{e.node.profileName}</h4>
               <h5>{e.node.jobTitle}</h5>
+              <p>{e.node.profileDescription}</p>
             </Portrait>
           ))}
         </Slider>

@@ -6,13 +6,20 @@ import Section from '../components/section'
 
 const StyledContainer = styled(Container)`
   display: flex;
+  align-items: center;
 `
 
 const ImageContainer = styled.div`
-  width: 1200px;
+  width: 160%;
   display: flex;
+  flex-direction: column;
 
   img {
+    width: 100%;
+    object-fit: contain;
+  }
+
+  @media (min-width: 900px) {
     width: 100%;
   }
 `
