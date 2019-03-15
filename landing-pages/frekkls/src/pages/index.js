@@ -43,7 +43,7 @@ export const query = graphql`
         }
       }
     }
-    clients: allContentfulClient(filter: { node_locale: { eq: "en-US" } }) {
+    clients: allContentfulClient(sort: { fields: order }, filter: { node_locale: { eq: "en-US" } }) {
       edges {
         node {
           name

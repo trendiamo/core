@@ -155,7 +155,7 @@ export const query = graphql`
         text
       }
     }
-    clients: allContentfulClient(filter: { node_locale: { eq: "en-US" } }) {
+    clients: allContentfulClient(sort: { fields: order }, filter: { node_locale: { eq: "en-US" } }) {
       edges {
         node {
           name
