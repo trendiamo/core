@@ -56,13 +56,28 @@ const ImageContainer = styled.div`
   }
 `
 
+const AdsMobileContainer = styled.div`
+  display: block;
+  @media (min-width: 900px) {
+    display: none;
+  }
+`
+
+const AdsDesktopContainer = styled.div`
+  display: none;
+  @media (min-width: 900px) {
+    display: block;
+  }
+`
+
 const ImageAndButton = ({ ads }) => (
   <ImageContainer>
-    {window.innerWidth < 900 ? (
+    <AdsMobileContainer>
       <AdsMobile alt="Ad preview" className="ads-mobile" />
-    ) : (
+    </AdsMobileContainer>
+    <AdsDesktopContainer>
       <AdsDesktop alt="Ad preview" className="ads-desktop" />
-    )}
+    </AdsDesktopContainer>
     <Button>{ads.adsCta}</Button>
   </ImageContainer>
 )
