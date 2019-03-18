@@ -56,11 +56,12 @@ const ImageContainer = styled.div`
     z-index: 11;
     transition: all 0.4s ease-in-out;
   }
+  ${({ hide }) => hide && 'opacity: 0;'}
   transition: opacity 0.4s ease-in-out;
 `
 
 const Background = ({ minimized, header, config, hide }) => (
-  <ImageContainer header={header} minimized={minimized} style={hide && { opacity: 0 }}>
+  <ImageContainer header={header} hide={hide} minimized={minimized}>
     <CoverAnimation config={config} minimized={minimized} src={header.animationUrl || header.imageUrl} />
     <CoverImage image={imgixUrl(header.imageUrl, { fit: 'crop', w: 160, h: 90 })} minimized={minimized} />
   </ImageContainer>
