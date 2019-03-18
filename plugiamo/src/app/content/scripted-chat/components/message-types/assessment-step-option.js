@@ -178,9 +178,9 @@ const TileDiv = ({ title, imageUrl, handleClick, isClicked, hideAll, highlight }
 const Tile = compose(
   withState('isClicked', 'setIsClicked', false),
   withHandlers({
-    handleClick: ({ setIsClicked, hideAll, onClick }) => () => {
+    handleClick: ({ isClicked, setIsClicked, hideAll, onClick }) => () => {
       if (!hideAll) {
-        setIsClicked(true)
+        setIsClicked(!isClicked)
         onClick()
       }
     },
@@ -188,12 +188,6 @@ const Tile = compose(
   lifecycle({
     componentWillUnmount() {
       timeout.clear('pluginClickItem')
-    },
-    componentDidUpdate() {
-      const { hideAll, isClicked, setIsClicked } = this.props
-      if (isClicked && !hideAll) {
-        setIsClicked(false)
-      }
     },
   })
 )(TileDiv)

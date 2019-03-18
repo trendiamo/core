@@ -38,7 +38,7 @@ export default compose(
     },
     onMessageClick: ({ goToNextStep, setHideAll }) => option => {
       goToNextStep(option)
-      setHideAll(true)
+      if (!option.endNode) setHideAll(true)
     },
   }),
   lifecycle({
