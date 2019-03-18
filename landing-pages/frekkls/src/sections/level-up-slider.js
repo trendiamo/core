@@ -62,16 +62,18 @@ const LabelContainer = styled.div`
     height: 74px;
   }
 `
-
-const AppendDots = dots => (
-  <ScrollBarContainer style={{ width: '810px' }}>
-    <DotsContainer>
-      {dots.map(dot => (
-        <LabelContainer key={dot.key}>{dot}</LabelContainer>
-      ))}
-    </DotsContainer>
-  </ScrollBarContainer>
-)
+const AppendDotsFactory = () => {
+  const AppendDots = dots => (
+    <ScrollBarContainer style={{ width: '810px' }}>
+      <DotsContainer>
+        {dots.map(dot => (
+          <LabelContainer key={dot.key}>{dot}</LabelContainer>
+        ))}
+      </DotsContainer>
+    </ScrollBarContainer>
+  )
+  return AppendDots
+}
 
 const getSlideName = (levelUpSliderContent, selectedSlide) => {
   return levelUpSliderContent.edges[selectedSlide].node.slideName
@@ -91,7 +93,7 @@ const sliderSettings = (levelUpSliderContent, setCurrentSlideIndex, currentSlide
     beforeChange: (oldIndex, newIndex) => {
       setCurrentSlideIndex(newIndex)
     },
-    appendDots: AppendDots,
+    appendDots: AppendDotsFactory(),
     customPaging: CustomPagingFactory(levelUpSliderContent, currentSlideIndex),
     dots: true,
     speed: 500,
