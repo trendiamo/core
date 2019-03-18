@@ -19,14 +19,15 @@ const Flex1 = styled.div`
   flex: 1;
   margin-left: 40px;
   margin-right: 40px;
-  min-width: 380px;
   text-align: center;
+  min-width: 80%;
 
   p {
     margin-bottom: 2rem;
   }
 
   @media (min-width: 900px) {
+    min-width: 380px;
     text-align: left;
     p {
       margin-bottom: 1rem;

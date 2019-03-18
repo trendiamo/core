@@ -48,9 +48,9 @@ const JobCard = styled.a`
   text-decoration: none;
   margin: 30px 0px;
   width: 100%;
-  height: 114px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.14);
   border-radius: 12px;
+  padding-bottom: 6px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,9 +80,12 @@ const JobCard = styled.a`
 
   @media (min-width: 900px) {
     width: 838px;
+    height: 114px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: 0px;
+
     h2 {
       font-size: 26px;
       margin-top: 0px;

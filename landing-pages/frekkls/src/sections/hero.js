@@ -7,12 +7,17 @@ import Section from '../components/section'
 const StyledContainer = styled(Container)`
   display: flex;
   align-items: center;
+
+  p {
+    margin-bottom: 50px;
+  }
 `
 
 const ImageContainer = styled.div`
   width: 160%;
   display: flex;
   flex-direction: column;
+  margin-top: 80px;
 
   img {
     width: 100%;

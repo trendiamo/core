@@ -146,28 +146,31 @@ const CopyrightDiv = styled.div`
   }
 `
 
-const DesktopCopyrightContent = styled.p`
+const DesktopCopyrightContent = styled.div`
   display: none;
+
   @media (min-width: 900px) {
     display: block;
   }
 `
 
-const MobileCopyrightContent = styled.p`
+const MobileCopyrightContent = styled.div`
   display: block;
   @media (min-width: 900px) {
     display: none;
   }
 `
 
-const DesktopCopyrigtContent = () => (
+const CopyrigtContent = () => (
   <div>
     <DesktopCopyrightContent>
-      {`Frekkls © Copyright ${new Date().getFullYear()}`}
-      <strong>{' frekkls.com '}</strong>
-      {'All rights reserved. Powered by '}
-      <a href="https://trendiamo.com/">{'Trendiamo GmbH'}</a>
-      {'.'}
+      <p>
+        {`Frekkls © Copyright ${new Date().getFullYear()}`}
+        <strong>{' frekkls.com '}</strong>
+        {'All rights reserved. Powered by '}
+        <a href="https://trendiamo.com/">{'Trendiamo GmbH'}</a>
+        {'.'}
+      </p>
     </DesktopCopyrightContent>
     <MobileCopyrightContent>
       <p>
@@ -186,7 +189,7 @@ const DesktopCopyrigtContent = () => (
 
 const CopyrightContent = () => (
   <CopyrightDiv>
-    <DesktopCopyrigtContent />
+    <CopyrigtContent />
   </CopyrightDiv>
 )
 

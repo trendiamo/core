@@ -13,7 +13,7 @@ const Container = styled.div`
   left: 0;
   right: 0;
   background: rgba(255, 255, 255, 0.96);
-  z-index: 1000;
+  z-index: 1;
   display: none;
   padding-top: 50px;
   @media (max-width: 900px) {
@@ -33,7 +33,7 @@ const Container = styled.div`
 
 const StyledOutlineButton = styled(Button)`
   position: absolute;
-  bottom: 50px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: block !important;
@@ -54,7 +54,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 50px;
 `
 
 const removeMobileMenu = () => {

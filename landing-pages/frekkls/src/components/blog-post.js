@@ -1,9 +1,8 @@
 import Layout from '../components/layout'
 import React from 'react'
 import styled from 'styled-components'
-import { graphql, Link } from 'gatsby'
+import { graphql } from 'gatsby'
 
-import locales from '../../locales'
 import Seo from './seo'
 import { FacebookLink, InstagramLink, TwitterLink, YoutubeLink } from './social-media-icons'
 
@@ -40,11 +39,16 @@ const HeaderImg = styled.div`
 `
 
 const TitleImgMeta = styled.div`
+  display: none;
   font-size: 12px;
   text-transform: uppercase;
   text-align: left;
   margin-left: 10px;
   padding-top: 10px;
+
+  @media (min-width: 900px) {
+    display: block;
+  }
 `
 
 const BlogPostBase = styled.article`
@@ -60,6 +64,7 @@ const BlogPostBase = styled.article`
     font-family: Roboto Slab, sans-serif;
     font-size: 30px;
     line-height: 1.3em;
+    margin-top: 40px;
   }
 
   h2 {
@@ -75,10 +80,17 @@ const BlogPostBase = styled.article`
     width: 70%;
     h1 {
       font-size: 2em;
+      margin-top: 40px;
     }
 
     h2 {
       font-size: 24px;
+    }
+  }
+
+  @media (min-width: 900px) {
+    h1 {
+      margin-top: 0px;
     }
   }
 `
@@ -103,21 +115,6 @@ const BlogText = styled.div`
 
   @media (min-width: 700px) {
     font-size: 20px;
-  }
-`
-
-const Slug = styled.div`
-  display: flex;
-  text-align: left;
-  flex-direction: column;
-  margin-bottom: 40px;
-
-  p {
-    margin-bottom: 0px;
-    font-size: 20px;
-  }
-  @media (min-width: 700px) {
-    flex-direction: row;
   }
 `
 
@@ -173,10 +170,6 @@ const ArticleDetails = ({ pageContext }) => (
   </DetailsContainer>
 )
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-`
-
 const BlogPost = ({ pageContext, data }) => (
   <Layout layout={data.layout} locale={pageContext.locale}>
     <Seo
@@ -194,12 +187,6 @@ const BlogPost = ({ pageContext, data }) => (
       }}
     />
     <BlogPostBase>
-      <Slug>
-        <StyledLink className="header-link" to={`${locales[pageContext.locale].path}/blog`}>
-          <p>{'Blog /'}</p>
-        </StyledLink>
-        <p style={{ fontWeight: '500', marginLeft: '0.2em' }}>{pageContext.post.node.title}</p>
-      </Slug>
       <h1>{pageContext.post.node.title}</h1>
       <h2>{pageContext.post.node.secondaryTitle}</h2>
       <ArticleDetails pageContext={pageContext} />
