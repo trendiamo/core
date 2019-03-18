@@ -17,6 +17,7 @@ const ScrollBarContainer = styled.div`
   transform: translateX(-50%);
 
   @media (min-width: 900px) {
+    display: block;
     background-color: #f2f4f7;
   }
 `
