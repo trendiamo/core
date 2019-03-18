@@ -1,50 +1,11 @@
+import Chat from './chat'
 import Container from 'app/content/scripted-chat/components/base-container'
-import Steps from './steps'
-import Store from './store'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 
-const Base = ({
-  depth,
-  handleScroll,
-  setContentRef,
-  step,
-  currentStep,
-  steps,
-  coverMinimized,
-  touch,
-  getContentRef,
-  goToNextStep,
-  setShowingLauncher,
-  setShowingContent,
-  tags,
-}) => (
+const Base = ({ getContentRef, ...props }) => (
   <Container contentRef={getContentRef}>
-    {currentStep.type === 'store' ? (
-      <Store
-        coverMinimized={coverMinimized}
-        getContentRef={getContentRef}
-        handleScroll={handleScroll}
-        setContentRef={setContentRef}
-        setShowingContent={setShowingContent}
-        setShowingLauncher={setShowingLauncher}
-        step={step}
-        tags={tags}
-      />
-    ) : (
-      <Steps
-        coverMinimized={coverMinimized}
-        currentStep={currentStep}
-        depth={depth}
-        getContentRef={getContentRef}
-        goToNextStep={goToNextStep}
-        handleScroll={handleScroll}
-        setContentRef={setContentRef}
-        step={step}
-        steps={steps}
-        touch={touch}
-      />
-    )}
+    <Chat contentRef={getContentRef} {...props} />
   </Container>
 )
 
