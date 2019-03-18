@@ -25,6 +25,7 @@ const Plugin = ({
   stepIndex,
   depth,
   tags,
+  showingCtaButton,
 }) => (
   <AppBase
     Component={
@@ -34,6 +35,7 @@ const Plugin = ({
         setPluginState={setPluginState}
         setShowingContent={setShowingContent}
         setShowingLauncher={setShowingLauncher}
+        showingCtaButton={showingCtaButton}
         step={step}
         stepIndex={stepIndex}
         steps={steps}
@@ -73,9 +75,11 @@ export default compose(
   })),
   branch(({ module }) => !module, renderNothing),
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
+  withState('endNodeTags', 'setEndNodeTags', []),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
   withState('showingLaucher', 'setShowingLauncher', true),
+  withState('showingCtaButton', 'setShowingCtaButton', false),
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent } = this.props
@@ -109,16 +113,49 @@ export default compose(
     launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
   })),
   withHandlers({
-    onToggleContent: ({
+    handleEndNodeTags: ({ showingCtaButton, endNodeTags, setEndNodeTags, setShowingCtaButton }) => step => {
+      let newTags
+      if (showingCtaButton) {
+        if (!endNodeTags.includes(step.title)) newTags = [...endNodeTags, step.title]
+        else {
+          newTags = endNodeTags.filter(tag => tag !== step.title)
+          if (newTags.length === 0) setShowingCtaButton(false)
+        }
+      } else {
+        newTags = [...endNodeTags, step.title]
+        setShowingCtaButton(true)
+      }
+      return setEndNodeTags(newTags)
+    },
+    goToStore: ({ endNodeTags, stepIndex, tags, setStepIndex, setTags, setCurrentStepKey }) => () => {
+      setStepIndex(stepIndex + 1)
+      setTags(endNodeTags.map(tag => [...tags, tag]))
+      setCurrentStepKey('store')
+    },
+    resetAssessment: ({
+      setTags,
+      setEndNodeTags,
       setCurrentStepKey,
+      setStepIndex,
+      setAssessmentDepth,
+      setShowingCtaButton,
+    }) => () => {
+      setTags([])
+      setEndNodeTags([])
+      setCurrentStepKey('root')
+      setStepIndex(0)
+      setAssessmentDepth(0)
+      setShowingCtaButton(false)
+    },
+  }),
+  withHandlers({
+    onToggleContent: ({
       module,
       setIsUnmounting,
       setShowingContent,
       showingContent,
       pluginState,
-      setStepIndex,
-      setAssessmentDepth,
-      setTags,
+      resetAssessment,
     }) => () => {
       if (module.flowType !== 'ht-chat' && module.flowType !== 'ht-assessment') return
       mixpanel.track('Toggled Plugin', {
@@ -140,10 +177,7 @@ export default compose(
         )
       }
       // reset assessment on plugin close
-      setTags([])
-      setCurrentStepKey('root')
-      setStepIndex(0)
-      setAssessmentDepth(0)
+      resetAssessment()
       return setShowingContent(!showingContent)
     },
     goToNextStep: ({
@@ -154,15 +188,18 @@ export default compose(
       stepIndex,
       setTags,
       tags,
+      handleEndNodeTags,
+      goToStore,
     }) => step => {
       if (step.url)
         return setStepIndex(
           stepIndex + 1,
           timeout.set('loadingProgressBar', () => (window.location.href = step.url), 600)
         )
+      if (step.endNode) return handleEndNodeTags(step)
+      if (step === 'showResults') return goToStore()
       setStepIndex(stepIndex + 1)
       setTags([...tags, step.title])
-      if (step.endNode) return setCurrentStepKey('store')
       // if depth declared in the step, set depth. Used in progress bar
       if (steps[step.title].depth) setAssessmentDepth(steps[step.title].depth)
       setCurrentStepKey(step.title)

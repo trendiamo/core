@@ -20,6 +20,7 @@ const AssessmentStepOptions = ({ onClick, options, hideAll }) => (
         imageUrl={imgixUrl(option.picUrl, { fit: 'crop', w: 156, h: 120 })}
         key={`option-${option.title}`}
         onClick={() => onClick(option)}
+        option={option}
         title={option.title}
       />
     ))}

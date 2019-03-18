@@ -1,4 +1,5 @@
 import Cover from 'app/content/scripted-chat/components/cover'
+import CtaButton from './steps/cta-button'
 import ScrollLock from 'ext/scroll-lock'
 import Steps from './steps'
 import StepsProgressBar from 'shared/progress-bar'
@@ -20,6 +21,7 @@ const Chat = ({
   setShowingLauncher,
   tags,
   stepIndex,
+  showingCtaButton,
 }) => (
   <ScrollLock>
     <Cover assessment currentStep={currentStep} index={stepIndex} minimized={coverMinimized} step={step} />
@@ -46,11 +48,13 @@ const Chat = ({
         goToNextStep={goToNextStep}
         onScroll={handleScroll}
         setContentRef={setContentRef}
+        showingCtaButton={showingCtaButton}
         step={step}
         steps={steps}
         touch={touch}
       />
     )}
+    {currentStep.type !== 'store' && <CtaButton goToNextStep={goToNextStep} showing={showingCtaButton} />}
   </ScrollLock>
 )
 
