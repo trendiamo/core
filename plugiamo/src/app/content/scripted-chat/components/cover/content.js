@@ -9,9 +9,8 @@ const Name = styled.div`
   font-weight: 700;
   backface-visibility: hidden;
   opacity: 1;
-  transition: 1s opacity;
+  transition: opacity 1s 0.4s, color 0.4s ease-in-out;
   top: 0;
-  transition-delay: 0.4s;
   ${({ minimized }) =>
     minimized &&
     `
@@ -46,6 +45,7 @@ const NameMinimized = styled.div`
   max-height: 0;
   transition: 0.4s all;
   opacity: 0;
+  transition: opacity 0.4s ease-in-out;
   ${({ minimized }) =>
     minimized &&
     `
@@ -59,6 +59,8 @@ const NameMinimized = styled.div`
 const PresentedBy = styled.div`
   font-size: 14px;
   backface-visibility: hidden;
+  color: ${({ header }) => header.textColor || '#333'};
+  transition: all 0.4s ease-in-out;
 `
 
 const TextContainer = styled.div`

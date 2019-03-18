@@ -1,36 +1,30 @@
 import assessProducts from './assess-products'
-import ChatLogUi from './chat-log-ui'
-import Cover from 'app/content/scripted-chat/components/cover'
+import Chat from 'app/content/scripted-chat/components/chat'
+import ItemDiv from 'app/content/scripted-chat/components/item-div'
 import Modal from './modal'
-import ScrollLock from 'ext/scroll-lock'
-import { compose, lifecycle, withState } from 'recompose'
+import { ChatBackground, convertLogs } from 'app/content/scripted-chat/shared'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 
-const StoreTemplate = ({
-  coverMinimized,
-  getContentRef,
-  goToNextStep,
-  handleScroll,
-  setContentRef,
-  touch,
-  step,
+const ChatLogUiTemplate = ({
+  onScroll,
   results,
-  setShowingLauncher,
   setShowingContent,
+  setShowingLauncher,
+  setContentRef,
+  contentRef,
+  setBackgroundRef,
+  touch,
+  minHeight,
+  logSection,
+  step,
 }) => (
-  <ScrollLock>
-    <Cover hackathon header={step.header} minimized={coverMinimized} />
-    <ChatLogUi
-      contentRef={getContentRef}
-      coverMinimized={coverMinimized}
-      goToNextStep={goToNextStep}
-      onScroll={handleScroll}
-      results={results}
-      setContentRef={setContentRef}
-      touch={touch}
-    />
-    {!isSmall() && (
+  <Chat onScroll={onScroll} ref={setContentRef} touch={touch}>
+    <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
+      <ItemDiv animate={false} contentRef={contentRef} dontScroll logSection={logSection} />
+    </ChatBackground>
+    {results.length > 0 && !isSmall() && (
       <Modal
         header={step.header}
         results={results}
@@ -38,10 +32,16 @@ const StoreTemplate = ({
         setShowingLauncher={setShowingLauncher}
       />
     )}
-  </ScrollLock>
+  </Chat>
 )
 
-const Store = compose(
+const prepareProductsToChat = results => {
+  return [{ message: { assessmentProducts: [...results], type: 'assessmentProducts' }, type: 'message' }]
+}
+
+export default compose(
+  withState('logs', 'setLogs', []),
+  withState('minHeight', 'setMinHeight', 0),
   withState('results', 'setResults', []),
   lifecycle({
     componentDidMount() {
@@ -56,7 +56,29 @@ const Store = compose(
           setResults(assessProducts(client.products, tags))
         })
     },
+  }),
+  withProps(({ results }) => ({
+    logSection: {
+      type: 'message',
+      logs: prepareProductsToChat(results),
+    },
+  })),
+  withHandlers(() => {
+    let backgroundRef
+    return {
+      setContentRef: ({ setContentRef }) => ref => {
+        setContentRef(ref)
+      },
+      setBackgroundRef: () => ref => (backgroundRef = ref),
+      getBackgroundRef: () => () => backgroundRef,
+    }
+  }),
+  withHandlers({
+    configMinHeight: ({ setMinHeight, getBackgroundRef, minHeight }) => () => {
+      if (getBackgroundRef().base.clientHeight !== minHeight) {
+        setMinHeight(getBackgroundRef().base.clientHeight)
+      }
+    },
+    updateLogs: ({ setLogs }) => ({ data }) => setLogs(convertLogs(data)),
   })
-)(StoreTemplate)
-
-export default Store
+)(ChatLogUiTemplate)

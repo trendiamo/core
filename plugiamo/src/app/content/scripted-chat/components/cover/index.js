@@ -3,7 +3,7 @@ import Content, { PersonaName } from './content'
 import defaultConfig from './config'
 import FlowBackButton from 'shared/flow-back-button'
 import styled from 'styled-components'
-import { branch, compose, renderComponent, withProps } from 'recompose'
+import { branch, compose, lifecycle, renderComponent, withProps, withState } from 'recompose'
 import {
   Cover as CoverBase,
   CoverImg,
@@ -42,9 +42,35 @@ export const CoverBridge = ({ header, minimized, config }) => (
   </CoverBase>
 )
 
+const CoverAssessmentTemplate = ({ headers, toggle, minimized, config }) => (
+  <CoverBase backgroundColor="#fff" config={config} hackathon minimized={minimized}>
+    <Background config={config} header={headers[1]} hide={!toggle} minimized={minimized} />
+    <Background config={config} header={headers[0]} hide={toggle} minimized={minimized} />
+    <Content config={config} header={headers[toggle ? 1 : 0]} minimized={minimized} />
+  </CoverBase>
+)
+
+const CoverAssessment = compose(
+  withState('toggle', 'setToggle', false),
+  withState('headers', 'setHeaders', ({ step }) => [step.header, step.header]),
+  lifecycle({
+    componentDidUpdate(prevProps) {
+      const { toggle, setToggle, setHeaders, headers, step } = this.props
+      if (prevProps.step.header !== step.header) {
+        const newHeaders = toggle ? [step.header, headers[1]] : [headers[0], step.header]
+        setHeaders(newHeaders)
+        setTimeout(() => {
+          setToggle(!toggle)
+        }, 980)
+      }
+    },
+  })
+)(CoverAssessmentTemplate)
+
 export default compose(
   withProps(({ config }) => ({
     config: { ...defaultConfig, ...config },
   })),
-  branch(({ hackathon }) => hackathon, renderComponent(CoverBridge))
+  branch(({ hackathon }) => hackathon, renderComponent(CoverBridge)),
+  branch(({ assessment }) => assessment, renderComponent(CoverAssessment))
 )(CoverSimpleChat)

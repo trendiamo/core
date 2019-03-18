@@ -14,6 +14,7 @@ const VideoButtonContainer = styled.div`
   display: inline-block;
   margin-top: 8px;
   cursor: pointer;
+  transition: all 0.4s ease-in-out;
 `
 
 const Icon = styled(VideoIcon)`
@@ -23,12 +24,14 @@ const Icon = styled(VideoIcon)`
   fill: ${({ color }) => color || '#fff'};
   display: inline-block;
   vertical-align: middle;
+  transition: all 0.4s ease-in-out;
 `
 
 const Text = styled.div`
   color: ${({ color }) => color || '#fff'};
   display: inline-block;
   vertical-align: middle;
+  transition: all 0.4s ease-in-out;
 `
 
 const VideoButton = ({ video, youtubeEmbedUrl, onClick, setIsOpen, isOpen }) => (

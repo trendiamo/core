@@ -25,7 +25,7 @@ const Cover = styled.div`
   overflow: hidden;
   position: relative;
   z-index: 2;
-  transition: max-height 0.4s ease-in-out;
+  transition: max-height 0.4s ease-in-out, background-color 0.4s ease-in-out;
   box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
   flex-shrink: 0;
 `
