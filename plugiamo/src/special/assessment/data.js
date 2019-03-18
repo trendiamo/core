@@ -284,7 +284,7 @@ const data = {
                         picUrl:
                           'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
                         title: 'Special Collection',
-                        endNode: true,
+                        url: 'https://www.pierre-cardin.de/',
                       },
                     ],
                   },
