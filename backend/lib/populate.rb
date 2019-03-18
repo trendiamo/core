@@ -188,6 +188,9 @@ class Populate
       outro_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Outro",
         persona: Persona.order("RANDOM()").first,
+        chat_bubble_text: "Awesome! 🤩 Was I helpful?",
+        chat_bubble_button_yes: "Yes, thanks!",
+        chat_bubble_button_no: "Not really.",
       }
       Outro.create!(outro_attrs)
     end
