@@ -7,7 +7,7 @@ import Container from '../components/container'
 import Section from '../components/section'
 
 const ScrollBarContainer = styled.div`
-  display: none;
+  display: block;
   border-radius: 50px;
   position: absolute;
   top: -50px;
