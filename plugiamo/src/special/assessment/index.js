@@ -59,15 +59,15 @@ export default compose(
         trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
     ),
   })),
-  withState('stepIndex', 'setStepIndex', 0),
   withState('assessmentDepth', 'setAssessmentDepth', 0),
   withState('currentStepKey', 'setCurrentStepKey', 'root'),
   withState('tags', 'setTags', []),
+  withState('stepIndex', 'setStepIndex', 0),
   withProps(({ trigger }) => ({
     module: trigger && trigger.module,
   })),
-  withProps(({ assessmentDepth, module, currentStepKey, stepIndex }) => ({
-    step: module && { ...module.steps[currentStepKey], index: stepIndex },
+  withProps(({ assessmentDepth, module, currentStepKey }) => ({
+    step: module && module.steps[currentStepKey],
     steps: module && module.steps,
     depth: assessmentDepth,
   })),
@@ -90,6 +90,7 @@ export default compose(
     },
     componentWillUnmount() {
       timeout.clear('exitOnMobile')
+      timeout.clear('loadingProgressBar')
     },
     componentDidUpdate(prevProps) {
       const { showingContent } = this.props
@@ -154,6 +155,11 @@ export default compose(
       setTags,
       tags,
     }) => step => {
+      if (step.url)
+        return setStepIndex(
+          stepIndex + 1,
+          timeout.set('loadingProgressBar', () => (window.location.href = step.url), 600)
+        )
       setStepIndex(stepIndex + 1)
       setTags([...tags, step.title])
       if (step.endNode) return setCurrentStepKey('store')

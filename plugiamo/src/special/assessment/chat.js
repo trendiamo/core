@@ -19,10 +19,11 @@ const Chat = ({
   setShowingContent,
   setShowingLauncher,
   tags,
+  stepIndex,
 }) => (
   <ScrollLock>
-    <Cover assessment currentStep={currentStep} index={step.index} minimized={coverMinimized} step={step} />
-    {currentStep.type !== 'store' && <StepsProgressBar progress={((step.index || 0) / (depth + 1)) * 100} />}
+    <Cover assessment currentStep={currentStep} index={stepIndex} minimized={coverMinimized} step={step} />
+    {currentStep.type !== 'store' && <StepsProgressBar progress={((stepIndex || 0) / (depth + 1)) * 100} />}
     {currentStep.type === 'store' ? (
       <Store
         contentRef={getContentRef}
