@@ -1,86 +1,114 @@
 import mixpanel from 'ext/mixpanel'
+/* eslint-disable no-undef */
 
 export default {
   addToCartObject() {
-    const formFields = window.$('#product_addtocart_form').serializeArray()
+    const formFields = jQuery
+      .noConflict()('#product_addtocart_form')
+      .serializeArray()
     return {
       name: 'Add To Cart',
       data: {
         hostname: location.hostname,
-        withPlugin: !!window.$('.trendiamo-container')[0],
+        withPlugin: !!jQuery.noConflict()('.trendiamo-container')[0],
         productId: formFields.find(element => element.name === 'product').value,
-        productName: window.$("[data-ui-id='page-title-wrapper']").text(),
-        productPrice: window
-          .$('span.price')
-          .last()
+        productName: jQuery
+          .noConflict()("[data-ui-id='page-title-wrapper']")
           .text(),
-        productOptions: window.$('.swatch-attribute').map((i, element) => {
-          const optionSelectedId = window.$(element).attr('option-selected')
-          const optionValue = window
-            .$(element)
-            .find(`[option-id='${optionSelectedId}']`)
-            .attr('option-label')
-          if (!optionValue) return
-          return {
-            attributeLabel: window.$(element).attr('attribute-label'),
-            attributeCode: window.$(element).attr('attribute-code'),
-            attributeId: window.$(element).attr('attribute-id'),
-            optionValue,
-          }
-        }),
+        currency: 'EUR',
+        subTotalInCents: Number(
+          jQuery
+            .noConflict()('span.price')
+            .last()
+            .text()
+            .replace(/\D/g, '')
+        ),
+        productOptions: jQuery
+          .noConflict()('.swatch-attribute')
+          .map((i, element) => {
+            const optionSelectedId = jQuery
+              .noConflict()(element)
+              .attr('option-selected')
+            const optionValue = jQuery
+              .noConflict()(element)
+              .find(`[option-id='${optionSelectedId}']`)
+              .attr('option-label')
+            if (!optionValue) return
+            return {
+              attributeLabel: jQuery
+                .noConflict()(element)
+                .attr('attribute-label'),
+              attributeCode: jQuery
+                .noConflict()(element)
+                .attr('attribute-code'),
+              attributeId: jQuery
+                .noConflict()(element)
+                .attr('attribute-id'),
+              optionValue,
+            }
+          }),
       },
     }
   },
   getProductsFromCart() {
-    return window.$('.cart.item').map((i, item) => {
-      const itemName = window
-        .$(item)
-        .find("[data-th='Artikel']")
-        .children('a')
-        .attr('title')
-      const itemUrl = window
-        .$(item)
-        .find("[data-th='Artikel']")
-        .children('a')
-        .attr('href')
-      const itemPrice = window
-        .$(item)
-        .find('span.price')
-        .last()
-        .text()
-      const itemQuantity = window
-        .$(item)
-        .find("[title='Menge']")
-        .attr('value')
-      return { name: itemName, url: itemUrl, price: itemPrice, quantity: itemQuantity }
-    })
+    return jQuery
+      .noConflict()('.cart.item')
+      .map((i, item) => {
+        const itemName = jQuery
+          .noConflict()(item)
+          .find("[data-th='Artikel']")
+          .children('a')
+          .attr('title')
+        const itemUrl = jQuery
+          .noConflict()(item)
+          .find("[data-th='Artikel']")
+          .children('a')
+          .attr('href')
+        const itemPrice = jQuery
+          .noConflict()(item)
+          .find('span.price')
+          .last()
+          .text()
+        const itemQuantity = jQuery
+          .noConflict()(item)
+          .find("[title='Menge']")
+          .attr('value')
+        return { name: itemName, url: itemUrl, price: itemPrice, quantity: itemQuantity }
+      })
   },
   checkoutObject() {
     return {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
-        withPlugin: !!window.$('.trendiamo-container')[0],
+        withPlugin: !!jQuery.noConflict()('.trendiamo-container')[0],
         products: this.getProductsFromCart(),
-        subTotal: window
-          .$('span.price')
-          .last()
-          .text(),
+        subTotalInCents: Number(
+          jQuery
+            .noConflict()('span.price')
+            .last()
+            .text()
+            .replace(/\D/g, '')
+        ),
       },
     }
   },
   setupDataGathering() {
     const _this = this
     if (location.pathname.match(/^\/checkout\/cart/)) {
-      window.$(document).on('click', 'button.action.primary.checkout', () => {
-        const json = _this.checkoutObject()
-        mixpanel.track(json.name, json.data)
-      })
-    } else if (window.$('#product-addtocart-button')[0]) {
-      window.$('form#product_addtocart_form').on('submit', () => {
-        const json = _this.addToCartObject()
-        mixpanel.track(json.name, json.data)
-      })
+      jQuery
+        .noConflict()(document)
+        .on('click', 'button.action.primary.checkout', () => {
+          const json = _this.checkoutObject()
+          mixpanel.track(json.name, json.data)
+        })
+    } else if (jQuery.noConflict()('#product-addtocart-button')[0]) {
+      jQuery
+        .noConflict()('form#product_addtocart_form')
+        .on('submit', () => {
+          const json = _this.addToCartObject()
+          mixpanel.track(json.name, json.data)
+        })
     }
   },
 }
