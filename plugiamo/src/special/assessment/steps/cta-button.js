@@ -1,10 +1,10 @@
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
-import { branch, compose, renderNothing, withHandlers } from 'recompose'
+import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 
-const CtaButton = styled.button.attrs({
+const Button = styled.button.attrs({
   type: 'button',
 })`
   appearance: none;
@@ -20,16 +20,31 @@ const CtaButton = styled.button.attrs({
   z-index: 1;
   background-color: #232323;
   color: white;
-  padding: 1rem;
+  padding: 25px 5px;
   font-size: 18px;
-  line-height: 1;
+  line-height: 0;
   text-transform: uppercase;
   cursor: pointer;
+  max-height: 50px;
+  ${({ hide }) =>
+    hide &&
+    `max-height: 0px;
+  padding: 0;
+  color: transparent;
+  `}
+
+  transition: color 0.3s${({ hide }) => !hide && ' 0.3s'}, padding 0.3s${({ hide }) =>
+  hide && ' 0.3s'}, max-height 0.0s${({ hide }) => hide && ' 0.3s'};
 `
 
+const CtaButton = ({ onClick, hide }) => (
+  <Button hide={hide} onClick={onClick}>
+    {'Done! Show me results!'}
+  </Button>
+)
+
 export default compose(
-  branch(({ showing }) => !showing, renderNothing),
   withHandlers({
     onClick: ({ goToNextStep }) => () => goToNextStep('showResults'),
   })
-)(({ onClick }) => <CtaButton onClick={onClick}>{'Done! Show me results!'}</CtaButton>)
+)(CtaButton)
