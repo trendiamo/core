@@ -10,7 +10,12 @@ export default {
         withPlugin: !!window.$('.trendiamo-container')[0],
         productId: formFields.find(element => element.name === 'id').value,
         productName: window.$('.product-single__title').html(),
-        productPrice: window.$('span.money').html(),
+        subTotalInCents: Number(
+          window
+            .$('span.money')
+            .html()
+            .replace(/\D/g, '')
+        ),
         productSize: formFields.find(element => element.name === 'Size').value,
         productQuantity: formFields.find(element => element.name === 'quantity').value,
       },
@@ -40,7 +45,7 @@ export default {
         withPlugin: !!window.$('.trendiamo-container')[0],
         products: this.getProductsFromCart(),
         currency: moneySpans.attr('data-currency') || 'EUR',
-        subTotal: moneySpans.text(),
+        subTotalInCents: Number(moneySpans.text().replace(/\D/g, '')),
       },
     }
   },
