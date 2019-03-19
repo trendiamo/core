@@ -1,5 +1,3 @@
-import getFrekklsConfig from 'frekkls-config'
-import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { h } from 'preact'
