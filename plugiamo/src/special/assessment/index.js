@@ -198,11 +198,18 @@ export default compose(
       goToStore,
       currentStepKey,
     }) => step => {
-      if (step.url)
+      if (step.url) {
+        mixpanel.track('Clicked Assessment Step', {
+          hostname: location.hostname,
+          stepIndex,
+          step: currentStepKey,
+          url: step.url,
+        })
         return setStepIndex(
           stepIndex + 1,
           timeout.set('loadingProgressBar', () => (window.location.href = step.url), 600)
         )
+      }
       if (step.endNode) return handleEndNodeTags(step)
       if (step === 'showResults') return goToStore(currentStepKey)
       setStepIndex(stepIndex + 1)
