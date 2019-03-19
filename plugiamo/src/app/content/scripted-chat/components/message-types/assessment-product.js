@@ -1,3 +1,4 @@
+import mixpanel from 'ext/mixpanel'
 import ProductMessage from './product-message'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
@@ -87,6 +88,11 @@ const AssessmentProduct = compose(
   withHandlers({
     onClick: ({ data }) => () => {
       if (!data.url) return
+      mixpanel.track('Clicked Assessment Store Product', {
+        hostname: location.hostname,
+        productUrl: data.url,
+        productName: data.title,
+      })
       window.location.href = data.url
     },
   })

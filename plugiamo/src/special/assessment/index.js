@@ -127,9 +127,15 @@ export default compose(
       }
       return setEndNodeTags(newTags)
     },
-    goToStore: ({ endNodeTags, stepIndex, tags, setStepIndex, setTags, setCurrentStepKey }) => () => {
+    goToStore: ({ endNodeTags, stepIndex, tags, setStepIndex, setTags, setCurrentStepKey }) => currentStepKey => {
       setStepIndex(stepIndex + 1)
       setTags(endNodeTags.map(tag => [...tags, tag]))
+      mixpanel.track('Clicked Assessment Step', {
+        hostname: location.hostname,
+        stepIndex,
+        step: currentStepKey,
+        tags: endNodeTags,
+      })
       setCurrentStepKey('store')
     },
     resetAssessment: ({
@@ -190,6 +196,7 @@ export default compose(
       tags,
       handleEndNodeTags,
       goToStore,
+      currentStepKey,
     }) => step => {
       if (step.url)
         return setStepIndex(
@@ -197,9 +204,16 @@ export default compose(
           timeout.set('loadingProgressBar', () => (window.location.href = step.url), 600)
         )
       if (step.endNode) return handleEndNodeTags(step)
-      if (step === 'showResults') return goToStore()
+      if (step === 'showResults') return goToStore(currentStepKey)
       setStepIndex(stepIndex + 1)
       setTags([...tags, step.title])
+      mixpanel.track('Clicked Assessment Step', {
+        hostname: location.hostname,
+        stepIndex,
+        step: currentStepKey,
+        tags: [step.title],
+      })
+      if (step.endNode) return setCurrentStepKey('store')
       // if depth declared in the step, set depth. Used in progress bar
       if (steps[step.title].depth) setAssessmentDepth(steps[step.title].depth)
       setCurrentStepKey(step.title)
