@@ -32,4 +32,24 @@ const AuthText = styled(Typography)`
   margin-bottom: 10px;
 `
 
-export { AuthButton, AuthLink, AuthTitle, AuthText }
+const AuthMessage = styled.div`
+  flex: 2;
+  flex-basis: 500px;
+  z-index: 100;
+  flex-grow: 0;
+  position: relative;
+
+  text-align: center;
+  padding: 20px;
+
+  @media (min-width: 900px) {
+    padding: 112px 0px 0px 100px;
+    text-align: right;
+  }
+
+  @media (min-width: 1050px) {
+    padding-left: 45px;
+  }
+`
+
+export { AuthButton, AuthLink, AuthTitle, AuthText, AuthMessage }

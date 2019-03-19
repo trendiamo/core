@@ -1,16 +1,17 @@
+import Button from 'shared/button'
 import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { apiPasswordChange, apiRequest } from 'utils'
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
+import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { withRouter } from 'react-router'
 import { withSnackbar } from 'notistack'
 
 const Actions = ({ onFormSubmit }) => (
-  <Button color="primary" onClick={onFormSubmit} type="submit" variant="contained">
+  <Button color="primaryGradient" onClick={onFormSubmit} type="submit" variant="contained">
     {'Reset'}
   </Button>
 )

@@ -1,4 +1,5 @@
 import auth from 'auth'
+import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import Link from 'shared/link'
 import Notification from 'shared/notification'
@@ -8,8 +9,8 @@ import routes from 'app/routes'
 import withForm from 'ext/recompose/with-form'
 import { apiMe, apiMeUpdate, apiRequest } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
-import { Button, TextField } from '@material-ui/core'
 import { Prompt } from 'react-router'
+import { TextField } from '@material-ui/core'
 import { withSnackbar } from 'notistack'
 
 const EditUser = ({
@@ -59,13 +60,13 @@ const EditUser = ({
     />
     {progress && <ProgressBar progress={progress} />}
     <div style={{ marginTop: '1rem' }}>
-      <Button color="primary" disabled={isFormLoading || isCropping} type="submit" variant="contained">
+      <Button color="primaryGradient" disabled={isFormLoading || isCropping} type="submit" variant="contained">
         {'Save'}
       </Button>
     </div>
     <div style={{ marginTop: '1rem' }}>
       <Link to={routes.passwordChange()}>
-        <Button color="default" variant="text">
+        <Button color="primaryText" variant="text">
           {'Change Password'}
         </Button>
       </Link>

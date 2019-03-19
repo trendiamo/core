@@ -1,35 +1,28 @@
 import auth from 'auth'
 import AuthLayout from 'auth/layout'
+import Button from 'shared/button'
 import Link from 'shared/link'
 import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
+import styled from 'styled-components'
 import { apiRequest, apiSignIn } from 'utils'
-import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
+import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { withSnackbar } from 'notistack'
 
-const AuthMessage = () => (
-  <React.Fragment>
-    <AuthTitle variant="h4">
-      {"Don't have an account?"}
-      <br />
-      {'Get to know what we can do for you.'}
-    </AuthTitle>
-    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body2">
-      {'Is something wrong? '}
-      <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
-    </AuthText>
-    <AuthLink href="https://frekkls.com">
-      <AuthButton>{'Learn about Frekkls'}</AuthButton>
-    </AuthLink>
-  </React.Fragment>
-)
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: 900px) {
+    display: block;
+  }
+`
 
 const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
-  <AuthLayout authMessage={<AuthMessage />} title="Login">
-    <form onSubmit={loginSubmit}>
+  <AuthLayout title="Let's log you in!">
+    <StyledForm onSubmit={loginSubmit}>
       <Notification data={errors} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
@@ -54,19 +47,19 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
           value={loginForm.password}
         />
       </FormControl>
-      <div style={{ marginTop: '1rem' }}>
-        <Button color="primary" fullWidth type="submit" variant="contained">
+      <div style={{ marginTop: '2rem', width: '70%' }}>
+        <Button color="primaryGradient" fullWidth type="submit" variant="contained">
           {'Login'}
         </Button>
       </div>
       <div style={{ marginTop: '1rem' }}>
         <Link to={routes.requestPasswordReset()}>
-          <Button color="default" fullWidth variant="text">
+          <Button color="primaryText" variant="text">
             {'Forgot Password?'}
           </Button>
         </Link>
       </div>
-    </form>
+    </StyledForm>
   </AuthLayout>
 )
 

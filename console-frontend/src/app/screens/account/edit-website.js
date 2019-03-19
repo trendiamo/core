@@ -1,5 +1,6 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import auth from 'auth'
+import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import MuiCancel from '@material-ui/icons/Cancel'
 import Notification from 'shared/notification'
@@ -9,7 +10,6 @@ import withForm from 'ext/recompose/with-form'
 import { apiRequest, apiWebsiteShow, apiWebsiteUpdate } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import {
-  Button,
   Checkbox,
   FormControlLabel,
   FormHelperText,
@@ -113,7 +113,7 @@ const EditWebsite = ({
     ))}
     <AddHostnameButton addHostnameSelect={addHostnameSelect} disabled={isFormLoading} />
     <div style={{ marginTop: '1rem' }}>
-      <Button color="primary" disabled={isFormLoading} type="submit" variant="contained">
+      <Button color="primaryGradient" disabled={isFormLoading} type="submit" variant="contained">
         {'Save'}
       </Button>
     </div>

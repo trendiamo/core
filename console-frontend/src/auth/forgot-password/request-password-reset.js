@@ -1,11 +1,12 @@
 import AuthLayout from 'auth/layout'
+import Button from 'shared/button'
 import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
 import { apiPasswordEmailLink, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
-import { Button, FormControl, Input, InputLabel, Typography } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
+import { FormControl, Input, InputLabel, Typography } from '@material-ui/core'
 import { withSnackbar } from 'notistack'
 
 const AuthMessage = () => (
@@ -28,7 +29,7 @@ const AuthMessage = () => (
 const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValue }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <form onSubmit={passwordChangeSubmit}>
-      <Typography variant="body2">
+      <Typography style={{ marginTop: '10px' }} variant="body2">
         {'We can help you reset your password using your email address linked to your account.'}
       </Typography>
       <FormControl fullWidth margin="normal" required>
@@ -44,13 +45,13 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
         />
       </FormControl>
       <div style={{ marginTop: '1rem' }}>
-        <Button color="primary" type="submit" variant="contained">
+        <Button color="primaryGradient" type="submit" variant="contained">
           {'Send Reset Instructions'}
         </Button>
       </div>
       <div style={{ marginTop: '1rem' }}>
         <Link to={routes.login()}>
-          <Button color="default" fullWidth variant="text">
+          <Button color="primaryText" variant="text">
             {'Back to Login'}
           </Button>
         </Link>

@@ -1,10 +1,12 @@
 import Autocomplete from 'shared/autocomplete'
+import Button from 'shared/button'
 import React from 'react'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
 import { apiGeneratedUrlCreate, apiPathAutocomplete, apiPersonasAutocomplete, apiRequest } from 'utils'
+import { compose, withHandlers, withProps, withState } from 'recompose'
+import { Form } from 'shared/form-elements'
 import {
-  Button,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -12,11 +14,10 @@ import {
   Input,
   InputAdornment,
   InputLabel,
+  Button as MUIButton,
   Switch,
   Typography,
 } from '@material-ui/core'
-import { compose, withHandlers, withProps, withState } from 'recompose'
-import { Form } from 'shared/form-elements'
 import { withSnackbar } from 'notistack'
 
 const Option = styled.div`
@@ -30,7 +31,7 @@ const StyledAutocomplete = styled(Autocomplete)`
   margin-bottom: 0px;
 `
 
-const AddButton = styled(Button)`
+const AddButton = styled(MUIButton)`
   display: flex;
   padding: 7px 0px;
   justify-content: left;
@@ -49,6 +50,10 @@ const AddOptionButton = ({ option, optionLabel, disabled, showOption }) => (
     </StyledTypography>
   </AddButton>
 )
+
+const CreateButton = styled(Button)`
+  width: 50%;
+`
 
 const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
   <FormControl style={{ display: 'flex' }}>
@@ -132,9 +137,9 @@ const UrlGeneratorForm = ({
         <FormHelperText>{'Whether the plugin should auto-open when the generated url is clicked.'}</FormHelperText>
       </Option>
       <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-        <Button color="primary" disabled={isDisabled} style={{ width: '50%' }} type="submit" variant="contained">
+        <CreateButton color="primaryGradient" disabled={isDisabled} type="submit" variant="contained">
           {'Create Url'}
-        </Button>
+        </CreateButton>
       </div>
     </Form>
   </React.Fragment>

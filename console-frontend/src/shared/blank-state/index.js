@@ -9,7 +9,7 @@ const BlankState = ({ title, imageSource, description, route, onClick }) => (
     {description && <Description variant="body1">{description}</Description>}
     {route && (
       <Link to={route}>
-        <StyledButton color="primary" onClick={onClick} variant="contained">
+        <StyledButton color="primaryGradient" onClick={onClick} variant="contained">
           {'Create New'}
         </StyledButton>
       </Link>
