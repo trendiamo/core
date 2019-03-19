@@ -56,6 +56,26 @@ const customButtons = {
     backgroundColor: '#dc4343',
     color: '#fff',
   },
+  disabled: {
+    backgroundImage: 'none',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    color: '#fff',
+  },
+  primaryGradient: {
+    backgroundImage: 'linear-gradient(132deg, #ff843e, #ff6c40 52%, #ff5642)',
+    backgroundColor: '#ff6641',
+    color: '#fff',
+    hover: {
+      backgroundImage: 'none',
+      backgroundColor: '#ff6641',
+      color: '#fff',
+    },
+  },
+  primaryText: {
+    hover: {
+      color: '#ff6641',
+    },
+  },
 }
 
 const customPalette = {

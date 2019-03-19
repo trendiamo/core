@@ -1,5 +1,6 @@
+import Button from 'shared/button'
 import styled, { keyframes } from 'styled-components'
-import { Button, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
 const ease = keyframes`
   0% {
