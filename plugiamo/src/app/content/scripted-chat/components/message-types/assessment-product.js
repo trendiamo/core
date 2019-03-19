@@ -34,6 +34,12 @@ const styleConfigDefault = {
   },
 }
 
+const highlightDefault = {
+  text: 'Best Seller',
+  backgroundColor: '#fa0',
+  textColor: '#fff',
+}
+
 const Container = styled.div`
   width: ${({ cols }) => 100 / cols}%;
   padding: 0 10px 20px;
@@ -78,7 +84,7 @@ const Highlight = ({ highlight, styleConfig }) => (
 const AssessmentProductTemplate = ({ data, onClick, big, styleConfig = styleConfigDefault }) => (
   <Container cols={big ? 3 : 2} style={styleConfig.container}>
     <InnerContainer>
-      {data.highlight && <Highlight highlight={data.highlight} styleConfig={styleConfig} />}
+      {data.highlight && <Highlight highlight={highlightDefault} styleConfig={styleConfig} />}
       <ProductMessage onClick={onClick} product={data} styleConfig={styleConfig} />
     </InnerContainer>
   </Container>
