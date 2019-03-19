@@ -1,3 +1,4 @@
+import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import VideoIcon from 'icons/ic-play.svg'
 import VideoModal from 'shared/video-modal'
@@ -50,8 +51,14 @@ export default compose(
     )}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
   })),
   withHandlers({
-    onClick: ({ setIsOpen }) => () => {
+    onClick: ({ setIsOpen, video }) => () => {
       setIsOpen(true)
+      mixpanel.track('Opened Assessment Header Video', {
+        hostname: location.hostname,
+        url: `https://www.youtube.com/embed/${extractYoutubeId(
+          video.url
+        )}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
+      })
     },
   })
 )(VideoButton)
