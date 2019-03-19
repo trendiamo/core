@@ -1,7 +1,7 @@
 import ProductsTable from './products-table'
 import React from 'react'
 import styled from 'styled-components'
-import TagsContainer from './tags-container'
+import Tags from './tags'
 
 const Img = styled.img`
   width: 100%;
@@ -34,22 +34,19 @@ const Price = styled.div`
   color: #333;
 `
 
-const ProductsAndTags = ({ changedProducts, currentProduct, tagsMatrix, tagGroupIndex, ...props }) => (
+const Product = ({ currentProduct }) => (
+  <ProductContainer>
+    <Img alt="" src={currentProduct.images[0].src} />
+    <Name>{currentProduct.title}</Name>
+    <Price>{currentProduct.displayPrice}</Price>
+  </ProductContainer>
+)
+
+const ProductsAndTags = ({ changedProducts, currentProduct, data, ...props }) => (
   <ProductAndTags>
-    <ProductsTable changedProducts={changedProducts} tagGroupIndex={tagGroupIndex} {...props} />
-    <ProductContainer>
-      <Img alt="" src={currentProduct.images[0].src} />
-      <Name>{currentProduct.title}</Name>
-      <Price>{currentProduct.displayPrice}</Price>
-    </ProductContainer>
-    <TagsContainer
-      currentProduct={currentProduct}
-      tagGroupIndex={tagGroupIndex}
-      tags={tagsMatrix[tagGroupIndex]}
-      tagsLength={tagsMatrix.length}
-      tagsMatrix={tagsMatrix}
-      {...props}
-    />
+    <ProductsTable changedProducts={changedProducts} {...props} />
+    <Product currentProduct={currentProduct} />
+    <Tags currentProduct={currentProduct} data={data} {...props} />
   </ProductAndTags>
 )
 

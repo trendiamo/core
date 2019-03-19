@@ -11,9 +11,8 @@ const TagBase = styled.div`
     background-color: #dddbd0;
   }
   border: 1px solid #b3a87d;
-  border-radius: 4px;
-  padding: 0.3rem;
-  margin-bottom: 1rem;
+  border-top: 0;
+  padding: 2px;
   cursor: pointer;
   font-weight: ${({ selected }) => (selected ? '500' : 'normal')};
 
@@ -42,10 +41,9 @@ const Tag = compose(
     onClick: ({ onClick, tag }) => () => onClick(tag),
   }),
   withProps(({ currentProduct, tag }) => {
-    const isSimple = typeof tag === 'string'
     return {
-      selected: isSimple ? currentProduct.tags && currentProduct.tags[tag] : currentProduct[tag.key],
-      label: isSimple ? tag : tag.name,
+      selected: tag.key ? currentProduct[tag.key] : currentProduct.tag === tag,
+      label: typeof tag === 'string' ? tag : tag.name,
     }
   })
 )(({ keyCode, label, onClick, selected }) => (
