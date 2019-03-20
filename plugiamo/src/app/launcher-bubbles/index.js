@@ -1,5 +1,6 @@
 import BubbleButtons from './buttons'
 import LauncherBubble from './launcher-bubble'
+import { h } from 'preact'
 
 const getExtraBubble = flow => {
   if (flow.flowType === 'outro') {
@@ -41,4 +42,43 @@ const getBubbleProps = data => {
   }
 }
 
-export { LauncherBubble, BubbleButtons, getBubbleProps }
+const LauncherBubbles = ({
+  bubble,
+  disappear,
+  onToggleContent,
+  position,
+  showingContent,
+  extraBubble,
+  setDisappear,
+}) => (
+  <div>
+    <LauncherBubble
+      bubble={bubble}
+      disappear={disappear}
+      onToggleContent={onToggleContent}
+      position={position}
+      showingContent={showingContent}
+    />
+    {extraBubble && extraBubble.message && (
+      <LauncherBubble
+        bubble={extraBubble}
+        disappear={disappear}
+        extraBubble
+        onToggleContent={onToggleContent}
+        position={position}
+        showingContent={showingContent}
+      />
+    )}
+    {extraBubble && extraBubble.buttons && (
+      <BubbleButtons
+        bubble={extraBubble}
+        disappear={disappear}
+        position={position}
+        setDisappear={setDisappear}
+        showingContent={showingContent}
+      />
+    )}
+  </div>
+)
+
+export { LauncherBubbles, getBubbleProps }

@@ -7,8 +7,7 @@ import PersonaPic from 'shared/persona-pic'
 import PulsateEffect from './pulsate-effect'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { BubbleButtons, LauncherBubble } from 'app/launcher-bubbles'
-import { compose, withHandlers, withProps, withState } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
 
@@ -63,38 +62,8 @@ const Container = styled.div`
   }
 `
 
-const Launcher = ({
-  extraBubble,
-  optimizelyToggleContent,
-  personaPicUrl,
-  position,
-  showingContent,
-  bubble,
-  onToggleContent,
-  setDisappear,
-  disappear,
-}) => (
+const Launcher = ({ optimizelyToggleContent, personaPicUrl, position, showingContent, onToggleContent, disappear }) => (
   <div>
-    <LauncherBubble
-      bubble={bubble}
-      disappear={disappear}
-      onToggleContent={onToggleContent}
-      position={position}
-      showingContent={showingContent}
-    />
-    {extraBubble && extraBubble.message && (
-      <LauncherBubble
-        bubble={extraBubble}
-        disappear={disappear}
-        extraBubble
-        onToggleContent={onToggleContent}
-        position={position}
-        showingContent={showingContent}
-      />
-    )}
-    {extraBubble && extraBubble.buttons && (
-      <BubbleButtons bubble={extraBubble} position={position} setDisappear={setDisappear} />
-    )}
     <LauncherFrame
       disappear={disappear}
       onToggleContent={onToggleContent}
@@ -113,7 +82,6 @@ const Launcher = ({
 )
 
 export default compose(
-  withState('disappear', 'setDisappear', false),
   withProps(({ persona }) => ({
     personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', w: 70, h: 70 }),
   })),
