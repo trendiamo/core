@@ -6,6 +6,18 @@
 yarn start
 ```
 
+## Upload products
+
+```sh
+yarn upload-data
+```
+
+## Deploy
+
+```sh
+yarn deploy
+```
+
 ## Include it in a website
 
 ```js

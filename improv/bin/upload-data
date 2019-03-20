@@ -1,0 +1,5 @@
+#!/bin/sh
+
+yarn fetch-improv
+gzip -9 -c bin/tmp/improv-data.js | aws s3 cp - s3://improv/improv-data.js --profile do --endpoint-url https://improv.ams3.digitaloceanspaces.com/ --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600'
+rm bin/tmp/improv-data.js

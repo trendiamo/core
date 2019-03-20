@@ -46,7 +46,7 @@ export default compose(
   lifecycle({
     componentDidMount() {
       const _this = this
-      fetch('https://console-assets-frb.ams3.digitaloceanspaces.com/manual/improv-clients.js', {
+      fetch('https://improv.ams3.digitaloceanspaces.com/improv/improv-data.js', {
         headers: new Headers({ 'Content-Type': 'application/json' }),
       })
         .then(response => response.json())
