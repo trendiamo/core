@@ -1,8 +1,6 @@
 import App from 'app'
-import Assessment from 'special/assessment'
 import Bridge from 'special/bridge'
 // import initRollbar from 'ext/rollbar'
-import assessmentData from 'special/assessment/data'
 import bridgeData from 'special/bridge/data'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
@@ -22,15 +20,8 @@ const detectAndMarkBridge = () => {
   return !!localStorage.getItem('trnd-hackathon')
 }
 
-const detectAndMarkAssessment = () => {
-  if (!Object.keys(assessmentData).includes(location.hostname) && !process.env.ASSESSMENT) return false
-  if ((optionsFromHash().asmt || '').match(/1|true/)) localStorage.setItem('trnd-assessment', 1)
-  return !!localStorage.getItem('trnd-assessment')
-}
-
 const initRootComponent = () => {
   if (detectAndMarkBridge()) return Bridge
-  if (detectAndMarkAssessment()) return Assessment
   // here we haven't requested info yet, so we do need to base this off of location.hostname
   if (location.hostname === 'www.spotahome.com') return SpotAHome
 
