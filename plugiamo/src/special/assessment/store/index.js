@@ -24,7 +24,7 @@ const ChatLogUiTemplate = ({
     <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
       <ItemDiv animate={false} contentRef={contentRef} dontScroll logSection={logSection} />
     </ChatBackground>
-    {results.length > 0 && !isSmall() && (
+    {!isSmall() && (
       <Modal
         header={step.header}
         results={results}
