@@ -15,6 +15,7 @@ const ShowcaseContent = ({ isLeaving, routeToSpotlight, spotlights, callbacks })
       <List>
         {spotlights.map((spotlight, index) => (
           <SpotlightItem
+            index={index}
             key={spotlight.id || `new-${index}`}
             onClick={callbacks.onSpotlightClick({ spotlight })}
             routeToSpotlight={routeToSpotlight}

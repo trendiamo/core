@@ -2,6 +2,7 @@ import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import routes from 'app/routes'
+import { assessmentHack } from 'special/assessment/utils'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
@@ -73,13 +74,16 @@ const Showcase = compose(
     },
   }),
   withHandlers({
-    onSpotlightClick: ({ routeToSpotlight }) => ({ spotlight }) => () => {
+    onSpotlightClick: ({ routeToSpotlight, setShowAssessmentContent }) => ({ spotlight }) => index => {
       mixpanel.track('Clicked Persona', {
         flowType: 'showcase',
         hostname: location.hostname,
         personaName: spotlight.persona.name,
         personaRef: spotlight.persona.id,
       })
+      if (index === 0 && assessmentHack()) {
+        setTimeout(() => setShowAssessmentContent(true), 300)
+      }
       routeToSpotlight(spotlight)
     },
     onProductClick: () => ({ product, spotlight }) => () => {

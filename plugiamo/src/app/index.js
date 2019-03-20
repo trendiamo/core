@@ -56,6 +56,11 @@ const AppBaseTemplate = ({
   bubble,
   extraBubble,
   ContentFrame,
+  showAssessmentContent,
+  setShowAssessmentContent,
+  setShowingLauncher,
+  setShowingContent,
+  showingLaucher,
 }) => (
   <AppBaseDiv>
     {showingContent && (
@@ -66,27 +71,35 @@ const AppBaseTemplate = ({
         onToggleContent={onToggleContent}
         persona={persona}
         position={position}
+        setShowAssessmentContent={setShowAssessmentContent}
+        setShowingContent={setShowingContent}
+        setShowingLauncher={setShowingLauncher}
+        showAssessmentContent={showAssessmentContent}
         showingContent={showingContent}
       />
     )}
-    <LauncherBubbles
-      bubble={bubble}
-      disappear={disappear}
-      extraBubble={extraBubble}
-      onToggleContent={onToggleContent}
-      position={position}
-      setDisappear={setDisappear}
-      showingContent={showingContent}
-    />
-    <Launcher
-      data={data}
-      disappear={disappear}
-      launcherType={launcherType}
-      onToggleContent={onToggleContent}
-      persona={persona}
-      position={position}
-      showingContent={showingContent}
-    />
+    {showingLaucher && (
+      <LauncherBubbles
+        bubble={bubble}
+        disappear={disappear}
+        extraBubble={extraBubble}
+        onToggleContent={onToggleContent}
+        position={position}
+        setDisappear={setDisappear}
+        showingContent={showingContent}
+      />
+    )}
+    {showingLaucher && (
+      <Launcher
+        data={data}
+        disappear={disappear}
+        launcherType={launcherType}
+        onToggleContent={onToggleContent}
+        persona={persona}
+        position={position}
+        showingContent={showingContent}
+      />
+    )}
     {showingContent && <Gradient position={position} />}
   </AppBaseDiv>
 )
@@ -145,6 +158,8 @@ export default compose(
   withState('persona', 'setPersona'),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
+  withState('showAssessmentContent', 'setShowAssessmentContent', false),
+  withState('showingLaucher', 'setShowingLauncher', true),
   lifecycle({
     componentDidMount() {
       const { data, pathFromNav, setPersona, setShowingContent } = this.props
@@ -186,7 +201,7 @@ export default compose(
   branch(({ persona }) => !persona, renderNothing),
   withProps(() => ({ position: getFrekklsConfig().position })),
   withHandlers({
-    onToggleContent: ({ data, setIsUnmounting, setShowingContent, showingContent }) => () => {
+    onToggleContent: ({ data, setIsUnmounting, setShowingContent, showingContent, setShowAssessmentContent }) => () => {
       if (data.flow.flowType === 'outro') return
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
@@ -202,6 +217,7 @@ export default compose(
           400
         )
       }
+      setShowAssessmentContent(false)
       return setShowingContent(!showingContent)
     },
   }),

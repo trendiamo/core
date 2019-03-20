@@ -15,9 +15,7 @@ const Wrapper = styled.div`
   color: #333;
 `
 
-const ContentWrapper = ({ children, onRouteChange, onToggleContent, persona, isTransitioning }) => (
-  <Wrapper>{React.cloneElement(children, { onRouteChange, onToggleContent, persona, isTransitioning })}</Wrapper>
-)
+const ContentWrapper = ({ children, ...props }) => <Wrapper>{React.cloneElement(children, { ...props })}</Wrapper>
 
 export default compose(
   withState('isTransitioning', 'setIsTransitioning', false),

@@ -36,10 +36,10 @@ const SpotlightItem = compose(
     return {
       setImgRef: () => ref => (imgRef = ref),
       setNameRef: () => ref => (nameRef = ref),
-      handleClick: ({ onClick }) => () => {
+      handleClick: ({ onClick, index }) => () => {
         transition.addElement('img', imgRef.base || imgRef)
         transition.addElement('name', nameRef.base || nameRef)
-        onClick()
+        onClick(index)
       },
     }
   })

@@ -1,3 +1,4 @@
+import AssessmentContent from 'special/assessment/base'
 import DefaultContentFrame from './content-frame'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose, lifecycle } from 'recompose'
@@ -11,10 +12,27 @@ const Content = ({
   onToggleContent,
   position,
   persona,
+  showAssessmentContent,
+  setShowAssessmentContent,
+  setShowingLauncher,
+  setShowingContent,
 }) => (
   <ContentFrame isUnmounting={isUnmounting} onToggleContent={onToggleContent} position={position}>
-    <ContentWrapper onToggleContent={onToggleContent} persona={persona}>
-      {Component}
+    <ContentWrapper
+      onToggleContent={onToggleContent}
+      persona={persona}
+      setShowAssessmentContent={setShowAssessmentContent}
+    >
+      {showAssessmentContent ? (
+        <AssessmentContent
+          animateOpacity
+          setShowingContent={setShowingContent}
+          setShowingLauncher={setShowingLauncher}
+          showingContent
+        />
+      ) : (
+        Component
+      )}
     </ContentWrapper>
   </ContentFrame>
 )

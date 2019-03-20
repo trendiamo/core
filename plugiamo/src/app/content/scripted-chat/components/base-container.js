@@ -9,6 +9,8 @@ const ContainerDiv = styled.div`
   flex-direction: column;
   max-height: 100%;
   background-color: #ebeef2;
+  transition: opacity 1s ease-out;
+  ${({ animateOpacity }) => animateOpacity && 'opacity: 0;'}
   @keyframes _frekkls_message_appear {
     0% {
       opacity: 0;
@@ -36,8 +38,8 @@ const ContainerDiv = styled.div`
   }
 `
 
-const Container = ({ handleWheel, handleTouch, children }) => (
-  <ContainerDiv onTouchMove={handleTouch} onWheel={handleWheel}>
+const Container = ({ handleWheel, handleTouch, children, animateOpacity }) => (
+  <ContainerDiv animateOpacity={animateOpacity} onTouchMove={handleTouch} onWheel={handleWheel}>
     {children}
   </ContainerDiv>
 )

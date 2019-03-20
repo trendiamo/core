@@ -4,10 +4,10 @@ import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withProps, withState } from 'recompose'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
-import { matchUrl, timeout } from 'plugin-base'
+import { matchUrl } from 'plugin-base'
 
 const Plugin = ({
   showingLaucher,
@@ -61,25 +61,14 @@ export default compose(
         trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
     ),
   })),
-  withState('assessmentDepth', 'setAssessmentDepth', 0),
-  withState('currentStepKey', 'setCurrentStepKey', 'root'),
-  withState('tags', 'setTags', []),
-  withState('stepIndex', 'setStepIndex', 0),
   withProps(({ trigger }) => ({
     module: trigger && trigger.module,
   })),
-  withProps(({ assessmentDepth, module, currentStepKey }) => ({
-    step: module && module.steps[currentStepKey],
-    steps: module && module.steps,
-    depth: assessmentDepth,
-  })),
   branch(({ module }) => !module, renderNothing),
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
-  withState('endNodeTags', 'setEndNodeTags', []),
   withState('isUnmounting', 'setIsUnmounting', false),
-  withState('showingContent', 'setShowingContent', false),
+  withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
   withState('showingLaucher', 'setShowingLauncher', true),
-  withState('showingCtaButton', 'setShowingCtaButton', false),
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent } = this.props
@@ -91,10 +80,6 @@ export default compose(
         hostname: location.hostname,
       })
       if (autoOpen) setShowingContent(true)
-    },
-    componentWillUnmount() {
-      timeout.clear('exitOnMobile')
-      timeout.clear('loadingProgressBar')
     },
     componentDidUpdate(prevProps) {
       const { showingContent } = this.props
@@ -112,120 +97,6 @@ export default compose(
   withProps(({ module }) => ({
     launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
   })),
-  withHandlers({
-    handleEndNodeTags: ({ showingCtaButton, endNodeTags, setEndNodeTags, setShowingCtaButton }) => step => {
-      let newTags
-      if (showingCtaButton) {
-        if (!endNodeTags.includes(step.title)) newTags = [...endNodeTags, step.title]
-        else {
-          newTags = endNodeTags.filter(tag => tag !== step.title)
-          if (newTags.length === 0) setShowingCtaButton(false)
-        }
-      } else {
-        newTags = [...endNodeTags, step.title]
-        setShowingCtaButton(true)
-      }
-      return setEndNodeTags(newTags)
-    },
-    goToStore: ({ endNodeTags, stepIndex, tags, setStepIndex, setTags, setCurrentStepKey }) => currentStepKey => {
-      setStepIndex(stepIndex + 1)
-      setTags(endNodeTags.map(tag => [...tags, tag]))
-      mixpanel.track('Clicked Assessment Step', {
-        hostname: location.hostname,
-        stepIndex,
-        step: currentStepKey,
-        tags: endNodeTags,
-      })
-      setCurrentStepKey('store')
-    },
-    resetAssessment: ({
-      setTags,
-      setEndNodeTags,
-      setCurrentStepKey,
-      setStepIndex,
-      setAssessmentDepth,
-      setShowingCtaButton,
-    }) => () => {
-      setTags([])
-      setEndNodeTags([])
-      setCurrentStepKey('root')
-      setStepIndex(0)
-      setAssessmentDepth(0)
-      setShowingCtaButton(false)
-    },
-  }),
-  withHandlers({
-    onToggleContent: ({
-      module,
-      setIsUnmounting,
-      setShowingContent,
-      showingContent,
-      pluginState,
-      resetAssessment,
-    }) => () => {
-      if (module.flowType !== 'ht-chat' && module.flowType !== 'ht-assessment') return
-      mixpanel.track('Toggled Plugin', {
-        hostname: location.hostname,
-        action: showingContent ? 'close' : 'open',
-        pluginState,
-      })
-      mixpanel.time_event('Toggled Plugin')
-
-      if (showingContent && isSmall()) {
-        setIsUnmounting(true)
-        return timeout.set(
-          'exitOnMobile',
-          () => {
-            setIsUnmounting(false)
-            setShowingContent(false)
-          },
-          400
-        )
-      }
-      // reset assessment on plugin close
-      resetAssessment()
-      return setShowingContent(!showingContent)
-    },
-    goToNextStep: ({
-      steps,
-      setAssessmentDepth,
-      setCurrentStepKey,
-      setStepIndex,
-      stepIndex,
-      setTags,
-      tags,
-      handleEndNodeTags,
-      goToStore,
-      currentStepKey,
-    }) => step => {
-      if (step.url) {
-        mixpanel.track('Clicked Assessment Step', {
-          hostname: location.hostname,
-          stepIndex,
-          step: currentStepKey,
-          url: step.url,
-        })
-        return setStepIndex(
-          stepIndex + 1,
-          timeout.set('loadingProgressBar', () => (window.location.href = step.url), 600)
-        )
-      }
-      if (step.endNode) return handleEndNodeTags(step)
-      if (step === 'showResults') return goToStore(currentStepKey)
-      setStepIndex(stepIndex + 1)
-      setTags([...tags, step.title])
-      mixpanel.track('Clicked Assessment Step', {
-        hostname: location.hostname,
-        stepIndex,
-        step: currentStepKey,
-        tags: [step.title],
-      })
-      if (step.endNode) return setCurrentStepKey('store')
-      // if depth declared in the step, set depth. Used in progress bar
-      if (steps[step.title].depth) setAssessmentDepth(steps[step.title].depth)
-      setCurrentStepKey(step.title)
-    },
-  }),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()
