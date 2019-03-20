@@ -89,7 +89,7 @@ export const styles = theme => ({
     paddingTop: '4px',
     position: 'relative',
     [theme.breakpoints.up('xs')]: {
-      padding: 0,
+      padding: 14,
       paddingTop: '4px',
     },
     [theme.breakpoints.down('xs')]: {
