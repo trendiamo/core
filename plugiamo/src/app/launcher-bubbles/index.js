@@ -1,3 +1,4 @@
+import BubbleButtons from './buttons'
 import ChatBubbleFrame from './frame'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { ChatBubbleBase, Container } from './components'
@@ -43,7 +44,7 @@ const ChatBubble = ({
   </ChatBubbleFrame>
 )
 
-export default compose(
+const Bubble = compose(
   withState('timeEnded', 'setTimeEnded', false),
   withState('hiddenForContent', 'setHiddenForContent', false),
   withState('animation', 'setAnimation', null),
@@ -140,3 +141,5 @@ export default compose(
   }),
   branch(({ hiddenForContent, bubble, timeEnded }) => !bubble.message || hiddenForContent || timeEnded, renderNothing)
 )(ChatBubble)
+
+export { Bubble, BubbleButtons }
