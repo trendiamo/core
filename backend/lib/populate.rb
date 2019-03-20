@@ -148,6 +148,7 @@ class Populate
       { email: "dh", name: "Dylan Henderson" },
       { email: "frb", name: "Fabian Brooks" },
       { email: "mc", name: "Michael Campbell" },
+      { email: "gc", name: "Gregg Cooper" },
     ]
   end
 
