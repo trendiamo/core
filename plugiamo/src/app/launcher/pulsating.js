@@ -7,12 +7,14 @@ import PersonaPic from 'shared/persona-pic'
 import PulsateEffect from './pulsate-effect'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { Bubble, BubbleButtons } from 'app/launcher-bubbles'
+import { BubbleButtons, LauncherBubble } from 'app/launcher-bubbles'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
 
-const StyledLauncherFrame = animateOnMount(styled(Frame).attrs({
+const StyledLauncherFrame = animateOnMount(styled(props => (
+  <Frame {...omit(props, ['position', 'showingContent'])} />
+)).attrs({
   title: 'Trendiamo Launcher',
 })`
   border: 0;
@@ -26,6 +28,14 @@ const StyledLauncherFrame = animateOnMount(styled(Frame).attrs({
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transition: opacity 0.25s ease;
 `)
+
+const LauncherFrame = compose(
+  withHotkeys({
+    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
+      if (showingContent) onToggleContent()
+    },
+  })
+)(StyledLauncherFrame)
 
 const Container = styled.div`
   width: 70px;
@@ -53,14 +63,6 @@ const Container = styled.div`
   }
 `
 
-const LauncherFrame = compose(
-  withHotkeys({
-    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
-      if (showingContent) onToggleContent()
-    },
-  })
-)(props => <StyledLauncherFrame {...omit(props, ['showingContent'])} />)
-
 const Launcher = ({
   extraBubble,
   optimizelyToggleContent,
@@ -73,7 +75,7 @@ const Launcher = ({
   disappear,
 }) => (
   <div>
-    <Bubble
+    <LauncherBubble
       bubble={bubble}
       disappear={disappear}
       onToggleContent={onToggleContent}
@@ -81,7 +83,7 @@ const Launcher = ({
       showingContent={showingContent}
     />
     {extraBubble && extraBubble.message && (
-      <Bubble
+      <LauncherBubble
         bubble={extraBubble}
         disappear={disappear}
         extraBubble

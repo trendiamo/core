@@ -4,12 +4,21 @@ import omit from 'lodash.omit'
 import styled from 'styled-components'
 import { h } from 'preact'
 
-const ChatBubbleFrame = styled(props => (
+const LauncherBubbleFrame = styled(props => (
   <Frame
-    {...omit(props, ['bubble', 'bubbleTimeoutId', 'extraBubble', 'textWidth', 'animation', 'elevation', 'disappear'])}
+    {...omit(props, [
+      'bubble',
+      'bubbleTimeoutId',
+      'extraBubble',
+      'position',
+      'textWidth',
+      'animation',
+      'elevation',
+      'disappear',
+    ])}
   />
 )).attrs({
-  title: 'Trendiamo Chat Bubble',
+  title: 'Trendiamo Launcher Bubble',
 })`
   border: 0;
   z-index: ${({ extraBubble }) => (extraBubble ? 2147483001 : 2147483000)};
@@ -62,4 +71,4 @@ const ChatBubbleFrame = styled(props => (
   ${({ position }) => keyframes({ position })}
 `
 
-export default ChatBubbleFrame
+export default LauncherBubbleFrame
