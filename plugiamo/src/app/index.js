@@ -9,6 +9,7 @@ import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { getBubbleProps } from './launcher-bubbles'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { HEIGHT_BREAKPOINT, location } from 'config'
@@ -39,29 +40,6 @@ const AppBaseDiv = styled.div`
     display: block;
   }
 `
-
-const getExtraBubble = flow => {
-  if (flow.flowType === 'outro') {
-    return {
-      buttons: [
-        {
-          value: 'no',
-          message: flow.chatBubbleButtonNo,
-          appearsAfter: 0,
-        },
-        {
-          value: 'yes',
-          message: flow.chatBubbleButtonYes,
-          appearsAfter: 0.2,
-        },
-      ],
-      timeStart: 2.5,
-      timeEnd: null,
-      timeStartDuration: 0.4,
-    }
-  }
-  return { message: flow.chatBubbleExtraText }
-}
 
 const AppBaseTemplate = ({
   Component,
@@ -103,24 +81,7 @@ const AppBaseTemplate = ({
   </AppBaseDiv>
 )
 
-export const AppBase = compose(
-  withProps(({ data }) => {
-    if (!data) return
-    const extraBubble = data.launcher ? data.launcher.chatBubbleExtra : getExtraBubble(data.flow)
-    let bubble = data.launcher ? data.launcher.chatBubble : { message: data.flow.chatBubbleText }
-    if (extraBubble.buttons || extraBubble.message) {
-      bubble.timeOfElevation = 1.6
-    }
-    if (extraBubble.buttons) {
-      bubble.timeEnd = null
-    }
-    return {
-      bubble,
-      extraBubble,
-      [extraBubble.buttons && 'launcherType']: 'original',
-    }
-  })
-)(AppBaseTemplate)
+export const AppBase = compose(withProps(({ data }) => getBubbleProps(data)))(AppBaseTemplate)
 
 export default compose(
   withProps({ Component: <Router /> }),
