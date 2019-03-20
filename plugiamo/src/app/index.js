@@ -9,7 +9,7 @@ import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
-import { getBubbleProps } from './launcher-bubbles'
+import { getBubbleProps, LauncherBubbles } from './launcher-bubbles'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { HEIGHT_BREAKPOINT, location } from 'config'
@@ -44,6 +44,8 @@ const AppBaseDiv = styled.div`
 const AppBaseTemplate = ({
   Component,
   Launcher,
+  disappear,
+  setDisappear,
   isUnmounting,
   launcherType,
   onToggleContent,
@@ -67,10 +69,18 @@ const AppBaseTemplate = ({
         showingContent={showingContent}
       />
     )}
-    <Launcher
+    <LauncherBubbles
       bubble={bubble}
-      data={data}
+      disappear={disappear}
       extraBubble={extraBubble}
+      onToggleContent={onToggleContent}
+      position={position}
+      setDisappear={setDisappear}
+      showingContent={showingContent}
+    />
+    <Launcher
+      data={data}
+      disappear={disappear}
       launcherType={launcherType}
       onToggleContent={onToggleContent}
       persona={persona}
@@ -87,6 +97,7 @@ export default compose(
   withProps({ Component: <Router /> }),
   withProps({ Launcher }),
   withProps({ pathFromNav: setupFlowHistory() }),
+  withState('disappear', 'setDisappear', false),
   graphql(
     gql`
       query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
