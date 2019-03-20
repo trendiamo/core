@@ -1,6 +1,7 @@
 /coverage
 /build
 /node_modules
+/bin/tmp
 
 .DS_Store
 .env
