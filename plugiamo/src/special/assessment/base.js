@@ -21,8 +21,9 @@ export default compose(
     }
   }),
   withHandlers({
-    handleScroll: ({ setCoverMinimized, coverMinimized, step, setTouch, touch }) => event => {
+    handleScroll: ({ setCoverMinimized, getContentRef, coverMinimized, step, setTouch, touch }) => event => {
       if (step.header.minimized) return
+      if (window.innerHeight - getContentRef().base.scrollHeight > 90) return
       const scrollTop = event.target.scrollTop
       if (scrollTop <= 0 && coverMinimized) {
         setTouch(false)
