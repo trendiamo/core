@@ -13,7 +13,6 @@ const implFactory = {
           src: img.dataset.src,
         }))
         return {
-          // id,
           url,
           title,
           images,
@@ -29,7 +28,6 @@ const implFactory = {
     parseProducts() {
       const products = $$('.product-item', e => {
         if (!e.querySelector('.price-wrapper .price')) return
-        const id = e.querySelector('.price-box').getAttribute('data-product-id')
         const url = e.querySelector('a').href
         const title = e.querySelector('.product-item-name').innerText
         const displayPrice = e.querySelector('.price-wrapper .price').innerText
@@ -41,7 +39,6 @@ const implFactory = {
         }))
         const picUrl = e.querySelectorAll('.product-image-photo')[0].dataset.src
         return {
-          id,
           url,
           title,
           picUrl,
