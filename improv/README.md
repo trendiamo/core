@@ -23,7 +23,7 @@ yarn deploy
 ```js
 var s1 = document.createElement('script'),
   s2 = document.getElementsByTagName('script')[0]
-s1.src = '<YOUR_NGROK_URL>/improv.js?' + Date.now()
+s1.src = 'https://improv.ams3.digitaloceanspaces.com/improv/improv.js?' + Date.now()
 s2.parentNode.insertBefore(s1, s2)
 ```
 
