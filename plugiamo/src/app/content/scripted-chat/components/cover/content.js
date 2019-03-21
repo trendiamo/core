@@ -56,7 +56,7 @@ const NameMinimized = styled.div`
   `}
 `
 
-const PresentedBy = styled.div`
+const Subheader = styled.div`
   font-size: 14px;
   backface-visibility: hidden;
   color: ${({ header }) => header.textColor || '#333'};
@@ -92,11 +92,11 @@ const Content = ({ minimized, header, config }) => (
         {header.title || header.productTitle}
       </NameHelper>
     </Header>
-    {header.personaInstagramHandle && (
-      <PresentedBy header={header} minimized={minimized}>
-        {'presented by '}
-        <b>{header.personaInstagramHandle}</b>
-      </PresentedBy>
+    {(header.personaInstagramHandle || header.subtitle) && (
+      <Subheader header={header} minimized={minimized}>
+        {header.personaInstagramHandle && 'presented by '}
+        <b>{header.personaInstagramHandle || header.subtitle}</b>
+      </Subheader>
     )}
     {header.video && <VideoButton video={header.video} />}
   </TextContainer>
