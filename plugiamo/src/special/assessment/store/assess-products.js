@@ -5,7 +5,7 @@ const assessProducts = (products, tagsArrays) => {
     .map(tag => products.filter(product => product.tag && tag === product.tag))
     .forEach(productArray => productsResult.push(...productArray))
 
-  return productsResult
+  return productsResult.sort((a, b) => !!b.highlight - !!a.highlight)
 }
 
 export default assessProducts
