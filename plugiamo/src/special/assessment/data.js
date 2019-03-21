@@ -1,3 +1,19 @@
+const header = {
+  title: 'Nico de Roy',
+  subtitle: 'Designer @ Pierre Cardin',
+  imageUrl: 'https://trendiamo-assets.imgix.net/manual/pierre-cardin/Nico-de-Roy_small.jpg?fit=crop&w=160&h90',
+  animationUrl:
+    'https://trendiamo-assets.imgix.net/uploads/personas-profile-pics/0a27b5c4/Nico-de-Roy.jpg?fit=crop&w=400&h400',
+  backgroundColor: '#fff',
+  textColor: '#111',
+  // video: {
+  //   url: 'https://youtu.be/x9AAdO7ufHg',
+  //   text: 'Check out my video',
+  //   textColor: '#fff',
+  //   backgroundColor: 'rgba(255,255,255,0.3)',
+  //   icon: true,
+  // },
+}
 const data = {
   'www.pierre-cardin.de': {
     triggers: [
@@ -31,54 +47,37 @@ const data = {
           },
           steps: {
             root: {
-              header: {
-                productTitle: 'Rodrigo',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                backgroundColor: '#111',
-                textColor: '#fff',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(255,255,255,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: "Please answer the following questions and I'll show you a selection that fits you 😉",
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
+                    text:
+                      'Willkommen bei Pierre Cardin! Ich würde dir gerne die für dich relevantesten Pieces zeigen und dir im Anschluss Optionen für das richtige Outfit vorstellen.',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Casual',
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                        title: 'Business',
-                      },
-                      {
-                        picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Basics',
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                        title: 'Business',
+                      },
+                      {
+                        picUrl:
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Specials',
+                        url: 'https://www.pierre-cardin.de/',
                       },
                     ],
                   },
@@ -87,51 +86,34 @@ const data = {
             },
             Casual: {
               depth: 2,
-              header: {
-                productTitle: 'Casual',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/red.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_red.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Casual it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: 'With which item do you want to start?',
+                    text: 'Alles klar! Womit wollen wir anfangen?',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
-                        title: 'Jeans & Hosen',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                        title: 'Jeans und Hosen',
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Jacken',
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Oberteile',
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Sakkos',
                       },
                     ],
@@ -141,51 +123,34 @@ const data = {
             },
             Business: {
               depth: 2,
-              header: {
-                productTitle: 'Business',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/red.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_red.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Business it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: 'With which item do you want to start?',
+                    text: 'Alles klar! Womit wollen wir anfangen?',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Anzüge',
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Baukasten Anzüge',
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Hemnden',
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Accessoires',
                       },
                     ],
@@ -195,54 +160,37 @@ const data = {
             },
             Basics: {
               depth: 1,
-              header: {
-                productTitle: 'Basics',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/red.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_red.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Basics it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: 'With which item do you want to start?',
+                    text: 'Alles klar! Wonach schaust du genau? 🙂',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Wäsche',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
-                        title: 'Jeans & Hosen',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                        title: 'Jeans und Hosen',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Oberteile',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Jacken',
                         endNode: true,
                       },
@@ -251,95 +199,39 @@ const data = {
                 ],
               },
             },
-            Specials: {
-              depth: 1,
-              header: {
-                productTitle: 'Specials',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/red.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_red.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+            'Jeans und Hosen': {
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Specials it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: 'With which item do you want to start?',
+                    text:
+                      'Super! Wir haben gerade auf unsere neue Frühling / Sommer Kollektion umgestellt. Falls du dir unsicher bist, welche unserer Jeans-Passformen die für dich beste ist, kannst du hier nachschauen: Zum Denim Guide',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR9-brief-red-front-web_900x.jpg?v=1516105114',
-                        title: 'Special Collection',
-                        url: 'https://www.pierre-cardin.de/',
-                      },
-                    ],
-                  },
-                ],
-              },
-            },
-            'Jeans & Hosen': {
-              header: {
-                productTitle: 'Jeans & Hosen',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
-              logs: {
-                default: [
-                  {
-                    type: 'text',
-                    text: 'Cool! Jeans & Hosen it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
-                  },
-                  {
-                    type: 'assessmentStepOptions',
-                    assessmentStepOptions: [
-                      {
-                        picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Regular Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Modern Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Tapered Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Slim Fit',
                         endNode: true,
                       },
@@ -349,54 +241,38 @@ const data = {
               },
             },
             Jacken: {
-              header: {
-                productTitle: 'Jacken',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Jacken it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
+                    text:
+                      'Okey! Wir haben die verschiedensten Typen im Angebot. Wonach suchst du genau? Du kannst gerne mehrere Optionen auswählen!',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Blousons',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Mäntel',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Jacken',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Westen',
                         endNode: true,
                       },
@@ -406,54 +282,37 @@ const data = {
               },
             },
             Oberteile: {
-              header: {
-                productTitle: 'Oberteile',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Oberteile it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
+                    text: 'Cool! Womit können wir dir dienen? Du kannst gerne mehrere Optionen auswählen!',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'T-Shirts',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Polos',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Hemnden',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Pullover',
                         endNode: true,
                       },
@@ -463,42 +322,26 @@ const data = {
               },
             },
             Sakkos: {
-              header: {
-                productTitle: 'Sakkos',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Sakkos it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
+                    text:
+                      'Super Wahl für ein Frühling reifes Smart Casual Outfit! Magst du mir einmal deinen Fit verraten?',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Slim Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Regular Fit',
                         endNode: true,
                       },
@@ -508,43 +351,26 @@ const data = {
               },
             },
             Anzüge: {
-              header: {
-                productTitle: 'Anzüge',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Anzüge it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
+                    text: 'Super! Das wichtigste ist, dass der vernünftig ist. Welchen Fit trägst du normalerweise?',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                        title: 'Slim Fit',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                        title: 'Regular Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                        title: 'Regular Fit',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                        title: 'Slim Fit',
                         endNode: true,
                       },
                     ],
@@ -553,43 +379,26 @@ const data = {
               },
             },
             'Baukasten Anzüge': {
-              header: {
-                productTitle: 'Baukasten Anzüge',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Baukasten Anzüge it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
+                    text: 'Okey! Magst du mir einmal deinen Fit verraten?',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                        title: 'Slim Fit',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                        title: 'Regular Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                        title: 'Regular Fit',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                        title: 'Slim Fit',
                         endNode: true,
                       },
                     ],
@@ -598,48 +407,32 @@ const data = {
               },
             },
             Hemnden: {
-              header: {
-                productTitle: 'Hemnden',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Hemnden it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
+                    text:
+                      'Von Schlicht bis Hingucker haben wir alles im Angebot! Aber zuerst müsste ich einmal wissen welchen Fit du trägst.',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Slim Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
-                        title: 'Regular Fit',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                        title: 'Modern Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Shaped Fit',
                         endNode: true,
                       },
@@ -649,42 +442,26 @@ const data = {
               },
             },
             Accessoires: {
-              header: {
-                productTitle: 'Accessoires',
-                personaName: 'Rodrigo',
-                personaInstagramHandle: '@_rodrigo_pires_',
-                animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/white.gif',
-                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/header_white.png',
-                video: {
-                  url: 'https://youtu.be/x9AAdO7ufHg',
-                  text: 'Check out my video',
-                  textColor: '#fff',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  icon: true,
-                },
-              },
+              header,
               logs: {
                 default: [
                   {
                     type: 'text',
-                    text: 'Cool! Accessoires it is! 👌',
-                  },
-                  {
-                    type: 'text',
-                    text: "Let's start by picking what style you like...",
+                    text:
+                      'Zu jedem guten Business Outfit gehört ein passender Gürtel und ein passendes Einstecktuch oder eine Krawatte. Suchst du nach beidem?',
                   },
                   {
                     type: 'assessmentStepOptions',
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Gürtel',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://cdn.shopify.com/s/files/1/2094/0433/products/PR3-boxer-black-front-web_360x.jpg?v=1498311202',
+                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
                         title: 'Krawatten & Einstecktücher',
                         endNode: true,
                       },

@@ -37,7 +37,7 @@ const Button = styled.button.attrs({
 
 const CtaButton = ({ onClick, hide }) => (
   <Button hide={hide} onClick={onClick}>
-    {'Done! Show me results!'}
+    {'ZUR AUSWAHL'}
   </Button>
 )
 
