@@ -1,8 +1,8 @@
 const data = [
-  'Casual/Jeans & Hosen/Regular Fit',
-  'Casual/Jeans & Hosen/Modern Fit',
-  'Casual/Jeans & Hosen/Tapered Fit',
-  'Casual/Jeans & Hosen/Slim Fit',
+  'Casual/Jeans und Hosen/Regular Fit',
+  'Casual/Jeans und Hosen/Modern Fit',
+  'Casual/Jeans und Hosen/Tapered Fit',
+  'Casual/Jeans und Hosen/Slim Fit',
 
   'Casual/Jacken/Blousons',
   'Casual/Jacken/Mäntel',
@@ -31,7 +31,7 @@ const data = [
   'Business/Accessoires/Krawatten & Einstecktücher',
 
   'Basics/Wäsche',
-  'Basics/Jeans & Hosen',
+  'Basics/Jeans und Hosen',
   'Basics/Oberteile',
   'Basics/Jacken',
 
