@@ -1,18 +1,10 @@
 const header = {
   title: 'Nico de Roy',
   subtitle: 'Designer @ Pierre Cardin',
-  imageUrl: 'https://trendiamo-assets.imgix.net/manual/pierre-cardin/Nico-de-Roy_small.jpg?fit=crop&w=160&h90',
-  animationUrl:
-    'https://trendiamo-assets.imgix.net/uploads/personas-profile-pics/0a27b5c4/Nico-de-Roy.jpg?fit=crop&w=400&h400',
+  imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy_small.jpg',
+  animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
   backgroundColor: '#fff',
   textColor: '#111',
-  // video: {
-  //   url: 'https://youtu.be/x9AAdO7ufHg',
-  //   text: 'Check out my video',
-  //   textColor: '#fff',
-  //   backgroundColor: 'rgba(255,255,255,0.3)',
-  //   icon: true,
-  // },
 }
 const data = {
   'www.pierre-cardin.de': {
@@ -22,29 +14,6 @@ const data = {
         urlMatchers: ['/'],
         module: {
           flowType: 'ht-assessment',
-          launcher: {
-            chatBubble: {
-              message: 'Hey! 👋 Welcome to Pierre Cardin!',
-              timeStart: 0.5,
-              timeEnd: 20,
-              hideBarAfter: 0.2,
-              timeOfElevation: 1.6,
-            },
-            chatBubbleExtra: {
-              message: 'Let me help you!',
-              timeStart: 2.5,
-              timeEnd: 18.2,
-              hideBarAfter: 3.4,
-              timeStartDuration: 0.4,
-            },
-            persona: {
-              name: 'Richard Liewald',
-              profilePic: {
-                url:
-                  'https://trendiamo-assets.imgix.net/uploads/personas-profile-pics/09f4c3ee/Richard_Liewald.jpg?dpr=2.200000047683716&fit=crop&w=45&h=45',
-              },
-            },
-          },
           steps: {
             root: {
               header,
@@ -60,22 +29,22 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Casual',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Basics',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Business',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Specials',
                         url: 'https://www.pierre-cardin.de/',
                       },
@@ -98,22 +67,22 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Jeans und Hosen',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Jacken',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Oberteile',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Sakkos',
                       },
                     ],
@@ -135,22 +104,22 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Anzüge',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Baukasten Anzüge',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Hemnden',
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Accessoires',
                       },
                     ],
@@ -172,25 +141,25 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Wäsche',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Jeans und Hosen',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Oberteile',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Jacken',
                         endNode: true,
                       },
@@ -213,25 +182,25 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Regular Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Modern Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Tapered Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Slim Fit',
                         endNode: true,
                       },
@@ -254,25 +223,25 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Blousons',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Mäntel',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Jacken',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Westen',
                         endNode: true,
                       },
@@ -294,25 +263,25 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'T-Shirts',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Polos',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Hemnden',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Pullover',
                         endNode: true,
                       },
@@ -335,13 +304,13 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Slim Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Regular Fit',
                         endNode: true,
                       },
@@ -363,13 +332,13 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Regular Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Slim Fit',
                         endNode: true,
                       },
@@ -391,13 +360,13 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Regular Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Slim Fit',
                         endNode: true,
                       },
@@ -420,19 +389,19 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Slim Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Modern Fit',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Shaped Fit',
                         endNode: true,
                       },
@@ -455,13 +424,13 @@ const data = {
                     assessmentStepOptions: [
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Gürtel',
                         endNode: true,
                       },
                       {
                         picUrl:
-                          'https://trendiamo-assets.imgix.net/manual/pierre-cardin/demo_sample.jpg?fit=crop&w=160&h160',
+                          'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                         title: 'Krawatten & Einstecktücher',
                         endNode: true,
                       },
@@ -474,8 +443,7 @@ const data = {
               type: 'store',
               header: {
                 title: 'Recommended pieces for your style',
-                imageUrl:
-                  'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/plugin_flow_header-4.png',
+                imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                 backgroundColor: '#111',
                 textColor: '#fff',
               },
