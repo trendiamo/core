@@ -1,5 +1,5 @@
 import DefaultLauncher from 'app/launcher/original'
-import { AppBase } from 'app/index'
+import { AppBase } from 'app'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 
@@ -26,6 +26,7 @@ const Plugin = compose(
     onToggleContent={onToggleContent}
     persona={persona}
     showingContent={showingContent}
+    showingLauncher
   />
 ))
 
