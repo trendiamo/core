@@ -104,7 +104,6 @@ export default {
         _this.addToCartObject(saveData, location.pathname)
       })
       window.$(document).on('click', '.buy-button', () => {
-        event.preventDefault()
         _this.addToCartObject(saveData, location.pathname)
       })
     }
