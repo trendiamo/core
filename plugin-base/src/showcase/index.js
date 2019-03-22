@@ -24,7 +24,6 @@ export const Showcase = ({
   history,
   onRouteChange,
   routeToShowcase,
-  routeToSpotlight,
   isTransitioning,
   spotlights,
   subtitle,
@@ -44,12 +43,7 @@ export const Showcase = ({
     </Cover>
     <BelowCover>
       <Router history={history} onChange={onRouteChange}>
-        <ShowcaseContent
-          callbacks={callbacks}
-          path="/showcase/:id"
-          routeToSpotlight={routeToSpotlight}
-          spotlights={spotlights}
-        />
+        <ShowcaseContent callbacks={callbacks} path="/showcase/:id" spotlights={spotlights} />
         <SpotlightContent
           callbacks={callbacks}
           path="/showcase/:showcaseId/spotlight/:spotlightId"

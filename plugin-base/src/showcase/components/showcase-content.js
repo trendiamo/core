@@ -9,7 +9,7 @@ const Container = styled.div`
   padding: 1rem;
 `
 
-const ShowcaseContent = ({ isLeaving, routeToSpotlight, spotlights, callbacks }) => (
+const ShowcaseContent = ({ isLeaving, spotlights, callbacks }) => (
   <Container>
     <TopSlideAnimation delay={250 * 1} isLeaving={isLeaving}>
       <List>
@@ -18,7 +18,6 @@ const ShowcaseContent = ({ isLeaving, routeToSpotlight, spotlights, callbacks })
             index={index}
             key={spotlight.id || `new-${index}`}
             onClick={callbacks.onSpotlightClick({ spotlight })}
-            routeToSpotlight={routeToSpotlight}
             spotlight={spotlight}
           />
         ))}
