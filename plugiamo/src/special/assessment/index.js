@@ -10,7 +10,7 @@ import { h } from 'preact'
 import { matchUrl } from 'plugin-base'
 
 const Plugin = ({
-  showingLaucher,
+  showingLauncher,
   isUnmounting,
   step,
   steps,
@@ -44,7 +44,7 @@ const Plugin = ({
     }
     data={module}
     isUnmounting={isUnmounting}
-    Launcher={showingLaucher && Launcher}
+    Launcher={showingLauncher && Launcher}
     launcherType={launcherType}
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
@@ -68,7 +68,7 @@ export default compose(
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
-  withState('showingLaucher', 'setShowingLauncher', true),
+  withState('showingLauncher', 'setShowingLauncher', true),
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent } = this.props

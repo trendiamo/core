@@ -60,7 +60,7 @@ const AppBaseTemplate = ({
   setShowAssessmentContent,
   setShowingLauncher,
   setShowingContent,
-  showingLaucher,
+  showingLauncher,
 }) => (
   <AppBaseDiv>
     {showingContent && (
@@ -78,7 +78,7 @@ const AppBaseTemplate = ({
         showingContent={showingContent}
       />
     )}
-    {showingLaucher && (
+    {showingLauncher && (
       <LauncherBubbles
         bubble={bubble}
         disappear={disappear}
@@ -89,7 +89,7 @@ const AppBaseTemplate = ({
         showingContent={showingContent}
       />
     )}
-    {showingLaucher && (
+    {showingLauncher && (
       <Launcher
         data={data}
         disappear={disappear}
@@ -159,7 +159,7 @@ export default compose(
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
-  withState('showingLaucher', 'setShowingLauncher', true),
+  withState('showingLauncher', 'setShowingLauncher', true),
   lifecycle({
     componentDidMount() {
       const { data, pathFromNav, setPersona, setShowingContent } = this.props
