@@ -20,6 +20,7 @@ a2enmod expires
 
 mkdir -p /var/www/demo.frekkls.com/html
 mkdir -p /var/www/frekkls.com/html
+mkdir -p /var/www/admin.frekkls.com/html
 
 vi /etc/apache2/sites-available/000-default.conf
 vi /etc/apache2/sites-available/000-default-le-ssl.conf
@@ -33,14 +34,19 @@ vi /etc/apache2/sites-available/002-frekkls.com-le-ssl.conf
 vi /etc/apache2/sites-available/003-frekkls.com.br.conf
 vi /etc/apache2/sites-available/003-frekkls.com.br-le-ssl.conf
 
+vi /etc/apache2/sites-available/004-admin.frekkls.com.conf
+vi /etc/apache2/sites-available/004-admin.frekkls.com-le-ssl.conf
+
 a2ensite 001-demo.frekkls.com.conf
 a2ensite 002-frekkls.com.conf
 a2ensite 003-frekkls.com.br.conf
+a2ensite 004-admin.frekkls.com.conf
 
 # these are enabled by certbot
 # a2ensite 001-demo.frekkls.com-le-ssl.conf
 # a2ensite 002-frekkls.com-le-ssl.conf
 # a2ensite 003-frekkls.com.br-le-ssl.conf
+# a2ensite 004-admin.frekkls.com-le-ssl.conf
 
 systemctl reload apache2
 
@@ -53,5 +59,5 @@ ufw enable
 add-apt-repository ppa:certbot/certbot
 apt-get update
 apt-get install python-certbot-apache
-certbot --apache -d trendiamo.com -d www.trendiamo.com -d demo.frekkls.com -d frekkls.com -d www.frekkls.com -d frekkls.com.br -d www.frekkls.com.br
+certbot --apache -d trendiamo.com -d www.trendiamo.com -d demo.frekkls.com -d frekkls.com -d www.frekkls.com -d frekkls.com.br -d www.frekkls.com.br -d admin.frekkls.com
 ```

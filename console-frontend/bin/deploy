@@ -1,0 +1,25 @@
+#!/bin/sh
+
+cp .env .env~
+
+cat >.env <<EOL
+NODE_PATH=src/
+NODE_ENV=production
+REACT_APP_NODE_ENV=production
+REACT_APP_API_ENDPOINT=https://api.trendiamo.com
+EOL
+
+yarn build
+
+mv .env~ .env
+
+cat >build/.htaccess <<EOL
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule ^.*$ / [L,QSA]
+EOL
+
+rsync -azh -e ssh --delete-after --ignore-errors build/ root@139.59.128.112:/var/www/admin.frekkls.com/html

@@ -1,7 +1,7 @@
 This is the monorepo holding the codebase for Trendiamo.
 
 - **backend** is a rails project, which contains the api.trendiamo.com rails backend.
-- **console-frontend** is a create-react-app project, which contains the console.trendiamo.com frontend.
+- **console-frontend** is a create-react-app project, which contains the admin.frekkls.com frontend.
 - **infra** is a collection of documents about the Trendiamo infrastructure.
 - **landing-pages** contains the trendiamo.com, frekkls.com, demo.frekkls.com and other webpages.
 - **plugiamo** is a preact project which is an installable plugin on third-party websites.

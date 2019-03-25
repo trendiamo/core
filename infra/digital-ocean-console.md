@@ -2,7 +2,7 @@
 
 ## Description
 
-This droplet has apps managed by dokku. The apps are: `console-frontend` and `console-backend`.
+This droplet has apps managed by dokku. The apps are: `console-backend`.
 
 ## Commands to setup
 
@@ -18,15 +18,6 @@ This droplet has apps managed by dokku. The apps are: `console-frontend` and `co
 # To add users to be able to deploy, run in your local machine (make sure to replace vars below):
 cat <pub-key-file> | ssh root@46.101.129.17 "sudo sshcommand acl-add dokku <key-id>"
 
-# To setup the console-frontend app:
-
-dokku apps:create console-frontend
-dokku config:set console-frontend BUILDPACK_URL=https://github.com/mars/create-react-app-buildpack.git
-dokku config:set console-frontend NODE_ENV=production REACT_APP_API_ENDPOINT=https://api.trendiamo.com
-dokku domains:add console-frontend console.trendiamo.com
-# from your local machine, do the first deploy:
-git subtree push --prefix console-frontend dokku-frontend master
-
 # To setup the console-backend app:
 
 dokku apps:create console-backend
@@ -37,7 +28,7 @@ dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 dokku redis:create console-backend-redis
 dokku redis:link console-backend-redis console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
-dokku config:set console-backend CORS_ORIGIN=console.trendiamo.com FRONTEND_BASE_URL=https://console.trendiamo.com MAILER_HOST=api.trendiamo.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=...
+dokku config:set console-backend CORS_ORIGIN=admin.frekkls.com FRONTEND_BASE_URL=https://admin.frekkls.com MAILER_HOST=api.trendiamo.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=...
 dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
 dokku ps:scale console-backend web=1 worker=1 scheduler=1
@@ -50,13 +41,12 @@ apt-get update
 apt-get install certbot
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d console.trendiamo.com -d api.trendiamo.com
+certbot certonly --standalone --preferred-challenges http -d api.trendiamo.com
 mkdir keycert
-cp /etc/letsencrypt/live/console.trendiamo.com/fullchain.pem keycert/certificate.crt
-cp /etc/letsencrypt/live/console.trendiamo.com/privkey.pem keycert/key.key
+cp /etc/letsencrypt/live/api.trendiamo.com/fullchain.pem keycert/certificate.crt
+cp /etc/letsencrypt/live/api.trendiamo.com/privkey.pem keycert/key.key
 tar -cvf keycert.tar keycert
 cat keycert.tar | dokku certs:add console-backend
-cat keycert.tar | dokku certs:add console-frontend
 rm keycert.tar keycert/certificate.crt keycert/key.key
 rmdir keycert
 service nginx start
@@ -66,10 +56,8 @@ service nginx start
 
 # To test renew: `certbot renew --dry-run`
 certbot renew
-cp /etc/letsencrypt/live/console.trendiamo.com/fullchain.pem /home/dokku/console-backend/tls/server.crt
-cp /etc/letsencrypt/live/console.trendiamo.com/privkey.pem /home/dokku/console-backend/tls/server.key
-cp /etc/letsencrypt/live/console.trendiamo.com/fullchain.pem /home/dokku/console-frontend/tls/server.crt
-cp /etc/letsencrypt/live/console.trendiamo.com/privkey.pem /home/dokku/console-frontend/tls/server.key
+cp /etc/letsencrypt/live/api.trendiamo.com/fullchain.pem /home/dokku/console-backend/tls/server.crt
+cp /etc/letsencrypt/live/api.trendiamo.com/privkey.pem /home/dokku/console-backend/tls/server.key
 service nginx restart
 
 # Backups:

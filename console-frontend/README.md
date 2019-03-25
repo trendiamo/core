@@ -1,6 +1,6 @@
 # Console-frontend
 
-This is a create-react-app project for the console.trendiamo.com UI which our customers use to configure their plugins.
+This is a create-react-app project for the admin.frekkls.com UI which our customers use to configure their plugins.
 
 You can read the [default create-react-app README.md](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
