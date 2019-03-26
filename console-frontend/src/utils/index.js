@@ -1,5 +1,6 @@
 import auth from 'auth'
 import {
+  apiAccounts,
   apiFlowsAutocomplete,
   apiFlowsList,
   apiGeneratedUrlCreate,
@@ -54,6 +55,7 @@ import { extractErrors } from 'utils/shared'
 
 export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn }
 export {
+  apiAccounts,
   apiShowcaseCreate,
   apiShowcaseDestroy,
   apiShowcaseDuplicate,

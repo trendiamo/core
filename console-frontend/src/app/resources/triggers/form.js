@@ -179,7 +179,9 @@ export default compose(
   lifecycle({
     async componentDidMount() {
       const { setHostnames, enqueueSnackbar } = this.props
-      const { json, requestError } = await apiRequest(apiWebsiteShow, [auth.getUser().account.websiteIds[0]])
+      const { json, requestError } = await apiRequest(apiWebsiteShow, [
+        auth.isAdmin() ? auth.getAdminSessionAccount().websites[0].id : auth.getUser().account.websiteIds[0],
+      ])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       setHostnames(json.hostnames)
     },

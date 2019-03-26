@@ -1,4 +1,6 @@
 class GeneratedUrlsController < RestController
+  before_action :ensure_tenant
+
   def index
     @generated_urls = current_user.generated_urls.order("created_at DESC").limit(20)
     authorize @generated_urls

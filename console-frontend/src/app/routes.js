@@ -77,6 +77,9 @@ const routes = {
   urlGenerator() {
     return '/url-generator'
   },
+  admin() {
+    return '/admin'
+  },
 }
 
 export default routes

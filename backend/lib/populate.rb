@@ -130,8 +130,9 @@ class Populate
 
   def process
     create_account
-    create_websites
     create_users
+    create_websites
+    ActsAsTenant.default_tenant = Account.where(name: "Trendiamo Demo").first
     create_personas
     create_outros
     create_simple_chats
@@ -149,26 +150,39 @@ class Populate
       { email: "frb", name: "Fabian Brooks" },
       { email: "mc", name: "Michael Campbell" },
       { email: "gc", name: "Gregg Cooper" },
+      { email: "dw", name: "Douglas Wellington", admin: true },
+      { email: "tds", name: "Thomas Simpson", admin: true },
     ]
   end
 
+  def user_format(team_member)
+    {
+      email: "#{team_member[:email]}@trendiamo.com",
+      first_name: team_member[:name].split(" ")[0],
+      last_name: team_member[:name].split(" ")[1],
+      password: "password", password_confirmation: "password",
+      confirmed_at: Time.now,
+    }
+  end
+
   def create_account
-    ActsAsTenant.default_tenant = Account.create!(name: "Trendiamo Demo")
+    Account.create!(name: "Trendiamo Demo")
+    Account.create!(name: "Intercom")
   end
 
   def create_websites
-    Website.create!(name: "Trendiamo Demo", hostnames: %w[demo.frekkls.com])
+    Website.create!(name: "Trendiamo Demo", hostnames: %w[demo.frekkls.com],
+                    account: Account.where(name: "Trendiamo Demo").first)
+    Website.create!(name: "Intercom", hostnames: %w[www.intercom.com],
+                    account: Account.where(name: "Intercom").first)
   end
 
   def create_users
     users_attrs = team_members.map do |team_member|
-      {
-        email: "#{team_member[:email]}@trendiamo.com",
-        first_name: team_member[:name].split(" ")[0],
-        last_name: team_member[:name].split(" ")[1],
-        password: "password", password_confirmation: "password",
-        confirmed_at: Time.now,
-      }
+      user = user_format(team_member)
+      user[:account] = Account.where(name: "Trendiamo Demo").first unless team_member[:admin]
+      user[:admin] = team_member[:admin] == true
+      user
     end
     User.create!(users_attrs)
   end

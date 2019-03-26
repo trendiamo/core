@@ -18,6 +18,7 @@ const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
 const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
 const GENERATED_URLS_URL = `${BASE_API_URL}/generated_urls`
 const PATH_URL = `${BASE_API_URL}/path`
+const ACCOUNTS_URL = `${BASE_API_URL}/accounts`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
@@ -157,3 +158,5 @@ export const apiFlowsList = () => apiGetRequest(FLOWS_URL)
 export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiPathAutocomplete = query => apiGetRequest(`${PATH_URL}/autocomplete/?${stringify(query)}`)
+
+export const apiAccounts = () => apiGetRequest(ACCOUNTS_URL)

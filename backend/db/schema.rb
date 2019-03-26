@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190305121740) do
+ActiveRecord::Schema.define(version: 20190320142231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,8 +195,9 @@ ActiveRecord::Schema.define(version: 20190305121740) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.boolean "subscribed_to_newsletter", default: false, null: false
-    t.bigint "account_id", null: false
+    t.bigint "account_id"
     t.integer "onboarding_stage", default: 0
+    t.boolean "admin", default: false, null: false
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -236,6 +237,5 @@ ActiveRecord::Schema.define(version: 20190305121740) do
   add_foreign_key "spotlights", "personas"
   add_foreign_key "spotlights", "showcases"
   add_foreign_key "triggers", "accounts"
-  add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
 end

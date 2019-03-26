@@ -1,4 +1,6 @@
 class TriggersController < RestController
+  before_action :ensure_tenant
+
   def index
     @triggers = Trigger.all.order(:order)
     authorize @triggers
@@ -64,7 +66,7 @@ class TriggersController < RestController
   end
 
   def add_hostnames_header
-    @hostnames = current_user.account.websites.first.hostnames
+    @hostnames = current_tenant.websites.first.hostnames
     response.headers["Hostnames"] = JSON.generate(@hostnames)
     response.headers["Access-Control-Expose-Headers"] = "Hostnames"
   end

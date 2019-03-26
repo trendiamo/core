@@ -1,4 +1,6 @@
 class SimpleChatsController < RestController
+  before_action :ensure_tenant
+
   def index
     @simple_chats = SimpleChat.includes(:persona).all
     authorize @simple_chats

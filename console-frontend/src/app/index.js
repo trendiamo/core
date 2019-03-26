@@ -1,4 +1,5 @@
 import Account from 'app/screens/account'
+import Admin from 'app/screens/admin'
 import auth from 'auth'
 import ChangePassword from 'app/screens/change-password'
 import ForgotPassword from 'auth/forgot-password'
@@ -82,6 +83,7 @@ const Routes = () => (
     <PrivateRoute component={Account} exact path={routes.account()} />
     <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
     <PrivateRoute component={UrlGenerator} exact path={routes.urlGenerator()} />
+    <PrivateRoute component={Admin} exact path={routes.admin()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
     <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
     <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />

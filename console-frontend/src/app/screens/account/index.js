@@ -1,3 +1,4 @@
+import auth from 'auth'
 import EditUser from './edit-user'
 import EditWebsite from './edit-website'
 import React from 'react'
@@ -10,9 +11,11 @@ const Account = () => (
     <Section title="Account">
       <EditWebsite />
     </Section>
-    <Section title="Your Personal Info">
-      <EditUser />
-    </Section>
+    {!auth.isAdmin() && (
+      <Section title="Your Personal Info">
+        <EditUser />
+      </Section>
+    )}
   </>
 )
 

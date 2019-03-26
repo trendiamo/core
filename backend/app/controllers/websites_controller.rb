@@ -1,5 +1,6 @@
 class WebsitesController < RestController
   before_action :authenticate_user!
+  before_action :ensure_tenant
 
   def show
     @website = Website.find(params[:id])
