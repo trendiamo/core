@@ -106,11 +106,12 @@ export {
   apiWebsiteUpdate,
 }
 
-const handleRequestError = response => {
+const handleRequestError = async response => {
   if (!response) {
     return { requestError: 'Network Error' }
   }
   if (response.status === 403 || response.status === 401) {
+    await apiSignOut()
     auth.clear()
     throw new Error('Invalid Credentials')
   }
