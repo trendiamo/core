@@ -4,6 +4,7 @@ import auth from 'auth'
 import classNames from 'classnames'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import Link from 'shared/link'
+import PeopleOutline from '@material-ui/icons/PeopleOutline'
 import React from 'react'
 import routes from 'app/routes'
 import { apiSignOut } from 'utils'
@@ -20,6 +21,7 @@ const MenuItemThemed = ({ classes, icon, text, ...props }) => {
 }
 
 const UserMenu = ({
+  adminChangeAccount,
   classes,
   initials,
   onLogoutButtonClick,
@@ -62,6 +64,16 @@ const UserMenu = ({
         vertical: 'top',
       }}
     >
+      {auth.isAdmin() && (
+        <Link to={routes.admin()}>
+          <MenuItemThemed
+            classes={classes}
+            icon={<PeopleOutline />}
+            onClick={adminChangeAccount}
+            text="Back to Accounts"
+          />
+        </Link>
+      )}
       <Link to={routes.account()}>
         <MenuItemThemed classes={classes} icon={<AccountCircleOutlined />} text="Account" />
       </Link>
@@ -80,6 +92,9 @@ export default compose(
     userIdentifier: (!user.firstName || !user.lastName ? null : `${user.firstName} ${user.lastName}`) || user.email,
   })),
   withHandlers({
+    adminChangeAccount: () => () => {
+      auth.clearAdminSessionAccount()
+    },
     handleClose: ({ setAnchorEl }) => event => {
       event.preventDefault()
       setAnchorEl(null)

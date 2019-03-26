@@ -1,4 +1,6 @@
 class ShowcasesController < RestController
+  before_action :ensure_tenant
+
   def index
     @showcases = Showcase.all
     authorize @showcases

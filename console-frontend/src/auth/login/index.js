@@ -76,7 +76,7 @@ export default compose(
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
       if (!requestError && !errors) auth.setUser(json.user)
-      if (auth.isLoggedIn()) window.location.href = routes.root()
+      if (auth.isLoggedIn()) window.location.href = auth.isAdmin() ? routes.admin() : routes.root()
     },
     setLoginValue: ({ loginForm, setLoginForm }) => event =>
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),

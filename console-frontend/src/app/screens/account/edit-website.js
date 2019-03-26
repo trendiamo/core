@@ -123,7 +123,7 @@ const EditWebsite = ({
 export default compose(
   withState('errors', 'setErrors', null),
   withProps(() => ({
-    websiteId: auth.getUser().account.websiteIds[0],
+    websiteId: auth.isAdmin() ? auth.getAdminSessionAccount().websites[0].id : auth.getUser().account.websiteIds[0],
   })),
   withSnackbar,
   withHandlers({

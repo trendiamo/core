@@ -10,7 +10,12 @@ class RestController < ApplicationController
   private
 
   def current_tenant
-    set_current_tenant(current_user.account) if current_user
+    manage_account = current_user&.admin && Account.find_by(id: request.headers["X-Manage-Account"])
+    set_current_tenant(manage_account || current_user&.account)
+  end
+
+  def ensure_tenant
+    render json: { errors: [{ title: "Tenant must be set" }] }, status: :forbidden unless current_tenant
   end
 
   def user_not_authorized

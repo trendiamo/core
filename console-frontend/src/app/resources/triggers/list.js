@@ -1,4 +1,5 @@
 import AppBarButton from 'shared/app-bar-button'
+import auth from 'auth'
 import BlankStateTemplate from 'shared/blank-state'
 import CircularProgress from 'shared/circular-progress'
 import EditButton from 'shared/edit-button'

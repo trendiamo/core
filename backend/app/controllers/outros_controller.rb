@@ -1,4 +1,6 @@
 class OutrosController < RestController
+  before_action :ensure_tenant
+
   def index
     @outros = Outro.includes(:persona).all
     authorize @outros

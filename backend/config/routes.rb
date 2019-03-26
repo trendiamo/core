@@ -51,6 +51,8 @@ Rails.application.routes.draw do
 
       resource :me, only: %i[show update]
       resources :websites, only: %i[show update]
+
+      resources :accounts, only: %i[index]
     end
     get "s3/sign", to: "s3#sign"
     # post :stripe, to: 'stripe#webhook'

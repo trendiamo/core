@@ -3,6 +3,7 @@ import auth from 'auth'
 import Menu from './menu'
 import Onboarding from 'onboarding'
 import React from 'react'
+import routes from 'app/routes'
 import Sidebar from './sidebar'
 import withClasses from 'ext/recompose/with-classes'
 import withOnboarding from 'ext/recompose/with-onboarding'
@@ -50,9 +51,13 @@ const EnhancedLayout = compose(
   withStyles(styles, { index: 1 }),
   withProps(() => ({
     isLoggedIn: auth.isLoggedIn(),
+    isAdminPage: window.location.pathname === routes.admin(),
   })),
   withClasses,
-  branch(({ isLoggedIn }) => !isLoggedIn, renderComponent(props => <EmptyLayout {...props} />))
+  branch(
+    ({ isLoggedIn, isAdminPage }) => !isLoggedIn || isAdminPage,
+    renderComponent(props => <EmptyLayout {...props} />)
+  )
 )(Layout)
 
 export default EnhancedLayout

@@ -1,4 +1,6 @@
 class PersonasController < RestController
+  before_action :ensure_tenant
+
   def index
     @personas = Persona.all
     authorize @personas

@@ -1,4 +1,6 @@
 class NavigationsController < RestController
+  before_action :ensure_tenant
+
   def index
     @navigations = Navigation.includes(:persona).all
     authorize @navigations
