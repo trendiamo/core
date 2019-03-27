@@ -3,6 +3,10 @@ class WebsitePolicy < ApplicationPolicy
     user
   end
 
+  def create?
+    user&.admin
+  end
+
   def update?
     user
   end
