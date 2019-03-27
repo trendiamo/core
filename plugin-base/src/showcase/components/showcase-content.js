@@ -9,13 +9,19 @@ const Container = styled.div`
   padding: 1rem;
 `
 
-const ShowcaseContent = ({ isLeaving, spotlights, callbacks }) => (
+const ShowcaseContent = ({ isLeaving, spotlights, callbacks, assessmentSpotlight }) => (
   <Container>
     <TopSlideAnimation delay={250 * 1} isLeaving={isLeaving}>
       <List>
+        {assessmentSpotlight && (
+          <SpotlightItem
+            assessment
+            onClick={callbacks.onSpotlightClick({ assessmentSpotlight })}
+            spotlight={assessmentSpotlight}
+          />
+        )}
         {spotlights.map((spotlight, index) => (
           <SpotlightItem
-            index={index}
             key={spotlight.id || `new-${index}`}
             onClick={callbacks.onSpotlightClick({ spotlight })}
             spotlight={spotlight}

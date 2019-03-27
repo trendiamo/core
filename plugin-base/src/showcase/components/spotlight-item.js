@@ -36,21 +36,25 @@ const SpotlightItem = compose(
     return {
       setImgRef: () => ref => (imgRef = ref),
       setNameRef: () => ref => (nameRef = ref),
-      handleClick: ({ onClick, index }) => () => {
-        transition.addElement('img', imgRef.base || imgRef)
-        transition.addElement('name', nameRef.base || nameRef)
-        onClick(index)
+      handleClick: ({ onClick, assessment }) => () => {
+        if (!assessment) {
+          transition.addElement('img', imgRef.base || imgRef)
+          transition.addElement('name', nameRef.base || nameRef)
+        }
+        onClick(assessment)
       },
     }
   })
-)(({ setImgRef, setNameRef, spotlight, handleClick, selectInList, listSelected }) => (
-  <ListItem listSelected={listSelected} onClick={handleClick} selectInList={selectInList}>
-    <ListImg
-      animation={spotlight.persona.profilePicAnimationUrl}
-      imgRef={setImgRef}
-      picture={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 101, h: 101 })}
-    />
-    <ListContent>
+)(({ setImgRef, setNameRef, spotlight, handleClick, selectInList, listSelected, assessment }) => (
+  <ListItem assessment={assessment} listSelected={listSelected} onClick={handleClick} selectInList={selectInList}>
+    {!assessment && (
+      <ListImg
+        animation={spotlight.persona.profilePicAnimationUrl}
+        imgRef={setImgRef}
+        picture={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 101, h: 101 })}
+      />
+    )}
+    <ListContent assessment={assessment}>
       <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>
       <PersonaDescription dangerouslySetInnerHTML={{ __html: emojify(spotlight.persona.description) }} />
     </ListContent>

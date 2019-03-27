@@ -17,6 +17,13 @@ const convertSpotlights = spotlights => {
   })
 }
 
+const assessmentSpotlight = {
+  persona: {
+    name: 'Self-assessment',
+    description: "Let us guide you to a selection that's in line with your personality.",
+  },
+}
+
 const Showcase = compose(
   withProps({ history, FlowBackButton }),
   graphql(
@@ -74,16 +81,21 @@ const Showcase = compose(
     },
   }),
   withHandlers({
-    onSpotlightClick: ({ routeToSpotlight, setShowAssessmentContent }) => ({ spotlight }) => index => {
+    onSpotlightClick: ({ routeToSpotlight, setShowAssessmentContent }) => ({ spotlight }) => assessment => {
+      if (assessment) {
+        setTimeout(() => setShowAssessmentContent(true), 300)
+        mixpanel.track('Clicked Self-Assessment Spotlight', {
+          flowType: 'showcase',
+          hostname: location.hostname,
+        })
+        return
+      }
       mixpanel.track('Clicked Persona', {
         flowType: 'showcase',
         hostname: location.hostname,
         personaName: spotlight.persona.name,
         personaRef: spotlight.persona.id,
       })
-      if (index === 0 && assessmentHack()) {
-        setTimeout(() => setShowAssessmentContent(true), 300)
-      }
       routeToSpotlight(spotlight)
     },
     onProductClick: () => ({ product, spotlight }) => () => {
@@ -108,6 +120,7 @@ const Showcase = compose(
       onSpotlightClick,
       onProductClick,
     },
+    assessmentSpotlight: assessmentHack() && assessmentSpotlight,
   }))
 )(ShowcaseBase)
 

@@ -49,11 +49,18 @@ const ListContent = styled.div`
   position: absolute;
   top: 8px;
   bottom: 8px;
-  left: 110px;
+  left: ${({ assessment }) => (assessment ? '16px' : '110px')};
   right: 30px;
   .Win32 & {
     letter-spacing: -0.2px;
   }
+  ${({ assessment }) =>
+    assessment &&
+    `
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  `}
 `
 
 const ListItem = compose(
@@ -96,7 +103,7 @@ const ListItem = compose(
   margin-bottom: 1rem;
   align-items: center;
   cursor: pointer;
-  height: 101px;
+  height: ${({ assessment }) => (assessment ? '90px' : '101px')};
   color: #4a4a4a;
   background-color: #fff;
   backface-visibility: hidden;
