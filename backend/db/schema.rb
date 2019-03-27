@@ -237,5 +237,6 @@ ActiveRecord::Schema.define(version: 20190320142231) do
   add_foreign_key "spotlights", "personas"
   add_foreign_key "spotlights", "showcases"
   add_foreign_key "triggers", "accounts"
+  add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
 end
