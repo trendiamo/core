@@ -159,4 +159,5 @@ export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocom
 
 export const apiPathAutocomplete = query => apiGetRequest(`${PATH_URL}/autocomplete/?${stringify(query)}`)
 
-export const apiAccounts = () => apiGetRequest(ACCOUNTS_URL)
+export const apiAccount = () => apiGetRequest(ACCOUNTS_URL)
+export const apiAccountCreate = body => apiCreateRequest(ACCOUNTS_URL, body)
