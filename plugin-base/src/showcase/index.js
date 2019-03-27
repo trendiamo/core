@@ -29,6 +29,7 @@ export const Showcase = ({
   subtitle,
   title,
   callbacks,
+  assessmentSpotlight,
 }) => (
   <ColFlexDiv>
     <Cover>
@@ -43,7 +44,12 @@ export const Showcase = ({
     </Cover>
     <BelowCover>
       <Router history={history} onChange={onRouteChange}>
-        <ShowcaseContent callbacks={callbacks} path="/showcase/:id" spotlights={spotlights} />
+        <ShowcaseContent
+          assessmentSpotlight={assessmentSpotlight}
+          callbacks={callbacks}
+          path="/showcase/:id"
+          spotlights={spotlights}
+        />
         <SpotlightContent
           callbacks={callbacks}
           path="/showcase/:showcaseId/spotlight/:spotlightId"
