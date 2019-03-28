@@ -36,9 +36,9 @@ export default compose(
       clickChatOption(chatOption)
       setHide(true)
     },
-    onMessageClick: ({ goToNextStep, setHideAll }) => option => {
-      goToNextStep(option)
-      if (!option.endNode) setHideAll(true)
+    onMessageClick: ({ assessmentOptions, setHideAll }) => option => {
+      assessmentOptions.goToNextStep(option)
+      if (!assessmentOptions.step.multiple) setHideAll(true)
     },
   }),
   lifecycle({

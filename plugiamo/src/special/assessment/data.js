@@ -46,7 +46,6 @@ const data = {
         },
       },
       Casual: {
-        depth: 2,
         header,
         logs: {
           default: [
@@ -79,7 +78,6 @@ const data = {
         },
       },
       Business: {
-        depth: 2,
         header,
         logs: {
           default: [
@@ -92,11 +90,19 @@ const data = {
               assessmentStepOptions: [
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
-                  title: 'Anzüge',
+                  title: 'Komplettanzüge',
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
-                  title: 'Baukasten Anzüge',
+                  title: 'Sakkos',
+                },
+                {
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
+                  title: 'Westen',
+                },
+                {
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
+                  title: 'Anzughosen',
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
@@ -112,7 +118,7 @@ const data = {
         },
       },
       Basics: {
-        depth: 1,
+        multiple: true,
         header,
         logs: {
           default: [
@@ -126,29 +132,26 @@ const data = {
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Wäsche',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Jeans und Hosen',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Oberteile',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Jacken',
-                  endNode: true,
                 },
               ],
             },
           ],
         },
       },
-      'Jeans und Hosen': {
+      'Casual/Jeans und Hosen': {
+        multiple: true,
         header,
         logs: {
           default: [
@@ -163,29 +166,26 @@ const data = {
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Regular Fit',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Modern Fit',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Tapered Fit',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Slim Fit',
-                  endNode: true,
                 },
               ],
             },
           ],
         },
       },
-      Jacken: {
+      'Casual/Jacken': {
+        multiple: true,
         header,
         logs: {
           default: [
@@ -200,29 +200,26 @@ const data = {
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Blousons',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Mäntel',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Jacken',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Westen',
-                  endNode: true,
                 },
               ],
             },
           ],
         },
       },
-      Oberteile: {
+      'Casual/Oberteile': {
+        multiple: true,
         header,
         logs: {
           default: [
@@ -236,29 +233,51 @@ const data = {
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'T-Shirts',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Polos',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Hemnden',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Pullover',
-                  endNode: true,
                 },
               ],
             },
           ],
         },
       },
-      Sakkos: {
+      'Casual/Sakkos': {
+        multiple: true,
+        header,
+        logs: {
+          default: [
+            {
+              type: 'text',
+              text: 'Super Wahl für ein Frühling reifes Smart Casual Outfit! Magst du mir einmal deinen Fit verraten?',
+            },
+            {
+              type: 'assessmentStepOptions',
+              assessmentStepOptions: [
+                {
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
+                  title: 'Slim Fit',
+                },
+                {
+                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
+                  title: 'Regular Fit',
+                },
+              ],
+            },
+          ],
+        },
+      },
+      'Business/Sakkos': {
+        multiple: true,
         header,
         logs: {
           default: [
@@ -284,59 +303,29 @@ const data = {
           ],
         },
       },
-      Anzüge: {
+      'Business/Anzughosen': {
+        multiple: true,
         header,
         logs: {
           default: [
-            {
-              type: 'text',
-              text: 'Super! Das wichtigste ist, dass der vernünftig ist. Welchen Fit trägst du normalerweise?',
-            },
             {
               type: 'assessmentStepOptions',
               assessmentStepOptions: [
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
-                  title: 'Regular Fit',
-                  endNode: true,
+                  title: 'Slim Fit',
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
-                  title: 'Slim Fit',
-                  endNode: true,
+                  title: 'Regular Fit',
                 },
               ],
             },
           ],
         },
       },
-      'Baukasten Anzüge': {
-        header,
-        logs: {
-          default: [
-            {
-              type: 'text',
-              text: 'Okey! Magst du mir einmal deinen Fit verraten?',
-            },
-            {
-              type: 'assessmentStepOptions',
-              assessmentStepOptions: [
-                {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
-                  title: 'Regular Fit',
-                  endNode: true,
-                },
-                {
-                  picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
-                  title: 'Slim Fit',
-                  endNode: true,
-                },
-              ],
-            },
-          ],
-        },
-      },
-      Hemnden: {
+      'Business/Hemnden': {
+        multiple: true,
         header,
         logs: {
           default: [
@@ -351,24 +340,22 @@ const data = {
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Slim Fit',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Modern Fit',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Shaped Fit',
-                  endNode: true,
                 },
               ],
             },
           ],
         },
       },
-      Accessoires: {
+      'Business/Accessoires': {
+        multiple: true,
         header,
         logs: {
           default: [
@@ -383,12 +370,10 @@ const data = {
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Gürtel',
-                  endNode: true,
                 },
                 {
                   picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
                   title: 'Krawatten & Einstecktücher',
-                  endNode: true,
                 },
               ],
             },
