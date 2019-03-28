@@ -2,6 +2,7 @@ class Account < ApplicationRecord
   has_many :users, dependent: :destroy
   has_many :websites, dependent: :destroy
   has_many :personas, dependent: :destroy
+  has_many :pictures, dependent: :destroy
 
   has_many :simple_chat_steps, dependent: :destroy
   has_many :simple_chat_messages, dependent: :destroy
