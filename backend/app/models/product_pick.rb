@@ -1,6 +1,7 @@
 class ProductPick < ApplicationRecord
   acts_as_tenant
   belongs_to :spotlight
+  belongs_to :pic, class_name: "Picture"
 
   before_create :assign_order
 

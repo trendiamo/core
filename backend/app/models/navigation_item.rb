@@ -1,15 +1,15 @@
 class NavigationItem < ApplicationRecord
   acts_as_tenant
   belongs_to :navigation
+  belongs_to :pic, class_name: "Picture"
 
   validates :text, presence: true
   validates :url, presence: true
-  validates :pic_url, presence: true
 
   before_create :assign_order
 
   def as_json(_options = {})
-    { id: id, text: text, url: url, pic_url: pic_url }
+    { id: id, text: text, url: url, pic_url: pic.url }
   end
 
   def assign_order

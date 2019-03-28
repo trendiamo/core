@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190320142231) do
+ActiveRecord::Schema.define(version: 20190327112127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,8 +38,10 @@ ActiveRecord::Schema.define(version: 20190320142231) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order", default: 1, null: false
+    t.bigint "pic_id"
     t.index ["account_id"], name: "index_navigation_items_on_account_id"
     t.index ["navigation_id"], name: "index_navigation_items_on_navigation_id"
+    t.index ["pic_id"], name: "index_navigation_items_on_pic_id"
   end
 
   create_table "navigations", force: :cascade do |t|
@@ -72,14 +74,26 @@ ActiveRecord::Schema.define(version: 20190320142231) do
   create_table "personas", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
-    t.string "profile_pic_url", null: false
+    t.string "profile_pic_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
     t.string "graphcms_ref"
     t.string "instagram_url"
     t.string "profile_pic_animation_url"
+    t.bigint "profile_pic_id"
+    t.bigint "profile_pic_animation_id"
     t.index ["account_id"], name: "index_personas_on_account_id"
+    t.index ["profile_pic_animation_id"], name: "index_personas_on_profile_pic_animation_id"
+    t.index ["profile_pic_id"], name: "index_personas_on_profile_pic_id"
+  end
+
+  create_table "pictures", force: :cascade do |t|
+    t.string "url", null: false
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_pictures_on_account_id"
   end
 
   create_table "product_picks", force: :cascade do |t|
@@ -88,12 +102,14 @@ ActiveRecord::Schema.define(version: 20190320142231) do
     t.string "name", null: false
     t.string "url", null: false
     t.string "description", null: false
-    t.string "pic_url", null: false
+    t.string "pic_url"
     t.string "display_price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order", default: 1, null: false
+    t.bigint "pic_id"
     t.index ["account_id"], name: "index_product_picks_on_account_id"
+    t.index ["pic_id"], name: "index_product_picks_on_pic_id"
     t.index ["spotlight_id"], name: "index_product_picks_on_spotlight_id"
   end
 
@@ -218,12 +234,17 @@ ActiveRecord::Schema.define(version: 20190320142231) do
   add_foreign_key "generated_urls", "users"
   add_foreign_key "navigation_items", "accounts"
   add_foreign_key "navigation_items", "navigations"
+  add_foreign_key "navigation_items", "pictures", column: "pic_id"
   add_foreign_key "navigations", "accounts"
   add_foreign_key "navigations", "personas"
   add_foreign_key "outros", "accounts"
   add_foreign_key "outros", "personas"
   add_foreign_key "personas", "accounts"
+  add_foreign_key "personas", "pictures", column: "profile_pic_animation_id"
+  add_foreign_key "personas", "pictures", column: "profile_pic_id"
+  add_foreign_key "pictures", "accounts"
   add_foreign_key "product_picks", "accounts"
+  add_foreign_key "product_picks", "pictures", column: "pic_id"
   add_foreign_key "product_picks", "spotlights"
   add_foreign_key "showcases", "accounts"
   add_foreign_key "showcases", "personas"

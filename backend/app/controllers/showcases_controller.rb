@@ -9,6 +9,7 @@ class ShowcasesController < RestController
   end
 
   def create
+    convert_and_assign_pictures
     @showcase = Showcase.new(showcase_params)
     authorize @showcase
     if @showcase.save
@@ -27,6 +28,7 @@ class ShowcasesController < RestController
   def update
     @showcase = Showcase.find(params[:id])
     authorize @showcase
+    convert_and_assign_pictures
     if @showcase.update(showcase_params)
       render json: @showcase
     else
@@ -64,11 +66,21 @@ class ShowcasesController < RestController
       spotlights_attributes: [
         :id, :persona_id, :_destroy,
         product_picks_attributes: %i[
-          id url name description display_price pic_url _destroy
+          id url name description display_price pic_id _destroy
         ],
       ]
     )
     add_order_fields(result)
+  end
+
+  def convert_and_assign_pictures
+    params[:showcase][:spotlights_attributes]&.each do |spotlight_attributes|
+      spotlight_attributes[:product_picks_attributes]&.each do |product_pick_attributes|
+        pic_url = product_pick_attributes[:pic_url]
+        pic_url.present? && product_pick_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
+        product_pick_attributes.delete :pic_url
+      end
+    end
   end
 
   # add order fields to showcase_attributes' spotlights and product_picks, based on received order
