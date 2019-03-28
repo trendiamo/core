@@ -1,5 +1,6 @@
 import getFrekklsConfig from 'frekkls-config'
 import routes from 'app/routes'
+import { assessmentHack, recallPersona } from 'special/assessment/utils'
 import { isSmall } from 'utils'
 import { location } from 'config'
 import { pushPath } from './flow-history'
@@ -21,7 +22,7 @@ export const optionsFromHash = () => {
 
 const getMatchedPersona = ({ flow, data }) => {
   if (data.persona) return data.persona
-  // XXX: maybe also save last persona we interacted with, and use that if available here, finally fallback to this:
+  if (assessmentHack() && flow.flowType === 'outro' && recallPersona()) return recallPersona()
   if (flow) return flow.persona
 }
 
