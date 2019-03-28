@@ -6,9 +6,36 @@ import { compose, lifecycle, withHandlers, withProps, withState } from 'recompos
 import { h } from 'preact'
 import { timeout } from 'plugin-base'
 
-const Base = ({ getContentRef, animateOpacity, ...props }) => (
-  <Container animateOpacity={animateOpacity} contentRef={getContentRef}>
-    <Chat contentRef={getContentRef} {...props} />
+const Base = ({
+  currentStep,
+  endNodeTags,
+  goToNextStep,
+  handleScroll,
+  setContentRef,
+  contentRef,
+  animateOpacity,
+  progress,
+  setShowingContent,
+  setShowingLauncher,
+  showingCtaButton,
+  step,
+  touch,
+}) => (
+  <Container animateOpacity={animateOpacity} contentRef={contentRef}>
+    <Chat
+      contentRef={contentRef}
+      currentStep={currentStep}
+      endNodeTags={endNodeTags}
+      goToNextStep={goToNextStep}
+      handleScroll={handleScroll}
+      progress={progress}
+      setContentRef={setContentRef}
+      setShowingContent={setShowingContent}
+      setShowingLauncher={setShowingLauncher}
+      showingCtaButton={showingCtaButton}
+      step={step}
+      touch={touch}
+    />
   </Container>
 )
 
@@ -17,28 +44,26 @@ export default compose(
   withState('animateOpacity', 'setAnimateOpacity', ({ animateOpacity }) => animateOpacity),
   withProps({ module: data.assessment }),
   withState('currentStepKey', 'setCurrentStepKey', 'root'),
-  withState('assessmentDepth', 'setAssessmentDepth', 0),
-  withProps(({ assessmentDepth, module, currentStepKey }) => ({
+  withProps(({ module, currentStepKey }) => ({
     step: module && module.steps[currentStepKey],
     steps: module && module.steps,
-    depth: assessmentDepth,
   })),
   withState('coverMinimized', 'setCoverMinimized', ({ step }) => !!step.header.minimized),
   withState('touch', 'setTouch', true),
   withState('currentStep', 'setCurrentStep', ({ step }) => step),
   withState('tags', 'setTags', []),
-  withState('stepIndex', 'setStepIndex', 0),
+  withState('progress', 'setProgress', 0),
   withState('endNodeTags', 'setEndNodeTags', []),
   withState('showingCtaButton', 'setShowingCtaButton', false),
   withHandlers(() => {
     let contentRef
     return {
       setContentRef: () => ref => (contentRef = ref),
-      getContentRef: () => () => contentRef,
+      contentRef: () => () => contentRef,
     }
   }),
   withHandlers({
-    handleScroll: ({ setCoverMinimized, getContentRef, coverMinimized, step, setTouch, touch }) => event => {
+    handleScroll: ({ setCoverMinimized, contentRef, coverMinimized, step, setTouch, touch }) => event => {
       if (step.header.minimized) return
       const scrollTop = event.target.scrollTop
       if (scrollTop <= 0 && coverMinimized) {
@@ -51,89 +76,79 @@ export default compose(
       if (scrollTop > 0 && !coverMinimized && touch) {
         const windowHeight = window.innerHeight
         const maxHeight = window.innerWidth >= 600 ? Math.min(windowHeight, 500) : windowHeight
-        maxHeight - getContentRef().base.scrollHeight <= 90 && setCoverMinimized(true)
+        maxHeight - contentRef().base.scrollHeight <= 90 && setCoverMinimized(true)
       }
     },
-    handleEndNodeTags: ({ showingCtaButton, endNodeTags, setEndNodeTags, setShowingCtaButton }) => step => {
-      let newTags
-      if (showingCtaButton) {
-        if (!endNodeTags.includes(step.title)) newTags = [...endNodeTags, step.title]
-        else {
-          newTags = endNodeTags.filter(tag => tag !== step.title)
-          if (newTags.length === 0) setShowingCtaButton(false)
-        }
-      } else {
-        newTags = [...endNodeTags, step.title]
-        setShowingCtaButton(true)
-      }
+    handleEndNodeTags: ({ endNodeTags, setEndNodeTags, setShowingCtaButton, tags }) => nextStep => {
+      const nextStepKey = [...tags, nextStep.title].join('/')
+      const newTags = endNodeTags.includes(nextStepKey)
+        ? endNodeTags.filter(tag => tag !== nextStepKey)
+        : [...endNodeTags, nextStepKey]
+      setShowingCtaButton(newTags.length > 0)
       return setEndNodeTags(newTags)
     },
-    goToStore: ({ endNodeTags, stepIndex, tags, setStepIndex, setTags, setCurrentStepKey }) => currentStepKey => {
-      setStepIndex(stepIndex + 1)
-      setTags(endNodeTags.map(tag => [...tags, tag]))
-      mixpanel.track('Clicked Assessment Step', {
-        hostname: location.hostname,
-        stepIndex,
-        step: currentStepKey,
-        tags: endNodeTags,
-      })
+    goToStore: ({ setProgress, setCurrentStepKey }) => () => {
+      setProgress(100)
       setCurrentStepKey('store')
     },
-    resetAssessment: ({
-      setTags,
-      setEndNodeTags,
-      setCurrentStepKey,
-      setStepIndex,
-      setAssessmentDepth,
-      setShowingCtaButton,
-    }) => () => {
+    resetAssessment: ({ setTags, setEndNodeTags, setCurrentStepKey, setStepIndex, setShowingCtaButton }) => () => {
       setTags([])
       setEndNodeTags([])
       setCurrentStepKey('root')
       setStepIndex(0)
-      setAssessmentDepth(0)
       setShowingCtaButton(false)
     },
   }),
   withHandlers({
     goToNextStep: ({
+      endNodeTags,
       steps,
-      setAssessmentDepth,
       setCurrentStepKey,
-      setStepIndex,
-      stepIndex,
+      setProgress,
       setTags,
       tags,
       handleEndNodeTags,
+      step,
       goToStore,
+      progress,
       currentStepKey,
-    }) => step => {
-      if (step.url) {
+    }) => nextStep => {
+      if (nextStep.url) {
         mixpanel.track('Clicked Assessment Step', {
           hostname: location.hostname,
-          stepIndex,
           step: currentStepKey,
-          url: step.url,
+          url: nextStep.url,
         })
-        return setStepIndex(
-          stepIndex + 1,
-          timeout.set('loadingProgressBar', () => (window.location.href = step.url), 600)
-        )
+        return setProgress(100, timeout.set('loadingProgressBar', () => (window.location.href = nextStep.url), 600))
       }
-      if (step.endNode) return handleEndNodeTags(step)
-      if (step === 'showResults') return goToStore(currentStepKey)
-      setStepIndex(stepIndex + 1)
-      setTags([...tags, step.title])
+      const nextStepKey = [...tags, nextStep.title].join('/')
+      if (nextStep === 'showResults') {
+        mixpanel.track('Clicked Assessment Step', {
+          hostname: location.hostname,
+          step: currentStepKey,
+          tags: endNodeTags,
+        })
+        return goToStore(currentStepKey)
+      }
+      if (step.multiple && !steps[nextStepKey]) {
+        return handleEndNodeTags(nextStep)
+      }
+      if (!step.multiple && !steps[nextStepKey]) {
+        mixpanel.track('Clicked Assessment Step', {
+          hostname: location.hostname,
+          step: currentStepKey,
+          tags: endNodeTags,
+        })
+        return goToStore(currentStepKey)
+      }
+      setProgress(progress + 33)
+      setTags([...tags, nextStepKey])
       mixpanel.track('Clicked Assessment Step', {
         hostname: location.hostname,
-        stepIndex,
         step: currentStepKey,
-        tags: [step.title],
+        tags: [nextStep.title],
       })
-      if (step.endNode) return setCurrentStepKey('store')
-      // if depth declared in the step, set depth. Used in progress bar
-      if (steps[step.title].depth) setAssessmentDepth(steps[step.title].depth)
-      setCurrentStepKey(step.title)
+      setCurrentStepKey(nextStepKey)
     },
   }),
   lifecycle({

@@ -16,7 +16,7 @@ const ChatLogUiTemplate = ({
   setBackgroundRef,
   touch,
   minHeight,
-  goToNextStep,
+  assessmentOptions,
   hideAll,
   setHideAll,
 }) => (
@@ -25,11 +25,11 @@ const ChatLogUiTemplate = ({
       {logs.map((logSection, index) => (
         /* eslint-disable react/no-array-index-key */
         <ItemDiv
+          assessmentOptions={assessmentOptions}
           callback={logSection.type === 'message' && animateNewOptions}
           clickChatOption={clickChatOption}
           contentRef={contentRef}
           dontScroll
-          goToNextStep={goToNextStep}
           hideAll={hideAll}
           key={index}
           logSection={logSection}
