@@ -1,3 +1,2 @@
-export const assessmentHack = () => {
-  return process.env.ASSESSMENT || (location.hostname === 'www.pierre-cardin.de' && location.pathname === '/')
-}
+export const assessmentHack = () =>
+  process.env.ASSESSMENT || localStorage.getItem('trnd-plugin-account') === 'PierreCardinGermany'

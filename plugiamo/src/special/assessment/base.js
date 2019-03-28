@@ -4,7 +4,7 @@ import data from './data'
 import mixpanel from 'ext/mixpanel'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
-import { matchUrl, timeout } from 'plugin-base'
+import { timeout } from 'plugin-base'
 
 const Base = ({ getContentRef, animateOpacity, ...props }) => (
   <Container animateOpacity={animateOpacity} contentRef={getContentRef}>
@@ -15,16 +15,7 @@ const Base = ({ getContentRef, animateOpacity, ...props }) => (
 export default compose(
   withState('pluginState', 'setPluginState', 'default'),
   withState('animateOpacity', 'setAnimateOpacity', ({ animateOpacity }) => animateOpacity),
-  withProps(({ pluginState }) => ({
-    trigger: data[process.env.ASSESSMENT || location.hostname].triggers.find(
-      trigger =>
-        (trigger.state || 'default') === pluginState &&
-        trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
-    ),
-  })),
-  withProps(({ trigger }) => ({
-    module: trigger && trigger.module,
-  })),
+  withProps({ module: data.assessment }),
   withState('currentStepKey', 'setCurrentStepKey', 'root'),
   withState('assessmentDepth', 'setAssessmentDepth', 0),
   withProps(({ assessmentDepth, module, currentStepKey }) => ({

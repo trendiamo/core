@@ -120,7 +120,7 @@ const Showcase = compose(
       onSpotlightClick,
       onProductClick,
     },
-    assessmentSpotlight: assessmentHack() && assessmentSpotlight,
+    assessmentSpotlight: assessmentHack() && location.pathname === '/' && assessmentSpotlight,
   }))
 )(ShowcaseBase)
 
