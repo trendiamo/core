@@ -232,7 +232,7 @@ const Showcase = ({ form, routeToSpotlight, routeToShowcase, previewCallbacks, .
       <ShowcaseForm form={form} {...props} />
     </Grid>
     <Grid item md={6} xs={12}>
-      <PluginPreview>
+      {/* <PluginPreview>
         <ShowcaseBase
           callbacks={previewCallbacks}
           history={pluginHistory}
@@ -243,7 +243,7 @@ const Showcase = ({ form, routeToSpotlight, routeToShowcase, previewCallbacks, .
           subtitle={form.subtitle || defaults.subtitle}
           title={form.title || defaults.title}
         />
-      </PluginPreview>
+      </PluginPreview> */}
     </Grid>
   </Grid>
 )
