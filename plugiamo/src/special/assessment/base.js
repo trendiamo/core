@@ -142,7 +142,7 @@ export default compose(
         return goToStore(currentStepKey)
       }
       setProgress(progress + 33)
-      setTags([...tags, nextStepKey])
+      setTags([...tags, nextStep.title])
       mixpanel.track('Clicked Assessment Step', {
         hostname: location.hostname,
         step: currentStepKey,
