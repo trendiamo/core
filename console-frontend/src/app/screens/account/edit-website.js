@@ -51,7 +51,7 @@ export default compose(
   withState('errors', 'setErrors', null),
   withProps(() => ({
     websiteId: auth.isAdmin()
-      ? auth.getAdminSessionAccount().websites[0] && auth.getAdminSessionAccount().websites[0].id
+      ? auth.getAdminSessionAccount().websitesAttributes[0] && auth.getAdminSessionAccount().websitesAttributes[0].id
       : auth.getUser().account.websiteIds[0],
   })),
   withSnackbar,
