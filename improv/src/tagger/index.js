@@ -91,17 +91,17 @@ export default compose(
       }
       setIsLoading(false)
     },
-    goToProduct: ({ setProductIndex, productIndex, products, setMultipleSelect }) => index => {
+    goToProduct: ({ setProductIndex, productIndex, pageProducts, setMultipleSelect }) => index => {
       let newIndex = index
       setMultipleSelect([])
       if (index === 'next') {
-        newIndex = Math.min(products.length - 1, productIndex + 1)
+        newIndex = Math.min(pageProducts.length - 1, productIndex + 1)
       } else if (index === 'prev') {
         newIndex = Math.max(0, productIndex - 1)
       }
       setProductIndex(newIndex)
     },
-    selectMultiple: ({ setMultipleSelect, multipleSelect, productIndex, setProductIndex, products }) => ({
+    selectMultiple: ({ setMultipleSelect, multipleSelect, productIndex, setProductIndex, pageProducts }) => ({
       index,
       bulk,
     }) => {
@@ -114,7 +114,7 @@ export default compose(
       }
       const indexOfSelect = multipleSelect.indexOf(index)
       if (indexOfSelect !== -1) {
-        if (indexOfSelect === 0 && products.length > index + 1) {
+        if (indexOfSelect === 0 && pageProducts.length > index + 1) {
           setProductIndex(index + 1)
         }
         multipleSelect.splice(indexOfSelect, 1)
