@@ -17,14 +17,18 @@ const data = [
   'Casual/Sakkos/Slim Fit',
   'Casual/Sakkos/Regular Fit',
 
-  'Business/Anzüge/Slim Fit',
-  'Business/Anzüge/Regular Fit',
+  'Business/Komplettanzüge',
 
-  'Business/Baukasten Anzüge/Slim Fit',
-  'Business/Baukasten Anzüge/Regular Fit',
+  'Business/Sakkos/Slim Fit',
+  'Business/Sakkos/Regular Fit',
+
+  'Business/Westen',
+
+  'Business/Anzughosen/Slim Fit',
+  'Business/Anzughosen/Regular Fit',
 
   'Business/Hemnden/Slim Fit',
-  'Business/Hemnden/Regular Fit',
+  'Business/Hemnden/Modern Fit',
   'Business/Hemnden/Shaped Fit',
 
   'Business/Accessoires/Gürtel',
@@ -35,7 +39,6 @@ const data = [
   'Basics/Oberteile',
   'Basics/Jacken',
 
-  'Specials/Special Collection',
   { key: 'highlight', name: 'Highlight' },
 ]
 
