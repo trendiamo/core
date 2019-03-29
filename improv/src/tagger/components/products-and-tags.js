@@ -30,6 +30,12 @@ const Name = styled.div`
   margin-bottom: 10px;
 `
 
+const FormFit = styled.div`
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 14px;
+`
+
 const Price = styled.div`
   color: #333;
 `
@@ -38,6 +44,7 @@ const Product = ({ currentProduct }) => (
   <ProductContainer>
     <Img alt="" src={currentProduct.images[0].src} />
     <Name>{currentProduct.title}</Name>
+    <FormFit>{currentProduct.formFit}</FormFit>
     <Price>{currentProduct.displayPrice}</Price>
   </ProductContainer>
 )

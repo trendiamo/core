@@ -39,8 +39,10 @@ const implFactory = {
         }))
         const picUrl = e.querySelectorAll('.product-image-photo')[0].dataset.src
         const id = url.split('/').pop()
+        const formFit = e.querySelector('.passform-fit').innerText || false
         return {
           id,
+          formFit,
           url,
           title,
           picUrl,
