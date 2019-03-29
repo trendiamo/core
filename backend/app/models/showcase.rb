@@ -14,7 +14,7 @@ class Showcase < ApplicationRecord
     attributes
       .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "created_at",
              "updated_at")
-      .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic.url, name: persona.name },
+      .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",
              trigger_ids: triggers.ids)
@@ -36,8 +36,8 @@ class Showcase < ApplicationRecord
       name: spotlight.persona.name,
       description: spotlight.persona.description,
       instagram_url: spotlight.persona.instagram_url,
-      profile_pic_url: spotlight.persona.profile_pic.url,
-      profile_pic_animation_url: spotlight.persona.profile_pic_animation&.url,
+      profile_pic_url: spotlight.persona.profile_pic_url,
+      profile_pic_animation_url: spotlight.persona.profile_pic_animation_url,
     }
   end
 
@@ -49,7 +49,7 @@ class Showcase < ApplicationRecord
         name: product_pick.name,
         description: product_pick.description,
         display_price: product_pick.display_price,
-        pic_url: product_pick.pic.url,
+        pic_url: product_pick.pic_url,
       }
     end
   end

@@ -16,11 +16,19 @@ class Persona < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
+  def profile_pic_url
+    profile_pic.url
+  end
+
+  def profile_pic_animation_url
+    profile_pic_animation&.url
+  end
+
   def as_json(_options = {})
     attributes
       .slice("id", "name", "description", "account_id", "graphcms_ref", "instagram_url",
              "created_at", "updated_at")
-      .merge(profile_pic_url: profile_pic.url,
-             profile_pic_animation_url: profile_pic_animation&.url)
+      .merge(profile_pic_url: profile_pic_url,
+             profile_pic_animation_url: profile_pic_animation_url)
   end
 end
