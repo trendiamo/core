@@ -49,6 +49,7 @@ const Tagger = ({ onCopyResult, ...props }) => (
 
 export default compose(
   withState('products', 'setProducts', () => parseProducts()),
+  withState('pageProducts', 'setPageProducts', []),
   withState('productIndex', 'setProductIndex', 0),
   withState('isLoading', 'setIsLoading', true),
   withState('client', 'setClient', false),
@@ -142,7 +143,7 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { setClient, setIsLoading, products, setProducts, getModalState } = this.props
+      const { setClient, setIsLoading, products, setProducts, getModalState, setPageProducts } = this.props
       const client = await getClient(location.hostname)
       if (client && !getModalState()) return
       if (client.length > 0) {
@@ -157,6 +158,7 @@ export default compose(
           }
         })
         setProducts([...products, ...client[0].products])
+        setPageProducts(products)
       }
       setIsLoading(false)
     },

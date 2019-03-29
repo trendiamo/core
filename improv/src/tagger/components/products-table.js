@@ -72,12 +72,12 @@ const Container = styled.div`
   width: 250px;
 `
 
-const TableTemplate = ({ products, changedProducts, productIndex, onClick, multipleSelect }) => (
+const TableTemplate = ({ pageProducts, changedProducts, productIndex, onClick, multipleSelect }) => (
   <TableContainer>
     <ListHeader>{'Products'}</ListHeader>
     <TableColumn>
       <List>
-        {products.map((product, index) => (
+        {pageProducts.map((product, index) => (
           <ListElement
             active={productIndex === index || multipleSelect.indexOf(index) !== -1}
             changedProducts={changedProducts}
