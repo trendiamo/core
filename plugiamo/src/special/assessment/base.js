@@ -4,6 +4,7 @@ import data from './data'
 import mixpanel from 'ext/mixpanel'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
+import { rememberPersona } from './utils'
 import { timeout } from 'plugin-base'
 
 const Base = ({
@@ -154,6 +155,7 @@ export default compose(
   lifecycle({
     componentDidMount() {
       const { step, setCurrentStep, animateOpacity, setAnimateOpacity } = this.props
+      rememberPersona(data.assessment.persona)
       if (animateOpacity) {
         setTimeout(() => {
           setAnimateOpacity(false)

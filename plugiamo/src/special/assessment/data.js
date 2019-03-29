@@ -10,6 +10,14 @@ const header = {
 const data = {
   assessment: {
     flowType: 'ht-assessment',
+    persona: {
+      description: 'Designer der Hosen. Ich würde Dir gern meine Key Looks für die neue Saison vorstellen!',
+      name: 'Nico de Roy',
+      profilePic: {
+        url:
+          'https://console-assets.ams3.digitaloceanspaces.com/uploads/personas-profile-pics/cd2692b6/Nico-de-Roy.jpg',
+      },
+    },
     steps: {
       root: {
         header,
