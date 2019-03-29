@@ -232,18 +232,20 @@ const Showcase = ({ form, routeToSpotlight, routeToShowcase, previewCallbacks, .
       <ShowcaseForm form={form} {...props} />
     </Grid>
     <Grid item md={6} xs={12}>
-      {/* <PluginPreview>
-        <ShowcaseBase
-          callbacks={previewCallbacks}
-          history={pluginHistory}
-          routeToShowcase={routeToShowcase}
-          routeToSpotlight={routeToSpotlight}
-          showcase={form}
-          spotlights={preview.spotlights(form).spotlights}
-          subtitle={form.subtitle || defaults.subtitle}
-          title={form.title || defaults.title}
-        />
-      </PluginPreview> */}
+      {
+        <PluginPreview>
+          <ShowcaseBase
+            callbacks={previewCallbacks}
+            history={pluginHistory}
+            routeToShowcase={routeToShowcase}
+            routeToSpotlight={routeToSpotlight}
+            showcase={form}
+            spotlights={preview.spotlights(form).spotlights}
+            subtitle={form.subtitle || defaults.subtitle}
+            title={form.title || defaults.title}
+          />
+        </PluginPreview>
+      }
     </Grid>
   </Grid>
 )
