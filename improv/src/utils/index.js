@@ -38,7 +38,9 @@ const implFactory = {
           src: img.dataset.src,
         }))
         const picUrl = e.querySelectorAll('.product-image-photo')[0].dataset.src
+        const id = url.split('/').pop()
         return {
+          id,
           url,
           title,
           picUrl,

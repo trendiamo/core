@@ -148,8 +148,8 @@ export default compose(
       if (client.length > 0) {
         setClient(client[0])
         products.forEach(product => {
-          const clientProduct = client[0].products.find(o => o.url === product.url)
-          const clientProductIndex = client[0].products.findIndex(o => o.url === product.url)
+          const clientProduct = client[0].products.find(o => o.id === product.id)
+          const clientProductIndex = client[0].products.findIndex(o => o.id === product.id)
           if (clientProduct) {
             product.tag = clientProduct.tag
             product.highlight = clientProduct.highlight
