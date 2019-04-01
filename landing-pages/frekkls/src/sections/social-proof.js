@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import 'slick-carousel/slick/slick-theme.css'
-import 'slick-carousel/slick/slick.css'
 
 import Container from '../components/container'
 import Section from '../components/section'

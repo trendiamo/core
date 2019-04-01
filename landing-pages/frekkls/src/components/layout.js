@@ -9,11 +9,9 @@ import Header from './header'
 import ModalContents from './modal-contents'
 import Seo from './seo'
 
+import '../css/index.css'
 import 'typeface-roboto'
 import 'typeface-roboto-slab'
-
-import '../css/index.css'
-import 'tingle.js/dist/tingle.min.css'
 
 import favicon from '../images/favicon.png'
 
