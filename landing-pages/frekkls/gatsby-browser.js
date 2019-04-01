@@ -15,8 +15,8 @@ const processEmailInputs = () => {
     const locale = metaHbspt ? metaHbspt.getAttribute('value') : 'en'
     window.hbspt.forms.create({
       css: '',
-      portalId: '4568386',
-      formId: '70b17e03-8153-4be3-ba4b-d3550a85e258',
+      portalId: '5559593',
+      formId: '88e4e99c-cf14-4dbd-9b99-7110bbb1c8b5',
       target,
       locale,
       translations: {
@@ -66,9 +66,9 @@ const processModalTriggers = () => {
       modal.setContent(requestDemoContent)
       window.hbspt.forms.create({
         css: '',
-        portalId: '4568386',
+        portalId: '5559593',
+        formId: '0b907c64-003d-40d2-8cc5-d10db6be1fe1',
         target: '.request-demo-form',
-        formId: 'c3b4b11b-fc3b-4aef-b24a-b23e5dcfff73',
       })
       modal.open()
 
