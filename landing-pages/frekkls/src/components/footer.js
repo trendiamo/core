@@ -167,9 +167,7 @@ const CopyrigtContent = () => (
       <p>
         {`Frekkls © Copyright ${new Date().getFullYear()}`}
         <strong>{' frekkls.com '}</strong>
-        {'All rights reserved. Powered by '}
-        <a href="https://trendiamo.com/">{'Trendiamo GmbH'}</a>
-        {'.'}
+        {'All rights reserved.'}
       </p>
     </DesktopCopyrightContent>
     <MobileCopyrightContent>
