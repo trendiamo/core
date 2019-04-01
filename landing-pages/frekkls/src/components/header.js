@@ -28,7 +28,7 @@ const toggleMobileMenu = () => {
 const Header = styled(({ className, layout, locale, siteTitle }) => (
   <header className={className}>
     <Container>
-      <Link to={`${locales[locale].path}/`}>
+      <Link className="logo-link" to={`${locales[locale].path}/`}>
         <Logo alt={siteTitle} />
       </Link>
       <nav>
@@ -68,6 +68,10 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
     .header-link {
       display: block;
     }
+  }
+
+  .logo-link {
+    align-self: flex-end;
   }
 
   .header-link {

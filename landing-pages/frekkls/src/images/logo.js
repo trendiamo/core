@@ -16,11 +16,7 @@ const Logo = ({ alt, style }) => (
       }
     `}
     render={data => (
-      <Img
-        alt={alt}
-        fixed={data.logo.childImageSharp.fixed}
-        style={{ ...style, width: '136px', height: '33px' } || { width: '136px', height: '33px' }}
-      />
+      <Img alt={alt} fixed={data.logo.childImageSharp.fixed} style={{ ...style, width: '135px', height: '47px' }} />
     )}
   />
 )
