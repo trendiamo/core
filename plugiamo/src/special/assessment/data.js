@@ -7,6 +7,12 @@ const header = {
   textColor: '#111',
 }
 
+export const tagSuggestions = {
+  'Casual/Jeans und Hosen/Slim Fit': ['Basics/Oberteile'],
+  'Basics/Jeans und Hosen': ['Basics/Oberteile', 'Casual/Jeans und Hosen/Slim Fit'],
+  'Business/Accessoires/Krawatten & Einstecktücher': ['Business/Accessoires/Krawatten & Einstecktücher'],
+}
+
 const data = {
   assessment: {
     flowType: 'ht-assessment',
@@ -404,6 +410,32 @@ const data = {
           textColor: '#fff',
         },
       },
+    },
+  },
+  cart: {
+    flowType: 'asmt-cart',
+    header,
+    launcher: {
+      chatBubble: {
+        message: 'Lass dich inspirieren! 🙂',
+        timeStart: 0.5,
+        timeEnd: 20,
+        hideBarAfter: 0.2,
+      },
+      chatBubbleExtra: {},
+      persona: {
+        name: 'Nico de Roy',
+        profilePic: {
+          url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
+        },
+      },
+    },
+    logs: {
+      default: [
+        {
+          text: 'Here are some products that match your taste:',
+        },
+      ],
     },
   },
 }

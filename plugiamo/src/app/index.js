@@ -1,4 +1,5 @@
 import animateOnMount from 'shared/animate-on-mount'
+import AssessmentCart from 'special/assessment/cart'
 import Content from './content'
 import getFrekklsConfig from 'frekkls-config'
 import Launcher from './launcher'
@@ -8,7 +9,17 @@ import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
+import { assessmentCart } from 'special/assessment/utils'
+import {
+  branch,
+  compose,
+  lifecycle,
+  renderComponent,
+  renderNothing,
+  withHandlers,
+  withProps,
+  withState,
+} from 'recompose'
 import { getBubbleProps, LauncherBubbles } from './launcher-bubbles'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
@@ -107,6 +118,7 @@ const AppBaseTemplate = ({
 export const AppBase = compose(withProps(({ data }) => getBubbleProps(data)))(AppBaseTemplate)
 
 export default compose(
+  branch(() => assessmentCart(), renderComponent(AssessmentCart)),
   withProps({ Component: <Router /> }),
   withProps({ Launcher }),
   withProps({ pathFromNav: setupFlowHistory() }),

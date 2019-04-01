@@ -4,6 +4,7 @@ import ItemDiv from 'app/content/scripted-chat/components/item-div'
 import Modal from './modal'
 import { ChatBackground, convertLogs } from 'app/content/scripted-chat/shared'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 
@@ -46,15 +47,11 @@ export default compose(
   lifecycle({
     componentDidMount() {
       const _this = this
-      fetch('https://improv.ams3.digitaloceanspaces.com/improv/improv-data.js', {
-        headers: new Headers({ 'Content-Type': 'application/json' }),
+      fetchProducts(results => {
+        const { setResults, tags } = _this.props
+        const client = results.find(client => client.hostname === location.hostname)
+        setResults(assessProducts(client.products, tags))
       })
-        .then(response => response.json())
-        .then(results => {
-          const { setResults, tags } = _this.props
-          const client = results.find(client => client.hostname === location.hostname)
-          setResults(assessProducts(client.products, tags))
-        })
     },
   }),
   withProps(({ results }) => ({
