@@ -53,7 +53,7 @@ const MetaAuthor = styled.div`
 
 const MetaDate = styled.div`
   font-size: 0.8em;
-  color: #a5a5a5;
+  color: #959595;
   padding-top: 4px;
 `
 

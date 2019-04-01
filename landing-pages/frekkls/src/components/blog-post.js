@@ -25,7 +25,7 @@ const MetaAuthor = styled.div`
 
 const MetaDate = styled.div`
   font-size: 0.8em;
-  color: #a5a5a5;
+  color: #959595;
 `
 
 const HeaderImg = styled.div`
@@ -136,7 +136,7 @@ const MetaDetailsContainer = styled.div`
   flex-direction: column;
 
   @media (min-width: 700px) {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #959595;
     flex-direction: row;
     padding-bottom: 16px;
   }
