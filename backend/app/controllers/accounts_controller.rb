@@ -1,9 +1,8 @@
 class AccountsController < RestController
   def index
-    @accounts = Account.all
+    @accounts = Account.order("name ASC")
     authorize @accounts
-    chain = sorting(@accounts)
-    render json: chain
+    render json: @accounts
   end
 
   def create
