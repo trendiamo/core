@@ -73,7 +73,8 @@ export default {
           .noConflict()(item)
           .find("[title='Menge']")
           .attr('value')
-        return { name: itemName, url: itemUrl, price: itemPrice, quantity: itemQuantity }
+        const id = itemUrl.split('/').pop()
+        return { id, name: itemName, url: itemUrl, price: itemPrice, quantity: itemQuantity }
       })
   },
   checkoutObject() {
