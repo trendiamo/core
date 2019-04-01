@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { navigate } from '@reach/router'
 
 import AdsDesktop from '../images/ads-desktop'
 import AdsMobile from '../images/ads-mobile'
 import Button from '../components/button'
 import Container from '../components/container'
+import locales from '../../locales'
 import Section from '../components/section'
 
 const Flex = styled.div`
@@ -70,7 +72,7 @@ const AdsDesktopContainer = styled.div`
   }
 `
 
-const ImageAndButton = ({ ads }) => (
+const ImageAndButton = ({ ads, onClick }) => (
   <ImageContainer>
     <AdsMobileContainer>
       <AdsMobile alt="Ad preview" className="ads-mobile" />
@@ -78,11 +80,11 @@ const ImageAndButton = ({ ads }) => (
     <AdsDesktopContainer>
       <AdsDesktop alt="Ad preview" className="ads-desktop" />
     </AdsDesktopContainer>
-    <Button>{ads.adsCta}</Button>
+    <Button onClick={onClick}>{ads.adsCta}</Button>
   </ImageContainer>
 )
 
-const Ads = styled(({ ads, className }) => (
+const Ads = styled(({ ads, className, locale }) => (
   <Section className={className}>
     <Container>
       <Flex>
@@ -92,7 +94,7 @@ const Ads = styled(({ ads, className }) => (
           <p>{ads.adsText.adsText}</p>
         </Flex1>
         <Flex1>
-          <ImageAndButton ads={ads} />
+          <ImageAndButton ads={ads} onClick={() => navigate(`${locales[locale].path}/features#our-features`)} />
         </Flex1>
       </Flex>
     </Container>

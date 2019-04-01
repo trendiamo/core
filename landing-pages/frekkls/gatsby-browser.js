@@ -88,8 +88,16 @@ const processDropCaps = () => {
   window.Dropcap.layout(dropcaps, 2)
 }
 
+const processInPageScroll = () => {
+  if (!location.hash) return
+  const element = document.querySelector(location.hash)
+  if (!element) return
+  element.scrollIntoView({ behavior: 'smooth' })
+}
+
 export const onRouteUpdate = () => {
   processEmailInputs()
   processModalTriggers()
   processDropCaps()
+  processInPageScroll()
 }

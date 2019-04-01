@@ -90,7 +90,7 @@ const FeatureSlideContainer = styled.div`
 `
 
 const FeaturesSlider = ({ featuresSlider, featuresSliderContent }) => (
-  <Section>
+  <Section id="our-features">
     <Container>
       <SliderContainer>
         <SectionLabel>{featuresSlider.featuresSliderHeading}</SectionLabel>

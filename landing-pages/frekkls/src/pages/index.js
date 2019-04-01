@@ -18,7 +18,7 @@ const IndexPage = ({ className, pageContext, data }) => (
     <SocialProof clients={data.clients} testimonial={data.testimonial} />
     <DiscoverProduct discoverProductsSliderContent={data.discoverProductsSliderContent} />
     <LevelUpSlider levelUp={data.levelUp} levelUpSliderContent={data.levelUpSliderContent} />
-    <Ads ads={data.ads} />
+    <Ads ads={data.ads} locale={pageContext.locale} />
     <Depth depth={data.depth} />
     <RecentBlog blogPost={data.recentBlogs.edges[0].node} locale={pageContext.locale} />
     <Buzz layout={data.layout} />
