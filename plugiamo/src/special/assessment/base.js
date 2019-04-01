@@ -80,8 +80,7 @@ export default compose(
         maxHeight - contentRef().base.scrollHeight <= 90 && setCoverMinimized(true)
       }
     },
-    handleEndNodeTags: ({ endNodeTags, setEndNodeTags, setShowingCtaButton, tags }) => nextStep => {
-      const nextStepKey = [...tags, nextStep.title].join('/')
+    handleEndNodeTags: ({ endNodeTags, setEndNodeTags, setShowingCtaButton }) => nextStepKey => {
       const newTags = endNodeTags.includes(nextStepKey)
         ? endNodeTags.filter(tag => tag !== nextStepKey)
         : [...endNodeTags, nextStepKey]
@@ -113,6 +112,7 @@ export default compose(
       goToStore,
       progress,
       currentStepKey,
+      setEndNodeTags,
     }) => nextStep => {
       if (nextStep.url) {
         mixpanel.track('Clicked Assessment Step', {
@@ -132,14 +132,16 @@ export default compose(
         return goToStore(currentStepKey)
       }
       if (step.multiple && !steps[nextStepKey]) {
-        return handleEndNodeTags(nextStep)
+        return handleEndNodeTags(nextStepKey)
       }
       if (!step.multiple && !steps[nextStepKey]) {
+        const newTags = [...endNodeTags, nextStepKey]
         mixpanel.track('Clicked Assessment Step', {
           hostname: location.hostname,
           step: currentStepKey,
-          tags: endNodeTags,
+          tags: newTags,
         })
+        setEndNodeTags(newTags)
         return goToStore(currentStepKey)
       }
       setProgress(progress + 33)
@@ -147,7 +149,7 @@ export default compose(
       mixpanel.track('Clicked Assessment Step', {
         hostname: location.hostname,
         step: currentStepKey,
-        tags: [nextStep.title],
+        tags: [nextStepKey],
       })
       setCurrentStepKey(nextStepKey)
     },
