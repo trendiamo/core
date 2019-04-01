@@ -13,4 +13,9 @@ class Account < ApplicationRecord
     attributes.slice("id", "name", "last_name", "created_at", "updated_at")
               .merge(websites_attributes: websites)
   end
+
+  def duplicate(name, hostnames)
+    duplicate_account = DuplicateAccount.new(self, name, hostnames)
+    duplicate_account.perform
+  end
 end
