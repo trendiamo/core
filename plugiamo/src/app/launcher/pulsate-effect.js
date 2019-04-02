@@ -1,14 +1,12 @@
 import styled from 'styled-components'
-import { branch, compose, renderNothing } from 'recompose'
-import { h } from 'preact'
 
 const PulsateCircle = styled.div`
   position: fixed;
-  display: block;
+  display: ${({ active }) => (active ? 'block' : 'none')};
   top: 0;
   left: 0;
-  width: 100px;
-  height: 100px;
+  width: ${({ config }) => config.frameSize}px;
+  height: ${({ config }) => config.frameSize}px;
   border: none;
   border-radius: 50%;
   animation: pulsateEffect 1.5s infinite;
@@ -29,6 +27,4 @@ const PulsateCircle = styled.div`
   }
 `
 
-const PulsateEffect = () => <PulsateCircle />
-
-export default compose(branch(({ active }) => !active, renderNothing))(PulsateEffect)
+export default PulsateCircle

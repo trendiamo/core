@@ -58,7 +58,7 @@ const AppBaseTemplate = ({
   disappear,
   setDisappear,
   isUnmounting,
-  launcherType,
+  launcherPulsating,
   onToggleContent,
   persona,
   position,
@@ -104,10 +104,10 @@ const AppBaseTemplate = ({
       <Launcher
         data={data}
         disappear={disappear}
-        launcherType={launcherType}
         onToggleContent={onToggleContent}
         persona={persona}
         position={position}
+        pulsating={launcherPulsating}
         showingContent={showingContent}
       />
     )}

@@ -9,13 +9,13 @@ import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
 import { matchUrl, timeout } from 'plugin-base'
 
-const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showingContent, launcherType }) => (
+const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showingContent, launcherPulsating }) => (
   <AppBase
     Component={<Base module={module} setPluginState={setPluginState} />}
     data={module}
     isUnmounting={isUnmounting}
     Launcher={Launcher}
-    launcherType={launcherType}
+    launcherPulsating={launcherPulsating}
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
     showingContent={showingContent}
@@ -67,7 +67,7 @@ export default compose(
     },
   }),
   withProps(({ module }) => ({
-    launcherType: module.flowType === 'ht-outro' ? 'original' : 'pulsating',
+    launcherPulsating: module.flowType !== 'ht-outro',
   })),
   withHandlers({
     onToggleContent: ({ module, setIsUnmounting, setShowingContent, showingContent, pluginState }) => () => {
