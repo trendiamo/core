@@ -217,15 +217,16 @@ export default compose(
   }),
   withHandlers({
     uploadSubImage: () => async ({ blob, setProgress, subform }) => {
-      const picUrl = await uploadImage({
-        blob,
-        setProgress,
-        type: 'navigation-items-pics',
-        defaultValue: subform.picUrl,
-      })
-      return {
-        ...subform,
-        picUrl,
+      if (blob) {
+        const picUrl = await uploadImage({
+          blob,
+          setProgress,
+          type: 'navigation-items-pics',
+        })
+        return {
+          ...subform,
+          picUrl,
+        }
       }
     },
   }),
@@ -258,8 +259,9 @@ export default compose(
         })),
       }
     },
-    saveFormObject: ({ saveFormObject, setErrors, uploadSubImages }) => async form => {
+    saveFormObject: ({ saveFormObject, setErrors, uploadSubImages, setNavigationItemsPictures }) => async form => {
       await Promise.all(uploadSubImages(form))
+      setNavigationItemsPictures([])
       return saveFormObject(form, { setErrors })
     },
     afterFormMount: ({ convertPersona, setPersona }) => formObject => {

@@ -258,15 +258,16 @@ export default compose(
   withState('productPicksPictures', 'setProductPicksPictures', []),
   withHandlers({
     uploadSubImage: () => async ({ blob, setProgress, subform }) => {
-      const productPickPhotoUrl = await uploadImage({
-        blob,
-        setProgress,
-        type: 'products-pics',
-        defaultValue: subform.picUrl,
-      })
-      return {
-        ...subform,
-        picUrl: productPickPhotoUrl,
+      if (blob) {
+        const productPickPhotoUrl = await uploadImage({
+          blob,
+          setProgress,
+          type: 'products-pics',
+        })
+        return {
+          ...subform,
+          picUrl: productPickPhotoUrl,
+        }
       }
     },
   }),
@@ -318,8 +319,9 @@ export default compose(
         })),
       }
     },
-    saveFormObject: ({ saveFormObject, setErrors, uploadSubImages }) => async form => {
+    saveFormObject: ({ saveFormObject, setErrors, uploadSubImages, setProductPicksPictures }) => async form => {
       await Promise.all(uploadSubImages(form))
+      setProductPicksPictures([])
       return saveFormObject(form, { setErrors })
     },
   }),

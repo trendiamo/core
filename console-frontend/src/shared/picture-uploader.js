@@ -265,8 +265,7 @@ const resultingCrop = (image, imageElement, pixelCrop) => {
   return new Promise(resolve => canvas.toBlob(resolve, image.type))
 }
 
-const uploadImage = async ({ blob, setProgress, type, defaultValue }) => {
-  if (!blob) return defaultValue
+const uploadImage = async ({ blob, setProgress, type }) => {
   try {
     const { fileUrl } = await S3Upload({
       contentDisposition: 'auto',
