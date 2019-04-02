@@ -14,6 +14,7 @@ import {
   DirectionsOutlined,
   Link as LinkIcon,
   PersonPinOutlined,
+  PhotoLibrary,
   SmsOutlined,
   TuneOutlined,
 } from '@material-ui/icons'
@@ -38,6 +39,12 @@ const resources = {
     route: routes.navigationsList(),
   },
   personas: { icon: AccountCircleOutlined, label: 'Personas', class: 'personas', route: routes.personasList() },
+  pictures: {
+    icon: PhotoLibrary,
+    label: 'Pictures',
+    class: 'pictures',
+    route: routes.picturesList(),
+  },
   urlGenerator: {
     icon: LinkIcon,
     label: 'Url Generator',
@@ -60,7 +67,7 @@ const resourceGroups = {
   basic: {
     name: 'Basic',
     showTitle: true,
-    resources: [resources.personas],
+    resources: [resources.pictures, resources.personas],
   },
   tools: {
     name: 'Tools',

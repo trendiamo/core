@@ -8,7 +8,8 @@ import { compose } from 'recompose'
 
 const BlankState = () => (
   <BlankStateTemplate
-    description={"You have no outros yet. Let's create the first one?"}
+    buttonText="Create new"
+    description="You have no outros yet. Let's create the first one?"
     imageSource="/img/background/img-empty-03.png"
     route={routes.outroCreate()}
     title="Create a new outro"
@@ -23,7 +24,13 @@ const OutrosRow = ({ record, highlightInactive }) => (
     <TableCell width="80%">
       <Text disabled={highlightInactive}>{record.name}</Text>
     </TableCell>
-    <ActiveColumn highlightInactive={highlightInactive} />
+    <ActiveColumn
+      highlightInactive={highlightInactive}
+      symbolTextActive="Active"
+      symbolTextInactive="Draft"
+      tooltipTextActive="Already used in Triggers"
+      tooltipTextInactive="Not yet used in Triggers"
+    />
   </React.Fragment>
 )
 
@@ -33,9 +40,10 @@ export default compose(
     columns,
     defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,
+    buttonText: 'Create new',
     api: { fetch: apiOutroList, destroy: apiOutroDestroy, duplicate: apiOutroDuplicate },
     routes: { create: routes.outroCreate, edit: routes.outroEdit },
     help: { single: true, stepName: 'outros', stageName: 'initial' },
-    highlightInactive: 'triggerIds',
+    highlightInactive: ['triggerIds'],
   })
 )(OutrosRow)

@@ -8,6 +8,7 @@ import { compose } from 'recompose'
 
 const BlankState = () => (
   <BlankStateTemplate
+    buttonText="Create new"
     description={"You don't have any showcases yet. Let's create the first one?"}
     imageSource="/img/background/img-empty-02.png"
     route={routes.showcaseCreate()}
@@ -23,7 +24,13 @@ const ShowcasesRow = ({ record, highlightInactive }) => (
     <TableCell width="80%">
       <Text disabled={highlightInactive}>{record.name}</Text>
     </TableCell>
-    <ActiveColumn highlightInactive={highlightInactive} />
+    <ActiveColumn
+      highlightInactive={highlightInactive}
+      symbolTextActive="Active"
+      symbolTextInactive="Draft"
+      tooltipTextActive="Already used in Triggers"
+      tooltipTextInactive="Not yet used in Triggers"
+    />
   </React.Fragment>
 )
 
@@ -33,9 +40,10 @@ export default compose(
     columns,
     defaultSorting: { column: 'active', direction: 'asc' },
     blankState: BlankState,
+    buttonText: 'Create new',
     api: { fetch: apiShowcaseList, destroy: apiShowcaseDestroy, duplicate: apiShowcaseDuplicate },
     routes: { create: routes.showcaseCreate, edit: routes.showcaseEdit },
     help: { single: true, stepName: 'showcases', stageName: 'initial' },
-    highlightInactive: 'triggerIds',
+    highlightInactive: ['triggerIds'],
   })
 )(ShowcasesRow)

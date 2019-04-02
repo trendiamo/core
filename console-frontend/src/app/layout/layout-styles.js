@@ -57,10 +57,6 @@ export const styles = theme => ({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     [theme.breakpoints.down('sm')]: {
-      '&:hover': {
-        background: '#fff !important',
-      },
-      background: '#fff',
       color: theme.palette.primary.main,
     },
   },

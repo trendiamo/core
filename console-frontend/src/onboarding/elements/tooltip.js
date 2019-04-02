@@ -5,7 +5,7 @@ import { Button } from './button'
 import { compose, lifecycle } from 'recompose'
 
 const Container = styled.div`
-  min-width: 200px;
+  min-width: 300px;
   margin: 20px;
   text-align: ${({ align }) => align};
 `

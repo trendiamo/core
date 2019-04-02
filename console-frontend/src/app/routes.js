@@ -29,6 +29,12 @@ const routes = {
   personaEdit(id) {
     return `/personas/${id}/edit`
   },
+  picturesList() {
+    return '/pictures'
+  },
+  pictureCreate() {
+    return '/pictures/create'
+  },
   outrosList() {
     return '/outros'
   },

@@ -22,6 +22,7 @@ import { CssBaseline } from '@material-ui/core'
 import { NavigationCreate, NavigationEdit, NavigationsList } from './resources/navigations'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
+import { PicturesList } from './resources/pictures'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from './resources/showcases'
 import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from './resources/simple-chats'
@@ -65,6 +66,7 @@ const Routes = () => (
     <PrivateRoute component={PersonasList} exact path={routes.personasList()} />
     <PrivateRoute component={PersonaCreate} exact path={routes.personaCreate()} />
     <PrivateRoute component={PersonaEdit} exact path={routes.personaEdit(':personaId')} />
+    <PrivateRoute component={PicturesList} exact path={routes.picturesList()} />
     <PrivateRoute component={ShowcasesList} exact path={routes.showcasesList()} />
     <PrivateRoute component={ShowcaseCreate} exact path={routes.showcaseCreate()} />
     <PrivateRoute component={ShowcaseEdit} exact path={routes.showcaseEdit(':showcaseId')} />

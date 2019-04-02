@@ -18,10 +18,18 @@ const ActiveSymbol = styled.div`
   user-select: none;
 `
 
-const ActiveColumn = ({ highlightInactive }) => (
+const ActiveColumn = ({
+  highlightInactive,
+  tooltipTextActive,
+  tooltipTextInactive,
+  symbolTextActive,
+  symbolTextInactive,
+}) => (
   <TableCell>
-    <Tooltip placement="left-end" title={highlightInactive ? 'Not yet used in Triggers' : 'Already used in Triggers'}>
-      <ActiveSymbol highlightInactive={highlightInactive}>{highlightInactive ? 'Draft' : 'Active'}</ActiveSymbol>
+    <Tooltip placement="left-end" title={highlightInactive ? tooltipTextInactive : tooltipTextActive}>
+      <ActiveSymbol highlightInactive={highlightInactive}>
+        {highlightInactive ? symbolTextInactive : symbolTextActive}
+      </ActiveSymbol>
     </Tooltip>
   </TableCell>
 )

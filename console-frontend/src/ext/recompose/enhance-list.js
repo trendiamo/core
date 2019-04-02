@@ -15,9 +15,9 @@ import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 import { withSnackbar } from 'notistack'
 
-const Actions = ({ createRoute }) => (
+const Actions = ({ buttonText, createRoute }) => (
   <AppBarButton color="primary" component={Link} to={createRoute} variant="contained">
-    {'Create New'}
+    {buttonText}
   </AppBarButton>
 )
 
@@ -37,6 +37,7 @@ const enhanceList = ({
   title,
   routes,
   blankState,
+  buttonText,
   help,
   highlightInactive,
 }) => ResourceRow =>
@@ -46,7 +47,7 @@ const enhanceList = ({
     withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
     withState('rowsPerPage', 'setRowsPerPage', 25),
     withAppBarContent(({ page }) => ({
-      Actions: <Actions createRoute={routes.create()} />,
+      Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
       title: page === 0 ? title : `${title} p.${page + 1}`,
     })),
     withState('records', 'setRecords', []),
@@ -63,7 +64,9 @@ const enhanceList = ({
       },
     })),
     withProps(({ records }) => {
-      const inactiveRows = records.map(record => record[highlightInactive] && isEmpty(record[highlightInactive]))
+      const inactiveRows = records.map(record => {
+        return highlightInactive ? highlightInactive.every(column => record[column] && isEmpty(record[column])) : false
+      })
       return { inactiveRows }
     }),
     withSnackbar,
@@ -194,7 +197,7 @@ const enhanceList = ({
                   index={index}
                   key={record.id}
                   resource={record}
-                  resourceEditPath={routes.edit(record.id)}
+                  resourceEditPath={routes.edit && routes.edit(record.id)}
                   routes={routes}
                   selectedIds={selectedIds}
                   setSelectedIds={setSelectedIds}
