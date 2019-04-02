@@ -54,7 +54,8 @@ const Container = styled.div`
     ${position === 'left' ? 'left' : 'right'}: ${(config.frameSize - config.size) / 2}px;
   `};
   background: #232323;
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06), 0 2px 32px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06),
+    0 2px ${({ config }) => (config.size > 80 ? 32 : 12)}px 0 rgba(0, 0, 0, 0.16);
   -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
