@@ -112,14 +112,17 @@ export default compose(
     loadFormObject: ({ loadFormObject }) => async () => {
       return loadFormObject()
     },
-    saveFormObject: ({ saveFormObject, setProgress, profilePic, setErrors }) => async form => {
-      const profilePicUrl = await uploadImage({
-        blob: profilePic,
-        setProgress,
-        type: 'personas-profile-pics',
-        defaultValue: form.profilePicUrl,
-      })
-      return saveFormObject({ ...form, profilePicUrl }, { setErrors })
+    saveFormObject: ({ saveFormObject, setProgress, profilePic, setErrors, setProfilePic }) => async form => {
+      if (profilePic) {
+        const profilePicUrl = await uploadImage({
+          blob: profilePic,
+          setProgress,
+          type: 'personas-profile-pics',
+        })
+        setProfilePic(null)
+        return saveFormObject({ ...form, profilePicUrl }, { setErrors })
+      }
+      return saveFormObject(form, { setErrors })
     },
   }),
   withForm({

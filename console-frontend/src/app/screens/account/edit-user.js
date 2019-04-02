@@ -91,16 +91,20 @@ export default compose(
     },
   }),
   withHandlers({
-    saveFormObject: ({ enqueueSnackbar, setErrors, setProgress, profilePic }) => async form => {
+    saveFormObject: ({ enqueueSnackbar, setErrors, setProgress, profilePic, setProfilePic }) => async form => {
       // upload the image
-      const profilePicUrl = await uploadImage({
-        blob: profilePic,
-        setProgress,
-        type: 'users-profile-pics',
-        defaultValue: form.profilePicUrl,
-      })
+      let data
+      if (profilePic) {
+        const profilePicUrl = await uploadImage({
+          blob: profilePic,
+          setProgress,
+          type: 'users-profile-pics',
+        })
+        data = { ...form, profilePicUrl }
+      } else {
+        data = form
+      }
       // update user data
-      const data = { ...form, profilePicUrl }
       const { json, errors, requestError } = await apiRequest(apiMeUpdate, [{ user: data }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) setErrors(errors)
@@ -108,6 +112,7 @@ export default compose(
         enqueueSnackbar('Successfully updated personal info', { variant: 'success' })
         auth.setUser(json)
       }
+      setProfilePic(null)
       return json
     },
   }),
