@@ -9,14 +9,16 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import { apiAccount, apiAccountCreate, apiRequest, apiSignOut } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
-import { IconButton, InputLabel, List, TextField, Tooltip } from '@material-ui/core'
+import { FormControl, IconButton, List, TextField, Tooltip } from '@material-ui/core'
 import { withSnackbar } from 'notistack'
 
 const SectionContainer = styled.div`
-  margin-top: -54px;
   max-width: 1200px;
-  display: flex;
-  flex-direction: row;
+  align-self: center;
+  min-width: 100%;
+  @media (min-width: 800px) {
+    min-width: 800px;
+  }
 `
 
 const StyledButton = styled(Button)`
@@ -39,34 +41,30 @@ const LogoutButton = ({ signOutButtonClick }) => (
   </Tooltip>
 )
 
-const StyledSaveButton = styled(Button)`
-  margin-left: 10px;
-`
-
 const Admin = ({
   addHostnameSelect,
   deleteHostname,
   accounts,
   signOutButtonClick,
   accountForm,
-  renderNewAccountForm,
+  toggleNewAccountForm,
   editHostnameValue,
   onAccountFormSubmit,
   isNewAccount,
   setAccountFormField,
 }) => (
-  <>
-    <SectionContainer>
-      <Section title="Accounts">
-        <ButtonsContainer>
-          <LogoutButton signOutButtonClick={signOutButtonClick} />
-          <StyledButton color="primaryGradient" onClick={renderNewAccountForm} type="submit" variant="contained">
-            {isNewAccount ? 'Close Form' : 'New Account'}
-          </StyledButton>
-        </ButtonsContainer>
-        {isNewAccount ? (
-          <form onSubmit={onAccountFormSubmit}>
-            <InputLabel>{'New Account'}</InputLabel>
+  <SectionContainer>
+    <Section>
+      <ButtonsContainer>
+        <LogoutButton signOutButtonClick={signOutButtonClick} />
+        <StyledButton color="primaryGradient" onClick={toggleNewAccountForm} type="submit" variant="contained">
+          {isNewAccount ? 'Close Form' : 'New Account'}
+        </StyledButton>
+      </ButtonsContainer>
+      {isNewAccount ? (
+        <form onSubmit={onAccountFormSubmit}>
+          <h2>{'New Account'}</h2>
+          <FormControl fullWidth margin="normal" required>
             <TextField
               fullWidth
               label="Name"
@@ -76,24 +74,26 @@ const Admin = ({
               required
               value={accountForm.name}
             />
+          </FormControl>
+          <FormControl fullWidth margin="normal" required>
             <HostnamesForm
               addHostnameSelect={addHostnameSelect}
               deleteHostname={deleteHostname}
               editHostnameValue={editHostnameValue}
               form={accountForm.websitesAttributes[0]}
             />
-            <StyledSaveButton color="primaryGradient" type="submit" variant="contained">
-              {'Save'}
-            </StyledSaveButton>
-          </form>
-        ) : (
-          <List component="nav">
-            <AccountsList accounts={accounts} />
-          </List>
-        )}
-      </Section>
-    </SectionContainer>
-  </>
+          </FormControl>
+          <Button color="primaryGradient" type="submit" variant="contained">
+            {'Save'}
+          </Button>
+        </form>
+      ) : (
+        <List component="nav">
+          <AccountsList accounts={accounts} />
+        </List>
+      )}
+    </Section>
+  </SectionContainer>
 )
 
 export default compose(
@@ -102,7 +102,7 @@ export default compose(
   withState('isNewAccount', 'setIsNewAccount', false),
   withState('accountForm', 'setAccountForm', { name: '', websitesAttributes: [{ hostnames: [''] }] }),
   withHandlers({
-    renderNewAccountForm: ({ isNewAccount, setIsNewAccount }) => () => {
+    toggleNewAccountForm: ({ isNewAccount, setIsNewAccount }) => () => {
       setIsNewAccount(!isNewAccount)
     },
     signOutButtonClick: () => async () => {
