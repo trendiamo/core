@@ -37,6 +37,7 @@ import { withSnackbar } from 'notistack'
 
 const BlankState = () => (
   <BlankStateTemplate
+    buttonText="Create new"
     description={"You don't have any triggers yet. Let's create the first one?"}
     imageSource="/img/background/img-welcome.png"
     route={routes.triggerCreate()}

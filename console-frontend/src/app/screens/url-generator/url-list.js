@@ -25,7 +25,11 @@ const ListItem = styled(MUIListItem)`
 
 const BlankState = () => (
   <>
-    <BlankStateTemplate description="No URLs were generated yet." imageSource="/img/background/img-box-inactive.png" />
+    <BlankStateTemplate
+      buttonText="Create new"
+      description="No URLs were generated yet."
+      imageSource="/img/background/img-box-inactive.png"
+    />
   </>
 )
 

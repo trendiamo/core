@@ -15,6 +15,7 @@ const columns = [
 
 const BlankState = () => (
   <BlankStateTemplate
+    buttonText="Create new"
     description={"You don't have any personas yet. Let's create the first one?"}
     imageSource="/img/background/img-empty-02.png"
     route={routes.personaCreate()}
@@ -36,6 +37,7 @@ export default compose(
   enhanceList({
     title: 'Personas',
     blankState: BlankState,
+    buttonText: 'Create new',
     columns,
     api: { fetch: apiPersonaList, destroy: apiPersonaDestroy },
     routes: { create: routes.personaCreate, edit: routes.personaEdit },

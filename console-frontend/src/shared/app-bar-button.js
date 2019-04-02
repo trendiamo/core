@@ -7,6 +7,7 @@ import { withClassesConsumer } from 'ext/recompose/with-classes'
 
 const StyledMuiButton = styled(MuiButton)`
   background-image: linear-gradient(132deg, #ff843e, #ff6c40 52%, #ff5642);
+  color: white;
   &:hover {
     background-image: none;
     background-color: #ff6641;

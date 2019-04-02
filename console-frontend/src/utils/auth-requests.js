@@ -5,6 +5,7 @@ import { stringify } from 'query-string'
 
 const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
+const PICTURES_URL = `${BASE_API_URL}/pictures`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/showcases`
 const SIMPLE_CHATS_URL = `${BASE_API_URL}/simple_chats`
@@ -115,6 +116,9 @@ export const apiPersonaCreate = body => apiCreateRequest(PERSONAS_URL, body)
 export const apiPersonaUpdate = (id, body) => apiUpdateRequest(`${PERSONAS_URL}/${id}`, body)
 export const apiPersonaDestroy = body => apiDestroyMultipleRequest(PERSONAS_URL, body)
 export const apiPersonasAutocomplete = query => apiGetRequest(`${PERSONAS_URL}/autocomplete/?${stringify(query)}`)
+
+export const apiPictureList = query => apiListRequest(`${PICTURES_URL}/?${stringify(query)}`)
+export const apiPictureDestroy = body => apiDestroyMultipleRequest(PICTURES_URL, body)
 
 export const apiOutroList = query => apiListRequest(`${OUTROS_URL}/?${stringify(query)}`)
 export const apiOutroDestroy = body => apiDestroyMultipleRequest(OUTROS_URL, body)

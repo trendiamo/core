@@ -56,8 +56,9 @@ class RestController < ApplicationController
       return chain
     end
     column, direction = *sort_params
-    direction = direction.match?(/asc/i) ? "asc" : "desc"
     return sorting_by_active_state(chain, direction) if column.underscore == "active"
+    return sorting_by_pictures_state(chain, direction) if column.underscore == "status"
+
     column = ActiveRecord::Base.connection.quote_column_name(column.underscore)
     chain.order("#{column} #{direction}")
   end
@@ -65,5 +66,15 @@ class RestController < ApplicationController
   def sorting_by_active_state(chain, direction)
     direction = direction == "desc" ? "asc" : "desc"
     chain.left_joins(:triggers).group(:id).order("count(triggers.id) #{direction}")
+  end
+
+  def sorting_by_pictures_state(chain, direction)
+    sorted_chain = chain.sort_by do |picture|
+      picture.navigation_items.count + picture.personas_with_profile_pic.count +
+        picture.personas_with_animation_pic.count + picture.product_picks.count
+    end
+    return sorted_chain.reverse if direction == "asc"
+
+    sorted_chain
   end
 end

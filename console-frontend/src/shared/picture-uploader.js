@@ -176,7 +176,7 @@ const BarebonesPictureUploader = ({
       <RemoveButtonContainer>
         <Button disabled={disabled} mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
           <RemoveCircle />
-          {'delete'}
+          {'clear'}
         </Button>
       </RemoveButtonContainer>
     )}

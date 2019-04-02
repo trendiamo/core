@@ -53,6 +53,9 @@ Rails.application.routes.draw do
       resources :websites, only: %i[show update]
 
       resources :accounts, only: %i[index create]
+
+      resources :pictures, only: %i[index]
+      delete "/pictures", to: "pictures#destroy"
     end
     get "s3/sign", to: "s3#sign"
     # post :stripe, to: 'stripe#webhook'
