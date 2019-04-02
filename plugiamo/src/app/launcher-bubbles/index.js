@@ -38,7 +38,7 @@ const getBubbleProps = data => {
   return {
     bubble,
     extraBubble,
-    [extraBubble.buttons && 'launcherType']: 'original',
+    [extraBubble.buttons && 'launcherPulsating']: false,
   }
 }
 

@@ -7,6 +7,7 @@ import { compose, lifecycle } from 'recompose'
 import { h } from 'preact'
 import { history, timeout, transition } from 'plugin-base'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
+import { positioning } from 'utils'
 
 export const ContentFrameContainerBase = styled.div`
   z-index: 2147483000;
@@ -27,8 +28,7 @@ export const ContentFrameContainerBase = styled.div`
 const ContentFrameContainer = animateOnMount(styled(ContentFrameContainerBase)`
   @media (min-width: ${MAIN_BREAKPOINT}px) {
     border-radius: 8px;
-    bottom: ${({ position }) => (position === 'right-elevated' ? '126px' : '100px')};
-    ${({ position }) => (position === 'left' ? 'left: 20px;' : 'right: 20px;')}
+    ${({ position }) => positioning.get({ type: 'content', position })}
     width: ${WIDTH}px;
     height: calc(100vh - 150px);
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);

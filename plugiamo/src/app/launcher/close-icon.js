@@ -12,19 +12,19 @@ const CloseIconContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 70px;
-  height: 70px;
+  width: ${({ config }) => config.size}px;
+  height: ${({ config }) => config.size}px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: ${({ active }) => (active ? 'none' : 'rotate(-30deg)')};
   opacity: ${({ active }) => (active ? 1 : 0)};
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: all 0.25s ease;
 `
 
-const CloseIcon = ({ active }) => (
-  <CloseIconContainer active={active}>
+const CloseIcon = ({ active, config }) => (
+  <CloseIconContainer active={active} config={config}>
     <StyledIconClose />
   </CloseIconContainer>
 )
