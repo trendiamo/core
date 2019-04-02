@@ -41,7 +41,9 @@ const PicturesRow = ({ record: { url, navigationItems, personas, productPicks },
       <Picture disabled={highlightInactive} src={url} />
     </TableCell>
     <TableCell width="100%">
-      <Text disabled={highlightInactive}>{url}</Text>
+      <Text disabled={highlightInactive} style={{ wordBreak: 'break-all' }}>
+        {url}
+      </Text>
     </TableCell>
     <ActiveColumn
       highlightInactive={highlightInactive}

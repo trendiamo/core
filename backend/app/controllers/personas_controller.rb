@@ -17,7 +17,7 @@ class PersonasController < RestController
   def update
     @persona = Persona.find(params[:id])
     authorize @persona
-    convert_and_assign_pictures
+    convert_and_assign_picture
     if @persona.update(persona_params)
       render json: @persona
     else
@@ -26,7 +26,7 @@ class PersonasController < RestController
   end
 
   def create
-    convert_and_assign_pictures
+    convert_and_assign_picture
     @persona = Persona.new(persona_params)
     authorize @persona
     if @persona.save
@@ -49,15 +49,13 @@ class PersonasController < RestController
   private
 
   def persona_params
-    params.require(:persona).permit(:name, :description, :instagram_url, :profile_pic_id, :profile_pic_animation_id)
+    params.require(:persona).permit(:name, :description, :instagram_url, :profile_pic_id, :profile_pic_animation_url)
   end
 
-  def convert_and_assign_pictures
-    %i[profile_pic profile_pic_animation].each do |pic|
-      pic_url = params[:persona]["#{pic}_url"]
-      pic_url.present? && params[:persona]["#{pic}_id"] = Picture.find_or_create_by!(url: pic_url).id
-      params[:persona].delete "#{pic}_url"
-    end
+  def convert_and_assign_picture
+    pic_url = params[:persona][:profile_pic_url]
+    pic_url.present? && params[:persona][:profile_pic_id] = Picture.find_or_create_by!(url: pic_url).id
+    params[:persona].delete :profile_pic_url
   end
 
   def render_error
