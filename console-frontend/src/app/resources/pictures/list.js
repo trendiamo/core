@@ -14,11 +14,12 @@ const columns = [
 
 const BlankState = () => (
   <BlankStateTemplate
-    buttonText="Upload new"
-    description="You don't have any picture yet. Let's add some?"
+    // buttonText="Upload new"
+    // description="You don't have any picture yet. Let's add some?"
     imageSource="/img/background/img-welcome.png"
-    route={routes.pictureCreate()}
-    title="Add new pictures"
+    // route={routes.pictureCreate()}
+    // title="Add new pictures"
+    title="No pictures yet"
   />
 )
 

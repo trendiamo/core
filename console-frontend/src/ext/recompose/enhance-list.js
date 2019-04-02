@@ -16,7 +16,13 @@ import { withRouter } from 'react-router'
 import { withSnackbar } from 'notistack'
 
 const Actions = ({ buttonText, createRoute }) => (
-  <AppBarButton color="primary" component={Link} to={createRoute} variant="contained">
+  <AppBarButton
+    color="primary"
+    component={Link}
+    style={{ display: createRoute.includes('picture') ? 'none' : 'inline-flex' }}
+    to={createRoute}
+    variant="contained"
+  >
     {buttonText}
   </AppBarButton>
 )
