@@ -16,13 +16,13 @@ const PulsateCircle = styled.div`
       opacity: 1;
     }
     30% {
-      opacity: 0.4;
-      background: #000;
+      opacity: 1;
+      box-shadow: inset 0px 0px 30px 0px #000;
     }
     100% {
       transform: scale(1);
       opacity: 0;
-      background: #000;
+      box-shadow: inset 0px 0px 30px 0px #000;
     }
   }
 `
