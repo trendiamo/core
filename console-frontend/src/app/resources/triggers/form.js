@@ -15,6 +15,7 @@ import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
 const pathPattern = '/[^?#]*'
+const pathAndSearchPattern = '/[^#]*'
 
 const FlexDiv = styled.div`
   display: flex;
@@ -85,11 +86,12 @@ const TriggerForm = ({
               // eslint-disable-next-line react/no-array-index-key
               <FlexDiv key={index}>
                 <StyledUrlTextField
-                  autoComplete="transaction-amount"
                   disabled={isFormLoading}
                   hostnames={hostnames}
                   index={index}
-                  inputProps={{ pattern: pathPattern }}
+                  inputProps={{
+                    pattern: hostnames.includes('www.pionier-workwear.com') ? pathAndSearchPattern : pathPattern,
+                  }}
                   onChange={editUrlValue}
                   required
                   value={url}

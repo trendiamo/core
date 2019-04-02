@@ -159,7 +159,8 @@ export default compose(
     `,
     {
       hasPersona: !!optionsFromHash().persona,
-      pathname: location.pathname,
+      pathname:
+        location.hostname === 'www.pionier-workwear.com' ? `${location.pathname}${location.search}` : location.pathname,
       personaId: optionsFromHash().persona,
       pluginPath: optionsFromHash().path,
     }

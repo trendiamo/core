@@ -10,7 +10,7 @@ module.exports = {
     disableHostCheck: true,
     open: true,
     historyApiFallback: {
-      index: 'index.html',
+      rewrites: [{ from: /.*/, to: '/index.html' }],
     },
     host: '0.0.0.0',
     proxy: { '/graphql': 'http://localhost:5000' },
