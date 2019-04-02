@@ -32,10 +32,10 @@ class UrlMatcher
       p = match_data[1].split("&")
       p.each do |e|
         r = e.split("=")
-        matches[CGI.unescape(r[0])] = CGI.unescape(r.slice(1).join("="))
+        matches[CGI.unescape(r[0])] = CGI.unescape(r.slice(1))
       end
     end
-    url = segmentize(pathname.sub(reg, ""))
+    url = segmentize(pathname)
     route = segmentize(url_matcher || "")
     max = [url.length, route.length].max
     i = 0
