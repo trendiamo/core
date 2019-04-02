@@ -8,8 +8,7 @@ class DuplicateAccount
 
   def perform
     duplicate
-  rescue StandardError => e
-    puts e
+  rescue StandardError
     @cloned_account.destroy if @cloned_account.persisted?
   end
 
