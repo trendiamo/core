@@ -1,18 +1,17 @@
-def uri_from_url(url)
-  URI.parse(WEBrick::HTTPUtils.escape(url))
+def extract_path(url)
+  url.gsub("https://#{ENV['DO_BUCKET']}.#{ENV['DO_SPACE_ENDPOINT']}/", "")
 end
 
-def generate_new_url(picture_url)
-  uri = uri_from_url(picture_url)
-  directories_array = uri.path[1..-1].split("/", 4)
+def generate_new_url(source_path)
+  directories_array = source_path.split("/", 4)
   directories_array[2] = SecureRandom.hex(4)
-  "#{uri.scheme}://#{uri.host}/#{directories_array.join('/')}"
+  "https://#{ENV['DO_BUCKET']}.#{ENV['DO_SPACE_ENDPOINT']}/#{directories_array.join('/')}"
 end
 
 def duplicate_pic_url(picture_url)
-  new_url = generate_new_url(picture_url)
-  source_path = uri_from_url(picture_url).path[1..-1]
-  destination_path = uri_from_url(new_url).path[1..-1]
+  source_path = extract_path(picture_url)
+  new_url = generate_new_url(source_path)
+  destination_path = extract_path(new_url)
   bucket = Aws::S3::Bucket.new(ENV["DO_BUCKET"])
   bucket.object(destination_path).copy_from(bucket: ENV["DO_BUCKET"], key: source_path, acl: "public-read")
   new_url
