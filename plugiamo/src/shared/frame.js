@@ -69,7 +69,12 @@ export default compose(
       const { iframeRef, setIsLoaded } = this.props
       if (iframeRef && iframeRef !== prevProps.iframeRef) {
         const load = () => {
-          loadCss(iframeRef.contentDocument.head, 'https://fonts.googleapis.com/css?family=Roboto:400,500,700')
+          // Here we avoid FOIT (Flash of Invisible Text) on the slow network connections. Read more: https://medium.com/@pierluc/enable-font-display-on-google-fonts-with-cloudflare-workers-d7604cb30eab
+          fetch('https://fonts.googleapis.com/css?family=Roboto:400,500,700').then(response => {
+            response.text().then(body => {
+              addCss(iframeRef.contentDocument.head, body.replace(/}/g, 'font-display: swap; }'))
+            })
+          })
           addCss(iframeRef.contentDocument.head, style)
           addBase(iframeRef.contentDocument.head)
           addPlatformClass(iframeRef.contentDocument.body)
