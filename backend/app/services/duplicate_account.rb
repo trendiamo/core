@@ -1,21 +1,21 @@
+def uri_from_url(url)
+  URI.parse(WEBrick::HTTPUtils.escape(url))
+end
+
 def generate_new_url(picture_url)
-  uri = URI(picture_url)
-  directories_array = path_without_slash(uri).split("/", 4)
+  uri = uri_from_url(picture_url)
+  directories_array = uri.path[1..-1].split("/", 4)
   directories_array[2] = SecureRandom.hex(4)
   "#{uri.scheme}://#{uri.host}/#{directories_array.join('/')}"
 end
 
 def duplicate_pic_url(picture_url)
   new_url = generate_new_url(picture_url)
-  source_path = path_without_slash(picture_url)
-  destination_path = path_without_slash(new_url)
+  source_path = uri_from_url(picture_url).path[1..-1]
+  destination_path = uri_from_url(new_url).path[1..-1]
   bucket = Aws::S3::Bucket.new(ENV["DO_BUCKET"])
   bucket.object(destination_path).copy_from(bucket: ENV["DO_BUCKET"], key: source_path, acl: "public-read")
   new_url
-end
-
-def path_without_slash(url)
-  URI(url).path[1..-1]
 end
 
 class DuplicateAccount
