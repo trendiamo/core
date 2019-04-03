@@ -15,7 +15,6 @@ class Account < ApplicationRecord
   end
 
   def duplicate(name, hostnames)
-    duplicate_account = DuplicateAccount.new(self, name, hostnames)
-    duplicate_account.perform
+    DuplicateAccount.new(self, name, hostnames).perform
   end
 end
