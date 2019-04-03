@@ -4,13 +4,16 @@ class DuplicateAccount
     @hostnames = hostnames
     @account = account
     @cloned_account = @account.deep_clone { |_void, copy| copy.name = @name }
+    @duplicate_pictures_service = Aws::S3::DuplicatePictures.new(@account, @cloned_account)
   end
 
   def perform
-    duplicate
-  rescue StandardError
+    @duplicate_pictures_service.perform if duplicate
+  rescue StandardError, Aws::S3::Errors::ServiceError
     @cloned_account.destroy if @cloned_account.persisted?
   end
+
+  private
 
   def duplicate
     @cloned_account.save!
@@ -26,7 +29,8 @@ class DuplicateAccount
     @personas = @account.personas
     ActsAsTenant.with_tenant(@cloned_account) do
       cloned_personas.each do |persona|
-        cloned_persona = persona.deep_clone include: %i[profile_pic profile_pic_animation]
+        cloned_persona = persona.deep_clone include: %i[profile_pic]
+        cloned_persona.profile_pic.url = @duplicate_pictures_service.duplicate_pic_url(persona.profile_pic)
         cloned_persona.save!
         @mapped_ids[persona.id] = cloned_persona.id
       end
@@ -35,7 +39,7 @@ class DuplicateAccount
 
   def clone_personas
     @account.personas.each do |persona|
-      persona.deep_clone include: %i[profile_pic profile_pic_animation]
+      persona.deep_clone include: %i[profile_pic]
     end
   end
 
@@ -67,7 +71,14 @@ class DuplicateAccount
 
   def navigations
     Navigation.where(account: @account).map do |navigation|
-      navigation.deep_clone include: { navigation_items: :pic }
+      cloned_navigation = navigation.deep_clone include: { navigation_items: :pic }
+      cloned_navigation.navigation_items.map do |navigation_item|
+        navigation_item.pic.url = @duplicate_pictures_service.duplicate_pic_url(navigation_item.pic)
+        ActsAsTenant.with_tenant(@cloned_account) do
+          navigation_item.pic.save
+        end
+      end
+      cloned_navigation
     end
   end
 
@@ -79,7 +90,17 @@ class DuplicateAccount
 
   def showcases
     showcases = Showcase.where(account: @account).map do |showcase|
-      showcase.deep_clone include: { spotlights: { product_picks: :pic } }
+      cloned_showcase = showcase.deep_clone include: { spotlights: { product_picks: :pic } }
+      cloned_showcase.spotlights.map do |spotlight|
+        spotlight.product_picks.map do |product_pick|
+          product_pick.pic.url = @duplicate_pictures_service.duplicate_pic_url(product_pick.pic)
+          ActsAsTenant.with_tenant(@cloned_account) do
+            product_pick.pic.save
+          end
+        end
+        spotlight
+      end
+      cloned_showcase
     end
     showcases.map { |showcase| showcase if assign_personas(showcase.spotlights) }
   end
@@ -96,9 +117,8 @@ class DuplicateAccount
   end
 
   def assign_personas(collection)
-    keys = @mapped_ids.keys
-    collection.each_with_index.map do |object, index|
-      persona = Persona.find(@mapped_ids[keys[index]])
+    collection.map do |object|
+      persona = Persona.find(@mapped_ids[object.persona.id])
       object.persona = persona
       object
     end

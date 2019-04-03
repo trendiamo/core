@@ -35,8 +35,4 @@ class S3Controller < RestController
   def s3_presigner
     @s3_presigner ||= Aws::S3::Presigner.new
   end
-
-  def s3_bucket
-    @s3_bucket ||= Aws::S3::Resource.new.bucket(ENV["DO_BUCKET"])
-  end
 end
