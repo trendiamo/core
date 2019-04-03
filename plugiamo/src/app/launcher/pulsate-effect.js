@@ -10,19 +10,18 @@ const PulsateCircle = styled.div`
   border: none;
   border-radius: 50%;
   animation: pulsateEffect 1.5s infinite;
+  background: radial-gradient(transparent, transparent, #000);
   @keyframes pulsateEffect {
     0% {
       transform: scale(0);
       opacity: 1;
     }
-    30% {
+    40% {
       opacity: 1;
-      box-shadow: inset 0px 0px 30px 0px #000;
     }
     100% {
       transform: scale(1);
       opacity: 0;
-      box-shadow: inset 0px 0px 30px 0px #000;
     }
   }
 `
