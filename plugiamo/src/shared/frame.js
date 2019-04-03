@@ -72,6 +72,7 @@ export default compose(
           // Here we avoid FOIT (Flash of Invisible Text) on the slow network connections. Read more: https://medium.com/@pierluc/enable-font-display-on-google-fonts-with-cloudflare-workers-d7604cb30eab
           fetch('https://fonts.googleapis.com/css?family=Roboto:400,500,700').then(response => {
             response.text().then(body => {
+              if (!iframeRef || !iframeRef.contentDocument) return
               addCss(iframeRef.contentDocument.head, body.replace(/}/g, 'font-display: swap; }'))
             })
           })

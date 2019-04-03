@@ -9,7 +9,15 @@ import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
 import { matchUrl, timeout } from 'plugin-base'
 
-const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showingContent, launcherPulsating }) => (
+const Plugin = ({
+  isUnmounting,
+  showingLauncher,
+  module,
+  onToggleContent,
+  setPluginState,
+  showingContent,
+  launcherPulsating,
+}) => (
   <AppBase
     Component={<Base module={module} setPluginState={setPluginState} />}
     data={module}
@@ -19,6 +27,7 @@ const Plugin = ({ isUnmounting, module, onToggleContent, setPluginState, showing
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
     showingContent={showingContent}
+    showingLauncher={showingLauncher}
   />
 )
 
@@ -38,6 +47,7 @@ export default compose(
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
+  withState('showingLauncher', 'setShowingLauncher', true),
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent } = this.props
