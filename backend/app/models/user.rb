@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  include CleanupAssets
-
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :validatable
 
   belongs_to :account, optional: true

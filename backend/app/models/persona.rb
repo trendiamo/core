@@ -1,6 +1,4 @@
 class Persona < ApplicationRecord
-  include CleanupAssets
-
   acts_as_tenant
 
   paginates_per 10

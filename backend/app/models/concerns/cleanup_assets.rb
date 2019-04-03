@@ -7,12 +7,12 @@ module CleanupAssets
   end
 
   def cleanup_assets_after_save
-    return unless saved_change_to_attribute?(:profile_pic_url) && attribute_before_last_save(:profile_pic_url)
-    CleanupAssetsJob.perform_later(attribute_before_last_save(:profile_pic_url))
+    return unless saved_change_to_attribute?(:url) && attribute_before_last_save(:url)
+    CleanupAssetsJob.perform_later(attribute_before_last_save(:url))
   end
 
   def cleanup_assets_after_destroy
-    return unless attribute_in_database(:profile_pic_url)
-    CleanupAssetsJob.perform_later(attribute_in_database(:profile_pic_url))
+    return unless attribute_in_database(:url)
+    CleanupAssetsJob.perform_later(attribute_in_database(:url))
   end
 end
