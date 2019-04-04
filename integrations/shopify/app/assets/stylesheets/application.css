@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+.success-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
