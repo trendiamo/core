@@ -7,8 +7,6 @@ ShopifyApp.configure do |config|
   # https://help.shopify.com/en/api/getting-started/authentication/oauth/scopes
   config.scope = "read_products,write_script_tags"
 
-  config.embedded_app = true
-
   config.after_authenticate_job = false
 
   config.session_repository = ShopifyApp::InMemorySessionStore
