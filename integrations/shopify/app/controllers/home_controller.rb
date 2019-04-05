@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-class HomeController < ApplicationController
-  def index
-  end
+class HomeController < ShopifyApp::AuthenticatedController
+  def index; end
 end
