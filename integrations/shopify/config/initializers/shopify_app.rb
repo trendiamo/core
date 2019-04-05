@@ -11,7 +11,7 @@ ShopifyApp.configure do |config|
 
   config.after_authenticate_job = false
 
-  config.session_repository = ShopifyApp::InMemorySessionStore
+  config.session_repository = Shop
 
   config.scripttags = [
     { event: 'onload', src: 'https://plugiamo.s3.eu-central-1.amazonaws.com/plugin.js', display_scope: "all" },
