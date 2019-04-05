@@ -1,8 +1,9 @@
 import App from 'app'
 import Bridge from 'special/bridge'
-// import initRollbar from 'ext/rollbar'
 import bridgeData from 'special/bridge/data'
 import getFrekklsConfig from 'frekkls-config'
+import { matchUrl } from 'plugin-base'
+// import initRollbar from 'ext/rollbar'
 import mixpanel from 'ext/mixpanel'
 import setupDataGathering from 'data-gathering'
 import SpotAHome from 'special/spotahome'
@@ -15,9 +16,13 @@ import { Provider } from 'ext/graphql-context'
 import './styles.css'
 
 const detectAndMarkBridge = () => {
-  if (!Object.keys(bridgeData).includes(location.hostname) && !process.env.HACKATHON) return false
-  if ((optionsFromHash().hckt || '').match(/1|true/)) localStorage.setItem('trnd-hackathon', 1)
-  return !!localStorage.getItem('trnd-hackathon')
+  if (!Object.keys(bridgeData).includes(process.env.BRIDGE || location.hostname)) return false
+  if ((optionsFromHash().hckt || '').match(/1|true/)) localStorage.setItem('trnd-bridge', 1)
+  if (!localStorage.getItem('trnd-bridge')) return false
+  const trigger = bridgeData[process.env.BRIDGE || location.hostname].triggers.find(trigger =>
+    trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
+  )
+  return !!trigger
 }
 
 const initRootComponent = () => {
