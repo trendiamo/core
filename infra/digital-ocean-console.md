@@ -2,7 +2,7 @@
 
 ## Description
 
-This droplet has apps managed by dokku. The apps are: `console-backend`.
+This droplet has apps managed by dokku. The apps are: `console-backend`, `shopify-app`.
 
 ## Commands to setup
 
@@ -18,13 +18,22 @@ This droplet has apps managed by dokku. The apps are: `console-backend`.
 # To add users to be able to deploy, run in your local machine (make sure to replace vars below):
 cat <pub-key-file> | ssh root@46.101.129.17 "sudo sshcommand acl-add dokku <key-id>"
 
+# Add required plugins
+
+dokku plugin:install https://github.com/dokku/dokku-postgres.git
+dokku plugin:install https://github.com/dokku/dokku-redis.git redis
+
+# Install certbot:
+
+add-apt-repository ppa:certbot/certbot
+apt-get update
+apt-get install certbot
+
 # To setup the console-backend app:
 
 dokku apps:create console-backend
-dokku plugin:install https://github.com/dokku/dokku-postgres.git
 dokku postgres:create console-backend-pg
 dokku postgres:link console-backend-pg console-backend
-dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 dokku redis:create console-backend-redis
 dokku redis:link console-backend-redis console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
@@ -35,24 +44,34 @@ dokku ps:scale console-backend web=1 worker=1 scheduler=1
 # from your local machine, do the first deploy:
 bin/rails deploy
 
-# certificates:
-add-apt-repository ppa:certbot/certbot
-apt-get update
-apt-get install certbot
+# To setup the shopify.frekkls.com app:
+
+dokku apps:create shopify-app
+dokku postgres:create shopify-app-pg
+dokku postgres:link shopify-app-pg shopify-app
+dokku config:set shopify-app SHOPIFY_API_KEY=... SHOPIFY_SHARED_SECRET=...
+dokku domains:add shopify-app shopify.frekkls.com
+dokku ps:scale shopify-app web=1
+# from your local machine, try to do the first deploy:
+bin/rails deploy
+# dokku run shopify-app rails db:schema:load
+
+# To install certificates
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d api.trendiamo.com
+certbot certonly --standalone --preferred-challenges http -d api.trendiamo.com -d shopify.frekkls.com
+service nginx start
+
 mkdir keycert
 cp /etc/letsencrypt/live/api.trendiamo.com/fullchain.pem keycert/certificate.crt
 cp /etc/letsencrypt/live/api.trendiamo.com/privkey.pem keycert/key.key
 tar -cvf keycert.tar keycert
 cat keycert.tar | dokku certs:add console-backend
+cat keycert.tar | dokku certs:add shopify-app
 rm keycert.tar keycert/certificate.crt keycert/key.key
 rmdir keycert
-service nginx start
 
-
-# To renew
+# To renew certificates
 
 # To test renew: `certbot renew --dry-run`
 certbot renew
@@ -60,7 +79,7 @@ cp /etc/letsencrypt/live/api.trendiamo.com/fullchain.pem /home/dokku/console-bac
 cp /etc/letsencrypt/live/api.trendiamo.com/privkey.pem /home/dokku/console-backend/tls/server.key
 service nginx restart
 
-# Backups:
+# Backups
 
 # To backup the console-backend postgres db:
 dokku postgres:backup-auth console-backend-pg <DO_SPACES_KEY_ID> <DO_SECRET_ACCESS_KEY> ams3 s3v4 https://ams3.digitaloceanspaces.com
