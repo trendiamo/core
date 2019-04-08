@@ -59,7 +59,7 @@ const data = {
                   picUrl:
                     'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/_0003_1_specials.png.jpg',
                   title: 'Specials',
-                  url: 'https://www.pierre-cardin.de/',
+                  url: 'https://www.pierre-cardin.de/specials/pierre-cardin-specials/summer-specials',
                 },
               ],
             },
@@ -218,7 +218,7 @@ const data = {
             {
               type: 'text',
               text:
-                'Falls du dir unsicher bist, welche unserer Jeans-Passformen die für dich beste ist, kannst du hier nachschauen: <a href="https://www.pierre-cardin.de/specials/pierre-cardin-specials/denim-guide">Zum Denim Guide</a>',
+                'Falls du dir unsicher bist, welche unserer Jeans-Passformen die für dich beste ist, kannst du hier nachschauen: <a target="_blank" rel="noopener noreferrer" href="https://www.pierre-cardin.de/specials/pierre-cardin-specials/denim-guide">Zum Denim Guide</a>',
             },
           ],
         },
