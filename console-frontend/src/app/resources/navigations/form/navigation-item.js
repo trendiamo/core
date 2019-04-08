@@ -2,9 +2,7 @@ import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import Section from 'shared/section'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
-import { Cancel, FormSection } from 'shared/form-elements'
-import { DragHandle } from 'shared/sortable-elements'
-import { FormHelperText, TextField } from '@material-ui/core'
+import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
 
 const NavigationItem = ({
   allowDelete,
@@ -25,14 +23,14 @@ const NavigationItem = ({
       actions={
         allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteNavigationItem} />
       }
-      dragHandle={<DragHandle />}
+      dragHandle
       ellipsize
       foldable
       folded={folded}
       hideTop
       title={navigationItem.id ? navigationItem.text : 'New Navigation Item'}
     >
-      <TextField
+      <Field
         disabled={isCropping || isFormLoading}
         fullWidth
         label="Url"
@@ -43,12 +41,12 @@ const NavigationItem = ({
         type="URL"
         value={navigationItem.url}
       />
-      <FormHelperText>
+      <HelperText>
         {
           'Use the whole url, eg: https://www.example.com/page1 - you can test it by clicking on the item in the preview.'
         }
-      </FormHelperText>
-      <TextField
+      </HelperText>
+      <Field
         disabled={isCropping || isFormLoading}
         fullWidth
         label="Text"
@@ -79,8 +77,7 @@ export default compose(
   withHandlers({
     editNavigationItemValue: ({ navigationItem, index, onChange }) => event => {
       const name = event.target.name.replace('navigationItem_', '')
-      navigationItem[name] = event.target.value
-      onChange(navigationItem, index)
+      onChange(Object.assign({}, navigationItem, { [name]: event.target.value }), index)
     },
     deleteNavigationItem: ({ navigationItem, index, onChange }) => () => {
       onChange(

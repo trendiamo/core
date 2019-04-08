@@ -1,8 +1,7 @@
 import React from 'react'
-import { branch, compose, renderNothing, withHandlers } from 'recompose'
-import { Cancel, FormSection } from 'shared/form-elements'
-import { DragHandle } from 'shared/sortable-elements'
-import { FormHelperText, TextField } from '@material-ui/core'
+import { branch, compose, renderNothing, shouldUpdate, withHandlers } from 'recompose'
+import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
+import { isEqual, omit } from 'lodash'
 
 const SimpleChatMessage = ({
   allowDelete,
@@ -21,14 +20,14 @@ const SimpleChatMessage = ({
       )
     }
     backgroundColor="#fff"
-    dragHandle={<DragHandle />}
+    dragHandle
     ellipsize
     foldable
     hideBottom
     hideTop={index === 0}
     title={simpleChatMessage.id ? simpleChatMessage.text : 'New Message'}
   >
-    <TextField
+    <Field
       disabled={isFormLoading}
       fullWidth
       label="Message"
@@ -39,23 +38,26 @@ const SimpleChatMessage = ({
       required
       value={simpleChatMessage.text}
     />
-    <FormHelperText>
+    <HelperText>
       {'ℹ️ You can format text using '}
       <a href="https://www.markdownguide.org/cheat-sheet" rel="noopener noreferrer" target="_blank">
         {'markdown'}
       </a>
       {'. If you just paste a youtube link, the video will be shown.'}
-    </FormHelperText>
+    </HelperText>
   </FormSection>
 )
 
 export default compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['onChange']
+    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
+  }),
   branch(({ simpleChatMessage }) => simpleChatMessage._destroy, renderNothing),
   withHandlers({
     editSimpleChatMessageValue: ({ simpleChatMessage, simpleChatMessageIndex, onChange }) => event => {
       const name = event.target.name.replace('simpleChatMessage_', '')
-      simpleChatMessage[name] = event.target.value
-      onChange(simpleChatMessage, simpleChatMessageIndex)
+      onChange(Object.assign({}, simpleChatMessage, { [name]: event.target.value }), simpleChatMessageIndex)
     },
     deleteSimpleChatMessage: ({ simpleChatMessage, simpleChatMessageIndex, onChange }) => () => {
       onChange(

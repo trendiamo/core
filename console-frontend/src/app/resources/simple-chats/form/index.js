@@ -7,16 +7,30 @@ import Section from 'shared/section'
 import SimpleChatStep from './simple-chat-step'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemContainer, Form, Field as LimitedField } from 'shared/form-elements'
+import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import {
+  branch,
+  compose,
+  renderComponent,
+  shallowEqual,
+  shouldUpdate,
+  withHandlers,
+  withProps,
+  withState,
+} from 'recompose'
+import { Grid } from '@material-ui/core'
+import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const SortableSimpleChatStep = SortableElement(SimpleChatStep)
+const SortableSimpleChatStep = compose(
+  shouldUpdate((props, nextProps) => {
+    return !shallowEqual(props, nextProps) || !shallowEqual(props.simpleChatStep, nextProps.simpleChatStep)
+  })
+)(SortableElement(SimpleChatStep))
 
 const SimpleChatSteps = ({ allowDelete, simpleChatSteps, onChange }) => (
   <div>
@@ -39,7 +53,85 @@ const SimpleChatSteps = ({ allowDelete, simpleChatSteps, onChange }) => (
   </div>
 )
 
-const SimpleChatStepsContainer = SortableContainer(SimpleChatSteps)
+const SimpleChatStepsContainer = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['onSortEnd', 'onChange']
+    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
+  })
+)(SortableContainer(SimpleChatSteps))
+
+const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPersona }) => (
+  <Section title={title}>
+    <Grid item sm={6}>
+      <Field
+        disabled={isFormLoading}
+        fullWidth
+        label="Name"
+        margin="normal"
+        name="name"
+        onChange={setFieldValue}
+        required
+        value={form.name}
+      />
+      <Autocomplete
+        autocomplete={apiPersonasAutocomplete}
+        defaultPlaceholder="Choose a persona"
+        disabled={isFormLoading}
+        fullWidth
+        initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
+        label="Persona"
+        onChange={selectPersona}
+        options={{ suggestionItem: 'withAvatar' }}
+        required
+      />
+      <HelperText>{'The persona that will appear for this chat.'}</HelperText>
+      <Field
+        disabled={isFormLoading}
+        fullWidth
+        label="Title"
+        margin="normal"
+        max={characterLimits.main.title}
+        name="title"
+        onChange={setFieldValue}
+        required
+        value={form.title}
+      />
+      <HelperText>{'The title will appear at the top of the chat.'}</HelperText>
+      <Field
+        disabled={isFormLoading}
+        fullWidth
+        label="Chat Bubble"
+        margin="normal"
+        max={characterLimits.main.chatBubbleText}
+        name="chatBubbleText"
+        onChange={setFieldValue}
+        value={form.chatBubbleText}
+      />
+      <HelperText>{'Shows as a text bubble next to the plugin launcher.'}</HelperText>
+      <Field
+        disabled={isFormLoading}
+        fullWidth
+        label="Extra Chat Bubble Text"
+        margin="normal"
+        max={characterLimits.main.chatBubble}
+        name="chatBubbleExtraText"
+        onChange={setFieldValue}
+        value={form.chatBubbleExtraText}
+      />
+      <HelperText>{'Additional text bubble. Pops up after the first one.'}</HelperText>
+    </Grid>
+  </Section>
+)
+
+const MainForm = compose(
+  shouldUpdate((props, nextProps) => {
+    return (
+      props.title !== nextProps.title ||
+      props.isFormLoading !== nextProps.isFormLoading ||
+      !shallowEqual(props.form, nextProps.form)
+    )
+  })
+)(MainFormTemplate)
 
 const SimpleChatForm = ({
   addSimpleChatStep,
@@ -56,66 +148,13 @@ const SimpleChatForm = ({
   title,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-    <Section title={title}>
-      <Grid item sm={6}>
-        <TextField
-          disabled={isFormLoading}
-          fullWidth
-          label="Name"
-          margin="normal"
-          name="name"
-          onChange={setFieldValue}
-          required
-          value={form.name}
-        />
-        <Autocomplete
-          autocomplete={apiPersonasAutocomplete}
-          defaultPlaceholder="Choose a persona"
-          disabled={isFormLoading}
-          fullWidth
-          initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
-          label="Persona"
-          onChange={selectPersona}
-          options={{ suggestionItem: 'withAvatar' }}
-          required
-        />
-        <FormHelperText>{'The persona that will appear for this chat.'}</FormHelperText>
-        <LimitedField
-          disabled={isFormLoading}
-          fullWidth
-          label="Title"
-          margin="normal"
-          max={characterLimits.main.title}
-          name="title"
-          onChange={setFieldValue}
-          required
-          value={form.title}
-        />
-        <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
-        <LimitedField
-          disabled={isFormLoading}
-          fullWidth
-          label="Chat Bubble"
-          margin="normal"
-          max={characterLimits.main.chatBubbleText}
-          name="chatBubbleText"
-          onChange={setFieldValue}
-          value={form.chatBubbleText}
-        />
-        <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
-        <LimitedField
-          disabled={isFormLoading}
-          fullWidth
-          label="Extra Chat Bubble Text"
-          margin="normal"
-          max={characterLimits.main.chatBubble}
-          name="chatBubbleExtraText"
-          onChange={setFieldValue}
-          value={form.chatBubbleExtraText}
-        />
-        <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
-      </Grid>
-    </Section>
+    <MainForm
+      form={omit(form, ['simpleChatStepsAttributes'])}
+      isFormLoading={isFormLoading}
+      selectPersona={selectPersona}
+      setFieldValue={setFieldValue}
+      title={title}
+    />
     <SimpleChatStepsContainer
       allowDelete={form.simpleChatStepsAttributes.length > 1}
       helperClass="sortable-element"

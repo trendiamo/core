@@ -4,7 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { apiRequest } from 'utils'
 import { ArrowDropDown } from '@material-ui/icons'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, shallowEqual, shouldUpdate, withHandlers, withProps, withState } from 'recompose'
 import { FormControl, Input, InputAdornment, InputLabel, MenuItem, Paper } from '@material-ui/core'
 import { suggestionTypes } from 'shared/autocomplete-options'
 
@@ -143,6 +143,19 @@ const Autocomplete = ({
 )
 
 export default compose(
+  shouldUpdate((props, nextProps) => {
+    const selectedItem =
+      props.initialSelectedItem && nextProps.initialSelectedItem
+        ? props.initialSelectedItem.label !== nextProps.initialSelectedItem.label ||
+          !shallowEqual(props.initialSelectedItem.value, nextProps.initialSelectedItem.value)
+        : false
+    return (
+      props.disabled !== nextProps.disabled ||
+      props.fullWidth !== nextProps.fullWidth ||
+      props.label !== nextProps.label ||
+      selectedItem
+    )
+  }),
   withProps(({ autocomplete }) => ({
     debouncedAutocomplete: debounce(async searchQuery => await apiRequest(autocomplete, [{ searchQuery }]), 250),
   })),

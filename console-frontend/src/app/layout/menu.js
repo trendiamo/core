@@ -185,7 +185,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
         </IconButton>
       )}
     </div>
-    <Divider style={{ background: sidebarOpen ? '#e3e3e3' : 'rgba(255,255,255,0.6)' }} />
+    <Divider color={sidebarOpen ? '#e3e3e3' : 'rgba(255,255,255,0.6)'} />
   </div>
 )
 

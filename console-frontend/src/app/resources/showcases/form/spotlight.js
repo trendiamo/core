@@ -5,12 +5,22 @@ import Section from 'shared/section'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import { branch, compose, renderNothing, withHandlers } from 'recompose'
-import { DragHandle, SortableContainer, SortableElement } from 'shared/sortable-elements'
-import { findIndex } from 'lodash'
+import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers, withProps } from 'recompose'
+import { findIndex, isEqual, omit } from 'lodash'
+import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
-const SortableProductPick = SortableElement(ProductPick)
+const SortableProductPick = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['onChange', 'productPick', 'setProductPicture', 'setIsCropping', 'onFocus']
+    return (
+      !shallowEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps)) ||
+      !shallowEqual(props.productPick, nextProps.productPick)
+    )
+  })
+)(SortableElement(ProductPick))
+
 const ProductPicks = ({
+  allowDelete,
   isFormLoading,
   isCropping,
   setIsCropping,
@@ -22,7 +32,7 @@ const ProductPicks = ({
   <div>
     {spotlight.productPicksAttributes.map((productPick, index) => (
       <SortableProductPick
-        allowDelete={spotlight.productPicksAttributes.length > 1}
+        allowDelete={allowDelete}
         folded={productPick.id}
         index={index}
         isCropping={isCropping}
@@ -30,6 +40,7 @@ const ProductPicks = ({
         key={productPick.id || `new-${index}`}
         onChange={onChange}
         onFocus={onFocus}
+        personaId={spotlight && spotlight.personaId}
         productPick={productPick}
         setIsCropping={setIsCropping}
         setProductPicture={setProductPicture}
@@ -38,7 +49,14 @@ const ProductPicks = ({
     ))}
   </div>
 )
-const ProductPicksContainer = SortableContainer(ProductPicks)
+
+const ProductPicksContainer = compose(
+  withProps(({ spotlight }) => ({ allowDelete: spotlight.productPicksAttributes.length > 1 })),
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['onChange', 'onFocus', 'onSortEnd', 'setIsCropping', 'setProductPicture']
+    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
+  })
+)(SortableContainer(ProductPicks))
 
 const Spotlight = ({
   addProductPick,
@@ -59,7 +77,7 @@ const Spotlight = ({
   <Section>
     <FormSection
       actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />}
-      dragHandle={<DragHandle />}
+      dragHandle
       ellipsize
       foldable
       folded={folded}
@@ -83,6 +101,7 @@ const Spotlight = ({
             <ProductPicksContainer
               helperClass="sortable-element"
               isCropping={isCropping}
+              isFormLoading={isFormLoading}
               onChange={setProductPickForm}
               onFocus={onFocus}
               onSortEnd={onSortEnd}

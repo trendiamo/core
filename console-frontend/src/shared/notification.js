@@ -1,5 +1,6 @@
 import React from 'react'
 import theme from 'app/theme'
+import { compose, shallowEqual, shouldUpdate } from 'recompose'
 import { Typography } from '@material-ui/core'
 
 const styles = {
@@ -21,4 +22,8 @@ const Notification = ({ data, ...props }) => {
   )
 }
 
-export default Notification
+export default compose(
+  shouldUpdate((props, nextProps) => {
+    return !shallowEqual(props.data, nextProps.data)
+  })
+)(Notification)

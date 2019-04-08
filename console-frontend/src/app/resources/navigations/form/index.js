@@ -8,19 +8,36 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemContainer, Form, Field as LimitedField } from 'shared/form-elements'
+import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { findIndex } from 'lodash'
-import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import {
+  branch,
+  compose,
+  renderComponent,
+  shallowEqual,
+  shouldUpdate,
+  withHandlers,
+  withProps,
+  withState,
+} from 'recompose'
+import { findIndex, omit } from 'lodash'
+import { Grid } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const SortableNavigationItem = SortableElement(NavigationItem)
+const SortableNavigationItem = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['navigationItem', 'onChange', 'setIsCropping', 'setPicture', 'setNavigationItemsPictures']
+    return (
+      !shallowEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps)) ||
+      !shallowEqual(props.navigationItem, nextProps.navigationItem)
+    )
+  })
+)(SortableElement(NavigationItem))
 const NavigationItems = ({
   isFormLoading,
   setNavigationItemForm,
@@ -51,7 +68,94 @@ const NavigationItems = ({
     ))}
   </div>
 )
-const NavigationItemsContainer = SortableContainer(NavigationItems)
+const NavigationItemsContainer = compose(
+  shouldUpdate((props, nextProps) => {
+    return (
+      props.isCropping !== nextProps.isCropping ||
+      props.isFormLoading !== nextProps.isFormLoading ||
+      props.form.navigationItemsAttributes.length !== nextProps.form.navigationItemsAttributes.length ||
+      props.form.navigationItemsAttributes.filter((item, index) => {
+        const nextItem = nextProps.form.navigationItemsAttributes && nextProps.form.navigationItemsAttributes[index]
+        return !shallowEqual(item, nextItem)
+      }).length > 0
+    )
+  })
+)(SortableContainer(NavigationItems))
+
+const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCropping, selectPersona }) => (
+  <Section title={title}>
+    <Field
+      autoFocus
+      disabled={isFormLoading}
+      fullWidth
+      label="Name"
+      margin="normal"
+      name="name"
+      onChange={setFieldValue}
+      required
+      value={form.name}
+    />
+    <HelperText>{'The name is useful for you to reference this module in a trigger.'}</HelperText>
+    <Field
+      disabled={isFormLoading}
+      fullWidth
+      label="Title"
+      margin="normal"
+      max={characterLimits.main.title}
+      name="title"
+      onChange={setFieldValue}
+      required
+      value={form.title}
+    />
+    <HelperText>{'The title will appear at the top of the navigation.'}</HelperText>
+    <Autocomplete
+      autocomplete={apiPersonasAutocomplete}
+      defaultPlaceholder="Choose a persona"
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
+      label="Persona"
+      onChange={selectPersona}
+      options={{ suggestionItem: 'withAvatar' }}
+      required
+    />
+    <HelperText>{'The persona will appear in the launcher, and in the cover.'}</HelperText>
+    <Field
+      disabled={isFormLoading}
+      fullWidth
+      label="Chat Bubble Text"
+      margin="normal"
+      max={characterLimits.main.chatBubble}
+      name="chatBubbleText"
+      onChange={setFieldValue}
+      value={form.chatBubbleText}
+    />
+    <HelperText>{'Shows as a text bubble next to the plugin launcher.'}</HelperText>
+    <Field
+      disabled={isFormLoading}
+      fullWidth
+      label="Extra Chat Bubble Text"
+      margin="normal"
+      max={characterLimits.main.chatBubble}
+      name="chatBubbleExtraText"
+      onChange={setFieldValue}
+      value={form.chatBubbleExtraText}
+    />
+    <HelperText>{'Additional text bubble. Pops up after the first one.'}</HelperText>
+  </Section>
+)
+
+const MainForm = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreForm = ['navigationItemsAttributes', '__persona']
+    return (
+      props.isCropping !== nextProps.isCropping ||
+      props.isFormLoading !== nextProps.isFormLoading ||
+      !shallowEqual(omit(props.form, ignoreForm), omit(nextProps.form, ignoreForm)) ||
+      !shallowEqual(props.form.__persona, nextProps.form.__persona)
+    )
+  })
+)(MainFormTemplate)
 
 const NavigationForm = ({
   addNavigationItem,
@@ -73,66 +177,14 @@ const NavigationForm = ({
   title,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-    <Section title={title}>
-      <TextField
-        autoFocus
-        disabled={isFormLoading}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
-      />
-      <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
-      <LimitedField
-        disabled={isFormLoading}
-        fullWidth
-        label="Title"
-        margin="normal"
-        max={characterLimits.main.title}
-        name="title"
-        onChange={setFieldValue}
-        required
-        value={form.title}
-      />
-      <FormHelperText>{'The title will appear at the top of the navigation.'}</FormHelperText>
-      <Autocomplete
-        autocomplete={apiPersonasAutocomplete}
-        defaultPlaceholder="Choose a persona"
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
-        label="Persona"
-        onChange={selectPersona}
-        options={{ suggestionItem: 'withAvatar' }}
-        required
-      />
-      <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
-      <LimitedField
-        disabled={isFormLoading}
-        fullWidth
-        label="Chat Bubble Text"
-        margin="normal"
-        max={characterLimits.main.chatBubble}
-        name="chatBubbleText"
-        onChange={setFieldValue}
-        value={form.chatBubbleText}
-      />
-      <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
-      <LimitedField
-        disabled={isFormLoading}
-        fullWidth
-        label="Extra Chat Bubble Text"
-        margin="normal"
-        max={characterLimits.main.chatBubble}
-        name="chatBubbleExtraText"
-        onChange={setFieldValue}
-        value={form.chatBubbleExtraText}
-      />
-      <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
-    </Section>
+    <MainForm
+      form={omit(form, ['navigationItemsAttributes'])}
+      isCropping={isCropping}
+      isFormLoading={isFormLoading}
+      selectPersona={selectPersona}
+      setFieldValue={setFieldValue}
+      title={title}
+    />
     <NavigationItemsContainer
       form={form}
       helperClass="sortable-element"
