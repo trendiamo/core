@@ -19,8 +19,8 @@ const convertSpotlights = spotlights => {
 
 const assessmentSpotlight = {
   persona: {
-    name: 'Self-assessment',
-    description: "Let us guide you to a selection that's in line with your personality.",
+    name: 'Style Assistent',
+    description: 'Beantworte 3 Fragen und wir zeigen dir die für dich passendsten Teile!',
   },
 }
 

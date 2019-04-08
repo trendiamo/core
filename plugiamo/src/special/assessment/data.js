@@ -31,8 +31,11 @@ const data = {
           default: [
             {
               type: 'text',
-              text:
-                'Willkommen bei Pierre Cardin! Ich würde dir gerne die für dich relevantesten Pieces zeigen und dir im Anschluss Optionen für das richtige Outfit vorstellen.',
+              text: 'Willkommen bei Pierre Cardin! Ich würde dir gerne die für dich relevantesten Pieces zeigen.',
+            },
+            {
+              type: 'text',
+              text: 'Mit welchem Look kann ich dir helfen?',
             },
             {
               type: 'assessmentStepOptions',
@@ -190,7 +193,7 @@ const data = {
             {
               type: 'text',
               text:
-                'Super! Wir haben gerade auf unsere neue Frühling / Sommer Kollektion umgestellt. Falls du dir unsicher bist, welche unserer Jeans-Passformen die für dich beste ist, kannst du hier nachschauen: Zum Denim Guide',
+                'Super! Wir haben gerade auf unsere neue Frühling / Sommer Kollektion umgestellt. Welchen Fit sollte die Hose haben? Du kannst mehrere auswählen!',
             },
             {
               type: 'assessmentStepOptions',
@@ -211,6 +214,11 @@ const data = {
                   title: 'Slim Fit',
                 },
               ],
+            },
+            {
+              type: 'text',
+              text:
+                'Falls du dir unsicher bist, welche unserer Jeans-Passformen die für dich beste ist, kannst du hier nachschauen: <a href="https://www.pierre-cardin.de/specials/pierre-cardin-specials/denim-guide">Zum Denim Guide</a>',
             },
           ],
         },
@@ -437,7 +445,7 @@ const data = {
       store: {
         type: 'store',
         header: {
-          title: 'Recommended pieces for your style',
+          title: 'Empfohlene Produkte für deinen Style',
           imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
           backgroundColor: '#111',
           textColor: '#fff',
