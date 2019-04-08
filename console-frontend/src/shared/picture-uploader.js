@@ -1,9 +1,9 @@
 import CloudUpload from '@material-ui/icons/CloudUpload'
+import Delete from '@material-ui/icons/Delete'
 import omit from 'lodash.omit'
 import React from 'react'
 import ReactCrop, { getPixelCrop } from 'react-image-crop'
 import ReactDropzone from 'react-dropzone'
-import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
 import theme from 'app/theme'
@@ -32,6 +32,10 @@ const InnerLabel = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: ${({ square }) => (square ? 'none' : '50%')};
+`
+
+const StyledDelete = styled(Delete)`
+  margin-bottom: 2px;
 `
 
 const FilteredReactDropzone = props => (
@@ -175,7 +179,7 @@ const BarebonesPictureUploader = ({
     {(image || previewImage) && (image ? doneCropping : true) && (
       <RemoveButtonContainer>
         <Button disabled={disabled} mini onClick={onRemove} style={{ color: theme.palette.error.main }} type="button">
-          <RemoveCircle />
+          <StyledDelete />
           {'clear'}
         </Button>
       </RemoveButtonContainer>
