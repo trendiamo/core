@@ -6,7 +6,7 @@ const AdsDesktop = ({ alt, className }) => (
   <StaticQuery
     query={graphql`
       query {
-        logo: file(relativePath: { eq: "ads-desktop.png" }) {
+        logo: file(relativePath: { eq: "shoesbrand-desktop.png" }) {
           childImageSharp {
             fixed(width: 1110) {
               ...GatsbyImageSharpFixed_withWebp_noBase64
