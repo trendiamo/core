@@ -11,7 +11,7 @@ const data = [
 
   'Casual/Oberteile/T-Shirts',
   'Casual/Oberteile/Polos',
-  'Casual/Oberteile/Hemnden',
+  'Casual/Oberteile/Hemden',
   'Casual/Oberteile/Pullover',
 
   'Casual/Sakkos/Slim Fit',
@@ -27,9 +27,9 @@ const data = [
   'Business/Anzughosen/Slim Fit',
   'Business/Anzughosen/Regular Fit',
 
-  'Business/Hemnden/Slim Fit',
-  'Business/Hemnden/Modern Fit',
-  'Business/Hemnden/Shaped Fit',
+  'Business/Hemden/Slim Fit',
+  'Business/Hemden/Modern Fit',
+  'Business/Hemden/Shaped Fit',
 
   'Business/Accessoires/Gürtel',
   'Business/Accessoires/Krawatten & Einstecktücher',

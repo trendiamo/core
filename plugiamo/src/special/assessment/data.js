@@ -136,7 +136,7 @@ const data = {
                 {
                   picUrl:
                     'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/_0011_2_hemden.png.jpg',
-                  title: 'Hemnden',
+                  title: 'Hemden',
                 },
                 {
                   picUrl:
@@ -231,7 +231,7 @@ const data = {
             {
               type: 'text',
               text:
-                'Okey! Wir haben die verschiedensten Typen im Angebot. Wonach suchst du genau? Du kannst gerne mehrere Optionen auswählen!',
+                'Ok! Wir haben die verschiedensten Typen im Angebot. Wonach suchst du genau? Du kannst gerne mehrere Optionen auswählen!',
             },
             {
               type: 'assessmentStepOptions',
@@ -286,7 +286,7 @@ const data = {
                 {
                   picUrl:
                     'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/_0027_3_hemnden.png.jpg',
-                  title: 'Hemnden',
+                  title: 'Hemden',
                 },
                 {
                   picUrl:
@@ -332,7 +332,7 @@ const data = {
           default: [
             {
               type: 'text',
-              text: 'Okey! Magst du mir einmal deinen Fit verraten? ',
+              text: 'Ok! Magst du mir einmal deinen Fit verraten? ',
             },
             {
               type: 'assessmentStepOptions',
@@ -381,7 +381,7 @@ const data = {
           ],
         },
       },
-      'Business/Hemnden': {
+      'Business/Hemden': {
         multiple: true,
         header,
         logs: {
@@ -394,11 +394,6 @@ const data = {
             {
               type: 'assessmentStepOptions',
               assessmentStepOptions: [
-                {
-                  picUrl:
-                    'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/_0026_3_hemden_slim_fit.png.jpg',
-                  title: 'Slim Fit',
-                },
                 {
                   picUrl:
                     'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/_0024_3_hemden_modern_fit.png.jpg',
@@ -446,7 +441,7 @@ const data = {
         type: 'store',
         header: {
           title: 'Empfohlene Produkte für deinen Style',
-          imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/demo_sample.jpg',
+          imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/list_modal_header.jpg',
           backgroundColor: '#111',
           textColor: '#fff',
         },

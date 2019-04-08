@@ -20,7 +20,7 @@ const convertSpotlights = spotlights => {
 const assessmentSpotlight = {
   persona: {
     name: 'Style Assistent',
-    description: 'Beantworte 3 Fragen und wir zeigen dir die für dich passendsten Teile!',
+    description: 'Beantworte Fragen und wir zeigen dir die für dich passendsten Teile!',
   },
 }
 
