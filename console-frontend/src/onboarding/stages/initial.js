@@ -15,17 +15,10 @@ const steps = {
   },
   showcases: {
     target: '.onboard-showcases',
-    content: <Tooltip body="Create your Showcases here." nextRoute={routes.navigationsList()} />,
+    content: <Tooltip body="Create your Showcases here." nextRoute={routes.simpleChatsList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Showcases',
-  },
-  navigations: {
-    target: '.onboard-navigations',
-    content: <Tooltip body="Create your Navigations here." nextRoute={routes.simpleChatsList()} />,
-    placement: 'right',
-    disableBeacon: true,
-    title: 'Navigations',
   },
   simpleChats: {
     target: '.onboard-simple-chats',
