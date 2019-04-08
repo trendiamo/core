@@ -138,72 +138,76 @@ const TriggerRow = compose(
       }
     },
   })
-)(({ trigger, handleSelect, selectedIds, highlightEnabled, highlightUrl }) => (
-  <TableRowStyled highlight={highlightEnabled} hover role="checkbox" tabIndex={-1}>
-    <TableCell>
-      <DragHandle highlight={highlightEnabled} />
-    </TableCell>
-    <TableCell>
-      <Checkbox
-        checked={selectedIds.includes(trigger.id)}
-        color="primary"
-        onChange={handleSelect}
-        style={{ color: highlightEnabled ? '#fff' : '' }}
-      />
-    </TableCell>
-    <TableCell style={{ whiteSpace: 'nowrap' }} width="50%">
-      <InlineTypography highlight={highlightEnabled} variant="subtitle2">{`${trigger.flowType}: '${
-        trigger.flow.name
-      }'`}</InlineTypography>
-      <Button
-        component={Link}
-        size="small"
-        style={{
-          marginLeft: '0.5rem',
-          color: highlightEnabled ? '#fff' : '',
-          borderColor: highlightEnabled && 'rgba(255,255,255,0.3)',
-        }}
-        to={routes[`${camelize(trigger.flowType, false)}Edit`](trigger.flowId)}
-        variant="outlined"
-      >
-        {'Edit module'}
-      </Button>
-    </TableCell>
-    <TableCell width="50%">
-      {trigger.urlMatchers.map((url, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <StyledChip enabled={highlightEnabled} highlight={highlightUrl === index} key={`url${index}`} label={url} />
-      ))}
-    </TableCell>
-    <TableCell>
-      <EditButton
-        component={Link}
-        style={{ color: highlightEnabled ? '#fff' : '' }}
-        to={routes.triggerEdit(trigger.id)}
-      >
-        <EditIcon />
-      </EditButton>
-    </TableCell>
-  </TableRowStyled>
-))
+)(({ trigger, handleSelect, selectedIds, highlightEnabled, highlightUrl }) =>
+  trigger.flowType === 'Navigation' ? null : (
+    <TableRowStyled highlight={highlightEnabled} hover role="checkbox" tabIndex={-1}>
+      <TableCell>
+        <DragHandle highlight={highlightEnabled} />
+      </TableCell>
+      <TableCell>
+        <Checkbox
+          checked={selectedIds.includes(trigger.id)}
+          color="primary"
+          onChange={handleSelect}
+          style={{ color: highlightEnabled ? '#fff' : '' }}
+        />
+      </TableCell>
+      <TableCell style={{ whiteSpace: 'nowrap' }} width="50%">
+        <InlineTypography highlight={highlightEnabled} variant="subtitle2">{`${trigger.flowType}: '${
+          trigger.flow.name
+        }'`}</InlineTypography>
+        <Button
+          component={Link}
+          size="small"
+          style={{
+            marginLeft: '0.5rem',
+            color: highlightEnabled ? '#fff' : '',
+            borderColor: highlightEnabled && 'rgba(255,255,255,0.3)',
+          }}
+          to={routes[`${camelize(trigger.flowType, false)}Edit`](trigger.flowId)}
+          variant="outlined"
+        >
+          {'Edit module'}
+        </Button>
+      </TableCell>
+      <TableCell width="50%">
+        {trigger.urlMatchers.map((url, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <StyledChip enabled={highlightEnabled} highlight={highlightUrl === index} key={`url${index}`} label={url} />
+        ))}
+      </TableCell>
+      <TableCell>
+        <EditButton
+          component={Link}
+          style={{ color: highlightEnabled ? '#fff' : '' }}
+          to={routes.triggerEdit(trigger.id)}
+        >
+          <EditIcon />
+        </EditButton>
+      </TableCell>
+    </TableRowStyled>
+  )
+)
 
 const SortableTriggerRow = SortableElement(TriggerRow)
 const SortableTriggerRows = SortableContainer(
   ({ triggers, handleSelectAll, selectedIds, setSelectedIds, testerUrl }) => (
     <TableBody>
       {triggers &&
-        triggers.map((trigger, index) => (
-          <SortableTriggerRow
-            handleSelectAll={handleSelectAll}
-            highlightEnabled={testerUrl.matches && testerUrl.matches.index === index}
-            highlightUrl={testerUrl.matches && testerUrl.matches.index === index && testerUrl.matches.urlIndex}
-            index={index}
-            key={trigger.id}
-            selectedIds={selectedIds}
-            setSelectedIds={setSelectedIds}
-            trigger={trigger}
-          />
-        ))}
+        triggers.map((trigger, index) =>
+          trigger.flowType === 'Navigation' ? null : (
+            <SortableTriggerRow
+              handleSelectAll={handleSelectAll}
+              highlightEnabled={testerUrl.matches && testerUrl.matches.index === index}
+              highlightUrl={testerUrl.matches && testerUrl.matches.index === index && testerUrl.matches.urlIndex}
+              index={index}
+              key={trigger.id}
+              selectedIds={selectedIds}
+              setSelectedIds={setSelectedIds}
+              trigger={trigger}
+            />
+          )
+        )}
     </TableBody>
   )
 )

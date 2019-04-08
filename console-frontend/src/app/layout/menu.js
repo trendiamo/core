@@ -11,7 +11,6 @@ import {
   AccountCircleOutlined,
   AssignmentTurnedInOutlined,
   ViewList as DefaultIcon,
-  DirectionsOutlined,
   Link as LinkIcon,
   PersonPinOutlined,
   PhotoLibrary,
@@ -32,12 +31,6 @@ const resources = {
     route: routes.simpleChatsList(),
   },
   outros: { icon: AssignmentTurnedInOutlined, label: 'Outros', class: 'outros', route: routes.outrosList() },
-  navigations: {
-    icon: DirectionsOutlined,
-    label: 'Navigations',
-    class: 'navigations',
-    route: routes.navigationsList(),
-  },
   personas: { icon: AccountCircleOutlined, label: 'Personas', class: 'personas', route: routes.personasList() },
   pictures: {
     icon: PhotoLibrary,
@@ -62,7 +55,7 @@ const resourceGroups = {
   modules: {
     name: 'Modules',
     showTitle: true,
-    resources: [resources.showcases, resources.navigations, resources.simpleChats, resources.outros],
+    resources: [resources.showcases, resources.simpleChats, resources.outros],
   },
   basic: {
     name: 'Basic',
