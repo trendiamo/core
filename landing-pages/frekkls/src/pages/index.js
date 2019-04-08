@@ -1,9 +1,9 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import Ads from '../sections/ads'
 import Buzz from '../sections/buzz'
 import Depth from '../sections/depth'
+import Nads from '../sections/nads'
 
 import DiscoverProduct from '../sections/discover-product'
 import Hero from '../sections/hero'
@@ -18,7 +18,7 @@ const IndexPage = ({ className, pageContext, data }) => (
     <SocialProof clients={data.clients} testimonial={data.testimonial} />
     <DiscoverProduct discoverProductsSliderContent={data.discoverProductsSliderContent} />
     <LevelUpSlider levelUp={data.levelUp} levelUpSliderContent={data.levelUpSliderContent} />
-    <Ads ads={data.ads} locale={pageContext.locale} />
+    <Nads ads={data.ads} locale={pageContext.locale} />
     <Depth depth={data.depth} />
     <RecentBlog blogPost={data.recentBlogs.edges[0].node} locale={pageContext.locale} />
     <Buzz layout={data.layout} />

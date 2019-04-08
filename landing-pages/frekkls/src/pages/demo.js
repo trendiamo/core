@@ -4,8 +4,8 @@ import { graphql } from 'gatsby'
 
 import BgWaveGrey from '../images/bg-wave-grey.svg'
 import Buzz from '../sections/buzz'
-import DemoAdLink from '../sections/demo-ad-link'
 import DemoBioLink from '../sections/demo-bio-link'
+import DemoNadLink from '../sections/demo-ad-link'
 import DemoOrganic from '../sections/demo-organic'
 import Layout from '../components/layout'
 import TopCta from '../sections/top-cta'
@@ -13,7 +13,7 @@ import TopCta from '../sections/top-cta'
 const DemoPage = styled(({ className, pageContext, data }) => (
   <Layout className={className} layout={data.layout} locale={pageContext.locale}>
     <DemoBioLink demoBioLink={data.demoBioLink} />
-    <DemoAdLink demoAdLink={data.demoAdLink} />
+    <DemoNadLink demoAdLink={data.demoAdLink} />
     <DemoOrganic demoOrganic={data.demoOrganic} />
     <Buzz BgWaveGrey={BgWaveGrey} layout={data.layout} />
   </Layout>

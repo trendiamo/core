@@ -2,11 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { navigate } from '@reach/router'
 
-import AdsDesktop from '../images/ads-desktop'
-import AdsMobile from '../images/ads-mobile'
 import Button from '../components/button'
 import Container from '../components/container'
 import locales from '../../locales'
+import NadsDesktop from '../images/ads-desktop'
+import NadsMobile from '../images/ads-mobile'
 import Section from '../components/section'
 
 const Flex = styled.div`
@@ -33,12 +33,12 @@ const ImageContainer = styled.div`
   display: flex;
   position: relative;
 
-  .ads-mobile {
+  .nads-mobile {
     box-shadow: 0 0 15px 10px rgba(0, 0, 0, 0.2);
     border-radius: 30px 30px 0 0;
   }
 
-  .ads-desktop {
+  .nads-desktop {
     box-shadow: 3px 9px 26px 0 rgba(0, 0, 0, 0.13);
     border-radius: 3px 3px 0 0;
   }
@@ -58,14 +58,14 @@ const ImageContainer = styled.div`
   }
 `
 
-const AdsMobileContainer = styled.div`
+const NadsMobileContainer = styled.div`
   display: block;
   @media (min-width: 900px) {
     display: none;
   }
 `
 
-const AdsDesktopContainer = styled.div`
+const NadsDesktopContainer = styled.div`
   display: none;
   @media (min-width: 900px) {
     display: block;
@@ -74,17 +74,17 @@ const AdsDesktopContainer = styled.div`
 
 const ImageAndButton = ({ ads, onClick }) => (
   <ImageContainer>
-    <AdsMobileContainer>
-      <AdsMobile alt="Ad preview" className="ads-mobile" />
-    </AdsMobileContainer>
-    <AdsDesktopContainer>
-      <AdsDesktop alt="Ad preview" className="ads-desktop" />
-    </AdsDesktopContainer>
+    <NadsMobileContainer>
+      <NadsMobile alt="Ad preview" className="nads-mobile" />
+    </NadsMobileContainer>
+    <NadsDesktopContainer>
+      <NadsDesktop alt="Ad preview" className="nads-desktop" />
+    </NadsDesktopContainer>
     <Button onClick={onClick}>{ads.adsCta}</Button>
   </ImageContainer>
 )
 
-const Ads = styled(({ ads, className, locale }) => (
+const Nads = styled(({ ads, className, locale }) => (
   <Section className={className}>
     <Container>
       <Flex>
@@ -136,4 +136,4 @@ const Ads = styled(({ ads, className, locale }) => (
   }
 `
 
-export default Ads
+export default Nads

@@ -113,7 +113,7 @@ const DesktopButton = styled(StyledButton)`
   }
 `
 
-const DemoAdLink = ({ demoAdLink }) => (
+const DemoNadLink = ({ demoAdLink }) => (
   <Section>
     <StyledContainer>
       <DetailsContainer>
@@ -145,4 +145,4 @@ const DemoAdLink = ({ demoAdLink }) => (
   </Section>
 )
 
-export default DemoAdLink
+export default DemoNadLink
