@@ -59,13 +59,9 @@ const BackgroundImage = styled.div`
     background-color: #fff;
     background-repeat: no-repeat;
     background-position-y: 80px;
-    background-position-x: 340px;
+    background-position-x: right;
     background-size: contain;
     min-height: 65vw;
-  }
-
-  @media (min-width: 1200px) {
-    background-position-x: right;
   }
 `
 
