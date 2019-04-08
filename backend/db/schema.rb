@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190402161149) do
+ActiveRecord::Schema.define(version: 20190404155613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,15 @@ ActiveRecord::Schema.define(version: 20190402161149) do
     t.index ["account_id"], name: "index_product_picks_on_account_id"
     t.index ["pic_id"], name: "index_product_picks_on_pic_id"
     t.index ["spotlight_id"], name: "index_product_picks_on_spotlight_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.bigint "account_id"
+    t.string "name", null: false
+    t.string "url", null: false
+    t.string "source", null: false
+    t.json "payload"
+    t.index ["account_id"], name: "index_products_on_account_id"
   end
 
   create_table "showcases", force: :cascade do |t|
@@ -243,6 +252,7 @@ ActiveRecord::Schema.define(version: 20190402161149) do
   add_foreign_key "product_picks", "accounts"
   add_foreign_key "product_picks", "pictures", column: "pic_id"
   add_foreign_key "product_picks", "spotlights"
+  add_foreign_key "products", "accounts"
   add_foreign_key "showcases", "accounts"
   add_foreign_key "showcases", "personas"
   add_foreign_key "simple_chat_messages", "accounts"

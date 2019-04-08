@@ -56,6 +56,11 @@ Rails.application.routes.draw do
 
       resources :pictures, only: %i[index]
       delete "/pictures", to: "pictures#destroy"
+
+    end
+
+    scope "shop-api/v1" do
+      resources :products, only: %i[index show create update destroy]
     end
     get "s3/sign", to: "s3#sign"
     # post :stripe, to: 'stripe#webhook'

@@ -1,4 +1,4 @@
-class OutrosController < RestController
+class OutrosController < RestAdminController
   before_action :ensure_tenant
 
   def index

@@ -1,4 +1,4 @@
-class SimpleChatsController < RestController
+class SimpleChatsController < RestAdminController
   before_action :ensure_tenant
 
   def index

@@ -1,4 +1,4 @@
-class PicturesController < RestController
+class PicturesController < RestAdminController
   def index
     @pictures = Picture.all
     authorize @pictures

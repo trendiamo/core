@@ -1,4 +1,4 @@
-class WebsitesController < RestController
+class WebsitesController < RestAdminController
   before_action :authenticate_user!
   before_action :ensure_tenant
 

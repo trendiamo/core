@@ -1,4 +1,4 @@
-class NavigationsController < RestController
+class NavigationsController < RestAdminController
   before_action :ensure_tenant
 
   def index
