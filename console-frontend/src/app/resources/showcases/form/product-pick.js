@@ -2,9 +2,7 @@ import characterLimits from 'shared/character-limits'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
-import { Cancel, FormSection, Field as LimitedField } from 'shared/form-elements'
-import { DragHandle } from 'shared/sortable-elements'
-import { FormHelperText, TextField } from '@material-ui/core'
+import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
 
 const ProductPick = ({
   allowDelete,
@@ -16,7 +14,7 @@ const ProductPick = ({
   folded,
   productPick,
   progress,
-  onFocus,
+  handleFocus,
   setPicture,
   setIsCropping,
   setPictureUrl,
@@ -24,7 +22,7 @@ const ProductPick = ({
   <FormSection
     actions={allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteProductPick} />}
     backgroundColor="#fff"
-    dragHandle={<DragHandle />}
+    dragHandle
     ellipsize
     foldable
     folded={folded}
@@ -32,24 +30,24 @@ const ProductPick = ({
     hideTop={index === 0}
     title={productPick.id ? productPick.name : 'New Product Pick'}
   >
-    <TextField
+    <Field
       disabled={isCropping || isFormLoading}
       fullWidth
       label="Url"
       margin="normal"
       name="productPick_url"
       onChange={editProductPickValue}
-      onFocus={onFocus}
+      onFocus={handleFocus}
       required
       type="URL"
       value={productPick.url}
     />
-    <FormHelperText>
+    <HelperText>
       {
         'Use the whole url, eg: https://www.example.com/page1 - you can test it by clicking on the item in the preview. Hint: you can copy/paste links from the URL Generator.'
       }
-    </FormHelperText>
-    <LimitedField
+    </HelperText>
+    <Field
       disabled={isCropping || isFormLoading}
       fullWidth
       label="Name"
@@ -57,11 +55,11 @@ const ProductPick = ({
       max={characterLimits.showcase.productName}
       name="productPick_name"
       onChange={editProductPickValue}
-      onFocus={onFocus}
+      onFocus={handleFocus}
       required
       value={productPick.name}
     />
-    <LimitedField
+    <Field
       disabled={isCropping || isFormLoading}
       fullWidth
       label="Description"
@@ -69,18 +67,18 @@ const ProductPick = ({
       max={characterLimits.showcase.productDescription}
       name="productPick_description"
       onChange={editProductPickValue}
-      onFocus={onFocus}
+      onFocus={handleFocus}
       required
       value={productPick.description}
     />
-    <TextField
+    <Field
       disabled={isCropping || isFormLoading}
       fullWidth
       label="Display Price"
       margin="normal"
       name="productPick_displayPrice"
       onChange={editProductPickValue}
-      onFocus={onFocus}
+      onFocus={handleFocus}
       required
       value={productPick.displayPrice}
     />
@@ -104,8 +102,7 @@ export default compose(
   withHandlers({
     editProductPickValue: ({ productPick, index, onChange }) => event => {
       const name = event.target.name.replace('productPick_', '')
-      productPick[name] = event.target.value
-      onChange(productPick, index)
+      onChange(Object.assign({}, productPick, { [name]: event.target.value }), index)
     },
     deleteProductPick: ({ productPick, index, onChange }) => () => {
       onChange(
@@ -116,6 +113,9 @@ export default compose(
         },
         index
       )
+    },
+    handleFocus: ({ onFocus }) => () => {
+      onFocus && onFocus()
     },
     setPictureUrl: ({ index, productPick, onChange, onFocus }) => picUrl => {
       onFocus()

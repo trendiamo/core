@@ -7,10 +7,10 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
+import { Actions, AddItemButton, Cancel, Form, HelperText } from 'shared/form-elements'
 import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormControl, FormHelperText, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
+import { FormControl, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -78,7 +78,7 @@ const TriggerForm = ({
           options={{ suggestionItem: 'withModuleIcon' }}
           required
         />
-        <FormHelperText>{'Choose between Showcases, Navigations, etc.'}</FormHelperText>
+        <HelperText>{'Choose between Showcases, Navigations, etc.'}</HelperText>
         <FormControl fullWidth margin="normal">
           <InputLabel shrink>{'Url Matchers'}</InputLabel>
           <div style={{ marginTop: '11px' }}>
@@ -104,10 +104,10 @@ const TriggerForm = ({
           </div>
           <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
         </FormControl>
-        <FormHelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</FormHelperText>
-        <FormHelperText>
+        <HelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</HelperText>
+        <HelperText>
           {'ℹ️ You can use a matching pattern such as /products/:id to match all urls in that form.'}
-        </FormHelperText>
+        </HelperText>
       </Form>
     </Grid>
   </Section>

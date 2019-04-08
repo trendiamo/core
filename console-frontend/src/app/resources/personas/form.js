@@ -6,9 +6,9 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, Form, Field as LimitedField } from 'shared/form-elements'
+import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
@@ -41,7 +41,7 @@ const PersonaForm = ({
           setPic={setProfilePic}
           value={form.profilePicUrl}
         />
-        <LimitedField
+        <Field
           autoFocus
           disabled={isFormLoading || isCropping}
           fullWidth
@@ -53,7 +53,7 @@ const PersonaForm = ({
           required
           value={form.name}
         />
-        <LimitedField
+        <Field
           disabled={isFormLoading || isCropping}
           fullWidth
           label="Description"
@@ -64,8 +64,8 @@ const PersonaForm = ({
           required
           value={form.description}
         />
-        <FormHelperText>{"A short text that is shown near the persona's name."}</FormHelperText>
-        <TextField
+        <HelperText>{"A short text that is shown near the persona's name."}</HelperText>
+        <Field
           disabled={isFormLoading || isCropping}
           fullWidth
           label="Instagram Profile URL"
@@ -74,8 +74,8 @@ const PersonaForm = ({
           onChange={setFieldValue}
           value={form.instagramUrl}
         />
-        <FormHelperText>{"Instagram link icon will appear near the persona's name."}</FormHelperText>
-        <TextField
+        <HelperText>{"Instagram link icon will appear near the persona's name."}</HelperText>
+        <Field
           disabled={isFormLoading || isCropping}
           fullWidth
           label="Animated picture URL"
@@ -84,7 +84,7 @@ const PersonaForm = ({
           onChange={setFieldValue}
           value={form.profilePicAnimationUrl}
         />
-        <FormHelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</FormHelperText>
+        <HelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</HelperText>
         {progress && <ProgressBar progress={progress} />}
       </Form>
     </Grid>

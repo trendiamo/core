@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import theme from 'app/theme'
 import { apiGetSignedUrlFactory } from 'utils'
 import { Button, FormControl, InputLabel, LinearProgress } from '@material-ui/core'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, shallowEqual, shouldUpdate, withHandlers, withProps, withState } from 'recompose'
 import 'react-image-crop/dist/ReactCrop.css'
 
 const Container = styled.div`
@@ -139,12 +139,16 @@ const RemoveButtonContainer = styled.div`
   }
 `
 
-const ProgressBar = ({ progress }) => (
+const ProgressBar = compose(
+  shouldUpdate((props, nextProps) => {
+    return !shallowEqual(props.progress, nextProps.progress)
+  })
+)(({ progress }) => (
   <React.Fragment>
     <StatusMessage>{`${progress.message}...`}</StatusMessage>
     <StyledLinearProgress value={progress.progress} variant="determinate" />
   </React.Fragment>
-)
+))
 
 const BarebonesPictureUploader = ({
   crop,
@@ -289,6 +293,10 @@ const uploadImage = async ({ blob, setProgress, type }) => {
 }
 
 const PictureUploader = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['setDisabled', 'setPic', 'onChange']
+    return !shallowEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
+  }),
   withProps({ imagePreviewRef: React.createRef() }),
   withState('image', 'setImage', null),
   withState('crop', 'setCrop', {}),

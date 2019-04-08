@@ -1,14 +1,22 @@
 import React from 'react'
 import Section from 'shared/section'
 import SimpleChatMessage from './simple-chat-message'
-import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
+import { AddItemButton, Cancel, Field, FormSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
-import { branch, compose, renderNothing, withHandlers } from 'recompose'
-import { DragHandle } from 'shared/sortable-elements'
+import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers } from 'recompose'
+import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
-import { TextField } from '@material-ui/core'
 
-const SortableSimpleChatMessage = SortableElement(SimpleChatMessage)
+const SortableSimpleChatMessage = compose(
+  shouldUpdate((props, nextProps) => {
+    return (
+      props.isFormLoading !== nextProps.isFormLoading ||
+      props.index !== nextProps.index ||
+      props.allowDelete !== nextProps.allowDelete ||
+      !shallowEqual(props.simpleChatMessage, nextProps.simpleChatMessage)
+    )
+  })
+)(SortableElement(SimpleChatMessage))
 
 const SimpleChatMessages = ({ allowDelete, simpleChatMessages, onChange, onFocus }) => (
   <div>
@@ -26,7 +34,12 @@ const SimpleChatMessages = ({ allowDelete, simpleChatMessages, onChange, onFocus
   </div>
 )
 
-const SimpleChatMessagesContainer = SortableContainer(SimpleChatMessages)
+const SimpleChatMessagesContainer = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['onSortEnd', 'onChange']
+    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
+  })
+)(SortableContainer(SimpleChatMessages))
 
 const SimpleChatStep = ({
   addSimpleChatMessage,
@@ -46,7 +59,7 @@ const SimpleChatStep = ({
       actions={
         allowDelete && <Cancel disabled={isFormLoading} index={simpleChatStepIndex} onClick={deleteSimpleChatStep} />
       }
-      dragHandle={<DragHandle />}
+      dragHandle
       ellipsize
       foldable
       folded={folded}
@@ -57,7 +70,7 @@ const SimpleChatStep = ({
     >
       <>
         {simpleChatStep.key !== 'default' && (
-          <TextField
+          <Field
             disabled={isFormLoading}
             fullWidth
             label="Option"
@@ -89,11 +102,14 @@ const SimpleChatStep = ({
 
 export default compose(
   branch(({ simpleChatStep }) => simpleChatStep._destroy, renderNothing),
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['onChange']
+    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
+  }),
   withHandlers({
     editSimpleChatStepValue: ({ simpleChatStep, simpleChatStepIndex, onChange }) => event => {
       const name = event.target.name.replace('simpleChatStep_', '')
-      simpleChatStep[name] = event.target.value
-      onChange(simpleChatStep, simpleChatStepIndex)
+      onChange(Object.assign({ ...simpleChatStep }, { [name]: event.target.value }), simpleChatStepIndex)
     },
     setSimpleChatMessagesForm: ({ simpleChatStep, simpleChatStepIndex, onChange }) => (
       simpleChatMessage,

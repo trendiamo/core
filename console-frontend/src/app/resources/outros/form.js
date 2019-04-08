@@ -6,10 +6,9 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, Form, Field as LimitedField } from 'shared/form-elements'
+import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormHelperText, TextField } from '@material-ui/core'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -26,7 +25,7 @@ const OutroForm = ({
 }) => (
   <Section title={title}>
     <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-      <TextField
+      <Field
         autoFocus
         disabled={isFormLoading}
         fullWidth
@@ -37,7 +36,7 @@ const OutroForm = ({
         required
         value={form.name}
       />
-      <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
+      <HelperText>{'The name is useful for you to reference this module in a trigger.'}</HelperText>
       <Autocomplete
         autocomplete={apiPersonasAutocomplete}
         defaultPlaceholder="Choose a persona"
@@ -49,8 +48,8 @@ const OutroForm = ({
         options={{ suggestionItem: 'withAvatar' }}
         required
       />
-      <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
-      <LimitedField
+      <HelperText>{'The persona will appear in the launcher, and in the content.'}</HelperText>
+      <Field
         disabled={isFormLoading}
         fullWidth
         label="Chat Bubble Text"
@@ -61,8 +60,8 @@ const OutroForm = ({
         required
         value={form.chatBubbleText}
       />
-      <FormHelperText>{'Question on whether users are satisfied with the help they got.'}</FormHelperText>
-      <LimitedField
+      <HelperText>{'Question on whether users are satisfied with the help they got.'}</HelperText>
+      <Field
         disabled={isFormLoading}
         fullWidth
         label="Chat Bubble 'YES' Button"
@@ -73,8 +72,8 @@ const OutroForm = ({
         required
         value={form.chatBubbleButtonYes}
       />
-      <FormHelperText>{'Button that indicates a positive user response.'}</FormHelperText>
-      <LimitedField
+      <HelperText>{'Button that indicates a positive user response.'}</HelperText>
+      <Field
         disabled={isFormLoading}
         fullWidth
         label="Chat Bubble 'NO' Button"
@@ -85,7 +84,7 @@ const OutroForm = ({
         required
         value={form.chatBubbleButtonNo}
       />
-      <FormHelperText>{'Button that indicates a negative user response.'}</FormHelperText>
+      <HelperText>{'Button that indicates a negative user response.'}</HelperText>
     </Form>
   </Section>
 )

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button } from '@material-ui/core'
+import { compose, onlyUpdateForKeys } from 'recompose'
 
 const Container = styled.div`
   width: 100%;
@@ -19,4 +20,4 @@ const AddItemContainer = ({ message, ...props }) => (
   </Container>
 )
 
-export default AddItemContainer
+export default compose(onlyUpdateForKeys(['message', 'disabled']))(AddItemContainer)

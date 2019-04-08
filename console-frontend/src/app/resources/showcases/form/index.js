@@ -8,19 +8,38 @@ import Section from 'shared/section'
 import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
-import { Actions, AddItemContainer, Form, Field as LimitedField } from 'shared/form-elements'
+import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { FormHelperText, Grid, TextField } from '@material-ui/core'
+import {
+  branch,
+  compose,
+  lifecycle,
+  renderComponent,
+  shouldUpdate,
+  withHandlers,
+  withProps,
+  withState,
+} from 'recompose'
+import { Grid } from '@material-ui/core'
+import { isEqual, omit } from 'lodash'
 import { history as pluginHistory, routes as pluginRoutes, Showcase as ShowcaseBase } from 'plugin-base'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { uploadImage } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
-const SortableSpotlight = SortableElement(Spotlight)
+const SortableSpotlight = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['onChange', 'setProductPicksPictures', 'setIsCropping', 'onFocus', 'spotlight']
+    return (
+      !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps)) || !isEqual(props.spotlight, nextProps.spotlight)
+    )
+  })
+)(SortableElement(Spotlight))
+
 const Spotlights = ({
+  allowDelete,
   isFormLoading,
   isCropping,
   setIsCropping,
@@ -34,7 +53,7 @@ const Spotlights = ({
   <div>
     {form.spotlightsAttributes.map((spotlight, index) => (
       <SortableSpotlight
-        allowDelete={form.spotlightsAttributes.length > 1}
+        allowDelete={allowDelete}
         folded={spotlight.id}
         index={index}
         isCropping={isCropping}
@@ -52,7 +71,102 @@ const Spotlights = ({
     ))}
   </div>
 )
-const SpotlightsContainer = SortableContainer(Spotlights)
+
+const SpotlightsContainer = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['onFocus', 'onSortEnd', 'form', 'setIsCropping', 'setProductPicksPictures', 'setSpotlightForm']
+    return (
+      !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps)) ||
+      !isEqual(props.form.spotlightsAttributes, nextProps.form.spotlightsAttributes)
+    )
+  }),
+  withProps(({ form }) => ({ allowDelete: form.spotlightsAttributes.length > 1 }))
+)(SortableContainer(Spotlights))
+
+const MainFormTemplate = ({ title, isCropping, setFieldValue, onBackClick, form, isFormLoading, selectPersona }) => (
+  <Section title={title}>
+    <Field
+      autoFocus
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Name"
+      margin="normal"
+      name="name"
+      onChange={setFieldValue}
+      onFocus={onBackClick}
+      required
+      value={form.name}
+    />
+    <HelperText>{'The name is useful for you to reference this module in a trigger.'}</HelperText>
+    <Autocomplete
+      autocomplete={apiPersonasAutocomplete}
+      defaultPlaceholder="Choose a persona"
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
+      label="Persona"
+      onChange={selectPersona}
+      options={{ suggestionItem: 'withAvatar' }}
+      required
+    />
+    <HelperText>{'The persona will appear in the launcher, and in the cover.'}</HelperText>
+    <Field
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Title"
+      margin="normal"
+      max={characterLimits.main.title}
+      name="title"
+      onChange={setFieldValue}
+      onFocus={onBackClick}
+      required
+      value={form.title}
+    />
+    <HelperText>{'The title is shown in the cover.'}</HelperText>
+    <Field
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Subtitle"
+      margin="normal"
+      max={characterLimits.main.subtitle}
+      name="subtitle"
+      onChange={setFieldValue}
+      onFocus={onBackClick}
+      required
+      value={form.subtitle}
+    />
+    <HelperText>{'The subtitle is shown in the cover, below the title.'}</HelperText>
+    <Field
+      disabled={isFormLoading}
+      fullWidth
+      label="Chat Bubble Text"
+      margin="normal"
+      max={characterLimits.main.chatBubble}
+      name="chatBubbleText"
+      onChange={setFieldValue}
+      value={form.chatBubbleText}
+    />
+    <HelperText>{'Shows as a text bubble next to the plugin launcher.'}</HelperText>
+    <Field
+      disabled={isFormLoading}
+      fullWidth
+      label="Extra Chat Bubble Text"
+      margin="normal"
+      max={characterLimits.main.chatBubble}
+      name="chatBubbleExtraText"
+      onChange={setFieldValue}
+      value={form.chatBubbleExtraText}
+    />
+    <HelperText>{'Additional text bubble. Pops up after the first one.'}</HelperText>
+  </Section>
+)
+
+const MainForm = compose(
+  shouldUpdate((props, nextProps) => {
+    const ignoreProps = ['setFieldValue', 'selectPersona', 'onBackClick']
+    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
+  })
+)(MainFormTemplate)
 
 const ShowcaseForm = ({
   selectPersona,
@@ -76,81 +190,15 @@ const ShowcaseForm = ({
   personas,
 }) => (
   <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-    <Section title={title}>
-      <TextField
-        autoFocus
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        onFocus={onBackClick}
-        required
-        value={form.name}
-      />
-      <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
-      <Autocomplete
-        autocomplete={apiPersonasAutocomplete}
-        defaultPlaceholder="Choose a persona"
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
-        label="Persona"
-        onChange={selectPersona}
-        options={{ suggestionItem: 'withAvatar' }}
-        required
-      />
-      <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
-      <LimitedField
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Title"
-        margin="normal"
-        max={characterLimits.main.title}
-        name="title"
-        onChange={setFieldValue}
-        onFocus={onBackClick}
-        required
-        value={form.title}
-      />
-      <FormHelperText>{'The title is shown in the cover.'}</FormHelperText>
-      <LimitedField
-        disabled={isCropping || isFormLoading}
-        fullWidth
-        label="Subtitle"
-        margin="normal"
-        max={characterLimits.main.subtitle}
-        name="subtitle"
-        onChange={setFieldValue}
-        onFocus={onBackClick}
-        required
-        value={form.subtitle}
-      />
-      <FormHelperText>{'The subtitle is shown in the cover, below the title.'}</FormHelperText>
-      <LimitedField
-        disabled={isFormLoading}
-        fullWidth
-        label="Chat Bubble Text"
-        margin="normal"
-        max={characterLimits.main.chatBubble}
-        name="chatBubbleText"
-        onChange={setFieldValue}
-        value={form.chatBubbleText}
-      />
-      <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
-      <LimitedField
-        disabled={isFormLoading}
-        fullWidth
-        label="Extra Chat Bubble Text"
-        margin="normal"
-        max={characterLimits.main.chatBubble}
-        name="chatBubbleExtraText"
-        onChange={setFieldValue}
-        value={form.chatBubbleExtraText}
-      />
-      <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
-    </Section>
+    <MainForm
+      form={omit(form, ['spotlightsAttributes'])}
+      isCropping={isCropping}
+      isFormLoading={isFormLoading}
+      onBackClick={onBackClick}
+      selectPersona={selectPersona}
+      setFieldValue={setFieldValue}
+      title={title}
+    />
     <SpotlightsContainer
       form={form}
       helperClass="sortable-element"
@@ -232,20 +280,18 @@ const Showcase = ({ form, routeToSpotlight, routeToShowcase, previewCallbacks, .
       <ShowcaseForm form={form} {...props} />
     </Grid>
     <Grid item md={6} xs={12}>
-      {
-        <PluginPreview>
-          <ShowcaseBase
-            callbacks={previewCallbacks}
-            history={pluginHistory}
-            routeToShowcase={routeToShowcase}
-            routeToSpotlight={routeToSpotlight}
-            showcase={form}
-            spotlights={preview.spotlights(form).spotlights}
-            subtitle={form.subtitle || defaults.subtitle}
-            title={form.title || defaults.title}
-          />
-        </PluginPreview>
-      }
+      <PluginPreview>
+        <ShowcaseBase
+          callbacks={previewCallbacks}
+          history={pluginHistory}
+          routeToShowcase={routeToShowcase}
+          routeToSpotlight={routeToSpotlight}
+          showcase={form}
+          spotlights={preview.spotlights(form).spotlights}
+          subtitle={form.subtitle || defaults.subtitle}
+          title={form.title || defaults.title}
+        />
+      </PluginPreview>
     </Grid>
   </Grid>
 )
