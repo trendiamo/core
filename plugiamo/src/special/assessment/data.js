@@ -202,11 +202,6 @@ const data = {
                 },
                 {
                   picUrl:
-                    'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/_0029_3_jeans_modern_fit.png.jpg',
-                  title: 'Modern Fit',
-                },
-                {
-                  picUrl:
                     'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/_0032_3_jeans_tapered_fit.png.jpg',
                   title: 'Tapered Fit',
                 },
