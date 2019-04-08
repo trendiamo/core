@@ -63,4 +63,7 @@ const main = () => {
   render(<Component />, trendiamoContainer)
 }
 
-main()
+if (!window.FREKKLS) {
+  window.FREKKLS = true
+  main()
+}
