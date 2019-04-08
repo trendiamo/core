@@ -1,4 +1,4 @@
-class ShowcasesController < RestController
+class ShowcasesController < RestAdminController
   before_action :ensure_tenant
 
   def index

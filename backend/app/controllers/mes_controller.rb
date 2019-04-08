@@ -1,4 +1,4 @@
-class MesController < RestController
+class MesController < RestAdminController
   before_action :authenticate_user!
 
   def show

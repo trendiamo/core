@@ -1,4 +1,4 @@
-class AutocompletesController < RestController
+class AutocompletesController < RestAdminController
   def personas_autocomplete
     authorize :autocomplete
     @personas = Persona.where("name ILIKE ?", "#{params[:searchQuery]}%")

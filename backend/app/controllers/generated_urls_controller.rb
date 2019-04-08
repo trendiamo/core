@@ -1,4 +1,4 @@
-class GeneratedUrlsController < RestController
+class GeneratedUrlsController < RestAdminController
   before_action :ensure_tenant
 
   def index

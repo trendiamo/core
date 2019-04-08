@@ -1,4 +1,4 @@
-class AccountsController < RestController
+class AccountsController < RestAdminController
   def index
     @accounts = Account.order("name ASC")
     authorize @accounts

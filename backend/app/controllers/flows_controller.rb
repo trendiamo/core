@@ -1,4 +1,4 @@
-class FlowsController < RestController
+class FlowsController < RestAdminController
   def index
     authorize :flow
     @simple_chats = SimpleChat.all

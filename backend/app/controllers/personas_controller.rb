@@ -1,4 +1,4 @@
-class PersonasController < RestController
+class PersonasController < RestAdminController
   before_action :ensure_tenant
 
   def index
