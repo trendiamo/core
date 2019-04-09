@@ -180,6 +180,9 @@ export default compose(
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
   withState('showingLauncher', 'setShowingLauncher', true),
   withProps(() => {
+    if (isSmall()) {
+      return { launcherConfig: smallLauncherConfig }
+    }
     if (!process.env.production) {
       return { launcherConfig: bigLauncherConfig }
     }
