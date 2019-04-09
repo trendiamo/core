@@ -5,13 +5,22 @@ const production = process.env.NODE_ENV === 'production'
 const MAIN_BREAKPOINT = 600 // in pixels. From this width up, we're in large screen mode. Up to this width we're in small (fullscreen mode)
 const HEIGHT_BREAKPOINT = 300 // in pixels. From this height up, the plugin may be shown. Up to this height, the plugin is not shown.
 const WIDTH = 360
-const launcherConfig = {
+const bigLauncherConfig = {
   size: 100,
   frameSize: 150,
   smallSize: 70,
   smallFrameSize: 100,
   elevationWhenActive: 25,
 }
+
+const smallLauncherConfig = {
+  size: 70,
+  frameSize: 100,
+  smallSize: 70,
+  smallFrameSize: 100,
+  elevationWhenActive: 25,
+}
+
 const location = {
   ...window.location,
 }
@@ -30,7 +39,8 @@ export {
   MAIN_BREAKPOINT,
   HEIGHT_BREAKPOINT,
   WIDTH,
-  launcherConfig,
+  bigLauncherConfig,
+  smallLauncherConfig,
 }
 export default {
   graphQlUrl,
@@ -42,5 +52,6 @@ export default {
   MAIN_BREAKPOINT,
   HEIGHT_BREAKPOINT,
   WIDTH,
-  launcherConfig,
+  bigLauncherConfig,
+  smallLauncherConfig,
 }

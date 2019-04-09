@@ -57,7 +57,7 @@ const ButtonFrame = styled(props => <Frame {...omit(props, ['action', 'button', 
   }
 `
 
-const containerStyle = ({ position, action }) => ({
+const containerStyle = ({ position, action, config }) => ({
   position: 'fixed',
   display: 'flex',
   width: '225px',
@@ -65,7 +65,7 @@ const containerStyle = ({ position, action }) => ({
   zIndex: '2147483005',
   justifyContent: 'space-between',
   pointerEvents: action === 'disappear' && 'none',
-  ...positioning.get({ type: 'launcherBubbles', position, noStyle: true, reset: true }),
+  ...positioning.get({ type: 'launcherBubbles', position, noStyle: true, reset: true, config }),
 })
 
 const buttonContainerStyle = index => ({
@@ -109,8 +109,8 @@ const Text = styled.div`
   pointer-events: none;
 `
 
-const ButtonsTemplate = ({ animation, bubble, position, action, handleClick, clicked }) => (
-  <div style={containerStyle({ position, action })}>
+const ButtonsTemplate = ({ animation, bubble, position, action, handleClick, clicked, config }) => (
+  <div style={containerStyle({ position, action, config })}>
     {bubble.buttons.map((button, index) => (
       <div key={button.value} style={buttonContainerStyle(index)}>
         <ButtonFrame action={action} animation={animation} button={button} clicked={clicked} left position={position}>

@@ -7,10 +7,10 @@ import PersonaPic from 'shared/persona-pic'
 import PulsateEffect from './pulsate-effect'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import { bigLauncherConfig } from 'config'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
-import { launcherConfig } from 'config'
 
 const StyledLauncherFrame = animateOnMount(styled(props => (
   <Frame {...omit(props, ['position', 'showingContent'])} />
@@ -20,7 +20,7 @@ const StyledLauncherFrame = animateOnMount(styled(props => (
   border: 0;
   z-index: 2147482999;
   position: fixed;
-  bottom: ${({ position }) => (position === 'right-elevated' ? launcherConfig.elevationWhenActive : 0) + 10}px;
+  bottom: ${({ position, config }) => (position === 'right-elevated' ? config.elevationWhenActive : 0) + 10}px;
   overflow: hidden;
   ${({ position }) => (position === 'left' ? 'left: 10px;' : 'right: 10px;')}
   width: ${({ config }) => config.frameSize}px;
@@ -115,9 +115,10 @@ const Launcher = ({
 )
 
 export default compose(
-  withState('config', 'setConfig', launcherConfig),
-  withProps(({ persona }) => ({
-    personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', w: launcherConfig.size, h: launcherConfig.size }),
+  withState('originalConfig', 'setOriginalConfig', ({ config }) => config || bigLauncherConfig),
+  withState('config', 'setConfig', ({ config }) => config),
+  withProps(({ persona, config }) => ({
+    personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', w: config.size, h: config.size }),
   })),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
@@ -125,22 +126,23 @@ export default compose(
     },
   }),
   withHandlers({
-    optimizelyToggleContent: ({ onToggleContent, optimizelyClientInstance, showingContent }) => () => {
-      if (optimizelyClientInstance && !showingContent) {
-        optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
+    optimizelyToggleContent: ({ onToggleContent, config, showingContent }) => () => {
+      if (config.optimizelyClientInstance && !showingContent) {
+        config.optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
       }
       onToggleContent()
     },
   }),
   lifecycle({
     componentDidUpdate(prevProps) {
-      const { showingContent, setConfig } = this.props
+      const { showingContent, setConfig, config, originalConfig } = this.props
       if (prevProps.showingContent !== showingContent) {
         const closedConfig = {
-          size: launcherConfig.smallSize,
-          frameSize: launcherConfig.smallFrameSize,
+          ...config,
+          size: config.smallSize,
+          frameSize: config.smallFrameSize,
         }
-        setConfig(showingContent ? closedConfig : launcherConfig)
+        setConfig(showingContent ? closedConfig : originalConfig)
       }
     },
   })
