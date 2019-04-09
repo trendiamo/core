@@ -14,26 +14,46 @@ const StyledArrowDropDown = styled(ArrowDropDown)`
   }
 `
 
-const DropdownButton = ({ loadAllOptions }) => (
+const DropdownButton = ({ onClick }) => (
   <InputAdornment position="end">
-    <StyledArrowDropDown onClick={loadAllOptions} />
+    <StyledArrowDropDown onClick={onClick} />
   </InputAdornment>
 )
 
-const AutocompleteInput = ({ formControlProps, inputProps, label, name, loadAllOptions }) => (
+const AutocompleteInputTemplate = ({ formControlProps, inputProps, onDropdownClick, label, name, setInputRef }) => (
   <FormControl margin="normal" {...formControlProps}>
     <InputLabel htmlFor={inputProps.id} id={inputProps['aria-labelledby']}>
       {label}
     </InputLabel>
     <Input
-      endAdornment={<DropdownButton loadAllOptions={loadAllOptions} />}
+      endAdornment={<DropdownButton onClick={onDropdownClick} />}
       fullWidth
+      inputProps={{ ref: setInputRef }}
       name={name}
       type="text"
       {...inputProps}
     />
   </FormControl>
 )
+
+const AutocompleteInput = compose(
+  withHandlers(() => {
+    let inputRef
+    return {
+      setInputRef: () => ref => (inputRef = ref),
+      getInputRef: () => () => inputRef,
+    }
+  }),
+  withHandlers({
+    onDropdownClick: ({ getInputRef, loadAllOptions }) => () => {
+      loadAllOptions()
+      const ref = getInputRef()
+      if (ref) {
+        ref.focus()
+      }
+    },
+  })
+)(AutocompleteInputTemplate)
 
 const ResultsDiv = styled.div`
   width: 100%;
