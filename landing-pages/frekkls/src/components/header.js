@@ -32,13 +32,13 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => (
         <Logo alt={siteTitle} />
       </Link>
       <nav>
-        <Link className="header-link" to={`${locales[locale].path}/features`}>
+        <Link activeClassName="active-header-link" className="header-link" to={`${locales[locale].path}/features`}>
           {layout.features}
         </Link>
-        <Link className="header-link" to={`${locales[locale].path}/about`}>
+        <Link activeClassName="active-header-link" className="header-link" to={`${locales[locale].path}/about`}>
           {layout.about}
         </Link>
-        <Link className="header-link" to={`${locales[locale].path}/blog`}>
+        <Link activeClassName="active-header-link" className="header-link" to={`${locales[locale].path}/blog`}>
           {layout.blog}
         </Link>
         <Button className="js-request-demo">{layout.tryNow}</Button>
@@ -85,12 +85,19 @@ const StyledHeader = styled(React.forwardRef(Header))`
 
   .header-link {
     font-size: 12px;
-    line-height: 3;
+    line-height: 30px;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    border-bottom: 2px solid transparent;
     letter-spacing: 0.7px;
     color: #393939;
     text-decoration: none;
     margin-right: 10px;
     white-space: nowrap;
+  }
+
+  .active-header-link {
+    border-color: #ff7640;
   }
 
   @media (min-width: 900px) {
