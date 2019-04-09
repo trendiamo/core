@@ -11,6 +11,7 @@ import { bigLauncherConfig } from 'config'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
+import { production } from 'config'
 
 const StyledLauncherFrame = animateOnMount(styled(props => (
   <Frame {...omit(props, ['position', 'showingContent'])} />
@@ -127,7 +128,7 @@ export default compose(
   }),
   withHandlers({
     optimizelyToggleContent: ({ onToggleContent, config, showingContent }) => () => {
-      if (process.env.production && config.optimizelyClientInstance && !showingContent) {
+      if (production && config.optimizelyClientInstance && !showingContent) {
         config.optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
       }
       onToggleContent()

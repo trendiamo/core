@@ -12,7 +12,7 @@ import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { assessmentCart } from 'special/assessment/utils'
-import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
+import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, production, smallLauncherConfig } from 'config'
 import {
   branch,
   compose,
@@ -183,7 +183,7 @@ export default compose(
     if (isSmall()) {
       return { launcherConfig: smallLauncherConfig }
     }
-    if (!process.env.production) {
+    if (!production) {
       return { launcherConfig: bigLauncherConfig }
     }
     const optimizelyClientInstance = optimizely.createInstance({ datafile, logger: { log: () => null } })

@@ -5,6 +5,7 @@ import { bubbleExtraDefault, defaultBubble } from './config'
 import { ChatBubbleBase, Container } from './components'
 import { emojify, timeout } from 'plugin-base'
 import { h } from 'preact'
+import { production } from 'config'
 
 const LauncherBubbleBase = ({
   position,
@@ -63,7 +64,7 @@ const LauncherBubble = compose(
       timeout.clear(bubbleTimeoutId)
     },
     optimizelyToggleContent: ({ onToggleContent, config, showingContent }) => () => {
-      if (process.env.production && config.optimizelyClientInstance && !showingContent) {
+      if (production && config.optimizelyClientInstance && !showingContent) {
         config.optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
       }
       onToggleContent()
