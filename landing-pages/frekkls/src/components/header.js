@@ -38,9 +38,6 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => (
         <Link className="header-link" to={`${locales[locale].path}/about`}>
           {layout.about}
         </Link>
-        <Link className="header-link" to={`${locales[locale].path}/demo`}>
-          {layout.demo}
-        </Link>
         <Link className="header-link" to={`${locales[locale].path}/blog`}>
           {layout.blog}
         </Link>
