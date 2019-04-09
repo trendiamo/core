@@ -3,6 +3,7 @@ import Section from 'shared/section'
 import SimpleChatMessage from './simple-chat-message'
 import { AddItemButton, Cancel, Field, FormSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
+import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers } from 'recompose'
 import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
@@ -73,7 +74,7 @@ const SimpleChatStep = ({
           <Field
             disabled={isFormLoading}
             fullWidth
-            inputProps={{ pattern: '.*\\S+.*' }}
+            inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
             label="Option"
             margin="normal"
             name="simpleChatStep_key"

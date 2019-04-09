@@ -1,6 +1,7 @@
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import Section from 'shared/section'
+import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
 import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
 
@@ -33,7 +34,7 @@ const NavigationItem = ({
       <Field
         disabled={isCropping || isFormLoading}
         fullWidth
-        inputProps={{ pattern: '.*\\S+.*' }}
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
         label="Url"
         margin="normal"
         name="navigationItem_url"
@@ -50,7 +51,7 @@ const NavigationItem = ({
       <Field
         disabled={isCropping || isFormLoading}
         fullWidth
-        inputProps={{ pattern: '.*\\S+.*' }}
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
         label="Text"
         margin="normal"
         name="navigationItem_text"

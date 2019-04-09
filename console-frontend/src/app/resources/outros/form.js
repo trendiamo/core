@@ -7,7 +7,7 @@ import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
-import { apiPersonasAutocomplete } from 'utils'
+import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -28,7 +28,7 @@ const OutroForm = ({
         autoFocus
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: '.*\\S+.*' }}
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
         label="Name"
         margin="normal"
         name="name"
@@ -52,7 +52,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: '.*\\S+.*' }}
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
         label="Chat Bubble Text"
         margin="normal"
         max={characterLimits.main.chatBubble}
@@ -65,7 +65,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: '.*\\S+.*' }}
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
         label="Chat Bubble 'YES' Button"
         margin="normal"
         max={characterLimits.main.chatBubbleButton}
@@ -78,7 +78,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: '.*\\S+.*' }}
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
         label="Chat Bubble 'NO' Button"
         margin="normal"
         max={characterLimits.main.chatBubbleButton}

@@ -6,7 +6,7 @@ import PictureUploader, { ProgressBar, uploadImage } from 'shared/picture-upload
 import React from 'react'
 import routes from 'app/routes'
 import withForm from 'ext/recompose/with-form'
-import { apiMe, apiMeUpdate, apiRequest } from 'utils'
+import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
@@ -47,7 +47,7 @@ const EditUser = ({
     <TextField
       disabled={isFormLoading || isCropping}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="First Name"
       margin="normal"
       name="firstName"
@@ -58,7 +58,7 @@ const EditUser = ({
     <TextField
       disabled={isFormLoading || isCropping}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Last Name"
       margin="normal"
       name="lastName"
