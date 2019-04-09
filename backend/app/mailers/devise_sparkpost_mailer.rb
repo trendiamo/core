@@ -2,7 +2,7 @@ class DeviseSparkpostMailer < Devise::Mailer
   default from: "Trendiamo Team <no-reply@trendiamo.com>"
 
   def reset_password_instructions(record, token, _opts = {})
-    url = users_password_edit_url(record, reset_password_token: token)
+    url = api_v1_users_password_edit_url(record, reset_password_token: token)
     sparkpost_data = {
       substitution_data: {
         user_identifier: record.email,
