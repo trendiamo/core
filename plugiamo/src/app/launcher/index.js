@@ -127,7 +127,7 @@ export default compose(
   }),
   withHandlers({
     optimizelyToggleContent: ({ onToggleContent, config, showingContent }) => () => {
-      if (config.optimizelyClientInstance && !showingContent) {
+      if (process.env.production && config.optimizelyClientInstance && !showingContent) {
         config.optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
       }
       onToggleContent()

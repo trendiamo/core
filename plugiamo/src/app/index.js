@@ -180,6 +180,9 @@ export default compose(
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
   withState('showingLauncher', 'setShowingLauncher', true),
   withProps(() => {
+    if (!process.env.production) {
+      return { launcherConfig: bigLauncherConfig }
+    }
     const optimizelyClientInstance = optimizely.createInstance({ datafile, logger: { log: () => null } })
     const variation = optimizelyClientInstance.activate('LauncherSize', mixpanel.get_distinct_id())
     let launcherConfig = variation === 'Big' ? bigLauncherConfig : smallLauncherConfig
