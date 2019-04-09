@@ -3,7 +3,7 @@ import omitDeep from 'ext/lodash/omit-deep'
 import { BASE_API_URL } from './shared'
 import { stringify } from 'query-string'
 
-const S3_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/s3/sign`
+const S3_URL = `${BASE_API_URL}/s3/sign`
 const PERSONAS_URL = `${BASE_API_URL}/personas`
 const PICTURES_URL = `${BASE_API_URL}/pictures`
 const OUTROS_URL = `${BASE_API_URL}/outros`
