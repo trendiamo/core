@@ -8,7 +8,7 @@ import SimpleChatStep from './simple-chat-step'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
-import { apiPersonasAutocomplete } from 'utils'
+import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, renderComponent, shallowEqual, shouldUpdate, withHandlers, withProps } from 'recompose'
 import { Grid } from '@material-ui/core'
@@ -57,7 +57,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
       <Field
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: '.*\\S+.*' }}
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
         label="Name"
         margin="normal"
         name="name"
@@ -80,7 +80,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
       <Field
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: '.*\\S+.*' }}
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
         label="Title"
         margin="normal"
         max={characterLimits.main.title}

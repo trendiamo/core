@@ -1,6 +1,7 @@
 import characterLimits from 'shared/character-limits'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
+import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
 import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
 
@@ -33,7 +34,7 @@ const ProductPick = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Url"
       margin="normal"
       name="productPick_url"
@@ -51,7 +52,7 @@ const ProductPick = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Name"
       margin="normal"
       max={characterLimits.showcase.productName}
@@ -64,7 +65,7 @@ const ProductPick = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Description"
       margin="normal"
       max={characterLimits.showcase.productDescription}
@@ -77,7 +78,7 @@ const ProductPick = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Display Price"
       margin="normal"
       name="productPick_displayPrice"

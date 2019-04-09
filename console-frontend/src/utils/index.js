@@ -143,3 +143,5 @@ export const apiRequest = async (requestMethod, args, options) => {
   const errors = extractErrors(json)
   return { json, requestError, errors, response }
 }
+
+export const atLeastOneNonBlankCharRegexp = '.*\\S+.*'

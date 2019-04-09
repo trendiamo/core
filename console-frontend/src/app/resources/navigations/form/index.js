@@ -9,7 +9,7 @@ import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
-import { apiPersonasAutocomplete } from 'utils'
+import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import {
   branch,
@@ -88,7 +88,7 @@ const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCroppin
       autoFocus
       disabled={isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Name"
       margin="normal"
       name="name"
@@ -100,7 +100,7 @@ const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCroppin
     <Field
       disabled={isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Title"
       margin="normal"
       max={characterLimits.main.title}

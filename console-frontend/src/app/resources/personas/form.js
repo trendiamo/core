@@ -7,6 +7,7 @@ import Section from 'shared/section'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
+import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid } from '@material-ui/core'
 import { uploadImage } from 'shared/picture-uploader'
@@ -44,7 +45,7 @@ const PersonaForm = ({
           autoFocus
           disabled={isFormLoading || isCropping}
           fullWidth
-          inputProps={{ pattern: '.*\\S+.*' }}
+          inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
           label="Name"
           margin="normal"
           max={characterLimits.persona.name}
@@ -56,7 +57,7 @@ const PersonaForm = ({
         <Field
           disabled={isFormLoading || isCropping}
           fullWidth
-          inputProps={{ pattern: '.*\\S+.*' }}
+          inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
           label="Description"
           margin="normal"
           max={characterLimits.persona.description}

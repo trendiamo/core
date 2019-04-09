@@ -9,7 +9,7 @@ import Spotlight from './spotlight'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
-import { apiPersonasAutocomplete } from 'utils'
+import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import {
   branch,
@@ -89,7 +89,7 @@ const MainFormTemplate = ({ title, isCropping, setFieldValue, onBackClick, form,
       autoFocus
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Name"
       margin="normal"
       name="name"
@@ -114,7 +114,7 @@ const MainFormTemplate = ({ title, isCropping, setFieldValue, onBackClick, form,
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Title"
       margin="normal"
       max={characterLimits.main.title}
@@ -128,7 +128,7 @@ const MainFormTemplate = ({ title, isCropping, setFieldValue, onBackClick, form,
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Subtitle"
       margin="normal"
       max={characterLimits.main.subtitle}

@@ -1,4 +1,5 @@
 import React from 'react'
+import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, shouldUpdate, withHandlers } from 'recompose'
 import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
 import { isEqual, omit } from 'lodash'
@@ -30,7 +31,7 @@ const SimpleChatMessage = ({
     <Field
       disabled={isFormLoading}
       fullWidth
-      inputProps={{ pattern: '.*\\S+.*' }}
+      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Message"
       margin="normal"
       name="simpleChatMessage_text"
