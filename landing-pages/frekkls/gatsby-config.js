@@ -18,6 +18,7 @@ module.exports = {
     author: '@trendiamo',
   },
   plugins: [
+    'gatsby-plugin-remove-trailing-slashes',
     'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-source-filesystem',
