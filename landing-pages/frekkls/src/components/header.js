@@ -25,8 +25,8 @@ const toggleMobileMenu = () => {
   document.body.classList.toggle('mobile-menu-open')
 }
 
-const Header = styled(({ className, layout, locale, siteTitle }) => (
-  <header className={className}>
+const Header = ({ className, layout, locale, siteTitle }, ref) => (
+  <header className={className} ref={ref}>
     <Container>
       <Link className="logo-link" to={`${locales[locale].path}/`}>
         <Logo alt={siteTitle} />
@@ -50,9 +50,21 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
     </Container>
     <MobileMenu layout={layout} locale={locale} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
   </header>
-))`
+)
+
+const StyledHeader = styled(React.forwardRef(Header))`
   padding: 1.5rem 1rem;
   font-family: Roboto, sans-serif;
+
+  background: white;
+  width: 100%;
+
+  &.fixed {
+    position: fixed;
+    padding: 10px 1rem;
+    z-index: 10;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  }
 
   nav,
   ${Container} {
@@ -109,4 +121,4 @@ const Header = styled(({ className, layout, locale, siteTitle }) => (
   }
 `
 
-export default Header
+export default StyledHeader
