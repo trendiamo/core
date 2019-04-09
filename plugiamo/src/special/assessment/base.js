@@ -21,10 +21,12 @@ const Base = ({
   showingCtaButton,
   step,
   touch,
+  coverMinimized,
 }) => (
   <Container animateOpacity={animateOpacity} contentRef={contentRef}>
     <Chat
       contentRef={contentRef}
+      coverMinimized={coverMinimized}
       currentStep={currentStep}
       endNodeTags={endNodeTags}
       goToNextStep={goToNextStep}
