@@ -66,7 +66,7 @@ const EditUser = ({
         isFormPristine={isFormPristine}
         tooltipEnabled
         tooltipPlacement="right"
-        tooltipText="no changes detected"
+        tooltipText="no changes"
         type="submit"
         variant="contained"
       >
