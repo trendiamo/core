@@ -163,15 +163,18 @@ export default compose(
     },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ backRoute, title, create, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
-    Actions: (
-      <Actions
-        onFormSubmit={onFormSubmit}
-        saveClassName={create && 'onboard-create-persona'}
-        saveDisabled={isFormSubmitting || isFormLoading || isCropping}
-      />
-    ),
-    backRoute,
-    title,
-  }))
+  withAppBarContent(
+    ({ backRoute, title, create, isCropping, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit }) => ({
+      Actions: (
+        <Actions
+          isFormPristine={isFormPristine}
+          onFormSubmit={onFormSubmit}
+          saveClassName={create && 'onboard-create-persona'}
+          saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine}
+        />
+      ),
+      backRoute,
+      title,
+    })
+  )
 )(PersonaForm)

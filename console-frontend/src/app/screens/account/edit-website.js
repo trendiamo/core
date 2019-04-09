@@ -40,7 +40,16 @@ const EditWebsite = ({
       isFormLoading={isFormLoading}
     />
     <div style={{ marginTop: '1rem' }}>
-      <Button color="primaryGradient" disabled={isFormLoading} type="submit" variant="contained">
+      <Button
+        color="primaryGradient"
+        disabled={isFormLoading || isFormPristine}
+        isFormPristine={isFormPristine}
+        tooltipEnabled
+        tooltipPlacement="right"
+        tooltipText="no changes detected"
+        type="submit"
+        variant="contained"
+      >
         {'Save'}
       </Button>
     </div>

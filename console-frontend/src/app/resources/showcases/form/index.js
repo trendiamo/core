@@ -464,11 +464,19 @@ export default compose(
     },
   })),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
-    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormSubmitting || isCropping || isFormLoading} />,
-    backRoute,
-    title,
-  })),
+  withAppBarContent(
+    ({ backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine }) => ({
+      Actions: (
+        <Actions
+          isFormPristine={isFormPristine}
+          onFormSubmit={onFormSubmit}
+          saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine}
+        />
+      ),
+      backRoute,
+      title,
+    })
+  ),
   lifecycle({
     componentDidMount() {
       const { form } = this.props

@@ -60,7 +60,16 @@ const EditUser = ({
     />
     {progress && <ProgressBar progress={progress} />}
     <div style={{ marginTop: '1rem' }}>
-      <Button color="primaryGradient" disabled={isFormLoading || isCropping} type="submit" variant="contained">
+      <Button
+        color="primaryGradient"
+        disabled={isFormLoading || isCropping || isFormPristine}
+        isFormPristine={isFormPristine}
+        tooltipEnabled
+        tooltipPlacement="right"
+        tooltipText="no changes detected"
+        type="submit"
+        variant="contained"
+      >
         {'Save'}
       </Button>
     </div>
