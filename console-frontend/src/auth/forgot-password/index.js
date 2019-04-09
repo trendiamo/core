@@ -1,6 +1,5 @@
 import auth from 'auth'
 import AuthLayout from 'auth/layout'
-import Notification from 'shared/notification'
 import queryString from 'query-string'
 import React from 'react'
 import routes from 'app/routes'
@@ -27,18 +26,17 @@ const AuthMessage = () => (
   </React.Fragment>
 )
 
-const PasswordReset = ({ errors, passwordForm, passwordResetSubmit, setFieldValue }) => (
+const PasswordReset = ({ passwordForm, passwordResetSubmit, setFieldValue }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <form onSubmit={passwordResetSubmit}>
-      <Notification data={errors} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'New Password'}</InputLabel>
         <Input
-          autoComplete="email"
           autoFocus
           id="email"
           name="fieldOne"
           onChange={setFieldValue}
+          required
           type="password"
           value={passwordForm.fieldOne}
         />
@@ -46,7 +44,6 @@ const PasswordReset = ({ errors, passwordForm, passwordResetSubmit, setFieldValu
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'Repeat Password'}</InputLabel>
         <Input
-          autoComplete="current-password"
           id="password"
           name="fieldTwo"
           onChange={setFieldValue}
@@ -69,13 +66,12 @@ export default compose(
     fieldOne: '',
     fieldTwo: '',
   }),
-  withState('errors', 'setErrors', null),
   withSnackbar,
   withHandlers({
-    passwordResetSubmit: ({ enqueueSnackbar, passwordForm, setErrors }) => async event => {
+    passwordResetSubmit: ({ enqueueSnackbar, passwordForm }) => async event => {
       event.preventDefault()
       if (passwordForm.fieldOne !== passwordForm.fieldTwo) {
-        setErrors({ status: 'error', message: "Passwords don't match" })
+        enqueueSnackbar("Passwords don't match", { variant: 'error' })
         return
       }
       const parsedUrl = queryString.parse(window.location.search)
@@ -88,7 +84,7 @@ export default compose(
         },
       ])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!requestError && !errors) auth.setUser(json.user)
       if (auth.isLoggedIn()) window.location.href = routes.root()
     },

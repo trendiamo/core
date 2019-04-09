@@ -1,5 +1,4 @@
 import Button from 'shared/button'
-import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
@@ -16,10 +15,9 @@ const Actions = ({ onFormSubmit }) => (
   </Button>
 )
 
-const ChangePassword = ({ errors, passwordForm, onFormSubmit, setFieldValue }) => (
+const ChangePassword = ({ passwordForm, onFormSubmit, setFieldValue }) => (
   <Section title="Change Password">
     <form onSubmit={onFormSubmit}>
-      <Notification data={errors} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
         <Input
@@ -33,7 +31,7 @@ const ChangePassword = ({ errors, passwordForm, onFormSubmit, setFieldValue }) =
       </FormControl>
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="password">{'New Password'}</InputLabel>
-        <Input name="password" onChange={setFieldValue} type="password" value={passwordForm.password} />
+        <Input name="password" onChange={setFieldValue} required type="password" value={passwordForm.password} />
       </FormControl>
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="passwordConfirmation">{'Repeat Password'}</InputLabel>
@@ -55,19 +53,18 @@ export default compose(
     password: '',
     passwordConfirmation: '',
   }),
-  withState('errors', 'setErrors', null),
   withRouter,
   withSnackbar,
   withHandlers({
-    onFormSubmit: ({ enqueueSnackbar, passwordForm, setErrors, history }) => async event => {
+    onFormSubmit: ({ enqueueSnackbar, passwordForm, history }) => async event => {
       event.preventDefault()
       if (passwordForm.password !== passwordForm.passwordConfirmation) {
-        setErrors({ message: "New passwords don't match", status: 'error' })
+        enqueueSnackbar("Passwords don't match", { variant: 'error' })
         return
       }
       const { errors, requestError } = await apiRequest(apiPasswordChange, [{ user: passwordForm }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!requestError && !errors) {
         enqueueSnackbar('Changed Password', { variant: 'Info' })
         history.push(routes.root())

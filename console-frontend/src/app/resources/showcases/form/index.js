@@ -89,6 +89,7 @@ const MainFormTemplate = ({ title, isCropping, setFieldValue, onBackClick, form,
       autoFocus
       disabled={isCropping || isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Name"
       margin="normal"
       name="name"
@@ -113,6 +114,7 @@ const MainFormTemplate = ({ title, isCropping, setFieldValue, onBackClick, form,
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Title"
       margin="normal"
       max={characterLimits.main.title}
@@ -126,6 +128,7 @@ const MainFormTemplate = ({ title, isCropping, setFieldValue, onBackClick, form,
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Subtitle"
       margin="normal"
       max={characterLimits.main.subtitle}
@@ -173,7 +176,6 @@ const ShowcaseForm = ({
   onSpotlightClick,
   form,
   formRef,
-  errors,
   isFormLoading,
   isFormPristine,
   onFormSubmit,
@@ -189,7 +191,7 @@ const ShowcaseForm = ({
   onSortEnd,
   personas,
 }) => (
-  <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+  <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <MainForm
       form={omit(form, ['spotlightsAttributes'])}
       isCropping={isCropping}
@@ -299,7 +301,6 @@ const Showcase = ({ form, routeToSpotlight, routeToShowcase, previewCallbacks, .
 export default compose(
   withProps({ formRef: React.createRef() }),
   withOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial' }),
-  withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('productPicksPictures', 'setProductPicksPictures', []),
   withHandlers({
@@ -365,10 +366,10 @@ export default compose(
         })),
       }
     },
-    saveFormObject: ({ saveFormObject, setErrors, uploadSubImages, setProductPicksPictures }) => async form => {
+    saveFormObject: ({ saveFormObject, uploadSubImages, setProductPicksPictures }) => async form => {
       await Promise.all(uploadSubImages(form))
       setProductPicksPictures([])
-      return saveFormObject(form, { setErrors })
+      return saveFormObject(form)
     },
   }),
   withForm({

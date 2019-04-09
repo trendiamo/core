@@ -56,7 +56,6 @@ const TriggerForm = ({
   editUrlValue,
   form,
   formRef,
-  errors,
   isFormLoading,
   hostnames,
   isFormPristine,
@@ -66,7 +65,7 @@ const TriggerForm = ({
 }) => (
   <Section title={title}>
     <Grid item sm={6}>
-      <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+      <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
         <Autocomplete
           autocomplete={apiFlowsAutocomplete}
           defaultPlaceholder="Choose a Trigger"
@@ -117,7 +116,6 @@ export default compose(
   withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
   withState('hostnames', 'setHostnames', []),
-  withState('errors', 'setErrors', null),
   withHandlers({
     formObjectTransformer: () => json => {
       return {
@@ -127,9 +125,6 @@ export default compose(
         urlMatchers: json.urlMatchers || [''],
         flowLabel: (json.flow && json.flow.name) || '',
       }
-    },
-    saveFormObject: ({ saveFormObject, setErrors }) => form => {
-      return saveFormObject(form, { setErrors })
     },
   }),
   withForm({

@@ -8,7 +8,7 @@ import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
-import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -17,18 +17,18 @@ const OutroForm = ({
   form,
   setFieldValue,
   selectPersona,
-  errors,
   isFormLoading,
   isFormPristine,
   onFormSubmit,
   title,
 }) => (
   <Section title={title}>
-    <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+    <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <Field
         autoFocus
         disabled={isFormLoading}
         fullWidth
+        inputProps={{ pattern: '.*\\S+.*' }}
         label="Name"
         margin="normal"
         name="name"
@@ -52,6 +52,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
+        inputProps={{ pattern: '.*\\S+.*' }}
         label="Chat Bubble Text"
         margin="normal"
         max={characterLimits.main.chatBubble}
@@ -64,6 +65,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
+        inputProps={{ pattern: '.*\\S+.*' }}
         label="Chat Bubble 'YES' Button"
         margin="normal"
         max={characterLimits.main.chatBubbleButton}
@@ -76,6 +78,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
+        inputProps={{ pattern: '.*\\S+.*' }}
         label="Chat Bubble 'NO' Button"
         margin="normal"
         max={characterLimits.main.chatBubbleButton}
@@ -92,7 +95,6 @@ const OutroForm = ({
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
-  withState('errors', 'setErrors', null),
   withHandlers({
     formObjectTransformer: () => json => {
       return {
@@ -104,9 +106,6 @@ export default compose(
         chatBubbleButtonNo: json.chatBubbleButtonNo || '',
         __persona: json.persona,
       }
-    },
-    saveFormObject: ({ saveFormObject, setErrors }) => form => {
-      return saveFormObject(form, { setErrors })
     },
   }),
   withForm({

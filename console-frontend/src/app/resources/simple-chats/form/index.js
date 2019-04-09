@@ -10,16 +10,7 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import {
-  branch,
-  compose,
-  renderComponent,
-  shallowEqual,
-  shouldUpdate,
-  withHandlers,
-  withProps,
-  withState,
-} from 'recompose'
+import { branch, compose, renderComponent, shallowEqual, shouldUpdate, withHandlers, withProps } from 'recompose'
 import { Grid } from '@material-ui/core'
 import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
@@ -66,6 +57,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
       <Field
         disabled={isFormLoading}
         fullWidth
+        inputProps={{ pattern: '.*\\S+.*' }}
         label="Name"
         margin="normal"
         name="name"
@@ -88,6 +80,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
       <Field
         disabled={isFormLoading}
         fullWidth
+        inputProps={{ pattern: '.*\\S+.*' }}
         label="Title"
         margin="normal"
         max={characterLimits.main.title}
@@ -135,7 +128,6 @@ const MainForm = compose(
 
 const SimpleChatForm = ({
   addSimpleChatStep,
-  errors,
   form,
   formRef,
   isFormLoading,
@@ -147,7 +139,7 @@ const SimpleChatForm = ({
   setSimpleChatStepsForm,
   title,
 }) => (
-  <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+  <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <MainForm
       form={omit(form, ['simpleChatStepsAttributes'])}
       isFormLoading={isFormLoading}
@@ -171,7 +163,6 @@ const SimpleChatForm = ({
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'simpleChats', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
-  withState('errors', 'setErrors', null),
   withHandlers({
     formObjectTransformer: () => json => {
       return {
@@ -188,9 +179,6 @@ export default compose(
           },
         ],
       }
-    },
-    saveFormObject: ({ saveFormObject, setErrors }) => form => {
-      return saveFormObject(form, { setErrors })
     },
   }),
   withForm({

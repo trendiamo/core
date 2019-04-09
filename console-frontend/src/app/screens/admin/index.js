@@ -67,6 +67,7 @@ const Admin = ({
           <FormControl fullWidth margin="normal" required>
             <TextField
               fullWidth
+              inputProps={{ pattern: '.*\\S+.*' }}
               label="Name"
               margin="normal"
               name="name"
@@ -128,7 +129,7 @@ export default compose(
       newHostnames[index] = newValue
       setAccountForm({ ...accountForm, websitesAttributes: [{ hostnames: newHostnames }] })
     },
-    onAccountFormSubmit: ({ accountForm, enqueueSnackbar, setErrors }) => async () => {
+    onAccountFormSubmit: ({ accountForm, enqueueSnackbar }) => async () => {
       const { json, errors, requestError } = await apiRequest(apiAccountCreate, [
         {
           account: {
@@ -138,7 +139,7 @@ export default compose(
         },
       ])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       return json
     },
   }),
