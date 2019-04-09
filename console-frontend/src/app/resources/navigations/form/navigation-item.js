@@ -33,6 +33,7 @@ const NavigationItem = ({
       <Field
         disabled={isCropping || isFormLoading}
         fullWidth
+        inputProps={{ pattern: '.*\\S+.*' }}
         label="Url"
         margin="normal"
         name="navigationItem_url"
@@ -49,6 +50,7 @@ const NavigationItem = ({
       <Field
         disabled={isCropping || isFormLoading}
         fullWidth
+        inputProps={{ pattern: '.*\\S+.*' }}
         label="Text"
         margin="normal"
         name="navigationItem_text"

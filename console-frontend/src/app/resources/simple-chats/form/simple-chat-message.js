@@ -30,6 +30,7 @@ const SimpleChatMessage = ({
     <Field
       disabled={isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Message"
       margin="normal"
       name="simpleChatMessage_text"

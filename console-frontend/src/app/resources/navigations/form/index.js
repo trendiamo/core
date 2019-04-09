@@ -88,6 +88,7 @@ const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCroppin
       autoFocus
       disabled={isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Name"
       margin="normal"
       name="name"
@@ -99,6 +100,7 @@ const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCroppin
     <Field
       disabled={isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Title"
       margin="normal"
       max={characterLimits.main.title}
@@ -163,7 +165,6 @@ const NavigationForm = ({
   form,
   setFieldValue,
   selectPersona,
-  errors,
   isCropping,
   isFormLoading,
   isFormPristine,
@@ -176,7 +177,7 @@ const NavigationForm = ({
   onSortEnd,
   title,
 }) => (
-  <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+  <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <MainForm
       form={omit(form, ['navigationItemsAttributes'])}
       isCropping={isCropping}
@@ -253,7 +254,6 @@ const NavigationSuperForm = compose(
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
-  withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('navigationItemsPictures', 'setNavigationItemsPictures', []),
   withState('persona', 'setPersona', defaults.persona),
@@ -311,10 +311,10 @@ export default compose(
         })),
       }
     },
-    saveFormObject: ({ saveFormObject, setErrors, uploadSubImages, setNavigationItemsPictures }) => async form => {
+    saveFormObject: ({ saveFormObject, uploadSubImages, setNavigationItemsPictures }) => async form => {
       await Promise.all(uploadSubImages(form))
       setNavigationItemsPictures([])
-      return saveFormObject(form, { setErrors })
+      return saveFormObject(form)
     },
     afterFormMount: ({ convertPersona, setPersona }) => formObject => {
       setPersona(convertPersona(formObject.__persona))

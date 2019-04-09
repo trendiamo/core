@@ -13,12 +13,12 @@ export default compose(
   withRouter,
   withSnackbar,
   withHandlers({
-    saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
+    saveFormObject: ({ enqueueSnackbar, match }) => async form => {
       const id = match.params.triggerId
       const { json, errors, requestError } = await apiRequest(apiTriggerUpdate, [id, { trigger: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (!errors && !requestError) enqueueSnackbar('Successfully updated trigger', { variant: 'success' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       return json
     },
   }),

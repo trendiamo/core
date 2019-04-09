@@ -73,6 +73,7 @@ const SimpleChatStep = ({
           <Field
             disabled={isFormLoading}
             fullWidth
+            inputProps={{ pattern: '.*\\S+.*' }}
             label="Option"
             margin="normal"
             name="simpleChatStep_key"

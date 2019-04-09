@@ -112,14 +112,18 @@ export {
   apiWebsiteUpdate,
 }
 
-const handleRequestError = async response => {
+const handleRequestError = async (response, isLoginRequest) => {
   if (!response) {
     return { requestError: 'Network Error' }
   }
   if (response.status === 403 || response.status === 401) {
-    await apiSignOut()
-    auth.clear()
-    throw new Error('Invalid Credentials')
+    if (isLoginRequest) {
+      return { requestError: undefined }
+    } else {
+      await apiSignOut()
+      auth.clear()
+      throw new Error('Invalid Credentials')
+    }
   }
   if (response.status >= 500) {
     return { requestError: 'Server Error' }
@@ -131,10 +135,10 @@ const handleRequestError = async response => {
   return { requestError: undefined }
 }
 
-export const apiRequest = async (requestMethod, args) => {
+export const apiRequest = async (requestMethod, args, options) => {
   const promise = args.length === 0 ? requestMethod() : requestMethod(...args)
   const response = await promise.catch(() => null)
-  const { requestError } = handleRequestError(response)
+  const { requestError } = handleRequestError(response, options && options.isLoginRequest)
   const json = requestError ? {} : await response.json()
   const errors = extractErrors(json)
   return { json, requestError, errors, response }

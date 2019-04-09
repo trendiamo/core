@@ -2,11 +2,10 @@ import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import HostnamesForm from 'shared/hostnames-form'
-import Notification from 'shared/notification'
 import React from 'react'
 import withForm from 'ext/recompose/with-form'
 import { apiRequest, apiWebsiteShow, apiWebsiteUpdate } from 'utils'
-import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
 import { Checkbox, FormControlLabel, FormHelperText, TextField } from '@material-ui/core'
 import { Prompt } from 'react-router'
 import { withSnackbar } from 'notistack'
@@ -16,7 +15,6 @@ const EditWebsite = ({
   deleteHostname,
   isFormLoading,
   editHostnameValue,
-  errors,
   isFormPristine,
   form,
   onFormSubmit,
@@ -24,8 +22,16 @@ const EditWebsite = ({
 }) => (
   <form onSubmit={onFormSubmit}>
     <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-    <Notification data={errors} />
-    <TextField disabled fullWidth label="Name" margin="normal" name="name" required value={form.name} />
+    <TextField
+      disabled
+      fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
+      label="Name"
+      margin="normal"
+      name="name"
+      required
+      value={form.name}
+    />
     <FormControlLabel
       control={<Checkbox checked={!form.previewMode} color="primary" onChange={setPreviewMode} />}
       disabled={isFormLoading}
@@ -57,7 +63,6 @@ const EditWebsite = ({
 )
 
 export default compose(
-  withState('errors', 'setErrors', null),
   withProps(() => ({
     websiteId: auth.isAdmin()
       ? auth.getAdminSessionAccount().websitesAttributes[0] && auth.getAdminSessionAccount().websitesAttributes[0].id
@@ -79,10 +84,10 @@ export default compose(
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       return json
     },
-    saveFormObject: ({ enqueueSnackbar, websiteId, setErrors }) => async form => {
+    saveFormObject: ({ enqueueSnackbar, websiteId }) => async form => {
       const { json, errors, requestError } = await apiRequest(apiWebsiteUpdate, [websiteId, { website: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!requestError && !errors) enqueueSnackbar('Successfully updated account info', { variant: 'success' })
       return json
     },

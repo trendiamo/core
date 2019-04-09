@@ -11,11 +11,11 @@ export default compose(
   }),
   withSnackbar,
   withHandlers({
-    saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
+    saveFormObject: ({ enqueueSnackbar, match }) => async form => {
       const id = match.params.outroId
       const { json, errors, requestError } = await apiRequest(apiOutroUpdate, [id, { outro: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) enqueueSnackbar('Successfully updated outro', { variant: 'success' })
       return json
     },

@@ -17,7 +17,6 @@ import { withRouter } from 'react-router'
 const PersonaForm = ({
   form,
   formRef,
-  errors,
   isCropping,
   isFormLoading,
   isFormPristine,
@@ -31,7 +30,7 @@ const PersonaForm = ({
 }) => (
   <Section title={title}>
     <Grid item sm={6}>
-      <Form errors={errors} formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+      <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
         <PictureUploader
           disabled={isCropping}
           label="Picture"
@@ -45,6 +44,7 @@ const PersonaForm = ({
           autoFocus
           disabled={isFormLoading || isCropping}
           fullWidth
+          inputProps={{ pattern: '.*\\S+.*' }}
           label="Name"
           margin="normal"
           max={characterLimits.persona.name}
@@ -56,6 +56,7 @@ const PersonaForm = ({
         <Field
           disabled={isFormLoading || isCropping}
           fullWidth
+          inputProps={{ pattern: '.*\\S+.*' }}
           label="Description"
           margin="normal"
           max={characterLimits.persona.description}
@@ -94,7 +95,6 @@ const PersonaForm = ({
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
-  withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
   withState('progress', 'setProgress', null),
@@ -112,7 +112,7 @@ export default compose(
     loadFormObject: ({ loadFormObject }) => async () => {
       return loadFormObject()
     },
-    saveFormObject: ({ saveFormObject, setProgress, profilePic, setErrors, setProfilePic }) => async form => {
+    saveFormObject: ({ saveFormObject, setProgress, profilePic, setProfilePic }) => async form => {
       if (profilePic) {
         const profilePicUrl = await uploadImage({
           blob: profilePic,
@@ -120,9 +120,9 @@ export default compose(
           type: 'personas-profile-pics',
         })
         setProfilePic(null)
-        return saveFormObject({ ...form, profilePicUrl }, { setErrors })
+        return saveFormObject({ ...form, profilePicUrl })
       }
-      return saveFormObject(form, { setErrors })
+      return saveFormObject(form)
     },
   }),
   withForm({

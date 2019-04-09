@@ -2,7 +2,6 @@ import auth from 'auth'
 import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
 import Link from 'shared/link'
-import Notification from 'shared/notification'
 import React from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
@@ -20,10 +19,9 @@ const StyledForm = styled.form`
   }
 `
 
-const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
+const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout title="Let's log you in!">
     <StyledForm onSubmit={loginSubmit}>
-      <Notification data={errors} />
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
         <Input
@@ -32,6 +30,7 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
           id="email"
           name="email"
           onChange={setLoginValue}
+          required
           value={loginForm.email}
         />
       </FormControl>
@@ -65,16 +64,17 @@ const Login = ({ errors, loginForm, loginSubmit, setLoginValue }) => (
 
 export default compose(
   withState('loginForm', 'setLoginForm', { email: '', password: '' }),
-  withState('errors', 'setErrors', null),
   withSnackbar,
   withHandlers({
-    loginSubmit: ({ enqueueSnackbar, loginForm, setErrors }) => async event => {
+    loginSubmit: ({ enqueueSnackbar, loginForm }) => async event => {
       event.preventDefault()
-      const { json, errors, requestError } = await apiRequest(apiSignIn, [
-        { user: { email: loginForm.email, password: loginForm.password } },
-      ])
+      const { json, errors, requestError } = await apiRequest(
+        apiSignIn,
+        [{ user: { email: loginForm.email, password: loginForm.password } }],
+        { isLoginRequest: true }
+      )
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!requestError && !errors) auth.setUser(json.user)
       if (auth.isLoggedIn()) window.location.href = auth.isAdmin() ? routes.admin() : routes.root()
     },

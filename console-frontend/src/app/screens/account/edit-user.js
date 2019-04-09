@@ -2,7 +2,6 @@ import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import Link from 'shared/link'
-import Notification from 'shared/notification'
 import PictureUploader, { ProgressBar, uploadImage } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
@@ -14,7 +13,6 @@ import { TextField } from '@material-ui/core'
 import { withSnackbar } from 'notistack'
 
 const EditUser = ({
-  errors,
   isFormPristine,
   onFormSubmit,
   isCropping,
@@ -28,7 +26,6 @@ const EditUser = ({
 }) => (
   <form onSubmit={onFormSubmit}>
     <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-    <Notification data={errors} />
     <PictureUploader
       disabled={isCropping}
       label="Picture"
@@ -37,10 +34,20 @@ const EditUser = ({
       setPic={setProfilePic}
       value={form.profilePicUrl}
     />
-    <TextField disabled fullWidth id="email" label="Email" margin="normal" required value={form.email} />
+    <TextField
+      disabled
+      fullWidth
+      id="email"
+      inputProps={{ pattern: '.*S+.*' }}
+      label="Email"
+      margin="normal"
+      required
+      value={form.email}
+    />
     <TextField
       disabled={isFormLoading || isCropping}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="First Name"
       margin="normal"
       name="firstName"
@@ -51,6 +58,7 @@ const EditUser = ({
     <TextField
       disabled={isFormLoading || isCropping}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Last Name"
       margin="normal"
       name="lastName"
@@ -84,7 +92,6 @@ const EditUser = ({
 )
 
 export default compose(
-  withState('errors', 'setErrors', null),
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
   withState('progress', 'setProgress', null),
@@ -100,7 +107,7 @@ export default compose(
     },
   }),
   withHandlers({
-    saveFormObject: ({ enqueueSnackbar, setErrors, setProgress, profilePic, setProfilePic }) => async form => {
+    saveFormObject: ({ enqueueSnackbar, setProgress, profilePic, setProfilePic }) => async form => {
       // upload the image
       let data
       if (profilePic) {
@@ -116,7 +123,7 @@ export default compose(
       // update user data
       const { json, errors, requestError } = await apiRequest(apiMeUpdate, [{ user: data }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) {
         enqueueSnackbar('Successfully updated personal info', { variant: 'success' })
         auth.setUser(json)

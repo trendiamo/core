@@ -33,6 +33,7 @@ const ProductPick = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Url"
       margin="normal"
       name="productPick_url"
@@ -50,6 +51,7 @@ const ProductPick = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Name"
       margin="normal"
       max={characterLimits.showcase.productName}
@@ -62,6 +64,7 @@ const ProductPick = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Description"
       margin="normal"
       max={characterLimits.showcase.productDescription}
@@ -74,6 +77,7 @@ const ProductPick = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
+      inputProps={{ pattern: '.*\\S+.*' }}
       label="Display Price"
       margin="normal"
       name="productPick_displayPrice"

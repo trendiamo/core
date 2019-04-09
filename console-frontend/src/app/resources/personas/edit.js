@@ -11,11 +11,11 @@ export default compose(
   }),
   withSnackbar,
   withHandlers({
-    saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
+    saveFormObject: ({ enqueueSnackbar, match }) => async form => {
       const id = match.params.personaId
       const { json, errors, requestError } = await apiRequest(apiPersonaUpdate, [id, { persona: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) enqueueSnackbar('Successfully updated persona', { variant: 'success' })
       return json
     },

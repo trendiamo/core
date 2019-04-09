@@ -11,12 +11,12 @@ export default compose(
   }),
   withSnackbar,
   withHandlers({
-    saveFormObject: ({ enqueueSnackbar, match }) => async (form, { setErrors }) => {
+    saveFormObject: ({ enqueueSnackbar, match }) => async form => {
       const id = match.params.showcaseId
       const { json, errors, requestError } = await apiRequest(apiShowcaseUpdate, [id, { showcase: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (!errors && !requestError) enqueueSnackbar('Successfully updated showcase', { variant: 'success' })
-      if (errors) setErrors(errors)
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       return json
     },
   }),
