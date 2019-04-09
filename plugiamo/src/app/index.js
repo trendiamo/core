@@ -1,15 +1,18 @@
 import animateOnMount from 'shared/animate-on-mount'
 import AssessmentCart from 'special/assessment/cart'
 import Content from './content'
+import datafile from 'optimizely.json'
 import getFrekklsConfig from 'frekkls-config'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
+import optimizely from '@optimizely/optimizely-sdk'
 import Router from './content/router'
 import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { assessmentCart } from 'special/assessment/utils'
+import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
 import {
   branch,
   compose,
@@ -23,7 +26,6 @@ import {
 import { getBubbleProps, LauncherBubbles } from './launcher-bubbles'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
-import { HEIGHT_BREAKPOINT, location } from 'config'
 import { infoMsgHof } from 'shared/info-msg'
 import { isSmall } from 'utils'
 import { timeout } from 'plugin-base'
@@ -72,11 +74,13 @@ const AppBaseTemplate = ({
   setShowingLauncher,
   setShowingContent,
   showingLauncher,
+  launcherConfig,
 }) => (
   <AppBaseDiv>
     {showingContent && (
       <Content
         Component={Component}
+        config={launcherConfig}
         ContentFrame={ContentFrame}
         isUnmounting={isUnmounting}
         onToggleContent={onToggleContent}
@@ -92,6 +96,7 @@ const AppBaseTemplate = ({
     {showingLauncher && (
       <LauncherBubbles
         bubble={bubble}
+        config={launcherConfig}
         disappear={disappear}
         extraBubble={extraBubble}
         onToggleContent={onToggleContent}
@@ -102,6 +107,7 @@ const AppBaseTemplate = ({
     )}
     {showingLauncher && (
       <Launcher
+        config={launcherConfig}
         data={data}
         disappear={disappear}
         onToggleContent={onToggleContent}
@@ -173,6 +179,13 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
   withState('showingLauncher', 'setShowingLauncher', true),
+  withProps(() => {
+    const optimizelyClientInstance = optimizely.createInstance({ datafile, logger: { log: () => null } })
+    const variation = optimizelyClientInstance.activate('LauncherSize', mixpanel.get_distinct_id())
+    let launcherConfig = variation === 'Big' ? bigLauncherConfig : smallLauncherConfig
+    launcherConfig.optimizelyClientInstance = optimizelyClientInstance
+    return { launcherConfig }
+  }),
   lifecycle({
     componentDidMount() {
       const { data, pathFromNav, setPersona, setShowingContent } = this.props

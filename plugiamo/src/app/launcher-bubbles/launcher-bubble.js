@@ -1,4 +1,5 @@
 import LauncherBubbleFrame from './launcher-bubble-frame'
+import mixpanel from 'ext/mixpanel'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { bubbleExtraDefault, defaultBubble } from './config'
 import { ChatBubbleBase, Container } from './components'
@@ -12,7 +13,7 @@ const LauncherBubbleBase = ({
   animation,
   setTextWidthRef,
   textWidth,
-  onToggleContent,
+  optimizelyToggleContent,
   ...props
 }) => (
   <LauncherBubbleFrame
@@ -23,7 +24,7 @@ const LauncherBubbleBase = ({
     textWidth={textWidth}
     {...props}
   >
-    <Container onClick={onToggleContent}>
+    <Container onClick={optimizelyToggleContent}>
       <ChatBubbleBase dangerouslySetInnerHTML={{ __html: emojify(bubble.message) }} ref={setTextWidthRef} />
     </Container>
   </LauncherBubbleFrame>
@@ -60,6 +61,12 @@ const LauncherBubble = compose(
       setTextWidth(0)
       setElevation(false)
       timeout.clear(bubbleTimeoutId)
+    },
+    optimizelyToggleContent: ({ onToggleContent, config, showingContent }) => () => {
+      if (config.optimizelyClientInstance && !showingContent) {
+        config.optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
+      }
+      onToggleContent()
     },
   }),
   withHandlers({
