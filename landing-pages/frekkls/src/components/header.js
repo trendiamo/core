@@ -32,6 +32,9 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => (
         <Logo alt={siteTitle} />
       </Link>
       <nav>
+        <Link activeClassName="active-header-link" className="header-link" to={`${locales[locale].path}/`}>
+          {layout.start}
+        </Link>
         <Link activeClassName="active-header-link" className="header-link" to={`${locales[locale].path}/features`}>
           {layout.features}
         </Link>
