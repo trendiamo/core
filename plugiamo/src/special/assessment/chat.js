@@ -21,9 +21,18 @@ const Chat = ({
   endNodeTags,
   progress,
   showingCtaButton,
+  goToPrevStep,
+  nothingSelected,
 }) => (
   <ScrollLock>
-    <Cover assessment currentStep={currentStep} minimized={coverMinimized} step={step} />
+    <Cover
+      assessment
+      currentStep={currentStep}
+      goToPrevStep={goToPrevStep}
+      minimized={coverMinimized}
+      showBackButton={currentStep.type !== 'store'}
+      step={step}
+    />
     <ProgressBar hide={currentStep.type === 'store'} progress={progress} />
     {currentStep.type === 'store' ? (
       <Store
@@ -44,6 +53,7 @@ const Chat = ({
         assessmentOptions={{ step, goToNextStep }}
         contentRef={contentRef}
         coverMinimized={coverMinimized}
+        nothingSelected={nothingSelected}
         onScroll={handleScroll}
         setContentRef={setContentRef}
         showingCtaButton={showingCtaButton}

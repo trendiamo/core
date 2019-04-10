@@ -5,6 +5,10 @@ const header = {
   animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
   backgroundColor: '#fff',
   textColor: '#111',
+  backButton: {
+    textColor: '#fff',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
 }
 
 export const tagSuggestions = {

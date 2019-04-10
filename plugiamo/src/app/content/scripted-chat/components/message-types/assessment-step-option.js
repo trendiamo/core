@@ -162,12 +162,18 @@ const Content = styled.div`
   `}
 `
 
-const TileDiv = ({ title, imageUrl, handleClick, isClicked, hideAll, highlight }) => (
+const TileDiv = ({ title, imageUrl, handleClick, isClicked, nothingSelected, hideAll, highlight }) => (
   <Container>
-    <Box highlight={highlight} imageUrl={imageUrl} isClicked={isClicked} listSelected={hideAll} onClick={handleClick}>
+    <Box
+      highlight={highlight}
+      imageUrl={imageUrl}
+      isClicked={isClicked && !nothingSelected}
+      listSelected={hideAll}
+      onClick={handleClick}
+    >
       <Content imageUrl={imageUrl}>
-        {imageUrl && <Background imageUrl={imageUrl} isClicked={isClicked} />}
-        <Title imageUrl={imageUrl} isClicked={isClicked}>
+        {imageUrl && <Background imageUrl={imageUrl} isClicked={isClicked && !nothingSelected} />}
+        <Title imageUrl={imageUrl} isClicked={isClicked && !nothingSelected}>
           {title}
         </Title>
       </Content>

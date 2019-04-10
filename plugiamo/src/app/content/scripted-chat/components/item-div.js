@@ -17,11 +17,17 @@ const Container = styled.div`
   }
 `
 
-const ItemDivTemplate = ({ logSection, onClick, hide, hideAll, onMessageClick }) => (
+const ItemDivTemplate = ({ logSection, onClick, hide, hideAll, onMessageClick, nothingSelected }) => (
   <Container>
     {logSection.logs.map((log, index) =>
       log.type === 'message' ? (
-        <ChatMessage hideAll={hideAll} index={index} log={log} onMessageClick={onMessageClick} />
+        <ChatMessage
+          hideAll={hideAll}
+          index={index}
+          log={log}
+          nothingSelected={nothingSelected}
+          onMessageClick={onMessageClick}
+        />
       ) : log.type === 'option' ? (
         <ChatOption animate={logSection.animate} chatOption={log} hide={hide} index={index} onClick={onClick} />
       ) : null

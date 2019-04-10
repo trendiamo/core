@@ -32,7 +32,7 @@ const MessageContainer = styled.div`
   ${({ clickable }) => !clickable && 'pointer-events: none;'}
 `
 
-const ChatMessageTemplate = ({ onMessageClick, data, type, show, hideAll, onClick, clickable }) => (
+const ChatMessageTemplate = ({ onMessageClick, data, type, show, hideAll, onClick, clickable, nothingSelected }) => (
   <MessageContainer clickable={clickable} show={type === 'assessmentStepOptions' ? show : !hideAll && show} type={type}>
     {type === 'text' ? (
       <TextMessage dangerouslySetInnerHTML={{ __html: emojify(snarkdown(data)) }} />
@@ -45,7 +45,12 @@ const ChatMessageTemplate = ({ onMessageClick, data, type, show, hideAll, onClic
     ) : type === 'imageCarousel' ? (
       <ImgCarouselMessage carouselType={type} imageCarousel={data} />
     ) : type === 'assessmentStepOptions' ? (
-      <AssessmentStepOptions hideAll={hideAll} onClick={onMessageClick} options={data} />
+      <AssessmentStepOptions
+        hideAll={hideAll}
+        nothingSelected={nothingSelected}
+        onClick={onMessageClick}
+        options={data}
+      />
     ) : type === 'assessmentProducts' ? (
       <AssessmentProducts data={data} onClick={onClick} />
     ) : null}
