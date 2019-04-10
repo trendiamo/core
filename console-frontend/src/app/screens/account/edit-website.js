@@ -14,6 +14,7 @@ const EditWebsite = ({
   addHostnameSelect,
   deleteHostname,
   isFormLoading,
+  isFormSubmitting,
   editHostnameValue,
   isFormPristine,
   form,
@@ -48,8 +49,9 @@ const EditWebsite = ({
     <div style={{ marginTop: '1rem' }}>
       <Button
         color="primaryGradient"
-        disabled={isFormLoading || isFormPristine}
+        disabled={isFormLoading || isFormPristine || isFormSubmitting}
         isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
         tooltipEnabled
         tooltipPlacement="right"
         tooltipText="No changes to save"

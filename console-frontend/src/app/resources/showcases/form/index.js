@@ -432,7 +432,6 @@ export default compose(
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
-      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return setIsFormSubmitting(false)
       pluginHistory.replace(pluginRoutes.showcase(result.id))
@@ -470,8 +469,11 @@ export default compose(
       Actions: (
         <Actions
           isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
           onFormSubmit={onFormSubmit}
           saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine}
+          tooltipEnabled
+          tooltipText="No changes to save"
         />
       ),
       backRoute,

@@ -365,7 +365,6 @@ export default compose(
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
-      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return setIsFormSubmitting(false)
       if (location.pathname !== routes.navigationEdit(result.id)) history.push(routes.navigationEdit(result.id))
@@ -388,7 +387,13 @@ export default compose(
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
   withAppBarContent(({ backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
-    Actions: <Actions onFormSubmit={onFormSubmit} saveDisabled={isFormSubmitting || isCropping || isFormLoading} />,
+    Actions: (
+      <Actions
+        isFormSubmitting={isFormSubmitting}
+        onFormSubmit={onFormSubmit}
+        saveDisabled={isFormSubmitting || isCropping || isFormLoading}
+      />
+    ),
     backRoute,
     title,
   }))

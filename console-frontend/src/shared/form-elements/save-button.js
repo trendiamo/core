@@ -1,10 +1,20 @@
-import AppBarButton from 'shared/app-bar-button'
+import Button from 'shared/button'
 import React from 'react'
 
-const Button = ({ message, ...props }) => (
-  <AppBarButton color="primary" {...props} type="submit" variant="contained">
+const SaveButton = ({ onClick, tooltipText, tooltipEnabled, isFormSubmitting, isFormPristine, message, disabled }) => (
+  <Button
+    color="primaryGradient"
+    disabled={disabled}
+    isFormPristine={isFormPristine}
+    isFormSubmitting={isFormSubmitting}
+    onClick={onClick}
+    tooltipEnabled={tooltipEnabled}
+    tooltipPlacement="bottom-start"
+    tooltipText={tooltipText}
+    type="submit"
+  >
     {message || 'Save'}
-  </AppBarButton>
+  </Button>
 )
 
-export default Button
+export default SaveButton

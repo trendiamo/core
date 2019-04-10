@@ -6,7 +6,12 @@ import { Button as MuiButton } from '@material-ui/core'
 import { withClassesConsumer } from 'ext/recompose/with-classes'
 
 const StyledMuiButton = styled(MuiButton)`
-  background-image: linear-gradient(132deg, #ff843e, #ff6c40 52%, #ff5642);
+  -moz-transition: none;
+  -webkit-transition: none;
+  -o-transition: color 0 ease-in;
+  transition: none;
+  background-image: ${({ disabled }) => (disabled ? 'none' : 'linear-gradient(132deg, #ff843e, #ff6c40 52%, #ff5642)')};
+  background-color: ${({ disabled }) => (disabled ? 'rgba(51, 51, 51, 0.25) !important' : 'transparent')};
   color: white;
   &:hover {
     background-image: none;

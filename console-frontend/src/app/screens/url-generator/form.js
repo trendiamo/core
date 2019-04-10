@@ -51,10 +51,6 @@ const AddOptionButton = ({ option, optionLabel, disabled, showOption }) => (
   </AddButton>
 )
 
-const CreateButton = styled(Button)`
-  width: 50%;
-`
-
 const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
   <FormControl style={{ display: 'flex' }}>
     <InputLabel shrink>{'Page URL'}</InputLabel>
@@ -137,9 +133,9 @@ const UrlGeneratorForm = ({
         <FormHelperText>{'Whether the plugin should auto-open when the generated url is clicked.'}</FormHelperText>
       </Option>
       <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-        <CreateButton color="primaryGradient" disabled={isDisabled} type="submit" variant="contained">
+        <Button color="primaryGradient" disabled={isDisabled} type="submit" variant="contained">
           {'Create Url'}
-        </CreateButton>
+        </Button>
       </div>
     </Form>
   </React.Fragment>

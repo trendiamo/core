@@ -147,7 +147,6 @@ export default compose(
       setIsFormSubmitting,
     }) => async event => {
       if (!formRef.current.reportValidity()) return
-      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return setIsFormSubmitting(false)
       setTimeout(() => {
@@ -165,13 +164,15 @@ export default compose(
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
   withAppBarContent(
-    ({ backRoute, title, create, isCropping, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit }) => ({
+    ({ backRoute, title, isCropping, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit }) => ({
       Actions: (
         <Actions
           isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
           onFormSubmit={onFormSubmit}
-          saveClassName={create && 'onboard-create-persona'}
           saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine}
+          tooltipEnabled
+          tooltipText="No changes to save"
         />
       ),
       backRoute,

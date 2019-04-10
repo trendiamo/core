@@ -151,7 +151,6 @@ export default compose(
   withHandlers({
     onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
-      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return setIsFormSubmitting(false)
       if (location.pathname !== routes.triggerEdit(result.id)) history.push(routes.triggerEdit(result.id))
@@ -172,8 +171,11 @@ export default compose(
     Actions: (
       <Actions
         isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
         onFormSubmit={onFormSubmit}
         saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+        tooltipEnabled
+        tooltipText="No changes to save"
       />
     ),
     backRoute,
