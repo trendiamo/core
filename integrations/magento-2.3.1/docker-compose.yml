@@ -34,7 +34,6 @@ services:
       default:
         aliases:
           - magento2.test
-          - www.magento2.test
 
   redis:
     container_name: redis

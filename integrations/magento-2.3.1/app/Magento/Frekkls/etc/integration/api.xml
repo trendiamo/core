@@ -1,0 +1,7 @@
+<integrations>
+    <integration name="frekklsIntegration">
+        <resources>
+            <!--  Grant permission to required resources-->
+        </resources>
+    </integration>
+</integrations>
