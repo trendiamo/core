@@ -121,7 +121,22 @@ const AppBaseTemplate = ({
   </AppBaseDiv>
 )
 
-export const AppBase = compose(withProps(({ data }) => getBubbleProps(data)))(AppBaseTemplate)
+export const AppBase = compose(
+  withProps(({ data }) => getBubbleProps(data)),
+  withProps(() => {
+    if (isSmall()) {
+      return { launcherConfig: smallLauncherConfig }
+    }
+    if (!production) {
+      return { launcherConfig: bigLauncherConfig }
+    }
+    const optimizelyClientInstance = optimizely.createInstance({ datafile, logger: { log: () => null } })
+    const variation = optimizelyClientInstance.activate('LauncherSize', mixpanel.get_distinct_id())
+    let launcherConfig = variation === 'Big' ? bigLauncherConfig : smallLauncherConfig
+    launcherConfig.optimizelyClientInstance = optimizelyClientInstance
+    return { launcherConfig }
+  })
+)(AppBaseTemplate)
 
 export default compose(
   branch(() => assessmentCart(), renderComponent(AssessmentCart)),
@@ -179,19 +194,6 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
   withState('showingLauncher', 'setShowingLauncher', true),
-  withProps(() => {
-    if (isSmall()) {
-      return { launcherConfig: smallLauncherConfig }
-    }
-    if (!production) {
-      return { launcherConfig: bigLauncherConfig }
-    }
-    const optimizelyClientInstance = optimizely.createInstance({ datafile, logger: { log: () => null } })
-    const variation = optimizelyClientInstance.activate('LauncherSize', mixpanel.get_distinct_id())
-    let launcherConfig = variation === 'Big' ? bigLauncherConfig : smallLauncherConfig
-    launcherConfig.optimizelyClientInstance = optimizelyClientInstance
-    return { launcherConfig }
-  }),
   lifecycle({
     componentDidMount() {
       const { data, pathFromNav, setPersona, setShowingContent } = this.props
