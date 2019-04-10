@@ -7,6 +7,7 @@ import pierreCardinConfig from './pierre-cardin'
 import pionierConfig from './pionier'
 import rihappyConfig from './rihappy'
 import shopinfoConfig from './shopinfo'
+import villaDonatelloConfig from './villadonatello'
 
 const defaultConfig = {
   position: 'right',
@@ -34,6 +35,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'www.shoptimao.com.br') return corinthiansConfig
   if (location.hostname === 'www.eotica.com.br') return eoticaConfig
   if (location.hostname === 'www.rihappy.com.br') return rihappyConfig
+  if (location.hostname === 'villadonatello.com') return villaDonatelloConfig
   return {}
 }
 
