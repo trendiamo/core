@@ -25,4 +25,4 @@ docker-compose up -d
 ## Magento store:
 
 Magento store at: http://magento2.test
-Magent store admin at: http://magento2.test/admin
+Magento store admin at: http://magento2.test/admin
