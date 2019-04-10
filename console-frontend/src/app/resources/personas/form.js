@@ -10,7 +10,7 @@ import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid } from '@material-ui/core'
-import { uploadImage } from 'shared/picture-uploader'
+import { uploadPicture } from 'shared/picture-uploader'
 import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
@@ -115,7 +115,7 @@ export default compose(
     },
     saveFormObject: ({ saveFormObject, setProgress, profilePic, setProfilePic }) => async form => {
       if (profilePic) {
-        const profilePicUrl = await uploadImage({
+        const profilePicUrl = await uploadPicture({
           blob: profilePic,
           setProgress,
           type: 'personas-profile-pics',

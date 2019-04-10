@@ -25,7 +25,7 @@ import { Grid } from '@material-ui/core'
 import { isEqual, omit } from 'lodash'
 import { history as pluginHistory, routes as pluginRoutes, Showcase as ShowcaseBase } from 'plugin-base'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
-import { uploadImage } from 'shared/picture-uploader'
+import { uploadPicture } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -304,9 +304,9 @@ export default compose(
   withState('isCropping', 'setIsCropping', false),
   withState('productPicksPictures', 'setProductPicksPictures', []),
   withHandlers({
-    uploadSubImage: () => async ({ blob, setProgress, subform }) => {
+    uploadSubPicture: () => async ({ blob, setProgress, subform }) => {
       if (blob) {
-        const productPickPhotoUrl = await uploadImage({
+        const productPickPhotoUrl = await uploadPicture({
           blob,
           setProgress,
           type: 'products-pics',
@@ -319,10 +319,10 @@ export default compose(
     },
   }),
   withHandlers({
-    uploadSubImages: ({ productPicksPictures, uploadSubImage }) => form => {
+    uploadSubPictures: ({ productPicksPictures, uploadSubPicture }) => form => {
       return productPicksPictures.map(async ({ blob, productPickIndex, setProgress, spotlightIndex }) => {
         const { productPicksAttributes } = form.spotlightsAttributes[spotlightIndex]
-        productPicksAttributes[productPickIndex] = await uploadSubImage({
+        productPicksAttributes[productPickIndex] = await uploadSubPicture({
           subform: productPicksAttributes[productPickIndex],
           blob,
           setProgress,
@@ -366,8 +366,8 @@ export default compose(
         })),
       }
     },
-    saveFormObject: ({ saveFormObject, uploadSubImages, setProductPicksPictures }) => async form => {
-      await Promise.all(uploadSubImages(form))
+    saveFormObject: ({ saveFormObject, uploadSubPictures, setProductPicksPictures }) => async form => {
+      await Promise.all(uploadSubPictures(form))
       setProductPicksPictures([])
       return saveFormObject(form)
     },

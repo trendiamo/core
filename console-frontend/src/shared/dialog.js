@@ -13,13 +13,21 @@ const StyledIconButton = styled(MuiIconButton)`
   top: 4px;
 `
 
-const Dialog = ({ open, handleClose, dialogActions, title, content, ...props }) => (
-  <MuiDialog aria-labelledby="form-dialog-title" onClose={handleClose} open={open} {...props}>
+const DialogSubtitle = styled.span`
+  font-size: 14px;
+  padding-left: 24px;
+  padding-bottom: 20px;
+  margin-top: -20px;
+`
+
+const Dialog = ({ open, handleClose, onKeyUp, dialogActions, title, subtitle, content, ...props }) => (
+  <MuiDialog aria-labelledby="form-dialog-title" onClose={handleClose} onKeyUp={onKeyUp} open={open} {...props}>
     <StyledIconButton onClick={handleClose}>
       <CloseIcon />
     </StyledIconButton>
     <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-    <DialogContent>
+    {subtitle && <DialogSubtitle>{subtitle}</DialogSubtitle>}
+    <DialogContent style={{ paddingBottom: '0' }}>
       {typeof content == 'string' ? <DialogContentText>{content}</DialogContentText> : content}
     </DialogContent>
     <DialogActions style={{ margin: '12px' }}>{dialogActions}</DialogActions>

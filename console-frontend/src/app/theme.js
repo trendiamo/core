@@ -76,6 +76,10 @@ const customButtons = {
       color: '#ff6641',
     },
   },
+  secondaryText: {
+    color: 'rgba(0, 0, 0, 0.6)',
+    boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.1)',
+  },
 }
 
 const customPalette = {
