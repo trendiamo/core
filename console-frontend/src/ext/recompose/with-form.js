@@ -11,8 +11,16 @@ const withForm = initialForm => BaseComponent =>
       isFormPristine: isEqual(form, initialForm),
     })),
     withHandlers({
-      onFormSubmit: ({ formObjectTransformer, setForm, form, saveFormObject, setInitialForm }) => async event => {
+      onFormSubmit: ({
+        formObjectTransformer,
+        setForm,
+        form,
+        saveFormObject,
+        setInitialForm,
+        setIsFormSubmitting,
+      }) => async event => {
         event.preventDefault()
+        setIsFormSubmitting(true)
         const json = await saveFormObject(form)
         if (json.error || json.errors) return json
         const formObject = formObjectTransformer(json)
@@ -40,6 +48,10 @@ const withForm = initialForm => BaseComponent =>
         setForm(formObject)
         setIsFormLoading(false)
         if (afterFormMount) afterFormMount(formObject)
+      },
+      componentDidUpdate(prevProps) {
+        const { setIsFormSubmitting, initialForm } = this.props
+        prevProps.initialForm !== initialForm && setIsFormSubmitting(false)
       },
     })
   )(BaseComponent)

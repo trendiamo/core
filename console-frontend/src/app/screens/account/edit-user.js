@@ -20,6 +20,7 @@ const EditUser = ({
   setProfilePic,
   setProfilePicUrl,
   progress,
+  isFormSubmitting,
   setIsCropping,
   isFormLoading,
   form,
@@ -70,8 +71,9 @@ const EditUser = ({
     <div style={{ marginTop: '1rem' }}>
       <Button
         color="primaryGradient"
-        disabled={isFormLoading || isCropping || isFormPristine}
+        disabled={isFormLoading || isCropping || isFormPristine || isFormSubmitting}
         isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
         tooltipEnabled
         tooltipPlacement="right"
         tooltipText="No changes to save"

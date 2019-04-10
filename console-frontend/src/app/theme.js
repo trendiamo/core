@@ -58,7 +58,7 @@ const customButtons = {
   },
   disabled: {
     backgroundImage: 'none',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(51, 51, 51, 0.25)',
     color: '#fff',
   },
   primaryGradient: {

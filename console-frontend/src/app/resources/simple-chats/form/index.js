@@ -216,7 +216,6 @@ export default compose(
     },
     onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
-      setIsFormSubmitting(true)
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return setIsFormSubmitting(false)
       if (location.pathname !== routes.simpleChatEdit(result.id)) history.push(routes.simpleChatEdit(result.id))
@@ -233,8 +232,11 @@ export default compose(
     Actions: (
       <Actions
         isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
         onFormSubmit={onFormSubmit}
         saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+        tooltipEnabled
+        tooltipText="No changes to save"
       />
     ),
     backRoute,
