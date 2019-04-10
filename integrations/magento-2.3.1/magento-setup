@@ -1,0 +1,28 @@
+#!/bin/bash
+
+docker exec -i -t apache-php bash -c "curl -L http://pubfiles.nexcess.net/magento/ce-packages/magento2-2.3.1.tar.gz | tar xzf - -o -C .; \
+find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} +; \
+
+find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} +; \
+
+chmod u+x bin/magento; \
+
+bin/magento setup:install \
+--base-url=http://magento2.test \
+--db-host=db \
+--db-name=test \
+--db-user=root \
+--db-password=test \
+--backend-frontname=admin \
+--admin-firstname=admin \
+--admin-lastname=admin \
+--admin-email=admin@admin.com \
+--admin-user=admin \
+--admin-password=admin123 \
+--use-rewrites=1; \
+
+bin/magento deploy:mode:set developer; \
+
+bin/magento cache:flush; \
+
+chown -R inchoo ."

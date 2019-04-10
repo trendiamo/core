@@ -1,0 +1,53 @@
+version: "3.6"
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+
+  apache-php:
+    image: udovicic/echo:apache-php7.2
+    container_name: apache-php
+    ports:
+      - "80:80"
+    expose:
+      - "9000"
+    volumes:
+      - ./docker/xdebug.ini:/etc/php/7.2/mods-available/xdebug.ini
+      - ./docker/php.ini:/etc/php/7.2/cli/php.ini
+      - ./app:/var/www/html/app/code/
+    environment:
+      - TERM=xterm-256color
+      - APACHE_RUN_USER=1000
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      default:
+        aliases:
+          - magento2.test
+          - www.magento2.test
+
+  redis:
+    container_name: redis
+    image: redis:latest
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8090:80"
+    links:
+      - db
+    environment:
+      - MYSQL_DB_HOST= db
+      - MYSQL_USERNAME= test
+      - MYSQL_ROOT_PASSWORD= test
