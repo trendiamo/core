@@ -22,6 +22,8 @@ const Base = ({
   step,
   touch,
   coverMinimized,
+  goToPrevStep,
+  nothingSelected,
 }) => (
   <Container animateOpacity={animateOpacity} contentRef={contentRef}>
     <Chat
@@ -30,7 +32,9 @@ const Base = ({
       currentStep={currentStep}
       endNodeTags={endNodeTags}
       goToNextStep={goToNextStep}
+      goToPrevStep={goToPrevStep}
       handleScroll={handleScroll}
+      nothingSelected={nothingSelected}
       progress={progress}
       setContentRef={setContentRef}
       setShowingContent={setShowingContent}
@@ -47,6 +51,7 @@ export default compose(
   withState('animateOpacity', 'setAnimateOpacity', ({ animateOpacity }) => animateOpacity),
   withProps({ module: data.assessment }),
   withState('currentStepKey', 'setCurrentStepKey', 'root'),
+  withState('nothingSelected', 'setNothingSelected', false),
   withProps(({ module, currentStepKey }) => ({
     step: module && module.steps[currentStepKey],
     steps: module && module.steps,
@@ -154,6 +159,35 @@ export default compose(
         tags: [nextStepKey],
       })
       setCurrentStepKey(nextStepKey)
+    },
+    goToPrevStep: ({
+      tags,
+      setCurrentStepKey,
+      setTags,
+      progress,
+      setShowAssessmentContent,
+      setProgress,
+      setShowingCtaButton,
+      setAnimateOpacity,
+      setNothingSelected,
+      setEndNodeTags,
+    }) => () => {
+      const tagsLength = tags.length
+      if (tagsLength === 0) {
+        setAnimateOpacity(true)
+        return setTimeout(() => setShowAssessmentContent(false), 300)
+      }
+      const key = tagsLength > 1 ? tags[tagsLength - 1] : 'root'
+      let newTags = [...tags]
+      newTags.pop()
+      const newStepKey = newTags.join('/')
+      setCurrentStepKey(key === 'root' ? key : newStepKey)
+      setTags(newTags)
+      setProgress(key === 'root' ? 0 : progress - 33)
+      setShowingCtaButton(false)
+      setEndNodeTags([])
+      setNothingSelected(true)
+      setTimeout(() => setNothingSelected(false), 800)
     },
   }),
   lifecycle({

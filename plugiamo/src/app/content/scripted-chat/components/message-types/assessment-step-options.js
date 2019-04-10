@@ -11,7 +11,7 @@ const TilesWrapperDiv = styled.div`
   margin-right: -5px;
 `
 
-const AssessmentStepOptions = ({ onClick, options, hideAll }) => (
+const AssessmentStepOptions = ({ onClick, options, hideAll, nothingSelected }) => (
   <TilesWrapperDiv>
     {options.map(option => (
       <Tile
@@ -19,6 +19,7 @@ const AssessmentStepOptions = ({ onClick, options, hideAll }) => (
         highlight
         imageUrl={imgixUrl(option.picUrl, { fit: 'crop', w: 156, h: 120 })}
         key={`option-${option.title}`}
+        nothingSelected={nothingSelected}
         onClick={() => onClick(option)}
         option={option}
         title={option.title}

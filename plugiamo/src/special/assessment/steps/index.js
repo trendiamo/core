@@ -19,6 +19,7 @@ const ChatLogUiTemplate = ({
   assessmentOptions,
   hideAll,
   setHideAll,
+  nothingSelected,
 }) => (
   <Chat onScroll={onScroll} ref={setContentRef} touch={touch}>
     <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
@@ -33,6 +34,7 @@ const ChatLogUiTemplate = ({
           hideAll={hideAll}
           key={index}
           logSection={logSection}
+          nothingSelected={nothingSelected}
           setHideAll={setHideAll}
         />
       ))}
