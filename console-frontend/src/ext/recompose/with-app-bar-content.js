@@ -6,7 +6,7 @@ import { withStoreConsumer } from './with-store'
 
 const setPageTitle = ({ title }) => {
   if (!title) return
-  document.title = `${title} - Trendiamo Console`
+  document.title = `${title} - Frekkls Admin`
 }
 
 const Sink = createSink(({ appBarContent, store, setStore, ...props }) => {
