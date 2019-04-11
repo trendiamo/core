@@ -72,6 +72,7 @@ const TriggerForm = ({
           disabled={isFormLoading}
           fullWidth
           initialSelectedItem={form.flowId && { value: form.flowId, label: form.flowLabel }}
+          initialValueFormatMismatch
           label="Flow"
           onChange={selectFlow}
           options={{ suggestionItem: 'withModuleIcon' }}
