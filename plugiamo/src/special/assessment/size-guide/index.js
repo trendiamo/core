@@ -1,11 +1,12 @@
 import Base from './base'
+import blacklistTags from './blacklist-tags'
 import data from 'special/assessment/data'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
-import { fetchProducts, recommendedProducts } from 'special/assessment/utils'
+import { fetchProducts } from 'special/assessment/utils'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
 import { timeout } from 'plugin-base'
@@ -24,8 +25,8 @@ const Plugin = ({
   showingContent,
   stepIndex,
   depth,
-  tags,
   showingCtaButton,
+  pluginState,
   products,
   productsData,
 }) => (
@@ -44,13 +45,12 @@ const Plugin = ({
         step={step}
         stepIndex={stepIndex}
         steps={steps}
-        tags={tags}
       />
     }
     data={module}
     isUnmounting={isUnmounting}
     Launcher={showingLauncher && Launcher}
-    launcherPulsating
+    launcherPulsating={pluginState !== 'closed'}
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
     showingContent={showingContent}
@@ -60,33 +60,30 @@ const Plugin = ({
 
 export default compose(
   withState('pluginState', 'setPluginState', 'default'),
-  withState('productsData', 'setProductsData', []),
-  withState('products', 'setProducts', []),
-  withProps({ module: data.cart }),
+  withProps({ module: data.sizeGuide }),
   branch(({ module }) => !module, renderNothing),
-  branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
+  withProps(({ module, pluginState }) => {
+    module.launcher = pluginState === 'closed' ? module.closedLauncher : module.launcher
+  }),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
   withState('showingLauncher', 'setShowingLauncher', true),
+  withState('product', 'setProduct', null),
   lifecycle({
     componentDidMount() {
-      const { module, setShowingContent, setProductsData, setProducts } = this.props
-
+      const { setProduct } = this.props
       fetchProducts(results => {
-        const products = recommendedProducts(results)
-        if (products.assessmentProducts.length === 0) return
-        setProductsData(results)
-        setProducts(products)
+        const pathArray = window.location.pathname.split('/')
+        const id = pathArray[pathArray.length - 1]
+        const products = results.find(item => item.hostname === 'www.pierre-cardin.de').products
+        const product = products.find(item => item.id === id && !blacklistTags.includes(item.tag))
+        setProduct(product)
         mixpanel.track('Loaded Plugin', {
-          autoOpen,
           flowType: module.flowType,
           hash: location.hash,
           hostname: location.hostname,
         })
       })
-
-      const autoOpen = isSmall() ? false : module.flowType === 'ht-chat'
-      if (autoOpen) setShowingContent(true)
     },
     componentDidUpdate(prevProps) {
       const { showingContent } = this.props
@@ -101,9 +98,21 @@ export default compose(
       }
     },
   }),
+  branch(({ product }) => !product, renderNothing),
   withHandlers({
-    onToggleContent: ({ module, setIsUnmounting, setShowingContent, showingContent }) => () => {
+    onToggleContent: ({
+      module,
+      setPluginState,
+      pluginState,
+      setIsUnmounting,
+      setShowingContent,
+      showingContent,
+    }) => () => {
       if (module.flowType === 'outro') return
+      if (pluginState === 'closed' && !showingContent) return
+      if (pluginState !== 'closed') {
+        setPluginState('closed')
+      }
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
 
@@ -121,7 +130,6 @@ export default compose(
       return setShowingContent(!showingContent)
     },
   }),
-  branch(({ products }) => products.length === 0, renderNothing),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()

@@ -56,9 +56,15 @@ const ProductImage = styled(CardImg)`
   height: 180px;
 `
 
+const Link = styled.a`
+  text-decoration: none;
+`
+
 const ProductMessage = compose(
   withHandlers({
-    onClick: ({ product, onClick }) => () => {
+    onClick: ({ product, onClick }) => event => {
+      if (product.newTab) return
+      event.preventDefault()
       if (onClick) return onClick()
       mixpanel.track('Clicked Product', { hostname: location.hostname, url: product.url }, () => {
         markGoFwd()
@@ -67,19 +73,21 @@ const ProductMessage = compose(
     },
   })
 )(({ product, styleConfig = { card: { minWidth: 260 } }, onClick }) => (
-  <ProductCard onClick={onClick} style={styleConfig.card}>
-    <ProductImage
-      src={imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: styleConfig.image ? styleConfig.image.height : 180 })}
-      style={styleConfig.image}
-    />
-    <CardContent style={styleConfig.details}>
-      <TitleAndPrice>
-        <Title style={styleConfig.detailsText}>{product.title}</Title>
-        <Price style={styleConfig.detailsPrice}>{product.displayPrice}</Price>
-      </TitleAndPrice>
-    </CardContent>
-    {product.cardCta && <CtaTextContainer>{product.cardCta}</CtaTextContainer>}
-  </ProductCard>
+  <Link href={product.url} onClick={onClick} rel="noopener noreferrer" target="_blank">
+    <ProductCard style={styleConfig.card}>
+      <ProductImage
+        src={imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: styleConfig.image ? styleConfig.image.height : 180 })}
+        style={styleConfig.image}
+      />
+      <CardContent style={styleConfig.details}>
+        <TitleAndPrice>
+          <Title style={styleConfig.detailsText}>{product.title}</Title>
+          <Price style={styleConfig.detailsPrice}>{product.displayPrice}</Price>
+        </TitleAndPrice>
+      </CardContent>
+      {product.cardCta && <CtaTextContainer>{product.cardCta}</CtaTextContainer>}
+    </ProductCard>
+  </Link>
 ))
 
 export default ProductMessage
