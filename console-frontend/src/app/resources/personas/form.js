@@ -118,7 +118,6 @@ export default compose(
         const profilePicUrl = await uploadPicture({
           blob: profilePic,
           setProgress,
-          type: 'personas-profile-pics',
         })
         setProfilePic(null)
         return saveFormObject({ ...form, profilePicUrl })

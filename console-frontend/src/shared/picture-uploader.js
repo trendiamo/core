@@ -269,12 +269,12 @@ const resultingCrop = (picture, pictureElement, pixelCrop) => {
   return new Promise(resolve => canvas.toBlob(resolve, picture.type))
 }
 
-const uploadPicture = async ({ blob, setProgress, type }) => {
+const uploadPicture = async ({ blob, setProgress }) => {
   try {
     const { fileUrl } = await S3Upload({
       contentDisposition: 'auto',
       files: [blob],
-      getSignedUrl: apiGetSignedUrlFactory(type),
+      getSignedUrl: apiGetSignedUrlFactory(),
       onProgress: (progress, message) => setProgress({ message, progress }),
       preprocess: (file, next) => next(file),
       uploadRequestHeaders: { 'x-amz-acl': 'public-read' },
