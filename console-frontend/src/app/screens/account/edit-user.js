@@ -2,7 +2,7 @@ import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import Link from 'shared/link'
-import PictureUploader, { ProgressBar, uploadImage } from 'shared/picture-uploader'
+import PictureUploader, { ProgressBar, uploadPicture } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
 import withForm from 'ext/recompose/with-form'
@@ -113,7 +113,7 @@ export default compose(
       // upload the image
       let data
       if (profilePic) {
-        const profilePicUrl = await uploadImage({
+        const profilePicUrl = await uploadPicture({
           blob: profilePic,
           setProgress,
           type: 'users-profile-pics',
