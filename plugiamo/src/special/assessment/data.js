@@ -217,6 +217,11 @@ const data = {
                     'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/_0031_3_jeans_slim_fit.png.jpg',
                   title: 'Slim Fit',
                 },
+                {
+                  picUrl:
+                    'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/3_jeans_comfort_fit.jpg',
+                  title: 'Comfort Fit',
+                },
               ],
             },
             {

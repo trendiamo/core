@@ -1,6 +1,6 @@
 const data = [
   'Casual/Jeans und Hosen/Regular Fit',
-  'Casual/Jeans und Hosen/Modern Fit',
+  'Casual/Jeans und Hosen/Comfort Fit',
   'Casual/Jeans und Hosen/Tapered Fit',
   'Casual/Jeans und Hosen/Slim Fit',
 
