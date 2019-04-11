@@ -133,7 +133,7 @@ const UrlGeneratorForm = ({
         <FormHelperText>{'Whether the plugin should auto-open when the generated url is clicked.'}</FormHelperText>
       </Option>
       <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-        <Button color="primaryGradient" disabled={isDisabled} type="submit" variant="contained">
+        <Button centered color="primaryGradient" disabled={isDisabled} type="submit" variant="contained" width="160px">
           {'Create Url'}
         </Button>
       </div>

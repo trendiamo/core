@@ -18,7 +18,7 @@ const WelcomePage = ({ getStarted, skipOnboarding }) => (
       <Image alt="" src="/img/background/img-welcome.png" />
       <Header variant="h4">{title}</Header>
       <Description variant="body1">{description}</Description>
-      <StyledButton color="primary" onClick={getStarted} variant="contained">
+      <StyledButton centered color="primary" onClick={getStarted} variant="contained">
         {'Get Started'}
       </StyledButton>
       <OutlinedButton onClick={skipOnboarding} variant="text">

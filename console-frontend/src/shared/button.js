@@ -6,6 +6,11 @@ import { CircularProgress } from '@material-ui/core'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Button as MuiButton, Tooltip } from '@material-ui/core'
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: ${({ centered }) => (centered ? 'center' : '')};
+`
+
 const ButtonContents = styled.div`
   display: flex;
   flex-direction: row;
@@ -19,6 +24,10 @@ const CircularProgressContainer = styled.div`
   z-index: 1;
 `
 
+const StyledMuiButton = styled(MuiButton)`
+  width: ${({ width }) => (width ? width : 'auto')};
+`
+
 const StyledCircularProgress = () => (
   <CircularProgressContainer>
     <CircularProgress size={20} />
@@ -29,6 +38,8 @@ const StyledCircularProgress = () => (
 const EventFirer = styled.div`
   max-width: fit-content;
 `
+
+const ConditionalWrap = ({ disabled, wrap, children }) => (disabled ? wrap(children) : children)
 
 // Customized button (since Mui accepts a very small range of params in the original Button component)
 const Button = compose(
@@ -63,38 +74,54 @@ const Button = compose(
     isFormPristine,
     onClick,
     isFormSubmitting,
+    width,
+    centered,
     children,
     ...props
   }) => (
-    <Tooltip
-      open={tooltipEnabled && tooltipOpen && isFormPristine}
-      placement={tooltipPlacement}
-      title={tooltipText || ''}
-    >
-      <EventFirer onMouseEnter={onButtonHoverStart} onMouseLeave={onButtonHoverEnd}>
-        <MuiButton
-          {...omit(props, [
-            'color',
-            'setStyleObject',
-            'tooltipEnabled',
-            'tooltipOpen',
-            'setTooltipOpen',
-            'isFormPristine',
-            'tooltipText',
-            'tooltipPlacement',
-            'isFormSubmitting',
-          ])}
+    <ButtonContainer centered={centered}>
+      <Tooltip
+        open={tooltipEnabled && tooltipOpen && isFormPristine}
+        placement={tooltipPlacement}
+        title={tooltipText || ''}
+      >
+        <ConditionalWrap
           disabled={disabled}
-          onClick={onClick}
-          style={disabled ? theme.customButtons['disabled'] : styleObject}
+          wrap={children => (
+            <EventFirer onMouseEnter={onButtonHoverStart} onMouseLeave={onButtonHoverEnd}>
+              {children}
+            </EventFirer>
+          )}
         >
-          <ButtonContents>
-            {isFormSubmitting && <StyledCircularProgress />}
-            {children}
-          </ButtonContents>
-        </MuiButton>
-      </EventFirer>
-    </Tooltip>
+          <StyledMuiButton
+            {...omit(props, [
+              'color',
+              'setStyleObject',
+              'tooltipEnabled',
+              'tooltipOpen',
+              'setTooltipOpen',
+              'isFormPristine',
+              'tooltipText',
+              'tooltipPlacement',
+              'isFormSubmitting',
+              'width',
+              'centered',
+            ])}
+            disabled={disabled}
+            onClick={onClick}
+            onMouseEnter={onButtonHoverStart}
+            onMouseLeave={onButtonHoverEnd}
+            style={disabled ? theme.customButtons['disabled'] : styleObject}
+            width={width}
+          >
+            <ButtonContents>
+              {isFormSubmitting && <StyledCircularProgress />}
+              {children}
+            </ButtonContents>
+          </StyledMuiButton>
+        </ConditionalWrap>
+      </Tooltip>
+    </ButtonContainer>
   )
 )
 
