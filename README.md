@@ -6,5 +6,6 @@ This is the monorepo holding the codebase for Trendiamo.
 - **landing-pages** contains the trendiamo.com, frekkls.com, demo.frekkls.com and other webpages.
 - **plugiamo** is a preact project which is an installable plugin on third-party websites.
 - **plugin-base** is a (p)react project which contains common code between plugiamo and the plugin preview used in **console-frontend**.
+- **slack-bot** is a slack-ruby-bot project which contains the source code for Frekky.
 
 More info in the `README.md` of each project.

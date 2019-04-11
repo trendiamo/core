@@ -1,6 +1,8 @@
 #!/bin/sh
 
-cp .env .env~
+set -e
+
+[ -f .env ] && cp .env .env~
 
 cat >.env <<EOL
 NODE_PATH=src/
@@ -11,7 +13,7 @@ EOL
 
 yarn build
 
-mv .env~ .env
+[ -f .env~ ] && mv .env~ .env
 
 cat >build/.htaccess <<EOL
 RewriteEngine On

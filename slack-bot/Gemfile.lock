@@ -69,6 +69,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   async-websocket
   dotenv
   fuzzy_match
