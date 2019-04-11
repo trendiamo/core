@@ -27,11 +27,6 @@
   height: 64px;
   line-height: 64px;
 }
-@media (min-width: 900px) {
-  .hs-form .hs-input {
-    font-size: 18px;
-  }
-}
 
 .hs-form .hs-input::placeholder {
   color: #474747;
@@ -42,22 +37,26 @@
 }
 
 .email-input .hs-form {
-  display: flex;
   margin: 0 auto;
   font-size: 24px;
   font-weight: 500;
-  max-width: 470px;
+  max-width: 600px;
   height: 64px;
   border-radius: 12px;
   box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.05), 0 11px 14px 0 rgba(255, 91, 46, 0.23);
 }
 
+.email-input .actions {
+  width: 100%;
+}
+
 .email-input .hs-button {
+  flex: 1;
   appearance: none;
-  font-size: 18px;
+  font-size: 16px;
   color: #fff;
   border: 0;
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 0 12px 12px;
   background-image: linear-gradient(137deg, #ff843e, #ff683f 100%);
   padding-left: 18px;
   padding-right: 18px;
@@ -67,7 +66,31 @@
   margin: 0;
   height: 64px;
 }
+
+.email-input .hs-input {
+  border-radius: 12px 12px 0 0;
+}
+
+@media (min-width: 480px) {
+  .email-input .hs-form {
+    display: flex;
+  }
+  .email-input .hs-input {
+    border-radius: 12px 0 0 12px;
+  }
+  .email-input .actions {
+    width: auto;
+  }
+  .email-input .hs-button {
+    border-radius: 0 12px 12px 0;
+  }
+}
+
 @media (min-width: 900px) {
+  .hs-form .hs-input {
+    font-size: 18px;
+  }
+
   .email-input .hs-button {
     font-size: 24px;
     font-weight: 500;
@@ -88,10 +111,6 @@
 
 .email-input .submitted-message {
   line-height: 64px;
-}
-
-.email-input .hs-input {
-  border-radius: 12px 0 0 12px;
 }
 
 .request-demo-form {
