@@ -3,15 +3,19 @@ def extract_path(url)
 end
 
 def generate_new_url(source_path)
-  directories_array = source_path.split("/", 4)
-  directories_array[2] = SecureRandom.hex(4)
-  "https://#{ENV['DO_BUCKET']}.#{ENV['DO_SPACE_ENDPOINT']}/#{directories_array.join('/')}"
+  if source_path.split("/", 3)[1].starts_with?("account")
+    "uploads/account-#{@cloned_account.id}/#{SecureRandom.hex(4)}-#{source_path.split('/', 3)[2][9..-1]}"
+  else
+    directories_array = source_path.split("/", 4)
+    directories_array[2] = SecureRandom.hex(4)
+    directories_array.join("/")
+  end
 end
 
 def duplicate_pic_url(picture_url)
   source_path = extract_path(picture_url)
   new_url = generate_new_url(source_path)
-  destination_path = extract_path(new_url)
+  destination_path = new_url
   bucket = Aws::S3::Bucket.new(ENV["DO_BUCKET"])
   bucket.object(destination_path).copy_from(bucket: ENV["DO_BUCKET"], key: source_path, acl: "public-read")
   new_url

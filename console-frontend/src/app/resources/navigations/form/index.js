@@ -273,7 +273,6 @@ export default compose(
         const picUrl = await uploadPicture({
           blob,
           setProgress,
-          type: 'navigation-items-pics',
         })
         return {
           ...subform,

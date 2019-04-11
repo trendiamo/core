@@ -309,7 +309,6 @@ export default compose(
         const productPickPhotoUrl = await uploadPicture({
           blob,
           setProgress,
-          type: 'products-pics',
         })
         return {
           ...subform,

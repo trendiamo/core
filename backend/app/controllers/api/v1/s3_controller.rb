@@ -1,7 +1,8 @@
 module Api
   module V1
-    class S3Controller < RestController
+    class S3Controller < RestAdminController
       before_action :authenticate_user!
+      before_action :ensure_tenant
 
       def sign
         render json: {
@@ -23,15 +24,7 @@ module Api
       end
 
       def file_key
-        @file_key ||= "uploads/#{folder}/#{SecureRandom.hex(4)}/#{params[:object_name]}"
-      end
-
-      def folder
-        if %w[personas-profile-pics users-profile-pics products-pics navigation-items-pics].include?(params[:type])
-          params[:type]
-        else
-          "unknown"
-        end
+        @file_key ||= "uploads/account-#{current_tenant.id}/#{SecureRandom.hex(4)}-#{params[:object_name]}"
       end
 
       def s3_presigner

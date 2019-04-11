@@ -78,12 +78,11 @@ export const apiSignOut = async () => {
   console.error('Error on Logout!')
 }
 
-export const apiGetSignedUrlFactory = type => (file, callback) =>
+export const apiGetSignedUrlFactory = () => (file, callback) =>
   authFetch(
     `${S3_URL}?${stringify({
       content_type: file.type,
       object_name: file.name,
-      type,
     })}`,
     {
       redirect: 'error',
