@@ -197,19 +197,28 @@ export default compose(
     handleOuterClick: ({ setMenuIsOpen }) => () => {
       setMenuIsOpen(false)
     },
-    onInputValueChange: ({ debouncedAutocomplete, setMenuIsOpen, setSuggestions }) => async (
-      searchQuery,
-      stateAndHelpers
-    ) => {
+    onInputValueChange: ({
+      debouncedAutocomplete,
+      setMenuIsOpen,
+      setSuggestions,
+      prevSelected,
+      initialValueFormatMismatch,
+    }) => async (searchQuery, stateAndHelpers) => {
       if (searchQuery.length <= 2) return setMenuIsOpen(false)
       const { json } = await debouncedAutocomplete(searchQuery)
       const options = json.map(option => {
         return { value: option, label: option.name }
       })
+      if (
+        initialValueFormatMismatch ||
+        !prevSelected ||
+        prevSelected.value.name.toLowerCase() !== searchQuery.toLowerCase()
+      ) {
+        setSuggestions(options)
+      }
       if (stateAndHelpers.type === '__autocomplete_change_input__') {
         setMenuIsOpen(true)
       }
-      setSuggestions(options)
     },
   }),
   lifecycle({
