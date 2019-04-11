@@ -133,17 +133,24 @@ export default compose(
       }
       onToggleContent()
     },
+    checkConfig: ({ setConfig, config, originalConfig, showingContent }) => () => {
+      const closedConfig = {
+        ...config,
+        size: config.smallSize,
+        frameSize: config.smallFrameSize,
+      }
+      setConfig(showingContent ? closedConfig : originalConfig)
+    },
   }),
   lifecycle({
+    componentDidMount() {
+      const { checkConfig } = this.props
+      checkConfig()
+    },
     componentDidUpdate(prevProps) {
-      const { showingContent, setConfig, config, originalConfig } = this.props
+      const { showingContent, checkConfig } = this.props
       if (prevProps.showingContent !== showingContent) {
-        const closedConfig = {
-          ...config,
-          size: config.smallSize,
-          frameSize: config.smallFrameSize,
-        }
-        setConfig(showingContent ? closedConfig : originalConfig)
+        checkConfig()
       }
     },
   })
