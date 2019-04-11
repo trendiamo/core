@@ -1,5 +1,6 @@
 import animateOnMount from 'shared/animate-on-mount'
 import AssessmentCart from 'special/assessment/cart'
+import AssessmentSizeGuide from 'special/assessment/size-guide'
 import Content from './content'
 import datafile from 'optimizely.json'
 import getFrekklsConfig from 'frekkls-config'
@@ -11,7 +12,7 @@ import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { assessmentCart } from 'special/assessment/utils'
+import { assessmentCart, assessmentHack } from 'special/assessment/utils'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, production, smallLauncherConfig } from 'config'
 import {
   branch,
@@ -187,6 +188,7 @@ export default compose(
     }
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
+  branch(({ data }) => !data.flow && assessmentHack(), renderComponent(AssessmentSizeGuide)),
   branch(({ data }) => !data.flow, infoMsgHof(`no data found for hostname ${location.hostname}`)),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
   withState('persona', 'setPersona'),
@@ -233,7 +235,10 @@ export default compose(
     },
   }),
   branch(({ persona }) => !persona, renderNothing),
-  withProps(() => ({ position: getFrekklsConfig().position })),
+  withProps(({ data }) => ({
+    position: getFrekklsConfig().position,
+    launcherPulsating: data.flow.flowType !== 'outro',
+  })),
   withHandlers({
     onToggleContent: ({ data, setIsUnmounting, setShowingContent, showingContent, setShowAssessmentContent }) => () => {
       if (data.flow.flowType === 'outro') return

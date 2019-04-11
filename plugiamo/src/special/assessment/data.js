@@ -478,6 +478,57 @@ const data = {
       ],
     },
   },
+  sizeGuide: {
+    flowType: 'asmt-size-guide',
+    header,
+    launcher: {
+      chatBubble: {
+        message: 'Brauchst du Hilfe bei der Größenwahl?',
+        timeStart: 0.5,
+        timeEnd: 20,
+        hideBarAfter: 0.2,
+      },
+      chatBubbleExtra: {},
+      persona: {
+        name: 'Nico de Roy',
+        profilePic: {
+          url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
+        },
+      },
+    },
+    closedLauncher: {
+      chatBubble: {
+        message: 'Wir sehen uns an der Kasse! 🙂',
+        timeStart: 0.5,
+        timeEnd: 20,
+        hideBarAfter: 0.2,
+      },
+      chatBubbleExtra: {},
+      persona: {
+        name: 'Nico de Roy',
+        profilePic: {
+          url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
+        },
+      },
+    },
+    logs: {
+      default: [
+        {
+          text: 'Check your size here:',
+        },
+        {
+          type: 'product',
+          product: {
+            url: 'https://www.pierre-cardin.de/size-advisor',
+            picUrl: 'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/size-guide.png',
+            title: 'Size Guide',
+            displayPrice: '',
+            newTab: true,
+          },
+        },
+      ],
+    },
+  },
 }
 
 export default data

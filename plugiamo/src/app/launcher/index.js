@@ -86,7 +86,7 @@ const Launcher = ({
   showingContent,
   onToggleContent,
   disappear,
-  pulsating = true,
+  pulsating,
   config,
 }) => (
   <div>
