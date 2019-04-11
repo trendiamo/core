@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
+import { branch, compose, lifecycle, renderNothing, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
+import { timeout } from 'plugin-base'
 
 const Button = styled.button.attrs({
   type: 'button',
@@ -24,24 +25,39 @@ const Button = styled.button.attrs({
   text-transform: uppercase;
   cursor: pointer;
   max-height: 50px;
-  ${({ hide }) =>
-    hide &&
+  transition: color 0.3s 0.3s, padding 0.3s, max-height 0.3s 0.3s;
+  ${({ animation }) =>
+    (animation === 'hide' || animation === 'init') &&
     `max-height: 0px;
-  padding: 0;
-  color: transparent;
-  `}
-
-  transition: color 0.3s${({ hide }) => !hide && ' 0.3s'}, padding 0.3s${({ hide }) =>
-  hide && ' 0.3s'}, max-height 0.0s${({ hide }) => hide && ' 0.3s'};
+      padding: 0;
+      color: transparent;
+      transition: color 0.29s 0.01s, padding 0.3s 0.3s, max-height 0.3s 0.3s;
+    `}
+  overflow: hidden;
 `
 
-const CtaButton = ({ onClick, hide }) => (
-  <Button hide={hide} onClick={onClick}>
+const CtaButton = ({ onClick, animation }) => (
+  <Button animation={animation} onClick={onClick}>
     {'Ergebnisse anzeigen'}
   </Button>
 )
 
 export default compose(
+  withState('animation', 'setAnimation', ({ hide }) => (hide ? 'remove' : 'show')),
+  lifecycle({
+    componentWillUnmount() {
+      timeout.clear('ctaButtonAnimation')
+    },
+    componentDidUpdate(prevProps) {
+      const { hide, setAnimation } = this.props
+      if (hide !== prevProps.hide) {
+        setAnimation(hide ? 'hide' : 'init')
+        timeout.clear('ctaButtonAnimation')
+        timeout.set('ctaButtonAnimation', () => setAnimation(hide ? 'remove' : 'show'), hide ? 600 : 30)
+      }
+    },
+  }),
+  branch(({ animation }) => animation === 'remove', renderNothing),
   withHandlers({
     onClick: ({ goToNextStep }) => () => goToNextStep('showResults'),
   })
