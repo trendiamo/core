@@ -68,12 +68,12 @@ const TriggerForm = ({
       <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
         <Autocomplete
           autocomplete={apiFlowsAutocomplete}
-          defaultPlaceholder="Choose a Trigger"
+          defaultPlaceholder="Choose a Module"
           disabled={isFormLoading}
           fullWidth
           initialSelectedItem={form.flowId && { value: form.flowId, label: form.flowLabel }}
           initialValueFormatMismatch
-          label="Flow"
+          label="Module"
           onChange={selectFlow}
           options={{ suggestionItem: 'withModuleIcon' }}
           required
