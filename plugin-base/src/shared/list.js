@@ -9,7 +9,7 @@ const ListChevron = styled(IconChevronRight)`
   height: 16px;
   width: 16px;
   position: absolute;
-  right: 10px;
+  right: ${({ assessment }) => (assessment ? '8px' : '10px')};
   top: 50%;
   transform: translateY(-50%);
 `
@@ -108,6 +108,11 @@ const ListItem = compose(
   background-color: #fff;
   backface-visibility: hidden;
   transition: all 0.3s ease-out;
+  ${({ assessment }) =>
+    assessment &&
+    `
+    border: 2px solid #fa0;
+  `}
   @keyframes _frekkls_selected_item_highlight {
     0% {
       box-shadow: 0 1px 15px 1px #00adef;
