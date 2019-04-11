@@ -25,7 +25,7 @@ import { findIndex, omit } from 'lodash'
 import { Grid } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
-import { uploadImage } from 'shared/picture-uploader'
+import { uploadPicture } from 'shared/picture-uploader'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -268,9 +268,9 @@ export default compose(
     }),
   }),
   withHandlers({
-    uploadSubImage: () => async ({ blob, setProgress, subform }) => {
+    uploadSubPicture: () => async ({ blob, setProgress, subform }) => {
       if (blob) {
-        const picUrl = await uploadImage({
+        const picUrl = await uploadPicture({
           blob,
           setProgress,
           type: 'navigation-items-pics',
@@ -283,9 +283,9 @@ export default compose(
     },
   }),
   withHandlers({
-    uploadSubImages: ({ navigationItemsPictures, uploadSubImage }) => form => {
+    uploadSubPictures: ({ navigationItemsPictures, uploadSubPicture }) => form => {
       return navigationItemsPictures.map(async ({ blob, index, setProgress }) => {
-        form.navigationItemsAttributes[index] = await uploadSubImage({
+        form.navigationItemsAttributes[index] = await uploadSubPicture({
           subform: form.navigationItemsAttributes[index],
           blob,
           setProgress,
@@ -311,8 +311,8 @@ export default compose(
         })),
       }
     },
-    saveFormObject: ({ saveFormObject, uploadSubImages, setNavigationItemsPictures }) => async form => {
-      await Promise.all(uploadSubImages(form))
+    saveFormObject: ({ saveFormObject, uploadSubPictures, setNavigationItemsPictures }) => async form => {
+      await Promise.all(uploadSubPictures(form))
       setNavigationItemsPictures([])
       return saveFormObject(form)
     },

@@ -8,7 +8,6 @@ import { Button as MuiButton, Tooltip } from '@material-ui/core'
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: ${({ centered }) => (centered ? 'center' : '')};
 `
 
 const ButtonContents = styled.div`
@@ -75,11 +74,11 @@ const Button = compose(
     onClick,
     isFormSubmitting,
     width,
-    centered,
+    containerStyle,
     children,
     ...props
   }) => (
-    <ButtonContainer centered={centered}>
+    <ButtonContainer style={containerStyle}>
       <Tooltip
         open={tooltipEnabled && tooltipOpen && isFormPristine}
         placement={tooltipPlacement}
@@ -105,7 +104,6 @@ const Button = compose(
               'tooltipPlacement',
               'isFormSubmitting',
               'width',
-              'centered',
             ])}
             disabled={disabled}
             onClick={onClick}
