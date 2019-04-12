@@ -4,7 +4,7 @@ class SimpleChatMessage < ApplicationRecord
 
   validates :text, presence: true
 
-  before_create :assign_order
+  before_create :assign_order, unless: :order_changed?
 
   def as_json(_options = {})
     attributes.slice("id", "text", "order")

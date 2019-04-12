@@ -7,7 +7,7 @@ class Trigger < ApplicationRecord
   validates :url_matchers, presence: true
   validate :url_matchers_cannot_be_blank
 
-  before_create :assign_order
+  before_create :assign_order, unless: :order_changed?
 
   def self.find_matching(pathname)
     Trigger.order(:order).find do |trigger|

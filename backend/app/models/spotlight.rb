@@ -6,7 +6,7 @@ class Spotlight < ApplicationRecord
 
   accepts_nested_attributes_for :product_picks, allow_destroy: true
 
-  before_create :assign_order
+  before_create :assign_order, unless: :order_changed?
 
   def paths(spotlight_index)
     new_step = attributes.slice("id", "name")
