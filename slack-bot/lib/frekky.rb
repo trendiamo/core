@@ -43,7 +43,7 @@ class Frekky < SlackRubyBot::Bot
   end
 
   command("deploy") do |client, data, match|
-    project_key = FuzzyMatch.new(PROJECTS_HASH.keys).find(match[:expression].gsub(/^the /i, ""))
+    project_key = FuzzyMatch.new(PROJECTS_HASH.keys).find((match[:expression] || "").gsub(/^the /i, ""))
     if !project_key
       say_in_thread("Unrecognized project to deploy: `#{match[:expression]}` 🙄", client, data)
     else
