@@ -19,10 +19,8 @@ bin/rails db:schema:load
 
 Add to .git/config in the root folder (core):
 
-```
-[remote "dokku-shopify"]
-	url = dokku@46.101.129.17:shopify-app
-	fetch = +refs/heads/*:refs/remotes/dokku-shopify/*
+```sh
+git remote add dokku-shopify dokku@46.101.129.17:shopify-app
 ```
 
 ## Run locally
