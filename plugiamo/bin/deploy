@@ -1,6 +1,8 @@
 #!/bin/sh
 
-cp .env .env~
+set -e
+
+[ -f .env ] && cp .env .env~
 aws s3 cp s3://plugiamo/.env .env
 yarn build
 gzip -9 -c build/plugin.js | aws s3 cp - s3://plugiamo/plugin.js --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600'
@@ -17,4 +19,4 @@ rm build/plugin.js
 #   -F revision=$REVISION \
 #   -F local_username=$LOCAL_USERNAME
 # end notify rollbar
-mv .env~ .env
+[ -f .env~ ] && mv .env~ .env
