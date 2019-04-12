@@ -18,7 +18,7 @@ const ShinyItem = styled.div`
     content: '';
     position: absolute;
     top: 50%;
-    background: linear-gradient(90deg, #fff0, #fff1, #fff0);
+    background: linear-gradient(90deg, #fff0, #fff, #fff0);
     width: 80px;
     height: 200%;
     transform: translateY(-50%);

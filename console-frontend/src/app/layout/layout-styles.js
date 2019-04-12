@@ -279,6 +279,6 @@ export const styles = theme => ({
     paddingLeft: 14,
     paddingRight: 14,
     display: 'flex',
-    height: '85px',
+    height: '84px',
   },
 })
