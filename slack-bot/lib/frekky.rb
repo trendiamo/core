@@ -74,6 +74,12 @@ end
 
 SlackRubyBot.configure do |config|
   config.aliases = [":robot_face:"]
+  config.logger = begin
+    $stdout.sync = true
+    logger = Logger.new($stdout)
+    logger.level = Logger::INFO
+    logger
+  end
 end
 
 Frekky.run
