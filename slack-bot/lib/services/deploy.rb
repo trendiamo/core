@@ -11,6 +11,7 @@ SH
 
 FETCH_CORE_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core && \
+  GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['GITHUB_KEY_FILE']}' \
   git pull
 SH
 
