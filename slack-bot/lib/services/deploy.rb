@@ -62,7 +62,6 @@ module Services
     def perform
       clone_core unless core_exists?
       fetch_core
-      puts deploy_cmd
       Open3.capture3(deploy_cmd)
     end
 
