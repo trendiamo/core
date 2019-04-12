@@ -25,7 +25,7 @@ PROJECTS_HASH = {
   "shopify": :shopify_app,
 }.freeze
 
-PROJECTS_STR = PROJECTS_HASH.values.map(&:to_s).map(&:humanize).map(&:downcase)
+PROJECTS_STR = PROJECTS_HASH.values.uniq.map(&:to_s).map(&:humanize).map(&:downcase)
 
 def say_in_thread(text, client, data)
   client.say(text: text, channel: data.channel, thread_ts: data.thread_ts || data.ts)
