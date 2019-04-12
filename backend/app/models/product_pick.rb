@@ -3,7 +3,7 @@ class ProductPick < ApplicationRecord
   belongs_to :spotlight
   belongs_to :pic, class_name: "Picture"
 
-  before_create :assign_order
+  before_create :assign_order, unless: :order_changed?
 
   def assign_order
     current_value = self.class.where(spotlight_id: spotlight_id).order(:order).pluck(:order).last || 0

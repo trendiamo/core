@@ -6,7 +6,7 @@ class NavigationItem < ApplicationRecord
   validates :text, presence: true
   validates :url, presence: true
 
-  before_create :assign_order
+  before_create :assign_order, unless: :order_changed?
 
   def pic_url
     pic.url

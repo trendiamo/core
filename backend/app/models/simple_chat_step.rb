@@ -5,7 +5,7 @@ class SimpleChatStep < ApplicationRecord
 
   accepts_nested_attributes_for :simple_chat_messages, allow_destroy: true
 
-  before_create :assign_order
+  before_create :assign_order, unless: :order_changed?
 
   validate :dafault_cannot_be_repeated
 
