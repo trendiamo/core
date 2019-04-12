@@ -56,6 +56,18 @@ dokku ps:scale shopify-app web=1
 bin/rails deploy
 # dokku run shopify-app rails db:schema:load
 
+# To setup the slack-bot:
+
+mkdir -p /opt/dokku/slack-bot
+chown -R dokku:dokku /opt/dokku
+dokku docker-options:add slack-bot deploy,run "-v /opt/dokku/slack-bot:/app/files"
+# then add the required files to /opt/dokku/slack-bot (git keys and such)
+dokku apps:create slack-bot
+dokku config:set slack-bot SLACK_API_TOKEN=... BUILD_FOLDER=/tmp GITHUB_KEY_FILE=/app/files/deploy_id_rsa DOKKU_KEY_FILE=/app/files/dokku_id_rsa LANDING_PAGE_ENV_FILE=/app/files/landing-page/.env
+dokku ps:scale slack-bot bot=1
+# from your local machine:
+bin/deploy
+
 # To install certificates
 
 service nginx stop
