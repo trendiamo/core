@@ -7,17 +7,18 @@ import routes from 'app/routes'
 import Sidebar from './sidebar'
 import withClasses from 'ext/recompose/with-classes'
 import withOnboarding from 'ext/recompose/with-onboarding'
-import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { styles } from './layout-styles'
 import { withStyles } from '@material-ui/core/styles'
 
-const Layout = ({ appBarContent, children, classes, logout, sidebarOpen, toggleOpen }) => (
+const Layout = ({ appBarContent, children, classes, hasScrolled, logout, sidebarOpen, toggleOpen }) => (
   <div className={classes.root}>
     <div className={classes.appFrame}>
       <Onboarding />
       <AppBar
         appBarContent={appBarContent}
         classes={classes}
+        hasScrolled={hasScrolled}
         logout={logout}
         sidebarOpen={sidebarOpen}
         toggleOpen={toggleOpen}
@@ -43,9 +44,11 @@ const EmptyLayout = ({ classes, children }) => (
 )
 
 const EnhancedLayout = compose(
+  withState('hasScrolled', 'setHasScrolled', false),
   withState('sidebarOpen', 'setSidebarOpen', true),
   withOnboarding,
   withHandlers({
+    onWindowScroll: ({ setHasScrolled }) => () => setHasScrolled(window.scrollY > 2),
     toggleOpen: ({ sidebarOpen, setSidebarOpen }) => () => setSidebarOpen(!sidebarOpen),
   }),
   withStyles(styles, { index: 1 }),
@@ -57,7 +60,17 @@ const EnhancedLayout = compose(
   branch(
     ({ isLoggedIn, isAdminPage }) => !isLoggedIn || isAdminPage,
     renderComponent(props => <EmptyLayout {...props} />)
-  )
+  ),
+  lifecycle({
+    componentDidMount() {
+      const { onWindowScroll } = this.props
+      window.addEventListener('scroll', onWindowScroll)
+    },
+    componentWillUnmount() {
+      const { onWindowScroll } = this.props
+      window.removeEventListener('scroll', onWindowScroll)
+    },
+  })
 )(Layout)
 
 export default EnhancedLayout
