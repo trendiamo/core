@@ -11,7 +11,7 @@ SH
 
 FETCH_CORE_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core && \
-  git fetch
+  git pull
 SH
 
 BACKEND_CMD = <<~SH.freeze
