@@ -13,7 +13,7 @@ const shine = keyframes`
 const ShinyItem = styled.div`
   position: relative;
   overflow: hidden;
-  background: #3b3c46;
+  background: #e0e0e0;
   &:before {
     content: '';
     position: absolute;
@@ -43,7 +43,7 @@ const Avatar = styled(ShinyItem)`
 const Divider = styled.div`
   height: 1px;
   width: 100%;
-  background: #3b3c46;
+  background: #e0e0e0;
 `
 
 const DummyText = styled(ShinyItem)`
