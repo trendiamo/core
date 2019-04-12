@@ -8,10 +8,10 @@ ActiveSupport::Dependencies.autoload_paths = ["lib/"]
 PROJECTS_HASH = {
   "api": :backend,
   "backend": :backend,
-  # "slack-bot": :slack_bot,
-  # "slack bot": :slack_bot,
-  # "frekky": :slack_bot,
-  # "yourself": :slack_bot,
+  "slack-bot": :slack_bot,
+  "slack bot": :slack_bot,
+  "frekky": :slack_bot,
+  "yourself": :slack_bot,
   "console-frontend": :console_frontend,
   "console frontend": :console_frontend,
   "admin": :console_frontend,
@@ -19,6 +19,10 @@ PROJECTS_HASH = {
   "landing page": :landing_page,
   # "plugin": :plugiamo,
   # "plugiamo": :plugiamo,
+  "shopify-app": :shopify_app,
+  "shopify app": :shopify_app,
+  "shopify integration": :shopify_app,
+  "shopify": :shopify_app,
 }.freeze
 
 PROJECTS_STR = PROJECTS_HASH.values.map(&:to_s).map(&:humanize).map(&:downcase)

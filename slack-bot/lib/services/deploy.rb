@@ -4,19 +4,32 @@ CLONE_CORE_CMD = <<~SH.freeze
   GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['GITHUB_KEY_FILE']}' \
   git clone -q git@github.com:trendiamo/core.git #{ENV['BUILD_FOLDER']}/core && \
   cd #{ENV['BUILD_FOLDER']}/core && \
-  git remote add dokku-backend dokku@46.101.129.17:console-backend
+  git remote add dokku-backend dokku@46.101.129.17:console-backend && \
+  git remote add dokku-shopify dokku@46.101.129.17:shopify-app && \
+  git remote add dokku-slack-bot dokku@46.101.129.17:slack-bot
 SH
 
 FETCH_CORE_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core && \
-  git fetch && \
-  git checkout master
+  git fetch
 SH
 
 BACKEND_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core && \
   GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['DOKKU_KEY_FILE']}' \
   git subtree push -q --prefix backend dokku-backend master
+SH
+
+SLACK_BOT_CMD = <<~SH.freeze
+  cd #{ENV['BUILD_FOLDER']}/core && \
+  GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['DOKKU_KEY_FILE']}' \
+  git subtree push -q --prefix slack-bot dokku-slack-bot master
+SH
+
+SHOPIFY_APP_CMD = <<~SH.freeze
+  cd #{ENV['BUILD_FOLDER']}/core && \
+  GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['DOKKU_KEY_FILE']}' \
+  git subtree push -q --prefix integrations/shopify dokku-shopify master
 SH
 
 CONSOLE_FRONTEND_CMD = <<~SH.freeze
