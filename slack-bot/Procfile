@@ -1,1 +1,1 @@
-worker: bundle exec ruby lib/frekky.rb
+bot: bundle exec ruby lib/frekky.rb
