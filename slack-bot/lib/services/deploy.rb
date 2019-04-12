@@ -1,7 +1,7 @@
 require "open3"
 
 CLONE_CORE_CMD = <<~SH.freeze
-  GIT_SSH_COMMAND='ssh -i #{ENV['GITHUB_KEY_FILE']}' \
+  GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['GITHUB_KEY_FILE']}' \
   git clone -q git@github.com:trendiamo/core.git #{ENV['BUILD_FOLDER']}/core && \
   cd #{ENV['BUILD_FOLDER']}/core && \
   git remote add dokku-backend dokku@46.101.129.17:console-backend
@@ -15,7 +15,7 @@ SH
 
 BACKEND_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core && \
-  GIT_SSH_COMMAND='ssh -i #{ENV['DOKKU_KEY_FILE']}' \
+  GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['DOKKU_KEY_FILE']}' \
   git subtree push -q --prefix backend dokku-backend master
 SH
 
