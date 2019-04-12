@@ -76,8 +76,10 @@ const AppBarContent = compose(
   </React.Fragment>
 ))
 
-const AppBar = ({ classes, sidebarOpen, toggleOpen }) => (
-  <MuiAppBar className={classNames(classes.appBar, sidebarOpen && classes.appBarShift)} position="absolute">
+const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
+  <MuiAppBar
+    className={classNames(classes.appBar, sidebarOpen && classes.appBarShift, hasScrolled && classes.appBarScroll)}
+  >
     <Toolbar className={classes.topToolbar}>
       <IconButton aria-label="Open drawer" className={classes.menuButton} color="inherit" onClick={toggleOpen}>
         <MenuIcon />

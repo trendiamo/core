@@ -3,7 +3,12 @@ export const drawerWidthClosed = 70
 const avatarSize = 46
 
 // Add transitions with different params here and use it in createTransition by providing key as type attribute.
+// Check https://github.com/mui-org/material-ui/blob/203be1fbe435cd6c2696d8e2aa93fee23a0805cb/packages/material-ui/src/styles/transitions.js#L52
 const transitions = theme => ({
+  ease: {
+    duration: theme.transitions.duration.shortest,
+    easing: theme.transitions.easing.easeInOut,
+  },
   standard: {
     duration: theme.transitions.duration.leavingScreen,
     easing: theme.transitions.easing.sharp,
@@ -36,22 +41,29 @@ export const styles = theme => ({
     marginLeft: '10px',
   },
   appBar: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#f5f5f5',
     boxShadow: 'none',
     color: '#333',
-    transition: createTransition(theme, ['width', 'margin', 'backgroundColor']),
+    transition: [createTransition(theme, ['width', 'margin']), createTransition(theme, 'box-shadow', 'ease')],
     width: `calc(100% - ${drawerWidthClosed}px)`,
+    marginLeft: `${drawerWidthClosed}px`,
     zIndex: theme.zIndex.drawer + 1,
+    position: 'sticky',
+    top: 0,
     [theme.breakpoints.down('sm')]: {
       width: '100%',
+      margin: 0,
     },
   },
   appBarShift: {
     [theme.breakpoints.up('md')]: {
       marginLeft: drawerWidth,
-      transition: createTransition(theme, ['width', 'margin']),
+      transition: [createTransition(theme, ['width', 'margin']), createTransition(theme, 'box-shadow', 'ease')],
       width: `calc(100% - ${drawerWidth}px)`,
     },
+  },
+  appBarScroll: {
+    boxShadow: '0 4px 2px -2px rgba(0, 0, 0, 0.1)',
   },
   appBarButton: {
     overflow: 'hidden',
@@ -80,7 +92,6 @@ export const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
-    marginTop: '60px',
     padding: theme.spacing.unit * 2,
     paddingTop: '4px',
     position: 'relative',
@@ -158,7 +169,7 @@ export const styles = theme => ({
     },
   },
   loadingContainer: {
-    backgroundColor: 'rgba(255,255,255,0.5)',
+    backgroundColor: '#f5f5f5',
     bottom: 0,
     display: 'flex',
     justifyContent: 'center',
@@ -268,5 +279,6 @@ export const styles = theme => ({
     paddingLeft: 14,
     paddingRight: 14,
     display: 'flex',
+    height: '85px',
   },
 })
