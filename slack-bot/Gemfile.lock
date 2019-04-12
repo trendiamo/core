@@ -77,7 +77,7 @@ DEPENDENCIES
   slack-ruby-bot
 
 RUBY VERSION
-   ruby 2.4.3p205
+   ruby 2.4.6p354
 
 BUNDLED WITH
-   1.16.3
+   2.0.1
