@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404155613) do
+ActiveRecord::Schema.define(version: 20190415094918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20190404155613) do
     t.string "pic_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "order", default: 1, null: false
+    t.integer "order"
     t.bigint "pic_id"
     t.index ["account_id"], name: "index_navigation_items_on_account_id"
     t.index ["navigation_id"], name: "index_navigation_items_on_navigation_id"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20190404155613) do
     t.string "display_price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "order", default: 1, null: false
+    t.integer "order"
     t.bigint "pic_id"
     t.index ["account_id"], name: "index_product_picks_on_account_id"
     t.index ["pic_id"], name: "index_product_picks_on_pic_id"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20190404155613) do
 
   create_table "simple_chat_messages", force: :cascade do |t|
     t.string "text", null: false
-    t.integer "order", default: 1, null: false
+    t.integer "order"
     t.bigint "simple_chat_step_id"
     t.bigint "account_id"
     t.datetime "created_at", null: false
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 20190404155613) do
 
   create_table "simple_chat_steps", force: :cascade do |t|
     t.string "key", default: "default", null: false
-    t.integer "order", default: 1, null: false
+    t.integer "order"
     t.bigint "simple_chat_id"
     t.bigint "account_id"
     t.datetime "created_at", null: false
@@ -176,14 +176,14 @@ ActiveRecord::Schema.define(version: 20190404155613) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "showcase_id"
-    t.integer "order", default: 1, null: false
+    t.integer "order"
     t.index ["account_id"], name: "index_spotlights_on_account_id"
     t.index ["persona_id"], name: "index_spotlights_on_persona_id"
     t.index ["showcase_id"], name: "index_spotlights_on_showcase_id"
   end
 
   create_table "triggers", force: :cascade do |t|
-    t.integer "order", default: 1, null: false
+    t.integer "order"
     t.string "url_matchers", null: false, array: true
     t.string "flow_type"
     t.bigint "flow_id"
