@@ -43,7 +43,7 @@ export default compose(
     }
   }),
   withHandlers({
-    handleScroll: ({ setCoverMinimized, coverMinimized, module, setTouch, touch }) => event => {
+    handleScroll: ({ setCoverMinimized, coverMinimized, module, getContentRef, setTouch, touch }) => event => {
       if (module.header.minimized) return
       const scrollTop = event.target.scrollTop
       if (scrollTop <= 0 && coverMinimized) {
@@ -53,7 +53,11 @@ export default compose(
         }, 50)
         return setCoverMinimized(false)
       }
-      if (scrollTop > 0 && !coverMinimized && touch) return setCoverMinimized(true)
+      if (scrollTop > 0 && !coverMinimized && touch) {
+        const windowHeight = window.innerHeight
+        const maxHeight = window.innerWidth >= 600 ? Math.min(windowHeight, 500) : windowHeight
+        maxHeight - getContentRef().base.scrollHeight <= 90 && setCoverMinimized(true)
+      }
     },
   })
 )(Base)
