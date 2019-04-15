@@ -3,7 +3,6 @@ class Trigger < ApplicationRecord
 
   belongs_to :flow, polymorphic: true
 
-  validates :order, presence: true
   validates :url_matchers, presence: true
   validate :url_matchers_cannot_be_blank
 
