@@ -44,7 +44,7 @@ LANDING_PAGE_CMD = <<~SH.freeze
   cp #{ENV['LANDING_PAGE_ENV_FILE']} . && \
   yarn install --silent --no-progress && \
   node_modules/.bin/gatsby build --no-color && \
-  rsync -azq -e ssh --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html
+  rsync -azq -e 'ssh -o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}' --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html
 SH
 
 module Services
