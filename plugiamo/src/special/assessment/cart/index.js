@@ -59,6 +59,7 @@ const Plugin = ({
 )
 
 export default compose(
+  branch(() => true, renderNothing),
   withState('pluginState', 'setPluginState', 'default'),
   withState('productsData', 'setProductsData', []),
   withState('products', 'setProducts', []),
