@@ -2,6 +2,8 @@
 
 set -e
 
+SSH=${1:-ssh}
+
 [ -f .env ] && cp .env .env~
 
 cat >.env <<EOL
@@ -12,6 +14,8 @@ REACT_APP_API_ENDPOINT=https://api.trendiamo.com
 EOL
 
 yarn build
+
+rm .env
 
 [ -f .env~ ] && mv .env~ .env
 
@@ -24,4 +28,4 @@ RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^.*$ / [L,QSA]
 EOL
 
-rsync -azh -e ssh --delete-after --ignore-errors build/ root@139.59.128.112:/var/www/admin.frekkls.com/html
+rsync -azh -e $SSH --delete-after --ignore-errors build/ root@139.59.128.112:/var/www/admin.frekkls.com/html
