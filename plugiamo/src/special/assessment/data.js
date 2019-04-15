@@ -519,14 +519,15 @@ const data = {
     logs: {
       default: [
         {
-          text: 'Check your size here:',
+          text:
+            'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
         },
         {
           type: 'product',
           product: {
             url: 'https://www.pierre-cardin.de/size-advisor',
             picUrl: 'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/size-guide.png',
-            title: 'Size Guide',
+            title: 'Zur Größentabelle',
             displayPrice: '',
             newTab: true,
           },
