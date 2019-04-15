@@ -16,4 +16,10 @@ ShopifyApp.configure do |config|
   config.scripttags = [
     { event: 'onload', src: 'https://plugiamo.s3.eu-central-1.amazonaws.com/plugin.js', display_scope: "all" },
   ]
+  config.webhooks = [
+    {topic: 'app/uninstalled', address: "#{ENV["BASE_API_URL"]}/webhooks/app_uninstalled", format: 'json'},
+    {topic: 'products/delete', address: "#{ENV["BASE_API_URL"]}/webhooks/products_delete", format: 'json'},
+    {topic: 'products/update', address: "#{ENV["BASE_API_URL"]}/webhooks/products_update", format: 'json'},
+    {topic: 'products/create', address: "#{ENV["BASE_API_URL"]}/webhooks/products_create", format: 'json'},
+  ]
 end

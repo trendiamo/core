@@ -29,7 +29,7 @@ module ShopApi
       end
 
       def update
-        @product = Product.find(params[:id])
+        @product = Product.find_by(source_id: params[:id])
         authorize @product
         if @product.update(product_params)
           render json: @product
@@ -39,10 +39,10 @@ module ShopApi
       end
 
       def destroy
-        @products = Product.find(params[:id])
-        authorize @products
-        if @products.destroy
-          render json: { data: @products }
+        @product = Product.find_by(source_id: params[:id])
+        authorize @product
+        if @product.destroy
+          render json: { data: @product }
         else
           render_error
         end
@@ -51,7 +51,7 @@ module ShopApi
       private
 
       def product_params
-        permitted = params.require(:product).permit(:name, :url, :source)
+        permitted = params.require(:product).permit(:name, :url, :source, :source_id)
         permitted.merge(payload: params[:product][:payload].permit!.to_h)
       end
 
