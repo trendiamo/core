@@ -33,7 +33,7 @@ SHOPIFY_APP_CMD = <<~SH.freeze
   git subtree push -q --prefix integrations/shopify dokku-shopify master
 SH
 
-PLUGIN_APP_CMD = <<~SH.freeze
+PLUGIN_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/plugiamo && \
   yarn install --silent --no-progress && \
   cp #{ENV['PLUGIN_ENV_FILE']} . && \
