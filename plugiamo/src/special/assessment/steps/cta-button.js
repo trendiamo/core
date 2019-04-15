@@ -44,14 +44,16 @@ const CtaButton = ({ onClick, animation }) => (
 
 export default compose(
   withState('animation', 'setAnimation', ({ hide }) => (hide ? 'remove' : 'show')),
+  withState('clicked', 'setClicked', false),
   lifecycle({
     componentWillUnmount() {
       timeout.clear('ctaButtonAnimation')
     },
     componentDidUpdate(prevProps) {
-      const { hide, setAnimation } = this.props
+      const { hide, setAnimation, clicked } = this.props
       if (hide !== prevProps.hide) {
         setAnimation(hide ? 'hide' : 'init')
+        if (clicked) return
         timeout.clear('ctaButtonAnimation')
         timeout.set('ctaButtonAnimation', () => setAnimation(hide ? 'remove' : 'show'), hide ? 600 : 30)
       }
@@ -59,6 +61,10 @@ export default compose(
   }),
   branch(({ animation }) => animation === 'remove', renderNothing),
   withHandlers({
-    onClick: ({ goToNextStep }) => () => goToNextStep('showResults'),
+    onClick: ({ goToNextStep, setClicked, clicked }) => () => {
+      if (clicked) return
+      goToNextStep('showResults')
+      setClicked(true)
+    },
   })
 )(CtaButton)
