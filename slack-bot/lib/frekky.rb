@@ -49,17 +49,17 @@ class Frekky < SlackRubyBot::Bot
   command("deploy") do |client, data, match|
     project_key = FuzzyMatch.new(PROJECTS_HASH.keys).find((match[:expression] || "").gsub(/^the /i, ""))
     if !project_key
-      say_in_thread("Unrecognized project to deploy: `#{match[:expression]}` 🙄", client, data)
+      say_in_thread("Unrecognized project to deploy: `#{match[:expression]}` :face_with_rolling_eyes:", client, data)
     else
       project = PROJECTS_HASH[project_key]
       project_label = project.to_s.humanize.downcase
-      say_in_thread("Deploying #{project_label}... 😆", client, data)
+      say_in_thread("Deploying #{project_label}... :laughing:", client, data)
       stdout, stderr, status = Services::Deploy.perform(PROJECTS_HASH[project_key])
       if status.success?
-        say_in_thread("Deployed #{project_label} 👍", client, data)
+        say_in_thread("Deployed #{project_label} :+1:", client, data)
       else
         text = <<~PLAIN
-          Couldn't deploy #{project_label} 😕
+          Couldn't deploy #{project_label} :confused:
           Here's the output:
 
           ```
