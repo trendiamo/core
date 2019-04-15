@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20190415094918) do
     t.string "url", null: false
     t.string "source", null: false
     t.json "payload"
+    t.bigint "source_id", null: false
     t.index ["account_id"], name: "index_products_on_account_id"
   end
 
