@@ -144,7 +144,7 @@ export default compose(
   withProps({ Component: <Router /> }),
   withProps({ Launcher }),
   withProps({ pathFromNav: setupFlowHistory() }),
-  withState('disappear', 'setDisappear', false),
+  withState('disappear', 'setDisappear', ({ disappear }) => !!disappear),
   graphql(
     gql`
       query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {

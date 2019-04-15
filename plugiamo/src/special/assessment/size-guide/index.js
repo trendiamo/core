@@ -29,6 +29,7 @@ const Plugin = ({
   pluginState,
   products,
   productsData,
+  disappear,
 }) => (
   <AppBase
     Component={
@@ -48,6 +49,7 @@ const Plugin = ({
       />
     }
     data={module}
+    disappear={disappear}
     isUnmounting={isUnmounting}
     Launcher={showingLauncher && Launcher}
     launcherPulsating={pluginState !== 'closed'}
@@ -69,6 +71,7 @@ export default compose(
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
   withState('showingLauncher', 'setShowingLauncher', true),
   withState('product', 'setProduct', null),
+  withState('disappear', 'setDisappear', false),
   lifecycle({
     componentDidMount() {
       const { setProduct } = this.props
@@ -107,9 +110,14 @@ export default compose(
       setIsUnmounting,
       setShowingContent,
       showingContent,
+      setDisappear,
+      disappear,
     }) => () => {
       if (module.flowType === 'outro') return
-      if (pluginState === 'closed' && !showingContent) return
+      if (pluginState === 'closed') {
+        !disappear && setTimeout(() => setDisappear(true), 22000)
+        if (!showingContent) return
+      }
       if (pluginState !== 'closed') {
         setPluginState('closed')
       }
