@@ -43,7 +43,7 @@ LANDING_PAGE_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/landing-pages/frekkls && \
   cp #{ENV['LANDING_PAGE_ENV_FILE']} . && \
   yarn install --silent --no-progress && \
-  gatsby build --no-color && \
+  node_modules/.bin/gatsby build --no-color && \
   rsync -azq -e ssh --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html
 SH
 
