@@ -33,6 +33,17 @@ SHOPIFY_APP_CMD = <<~SH.freeze
   git subtree push -q --prefix integrations/shopify dokku-shopify master
 SH
 
+PLUGIN_APP_CMD = <<~SH.freeze
+  cd #{ENV['BUILD_FOLDER']}/core/plugiamo && \
+  yarn install --silent --no-progress && \
+  cp #{ENV['PLUGIN_ENV_FILE']} . && \
+  mkdir -p ~/.aws && \
+  [ -f ~/.aws/credentials ] || cp #{ENV['AWS_CREDENTIALS_FILE']} ~/.aws/credentials && \
+  yarn build && \
+  gzip -9 -c build/plugin.js | aws s3 cp - s3://plugiamo/plugin.js --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
+  rm build/plugin.js
+SH
+
 CONSOLE_FRONTEND_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/console-frontend && \
   yarn install --silent --no-progress && \
