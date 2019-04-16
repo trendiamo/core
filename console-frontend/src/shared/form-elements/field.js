@@ -29,12 +29,16 @@ const FieldTemplate = ({
   max,
   label,
   value,
+  required,
   ...props
 }) => (
   <Container>
     <FormControl fullWidth margin="normal">
-      <Label shrink={focused || value.length !== 0}>{label}</Label>
+      <Label required={required} shrink={focused || value.length !== 0}>
+        {label}
+      </Label>
       <Input
+        required={required}
         {...omit(props, ['setTextLength', 'setIsOutsideLimits', 'setFocused', 'margin'])}
         onBlur={handleBlur}
         onChange={handleChange}
