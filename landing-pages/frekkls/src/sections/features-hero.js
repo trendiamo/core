@@ -4,19 +4,12 @@ import styled from 'styled-components'
 import Container from '../components/container'
 import Section from '../components/section'
 
-import featuresHeader from '../images/features-header.png'
+import FeaturesHeader from '../images/features-header'
 
 const FeaturesHeaderContainer = styled.div`
   width: 100%;
   max-width: 886px;
-  img {
-    width: 100%;
-  }
 `
-
-const FeaturesHeader = styled.img.attrs({
-  src: featuresHeader,
-})``
 
 const FeaturesHero = styled(({ className, featuresHero }) => (
   <Section className={className}>

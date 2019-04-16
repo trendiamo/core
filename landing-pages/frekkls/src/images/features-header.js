@@ -8,7 +8,7 @@ const FeaturesHeader = ({ alt, className }) => (
       query {
         featuresHeader: file(relativePath: { eq: "features-header.png" }) {
           childImageSharp {
-            fluid {
+            fluid(maxWidth: 886) {
               ...GatsbyImageSharpFluid_withWebp
             }
           }
@@ -21,7 +21,6 @@ const FeaturesHeader = ({ alt, className }) => (
         className={className}
         fluid={data.featuresHeader.childImageSharp.fluid}
         imgStyle={{ objectFit: 'contain', bottom: 0, height: 'auto', top: 'unset' }}
-        style={{ position: 'absolute' }}
       />
     )}
   />
