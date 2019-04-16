@@ -1,4 +1,4 @@
-class Shop < ActiveRecord::Base
+class Shop < ApplicationRecord
   include ShopifyApp::SessionStorage
   after_create :export_products
 
@@ -6,8 +6,8 @@ class Shop < ActiveRecord::Base
     shopify_session
     ShopifyAPI::Product.where(vendor: shopify_domain.split(".", 2).first).map do |product|
       converted_product = convert_product(product)
-      RestClient.post "#{ENV['BASE_SHOP_API_URL']}/products", converted_product,
-                      RestClient::RequestData.new(shopify_domain).request_headers
+      RestClient.post("#{ENV['BASE_SHOP_API_URL']}/products", converted_product,
+                      RestClient::RequestData.new(shopify_domain).request_headers)
     end
   end
 
@@ -21,6 +21,6 @@ class Shop < ActiveRecord::Base
                  url: "/#{product.class.element_name}/#{product.handle}",
                  source: "shopify",
                  source_id: product.id,
-                 payload: { product: product }, }, }.to_json
+                 payload: { product: product }, } }.to_json
   end
 end

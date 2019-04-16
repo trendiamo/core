@@ -8,13 +8,11 @@ AllCops:
     - "**/*.rb"
   Exclude:
     - bin/**/*
-    - config.ru
     - config/**/*
     - db/**/*
     - script/**/*
     - public/**/*
-    - Rakefile
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6
 
 Metrics/LineLength:
   Max: 120
@@ -42,3 +40,19 @@ Style/TrailingCommaInArrayLiteral:
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
+
+Layout/ClassStructure:
+  Enabled: true
+
+Rails:
+  Enabled: true
+
+Rails/SaveBang:
+  Enabled: true
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  IgnoredMethods: ["authorize", "desc", "raise", "redirect_to", "render", "require", "require_relative", "run", "ruby", "source", "yield", "gem", "has_many", "head"]
+
+Style/MultilineMethodSignature:
+  Enabled: true
