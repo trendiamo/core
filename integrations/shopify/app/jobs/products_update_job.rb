@@ -5,5 +5,9 @@ class ProductsUpdateJob < ApplicationJob
     shop.with_shopify_session do
       RestClient::ProductWebhookRequest.new(shop_domain, webhook).update_product
     end
+  rescue StandardError, ShopifyAPI::ValidationException, ShopifyAPI::Base::InvalidSessionError,
+         ShopifyAPI::Limits::LimitUnavailable, InMemorySessionStore::EnvironmentError,
+         ShopifySessionRepository::ConfigurationError => e
+    Rollbar.warning(e)
   end
 end
