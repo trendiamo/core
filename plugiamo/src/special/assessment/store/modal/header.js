@@ -15,8 +15,15 @@ const config = {
   },
 }
 
-const Header = ({ header, coverMinimized }) => (
-  <Cover config={config} hackathon header={header} minimized={coverMinimized} />
+const Header = ({ header, coverMinimized, goToPrevStep }) => (
+  <Cover
+    assessment
+    config={config}
+    goToPrevStep={goToPrevStep}
+    minimized={coverMinimized}
+    showBackButton
+    step={{ header }}
+  />
 )
 
 export default Header

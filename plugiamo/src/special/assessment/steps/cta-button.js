@@ -44,7 +44,6 @@ const CtaButton = ({ onClick, animation }) => (
 
 export default compose(
   withState('animation', 'setAnimation', ({ hide }) => (hide ? 'remove' : 'show')),
-  withState('clicked', 'setClicked', false),
   lifecycle({
     componentWillUnmount() {
       timeout.clear('ctaButtonAnimation')

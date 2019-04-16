@@ -20,6 +20,7 @@ const ChatLogUiTemplate = ({
   minHeight,
   logSection,
   step,
+  goToPrevStep,
 }) => (
   <Chat onScroll={onScroll} ref={setContentRef} touch={touch}>
     <ChatBackground ref={setBackgroundRef} style={{ minHeight }}>
@@ -27,6 +28,7 @@ const ChatLogUiTemplate = ({
     </ChatBackground>
     {!isSmall() && (
       <Modal
+        goToPrevStep={goToPrevStep}
         header={step.header}
         results={results}
         setShowingContent={setShowingContent}

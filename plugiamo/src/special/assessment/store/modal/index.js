@@ -15,17 +15,17 @@ const iframeStyle = {
   minHeight: '400px',
 }
 
-const FrameChild = ({ header, results }) => (
+const FrameChild = ({ header, results, goToPrevStep }) => (
   <div>
-    <Header header={header} />
+    <Header goToPrevStep={goToPrevStep} header={header} />
     <Content results={results} />
   </div>
 )
 
-const ModalTemplate = ({ closeModal, isOpen, results, header }) => (
+const ModalTemplate = ({ closeModal, isOpen, results, header, goToPrevStep }) => (
   <Wrapper allowBackgroundClose closeModal={closeModal} isOpen={isOpen}>
     <Frame style={iframeStyle}>
-      <FrameChild header={header} results={results} />
+      <FrameChild goToPrevStep={goToPrevStep} header={header} results={results} />
     </Frame>
   </Wrapper>
 )
@@ -36,6 +36,12 @@ const Modal = compose(
     closeModal: ({ setIsOpen, setShowingLauncher }) => () => {
       setIsOpen(false)
       setShowingLauncher(true)
+    },
+    goToPrevStep: ({ goToPrevStep, setIsOpen, setShowingLauncher, setShowingContent }) => () => {
+      setIsOpen(false)
+      setShowingLauncher(true)
+      setShowingContent(true)
+      goToPrevStep()
     },
   }),
   lifecycle({
