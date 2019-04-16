@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import Slider from 'react-slick'
 import styled from 'styled-components'
@@ -124,7 +125,7 @@ const AboutTeam = ({ aboutPortraits, teamMembers }) => (
         <Slider {...sliderSettings}>
           {teamMembers.edges.map(e => (
             <Portrait key={e.node.id}>
-              <img alt="" src={e.node.profilePicture.fixed.src} />
+              <Img alt="" fluid={e.node.profilePicture.fluid} />
               <h4>{e.node.profileName}</h4>
               <h5>{e.node.jobTitle}</h5>
               <p>{e.node.profileDescription}</p>

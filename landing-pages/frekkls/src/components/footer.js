@@ -4,7 +4,7 @@ import { Link } from 'gatsby'
 
 import Container from './container'
 import locales from '../../locales'
-import Logo from '../images/logo-grey.svg'
+import LogoGrey from '../images/logo-grey.svg'
 import Section from './section'
 
 const FooterFlex = styled.div`
@@ -87,7 +87,7 @@ const FooterContent = ({ layout, locale }) => (
     <FooterSection flex="1">
       <FooterColumn>
         <Link to={`${locales[locale].path}/`}>
-          <img alt="siteTitle" src={Logo} />
+          <img alt="" src={LogoGrey} />
         </Link>
         <ContactUsHeader>{layout.contactPrompt}</ContactUsHeader>
         <MailTo href="mailto:hello@trendiamo.com">{'hello@trendiamo.com'}</MailTo>

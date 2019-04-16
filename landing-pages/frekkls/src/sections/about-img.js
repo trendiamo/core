@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -7,15 +8,14 @@ import Section from '../components/section'
 const AboutImg = styled(({ className, aboutImg }) => (
   <Section className={className}>
     <Container>
-      <img alt="" src={aboutImg.teamPicture.fixed.src} />
+      <Img alt="The frekkls team" fluid={aboutImg.teamPicture.fluid} />
     </Container>
   </Section>
 ))`
   padding: 0;
   background-color: #f5f5f5;
 
-  img {
-    margin-bottom: -4px;
+  ${Container} {
     width: 100%;
     max-width: 1100px;
   }

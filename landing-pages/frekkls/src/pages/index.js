@@ -38,8 +38,11 @@ export const query = graphql`
       openerEmailLabel
       openerEmailCta
       openerImage {
-        fixed(width: 1200, toFormat: WEBP) {
+        fluid(maxWidth: 1200, toFormat: WEBP) {
+          aspectRatio
           src
+          srcSet
+          sizes
         }
       }
     }
@@ -73,6 +76,9 @@ export const query = graphql`
           slideImage {
             fixed(width: 350) {
               src
+              width
+              height
+              srcSet
             }
           }
         }

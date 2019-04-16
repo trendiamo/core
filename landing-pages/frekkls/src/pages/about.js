@@ -27,8 +27,11 @@ export const query = graphql`
     }
     aboutImg: contentfulAboutPage(name: { eq: "About Page" }, node_locale: { eq: $locale }) {
       teamPicture {
-        fixed(width: 1400) {
+        fluid(maxWidth: 1400) {
+          aspectRatio
           src
+          srcSet
+          sizes
         }
       }
     }
@@ -64,8 +67,11 @@ export const query = graphql`
           jobTitle
           profileDescription
           profilePicture {
-            fixed {
+            fluid {
+              aspectRatio
               src
+              srcSet
+              sizes
             }
           }
         }

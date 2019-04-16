@@ -63,8 +63,11 @@ export const query = graphql`
       edges {
         node {
           titleImage {
-            fixed(width: 860) {
+            fluid(maxWidth: 860) {
+              aspectRatio
               src
+              srcSet
+              sizes
             }
           }
         }

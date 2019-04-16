@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
@@ -81,7 +82,7 @@ const BlogPostCard = ({ to, imagesData, post }) => (
   <StyledLink to={to}>
     <StyledFeatureCard>
       <ImageContainer>
-        <img alt="" src={imagesData.titleImage.fixed.src} />
+        <Img alt="" fluid={imagesData.titleImage.fluid} />
       </ImageContainer>
       <h1>{post.title}</h1>
       <DetailsContainer>

@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -40,7 +41,12 @@ const Hero = styled(({ className, hero }) => (
         data-submit-text={hero.openerEmailCta}
       />
       <ImageContainer>
-        <img alt="" src={hero.openerImage.fixed.src} />
+        <Img
+          alt=""
+          fluid={hero.openerImage.fluid}
+          imgStyle={{ objectFit: 'contain', objectPosition: '50% 100%' }}
+          style={{ height: '400px' }}
+        />
       </ImageContainer>
     </StyledContainer>
   </Section>

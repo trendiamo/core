@@ -277,7 +277,7 @@ const LevelUpSlider = ({ levelUp, levelUpSliderContent }) => {
                     <Link to="/features">{slide.node.slideCta}</Link>
                   </Card>
                   <ImageContainer>
-                    <StyledImage alt="siteTitle" src={slide.node.slideImage.fixed.src} />
+                    <StyledImage alt="" src={slide.node.slideImage.fixed.src} />
                   </ImageContainer>
                 </Slide>
               </div>

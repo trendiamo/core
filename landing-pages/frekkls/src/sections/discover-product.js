@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import Slider from 'react-slick'
 import styled from 'styled-components'
@@ -59,14 +60,7 @@ const DiscoverProductSlide = styled.div`
     color: rgba(0, 0, 0, 0.7);
   }
 
-  img {
-    width: 100%;
-  }
-
   @media (min-width: 400px) {
-    img {
-      width: 350px;
-    }
     h2 {
       font-size: 32px;
     }
@@ -97,7 +91,7 @@ const DiscoverProduct = ({ discoverProductsSliderContent }) => (
                 <h2>{e.node.slideMainText}</h2>
                 <p>{e.node.slideSecondaryText.slideSecondaryText}</p>
                 <div>
-                  <img alt="" src={e.node.slideImage.fixed.src} />
+                  <Img alt="" fixed={e.node.slideImage.fixed} />
                 </div>
               </DiscoverProductSlide>
             </DiscoverProductContainer>
