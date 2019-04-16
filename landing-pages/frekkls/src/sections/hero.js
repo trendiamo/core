@@ -41,12 +41,7 @@ const Hero = styled(({ className, hero }) => (
         data-submit-text={hero.openerEmailCta}
       />
       <ImageContainer>
-        <Img
-          alt=""
-          fluid={hero.openerImage.fluid}
-          imgStyle={{ objectFit: 'contain', objectPosition: '50% 100%' }}
-          style={{ height: '400px' }}
-        />
+        <Img alt="" fluid={hero.openerImage.fluid} imgStyle={{ objectFit: 'contain', objectPosition: '50% 100%' }} />
       </ImageContainer>
     </StyledContainer>
   </Section>
