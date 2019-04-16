@@ -54,7 +54,7 @@ class Frekky < SlackRubyBot::Bot
     if !channel || channel.name != "tech"
       say_in_context("Ask me in #tech so everyone's aware.", client, data)
     else
-      project = PROJECTS_HASH[(match[:expression] || "").downcase.gsub(/^the /, "")]
+      project = PROJECTS_HASH[(match[:expression] || "").downcase.gsub(/^the /, "").to_sym]
       if !project
         say_in_thread("Unrecognized project to deploy: `#{match[:expression]}` :face_with_rolling_eyes:", client, data)
       else
