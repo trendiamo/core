@@ -1,7 +1,6 @@
 require "dotenv/load"
 require "active_support/all"
 require "slack-ruby-bot"
-require "fuzzy_match"
 
 ActiveSupport::Dependencies.autoload_paths = ["lib/"]
 
@@ -31,6 +30,14 @@ def say_in_thread(text, client, data)
   client.say(text: text, channel: data.channel, thread_ts: data.thread_ts || data.ts)
 end
 
+def say_in_context(text, client, data)
+  client.say(text: text, channel: data.channel, thread_ts: data.thread_ts)
+end
+
+def say_in_channel(text, client, data)
+  client.say(text: text, channel: data.channel)
+end
+
 class Frekky < SlackRubyBot::Bot
   help do
     title "Frekky"
@@ -42,35 +49,36 @@ class Frekky < SlackRubyBot::Bot
     end
   end
 
-  command("ping") do |client, data, _match|
-    client.say(text: "pong", channel: data.channel)
-  end
-
   command("deploy") do |client, data, match|
-    project_key = FuzzyMatch.new(PROJECTS_HASH.keys).find((match[:expression] || "").gsub(/^the /i, ""))
-    if !project_key
-      say_in_thread("Unrecognized project to deploy: `#{match[:expression]}` :face_with_rolling_eyes:", client, data)
+    channel = client.channels[data.channel]
+    if !channel || channel.name != "dev"
+      say_in_context("Ask me in #dev so everyone's aware.", client, data)
     else
-      project = PROJECTS_HASH[project_key]
-      project_label = project.to_s.humanize.downcase
-      say_in_thread("Deploying #{project_label}... :laughing:", client, data)
-      stdout, stderr, status = Services::Deploy.perform(PROJECTS_HASH[project_key])
-      if status.success?
-        say_in_thread("Deployed #{project_label} :+1:", client, data)
+      project_key = (match[:expression] || "").downcase.gsub(/^the /, "")
+      if !project_key
+        say_in_thread("Unrecognized project to deploy: `#{match[:expression]}` :face_with_rolling_eyes:", client, data)
       else
-        text = <<~PLAIN
-          Couldn't deploy #{project_label} :confused:
-          Here's the output:
+        project = PROJECTS_HASH[project_key]
+        project_label = project.to_s.humanize.downcase
+        say_in_thread("Deploying #{project_label}... :laughing:", client, data)
+        stdout, stderr, status = Services::Deploy.perform(PROJECTS_HASH[project_key])
+        if status.success?
+          say_in_thread("Deployed #{project_label} :+1:", client, data)
+        else
+          text = <<~PLAIN
+            Couldn't deploy #{project_label} :confused:
+            Here's the output:
 
-          ```
-          stdout:
-          #{stdout.chars.last(240).join.strip}
+            ```
+            stdout:
+            #{stdout.chars.last(240).join.strip}
 
-          stderr:
-          #{stderr.chars.last(240).join.strip}
-          ```
-        PLAIN
-        say_in_thread(text, client, data)
+            stderr:
+            #{stderr.chars.last(240).join.strip}
+            ```
+          PLAIN
+          say_in_channel(text, client, data)
+        end
       end
     end
   end
