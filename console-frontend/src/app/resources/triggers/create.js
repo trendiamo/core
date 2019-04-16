@@ -15,6 +15,7 @@ export default compose(
       const { json, errors, requestError } = await apiRequest(apiTriggerCreate, [{ trigger: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!errors && !requestError) enqueueSnackbar('Successfully created trigger', { variant: 'success' })
       return json
     },
   }),
