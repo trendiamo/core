@@ -54,14 +54,13 @@ class Frekky < SlackRubyBot::Bot
     if !channel || channel.name != "tech"
       say_in_context("Ask me in #tech so everyone's aware.", client, data)
     else
-      project_key = (match[:expression] || "").downcase.gsub(/^the /, "")
-      if !project_key
+      project = PROJECTS_HASH[(match[:expression] || "").downcase.gsub(/^the /, "")]
+      if !project
         say_in_thread("Unrecognized project to deploy: `#{match[:expression]}` :face_with_rolling_eyes:", client, data)
       else
-        project = PROJECTS_HASH[project_key]
         project_label = project.to_s.humanize.downcase
         say_in_thread("Deploying #{project_label}... :laughing:", client, data)
-        stdout, stderr, status = Services::Deploy.perform(PROJECTS_HASH[project_key])
+        stdout, stderr, status = Services::Deploy.perform(project)
         if status.success?
           say_in_thread("Deployed #{project_label} :+1:", client, data)
         else
