@@ -16,6 +16,7 @@ export default compose(
       const { json, errors, requestError } = await apiRequest(apiPersonaCreate, [{ persona: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!errors && !requestError) enqueueSnackbar('Successfully created persona', { variant: 'success' })
       return json
     },
   }),

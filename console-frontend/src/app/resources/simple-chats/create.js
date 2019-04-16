@@ -15,6 +15,7 @@ export default compose(
       const { json, errors, requestError } = await apiRequest(apiSimpleChatCreate, [{ simpleChat: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!errors && !requestError) enqueueSnackbar('Successfully created simple chat', { variant: 'success' })
       return json
     },
   }),
