@@ -18,7 +18,7 @@ class ProductPickTest < ActiveSupport::TestCase
     showcase = create(:showcase)
     spotlight = create(:spotlight, showcase: showcase)
     3.times { create(:product_pick, spotlight: spotlight) }
-    spotlight.product_picks.first.destroy
+    spotlight.product_picks.first.destroy!
     2.times { create(:product_pick, spotlight: spotlight) }
     result = spotlight.product_picks.pluck(:order)
 

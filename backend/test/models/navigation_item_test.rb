@@ -16,7 +16,7 @@ class NavigationItemTest < ActiveSupport::TestCase
 
     navigation = create(:navigation)
     3.times { create(:navigation_item, navigation: navigation) }
-    navigation.navigation_items.first.destroy
+    navigation.navigation_items.first.destroy!
     2.times { create(:navigation_item, navigation: navigation) }
     result = navigation.navigation_items.pluck(:order)
 

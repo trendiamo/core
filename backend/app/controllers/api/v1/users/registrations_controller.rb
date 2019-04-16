@@ -21,10 +21,10 @@ module Api
               end
               render json: { errors: flash_key }
             end
-            bypass_sign_in resource, scope: resource_name
+            bypass_sign_in(resource, scope: resource_name)
             render json: {}
           else
-            clean_up_passwords resource
+            clean_up_passwords(resource)
             set_minimum_password_length
             errors = resource.errors.full_messages.map { |string| { title: string } }
             render json: { errors: errors }

@@ -6,7 +6,7 @@ class WebsiteTest < ActiveSupport::TestCase
 
     @website = build(:website, hostnames: [])
 
-    refute_predicate @website, :valid?
+    assert_not_predicate @website, :valid?
     assert_includes @website.errors[:hostnames], "can't be blank"
   end
 
@@ -15,7 +15,7 @@ class WebsiteTest < ActiveSupport::TestCase
 
     @website = build(:website, hostnames: [""])
 
-    refute_predicate @website, :valid?
+    assert_not_predicate @website, :valid?
     assert_includes @website.errors[:hostnames], "can't be blank"
   end
 
@@ -26,7 +26,7 @@ class WebsiteTest < ActiveSupport::TestCase
 
     @website = build(:website, hostnames: %w[b.com])
 
-    refute_predicate @website, :valid?
+    assert_not_predicate @website, :valid?
     assert_includes @website.errors[:hostnames], "already exists"
   end
 
@@ -38,7 +38,7 @@ class WebsiteTest < ActiveSupport::TestCase
 
     @website = build(:website, hostnames: %w[other.com])
 
-    refute_predicate @website, :valid?
+    assert_not_predicate @website, :valid?
     assert_includes @website.errors[:hostnames], "already exists"
   end
 
@@ -47,9 +47,9 @@ class WebsiteTest < ActiveSupport::TestCase
     website1 = create(:website, hostnames: %w[a.com b.com])
     website2 = create(:website, hostnames: %w[c.com])
 
-    assert_equal website1, Website.find_by_hostname("a.com")
-    assert_equal website1, Website.find_by_hostname("b.com")
-    assert_equal website2, Website.find_by_hostname("c.com")
-    assert_nil Website.find_by_hostname("d.com")
+    assert_equal website1, Website.find_with_hostname("a.com")
+    assert_equal website1, Website.find_with_hostname("b.com")
+    assert_equal website2, Website.find_with_hostname("c.com")
+    assert_nil Website.find_with_hostname("d.com")
   end
 end

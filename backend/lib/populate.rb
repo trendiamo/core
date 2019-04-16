@@ -163,7 +163,7 @@ class Populate
       first_name: team_member[:name].split(" ")[0],
       last_name: team_member[:name].split(" ")[1],
       password: "password", password_confirmation: "password",
-      confirmed_at: Time.now,
+      confirmed_at: Time.now.utc,
     }
   end
 

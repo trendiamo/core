@@ -31,6 +31,7 @@ class PortScriptedChatsToSimpleChats
 
   def extract_simple_chat_step(simple_chat_steps, chat_step, key, account, depth)
     return unless chat_step && depth <= 1
+
     simple_chat_steps << chat_step_data(chat_step, key, account)
     chat_step.chat_options.each do |chat_option|
       extract_simple_chat_step(simple_chat_steps, chat_option.destination_chat_step, chat_option.text, account,

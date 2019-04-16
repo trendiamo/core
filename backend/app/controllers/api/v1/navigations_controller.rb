@@ -51,7 +51,7 @@ module Api
       def duplicate
         @navigation = Navigation.find(params[:id])
         authorize @navigation
-        @cloned_navigation = @navigation.deep_clone include: :navigation_items
+        @cloned_navigation = @navigation.deep_clone(include: :navigation_items)
         @cloned_navigation.name = "Copied from - " + @cloned_navigation.name
         if @cloned_navigation.save
           render json: @cloned_navigation, status: :created
@@ -72,6 +72,7 @@ module Api
       # add order fields to navigation_attributes' navigation_items, based on received order
       def add_order_fields(navigation_attributes)
         return unless navigation_attributes
+
         navigation_attributes[:navigation_items_attributes]&.each_with_index do |navigation_item_attributes, i|
           navigation_item_attributes[:order] = i + 1
         end
@@ -82,7 +83,7 @@ module Api
         params[:navigation][:navigation_items_attributes]&.each do |navigation_item_attributes|
           pic_url = navigation_item_attributes[:pic_url]
           pic_url.present? && navigation_item_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
-          navigation_item_attributes.delete :pic_url
+          navigation_item_attributes.delete(:pic_url)
         end
       end
 

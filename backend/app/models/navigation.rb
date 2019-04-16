@@ -2,7 +2,7 @@ class Navigation < ApplicationRecord
   acts_as_tenant
 
   belongs_to :persona
-  has_many :triggers, as: :flow, dependent: :destroy
+  has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
   has_many :navigation_items, dependent: :destroy
 
   accepts_nested_attributes_for :navigation_items, allow_destroy: true

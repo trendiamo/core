@@ -10,9 +10,7 @@ class ProductPick < ApplicationRecord
     self.order = current_value + 1
   end
 
-  def pic_url
-    pic.url
-  end
+  delegate :url, to: :pic, prefix: :pic
 
   def as_json(_options = {})
     attributes

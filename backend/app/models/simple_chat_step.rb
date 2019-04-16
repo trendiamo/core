@@ -26,8 +26,10 @@ class SimpleChatStep < ApplicationRecord
 
   def dafault_cannot_be_repeated
     return if key != "default"
+
     other_default_keys = self.class.where(simple_chat_id: simple_chat_id, key: "default").pluck(:id)
-    return if other_default_keys.empty? || (other_default_keys.include? id)
+    return if other_default_keys.empty? || other_default_keys.include?(id)
+
     errors.add(:key, "default already exists")
   end
 end

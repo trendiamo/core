@@ -15,6 +15,7 @@ def flow_by_path(path)
   type, id = path[1..-1].split("/")
   klass = flow_class_by_type(type)
   return nil if !klass || !id
+
   if id.scan(/^\d+$/).any?
     klass.find(id)
   else

@@ -12,6 +12,7 @@ class UrlMatcher
 
   def perform
     return true if url_matcher == "*"
+
     match_url
   end
 
@@ -62,6 +63,7 @@ class UrlMatcher
       i += 1
     end
     return false if ret == false
+
     matches
   end
   # rubocop:enable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity

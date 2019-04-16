@@ -58,7 +58,7 @@ class TriggerTest < ActiveSupport::TestCase
     ActsAsTenant.default_tenant = Account.create!
 
     3.times { create(:trigger) }
-    Trigger.first.destroy
+    Trigger.first.destroy!
     2.times { create(:trigger) }
     result = Trigger.pluck(:order)
 

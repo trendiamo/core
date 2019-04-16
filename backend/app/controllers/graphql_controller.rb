@@ -18,18 +18,20 @@ class GraphqlController < ApplicationController
   def set_tenant
     account = find_account_from_override || find_account_from_request
     return render json: { error: "no content found" }, status: :bad_request unless account
+
     set_current_tenant(account)
   end
 
   def find_account_from_override
     override_account_name = request.headers["Override-Account"]
     return unless override_account_name
+
     Account.find_by(name: override_account_name)
   end
 
   def find_account_from_request
     hostname = (request.origin || "").gsub(%r{https?://|:\d+}, "")
-    hostname.present? ? Website.find_by_hostname(hostname)&.account : nil
+    hostname.present? ? Website.find_with_hostname(hostname)&.account : nil
   end
 
   def ensure_hash_variables

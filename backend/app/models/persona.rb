@@ -13,9 +13,7 @@ class Persona < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
-  def profile_pic_url
-    profile_pic.url
-  end
+  delegate :url, to: :profile_pic, prefix: :profile_pic
 
   def as_json(_options = {})
     attributes

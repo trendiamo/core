@@ -2,7 +2,7 @@ class Showcase < ApplicationRecord
   acts_as_tenant
   belongs_to :persona
   has_many :spotlights, dependent: :destroy
-  has_many :triggers, as: :flow, dependent: :destroy
+  has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
 
   accepts_nested_attributes_for :spotlights, allow_destroy: true
 

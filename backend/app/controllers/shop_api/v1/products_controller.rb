@@ -63,12 +63,13 @@ module ShopApi
       def authenticate
         auth_header = request.headers["Authorization"]
         return if auth_header == "Plain #{ENV['AUTH_TOKEN']}"
+
         user_not_authorized
       end
 
       def set_tenant_from_hostname
         hostname_header = request.headers["Hostname"]
-        set_current_tenant(Website.find_by_hostname(hostname_header)&.account)
+        set_current_tenant(Website.find_with_hostname(hostname_header)&.account)
       end
     end
   end

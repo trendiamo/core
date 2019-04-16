@@ -49,7 +49,7 @@ module Api
       def duplicate
         @simple_chat = SimpleChat.find(params[:id])
         authorize @simple_chat
-        @cloned_simple_chat = @simple_chat.deep_clone include: { simple_chat_steps: :simple_chat_messages }
+        @cloned_simple_chat = @simple_chat.deep_clone(include: { simple_chat_steps: :simple_chat_messages })
         @cloned_simple_chat.name = "Copied from - " + @cloned_simple_chat.name
         if @cloned_simple_chat.save
           render json: @cloned_simple_chat, status: :created
@@ -74,9 +74,11 @@ module Api
       # add order fields to chat_step_attributes' messages and options, based on received order
       def add_order_fields(simple_chat_steps_attributes)
         return unless simple_chat_steps_attributes
+
         simple_chat_steps_attributes&.each_with_index do |chat_step_attributes, i|
           chat_step_attributes[:order] = i + 1
           next unless chat_step_attributes[:simple_chat_messages_attributes]
+
           chat_step_attributes[:simple_chat_messages_attributes]&.each_with_index do |chat_message_attributes, l|
             chat_message_attributes[:order] = l + 1
           end

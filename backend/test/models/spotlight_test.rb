@@ -16,7 +16,7 @@ class SpotlightTest < ActiveSupport::TestCase
 
     showcase = create(:showcase)
     3.times { create(:spotlight, showcase: showcase) }
-    showcase.spotlights.first.destroy
+    showcase.spotlights.first.destroy!
     2.times { create(:spotlight, showcase: showcase) }
     result = showcase.spotlights.pluck(:order)
 

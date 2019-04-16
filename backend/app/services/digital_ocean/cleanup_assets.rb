@@ -10,6 +10,7 @@ class DigitalOcean::CleanupAssets
 
   def perform
     return unless @url.match?(/uploads.*/)
+
     @s3.client.delete_object(object_params(@url))
   end
 

@@ -1,7 +1,7 @@
 class Outro < ApplicationRecord
   acts_as_tenant
   belongs_to :persona
-  has_many :triggers, as: :flow, dependent: :destroy
+  has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
 
   validates :name, presence: true
   validates :chat_bubble_text, presence: true

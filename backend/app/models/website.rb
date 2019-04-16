@@ -8,7 +8,7 @@ class Website < ApplicationRecord
   validate :hostnames_cannot_be_blank
   validate :hostnames_cannot_be_repeated
 
-  def self.find_by_hostname(hostname)
+  def self.find_with_hostname(hostname)
     find_by("hostnames @> array[:hostname]::varchar[]", hostname: hostname)
   end
 
@@ -21,6 +21,7 @@ class Website < ApplicationRecord
   def hostnames_cannot_be_repeated
     other_hostnames = Website.unscoped.where.not(id: id).pluck(:hostnames).flatten
     return if ((hostnames || []) & other_hostnames).empty?
+
     errors.add(:hostnames, "already exists")
   end
 end

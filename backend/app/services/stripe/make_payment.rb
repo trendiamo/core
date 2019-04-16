@@ -8,7 +8,7 @@ class Stripe::MakePayment
   end
 
   def perform
-    Stripe::Charge.create(charge_params)
+    Stripe::Charge.create!(charge_params)
   rescue Stripe::CardError => e
     { error: e.json_body[:error] }
   rescue Stripe::RateLimitError, Stripe::InvalidRequestError, Stripe::AuthenticationError, Stripe::APIConnectionError,

@@ -10,7 +10,7 @@ class UrlMatcherTest < ActiveSupport::TestCase
   end
 
   test "does not match different urls" do
-    refute UrlMatcher.perform("/a", "/b")
+    assert_not UrlMatcher.perform("/a", "/b")
   end
 
   test "matches url with search (aka the query params)" do

@@ -29,20 +29,20 @@ module Api
 
       def pagination(chain)
         pagination_hash = begin
-          pagination_vars(params[:range])
-        rescue JSON::ParserError, TypeError
-          return chain
-        end
+                            pagination_vars(params[:range])
+                          rescue JSON::ParserError, TypeError
+                            return chain
+                          end
         add_pagination_headers(chain, pagination_hash[:range])
         chain.page(pagination_hash[:page_number]).per(pagination_hash[:total_per_page])
       end
 
       def sorting(chain)
         sort_params = begin
-          JSON.parse(params[:sort])
-        rescue JSON::ParserError, TypeError
-          return chain
-        end
+                        JSON.parse(params[:sort])
+                      rescue JSON::ParserError, TypeError
+                        return chain
+                      end
         column, direction = *sort_params
         return sorting_by_active_state(chain, direction) if column.underscore == "active"
         return sorting_by_pictures_state(chain, direction) if column.underscore == "status"

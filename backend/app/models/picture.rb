@@ -5,9 +5,9 @@ class Picture < ApplicationRecord
 
   paginates_per 10
 
-  has_many :navigation_items, foreign_key: :pic_id
-  has_many :personas, foreign_key: :profile_pic_id
-  has_many :product_picks, foreign_key: :pic_id
+  has_many :navigation_items, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
+  has_many :personas, foreign_key: :profile_pic_id, dependent: :restrict_with_exception, inverse_of: :profile_pic
+  has_many :product_picks, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
 
   validates :url, presence: true, uniqueness: true
 

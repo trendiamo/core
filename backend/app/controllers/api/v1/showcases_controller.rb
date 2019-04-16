@@ -51,7 +51,7 @@ module Api
       def duplicate
         @showcase = Showcase.find(params[:id])
         authorize @showcase
-        @cloned_showcase = @showcase.deep_clone include: { spotlights: :product_picks }
+        @cloned_showcase = @showcase.deep_clone(include: { spotlights: :product_picks })
         @cloned_showcase.name = "Copied from - " + @cloned_showcase.name
         if @cloned_showcase.save
           render json: @cloned_showcase, status: :created
@@ -80,7 +80,7 @@ module Api
           spotlight_attributes[:product_picks_attributes]&.each do |product_pick_attributes|
             pic_url = product_pick_attributes[:pic_url]
             pic_url.present? && product_pick_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
-            product_pick_attributes.delete :pic_url
+            product_pick_attributes.delete(:pic_url)
           end
         end
       end
@@ -88,6 +88,7 @@ module Api
       # add order fields to showcase_attributes' spotlights and product_picks, based on received order
       def add_order_fields(showcase_attributes)
         return unless showcase_attributes
+
         showcase_attributes[:spotlights_attributes]&.each_with_index do |spotlight_attributes, i|
           spotlight_attributes[:order] = i + 1
           spotlight_attributes[:product_picks_attributes]&.each_with_index do |product_pick_attributes, j|

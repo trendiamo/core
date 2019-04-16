@@ -58,7 +58,7 @@ module Api
       def convert_and_assign_picture
         pic_url = params[:persona][:profile_pic_url]
         pic_url.present? && params[:persona][:profile_pic_id] = Picture.find_or_create_by!(url: pic_url).id
-        params[:persona].delete :profile_pic_url
+        params[:persona].delete(:profile_pic_url)
       end
 
       def render_error

@@ -9,10 +9,10 @@ class Resolver
     nil
   rescue Pundit::NotAuthorizedError
     GraphQL::ExecutionError.new("You are not authorized to perform this action")
-  rescue ActiveRecord::RecordInvalid => error
-    messages = error.record.errors.full_messages.join(", ")
+  rescue ActiveRecord::RecordInvalid => e
+    messages = e.record.errors.full_messages.join(", ")
     GraphQL::ExecutionError.new("Validation failed: #{messages}")
-  rescue StandardError => error
-    GraphQL::ExecutionError.new("Unexpected error: #{error.message}")
+  rescue StandardError => e
+    GraphQL::ExecutionError.new("Unexpected error: #{e.message}")
   end
 end

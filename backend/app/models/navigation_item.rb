@@ -8,9 +8,7 @@ class NavigationItem < ApplicationRecord
 
   before_create :assign_order, unless: :order_changed?
 
-  def pic_url
-    pic.url
-  end
+  delegate :url, to: :pic, prefix: :pic
 
   def as_json(_options = {})
     { id: id, text: text, url: url, pic_url: pic_url }
