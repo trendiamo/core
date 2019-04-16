@@ -38,7 +38,7 @@ export const query = graphql`
       openerEmailLabel
       openerEmailCta
       openerImage {
-        fixed(width: 1200) {
+        fixed(width: 1200, toFormat: WEBP) {
           src
         }
       }
@@ -48,9 +48,8 @@ export const query = graphql`
         node {
           name
           logo {
-            file {
-              url
-              fileName
+            fixed(width: 160, toFormat: WEBP) {
+              src
             }
           }
         }
@@ -61,6 +60,22 @@ export const query = graphql`
       authorDescription
       text {
         text
+      }
+    }
+    discoverProductsSliderContent: allContentfulDiscoverProductSlide(filter: { node_locale: { eq: $locale } }) {
+      edges {
+        node {
+          id
+          slideMainText
+          slideSecondaryText {
+            slideSecondaryText
+          }
+          slideImage {
+            fixed(width: 350) {
+              src
+            }
+          }
+        }
       }
     }
     ads: contentfulHomepage(name: { eq: "Homepage-v2" }, node_locale: { eq: $locale }) {
@@ -114,28 +129,11 @@ export const query = graphql`
             slideText
           }
           slideImage {
-            file {
-              url
-              fileName
+            fixed(width: 605, toFormat: WEBP) {
+              src
             }
           }
           slideCta
-        }
-      }
-    }
-    discoverProductsSliderContent: allContentfulDiscoverProductSlide(filter: { node_locale: { eq: $locale } }) {
-      edges {
-        node {
-          id
-          slideMainText
-          slideSecondaryText {
-            slideSecondaryText
-          }
-          slideImage {
-            file {
-              url
-            }
-          }
         }
       }
     }

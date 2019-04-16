@@ -7,20 +7,17 @@ import Section from '../components/section'
 
 import { LeftArrow, RightArrow } from '../components/arrows'
 
-const StyledRightArrow = styled(RightArrow)`
+const NextArrow = styled(RightArrow)`
   position: absolute;
   top: 170px;
   right: 0px;
 `
 
-const StyledLeftArrow = styled(LeftArrow)`
+const PrevArrow = styled(LeftArrow)`
   position: absolute;
   top: 170px;
   left: 0px;
 `
-
-const NextArrow = ({ onClick }) => <StyledRightArrow onClick={onClick} />
-const PrevArrow = ({ onClick }) => <StyledLeftArrow onClick={onClick} />
 
 const sliderSettings = {
   dots: false,
@@ -100,7 +97,7 @@ const DiscoverProduct = ({ discoverProductsSliderContent }) => (
                 <h2>{e.node.slideMainText}</h2>
                 <p>{e.node.slideSecondaryText.slideSecondaryText}</p>
                 <div>
-                  <img alt="" src={e.node.slideImage.file.url} />
+                  <img alt="" src={e.node.slideImage.fixed.src} />
                 </div>
               </DiscoverProductSlide>
             </DiscoverProductContainer>

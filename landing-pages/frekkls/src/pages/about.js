@@ -53,19 +53,6 @@ export const query = graphql`
         investerSectionText
       }
     }
-    investors: allContentfulInvestor(filter: { node_locale: { eq: "en-US" } }) {
-      edges {
-        node {
-          name
-          logo {
-            file {
-              url
-              fileName
-            }
-          }
-        }
-      }
-    }
     aboutPortraits: contentfulAboutPage(name: { eq: "About Page" }, node_locale: { eq: $locale }) {
       teamSectionHeading
     }

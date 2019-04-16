@@ -1,3 +1,7 @@
+import '../css/index.css'
+import 'typeface-roboto'
+import 'typeface-roboto-slab'
+
 import Helmet from 'react-helmet'
 import locales from '../../locales'
 import React, { useEffect, useRef } from 'react'
@@ -8,10 +12,6 @@ import Footer from './footer'
 import Header from './header'
 import ModalContents from './modal-contents'
 import Seo from './seo'
-
-import '../css/index.css'
-import 'typeface-roboto'
-import 'typeface-roboto-slab'
 
 import favicon from '../images/favicon.png'
 

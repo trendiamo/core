@@ -7,20 +7,17 @@ import Section from '../components/section'
 
 import { LeftArrow, RightArrow } from '../components/arrows'
 
-const StyledRightArrow = styled(RightArrow)`
+const NextArrow = styled(RightArrow)`
   position: absolute;
   top: 260px;
   right: 0px;
 `
 
-const StyledLeftArrow = styled(LeftArrow)`
+const PrevArrow = styled(LeftArrow)`
   position: absolute;
   top: 260px;
   left: 0px;
 `
-
-const NextArrow = ({ onClick }) => <StyledRightArrow onClick={onClick} />
-const PrevArrow = ({ onClick }) => <StyledLeftArrow onClick={onClick} />
 
 const sliderSettings = {
   dots: false,
@@ -101,7 +98,7 @@ const FeaturesSlider = ({ featuresSlider, featuresSliderContent }) => (
                 <h2>{feature.node.slideHeader}</h2>
                 <p>{feature.node.slideText.slideText}</p>
                 <div>
-                  <img alt="" src={feature.node.slideImage.file.url} />
+                  <img alt="" src={feature.node.slideImage.fixed.src} />
                 </div>
               </FeatureSlide>
             </FeatureSlideContainer>

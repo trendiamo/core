@@ -16,7 +16,7 @@ const FeaturesPage = ({ className, pageContext, data }) => (
     <Steps steps={data.steps} />
     <FeaturesSlider featuresSlider={data.featuresSlider} featuresSliderContent={data.featuresSliderContent} />
     <CustomerJourneySlider
-      customerJournerSlider={data.customerJournerSlider}
+      customerJourneySlider={data.customerJourneySlider}
       customerJourneySliderContent={data.customerJourneySliderContent}
     />
     <BridgeSlider bridgeSlider={data.bridgeSlider} bridgeSliderContent={data.bridgeSliderContent} />
@@ -78,14 +78,14 @@ export const query = graphql`
             slideText
           }
           slideImage {
-            file {
-              url
+            fixed(width: 700, toFormat: WEBP) {
+              src
             }
           }
         }
       }
     }
-    customerJournerSlider: contentfulFeaturesPage(node_locale: { eq: $locale }) {
+    customerJourneySlider: contentfulFeaturesPage(node_locale: { eq: $locale }) {
       customerJourneySliderHeading
       customerJourneySliderSubHeading
     }
@@ -112,8 +112,8 @@ export const query = graphql`
             mainText
           }
           image {
-            file {
-              url
+            fixed(width: 440) {
+              src
             }
           }
         }
@@ -146,8 +146,8 @@ export const query = graphql`
             mainText
           }
           image {
-            file {
-              url
+            fixed {
+              src
             }
           }
         }

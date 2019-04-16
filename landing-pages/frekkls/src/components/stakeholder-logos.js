@@ -51,9 +51,9 @@ const Img = styled.img`
   width: 100%;
 `
 
-const Logo = ({ file }) => (
+const Logo = ({ src }) => (
   <LogoContainer>
-    <Img alt={file.fileName} src={`https:${file.url}`} />
+    <Img alt="" src={src} />
   </LogoContainer>
 )
 
@@ -68,7 +68,7 @@ const StakeholderLogos = ({ stakeholders }) =>
     <FixedWidthContainer>
       <Slider {...sliderSettings}>
         {stakeholders.edges.map(stakeholder => (
-          <Logo file={stakeholder.node.logo.file} key={stakeholder.node.name} />
+          <Logo key={stakeholder.node.name} src={stakeholder.node.logo.fixed.src} />
         ))}
       </Slider>
     </FixedWidthContainer>

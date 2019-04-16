@@ -160,9 +160,8 @@ export const query = graphql`
         node {
           name
           logo {
-            file {
-              url
-              fileName
+            fixed(width: 160, toFormat: WEBP) {
+              src
             }
           }
         }

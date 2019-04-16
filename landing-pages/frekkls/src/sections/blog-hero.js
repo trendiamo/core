@@ -48,7 +48,7 @@ const StyledSection = styled(Section)`
 `
 
 const BlogHero = ({ blogHero }) => (
-  <StyledSection mainImage={blogHero.mainImage.file.url}>
+  <StyledSection mainImage={blogHero.mainImage.fluid.src}>
     <Container>
       <Flex>
         <Flex1>

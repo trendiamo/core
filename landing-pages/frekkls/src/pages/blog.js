@@ -54,8 +54,8 @@ export const query = graphql`
       heading
       mainText
       mainImage {
-        file {
-          url
+        fluid(maxWidth: 1280) {
+          ...GatsbyContentfulFluid_withWebp
         }
       }
     }
@@ -63,7 +63,7 @@ export const query = graphql`
       edges {
         node {
           titleImage {
-            fixed(width: 1280) {
+            fixed(width: 860) {
               src
             }
           }

@@ -3,24 +3,15 @@ import styled from 'styled-components'
 import leftArrow from '../images/about-arrow-left.svg'
 import rightArrow from '../images/about-arrow-right.svg'
 
-const LeftArrow = styled.img.attrs({
-  src: leftArrow,
+const arrowFactory = src => styled.img.attrs({
+  src,
 })`
   z-index: 1;
   height: 40px;
-  &:hover {
-    cursor: pointer;
-  }
+  width: 40px;
 `
 
-const RightArrow = styled.img.attrs({
-  src: rightArrow,
-})`
-  z-index: 1;
-  height: 40px;
-  &:hover {
-    cursor: pointer;
-  }
-`
+const LeftArrow = arrowFactory(leftArrow)
+const RightArrow = arrowFactory(rightArrow)
 
 export { RightArrow, LeftArrow }
