@@ -51,8 +51,8 @@ class Frekky < SlackRubyBot::Bot
 
   command("deploy") do |client, data, match|
     channel = client.channels[data.channel]
-    if !channel || channel.name != "dev"
-      say_in_context("Ask me in #dev so everyone's aware.", client, data)
+    if !channel || channel.name != "tech"
+      say_in_context("Ask me in #tech so everyone's aware.", client, data)
     else
       project_key = (match[:expression] || "").downcase.gsub(/^the /, "")
       if !project_key
