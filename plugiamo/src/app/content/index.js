@@ -27,8 +27,10 @@ const Content = ({
       {showAssessmentContent ? (
         <AssessmentContent
           animateOpacity
+          setShowAssessmentContent={setShowAssessmentContent}
           setShowingContent={setShowingContent}
           setShowingLauncher={setShowingLauncher}
+          showAssessmentContent={showAssessmentContent}
           showingContent
         />
       ) : (

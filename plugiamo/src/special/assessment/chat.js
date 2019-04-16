@@ -23,6 +23,8 @@ const Chat = ({
   showingCtaButton,
   goToPrevStep,
   nothingSelected,
+  ctaButtonClicked,
+  setCtaButtonClicked,
 }) => (
   <ScrollLock>
     <Cover
@@ -30,7 +32,7 @@ const Chat = ({
       currentStep={currentStep}
       goToPrevStep={goToPrevStep}
       minimized={coverMinimized}
-      showBackButton={currentStep.type !== 'store'}
+      showBackButton
       step={step}
     />
     <ProgressBar hide={currentStep.type === 'store'} progress={progress} />
@@ -39,6 +41,7 @@ const Chat = ({
         contentRef={contentRef}
         coverMinimized={coverMinimized}
         goToNextStep={goToNextStep}
+        goToPrevStep={goToPrevStep}
         onScroll={handleScroll}
         setContentRef={setContentRef}
         setShowingContent={setShowingContent}
@@ -62,7 +65,12 @@ const Chat = ({
         touch={touch}
       />
     )}
-    <CtaButton goToNextStep={goToNextStep} hide={currentStep.type === 'store' || !showingCtaButton} />
+    <CtaButton
+      clicked={ctaButtonClicked}
+      goToNextStep={goToNextStep}
+      hide={currentStep.type === 'store' || !showingCtaButton}
+      setClicked={setCtaButtonClicked}
+    />
   </ScrollLock>
 )
 

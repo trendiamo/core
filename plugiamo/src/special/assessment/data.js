@@ -453,6 +453,10 @@ const data = {
           imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/list_modal_header.jpg',
           backgroundColor: '#111',
           textColor: '#fff',
+          backButton: {
+            textColor: '#fff',
+            backgroundColor: 'rgba(255, 255, 255, 0.3)',
+          },
         },
       },
     },

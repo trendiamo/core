@@ -24,11 +24,14 @@ const Base = ({
   coverMinimized,
   goToPrevStep,
   nothingSelected,
+  ctaButtonClicked,
+  setCtaButtonClicked,
 }) => (
   <Container animateOpacity={animateOpacity} contentRef={contentRef}>
     <Chat
       contentRef={contentRef}
       coverMinimized={coverMinimized}
+      ctaButtonClicked={ctaButtonClicked}
       currentStep={currentStep}
       endNodeTags={endNodeTags}
       goToNextStep={goToNextStep}
@@ -37,6 +40,7 @@ const Base = ({
       nothingSelected={nothingSelected}
       progress={progress}
       setContentRef={setContentRef}
+      setCtaButtonClicked={setCtaButtonClicked}
       setShowingContent={setShowingContent}
       setShowingLauncher={setShowingLauncher}
       showingCtaButton={showingCtaButton}
@@ -50,7 +54,9 @@ export default compose(
   withState('pluginState', 'setPluginState', 'default'),
   withState('animateOpacity', 'setAnimateOpacity', ({ animateOpacity }) => animateOpacity),
   withProps({ module: data.assessment }),
-  withState('currentStepKey', 'setCurrentStepKey', 'root'),
+  withState('currentStepKey', 'setCurrentStepKey', ({ showAssessmentContent }) =>
+    typeof showAssessmentContent !== 'boolean' ? showAssessmentContent.key : 'root'
+  ),
   withState('nothingSelected', 'setNothingSelected', false),
   withProps(({ module, currentStepKey }) => ({
     step: module && module.steps[currentStepKey],
@@ -59,10 +65,15 @@ export default compose(
   withState('coverMinimized', 'setCoverMinimized', ({ step }) => !!step.header.minimized),
   withState('touch', 'setTouch', true),
   withState('currentStep', 'setCurrentStep', ({ step }) => step),
-  withState('tags', 'setTags', []),
-  withState('progress', 'setProgress', 0),
+  withState('tags', 'setTags', ({ showAssessmentContent }) =>
+    typeof showAssessmentContent !== 'boolean' ? showAssessmentContent.key.split('/') : []
+  ),
+  withState('progress', 'setProgress', ({ showAssessmentContent }) =>
+    typeof showAssessmentContent !== 'boolean' ? showAssessmentContent.progress : 0
+  ),
   withState('endNodeTags', 'setEndNodeTags', []),
   withState('showingCtaButton', 'setShowingCtaButton', false),
+  withState('ctaButtonClicked', 'setCtaButtonClicked', false),
   withHandlers(() => {
     let contentRef
     return {
@@ -171,28 +182,38 @@ export default compose(
       setAnimateOpacity,
       setNothingSelected,
       setEndNodeTags,
+      currentStepKey,
+      setCtaButtonClicked,
     }) => () => {
       const tagsLength = tags.length
       if (tagsLength === 0) {
         setAnimateOpacity(true)
         return setTimeout(() => setShowAssessmentContent(false), 300)
       }
-      const key = tagsLength > 1 ? tags[tagsLength - 1] : 'root'
-      let newTags = [...tags]
-      newTags.pop()
+      let key = tags
+      let newTags = tags
+      if (currentStepKey !== 'store') {
+        key = tagsLength > 1 ? tags[tagsLength - 1] : 'root'
+        newTags = [...tags]
+        newTags.pop()
+        setProgress(key === 'root' ? 0 : progress - 33)
+      }
       const newStepKey = newTags.join('/')
+      if (currentStepKey === 'store') {
+        setShowAssessmentContent({ key: newStepKey, progress })
+      }
       setCurrentStepKey(key === 'root' ? key : newStepKey)
       setTags(newTags)
-      setProgress(key === 'root' ? 0 : progress - 33)
       setShowingCtaButton(false)
       setEndNodeTags([])
       setNothingSelected(true)
       setTimeout(() => setNothingSelected(false), 800)
+      setCtaButtonClicked(false)
     },
   }),
   lifecycle({
     componentDidMount() {
-      const { step, setCurrentStep, animateOpacity, setAnimateOpacity } = this.props
+      const { step, setCurrentStep, animateOpacity, setAnimateOpacity, progress, setProgress } = this.props
       rememberPersona(data.assessment.persona)
       if (animateOpacity) {
         setTimeout(() => {
@@ -200,14 +221,20 @@ export default compose(
         }, 10)
       }
       setCurrentStep(step)
+      progress === 100 && setTimeout(() => setProgress(progress - 33), 1000)
     },
     componentWillUnmount() {
       timeout.clear('exitOnMobile')
       timeout.clear('loadingProgressBar')
     },
     componentDidUpdate(prevProps) {
-      const { step, setCurrentStep } = this.props
+      const { step, setCurrentStep, progress, setProgress } = this.props
       if (prevProps.step !== step) {
+        if (prevProps.currentStepKey === 'store' && progress === 100) {
+          setTimeout(() => {
+            setProgress(progress - 33)
+          }, 2000)
+        }
         setTimeout(
           () => {
             setCurrentStep(step)
