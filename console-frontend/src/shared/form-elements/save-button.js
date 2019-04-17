@@ -1,9 +1,18 @@
 import Button from 'shared/button'
 import React from 'react'
 
-const SaveButton = ({ onClick, tooltipText, tooltipEnabled, isFormSubmitting, isFormPristine, message, disabled }) => (
+const SaveButton = ({
+  color,
+  onClick,
+  tooltipText,
+  tooltipEnabled,
+  isFormSubmitting,
+  isFormPristine,
+  message,
+  disabled,
+}) => (
   <Button
-    color="primaryGradient"
+    color={color || 'primaryGradient'}
     disabled={disabled}
     isFormPristine={isFormPristine}
     isFormSubmitting={isFormSubmitting}

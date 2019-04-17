@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form, HelperText } from 'shared/form-elements'
-import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow } from 'utils'
+import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow, refreshRoute } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormControl, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
@@ -150,12 +150,17 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async event => {
+    onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async (event, action) => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       if (result.error || result.errors) return setIsFormSubmitting(false)
-      if (location.pathname !== routes.triggerEdit(result.id)) history.push(routes.triggerEdit(result.id))
-      setIsFormSubmitting(false)
+      if (action === 'Save & New') {
+        location.pathname === routes.triggerCreate()
+          ? refreshRoute(history, routes.triggerCreate())
+          : history.push(routes.triggerCreate())
+      } else {
+        if (location.pathname !== routes.triggerEdit(result.id)) history.push(routes.triggerEdit(result.id))
+      }
       return result
     },
     selectFlow: ({ form, setForm }) => selected => {
@@ -174,6 +179,7 @@ export default compose(
         isFormPristine={isFormPristine}
         isFormSubmitting={isFormSubmitting}
         onFormSubmit={onFormSubmit}
+        saveAndCreateNewEnabled
         saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
         tooltipEnabled
         tooltipText="No changes to save"

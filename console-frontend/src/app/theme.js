@@ -80,6 +80,13 @@ const customButtons = {
     color: 'rgba(0, 0, 0, 0.6)',
     boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.1)',
   },
+  actions: {
+    backgroundColor: '#fff',
+    color: '#ff6641',
+    hover: {
+      color: '#ff6641',
+    },
+  },
 }
 
 const customPalette = {

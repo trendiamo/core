@@ -1,4 +1,5 @@
 import auth from 'auth'
+import routes from 'app/routes'
 import {
   apiAccount,
   apiAccountCreate,
@@ -143,3 +144,10 @@ export const apiRequest = async (requestMethod, args, options) => {
 }
 
 export const atLeastOneNonBlankCharRegexp = '.*\\S+.*'
+
+// refreshRoute goes to "/empty", and replaces that history entry by the original route,
+// remounting the original component
+export const refreshRoute = (history, route, query) => {
+  history.push(routes.nullRoute())
+  history.replace(route, query)
+}
