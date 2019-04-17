@@ -160,8 +160,11 @@ export const query = graphql`
         node {
           name
           logo {
-            fixed(width: 160, toFormat: WEBP) {
+            fluid(maxWidth: 160, toFormat: WEBP) {
+              aspectRatio
+              sizes
               src
+              srcSet
             }
           }
         }

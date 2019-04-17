@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React, { useState } from 'react'
 import Slider from 'react-slick'
 import styled from 'styled-components'
@@ -233,29 +234,19 @@ const Card = styled.div`
 `
 
 const ImageContainer = styled.div`
-  width: 100%;
-  margin-top: 40px;
-
   display: none;
 
   @media (min-width: 500px) {
     display: block;
-    width: 80%;
+    margin-top: 40px;
+    width: 50%;
   }
-  @media (min-width: 700px) {
-    position: relative;
-    width: 550px;
-  }
-`
 
-const StyledImage = styled.img`
-  width: 100%;
-  objectfit: contain;
   @media (min-width: 900px) {
-    position: absolute;
-    width: 110%;
-    right: 20px;
-    bottom: -280px;
+    margin-top: 0;
+    .gatsby-image-wrapper {
+      left: -10%;
+    }
   }
 `
 
@@ -277,7 +268,7 @@ const LevelUpSlider = ({ levelUp, levelUpSliderContent }) => {
                     <Link to="/features">{slide.node.slideCta}</Link>
                   </Card>
                   <ImageContainer>
-                    <StyledImage alt="" src={slide.node.slideImage.fixed.src} />
+                    <Img alt="" fluid={slide.node.slideImage.fluid} />
                   </ImageContainer>
                 </Slide>
               </div>

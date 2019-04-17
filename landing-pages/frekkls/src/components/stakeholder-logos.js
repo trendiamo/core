@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import Slider from 'react-slick'
 import styled from 'styled-components'
@@ -32,31 +33,6 @@ const sliderSettings = {
   ],
 }
 
-const LogoContainer = styled.div`
-  display: flex;
-  text-align: center;
-  align-items: center;
-  flex: 1;
-  height: 3rem;
-  margin: 0rem 1rem;
-  @media (min-width: 600px) {
-    margin: 0rem 3rem;
-  }
-  @media (min-width: 900px) {
-    margin: 0rem 2rem;
-  }
-`
-
-const Img = styled.img`
-  width: 100%;
-`
-
-const Logo = ({ src }) => (
-  <LogoContainer>
-    <Img alt="" src={src} />
-  </LogoContainer>
-)
-
 const FixedWidthContainer = styled.div`
   @media (min-width: 1200px) {
     width: 1200px;
@@ -68,7 +44,14 @@ const StakeholderLogos = ({ stakeholders }) =>
     <FixedWidthContainer>
       <Slider {...sliderSettings}>
         {stakeholders.edges.map(stakeholder => (
-          <Logo key={stakeholder.node.name} src={stakeholder.node.logo.fixed.src} />
+          <div key={stakeholder.node.name}>
+            <Img
+              alt=""
+              fluid={stakeholder.node.logo.fluid}
+              imgStyle={{ objectFit: 'contain' }}
+              style={{ maxWidth: 160, margin: '0 auto' }}
+            />
+          </div>
         ))}
       </Slider>
     </FixedWidthContainer>

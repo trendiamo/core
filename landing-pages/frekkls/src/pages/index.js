@@ -51,8 +51,11 @@ export const query = graphql`
         node {
           name
           logo {
-            fixed(width: 160, toFormat: WEBP) {
+            fluid(maxWidth: 160, toFormat: WEBP) {
+              aspectRatio
+              sizes
               src
+              srcSet
             }
           }
         }
@@ -135,9 +138,9 @@ export const query = graphql`
             slideText
           }
           slideImage {
-            fixed(width: 605, toFormat: WEBP) {
-              width
-              height
+            fluid(maxWidth: 605, toFormat: WEBP) {
+              aspectRatio
+              sizes
               src
               srcSet
             }
