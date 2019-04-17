@@ -1,4 +1,3 @@
-import animateOnMount from 'shared/animate-on-mount'
 import AssessmentCart from 'special/assessment/cart'
 import AssessmentSizeGuide from 'special/assessment/size-guide'
 import Content from './content'
@@ -12,6 +11,7 @@ import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import { animateOnMount, getBubbleProps, LauncherBubbles } from 'plugin-base'
 import { assessmentCart, assessmentHack } from 'special/assessment/utils'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, production, smallLauncherConfig } from 'config'
 import {
@@ -24,7 +24,6 @@ import {
   withProps,
   withState,
 } from 'recompose'
-import { getBubbleProps, LauncherBubbles } from './launcher-bubbles'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { infoMsgHof } from 'shared/info-msg'
@@ -76,6 +75,7 @@ const AppBaseTemplate = ({
   setShowingContent,
   showingLauncher,
   launcherConfig,
+  outroButtonsClick,
 }) => (
   <AppBaseDiv>
     {showingContent && (
@@ -101,6 +101,7 @@ const AppBaseTemplate = ({
         disappear={disappear}
         extraBubble={extraBubble}
         onToggleContent={onToggleContent}
+        outroButtonsClick={outroButtonsClick}
         position={position}
         setDisappear={setDisappear}
         showingContent={showingContent}
@@ -136,7 +137,13 @@ export const AppBase = compose(
     let launcherConfig = variation === 'Big' ? bigLauncherConfig : smallLauncherConfig
     launcherConfig.optimizelyClientInstance = optimizelyClientInstance
     return { launcherConfig }
-  })
+  }),
+  withHandlers({
+    outroButtonsClick: () => value => {
+      mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
+    },
+  }),
+  withState('disappear', 'setDisappear', ({ disappear }) => !!disappear)
 )(AppBaseTemplate)
 
 export default compose(
@@ -144,7 +151,6 @@ export default compose(
   withProps({ Component: <Router /> }),
   withProps({ Launcher }),
   withProps({ pathFromNav: setupFlowHistory() }),
-  withState('disappear', 'setDisappear', ({ disappear }) => !!disappear),
   graphql(
     gql`
       query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
@@ -258,6 +264,9 @@ export default compose(
       }
       setShowAssessmentContent(false)
       return setShowingContent(!showingContent)
+    },
+    outroButtonsClick: () => value => {
+      mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
     },
   }),
   withHotkeys({

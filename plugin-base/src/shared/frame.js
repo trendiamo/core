@@ -1,8 +1,8 @@
 import omit from 'lodash.omit'
-import ReactDOM from 'preact-compat'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { compose, lifecycle, withState } from 'recompose'
-import { emojifyStyles } from 'plugin-base'
-import { h } from 'preact'
+import { emojifyStyles } from 'ext'
 import { StyleSheetManager } from 'styled-components'
 
 const Frame = ({ children, iframeRef, isLoaded, setIframeRef, title, ...rest }) => (
@@ -29,14 +29,6 @@ body, html {
 }
 ${emojifyStyles}
 `
-
-const loadCss = (head, href) => {
-  const link = document.createElement('link')
-  link.rel = 'stylesheet'
-  link.type = 'text/css'
-  link.href = href
-  head.appendChild(link)
-}
 
 const addCss = (head, css) => {
   const element = document.createElement('style')

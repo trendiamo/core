@@ -15,6 +15,12 @@ module.exports = {
       commonjs2: 'react',
       root: 'React',
     },
+    'react-dom': {
+      amd: 'react-dom',
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      root: 'ReactDOM',
+    },
     'styled-components': {
       amd: 'styled-components',
       commonjs: 'styled-components',

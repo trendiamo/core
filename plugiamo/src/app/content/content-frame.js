@@ -1,11 +1,9 @@
-import animateOnMount from 'shared/animate-on-mount'
 import CloseButton from './close-button'
-import Frame from 'shared/frame'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import { animateOnMount, FrameBase, history, timeout, transition } from 'plugin-base'
 import { compose, lifecycle } from 'recompose'
 import { h } from 'preact'
-import { history, timeout, transition } from 'plugin-base'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 import { positioning } from 'utils'
 
@@ -50,7 +48,7 @@ const IFrame = compose(
       transition.clear()
     },
   })
-)(styled(Frame).attrs({
+)(styled(FrameBase).attrs({
   title: 'Trendiamo Content',
 })`
   border: 0;

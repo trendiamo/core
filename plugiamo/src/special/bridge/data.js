@@ -14,14 +14,11 @@ const data = {
               message: "Hey! 👋Cool that you're interested!",
               timeStart: 0.5,
               timeEnd: 20,
-              hideBarAfter: 0.2,
-              timeOfElevation: 1.6,
             },
             chatBubbleExtra: {
               message: 'Let me show you more! 👀',
               timeStart: 2.5,
               timeEnd: 18.2,
-              hideBarAfter: 3.4,
               timeStartDuration: 0.4,
             },
             persona: {
@@ -182,14 +179,11 @@ const data = {
               message: 'Choose size and Add to Cart',
               timeStart: 0.5,
               timeEnd: 20,
-              hideBarAfter: 0.2,
-              timeOfElevation: 1.6,
             },
             chatBubbleExtra: {
               message: 'Or: need help with the sizes?',
               timeStart: 2.5,
               timeEnd: 18.2,
-              hideBarAfter: 3.4,
               timeStartDuration: 0.4,
             },
             persona: {
@@ -249,14 +243,11 @@ const data = {
               message: "Hey! 👋Cool that you're interested!",
               timeStart: 0.5,
               timeEnd: 20,
-              hideBarAfter: 0.2,
-              timeOfElevation: 1.6,
             },
             chatBubbleExtra: {
               message: 'Let me show you more! 👀',
               timeStart: 2.5,
               timeEnd: 18.2,
-              hideBarAfter: 3.4,
               timeStartDuration: 0.4,
             },
             persona: {
@@ -417,14 +408,11 @@ const data = {
               message: 'Choose size and Add to Cart',
               timeStart: 0.5,
               timeEnd: 20,
-              hideBarAfter: 0.2,
-              timeOfElevation: 1.6,
             },
             chatBubbleExtra: {
               message: 'Or: need help with the sizes?',
               timeStart: 2.5,
               timeEnd: 18.2,
-              hideBarAfter: 3.4,
               timeStartDuration: 0.4,
             },
             persona: {
@@ -480,14 +468,11 @@ const data = {
               message: "I'm glad that you like it! 🎉",
               timeStart: 0.5,
               timeEnd: 20,
-              hideBarAfter: 0.2,
-              timeOfElevation: 1.6,
             },
             chatBubbleExtra: {
               message: 'Anything else?',
               timeStart: 2.5,
               timeEnd: 18.2,
-              hideBarAfter: 3.4,
               timeStartDuration: 0.4,
             },
             persona: {
@@ -575,8 +560,6 @@ const data = {
               message: 'Awesome! 🤩 Was I helpful?',
               timeStart: 0.5,
               timeEnd: null,
-              hideBarAfter: 0.2,
-              timeOfElevation: 1.6,
             },
             chatBubbleExtra: {
               buttons: [

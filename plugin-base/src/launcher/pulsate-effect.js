@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const PulsateCircle = styled.div`
-  position: fixed;
+  position: absolute;
   display: ${({ active }) => (active ? 'block' : 'none')};
   top: 0;
   left: 0;
