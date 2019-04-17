@@ -77,6 +77,9 @@ const routes = {
   admin() {
     return '/admin'
   },
+  nullRoute() {
+    return '/empty'
+  },
 }
 
 export default routes
