@@ -1,11 +1,9 @@
 import LauncherBubbleFrame from './launcher-bubble-frame'
-import mixpanel from 'ext/mixpanel'
+import React from 'react'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { bubbleExtraDefault, defaultBubble } from './config'
 import { ChatBubbleBase, Container } from './components'
-import { emojify, timeout } from 'plugin-base'
-import { h } from 'preact'
-import { production } from 'config'
+import { emojify, timeout } from 'ext'
 
 const LauncherBubbleBase = ({
   position,
@@ -14,18 +12,22 @@ const LauncherBubbleBase = ({
   animation,
   setTextWidthRef,
   textWidth,
-  optimizelyToggleContent,
-  ...props
+  onClick,
+  config,
+  elevation,
+  offset,
 }) => (
   <LauncherBubbleFrame
     animation={animation}
     bubble={bubble}
+    config={config}
     disappear={disappear}
+    elevation={elevation}
+    offset={offset}
     position={position}
     textWidth={textWidth}
-    {...props}
   >
-    <Container onClick={optimizelyToggleContent}>
+    <Container onClick={onClick}>
       <ChatBubbleBase dangerouslySetInnerHTML={{ __html: emojify(bubble.message) }} ref={setTextWidthRef} />
     </Container>
   </LauncherBubbleFrame>
@@ -46,7 +48,7 @@ const LauncherBubble = compose(
   withHandlers(() => {
     let textWidthRef
     return {
-      setTextWidthRef: () => ref => (textWidthRef = ref),
+      setTextWidthRef: () => ref => (textWidthRef = ref && ref.base ? ref : { base: ref }),
       changeTextWidth: ({ setTextWidth }) => () => {
         if (!textWidthRef || !textWidthRef.base) return
         setTextWidth(textWidthRef.base.offsetWidth)
@@ -56,18 +58,17 @@ const LauncherBubble = compose(
     }
   }),
   withHandlers({
-    reset: ({ setTimeEnded, setAnimation, setTextWidth, setElevation, bubbleTimeoutId }) => () => {
+    reset: ({ setTimeEnded, extraBubble, setAnimation, setTextWidth, setElevation, bubbleTimeoutId }) => () => {
       setTimeEnded(false)
       setAnimation(null)
       setTextWidth(0)
-      setElevation(false)
+      !extraBubble && setElevation(false)
       timeout.clear(bubbleTimeoutId)
     },
-    optimizelyToggleContent: ({ onToggleContent, config, showingContent }) => () => {
-      if (production && config.optimizelyClientInstance && !showingContent) {
-        config.optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
+    safeAction: ({ showingContent }) => callback => () => {
+      if (!showingContent) {
+        callback()
       }
-      onToggleContent()
     },
   }),
   withHandlers({
@@ -79,40 +80,42 @@ const LauncherBubble = compose(
       setAnimation,
       setElevation,
       setTimeEnded,
+      extraBubbleExists,
+      safeAction,
     }) => () => {
       if (!bubble.message) return false
       reset()
       timeout.set(
         bubbleTimeoutId,
-        () => {
+        safeAction(() => {
           setAnimation('roll')
           changeTextWidth()
-        },
+        }),
         bubble.timeStart * 1000
       )
       if (bubble.timeEnd != null)
         timeout.set(
           bubbleTimeoutId,
-          () => {
+          safeAction(() => {
             setAnimation('unroll')
-          },
+          }),
           (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd) * 1000
         )
-      if (bubble.timeOfElevation != null) {
+      if (extraBubbleExists) {
         timeout.set(
           bubbleTimeoutId,
-          () => {
+          safeAction(() => {
             setElevation(true)
-          },
+          }),
           (bubble.timeStart + bubble.timeStartDuration + bubble.timeOfElevation) * 1000
         )
       }
       if (bubble.timeEnd != null)
         timeout.set(
           bubbleTimeoutId,
-          () => {
+          safeAction(() => {
             setTimeEnded(true)
-          },
+          }),
           (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd + bubble.timeEndDuration) * 1000
         )
     },
@@ -123,9 +126,29 @@ const LauncherBubble = compose(
       animateThis()
     },
     componentDidUpdate(prevProps) {
-      const { animateThis, showingContent, hiddenForContent, setHiddenForContent } = this.props
-      if (prevProps.bubble.message !== this.props.bubble.message) animateThis()
+      const {
+        animateThis,
+        showingContent,
+        setElevation,
+        hiddenForContent,
+        setHiddenForContent,
+        changeTextWidth,
+        setAnimation,
+        bubble,
+        extraBubbleExists,
+      } = this.props
+      const messageChanged = prevProps.bubble.message !== bubble.message
+      if (
+        prevProps.extraBubbleExists !== extraBubbleExists ||
+        (prevProps.bubble.message === '' && messageChanged && extraBubbleExists)
+      ) {
+        setElevation(extraBubbleExists)
+      }
       if (showingContent && !hiddenForContent) setHiddenForContent(true)
+      if (messageChanged) {
+        setAnimation('roll')
+        setTimeout(changeTextWidth, 10)
+      }
       if (!showingContent && hiddenForContent) {
         animateThis()
         setHiddenForContent(false)

@@ -4,6 +4,7 @@ const defaultBubble = {
   timeEnd: 20,
   timeStartDuration: 0.4,
   timeEndDuration: 0.4,
+  timeOfElevation: 1.6,
 }
 
 const bubbleExtraDefault = {

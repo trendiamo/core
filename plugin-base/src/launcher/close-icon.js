@@ -1,6 +1,6 @@
+import React from 'react'
 import styled from 'styled-components'
-import { h } from 'preact'
-import { IconClose } from 'plugin-base'
+import { IconClose } from 'icons'
 
 const StyledIconClose = styled(IconClose)`
   fill: white;

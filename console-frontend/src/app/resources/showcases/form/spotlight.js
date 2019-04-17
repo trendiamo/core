@@ -92,6 +92,7 @@ const Spotlight = ({
         initialSelectedItem={spotlight.__persona && { value: spotlight.__persona, label: spotlight.__persona.name }}
         label="Persona"
         onChange={selectPersona}
+        onFocus={onFocus}
         options={{ suggestionItem: 'withAvatar' }}
         required
       />

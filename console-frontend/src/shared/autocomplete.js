@@ -102,6 +102,7 @@ const Autocomplete = ({
   menuIsOpen,
   suggestions,
   initialSelectedItem,
+  onFocus,
 }) => (
   <Downshift
     initialSelectedItem={initialSelectedItem}
@@ -130,6 +131,7 @@ const Autocomplete = ({
             onFocus: () => {
               clearSelection()
               selectedItem && setPrevSelected(selectedItem)
+              onFocus && onFocus()
             },
             onBlur: () => {
               if (selectedItem === null) selectItem(prevSelected)

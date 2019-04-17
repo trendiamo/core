@@ -1,9 +1,9 @@
 import Frame from 'shared/frame'
 import keyframes from './keyframes'
 import omit from 'lodash.omit'
+import React from 'react'
 import styled from 'styled-components'
-import { h } from 'preact'
-import { positioning } from 'utils'
+import { positioning } from 'tools'
 
 const LauncherBubbleFrame = styled(props => (
   <Frame
@@ -26,8 +26,8 @@ const LauncherBubbleFrame = styled(props => (
   position: fixed;
   transition: bottom 0.4s cubic-bezier(0.43, 0.21, 0.35, 1.7);
   border-radius: ${({ position }) => (position === 'left' ? '10px 20px 20px 1px' : '20px 10px 1px 20px')};
-  ${({ position, elevation, config }) =>
-    positioning.get({ type: 'launcherBubbles', position, elevation, reset: true, config })}
+  ${({ position, elevation, config, offset }) =>
+    positioning.get({ type: 'launcherBubbles', position, elevation, reset: true, config, offset })}
   height: 40px;
   box-shadow: 2px 7px 40px 2px rgba(64, 67, 77, 0.28), 0px 2px 4px 0px rgba(0, 0, 0, 0.17);
   background-color: #fbfbfb;

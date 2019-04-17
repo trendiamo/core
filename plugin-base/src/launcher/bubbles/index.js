@@ -1,6 +1,6 @@
 import BubbleButtons from './buttons'
 import LauncherBubble from './launcher-bubble'
-import { h } from 'preact'
+import React from 'react'
 
 const getExtraBubble = flow => {
   if (flow.flowType === 'outro') {
@@ -29,9 +29,6 @@ const getBubbleProps = data => {
   if (!data) return
   const extraBubble = data.launcher ? data.launcher.chatBubbleExtra : getExtraBubble(data.flow)
   let bubble = data.launcher ? data.launcher.chatBubble : { message: data.flow.chatBubbleText }
-  if (extraBubble.buttons || extraBubble.message) {
-    bubble.timeOfElevation = 1.6
-  }
   if (extraBubble.buttons) {
     bubble.timeEnd = null
   }
@@ -51,32 +48,37 @@ const LauncherBubbles = ({
   extraBubble,
   setDisappear,
   config,
+  offset,
+  outroButtonsClick,
 }) => (
   <div>
     <LauncherBubble
       bubble={bubble}
       config={config}
       disappear={disappear}
-      onToggleContent={onToggleContent}
+      extraBubbleExists={extraBubble && (extraBubble.message || extraBubble.buttons)}
+      offset={offset}
+      onClick={onToggleContent}
       position={position}
       showingContent={showingContent}
     />
-    {extraBubble && extraBubble.message && (
-      <LauncherBubble
-        bubble={extraBubble}
-        config={config}
-        disappear={disappear}
-        extraBubble
-        onToggleContent={onToggleContent}
-        position={position}
-        showingContent={showingContent}
-      />
-    )}
+    <LauncherBubble
+      bubble={extraBubble}
+      config={config}
+      disappear={disappear}
+      extraBubble
+      offset={offset}
+      onClick={onToggleContent}
+      position={position}
+      showingContent={showingContent}
+    />
     {extraBubble && extraBubble.buttons && (
       <BubbleButtons
         bubble={extraBubble}
         config={config}
         disappear={disappear}
+        offset={offset}
+        onClick={outroButtonsClick}
         position={position}
         setDisappear={setDisappear}
         showingContent={showingContent}
