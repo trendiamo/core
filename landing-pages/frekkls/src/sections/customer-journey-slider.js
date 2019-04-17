@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React, { useState } from 'react'
 import Slider from 'react-slick'
 
@@ -33,7 +34,7 @@ const CustomerJourneySlider = ({ customerJourneySlider, customerJourneySliderCon
                     <p>{slide.node.mainText.mainText}</p>
                   </DetailsContainer>
                   <ImageContainer>
-                    <img alt="" src={slide.node.image.fixed.src} />
+                    <Img alt="" fixed={slide.node.image.fixed} />
                   </ImageContainer>
                 </Slide>
               </div>

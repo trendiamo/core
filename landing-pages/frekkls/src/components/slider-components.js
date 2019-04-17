@@ -97,10 +97,8 @@ export const SlideNameContainer = styled.div`
 
 const getSlideName = ({ sliderContent, index }) => sliderContent.edges[index].node.heading
 
-const iconSrc = ({ sliderContent, index, currentSlideIndex }) =>
-  currentSlideIndex === index
-    ? sliderContent.edges[index].node.activeIcon.file.url
-    : sliderContent.edges[index].node.icon.file.url
+const chooseIcon = ({ sliderContent, index, currentSlideIndex }) =>
+  currentSlideIndex === index ? sliderContent.edges[index].node.activeIcon : sliderContent.edges[index].node.icon
 
 const SlideLabelContainer = styled.div`
   display: flex;
@@ -119,7 +117,7 @@ const CustomPagingFactory = (sliderContent, currentSlideIndex) => {
     <SlideLabelContainer isSelected={currentSlideIndex === index}>
       <ImagesContainer>
         <IconContainer isLastElement={index === sliderContent.edges.length - 1}>
-          <img alt="" src={iconSrc({ sliderContent, index, currentSlideIndex })} />
+          <img alt="" src={chooseIcon({ sliderContent, index, currentSlideIndex }).file.url} />
         </IconContainer>
         {currentSlideIndex === index ? (
           <StepArrowOrange isLastElement={index === sliderContent.edges.length - 1} />

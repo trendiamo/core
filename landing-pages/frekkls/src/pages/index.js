@@ -75,9 +75,9 @@ export const query = graphql`
           }
           slideImage {
             fixed(width: 350) {
-              src
               width
               height
+              src
               srcSet
             }
           }
@@ -136,7 +136,10 @@ export const query = graphql`
           }
           slideImage {
             fixed(width: 605, toFormat: WEBP) {
+              width
+              height
               src
+              srcSet
             }
           }
           slideCta

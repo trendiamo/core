@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import Slider from 'react-slick'
 import styled from 'styled-components'
@@ -98,7 +99,7 @@ const FeaturesSlider = ({ featuresSlider, featuresSliderContent }) => (
                 <h2>{feature.node.slideHeader}</h2>
                 <p>{feature.node.slideText.slideText}</p>
                 <div>
-                  <img alt="" src={feature.node.slideImage.fixed.src} />
+                  <Img alt="" fixed={feature.node.slideImage.fixed} />
                 </div>
               </FeatureSlide>
             </FeatureSlideContainer>
