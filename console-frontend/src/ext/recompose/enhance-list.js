@@ -120,8 +120,9 @@ const enhanceList = ({
     branch(({ recordsCount }) => recordsCount === 0, renderComponent(blankState)),
     withHandlers({
       deleteRecords: ({ enqueueSnackbar, selectedIds, fetchRecords, setSelectedIds, setIsSelectAll }) => async () => {
-        const { requestError } = await apiRequest(api.destroy, [{ ids: selectedIds }])
+        const { errors, requestError } = await apiRequest(api.destroy, [{ ids: selectedIds }])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         await fetchRecords()
         setSelectedIds([])
         setIsSelectAll(false)
