@@ -1,3 +1,4 @@
+import getFrekklsConfig from 'frekkls-config'
 import { BackButton } from 'plugin-base'
 import { branch, compose, renderNothing, withHandlers } from 'recompose'
 import { h } from 'preact'
@@ -11,6 +12,6 @@ const FlowBackButton = compose(
     },
   }),
   branch(() => !shouldRenderBack(), renderNothing)
-)(({ onClick }) => <BackButton onClick={onClick} />)
+)(({ onClick }) => <BackButton backButtonLabel={getFrekklsConfig().i18n.backButton} onClick={onClick} />)
 
 export default FlowBackButton

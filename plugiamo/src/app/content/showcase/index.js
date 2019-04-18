@@ -25,7 +25,7 @@ const assessmentSpotlight = {
 }
 
 const Showcase = compose(
-  withProps({ history, FlowBackButton }),
+  withProps({ history, FlowBackButton, backButtonLabel: getFrekklsConfig().i18n.backButton }),
   graphql(
     gql`
       query($id: ID!) {
