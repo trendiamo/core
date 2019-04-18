@@ -40,9 +40,9 @@ const SpotlightCover = compose(
   })),
   branch(({ spotlight }) => !spotlight, renderNothing),
   withTextTyping(({ spotlight }) => spotlight.persona.description, 500)
-)(({ isLeaving, routeToShowcase, setImgRef, setNameRef, spotlight, currentDescription }) => (
+)(({ backButtonLabel, isLeaving, routeToShowcase, setImgRef, setNameRef, spotlight, currentDescription }) => (
   <CoverInner>
-    <BackButton isLeaving={isLeaving} onClick={routeToShowcase} />
+    <BackButton backButtonLabel={backButtonLabel} isLeaving={isLeaving} onClick={routeToShowcase} />
     <FlexDiv>
       <CoverImg imgRef={setImgRef} src={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
       <PaddedCover>

@@ -18,6 +18,7 @@ const defaultConfig = {
   onChatStop: () => null,
   processChatOptions: chatOptions => chatOptions,
   i18n: {
+    backButton: 'Back',
     productsSelectedBy: firstName => `Products selected by ${firstName}`,
   },
 }
@@ -42,6 +43,12 @@ const getFrekklsConfig = () => {
 let frekklsConfig = null
 
 export default () => {
-  if (!frekklsConfig) frekklsConfig = { ...defaultConfig, ...getFrekklsConfig() }
+  if (!frekklsConfig) {
+    frekklsConfig = {
+      ...defaultConfig,
+      ...getFrekklsConfig(),
+      i18n: { ...defaultConfig.i18n, ...getFrekklsConfig().i18n },
+    }
+  }
   return frekklsConfig
 }

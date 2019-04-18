@@ -16,10 +16,10 @@ const Span = styled.span`
 `
 
 const BackButton = animate(
-  styled(({ className, onClick, config = {}, hide }) => (
+  styled(({ backButtonLabel, className, onClick, config = {}, hide }) => (
     <button className={className} onClick={hide ? () => {} : onClick} type="button">
       <Chevron config={config} />
-      <Span>{'Back'}</Span>
+      <Span>{backButtonLabel}</Span>
     </button>
   ))`
     color: ${({ config = {} }) => config.textColor || '#aaa'};

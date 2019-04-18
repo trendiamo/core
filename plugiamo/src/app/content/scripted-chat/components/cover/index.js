@@ -2,6 +2,7 @@ import Background from './background'
 import Content, { PersonaName } from './content'
 import defaultConfig from './config'
 import FlowBackButton from 'shared/flow-back-button'
+import getFrekklsConfig from 'frekkls-config'
 import styled from 'styled-components'
 import { BackButton } from 'plugin-base'
 import { branch, compose, lifecycle, renderComponent, withProps, withState } from 'recompose'
@@ -46,6 +47,7 @@ export const CoverBridge = ({ header, minimized, config }) => (
 const CoverAssessmentTemplate = ({ headers, toggle, minimized, config, goToPrevStep, showBackButton }) => (
   <CoverBase backgroundColor="#fff" config={config} hackathon minimized={minimized}>
     <BackButton
+      backButtonLabel={getFrekklsConfig().i18n.backButton}
       color="black"
       config={headers[toggle ? 1 : 0].backButton}
       flexibleCover
