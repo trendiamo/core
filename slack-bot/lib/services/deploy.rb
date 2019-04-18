@@ -35,6 +35,7 @@ SH
 
 PLUGIN_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/plugiamo && \
+  yarn add ./plugin-base && \
   yarn install --silent --no-progress && \
   cp #{ENV['PLUGIN_ENV_FILE']} . && \
   mkdir -p ~/.aws && \
