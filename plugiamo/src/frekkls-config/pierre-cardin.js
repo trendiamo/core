@@ -6,6 +6,7 @@ export default {
     tmc.parentElement.style.cssText += ';z-index:2147482999 !important;'
   },
   i18n: {
+    backButton: 'Zurück',
     productsSelectedBy: firstName => `Die Lieblingsprodukte von ${firstName}`,
   },
 }
