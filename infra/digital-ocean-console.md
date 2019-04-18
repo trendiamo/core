@@ -2,7 +2,7 @@
 
 ## Description
 
-This droplet has apps managed by dokku. The apps are: `console-backend`, `shopify-app`.
+This droplet has apps managed by dokku. The apps are: `console-backend`, `shopify-app`, `slack-bot`.
 
 ## Commands to setup
 
