@@ -37,9 +37,10 @@ dokku postgres:link console-backend-pg console-backend
 dokku redis:create console-backend-redis
 dokku redis:link console-backend-redis console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
-dokku config:set console-backend CORS_ORIGIN=admin.frekkls.com FRONTEND_BASE_URL=https://admin.frekkls.com MAILER_HOST=api.trendiamo.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=...
+dokku config:set console-backend CORS_ORIGIN=admin.frekkls.com FRONTEND_BASE_URL=https://admin.frekkls.com MAILER_HOST=api.frekkls.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=...
 dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
+dokku domains:add console-backend api.frekkls.com
 dokku ps:scale console-backend web=1 worker=1 scheduler=1
 # from your local machine, do the first deploy:
 bin/rails deploy
@@ -71,7 +72,7 @@ bin/deploy
 # To install certificates
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d api.trendiamo.com -d shopify.frekkls.com
+certbot certonly --standalone --preferred-challenges http -d api.trendiamo.com -d api.frekkls.com -d shopify.frekkls.com
 service nginx start
 
 mkdir keycert
