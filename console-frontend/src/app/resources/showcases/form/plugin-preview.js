@@ -17,6 +17,7 @@ const Preview = ({
   <PluginPreview
     Base={
       <ShowcaseBase
+        backButtonLabel="Back"
         callbacks={previewCallbacks}
         history={pluginHistory}
         routeToShowcase={routeToShowcase}
