@@ -21,8 +21,12 @@ const SectionContainer = styled.div`
   }
 `
 
-const StyledButton = styled(Button)`
+const ToggleFormButton = styled(Button)`
   width: 140px;
+`
+
+const SaveButton = styled(Button)`
+  margin-top: 1rem;
 `
 
 const StyledPowerButton = styled(IconButton)`
@@ -57,9 +61,9 @@ const Admin = ({
     <Section>
       <ButtonsContainer>
         <LogoutButton signOutButtonClick={signOutButtonClick} />
-        <StyledButton color="primaryGradient" onClick={toggleNewAccountForm} type="submit" variant="contained">
+        <ToggleFormButton color="primaryGradient" onClick={toggleNewAccountForm} type="submit" variant="contained">
           {isNewAccount ? 'Close Form' : 'New Account'}
-        </StyledButton>
+        </ToggleFormButton>
       </ButtonsContainer>
       {isNewAccount ? (
         <form onSubmit={onAccountFormSubmit}>
@@ -76,17 +80,15 @@ const Admin = ({
               value={accountForm.name}
             />
           </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <HostnamesForm
-              addHostnameSelect={addHostnameSelect}
-              deleteHostname={deleteHostname}
-              editHostnameValue={editHostnameValue}
-              form={accountForm.websitesAttributes[0]}
-            />
-          </FormControl>
-          <Button color="primaryGradient" type="submit" variant="contained">
+          <HostnamesForm
+            addHostnameSelect={addHostnameSelect}
+            deleteHostname={deleteHostname}
+            editHostnameValue={editHostnameValue}
+            form={accountForm.websitesAttributes[0]}
+          />
+          <SaveButton color="primaryGradient" type="submit" variant="contained">
             {'Save'}
-          </Button>
+          </SaveButton>
         </form>
       ) : (
         <List component="nav">
