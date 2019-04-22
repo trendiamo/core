@@ -5,7 +5,7 @@ import { animateOnMount, FrameBase, history, timeout, transition } from 'plugin-
 import { compose, lifecycle } from 'recompose'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
-import { positioning } from 'utils'
+import { positioning } from 'plugin-base'
 
 export const ContentFrameContainerBase = styled.div`
   z-index: 2147483000;
