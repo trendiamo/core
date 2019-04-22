@@ -11,18 +11,20 @@ import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, w
 import { styles } from './layout-styles'
 import { withStyles } from '@material-ui/core/styles'
 
-const Layout = ({ appBarContent, children, classes, hasScrolled, logout, sidebarOpen, toggleOpen }) => (
+const Layout = ({ appBarContent, children, classes, hasScrolled, isWelcomePage, logout, sidebarOpen, toggleOpen }) => (
   <div className={classes.root}>
     <div className={classes.appFrame}>
       <Onboarding />
-      <AppBar
-        appBarContent={appBarContent}
-        classes={classes}
-        hasScrolled={hasScrolled}
-        logout={logout}
-        sidebarOpen={sidebarOpen}
-        toggleOpen={toggleOpen}
-      />
+      {!isWelcomePage && (
+        <AppBar
+          appBarContent={appBarContent}
+          classes={classes}
+          hasScrolled={hasScrolled}
+          logout={logout}
+          sidebarOpen={sidebarOpen}
+          toggleOpen={toggleOpen}
+        />
+      )}
       <main className={classes.contentWithSidebar}>
         <Sidebar classes={classes} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen}>
           <Menu classes={classes} logout={logout} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
@@ -55,6 +57,7 @@ const EnhancedLayout = compose(
   withProps(() => ({
     isLoggedIn: auth.isLoggedIn(),
     isAdminPage: window.location.pathname === routes.admin(),
+    isWelcomePage: window.location.pathname === routes.root(),
   })),
   withClasses,
   branch(
