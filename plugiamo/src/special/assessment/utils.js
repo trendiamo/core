@@ -1,5 +1,5 @@
 import dataGathering from 'data-gathering/pierre-cardin'
-import { tagSuggestions } from './data'
+import { suggestions } from './data'
 
 const assessmentHack = () =>
   process.env.ASSESSMENT || localStorage.getItem('trnd-plugin-account') === 'PierreCardinGermany'
@@ -19,6 +19,14 @@ const fetchProducts = callback => {
     .then(results => callback(results))
 }
 
+const shuffle = a => {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
 const getShopcartProductIds = () =>
   dataGathering
     .getProductsFromCart()
@@ -26,28 +34,34 @@ const getShopcartProductIds = () =>
     .toArray()
 
 const recommendedProducts = results => {
-  const shopcartProductIds = getShopcartProductIds()
-
   const productReferences = results.find(item => item.hostname === location.hostname).products
-  const productsMatchingCart = productReferences.filter(product => shopcartProductIds.includes(product.id))
-  const tagsToRecommend = productsMatchingCart.map(product => {
-    const productTag = product.tag
-    // Search for matches by tagSuggestion keys (and return values if found)
-    if (tagSuggestions[productTag]) {
-      return tagSuggestions[productTag]
-    }
-    // Search for matches by tagSuggestion values (and return keys if found)
-    return Object.keys(tagSuggestions).filter(key => tagSuggestions[key].includes(productTag))
-  })
+  const shopcartProductIds = getShopcartProductIds()
+  const shopcartProducts = productReferences.filter(product => shopcartProductIds.includes(product.id))
+
+  const filteredSuggestions = Object.keys(suggestions)
+    .filter(suggestionTag => {
+      return shopcartProducts.find(product => product.tag.includes(suggestionTag))
+    })
+    .reduce((res, key) => ((res[key] = suggestions[key]), res), {})
+
+  let suggestionTags = []
+
+  Object.keys(filteredSuggestions).map(key =>
+    filteredSuggestions[key].map(suggestion => suggestionTags.push(suggestion))
+  )
+
+  // Get unique tags
+  const uniqueTags = [...new Set(suggestionTags)]
 
   const recommendedProducts = productReferences.filter(
     product =>
-      tagsToRecommend.filter(tagToRecommend => tagToRecommend.includes(product.tag)).length > 0 &&
-      !shopcartProductIds.includes(product.id)
+      product.tag !== '' &&
+      !shopcartProductIds.includes(product.id) &&
+      uniqueTags.filter(tagToRecommend => tagToRecommend.includes(product.tag)).length > 0
   )
   return {
     type: 'assessmentProducts',
-    assessmentProducts: recommendedProducts,
+    assessmentProducts: shuffle(recommendedProducts),
   }
 }
 
