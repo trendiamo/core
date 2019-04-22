@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         resource :me, only: %i[show update]
         resources :generated_urls, only: %i[index create]
         get "s3/sign", to: "s3#sign"
+        get "/cors_proxy(/*url)", to: "cors_proxy#download", format: false
 
         devise_scope :user do
           get "/users/confirmation", to: "users/confirmations#show"

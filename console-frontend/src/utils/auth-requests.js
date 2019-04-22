@@ -20,6 +20,7 @@ const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
 const GENERATED_URLS_URL = `${BASE_API_URL}/generated_urls`
 const PATH_URL = `${BASE_API_URL}/path`
 const ACCOUNTS_URL = `${BASE_API_URL}/accounts`
+const CORS_PROXY_URL = `${BASE_API_URL}/cors_proxy`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
@@ -118,6 +119,8 @@ export const apiPersonasAutocomplete = query => apiGetRequest(`${PERSONAS_URL}/a
 
 export const apiPictureList = query => apiListRequest(`${PICTURES_URL}/?${stringify(query)}`)
 export const apiPictureDestroy = body => apiDestroyMultipleRequest(PICTURES_URL, body)
+
+export const apiGetRemotePicture = url => apiGetRequest(`${CORS_PROXY_URL}/${url}`)
 
 export const apiOutroList = query => apiListRequest(`${OUTROS_URL}/?${stringify(query)}`)
 export const apiOutroDestroy = body => apiDestroyMultipleRequest(OUTROS_URL, body)
