@@ -4,7 +4,6 @@ import ItemDiv from 'app/content/scripted-chat/components/item-div'
 import { ChatBackground, convertLogs } from 'app/content/scripted-chat/shared'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
-import { recommendedProducts } from 'special/assessment/utils'
 
 const ChatLogUiTemplate = ({
   clickChatOption,
