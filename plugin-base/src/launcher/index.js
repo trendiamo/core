@@ -10,24 +10,30 @@ const Launcher = ({
   onToggleContent,
   disappear,
   showingContent,
-  config,
+  launcherConfig,
   onClick,
   position,
   personaPicUrl,
 }) => (
   <Frame
-    config={config}
     disappear={disappear}
+    launcherConfig={launcherConfig}
     onToggleContent={onToggleContent}
     position={position}
     scrolling="no"
     showingContent={showingContent}
   >
     <div>
-      {pulsating && <PulsateEffect active={!showingContent} config={config} />}
-      <Circle active={!showingContent} config={config} onClick={onClick} position={position} pulsating={pulsating}>
+      {pulsating && <PulsateEffect active={!showingContent} launcherConfig={launcherConfig} />}
+      <Circle
+        active={!showingContent}
+        launcherConfig={launcherConfig}
+        onClick={onClick}
+        position={position}
+        pulsating={pulsating}
+      >
         <PersonaPic active={!showingContent} url={personaPicUrl} />
-        <CloseIcon active={showingContent} config={config} />
+        <CloseIcon active={showingContent} launcherConfig={launcherConfig} />
       </Circle>
     </div>
   </Frame>

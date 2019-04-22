@@ -12,8 +12,8 @@ const CloseIconContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: ${({ config }) => config.size}px;
-  height: ${({ config }) => config.size}px;
+  width: ${({ launcherConfig }) => launcherConfig.size}px;
+  height: ${({ launcherConfig }) => launcherConfig.size}px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -23,8 +23,8 @@ const CloseIconContainer = styled.div`
   transition: all 0.25s ease;
 `
 
-const CloseIcon = ({ active, config }) => (
-  <CloseIconContainer active={active} config={config}>
+const CloseIcon = ({ active, launcherConfig }) => (
+  <CloseIconContainer active={active} launcherConfig={launcherConfig}>
     <StyledIconClose />
   </CloseIconContainer>
 )

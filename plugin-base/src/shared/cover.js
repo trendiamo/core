@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 
-const defaultConfig = {
+const defaultHeaderConfig = {
   heights: { min: 90, max: 140 },
 }
 
@@ -13,8 +13,9 @@ const Cover = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  height: ${({ config = defaultConfig }) => config.heights.max};
-  max-height: ${({ minimized, config = defaultConfig }) => (minimized ? config.heights.min : config.heights.max)}px;
+  height: ${({ headerConfig = defaultHeaderConfig }) => headerConfig.heights.max};
+  max-height: ${({ minimized, headerConfig = defaultHeaderConfig }) =>
+    minimized ? headerConfig.heights.min : headerConfig.heights.max}px;
   ${({ hackathon }) =>
     !hackathon &&
     `

@@ -66,29 +66,27 @@ export const positioning = {
     this[type] = noStyle ? this.toStyleObject(result) : this.toStyle(result)
     return this[type]
   },
-  getContent({ position, config }) {
+  getContent({ position, launcherConfig }) {
     return {
-      bottom: config.smallFrameSize + this.getElevation(position, config) + 10,
-      [position === 'left' ? 'left' : 'right']: (config.smallFrameSize - config.smallSize) / 2 + 10,
+      bottom: launcherConfig.smallFrameSize + this.getElevation({ position, launcherConfig }) + 10,
+      [position === 'left' ? 'left' : 'right']: (launcherConfig.smallFrameSize - launcherConfig.smallSize) / 2 + 10,
     }
   },
-  getLauncherBubbles({ position, elevation, config, offset = { x: 0, y: 0 } }) {
+  getLauncherBubbles({ position, elevation, launcherConfig, offset = { x: 0, y: 0 } }) {
     // As Math.cos and Math.sin are "heavy" operations and the angle will always be 45 degrees we can use 0.707
     // which is roughly the result of both Math.cos(45 * Math.PI / 180) and Math.sin(45 * Math.PI / 180)
-    this.bubblesOffset = this.bubblesOffset || config.frameSize / 2 + 10 + (config.size * 0.707) / 2 + 2
+    this.bubblesOffset = this.bubblesOffset || launcherConfig.frameSize / 2 + 10 + (launcherConfig.size * 0.707) / 2 + 2
     return {
       [position === 'left' ? 'left' : 'right']: this.bubblesOffset + offset.x,
-      bottom: this.bubblesOffset + this.getElevation(position, config) + (elevation ? 50 : 0) + offset.y,
+      bottom: this.bubblesOffset + this.getElevation({ position, launcherConfig }) + (elevation ? 50 : 0) + offset.y,
     }
   },
-  getElevation(position, config) {
-    return position === 'right-elevated' ? config.elevationWhenActive : 0
+  getElevation({ position, launcherConfig }) {
+    return position === 'right-elevated' ? launcherConfig.elevationWhenActive : 0
   },
   toStyle(object) {
     return Object.keys(object)
-      .map(key => {
-        return `${key}: ${Math.floor(object[key])}px; `
-      })
+      .map(key => `${key}: ${Math.floor(object[key])}px; `)
       .join('')
   },
   toStyleObject(object) {

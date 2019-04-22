@@ -5,8 +5,8 @@ const PulsateCircle = styled.div`
   display: ${({ active }) => (active ? 'block' : 'none')};
   top: 0;
   left: 0;
-  width: ${({ config }) => config.frameSize}px;
-  height: ${({ config }) => config.frameSize}px;
+  width: ${({ launcherConfig }) => launcherConfig.frameSize}px;
+  height: ${({ launcherConfig }) => launcherConfig.frameSize}px;
   border: none;
   border-radius: 50%;
   animation: pulsateEffect 1.5s infinite;

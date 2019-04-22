@@ -13,16 +13,16 @@ const LauncherBubbleBase = ({
   setTextWidthRef,
   textWidth,
   onClick,
-  config,
+  launcherConfig,
   elevation,
   offset,
 }) => (
   <LauncherBubbleFrame
     animation={animation}
     bubble={bubble}
-    config={config}
     disappear={disappear}
     elevation={elevation}
+    launcherConfig={launcherConfig}
     offset={offset}
     position={position}
     textWidth={textWidth}

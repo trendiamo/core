@@ -68,6 +68,7 @@ const AppBaseTemplate = ({
   data,
   bubble,
   extraBubble,
+  optimizelyClientInstance,
   ContentFrame,
   showAssessmentContent,
   setShowAssessmentContent,
@@ -81,9 +82,9 @@ const AppBaseTemplate = ({
     {showingContent && (
       <Content
         Component={Component}
-        config={launcherConfig}
         ContentFrame={ContentFrame}
         isUnmounting={isUnmounting}
+        launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         persona={persona}
         position={position}
@@ -97,9 +98,9 @@ const AppBaseTemplate = ({
     {showingLauncher && (
       <LauncherBubbles
         bubble={bubble}
-        config={launcherConfig}
         disappear={disappear}
         extraBubble={extraBubble}
+        launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         outroButtonsClick={outroButtonsClick}
         position={position}
@@ -109,10 +110,11 @@ const AppBaseTemplate = ({
     )}
     {showingLauncher && (
       <Launcher
-        config={launcherConfig}
         data={data}
         disappear={disappear}
+        launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
+        optimizelyClientInstance={optimizelyClientInstance}
         persona={persona}
         position={position}
         pulsating={launcherPulsating}
@@ -134,9 +136,8 @@ export const AppBase = compose(
     }
     const optimizelyClientInstance = optimizely.createInstance({ datafile, logger: { log: () => null } })
     const variation = optimizelyClientInstance.activate('LauncherSize', mixpanel.get_distinct_id())
-    let launcherConfig = variation === 'Big' ? bigLauncherConfig : smallLauncherConfig
-    launcherConfig.optimizelyClientInstance = optimizelyClientInstance
-    return { launcherConfig }
+    const launcherConfig = variation === 'Big' ? bigLauncherConfig : smallLauncherConfig
+    return { launcherConfig, optimizelyClientInstance }
   }),
   withHandlers({
     outroButtonsClick: () => value => {

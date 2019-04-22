@@ -14,11 +14,11 @@ const Launcher = ({
   onToggleContent,
   disappear,
   pulsating,
-  compiledConfig,
+  compiledLauncherConfig,
 }) => (
   <LauncherBase
-    config={compiledConfig}
     disappear={disappear}
+    launcherConfig={compiledLauncherConfig}
     onClick={optimizelyToggleContent}
     onToggleContent={onToggleContent}
     personaPicUrl={personaPicUrl}
@@ -30,17 +30,17 @@ const Launcher = ({
 
 export default compose(
   withState('config', 'setConfig', ({ config }) => config || bigLauncherConfig),
-  withProps(({ config, showingContent }) => ({
-    compiledConfig: {
-      ...config,
-      size: showingContent ? config.smallSize : config.size,
-      frameSize: showingContent ? config.smallFrameSize : config.frameSize,
+  withProps(({ launcherConfig, showingContent }) => ({
+    compiledLauncherConfig: {
+      ...launcherConfig,
+      size: showingContent ? launcherConfig.smallSize : launcherConfig.size,
+      frameSize: showingContent ? launcherConfig.smallFrameSize : launcherConfig.frameSize,
       offsetX: -10,
       offsetY: -10,
     },
   })),
-  withProps(({ persona, config }) => ({
-    personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', w: config.size, h: config.size }),
+  withProps(({ persona, launcherConfig }) => ({
+    personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', w: launcherConfig.size, h: launcherConfig.size }),
   })),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
@@ -48,9 +48,9 @@ export default compose(
     },
   }),
   withHandlers({
-    optimizelyToggleContent: ({ onToggleContent, config, showingContent }) => () => {
-      if (production && config.optimizelyClientInstance && !showingContent) {
-        config.optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
+    optimizelyToggleContent: ({ onToggleContent, optimizelyClientInstance, showingContent }) => () => {
+      if (production && optimizelyClientInstance && !showingContent) {
+        optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
       }
       onToggleContent()
     },

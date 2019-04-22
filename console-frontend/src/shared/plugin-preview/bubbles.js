@@ -9,12 +9,12 @@ const BubblesContainer = styled.div`
   left: 0;
   right: -25px;
 `
-const Bubbles = ({ showingContent, position, bubbleText, bubbleExtraText, onToggleContent, config }) => (
+const Bubbles = ({ showingContent, position, bubbleText, bubbleExtraText, onToggleContent, launcherConfig }) => (
   <BubblesContainer>
     <LauncherBubbles
       bubble={{ message: bubbleText, timeEnd: null }}
-      config={config}
       extraBubble={{ message: bubbleExtraText, timeEnd: null }}
+      launcherConfig={launcherConfig}
       offset={{ x: -25, y: -10 }}
       onToggleContent={onToggleContent}
       position={position}
