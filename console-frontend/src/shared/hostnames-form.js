@@ -57,7 +57,7 @@ const Cancel = compose(
 const HostnamesForm = ({ form, addHostnameSelect, editHostnameValue, deleteHostname, isFormLoading }) => (
   <>
     <LabelContainer>
-      <InputLabel>{'Hostnames'}</InputLabel>
+      <InputLabel required>{'Hostnames'}</InputLabel>
     </LabelContainer>
     {form.hostnames.map((hostname, index) => (
       // eslint-disable-next-line react/no-array-index-key
