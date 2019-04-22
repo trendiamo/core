@@ -106,7 +106,9 @@ const UrlIcon = styled(LinkIcon)`
   height: 24px;
 `
 
+// max-height: 253px = dialog's margin (96px) + dialog title height (76px) + dialog action height (81px)
 const DialogCroppingContainer = styled.div`
+  max-height: calc(100vh - 253px);
   display: flex;
   justify-content: center;
   align-items: center;
