@@ -143,7 +143,15 @@ export const AppBase = compose(
       mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
     },
   }),
-  withState('disappear', 'setDisappear', ({ disappear }) => !!disappear)
+  withState('disappear', 'setDisappear', false),
+  lifecycle({
+    componentDidUpdate(prevProps) {
+      const { launcherDisappear, setDisappear } = this.props
+      if (launcherDisappear !== prevProps.launcherDisappear) {
+        setDisappear(launcherDisappear)
+      }
+    },
+  })
 )(AppBaseTemplate)
 
 export default compose(
