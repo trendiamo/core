@@ -7,6 +7,7 @@ import {
   apiFlowsList,
   apiGeneratedUrlCreate,
   apiGeneratedUrlList,
+  apiGetRemotePicture,
   apiGetSignedUrlFactory,
   apiMe,
   apiMeUpdate,
@@ -68,6 +69,7 @@ export {
   apiShowcaseShow,
   apiShowcaseUpdate,
   apiFlowsList,
+  apiGetRemotePicture,
   apiGetSignedUrlFactory,
   apiMe,
   apiMeUpdate,
@@ -138,7 +140,11 @@ export const apiRequest = async (requestMethod, args, options) => {
   const promise = args.length === 0 ? requestMethod() : requestMethod(...args)
   const response = await promise.catch(() => null)
   const { requestError } = await handleRequestError(response, options && options.isLoginRequest)
-  const json = requestError ? {} : await response.json()
+  const json = requestError
+    ? {}
+    : response.headers.get('content-type').startsWith('image')
+    ? await response.blob()
+    : await response.json()
   const errors = extractErrors(json)
   return { json, requestError, errors, response }
 }

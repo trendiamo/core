@@ -40,7 +40,7 @@ const StyledDelete = styled(Delete)`
 `
 
 const FilteredReactDropzone = props => (
-  <ReactDropzone {...omit(props, ['isDragging', 'previewPicture', 'setIsDragging'])} />
+  <ReactDropzone {...omit(props, ['isDragging', 'onFileUpload', 'previewPicture', 'setIsDragging'])} />
 )
 
 const StyledDropzone = styled(FilteredReactDropzone)`
@@ -74,9 +74,9 @@ const Dropzone = compose(
     onDragLeave: ({ setIsDragging }) => () => {
       setIsDragging(false)
     },
-    onDrop: ({ onDrop, setIsDragging }) => (acceptedFiles, rejectedFiles) => {
+    onDrop: ({ onFileUpload, setIsDragging }) => (acceptedFiles, rejectedFiles) => {
       setIsDragging(false)
-      onDrop(acceptedFiles, rejectedFiles)
+      onFileUpload(acceptedFiles, rejectedFiles)
     },
   })
 )(({ disabled, square, isDragging, onDragEnter, onDragLeave, previewPicture, ...props }) => (
@@ -153,7 +153,7 @@ const BarebonesPictureUploader = ({
   onCropChange,
   onCropComplete,
   onDoneClick,
-  onDrop,
+  onFileUpload,
   onModalClose,
   onPictureLoaded,
   onRemovePicture,
@@ -172,7 +172,7 @@ const BarebonesPictureUploader = ({
       onCropChange={onCropChange}
       onCropComplete={onCropComplete}
       onDoneClick={onDoneClick}
-      onDrop={onDrop}
+      onFileUpload={onFileUpload}
       onModalClose={onModalClose}
       onPictureLoaded={onPictureLoaded}
       open={modalOpen}
@@ -189,7 +189,7 @@ const BarebonesPictureUploader = ({
           disabled={disabled}
           multiple={false}
           onClick={onClick}
-          onDrop={onDrop}
+          onFileUpload={onFileUpload}
           previewPicture={previewPicture}
           square={square}
         />
@@ -351,14 +351,14 @@ const PictureUploader = compose(
       setPic(blob)
       URL.revokeObjectURL(picture.preview)
     },
-    onDrop: ({ onChange, setDoneCropping, setModalOpen, setPicture, setPreviousValue, value }) => files => {
+    onFileUpload: ({ onChange, setDoneCropping, setModalOpen, setPicture, setPreviousValue, value }) => files => {
       setDoneCropping(false)
       onChange('')
       setPreviousValue(value)
       if (files.length === 0) return
       const file = files[0]
       setPicture({
-        name: file.name,
+        name: file.name || 'upload',
         preview: URL.createObjectURL(file),
         size: file.size,
         type: file.type,
