@@ -56,13 +56,15 @@ export default compose(
     updateLogs: ({ setLogs }) => ({ data }) => setLogs(convertLogs(data)),
   }),
   withHandlers({
-    initChatLog: ({ module, updateLogs, productsData, setCountOfRows, countOfRows }) => numberOfRows => {
+    initChatLog: ({ module, updateLogs, products, setCountOfRows, countOfRows }) => numberOfRows => {
       setCountOfRows(countOfRows + numberOfRows)
-      let productSuggestions = recommendedProducts(productsData)
-      productSuggestions.assessmentProducts.splice(countOfRows)
+      let productSuggestions = [...products.assessmentProducts]
+      productSuggestions.splice(countOfRows)
       const compiledData = {
         ...module,
-        logs: { default: [...module.logs.default, productSuggestions] },
+        logs: {
+          default: [...module.logs.default, { type: 'assessmentProducts', assessmentProducts: productSuggestions }],
+        },
       }
       chatLog.init({ data: compiledData, listeners: [updateLogs], hackathon: true })
     },

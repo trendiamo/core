@@ -11,10 +11,28 @@ const header = {
   },
 }
 
-export const tagSuggestions = {
-  'Casual/Jeans und Hosen/Slim Fit': ['Basics/Oberteile'],
-  'Basics/Jeans und Hosen': ['Basics/Oberteile', 'Casual/Jeans und Hosen/Slim Fit'],
-  'Business/Accessoires/Krawatten & Einstecktücher': ['Business/Accessoires/Krawatten & Einstecktücher'],
+export const suggestions = {
+  'Casual/Jeans und Hosen': ['Casual/Oberteile/Polos', 'Casual/Sakkos', 'Casual/Oberteile/Pullover'],
+  'Casual/Jacken/Blousons': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Pullover', 'Casual/Oberteile/Polos'],
+  'Casual/Jacken/Mäntel': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Hemden'],
+  'Casual/Jacken/Jacken': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Polos'],
+  'Casual/Jacken/Westen': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Pullover'],
+  'Casual/Oberteile/T-Shirts': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Pullover'],
+  'Casual/Oberteile/Polos': ['Casual/Jeans und Hosen', 'Casual/Jacken/Jacken'],
+  'Casual/Oberteile/Hemden': ['Casual/Jeans und Hosen', 'Casual/Sakkos', 'Casual/Oberteile/Pullover'],
+  'Casual/Oberteile/Pullover': ['Casual/Jeans und Hosen', 'Casual/Jacken/Blousons'],
+  'Casual/Sakkos': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Hemden'],
+  'Business/Komplettanzüge': ['Business/Hemden', 'Business/Westen', 'Business/Accessoires/Krawatten & Einstecktücher'],
+  'Business/Sakkos': ['Business/Hemden', 'Business/Anzughosen'],
+  'Business/Westen': ['Business/Hemden', 'Business/Sakkos'],
+  'Business/Anzughosen': ['Business/Hemden', 'Business/Sakkos'],
+  'Business/Hemden': ['Business/Sakkos', 'Business/Komplettanzüge'],
+  'Business/Accessoires/Gürtel': ['Business/Komplettanzüge', 'Business/Anzughosen'],
+  'Business/Accessoires/Krawatten & Einstecktücher': ['Business/Komplettanzüge', 'Business/Sakkos'],
+  'Basics/Wäsche': ['Basics/Jeans und Hosen', 'Basics/Oberteile'],
+  'Basics/Jeans und Hosen': ['Basics/Oberteile', 'Basics/Jacken'],
+  'Basics/Oberteile': ['Basics/Jeans und Hosen', 'Basics/Jacken'],
+  'Basics/Jacken': ['Basics/Jeans und Hosen', 'Basics/Oberteile'],
 }
 
 const data = {
