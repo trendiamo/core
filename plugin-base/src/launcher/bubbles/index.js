@@ -47,16 +47,16 @@ const LauncherBubbles = ({
   showingContent,
   extraBubble,
   setDisappear,
-  config,
+  launcherConfig,
   offset,
   outroButtonsClick,
 }) => (
   <div>
     <LauncherBubble
       bubble={bubble}
-      config={config}
       disappear={disappear}
       extraBubbleExists={extraBubble && (extraBubble.message || extraBubble.buttons)}
+      launcherConfig={launcherConfig}
       offset={offset}
       onClick={onToggleContent}
       position={position}
@@ -64,9 +64,9 @@ const LauncherBubbles = ({
     />
     <LauncherBubble
       bubble={extraBubble}
-      config={config}
       disappear={disappear}
       extraBubble
+      launcherConfig={launcherConfig}
       offset={offset}
       onClick={onToggleContent}
       position={position}
@@ -75,8 +75,8 @@ const LauncherBubbles = ({
     {extraBubble && extraBubble.buttons && (
       <BubbleButtons
         bubble={extraBubble}
-        config={config}
         disappear={disappear}
+        launcherConfig={launcherConfig}
         offset={offset}
         onClick={outroButtonsClick}
         position={position}

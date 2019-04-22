@@ -4,8 +4,8 @@ import React from 'react'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withState } from 'recompose'
 import { buttonContainerStyle, containerStyle } from './styles'
 
-const ButtonsTemplate = ({ animation, bubble, position, action, handleClick, clicked, config }) => (
-  <div style={containerStyle({ position, action, config })}>
+const ButtonsTemplate = ({ animation, bubble, position, action, handleClick, clicked, launcherConfig }) => (
+  <div style={containerStyle({ position, action, launcherConfig })}>
     {bubble.buttons.map((button, index) => (
       <div key={button.value} style={buttonContainerStyle(index)}>
         <ButtonFrame action={action} animation={animation} button={button} clicked={clicked} left position={position}>

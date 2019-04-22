@@ -3,10 +3,19 @@ import FrameBase from 'shared/frame'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
+import { positioning } from 'tools'
 
 const LauncherFrame = animateOnMount(styled(props => (
   <FrameBase
-    {...omit(props, ['position', 'entry', 'setEntry', 'showingContent', 'onToggleContent', 'disappear', 'config'])}
+    {...omit(props, [
+      'position',
+      'entry',
+      'setEntry',
+      'showingContent',
+      'onToggleContent',
+      'disappear',
+      'launcherConfig',
+    ])}
   />
 )).attrs({
   title: 'Trendiamo Launcher',
@@ -14,12 +23,13 @@ const LauncherFrame = animateOnMount(styled(props => (
   border: 0;
   z-index: 2147482999;
   position: fixed;
-  bottom: ${({ position, config }) =>
-    (position === 'right-elevated' ? config.elevationWhenActive : 0) - config.offsetY}px;
+  bottom: ${({ position, launcherConfig }) =>
+    positioning.getElevation({ position, launcherConfig }) - launcherConfig.offsetY}px;
   overflow: hidden;
-  ${({ position }) => (position === 'left' ? 'left' : 'right')}: ${({ config }) => -config.offsetX || 0}px;
-  width: ${({ config }) => config.frameSize}px;
-  height: ${({ config }) => config.frameSize}px;
+  ${({ position }) => (position === 'left' ? 'left' : 'right')}: ${({ launcherConfig }) =>
+    -launcherConfig.offsetX || 0}px;
+  width: ${({ launcherConfig }) => launcherConfig.frameSize}px;
+  height: ${({ launcherConfig }) => launcherConfig.frameSize}px;
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transition: all 0.25s ease;
   ${({ disappear }) =>

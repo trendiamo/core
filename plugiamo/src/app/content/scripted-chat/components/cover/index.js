@@ -1,6 +1,6 @@
 import Background from './background'
 import Content, { PersonaName } from './content'
-import defaultConfig from './config'
+import defaultHeaderConfig from './header-config'
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import styled from 'styled-components'
@@ -22,8 +22,8 @@ const FlexDiv = styled.div`
 `
 
 export const CoverSimpleChat = compose(withTextTyping(({ persona }) => persona.description, 300))(
-  ({ persona, currentDescription, config }) => (
-    <CoverBase config={config}>
+  ({ persona, currentDescription, headerConfig }) => (
+    <CoverBase headerConfig={headerConfig}>
       <FlowBackButton />
       <FlexDiv>
         <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
@@ -37,29 +37,29 @@ export const CoverSimpleChat = compose(withTextTyping(({ persona }) => persona.d
   )
 )
 
-export const CoverBridge = ({ header, minimized, config }) => (
-  <CoverBase backgroundColor={header.backgroundColor} config={config} hackathon minimized={minimized}>
-    <Background config={config} header={header} minimized={minimized} />
-    <Content config={config} header={header} minimized={minimized} />
+export const CoverBridge = ({ header, minimized, headerConfig }) => (
+  <CoverBase backgroundColor={header.backgroundColor} hackathon headerConfig={headerConfig} minimized={minimized}>
+    <Background header={header} headerConfig={headerConfig} minimized={minimized} />
+    <Content header={header} headerConfig={headerConfig} minimized={minimized} />
   </CoverBase>
 )
 
-const CoverAssessmentTemplate = ({ headers, toggle, minimized, config, goToPrevStep, showBackButton }) => (
-  <CoverBase backgroundColor="#fff" config={config} hackathon minimized={minimized}>
+const CoverAssessmentTemplate = ({ headers, toggle, minimized, headerConfig, goToPrevStep, showBackButton }) => (
+  <CoverBase backgroundColor="#fff" hackathon headerConfig={headerConfig} minimized={minimized}>
     <BackButton
       backButtonLabel={getFrekklsConfig().i18n.backButton}
+      buttonConfig={headers[toggle ? 1 : 0].backButton}
       color="black"
-      config={headers[toggle ? 1 : 0].backButton}
       flexibleCover
       hide={!showBackButton}
       onClick={goToPrevStep}
     />
-    <Background config={config} header={headers[1]} hide={!toggle} minimized={minimized} />
-    <Background config={config} header={headers[0]} hide={toggle} minimized={minimized} />
+    <Background header={headers[1]} headerConfig={headerConfig} hide={!toggle} minimized={minimized} />
+    <Background header={headers[0]} headerConfig={headerConfig} hide={toggle} minimized={minimized} />
     <Content
-      config={config}
       goToPrevStep={goToPrevStep}
       header={headers[toggle ? 1 : 0]}
+      headerConfig={headerConfig}
       minimized={minimized}
       showBackButton={showBackButton}
     />
@@ -84,8 +84,8 @@ const CoverAssessment = compose(
 )(CoverAssessmentTemplate)
 
 export default compose(
-  withProps(({ config }) => ({
-    config: { ...defaultConfig, ...config },
+  withProps(({ headerConfig }) => ({
+    headerConfig: { ...defaultHeaderConfig, ...headerConfig },
   })),
   branch(({ hackathon }) => hackathon, renderComponent(CoverBridge)),
   branch(({ assessment }) => assessment, renderComponent(CoverAssessment))

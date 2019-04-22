@@ -16,9 +16,14 @@ const Content = ({
   setShowAssessmentContent,
   setShowingLauncher,
   setShowingContent,
-  config,
+  launcherConfig,
 }) => (
-  <ContentFrame config={config} isUnmounting={isUnmounting} onToggleContent={onToggleContent} position={position}>
+  <ContentFrame
+    isUnmounting={isUnmounting}
+    launcherConfig={launcherConfig}
+    onToggleContent={onToggleContent}
+    position={position}
+  >
     <ContentWrapper
       onToggleContent={onToggleContent}
       persona={persona}

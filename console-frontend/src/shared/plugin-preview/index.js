@@ -30,7 +30,7 @@ const PluginPreview = ({
   Launcher,
   showingContent,
   onToggleContent,
-  compiledConfig,
+  compiledLauncherConfig,
   bubbleText,
   bubbleExtraText,
   position = 'right',
@@ -41,12 +41,12 @@ const PluginPreview = ({
       <LauncherBubbles
         bubbleExtraText={bubbleExtraText}
         bubbleText={bubbleText}
-        config={compiledConfig}
+        launcherConfig={compiledLauncherConfig}
         onToggleContent={onToggleContent}
         position={position}
         showingContent={showingContent}
       />
-      {React.cloneElement(Launcher, { config: compiledConfig })}
+      {React.cloneElement(Launcher, { launcherConfig: compiledLauncherConfig })}
     </Alignment>
   </StickyContainer>
 )
@@ -54,7 +54,7 @@ const PluginPreview = ({
 export default compose(
   withWidth({ noSSR: true }),
   withProps(({ launcherConfig, showingContent }) => ({
-    compiledConfig: {
+    compiledLauncherConfig: {
       ...launcherConfig,
       size: showingContent ? launcherConfig.smallSize : launcherConfig.size,
       frameSize: showingContent ? launcherConfig.smallFrameSize : launcherConfig.frameSize,

@@ -26,7 +26,7 @@ export const ContentFrameContainerBase = styled.div`
 const ContentFrameContainer = animateOnMount(styled(ContentFrameContainerBase)`
   @media (min-width: ${MAIN_BREAKPOINT}px) {
     border-radius: 8px;
-    ${({ position, config }) => positioning.get({ type: 'content', position, config })}
+    ${({ position, launcherConfig }) => positioning.get({ type: 'content', position, launcherConfig })}
     width: ${WIDTH}px;
     height: calc(100vh - 150px);
     box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
@@ -59,8 +59,8 @@ const IFrame = compose(
   width: 100%;
 `)
 
-const ContentFrame = ({ children, isUnmounting, onToggleContent, position, config }) => (
-  <ContentFrameContainer config={config} isUnmounting={isUnmounting} position={position}>
+const ContentFrame = ({ children, isUnmounting, onToggleContent, position, launcherConfig }) => (
+  <ContentFrameContainer isUnmounting={isUnmounting} launcherConfig={launcherConfig} position={position}>
     <IFrame onToggleContent={onToggleContent}>
       <div>
         {children}

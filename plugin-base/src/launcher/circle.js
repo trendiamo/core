@@ -1,17 +1,17 @@
 import styled from 'styled-components'
 
 const Circle = styled.div`
-  width: ${({ config }) => config.size}px;
-  height: ${({ config }) => config.size}px;
+  width: ${({ launcherConfig }) => launcherConfig.size}px;
+  height: ${({ launcherConfig }) => launcherConfig.size}px;
   border-radius: 50%;
   position: absolute;
-  bottom: ${({ config }) => (config.frameSize - config.size) / 2}px;
-  ${({ config, position }) => `
-    ${position === 'left' ? 'left' : 'right'}: ${(config.frameSize - config.size) / 2}px;
+  bottom: ${({ launcherConfig }) => (launcherConfig.frameSize - launcherConfig.size) / 2}px;
+  ${({ launcherConfig, position }) => `
+    ${position === 'left' ? 'left' : 'right'}: ${(launcherConfig.frameSize - launcherConfig.size) / 2}px;
   `};
   background: #232323;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06),
-    0 2px ${({ config }) => (config.size > 80 ? 32 : 12)}px 0 rgba(0, 0, 0, 0.16);
+    0 2px ${({ launcherConfig }) => (launcherConfig.size > 80 ? 32 : 12)}px 0 rgba(0, 0, 0, 0.16);
   -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;

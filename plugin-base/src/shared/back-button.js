@@ -4,7 +4,7 @@ import { animate } from 'shared/animate'
 import { IconChevronLeft } from 'icons'
 
 const Chevron = styled(IconChevronLeft)`
-  fill: ${({ config }) => config.textColor || '#aaa'};
+  fill: ${({ buttonConfig }) => buttonConfig.textColor || '#aaa'};
   height: 12px;
   width: 12px;
   vertical-align: middle;
@@ -16,18 +16,18 @@ const Span = styled.span`
 `
 
 const BackButton = animate(
-  styled(({ backButtonLabel, className, onClick, config = {}, hide }) => (
+  styled(({ backButtonLabel, className, onClick, buttonConfig = {}, hide }) => (
     <button className={className} onClick={hide ? () => {} : onClick} type="button">
-      <Chevron config={config} />
+      <Chevron buttonConfig={buttonConfig} />
       <Span>{backButtonLabel}</Span>
     </button>
   ))`
-    color: ${({ config = {} }) => config.textColor || '#aaa'};
+    color: ${({ buttonConfig = {} }) => buttonConfig.textColor || '#aaa'};
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
 
-    background: ${({ config = {} }) => config.backgroundColor || 'transparent'};
+    background: ${({ buttonConfig = {} }) => buttonConfig.backgroundColor || 'transparent'};
     outline: none;
     border: none;
     padding: 0;

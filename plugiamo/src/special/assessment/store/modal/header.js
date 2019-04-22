@@ -1,7 +1,7 @@
 import Cover from 'app/content/scripted-chat/components/cover'
 import { h } from 'preact'
 
-const config = {
+const headerConfig = {
   heights: { min: 200, max: 200 },
   titleStyle: {
     fontSize: '32px',
@@ -18,8 +18,8 @@ const config = {
 const Header = ({ header, coverMinimized, goToPrevStep }) => (
   <Cover
     assessment
-    config={config}
     goToPrevStep={goToPrevStep}
+    headerConfig={headerConfig}
     minimized={coverMinimized}
     showBackButton
     step={{ header }}

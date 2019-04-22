@@ -20,9 +20,9 @@ const StyledButton = styled(({ ...props }) => <MuiButton {...omit(props, ['creat
     }`}
 `
 
-const ButtonTemplate = ({ config, handleClick, create, onboarding }) => (
+const ButtonTemplate = ({ buttonConfig, handleClick, create, onboarding }) => (
   <StyledButton
-    aria-label={config['ariaLabel']}
+    aria-label={buttonConfig['ariaLabel']}
     color={create && !onboarding.help.run ? 'primary' : 'default'}
     create={create}
     helpRun={onboarding.help.run}
@@ -37,7 +37,7 @@ const ButtonTemplate = ({ config, handleClick, create, onboarding }) => (
 const Button = compose(
   withOnboardingConsumer,
   withHandlers({
-    handleClick: ({ history, nextRoute, create, config, onboarding, setOnboarding }) => event => {
+    handleClick: ({ history, nextRoute, create, buttonConfig, onboarding, setOnboarding }) => event => {
       if (onboarding.help.run && onboarding.help.single) {
         setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
         return false
@@ -45,7 +45,7 @@ const Button = compose(
       history.push(nextRoute)
       if (!create) {
         setOnboarding({ ...onboarding, stepIndex: onboarding.stepIndex + 1 })
-        config.onClick(event)
+        buttonConfig.onClick(event)
         return false
       }
       setOnboarding({ ...onboarding, run: false, stepIndex: 0 })
