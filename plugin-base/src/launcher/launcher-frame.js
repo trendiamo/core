@@ -3,7 +3,6 @@ import FrameBase from 'shared/frame'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
-import { positioning } from 'tools'
 
 const LauncherFrame = animateOnMount(styled(props => (
   <FrameBase
@@ -23,8 +22,7 @@ const LauncherFrame = animateOnMount(styled(props => (
   border: 0;
   z-index: 2147482999;
   position: fixed;
-  bottom: ${({ position, launcherConfig }) =>
-    positioning.getElevation({ position, launcherConfig }) - launcherConfig.offsetY}px;
+  bottom: ${({ launcherConfig }) => launcherConfig.extraElevation - launcherConfig.offsetY}px;
   overflow: hidden;
   ${({ position }) => (position === 'left' ? 'left' : 'right')}: ${({ launcherConfig }) =>
     -launcherConfig.offsetX || 0}px;
