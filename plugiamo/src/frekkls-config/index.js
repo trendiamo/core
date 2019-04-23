@@ -21,6 +21,9 @@ const defaultConfig = {
     backButton: 'Back',
     productsSelectedBy: firstName => `Products selected by ${firstName}`,
   },
+  launcherConfig: {
+    extraElevation: 0,
+  },
 }
 
 // Our clients can define a window.frekklsConfig object. Here we have some defined for them
@@ -48,6 +51,7 @@ export default () => {
       ...defaultConfig,
       ...getFrekklsConfig(),
       i18n: { ...defaultConfig.i18n, ...getFrekklsConfig().i18n },
+      launcherConfig: { ...defaultConfig.launcherConfig, ...getFrekklsConfig().launcherConfig },
     }
   }
   return frekklsConfig

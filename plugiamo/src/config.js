@@ -10,7 +10,6 @@ const bigLauncherConfig = {
   frameSize: 150,
   smallSize: 70,
   smallFrameSize: 100,
-  elevationWhenActive: 25,
 }
 
 const smallLauncherConfig = {
@@ -18,7 +17,6 @@ const smallLauncherConfig = {
   frameSize: 100,
   smallSize: 70,
   smallFrameSize: 100,
-  elevationWhenActive: 25,
 }
 
 const location = {

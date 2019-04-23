@@ -3,7 +3,7 @@ const defaultConfig = {
   frameSize: 100,
   smallSize: 70,
   smallFrameSize: 100,
-  elevationWhenActive: 25,
+  extraElevation: 0,
 }
 
 export default defaultConfig

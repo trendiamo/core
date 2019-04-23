@@ -68,7 +68,7 @@ export const positioning = {
   },
   getContent({ position, launcherConfig }) {
     return {
-      bottom: launcherConfig.smallFrameSize + this.getElevation({ position, launcherConfig }) + 10,
+      bottom: launcherConfig.smallFrameSize + launcherConfig.extraElevation + 10,
       [position === 'left' ? 'left' : 'right']: (launcherConfig.smallFrameSize - launcherConfig.smallSize) / 2 + 10,
     }
   },
@@ -78,11 +78,8 @@ export const positioning = {
     this.bubblesOffset = this.bubblesOffset || launcherConfig.frameSize / 2 + 10 + (launcherConfig.size * 0.707) / 2 + 2
     return {
       [position === 'left' ? 'left' : 'right']: this.bubblesOffset + offset.x,
-      bottom: this.bubblesOffset + this.getElevation({ position, launcherConfig }) + (elevation ? 50 : 0) + offset.y,
+      bottom: this.bubblesOffset + launcherConfig.extraElevation + (elevation ? 50 : 0) + offset.y,
     }
-  },
-  getElevation({ position, launcherConfig }) {
-    return position === 'right-elevated' ? launcherConfig.elevationWhenActive : 0
   },
   toStyle(object) {
     return Object.keys(object)

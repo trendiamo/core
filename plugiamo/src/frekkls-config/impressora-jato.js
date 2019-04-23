@@ -1,5 +1,8 @@
 export default {
-  position: 'right-elevated',
+  position: 'right',
+  launcherConfig: {
+    extraElevation: 25,
+  },
   onShow: () => {
     const liveChatContainer = document.querySelector('#livechat-compact-container')
     if (!liveChatContainer) return

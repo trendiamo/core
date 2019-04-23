@@ -128,15 +128,19 @@ const AppBaseTemplate = ({
 export const AppBase = compose(
   withProps(({ data }) => getBubbleProps(data)),
   withProps(() => {
+    const frekklsConfig = getFrekklsConfig()
     if (isSmall()) {
-      return { launcherConfig: smallLauncherConfig }
+      return { launcherConfig: { ...smallLauncherConfig, ...frekklsConfig.launcherConfig } }
     }
     if (!production) {
-      return { launcherConfig: bigLauncherConfig }
+      return { launcherConfig: { ...bigLauncherConfig, ...frekklsConfig.launcherConfig } }
     }
     const optimizelyClientInstance = optimizely.createInstance({ datafile, logger: { log: () => null } })
     const variation = optimizelyClientInstance.activate('LauncherSize', mixpanel.get_distinct_id())
-    const launcherConfig = variation === 'Big' ? bigLauncherConfig : smallLauncherConfig
+    const launcherConfig = {
+      ...(variation === 'Big' ? bigLauncherConfig : smallLauncherConfig),
+      ...frekklsConfig.launcherConfig,
+    }
     return { launcherConfig, optimizelyClientInstance }
   }),
   withHandlers({
