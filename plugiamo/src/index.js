@@ -54,7 +54,8 @@ const main = () => {
   const supportedBrowsers = ['chrome', 'firefox', 'safari', 'edge', 'opera', 'ios', 'ios-webview', 'crios', 'fxios']
   if (!browser || !supportedBrowsers.includes(browser.name)) return
 
-  getFrekklsConfig().onInit()
+  const onInitResult = getFrekklsConfig().onInit()
+  if (onInitResult === false) return
 
   const Component = initRootComponent()
   const trendiamoContainer = document.createElement('div')

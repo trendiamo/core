@@ -11,7 +11,7 @@ import villaDonatelloConfig from './villadonatello'
 
 const defaultConfig = {
   position: 'right',
-  onInit: () => null,
+  onInit: () => null, // return false to "cancel" the plugin.
   onShow: () => null, // autoOpen => null,
   addPicture: () => null, // picure => null
   onCtaClick: () => null, // action => null,
