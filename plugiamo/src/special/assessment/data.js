@@ -484,7 +484,7 @@ const data = {
     header,
     launcher: {
       chatBubble: {
-        message: 'Lass dich inspirieren! 🙂',
+        message: 'Lust auf weitere Ergänzungen?',
         timeStart: 0.5,
         timeEnd: 20,
         hideBarAfter: 0.2,
@@ -500,7 +500,8 @@ const data = {
     logs: {
       default: [
         {
-          text: 'Here are some products that match your taste:',
+          text:
+            'Hier sind ein paar Produkte die zu deiner bisherigen Auswahl passen und gerne von unseren Kunden kombiniert werden! 🙂',
         },
       ],
     },
