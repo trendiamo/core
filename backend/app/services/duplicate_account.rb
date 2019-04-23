@@ -6,15 +6,14 @@ def convert_to_url(path)
   "https://#{ENV['DO_BUCKET']}.#{ENV['DO_SPACE_ENDPOINT']}/#{path}"
 end
 
+def new_path_format?(source_path)
+  source_path.split("/", 3)[1].starts_with?("account")
+end
+
 def generate_new_path(source_path)
-  if source_path.split("/", 3)[1].starts_with?("account")
-    filename = source_path.split("/", 3)[2][9..-1]
-    "uploads/account-#{@cloned_account.id}/#{SecureRandom.hex(4)}-#{filename}"
-  else
-    directories_array = source_path.split("/", 4)
-    directories_array[2] = SecureRandom.hex(4)
-    directories_array.join("/")
-  end
+  filename = source_path.split("/", 4)[3]
+  filename = source_path.split("/", 3)[2][9..-1] if new_path_format?(source_path)
+  "uploads/account-#{@cloned_account.id}/#{SecureRandom.hex(4)}-#{filename}"
 end
 
 def duplicate_pic_url(picture_url)
@@ -45,17 +44,31 @@ class DuplicateAccount
   def duplicate
     @cloned_account = @account.deep_clone { |_void, copy| copy.name = @name }
     @cloned_account.save!
-    @persona_id_mapping = {} # hash of original ids to duplicate ids
+    @persona_id_mapping = {} # hash of original persona ids to duplicate ids
+    @picture_id_mapping = {} # hash of original picture ids to duplicate ids
+    duplicate_pictures
     duplicate_personas
     duplicate_websites
     duplicate_flows
     duplicate_triggers
   end
 
+  def duplicate_pictures
+    @account.pictures.map do |picture|
+      cloned_picture = picture.deep_clone
+      cloned_picture.url = duplicate_pic_url(picture.url)
+      ActsAsTenant.with_tenant(@cloned_account) do
+        cloned_picture.save!
+      end
+      @picture_id_mapping[picture.id] = cloned_picture.id
+      cloned_picture
+    end
+  end
+
   def duplicate_personas
     @account.personas.map do |persona|
-      cloned_persona = persona.deep_clone(include: %i[profile_pic])
-      cloned_persona.profile_pic.url = duplicate_pic_url(persona.profile_pic.url)
+      cloned_persona = persona.deep_clone
+      cloned_persona.profile_pic_id = @picture_id_mapping[persona.profile_pic_id]
       ActsAsTenant.with_tenant(@cloned_account) do
         cloned_persona.save!
       end
@@ -76,7 +89,7 @@ class DuplicateAccount
   end
 
   def duplicate_flows
-    DuplicateFlows.new(@account, @cloned_account, @persona_id_mapping).perform
+    DuplicateFlows.new(@account, @cloned_account, @persona_id_mapping, @picture_id_mapping).perform
   end
 
   def duplicate_triggers
@@ -92,15 +105,15 @@ class DuplicateAccount
 end
 
 class DuplicateFlows
-  def initialize(account, cloned_account, persona_id_mapping)
+  def initialize(account, cloned_account, persona_id_mapping, picture_id_mapping)
     @account = account
     @cloned_account = cloned_account
     @persona_id_mapping = persona_id_mapping
+    @picture_id_mapping = picture_id_mapping
   end
 
   def perform
     flows = {
-      navigations: navigations,
       showcases: showcases,
       simple_chats: simple_chats,
       outros: Outro.where(account: @account).map(&:deep_clone),
@@ -113,17 +126,9 @@ class DuplicateFlows
 
   private
 
-  def navigations
-    Navigation.where(account: @account).map do |navigation|
-      cloned_navigation = navigation.deep_clone(include: { navigation_items: :pic })
-      process_cloned_navigation(cloned_navigation)
-      cloned_navigation
-    end
-  end
-
   def showcases
     Showcase.where(account: @account).map do |showcase|
-      cloned_showcase = showcase.deep_clone(include: { spotlights: { product_picks: :pic } })
+      cloned_showcase = showcase.deep_clone(include: { spotlights: :product_picks })
       process_cloned_showcase(cloned_showcase)
       cloned_showcase
     end
@@ -135,23 +140,11 @@ class DuplicateFlows
     end
   end
 
-  def process_cloned_navigation(cloned_navigation)
-    cloned_navigation.navigation_items.map do |navigation_item|
-      navigation_item.pic.url = duplicate_pic_url(navigation_item.pic.url)
-      ActsAsTenant.with_tenant(@cloned_account) do
-        navigation_item.pic.save!
-      end
-    end
-  end
-
   def process_cloned_showcase(cloned_showcase)
     assign_personas(cloned_showcase.spotlights)
     cloned_showcase.spotlights.map do |spotlight|
       spotlight.product_picks.map do |product_pick|
-        product_pick.pic.url = duplicate_pic_url(product_pick.pic.url)
-        ActsAsTenant.with_tenant(@cloned_account) do
-          product_pick.pic.save!
-        end
+        product_pick.pic_id = @picture_id_mapping[product_pick.pic.id]
       end
     end
   end
