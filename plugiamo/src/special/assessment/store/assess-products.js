@@ -1,5 +1,7 @@
+import flatten from 'lodash.flatten'
+
 const assessProducts = (products, tags) => {
-  const productsResult = tags.map(tag => products.filter(product => product.tag && tag === product.tag)).flat()
+  const productsResult = flatten(tags.map(tag => products.filter(product => product.tag && tag === product.tag)))
   return productsResult.sort((a, b) => !!b.highlight - !!a.highlight)
 }
 
