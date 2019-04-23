@@ -2,9 +2,14 @@ def extract_path(url)
   url.gsub("https://#{ENV['DO_BUCKET']}.#{ENV['DO_SPACE_ENDPOINT']}/", "")
 end
 
-def generate_new_url(source_path)
+def convert_to_url(path)
+  "https://#{ENV['DO_BUCKET']}.#{ENV['DO_SPACE_ENDPOINT']}/#{path}"
+end
+
+def generate_new_path(source_path)
   if source_path.split("/", 3)[1].starts_with?("account")
-    "uploads/account-#{@cloned_account.id}/#{SecureRandom.hex(4)}-#{source_path.split('/', 3)[2][9..-1]}"
+    filename = source_path.split("/", 3)[2][9..-1]
+    "uploads/account-#{@cloned_account.id}/#{SecureRandom.hex(4)}-#{filename}"
   else
     directories_array = source_path.split("/", 4)
     directories_array[2] = SecureRandom.hex(4)
@@ -14,11 +19,11 @@ end
 
 def duplicate_pic_url(picture_url)
   source_path = extract_path(picture_url)
-  new_url = generate_new_url(source_path)
-  destination_path = new_url
+  new_path = generate_new_path(source_path)
+  destination_path = new_path
   bucket = Aws::S3::Bucket.new(ENV["DO_BUCKET"])
   bucket.object(destination_path).copy_from(bucket: ENV["DO_BUCKET"], key: source_path, acl: "public-read")
-  new_url
+  convert_to_url(new_path)
 end
 
 class DuplicateAccount
