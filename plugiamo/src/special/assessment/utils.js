@@ -61,7 +61,7 @@ const recommendedProducts = results => {
   )
   return {
     type: 'assessmentProducts',
-    assessmentProducts: shuffle(recommendedProducts),
+    assessmentProducts: shuffle(recommendedProducts.slice(0, 8)),
   }
 }
 
