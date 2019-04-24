@@ -52,7 +52,7 @@ export const imgixUrl = (url, imgixParams) => {
   const urlObj = new URL(url)
   const dpr = window.devicePixelRatio || 1
   const search = { ...parse(urlObj.search.substr(1)), dpr, ...imgixParams }
-  return `//trendiamo-assets.imgix.net${urlObj.pathname}?${stringify(search)}`
+  return `https://trendiamo-assets.imgix.net${urlObj.pathname}?${stringify(search)}`
 }
 
 export const positioning = {
