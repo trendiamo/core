@@ -5,7 +5,7 @@ import { LauncherBubbles as LauncherBubblesBase } from 'plugin-base'
 import { production } from 'config'
 
 const LauncherBubbles = ({
-  bubble,
+  data,
   disappear,
   extraBubble,
   launcherConfig,
@@ -16,7 +16,7 @@ const LauncherBubbles = ({
   showingContent,
 }) => (
   <LauncherBubblesBase
-    bubble={bubble}
+    data={data}
     disappear={disappear}
     extraBubble={extraBubble}
     launcherConfig={launcherConfig}

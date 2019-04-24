@@ -11,8 +11,7 @@ const Container = styled.div`
   font-weight: 500;
   overflow: hidden;
   transition: 2s opacity;
-  transition-delay: 0.3s;
-  opacity: ${({ action }) => (action === 'appear' ? 0 : 1)};
+  opacity: ${({ action }) => (action !== 'fadeOut' ? 0 : 1)};
   cursor: pointer;
   animation: ${({ action }) => (action === 'appear' ? '_frekkls_bubble_btn_text_appear 1s' : 'none')};
   animation-delay: ${({ action }) => (action === 'appear' ? 0.5 : 0)}s;
