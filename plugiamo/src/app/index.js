@@ -4,6 +4,7 @@ import Content from './content'
 import datafile from 'optimizely.json'
 import getFrekklsConfig from 'frekkls-config'
 import Launcher from './launcher'
+import LauncherBubbles from './launcher-bubbles'
 import mixpanel from 'ext/mixpanel'
 import optimizely from '@optimizely/optimizely-sdk'
 import Router from './content/router'
@@ -11,7 +12,7 @@ import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { animateOnMount, getBubbleProps, LauncherBubbles } from 'plugin-base'
+import { animateOnMount, getBubbleProps } from 'plugin-base'
 import { assessmentCart, assessmentHack } from 'special/assessment/utils'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, production, smallLauncherConfig } from 'config'
 import {
@@ -98,10 +99,12 @@ const AppBaseTemplate = ({
     {showingLauncher && (
       <LauncherBubbles
         bubble={bubble}
+        data={data}
         disappear={disappear}
         extraBubble={extraBubble}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
+        optimizelyClientInstance={optimizelyClientInstance}
         outroButtonsClick={outroButtonsClick}
         position={position}
         setDisappear={setDisappear}
