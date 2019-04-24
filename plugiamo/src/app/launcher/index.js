@@ -7,11 +7,10 @@ import { imgixUrl, Launcher as LauncherBase } from 'plugin-base'
 import { production } from 'config'
 
 const Launcher = ({
-  optimizelyToggleContent,
+  onToggleContent,
   personaPicUrl,
   position,
   showingContent,
-  onToggleContent,
   disappear,
   pulsating,
   compiledLauncherConfig,
@@ -19,8 +18,7 @@ const Launcher = ({
   <LauncherBase
     disappear={disappear}
     launcherConfig={compiledLauncherConfig}
-    onClick={optimizelyToggleContent}
-    onToggleContent={onToggleContent}
+    onClick={onToggleContent}
     personaPicUrl={personaPicUrl}
     position={position}
     pulsating={pulsating}
@@ -48,7 +46,9 @@ export default compose(
     },
   }),
   withHandlers({
-    optimizelyToggleContent: ({ onToggleContent, optimizelyClientInstance, showingContent }) => () => {
+    onToggleContent: ({ data, onToggleContent, optimizelyClientInstance, showingContent }) => () => {
+      if ((data.flow && data.flow.flowType === 'outro') || data.flowType === 'ht-outro') return
+
       if (production && optimizelyClientInstance && !showingContent) {
         optimizelyClientInstance.track('openLauncher', mixpanel.get_distinct_id())
       }

@@ -5,17 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const LauncherFrame = animateOnMount(styled(props => (
-  <FrameBase
-    {...omit(props, [
-      'position',
-      'entry',
-      'setEntry',
-      'showingContent',
-      'onToggleContent',
-      'disappear',
-      'launcherConfig',
-    ])}
-  />
+  <FrameBase {...omit(props, ['position', 'entry', 'setEntry', 'showingContent', 'disappear', 'launcherConfig'])} />
 )).attrs({
   title: 'Trendiamo Launcher',
 })`

@@ -42,7 +42,7 @@ const getBubbleProps = data => {
 const LauncherBubbles = ({
   bubble,
   disappear,
-  onToggleContent,
+  onClick,
   position,
   showingContent,
   extraBubble,
@@ -58,7 +58,7 @@ const LauncherBubbles = ({
       extraBubbleExists={extraBubble && (extraBubble.message || extraBubble.buttons)}
       launcherConfig={launcherConfig}
       offset={offset}
-      onClick={onToggleContent}
+      onClick={onClick}
       position={position}
       showingContent={showingContent}
     />
@@ -68,7 +68,7 @@ const LauncherBubbles = ({
       extraBubble
       launcherConfig={launcherConfig}
       offset={offset}
-      onClick={onToggleContent}
+      onClick={onClick}
       position={position}
       showingContent={showingContent}
     />

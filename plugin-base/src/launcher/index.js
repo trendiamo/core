@@ -5,20 +5,10 @@ import PersonaPic from './persona-pic'
 import PulsateEffect from './pulsate-effect'
 import React from 'react'
 
-const Launcher = ({
-  pulsating,
-  onToggleContent,
-  disappear,
-  showingContent,
-  launcherConfig,
-  onClick,
-  position,
-  personaPicUrl,
-}) => (
+const Launcher = ({ pulsating, disappear, showingContent, launcherConfig, onClick, position, personaPicUrl }) => (
   <Frame
     disappear={disappear}
     launcherConfig={launcherConfig}
-    onToggleContent={onToggleContent}
     position={position}
     scrolling="no"
     showingContent={showingContent}
