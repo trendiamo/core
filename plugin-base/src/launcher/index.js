@@ -23,7 +23,11 @@ const Launcher = ({ pulsating, disappear, showingContent, launcherConfig, onClic
         position={position}
         pulsating={pulsating}
       >
-        {personaPicUrl ? <PersonaPic active={!showingContent} url={personaPicUrl} /> : <EmptyPersonaPic />}
+        {personaPicUrl ? (
+          <PersonaPic active={!showingContent} url={personaPicUrl} />
+        ) : (
+          <EmptyPersonaPic active={!showingContent} />
+        )}
         <CloseIcon active={showingContent} launcherConfig={launcherConfig} />
       </Circle>
     </div>
