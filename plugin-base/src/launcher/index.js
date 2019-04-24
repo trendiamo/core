@@ -1,5 +1,6 @@
 import Circle from './circle'
 import CloseIcon from './close-icon'
+import EmptyPersonaPic from './empty-persona-pic'
 import Frame from './launcher-frame'
 import PersonaPic from './persona-pic'
 import PulsateEffect from './pulsate-effect'
@@ -22,7 +23,7 @@ const Launcher = ({ pulsating, disappear, showingContent, launcherConfig, onClic
         position={position}
         pulsating={pulsating}
       >
-        <PersonaPic active={!showingContent} url={personaPicUrl} />
+        {personaPicUrl ? <PersonaPic active={!showingContent} url={personaPicUrl} /> : <EmptyPersonaPic />}
         <CloseIcon active={showingContent} launcherConfig={launcherConfig} />
       </Circle>
     </div>
