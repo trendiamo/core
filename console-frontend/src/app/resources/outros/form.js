@@ -1,6 +1,7 @@
 import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
+import PluginPreview from './plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
@@ -9,6 +10,7 @@ import withForm from 'ext/recompose/with-form'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
+import { Grid } from '@material-ui/core'
 import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
 import { withRouter } from 'react-router'
 
@@ -92,6 +94,17 @@ const OutroForm = ({
   </Section>
 )
 
+const FormTemplate = props => (
+  <Grid container spacing={24}>
+    <Grid item md={6} xs={12}>
+      <OutroForm {...props} />
+    </Grid>
+    <Grid item md={6} xs={12}>
+      <PluginPreview {...props} />
+    </Grid>
+  </Grid>
+)
+
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
@@ -119,6 +132,7 @@ export default compose(
         setForm({
           ...form,
           personaId: selected.value.id,
+          personaProfilePic: selected.value.profilePicUrl,
         })
     },
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
@@ -145,4 +159,4 @@ export default compose(
     backRoute,
     title,
   }))
-)(OutroForm)
+)(FormTemplate)

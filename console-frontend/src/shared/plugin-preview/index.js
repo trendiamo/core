@@ -33,12 +33,14 @@ const PluginPreview = ({
   compiledLauncherConfig,
   bubbleText,
   bubbleExtraText,
+  bubbleButtons,
   position = 'right',
 }) => (
   <StickyContainer>
     <Alignment width={width}>
       <Content Base={Base} position={position} showingContent={showingContent} />
       <LauncherBubbles
+        bubbleButtons={bubbleButtons}
         bubbleExtraText={bubbleExtraText}
         bubbleText={bubbleText}
         launcherConfig={compiledLauncherConfig}

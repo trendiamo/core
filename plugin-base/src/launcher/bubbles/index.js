@@ -1,61 +1,29 @@
 import BubbleButtons from './buttons'
 import LauncherBubble from './launcher-bubble'
 import React from 'react'
+import { compose, withProps } from 'recompose'
+import { defaultBubble, defaultBubbleButtons, defaultBubbleExtra } from './config'
 
-const getExtraBubble = flow => {
-  if (flow.flowType === 'outro') {
-    return {
-      buttons: [
-        {
-          value: 'no',
-          message: flow.chatBubbleButtonNo,
-          appearsAfter: 0,
-        },
-        {
-          value: 'yes',
-          message: flow.chatBubbleButtonYes,
-          appearsAfter: 0.2,
-        },
-      ],
-      timeStart: 2.5,
-      timeEnd: null,
-      timeStartDuration: 0.4,
-    }
-  }
-  return { message: flow.chatBubbleExtraText }
-}
-
-const getBubbleProps = data => {
-  if (!data) return
-  const extraBubble = data.launcher ? data.launcher.chatBubbleExtra : getExtraBubble(data.flow)
-  let bubble = data.launcher ? data.launcher.chatBubble : { message: data.flow.chatBubbleText }
-  if (extraBubble.buttons) {
-    bubble.timeEnd = null
-  }
-  return {
-    bubble,
-    extraBubble,
-    [extraBubble.buttons && 'launcherPulsating']: false,
-  }
-}
-
-const LauncherBubbles = ({
+const LauncherBubblesTemplate = ({
   bubble,
   disappear,
   onClick,
   position,
   showingContent,
-  extraBubble,
+  bubbleExtra,
   setDisappear,
   launcherConfig,
   offset,
   outroButtonsClick,
+  bubbleExtraExists,
+  bubbleButtons,
 }) => (
   <div>
     <LauncherBubble
       bubble={bubble}
+      bubbleButtons={bubbleButtons}
+      bubbleExtraExists={bubbleExtraExists}
       disappear={disappear}
-      extraBubbleExists={extraBubble && (extraBubble.message || extraBubble.buttons)}
       launcherConfig={launcherConfig}
       offset={offset}
       onClick={onClick}
@@ -63,7 +31,7 @@ const LauncherBubbles = ({
       showingContent={showingContent}
     />
     <LauncherBubble
-      bubble={extraBubble}
+      bubble={bubbleExtra}
       disappear={disappear}
       extraBubble
       launcherConfig={launcherConfig}
@@ -72,19 +40,58 @@ const LauncherBubbles = ({
       position={position}
       showingContent={showingContent}
     />
-    {extraBubble && extraBubble.buttons && (
-      <BubbleButtons
-        bubble={extraBubble}
-        disappear={disappear}
-        launcherConfig={launcherConfig}
-        offset={offset}
-        onClick={outroButtonsClick}
-        position={position}
-        setDisappear={setDisappear}
-        showingContent={showingContent}
-      />
-    )}
+    <BubbleButtons
+      bubble={bubbleButtons}
+      disappear={disappear}
+      launcherConfig={launcherConfig}
+      offset={offset}
+      onClick={outroButtonsClick}
+      position={position}
+      setDisappear={setDisappear}
+      showingContent={showingContent}
+    />
   </div>
 )
 
-export { LauncherBubbles, getBubbleProps }
+const mixBubblesDefault = ({ bubble, bubbleExtra, bubbleButtons }) => {
+  const result = {
+    bubble: { ...defaultBubble, ...bubble },
+    bubbleExtra: { ...defaultBubbleExtra, ...bubbleExtra },
+    ...{
+      bubbleButtons: bubbleButtons && {
+        ...defaultBubbleButtons,
+        buttonYes: { ...defaultBubbleButtons.buttonYes, ...bubbleButtons.buttonYes },
+        buttonNo: { ...defaultBubbleButtons.buttonNo, ...bubbleButtons.buttonNo },
+      },
+    },
+  }
+  return result
+}
+
+const getBubbles = data => {
+  const comesFromApi = !!data.flow
+  const source = data.flow || data.launcher
+  const buttons = comesFromApi ? source : source.chatBubbleButtons
+  const bubble = comesFromApi ? { message: source.chatBubbleText } : source.chatBubble
+  const bubbleExtra = comesFromApi ? { message: source.chatBubbleExtraText } : source.chatBubbleExtra
+  const bubbleButtons = buttons && {
+    buttonYes: buttons.chatBubbleButtonYes && { message: buttons.chatBubbleButtonYes },
+    buttonNo: buttons.chatBubbleButtonNo && { message: buttons.chatBubbleButtonNo },
+  }
+  if (bubbleButtons && bubbleButtons.buttonYes && bubbleButtons.buttonNo) {
+    bubble.timeEnd = null
+  }
+  return { bubble, bubbleExtra, bubbleButtons }
+}
+
+const LauncherBubbles = compose(
+  withProps(({ data }) => data && mixBubblesDefault(getBubbles(data))),
+  withProps(({ bubbleExtra, bubbleButtons }) => ({
+    bubbleExtraExists: !!(
+      (bubbleExtra && bubbleExtra.message) ||
+      (bubbleButtons && (bubbleButtons.buttonNo.message || bubbleButtons.buttonYes.message))
+    ),
+  }))
+)(LauncherBubblesTemplate)
+
+export default LauncherBubbles

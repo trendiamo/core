@@ -12,7 +12,7 @@ import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { animateOnMount, getBubbleProps } from 'plugin-base'
+import { animateOnMount } from 'plugin-base'
 import { assessmentCart, assessmentHack } from 'special/assessment/utils'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, production, smallLauncherConfig } from 'config'
 import {
@@ -67,8 +67,6 @@ const AppBaseTemplate = ({
   position,
   showingContent,
   data,
-  bubble,
-  extraBubble,
   optimizelyClientInstance,
   ContentFrame,
   showAssessmentContent,
@@ -98,10 +96,8 @@ const AppBaseTemplate = ({
     )}
     {showingLauncher && (
       <LauncherBubbles
-        bubble={bubble}
         data={data}
         disappear={disappear}
-        extraBubble={extraBubble}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         optimizelyClientInstance={optimizelyClientInstance}
@@ -129,7 +125,6 @@ const AppBaseTemplate = ({
 )
 
 export const AppBase = compose(
-  withProps(({ data }) => getBubbleProps(data)),
   withProps(() => {
     const frekklsConfig = getFrekklsConfig()
     if (isSmall()) {

@@ -1,19 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import { compose, withProps } from 'recompose'
 import { LauncherBubbles } from 'plugin-base'
 
 const BubblesContainer = styled.div`
   position: absolute;
   top: 0;
-  bottom: -10px;
   left: 0;
-  right: -25px;
 `
-const Bubbles = ({ showingContent, position, bubbleText, bubbleExtraText, onToggleContent, launcherConfig }) => (
+
+const Bubbles = ({ showingContent, position, data, onToggleContent, launcherConfig }) => (
   <BubblesContainer>
     <LauncherBubbles
-      bubble={{ message: bubbleText, timeEnd: null }}
-      extraBubble={{ message: bubbleExtraText, timeEnd: null }}
+      data={data}
       launcherConfig={launcherConfig}
       offset={{ x: -25, y: -10 }}
       onToggleContent={onToggleContent}
@@ -23,4 +22,16 @@ const Bubbles = ({ showingContent, position, bubbleText, bubbleExtraText, onTogg
   </BubblesContainer>
 )
 
-export default Bubbles
+export default compose(
+  withProps(({ bubbleExtraText, bubbleText, bubbleButtons }) => ({
+    data: {
+      flowType: bubbleButtons && 'outro',
+      launcher: {
+        chatBubble: {
+          message: bubbleText,
+        },
+        ...(bubbleButtons ? { chatBubbleButtons: bubbleButtons } : { chatBubbleExtra: { message: bubbleExtraText } }),
+      },
+    },
+  }))
+)(Bubbles)

@@ -485,9 +485,6 @@ const data = {
     launcher: {
       chatBubble: {
         message: 'Lust auf weitere Ergänzungen?',
-        timeStart: 0.5,
-        timeEnd: 20,
-        hideBarAfter: 0.2,
       },
       chatBubbleExtra: {},
       persona: {
@@ -512,9 +509,6 @@ const data = {
     launcher: {
       chatBubble: {
         message: 'Brauchst du Hilfe bei der Größenwahl?',
-        timeStart: 0.5,
-        timeEnd: 20,
-        hideBarAfter: 0.2,
       },
       chatBubbleExtra: {},
       persona: {
@@ -527,9 +521,6 @@ const data = {
     closedLauncher: {
       chatBubble: {
         message: 'Wir sehen uns an der Kasse! 🙂',
-        timeStart: 0.5,
-        timeEnd: 20,
-        hideBarAfter: 0.2,
       },
       chatBubbleExtra: {},
       persona: {

@@ -1,7 +1,6 @@
 import LauncherBubbleFrame from './launcher-bubble-frame'
 import React from 'react'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
-import { bubbleExtraDefault, defaultBubble } from './config'
 import { ChatBubbleBase, Container } from './components'
 import { emojify, timeout } from 'ext'
 
@@ -39,9 +38,6 @@ const LauncherBubble = compose(
   withState('animation', 'setAnimation', null),
   withState('textWidth', 'setTextWidth', 0),
   withState('elevation', 'setElevation', false),
-  withProps(({ bubble, extraBubble }) => ({
-    bubble: { ...(extraBubble ? bubbleExtraDefault : defaultBubble), ...bubble },
-  })),
   withProps(({ extraBubble }) => ({
     bubbleTimeoutId: `chatBubble${extraBubble && 'Extra'}`,
   })),
@@ -80,7 +76,7 @@ const LauncherBubble = compose(
       setAnimation,
       setElevation,
       setTimeEnded,
-      extraBubbleExists,
+      bubbleExtraExists,
       safeAction,
     }) => () => {
       if (!bubble.message) return false
@@ -101,7 +97,7 @@ const LauncherBubble = compose(
           }),
           (bubble.timeStart + bubble.timeStartDuration + bubble.timeEnd) * 1000
         )
-      if (extraBubbleExists) {
+      if (bubbleExtraExists) {
         timeout.set(
           bubbleTimeoutId,
           safeAction(() => {
@@ -135,14 +131,15 @@ const LauncherBubble = compose(
         changeTextWidth,
         setAnimation,
         bubble,
-        extraBubbleExists,
+        bubbleExtraExists,
+        bubbleButtons,
       } = this.props
       const messageChanged = prevProps.bubble.message !== bubble.message
       if (
-        prevProps.extraBubbleExists !== extraBubbleExists ||
-        (prevProps.bubble.message === '' && messageChanged && extraBubbleExists)
+        prevProps.bubbleExtraExists !== bubbleExtraExists ||
+        (prevProps.bubble.message === '' && messageChanged && bubbleExtraExists)
       ) {
-        setElevation(extraBubbleExists)
+        setTimeout(() => setElevation(bubbleExtraExists), bubbleButtons && !bubbleExtraExists ? 300 : 10)
       }
       if (showingContent && !hiddenForContent) setHiddenForContent(true)
       if (messageChanged) {

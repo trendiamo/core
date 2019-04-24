@@ -1,6 +1,6 @@
 import { positioning } from 'tools'
 
-const containerStyle = ({ position, action, launcherConfig }) => ({
+const containerStyle = ({ position, action, launcherConfig, offset }) => ({
   position: 'fixed',
   display: 'flex',
   width: '225px',
@@ -8,13 +8,13 @@ const containerStyle = ({ position, action, launcherConfig }) => ({
   zIndex: '2147483005',
   justifyContent: 'space-between',
   pointerEvents: action === 'disappear' && 'none',
-  ...positioning.get({ type: 'launcherBubbles', position, noStyle: true, reset: true, launcherConfig }),
+  ...positioning.get({ type: 'launcherBubbles', position, noStyle: true, reset: true, launcherConfig, offset }),
 })
 
-const buttonContainerStyle = index => ({
+const buttonContainerStyle = margin => ({
   flex: 1,
   display: 'flex',
-  [index === 0 && 'marginRight']: '10px',
+  [margin && 'marginRight']: '10px',
   justifyContent: 'center',
   alignItems: 'center',
 })

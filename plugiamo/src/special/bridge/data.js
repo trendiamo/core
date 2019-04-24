@@ -12,14 +12,9 @@ const data = {
           launcher: {
             chatBubble: {
               message: "Hey! 👋Cool that you're interested!",
-              timeStart: 0.5,
-              timeEnd: 20,
             },
             chatBubbleExtra: {
               message: 'Let me show you more! 👀',
-              timeStart: 2.5,
-              timeEnd: 18.2,
-              timeStartDuration: 0.4,
             },
             persona: {
               name: 'Rodrigo',
@@ -177,14 +172,9 @@ const data = {
           launcher: {
             chatBubble: {
               message: 'Choose size and Add to Cart',
-              timeStart: 0.5,
-              timeEnd: 20,
             },
             chatBubbleExtra: {
               message: 'Or: need help with the sizes?',
-              timeStart: 2.5,
-              timeEnd: 18.2,
-              timeStartDuration: 0.4,
             },
             persona: {
               name: 'Rodrigo',
@@ -241,14 +231,9 @@ const data = {
           launcher: {
             chatBubble: {
               message: "Hey! 👋Cool that you're interested!",
-              timeStart: 0.5,
-              timeEnd: 20,
             },
             chatBubbleExtra: {
               message: 'Let me show you more! 👀',
-              timeStart: 2.5,
-              timeEnd: 18.2,
-              timeStartDuration: 0.4,
             },
             persona: {
               name: 'Rodrigo',
@@ -406,14 +391,9 @@ const data = {
           launcher: {
             chatBubble: {
               message: 'Choose size and Add to Cart',
-              timeStart: 0.5,
-              timeEnd: 20,
             },
             chatBubbleExtra: {
               message: 'Or: need help with the sizes?',
-              timeStart: 2.5,
-              timeEnd: 18.2,
-              timeStartDuration: 0.4,
             },
             persona: {
               name: 'Rodrigo',
@@ -466,14 +446,9 @@ const data = {
           launcher: {
             chatBubble: {
               message: "I'm glad that you like it! 🎉",
-              timeStart: 0.5,
-              timeEnd: 20,
             },
             chatBubbleExtra: {
               message: 'Anything else?',
-              timeStart: 2.5,
-              timeEnd: 18.2,
-              timeStartDuration: 0.4,
             },
             persona: {
               name: 'Rodrigo',
@@ -558,25 +533,10 @@ const data = {
           launcher: {
             chatBubble: {
               message: 'Awesome! 🤩 Was I helpful?',
-              timeStart: 0.5,
-              timeEnd: null,
             },
-            chatBubbleExtra: {
-              buttons: [
-                {
-                  message: 'Not really.',
-                  value: 'no',
-                  appearsAfter: 0,
-                },
-                {
-                  message: 'Yes, thanks!',
-                  value: 'yes',
-                  appearsAfter: 0.2,
-                },
-              ],
-              timeStart: 2.5,
-              timeEnd: null,
-              timeStartDuration: 0.4,
+            chatBubbleButtons: {
+              chatBubbleButtonNo: 'Not really.',
+              chatBubbleButtonYes: 'Yes, thanks!',
             },
             persona: {
               name: 'Rodrigo',
