@@ -50,7 +50,7 @@ bin/rails deploy
 dokku apps:create shopify-app
 dokku postgres:create shopify-app-pg
 dokku postgres:link shopify-app-pg shopify-app
-dokku config:set shopify-app SHOPIFY_API_KEY=... SHOPIFY_SHARED_SECRET=... SHOP_API_URL=... SHOP_API_TOKEN=...
+dokku config:set shopify-app BASE_API_URL=https://shopify.frekkls.com SHOPIFY_API_KEY=... SHOPIFY_SHARED_SECRET=... SHOP_API_URL=... SHOP_API_TOKEN=...
 dokku domains:add shopify-app shopify.frekkls.com
 dokku ps:scale shopify-app web=1
 # from your local machine, try to do the first deploy:
