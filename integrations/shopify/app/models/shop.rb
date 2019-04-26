@@ -11,7 +11,7 @@ class Shop < ApplicationRecord
   end
 
   def export_products
-    shopify_session
+    activate_shopify_session
     request_data = RestClient::RequestData.new(shopify_domain)
     ShopifyAPI::Product.where(vendor: shopify_domain.split(".", 2).first).map do |product|
       converted_product = request_data.convert_product(product)
@@ -20,7 +20,7 @@ class Shop < ApplicationRecord
     end
   end
 
-  def shopify_session
+  def activate_shopify_session
     shop_session = ShopifyAPI::Session.new(shopify_domain, shopify_token)
     ShopifyAPI::Base.activate_session(shop_session)
   end
