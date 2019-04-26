@@ -4,16 +4,22 @@ class RestClient::RequestData
   end
 
   def convert_product(product)
-    { product: { name: product.title,
-                 url: "/#{product.class.element_name}/#{product.handle}",
-                 source: "shopify",
-                 source_id: product.id,
-                 payload: { product: product }, } }.to_json
+    {
+      product: {
+        name: product.title,
+        url: "/products/#{product.handle}",
+        source: "shopify",
+        source_id: product.id,
+        payload: product,
+      },
+    }.to_json
   end
 
   def request_headers
-    { Content_type: :json,
+    {
+      Content_type: :json,
       Authorization: "Plain #{ENV['SHOP_API_TOKEN']}",
-      Hostname: @shop_domain, }
+      Hostname: @shop_domain,
+    }
   end
 end

@@ -13,10 +13,9 @@ class Shop < ApplicationRecord
   def export_products
     activate_shopify_session
     request_data = RestClient::RequestData.new(shopify_domain)
-    ShopifyAPI::Product.where(vendor: shopify_domain.split(".", 2).first).map do |product|
+    ShopifyAPI::Product.all.map do |product|
       converted_product = request_data.convert_product(product)
-      RestClient.post("#{ENV['SHOP_API_URL']}/products", converted_product,
-                      request_data.request_headers)
+      RestClient.post("#{ENV['SHOP_API_URL']}/products", converted_product, request_data.request_headers)
     end
   end
 
