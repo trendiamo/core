@@ -7,19 +7,23 @@ class RestClient::ProductWebhookRequest
 
   def create_product
     product = find_and_convert_product
-    RestClient.post("#{ENV['SHOP_API_URL']}/products", { product: product }, @request_data.headers)
+    RestClient.post(base_url, { product: product }.to_json, @request_data.headers)
   end
 
   def update_product
     product = find_and_convert_product
-    RestClient.put("#{ENV['SHOP_API_URL']}/products/#{@product_webhook[:id]}", product, @request_data.headers)
+    RestClient.put("#{base_url}/#{@product_webhook[:id]}", { product: product }.to_json, @request_data.headers)
   end
 
   def destroy_product
-    RestClient.delete("#{ENV['SHOP_API_URL']}/products/#{@product_webhook[:id]}", @request_data.headers)
+    RestClient.delete("#{base_url}/#{@product_webhook[:id]}", @request_data.headers)
   end
 
   private
+
+  def base_url
+    "#{ENV['SHOP_API_URL']}/products"
+  end
 
   def find_and_convert_product
     product = ShopifyAPI::Product.find(@product_webhook[:id])

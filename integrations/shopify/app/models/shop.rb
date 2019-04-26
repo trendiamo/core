@@ -15,7 +15,7 @@ class Shop < ApplicationRecord
     request_data = RestClient::RequestData.new(shopify_domain)
     ShopifyAPI::Product.all.map do |product|
       converted_product = request_data.convert_product(product)
-      RestClient.post("#{ENV['SHOP_API_URL']}/products", { product: converted_product }, request_data.headers)
+      RestClient.post("#{ENV['SHOP_API_URL']}/products", { product: converted_product }.to_json, request_data.headers)
     end
   end
 

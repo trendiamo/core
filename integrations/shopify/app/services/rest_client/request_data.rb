@@ -10,7 +10,7 @@ class RestClient::RequestData
       source: "shopify",
       source_id: product.id,
       payload: product,
-    }.to_json
+    }
   end
 
   def headers
