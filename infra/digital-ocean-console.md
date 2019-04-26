@@ -37,7 +37,7 @@ dokku postgres:link console-backend-pg console-backend
 dokku redis:create console-backend-redis
 dokku redis:link console-backend-redis console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
-dokku config:set console-backend CORS_ORIGIN=admin.frekkls.com FRONTEND_BASE_URL=https://admin.frekkls.com MAILER_HOST=api.frekkls.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=...
+dokku config:set console-backend CORS_ORIGIN=admin.frekkls.com FRONTEND_BASE_URL=https://admin.frekkls.com MAILER_HOST=api.frekkls.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=... SHOP_API_TOKEN=...
 dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
 dokku domains:add console-backend api.frekkls.com
@@ -50,7 +50,7 @@ bin/rails deploy
 dokku apps:create shopify-app
 dokku postgres:create shopify-app-pg
 dokku postgres:link shopify-app-pg shopify-app
-dokku config:set shopify-app SHOPIFY_API_KEY=... SHOPIFY_SHARED_SECRET=...
+dokku config:set shopify-app SHOPIFY_API_KEY=... SHOPIFY_SHARED_SECRET=... SHOP_API_URL=... SHOP_API_TOKEN=...
 dokku domains:add shopify-app shopify.frekkls.com
 dokku ps:scale shopify-app web=1
 # from your local machine, try to do the first deploy:

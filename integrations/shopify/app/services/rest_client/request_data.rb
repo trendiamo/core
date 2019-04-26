@@ -13,7 +13,7 @@ class RestClient::RequestData
 
   def request_headers
     { Content_type: :json,
-      Authorization: "Plain #{ENV['BASE_SHOP_API_TOKEN']}",
+      Authorization: "Plain #{ENV['SHOP_API_TOKEN']}",
       Hostname: @shop_domain, }
   end
 end

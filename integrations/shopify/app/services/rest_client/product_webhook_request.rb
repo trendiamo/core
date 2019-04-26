@@ -7,18 +7,18 @@ class RestClient::ProductWebhookRequest
 
   def create_product
     find_product
-    RestClient.post("#{ENV['BASE_SHOP_API_URL']}/products",
+    RestClient.post("#{ENV['SHOP_API_URL']}/products",
                     @request_data.convert_product(@product), @request_data.request_headers)
   end
 
   def update_product
     find_product
-    RestClient.put("#{ENV['BASE_SHOP_API_URL']}/products/#{@product.id}",
+    RestClient.put("#{ENV['SHOP_API_URL']}/products/#{@product.id}",
                    @request_data.convert_product(@product), @request_data.request_headers)
   end
 
   def destroy_product
-    RestClient.delete("#{ENV['BASE_SHOP_API_URL']}/products/#{@product_webhook[:id]}", @request_data.request_headers)
+    RestClient.delete("#{ENV['SHOP_API_URL']}/products/#{@product_webhook[:id]}", @request_data.request_headers)
   end
 
   private

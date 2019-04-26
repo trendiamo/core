@@ -62,7 +62,7 @@ module ShopApi
 
       def authenticate
         auth_header = request.headers["Authorization"]
-        return if auth_header == "Plain #{ENV['AUTH_TOKEN']}"
+        return if auth_header == "Plain #{ENV['SHOP_API_TOKEN']}"
 
         user_not_authorized
       end
