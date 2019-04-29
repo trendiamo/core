@@ -344,7 +344,8 @@ const PicturesModal = compose(
     onPictureClick: ({ setActivePicture }) => picture => {
       setActivePicture(picture)
     },
-    onUrlUploadClick: ({ setUrlUploadState }) => () => {
+    onUrlUploadClick: ({ setUrlUploadState, setPictureUrl }) => () => {
+      setPictureUrl('')
       setUrlUploadState(true)
     },
   }),
