@@ -138,7 +138,7 @@ const TriggerRow = compose(
       }
     },
   })
-)(({ trigger, handleSelect, selectedIds, highlightEnabled, highlightUrl }) =>
+)(({ trigger, handleSelect, selectedIds, highlightEnabled, highlightUrl, hostnames }) =>
   trigger.flowType === 'Navigation' ? null : (
     <TableRowStyled highlight={highlightEnabled} hover role="checkbox" tabIndex={-1}>
       <TableCell>
@@ -172,8 +172,17 @@ const TriggerRow = compose(
       </TableCell>
       <TableCell width="50%">
         {trigger.urlMatchers.map((url, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <StyledChip enabled={highlightEnabled} highlight={highlightUrl === index} key={`url${index}`} label={url} />
+          <StyledChip
+            clickable
+            component="a"
+            enabled={highlightEnabled}
+            highlight={highlightUrl === index}
+            href={`http://${hostnames[0] + url}`}
+            // eslint-disable-next-line react/no-array-index-key
+            key={`url${index}`}
+            label={url}
+            target="_blank"
+          />
         ))}
       </TableCell>
       <TableCell>
@@ -191,7 +200,7 @@ const TriggerRow = compose(
 
 const SortableTriggerRow = SortableElement(TriggerRow)
 const SortableTriggerRows = SortableContainer(
-  ({ triggers, handleSelectAll, selectedIds, setSelectedIds, testerUrl }) => (
+  ({ triggers, handleSelectAll, selectedIds, setSelectedIds, testerUrl, hostnames }) => (
     <TableBody>
       {triggers &&
         triggers.map((trigger, index) =>
@@ -200,6 +209,7 @@ const SortableTriggerRows = SortableContainer(
               handleSelectAll={handleSelectAll}
               highlightEnabled={testerUrl.matches && testerUrl.matches.index === index}
               highlightUrl={testerUrl.matches && testerUrl.matches.index === index && testerUrl.matches.urlIndex}
+              hostnames={hostnames}
               index={index}
               key={trigger.id}
               selectedIds={selectedIds}
@@ -248,6 +258,7 @@ const UrlTester = compose(
 const TriggerList = ({
   selectedIds,
   handleSelectAll,
+  hostnames,
   triggers,
   handleRequestSort,
   deleteTriggers,
@@ -291,6 +302,7 @@ const TriggerList = ({
         distance={1}
         handleSelectAll={handleSelectAll}
         helperClass="sortable-element sortable-trigger-row"
+        hostnames={hostnames}
         lockAxis="y"
         onSortEnd={onSortEnd}
         selectedIds={selectedIds}
