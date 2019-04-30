@@ -1,8 +1,9 @@
+import MarkdownRTE from './markdown-rte'
 import React from 'react'
-import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, shouldUpdate, withHandlers } from 'recompose'
-import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
+import { Cancel, FormSection } from 'shared/form-elements'
 import { isEqual, omit } from 'lodash'
+import { InputLabel as Label } from '@material-ui/core'
 
 const SimpleChatMessage = ({
   allowDelete,
@@ -11,8 +12,7 @@ const SimpleChatMessage = ({
   isFormLoading,
   simpleChatMessage,
   simpleChatMessageIndex,
-  onFocus,
-  editSimpleChatMessageValue,
+  onChange,
 }) => (
   <FormSection
     actions={
@@ -26,27 +26,17 @@ const SimpleChatMessage = ({
     foldable
     hideBottom
     hideTop={index === 0}
-    title={simpleChatMessage.id ? simpleChatMessage.text : 'New Message'}
   >
-    <Field
+    <Label required style={{ fontSize: '12px' }}>
+      {'Message'}
+    </Label>
+    <MarkdownRTE
       disabled={isFormLoading}
-      fullWidth
-      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-      label="Message"
-      margin="normal"
       name="simpleChatMessage_text"
-      onChange={editSimpleChatMessageValue}
-      onFocus={onFocus}
-      required
-      value={simpleChatMessage.text}
+      onChange={onChange}
+      simpleChatMessage={simpleChatMessage}
+      simpleChatMessageIndex={simpleChatMessageIndex}
     />
-    <HelperText>
-      {'ℹ️ You can format text using '}
-      <a href="https://www.markdownguide.org/cheat-sheet" rel="noopener noreferrer" target="_blank">
-        {'markdown'}
-      </a>
-      {'. If you just paste a youtube link, the video will be shown.'}
-    </HelperText>
   </FormSection>
 )
 
@@ -57,10 +47,6 @@ export default compose(
   }),
   branch(({ simpleChatMessage }) => simpleChatMessage._destroy, renderNothing),
   withHandlers({
-    editSimpleChatMessageValue: ({ simpleChatMessage, simpleChatMessageIndex, onChange }) => event => {
-      const name = event.target.name.replace('simpleChatMessage_', '')
-      onChange(Object.assign({}, simpleChatMessage, { [name]: event.target.value }), simpleChatMessageIndex)
-    },
     deleteSimpleChatMessage: ({ simpleChatMessage, simpleChatMessageIndex, onChange }) => () => {
       onChange(
         {
