@@ -4,8 +4,8 @@ import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
+import useForm from 'ext/hooks/use-form'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import withForm from 'ext/recompose/with-form'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -93,45 +93,7 @@ const PersonaForm = ({
   </Section>
 )
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial' }),
-  withProps({ formRef: React.createRef() }),
-  withState('isCropping', 'setIsCropping', false),
-  withState('profilePic', 'setProfilePic', null),
-  withState('progress', 'setProgress', null),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        id: json.id,
-        name: json.name || '',
-        description: json.description || '',
-        profilePicUrl: json.profilePicUrl || '',
-        instagramUrl: json.instagramUrl || '',
-        profilePicAnimationUrl: json.profilePicAnimationUrl || '',
-      }
-    },
-    loadFormObject: ({ loadFormObject }) => async () => {
-      return loadFormObject()
-    },
-    saveFormObject: ({ saveFormObject, setProgress, profilePic, setProfilePic }) => async form => {
-      if (profilePic) {
-        const profilePicUrl = await uploadPicture({
-          blob: profilePic,
-          setProgress,
-        })
-        setProfilePic(null)
-        return saveFormObject({ ...form, profilePicUrl })
-      }
-      return saveFormObject(form)
-    },
-  }),
-  withForm({
-    name: '',
-    description: '',
-    profilePicUrl: '',
-    instagramUrl: '',
-    profilePicAnimationUrl: '',
-  }),
+const PersonaForm1 = compose(
   withRouter,
   withOnboardingConsumer,
   withHandlers({
@@ -179,3 +141,49 @@ export default compose(
     })
   )
 )(PersonaForm)
+
+const PersonaForm2 = props => {
+  const defaultForm = {
+    name: '',
+    description: '',
+    profilePicUrl: '',
+    instagramUrl: '',
+    profilePicAnimationUrl: '',
+  }
+  const formProps = useForm({ ...props, defaultForm })
+  return <PersonaForm1 {...{ ...props, ...formProps }} />
+}
+
+export default compose(
+  withOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial' }),
+  withProps({ formRef: React.createRef() }),
+  withState('isCropping', 'setIsCropping', false),
+  withState('profilePic', 'setProfilePic', null),
+  withState('progress', 'setProgress', null),
+  withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        id: json.id,
+        name: json.name || '',
+        description: json.description || '',
+        profilePicUrl: json.profilePicUrl || '',
+        instagramUrl: json.instagramUrl || '',
+        profilePicAnimationUrl: json.profilePicAnimationUrl || '',
+      }
+    },
+    loadFormObject: ({ loadFormObject }) => async () => {
+      return loadFormObject()
+    },
+    saveFormObject: ({ saveFormObject, setProgress, profilePic, setProfilePic }) => async form => {
+      if (profilePic) {
+        const profilePicUrl = await uploadPicture({
+          blob: profilePic,
+          setProgress,
+        })
+        setProfilePic(null)
+        return saveFormObject({ ...form, profilePicUrl })
+      }
+      return saveFormObject(form)
+    },
+  })
+)(PersonaForm2)

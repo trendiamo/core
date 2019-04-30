@@ -5,7 +5,7 @@ import Link from 'shared/link'
 import PictureUploader, { ProgressBar, uploadPicture } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
-import withForm from 'ext/recompose/with-form'
+import useForm from 'ext/hooks/use-form'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
@@ -93,6 +93,26 @@ const EditUser = ({
   </form>
 )
 
+const EditUser1 = compose(
+  withHandlers({
+    setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
+      setForm({ ...form, profilePicUrl })
+    },
+  }),
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
+)(EditUser)
+
+const EditUser2 = props => {
+  const defaultForm = {
+    email: '',
+    firstName: '',
+    lastName: '',
+    profilePicUrl: '',
+  }
+  const formProps = useForm({ ...props, defaultForm })
+  return <EditUser1 {...{ ...props, ...formProps }} />
+}
+
 export default compose(
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
@@ -143,17 +163,5 @@ export default compose(
       auth.setUser(json)
       return json
     },
-  }),
-  withForm({
-    email: '',
-    firstName: '',
-    lastName: '',
-    profilePicUrl: '',
-  }),
-  withHandlers({
-    setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
-      setForm({ ...form, profilePicUrl })
-    },
-  }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
-)(EditUser)
+  })
+)(EditUser2)

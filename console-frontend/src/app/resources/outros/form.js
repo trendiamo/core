@@ -5,8 +5,8 @@ import PluginPreview from './plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
+import useForm from 'ext/hooks/use-form'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import withForm from 'ext/recompose/with-form'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
@@ -94,7 +94,7 @@ const OutroForm = ({
   </Section>
 )
 
-const FormTemplate = props => (
+const OutroForm1 = props => (
   <Grid container spacing={24}>
     <Grid item md={6} xs={12}>
       <OutroForm {...props} />
@@ -105,26 +105,7 @@ const FormTemplate = props => (
   </Grid>
 )
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial' }),
-  withProps({ formRef: React.createRef() }),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        id: json.id,
-        personaId: (json.persona && json.persona.id) || '',
-        name: json.name || '',
-        chatBubbleText: json.chatBubbleText || '',
-        chatBubbleButtonYes: json.chatBubbleButtonYes || '',
-        chatBubbleButtonNo: json.chatBubbleButtonNo || '',
-        __persona: json.persona,
-      }
-    },
-  }),
-  withForm({
-    personaId: '',
-    name: '',
-  }),
+const OutroForm2 = compose(
   withRouter,
   withHandlers({
     selectPersona: ({ form, setForm }) => selected => {
@@ -159,4 +140,31 @@ export default compose(
     backRoute,
     title,
   }))
-)(FormTemplate)
+)(OutroForm1)
+
+const OutroForm3 = props => {
+  const defaultForm = {
+    personaId: '',
+    name: '',
+  }
+  const formProps = useForm({ ...props, defaultForm })
+  return <OutroForm2 {...{ ...props, ...formProps }} />
+}
+
+export default compose(
+  withOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial' }),
+  withProps({ formRef: React.createRef() }),
+  withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        id: json.id,
+        personaId: (json.persona && json.persona.id) || '',
+        name: json.name || '',
+        chatBubbleText: json.chatBubbleText || '',
+        chatBubbleButtonYes: json.chatBubbleButtonYes || '',
+        chatBubbleButtonNo: json.chatBubbleButtonNo || '',
+        __persona: json.persona,
+      }
+    },
+  })
+)(OutroForm3)

@@ -3,8 +3,8 @@ import FormContainer from './form-container'
 import PluginPreview from './plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
+import useForm from 'ext/hooks/use-form'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import withForm from 'ext/recompose/with-form'
 import { Actions } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -26,47 +26,7 @@ const Showcase = props => (
   </Grid>
 )
 
-export default compose(
-  withProps({ formRef: React.createRef() }),
-  withOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial' }),
-  withState('isCropping', 'setIsCropping', false),
-  withState('productPicksPictures', 'setProductPicksPictures', []),
-  withState('showingContent', 'setShowingContent', false),
-  withHandlers({
-    uploadSubPicture: () => async ({ blob, setProgress, subform }) => {
-      if (blob) {
-        const productPickPhotoUrl = await uploadPicture({
-          blob,
-          setProgress,
-        })
-        return {
-          ...subform,
-          picUrl: productPickPhotoUrl,
-        }
-      }
-    },
-  }),
-  withHandlers({
-    uploadSubPictures: ({ productPicksPictures, uploadSubPicture }) => form => {
-      return productPicksPictures.map(async ({ blob, productPickIndex, setProgress, spotlightIndex }) => {
-        const { productPicksAttributes } = form.spotlightsAttributes[spotlightIndex]
-        productPicksAttributes[productPickIndex] = await uploadSubPicture({
-          subform: productPicksAttributes[productPickIndex],
-          blob,
-          setProgress,
-        })
-      })
-    },
-  }),
-  withHandlers({
-    formObjectTransformer,
-    saveFormObject: ({ saveFormObject, uploadSubPictures, setProductPicksPictures }) => async form => {
-      await Promise.all(uploadSubPictures(form))
-      setProductPicksPictures([])
-      return saveFormObject(form)
-    },
-  }),
-  withForm(formObject),
+const Showcase1 = compose(
   withHandlers({
     addSpotlight: ({ form, setForm }) => () => {
       setForm({
@@ -166,3 +126,50 @@ export default compose(
     },
   })
 )(Showcase)
+
+const Showcase2 = props => {
+  const formProps = useForm({ ...props, defaultForm: formObject })
+  return <Showcase1 {...{ ...props, ...formProps }} />
+}
+
+export default compose(
+  withProps({ formRef: React.createRef() }),
+  withOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial' }),
+  withState('isCropping', 'setIsCropping', false),
+  withState('productPicksPictures', 'setProductPicksPictures', []),
+  withState('showingContent', 'setShowingContent', false),
+  withHandlers({
+    uploadSubPicture: () => async ({ blob, setProgress, subform }) => {
+      if (blob) {
+        const productPickPhotoUrl = await uploadPicture({
+          blob,
+          setProgress,
+        })
+        return {
+          ...subform,
+          picUrl: productPickPhotoUrl,
+        }
+      }
+    },
+  }),
+  withHandlers({
+    uploadSubPictures: ({ productPicksPictures, uploadSubPicture }) => form => {
+      return productPicksPictures.map(async ({ blob, productPickIndex, setProgress, spotlightIndex }) => {
+        const { productPicksAttributes } = form.spotlightsAttributes[spotlightIndex]
+        productPicksAttributes[productPickIndex] = await uploadSubPicture({
+          subform: productPicksAttributes[productPickIndex],
+          blob,
+          setProgress,
+        })
+      })
+    },
+  }),
+  withHandlers({
+    formObjectTransformer,
+    saveFormObject: ({ saveFormObject, uploadSubPictures, setProductPicksPictures }) => async form => {
+      await Promise.all(uploadSubPictures(form))
+      setProductPicksPictures([])
+      return saveFormObject(form)
+    },
+  })
+)(Showcase2)

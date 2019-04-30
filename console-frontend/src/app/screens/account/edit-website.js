@@ -3,7 +3,7 @@ import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import HostnamesForm from 'shared/hostnames-form'
 import React from 'react'
-import withForm from 'ext/recompose/with-form'
+import useForm from 'ext/hooks/use-form'
 import { apiRequest, apiWebsiteShow, apiWebsiteUpdate, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
 import { Checkbox, FormControlLabel, FormHelperText, TextField } from '@material-ui/core'
@@ -64,6 +64,40 @@ const EditWebsite = ({
   </form>
 )
 
+const EditWebsite1 = compose(
+  withHandlers({
+    addHostnameSelect: ({ form, setForm }) => () => {
+      setForm({ ...form, hostnames: [...form.hostnames, ''] })
+    },
+    deleteHostname: ({ form, setForm }) => index => {
+      let newHostnames = [...form.hostnames]
+      newHostnames.splice(index, 1)
+      setForm({ ...form, hostnames: newHostnames })
+    },
+    editHostnameValue: ({ form, setForm }) => (index, newValue) => {
+      const newHostnames = [...form.hostnames]
+      newHostnames[index] = newValue
+      setForm({ ...form, hostnames: newHostnames })
+    },
+  }),
+  withHandlers({
+    setPreviewMode: ({ form, setForm }) => (event, checked) => {
+      setForm({ ...form, previewMode: !checked })
+    },
+  }),
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
+)(EditWebsite)
+
+const EditWebsite2 = props => {
+  const defaultForm = {
+    hostnames: [''],
+    name: '',
+    previewMode: false,
+  }
+  const formProps = useForm({ ...props, defaultForm })
+  return <EditWebsite1 {...{ ...props, ...formProps }} />
+}
+
 export default compose(
   withProps(() => ({
     websiteId: auth.isAdmin()
@@ -93,31 +127,5 @@ export default compose(
       if (!requestError && !errors) enqueueSnackbar('Successfully updated account info', { variant: 'success' })
       return json
     },
-  }),
-  withForm({
-    hostnames: [''],
-    name: '',
-    previewMode: false,
-  }),
-  withHandlers({
-    addHostnameSelect: ({ form, setForm }) => () => {
-      setForm({ ...form, hostnames: [...form.hostnames, ''] })
-    },
-    deleteHostname: ({ form, setForm }) => index => {
-      let newHostnames = [...form.hostnames]
-      newHostnames.splice(index, 1)
-      setForm({ ...form, hostnames: newHostnames })
-    },
-    editHostnameValue: ({ form, setForm }) => (index, newValue) => {
-      const newHostnames = [...form.hostnames]
-      newHostnames[index] = newValue
-      setForm({ ...form, hostnames: newHostnames })
-    },
-  }),
-  withHandlers({
-    setPreviewMode: ({ form, setForm }) => (event, checked) => {
-      setForm({ ...form, previewMode: !checked })
-    },
-  }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
-)(EditWebsite)
+  })
+)(EditWebsite2)
