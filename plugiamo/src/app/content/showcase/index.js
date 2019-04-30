@@ -35,6 +35,7 @@ const Showcase = compose(
           subtitle
           spotlights {
             id
+            order
             persona {
               id
               name
@@ -95,6 +96,7 @@ const Showcase = compose(
         hostname: location.hostname,
         personaName: spotlight.persona.name,
         personaRef: spotlight.persona.id,
+        personaOrder: spotlight.order,
       })
       if (assessmentHack()) rememberPersona(spotlight.persona)
       routeToSpotlight(spotlight)
