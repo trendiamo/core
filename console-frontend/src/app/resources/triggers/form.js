@@ -5,8 +5,8 @@ import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
+import useForm from 'ext/hooks/use-form'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemButton, Cancel, Form, HelperText } from 'shared/form-elements'
 import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow, refreshRoute } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -113,26 +113,7 @@ const TriggerForm = ({
   </Section>
 )
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
-  withProps({ formRef: React.createRef() }),
-  withState('hostnames', 'setHostnames', []),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        id: json.id,
-        flowId: json.flowId || '',
-        flowType: json.flowType || '',
-        urlMatchers: json.urlMatchers || [''],
-        flowLabel: (json.flow && json.flow.name) || '',
-      }
-    },
-  }),
-  withForm({
-    flowId: '',
-    flowType: '',
-    urlMatchers: [''],
-  }),
+const TriggerForm1 = compose(
   withHandlers({
     addUrlSelect: ({ form, setForm }) => () => {
       setForm({ ...form, urlMatchers: [...form.urlMatchers, ''] })
@@ -199,3 +180,30 @@ export default compose(
     },
   })
 )(TriggerForm)
+
+const TriggerForm2 = props => {
+  const defaultForm = {
+    flowId: '',
+    flowType: '',
+    urlMatchers: [''],
+  }
+  const formProps = useForm({ ...props, defaultForm })
+  return <TriggerForm1 {...{ ...props, ...formProps }} />
+}
+
+export default compose(
+  withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
+  withProps({ formRef: React.createRef() }),
+  withState('hostnames', 'setHostnames', []),
+  withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        id: json.id,
+        flowId: json.flowId || '',
+        flowType: json.flowType || '',
+        urlMatchers: json.urlMatchers || [''],
+        flowLabel: (json.flow && json.flow.name) || '',
+      }
+    },
+  })
+)(TriggerForm2)

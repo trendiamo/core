@@ -6,8 +6,8 @@ import PluginPreview from 'shared/plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
+import useForm from 'ext/hooks/use-form'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
@@ -251,6 +251,91 @@ const NavigationSuperForm = compose(
   </Grid>
 ))
 
+const NavigationSuperForm1 = compose(
+  withHandlers({
+    addNavigationItem: ({ form, setForm }) => () => {
+      setForm({
+        ...form,
+        navigationItemsAttributes: [
+          ...form.navigationItemsAttributes,
+          {
+            text: '',
+            url: '',
+            picUrl: '',
+          },
+        ],
+      })
+    },
+    setNavigationItemForm: ({ form, setForm }) => (navigationItem, index) => {
+      const newNavigationItemsAttributes = [...form.navigationItemsAttributes]
+      newNavigationItemsAttributes[index] = navigationItem
+      setForm({ ...form, navigationItemsAttributes: newNavigationItemsAttributes })
+    },
+  }),
+  withRouter,
+  withHandlers({
+    selectPersona: ({ convertPersona, form, setForm, setPersona }) => selected => {
+      selected &&
+        setForm({
+          ...form,
+          personaId: selected.value.id,
+        })
+      selected && setPersona(convertPersona(selected.value))
+    },
+    onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
+      if (!formRef.current.reportValidity()) return
+      const result = await onFormSubmit(event)
+      if (result.error || result.errors) return setIsFormSubmitting(false)
+      if (location.pathname !== routes.navigationEdit(result.id)) history.push(routes.navigationEdit(result.id))
+      setIsFormSubmitting(false)
+      return result
+    },
+    setPicture: ({ navigationItemsPictures, setNavigationItemsPictures }) => (index, blob, setProgress) => {
+      const picture = { index, blob, setProgress }
+      let newNavigationItemsPictures = [...navigationItemsPictures]
+      const navigationItemsPictureIndex = findIndex(newNavigationItemsPictures, { index })
+      navigationItemsPictureIndex >= 0
+        ? newNavigationItemsPictures.splice(navigationItemsPictureIndex, 1, picture)
+        : newNavigationItemsPictures.push(picture)
+      setNavigationItemsPictures(newNavigationItemsPictures)
+    },
+    onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
+      const orderedNavigationItems = arrayMove(form.navigationItemsAttributes, oldIndex, newIndex)
+      setForm({ ...form, navigationItemsAttributes: orderedNavigationItems })
+    },
+  }),
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
+  withAppBarContent(({ backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
+    Actions: (
+      <Actions
+        isFormSubmitting={isFormSubmitting}
+        onFormSubmit={onFormSubmit}
+        saveDisabled={isFormSubmitting || isCropping || isFormLoading}
+      />
+    ),
+    backRoute,
+    title,
+  }))
+)(NavigationSuperForm)
+
+const NavigationSuperForm2 = props => {
+  const defaultForm = {
+    personaId: '',
+    name: '',
+    chatBubbleText: '',
+    chatBubbleExtraText: '',
+    navigationItemsAttributes: [
+      {
+        text: '',
+        url: '',
+        picUrl: '',
+      },
+    ],
+  }
+  const formProps = useForm({ ...props, defaultForm })
+  return <NavigationSuperForm1 {...{ ...props, ...formProps }} />
+}
+
 export default compose(
   withOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }),
   withProps({ formRef: React.createRef() }),
@@ -318,82 +403,5 @@ export default compose(
     afterFormMount: ({ convertPersona, setPersona }) => formObject => {
       setPersona(convertPersona(formObject.__persona))
     },
-  }),
-  withForm({
-    personaId: '',
-    name: '',
-    chatBubbleText: '',
-    chatBubbleExtraText: '',
-    navigationItemsAttributes: [
-      {
-        text: '',
-        url: '',
-        picUrl: '',
-      },
-    ],
-  }),
-  withHandlers({
-    addNavigationItem: ({ form, setForm }) => () => {
-      setForm({
-        ...form,
-        navigationItemsAttributes: [
-          ...form.navigationItemsAttributes,
-          {
-            text: '',
-            url: '',
-            picUrl: '',
-          },
-        ],
-      })
-    },
-    setNavigationItemForm: ({ form, setForm }) => (navigationItem, index) => {
-      const newNavigationItemsAttributes = [...form.navigationItemsAttributes]
-      newNavigationItemsAttributes[index] = navigationItem
-      setForm({ ...form, navigationItemsAttributes: newNavigationItemsAttributes })
-    },
-  }),
-  withRouter,
-  withHandlers({
-    selectPersona: ({ convertPersona, form, setForm, setPersona }) => selected => {
-      selected &&
-        setForm({
-          ...form,
-          personaId: selected.value.id,
-        })
-      selected && setPersona(convertPersona(selected.value))
-    },
-    onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
-      if (!formRef.current.reportValidity()) return
-      const result = await onFormSubmit(event)
-      if (result.error || result.errors) return setIsFormSubmitting(false)
-      if (location.pathname !== routes.navigationEdit(result.id)) history.push(routes.navigationEdit(result.id))
-      setIsFormSubmitting(false)
-      return result
-    },
-    setPicture: ({ navigationItemsPictures, setNavigationItemsPictures }) => (index, blob, setProgress) => {
-      const picture = { index, blob, setProgress }
-      let newNavigationItemsPictures = [...navigationItemsPictures]
-      const navigationItemsPictureIndex = findIndex(newNavigationItemsPictures, { index })
-      navigationItemsPictureIndex >= 0
-        ? newNavigationItemsPictures.splice(navigationItemsPictureIndex, 1, picture)
-        : newNavigationItemsPictures.push(picture)
-      setNavigationItemsPictures(newNavigationItemsPictures)
-    },
-    onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
-      const orderedNavigationItems = arrayMove(form.navigationItemsAttributes, oldIndex, newIndex)
-      setForm({ ...form, navigationItemsAttributes: orderedNavigationItems })
-    },
-  }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
-    Actions: (
-      <Actions
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isCropping || isFormLoading}
-      />
-    ),
-    backRoute,
-    title,
-  }))
-)(NavigationSuperForm)
+  })
+)(NavigationSuperForm2)

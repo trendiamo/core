@@ -5,8 +5,8 @@ import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import SimpleChatStep from './simple-chat-step'
+import useForm from 'ext/hooks/use-form'
 import withAppBarContent from 'ext/recompose/with-app-bar-content'
-import withForm from 'ext/recompose/with-form'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
@@ -160,39 +160,7 @@ const SimpleChatForm = ({
   </Form>
 )
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'simpleChats', stageName: 'initial' }),
-  withProps({ formRef: React.createRef() }),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        id: json.id,
-        name: json.name || '',
-        title: json.title || '',
-        chatBubbleText: json.chatBubbleText || '',
-        chatBubbleExtraText: json.chatBubbleExtraText || '',
-        personaId: (json.persona && json.persona.id) || '',
-        __persona: json.persona,
-        simpleChatStepsAttributes: json.simpleChatStepsAttributes || [
-          {
-            simpleChatMessagesAttributes: [{ text: '' }],
-          },
-        ],
-      }
-    },
-  }),
-  withForm({
-    name: '',
-    title: '',
-    personaId: '',
-    chatBubbleText: '',
-    chatBubbleExtraText: '',
-    simpleChatStepsAttributes: [
-      {
-        simpleChatMessagesAttributes: [{ text: '' }],
-      },
-    ],
-  }),
+const SimpleChatForm1 = compose(
   withHandlers({
     setSimpleChatStepsForm: ({ form, setForm }) => (simpleChatStep, simpleChatStepIndex) => {
       let newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
@@ -243,3 +211,43 @@ export default compose(
     title,
   }))
 )(SimpleChatForm)
+
+const SimpleChatForm2 = props => {
+  const defaultForm = {
+    name: '',
+    title: '',
+    personaId: '',
+    chatBubbleText: '',
+    chatBubbleExtraText: '',
+    simpleChatStepsAttributes: [
+      {
+        simpleChatMessagesAttributes: [{ text: '' }],
+      },
+    ],
+  }
+  const formProps = useForm({ ...props, defaultForm })
+  return <SimpleChatForm1 {...{ ...props, ...formProps }} />
+}
+
+export default compose(
+  withOnboardingHelp({ single: true, stepName: 'simpleChats', stageName: 'initial' }),
+  withProps({ formRef: React.createRef() }),
+  withHandlers({
+    formObjectTransformer: () => json => {
+      return {
+        id: json.id,
+        name: json.name || '',
+        title: json.title || '',
+        chatBubbleText: json.chatBubbleText || '',
+        chatBubbleExtraText: json.chatBubbleExtraText || '',
+        personaId: (json.persona && json.persona.id) || '',
+        __persona: json.persona,
+        simpleChatStepsAttributes: json.simpleChatStepsAttributes || [
+          {
+            simpleChatMessagesAttributes: [{ text: '' }],
+          },
+        ],
+      }
+    },
+  })
+)(SimpleChatForm2)
