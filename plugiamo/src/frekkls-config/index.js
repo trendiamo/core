@@ -1,3 +1,4 @@
+import baldessariniConfig from './baldessarini'
 import buttwrapConfig from './buttwrap'
 import corinthiansConfig from './corinthians'
 import eoticaConfig from './eotica'
@@ -29,6 +30,7 @@ const defaultConfig = {
 // Our clients can define a window.frekklsConfig object. Here we have some defined for them
 const getFrekklsConfig = () => {
   if (window.frekklsConfig) return window.frekklsConfig
+  if (location.hostname === 'www.baldessarini.com') return baldessariniConfig
   if (location.hostname === 'demo.frekkls.com') return frekklsDemoConfig
   if (location.hostname === 'www.buttwrap.com') return buttwrapConfig
   if (location.hostname === 'www.pierre-cardin.de') return pierreCardinConfig
