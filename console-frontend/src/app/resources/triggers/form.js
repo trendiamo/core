@@ -5,8 +5,8 @@ import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
+import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { Actions, AddItemButton, Cancel, Form, HelperText } from 'shared/form-elements'
 import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow, refreshRoute } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -114,6 +114,41 @@ const TriggerForm = ({
 )
 
 const TriggerForm1 = compose(
+  lifecycle({
+    async componentDidMount() {
+      const { setHostnames, enqueueSnackbar } = this.props
+      const { json, requestError } = await apiRequest(apiWebsiteShow, [
+        auth.isAdmin() ? auth.getAdminSessionAccount().websitesAttributes[0].id : auth.getUser().account.websiteIds[0],
+      ])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      setHostnames(json.hostnames)
+    },
+  })
+)(TriggerForm)
+
+const TriggerForm2 = props => {
+  const { backRoute, title, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine } = props
+  const appBarContent = {
+    Actions: (
+      <Actions
+        isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
+        onFormSubmit={onFormSubmit}
+        saveAndCreateNewEnabled
+        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+        tooltipEnabled
+        tooltipText="No changes to save"
+      />
+    ),
+    backRoute,
+    title,
+  }
+  useAppBarContent(appBarContent)
+
+  return <TriggerForm1 {...props} />
+}
+
+const TriggerForm3 = compose(
   withHandlers({
     addUrlSelect: ({ form, setForm }) => () => {
       setForm({ ...form, urlMatchers: [...form.urlMatchers, ''] })
@@ -152,45 +187,20 @@ const TriggerForm1 = compose(
         })
     },
   }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ backRoute, title, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine }) => ({
-    Actions: (
-      <Actions
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveAndCreateNewEnabled
-        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
-        tooltipEnabled
-        tooltipText="No changes to save"
-      />
-    ),
-    backRoute,
-    title,
-  })),
-  lifecycle({
-    async componentDidMount() {
-      const { setHostnames, enqueueSnackbar } = this.props
-      const { json, requestError } = await apiRequest(apiWebsiteShow, [
-        auth.isAdmin() ? auth.getAdminSessionAccount().websitesAttributes[0].id : auth.getUser().account.websiteIds[0],
-      ])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      setHostnames(json.hostnames)
-    },
-  })
-)(TriggerForm)
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
+)(TriggerForm2)
 
-const TriggerForm2 = props => {
+const TriggerForm4 = props => {
   const defaultForm = {
     flowId: '',
     flowType: '',
     urlMatchers: [''],
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <TriggerForm1 {...{ ...props, ...formProps }} />
+  return <TriggerForm3 {...{ ...props, ...formProps }} />
 }
 
-const TriggerForm3 = compose(
+const TriggerForm5 = compose(
   withProps({ formRef: React.createRef() }),
   withState('hostnames', 'setHostnames', []),
   withHandlers({
@@ -204,12 +214,12 @@ const TriggerForm3 = compose(
       }
     },
   })
-)(TriggerForm2)
+)(TriggerForm4)
 
-const TriggerForm4 = props => {
+const TriggerForm6 = props => {
   const { location } = props
   useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }, location)
-  return <TriggerForm3 {...props} />
+  return <TriggerForm5 {...props} />
 }
 
-export default withRouter(TriggerForm4)
+export default withRouter(TriggerForm6)

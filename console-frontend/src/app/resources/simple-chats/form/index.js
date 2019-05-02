@@ -5,8 +5,8 @@ import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import SimpleChatStep from './simple-chat-step'
+import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
@@ -128,37 +128,56 @@ const MainForm = compose(
 
 const SimpleChatForm = ({
   addSimpleChatStep,
+  backRoute,
   form,
   formRef,
   isFormLoading,
   isFormPristine,
+  isFormSubmitting,
   onFormSubmit,
   onSortEnd,
   selectPersona,
   setFieldValue,
   setSimpleChatStepsForm,
   title,
-}) => (
-  <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-    <MainForm
-      form={omit(form, ['simpleChatStepsAttributes'])}
-      isFormLoading={isFormLoading}
-      selectPersona={selectPersona}
-      setFieldValue={setFieldValue}
-      title={title}
-    />
-    <SimpleChatStepsContainer
-      allowDelete={form.simpleChatStepsAttributes.length > 1}
-      helperClass="sortable-element"
-      isFormLoading={isFormLoading}
-      onChange={setSimpleChatStepsForm}
-      onSortEnd={onSortEnd}
-      simpleChatSteps={form.simpleChatStepsAttributes}
-      useDragHandle
-    />
-    <AddItemContainer disabled={isFormLoading} message="Add Option" onClick={addSimpleChatStep} />
-  </Form>
-)
+}) => {
+  const appBarContent = {
+    Actions: (
+      <Actions
+        isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
+        onFormSubmit={onFormSubmit}
+        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+        tooltipEnabled
+        tooltipText="No changes to save"
+      />
+    ),
+    backRoute,
+    title,
+  }
+  useAppBarContent(appBarContent)
+  return (
+    <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+      <MainForm
+        form={omit(form, ['simpleChatStepsAttributes'])}
+        isFormLoading={isFormLoading}
+        selectPersona={selectPersona}
+        setFieldValue={setFieldValue}
+        title={title}
+      />
+      <SimpleChatStepsContainer
+        allowDelete={form.simpleChatStepsAttributes.length > 1}
+        helperClass="sortable-element"
+        isFormLoading={isFormLoading}
+        onChange={setSimpleChatStepsForm}
+        onSortEnd={onSortEnd}
+        simpleChatSteps={form.simpleChatStepsAttributes}
+        useDragHandle
+      />
+      <AddItemContainer disabled={isFormLoading} message="Add Option" onClick={addSimpleChatStep} />
+    </Form>
+  )
+}
 
 const SimpleChatForm1 = compose(
   withHandlers({
@@ -194,21 +213,7 @@ const SimpleChatForm1 = compose(
       setForm({ ...form, simpleChatStepsAttributes: orderedSimpleChatSteps })
     },
   }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ backRoute, title, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine }) => ({
-    Actions: (
-      <Actions
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
-        tooltipEnabled
-        tooltipText="No changes to save"
-      />
-    ),
-    backRoute,
-    title,
-  }))
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(SimpleChatForm)
 
 const SimpleChatForm2 = props => {

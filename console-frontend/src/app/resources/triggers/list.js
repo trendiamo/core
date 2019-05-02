@@ -7,7 +7,7 @@ import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import withAppBarContent from 'ext/recompose/with-app-bar-content'
+import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
 import { arrayMove, SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
@@ -318,7 +318,6 @@ const TriggerList = ({
 )
 
 const TriggersList1 = compose(
-  withAppBarContent({ Actions: <Actions />, title: 'Triggers' }),
   withState('triggers', 'setTriggers', []),
   withState('isLoading', 'setIsLoading', true),
   withState('testerUrl', 'setTesterUrl', { value: '', matches: false }),
@@ -385,6 +384,7 @@ const TriggersList1 = compose(
 const TriggersList2 = props => {
   const { location } = props
   useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }, location)
+  useAppBarContent({ Actions: <Actions />, title: 'Triggers' })
   return <TriggersList1 {...props} />
 }
 

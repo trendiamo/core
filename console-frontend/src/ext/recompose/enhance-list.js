@@ -3,7 +3,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CircularProgress from 'app/layout/loading'
 import React from 'react'
 import Section from 'shared/section'
-import withAppBarContent from './with-app-bar-content'
+import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiRequest } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Checkbox, Table, TableBody, TablePagination } from '@material-ui/core'
@@ -51,10 +51,6 @@ const enhanceList = ({
     withRouter,
     withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
     withState('rowsPerPage', 'setRowsPerPage', 25),
-    withAppBarContent(({ page }) => ({
-      Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
-      title: page === 0 ? title : `${title} p.${page + 1}`,
-    })),
     withState('records', 'setRecords', []),
     withState('recordsCount', 'setRecordsCount', 0),
     withState('orderDirection', 'setOrderDirection', defaultSorting.direction || 'desc'),
@@ -156,7 +152,6 @@ const enhanceList = ({
       handleRequestSort,
       handleSelectAll,
       isSelectAll,
-      title,
       orderBy,
       orderDirection,
       handleChangeRowsPerPage,
@@ -170,6 +165,11 @@ const enhanceList = ({
       location,
     }) => {
       useOnboardingHelp(help, location)
+      const appBarContent = {
+        Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
+        title: page === 0 ? title : `${title} p.${page + 1}`,
+      }
+      useAppBarContent(appBarContent)
       return (
         <Section>
           <TableToolbar

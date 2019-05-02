@@ -3,8 +3,8 @@ import FormContainer from './form-container'
 import PluginPreview from './plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
+import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { Actions } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -15,16 +15,34 @@ import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
-const Showcase = props => (
-  <Grid container spacing={24}>
-    <Grid item md={6} xs={12}>
-      <FormContainer {...props} />
+const Showcase = props => {
+  const { backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine } = props
+  const appBarContent = {
+    Actions: (
+      <Actions
+        isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
+        onFormSubmit={onFormSubmit}
+        saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine}
+        tooltipEnabled
+        tooltipText="No changes to save"
+      />
+    ),
+    backRoute,
+    title,
+  }
+  useAppBarContent(appBarContent)
+  return (
+    <Grid container spacing={24}>
+      <Grid item md={6} xs={12}>
+        <FormContainer {...props} />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <PluginPreview {...props} />
+      </Grid>
     </Grid>
-    <Grid item md={6} xs={12}>
-      <PluginPreview {...props} />
-    </Grid>
-  </Grid>
-)
+  )
+}
 
 const Showcase1 = compose(
   withHandlers({
@@ -102,22 +120,6 @@ const Showcase1 = compose(
     },
   })),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(
-    ({ backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine }) => ({
-      Actions: (
-        <Actions
-          isFormPristine={isFormPristine}
-          isFormSubmitting={isFormSubmitting}
-          onFormSubmit={onFormSubmit}
-          saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine}
-          tooltipEnabled
-          tooltipText="No changes to save"
-        />
-      ),
-      backRoute,
-      title,
-    })
-  ),
   lifecycle({
     componentDidMount() {
       const { form } = this.props
