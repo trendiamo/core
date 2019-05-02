@@ -6,8 +6,8 @@ import PluginPreview from 'shared/plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
+import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
@@ -305,18 +305,7 @@ const NavigationSuperForm1 = compose(
       setForm({ ...form, navigationItemsAttributes: orderedNavigationItems })
     },
   }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit }) => ({
-    Actions: (
-      <Actions
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isCropping || isFormLoading}
-      />
-    ),
-    backRoute,
-    title,
-  }))
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(NavigationSuperForm0)
 
 const NavigationSuperForm2 = props => {
@@ -409,6 +398,19 @@ const NavigationSuperForm3 = compose(
 const NavigationSuperForm4 = props => {
   const { location } = props
   useOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }, location)
+  const { backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit } = props
+  const appBarContent = {
+    Actions: (
+      <Actions
+        isFormSubmitting={isFormSubmitting}
+        onFormSubmit={onFormSubmit}
+        saveDisabled={isFormSubmitting || isCropping || isFormLoading}
+      />
+    ),
+    backRoute,
+    title,
+  }
+  useAppBarContent(appBarContent)
   return <NavigationSuperForm3 {...props} />
 }
 

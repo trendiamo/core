@@ -4,8 +4,8 @@ import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
+import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
@@ -15,10 +15,12 @@ import { useOnboardingConsumer, useOnboardingHelp } from 'ext/hooks/use-onboardi
 import { withRouter } from 'react-router'
 
 const PersonaForm = ({
+  backRoute,
   form,
   formRef,
   isCropping,
   isFormLoading,
+  isFormSubmitting,
   isFormPristine,
   onFormSubmit,
   progress,
@@ -27,70 +29,87 @@ const PersonaForm = ({
   setProfilePic,
   title,
   setProfilePicUrl,
-}) => (
-  <Section title={title}>
-    <Grid item sm={6}>
-      <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-        <PictureUploader
-          disabled={isCropping}
-          label="Picture"
-          onChange={setProfilePicUrl}
-          required
-          setDisabled={setIsCropping}
-          setPic={setProfilePic}
-          value={form.profilePicUrl}
-        />
-        <Field
-          autoFocus
-          disabled={isFormLoading || isCropping}
-          fullWidth
-          inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-          label="Name"
-          margin="normal"
-          max={characterLimits.persona.name}
-          name="name"
-          onChange={setFieldValue}
-          required
-          value={form.name}
-        />
-        <Field
-          disabled={isFormLoading || isCropping}
-          fullWidth
-          inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-          label="Description"
-          margin="normal"
-          max={characterLimits.persona.description}
-          name="description"
-          onChange={setFieldValue}
-          required
-          value={form.description}
-        />
-        <HelperText>{"A short text that is shown near the persona's name."}</HelperText>
-        <Field
-          disabled={isFormLoading || isCropping}
-          fullWidth
-          label="Instagram Profile URL"
-          margin="normal"
-          name="instagramUrl"
-          onChange={setFieldValue}
-          value={form.instagramUrl}
-        />
-        <HelperText>{"Instagram link icon will appear near the persona's name."}</HelperText>
-        <Field
-          disabled={isFormLoading || isCropping}
-          fullWidth
-          label="Animated picture URL"
-          margin="normal"
-          name="profilePicAnimationUrl"
-          onChange={setFieldValue}
-          value={form.profilePicAnimationUrl}
-        />
-        <HelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</HelperText>
-        {progress && <ProgressBar progress={progress} />}
-      </Form>
-    </Grid>
-  </Section>
-)
+}) => {
+  const appBarContent = {
+    Actions: (
+      <Actions
+        isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
+        onFormSubmit={onFormSubmit}
+        saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine}
+        tooltipEnabled
+        tooltipText="No changes to save"
+      />
+    ),
+    backRoute,
+    title,
+  }
+  useAppBarContent(appBarContent)
+  return (
+    <Section title={title}>
+      <Grid item sm={6}>
+        <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+          <PictureUploader
+            disabled={isCropping}
+            label="Picture"
+            onChange={setProfilePicUrl}
+            required
+            setDisabled={setIsCropping}
+            setPic={setProfilePic}
+            value={form.profilePicUrl}
+          />
+          <Field
+            autoFocus
+            disabled={isFormLoading || isCropping}
+            fullWidth
+            inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+            label="Name"
+            margin="normal"
+            max={characterLimits.persona.name}
+            name="name"
+            onChange={setFieldValue}
+            required
+            value={form.name}
+          />
+          <Field
+            disabled={isFormLoading || isCropping}
+            fullWidth
+            inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+            label="Description"
+            margin="normal"
+            max={characterLimits.persona.description}
+            name="description"
+            onChange={setFieldValue}
+            required
+            value={form.description}
+          />
+          <HelperText>{"A short text that is shown near the persona's name."}</HelperText>
+          <Field
+            disabled={isFormLoading || isCropping}
+            fullWidth
+            label="Instagram Profile URL"
+            margin="normal"
+            name="instagramUrl"
+            onChange={setFieldValue}
+            value={form.instagramUrl}
+          />
+          <HelperText>{"Instagram link icon will appear near the persona's name."}</HelperText>
+          <Field
+            disabled={isFormLoading || isCropping}
+            fullWidth
+            label="Animated picture URL"
+            margin="normal"
+            name="profilePicAnimationUrl"
+            onChange={setFieldValue}
+            value={form.profilePicAnimationUrl}
+          />
+          <HelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</HelperText>
+          {progress && <ProgressBar progress={progress} />}
+        </Form>
+      </Grid>
+    </Section>
+  )
+}
 
 const PersonaForm1 = compose(
   withHandlers({
@@ -120,23 +139,7 @@ const PersonaForm1 = compose(
       setForm({ ...form, profilePicUrl })
     },
   }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(
-    ({ backRoute, title, isCropping, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit }) => ({
-      Actions: (
-        <Actions
-          isFormPristine={isFormPristine}
-          isFormSubmitting={isFormSubmitting}
-          onFormSubmit={onFormSubmit}
-          saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine}
-          tooltipEnabled
-          tooltipText="No changes to save"
-        />
-      ),
-      backRoute,
-      title,
-    })
-  )
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(PersonaForm)
 
 const PersonaForm2 = props => {

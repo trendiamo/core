@@ -5,8 +5,8 @@ import PluginPreview from './plugin-preview'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
+import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import withAppBarContent from 'ext/recompose/with-app-bar-content'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
@@ -94,16 +94,34 @@ const OutroForm = ({
   </Section>
 )
 
-const OutroForm1 = props => (
-  <Grid container spacing={24}>
-    <Grid item md={6} xs={12}>
-      <OutroForm {...props} />
+const OutroForm1 = props => {
+  const { backRoute, title, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit } = props
+  const appBarContent = {
+    Actions: (
+      <Actions
+        isFormPristine={isFormPristine}
+        isFormSubmitting={isFormSubmitting}
+        onFormSubmit={onFormSubmit}
+        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+        tooltipEnabled
+        tooltipText="No changes to save"
+      />
+    ),
+    backRoute,
+    title,
+  }
+  useAppBarContent(appBarContent)
+  return (
+    <Grid container spacing={24}>
+      <Grid item md={6} xs={12}>
+        <OutroForm {...props} />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <PluginPreview {...props} />
+      </Grid>
     </Grid>
-    <Grid item md={6} xs={12}>
-      <PluginPreview {...props} />
-    </Grid>
-  </Grid>
-)
+  )
+}
 
 const OutroForm2 = compose(
   withHandlers({
@@ -124,21 +142,7 @@ const OutroForm2 = compose(
       return result
     },
   }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress)),
-  withAppBarContent(({ backRoute, title, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit }) => ({
-    Actions: (
-      <Actions
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
-        tooltipEnabled
-        tooltipText="No changes to save"
-      />
-    ),
-    backRoute,
-    title,
-  }))
+  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(OutroForm1)
 
 const OutroForm3 = props => {
