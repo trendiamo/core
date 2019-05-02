@@ -114,11 +114,6 @@ export const styles = theme => ({
   drawerGhostClosed: {
     width: drawerWidthClosed,
   },
-  contentInnerDiv: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
   contentWithSidebar: {
     display: 'flex',
     flexGrow: 1,
