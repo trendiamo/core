@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { Button as MuiButton } from '@material-ui/core'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
+import { withRouter } from 'react-router'
 
 const Icon = styled.img`
   padding-left: 5px;
@@ -50,4 +51,4 @@ const Button = ({ history, nextRoute, create, buttonConfig }) => {
   )
 }
 
-export { Button }
+export default withRouter(Button)

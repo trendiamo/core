@@ -1,7 +1,6 @@
 import Joyride from 'react-joyride'
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import SkipButton from './elements/skip-button'
-import { branch, compose, lifecycle, renderNothing, withHandlers } from 'recompose'
 import { Hidden, Portal } from '@material-ui/core'
 import { stages, stagesArray } from './stages'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
@@ -39,71 +38,58 @@ const getOnboardingConfig = onboarding => {
 
 const DummyContainer = ({ content, ...props }) => <div>{content && React.cloneElement(content, props)}</div>
 
-const Onboarding = ({ onboarding }) => (
-  <Hidden smDown>
-    <Joyride
-      continuous
-      disableCloseOnEsc
-      disableOverlayClose
-      floaterProps={floaterProps}
-      run={onboarding.run || onboarding.help.run}
-      scrollToFirstStep
-      stepIndex={getOnboardingConfig(onboarding).stepIndex}
-      steps={getOnboardingConfig(onboarding).steps}
-      styles={styles}
-      tooltipComponent={<DummyContainer onboarding={onboarding} />}
-    />
-    <Portal>
-      <SkipButton />
-    </Portal>
-  </Hidden>
-)
-
-const Onboarding1 = compose(
-  branch(
-    ({ onboarding }) => (!onboarding.run || !stagesArray[onboarding.stageIndex]) && !onboarding.help.run,
-    renderNothing
-  ),
-  withHandlers({
-    handleClose: ({ setOnboarding, onboarding }) => event => {
-      if (event.keyCode === 27) {
-        setOnboarding({ ...onboarding, run: false, help: { ...onboarding.help, run: false } })
-      }
-    },
-    setStyleToPortal: () => () => {
-      // There's currently no other way to fix scrolling bug on elements with position:fixed.
-      const portal = document.querySelector("[id^='react-joyride:']")
-      if (portal && portal.style) {
-        portal.style.position = 'absolute'
-        portal.style.top = '0'
-      }
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { handleClose, setStyleToPortal } = this.props
-      // Was set to act after the JoyRide's scroll timeout of 100ms. (Joyride src: src/components/Overlay.js line 76)
-      setTimeout(() => {
-        setStyleToPortal()
-        document.addEventListener('keydown', handleClose)
-      }, 200)
-    },
-    componentDidUpdate() {
-      const { setStyleToPortal } = this.props
-      setTimeout(() => {
-        setStyleToPortal()
-      }, 200)
-    },
-    componentWillUnmount() {
-      const { handleClose } = this.props
-      document.removeEventListener('keydown', handleClose)
-    },
-  })
-)(Onboarding)
-
-const Onboarding2 = props => {
-  const { onboarding, setOnboarding } = useOnboardingConsumer()
-  return <Onboarding1 {...props} onboarding={onboarding} setOnboarding={setOnboarding} />
+const setStyleToPortal = () => {
+  // There's currently no other way to fix scrolling bug on elements with position:fixed.
+  const portal = document.querySelector("[id^='react-joyride:']")
+  if (portal && portal.style) {
+    portal.style.position = 'absolute'
+    portal.style.top = '0'
+  }
 }
 
-export default Onboarding2
+const Onboarding = () => {
+  const { onboarding, setOnboarding } = useOnboardingConsumer()
+
+  const handleClose = useCallback(event => {
+    if (event.keyCode === 27) {
+      setOnboarding({ ...onboarding, run: false, help: { ...onboarding.help, run: false } })
+    }
+  })
+
+  useEffect(() => {
+    // Act after the JoyRide's scroll timeout of 100ms. (Joyride src: src/components/Overlay.js line 76)
+    const t = setTimeout(() => {
+      document.addEventListener('keydown', handleClose)
+      setStyleToPortal()
+    }, 200)
+
+    return () => {
+      clearTimeout(t)
+      document.removeEventListener('keydown', handleClose)
+    }
+  }, [])
+
+  if ((!onboarding.run || !stagesArray[onboarding.stageIndex]) && !onboarding.help.run) return null
+
+  return (
+    <Hidden smDown>
+      <Joyride
+        continuous
+        disableCloseOnEsc
+        disableOverlayClose
+        floaterProps={floaterProps}
+        run={onboarding.run || onboarding.help.run}
+        scrollToFirstStep
+        stepIndex={getOnboardingConfig(onboarding).stepIndex}
+        steps={getOnboardingConfig(onboarding).steps}
+        styles={styles}
+        tooltipComponent={<DummyContainer onboarding={onboarding} />}
+      />
+      <Portal>
+        <SkipButton />
+      </Portal>
+    </Hidden>
+  )
+}
+
+export default Onboarding

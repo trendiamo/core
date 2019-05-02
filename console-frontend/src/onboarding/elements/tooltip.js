@@ -1,7 +1,7 @@
+import Button from './button'
 import React from 'react'
 import styled from 'styled-components'
 import { Body, Header, SmallHeader } from './typography'
-import { Button } from './button'
 import { compose, lifecycle } from 'recompose'
 
 const Container = styled.div`
