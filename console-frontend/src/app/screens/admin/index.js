@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import { apiAccount, apiAccountCreate, apiRequest, apiSignOut, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import { FormControl, IconButton, List, TextField, Tooltip } from '@material-ui/core'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 const SectionContainer = styled.div`
   max-width: 1200px;
@@ -99,8 +99,7 @@ const Admin = ({
   </SectionContainer>
 )
 
-export default compose(
-  withSnackbar,
+const Admin1 = compose(
   withState('accounts', 'setAccounts', {}),
   withState('isNewAccount', 'setIsNewAccount', false),
   withState('accountForm', 'setAccountForm', { name: '', websitesAttributes: [{ hostnames: [''] }] }),
@@ -154,3 +153,10 @@ export default compose(
   }),
   branch(({ accounts }) => !(accounts && accounts.length), renderComponent(CircularProgress))
 )(Admin)
+
+const Admin2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <Admin1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default Admin2

@@ -1,15 +1,15 @@
+import React from 'react'
 import routes from 'app/routes'
 import TriggerForm from './form'
 import { apiRequest, apiTriggerCreate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
-export default compose(
+const TriggerForm1 = compose(
   withProps({
     backRoute: routes.triggersList(),
     title: 'Create Trigger',
   }),
-  withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar }) => async form => {
       const { json, errors, requestError } = await apiRequest(apiTriggerCreate, [{ trigger: form }])
@@ -29,3 +29,10 @@ export default compose(
     },
   })
 )(TriggerForm)
+
+const TriggerForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <TriggerForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default TriggerForm2

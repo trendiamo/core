@@ -6,8 +6,8 @@ import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiPasswordChange, apiRequest } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
+import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
-import { withSnackbar } from 'notistack'
 
 const Actions = ({ onFormSubmit }) => (
   <Button color="primaryGradient" onClick={onFormSubmit} type="submit" variant="contained">
@@ -55,14 +55,13 @@ const ChangePassword = ({ passwordForm, onFormSubmit, setFieldValue }) => {
   )
 }
 
-export default compose(
+const ChangePassword1 = compose(
   withState('passwordForm', 'setPasswordForm', {
     currentPassword: '',
     password: '',
     passwordConfirmation: '',
   }),
   withRouter,
-  withSnackbar,
   withHandlers({
     onFormSubmit: ({ enqueueSnackbar, passwordForm, history }) => async event => {
       event.preventDefault()
@@ -84,3 +83,10 @@ export default compose(
     },
   })
 )(ChangePassword)
+
+const ChangePassword2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <ChangePassword1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default ChangePassword2

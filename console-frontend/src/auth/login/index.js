@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { apiRequest, apiSignIn } from 'utils'
 import { compose, withHandlers, withState } from 'recompose'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 const StyledForm = styled.form`
   display: flex;
@@ -62,9 +62,8 @@ const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
   </AuthLayout>
 )
 
-export default compose(
+const Login1 = compose(
   withState('loginForm', 'setLoginForm', { email: '', password: '' }),
-  withSnackbar,
   withHandlers({
     loginSubmit: ({ enqueueSnackbar, loginForm }) => async event => {
       event.preventDefault()
@@ -82,3 +81,10 @@ export default compose(
       setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),
   })
 )(Login)
+
+const Login2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <Login1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default Login2

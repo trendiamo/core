@@ -7,7 +7,7 @@ import { apiPasswordReset, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { compose, withHandlers, withState } from 'recompose'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 const AuthMessage = () => (
   <React.Fragment>
@@ -61,12 +61,11 @@ const PasswordReset = ({ passwordForm, passwordResetSubmit, setFieldValue }) => 
   </AuthLayout>
 )
 
-export default compose(
+const PasswordReset1 = compose(
   withState('passwordForm', 'setPasswordForm', {
     fieldOne: '',
     fieldTwo: '',
   }),
-  withSnackbar,
   withHandlers({
     passwordResetSubmit: ({ enqueueSnackbar, passwordForm }) => async event => {
       event.preventDefault()
@@ -95,3 +94,10 @@ export default compose(
     },
   })
 )(PasswordReset)
+
+const PasswordReset2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <PasswordReset1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default PasswordReset2

@@ -1,16 +1,16 @@
 import PersonaForm from './form'
+import React from 'react'
 import routes from 'app/routes'
 import { apiPersonaCreate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
-export default compose(
+const PersonaForm1 = compose(
   withProps({
     backRoute: routes.personasList(),
     title: 'Create Persona',
     onboardingCreate: true,
   }),
-  withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar }) => async form => {
       const { json, errors, requestError } = await apiRequest(apiPersonaCreate, [{ persona: form }])
@@ -31,3 +31,10 @@ export default compose(
     },
   })
 )(PersonaForm)
+
+const PersonaForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <PersonaForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default PersonaForm2

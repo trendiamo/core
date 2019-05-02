@@ -8,11 +8,10 @@ import { apiRequest } from 'utils'
 import { Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
 import { compose, withHandlers } from 'recompose'
 import { Link } from 'react-router-dom'
+import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
-import { withSnackbar } from 'notistack'
 
 const TableRow = compose(
-  withSnackbar,
   withRouter,
   withHandlers({
     handleSelect: ({ setSelectedIds, selectedIds, resource }) => event => {
@@ -63,4 +62,9 @@ const TableRow = compose(
   </MuiTableRow>
 ))
 
-export default TableRow
+const TableRow1 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <TableRow {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default TableRow1
