@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { Button } from '@material-ui/core'
 import { changeStage } from 'onboarding/scenario-actions'
-import { compose, withHandlers } from 'recompose'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 
 const StyledButton = styled(Button)`
@@ -17,28 +16,23 @@ const StyledButton = styled(Button)`
   }
 `
 
-const SkipButton = ({ handleClick }) => (
-  <StyledButton color="primary" onClick={handleClick} variant="contained">
-    {'Skip'}
-  </StyledButton>
-)
-
-const SkipButton1 = compose(
-  withHandlers({
-    handleClick: ({ onboarding, setOnboarding }) => () => {
-      if (onboarding.help.run) {
-        setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
-        return false
-      }
-      setOnboarding({ ...onboarding, stageIndex: 1, stepIndex: 0, run: false })
-      changeStage(1)()
-    },
-  })
-)(SkipButton)
-
-const SkipButton2 = props => {
+const SkipButton = () => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
-  return <SkipButton1 {...props} onboarding={onboarding} setOnboarding={setOnboarding} />
+
+  const handleClick = useCallback(() => {
+    if (onboarding.help.run) {
+      setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
+      return false
+    }
+    setOnboarding({ ...onboarding, stageIndex: 1, stepIndex: 0, run: false })
+    changeStage(1)()
+  })
+
+  return (
+    <StyledButton color="primary" onClick={handleClick} variant="contained">
+      {'Skip'}
+    </StyledButton>
+  )
 }
 
-export default SkipButton2
+export default SkipButton
