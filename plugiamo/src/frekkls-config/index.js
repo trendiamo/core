@@ -8,6 +8,7 @@ import pierreCardinConfig from './pierre-cardin'
 import pionierConfig from './pionier'
 import rihappyConfig from './rihappy'
 import shopinfoConfig from './shopinfo'
+import uniplacesConfig from './uniplaces'
 import villaDonatelloConfig from './villadonatello'
 
 const defaultConfig = {
@@ -38,6 +39,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'www.shopinfo.com.br') return shopinfoConfig
   if (['www.impressorajato.com.br', 'ia.luanda.supercopy.com.br'].includes(location.hostname))
     return impressoraJatoConfig
+  if (['www.staging-uniplaces.com', 'www.uniplaces.com'].includes(location.hostname)) return uniplacesConfig
   if (location.hostname === 'www.shoptimao.com.br') return corinthiansConfig
   if (location.hostname === 'www.eotica.com.br') return eoticaConfig
   if (location.hostname === 'www.rihappy.com.br') return rihappyConfig
