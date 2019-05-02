@@ -230,7 +230,7 @@ const SimpleChatForm2 = props => {
     ],
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <SimpleChatForm1 {...{ ...props, ...formProps }} />
+  return <SimpleChatForm1 {...props} {...formProps} />
 }
 
 const SimpleChatForm3 = compose(

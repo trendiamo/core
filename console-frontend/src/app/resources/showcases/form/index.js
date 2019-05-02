@@ -130,7 +130,7 @@ const Showcase1 = compose(
 
 const Showcase2 = props => {
   const formProps = useForm({ ...props, defaultForm: formObject })
-  return <Showcase1 {...{ ...props, ...formProps }} />
+  return <Showcase1 {...props} {...formProps} />
 }
 
 const Showcase3 = compose(

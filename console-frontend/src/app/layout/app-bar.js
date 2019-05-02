@@ -5,7 +5,6 @@ import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
 import React, { useCallback, useContext } from 'react'
 import styled from 'styled-components'
-import { branch, compose, renderNothing, withProps } from 'recompose'
 import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core'
 import { StoreContext } from 'ext/hooks/store'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
@@ -25,7 +24,7 @@ const StyledHelp = styled(IconButton)`
   }
 `
 
-const OnboardingButton = compose(withRouter)(({ location }) => {
+const OnboardingButton = withRouter(({ location }) => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
   const handleClick = useCallback(() => {
     setOnboarding({ ...onboarding, help: { ...onboarding.help, run: true } })
@@ -67,18 +66,17 @@ const AppBarContent1 = ({ Actions, backRoute, classes, title }) => (
   </React.Fragment>
 )
 
-const AppBarContent2 = compose(
-  branch(({ store }) => !store.appBarContent, renderNothing),
-  withProps(({ store }) => ({
-    Actions: store.appBarContent.Actions,
-    backRoute: store.appBarContent.backRoute,
-    title: store.appBarContent.title,
-  }))
-)(AppBarContent1)
-
-const AppBarContent3 = props => {
-  const { store, setStore } = useContext(StoreContext)
-  return <AppBarContent2 {...{ ...props, store, setStore }} />
+const AppBarContent2 = props => {
+  const { store } = useContext(StoreContext)
+  if (!store.appBarContent) return null
+  return (
+    <AppBarContent1
+      {...props}
+      Actions={store.appBarContent.Actions}
+      backRoute={store.appBarContent.backRoute}
+      title={store.appBarContent.title}
+    />
+  )
 }
 
 const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
@@ -89,7 +87,7 @@ const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
       <IconButton aria-label="Open drawer" className={classes.menuButton} color="inherit" onClick={toggleOpen}>
         <MenuIcon />
       </IconButton>
-      <AppBarContent3 classes={classes} />
+      <AppBarContent2 classes={classes} />
     </Toolbar>
   </MuiAppBar>
 )

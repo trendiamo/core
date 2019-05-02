@@ -95,7 +95,7 @@ const EditWebsite2 = props => {
     previewMode: false,
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <EditWebsite1 {...{ ...props, ...formProps }} />
+  return <EditWebsite1 {...props} {...formProps} />
 }
 
 export default compose(

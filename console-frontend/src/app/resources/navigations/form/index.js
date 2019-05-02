@@ -323,7 +323,7 @@ const NavigationSuperForm2 = props => {
     ],
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <NavigationSuperForm1 {...{ ...props, ...formProps }} />
+  return <NavigationSuperForm1 {...props} {...formProps} />
 }
 
 const NavigationSuperForm3 = compose(

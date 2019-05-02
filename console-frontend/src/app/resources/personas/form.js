@@ -156,7 +156,7 @@ const PersonaForm3 = props => {
     profilePicAnimationUrl: '',
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <PersonaForm2 {...{ ...props, ...formProps }} />
+  return <PersonaForm2 {...props} {...formProps} />
 }
 
 const PersonaForm4 = compose(

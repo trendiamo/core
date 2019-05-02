@@ -151,7 +151,7 @@ const OutroForm3 = props => {
     name: '',
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <OutroForm2 {...{ ...props, ...formProps }} />
+  return <OutroForm2 {...props} {...formProps} />
 }
 
 const OutroForm4 = compose(

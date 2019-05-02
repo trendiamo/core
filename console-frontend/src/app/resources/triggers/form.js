@@ -197,7 +197,7 @@ const TriggerForm4 = props => {
     urlMatchers: [''],
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <TriggerForm3 {...{ ...props, ...formProps }} />
+  return <TriggerForm3 {...props} {...formProps} />
 }
 
 const TriggerForm5 = compose(

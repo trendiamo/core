@@ -110,7 +110,7 @@ const EditUser2 = props => {
     profilePicUrl: '',
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <EditUser1 {...{ ...props, ...formProps }} />
+  return <EditUser1 {...props} {...formProps} />
 }
 
 export default compose(
