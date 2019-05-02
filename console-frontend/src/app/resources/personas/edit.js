@@ -1,15 +1,15 @@
 import PersonaForm from './form'
+import React from 'react'
 import routes from 'app/routes'
 import { apiPersonaShow, apiPersonaUpdate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
-export default compose(
+const PersonaForm1 = compose(
   withProps({
     backRoute: routes.personasList(),
     title: 'Edit Persona',
   }),
-  withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async form => {
       const id = match.params.personaId
@@ -29,3 +29,10 @@ export default compose(
     },
   })
 )(PersonaForm)
+
+const PersonaForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <PersonaForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default PersonaForm2

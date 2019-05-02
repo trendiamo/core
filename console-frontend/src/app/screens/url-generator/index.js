@@ -7,7 +7,7 @@ import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiGeneratedUrlList, apiRequest } from 'utils'
 import { compose, lifecycle, withState } from 'recompose'
 import { Grid } from '@material-ui/core'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 const UrlGenerator = ({
   setGeneratedUrl,
@@ -40,8 +40,7 @@ const UrlGenerator = ({
   )
 }
 
-export default compose(
-  withSnackbar,
+const UrlGenerator1 = compose(
   withState('generatedUrl', 'setGeneratedUrl', ''),
   withState('isModalOpened', 'setIsModalOpened', false),
   withState('urlHistory', 'setUrlHistory', []),
@@ -53,3 +52,10 @@ export default compose(
     },
   })
 )(UrlGenerator)
+
+const UrlGenerator2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <UrlGenerator1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default UrlGenerator2

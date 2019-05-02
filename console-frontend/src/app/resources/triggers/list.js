@@ -33,8 +33,8 @@ import { Link } from 'react-router-dom'
 import { matchUrl } from 'plugin-base'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
+import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
-import { withSnackbar } from 'notistack'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -324,7 +324,6 @@ const TriggersList1 = compose(
   withState('selectedIds', 'setSelectedIds', []),
   withState('hostnames', 'setHostnames', []),
   withState('isSelectAll', 'setIsSelectAll', false),
-  withSnackbar,
   withHandlers({
     deleteTriggers: ({
       enqueueSnackbar,
@@ -385,7 +384,8 @@ const TriggersList2 = props => {
   const { location } = props
   useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }, location)
   useAppBarContent({ Actions: <Actions />, title: 'Triggers' })
-  return <TriggersList1 {...props} />
+  const { enqueueSnackbar } = useSnackbar()
+  return <TriggersList1 {...props} enqueueSnackbar={enqueueSnackbar} />
 }
 
 export default withRouter(TriggersList2)

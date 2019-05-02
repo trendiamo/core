@@ -1,15 +1,15 @@
+import React from 'react'
 import routes from 'app/routes'
 import SimpleChatForm from './form'
 import { apiRequest, apiSimpleChatShow, apiSimpleChatUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
-export default compose(
+const SimpleChatForm1 = compose(
   withProps({
     backRoute: routes.simpleChatsList(),
     title: 'Edit Simple Chat',
   }),
-  withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async form => {
       const id = match.params.simpleChatId
@@ -32,3 +32,10 @@ export default compose(
     showChildSteps: true,
   })
 )(SimpleChatForm)
+
+const SimpleChatForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <SimpleChatForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default SimpleChatForm2

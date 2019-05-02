@@ -1,17 +1,17 @@
+import React from 'react'
 import routes from 'app/routes'
 import TriggerForm from './form'
 import { apiRequest, apiTriggerShow, apiTriggerUpdate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
+import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
-import { withSnackbar } from 'notistack'
 
-export default compose(
+const TriggerForm1 = compose(
   withProps({
     backRoute: routes.triggersList(),
     title: 'Edit Trigger',
   }),
   withRouter,
-  withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async form => {
       const id = match.params.triggerId
@@ -31,3 +31,10 @@ export default compose(
     },
   })
 )(TriggerForm)
+
+const TriggerForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <TriggerForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default TriggerForm2

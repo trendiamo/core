@@ -28,7 +28,7 @@ import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from './resources/s
 import { SnackbarProvider } from 'notistack'
 import { StoreProvider } from 'ext/hooks/store'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 import 'assets/css/fonts.css'
 
 const generateClassName = createGenerateClassName()
@@ -100,9 +100,18 @@ const SortableStyle = createGlobalStyle`
   }
 `
 
-const AppBase = compose(
+const AppBase = () => (
+  <>
+    <CssBaseline />
+    <SortableStyle />
+    <Layout>
+      <Routes />
+    </Layout>
+  </>
+)
+
+const AppBase1 = compose(
   withState('loading', 'setLoading', true),
-  withSnackbar,
   lifecycle({
     componentDidMount() {
       const { enqueueSnackbar, setLoading } = this.props
@@ -114,15 +123,12 @@ const AppBase = compose(
     },
   }),
   branch(({ loading }) => loading, renderNothing)
-)(() => (
-  <>
-    <CssBaseline />
-    <SortableStyle />
-    <Layout>
-      <Routes />
-    </Layout>
-  </>
-))
+)(AppBase)
+
+const AppBase2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <AppBase1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
 
 /* eslint-disable react/jsx-max-depth */
 export const App = ({ history }) => (
@@ -131,7 +137,7 @@ export const App = ({ history }) => (
       <JssProvider generateClassName={generateClassName} jss={jss}>
         <MuiThemeProvider theme={theme}>
           <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} maxSnack={3}>
-            <AppBase />
+            <AppBase2 />
           </SnackbarProvider>
         </MuiThemeProvider>
       </JssProvider>

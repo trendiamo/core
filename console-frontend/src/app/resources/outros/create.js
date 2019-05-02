@@ -1,15 +1,15 @@
 import OutroForm from './form'
+import React from 'react'
 import routes from 'app/routes'
 import { apiOutroCreate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
-export default compose(
+const OutroForm1 = compose(
   withProps({
     backRoute: routes.outrosList(),
     title: 'Create Outro',
   }),
-  withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar }) => async form => {
       const { json, errors, requestError } = await apiRequest(apiOutroCreate, [{ outro: form }])
@@ -31,3 +31,10 @@ export default compose(
     },
   })
 )(OutroForm)
+
+const OutroForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <OutroForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default OutroForm2

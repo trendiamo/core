@@ -1,15 +1,15 @@
 import NavigationForm from './form'
+import React from 'react'
 import routes from 'app/routes'
 import { apiNavigationShow, apiNavigationUpdate, apiRequest } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
-export default compose(
+const NavigationForm1 = compose(
   withProps({
     backRoute: routes.navigationsList(),
     title: 'Edit Navigation',
   }),
-  withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar, match }) => async form => {
       const id = match.params.navigationId
@@ -29,3 +29,10 @@ export default compose(
     },
   })
 )(NavigationForm)
+
+const NavigationForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <NavigationForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default NavigationForm2

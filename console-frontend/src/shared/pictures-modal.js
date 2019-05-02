@@ -14,7 +14,7 @@ import { Grid, Input, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { Link } from 'react-router-dom'
 import { Link as LinkIcon } from '@material-ui/icons'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 import 'react-aspect-ratio/aspect-ratio.css'
 
 const ENTER_KEYCODE = 13
@@ -298,7 +298,6 @@ const PicturesModal = compose(
   withState('pictures', 'setPictures', []),
   withState('pictureUrl', 'setPictureUrl', ''),
   withState('urlUploadState', 'setUrlUploadState', false),
-  withSnackbar,
   withHandlers({
     fetchRemotePicture: ({ enqueueSnackbar, onFileUpload, pictureUrl }) => async () => {
       if (isEmpty(pictureUrl.trim())) return enqueueSnackbar('Please enter an URL', { variant: 'error' })
@@ -501,4 +500,9 @@ const PicturesModal = compose(
     )
 )
 
-export default PicturesModal
+const PicturesModal1 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <PicturesModal {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default PicturesModal1

@@ -1,15 +1,15 @@
+import React from 'react'
 import routes from 'app/routes'
 import ShowcaseForm from './form'
 import { apiRequest, apiShowcaseCreate } from 'utils'
 import { compose, withHandlers, withProps } from 'recompose'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
-export default compose(
+const ShowcaseForm1 = compose(
   withProps({
     backRoute: routes.showcasesList(),
     title: 'Create Showcase',
   }),
-  withSnackbar,
   withHandlers({
     saveFormObject: ({ enqueueSnackbar }) => async form => {
       const { json, errors, requestError } = await apiRequest(apiShowcaseCreate, [{ showcase: form }])
@@ -46,3 +46,10 @@ export default compose(
     },
   })
 )(ShowcaseForm)
+
+const ShowcaseForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <ShowcaseForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default ShowcaseForm2

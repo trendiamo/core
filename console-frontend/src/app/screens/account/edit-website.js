@@ -8,7 +8,7 @@ import { apiRequest, apiWebsiteShow, apiWebsiteUpdate, atLeastOneNonBlankCharReg
 import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
 import { Checkbox, FormControlLabel, FormHelperText, TextField } from '@material-ui/core'
 import { Prompt } from 'react-router'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 const EditWebsite = ({
   addHostnameSelect,
@@ -98,13 +98,12 @@ const EditWebsite2 = props => {
   return <EditWebsite1 {...props} {...formProps} />
 }
 
-export default compose(
+const EditWebsite3 = compose(
   withProps(() => ({
     websiteId: auth.isAdmin()
       ? auth.getAdminSessionAccount().websitesAttributes[0] && auth.getAdminSessionAccount().websitesAttributes[0].id
       : auth.getUser().account.websiteIds[0],
   })),
-  withSnackbar,
   withHandlers({
     formObjectTransformer: () => json => {
       return {
@@ -129,3 +128,10 @@ export default compose(
     },
   })
 )(EditWebsite2)
+
+const EditWebsite4 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <EditWebsite3 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default EditWebsite4

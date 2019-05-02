@@ -10,7 +10,7 @@ import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharRegexp } from 'ut
 import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 const EditUser = ({
   isFormPristine,
@@ -113,11 +113,10 @@ const EditUser2 = props => {
   return <EditUser1 {...props} {...formProps} />
 }
 
-export default compose(
+const EditUser3 = compose(
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
   withState('progress', 'setProgress', null),
-  withSnackbar,
   withHandlers({
     formObjectTransformer: () => json => {
       return {
@@ -165,3 +164,10 @@ export default compose(
     },
   })
 )(EditUser2)
+
+const EditUser4 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <EditUser3 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default EditUser4

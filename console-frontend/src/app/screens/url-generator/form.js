@@ -18,7 +18,7 @@ import {
   Switch,
   Typography,
 } from '@material-ui/core'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 
 const Option = styled.div`
   margin: 12px 0px;
@@ -149,7 +149,7 @@ const generateUrl = form => {
   return `${form.url}#trnd:${fragments.join(',')}`
 }
 
-export default compose(
+const UrlGeneratorForm1 = compose(
   withProps({ formRef: React.createRef() }),
   withState('form', 'setForm', {
     personaId: '',
@@ -162,7 +162,6 @@ export default compose(
   withProps(({ form }) => ({
     isDisabled: !(form.url && (form.autoOpen || form.step || form.personaId)),
   })),
-  withSnackbar,
   withHandlers({
     showOption: ({ setShowStep, setShowPersona }) => option => {
       if (option === 'step') setShowStep(true)
@@ -213,3 +212,10 @@ export default compose(
     },
   })
 )(UrlGeneratorForm)
+
+const UrlGeneratorForm2 = props => {
+  const { enqueueSnackbar } = useSnackbar()
+  return <UrlGeneratorForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+}
+
+export default UrlGeneratorForm2

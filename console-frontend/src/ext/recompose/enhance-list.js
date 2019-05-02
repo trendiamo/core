@@ -12,8 +12,8 @@ import { Link } from 'react-router-dom'
 import { parse, stringify } from 'query-string'
 import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
+import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
-import { withSnackbar } from 'notistack'
 
 const Actions = ({ buttonText, createRoute }) => (
   <AppBarButton
@@ -46,31 +46,97 @@ const enhanceList = ({
   buttonText,
   help,
   highlightInactive,
-}) => ResourceRow =>
-  compose(
-    withRouter,
-    withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
-    withState('rowsPerPage', 'setRowsPerPage', 25),
-    withState('records', 'setRecords', []),
-    withState('recordsCount', 'setRecordsCount', 0),
-    withState('orderDirection', 'setOrderDirection', defaultSorting.direction || 'desc'),
-    withState('orderBy', 'setOrderBy', defaultSorting.column || 'id'),
-    withState('selectedIds', 'setSelectedIds', []),
-    withState('isSelectAll', 'setIsSelectAll', false),
-    withState('isLoading', 'setIsLoading', true),
-    withProps(({ rowsPerPage, page, orderDirection, orderBy }) => ({
-      query: {
-        range: JSON.stringify([page * rowsPerPage, (page + 1) * rowsPerPage - 1]),
-        sort: JSON.stringify([orderBy, orderDirection]),
-      },
-    })),
-    withProps(({ records }) => {
-      const inactiveRows = records.map(record => {
-        return highlightInactive ? highlightInactive.every(column => record[column] && isEmpty(record[column])) : false
-      })
-      return { inactiveRows }
-    }),
-    withSnackbar,
+}) => ResourceRow => {
+  const EnhancedList = ({
+    deleteRecords,
+    handleChangePage,
+    handleRequestSort,
+    handleSelectAll,
+    isSelectAll,
+    orderBy,
+    orderDirection,
+    handleChangeRowsPerPage,
+    page,
+    records,
+    recordsCount,
+    rowsPerPage,
+    selectedIds,
+    setSelectedIds,
+    inactiveRows,
+    location,
+  }) => {
+    useOnboardingHelp(help, location)
+    const appBarContent = {
+      Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
+      title: page === 0 ? title : `${title} p.${page + 1}`,
+    }
+    useAppBarContent(appBarContent)
+    return (
+      <Section>
+        <TableToolbar
+          createRoute={routes.create()}
+          deleteRecords={deleteRecords}
+          label={title}
+          selectedIds={selectedIds}
+        />
+        <Table aria-labelledby={title}>
+          <TableHead
+            columns={columns}
+            duplicate={!!api.duplicate}
+            handleRequestSort={handleRequestSort}
+            leftColumns={
+              <TableCell>
+                <Checkbox
+                  checked={isSelectAll}
+                  checkedIcon={<CheckBoxIcon />}
+                  color="primary"
+                  onClick={handleSelectAll}
+                />
+              </TableCell>
+            }
+            orderBy={orderBy}
+            orderDirection={orderDirection}
+          />
+          <TableBody>
+            {records &&
+              records.map((record, index) => (
+                <TableRow
+                  api={api}
+                  handleSelectAll={handleSelectAll}
+                  highlightInactive={inactiveRows[index]}
+                  index={index}
+                  key={record.id}
+                  resource={record}
+                  resourceEditPath={routes.edit && routes.edit(record.id)}
+                  routes={routes}
+                  selectedIds={selectedIds}
+                  setSelectedIds={setSelectedIds}
+                >
+                  <ResourceRow record={record} />
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+        <TablePagination
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          component="div"
+          count={recordsCount}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[]}
+        />
+      </Section>
+    )
+  }
+
+  const EnhancedList1 = compose(
     withHandlers({
       fetchRecords: ({
         setIsLoading,
@@ -145,95 +211,37 @@ const enhanceList = ({
         setSelectedIds(selectedIds)
       },
     })
-  )(
-    ({
-      deleteRecords,
-      handleChangePage,
-      handleRequestSort,
-      handleSelectAll,
-      isSelectAll,
-      orderBy,
-      orderDirection,
-      handleChangeRowsPerPage,
-      page,
-      records,
-      recordsCount,
-      rowsPerPage,
-      selectedIds,
-      setSelectedIds,
-      inactiveRows,
-      location,
-    }) => {
-      useOnboardingHelp(help, location)
-      const appBarContent = {
-        Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
-        title: page === 0 ? title : `${title} p.${page + 1}`,
-      }
-      useAppBarContent(appBarContent)
-      return (
-        <Section>
-          <TableToolbar
-            createRoute={routes.create()}
-            deleteRecords={deleteRecords}
-            label={title}
-            selectedIds={selectedIds}
-          />
-          <Table aria-labelledby={title}>
-            <TableHead
-              columns={columns}
-              duplicate={!!api.duplicate}
-              handleRequestSort={handleRequestSort}
-              leftColumns={
-                <TableCell>
-                  <Checkbox
-                    checked={isSelectAll}
-                    checkedIcon={<CheckBoxIcon />}
-                    color="primary"
-                    onClick={handleSelectAll}
-                  />
-                </TableCell>
-              }
-              orderBy={orderBy}
-              orderDirection={orderDirection}
-            />
-            <TableBody>
-              {records &&
-                records.map((record, index) => (
-                  <TableRow
-                    api={api}
-                    handleSelectAll={handleSelectAll}
-                    highlightInactive={inactiveRows[index]}
-                    index={index}
-                    key={record.id}
-                    resource={record}
-                    resourceEditPath={routes.edit && routes.edit(record.id)}
-                    routes={routes}
-                    selectedIds={selectedIds}
-                    setSelectedIds={setSelectedIds}
-                  >
-                    <ResourceRow record={record} />
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-          <TablePagination
-            backIconButtonProps={{
-              'aria-label': 'Previous Page',
-            }}
-            component="div"
-            count={recordsCount}
-            nextIconButtonProps={{
-              'aria-label': 'Next Page',
-            }}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[]}
-          />
-        </Section>
-      )
-    }
-  )
+  )(EnhancedList)
+
+  const EnhancedList2 = props => {
+    const { enqueueSnackbar } = useSnackbar()
+    return <EnhancedList1 {...props} enqueueSnackbar={enqueueSnackbar} />
+  }
+
+  return compose(
+    withRouter,
+    withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
+    withState('rowsPerPage', 'setRowsPerPage', 25),
+    withState('records', 'setRecords', []),
+    withState('recordsCount', 'setRecordsCount', 0),
+    withState('orderDirection', 'setOrderDirection', defaultSorting.direction || 'desc'),
+    withState('orderBy', 'setOrderBy', defaultSorting.column || 'id'),
+    withState('selectedIds', 'setSelectedIds', []),
+    withState('isSelectAll', 'setIsSelectAll', false),
+    withState('isLoading', 'setIsLoading', true),
+    withProps(({ rowsPerPage, page, orderDirection, orderBy }) => ({
+      query: {
+        range: JSON.stringify([page * rowsPerPage, (page + 1) * rowsPerPage - 1]),
+        sort: JSON.stringify([orderBy, orderDirection]),
+      },
+    })),
+    withProps(({ records }) => {
+      const inactiveRows = records.map(record => {
+        return highlightInactive ? highlightInactive.every(column => record[column] && isEmpty(record[column])) : false
+      })
+      return { inactiveRows }
+    })
+  )(EnhancedList2)
+}
 
 export default enhanceList
