@@ -26,7 +26,7 @@ import { Grid } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { uploadPicture } from 'shared/picture-uploader'
-import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const SortableNavigationItem = compose(
@@ -230,11 +230,7 @@ const transform = navigationItems =>
     picture: { url: e.picUrl || defaults.product.pictureUrl },
   }))
 
-const NavigationSuperForm = compose(
-  withHandlers({
-    onTileClick: () => ({ url }) => window.open(url, '_blank'),
-  })
-)(({ form, onTileClick, persona, ...props }) => (
+const NavigationSuperForm = ({ form, onTileClick, persona, ...props }) => (
   <Grid container spacing={24}>
     <Grid item md={6} xs={12}>
       <NavigationForm form={form} {...props} />
@@ -249,7 +245,13 @@ const NavigationSuperForm = compose(
       </PluginPreview>
     </Grid>
   </Grid>
-))
+)
+
+const NavigationSuperForm0 = compose(
+  withHandlers({
+    onTileClick: () => ({ url }) => window.open(url, '_blank'),
+  })
+)(NavigationSuperForm)
 
 const NavigationSuperForm1 = compose(
   withHandlers({
@@ -272,7 +274,6 @@ const NavigationSuperForm1 = compose(
       setForm({ ...form, navigationItemsAttributes: newNavigationItemsAttributes })
     },
   }),
-  withRouter,
   withHandlers({
     selectPersona: ({ convertPersona, form, setForm, setPersona }) => selected => {
       selected &&
@@ -316,7 +317,7 @@ const NavigationSuperForm1 = compose(
     backRoute,
     title,
   }))
-)(NavigationSuperForm)
+)(NavigationSuperForm0)
 
 const NavigationSuperForm2 = props => {
   const defaultForm = {
@@ -336,8 +337,7 @@ const NavigationSuperForm2 = props => {
   return <NavigationSuperForm1 {...{ ...props, ...formProps }} />
 }
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }),
+const NavigationSuperForm3 = compose(
   withProps({ formRef: React.createRef() }),
   withState('isCropping', 'setIsCropping', false),
   withState('navigationItemsPictures', 'setNavigationItemsPictures', []),
@@ -405,3 +405,11 @@ export default compose(
     },
   })
 )(NavigationSuperForm2)
+
+const NavigationSuperForm4 = props => {
+  const { location } = props
+  useOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }, location)
+  return <NavigationSuperForm3 {...props} />
+}
+
+export default withRouter(NavigationSuperForm4)

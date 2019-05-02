@@ -11,8 +11,7 @@ import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Grid } from '@material-ui/core'
 import { uploadPicture } from 'shared/picture-uploader'
-import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
-import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { useOnboardingConsumer, useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const PersonaForm = ({
@@ -94,8 +93,6 @@ const PersonaForm = ({
 )
 
 const PersonaForm1 = compose(
-  withRouter,
-  withOnboardingConsumer,
   withHandlers({
     onFormSubmit: ({
       formRef,
@@ -143,6 +140,11 @@ const PersonaForm1 = compose(
 )(PersonaForm)
 
 const PersonaForm2 = props => {
+  const { onboarding, setOnboarding } = useOnboardingConsumer()
+  return <PersonaForm1 {...props} onboarding={onboarding} setOnboarding={setOnboarding} />
+}
+
+const PersonaForm3 = props => {
   const defaultForm = {
     name: '',
     description: '',
@@ -151,11 +153,10 @@ const PersonaForm2 = props => {
     profilePicAnimationUrl: '',
   }
   const formProps = useForm({ ...props, defaultForm })
-  return <PersonaForm1 {...{ ...props, ...formProps }} />
+  return <PersonaForm2 {...{ ...props, ...formProps }} />
 }
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial' }),
+const PersonaForm4 = compose(
   withProps({ formRef: React.createRef() }),
   withState('isCropping', 'setIsCropping', false),
   withState('profilePic', 'setProfilePic', null),
@@ -186,4 +187,12 @@ export default compose(
       return saveFormObject(form)
     },
   })
-)(PersonaForm2)
+)(PersonaForm3)
+
+const PersonaForm5 = props => {
+  const { location } = props
+  useOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial' }, location)
+  return <PersonaForm4 {...props} />
+}
+
+export default withRouter(PersonaForm5)

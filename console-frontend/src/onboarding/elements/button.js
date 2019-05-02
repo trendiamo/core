@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
 import { Button as MuiButton } from '@material-ui/core'
-import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
+import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 
 const Icon = styled.img`
   padding-left: 5px;
@@ -20,7 +20,7 @@ const StyledButton = styled(({ ...props }) => <MuiButton {...omit(props, ['creat
     }`}
 `
 
-const ButtonTemplate = ({ buttonConfig, handleClick, create, onboarding }) => (
+const Button0 = ({ buttonConfig, handleClick, create, onboarding }) => (
   <StyledButton
     aria-label={buttonConfig['ariaLabel']}
     color={create && !onboarding.help.run ? 'primary' : 'default'}
@@ -34,8 +34,7 @@ const ButtonTemplate = ({ buttonConfig, handleClick, create, onboarding }) => (
   </StyledButton>
 )
 
-const Button = compose(
-  withOnboardingConsumer,
+const Button1 = compose(
   withHandlers({
     handleClick: ({ history, nextRoute, create, buttonConfig, onboarding, setOnboarding }) => event => {
       if (onboarding.help.run && onboarding.help.single) {
@@ -51,6 +50,11 @@ const Button = compose(
       setOnboarding({ ...onboarding, run: false, stepIndex: 0 })
     },
   })
-)(ButtonTemplate)
+)(Button0)
+
+const Button = props => {
+  const { onboarding, setOnboarding } = useOnboardingConsumer()
+  return <Button1 {...props} onboarding={onboarding} setOnboarding={setOnboarding} />
+}
 
 export { Button }

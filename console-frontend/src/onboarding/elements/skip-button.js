@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Button } from '@material-ui/core'
 import { changeStage } from 'onboarding/scenario-actions'
 import { compose, withHandlers } from 'recompose'
-import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
+import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 
 const StyledButton = styled(Button)`
   background: #464754;
@@ -23,8 +23,7 @@ const SkipButton = ({ handleClick }) => (
   </StyledButton>
 )
 
-export default compose(
-  withOnboardingConsumer,
+const SkipButton1 = compose(
   withHandlers({
     handleClick: ({ onboarding, setOnboarding }) => () => {
       if (onboarding.help.run) {
@@ -36,3 +35,10 @@ export default compose(
     },
   })
 )(SkipButton)
+
+const SkipButton2 = props => {
+  const { onboarding, setOnboarding } = useOnboardingConsumer()
+  return <SkipButton1 {...props} onboarding={onboarding} setOnboarding={setOnboarding} />
+}
+
+export default SkipButton2
