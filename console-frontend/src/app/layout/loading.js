@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { CircularProgress } from '@material-ui/core'
-import { compose } from 'recompose'
-import { withClassesConsumer } from 'ext/recompose/with-classes'
+import { StoreContext } from 'ext/hooks/store'
 
-const Loading = ({ classes, transparent }) => (
-  <div className={classes.loadingContainer} style={transparent && { backgroundColor: 'transparent' }}>
-    <div className={classes.loadingInnerContainer}>
-      <div className={classes.loadingMessage}>
-        <CircularProgress className={classes.loadingIcon} color="primary" size="80" />
+const Loading = ({ transparent }) => {
+  const { store } = useContext(StoreContext)
+  const classes = store.classes
+  return (
+    <div className={classes.loadingContainer} style={transparent && { backgroundColor: 'transparent' }}>
+      <div className={classes.loadingInnerContainer}>
+        <div className={classes.loadingMessage}>
+          <CircularProgress className={classes.loadingIcon} color="primary" size="80" />
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
-export default compose(withClassesConsumer)(Loading)
+export default Loading

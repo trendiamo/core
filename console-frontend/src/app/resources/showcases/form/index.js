@@ -12,7 +12,7 @@ import { formObject, formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
 import { history as pluginHistory, routes as pluginRoutes } from 'plugin-base'
 import { uploadPicture } from 'shared/picture-uploader'
-import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const Showcase = props => (
@@ -54,7 +54,6 @@ const Showcase1 = compose(
       setForm({ ...form, spotlightsAttributes: newSpotlightsAttributes })
     },
   }),
-  withRouter,
   withHandlers({
     selectPersona: ({ form, setForm }) => selected => {
       selected &&
@@ -132,9 +131,8 @@ const Showcase2 = props => {
   return <Showcase1 {...{ ...props, ...formProps }} />
 }
 
-export default compose(
+const Showcase3 = compose(
   withProps({ formRef: React.createRef() }),
-  withOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial' }),
   withState('isCropping', 'setIsCropping', false),
   withState('productPicksPictures', 'setProductPicksPictures', []),
   withState('showingContent', 'setShowingContent', false),
@@ -173,3 +171,11 @@ export default compose(
     },
   })
 )(Showcase2)
+
+const Showcase4 = props => {
+  const { location } = props
+  useOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial' }, location)
+  return <Showcase3 {...props} />
+}
+
+export default withRouter(Showcase4)

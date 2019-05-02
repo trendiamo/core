@@ -11,7 +11,7 @@ import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
 import { Grid } from '@material-ui/core'
-import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const OutroForm = ({
@@ -106,7 +106,6 @@ const OutroForm1 = props => (
 )
 
 const OutroForm2 = compose(
-  withRouter,
   withHandlers({
     selectPersona: ({ form, setForm }) => selected => {
       selected &&
@@ -151,8 +150,7 @@ const OutroForm3 = props => {
   return <OutroForm2 {...{ ...props, ...formProps }} />
 }
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial' }),
+const OutroForm4 = compose(
   withProps({ formRef: React.createRef() }),
   withHandlers({
     formObjectTransformer: () => json => {
@@ -168,3 +166,11 @@ export default compose(
     },
   })
 )(OutroForm3)
+
+const OutroForm5 = props => {
+  const { location } = props
+  useOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial' }, location)
+  return <OutroForm4 {...props} />
+}
+
+export default withRouter(OutroForm5)

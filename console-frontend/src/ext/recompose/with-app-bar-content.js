@@ -1,8 +1,7 @@
-import omit from 'lodash.omit'
-import React from 'react'
-import { compose, createSink } from 'recompose'
+import React, { useContext } from 'react'
+import { createSink } from 'recompose'
 import { isEqual } from 'lodash'
-import { withStoreConsumer } from './with-store'
+import { StoreContext } from 'ext/hooks/store'
 
 const setPageTitle = ({ title }) => {
   if (!title) return
@@ -16,12 +15,17 @@ const Sink = createSink(({ appBarContent, store, setStore, ...props }) => {
   setStore({ ...store, appBarContent })
 })
 
-const withAppBarContent = appBarContent => BaseComponent =>
-  compose(withStoreConsumer)(props => (
-    <React.Fragment>
-      <Sink appBarContent={appBarContent} {...props} />
-      <BaseComponent {...omit(props, ['store', 'setStore'])} />
-    </React.Fragment>
-  ))
+const withAppBarContent = appBarContent => BaseComponent => {
+  const WithAppBarContent = props => {
+    const { store, setStore } = useContext(StoreContext)
+    return (
+      <React.Fragment>
+        <Sink appBarContent={appBarContent} {...props} setStore={setStore} store={store} />
+        <BaseComponent {...props} />
+      </React.Fragment>
+    )
+  }
+  return WithAppBarContent
+}
 
 export default withAppBarContent

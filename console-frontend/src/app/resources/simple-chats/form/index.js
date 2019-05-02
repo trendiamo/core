@@ -14,7 +14,7 @@ import { branch, compose, renderComponent, shallowEqual, shouldUpdate, withHandl
 import { Grid } from '@material-ui/core'
 import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
-import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const SortableSimpleChatStep = compose(
@@ -174,7 +174,6 @@ const SimpleChatForm1 = compose(
       })
     },
   }),
-  withRouter,
   withHandlers({
     selectPersona: ({ form, setForm }) => selected => {
       setForm({
@@ -229,8 +228,7 @@ const SimpleChatForm2 = props => {
   return <SimpleChatForm1 {...{ ...props, ...formProps }} />
 }
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'simpleChats', stageName: 'initial' }),
+const SimpleChatForm3 = compose(
   withProps({ formRef: React.createRef() }),
   withHandlers({
     formObjectTransformer: () => json => {
@@ -251,3 +249,11 @@ export default compose(
     },
   })
 )(SimpleChatForm2)
+
+const SimpleChatForm4 = props => {
+  const { location } = props
+  useOnboardingHelp({ single: true, stepName: 'simpleChats', stageName: 'initial' }, location)
+  return <SimpleChatForm3 {...props} />
+}
+
+export default withRouter(SimpleChatForm4)

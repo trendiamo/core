@@ -3,12 +3,13 @@ import classNames from 'classnames'
 import HelpOutline from '@material-ui/icons/HelpOutline'
 import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import styled from 'styled-components'
-import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
+import { branch, compose, renderNothing, withProps } from 'recompose'
 import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core'
-import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
-import { withStoreConsumer } from 'ext/recompose/with-store'
+import { StoreContext } from 'ext/hooks/store'
+import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
+import { withRouter } from 'react-router'
 
 const ButtonsContainer = styled.div`
   flex: 1;
@@ -24,23 +25,21 @@ const StyledHelp = styled(IconButton)`
   }
 `
 
-const OnboardingButtonTemplate = ({ handleClick }) => (
-  <Hidden smDown>
-    <StyledHelp onClick={handleClick}>
-      <HelpOutline />
-    </StyledHelp>
-  </Hidden>
-)
+const OnboardingButton = compose(withRouter)(({ location }) => {
+  const { onboarding, setOnboarding } = useOnboardingConsumer()
+  const handleClick = useCallback(() => {
+    setOnboarding({ ...onboarding, help: { ...onboarding.help, run: true } })
+  })
+  if (location.pathname !== onboarding.help.pathname) return null
 
-const OnboardingButton = compose(
-  withOnboardingConsumer,
-  withHandlers({
-    handleClick: ({ onboarding, setOnboarding }) => () => {
-      setOnboarding({ ...onboarding, help: { ...onboarding.help, run: true } })
-    },
-  }),
-  branch(({ location, onboarding }) => location.pathname !== onboarding.help.pathname, renderNothing)
-)(OnboardingButtonTemplate)
+  return (
+    <Hidden smDown>
+      <StyledHelp onClick={handleClick}>
+        <HelpOutline />
+      </StyledHelp>
+    </Hidden>
+  )
+})
 
 const Title = ({ text, classes, responsive, highlight }) => (
   <Typography
@@ -51,15 +50,7 @@ const Title = ({ text, classes, responsive, highlight }) => (
   </Typography>
 )
 
-const AppBarContent = compose(
-  withStoreConsumer,
-  branch(({ store }) => !store.appBarContent, renderNothing),
-  withProps(({ store }) => ({
-    Actions: store.appBarContent.Actions,
-    backRoute: store.appBarContent.backRoute,
-    title: store.appBarContent.title,
-  }))
-)(({ Actions, backRoute, classes, title }) => (
+const AppBarContent1 = ({ Actions, backRoute, classes, title }) => (
   <React.Fragment>
     {backRoute && (
       <Link to={backRoute}>
@@ -74,7 +65,21 @@ const AppBarContent = compose(
       </ButtonsContainer>
     )}
   </React.Fragment>
-))
+)
+
+const AppBarContent2 = compose(
+  branch(({ store }) => !store.appBarContent, renderNothing),
+  withProps(({ store }) => ({
+    Actions: store.appBarContent.Actions,
+    backRoute: store.appBarContent.backRoute,
+    title: store.appBarContent.title,
+  }))
+)(AppBarContent1)
+
+const AppBarContent3 = props => {
+  const { store, setStore } = useContext(StoreContext)
+  return <AppBarContent2 {...{ ...props, store, setStore }} />
+}
 
 const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
   <MuiAppBar
@@ -84,7 +89,7 @@ const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
       <IconButton aria-label="Open drawer" className={classes.menuButton} color="inherit" onClick={toggleOpen}>
         <MenuIcon />
       </IconButton>
-      <AppBarContent classes={classes} />
+      <AppBarContent3 classes={classes} />
     </Toolbar>
   </MuiAppBar>
 )

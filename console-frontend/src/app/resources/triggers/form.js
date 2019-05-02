@@ -11,7 +11,7 @@ import { Actions, AddItemButton, Cancel, Form, HelperText } from 'shared/form-el
 import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow, refreshRoute } from 'utils'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormControl, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
-import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const pathPattern = '/[^?#]*'
@@ -129,7 +129,6 @@ const TriggerForm1 = compose(
       setForm({ ...form, urlMatchers: newUrlMatchers })
     },
   }),
-  withRouter,
   withHandlers({
     onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async (event, action) => {
       if (!formRef.current.reportValidity()) return
@@ -191,8 +190,7 @@ const TriggerForm2 = props => {
   return <TriggerForm1 {...{ ...props, ...formProps }} />
 }
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
+const TriggerForm3 = compose(
   withProps({ formRef: React.createRef() }),
   withState('hostnames', 'setHostnames', []),
   withHandlers({
@@ -207,3 +205,11 @@ export default compose(
     },
   })
 )(TriggerForm2)
+
+const TriggerForm4 = props => {
+  const { location } = props
+  useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }, location)
+  return <TriggerForm3 {...props} />
+}
+
+export default withRouter(TriggerForm4)

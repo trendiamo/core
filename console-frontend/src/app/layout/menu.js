@@ -17,9 +17,10 @@ import {
   SmsOutlined,
   TuneOutlined,
 } from '@material-ui/icons'
-import { branch, compose, renderComponent, withProps } from 'recompose'
+import { compose, withProps } from 'recompose'
 import { Divider, IconButton, MenuItem, SvgIcon, Typography } from '@material-ui/core'
-import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
+import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
+import { withRouter } from 'react-router'
 
 const resources = {
   triggers: { icon: TuneOutlined, label: 'Triggers', class: 'triggers', route: routes.triggersList() },
@@ -189,32 +190,33 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
   </div>
 )
 
-const Menu = ({ classes, sidebarOpen, toggleOpen, ...rest }) => (
-  <Container {...omit(rest, ['onboarding'])}>
-    <div style={{ flex: 1 }}>
-      <MenuLogo sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-      {Object.keys(resourceGroups).map(group => (
-        <div key={group}>
-          <MenuItemGroup showTitle={resourceGroups[group].showTitle} sidebarOpen={sidebarOpen}>
-            <GroupText sidebarOpen={sidebarOpen}>
-              {resourceGroups[group].showTitle && resourceGroups[group].name}
-            </GroupText>
-          </MenuItemGroup>
-          {resourceGroups[group].resources.map(resource => (
-            <Item classes={classes} key={resource.route} resource={resource} sidebarOpen={sidebarOpen} />
-          ))}
-        </div>
-      ))}
-    </div>
-    <UserMenu classes={classes} sidebarOpen={sidebarOpen} />
-  </Container>
-)
+const Menu = ({ classes, location, menuLoaded, sidebarOpen, toggleOpen, ...rest }) => {
+  const { onboarding } = useOnboardingConsumer()
 
-export default compose(
-  withOnboardingConsumer,
-  branch(
-    ({ location, onboarding, menuLoaded }) =>
-      !menuLoaded && onboarding.stageIndex === 0 && location.pathname === routes.root(),
-    renderComponent(DummyMenu)
+  if (!menuLoaded && onboarding.stageIndex === 0 && location.pathname === routes.root()) {
+    return <DummyMenu />
+  }
+
+  return (
+    <Container {...rest}>
+      <div style={{ flex: 1 }}>
+        <MenuLogo sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
+        {Object.keys(resourceGroups).map(group => (
+          <div key={group}>
+            <MenuItemGroup showTitle={resourceGroups[group].showTitle} sidebarOpen={sidebarOpen}>
+              <GroupText sidebarOpen={sidebarOpen}>
+                {resourceGroups[group].showTitle && resourceGroups[group].name}
+              </GroupText>
+            </MenuItemGroup>
+            {resourceGroups[group].resources.map(resource => (
+              <Item classes={classes} key={resource.route} resource={resource} sidebarOpen={sidebarOpen} />
+            ))}
+          </div>
+        ))}
+      </div>
+      <UserMenu classes={classes} sidebarOpen={sidebarOpen} />
+    </Container>
   )
-)(Menu)
+}
+
+export default withRouter(Menu)

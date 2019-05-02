@@ -11,7 +11,7 @@ import { isEmpty } from 'lodash'
 import { Link } from 'react-router-dom'
 import { parse, stringify } from 'query-string'
 import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
-import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 import { withSnackbar } from 'notistack'
 
@@ -48,7 +48,6 @@ const enhanceList = ({
   highlightInactive,
 }) => ResourceRow =>
   compose(
-    withOnboardingHelp(help),
     withRouter,
     withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
     withState('rowsPerPage', 'setRowsPerPage', 25),
@@ -168,69 +167,73 @@ const enhanceList = ({
       selectedIds,
       setSelectedIds,
       inactiveRows,
-    }) => (
-      <Section>
-        <TableToolbar
-          createRoute={routes.create()}
-          deleteRecords={deleteRecords}
-          label={title}
-          selectedIds={selectedIds}
-        />
-        <Table aria-labelledby={title}>
-          <TableHead
-            columns={columns}
-            duplicate={!!api.duplicate}
-            handleRequestSort={handleRequestSort}
-            leftColumns={
-              <TableCell>
-                <Checkbox
-                  checked={isSelectAll}
-                  checkedIcon={<CheckBoxIcon />}
-                  color="primary"
-                  onClick={handleSelectAll}
-                />
-              </TableCell>
-            }
-            orderBy={orderBy}
-            orderDirection={orderDirection}
+      location,
+    }) => {
+      useOnboardingHelp(help, location)
+      return (
+        <Section>
+          <TableToolbar
+            createRoute={routes.create()}
+            deleteRecords={deleteRecords}
+            label={title}
+            selectedIds={selectedIds}
           />
-          <TableBody>
-            {records &&
-              records.map((record, index) => (
-                <TableRow
-                  api={api}
-                  handleSelectAll={handleSelectAll}
-                  highlightInactive={inactiveRows[index]}
-                  index={index}
-                  key={record.id}
-                  resource={record}
-                  resourceEditPath={routes.edit && routes.edit(record.id)}
-                  routes={routes}
-                  selectedIds={selectedIds}
-                  setSelectedIds={setSelectedIds}
-                >
-                  <ResourceRow record={record} />
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          component="div"
-          count={recordsCount}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[]}
-        />
-      </Section>
-    )
+          <Table aria-labelledby={title}>
+            <TableHead
+              columns={columns}
+              duplicate={!!api.duplicate}
+              handleRequestSort={handleRequestSort}
+              leftColumns={
+                <TableCell>
+                  <Checkbox
+                    checked={isSelectAll}
+                    checkedIcon={<CheckBoxIcon />}
+                    color="primary"
+                    onClick={handleSelectAll}
+                  />
+                </TableCell>
+              }
+              orderBy={orderBy}
+              orderDirection={orderDirection}
+            />
+            <TableBody>
+              {records &&
+                records.map((record, index) => (
+                  <TableRow
+                    api={api}
+                    handleSelectAll={handleSelectAll}
+                    highlightInactive={inactiveRows[index]}
+                    index={index}
+                    key={record.id}
+                    resource={record}
+                    resourceEditPath={routes.edit && routes.edit(record.id)}
+                    routes={routes}
+                    selectedIds={selectedIds}
+                    setSelectedIds={setSelectedIds}
+                  >
+                    <ResourceRow record={record} />
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+          <TablePagination
+            backIconButtonProps={{
+              'aria-label': 'Previous Page',
+            }}
+            component="div"
+            count={recordsCount}
+            nextIconButtonProps={{
+              'aria-label': 'Next Page',
+            }}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[]}
+          />
+        </Section>
+      )
+    }
   )
 
 export default enhanceList

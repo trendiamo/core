@@ -32,7 +32,8 @@ import { isEqual } from 'lodash'
 import { Link } from 'react-router-dom'
 import { matchUrl } from 'plugin-base'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
-import { withOnboardingHelp } from 'ext/recompose/with-onboarding'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
+import { withRouter } from 'react-router'
 import { withSnackbar } from 'notistack'
 
 const BlankState = () => (
@@ -316,8 +317,7 @@ const TriggerList = ({
   </Section>
 )
 
-export default compose(
-  withOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }),
+const TriggersList1 = compose(
   withAppBarContent({ Actions: <Actions />, title: 'Triggers' }),
   withState('triggers', 'setTriggers', []),
   withState('isLoading', 'setIsLoading', true),
@@ -381,3 +381,11 @@ export default compose(
   branch(({ isLoading }) => isLoading, renderComponent(CircularProgress)),
   branch(({ triggers }) => triggers.length === 0, renderComponent(BlankState))
 )(TriggerList)
+
+const TriggersList2 = props => {
+  const { location } = props
+  useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }, location)
+  return <TriggersList1 {...props} />
+}
+
+export default withRouter(TriggersList2)

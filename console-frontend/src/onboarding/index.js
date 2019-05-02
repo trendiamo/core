@@ -4,7 +4,7 @@ import SkipButton from './elements/skip-button'
 import { branch, compose, lifecycle, renderNothing, withHandlers } from 'recompose'
 import { Hidden, Portal } from '@material-ui/core'
 import { stages, stagesArray } from './stages'
-import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
+import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 
 const floaterProps = {
   hideArrow: true,
@@ -59,8 +59,7 @@ const Onboarding = ({ onboarding }) => (
   </Hidden>
 )
 
-export default compose(
-  withOnboardingConsumer,
+const Onboarding1 = compose(
   branch(
     ({ onboarding }) => (!onboarding.run || !stagesArray[onboarding.stageIndex]) && !onboarding.help.run,
     renderNothing
@@ -101,3 +100,10 @@ export default compose(
     },
   })
 )(Onboarding)
+
+const Onboarding2 = props => {
+  const { onboarding, setOnboarding } = useOnboardingConsumer()
+  return <Onboarding1 {...props} onboarding={onboarding} setOnboarding={setOnboarding} />
+}
+
+export default Onboarding2

@@ -1,9 +1,8 @@
 import classNames from 'classnames'
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { compose } from 'recompose'
 import { Button as MuiButton } from '@material-ui/core'
-import { withClassesConsumer } from 'ext/recompose/with-classes'
+import { StoreContext } from 'ext/hooks/store'
 
 const StyledMuiButton = styled(MuiButton)`
   -moz-transition: none;
@@ -19,10 +18,14 @@ const StyledMuiButton = styled(MuiButton)`
   }
 `
 
-const Button = ({ children, classes, disabled, ...props }) => (
-  <StyledMuiButton className={classNames(!disabled && classes.appBarButton)} disabled={disabled} {...props}>
-    {children}
-  </StyledMuiButton>
-)
+const Button = ({ children, disabled, ...props }) => {
+  const { store } = useContext(StoreContext)
+  const classes = store.classes
+  return (
+    <StyledMuiButton className={classNames(!disabled && classes.appBarButton)} disabled={disabled} {...props}>
+      {children}
+    </StyledMuiButton>
+  )
+}
 
-export default compose(withClassesConsumer)(Button)
+export default Button

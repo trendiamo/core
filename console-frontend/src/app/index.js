@@ -26,9 +26,9 @@ import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from './resources/showcases'
 import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from './resources/simple-chats'
 import { SnackbarProvider } from 'notistack'
+import { StoreProvider } from 'ext/hooks/store'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
 import { withSnackbar } from 'notistack'
-import { withStoreProvider } from 'ext/recompose/with-store'
 import 'assets/css/fonts.css'
 
 const generateClassName = createGenerateClassName()
@@ -126,16 +126,18 @@ const AppBase = compose(
 
 /* eslint-disable react/jsx-max-depth */
 export const App = ({ history }) => (
-  <Router history={history}>
-    <JssProvider generateClassName={generateClassName} jss={jss}>
-      <MuiThemeProvider theme={theme}>
-        <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} maxSnack={3}>
-          <AppBase />
-        </SnackbarProvider>
-      </MuiThemeProvider>
-    </JssProvider>
-  </Router>
+  <StoreProvider>
+    <Router history={history}>
+      <JssProvider generateClassName={generateClassName} jss={jss}>
+        <MuiThemeProvider theme={theme}>
+          <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} maxSnack={3}>
+            <AppBase />
+          </SnackbarProvider>
+        </MuiThemeProvider>
+      </JssProvider>
+    </Router>
+  </StoreProvider>
 )
 /* eslint-enable react/jsx-max-depth */
 
-export default compose(withStoreProvider)(App)
+export default App

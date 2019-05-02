@@ -4,7 +4,7 @@ import routes from 'app/routes'
 import { changeStage } from 'onboarding/scenario-actions'
 import { compose, lifecycle, withHandlers } from 'recompose'
 import { Container, Description, Header, Image, OutlinedButton, StyledButton } from 'shared/blank-state/components'
-import { withOnboardingConsumer } from 'ext/recompose/with-onboarding'
+import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 import { withWidth } from '@material-ui/core'
 
@@ -28,9 +28,7 @@ const WelcomePage = ({ getStarted, skipOnboarding }) => (
   </Container>
 )
 
-export default compose(
-  withRouter,
-  withOnboardingConsumer,
+const WelcomePage1 = compose(
   withWidth({ noSSR: true }),
   lifecycle({
     componentDidMount() {
@@ -52,3 +50,10 @@ export default compose(
     },
   })
 )(WelcomePage)
+
+const WelcomePage2 = props => {
+  const { onboarding, setOnboarding } = useOnboardingConsumer()
+  return <WelcomePage1 {...props} onboarding={onboarding} setOnboarding={setOnboarding} />
+}
+
+export default compose(withRouter)(WelcomePage2)
