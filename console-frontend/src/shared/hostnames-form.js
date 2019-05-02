@@ -1,9 +1,8 @@
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import Button from 'shared/button'
 import MuiCancel from '@material-ui/icons/Cancel'
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
 import { IconButton, InputLabel, TextField, Typography } from '@material-ui/core'
 
 const LabelContainer = styled.div`
@@ -33,26 +32,22 @@ const FlexDiv = styled.div`
   align-items: center;
 `
 
-const HostnameTextField = compose(
-  withHandlers({
-    editHostnameValue: ({ index, onChange }) => event => {
-      onChange(index, event.target.value)
-    },
-  })
-)(({ editHostnameValue, value, ...props }) => <TextField {...props} onChange={editHostnameValue} value={value} />)
+const HostnameTextField = ({ index, onChange, value, ...props }) => {
+  const editHostnameValue = useCallback(event => onChange(index, event.target.value))
+
+  return <TextField {...props} onChange={editHostnameValue} value={value} />
+}
 
 const StyledHostnameTextField = styled(HostnameTextField)`
   flex: 1;
   margin: 8px 0;
 `
 
-const Cancel = compose(
-  withHandlers({
-    deleteHostname: ({ index, onClick, disabled }) => () => {
-      if (!disabled) onClick(index)
-    },
-  })
-)(({ deleteHostname, ...props }) => <MuiCancel {...props} onClick={deleteHostname} />)
+const Cancel = ({ index, onClick, disabled, ...props }) => {
+  const deleteHostname = useCallback(() => !disabled && onClick(index))
+
+  return <MuiCancel {...props} disabled={disabled} onClick={deleteHostname} />
+}
 
 const HostnamesForm = ({ form, addHostnameSelect, editHostnameValue, deleteHostname, isFormLoading }) => (
   <>
