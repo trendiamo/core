@@ -3,7 +3,7 @@ import routes from 'app/routes'
 import { changeStage } from 'onboarding/scenario-actions'
 import { Tooltip } from 'onboarding/elements'
 
-const order = ['triggers', 'showcases', 'navigations', 'simpleChats', 'outros', 'pictures', 'personas']
+const order = ['triggers', 'showcases', 'simpleChats', 'outros', 'pictures', 'personas']
 
 const steps = {
   triggers: {
