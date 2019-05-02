@@ -2,7 +2,6 @@ import Content from './content'
 import LauncherBubbles from './bubbles'
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withProps } from 'recompose'
 import { withWidth } from '@material-ui/core'
 
 const StickyContainer = styled.div`
@@ -28,40 +27,39 @@ const PluginPreview = ({
   Base,
   width,
   Launcher,
+  launcherConfig,
   showingContent,
   onToggleContent,
-  compiledLauncherConfig,
   bubbleText,
   bubbleExtraText,
   bubbleButtons,
   position = 'right',
-}) => (
-  <StickyContainer>
-    <Alignment width={width}>
-      <Content Base={Base} position={position} showingContent={showingContent} />
-      <LauncherBubbles
-        bubbleButtons={bubbleButtons}
-        bubbleExtraText={bubbleExtraText}
-        bubbleText={bubbleText}
-        launcherConfig={compiledLauncherConfig}
-        onToggleContent={onToggleContent}
-        position={position}
-        showingContent={showingContent}
-      />
-      {React.cloneElement(Launcher, { launcherConfig: compiledLauncherConfig })}
-    </Alignment>
-  </StickyContainer>
-)
+}) => {
+  const compiledLauncherConfig = {
+    ...launcherConfig,
+    size: showingContent ? launcherConfig.smallSize : launcherConfig.size,
+    frameSize: showingContent ? launcherConfig.smallFrameSize : launcherConfig.frameSize,
+    offsetX: 15,
+    offsetY: 0,
+  }
 
-export default compose(
-  withWidth({ noSSR: true }),
-  withProps(({ launcherConfig, showingContent }) => ({
-    compiledLauncherConfig: {
-      ...launcherConfig,
-      size: showingContent ? launcherConfig.smallSize : launcherConfig.size,
-      frameSize: showingContent ? launcherConfig.smallFrameSize : launcherConfig.frameSize,
-      offsetX: 15,
-      offsetY: 0,
-    },
-  }))
-)(PluginPreview)
+  return (
+    <StickyContainer>
+      <Alignment width={width}>
+        <Content Base={Base} position={position} showingContent={showingContent} />
+        <LauncherBubbles
+          bubbleButtons={bubbleButtons}
+          bubbleExtraText={bubbleExtraText}
+          bubbleText={bubbleText}
+          launcherConfig={compiledLauncherConfig}
+          onToggleContent={onToggleContent}
+          position={position}
+          showingContent={showingContent}
+        />
+        {React.cloneElement(Launcher, { launcherConfig: compiledLauncherConfig })}
+      </Alignment>
+    </StickyContainer>
+  )
+}
+
+export default withWidth({ noSSR: true })(PluginPreview)

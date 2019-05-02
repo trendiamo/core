@@ -17,7 +17,6 @@ import {
   SmsOutlined,
   TuneOutlined,
 } from '@material-ui/icons'
-import { compose, withProps } from 'recompose'
 import { Divider, IconButton, MenuItem, SvgIcon, Typography } from '@material-ui/core'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -131,31 +130,34 @@ const itemIsActive = route => {
   return pathname && pathname.startsWith(route)
 }
 
-const Item = compose(
-  withProps(({ resource }) => ({
-    isActive: itemIsActive(resource.route),
-  })),
-  withProps(({ sidebarOpen, classes, isActive }) => ({
-    itemClass: classNames(classes.menuItem, isActive && classes.menuItemActive, !sidebarOpen && classes.menuItemClosed),
-    textClass: classNames(classes.menuText, isActive && classes.menuTextActive),
-    iconClass: classNames(
-      classes.menuIcon,
-      !sidebarOpen && classes.menuIconClosed,
-      !sidebarOpen && isActive && classes.menuIconClosedActive
-    ),
-  }))
-)(({ sidebarOpen, resource, itemClass, iconClass, textClass }) => (
-  <div className={`onboard-${resource.class}`}>
-    <Link key={resource.route} to={resource.route}>
-      <MenuItem className={itemClass}>
-        <SvgIcon className={iconClass}>{resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}</SvgIcon>
-        <Typography className={textClass} variant="body1">
-          {sidebarOpen ? resource.label : ''}
-        </Typography>
-      </MenuItem>
-    </Link>
-  </div>
-))
+const Item = ({ classes, sidebarOpen, resource }) => {
+  const isActive = itemIsActive(resource.route)
+  const itemClass = classNames(
+    classes.menuItem,
+    isActive && classes.menuItemActive,
+    !sidebarOpen && classes.menuItemClosed
+  )
+  const iconClass = classNames(
+    classes.menuIcon,
+    !sidebarOpen && classes.menuIconClosed,
+    !sidebarOpen && isActive && classes.menuIconClosedActive
+  )
+  const textClass = classNames(classes.menuText, isActive && classes.menuTextActive)
+  return (
+    <div className={`onboard-${resource.class}`}>
+      <Link key={resource.route} to={resource.route}>
+        <MenuItem className={itemClass}>
+          <SvgIcon className={iconClass}>
+            {resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}
+          </SvgIcon>
+          <Typography className={textClass} variant="body1">
+            {sidebarOpen ? resource.label : ''}
+          </Typography>
+        </MenuItem>
+      </Link>
+    </div>
+  )
+}
 
 const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '85px' }}>
