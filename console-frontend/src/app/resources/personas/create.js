@@ -1,40 +1,45 @@
-import PersonaForm from './form'
-import React from 'react'
+import BasePersonaForm from './form'
+import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiPersonaCreate, apiRequest } from 'utils'
-import { compose, withHandlers, withProps } from 'recompose'
 import { useSnackbar } from 'notistack'
 
-const PersonaForm1 = compose(
-  withProps({
-    backRoute: routes.personasList(),
-    title: 'Create Persona',
-    onboardingCreate: true,
-  }),
-  withHandlers({
-    saveFormObject: ({ enqueueSnackbar }) => async form => {
-      const { json, errors, requestError } = await apiRequest(apiPersonaCreate, [{ persona: form }])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!errors && !requestError) enqueueSnackbar('Successfully created persona', { variant: 'success' })
-      return json
-    },
-  }),
-  withHandlers({
-    loadFormObject: () => () => {
-      return {
-        name: '',
-        description: '',
-        profilePicUrl: '',
-        instagramUrl: '',
-      }
-    },
-  })
-)(PersonaForm)
-
-const PersonaForm2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <PersonaForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+const loadFormObject = () => {
+  return {
+    name: '',
+    description: '',
+    profilePicUrl: '',
+    instagramUrl: '',
+  }
 }
 
-export default PersonaForm2
+const PersonaForm = props => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const saveFormObject = useCallback(
+    form => {
+      return (async () => {
+        const { json, errors, requestError } = await apiRequest(apiPersonaCreate, [{ persona: form }])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        if (!errors && !requestError) enqueueSnackbar('Successfully created persona', { variant: 'success' })
+        return json
+      })()
+    },
+    [enqueueSnackbar]
+  )
+
+  return (
+    <BasePersonaForm
+      {...props}
+      backRoute={routes.personasList()}
+      enqueueSnackbar={enqueueSnackbar}
+      loadFormObject={loadFormObject}
+      onboardingCreate
+      saveFormObject={saveFormObject}
+      title="Create Persona"
+    />
+  )
+}
+
+export default PersonaForm

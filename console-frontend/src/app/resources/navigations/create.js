@@ -1,45 +1,50 @@
-import NavigationForm from './form'
-import React from 'react'
+import BaseNavigationForm from './form'
+import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiNavigationCreate, apiRequest } from 'utils'
-import { compose, withHandlers, withProps } from 'recompose'
 import { useSnackbar } from 'notistack'
 
-const NavigationForm1 = compose(
-  withProps({
-    backRoute: routes.navigationsList(),
-    title: 'Create Navigation',
-  }),
-  withHandlers({
-    saveFormObject: ({ enqueueSnackbar }) => async form => {
-      const { json, errors, requestError } = await apiRequest(apiNavigationCreate, [{ navigation: form }])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      return json
-    },
-  }),
-  withHandlers({
-    loadFormObject: () => () => {
-      return {
-        personaId: '',
-        name: '',
-        chatBubbleText: '',
-        chatBubbleExtraText: '',
-        navigationItemsAttributes: [
-          {
-            text: '',
-            url: '',
-            picUrl: '',
-          },
-        ],
-      }
-    },
-  })
-)(NavigationForm)
-
-const NavigationForm2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <NavigationForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+const loadFormObject = () => {
+  return {
+    personaId: '',
+    name: '',
+    chatBubbleText: '',
+    chatBubbleExtraText: '',
+    navigationItemsAttributes: [
+      {
+        text: '',
+        url: '',
+        picUrl: '',
+      },
+    ],
+  }
 }
 
-export default NavigationForm2
+const NavigationForm = props => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const saveFormObject = useCallback(
+    form => {
+      return (async () => {
+        const { json, errors, requestError } = await apiRequest(apiNavigationCreate, [{ navigation: form }])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        return json
+      })()
+    },
+    [enqueueSnackbar]
+  )
+
+  return (
+    <BaseNavigationForm
+      {...props}
+      backRoute={routes.navigationsList()}
+      enqueueSnackbar={enqueueSnackbar}
+      loadFormObject={loadFormObject}
+      saveFormObject={saveFormObject}
+      title="Create Navigation"
+    />
+  )
+}
+
+export default NavigationForm
