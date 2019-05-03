@@ -7,7 +7,7 @@ import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 const StyledButton = styled(Button)`
   background: #464754;
   position: fixed;
-  top: 14px;
+  top: 24px;
   right: 14px;
   width: 125px;
   z-index: 1000;
