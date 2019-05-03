@@ -82,7 +82,6 @@ export const layoutFragment = graphql`
   fragment Layout on ContentfulLayout {
     start
     features
-    pricing
     about
     blog
     careers
