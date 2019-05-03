@@ -7,13 +7,13 @@ const setPageTitle = ({ title }) => {
 }
 
 const useAppBarContent = appBarContent => {
-  const { store, setStore } = useContext(StoreContext)
+  const { setStore } = useContext(StoreContext)
   useEffect(
     () => {
       setPageTitle(appBarContent)
-      setStore({ ...store, appBarContent })
+      setStore({ appBarContent })
     },
-    [appBarContent]
+    [appBarContent, setStore]
   )
 }
 

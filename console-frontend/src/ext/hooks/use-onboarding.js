@@ -1,7 +1,7 @@
 import auth from 'auth'
 import routes from 'app/routes'
 import { StoreContext } from 'ext/hooks/store'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useReducer } from 'react'
 
 const initialOnboardingState = {
   stageIndex: 0,
@@ -12,23 +12,36 @@ const initialOnboardingState = {
 
 export const useOnboarding = location => {
   const { store, setStore } = useContext(StoreContext)
-  const [onboarding, setOnboarding] = useState(initialOnboardingState)
-  useEffect(() => {
-    const stageIndex = auth.getUser().onboardingStage
-    const newOnboardingState = {
-      ...onboarding,
-      stageIndex,
-      run: !(location.pathname === routes.root()) && stageIndex === 0,
+  const [onboarding, dispatch] = useReducer((state, action) => {
+    if (action.type === 'merge') {
+      return { ...state, ...action.value }
+    } else if (action.type === 'mergeHelp') {
+      return { ...state, help: { ...state.help, ...action.value } }
+    } else {
+      throw new Error()
     }
-    setOnboarding(newOnboardingState)
-  }, [])
-  useEffect(() => setStore({ ...store, onboarding, setOnboarding }), [onboarding])
-
-  return {
-    store,
+  }, initialOnboardingState)
+  const setOnboarding = useCallback(value => dispatch({ type: 'merge', value }), [dispatch])
+  const setOnboardingHelp = useCallback(value => dispatch({ type: 'mergeHelp', value }), [dispatch])
+  useEffect(
+    () => {
+      const stageIndex = auth.getUser().onboardingStage
+      const newOnboardingState = {
+        stageIndex,
+        run: !(location.pathname === routes.root()) && stageIndex === 0,
+      }
+      setOnboarding(newOnboardingState)
+    },
+    [location, setOnboarding]
+  )
+  useEffect(() => setStore({ onboarding, setOnboarding, setOnboardingHelp }), [
+    onboarding,
     setStore,
-    onboardingReady: !!store.onboarding,
-  }
+    setOnboarding,
+    setOnboardingHelp,
+  ])
+
+  return !!store.onboarding
 }
 
 export const useOnboardingConsumer = () => {
@@ -36,14 +49,11 @@ export const useOnboardingConsumer = () => {
   return {
     onboarding: store.onboarding,
     setOnboarding: store.setOnboarding,
+    setOnboardingHelp: store.setOnboardingHelp,
   }
 }
 
-export const useOnboardingHelp = (help, location) => {
-  const { onboarding, setOnboarding } = useOnboardingConsumer()
-  useEffect(() => {
-    setTimeout(() => {
-      setOnboarding({ ...onboarding, help: { ...onboarding.help, ...help, pathname: location.pathname } })
-    }, 0)
-  }, [])
+export const useOnboardingHelp = help => {
+  const { setOnboardingHelp } = useOnboardingConsumer()
+  useEffect(() => setOnboardingHelp(help), [help, setOnboardingHelp])
 }

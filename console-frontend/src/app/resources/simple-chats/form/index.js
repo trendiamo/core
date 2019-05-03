@@ -257,7 +257,7 @@ const SimpleChatForm3 = compose(
 
 const SimpleChatForm4 = props => {
   const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'simpleChats', stageName: 'initial' }, location)
+  useOnboardingHelp({ single: true, stepName: 'simpleChats', stageName: 'initial', pathname: location.pathname })
   return <SimpleChatForm3 {...props} />
 }
 

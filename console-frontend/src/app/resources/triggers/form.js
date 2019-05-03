@@ -218,7 +218,7 @@ const TriggerForm5 = compose(
 
 const TriggerForm6 = props => {
   const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }, location)
+  useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname })
   return <TriggerForm5 {...props} />
 }
 

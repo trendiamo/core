@@ -43,7 +43,7 @@ export default compose(
     buttonText: 'Create new',
     api: { fetch: apiOutroList, destroy: apiOutroDestroy, duplicate: apiOutroDuplicate },
     routes: { create: routes.outroCreate, edit: routes.outroEdit },
-    help: { single: true, stepName: 'outros', stageName: 'initial' },
+    help: location => ({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname }),
     highlightInactive: ['triggerIds'],
   })
 )(OutrosRow)

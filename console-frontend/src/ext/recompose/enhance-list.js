@@ -65,7 +65,7 @@ const enhanceList = ({
     inactiveRows,
     location,
   }) => {
-    useOnboardingHelp(help, location)
+    useOnboardingHelp(help(location))
     const appBarContent = {
       Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
       title: page === 0 ? title : `${title} p.${page + 1}`,

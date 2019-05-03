@@ -64,7 +64,7 @@ export default compose(
     defaultSorting: { column: 'status', direction: 'asc' },
     api: { fetch: apiPictureList, destroy: apiPictureDestroy },
     routes: { create: routes.pictureCreate, edit: routes.pictureEdit },
-    help: { single: true, stepName: 'pictures', stageName: 'initial' },
+    help: location => ({ single: true, stepName: 'pictures', stageName: 'initial', pathname: location.pathname }),
     highlightInactive: ['navigationItems', 'personas', 'productPicks'],
   })
 )(PicturesRow)

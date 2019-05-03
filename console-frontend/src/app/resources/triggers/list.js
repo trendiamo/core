@@ -382,7 +382,7 @@ const TriggersList1 = compose(
 
 const TriggersList2 = props => {
   const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial' }, location)
+  useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname })
   useAppBarContent({ Actions: <Actions />, title: 'Triggers' })
   const { enqueueSnackbar } = useSnackbar()
   return <TriggersList1 {...props} enqueueSnackbar={enqueueSnackbar} />

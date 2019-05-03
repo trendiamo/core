@@ -22,19 +22,22 @@ const StyledButton = styled(({ ...props }) => <MuiButton {...omit(props, ['creat
 
 const Button = ({ history, nextRoute, create, buttonConfig }) => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
-  const handleClick = useCallback(event => {
-    if (onboarding.help.run && onboarding.help.single) {
-      setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
-      return false
-    }
-    history.push(nextRoute)
-    if (!create) {
-      setOnboarding({ ...onboarding, stepIndex: onboarding.stepIndex + 1 })
-      buttonConfig.onClick(event)
-      return false
-    }
-    setOnboarding({ ...onboarding, run: false, stepIndex: 0 })
-  })
+  const handleClick = useCallback(
+    event => {
+      if (onboarding.help.run && onboarding.help.single) {
+        setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
+        return false
+      }
+      history.push(nextRoute)
+      if (!create) {
+        setOnboarding({ ...onboarding, stepIndex: onboarding.stepIndex + 1 })
+        buttonConfig.onClick(event)
+        return false
+      }
+      setOnboarding({ ...onboarding, run: false, stepIndex: 0 })
+    },
+    [history, nextRoute, buttonConfig, create, onboarding, setOnboarding]
+  )
 
   return (
     <StyledButton

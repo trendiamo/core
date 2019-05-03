@@ -41,6 +41,6 @@ export default compose(
     columns,
     api: { fetch: apiPersonaList, destroy: apiPersonaDestroy },
     routes: { create: routes.personaCreate, edit: routes.personaEdit },
-    help: { single: true, stepName: 'personas', stageName: 'initial' },
+    help: location => ({ single: true, stepName: 'personas', stageName: 'initial', pathname: location.pathname }),
   })
 )(PersonasRow)

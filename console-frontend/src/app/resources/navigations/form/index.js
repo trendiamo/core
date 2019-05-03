@@ -397,7 +397,7 @@ const NavigationSuperForm3 = compose(
 
 const NavigationSuperForm4 = props => {
   const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial' }, location)
+  useOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial', pathname: location.pathname })
   const { backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit } = props
   const appBarContent = {
     Actions: (

@@ -48,26 +48,33 @@ const setStyleToPortal = () => {
 }
 
 const Onboarding = () => {
-  const { onboarding, setOnboarding } = useOnboardingConsumer()
+  const { onboarding, setOnboarding, setOnboardingHelp } = useOnboardingConsumer()
 
-  const handleClose = useCallback(event => {
-    if (event.keyCode === 27) {
-      setOnboarding({ ...onboarding, run: false, help: { ...onboarding.help, run: false } })
-    }
-  })
+  const handleClose = useCallback(
+    event => {
+      if (event.keyCode === 27) {
+        setOnboarding({ run: false })
+        setOnboardingHelp({ run: false })
+      }
+    },
+    [setOnboarding, setOnboardingHelp]
+  )
 
-  useEffect(() => {
-    // Act after the JoyRide's scroll timeout of 100ms. (Joyride src: src/components/Overlay.js line 76)
-    const t = setTimeout(() => {
-      document.addEventListener('keydown', handleClose)
-      setStyleToPortal()
-    }, 200)
+  useEffect(
+    () => {
+      // Act after the JoyRide's scroll timeout of 100ms. (Joyride src: src/components/Overlay.js line 76)
+      const t = setTimeout(() => {
+        document.addEventListener('keydown', handleClose)
+        setStyleToPortal()
+      }, 200)
 
-    return () => {
-      clearTimeout(t)
-      document.removeEventListener('keydown', handleClose)
-    }
-  }, [])
+      return () => {
+        clearTimeout(t)
+        document.removeEventListener('keydown', handleClose)
+      }
+    },
+    [handleClose]
+  )
 
   if ((!onboarding.run || !stagesArray[onboarding.stageIndex]) && !onboarding.help.run) return null
 
