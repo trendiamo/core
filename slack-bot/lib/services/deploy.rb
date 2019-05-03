@@ -12,7 +12,8 @@ SH
 FETCH_CORE_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core && \
   GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['GITHUB_KEY_FILE']}' \
-  git pull
+  git fetch && \
+  git reset --hard origin/master
 SH
 
 BACKEND_CMD = <<~SH.freeze
