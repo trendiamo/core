@@ -1,9 +1,17 @@
 import { isEqual } from 'lodash'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 
 const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormObject, saveFormObject }) => {
   const [initialForm, setInitialForm] = useState(defaultForm)
-  const [form, setForm] = useState(initialForm)
+  const [form, dispatch] = useReducer((state, action) => {
+    if (action.type === 'merge') {
+      return { ...state, ...action.value }
+    } else {
+      throw new Error()
+    }
+  }, initialForm)
+  const setForm = useCallback(value => dispatch({ type: 'merge', value }), [dispatch])
+
   const [isFormLoading, setIsFormLoading] = useState(true)
   const [isFormSubmitting, setIsFormSubmitting] = useState(false)
   const isFormPristine = useMemo(() => isEqual(form, initialForm), [form, initialForm])
@@ -22,9 +30,9 @@ const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormO
   )
   const setFieldValue = useCallback(
     event => {
-      setForm({ ...form, [event.target.name]: event.target.value })
+      setForm({ [event.target.name]: event.target.value })
     },
-    [form, setForm]
+    [setForm]
   )
   useEffect(
     () => {
