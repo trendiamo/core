@@ -1,11 +1,11 @@
 import AppBarButton from 'shared/app-bar-button'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CircularProgress from 'app/layout/loading'
-import React from 'react'
+import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
+import useCancelable from 'ext/hooks/use-cancelable'
 import { apiRequest } from 'utils'
-import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { Checkbox, Table, TableBody, TablePagination } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { Link } from 'react-router-dom'
@@ -41,37 +41,169 @@ const EnhancedList = ({
   BlankState,
   buttonText,
   columns,
-  deleteRecords,
-  handleChangePage,
-  handleRequestSort,
-  handleSelectAll,
+  defaultSorting,
   helpStep,
-  isSelectAll,
-  orderBy,
-  orderDirection,
-  handleChangeRowsPerPage,
-  page,
-  records,
-  recordsCount,
+  history,
+  highlightInactive,
+  location,
   ResourceRow,
   routes,
-  rowsPerPage,
-  selectedIds,
-  setSelectedIds,
   title,
-  inactiveRows,
-  location,
 }) => {
   useOnboardingHelp({ single: true, stepName: helpStep, stageName: 'initial', pathname: location.pathname })
+
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      if (action.type === 'setOrder') {
+        return { ...state, orderBy: action.orderBy, orderDirection: action.orderDirection }
+      } else if (action.type === 'setRowsPerPage') {
+        return { ...state, rowsPerPage: action.rowsPerPage }
+      } else if (action.type === 'setSelectedIds') {
+        return {
+          ...state,
+          isSelectAll: action.selectedIds.length === state.records.length,
+          selectedIds: action.selectedIds,
+        }
+      } else if (action.type === 'handleSelectAll') {
+        return {
+          ...state,
+          isSelectAll: true,
+          selectedIds: action.checked ? state.records.map(resource => resource.id) : [],
+        }
+      } else if (action.type === 'setLoading') {
+        return {
+          ...state,
+          isLoading: true,
+        }
+      } else if (action.type === 'completeFetch') {
+        if (action.requestError) enqueueSnackbar(action.requestError, { variant: 'error' })
+        if (action.requestError || action.errors) {
+          return {
+            ...state,
+            records: [],
+            recordsCount: 0,
+            isLoading: false,
+            isSelectAll: false,
+            selectedIds: [],
+          }
+        } else {
+          return {
+            ...state,
+            records: action.json,
+            recordsCount: extractCountFromHeaders(action.response.headers),
+            isLoading: false,
+            isSelectAll: false,
+            selectedIds: [],
+          }
+        }
+      } else {
+        throw new Error()
+      }
+    },
+    {
+      page: parse(location.search).page - 1 || 0,
+      rowsPerPage: 25,
+      recordsCount: 0,
+      orderDirection: (defaultSorting || {}).direction || 'desc',
+      orderBy: (defaultSorting || {}).column || 'id',
+      selectedIds: [],
+      isSelectAll: false,
+      isLoading: true,
+      records: [],
+    }
+  )
+
   const appBarContent = {
     Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
-    title: page === 0 ? title : `${title} p.${page + 1}`,
+    title: state.page === 0 ? title : `${title} p.${state.page + 1}`,
   }
   useAppBarContent(appBarContent)
 
-  if (recordsCount === 0) {
-    return <BlankState />
-  }
+  const query = useMemo(
+    () => ({
+      range: JSON.stringify([state.page * state.rowsPerPage, (state.page + 1) * state.rowsPerPage - 1]),
+      sort: JSON.stringify([state.orderBy, state.orderDirection]),
+    }),
+    [state.page, state.orderBy, state.orderDirection, state.rowsPerPage]
+  )
+
+  const { enqueueSnackbar } = useSnackbar()
+
+  const inactiveRows = state.records.map(record => {
+    return highlightInactive ? highlightInactive.every(column => record[column] && isEmpty(record[column])) : false
+  })
+
+  const handleRequestSort = useCallback(
+    columnName => {
+      const newDirection = state.orderBy === columnName ? (state.orderDirection === 'desc' ? 'asc' : 'desc') : 'asc'
+      dispatch({ type: 'setOrder', orderBy: columnName, orderDirection: newDirection })
+    },
+    [state.orderBy, state.orderDirection, dispatch]
+  )
+
+  const handleChangeRowsPerPage = useCallback(
+    event => dispatch({ type: 'setRowsPerPage', rowsPerPage: event.target.value }),
+    [dispatch]
+  )
+
+  const handleChangePage = useCallback(
+    (event, newPage) => {
+      let currentSearch = parse(location.search)
+      delete currentSearch.page
+      const newSearch = newPage === 0 ? currentSearch : { ...currentSearch, page: newPage + 1 }
+      const uri =
+        Object.keys(newSearch).length === 0 ? location.pathname : `${location.pathname}?${stringify(newSearch)}`
+      history.push(uri)
+    },
+    [history, location.pathname, location.search]
+  )
+
+  const cancelable = useCancelable()
+
+  const fetchRecords = useCallback(
+    () => {
+      ;(async () => {
+        dispatch({ type: 'setLoading' })
+        try {
+          const { json, response, errors, requestError } = await cancelable(apiRequest(api.fetch, [query]))
+          dispatch({ type: 'completeFetch', json, response, errors, requestError })
+        } catch (e) {
+          if (e.message === 'isCanceled') {
+            // ignore: this means the component was unmounted before the request could complete
+          } else {
+            throw e
+          }
+        }
+      })()
+    },
+    [api.fetch, cancelable, query]
+  )
+
+  const deleteRecords = useCallback(
+    () => {
+      ;(async () => {
+        try {
+          const { errors, requestError } = await cancelable(apiRequest(api.destroy, [{ ids: state.selectedIds }]))
+          if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+          if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+          cancelable(fetchRecords())
+        } catch (e) {
+          if (e.message === 'isCanceled') {
+            // ignore: this means the component was unmounted before the request could complete
+          } else {
+            throw e
+          }
+        }
+      })()
+    },
+    [api.destroy, cancelable, enqueueSnackbar, fetchRecords, state.selectedIds]
+  )
+
+  useEffect(fetchRecords, [fetchRecords])
+
+  if (state.isLoading) return <CircularProgress />
+
+  if (state.recordsCount === 0) return <BlankState />
 
   return (
     <Section>
@@ -79,7 +211,7 @@ const EnhancedList = ({
         createRoute={routes.create()}
         deleteRecords={deleteRecords}
         label={title}
-        selectedIds={selectedIds}
+        selectedIds={state.selectedIds}
       />
       <Table aria-labelledby={title}>
         <TableHead
@@ -89,30 +221,30 @@ const EnhancedList = ({
           leftColumns={
             <TableCell>
               <Checkbox
-                checked={isSelectAll}
+                checked={state.isSelectAll}
                 checkedIcon={<CheckBoxIcon />}
                 color="primary"
-                onClick={handleSelectAll}
+                onClick={event => dispatch({ type: 'handleSelectAll', checked: event.target.checked })}
               />
             </TableCell>
           }
-          orderBy={orderBy}
-          orderDirection={orderDirection}
+          orderBy={state.orderBy}
+          orderDirection={state.orderDirection}
         />
         <TableBody>
-          {records &&
-            records.map((record, index) => (
+          {state.records &&
+            state.records.map((record, index) => (
               <TableRow
                 api={api}
-                handleSelectAll={handleSelectAll}
+                handleSelectAll={event => dispatch({ type: 'handleSelectAll', checked: event.target.checked })}
                 highlightInactive={inactiveRows[index]}
                 index={index}
                 key={record.id}
                 resource={record}
                 resourceEditPath={routes.edit && routes.edit(record.id)}
                 routes={routes}
-                selectedIds={selectedIds}
-                setSelectedIds={setSelectedIds}
+                selectedIds={state.selectedIds}
+                setSelectedIds={selectedIds => dispatch({ type: 'setSelectedIds', selectedIds })}
               >
                 <ResourceRow record={record} />
               </TableRow>
@@ -124,132 +256,18 @@ const EnhancedList = ({
           'aria-label': 'Previous Page',
         }}
         component="div"
-        count={recordsCount}
+        count={state.recordsCount}
         nextIconButtonProps={{
           'aria-label': 'Next Page',
         }}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
-        page={page}
-        rowsPerPage={rowsPerPage}
+        page={state.page}
+        rowsPerPage={state.rowsPerPage}
         rowsPerPageOptions={[]}
       />
     </Section>
   )
 }
 
-const EnhancedList1 = compose(
-  withHandlers({
-    fetchRecords: ({
-      api,
-      setIsLoading,
-      setIsSelectAll,
-      setRecords,
-      setRecordsCount,
-      setSelectedIds,
-      query,
-      enqueueSnackbar,
-    }) => async () => {
-      setIsLoading(true)
-      const { json, response, errors, requestError, ...rest } = await apiRequest(api.fetch, [query])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      setSelectedIds([])
-      setIsSelectAll(false)
-      setIsLoading(false)
-      if (requestError || errors) {
-        setRecords([])
-        setRecordsCount(0)
-      } else {
-        setRecords(json)
-        setRecordsCount(extractCountFromHeaders(response.headers))
-      }
-      return { json, response, errors, requestError, ...rest }
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { fetchRecords } = this.props
-      return fetchRecords()
-    },
-    componentDidUpdate(prevProps) {
-      const { query: prevQuery } = prevProps
-      const { query } = this.props
-      const shouldFetch = prevQuery.range !== query.range || prevQuery.sort !== query.sort
-      if (!shouldFetch) return
-      const { fetchRecords } = this.props
-      return fetchRecords()
-    },
-  }),
-  branch(({ isLoading }) => isLoading, renderComponent(CircularProgress)),
-  withHandlers({
-    deleteRecords: ({
-      api,
-      enqueueSnackbar,
-      selectedIds,
-      fetchRecords,
-      setSelectedIds,
-      setIsSelectAll,
-    }) => async () => {
-      const { errors, requestError } = await apiRequest(api.destroy, [{ ids: selectedIds }])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      await fetchRecords()
-      setSelectedIds([])
-      setIsSelectAll(false)
-    },
-    handleSelectAll: ({ setSelectedIds, records, setIsSelectAll }) => event => {
-      setSelectedIds(event.target.checked ? records.map(resource => resource.id) : [])
-      setIsSelectAll(event.target.checked)
-    },
-    handleRequestSort: ({ setOrderBy, setOrderDirection, orderDirection, orderBy }) => columnName => {
-      const newDirection = orderBy === columnName ? (orderDirection === 'desc' ? 'asc' : 'desc') : 'asc'
-      setOrderBy(columnName)
-      setOrderDirection(newDirection)
-    },
-    handleChangeRowsPerPage: ({ setRowsPerPage }) => event => setRowsPerPage(event.target.value),
-    handleChangePage: ({ location, history }) => (event, page) => {
-      let currentSearch = parse(location.search)
-      delete currentSearch.page
-      const newSearch = page === 0 ? currentSearch : { ...currentSearch, page: page + 1 }
-      const uri =
-        Object.keys(newSearch).length === 0 ? location.pathname : `${location.pathname}?${stringify(newSearch)}`
-      history.push(uri)
-    },
-    setSelectedIds: ({ records, setIsSelectAll, setSelectedIds }) => selectedIds => {
-      setIsSelectAll(selectedIds.length === records.length)
-      setSelectedIds(selectedIds)
-    },
-  })
-)(EnhancedList)
-
-const EnhancedList2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <EnhancedList1 {...props} enqueueSnackbar={enqueueSnackbar} />
-}
-
-const EnhancedList3 = compose(
-  withRouter,
-  withProps(({ location }) => ({ page: parse(location.search).page - 1 || 0 })),
-  withState('rowsPerPage', 'setRowsPerPage', 25),
-  withState('records', 'setRecords', []),
-  withState('recordsCount', 'setRecordsCount', 0),
-  withState('orderDirection', 'setOrderDirection', ({ defaultSorting = {} }) => defaultSorting.direction || 'desc'),
-  withState('orderBy', 'setOrderBy', ({ defaultSorting = {} }) => defaultSorting.column || 'id'),
-  withState('selectedIds', 'setSelectedIds', []),
-  withState('isSelectAll', 'setIsSelectAll', false),
-  withState('isLoading', 'setIsLoading', true),
-  withProps(({ rowsPerPage, page, orderDirection, orderBy }) => ({
-    query: {
-      range: JSON.stringify([page * rowsPerPage, (page + 1) * rowsPerPage - 1]),
-      sort: JSON.stringify([orderBy, orderDirection]),
-    },
-  })),
-  withProps(({ highlightInactive, records }) => {
-    const inactiveRows = records.map(record => {
-      return highlightInactive ? highlightInactive.every(column => record[column] && isEmpty(record[column])) : false
-    })
-    return { inactiveRows }
-  })
-)(EnhancedList2)
-
-export default EnhancedList3
+export default withRouter(EnhancedList)
