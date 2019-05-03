@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import TableCell from './table-cell'
-import { compose, withHandlers } from 'recompose'
 import { TableHead as MuiTableHead, TableSortLabel as MuiTableSortLabel, TableRow, Tooltip } from '@material-ui/core'
 
 const StyledTableHead = styled(MuiTableHead)`
@@ -14,13 +13,11 @@ const StyledTableHead = styled(MuiTableHead)`
   text-transform: uppercase;
 `
 
-const TableSortLabel = compose(
-  withHandlers({
-    handleRequestSort: ({ value, onClick }) => () => {
-      onClick(value)
-    },
-  })
-)(({ handleRequestSort, ...props }) => <MuiTableSortLabel {...props} onClick={handleRequestSort} />)
+const TableSortLabel = ({ onClick, value, ...props }) => {
+  const handleRequestSort = useCallback(() => onClick(value), [onClick, value])
+
+  return <MuiTableSortLabel {...props} onClick={handleRequestSort} />
+}
 
 const TableHead = ({ leftColumns, handleRequestSort, orderBy, orderDirection, columns, duplicate }) => (
   <StyledTableHead>
