@@ -1,7 +1,6 @@
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
-import { compose, onlyUpdateForKeys } from 'recompose'
 import { Divider as MuiDivider } from '@material-ui/core'
 
 const Divider = styled(props => <MuiDivider {...omit(props, ['folded'])} />)`
@@ -13,4 +12,7 @@ const Divider = styled(props => <MuiDivider {...omit(props, ['folded'])} />)`
   transition: all 0.5s;
 `
 
-export default compose(onlyUpdateForKeys(['folded', 'color']))(Divider)
+export default memo(
+  Divider,
+  (prevProps, nextProps) => prevProps.folded === nextProps.folded && prevProps.color === nextProps.color
+)

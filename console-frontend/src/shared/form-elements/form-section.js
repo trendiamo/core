@@ -1,8 +1,8 @@
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { Collapse, IconButton } from '@material-ui/core'
-import { compose, onlyUpdateForKeys, withHandlers, withState } from 'recompose'
+import { compose, withHandlers, withState } from 'recompose'
 import { Divider, FlexBar, Header } from './index'
 import { DragHandle } from 'shared/sortable-elements'
 import { ExpandMore } from '@material-ui/icons'
@@ -27,7 +27,11 @@ const FoldButtonTemplate = ({ isFoldedByLogic, folded, toggleFolded }) => (
   </IconButton>
 )
 
-const FoldButton = compose(onlyUpdateForKeys(['isFoldedByLogic', 'folded']))(FoldButtonTemplate)
+const FoldButton = memo(
+  FoldButtonTemplate,
+  (prevProps, nextProps) =>
+    prevProps.isFoldedByLogic === nextProps.isFoldedByLogic && prevProps.folded === nextProps.folded
+)
 
 const HeaderBar = ({ dragHandle, ellipsize, isFoldedByLogic, toggleFolded, folded, foldable, title, actions }) => (
   <FlexBar>
