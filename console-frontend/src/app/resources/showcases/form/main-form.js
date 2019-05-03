@@ -1,9 +1,8 @@
 import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
-import React from 'react'
+import React, { memo } from 'react'
 import Section from 'shared/section'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
-import { compose, shouldUpdate } from 'recompose'
 import { Field, HelperText } from 'shared/form-elements'
 import { isEqual, omit } from 'lodash'
 
@@ -100,11 +99,9 @@ const MainFormTemplate = ({
   </Section>
 )
 
-const MainForm = compose(
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['setFieldValue', 'selectPersona', 'onBackClick']
-    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-  })
-)(MainFormTemplate)
+const MainForm = memo(MainFormTemplate, (props, nextProps) => {
+  const ignoreProps = ['setFieldValue', 'selectPersona', 'onBackClick']
+  return isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
+})
 
 export default MainForm
