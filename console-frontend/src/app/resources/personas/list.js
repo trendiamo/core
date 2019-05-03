@@ -1,11 +1,9 @@
 import Avatar from 'shared/table-elements/avatar'
 import BlankStateTemplate from 'shared/blank-state'
-import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
-import TableCell from 'shared/table-elements/table-cell'
 import { apiPersonaDestroy, apiPersonaList } from 'utils'
-import { compose } from 'recompose'
+import { EnhancedList, TableCell } from 'shared/table-elements'
 
 const columns = [
   { name: 'avatar' },
@@ -33,14 +31,17 @@ const PersonasRow = ({ record }) => (
   </React.Fragment>
 )
 
-export default compose(
-  enhanceList({
-    title: 'Personas',
-    blankState: BlankState,
-    buttonText: 'Create new',
-    columns,
-    api: { fetch: apiPersonaList, destroy: apiPersonaDestroy },
-    routes: { create: routes.personaCreate, edit: routes.personaEdit },
-    help: location => ({ single: true, stepName: 'personas', stageName: 'initial', pathname: location.pathname }),
-  })
-)(PersonasRow)
+const PersonasList = () => (
+  <EnhancedList
+    api={{ fetch: apiPersonaList, destroy: apiPersonaDestroy }}
+    BlankState={BlankState}
+    buttonText="Create new"
+    columns={columns}
+    helpStep="personas"
+    ResourceRow={PersonasRow}
+    routes={{ create: routes.personaCreate, edit: routes.personaEdit }}
+    title="Personas"
+  />
+)
+
+export default PersonasList

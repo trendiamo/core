@@ -1,10 +1,8 @@
 import BlankStateTemplate from 'shared/blank-state'
-import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
-import { ActiveColumn, Avatar, columns, TableCell, Text } from 'shared/table-elements'
+import { ActiveColumn, Avatar, columns, EnhancedList, TableCell, Text } from 'shared/table-elements'
 import { apiOutroDestroy, apiOutroDuplicate, apiOutroList } from 'utils'
-import { compose } from 'recompose'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -34,16 +32,19 @@ const OutrosRow = ({ record, highlightInactive }) => (
   </React.Fragment>
 )
 
-export default compose(
-  enhanceList({
-    title: 'Outros',
-    columns,
-    defaultSorting: { column: 'active', direction: 'asc' },
-    blankState: BlankState,
-    buttonText: 'Create new',
-    api: { fetch: apiOutroList, destroy: apiOutroDestroy, duplicate: apiOutroDuplicate },
-    routes: { create: routes.outroCreate, edit: routes.outroEdit },
-    help: location => ({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname }),
-    highlightInactive: ['triggerIds'],
-  })
-)(OutrosRow)
+const OutrosList = () => (
+  <EnhancedList
+    api={{ fetch: apiOutroList, destroy: apiOutroDestroy, duplicate: apiOutroDuplicate }}
+    BlankState={BlankState}
+    buttonText="Create new"
+    columns={columns}
+    defaultSorting={{ column: 'active', direction: 'asc' }}
+    helpStep="outros"
+    highlightInactive={['triggerIds']}
+    ResourceRow={OutrosRow}
+    routes={{ create: routes.outroCreate, edit: routes.outroEdit }}
+    title="Outros"
+  />
+)
+
+export default OutrosList
