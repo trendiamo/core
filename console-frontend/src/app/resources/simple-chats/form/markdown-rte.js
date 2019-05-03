@@ -1,135 +1,133 @@
 import Button from 'shared/button'
-import classNames from 'classnames'
 import ContentEditable from 'react-contenteditable'
-import injectSheet from 'react-jss'
+import omit from 'lodash.omit'
 import React from 'react'
 import RichTextEditor from 'react-rte'
+import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Tooltip } from '@material-ui/core'
 import { trim } from 'lodash'
-import { OndemandVideo as VideoIcon } from '@material-ui/icons'
 
-const styles = {
-  editor: {
-    border: 'none !important',
-  },
-  editorContainer: {
-    borderBottom: '1px solid #ddd',
-    paddingBottom: '5px',
-    position: 'relative',
-  },
-  hidden: {
-    display: 'none !important',
-  },
-  markdownEditor: {
-    fontSize: '16px',
-    lineHeight: '25px',
-    outline: 'none',
-    padding: '15px 10px 10px',
-    whiteSpace: 'pre-wrap',
-    wordBreak: 'break-word',
-    '&:empty::before': {
-      color: '#9197a3',
-      content: 'attr(placeholder)',
-      display: 'block',
-      margin: '-1px 0 1px -1px',
-    },
-    '&:empty:focus::before': {
-      color: '#bdc1c9',
-    },
-  },
-  markdownIcon: {
-    position: 'absolute',
-    right: '42px',
-    top: '16px',
-    zIndex: 5,
-    '& img': {
-      filter: 'brightness(0)',
-      '&:hover': {
-        filter: 'none',
-      },
-    },
-  },
-  RTEditor: {
-    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-    lineHeight: '25px',
-    paddingTop: '5px',
-    wordBreak: 'break-word',
-  },
-  switchButton: {
-    borderRadius: 0,
-    color: '#ff6641',
-    minHeight: 0,
-    opacity: '0.9 !important',
-    padding: '5.3px 13px',
-  },
-  switchButtonContainer: {
-    display: 'inline-block',
-  },
-  toolbar: {
-    borderColor: '#e7e8e7',
-    margin: '0 !important',
-    paddingBottom: '0 !important',
-    position: 'relative',
-    '& > div': {
-      borderRight: '1px solid #e7e8e7',
-      margin: '0',
-      '&:last-child': {
-        borderRight: 'none',
-        paddingRight: 'none',
-      },
-    },
-    '& button': {
-      border: 'none',
-      borderRadius: '0 !important',
-      cursor: 'pointer',
-      opacity: 0.6,
-      outlineColor: '#ff6641',
-    },
-    '& input': {
-      outline: 'none',
-      '&:focus': {
-        borderColor: '#ff6641',
-      },
-    },
-  },
-  toolbarDisabled: {
-    backgroundColor: 'rgba(255, 255, 255, 0.6) !important',
-    border: 'none !important',
-    cursor: 'not-allowed',
-    height: '30px',
-    position: 'absolute',
-    top: '10px',
-    width: '198px',
-    zIndex: 10,
-  },
-  tooltip: {
-    margin: '6px 0',
-  },
-  videoIcon: {
-    cursor: 'help',
-    position: 'absolute',
-    right: '10px',
-    top: '15px',
-    width: 20,
-    zIndex: 5,
-    '&:hover': {
-      color: '#ff6641',
-    },
-  },
-}
+const StyledRichTextEditor = styled(RichTextEditor)`
+  border: none !important;
+  line-height: 25px !important;
+  padding-top: 5px;
+  word-break: break-word;
+  .RichTextEditor__editor___1QqIU {
+    display: ${({ isMarkdownMode }) => isMarkdownMode && 'none'};
+    font-family: Roboto, Helvetica, Arial, sans-serif !important;
+    line-height: 25px;
+    padding-top: 5px;
+    word-break: break-word;
+  }
+  .EditorToolbar__root___3_Aqz {
+    border-color: #e7e8e7;
+    margin: 0 !important;
+    padding-bottom: 0 !important;
+    position: relative;
+    & > div {
+      border-right: 1px solid #e7e8e7;
+      margin: 0;
+      &:last-child {
+        border-right: none;
+        padding-right: none;
+      }
+    }
+    & button {
+      border: none;
+      border-radius: 0 !important;
+      cursor: pointer;
+      opacity: 0.6;
+      outline-color: #ff6641;
+    }
+    & input {
+      outline: none;
+      &:focus {
+        border-color: #ff6641;
+      }
+    }
+  }
+`
+
+const StyledEditorContainer = styled.div`
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  position: relative;
+`
+
+const StyledTooltip = styled(Tooltip)`
+  margin: 6px 0;
+`
+
+const MarkdownIcon = styled.a`
+  display: ${({ isMarkdownMode }) => isMarkdownMode && 'none'};
+  position: absolute;
+  right: 42px;
+  top: 16px;
+  z-index: 5;
+  & img {
+    filter: brightness(0);
+    &:hover {
+      filter: none;
+    }
+  }
+`
+
+const DisabledToolbar = styled.div`
+  display: ${({ isMarkdownMode }) => !isMarkdownMode && 'none'};
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  border: none !important;
+  cursor: not-allowed;
+  height: 30px;
+  position: absolute;
+  top: 10px;
+  width: 170px;
+  z-index: 10;
+`
+
+const SwitchButtonContainer = styled.div`
+  display: inline-block;
+`
+
+const SwitchButton = styled(Button)`
+  border-radius: 0;
+  color: #ff6641;
+  min-height: 0;
+  opacity: 0.9 !important;
+  padding: 5.3px 13px;
+`
+
+const OmittedContentEditable = ({ ...props }) => <ContentEditable {...omit(props, ['isMarkdownMode'])} />
+
+const StyledContentEditable = styled(OmittedContentEditable)`
+  display: ${({ isMarkdownMode }) => !isMarkdownMode && 'none'};
+  font-size: 16px;
+  line-height: 25px;
+  outline: none;
+  padding: 15px 10px 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  &:empty::before {
+    color: #9197a3;
+    content: attr(placeholder);
+    display: block;
+    margin: -1px 0 1px -1px;
+  }
+  &:empty:focus::before {
+    color: #bdc1c9;
+  }
+`
 
 const toolbarConfig = {
   display: ['INLINE_STYLE_BUTTONS', 'LINK_BUTTONS', 'HISTORY_BUTTONS'],
   INLINE_STYLE_BUTTONS: [
     { label: 'Bold (Cmd+Shift+B)', style: 'BOLD' },
     { label: 'Italic (Cmd+Shift+I)', style: 'ITALIC' },
-    { label: 'Underline (Cmd+Shift+U)', style: 'UNDERLINE' },
   ],
 }
 
 const MarkdownRTE = compose(
-  withState('markdownMode', 'setMarkdownMode', false),
+  withState('isMarkdownMode', 'setIsMarkdownMode', false),
   withState('value', 'setValue', ({ simpleChatMessage }) =>
     RichTextEditor.createValueFromString(simpleChatMessage.text, 'markdown')
   ),
@@ -148,8 +146,8 @@ const MarkdownRTE = compose(
       document.execCommand('insertHTML', false, '\n')
       return 'handled'
     },
-    onSwitchButtonClick: ({ markdownMode, setMarkdownMode }) => () => {
-      setMarkdownMode(!markdownMode)
+    onSwitchButtonClick: ({ isMarkdownMode, setIsMarkdownMode }) => () => {
+      setIsMarkdownMode(!isMarkdownMode)
     },
     onValueChange: ({ name, onChange, setValue, simpleChatMessage, simpleChatMessageIndex }) => event => {
       const value = event.nativeEvent ? RichTextEditor.createValueFromString(event.target.value, 'markdown') : event
@@ -171,70 +169,56 @@ const MarkdownRTE = compose(
   })
 )(
   ({
-    classes,
     disabled,
     onMarkdownKeyDown,
     onMarkdownPaste,
     onRTEReturn,
     onSwitchButtonClick,
     onValueChange,
-    markdownMode,
+    isMarkdownMode,
     value,
   }) => (
-    <div className={classes.editorContainer}>
-      <Tooltip
-        classes={{ tooltip: classes.tooltip }}
-        placement="top-start"
-        title="If you paste a YouTube link, the video will be shown"
-      >
-        <VideoIcon className={classes.videoIcon} />
-      </Tooltip>
-      <Tooltip
-        classes={{ tooltip: classes.tooltip }}
-        placement="top-start"
-        title="Click here to know more about the Markdown syntax"
-      >
-        <a
-          className={classNames(classes.markdownIcon, !markdownMode && classes.hidden)}
+    <StyledEditorContainer>
+      <StyledTooltip placement="left" title="Learn About Markdown Syntax">
+        <MarkdownIcon
           href="https://www.markdownguide.org/cheat-sheet"
+          isMarkdownMode={isMarkdownMode}
           rel="noopener noreferrer"
           target="_blank"
         >
           <img alt="" src="/img/icons/markdown.svg" />
-        </a>
-      </Tooltip>
-      <RichTextEditor
-        className={classes.editor}
+        </MarkdownIcon>
+      </StyledTooltip>
+      <StyledRichTextEditor
         customControls={[
-          <Tooltip key={0} placement="top" title="Switch to preview to use this commands">
-            <div className={classNames(classes.toolbarDisabled, !markdownMode && classes.hidden)} />
+          <Tooltip key={0} placement="top" title="Switch to preview to use these commands">
+            <DisabledToolbar isMarkdownMode={isMarkdownMode} />
           </Tooltip>,
-          <div className={classes.switchButtonContainer} key={1}>
-            <Button className={classes.switchButton} onClick={onSwitchButtonClick} size="small">
-              {`Switch to ${markdownMode ? 'preview' : 'markdown'}`}
-            </Button>
-          </div>,
+          <SwitchButtonContainer key={1}>
+            <SwitchButton onClick={onSwitchButtonClick} size="small">
+              {`${isMarkdownMode ? 'preview' : 'markdown'}`}
+            </SwitchButton>
+          </SwitchButtonContainer>,
         ]}
-        editorClassName={classNames(classes.RTEditor, markdownMode && classes.hidden)}
         handleReturn={onRTEReturn}
+        isMarkdownMode={isMarkdownMode}
         onChange={onValueChange}
         placeholder="Insert a message"
         readOnly={disabled}
-        toolbarClassName={classes.toolbar}
         toolbarConfig={toolbarConfig}
         value={value}
       />
-      <ContentEditable
-        className={classNames(classes.markdownEditor, !markdownMode && classes.hidden)}
+      <StyledContentEditable
         disabled={disabled}
         html={value.toString('markdown')}
+        isMarkdownMode={isMarkdownMode}
         onChange={onValueChange}
         onKeyDown={onMarkdownKeyDown}
         onPaste={onMarkdownPaste}
         placeholder="Insert a message"
       />
-    </div>
+    </StyledEditorContainer>
   )
 )
 
-export default injectSheet(styles)(MarkdownRTE)
+export default MarkdownRTE
