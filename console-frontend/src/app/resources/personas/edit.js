@@ -1,38 +1,49 @@
-import PersonaForm from './form'
-import React from 'react'
+import BasePersonaForm from './form'
+import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiPersonaShow, apiPersonaUpdate, apiRequest } from 'utils'
-import { compose, withHandlers, withProps } from 'recompose'
 import { useSnackbar } from 'notistack'
 
-const PersonaForm1 = compose(
-  withProps({
-    backRoute: routes.personasList(),
-    title: 'Edit Persona',
-  }),
-  withHandlers({
-    saveFormObject: ({ enqueueSnackbar, match }) => async form => {
-      const id = match.params.personaId
-      const { json, errors, requestError } = await apiRequest(apiPersonaUpdate, [id, { persona: form }])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!errors && !requestError) enqueueSnackbar('Successfully updated persona', { variant: 'success' })
-      return json
-    },
-  }),
-  withHandlers({
-    loadFormObject: ({ enqueueSnackbar, match }) => async () => {
-      const id = match.params.personaId
-      const { json, requestError } = await apiRequest(apiPersonaShow, [id])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      return json
-    },
-  })
-)(PersonaForm)
-
-const PersonaForm2 = props => {
+const PersonaForm = ({ match, ...props }) => {
   const { enqueueSnackbar } = useSnackbar()
-  return <PersonaForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+
+  const loadFormObject = useCallback(
+    () => {
+      return (async () => {
+        const id = match.params.personaId
+        const { json, requestError } = await apiRequest(apiPersonaShow, [id])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        return json
+      })()
+    },
+    [enqueueSnackbar, match.params.personaId]
+  )
+
+  const saveFormObject = useCallback(
+    form => {
+      return (async () => {
+        const id = match.params.personaId
+        const { json, errors, requestError } = await apiRequest(apiPersonaUpdate, [id, { persona: form }])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        if (!errors && !requestError) enqueueSnackbar('Successfully updated persona', { variant: 'success' })
+        return json
+      })()
+    },
+    [enqueueSnackbar, match.params.personaId]
+  )
+
+  return (
+    <BasePersonaForm
+      {...props}
+      backRoute={routes.personasList()}
+      enqueueSnackbar={enqueueSnackbar}
+      loadFormObject={loadFormObject}
+      match={match}
+      saveFormObject={saveFormObject}
+      title="Edit Persona"
+    />
+  )
 }
 
-export default PersonaForm2
+export default PersonaForm

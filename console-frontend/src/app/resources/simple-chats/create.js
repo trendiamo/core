@@ -1,46 +1,51 @@
-import React from 'react'
+import BaseSimpleChatForm from './form'
+import React, { useCallback } from 'react'
 import routes from 'app/routes'
-import SimpleChatForm from './form'
 import { apiRequest, apiSimpleChatCreate } from 'utils'
-import { compose, withHandlers, withProps } from 'recompose'
 import { useSnackbar } from 'notistack'
 
-const SimpleChatForm1 = compose(
-  withProps({
-    backRoute: routes.simpleChatsList(),
-    title: 'Create Simple Chat',
-  }),
-  withHandlers({
-    saveFormObject: ({ enqueueSnackbar }) => async form => {
-      const { json, errors, requestError } = await apiRequest(apiSimpleChatCreate, [{ simpleChat: form }])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!errors && !requestError) enqueueSnackbar('Successfully created simple chat', { variant: 'success' })
-      return json
-    },
-  }),
-  withHandlers({
-    loadFormObject: () => () => {
-      return {
-        name: '',
-        title: '',
-        personaId: '',
-        chatBubbleText: '',
-        chatBubbleExtraText: '',
-        simpleChatStepsAttributes: [
-          {
-            key: 'default',
-            simpleChatMessagesAttributes: [{ text: '' }],
-          },
-        ],
-      }
-    },
-  })
-)(SimpleChatForm)
-
-const SimpleChatForm2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <SimpleChatForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
+const loadFormObject = () => {
+  return {
+    name: '',
+    title: '',
+    personaId: '',
+    chatBubbleText: '',
+    chatBubbleExtraText: '',
+    simpleChatStepsAttributes: [
+      {
+        key: 'default',
+        simpleChatMessagesAttributes: [{ text: '' }],
+      },
+    ],
+  }
 }
 
-export default SimpleChatForm2
+const SimpleChatForm = props => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const saveFormObject = useCallback(
+    form => {
+      return (async () => {
+        const { json, errors, requestError } = await apiRequest(apiSimpleChatCreate, [{ simpleChat: form }])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        if (!errors && !requestError) enqueueSnackbar('Successfully created simple chat', { variant: 'success' })
+        return json
+      })()
+    },
+    [enqueueSnackbar]
+  )
+
+  return (
+    <BaseSimpleChatForm
+      {...props}
+      backRoute={routes.simpleChatsList()}
+      enqueueSnackbar={enqueueSnackbar}
+      loadFormObject={loadFormObject}
+      saveFormObject={saveFormObject}
+      title="Create Simple Chat"
+    />
+  )
+}
+
+export default SimpleChatForm
