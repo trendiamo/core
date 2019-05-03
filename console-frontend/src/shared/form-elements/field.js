@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
-import { compose, lifecycle, onlyUpdateForKeys, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { omit } from 'lodash'
 
@@ -17,7 +17,10 @@ const Container = styled.div`
   position: relative;
 `
 
-const Label = compose(onlyUpdateForKeys(['children', 'shrink']))(InputLabel)
+const Label = memo(
+  InputLabel,
+  (prevProps, nextProps) => prevProps.children === nextProps.children && prevProps.shrink === nextProps.shrink
+)
 
 const FieldTemplate = ({
   isOutsideLimits,
@@ -55,7 +58,6 @@ const FieldTemplate = ({
 )
 
 const Field = compose(
-  onlyUpdateForKeys(['value', 'disabled']),
   withState('textLength', 'setTextLength', 0),
   withState('isOutsideLimits', 'setIsOutsideLimits', false),
   withState('focused', 'setFocused', false),
@@ -86,4 +88,7 @@ const Field = compose(
   })
 )(FieldTemplate)
 
-export default Field
+export default memo(
+  Field,
+  (prevProps, nextProps) => prevProps.value === nextProps.value && prevProps.disabled === nextProps.disabled
+)

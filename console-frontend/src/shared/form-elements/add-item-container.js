@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { Button } from '@material-ui/core'
-import { compose, onlyUpdateForKeys } from 'recompose'
 
 const Container = styled.div`
   width: 100%;
@@ -20,4 +19,7 @@ const AddItemContainer = ({ message, ...props }) => (
   </Container>
 )
 
-export default compose(onlyUpdateForKeys(['message', 'disabled']))(AddItemContainer)
+export default memo(
+  AddItemContainer,
+  (prevProps, nextProps) => prevProps.message === nextProps.message && prevProps.disabled === nextProps.disabled
+)
