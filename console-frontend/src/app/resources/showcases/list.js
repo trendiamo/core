@@ -1,10 +1,8 @@
 import BlankStateTemplate from 'shared/blank-state'
-import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
-import { ActiveColumn, Avatar, columns, TableCell, Text } from 'shared/table-elements'
+import { ActiveColumn, Avatar, columns, EnhancedList, TableCell, Text } from 'shared/table-elements'
 import { apiShowcaseDestroy, apiShowcaseDuplicate, apiShowcaseList } from 'utils'
-import { compose } from 'recompose'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -34,16 +32,19 @@ const ShowcasesRow = ({ record, highlightInactive }) => (
   </React.Fragment>
 )
 
-export default compose(
-  enhanceList({
-    title: 'Showcases',
-    columns,
-    defaultSorting: { column: 'active', direction: 'asc' },
-    blankState: BlankState,
-    buttonText: 'Create new',
-    api: { fetch: apiShowcaseList, destroy: apiShowcaseDestroy, duplicate: apiShowcaseDuplicate },
-    routes: { create: routes.showcaseCreate, edit: routes.showcaseEdit },
-    help: location => ({ single: true, stepName: 'showcases', stageName: 'initial', pathname: location.pathname }),
-    highlightInactive: ['triggerIds'],
-  })
-)(ShowcasesRow)
+const ShowcasesList = () => (
+  <EnhancedList
+    api={{ fetch: apiShowcaseList, destroy: apiShowcaseDestroy, duplicate: apiShowcaseDuplicate }}
+    BlankState={BlankState}
+    buttonText="Create new"
+    columns={columns}
+    defaultSorting={{ column: 'active', direction: 'asc' }}
+    helpStep="showcases"
+    highlightInactive={['triggerIds']}
+    ResourceRow={ShowcasesRow}
+    routes={{ create: routes.showcaseCreate, edit: routes.showcaseEdit }}
+    title="Showcases"
+  />
+)
+
+export default ShowcasesList

@@ -1,10 +1,8 @@
 import BlankStateTemplate from 'shared/blank-state'
-import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
-import { ActiveColumn, Avatar, columns, TableCell, Text } from 'shared/table-elements'
+import { ActiveColumn, Avatar, columns, EnhancedList, TableCell, Text } from 'shared/table-elements'
 import { apiSimpleChatDestroy, apiSimpleChatDuplicate, apiSimpleChatList } from 'utils'
-import { compose } from 'recompose'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -34,16 +32,19 @@ const SimpleChatsRow = ({ record, highlightInactive }) => (
   </React.Fragment>
 )
 
-export default compose(
-  enhanceList({
-    title: 'Simple Chats',
-    columns,
-    defaultSorting: { column: 'active', direction: 'asc' },
-    blankState: BlankState,
-    buttonText: 'Create new',
-    api: { fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate },
-    routes: { create: routes.simpleChatCreate, edit: routes.simpleChatEdit },
-    help: location => ({ single: true, stepName: 'simpleChats', stageName: 'initial', pathname: location.pathname }),
-    highlightInactive: ['triggerIds'],
-  })
-)(SimpleChatsRow)
+const SimpleChatsList = () => (
+  <EnhancedList
+    api={{ fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate }}
+    BlankState={BlankState}
+    buttonText="Create new"
+    columns={columns}
+    defaultSorting={{ column: 'active', direction: 'asc' }}
+    helpStep="simpleChats"
+    highlightInactive={['triggerIds']}
+    ResourceRow={SimpleChatsRow}
+    routes={{ create: routes.simpleChatCreate, edit: routes.simpleChatEdit }}
+    title="Simple Chats"
+  />
+)
+
+export default SimpleChatsList

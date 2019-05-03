@@ -1,10 +1,8 @@
 import BlankStateTemplate from 'shared/blank-state'
-import enhanceList from 'ext/recompose/enhance-list'
 import React from 'react'
 import routes from 'app/routes'
-import { ActiveColumn, Picture, TableCell, Text } from 'shared/table-elements'
+import { ActiveColumn, EnhancedList, Picture, TableCell, Text } from 'shared/table-elements'
 import { apiPictureDestroy, apiPictureList } from 'utils'
-import { compose } from 'recompose'
 
 const columns = [
   { name: 'picture' },
@@ -55,16 +53,19 @@ const PicturesRow = ({ record: { url, navigationItems, personas, productPicks },
   </React.Fragment>
 )
 
-export default compose(
-  enhanceList({
-    title: 'Pictures Gallery',
-    blankState: BlankState,
-    buttonText: 'Upload new',
-    columns,
-    defaultSorting: { column: 'status', direction: 'asc' },
-    api: { fetch: apiPictureList, destroy: apiPictureDestroy },
-    routes: { create: routes.pictureCreate, edit: routes.pictureEdit },
-    help: location => ({ single: true, stepName: 'pictures', stageName: 'initial', pathname: location.pathname }),
-    highlightInactive: ['navigationItems', 'personas', 'productPicks'],
-  })
-)(PicturesRow)
+const PicturesList = () => (
+  <EnhancedList
+    api={{ fetch: apiPictureList, destroy: apiPictureDestroy }}
+    BlankState={BlankState}
+    buttonText="Upload new"
+    columns={columns}
+    defaultSorting={{ column: 'status', direction: 'asc' }}
+    helpStep="pictures"
+    highlightInactive={['navigationItems', 'personas', 'productPicks']}
+    ResourceRow={PicturesRow}
+    routes={{ create: routes.pictureCreate, edit: routes.pictureEdit }}
+    title="Pictures Gallery"
+  />
+)
+
+export default PicturesList
