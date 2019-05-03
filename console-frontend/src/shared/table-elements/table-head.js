@@ -25,13 +25,7 @@ const TableHead = ({ leftColumns, handleRequestSort, orderBy, orderDirection, co
       {leftColumns}
       {columns.map(column => {
         return (
-          <TableCell
-            align={column.align}
-            component="th"
-            key={column.name}
-            numeric={column.numeric}
-            padding={column.padding}
-          >
+          <TableCell align={column.align} component="th" key={column.name} padding={column.padding}>
             {column.sortable ? (
               <Tooltip enterDelay={50} placement={column.numeric ? 'bottom-end' : 'bottom-start'} title="Sort">
                 <TableSortLabel

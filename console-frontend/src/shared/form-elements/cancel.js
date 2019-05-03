@@ -4,8 +4,8 @@ import { compose, onlyUpdateForKeys, withHandlers } from 'recompose'
 import { IconButton } from '@material-ui/core'
 
 const Cancel = ({ onClick, ...props }) => (
-  <IconButton>
-    <MuiDelete {...props} onClick={onClick} />
+  <IconButton onClick={onClick}>
+    <MuiDelete {...props} />
   </IconButton>
 )
 
