@@ -33,7 +33,7 @@ const FlexDiv = styled.div`
 `
 
 const HostnameTextField = ({ index, onChange, value, ...props }) => {
-  const editHostnameValue = useCallback(event => onChange(index, event.target.value))
+  const editHostnameValue = useCallback(event => onChange(index, event.target.value), [index, onChange])
 
   return <TextField {...props} onChange={editHostnameValue} value={value} />
 }
@@ -44,7 +44,7 @@ const StyledHostnameTextField = styled(HostnameTextField)`
 `
 
 const Cancel = ({ index, onClick, disabled, ...props }) => {
-  const deleteHostname = useCallback(() => !disabled && onClick(index))
+  const deleteHostname = useCallback(() => !disabled && onClick(index), [disabled, index, onClick])
 
   return <MuiCancel {...props} disabled={disabled} onClick={deleteHostname} />
 }

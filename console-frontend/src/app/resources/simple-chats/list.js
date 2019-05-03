@@ -43,7 +43,7 @@ export default compose(
     buttonText: 'Create new',
     api: { fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate },
     routes: { create: routes.simpleChatCreate, edit: routes.simpleChatEdit },
-    help: { single: true, stepName: 'simpleChats', stageName: 'initial' },
+    help: location => ({ single: true, stepName: 'simpleChats', stageName: 'initial', pathname: location.pathname }),
     highlightInactive: ['triggerIds'],
   })
 )(SimpleChatsRow)

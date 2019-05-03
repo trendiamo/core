@@ -26,9 +26,12 @@ const StyledHelp = styled(IconButton)`
 
 const OnboardingButton = withRouter(({ location }) => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
-  const handleClick = useCallback(() => {
-    setOnboarding({ ...onboarding, help: { ...onboarding.help, run: true } })
-  })
+  const handleClick = useCallback(
+    () => {
+      setOnboarding({ ...onboarding, help: { ...onboarding.help, run: true } })
+    },
+    [onboarding, setOnboarding]
+  )
   if (location.pathname !== onboarding.help.pathname) return null
 
   return (

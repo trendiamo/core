@@ -176,7 +176,7 @@ const Showcase3 = compose(
 
 const Showcase4 = props => {
   const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial' }, location)
+  useOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial', pathname: location.pathname })
   return <Showcase3 {...props} />
 }
 

@@ -173,7 +173,7 @@ const OutroForm4 = compose(
 
 const OutroForm5 = props => {
   const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial' }, location)
+  useOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname })
   return <OutroForm4 {...props} />
 }
 

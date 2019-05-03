@@ -194,7 +194,7 @@ const PersonaForm4 = compose(
 
 const PersonaForm5 = props => {
   const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial' }, location)
+  useOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial', pathname: location.pathname })
   return <PersonaForm4 {...props} />
 }
 

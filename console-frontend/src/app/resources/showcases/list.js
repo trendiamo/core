@@ -43,7 +43,7 @@ export default compose(
     buttonText: 'Create new',
     api: { fetch: apiShowcaseList, destroy: apiShowcaseDestroy, duplicate: apiShowcaseDuplicate },
     routes: { create: routes.showcaseCreate, edit: routes.showcaseEdit },
-    help: { single: true, stepName: 'showcases', stageName: 'initial' },
+    help: location => ({ single: true, stepName: 'showcases', stageName: 'initial', pathname: location.pathname }),
     highlightInactive: ['triggerIds'],
   })
 )(ShowcasesRow)

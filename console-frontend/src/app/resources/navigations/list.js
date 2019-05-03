@@ -43,7 +43,7 @@ export default compose(
     buttonText: 'Create new',
     api: { fetch: apiNavigationList, destroy: apiNavigationDestroy, duplicate: apiNavigationDuplicate },
     routes: { create: routes.navigationCreate, edit: routes.navigationEdit },
-    help: { single: true, stepName: 'navigations', stageName: 'initial' },
+    help: location => ({ single: true, stepName: 'navigations', stageName: 'initial', pathname: location.pathname }),
     highlightInactive: ['triggerIds'],
   })
 )(NavigationsRow)

@@ -18,7 +18,7 @@ const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormO
       setForm(formObject)
       return formObject
     },
-    [form, setIsFormSubmitting, setInitialForm, setForm]
+    [form, formObjectTransformer, saveFormObject, setIsFormSubmitting, setInitialForm, setForm]
   )
   const setFieldValue = useCallback(
     event => {
@@ -38,7 +38,7 @@ const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormO
       }
       initForm()
     },
-    [setInitialForm, setForm, setIsFormLoading]
+    [afterFormMount, formObjectTransformer, loadFormObject, setInitialForm, setForm, setIsFormLoading]
   )
   useEffect(() => setIsFormSubmitting(false), [initialForm, setIsFormSubmitting])
 

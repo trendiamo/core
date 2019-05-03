@@ -2,10 +2,11 @@ import AppBar from './app-bar'
 import auth from 'auth'
 import Menu from './menu'
 import Onboarding from 'onboarding'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import Sidebar from './sidebar'
 import styled from 'styled-components'
+import { StoreContext } from 'ext/hooks/store'
 import { styles } from './layout-styles'
 import { useOnboarding } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -26,8 +27,9 @@ const EmptyLayout = ({ classes, children }) => (
 )
 
 const FilledLayout = ({ appBarContent, classes, children, location, logout }) => {
-  const { store, setStore, onboardingReady } = useOnboarding(location)
-  useEffect(() => setStore({ ...store, classes }), [classes])
+  const { setStore } = useContext(StoreContext)
+  const onboardingReady = useOnboarding(location)
+  useEffect(() => setStore({ classes }), [classes, setStore])
 
   const [hasScrolled, setHasScrolled] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
