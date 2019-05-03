@@ -1,7 +1,6 @@
 import omit from 'lodash.omit'
 import React, { memo } from 'react'
 import styled from 'styled-components'
-import { compose, withProps } from 'recompose'
 import { Reorder } from '@material-ui/icons'
 import {
   SortableContainer as SortableContainerHoc,
@@ -21,12 +20,5 @@ export const DragHandle = memo(SortableHandle(() => <ReorderIcon />))
 export const SortableElement = Component =>
   SortableElementHoc(({ sortIndex, ...props }) => <Component index={sortIndex} {...omit(props, ['sortIndex'])} />)
 
-// applies common props
 export const SortableContainer = Component =>
-  compose(
-    withProps(() => ({
-      lockAxis: 'y',
-      lockToContainerEdges: true,
-      lockOffset: '0%',
-    }))
-  )(SortableContainerHoc(Component))
+  SortableContainerHoc(props => <Component {...props} lockAxis="y" lockOffset="0%" lockToContainerEdges />)
