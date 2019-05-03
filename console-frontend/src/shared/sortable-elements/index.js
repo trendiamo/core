@@ -1,5 +1,5 @@
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { compose, withProps } from 'recompose'
 import { Reorder } from '@material-ui/icons'
@@ -15,7 +15,7 @@ const ReorderIcon = styled(Reorder)`
   margin-right: 1rem;
 `
 
-export const DragHandle = React.memo(SortableHandle(() => <ReorderIcon />))
+export const DragHandle = memo(SortableHandle(() => <ReorderIcon />))
 
 // receives sortIndex, and passes it as index to received Component
 export const SortableElement = Component =>
