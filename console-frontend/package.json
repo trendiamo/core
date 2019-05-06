@@ -30,7 +30,7 @@
     "react-s3-uploader": "^4.8.0",
     "react-scripts": "3.0.0",
     "react-sortable-hoc": "^0.8.4",
-    "styled-components": "^4.0.0"
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^4.0.0",
