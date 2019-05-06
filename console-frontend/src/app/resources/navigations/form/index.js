@@ -82,6 +82,8 @@ const NavigationItemsContainer = compose(
   })
 )(SortableContainer(NavigationItems))
 
+const options = { suggestionItem: 'withAvatar' }
+
 const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCropping, selectPersona }) => (
   <Section title={title}>
     <Field
@@ -118,7 +120,7 @@ const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCroppin
       initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
       label="Persona"
       onChange={selectPersona}
-      options={{ suggestionItem: 'withAvatar' }}
+      options={options}
       required
     />
     <HelperText>{'The persona will appear in the launcher, and in the cover.'}</HelperText>

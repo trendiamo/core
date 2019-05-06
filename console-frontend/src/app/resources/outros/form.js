@@ -30,6 +30,8 @@ const formObjectTransformer = json => {
   }
 }
 
+const options = { suggestionItem: 'withAvatar' }
+
 const OutroForm = ({
   formRef,
   form,
@@ -63,7 +65,7 @@ const OutroForm = ({
         initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
         label="Persona"
         onChange={selectPersona}
-        options={{ suggestionItem: 'withAvatar' }}
+        options={options}
         required
       />
       <HelperText>{'The persona will appear in the launcher, and in the content.'}</HelperText>

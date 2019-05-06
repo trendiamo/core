@@ -50,6 +50,8 @@ const StyledUrlTextField = styled(UrlTextField)`
   margin: 8px 0;
 `
 
+const options = { suggestionItem: 'withModuleIcon' }
+
 const TriggerForm = ({
   addUrlSelect,
   deleteUrlMatcher,
@@ -75,7 +77,7 @@ const TriggerForm = ({
           initialValueFormatMismatch
           label="Module"
           onChange={selectFlow}
-          options={{ suggestionItem: 'withModuleIcon' }}
+          options={options}
           required
         />
         <HelperText>{'Choose between Showcases, Navigations, etc.'}</HelperText>

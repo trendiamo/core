@@ -60,6 +60,8 @@ const ProductPicksContainer = compose(
   })
 )(SortableContainer(ProductPicks))
 
+const options = { suggestionItem: 'withAvatar' }
+
 const Spotlight = ({
   addProductPick,
   allowDelete,
@@ -95,7 +97,7 @@ const Spotlight = ({
         label="Persona"
         onChange={selectPersona}
         onFocus={onFocus}
-        options={{ suggestionItem: 'withAvatar' }}
+        options={options}
         required
       />
       <div style={{ marginTop: '24px' }}>

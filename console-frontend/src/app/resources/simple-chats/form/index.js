@@ -54,6 +54,8 @@ const SimpleChatStepsContainer = compose(
   })
 )(SortableContainer(SimpleChatSteps))
 
+const options = { suggestionItem: 'withAvatar' }
+
 const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPersona }) => (
   <Section title={title}>
     <Grid item sm={6}>
@@ -76,7 +78,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
         initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
         label="Persona"
         onChange={selectPersona}
-        options={{ suggestionItem: 'withAvatar' }}
+        options={options}
         required
       />
       <HelperText>{'The persona that will appear for this chat.'}</HelperText>

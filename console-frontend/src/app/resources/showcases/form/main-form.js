@@ -6,6 +6,8 @@ import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { Field, HelperText } from 'shared/form-elements'
 import { isEqual, omit } from 'lodash'
 
+const options = { suggestionItem: 'withAvatar' }
+
 const MainFormTemplate = ({
   title,
   isCropping,
@@ -40,7 +42,7 @@ const MainFormTemplate = ({
       label="Persona"
       onChange={selectPersona}
       onFocus={() => onToggleContent(false)}
-      options={{ suggestionItem: 'withAvatar' }}
+      options={options}
       required
     />
     <HelperText>{'The persona will appear in the launcher, and in the cover.'}</HelperText>

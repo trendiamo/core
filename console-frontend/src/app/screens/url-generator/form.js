@@ -74,6 +74,8 @@ const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
   </FormControl>
 )
 
+const options = {}
+
 const UrlGeneratorForm = ({
   showPersona,
   showStep,
@@ -102,7 +104,7 @@ const UrlGeneratorForm = ({
               label="Step"
               noMargin
               onChange={selectStep}
-              options={{}}
+              options={options}
             />
             <FormHelperText>{'Show a specific step of a module.'}</FormHelperText>
           </React.Fragment>
