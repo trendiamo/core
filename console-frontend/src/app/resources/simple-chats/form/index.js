@@ -141,20 +141,23 @@ const SimpleChatForm = ({
   setSimpleChatStepsForm,
   title,
 }) => {
-  const appBarContent = {
-    Actions: (
-      <Actions
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
-        tooltipEnabled
-        tooltipText="No changes to save"
-      />
-    ),
-    backRoute,
-    title,
-  }
+  const appBarContent = useMemo(
+    () => ({
+      Actions: (
+        <Actions
+          isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={onFormSubmit}
+          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+          tooltipEnabled
+          tooltipText="No changes to save"
+        />
+      ),
+      backRoute,
+      title,
+    }),
+    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, title]
+  )
   useAppBarContent(appBarContent)
   return (
     <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>

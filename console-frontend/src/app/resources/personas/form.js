@@ -30,20 +30,23 @@ const PersonaForm = ({
   title,
   setProfilePicUrl,
 }) => {
-  const appBarContent = {
-    Actions: (
-      <Actions
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine}
-        tooltipEnabled
-        tooltipText="No changes to save"
-      />
-    ),
-    backRoute,
-    title,
-  }
+  const appBarContent = useMemo(
+    () => ({
+      Actions: (
+        <Actions
+          isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={onFormSubmit}
+          saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine}
+          tooltipEnabled
+          tooltipText="No changes to save"
+        />
+      ),
+      backRoute,
+      title,
+    }),
+    [backRoute, isCropping, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, title]
+  )
   useAppBarContent(appBarContent)
   return (
     <Section title={title}>

@@ -128,21 +128,24 @@ const TriggerForm1 = compose(
 
 const TriggerForm2 = props => {
   const { backRoute, title, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine } = props
-  const appBarContent = {
-    Actions: (
-      <Actions
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveAndCreateNewEnabled
-        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
-        tooltipEnabled
-        tooltipText="No changes to save"
-      />
-    ),
-    backRoute,
-    title,
-  }
+  const appBarContent = useMemo(
+    () => ({
+      Actions: (
+        <Actions
+          isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={onFormSubmit}
+          saveAndCreateNewEnabled
+          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+          tooltipEnabled
+          tooltipText="No changes to save"
+        />
+      ),
+      backRoute,
+      title,
+    }),
+    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, title]
+  )
   useAppBarContent(appBarContent)
 
   return <TriggerForm1 {...props} />

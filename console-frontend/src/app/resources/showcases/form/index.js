@@ -17,21 +17,25 @@ import { withRouter } from 'react-router'
 
 const Showcase = props => {
   const { backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine } = props
-  const appBarContent = {
-    Actions: (
-      <Actions
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine}
-        tooltipEnabled
-        tooltipText="No changes to save"
-      />
-    ),
-    backRoute,
-    title,
-  }
+  const appBarContent = useMemo(
+    () => ({
+      Actions: (
+        <Actions
+          isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={onFormSubmit}
+          saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine}
+          tooltipEnabled
+          tooltipText="No changes to save"
+        />
+      ),
+      backRoute,
+      title,
+    }),
+    [backRoute, isCropping, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, title]
+  )
   useAppBarContent(appBarContent)
+
   return (
     <Grid container spacing={24}>
       <Grid item md={6} xs={12}>
