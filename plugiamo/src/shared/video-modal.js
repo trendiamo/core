@@ -1,4 +1,3 @@
-import mixpanel from 'ext/mixpanel'
 import Modal from './modal'
 import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
@@ -23,10 +22,9 @@ const VideoModal = ({ url, closeModal, isOpen }) => (
 
 export default compose(
   withHandlers({
-    closeModal: ({ setIsOpen, url }) => event => {
+    closeModal: ({ closeModal }) => event => {
       event.stopPropagation()
-      setIsOpen(false)
-      mixpanel.track('Closed Video', { hostname: location.hostname, url })
+      closeModal()
     },
   })
 )(VideoModal)

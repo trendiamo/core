@@ -35,30 +35,31 @@ const Text = styled.div`
   transition: all 0.4s ease-in-out;
 `
 
-const VideoButton = ({ video, youtubeEmbedUrl, onClick, setIsOpen, isOpen }) => (
+const VideoButton = ({ video, youtubeEmbedUrl, onClick, closeModal, isOpen }) => (
   <VideoButtonContainer backgroundColor={video.backgroundColor} onClick={onClick}>
     <Text color={video.textColor}>{video.text}</Text>
     {video.icon && <Icon color={video.textColor} />}
-    <VideoModal isOpen={isOpen} setIsOpen={setIsOpen} url={youtubeEmbedUrl} />
+    <VideoModal closeModal={closeModal} isOpen={isOpen} url={youtubeEmbedUrl} />
   </VideoButtonContainer>
 )
 
 export default compose(
   withState('isOpen', 'setIsOpen', false),
   withProps(({ video }) => ({
-    youtubeEmbedUrl: `https://www.youtube.com/embed/${extractYoutubeId(
-      video.url
-    )}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
+    youtubeId: extractYoutubeId(video.url),
+  })),
+  withProps(({ youtubeId }) => ({
+    youtubeEmbedUrl: `https://www.youtube.com/embed/${youtubeId}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
+    youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
   })),
   withHandlers({
-    onClick: ({ setIsOpen, video }) => () => {
+    onClick: ({ setIsOpen, youtubeUrl }) => () => {
       setIsOpen(true)
-      mixpanel.track('Opened Assessment Header Video', {
-        hostname: location.hostname,
-        url: `https://www.youtube.com/embed/${extractYoutubeId(
-          video.url
-        )}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
-      })
+      mixpanel.track('Opened Assessment Header Video', { hostname: location.hostname, url: youtubeUrl })
+    },
+    closeModal: ({ setIsOpen, youtubeUrl }) => () => {
+      setIsOpen(false)
+      mixpanel.track('Closed Assessment Header Video', { hostname: location.hostname, url: youtubeUrl })
     },
   })
 )(VideoButton)
