@@ -28,18 +28,22 @@ const VideoMessage = compose(
       setIsOpen(true)
       mixpanel.track('Open Video', { hostname: location.hostname, url: youtubeUrl })
     },
+    closeModal: ({ setIsOpen, youtubeUrl }) => () => {
+      setIsOpen(false)
+      mixpanel.track('Closed Video', { hostname: location.hostname, url: youtubeUrl })
+    },
   }),
   withHandlers({
     onClick: ({ openModal }) => openModal,
     onKeyUp: ({ openModal }) => event => (event.key === 'Enter' ? openModal() : undefined),
   })
-)(styled(({ className, setIsOpen, isOpen, onClick, onKeyUp, youtubeEmbedUrl, youtubePreviewImageUrl }) => (
+)(styled(({ className, closeModal, isOpen, onClick, onKeyUp, youtubeEmbedUrl, youtubePreviewImageUrl }) => (
   <div className={className} onClick={onClick} onKeyUp={onKeyUp} role="button" tabIndex={0}>
     <img alt="" src={youtubePreviewImageUrl} style={{ maxWidth: '100%' }} />
     <IconContainer>
       <IconPlayButton />
     </IconContainer>
-    <VideoModal isOpen={isOpen} setIsOpen={setIsOpen} url={youtubeEmbedUrl} />
+    <VideoModal closeModal={closeModal} isOpen={isOpen} url={youtubeEmbedUrl} />
   </div>
 ))`
   cursor: pointer;
