@@ -21,7 +21,7 @@ const UrlGenerator = ({
 }) => {
   useAppBarContent(appBarContent)
   return (
-    <React.Fragment>
+    <>
       <ModalUrlGenerator open={isModalOpened} setOpen={setIsModalOpened} url={generatedUrl} />
       <Section>
         <Grid alignItems="center" container justify="center">
@@ -38,7 +38,7 @@ const UrlGenerator = ({
       <Section>
         <UrlList urlHistory={urlHistory} />
       </Section>
-    </React.Fragment>
+    </>
   )
 }
 

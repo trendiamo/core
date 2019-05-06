@@ -15,7 +15,7 @@ const BlankState = () => (
 )
 
 const SimpleChatsRow = ({ record, highlightInactive }) => (
-  <React.Fragment>
+  <>
     <TableCell width="20%">
       <Avatar alt="" disabled={highlightInactive} src={record.persona.profilePicUrl} />
     </TableCell>
@@ -29,7 +29,7 @@ const SimpleChatsRow = ({ record, highlightInactive }) => (
       tooltipTextActive="Already used in Triggers"
       tooltipTextInactive="Not yet used in Triggers"
     />
-  </React.Fragment>
+  </>
 )
 
 const SimpleChatsList = () => (

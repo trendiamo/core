@@ -9,7 +9,7 @@ import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const AuthMessage = () => (
-  <React.Fragment>
+  <>
     <AuthTitle variant="h4">
       {"Don't have an account?"}
       <br />
@@ -22,7 +22,7 @@ const AuthMessage = () => (
     <AuthLink href="https://frekkls.com">
       <AuthButton>{'Learn about Frekkls'}</AuthButton>
     </AuthLink>
-  </React.Fragment>
+  </>
 )
 
 const PasswordReset = ({ passwordForm, passwordResetSubmit, setFieldValue }) => (

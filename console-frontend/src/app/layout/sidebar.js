@@ -4,7 +4,7 @@ import { compose, lifecycle, withState } from 'recompose'
 import { Drawer, Hidden, withWidth } from '@material-ui/core'
 
 const Sidebar = ({ children, classes, sidebarOpen, toggleOpen, menuLoaded }) => (
-  <React.Fragment>
+  <>
     <Hidden implementation="js" mdUp>
       <div className={classNames(classes.drawerGhost)} />
       <Drawer
@@ -33,7 +33,7 @@ const Sidebar = ({ children, classes, sidebarOpen, toggleOpen, menuLoaded }) => 
         {React.cloneElement(children, { menuLoaded })}
       </Drawer>
     </Hidden>
-  </React.Fragment>
+  </>
 )
 
 export default compose(

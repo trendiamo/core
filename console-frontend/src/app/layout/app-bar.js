@@ -53,7 +53,7 @@ const Title = ({ text, classes, responsive, highlight }) => (
 )
 
 const AppBarContent1 = ({ Actions, backRoute, classes, title }) => (
-  <React.Fragment>
+  <>
     {backRoute && (
       <Link to={backRoute}>
         <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
@@ -66,7 +66,7 @@ const AppBarContent1 = ({ Actions, backRoute, classes, title }) => (
         {Actions}
       </ButtonsContainer>
     )}
-  </React.Fragment>
+  </>
 )
 
 const AppBarContent2 = props => {

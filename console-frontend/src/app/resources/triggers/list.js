@@ -284,7 +284,7 @@ const TriggerList = ({
         handleSelectAll={handleSelectAll}
         isSelectAll={isSelectAll}
         leftColumns={
-          <React.Fragment>
+          <>
             <TableCell>{'Sort'}</TableCell>
             <TableCell>
               <Checkbox
@@ -294,7 +294,7 @@ const TriggerList = ({
                 onClick={handleSelectAll}
               />
             </TableCell>
-          </React.Fragment>
+          </>
         }
         selectedIds={selectedIds}
         triggers={triggers}

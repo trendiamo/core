@@ -34,7 +34,7 @@ const tooltipTextActive = (navigationItems, personas, productPicks) => {
 }
 
 const PicturesRow = ({ record: { url, navigationItems, personas, productPicks }, highlightInactive }) => (
-  <React.Fragment>
+  <>
     <TableCell>
       <Picture disabled={highlightInactive} src={url} />
     </TableCell>
@@ -50,7 +50,7 @@ const PicturesRow = ({ record: { url, navigationItems, personas, productPicks },
       tooltipTextActive={tooltipTextActive(navigationItems, personas, productPicks)}
       tooltipTextInactive="Not used yet"
     />
-  </React.Fragment>
+  </>
 )
 
 const PicturesList = () => (

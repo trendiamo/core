@@ -56,7 +56,7 @@ const ExternalRoute = ({ component, path, ...props }) => (
 )
 
 const RedirectRoot = () => (
-  <React.Fragment>{<Redirect to={auth.isLoggedIn() ? routes.triggersList() : routes.login()} />}</React.Fragment>
+  <>{<Redirect to={auth.isLoggedIn() ? routes.triggersList() : routes.login()} />}</>
 )
 
 const Routes = () => (

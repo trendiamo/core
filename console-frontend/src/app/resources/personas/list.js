@@ -22,13 +22,13 @@ const BlankState = () => (
 )
 
 const PersonasRow = ({ record }) => (
-  <React.Fragment>
+  <>
     <TableCell>
       <Avatar alt={record.name} src={record.profilePicUrl} style={{ marginRight: '0.5rem' }} />
     </TableCell>
     <TableCell width="30%">{record.name}</TableCell>
     <TableCell width="70%">{record.description}</TableCell>
-  </React.Fragment>
+  </>
 )
 
 const PersonasList = () => (

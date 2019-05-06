@@ -172,12 +172,12 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
       }}
     >
       {sidebarOpen ? (
-        <React.Fragment>
+        <>
           <img alt="" src="/img/frekkls-logo.svg" />
           <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
             <MenuIcon />
           </IconButton>
-        </React.Fragment>
+        </>
       ) : (
         <IconButton onClick={toggleOpen}>
           <img

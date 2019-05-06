@@ -155,7 +155,7 @@ const GalleryPicture = compose(
 ))
 
 const DialogContentGallery = ({ activePicture, onPictureClick, pictures }) => (
-  <React.Fragment>
+  <>
     <Grid container spacing={24}>
       {pictures &&
         pictures
@@ -169,7 +169,7 @@ const DialogContentGallery = ({ activePicture, onPictureClick, pictures }) => (
             />
           ))}
     </Grid>
-  </React.Fragment>
+  </>
 )
 
 const DialogActionsGallery = ({ onDialogClose, onFileUpload, onUrlUploadClick }) => (
@@ -202,7 +202,7 @@ const DialogContentUrlUpload = compose(
     },
   })
 )(({ isFocused, isPictureLoading, onBlur, onChange, onFocus }) => (
-  <React.Fragment>
+  <>
     <UrlInputContainer isFocused={isFocused}>
       <UrlInput
         autoFocus
@@ -218,7 +218,7 @@ const DialogContentUrlUpload = compose(
       </UrlIconContainer>
     </UrlInputContainer>
     {isPictureLoading && <CircularProgress />}
-  </React.Fragment>
+  </>
 ))
 
 const DialogActionsUrlUpload = ({ handleClose, onCancelUrlUpload, onDoneUrlUpload, onFileUpload }) => (

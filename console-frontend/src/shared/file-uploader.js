@@ -16,10 +16,10 @@ const Label = styled.label`
 `
 
 const FileUploader = ({ accept, content, inputProps, name, onChange }) => (
-  <React.Fragment>
+  <>
     <Input accept={accept || '*'} id={name} name={name} onChange={onChange} type="file" {...inputProps} />
     <Label htmlFor={name}>{content}</Label>
-  </React.Fragment>
+  </>
 )
 
 export default FileUploader

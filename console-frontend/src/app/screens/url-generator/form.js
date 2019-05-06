@@ -90,14 +90,14 @@ const UrlGeneratorForm = ({
   isDisabled,
   selectStep,
 }) => (
-  <React.Fragment>
+  <>
     <Form formRef={formRef} isFormPristine onSubmit={onFormSubmit}>
       <Option>
         <UrlTextField form={form} resetUrl={resetUrl} setFieldValue={setFieldValue} />
       </Option>
       <Option>
         {showStep ? (
-          <React.Fragment>
+          <>
             <Autocomplete
               autocomplete={apiPathAutocomplete}
               defaultPlaceholder="Choose a step"
@@ -107,7 +107,7 @@ const UrlGeneratorForm = ({
               options={options}
             />
             <FormHelperText>{'Show a specific step of a module.'}</FormHelperText>
-          </React.Fragment>
+          </>
         ) : (
           <AddOptionButton option="step" optionLabel="Set Step" showOption={showOption} />
         )}
@@ -140,7 +140,7 @@ const UrlGeneratorForm = ({
         </Button>
       </div>
     </Form>
-  </React.Fragment>
+  </>
 )
 
 const generateUrl = form => {

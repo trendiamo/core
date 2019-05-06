@@ -164,7 +164,7 @@ const BarebonesPictureUploader = ({
   setModalOpen,
   square,
 }) => (
-  <React.Fragment>
+  <>
     <PicturesModal
       crop={crop}
       croppingState={!doneCropping}
@@ -209,7 +209,7 @@ const BarebonesPictureUploader = ({
         </RemoveButtonContainer>
       )}
     </Container>
-  </React.Fragment>
+  </>
 )
 
 const defaultCrop = picture => {

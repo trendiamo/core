@@ -31,7 +31,7 @@ const Actions = ({
   saveAndCreateNewEnabled,
   width,
 }) => (
-  <React.Fragment>
+  <>
     {saveAndCreateNewEnabled ? (
       width === 'sm' || width === 'xs' ? (
         <ActionsMenu
@@ -70,7 +70,7 @@ const Actions = ({
         tooltipText={tooltipText}
       />
     )}
-  </React.Fragment>
+  </>
 )
 
 export default withWidth()(Actions)

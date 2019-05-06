@@ -96,7 +96,7 @@ const StyledTypography = styled(Typography)`
 `
 
 const Layout = ({ children, title }) => (
-  <React.Fragment>
+  <>
     <CssBaseline />
     <MuiThemeProvider theme={theme}>
       <BackgroundImage url="/img/background/login.png" />
@@ -108,7 +108,7 @@ const Layout = ({ children, title }) => (
         </AuthStyledDiv>
       </AuthMain>
     </MuiThemeProvider>
-  </React.Fragment>
+  </>
 )
 
 export default Layout
