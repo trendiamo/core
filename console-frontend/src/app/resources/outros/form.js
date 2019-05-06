@@ -2,17 +2,33 @@ import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import PluginPreview from './plugin-preview'
-import React from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
-import { branch, compose, renderComponent, withHandlers, withProps } from 'recompose'
 import { Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
+
+const defaultForm = {
+  personaId: '',
+  name: '',
+}
+
+const formObjectTransformer = json => {
+  return {
+    id: json.id,
+    personaId: (json.persona && json.persona.id) || '',
+    name: json.name || '',
+    chatBubbleText: json.chatBubbleText || '',
+    chatBubbleButtonYes: json.chatBubbleButtonYes || '',
+    chatBubbleButtonNo: json.chatBubbleButtonNo || '',
+    __persona: json.persona,
+  }
+}
 
 const OutroForm = ({
   formRef,
@@ -94,87 +110,97 @@ const OutroForm = ({
   </Section>
 )
 
-const OutroForm1 = props => {
-  const { backRoute, title, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit } = props
-  const appBarContent = {
-    Actions: (
-      <Actions
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
-        tooltipEnabled
-        tooltipText="No changes to save"
-      />
-    ),
-    backRoute,
-    title,
-  }
-  useAppBarContent(appBarContent)
-  return (
-    <Grid container spacing={24}>
-      <Grid item md={6} xs={12}>
-        <OutroForm {...props} />
-      </Grid>
-      <Grid item md={6} xs={12}>
-        <PluginPreview {...props} />
-      </Grid>
+const OutroForm1 = props => (
+  <Grid container spacing={24}>
+    <Grid item md={6} xs={12}>
+      <OutroForm {...props} />
     </Grid>
-  )
-}
+    <Grid item md={6} xs={12}>
+      <PluginPreview {...props} />
+    </Grid>
+  </Grid>
+)
 
-const OutroForm2 = compose(
-  withHandlers({
-    selectPersona: ({ form, setForm }) => selected => {
+const OutroForm2 = ({ backRoute, title, location, history, ...props }) => {
+  useOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname })
+
+  const formRef = useRef(null)
+
+  const {
+    form,
+    isFormLoading,
+    isFormPristine,
+    isFormSubmitting,
+    mergeForm,
+    onFormSubmit,
+    setFieldValue,
+    setIsFormSubmitting,
+  } = useForm({
+    ...props,
+    formObjectTransformer,
+    defaultForm,
+  })
+
+  const newOnFormSubmit = useCallback(
+    event => {
+      ;(async () => {
+        if (!formRef.current.reportValidity()) return
+        const result = await onFormSubmit(event)
+        setIsFormSubmitting(false)
+        if (result.error || result.errors) return
+        if (location.pathname !== routes.outroEdit(result.id)) history.push(routes.outroEdit(result.id))
+        return result
+      })()
+    },
+    [formRef, history, location.pathname, onFormSubmit, setIsFormSubmitting]
+  )
+
+  const selectPersona = useCallback(
+    selected => {
       selected &&
-        setForm({
-          ...form,
+        mergeForm({
           personaId: selected.value.id,
           personaProfilePic: selected.value.profilePicUrl,
         })
     },
-    onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
-      if (!formRef.current.reportValidity()) return
-      const result = await onFormSubmit(event)
-      if (result.error || result.errors) return setIsFormSubmitting(false)
-      if (location.pathname !== routes.outroEdit(result.id)) history.push(routes.outroEdit(result.id))
-      setIsFormSubmitting(false)
-      return result
-    },
-  }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
-)(OutroForm1)
+    [mergeForm]
+  )
 
-const OutroForm3 = props => {
-  const defaultForm = {
-    personaId: '',
-    name: '',
-  }
-  const formProps = useForm({ ...props, defaultForm })
-  return <OutroForm2 {...props} {...formProps} />
+  const appBarContent = useMemo(
+    () => ({
+      Actions: (
+        <Actions
+          isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={newOnFormSubmit}
+          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+          tooltipEnabled
+          tooltipText="No changes to save"
+        />
+      ),
+      backRoute,
+      title,
+    }),
+    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit, title]
+  )
+  useAppBarContent(appBarContent)
+
+  if (isFormLoading) return <CircularProgress />
+
+  return (
+    <OutroForm1
+      {...props}
+      form={form}
+      formRef={formRef}
+      isFormLoading={isFormLoading}
+      isFormPristine={isFormPristine}
+      location={location}
+      onFormSubmit={newOnFormSubmit}
+      selectPersona={selectPersona}
+      setFieldValue={setFieldValue}
+      title={title}
+    />
+  )
 }
 
-const OutroForm4 = compose(
-  withProps({ formRef: React.createRef() }),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        id: json.id,
-        personaId: (json.persona && json.persona.id) || '',
-        name: json.name || '',
-        chatBubbleText: json.chatBubbleText || '',
-        chatBubbleButtonYes: json.chatBubbleButtonYes || '',
-        chatBubbleButtonNo: json.chatBubbleButtonNo || '',
-        __persona: json.persona,
-      }
-    },
-  })
-)(OutroForm3)
-
-const OutroForm5 = props => {
-  const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname })
-  return <OutroForm4 {...props} />
-}
-
-export default withRouter(OutroForm5)
+export default withRouter(OutroForm2)

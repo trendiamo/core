@@ -1,60 +1,71 @@
 import { isEqual } from 'lodash'
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
+import { useCallback, useEffect, useMemo, useReducer } from 'react'
 
 const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormObject, saveFormObject }) => {
-  const [initialForm, setInitialForm] = useState(defaultForm)
-  const [form, dispatch] = useReducer((state, action) => {
-    if (action.type === 'merge') {
-      return { ...state, ...action.value }
-    } else {
-      throw new Error()
-    }
-  }, initialForm)
-  const setForm = useCallback(value => dispatch({ type: 'merge', value }), [dispatch])
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      if (action.type === 'mergeForm') {
+        return { ...state, form: { ...state.form, ...action.value } }
+      } else if (action.type === 'merge') {
+        return { ...state, ...action.value }
+      } else {
+        throw new Error()
+      }
+    },
+    { form: defaultForm, initialForm: defaultForm, isFormLoading: true, isFormSubmitting: false }
+  )
+  const mergeForm = useCallback(value => dispatch({ type: 'mergeForm', value }), [dispatch])
+  const setForm = useCallback(form => dispatch({ type: 'merge', value: { form } }), [dispatch])
+  const setInitialForm = useCallback(initialForm => dispatch({ type: 'merge', value: { initialForm } }), [dispatch])
+  const setIsFormLoading = useCallback(isFormLoading => dispatch({ type: 'merge', value: { isFormLoading } }), [
+    dispatch,
+  ])
+  const setIsFormSubmitting = useCallback(
+    isFormSubmitting => dispatch({ type: 'merge', value: { isFormSubmitting } }),
+    [dispatch]
+  )
 
-  const [isFormLoading, setIsFormLoading] = useState(true)
-  const [isFormSubmitting, setIsFormSubmitting] = useState(false)
-  const isFormPristine = useMemo(() => isEqual(form, initialForm), [form, initialForm])
+  const isFormPristine = useMemo(() => isEqual(state.form, state.initialForm), [state.form, state.initialForm])
   const onFormSubmit = useCallback(
     async event => {
       event.preventDefault()
       setIsFormSubmitting(true)
-      const json = await saveFormObject(form)
+      const json = await saveFormObject(state.form)
       if (json.error || json.errors) return json
       const formObject = formObjectTransformer(json)
       setInitialForm(formObject)
       setForm(formObject)
       return formObject
     },
-    [form, formObjectTransformer, saveFormObject, setIsFormSubmitting, setInitialForm, setForm]
+    [setIsFormSubmitting, saveFormObject, state.form, formObjectTransformer, setInitialForm, setForm]
   )
   const setFieldValue = useCallback(
     event => {
-      setForm({ [event.target.name]: event.target.value })
+      mergeForm({ [event.target.name]: event.target.value })
     },
-    [setForm]
+    [mergeForm]
   )
   useEffect(
     () => {
-      const initForm = async () => {
+      ;(async () => {
         const json = await loadFormObject()
         const formObject = formObjectTransformer(json)
         setInitialForm(formObject)
         setForm(formObject)
         setIsFormLoading(false)
         if (afterFormMount) afterFormMount(formObject)
-      }
-      initForm()
+      })()
     },
     [afterFormMount, formObjectTransformer, loadFormObject, setInitialForm, setForm, setIsFormLoading]
   )
-  useEffect(() => setIsFormSubmitting(false), [initialForm, setIsFormSubmitting])
+  useEffect(() => setIsFormSubmitting(false), [state.initialForm, setIsFormSubmitting])
 
   return {
-    form,
-    isFormLoading,
+    form: state.form,
+    isFormLoading: state.isFormLoading,
     isFormPristine,
-    isFormSubmitting,
+    isFormSubmitting: state.isFormSubmitting,
+    mergeForm,
     onFormSubmit,
     setFieldValue,
     setForm,

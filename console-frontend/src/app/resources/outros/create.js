@@ -14,7 +14,7 @@ const loadFormObject = () => {
   }
 }
 
-const OutroForm = props => {
+const OutroForm = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const saveFormObject = useCallback(
@@ -32,7 +32,6 @@ const OutroForm = props => {
 
   return (
     <BaseOutroForm
-      {...props}
       backRoute={routes.outrosList()}
       enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
