@@ -36,9 +36,9 @@ export const useOnboarding = location => {
   )
   useEffect(() => setStore({ onboarding, setOnboarding, setOnboardingHelp }), [
     onboarding,
-    setStore,
     setOnboarding,
     setOnboardingHelp,
+    setStore,
   ])
 
   return !!store.onboarding
