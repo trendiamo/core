@@ -21,17 +21,19 @@ const SortableSimpleChatMessage = compose(
 
 const SimpleChatMessages = ({ allowDelete, simpleChatMessages, onChange, onFocus }) => (
   <div>
-    {simpleChatMessages.map((simpleChatMessage, index) => (
-      <SortableSimpleChatMessage
-        allowDelete={allowDelete}
-        index={index}
-        key={simpleChatMessage.id || `simple-chat-message${index}`}
-        onChange={onChange}
-        onFocus={onFocus}
-        simpleChatMessage={simpleChatMessage}
-        simpleChatMessageIndex={index}
-      />
-    ))}
+    {simpleChatMessages
+      .filter(simpleChatMessage => !simpleChatMessage._destroy)
+      .map((simpleChatMessage, index) => (
+        <SortableSimpleChatMessage
+          allowDelete={allowDelete}
+          index={index}
+          key={simpleChatMessage.id || `simple-chat-message${index}`}
+          onChange={onChange}
+          onFocus={onFocus}
+          simpleChatMessage={simpleChatMessage}
+          simpleChatMessageIndex={index}
+        />
+      ))}
   </div>
 )
 

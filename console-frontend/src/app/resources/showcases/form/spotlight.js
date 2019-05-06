@@ -30,23 +30,25 @@ const ProductPicks = ({
   onFocus,
 }) => (
   <div>
-    {spotlight.productPicksAttributes.map((productPick, index) => (
-      <SortableProductPick
-        allowDelete={allowDelete}
-        folded={productPick.id}
-        index={index}
-        isCropping={isCropping}
-        isFormLoading={isFormLoading}
-        key={productPick.id || `new-${index}`}
-        onChange={onChange}
-        onFocus={onFocus}
-        personaId={spotlight && spotlight.personaId}
-        productPick={productPick}
-        setIsCropping={setIsCropping}
-        setProductPicture={setProductPicture}
-        sortIndex={index}
-      />
-    ))}
+    {spotlight.productPicksAttributes
+      .filter(productPick => !productPick._destroy)
+      .map((productPick, index) => (
+        <SortableProductPick
+          allowDelete={allowDelete}
+          folded={productPick.id}
+          index={index}
+          isCropping={isCropping}
+          isFormLoading={isFormLoading}
+          key={productPick.id || `new-${index}`}
+          onChange={onChange}
+          onFocus={onFocus}
+          personaId={spotlight && spotlight.personaId}
+          productPick={productPick}
+          setIsCropping={setIsCropping}
+          setProductPicture={setProductPicture}
+          sortIndex={index}
+        />
+      ))}
   </div>
 )
 
