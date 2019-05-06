@@ -193,7 +193,7 @@ const EnhancedList = ({
           const { errors, requestError } = await cancelable(apiRequest(api.destroy, [{ ids: state.selectedIds }]))
           if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
           if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-          cancelable(fetchRecords())
+          fetchRecords()
         } catch (e) {
           if (e.message === 'isCanceled') {
             // ignore: this means the component was unmounted before the request could complete
