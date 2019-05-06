@@ -7,14 +7,13 @@ import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import LoginPage from 'auth/login'
 import NotFound from 'app/screens/not-found'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
 import theme from 'app/theme'
 import UrlGenerator from 'app/screens/url-generator'
 import WelcomePage from 'app/screens/welcome'
 import { apiGetCsrfToken, apiRequest } from 'utils'
-import { branch, compose, lifecycle, renderNothing, withState } from 'recompose'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset, MuiThemeProvider } from '@material-ui/core/styles'
 import { createGlobalStyle } from 'styled-components'
@@ -100,34 +99,30 @@ const SortableStyle = createGlobalStyle`
   }
 `
 
-const AppBase = () => (
-  <>
-    <CssBaseline />
-    <SortableStyle />
-    <Layout>
-      <Routes />
-    </Layout>
-  </>
-)
-
-const AppBase1 = compose(
-  withState('loading', 'setLoading', true),
-  lifecycle({
-    componentDidMount() {
-      const { enqueueSnackbar, setLoading } = this.props
+const AppBase = () => {
+  const { enqueueSnackbar } = useSnackbar()
+  const [loading, setLoading] = useState(true)
+  useEffect(
+    () => {
       apiRequest(apiGetCsrfToken, []).then(({ json, errors, requestError }) => {
         setLoading(false)
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (!requestError && !errors) auth.setCsrfToken(json)
       })
     },
-  }),
-  branch(({ loading }) => loading, renderNothing)
-)(AppBase)
+    [enqueueSnackbar, setLoading]
+  )
+  if (loading) return null
 
-const AppBase2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <AppBase1 {...props} enqueueSnackbar={enqueueSnackbar} />
+  return (
+    <>
+      <CssBaseline />
+      <SortableStyle />
+      <Layout>
+        <Routes />
+      </Layout>
+    </>
+  )
 }
 
 /* eslint-disable react/jsx-max-depth */
@@ -137,7 +132,7 @@ export const App = ({ history }) => (
       <JssProvider generateClassName={generateClassName} jss={jss}>
         <MuiThemeProvider theme={theme}>
           <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} maxSnack={3}>
-            <AppBase2 />
+            <AppBase />
           </SnackbarProvider>
         </MuiThemeProvider>
       </JssProvider>
