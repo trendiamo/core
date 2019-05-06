@@ -11,7 +11,13 @@ import {
 } from './message-types'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { emojify } from 'plugin-base'
-import { extractJson, extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER } from 'app/content/scripted-chat/shared'
+import {
+  extractJson,
+  extractYoutubeId,
+  MESSAGE_INTERVAL,
+  MESSAGE_RANDOMIZER,
+  replaceExternalLinks,
+} from 'app/content/scripted-chat/shared'
 import { h } from 'preact'
 
 const MessageContainer = styled.div`
@@ -35,7 +41,7 @@ const MessageContainer = styled.div`
 const ChatMessageTemplate = ({ onMessageClick, data, type, show, hideAll, onClick, clickable, nothingSelected }) => (
   <MessageContainer clickable={clickable} show={type === 'assessmentStepOptions' ? show : !hideAll && show} type={type}>
     {type === 'text' ? (
-      <TextMessage dangerouslySetInnerHTML={{ __html: emojify(snarkdown(data)) }} />
+      <TextMessage dangerouslySetInnerHTML={{ __html: emojify(replaceExternalLinks(snarkdown(data))) }} />
     ) : type === 'videoUrl' ? (
       <VideoMessage youtubeId={data} />
     ) : type === 'product' ? (
