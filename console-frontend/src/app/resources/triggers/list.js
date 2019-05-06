@@ -3,7 +3,7 @@ import BlankStateTemplate from 'shared/blank-state'
 import CircularProgress from 'shared/circular-progress'
 import EditButton from 'shared/edit-button'
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useMemo } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
@@ -380,12 +380,17 @@ const TriggersList1 = compose(
   branch(({ triggers }) => triggers.length === 0, renderComponent(BlankState))
 )(TriggerList)
 
-const TriggersList2 = props => {
-  const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname })
-  useAppBarContent({ Actions: <Actions />, title: 'Triggers' })
+const appBarContent = { Actions: <Actions />, title: 'Triggers' }
+
+const TriggersList2 = ({ location, ...props }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
+  useAppBarContent(appBarContent)
   const { enqueueSnackbar } = useSnackbar()
-  return <TriggersList1 {...props} enqueueSnackbar={enqueueSnackbar} />
+  return <TriggersList1 {...props} enqueueSnackbar={enqueueSnackbar} location={location} />
 }
 
 export default withRouter(TriggersList2)

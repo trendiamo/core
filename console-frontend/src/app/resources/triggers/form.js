@@ -1,7 +1,7 @@
 import auth from 'auth'
 import Autocomplete from 'shared/autocomplete'
 import CircularProgress from 'shared/circular-progress'
-import React from 'react'
+import React, { useMemo } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
@@ -216,10 +216,13 @@ const TriggerForm5 = compose(
   })
 )(TriggerForm4)
 
-const TriggerForm6 = props => {
-  const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname })
-  return <TriggerForm5 {...props} />
+const TriggerForm6 = ({ location, ...props }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
+  return <TriggerForm5 {...props} location={location} />
 }
 
 export default withRouter(TriggerForm6)

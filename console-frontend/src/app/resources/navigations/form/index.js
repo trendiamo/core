@@ -3,7 +3,7 @@ import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import NavigationItem from './navigation-item'
 import PluginPreview from 'shared/plugin-preview'
-import React from 'react'
+import React, { useMemo } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
@@ -395,23 +395,29 @@ const NavigationSuperForm3 = compose(
   })
 )(NavigationSuperForm2)
 
-const NavigationSuperForm4 = props => {
-  const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'navigations', stageName: 'initial', pathname: location.pathname })
+const NavigationSuperForm4 = ({ location, ...props }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'navigations', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
   const { backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit } = props
-  const appBarContent = {
-    Actions: (
-      <Actions
-        isFormSubmitting={isFormSubmitting}
-        onFormSubmit={onFormSubmit}
-        saveDisabled={isFormSubmitting || isCropping || isFormLoading}
-      />
-    ),
-    backRoute,
-    title,
-  }
+  const appBarContent = useMemo(
+    () => ({
+      Actions: (
+        <Actions
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={onFormSubmit}
+          saveDisabled={isFormSubmitting || isCropping || isFormLoading}
+        />
+      ),
+      backRoute,
+      title,
+    }),
+    [backRoute, isCropping, isFormLoading, isFormSubmitting, onFormSubmit, title]
+  )
   useAppBarContent(appBarContent)
-  return <NavigationSuperForm3 {...props} />
+  return <NavigationSuperForm3 {...props} location={location} />
 }
 
 export default withRouter(NavigationSuperForm4)

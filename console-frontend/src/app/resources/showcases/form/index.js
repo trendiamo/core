@@ -1,7 +1,7 @@
 import CircularProgress from 'shared/circular-progress'
 import FormContainer from './form-container'
 import PluginPreview from './plugin-preview'
-import React from 'react'
+import React, { useMemo } from 'react'
 import routes from 'app/routes'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
@@ -174,10 +174,13 @@ const Showcase3 = compose(
   })
 )(Showcase2)
 
-const Showcase4 = props => {
-  const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'showcases', stageName: 'initial', pathname: location.pathname })
-  return <Showcase3 {...props} />
+const Showcase4 = ({ location, ...props }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'showcases', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
+  return <Showcase3 {...props} location={location} />
 }
 
 export default withRouter(Showcase4)

@@ -58,7 +58,12 @@ const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormO
     },
     [afterFormMount, formObjectTransformer, loadFormObject, setInitialForm, setForm, setIsFormLoading]
   )
-  useEffect(() => setIsFormSubmitting(false), [state.initialForm, setIsFormSubmitting])
+  useEffect(
+    () => {
+      setIsFormSubmitting(false)
+    },
+    [state.initialForm, setIsFormSubmitting]
+  )
 
   return {
     form: state.form,

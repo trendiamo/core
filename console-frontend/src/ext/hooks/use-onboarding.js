@@ -34,12 +34,12 @@ export const useOnboarding = location => {
     },
     [location, setOnboarding]
   )
-  useEffect(() => setStore({ onboarding, setOnboarding, setOnboardingHelp }), [
-    onboarding,
-    setOnboarding,
-    setOnboardingHelp,
-    setStore,
-  ])
+  useEffect(
+    () => {
+      setStore({ onboarding, setOnboarding, setOnboardingHelp })
+    },
+    [onboarding, setOnboarding, setOnboardingHelp, setStore]
+  )
 
   return !!store.onboarding
 }
@@ -55,5 +55,10 @@ export const useOnboardingConsumer = () => {
 
 export const useOnboardingHelp = help => {
   const { setOnboardingHelp } = useOnboardingConsumer()
-  useEffect(() => setOnboardingHelp(help), [help, setOnboardingHelp])
+  useEffect(
+    () => {
+      setOnboardingHelp(help)
+    },
+    [help, setOnboardingHelp]
+  )
 }

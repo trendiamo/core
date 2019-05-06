@@ -9,6 +9,8 @@ import { compose, lifecycle, withState } from 'recompose'
 import { Grid } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
+const appBarContent = { title: 'Url Generator' }
+
 const UrlGenerator = ({
   setGeneratedUrl,
   isModalOpened,
@@ -17,7 +19,7 @@ const UrlGenerator = ({
   urlHistory,
   setUrlHistory,
 }) => {
-  useAppBarContent({ title: 'Url Generator' })
+  useAppBarContent(appBarContent)
   return (
     <React.Fragment>
       <ModalUrlGenerator open={isModalOpened} setOpen={setIsModalOpened} url={generatedUrl} />

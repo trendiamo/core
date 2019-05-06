@@ -5,8 +5,10 @@ import React from 'react'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 
+const appBarContent = { title: 'Account' }
+
 const Account = () => {
-  useAppBarContent({ title: 'Account' })
+  useAppBarContent(appBarContent)
   return (
     <>
       <Section title="Account">

@@ -122,7 +122,11 @@ const OutroForm1 = props => (
 )
 
 const OutroForm2 = ({ backRoute, title, location, history, ...props }) => {
-  useOnboardingHelp({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname })
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
 
   const formRef = useRef(null)
 

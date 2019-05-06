@@ -2,7 +2,7 @@ import AppBar from './app-bar'
 import auth from 'auth'
 import Menu from './menu'
 import Onboarding from 'onboarding'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import Sidebar from './sidebar'
 import styled from 'styled-components'
@@ -29,20 +29,28 @@ const EmptyLayout = ({ classes, children }) => (
 const FilledLayout = ({ appBarContent, classes, children, location, logout }) => {
   const { setStore } = useContext(StoreContext)
   const onboardingReady = useOnboarding(location)
-  useEffect(() => setStore({ classes }), [classes, setStore])
+  useEffect(
+    () => {
+      setStore({ classes })
+    },
+    [classes, setStore]
+  )
 
   const [hasScrolled, setHasScrolled] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
-  const isWelcomePage = window.location.pathname === routes.root()
+  const isWelcomePage = useMemo(() => location.pathname === routes.root(), [location.pathname])
 
-  const onWindowScroll = () => setHasScrolled(window.scrollY > 2)
-  const toggleOpen = () => setSidebarOpen(!sidebarOpen)
+  const onWindowScroll = useCallback(() => setHasScrolled(window.scrollY > 2), [setHasScrolled])
+  const toggleOpen = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen])
 
-  useEffect(() => {
-    window.addEventListener('scroll', onWindowScroll)
-    return () => window.removeEventListener('scroll', onWindowScroll)
-  }, [])
+  useEffect(
+    () => {
+      window.addEventListener('scroll', onWindowScroll)
+      return () => window.removeEventListener('scroll', onWindowScroll)
+    },
+    [onWindowScroll]
+  )
 
   if (!onboardingReady) return null
 
@@ -73,13 +81,13 @@ const FilledLayout = ({ appBarContent, classes, children, location, logout }) =>
   )
 }
 
-const Layout = props => {
+const Layout = ({ location, ...props }) => {
   const isLoggedIn = auth.isLoggedIn()
-  const isAdminPage = window.location.pathname === routes.admin()
+  const isAdminPage = useMemo(() => location.pathname === routes.admin(), [location.pathname])
 
   if (!isLoggedIn || isAdminPage) return <EmptyLayout {...props} />
 
-  return <FilledLayout {...props} />
+  return <FilledLayout {...props} location={location} />
 }
 
 export default withRouter(withStyles(styles, { index: 1 })(Layout))

@@ -11,6 +11,11 @@ const useAppBarContent = appBarContent => {
   useEffect(
     () => {
       setPageTitle(appBarContent)
+    },
+    [appBarContent]
+  )
+  useEffect(
+    () => {
       setStore({ appBarContent })
     },
     [appBarContent, setStore]

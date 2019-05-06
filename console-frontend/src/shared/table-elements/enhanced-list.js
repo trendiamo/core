@@ -50,7 +50,11 @@ const EnhancedList = ({
   routes,
   title,
 }) => {
-  useOnboardingHelp({ single: true, stepName: helpStep, stageName: 'initial', pathname: location.pathname })
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: helpStep, stageName: 'initial', pathname: location.pathname }),
+    [helpStep, location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
 
   const [state, dispatch] = useReducer(
     (state, action) => {
@@ -113,10 +117,13 @@ const EnhancedList = ({
     }
   )
 
-  const appBarContent = {
-    Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
-    title: state.page === 0 ? title : `${title} p.${state.page + 1}`,
-  }
+  const appBarContent = useMemo(
+    () => ({
+      Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
+      title: state.page === 0 ? title : `${title} p.${state.page + 1}`,
+    }),
+    [buttonText, routes, state.page, title]
+  )
   useAppBarContent(appBarContent)
 
   const query = useMemo(

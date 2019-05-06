@@ -1,7 +1,7 @@
 import React, { useCallback, useReducer } from 'react'
 import { createContext } from 'react'
 
-export const StoreContext = createContext('store')
+export const StoreContext = createContext(null)
 
 export const StoreProvider = ({ children }) => {
   const [store, dispatch] = useReducer((state, action) => {

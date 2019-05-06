@@ -1,7 +1,7 @@
 import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
-import React from 'react'
+import React, { useMemo } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
@@ -194,7 +194,11 @@ const PersonaForm4 = compose(
 
 const PersonaForm5 = props => {
   const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'personas', stageName: 'initial', pathname: location.pathname })
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'personas', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
   return <PersonaForm4 {...props} />
 }
 

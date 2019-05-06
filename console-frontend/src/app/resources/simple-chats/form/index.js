@@ -1,7 +1,7 @@
 import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
-import React from 'react'
+import React, { useMemo } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import SimpleChatStep from './simple-chat-step'
@@ -255,10 +255,13 @@ const SimpleChatForm3 = compose(
   })
 )(SimpleChatForm2)
 
-const SimpleChatForm4 = props => {
-  const { location } = props
-  useOnboardingHelp({ single: true, stepName: 'simpleChats', stageName: 'initial', pathname: location.pathname })
-  return <SimpleChatForm3 {...props} />
+const SimpleChatForm4 = ({ location, ...props }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'simpleChats', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
+  return <SimpleChatForm3 {...props} location={location} />
 }
 
 export default withRouter(SimpleChatForm4)
