@@ -60,9 +60,9 @@ const StyledTooltip = styled(Tooltip)`
 `
 
 const MarkdownIcon = styled.a`
-  display: ${({ isMarkdownMode }) => isMarkdownMode && 'none'};
+  display: ${({ isMarkdownMode }) => !isMarkdownMode && 'none'};
   position: absolute;
-  right: 42px;
+  right: 16px;
   top: 16px;
   z-index: 5;
   & img {
