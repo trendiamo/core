@@ -4,10 +4,8 @@ import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const SortableSpotlight = memo(SortableElement(Spotlight), (props, nextProps) => {
-  const ignoreProps = ['onChange', 'setProductPicksPictures', 'setIsCropping', 'onFocus', 'spotlight']
-  return (
-    isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps)) || !isEqual(props.spotlight, nextProps.spotlight)
-  )
+  const ignoreProps = ['onChange', 'setProductPicksPictures', 'setIsCropping', 'onFocus']
+  return isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
 })
 
 const Spotlights = ({
