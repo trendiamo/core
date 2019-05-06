@@ -21,6 +21,18 @@ export const extractJson = message => {
   }
 }
 
+export const replaceExternalLinks = message => {
+  const messageWrapper = document.createElement('div')
+  messageWrapper.innerHTML = message
+  Array.from(messageWrapper.getElementsByTagName('a')).forEach(a => {
+    if (a.hostname !== window.location.hostname) {
+      a.setAttribute('target', '_blank')
+      a.setAttribute('rel', 'noreferrer noopener')
+    }
+  })
+  return messageWrapper.innerHTML
+}
+
 export const isFrameActive = () => {
   return (
     document.activeElement &&
