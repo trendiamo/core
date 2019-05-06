@@ -23,24 +23,26 @@ const Spotlights = ({
 
   return (
     <div>
-      {form.spotlightsAttributes.map((spotlight, index) => (
-        <SortableSpotlight
-          allowDelete={allowDelete}
-          folded={spotlight.id}
-          index={index}
-          isCropping={isCropping}
-          isFormLoading={isFormLoading}
-          key={spotlight.id || `new-${index}`}
-          onChange={setSpotlightForm}
-          onFocus={onFocus({ spotlight: { ...spotlight, id: spotlight.id || `new-${index}` } })}
-          personas={personas}
-          productPicksPictures={productPicksPictures}
-          setIsCropping={setIsCropping}
-          setProductPicksPictures={setProductPicksPictures}
-          sortIndex={index}
-          spotlight={spotlight}
-        />
-      ))}
+      {form.spotlightsAttributes
+        .filter(spotlight => !spotlight._destroy)
+        .map((spotlight, index) => (
+          <SortableSpotlight
+            allowDelete={allowDelete}
+            folded={spotlight.id}
+            index={index}
+            isCropping={isCropping}
+            isFormLoading={isFormLoading}
+            key={spotlight.id || `new-${index}`}
+            onChange={setSpotlightForm}
+            onFocus={onFocus({ spotlight: { ...spotlight, id: spotlight.id || `new-${index}` } })}
+            personas={personas}
+            productPicksPictures={productPicksPictures}
+            setIsCropping={setIsCropping}
+            setProductPicksPictures={setProductPicksPictures}
+            sortIndex={index}
+            spotlight={spotlight}
+          />
+        ))}
     </div>
   )
 }

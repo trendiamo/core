@@ -31,16 +31,19 @@ const SimpleChatSteps = ({ allowDelete, simpleChatSteps, onChange }) => (
       simpleChatStep={simpleChatSteps[0]}
       simpleChatStepIndex={0}
     />
-    {simpleChatSteps.slice(1).map((simpleChatStep, index) => (
-      <SortableSimpleChatStep
-        allowDelete={allowDelete}
-        index={index + 1}
-        key={simpleChatStep.id || `simple-chat-${index}`}
-        onChange={onChange}
-        simpleChatStep={simpleChatStep}
-        simpleChatStepIndex={index + 1}
-      />
-    ))}
+    {simpleChatSteps
+      .slice(1)
+      .filter(simpleChatStep => !simpleChatStep._destroy)
+      .map((simpleChatStep, index) => (
+        <SortableSimpleChatStep
+          allowDelete={allowDelete}
+          index={index + 1}
+          key={simpleChatStep.id || `simple-chat-${index}`}
+          onChange={onChange}
+          simpleChatStep={simpleChatStep}
+          simpleChatStepIndex={index + 1}
+        />
+      ))}
   </div>
 )
 
