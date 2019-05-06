@@ -182,7 +182,8 @@ export default compose(
       setProductPicksPictures(newProductPicksPictures)
     },
     onSortEnd: ({ onChange, index, spotlight }) => ({ oldIndex, newIndex }) => {
-      const orderedProductPicks = arrayMove(spotlight.productPicksAttributes, oldIndex, newIndex)
+      const filteredProductPicks = spotlight.productPicksAttributes.filter(productPick => !productPick._destroy)
+      const orderedProductPicks = arrayMove(filteredProductPicks, oldIndex, newIndex)
       onChange({ ...spotlight, productPicksAttributes: orderedProductPicks }, index)
     },
   })

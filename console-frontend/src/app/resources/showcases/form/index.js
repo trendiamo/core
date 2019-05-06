@@ -95,7 +95,8 @@ const Showcase1 = compose(
       return result
     },
     onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
-      const orderedSpotlights = arrayMove(form.spotlightsAttributes, oldIndex, newIndex)
+      const filteredSpotlights = form.spotlightsAttributes.filter(spotlight => !spotlight._destroy)
+      const orderedSpotlights = arrayMove(filteredSpotlights, oldIndex, newIndex)
       setForm({ ...form, spotlightsAttributes: orderedSpotlights })
     },
     routeToShowcase: ({ form }) => () => pluginHistory.replace(pluginRoutes.showcase(form.id)),

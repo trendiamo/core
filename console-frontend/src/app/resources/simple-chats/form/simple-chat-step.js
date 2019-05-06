@@ -147,7 +147,10 @@ export default compose(
       )
     },
     onSimpleChatMessagesSortEnd: ({ onChange, simpleChatStepIndex, simpleChatStep }) => ({ oldIndex, newIndex }) => {
-      const orderedSimpleChatMessages = arrayMove(simpleChatStep.simpleChatMessagesAttributes, oldIndex, newIndex)
+      const filteredSimpleChatMessages = simpleChatStep.simpleChatMessagesAttributes.filter(
+        simpleChatMessage => !simpleChatMessage._destroy
+      )
+      const orderedSimpleChatMessages = arrayMove(filteredSimpleChatMessages, oldIndex, newIndex)
       onChange({ ...simpleChatStep, simpleChatMessagesAttributes: orderedSimpleChatMessages }, simpleChatStepIndex)
     },
   })
