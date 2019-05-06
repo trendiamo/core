@@ -1,8 +1,7 @@
 import omit from 'lodash.omit'
-import React, { memo } from 'react'
+import React, { memo, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Collapse, IconButton } from '@material-ui/core'
-import { compose, withHandlers, withState } from 'recompose'
 import { Divider, FlexBar, Header } from './index'
 import { DragHandle } from 'shared/sortable-elements'
 import { ExpandMore } from '@material-ui/icons'
@@ -49,40 +48,44 @@ const FormSection = ({
   dragHandle,
   title,
   children,
-  folded,
+  folded: defaultFolded,
   ellipsize,
   foldable,
-  toggleFolded,
   actions,
   hideTop,
   hideBottom,
   isFoldedByLogic,
-}) => (
-  <SectionContainer backgroundColor={backgroundColor}>
-    {!hideTop && <Divider />}
-    <HeaderBar
-      actions={actions}
-      dragHandle={dragHandle}
-      ellipsize={ellipsize}
-      foldable={foldable}
-      folded={folded}
-      isFoldedByLogic={isFoldedByLogic}
-      title={title}
-      toggleFolded={toggleFolded}
-    />
-    {!hideBottom && <Divider folded={isFoldedByLogic || folded} />}
-    <Collapse in={isFoldedByLogic !== undefined ? !isFoldedByLogic : !folded} timeout="auto">
-      <Content>{children}</Content>
-    </Collapse>
-  </SectionContainer>
-)
+  setIsFoldedByLogic,
+}) => {
+  const [folded, setFolded] = useState(defaultFolded)
 
-export default compose(
-  withState('folded', 'setFolded', ({ folded }) => folded),
-  withHandlers({
-    toggleFolded: ({ folded, setFolded, setIsFoldedByLogic }) => () => {
+  const toggleFolded = useCallback(
+    () => {
       setIsFoldedByLogic && setIsFoldedByLogic(!folded)
       setFolded(!folded)
     },
-  })
-)(FormSection)
+    [folded, setIsFoldedByLogic]
+  )
+
+  return (
+    <SectionContainer backgroundColor={backgroundColor}>
+      {!hideTop && <Divider />}
+      <HeaderBar
+        actions={actions}
+        dragHandle={dragHandle}
+        ellipsize={ellipsize}
+        foldable={foldable}
+        folded={folded}
+        isFoldedByLogic={isFoldedByLogic}
+        title={title}
+        toggleFolded={toggleFolded}
+      />
+      {!hideBottom && <Divider folded={isFoldedByLogic || folded} />}
+      <Collapse in={isFoldedByLogic !== undefined ? !isFoldedByLogic : !folded} timeout="auto">
+        <Content>{children}</Content>
+      </Collapse>
+    </SectionContainer>
+  )
+}
+
+export default FormSection

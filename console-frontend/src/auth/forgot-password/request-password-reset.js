@@ -1,11 +1,10 @@
 import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
 import Link from 'shared/link'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import { apiPasswordEmailLink, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
-import { compose, withHandlers, withState } from 'recompose'
 import { FormControl, Input, InputLabel, Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -60,31 +59,40 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
   </AuthLayout>
 )
 
-const PasswordReset1 = compose(
-  withState('passwordForm', 'setPasswordForm', { email: '' }),
-  withHandlers({
-    onBackToLogin: () => event => {
-      event.preventDefault()
-      window.location.href = routes.login()
+const PasswordReset1 = () => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [passwordForm, setPasswordForm] = useState({ email: '' })
+
+  const passwordChangeSubmit = useCallback(
+    event => {
+      ;(async () => {
+        event.preventDefault()
+        const { json, requestError } = await apiRequest(apiPasswordEmailLink, [{ user: { email: passwordForm.email } }])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (!requestError) enqueueSnackbar('Email sent!', { variant: 'info' })
+        return json
+      })()
     },
-    passwordChangeSubmit: ({ enqueueSnackbar, passwordForm }) => async event => {
-      event.preventDefault()
-      const { json, requestError } = await apiRequest(apiPasswordEmailLink, [{ user: { email: passwordForm.email } }])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (!requestError) enqueueSnackbar('Email sent!', { variant: 'info' })
-      return json
-    },
-    setPasswordFormValue: ({ passwordForm, setPasswordForm }) => event =>
+    [enqueueSnackbar, passwordForm.email]
+  )
+
+  const setPasswordFormValue = useCallback(
+    event =>
       setPasswordForm({
         ...passwordForm,
         [event.target.name]: event.target.value,
       }),
-  })
-)(PasswordReset)
+    [passwordForm, setPasswordForm]
+  )
 
-const PasswordReset2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <PasswordReset1 {...props} enqueueSnackbar={enqueueSnackbar} />
+  return (
+    <PasswordReset
+      passwordChangeSubmit={passwordChangeSubmit}
+      passwordForm={passwordForm}
+      setPasswordFormValue={setPasswordFormValue}
+    />
+  )
 }
 
-export default PasswordReset2
+export default PasswordReset1

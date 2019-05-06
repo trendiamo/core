@@ -1,11 +1,10 @@
 import Dialog from 'shared/dialog'
 import DoneIcon from '@material-ui/icons/Done'
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { Button, Input, Tooltip, Typography } from '@material-ui/core'
-import { compose, withHandlers, withState } from 'recompose'
 
 const ContentContainer = styled.div`
   text-align: center;
@@ -48,29 +47,34 @@ const CopyButtonDiv = styled.div`
   flex: 1;
 `
 
-const ResultBox = compose(
-  withState('isCopied', 'setIsCopied', false),
-  withHandlers({
-    copyUrl: ({ url, setIsCopied }) => async () => {
-      await navigator.clipboard.writeText(url)
-      setIsCopied(true)
+const handleUrlFocus = event => event.target.select()
+
+const ResultBox = ({ url }) => {
+  const [isCopied, setIsCopied] = useState(false)
+
+  const copyUrl = useCallback(
+    () => {
+      ;(async () => {
+        await navigator.clipboard.writeText(url)
+        setIsCopied(true)
+      })()
     },
-    handleUrlFocus: () => event => {
-      event.target.select()
-    },
-  })
-)(({ isCopied, copyUrl, url, handleUrlFocus }) => (
-  <ResultDiv isCopied={isCopied}>
-    <UrlInput defaultValue={url} disableUnderline fullWidth isCopied={isCopied} onFocus={handleUrlFocus} readOnly />
-    <CopyButtonDiv>
-      <Tooltip title="Copy to Clipboard">
-        <CopyButton color="primary" fullWidth isCopied={isCopied} onClick={copyUrl} variant="contained">
-          {isCopied ? <DoneIcon /> : 'Copy'}
-        </CopyButton>
-      </Tooltip>
-    </CopyButtonDiv>
-  </ResultDiv>
-))
+    [url]
+  )
+
+  return (
+    <ResultDiv isCopied={isCopied}>
+      <UrlInput defaultValue={url} disableUnderline fullWidth isCopied={isCopied} onFocus={handleUrlFocus} readOnly />
+      <CopyButtonDiv>
+        <Tooltip title="Copy to Clipboard">
+          <CopyButton color="primary" fullWidth isCopied={isCopied} onClick={copyUrl} variant="contained">
+            {isCopied ? <DoneIcon /> : 'Copy'}
+          </CopyButton>
+        </Tooltip>
+      </CopyButtonDiv>
+    </ResultDiv>
+  )
+}
 
 const FilteredTypography = props => <Typography {...omit(props, ['fontSize', 'fontWeight'])} />
 
@@ -101,22 +105,20 @@ const DialogActions = ({ handleClose }) => (
   </Button>
 )
 
-const ModalUrlGenerator = compose(
-  withHandlers({
-    handleClose: ({ setOpen }) => () => {
-      setOpen(false)
-    },
-  })
-)(({ handleClose, url, open }) => (
-  <Dialog
-    content={<DialogContent url={url} />}
-    dialogActions={<DialogActions handleClose={handleClose} />}
-    fullWidth
-    handleClose={handleClose}
-    maxWidth="sm"
-    open={open}
-    title=""
-  />
-))
+const ModalUrlGenerator = ({ url, open, setOpen }) => {
+  const handleClose = useCallback(() => setOpen(false), [setOpen])
+
+  return (
+    <Dialog
+      content={<DialogContent url={url} />}
+      dialogActions={<DialogActions handleClose={handleClose} />}
+      fullWidth
+      handleClose={handleClose}
+      maxWidth="sm"
+      open={open}
+      title=""
+    />
+  )
+}
 
 export default ModalUrlGenerator

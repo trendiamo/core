@@ -2,11 +2,10 @@ import auth from 'auth'
 import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
 import Link from 'shared/link'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignIn } from 'utils'
-import { compose, withHandlers, withState } from 'recompose'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -62,29 +61,34 @@ const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
   </AuthLayout>
 )
 
-const Login1 = compose(
-  withState('loginForm', 'setLoginForm', { email: '', password: '' }),
-  withHandlers({
-    loginSubmit: ({ enqueueSnackbar, loginForm }) => async event => {
-      event.preventDefault()
-      const { json, errors, requestError } = await apiRequest(
-        apiSignIn,
-        [{ user: { email: loginForm.email, password: loginForm.password } }],
-        { isLoginRequest: true }
-      )
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!requestError && !errors) auth.setUser(json.user)
-      if (auth.isLoggedIn()) window.location.href = auth.isAdmin() ? routes.admin() : routes.root()
-    },
-    setLoginValue: ({ loginForm, setLoginForm }) => event =>
-      setLoginForm({ ...loginForm, [event.target.name]: event.target.value }),
-  })
-)(Login)
-
-const Login2 = props => {
+const Login1 = () => {
   const { enqueueSnackbar } = useSnackbar()
-  return <Login1 {...props} enqueueSnackbar={enqueueSnackbar} />
+
+  const [loginForm, setLoginForm] = useState({ email: '', password: '' })
+
+  const loginSubmit = useCallback(
+    event => {
+      ;(async () => {
+        event.preventDefault()
+        const { json, errors, requestError } = await apiRequest(
+          apiSignIn,
+          [{ user: { email: loginForm.email, password: loginForm.password } }],
+          { isLoginRequest: true }
+        )
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        if (!requestError && !errors) auth.setUser(json.user)
+        if (auth.isLoggedIn()) window.location.href = auth.isAdmin() ? routes.admin() : routes.root()
+      })()
+    },
+    [enqueueSnackbar, loginForm.email, loginForm.password]
+  )
+
+  const setLoginValue = useCallback(event => setLoginForm({ ...loginForm, [event.target.name]: event.target.value }), [
+    loginForm,
+  ])
+
+  return <Login loginForm={loginForm} loginSubmit={loginSubmit} setLoginValue={setLoginValue} />
 }
 
-export default Login2
+export default Login1

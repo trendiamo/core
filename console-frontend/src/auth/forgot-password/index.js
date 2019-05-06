@@ -1,12 +1,11 @@
 import auth from 'auth'
 import AuthLayout from 'auth/layout'
 import queryString from 'query-string'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import { apiPasswordReset, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
-import { compose, withHandlers, withState } from 'recompose'
 import { useSnackbar } from 'notistack'
 
 const AuthMessage = () => (
@@ -61,43 +60,56 @@ const PasswordReset = ({ passwordForm, passwordResetSubmit, setFieldValue }) => 
   </AuthLayout>
 )
 
-const PasswordReset1 = compose(
-  withState('passwordForm', 'setPasswordForm', {
+const PasswordReset1 = () => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [passwordForm, setPasswordForm] = useState({
     fieldOne: '',
     fieldTwo: '',
-  }),
-  withHandlers({
-    passwordResetSubmit: ({ enqueueSnackbar, passwordForm }) => async event => {
-      event.preventDefault()
-      if (passwordForm.fieldOne !== passwordForm.fieldTwo) {
-        enqueueSnackbar("Passwords don't match", { variant: 'error' })
-        return
-      }
-      const parsedUrl = queryString.parse(window.location.search)
-      const { json, errors, requestError } = await apiRequest(apiPasswordReset, [
-        {
-          user: {
-            password: passwordForm.fieldTwo,
-            reset_password_token: parsedUrl.reset_password_token,
+  })
+
+  const passwordResetSubmit = useCallback(
+    event => {
+      ;(async () => {
+        event.preventDefault()
+        if (passwordForm.fieldOne !== passwordForm.fieldTwo) {
+          enqueueSnackbar("Passwords don't match", { variant: 'error' })
+          return
+        }
+        const parsedUrl = queryString.parse(window.location.search)
+        const { json, errors, requestError } = await apiRequest(apiPasswordReset, [
+          {
+            user: {
+              password: passwordForm.fieldTwo,
+              reset_password_token: parsedUrl.reset_password_token,
+            },
           },
-        },
-      ])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!requestError && !errors) auth.setUser(json.user)
-      if (auth.isLoggedIn()) window.location.href = routes.root()
+        ])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        if (!requestError && !errors) auth.setUser(json.user)
+        if (auth.isLoggedIn()) window.location.href = routes.root()
+      })()
     },
-    setFieldValue: ({ setPasswordForm, passwordForm }) => event => {
+    [enqueueSnackbar, passwordForm.fieldOne, passwordForm.fieldTwo]
+  )
+
+  const setFieldValue = useCallback(
+    event => {
       event.preventDefault()
       const value = event.target.value
       setPasswordForm({ ...passwordForm, [event.target.name]: value })
     },
-  })
-)(PasswordReset)
+    [passwordForm]
+  )
 
-const PasswordReset2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <PasswordReset1 {...props} enqueueSnackbar={enqueueSnackbar} />
+  return (
+    <PasswordReset
+      passwordForm={passwordForm}
+      passwordResetSubmit={passwordResetSubmit}
+      setFieldValue={setFieldValue}
+    />
+  )
 }
 
-export default PasswordReset2
+export default PasswordReset1
