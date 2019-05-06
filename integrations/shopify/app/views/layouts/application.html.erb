@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Shopify</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <% application_name = ShopifyApp.configuration.application_name %>
+    <title><%= application_name %></title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application", "data-turbolinks-track": true %>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "layouts/navbar" %>
+    <%= render "layouts/flash_messages" %>
+    <div class="app-wrapper">
+      <div class="app-content">
+        <%= yield %>
+      </div>
+    </div>
+
+
+    <script src="https://cdn.shopify.com/s/assets/external/app.js?<%= Time.now.strftime('%Y%m%d%H') %>"></script>
+
+    <script type="text/javascript">
+      ShopifyApp.init({
+        apiKey: "<%= ShopifyApp.configuration.api_key %>",
+        shopOrigin: "<%= "https://#{ @shop_session.url }" if @shop_session %>",
+        debug: <%= Rails.env.development? ? 'true' : 'false' %>,
+        forceRedirect: false
+      });
+    </script>
+
+    <% if content_for?(:javascript) %>
+        <%= yield :javascript %>
+    <% end %>
   </body>
 </html>
