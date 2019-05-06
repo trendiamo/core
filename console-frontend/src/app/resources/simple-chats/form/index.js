@@ -215,7 +215,8 @@ const SimpleChatForm1 = compose(
       return result
     },
     onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
-      const orderedSimpleChatSteps = arrayMove(form.simpleChatStepsAttributes, oldIndex, newIndex)
+      const filteredSimpleChatSteps = form.simpleChatStepsAttributes.filter(simpleChat => !simpleChat._destroy)
+      const orderedSimpleChatSteps = arrayMove(filteredSimpleChatSteps, oldIndex, newIndex)
       setForm({ ...form, simpleChatStepsAttributes: orderedSimpleChatSteps })
     },
   }),
