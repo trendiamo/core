@@ -1,9 +1,8 @@
 import Dialog from 'shared/dialog'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Typography } from '@material-ui/core'
 import { changeStage } from 'onboarding/scenario-actions'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 
 const ContentContainer = styled.div`
@@ -31,35 +30,32 @@ const DialogActions = ({ handleClose }) => (
   </Button>
 )
 
-const ModalFirstPersona = ({ handleClose, open }) => (
-  <Dialog
-    content={<DialogContent />}
-    dialogActions={<DialogActions handleClose={handleClose} />}
-    handleClose={handleClose}
-    hideBackdrop
-    open={open}
-    title=""
-  />
-)
+const ModalFirstPersona = () => {
+  const { onboarding, setOnboarding } = useOnboardingConsumer()
+  const [open, setOpen] = useState(true)
 
-const ModalFirstPersona1 = compose(
-  withState('open', 'setOpen', true),
-  withHandlers({
-    handleClose: ({ setOpen, setOnboarding, onboarding }) => () => {
+  const handleClose = useCallback(
+    () => {
       setOnboarding({ ...onboarding, stageIndex: 2, run: false })
       setOpen(false)
     },
-  }),
-  lifecycle({
-    componentDidMount() {
-      changeStage(2)
-    },
-  })
-)(ModalFirstPersona)
+    [onboarding, setOnboarding]
+  )
 
-const ModalFirstPersona2 = props => {
-  const { onboarding, setOnboarding } = useOnboardingConsumer()
-  return <ModalFirstPersona1 {...props} onboarding={onboarding} setOnboarding={setOnboarding} />
+  useEffect(() => {
+    changeStage(2)
+  }, [])
+
+  return (
+    <Dialog
+      content={<DialogContent />}
+      dialogActions={<DialogActions handleClose={handleClose} />}
+      handleClose={handleClose}
+      hideBackdrop
+      open={open}
+      title=""
+    />
+  )
 }
 
-export default ModalFirstPersona2
+export default ModalFirstPersona
