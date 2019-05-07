@@ -4,11 +4,10 @@ import Button from 'shared/button'
 import CircularProgress from 'app/layout/loading'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import HostnamesForm from 'shared/hostnames-form'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import { apiAccount, apiAccountCreate, apiRequest, apiSignOut, atLeastOneNonBlankCharRegexp } from 'utils'
-import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import { FormControl, IconButton, List, TextField, Tooltip } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -45,92 +44,62 @@ const LogoutButton = ({ signOutButtonClick }) => (
   </Tooltip>
 )
 
-const Admin = ({
-  addHostnameSelect,
-  deleteHostname,
-  accounts,
-  signOutButtonClick,
-  accountForm,
-  toggleNewAccountForm,
-  editHostnameValue,
-  onAccountFormSubmit,
-  isNewAccount,
-  setAccountFormField,
-}) => (
-  <SectionContainer>
-    <Section>
-      <ButtonsContainer>
-        <LogoutButton signOutButtonClick={signOutButtonClick} />
-        <ToggleFormButton color="primaryGradient" onClick={toggleNewAccountForm} type="submit" variant="contained">
-          {isNewAccount ? 'Close Form' : 'New Account'}
-        </ToggleFormButton>
-      </ButtonsContainer>
-      {isNewAccount ? (
-        <form onSubmit={onAccountFormSubmit}>
-          <h2>{'New Account'}</h2>
-          <FormControl fullWidth margin="normal" required>
-            <TextField
-              fullWidth
-              inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-              label="Name"
-              margin="normal"
-              name="name"
-              onChange={setAccountFormField}
-              required
-              value={accountForm.name}
-            />
-          </FormControl>
-          <HostnamesForm
-            addHostnameSelect={addHostnameSelect}
-            deleteHostname={deleteHostname}
-            editHostnameValue={editHostnameValue}
-            form={accountForm.websitesAttributes[0]}
-          />
-          <SaveButton color="primaryGradient" type="submit" variant="contained">
-            {'Save'}
-          </SaveButton>
-        </form>
-      ) : (
-        <List component="nav">
-          <AccountsList accounts={accounts} />
-        </List>
-      )}
-    </Section>
-  </SectionContainer>
-)
+const signOutButtonClick = async () => {
+  await apiSignOut()
+  auth.clear()
+}
 
-const Admin1 = compose(
-  withState('accounts', 'setAccounts', {}),
-  withState('isNewAccount', 'setIsNewAccount', false),
-  withState('accountForm', 'setAccountForm', { name: '', websitesAttributes: [{ hostnames: [''] }] }),
-  withHandlers({
-    toggleNewAccountForm: ({ isNewAccount, setIsNewAccount }) => () => {
+const Admin = () => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [accounts, setAccounts] = useState({})
+  const [isNewAccount, setIsNewAccount] = useState(false)
+  const [accountForm, setAccountForm] = useState({ name: '', websitesAttributes: [{ hostnames: [''] }] })
+
+  const toggleNewAccountForm = useCallback(
+    () => {
       setIsNewAccount(!isNewAccount)
     },
-    signOutButtonClick: () => async () => {
-      await apiSignOut()
-      auth.clear()
-    },
-    setAccountFormField: ({ accountForm, setAccountForm }) => event => {
+    [isNewAccount]
+  )
+
+  const setAccountFormField = useCallback(
+    event => {
       setAccountForm({ ...accountForm, [event.target.name]: event.target.value })
     },
-    addHostnameSelect: ({ accountForm, setAccountForm }) => () => {
+    [accountForm]
+  )
+
+  const addHostnameSelect = useCallback(
+    () => {
       setAccountForm({
         ...accountForm,
         websitesAttributes: [{ hostnames: [...accountForm.websitesAttributes[0].hostnames, ''] }],
       })
     },
-    deleteHostname: ({ accountForm, setAccountForm }) => index => {
+    [accountForm]
+  )
+
+  const deleteHostname = useCallback(
+    index => {
       let newHostnames = [...accountForm.websitesAttributes[0].hostnames]
       newHostnames.splice(index, 1)
       setAccountForm({ ...accountForm, websitesAttributes: [{ hostnames: newHostnames }] })
     },
-    editHostnameValue: ({ accountForm, setAccountForm }) => (index, newValue) => {
+    [accountForm]
+  )
+
+  const editHostnameValue = useCallback(
+    ({ accountForm, setAccountForm }) => (index, newValue) => {
       const newHostnames = [...accountForm.websitesAttributes[0].hostnames]
       newHostnames[index] = newValue
       setAccountForm({ ...accountForm, websitesAttributes: [{ hostnames: newHostnames }] })
     },
-    onAccountFormSubmit: ({ accountForm, enqueueSnackbar }) => async () => {
+    []
+  )
+
+  const onAccountFormSubmit = useCallback(
+    async () => {
       const { json, errors, requestError } = await apiRequest(apiAccountCreate, [
         {
           account: {
@@ -143,20 +112,63 @@ const Admin1 = compose(
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       return json
     },
-  }),
-  lifecycle({
-    async componentDidMount() {
-      const { setAccounts, enqueueSnackbar } = this.props
-      const { json, requestError } = await apiRequest(apiAccount, [])
-      requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(json)
-    },
-  }),
-  branch(({ accounts }) => !(accounts && accounts.length), renderComponent(CircularProgress))
-)(Admin)
+    [accountForm, enqueueSnackbar]
+  )
 
-const Admin2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <Admin1 {...props} enqueueSnackbar={enqueueSnackbar} />
+  useEffect(
+    () => {
+      ;(async () => {
+        const { json, requestError } = await apiRequest(apiAccount, [])
+        requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(json)
+      })()
+    },
+    [enqueueSnackbar]
+  )
+
+  if (!(accounts && accounts.length)) return <CircularProgress />
+
+  return (
+    <SectionContainer>
+      <Section>
+        <ButtonsContainer>
+          <LogoutButton signOutButtonClick={signOutButtonClick} />
+          <ToggleFormButton color="primaryGradient" onClick={toggleNewAccountForm} type="submit" variant="contained">
+            {isNewAccount ? 'Close Form' : 'New Account'}
+          </ToggleFormButton>
+        </ButtonsContainer>
+        {isNewAccount ? (
+          <form onSubmit={onAccountFormSubmit}>
+            <h2>{'New Account'}</h2>
+            <FormControl fullWidth margin="normal" required>
+              <TextField
+                fullWidth
+                inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+                label="Name"
+                margin="normal"
+                name="name"
+                onChange={setAccountFormField}
+                required
+                value={accountForm.name}
+              />
+            </FormControl>
+            <HostnamesForm
+              addHostnameSelect={addHostnameSelect}
+              deleteHostname={deleteHostname}
+              editHostnameValue={editHostnameValue}
+              form={accountForm.websitesAttributes[0]}
+            />
+            <SaveButton color="primaryGradient" type="submit" variant="contained">
+              {'Save'}
+            </SaveButton>
+          </form>
+        ) : (
+          <List component="nav">
+            <AccountsList accounts={accounts} />
+          </List>
+        )}
+      </Section>
+    </SectionContainer>
+  )
 }
 
-export default Admin2
+export default Admin
