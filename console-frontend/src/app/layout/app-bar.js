@@ -52,33 +52,27 @@ const Title = ({ text, classes, responsive, highlight }) => (
   </Typography>
 )
 
-const AppBarContent1 = ({ Actions, backRoute, classes, title }) => (
-  <>
-    {backRoute && (
-      <Link to={backRoute}>
-        <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
-      </Link>
-    )}
-    <Title classes={classes} text={title} />
-    {Actions && (
-      <ButtonsContainer>
-        {<OnboardingButton />}
-        {Actions}
-      </ButtonsContainer>
-    )}
-  </>
-)
-
-const AppBarContent2 = props => {
+const AppBarContent = ({ classes }) => {
   const { store } = useContext(StoreContext)
   if (!store.appBarContent) return null
+
+  const { Actions, backRoute, title } = store.appBarContent.Actions
+
   return (
-    <AppBarContent1
-      {...props}
-      Actions={store.appBarContent.Actions}
-      backRoute={store.appBarContent.backRoute}
-      title={store.appBarContent.title}
-    />
+    <>
+      {backRoute && (
+        <Link to={backRoute}>
+          <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
+        </Link>
+      )}
+      <Title classes={classes} text={title} />
+      {Actions && (
+        <ButtonsContainer>
+          {<OnboardingButton />}
+          {Actions}
+        </ButtonsContainer>
+      )}
+    </>
   )
 }
 
@@ -90,7 +84,7 @@ const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
       <IconButton aria-label="Open drawer" className={classes.menuButton} color="inherit" onClick={toggleOpen}>
         <MenuIcon />
       </IconButton>
-      <AppBarContent2 classes={classes} />
+      <AppBarContent classes={classes} />
     </Toolbar>
   </MuiAppBar>
 )
