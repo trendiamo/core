@@ -1,9 +1,8 @@
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { CircularProgress } from '@material-ui/core'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Button as MuiButton, Tooltip } from '@material-ui/core'
 
 const ButtonContainer = styled.div`
@@ -42,43 +41,47 @@ const EventFirer = styled.div`
 const ConditionalWrap = ({ disabled, wrap, children }) => (disabled ? wrap(children) : children)
 
 // Customized button (since Mui accepts a very small range of params in the original Button component)
-const Button = compose(
-  withState('styleObject', 'setStyleObject', {}),
-  withState('tooltipOpen', 'setTooltipOpen', false),
-  withHandlers({
-    onButtonHoverStart: ({ setStyleObject, color, setTooltipOpen }) => () => {
+const Button = ({
+  color,
+  disabled,
+  tooltipEnabled,
+  tooltipText,
+  tooltipPlacement,
+  isFormPristine,
+  onClick,
+  isFormSubmitting,
+  width,
+  centered,
+  children,
+  ...props
+}) => {
+  const [styleObject, setStyleObject] = useState({})
+  const [tooltipOpen, setTooltipOpen] = useState(false)
+
+  const onButtonHoverStart = useCallback(
+    () => {
       setTooltipOpen(true)
       setStyleObject(theme.customButtons[color] && theme.customButtons[color].hover)
     },
-    onButtonHoverEnd: ({ setStyleObject, color, setTooltipOpen }) => () => {
+    [color]
+  )
+
+  const onButtonHoverEnd = useCallback(
+    () => {
       setTooltipOpen(false)
       setStyleObject(omit(theme.customButtons[color], ['hover']))
     },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { color, setStyleObject } = this.props
+    [color]
+  )
+
+  useEffect(
+    () => {
       setStyleObject(omit(theme.customButtons[color], ['hover']))
     },
-  })
-)(
-  ({
-    styleObject,
-    onButtonHoverStart,
-    onButtonHoverEnd,
-    disabled,
-    tooltipEnabled,
-    tooltipOpen,
-    tooltipText,
-    tooltipPlacement,
-    isFormPristine,
-    onClick,
-    isFormSubmitting,
-    width,
-    centered,
-    children,
-    ...props
-  }) => (
+    [color]
+  )
+
+  return (
     <ButtonContainer centered={centered}>
       <Tooltip
         open={tooltipEnabled && tooltipOpen && isFormPristine}
@@ -96,10 +99,7 @@ const Button = compose(
           <StyledMuiButton
             {...omit(props, [
               'color',
-              'setStyleObject',
               'tooltipEnabled',
-              'tooltipOpen',
-              'setTooltipOpen',
               'isFormPristine',
               'tooltipText',
               'tooltipPlacement',
@@ -123,6 +123,6 @@ const Button = compose(
       </Tooltip>
     </ButtonContainer>
   )
-)
+}
 
 export default Button
