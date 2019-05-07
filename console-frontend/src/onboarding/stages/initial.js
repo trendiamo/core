@@ -1,6 +1,5 @@
 import React from 'react'
 import routes from 'app/routes'
-import { changeStage } from 'onboarding/scenario-actions'
 import { Tooltip } from 'onboarding/elements'
 
 const order = ['triggers', 'showcases', 'simpleChats', 'outros', 'pictures', 'personas']
@@ -43,9 +42,7 @@ const steps = {
   },
   personas: {
     target: '.onboard-personas',
-    content: (
-      <Tooltip body="Create your Personas here." callback={changeStage(1)} create nextRoute={routes.personaCreate()} />
-    ),
+    content: <Tooltip body="Create your Personas here." create nextRoute={routes.personaCreate()} toStage1 />,
     placement: 'right',
     disableBeacon: true,
     title: 'Personas',

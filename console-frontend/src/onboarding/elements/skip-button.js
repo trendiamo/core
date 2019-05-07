@@ -26,7 +26,7 @@ const SkipButton = () => {
         return false
       }
       setOnboarding({ ...onboarding, stageIndex: 1, stepIndex: 0, run: false })
-      changeStage(1)()
+      changeStage(1)
     },
     [onboarding, setOnboarding]
   )

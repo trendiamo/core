@@ -44,7 +44,7 @@ const WelcomePage1 = compose(
       history.push(routes.triggersList())
     },
     skipOnboarding: ({ history, onboarding, setOnboarding }) => () => {
-      changeStage(1)()
+      changeStage(1)
       setOnboarding({ ...onboarding, run: false, stageIndex: 1 })
       history.push(routes.triggersList())
     },

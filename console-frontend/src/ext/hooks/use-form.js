@@ -37,7 +37,7 @@ const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormO
       setForm(formObject)
       return formObject
     },
-    [setIsFormSubmitting, saveFormObject, state.form, formObjectTransformer, setInitialForm, setForm]
+    [formObjectTransformer, saveFormObject, setForm, setInitialForm, setIsFormSubmitting, state.form]
   )
   const setFieldValue = useCallback(
     event => {

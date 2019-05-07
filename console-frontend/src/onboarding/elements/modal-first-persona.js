@@ -52,7 +52,7 @@ const ModalFirstPersona1 = compose(
   }),
   lifecycle({
     componentDidMount() {
-      changeStage(2)()
+      changeStage(2)
     },
   })
 )(ModalFirstPersona)
