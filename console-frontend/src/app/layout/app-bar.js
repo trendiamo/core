@@ -56,7 +56,7 @@ const AppBarContent = ({ classes }) => {
   const { store } = useContext(StoreContext)
   if (!store.appBarContent) return null
 
-  const { Actions, backRoute, title } = store.appBarContent.Actions
+  const { Actions, backRoute, title } = store.appBarContent
 
   return (
     <>
