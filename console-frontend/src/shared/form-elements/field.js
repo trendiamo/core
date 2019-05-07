@@ -1,7 +1,6 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { omit } from 'lodash'
 
@@ -22,71 +21,70 @@ const Label = memo(
   (prevProps, nextProps) => prevProps.children === nextProps.children && prevProps.shrink === nextProps.shrink
 )
 
-const FieldTemplate = ({
-  isOutsideLimits,
-  handleFocus,
-  handleBlur,
-  focused,
-  handleChange,
-  textLength,
-  max,
-  label,
-  value,
-  required,
-  ...props
-}) => (
-  <Container>
-    <FormControl fullWidth margin="normal">
-      <Label required={required} shrink={focused || value.length !== 0}>
-        {label}
-      </Label>
-      <Input
-        required={required}
-        {...omit(props, ['setTextLength', 'setIsOutsideLimits', 'setFocused', 'margin'])}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        value={value}
-      />
-    </FormControl>
-    {focused && max && (
-      <Counter isOutsideLimits={isOutsideLimits}>
-        {isOutsideLimits ? 'Might be too long to display correctly' : max - textLength}
-      </Counter>
-    )}
-  </Container>
-)
+const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...props }) => {
+  const [textLength, setTextLength] = useState(0)
+  const [isOutsideLimits, setIsOutsideLimits] = useState(false)
+  const [focused, setFocused] = useState(false)
 
-const Field = compose(
-  withState('textLength', 'setTextLength', 0),
-  withState('isOutsideLimits', 'setIsOutsideLimits', false),
-  withState('focused', 'setFocused', false),
-  withHandlers({
-    handleChange: ({ onChange, max, setTextLength, setIsOutsideLimits }) => event => {
+  const handleChange = useCallback(
+    event => {
       const textLength = event.target.value.length
       setTextLength(textLength)
       setIsOutsideLimits(textLength > max)
       onChange(event)
     },
-    handleFocus: ({ setFocused, onFocus }) => () => {
+    [max, onChange]
+  )
+
+  const handleFocus = useCallback(
+    () => {
       setFocused(true)
       onFocus && onFocus()
     },
-    handleBlur: ({ setFocused, onBlur }) => () => {
+    [onFocus]
+  )
+
+  const handleBlur = useCallback(
+    () => {
       setFocused(false)
       onBlur && onBlur()
     },
-  }),
-  lifecycle({
-    componentDidUpdate() {
-      const { value, textLength, setTextLength, max, setIsOutsideLimits } = this.props
+    [onBlur]
+  )
+
+  useEffect(
+    () => {
       if (value.length !== textLength) {
         setTextLength(value.length)
         setIsOutsideLimits(value.length > max)
       }
     },
-  })
-)(FieldTemplate)
+    [max, textLength, value.length]
+  )
+
+  return (
+    <Container>
+      <FormControl fullWidth margin="normal">
+        <Label required={required} shrink={focused || value.length !== 0}>
+          {label}
+        </Label>
+        <Input
+          required={required}
+          {...omit(props, ['setTextLength', 'setIsOutsideLimits', 'setFocused', 'margin'])}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          value={value}
+        />
+      </FormControl>
+      {focused && max && (
+        <Counter isOutsideLimits={isOutsideLimits}>
+          {isOutsideLimits ? 'Might be too long to display correctly' : max - textLength}
+        </Counter>
+      )}
+    </Container>
+  )
+}
 
 export default memo(
   Field,
