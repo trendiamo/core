@@ -3,14 +3,13 @@ import BlankStateTemplate from 'shared/blank-state'
 import CircularProgress from 'shared/circular-progress'
 import EditButton from 'shared/edit-button'
 import omit from 'lodash.omit'
-import React, { useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
 import { arrayMove, SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
-import { branch, compose, lifecycle, renderComponent, withHandlers, withState } from 'recompose'
 import {
   Button,
   Checkbox,
@@ -127,9 +126,9 @@ const TableRowStyled = styled(props => <TableRow {...omit(props, ['highlight'])}
   transition: all 0.2s;
 `
 
-const TriggerRow = compose(
-  withHandlers({
-    handleSelect: ({ setSelectedIds, selectedIds, trigger }) => event => {
+const TriggerRow = ({ trigger, selectedIds, setSelectedIds, highlightEnabled, highlightUrl, hostnames }) => {
+  const handleSelect = useCallback(
+    event => {
       if (event.target.checked) {
         setSelectedIds([...selectedIds, trigger.id])
       } else {
@@ -138,9 +137,12 @@ const TriggerRow = compose(
         setSelectedIds(newIdsToDelete)
       }
     },
-  })
-)(({ trigger, handleSelect, selectedIds, highlightEnabled, highlightUrl, hostnames }) =>
-  trigger.flowType === 'Navigation' ? null : (
+    [selectedIds, setSelectedIds, trigger.id]
+  )
+
+  if (trigger.flowType === 'Navigation') return null
+
+  return (
     <TableRowStyled highlight={highlightEnabled} hover role="checkbox" tabIndex={-1}>
       <TableCell>
         <DragHandle highlight={highlightEnabled} />
@@ -197,7 +199,7 @@ const TriggerRow = compose(
       </TableCell>
     </TableRowStyled>
   )
-)
+}
 
 const SortableTriggerRow = SortableElement(TriggerRow)
 const SortableTriggerRows = SortableContainer(
@@ -223,116 +225,65 @@ const SortableTriggerRows = SortableContainer(
   )
 )
 
-const UrlTesterTemplate = ({ changeValue, testerUrl, resetUrl }) => (
-  <FormControl style={{ display: 'flex' }}>
-    <InputLabel htmlFor="urlTester">{'Test your URL here'}</InputLabel>
-    <Input
-      endAdornment={
-        <InputAdornment position="end">
-          {testerUrl.value && (
-            <IconButton aria-label="Clear url tester" onClick={resetUrl} style={{ padding: '4px' }}>
-              <Close fontSize="small" />
-            </IconButton>
-          )}
-        </InputAdornment>
-      }
-      id="urlTester"
-      label=""
-      onChange={changeValue}
-      style={{ minWidth: '250px' }}
-      value={testerUrl.value}
-    />
-  </FormControl>
-)
-const UrlTester = compose(
-  withHandlers({
-    changeValue: ({ setTesterUrl }) => event => {
+const UrlTester = ({ testerUrl, setTesterUrl }) => {
+  const changeValue = useCallback(
+    event => {
       const url = event.target.value
       setTesterUrl({ value: url, matches: false })
     },
-    resetUrl: ({ setTesterUrl }) => () => {
+    [setTesterUrl]
+  )
+
+  const resetUrl = useCallback(
+    () => {
       setTesterUrl({ value: '', matches: false })
     },
-  })
-)(UrlTesterTemplate)
+    [setTesterUrl]
+  )
 
-const TriggerList = ({
-  selectedIds,
-  handleSelectAll,
-  hostnames,
-  triggers,
-  handleRequestSort,
-  deleteTriggers,
-  onSortEnd,
-  setSelectedIds,
-  isSelectAll,
-  setTesterUrl,
-  testerUrl,
-}) => (
-  <Section>
-    <TableToolbar
-      defaultActions={<UrlTester setTesterUrl={setTesterUrl} testerUrl={testerUrl} />}
-      deleteRecords={deleteTriggers}
-      label="Triggers"
-      selectedIds={selectedIds}
-    />
-    <Table aria-labelledby="Triggers">
-      <TriggerRowStyle />
-      <TableHead
-        columns={columns}
-        handleRequestSort={handleRequestSort}
-        handleSelectAll={handleSelectAll}
-        isSelectAll={isSelectAll}
-        leftColumns={
-          <>
-            <TableCell>{'Sort'}</TableCell>
-            <TableCell>
-              <Checkbox
-                checked={isSelectAll}
-                checkedIcon={<CheckBoxIcon />}
-                color="primary"
-                onClick={handleSelectAll}
-              />
-            </TableCell>
-          </>
+  return (
+    <FormControl style={{ display: 'flex' }}>
+      <InputLabel htmlFor="urlTester">{'Test your URL here'}</InputLabel>
+      <Input
+        endAdornment={
+          <InputAdornment position="end">
+            {testerUrl.value && (
+              <IconButton aria-label="Clear url tester" onClick={resetUrl} style={{ padding: '4px' }}>
+                <Close fontSize="small" />
+              </IconButton>
+            )}
+          </InputAdornment>
         }
-        selectedIds={selectedIds}
-        triggers={triggers}
+        id="urlTester"
+        label=""
+        onChange={changeValue}
+        style={{ minWidth: '250px' }}
+        value={testerUrl.value}
       />
-      <SortableTriggerRows
-        distance={1}
-        handleSelectAll={handleSelectAll}
-        helperClass="sortable-element sortable-trigger-row"
-        hostnames={hostnames}
-        lockAxis="y"
-        onSortEnd={onSortEnd}
-        selectedIds={selectedIds}
-        setSelectedIds={setSelectedIds}
-        testerUrl={testerUrl}
-        triggers={triggers}
-        useDragHandle
-        useWindowAsScrollContainer
-      />
-    </Table>
-  </Section>
-)
+    </FormControl>
+  )
+}
 
-const TriggersList1 = compose(
-  withState('triggers', 'setTriggers', []),
-  withState('isLoading', 'setIsLoading', true),
-  withState('testerUrl', 'setTesterUrl', { value: '', matches: false }),
-  withState('selectedIds', 'setSelectedIds', []),
-  withState('hostnames', 'setHostnames', []),
-  withState('isSelectAll', 'setIsSelectAll', false),
-  withHandlers({
-    deleteTriggers: ({
-      enqueueSnackbar,
-      setIsSelectAll,
-      selectedIds,
-      setIsLoading,
-      setSelectedIds,
-      setTriggers,
-    }) => async () => {
+const appBarContent = { Actions: <Actions />, title: 'Triggers' }
+
+const TriggersList = ({ location }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
+  useAppBarContent(appBarContent)
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [triggers, setTriggers] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [testerUrl, setTesterUrl] = useState({ value: '', matches: false })
+  const [selectedIds, setSelectedIds] = useState([])
+  const [hostnames, setHostnames] = useState([])
+  const [isSelectAll, setIsSelectAll] = useState(false)
+
+  const deleteTriggers = useCallback(
+    async () => {
       const { requestError } = await apiRequest(apiTriggerDestroy, [{ ids: selectedIds }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       const { json, errors, requestError: requestError2 } = await apiRequest(apiTriggerList, [])
@@ -343,11 +294,19 @@ const TriggersList1 = compose(
       if (errors) return
       setTriggers(json)
     },
-    handleSelectAll: ({ setSelectedIds, triggers, setIsSelectAll }) => event => {
+    [enqueueSnackbar, selectedIds]
+  )
+
+  const handleSelectAll = useCallback(
+    event => {
       setSelectedIds(event.target.checked ? triggers.map(trigger => trigger.id) : [])
       setIsSelectAll(event.target.checked)
     },
-    onSortEnd: ({ enqueueSnackbar, setTriggers, triggers }) => async ({ oldIndex, newIndex }) => {
+    [triggers]
+  )
+
+  const onSortEnd = useCallback(
+    async ({ oldIndex, newIndex }) => {
       const orderedTriggers = arrayMove(triggers, oldIndex, newIndex)
       const orderedIds = orderedTriggers.map(trigger => trigger.id)
       setTriggers(orderedTriggers)
@@ -355,19 +314,25 @@ const TriggersList1 = compose(
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (!errors && !requestError) enqueueSnackbar('Sorted!', { variant: 'success' })
     },
-  }),
-  lifecycle({
-    async componentDidMount() {
-      const { enqueueSnackbar, setIsLoading, setTriggers, setHostnames } = this.props
-      const { json, response, errors, requestError } = await apiRequest(apiTriggerList, [])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (requestError || errors) return
-      setTriggers(json)
-      setHostnames(JSON.parse(response.headers.get('hostnames')))
-      setIsLoading(false)
+    [enqueueSnackbar, triggers]
+  )
+
+  useEffect(
+    () => {
+      ;(async () => {
+        const { json, response, errors, requestError } = await apiRequest(apiTriggerList, [])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (requestError || errors) return
+        setTriggers(json)
+        setHostnames(JSON.parse(response.headers.get('hostnames')))
+        setIsLoading(false)
+      })()
     },
-    componentDidUpdate() {
-      const { testerUrl, setTesterUrl, triggers, hostnames } = this.props
+    [enqueueSnackbar]
+  )
+
+  useEffect(
+    () => {
       if (testerUrl.value) {
         const matchesUrl = matchTriggers(triggers, testerUrl.value, hostnames)
         if (!isEqual(testerUrl.matches, matchesUrl)) {
@@ -375,22 +340,59 @@ const TriggersList1 = compose(
         }
       }
     },
-  }),
-  branch(({ isLoading }) => isLoading, renderComponent(CircularProgress)),
-  branch(({ triggers }) => triggers.length === 0, renderComponent(BlankState))
-)(TriggerList)
-
-const appBarContent = { Actions: <Actions />, title: 'Triggers' }
-
-const TriggersList2 = ({ location, ...props }) => {
-  const onboardingHelp = useMemo(
-    () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
-    [location.pathname]
+    [hostnames, testerUrl, triggers]
   )
-  useOnboardingHelp(onboardingHelp)
-  useAppBarContent(appBarContent)
-  const { enqueueSnackbar } = useSnackbar()
-  return <TriggersList1 {...props} enqueueSnackbar={enqueueSnackbar} location={location} />
+
+  if (isLoading) return <CircularProgress />
+  if (triggers.length === 0) return <BlankState />
+
+  return (
+    <Section>
+      <TableToolbar
+        defaultActions={<UrlTester setTesterUrl={setTesterUrl} testerUrl={testerUrl} />}
+        deleteRecords={deleteTriggers}
+        label="Triggers"
+        selectedIds={selectedIds}
+      />
+      <Table aria-labelledby="Triggers">
+        <TriggerRowStyle />
+        <TableHead
+          columns={columns}
+          handleSelectAll={handleSelectAll}
+          isSelectAll={isSelectAll}
+          leftColumns={
+            <>
+              <TableCell>{'Sort'}</TableCell>
+              <TableCell>
+                <Checkbox
+                  checked={isSelectAll}
+                  checkedIcon={<CheckBoxIcon />}
+                  color="primary"
+                  onClick={handleSelectAll}
+                />
+              </TableCell>
+            </>
+          }
+          selectedIds={selectedIds}
+          triggers={triggers}
+        />
+        <SortableTriggerRows
+          distance={1}
+          handleSelectAll={handleSelectAll}
+          helperClass="sortable-element sortable-trigger-row"
+          hostnames={hostnames}
+          lockAxis="y"
+          onSortEnd={onSortEnd}
+          selectedIds={selectedIds}
+          setSelectedIds={setSelectedIds}
+          testerUrl={testerUrl}
+          triggers={triggers}
+          useDragHandle
+          useWindowAsScrollContainer
+        />
+      </Table>
+    </Section>
+  )
 }
 
-export default withRouter(TriggersList2)
+export default withRouter(TriggersList)
