@@ -1,8 +1,10 @@
+import omit from 'lodash.omit'
+import React from 'react'
 import styled from 'styled-components'
 import { compose, lifecycle, withState } from 'recompose'
 import { timeout } from 'ext'
 
-const animate = component =>
+const animate = BaseComponent =>
   compose(
     withState('isEntering', 'setIsEntering', true),
     withState('timeoutName', 'setTimeoutName'),
@@ -18,7 +20,7 @@ const animate = component =>
         timeout.clear(timeoutName)
       },
     })
-  )(component)
+  )(props => <BaseComponent {...omit(props, ['timeoutName', 'setTimeoutName'])} />)
 
 const TopSlideAnimation = animate(
   styled.div`

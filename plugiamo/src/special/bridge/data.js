@@ -158,7 +158,7 @@ const data = {
               },
             ],
           },
-          ctaButton: { label: 'I want the white one!', action: 'want' },
+          ctaButton: { label: 'I want the white one!', action: 'want', backgroundColor: '#ff6b02', color: '#fff' },
         },
       },
       {
@@ -207,7 +207,7 @@ const data = {
               },
             ],
           },
-          ctaButton: { label: 'Ok, got it', action: 'ok-size' },
+          ctaButton: { label: 'Ok, got it', action: 'ok-size', backgroundColor: '#ff6b02', color: '#fff' },
         },
       },
       {
@@ -377,7 +377,7 @@ const data = {
               },
             ],
           },
-          ctaButton: { label: 'I want the red one!', action: 'want' },
+          ctaButton: { label: 'I want the red one!', action: 'want', backgroundColor: '#ff6b02', color: '#fff' },
         },
       },
       {
@@ -426,7 +426,7 @@ const data = {
               },
             ],
           },
-          ctaButton: { label: 'Ok, got it', action: 'ok-size' },
+          ctaButton: { label: 'Ok, got it', action: 'ok-size', backgroundColor: '#ff6b02', color: '#fff' },
         },
       },
       {
@@ -523,7 +523,7 @@ const data = {
               },
             ],
           },
-          ctaButton: { label: 'Proceed to checkout', action: 'checkout' },
+          ctaButton: { label: 'Proceed to checkout', action: 'checkout', backgroundColor: '#ff6b02', color: '#fff' },
         },
       },
       {

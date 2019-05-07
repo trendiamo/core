@@ -1,4 +1,5 @@
 import dataGathering from 'data-gathering/pierre-cardin'
+import mixpanel from 'ext/mixpanel'
 import { suggestions } from './data'
 
 const assessmentHack = () =>
@@ -65,4 +66,22 @@ const recommendedProducts = results => {
   }
 }
 
-export { assessmentHack, rememberPersona, recallPersona, recommendedProducts, assessmentCart, fetchProducts }
+const clickAssessmentProduct = item => {
+  if (!item.url) return
+  mixpanel.track('Clicked Assessment Store Product', {
+    hostname: location.hostname,
+    productUrl: item.url,
+    productName: item.title,
+  })
+  window.location.href = item.url
+}
+
+export {
+  assessmentHack,
+  clickAssessmentProduct,
+  rememberPersona,
+  recallPersona,
+  recommendedProducts,
+  assessmentCart,
+  fetchProducts,
+}

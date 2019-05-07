@@ -1,57 +1,69 @@
-import Chat from './chat'
-import Container from 'app/content/scripted-chat/components/base-container'
+import ChatModals from 'shared/chat-modals'
 import data from './data'
+import flatten from 'lodash.flatten'
+import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import StoreModal from './store-modal'
+import withChatActions from 'ext/recompose/with-chat-actions'
+import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
+import { isSmall } from 'utils'
 import { rememberPersona } from './utils'
-import { timeout } from 'plugin-base'
+import { SimpleChat, timeout } from 'plugin-base'
+
+const assessProducts = (products, tags) => {
+  const productsResult = flatten(tags.map(tag => products.filter(product => product.tag && tag === product.tag)))
+  return productsResult.sort((a, b) => !!b.highlight - !!a.highlight)
+}
 
 const Base = ({
   currentStep,
-  endNodeTags,
   goToNextStep,
-  handleScroll,
-  setContentRef,
-  contentRef,
   animateOpacity,
   progress,
-  setShowingContent,
-  setShowingLauncher,
   showingCtaButton,
   step,
-  touch,
-  coverMinimized,
   goToPrevStep,
   nothingSelected,
   ctaButtonClicked,
   setCtaButtonClicked,
+  storeLog,
+  onCtaButtonClick,
+  hideProgressBar,
+  modalsProps,
+  clickActions,
 }) => (
-  <Container animateOpacity={animateOpacity} contentRef={contentRef}>
-    <Chat
-      contentRef={contentRef}
-      coverMinimized={coverMinimized}
-      ctaButtonClicked={ctaButtonClicked}
+  <div>
+    <ChatModals {...modalsProps} />
+    <SimpleChat
+      animateOpacity={animateOpacity}
+      assessment
+      assessmentOptions={{ step, goToNextStep }}
+      backButtonLabel={getFrekklsConfig().i18n.backButton}
+      clickActions={clickActions}
+      clicked={ctaButtonClicked}
+      ctaButton={{ label: 'Ergebnisse anzeigen' }}
       currentStep={currentStep}
-      endNodeTags={endNodeTags}
-      goToNextStep={goToNextStep}
+      data={step}
       goToPrevStep={goToPrevStep}
-      handleScroll={handleScroll}
+      hideCtaButton={currentStep.type === 'store' || !showingCtaButton}
+      hideProgressBar={hideProgressBar}
       nothingSelected={nothingSelected}
+      onCtaButtonClick={onCtaButtonClick}
       progress={progress}
-      setContentRef={setContentRef}
       setCtaButtonClicked={setCtaButtonClicked}
-      setShowingContent={setShowingContent}
-      setShowingLauncher={setShowingLauncher}
-      showingCtaButton={showingCtaButton}
-      step={step}
-      touch={touch}
+      showBackButton
+      storeLog={storeLog}
     />
-  </Container>
+  </div>
 )
 
+const prepareProductsToChat = results => {
+  return [{ message: { assessmentProducts: [...results], type: 'assessmentProducts' }, type: 'message' }]
+}
+
 export default compose(
-  withState('pluginState', 'setPluginState', 'default'),
   withState('animateOpacity', 'setAnimateOpacity', ({ animateOpacity }) => animateOpacity),
   withProps({ module: data.assessment }),
   withState('currentStepKey', 'setCurrentStepKey', ({ showAssessmentContent }) =>
@@ -74,6 +86,7 @@ export default compose(
   withState('endNodeTags', 'setEndNodeTags', []),
   withState('showingCtaButton', 'setShowingCtaButton', false),
   withState('ctaButtonClicked', 'setCtaButtonClicked', false),
+  withState('hideProgressBar', 'setHideProgressBar', false),
   withHandlers(() => {
     let contentRef
     return {
@@ -105,7 +118,8 @@ export default compose(
       setShowingCtaButton(newTags.length > 0)
       return setEndNodeTags(newTags)
     },
-    goToStore: ({ setProgress, setCurrentStepKey }) => () => {
+    goToStore: ({ setProgress, setCurrentStepKey, setHideProgressBar }) => () => {
+      setTimeout(() => setHideProgressBar(true), 800)
       setProgress(100)
       setCurrentStepKey('store')
     },
@@ -184,6 +198,7 @@ export default compose(
       setEndNodeTags,
       currentStepKey,
       setCtaButtonClicked,
+      setHideProgressBar,
     }) => () => {
       const tagsLength = tags.length
       if (tagsLength === 0) {
@@ -201,6 +216,7 @@ export default compose(
       const newStepKey = newTags.join('/')
       if (currentStepKey === 'store') {
         setShowAssessmentContent({ key: newStepKey, progress })
+        setHideProgressBar(false)
       }
       setCurrentStepKey(key === 'root' ? key : newStepKey)
       setTags(newTags)
@@ -211,6 +227,13 @@ export default compose(
       setCtaButtonClicked(false)
     },
   }),
+  withHandlers({
+    onCtaButtonClick: ({ goToNextStep, setCtaButtonClicked }) => () => {
+      goToNextStep('showResults')
+      setCtaButtonClicked(true)
+    },
+  }),
+  withState('results', 'setResults', []),
   lifecycle({
     componentDidMount() {
       const { step, setCurrentStep, animateOpacity, setAnimateOpacity, progress, setProgress } = this.props
@@ -228,8 +251,16 @@ export default compose(
       timeout.clear('loadingProgressBar')
     },
     componentDidUpdate(prevProps) {
-      const { step, setCurrentStep, progress, setProgress } = this.props
+      const { step, setCurrentStep, currentStepKey, progress, setProgress } = this.props
       if (prevProps.step !== step) {
+        if (currentStepKey === 'store') {
+          const _this = this
+          fetchProducts(results => {
+            const { setResults, endNodeTags } = _this.props
+            const client = results.find(client => client.hostname === window.location.hostname)
+            setResults(assessProducts(client.products, endNodeTags))
+          })
+        }
         if (prevProps.currentStepKey === 'store' && progress === 100) {
           setTimeout(() => {
             setProgress(progress - 33)
@@ -243,5 +274,13 @@ export default compose(
         )
       }
     },
-  })
+  }),
+  withProps(({ results }) => ({
+    storeLog: {
+      type: 'message',
+      logs: results.length > 0 && prepareProductsToChat(results),
+    },
+  })),
+  withChatActions(),
+  branch(({ currentStepKey }) => !isSmall() && currentStepKey === 'store', renderComponent(StoreModal))
 )(Base)

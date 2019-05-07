@@ -1,5 +1,6 @@
 import LauncherBubbleFrame from './launcher-bubble-frame'
 import React from 'react'
+import withRef from 'ext/with-ref'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { ChatBubbleBase, Container } from './components'
 import { emojify, timeout } from 'ext'
@@ -38,20 +39,18 @@ const LauncherBubble = compose(
   withState('animation', 'setAnimation', null),
   withState('textWidth', 'setTextWidth', 0),
   withState('elevation', 'setElevation', false),
+  withRef('getTextWidthRef', 'setTextWidthRef'),
   withProps(({ extraBubble }) => ({
     bubbleTimeoutId: `chatBubble${extraBubble && 'Extra'}`,
   })),
-  withHandlers(() => {
-    let textWidthRef
-    return {
-      setTextWidthRef: () => ref => (textWidthRef = ref && ref.base ? ref : { base: ref }),
-      changeTextWidth: ({ setTextWidth }) => () => {
-        if (!textWidthRef || !textWidthRef.base) return
-        setTextWidth(textWidthRef.base.offsetWidth)
-        textWidthRef.base.style.transform = `translate(-${Math.floor(textWidthRef.base.offsetWidth / 2)}px, 0)`
-        textWidthRef.base.style.opacity = 1
-      },
-    }
+  withHandlers({
+    changeTextWidth: ({ setTextWidth, getTextWidthRef }) => () => {
+      const textWidthRef = getTextWidthRef()
+      if (!textWidthRef) return
+      setTextWidth(textWidthRef.offsetWidth)
+      textWidthRef.style.transform = `translate(-${Math.floor(textWidthRef.offsetWidth / 2)}px, 0)`
+      textWidthRef.style.opacity = 1
+    },
   }),
   withHandlers({
     reset: ({ setTimeEnded, extraBubble, setAnimation, setTextWidth, setElevation, bubbleTimeoutId }) => () => {

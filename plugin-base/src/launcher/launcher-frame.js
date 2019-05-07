@@ -1,8 +1,7 @@
-import animateOnMount from 'shared/animate-on-mount'
-import FrameBase from 'shared/frame'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
+import { animateOnMount, Frame as FrameBase } from 'shared'
 
 const LauncherFrame = animateOnMount(styled(props => (
   <FrameBase {...omit(props, ['position', 'entry', 'setEntry', 'showingContent', 'disappear', 'launcherConfig'])} />

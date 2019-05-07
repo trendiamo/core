@@ -4,17 +4,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, renderNothing, withProps } from 'recompose'
 import { List } from 'shared/list'
+import { Title } from 'shared'
 import { TopSlideAnimation } from 'shared/animate'
 
 const Container = styled.div`
   height: 100%;
   padding: 1rem;
-`
-
-const H2 = styled.h2`
-  margin: 0;
-  font-size: 18px;
-  margin-bottom: 12px;
 `
 
 const SpotlightContent = compose(
@@ -25,7 +20,7 @@ const SpotlightContent = compose(
   branch(({ spotlight }) => !spotlight, renderNothing)
 )(({ isLeaving, spotlight, callbacks }) => (
   <Container>
-    <H2 dangerouslySetInnerHTML={{ __html: emojify(spotlight.translation.selectedBy) }} />
+    <Title dangerouslySetInnerHTML={{ __html: emojify(spotlight.translation.selectedBy) }} />
     <TopSlideAnimation isLeaving={isLeaving} name="content">
       <List objectForResetCheck={spotlight}>
         {spotlight.productPicks.map((product, index) => (

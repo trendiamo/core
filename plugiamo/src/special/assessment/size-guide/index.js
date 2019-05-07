@@ -1,63 +1,53 @@
-import Base from './base'
 import blacklistTags from './blacklist-tags'
+import ChatModals from 'shared/chat-modals'
 import data from 'special/assessment/data'
+import getFrekklsConfig from 'frekkls-config'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
+import withChatActions from 'ext/recompose/with-chat-actions'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { fetchProducts } from 'special/assessment/utils'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
-import { timeout } from 'plugin-base'
+import { SimpleChat, timeout } from 'plugin-base'
 
 const Plugin = ({
   showingLauncher,
   isUnmounting,
-  step,
-  steps,
-  goToNextStep,
   module,
   onToggleContent,
-  setShowingLauncher,
   setPluginState,
-  setShowingContent,
   showingContent,
-  stepIndex,
-  depth,
-  showingCtaButton,
   pluginState,
-  products,
-  productsData,
   launcherDisappear,
+  modalsProps,
+  clickActions,
 }) => (
-  <AppBase
-    Component={
-      <Base
-        depth={depth}
-        goToNextStep={goToNextStep}
-        module={module}
-        products={products}
-        productsData={productsData}
-        setPluginState={setPluginState}
-        setShowingContent={setShowingContent}
-        setShowingLauncher={setShowingLauncher}
-        showingCtaButton={showingCtaButton}
-        step={step}
-        stepIndex={stepIndex}
-        steps={steps}
-      />
-    }
-    data={module}
-    isUnmounting={isUnmounting}
-    Launcher={showingLauncher && Launcher}
-    launcherDisappear={launcherDisappear}
-    launcherPulsating={pluginState !== 'closed'}
-    onToggleContent={onToggleContent}
-    persona={module.launcher.persona}
-    showingContent={showingContent}
-    showingLauncher={showingLauncher}
-  />
+  <div>
+    <ChatModals {...modalsProps} />
+    <AppBase
+      Component={
+        <SimpleChat
+          backButtonLabel={getFrekklsConfig().i18n.backButton}
+          bridge
+          clickActions={clickActions}
+          data={module}
+          setPluginState={setPluginState}
+        />
+      }
+      data={module}
+      isUnmounting={isUnmounting}
+      Launcher={showingLauncher && Launcher}
+      launcherDisappear={launcherDisappear}
+      launcherPulsating={pluginState !== 'closed'}
+      onToggleContent={onToggleContent}
+      persona={module.launcher.persona}
+      showingContent={showingContent}
+      showingLauncher={showingLauncher}
+    />
+  </div>
 )
 
 export default compose(
@@ -142,5 +132,6 @@ export default compose(
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()
     },
-  })
+  }),
+  withChatActions
 )(Plugin)

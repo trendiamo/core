@@ -1,27 +1,12 @@
-import ChatLogUi from './chat-log-ui'
-import Container from './components/base-container'
-import Cover from './components/cover'
-import ScrollLock from 'ext/scroll-lock'
-import { branch, compose, renderNothing, withHandlers } from 'recompose'
+import chatLogCallbacks from 'shared/chat-log-callbacks'
+import ChatModals from 'shared/chat-modals'
+import FlowBackButton from 'shared/flow-back-button'
+import getFrekklsConfig from 'frekkls-config'
+import withChatActions from 'ext/recompose/with-chat-actions'
+import { branch, compose, renderNothing, withProps } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
-
-const Base = ({ persona, onToggleContent, getContentRef, setContentRef, handleScroll, data, client }) => (
-  <Container contentRef={getContentRef}>
-    <ScrollLock>
-      <Cover persona={persona} />
-      <ChatLogUi
-        client={client}
-        contentRef={getContentRef}
-        data={data}
-        onScroll={handleScroll}
-        onToggleContent={onToggleContent}
-        persona={persona}
-        setContentRef={setContentRef}
-      />
-    </ScrollLock>
-  </Container>
-)
+import { SimpleChat } from 'plugin-base'
 
 export default compose(
   graphql(
@@ -44,12 +29,16 @@ export default compose(
     `,
     ({ id }) => ({ id })
   ),
-  branch(({ data }) => !data || data.loading || data.error, renderNothing),
-  withHandlers(() => {
-    let contentRef
-    return {
-      setContentRef: () => ref => (contentRef = ref),
-      getContentRef: () => () => contentRef,
-    }
-  })
-)(Base)
+  withChatActions(),
+  withProps({
+    backButtonLabel: getFrekklsConfig().i18n.backButton,
+    FlowBackButton,
+    chatLogCallbacks,
+  }),
+  branch(({ data }) => !data || data.loading || data.error, renderNothing)
+)(({ modalsProps, ...props }) => (
+  <div>
+    <ChatModals {...modalsProps} />
+    <SimpleChat {...props} />
+  </div>
+))

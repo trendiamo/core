@@ -4,7 +4,7 @@ const segmentize = url => url.replace(/(^\/+|\/+$)/g, '').split('/')
 
 const EMPTY = {}
 
-export const matchUrl = (url, route) => {
+const matchUrl = (url, route) => {
   const reg = /(?:\?([^#]*))?(#.*)?$/
   let c = url.match(reg),
     matches = {},
@@ -47,7 +47,7 @@ export const matchUrl = (url, route) => {
   return matches
 }
 
-export const imgixUrl = (url, imgixParams) => {
+const imgixUrl = (url, imgixParams) => {
   if (url.lastIndexOf('https://console-assets.ams3.digitaloceanspaces.com', 0) !== 0) return url
   const urlObj = new URL(url)
   const dpr = window.devicePixelRatio || 1
@@ -55,7 +55,7 @@ export const imgixUrl = (url, imgixParams) => {
   return `https://trendiamo-assets.imgix.net${urlObj.pathname}?${stringify(search)}`
 }
 
-export const positioning = {
+const positioning = {
   content: null,
   launcherBubbles: null,
   launcherButtons: null,
@@ -90,4 +90,99 @@ export const positioning = {
     Object.keys(object).map(key => (object[key] = Math.floor(object[key]) + 'px'))
     return object
   },
+}
+
+const extractYoutubeId = message => {
+  const regExp = /^\S*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/
+  const match = message.match(regExp)
+  return match && match[2].length === 11 && match[2]
+}
+
+const extractJson = message => {
+  if (message[0] !== '{') return
+  try {
+    return JSON.parse(message)
+  } catch (e) {
+    return null
+  }
+}
+
+const isFrameActive = () => {
+  return (
+    document.activeElement &&
+    document.activeElement.tagName.toLowerCase() === 'iframe' &&
+    document.activeElement.title === 'Trendiamo Content'
+  )
+}
+
+const convertLogs = logs => {
+  let newLog = []
+  let currentList = []
+  logs.map((log, index) => {
+    const nextLog = logs[index + 1]
+    currentList.push(log)
+    if (nextLog) {
+      if (nextLog.type !== log.type) {
+        newLog.push({ ...log, logs: currentList })
+        currentList = []
+      }
+      return
+    }
+    newLog.push({ ...log, logs: currentList })
+  })
+  return newLog
+}
+
+const listeners = {
+  list: [],
+  addMany(fns) {
+    fns.forEach(fn => {
+      this.add(fn)
+    })
+  },
+  reset(listeners) {
+    this.removeAll()
+    this.addMany(listeners)
+  },
+  add(fn) {
+    this.list.push(fn)
+  },
+  remove(fn) {
+    this.list = this.list.filter(e => e !== fn)
+  },
+  removeAll() {
+    this.list = []
+  },
+  fireAll(params) {
+    this.list.forEach(fn => fn(params))
+  },
+}
+
+const replaceExternalLinks = message => {
+  const messageWrapper = document.createElement('div')
+  messageWrapper.innerHTML = message
+  Array.from(messageWrapper.getElementsByTagName('a')).forEach(a => {
+    if (a.hostname !== window.location.hostname) {
+      a.setAttribute('target', '_blank')
+      a.setAttribute('rel', 'noreferrer noopener')
+    }
+  })
+  return messageWrapper.innerHTML
+}
+
+const MESSAGE_INTERVAL = 400
+const MESSAGE_RANDOMIZER = 320
+
+export {
+  matchUrl,
+  imgixUrl,
+  positioning,
+  extractYoutubeId,
+  extractJson,
+  isFrameActive,
+  convertLogs,
+  listeners,
+  MESSAGE_INTERVAL,
+  MESSAGE_RANDOMIZER,
+  replaceExternalLinks,
 }
