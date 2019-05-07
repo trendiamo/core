@@ -1,7 +1,7 @@
 import auth from 'auth'
 import Autocomplete from 'shared/autocomplete'
 import CircularProgress from 'shared/circular-progress'
-import React, { useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
@@ -9,7 +9,6 @@ import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, AddItemButton, Cancel, Form, HelperText } from 'shared/form-elements'
 import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow, refreshRoute } from 'utils'
-import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
 import { FormControl, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -22,28 +21,31 @@ const FlexDiv = styled.div`
   align-items: center;
 `
 
-const UrlTextField = compose(
-  withHandlers({
-    editUrlValue: ({ index, onChange }) => event => {
+const UrlTextField = ({ index, onChange, value, hostnames, ...props }) => {
+  const editUrlValue = useCallback(
+    event => {
       onChange(index, event.target.value)
     },
-  })
-)(({ editUrlValue, value, hostnames, ...props }) => (
-  <TextField
-    {...props}
-    InputProps={{
-      startAdornment: (
-        <InputAdornment>
-          <Typography style={{ whiteSpace: 'nowrap' }}>
-            {hostnames.length > 1 ? 'https://yourwebsite.com' : hostnames[0]}
-          </Typography>
-        </InputAdornment>
-      ),
-    }}
-    onChange={editUrlValue}
-    value={value}
-  />
-))
+    [index, onChange]
+  )
+
+  return (
+    <TextField
+      {...props}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment>
+            <Typography style={{ whiteSpace: 'nowrap' }}>
+              {hostnames.length > 1 ? 'https://yourwebsite.com' : hostnames[0]}
+            </Typography>
+          </InputAdornment>
+        ),
+      }}
+      onChange={editUrlValue}
+      value={value}
+    />
+  )
+}
 
 const StyledUrlTextField = styled(UrlTextField)`
   flex: 1;
@@ -52,125 +54,63 @@ const StyledUrlTextField = styled(UrlTextField)`
 
 const options = { suggestionItem: 'withModuleIcon' }
 
-const TriggerForm = ({
-  addUrlSelect,
-  deleteUrlMatcher,
-  editUrlValue,
-  form,
-  formRef,
-  isFormLoading,
-  hostnames,
-  isFormPristine,
-  onFormSubmit,
-  title,
-  selectFlow,
-}) => (
-  <Section title={title}>
-    <Grid item sm={6}>
-      <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-        <Autocomplete
-          autocomplete={apiFlowsAutocomplete}
-          defaultPlaceholder="Choose a Module"
-          disabled={isFormLoading}
-          fullWidth
-          initialSelectedItem={form.flowId && { value: form.flowId, label: form.flowLabel }}
-          initialValueFormatMismatch
-          label="Module"
-          onChange={selectFlow}
-          options={options}
-          required
-        />
-        <HelperText>{'Choose between Showcases, Navigations, etc.'}</HelperText>
-        <FormControl fullWidth margin="normal">
-          <InputLabel shrink>{'Url Matchers'}</InputLabel>
-          <div style={{ marginTop: '11px' }}>
-            {form.urlMatchers.map((url, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <FlexDiv key={index}>
-                <StyledUrlTextField
-                  disabled={isFormLoading}
-                  hostnames={hostnames}
-                  index={index}
-                  inputProps={{
-                    pattern: hostnames.includes('www.pionier-workwear.com') ? pathAndSearchPattern : pathPattern,
-                  }}
-                  onChange={editUrlValue}
-                  required
-                  value={url}
-                />
-                {form.urlMatchers.length > 1 && (
-                  <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
-                )}
-              </FlexDiv>
-            ))}
-          </div>
-          <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
-        </FormControl>
-        <HelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</HelperText>
-        <HelperText>
-          {'ℹ️ You can use a matching pattern such as /products/:id to match all urls in that form.'}
-        </HelperText>
-      </Form>
-    </Grid>
-  </Section>
-)
-
-const TriggerForm1 = compose(
-  lifecycle({
-    async componentDidMount() {
-      const { setHostnames, enqueueSnackbar } = this.props
-      const { json, requestError } = await apiRequest(apiWebsiteShow, [
-        auth.isAdmin() ? auth.getAdminSessionAccount().websitesAttributes[0].id : auth.getUser().account.websiteIds[0],
-      ])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      setHostnames(json.hostnames)
-    },
-  })
-)(TriggerForm)
-
-const TriggerForm2 = props => {
-  const { backRoute, title, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine } = props
-  const appBarContent = useMemo(
-    () => ({
-      Actions: (
-        <Actions
-          isFormPristine={isFormPristine}
-          isFormSubmitting={isFormSubmitting}
-          onFormSubmit={onFormSubmit}
-          saveAndCreateNewEnabled
-          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
-          tooltipEnabled
-          tooltipText="No changes to save"
-        />
-      ),
-      backRoute,
-      title,
-    }),
-    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, title]
-  )
-  useAppBarContent(appBarContent)
-
-  return <TriggerForm1 {...props} />
+const defaultForm = {
+  flowId: '',
+  flowType: '',
+  urlMatchers: [''],
 }
 
-const TriggerForm3 = compose(
-  withHandlers({
-    addUrlSelect: ({ form, setForm }) => () => {
+const formObjectTransformer = json => {
+  return {
+    id: json.id,
+    flowId: json.flowId || '',
+    flowType: json.flowType || '',
+    urlMatchers: json.urlMatchers || [''],
+    flowLabel: (json.flow && json.flow.name) || '',
+  }
+}
+
+const TriggerForm = ({ history, backRoute, location, title, loadFormObject, saveFormObject, enqueueSnackbar }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
+
+  const formRef = useRef()
+  const [hostnames, setHostnames] = useState([])
+
+  const { form, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, setForm, setIsFormSubmitting } = useForm(
+    { formObjectTransformer, defaultForm, loadFormObject, saveFormObject }
+  )
+
+  const addUrlSelect = useCallback(
+    () => {
       setForm({ ...form, urlMatchers: [...form.urlMatchers, ''] })
     },
-    editUrlValue: ({ form, setForm }) => (index, newValue) => {
+    [form, setForm]
+  )
+
+  const editUrlValue = useCallback(
+    (index, newValue) => {
       const newUrlMatchers = [...form.urlMatchers]
       newUrlMatchers[index] = newValue
       setForm({ ...form, urlMatchers: newUrlMatchers })
     },
-    deleteUrlMatcher: ({ form, setForm }) => index => {
+    [form, setForm]
+  )
+
+  const deleteUrlMatcher = useCallback(
+    index => {
       let newUrlMatchers = [...form.urlMatchers]
       newUrlMatchers.splice(index, 1)
       setForm({ ...form, urlMatchers: newUrlMatchers })
     },
-  }),
-  withHandlers({
-    onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async (event, action) => {
+    [form, setForm]
+  )
+
+  const newOnFormSubmit = useCallback(
+    async (event, action) => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       setIsFormSubmitting(false)
@@ -184,7 +124,11 @@ const TriggerForm3 = compose(
       }
       return result
     },
-    selectFlow: ({ form, setForm }) => selected => {
+    [history, location.pathname, onFormSubmit, setIsFormSubmitting]
+  )
+
+  const selectFlow = useCallback(
+    selected => {
       selected &&
         setForm({
           ...form,
@@ -192,43 +136,96 @@ const TriggerForm3 = compose(
           flowType: selected.value.type,
         })
     },
-  }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
-)(TriggerForm2)
-
-const TriggerForm4 = props => {
-  const defaultForm = {
-    flowId: '',
-    flowType: '',
-    urlMatchers: [''],
-  }
-  const formProps = useForm({ ...props, defaultForm })
-  return <TriggerForm3 {...props} {...formProps} />
-}
-
-const TriggerForm5 = compose(
-  withProps({ formRef: React.createRef() }),
-  withState('hostnames', 'setHostnames', []),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        id: json.id,
-        flowId: json.flowId || '',
-        flowType: json.flowType || '',
-        urlMatchers: json.urlMatchers || [''],
-        flowLabel: (json.flow && json.flow.name) || '',
-      }
-    },
-  })
-)(TriggerForm4)
-
-const TriggerForm6 = ({ location, ...props }) => {
-  const onboardingHelp = useMemo(
-    () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
-    [location.pathname]
+    [form, setForm]
   )
-  useOnboardingHelp(onboardingHelp)
-  return <TriggerForm5 {...props} location={location} />
+
+  const appBarContent = useMemo(
+    () => ({
+      Actions: (
+        <Actions
+          isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={newOnFormSubmit}
+          saveAndCreateNewEnabled
+          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+          tooltipEnabled
+          tooltipText="No changes to save"
+        />
+      ),
+      backRoute,
+      title,
+    }),
+    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit, title]
+  )
+  useAppBarContent(appBarContent)
+
+  useEffect(
+    () => {
+      ;(async () => {
+        const { json, requestError } = await apiRequest(apiWebsiteShow, [
+          auth.isAdmin()
+            ? auth.getAdminSessionAccount().websitesAttributes[0].id
+            : auth.getUser().account.websiteIds[0],
+        ])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        setHostnames(json.hostnames)
+      })()
+    },
+    [enqueueSnackbar]
+  )
+
+  if (isFormLoading) return <CircularProgress />
+
+  return (
+    <Section title={title}>
+      <Grid item sm={6}>
+        <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
+          <Autocomplete
+            autocomplete={apiFlowsAutocomplete}
+            defaultPlaceholder="Choose a Module"
+            disabled={isFormLoading}
+            fullWidth
+            initialSelectedItem={form.flowId && { value: form.flowId, label: form.flowLabel }}
+            initialValueFormatMismatch
+            label="Module"
+            onChange={selectFlow}
+            options={options}
+            required
+          />
+          <HelperText>{'Choose between Showcases, Navigations, etc.'}</HelperText>
+          <FormControl fullWidth margin="normal">
+            <InputLabel shrink>{'Url Matchers'}</InputLabel>
+            <div style={{ marginTop: '11px' }}>
+              {form.urlMatchers.map((url, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <FlexDiv key={index}>
+                  <StyledUrlTextField
+                    disabled={isFormLoading}
+                    hostnames={hostnames}
+                    index={index}
+                    inputProps={{
+                      pattern: hostnames.includes('www.pionier-workwear.com') ? pathAndSearchPattern : pathPattern,
+                    }}
+                    onChange={editUrlValue}
+                    required
+                    value={url}
+                  />
+                  {form.urlMatchers.length > 1 && (
+                    <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
+                  )}
+                </FlexDiv>
+              ))}
+            </div>
+            <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
+          </FormControl>
+          <HelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</HelperText>
+          <HelperText>
+            {'ℹ️ You can use a matching pattern such as /products/:id to match all urls in that form.'}
+          </HelperText>
+        </Form>
+      </Grid>
+    </Section>
+  )
 }
 
-export default withRouter(TriggerForm6)
+export default withRouter(TriggerForm)
