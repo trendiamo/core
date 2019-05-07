@@ -211,9 +211,9 @@ const SimpleChatForm1 = compose(
     onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      if (result.error || result.errors) return setIsFormSubmitting(false)
-      if (location.pathname !== routes.simpleChatEdit(result.id)) history.push(routes.simpleChatEdit(result.id))
       setIsFormSubmitting(false)
+      if (result.error || result.errors) return
+      if (location.pathname !== routes.simpleChatEdit(result.id)) history.push(routes.simpleChatEdit(result.id))
       return result
     },
     onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {

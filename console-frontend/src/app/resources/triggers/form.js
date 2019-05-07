@@ -173,7 +173,8 @@ const TriggerForm3 = compose(
     onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async (event, action) => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      if (result.error || result.errors) return setIsFormSubmitting(false)
+      setIsFormSubmitting(false)
+      if (result.error || result.errors) return
       if (action === 'Save & New') {
         location.pathname === routes.triggerCreate()
           ? refreshRoute(history, routes.triggerCreate())

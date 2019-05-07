@@ -1,10 +1,10 @@
-import BasePersonaForm from './form'
+import PersonaForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiPersonaShow, apiPersonaUpdate, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
-const PersonaForm = ({ match, ...props }) => {
+const EditPersonaForm = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const loadFormObject = useCallback(
@@ -34,8 +34,7 @@ const PersonaForm = ({ match, ...props }) => {
   )
 
   return (
-    <BasePersonaForm
-      {...props}
+    <PersonaForm
       backRoute={routes.personasList()}
       enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
@@ -46,4 +45,4 @@ const PersonaForm = ({ match, ...props }) => {
   )
 }
 
-export default PersonaForm
+export default EditPersonaForm

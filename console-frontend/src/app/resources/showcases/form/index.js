@@ -88,10 +88,10 @@ const Showcase1 = compose(
     onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      if (result.error || result.errors) return setIsFormSubmitting(false)
+      setIsFormSubmitting(false)
+      if (result.error || result.errors) return
       pluginHistory.replace(pluginRoutes.showcase(result.id))
       if (location.pathname !== routes.showcaseEdit(result.id)) history.push(routes.showcaseEdit(result.id))
-      setIsFormSubmitting(false)
       return result
     },
     onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {

@@ -1,4 +1,4 @@
-import BasePersonaForm from './form'
+import PersonaForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiPersonaCreate, apiRequest } from 'utils'
@@ -13,7 +13,7 @@ const loadFormObject = () => {
   }
 }
 
-const PersonaForm = props => {
+const CreatePersonaForm = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const saveFormObject = useCallback(
@@ -30,10 +30,8 @@ const PersonaForm = props => {
   )
 
   return (
-    <BasePersonaForm
-      {...props}
+    <PersonaForm
       backRoute={routes.personasList()}
-      enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
       onboardingCreate
       saveFormObject={saveFormObject}
@@ -42,4 +40,4 @@ const PersonaForm = props => {
   )
 }
 
-export default PersonaForm
+export default CreatePersonaForm
