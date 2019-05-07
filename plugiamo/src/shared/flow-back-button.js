@@ -12,6 +12,6 @@ const FlowBackButton = compose(
     },
   }),
   branch(() => !shouldRenderBack(), renderNothing)
-)(({ onClick }) => <BackButton backButtonLabel={getFrekklsConfig().i18n.backButton} onClick={onClick} />)
+)(({ onClick }) => <BackButton label={getFrekklsConfig().i18n.backButton} onClick={onClick} />)
 
 export default FlowBackButton

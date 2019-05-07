@@ -4,6 +4,7 @@ import IconChevronRight from './icon-chevron-right.svg'
 import IconClose from './icon-close.svg'
 import IconInstagram from './icon-instagram.svg'
 import IconPlaceholderPersona from './icon-placeholder-persona.svg'
+import IconPlay from './ic-play.svg'
 import IconPlayButton from './icon-play-button.svg'
 
 export {
@@ -14,4 +15,5 @@ export {
   IconClose,
   IconPlayButton,
   IconInstagram,
+  IconPlay,
 }

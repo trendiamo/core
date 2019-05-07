@@ -5,11 +5,7 @@ import { compose } from 'recompose'
 import { h } from 'preact'
 import { IconClose } from 'plugin-base'
 
-const ModalComp = compose(
-  withHotkeys({
-    [escapeKey]: ({ closeModal }) => closeModal,
-  })
-)(({ allowBackgroundClose, closeModal, children }) => (
+const ModalTemplate = ({ allowBackgroundClose, closeModal, children }) => (
   <div
     onClick={allowBackgroundClose && closeModal}
     role="presentation"
@@ -45,7 +41,13 @@ const ModalComp = compose(
       <FocusLock>{children}</FocusLock>
     </div>
   </div>
-))
+)
+
+const ModalComp = compose(
+  withHotkeys({
+    [escapeKey]: ({ closeModal }) => closeModal,
+  })
+)(ModalTemplate)
 
 const Modal = ({ allowBackgroundClose, closeModal, isOpen, into = 'body', children }) =>
   isOpen ? (

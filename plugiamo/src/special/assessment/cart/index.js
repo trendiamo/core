@@ -1,50 +1,27 @@
-import Base from './base'
 import data from 'special/assessment/data'
+import getFrekklsConfig from 'frekkls-config'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
+import withChatActions from 'ext/recompose/with-chat-actions'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { fetchProducts, recommendedProducts } from 'special/assessment/utils'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
-import { timeout } from 'plugin-base'
+import { SimpleChat, timeout } from 'plugin-base'
 
-const Plugin = ({
-  showingLauncher,
-  isUnmounting,
-  step,
-  steps,
-  goToNextStep,
-  module,
-  onToggleContent,
-  setShowingLauncher,
-  setPluginState,
-  setShowingContent,
-  showingContent,
-  stepIndex,
-  depth,
-  tags,
-  showingCtaButton,
-  products,
-  productsData,
-}) => (
+const Plugin = ({ showingLauncher, isUnmounting, module, onToggleContent, showingContent, products, clickActions }) => (
   <AppBase
     Component={
-      <Base
-        depth={depth}
-        goToNextStep={goToNextStep}
-        module={module}
+      <SimpleChat
+        backButtonLabel={getFrekklsConfig().i18n.backButton}
+        bridge
+        clickActions={clickActions}
+        ctaButton={module.ctaButton}
+        data={module}
+        lazyLoadingCount={6}
         products={products}
-        productsData={productsData}
-        setPluginState={setPluginState}
-        setShowingContent={setShowingContent}
-        setShowingLauncher={setShowingLauncher}
-        showingCtaButton={showingCtaButton}
-        step={step}
-        stepIndex={stepIndex}
-        steps={steps}
-        tags={tags}
       />
     }
     data={module}
@@ -68,6 +45,7 @@ export default compose(
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
   withState('showingLauncher', 'setShowingLauncher', true),
+  withChatActions(),
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent, setProductsData, setProducts } = this.props

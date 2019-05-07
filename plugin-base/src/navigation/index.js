@@ -1,12 +1,10 @@
-import Cover, { BelowCover } from 'shared/cover'
-import PersonaInstagram from 'shared/persona-instagram'
 import React from 'react'
 import styled from 'styled-components'
+import { BelowCover, CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover/components'
 import { compose } from 'recompose'
-import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
+import { Cover, PersonaInstagram, Tile, TilesWrapper, TopSlideAnimation } from 'shared'
 import { imgixUrl } from 'tools'
-import { Tile, TilesWrapper } from 'shared/tiles'
-import { TopSlideAnimation } from 'shared/animate'
+import { Title } from 'shared'
 import { withTextTyping } from 'ext'
 
 const ColFlexDiv = styled.div`
@@ -47,12 +45,6 @@ const NavigationCover = compose(withTextTyping(({ persona }) => persona.descript
   )
 )
 
-const H2 = styled.h2`
-  margin: 0;
-  font-size: 18px;
-  margin-bottom: 12px;
-`
-
 const Navigation = ({ FlowBackButton, title, navigationItems, onTileClick, persona }) => (
   <ColFlexDiv>
     <Cover>
@@ -60,7 +52,7 @@ const Navigation = ({ FlowBackButton, title, navigationItems, onTileClick, perso
     </Cover>
     <BelowCover>
       <Container>
-        <H2>{title}</H2>
+        <Title>{title}</Title>
         <TopSlideAnimation delay={250 * 1}>
           <TilesWrapper objectForResetCheck={{ ...navigationItems, persona }}>
             {navigationItems.map((navigationItem, index) => (

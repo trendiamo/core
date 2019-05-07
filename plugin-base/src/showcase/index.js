@@ -1,6 +1,7 @@
-import Cover, { BelowCover } from 'shared/cover'
+import Cover from 'shared/cover'
 import React from 'react'
 import styled from 'styled-components'
+import { BelowCover } from 'shared/cover/components'
 import { Router, transition } from 'ext'
 import { ShowcaseContent, ShowcaseCover, SpotlightContent, SpotlightCover } from './components'
 

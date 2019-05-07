@@ -1,13 +1,16 @@
-import Base from './base'
+import chatLogCallbacks from 'shared/chat-log-callbacks'
+import ChatModals from 'shared/chat-modals'
 import data from './data'
+import getFrekklsConfig from 'frekkls-config'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
+import withChatActions from 'ext/recompose/with-chat-actions'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
-import { matchUrl, timeout } from 'plugin-base'
+import { matchUrl, SimpleChat, timeout } from 'plugin-base'
 
 const Plugin = ({
   isUnmounting,
@@ -17,18 +20,36 @@ const Plugin = ({
   setPluginState,
   showingContent,
   launcherPulsating,
+  onCtaButtonClick,
+  clickActions,
+  modalsProps,
 }) => (
-  <AppBase
-    Component={<Base module={module} setPluginState={setPluginState} />}
-    data={module}
-    isUnmounting={isUnmounting}
-    Launcher={Launcher}
-    launcherPulsating={launcherPulsating}
-    onToggleContent={onToggleContent}
-    persona={module.launcher.persona}
-    showingContent={showingContent}
-    showingLauncher={showingLauncher}
-  />
+  <div>
+    <ChatModals {...modalsProps} />
+    <AppBase
+      Component={
+        <SimpleChat
+          backButtonLabel={getFrekklsConfig().i18n.backButton}
+          bridge
+          chatLogCallbacks={chatLogCallbacks}
+          clickActions={clickActions}
+          coverIsMinimized={module.header.minimized}
+          ctaButton={module.ctaButton}
+          data={module}
+          onCtaButtonClick={onCtaButtonClick}
+          setPluginState={setPluginState}
+        />
+      }
+      data={module}
+      isUnmounting={isUnmounting}
+      Launcher={Launcher}
+      launcherPulsating={launcherPulsating}
+      onToggleContent={onToggleContent}
+      persona={module.launcher.persona}
+      showingContent={showingContent}
+      showingLauncher={showingLauncher}
+    />
+  </div>
 )
 
 export default compose(
@@ -103,9 +124,22 @@ export default compose(
       return setShowingContent(!showingContent)
     },
   }),
+  withHandlers({
+    onCtaButtonClick: ({ module, onToggleContent, setPluginState }) => () => {
+      onToggleContent()
+      getFrekklsConfig().onCtaClick(module.ctaButton.action)
+      if (module.ctaButton.action === 'want') {
+        setPluginState('size-help')
+      } else if (module.ctaButton.action === 'ok-size') {
+        setPluginState('nothing')
+      }
+      mixpanel.track('Clicked Button', { hostname: location.hostname, type: 'CTA', action: module.ctaButton.action })
+    },
+  }),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()
     },
-  })
+  }),
+  withChatActions()
 )(Plugin)

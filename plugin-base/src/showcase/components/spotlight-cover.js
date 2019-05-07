@@ -1,9 +1,9 @@
-import BackButton from 'shared/back-button'
 import PersonaInstagram from 'shared/persona-instagram'
 import React from 'react'
 import styled from 'styled-components'
+import { BackButton } from 'shared'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
-import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover'
+import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover/components'
 import { imgixUrl } from 'tools'
 import { transition, withTextTyping } from 'ext'
 
@@ -42,7 +42,7 @@ const SpotlightCover = compose(
   withTextTyping(({ spotlight }) => spotlight.persona.description, 500)
 )(({ backButtonLabel, isLeaving, routeToShowcase, setImgRef, setNameRef, spotlight, currentDescription }) => (
   <CoverInner>
-    <BackButton backButtonLabel={backButtonLabel} isLeaving={isLeaving} onClick={routeToShowcase} />
+    <BackButton isLeaving={isLeaving} label={backButtonLabel} onClick={routeToShowcase} />
     <FlexDiv>
       <CoverImg imgRef={setImgRef} src={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
       <PaddedCover>
