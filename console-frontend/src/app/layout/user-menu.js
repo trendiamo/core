@@ -90,7 +90,7 @@ const UserMenu = ({ classes, sidebarOpen }) => {
             <MenuItemThemed
               classes={classes}
               icon={<PeopleOutline />}
-              onClick={auth.clearAdminSessionAccount}
+              onClick={auth.clearAdminSessionAccount.bind(auth)}
               text="Back to Accounts"
             />
           </Link>
