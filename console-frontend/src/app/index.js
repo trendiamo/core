@@ -55,9 +55,7 @@ const ExternalRoute = ({ component, path, ...props }) => (
   />
 )
 
-const RedirectRoot = () => (
-  <>{<Redirect to={auth.isLoggedIn() ? routes.triggersList() : routes.login()} />}</>
-)
+const RedirectRoot = () => <>{<Redirect to={auth.isLoggedIn() ? routes.triggersList() : routes.login()} />}</>
 
 const Routes = () => (
   <Switch>
