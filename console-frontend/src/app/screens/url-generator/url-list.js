@@ -5,10 +5,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import MUIList from '@material-ui/core/List'
 import MUIListItem from '@material-ui/core/ListItem'
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import Tooltip from '@material-ui/core/Tooltip'
-import { branch, compose, renderComponent, withHandlers } from 'recompose'
 import { Header } from 'shared/form-elements'
 
 const List = styled(MUIList)`
@@ -35,37 +34,37 @@ const BlankState = () => (
 
 const UrlListItems = ({ urlHistory, copyToClipboard }) => (
   <>
-    {urlHistory &&
-      urlHistory.map(generatedUrl => (
-        <Tooltip key={generatedUrl.id} placement="top-end" title="Copy to Clipboard">
-          <ListItem button onClick={copyToClipboard}>
-            <ListItemText primary={generatedUrl.url} />
-          </ListItem>
-        </Tooltip>
-      ))}
+    {urlHistory.map(generatedUrl => (
+      <Tooltip key={generatedUrl.id} placement="top-end" title="Copy to Clipboard">
+        <ListItem button onClick={copyToClipboard}>
+          <ListItemText primary={generatedUrl.url} />
+        </ListItem>
+      </Tooltip>
+    ))}
   </>
 )
 
-const UrlList = ({ urlHistory, copyToClipboard }) => (
-  <>
-    <List component="nav">
-      <Header variant="h6">{'Url History'}</Header>
-      <ListItemIcon>
-        <HistoryIcon />
-      </ListItemIcon>
-    </List>
-    <Divider />
-    <MUIList component="nav">
-      <UrlListItems copyToClipboard={copyToClipboard} urlHistory={urlHistory} />
-    </MUIList>
-  </>
-)
+const UrlList = ({ urlHistory }) => {
+  const copyToClipboard = useCallback(event => {
+    navigator.clipboard.writeText(event.target.textContent)
+  }, [])
 
-export default compose(
-  withHandlers({
-    copyToClipboard: () => event => {
-      navigator.clipboard.writeText(event.target.textContent)
-    },
-  }),
-  branch(({ urlHistory }) => !(urlHistory && urlHistory.length), renderComponent(BlankState))
-)(UrlList)
+  if (urlHistory.length === 0) return <BlankState />
+
+  return (
+    <>
+      <List component="nav">
+        <Header variant="h6">{'Url History'}</Header>
+        <ListItemIcon>
+          <HistoryIcon />
+        </ListItemIcon>
+      </List>
+      <Divider />
+      <MUIList component="nav">
+        <UrlListItems copyToClipboard={copyToClipboard} urlHistory={urlHistory} />
+      </MUIList>
+    </>
+  )
+}
+
+export default UrlList

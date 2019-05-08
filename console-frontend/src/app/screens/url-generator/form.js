@@ -1,10 +1,9 @@
 import Autocomplete from 'shared/autocomplete'
 import Button from 'shared/button'
-import React from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
 import { apiGeneratedUrlCreate, apiPathAutocomplete, apiPersonasAutocomplete, apiRequest } from 'utils'
-import { compose, withHandlers, withProps, withState } from 'recompose'
 import { Form } from 'shared/form-elements'
 import {
   FormControl,
@@ -19,6 +18,14 @@ import {
   Typography,
 } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
+
+const generateUrl = form => {
+  const fragments = []
+  if (form.autoOpen) fragments.push('open:1')
+  if (form.step) fragments.push(`path:${form.step}`)
+  if (form.personaId) fragments.push(`persona:${form.personaId}`)
+  return `${form.url}#trnd:${fragments.join(',')}`
+}
 
 const Option = styled.div`
   margin: 12px 0px;
@@ -76,21 +83,85 @@ const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
 
 const options = {}
 
-const UrlGeneratorForm = ({
-  showPersona,
-  showStep,
-  formRef,
-  onFormSubmit,
-  selectPersona,
-  resetUrl,
-  form,
-  setFieldValue,
-  toggleAutoOpen,
-  showOption,
-  isDisabled,
-  selectStep,
-}) => (
-  <>
+const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, urlHistory }) => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const formRef = useRef()
+  const [form, setForm] = useState({
+    personaId: '',
+    url: '',
+    autoOpen: false,
+    step: '',
+  })
+  const [showStep, setShowStep] = useState(false)
+  const [showPersona, setShowPersona] = useState(false)
+  const isDisabled = useMemo(() => !(form.url && (form.autoOpen || form.step || form.personaId)), [form])
+
+  const showOption = useCallback(option => {
+    if (option === 'step') setShowStep(true)
+    if (option === 'persona') setShowPersona(true)
+  }, [])
+
+  const resetUrl = useCallback(
+    () => {
+      setForm({
+        ...form,
+        url: '',
+      })
+    },
+    [form]
+  )
+
+  const selectPersona = useCallback(
+    selected => {
+      selected &&
+        setForm({
+          ...form,
+          personaId: selected.value.id,
+        })
+    },
+    [form]
+  )
+
+  const selectStep = useCallback(
+    selected => {
+      selected &&
+        setForm({
+          ...form,
+          step: selected.value.path,
+        })
+    },
+    [form]
+  )
+
+  const toggleAutoOpen = useCallback(
+    () => {
+      setForm({ ...form, autoOpen: !form.autoOpen })
+    },
+    [form]
+  )
+
+  const setFieldValue = useCallback(
+    event => {
+      setForm({ ...form, [event.target.name]: event.target.value })
+    },
+    [form]
+  )
+
+  const onFormSubmit = useCallback(
+    async event => {
+      event.preventDefault()
+      const url = generateUrl(form)
+      const { json, requestError } = await apiRequest(apiGeneratedUrlCreate, [{ url }])
+      requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setUrlHistory([json, ...urlHistory])
+      if (!formRef.current.reportValidity()) return
+      setGeneratedUrl(url)
+      setIsModalOpened(true)
+    },
+    [enqueueSnackbar, form, setGeneratedUrl, setIsModalOpened, setUrlHistory, urlHistory]
+  )
+
+  return (
     <Form formRef={formRef} isFormPristine onSubmit={onFormSubmit}>
       <Option>
         <UrlTextField form={form} resetUrl={resetUrl} setFieldValue={setFieldValue} />
@@ -140,84 +211,7 @@ const UrlGeneratorForm = ({
         </Button>
       </div>
     </Form>
-  </>
-)
-
-const generateUrl = form => {
-  const fragments = []
-  if (form.autoOpen) fragments.push('open:1')
-  if (form.step) fragments.push(`path:${form.step}`)
-  if (form.personaId) fragments.push(`persona:${form.personaId}`)
-  return `${form.url}#trnd:${fragments.join(',')}`
+  )
 }
 
-const UrlGeneratorForm1 = compose(
-  withProps({ formRef: React.createRef() }),
-  withState('form', 'setForm', {
-    personaId: '',
-    url: '',
-    autoOpen: false,
-    step: '',
-  }),
-  withState('showStep', 'setShowStep', false),
-  withState('showPersona', 'setShowPersona', false),
-  withProps(({ form }) => ({
-    isDisabled: !(form.url && (form.autoOpen || form.step || form.personaId)),
-  })),
-  withHandlers({
-    showOption: ({ setShowStep, setShowPersona }) => option => {
-      if (option === 'step') setShowStep(true)
-      if (option === 'persona') setShowPersona(true)
-    },
-    resetUrl: ({ form, setForm }) => () => {
-      setForm({
-        ...form,
-        url: '',
-      })
-    },
-    selectPersona: ({ form, setForm }) => selected => {
-      selected &&
-        setForm({
-          ...form,
-          personaId: selected.value.id,
-        })
-    },
-    selectStep: ({ form, setForm }) => selected => {
-      selected &&
-        setForm({
-          ...form,
-          step: selected.value.path,
-        })
-    },
-    toggleAutoOpen: ({ form, setForm }) => () => {
-      setForm({ ...form, autoOpen: !form.autoOpen })
-    },
-    setFieldValue: ({ form, setForm }) => event => {
-      setForm({ ...form, [event.target.name]: event.target.value })
-    },
-    onFormSubmit: ({
-      setIsModalOpened,
-      setGeneratedUrl,
-      form,
-      formRef,
-      urlHistory,
-      setUrlHistory,
-      enqueueSnackbar,
-    }) => async event => {
-      event.preventDefault()
-      const url = generateUrl(form)
-      const { json, requestError } = await apiRequest(apiGeneratedUrlCreate, [{ url }])
-      requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setUrlHistory([json, ...urlHistory])
-      if (!formRef.current.reportValidity()) return
-      setGeneratedUrl(url)
-      setIsModalOpened(true)
-    },
-  })
-)(UrlGeneratorForm)
-
-const UrlGeneratorForm2 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <UrlGeneratorForm1 {...props} enqueueSnackbar={enqueueSnackbar} />
-}
-
-export default UrlGeneratorForm2
+export default UrlGeneratorForm
