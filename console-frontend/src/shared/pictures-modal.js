@@ -309,8 +309,8 @@ const PicturesModal = compose(
       const { json: blob, requestError, errors, response, ...rest } = await apiRequest(apiGetRemotePicture, [
         pictureUrl,
       ])
-      if (errors) {
-        enqueueSnackbar(errors.message, { variant: 'error' })
+      if (errors || requestError) {
+        enqueueSnackbar(errors.message || requestError, { variant: 'error' })
       } else {
         onFileUpload([blob])
       }
