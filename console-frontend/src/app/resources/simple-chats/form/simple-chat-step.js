@@ -1,12 +1,33 @@
 import React from 'react'
 import Section from 'shared/section'
 import SimpleChatMessage from './simple-chat-message'
+import styled from 'styled-components'
 import { AddItemButton, Cancel, Field, FormSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
-import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers } from 'recompose'
+import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers, withState } from 'recompose'
 import { isEqual, omit } from 'lodash'
+import { Menu, MenuItem } from '@material-ui/core'
+import { MessageOutlined } from '@material-ui/icons'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
+
+const MessageIcon = styled(MessageOutlined)`
+  font-size: 18px;
+  margin-right: 6px;
+`
+
+const StyledMenu = styled(Menu)`
+  div:last-child {
+    margin-top: 48px;
+    width: 160px;
+    transform-origin: top center !important;
+    li {
+      justify-content: center;
+      padding-right: 16px;
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+`
 
 const SortableSimpleChatMessage = compose(
   shouldUpdate((props, nextProps) => {
@@ -47,15 +68,18 @@ const SimpleChatMessagesContainer = compose(
 const SimpleChatStep = ({
   addSimpleChatMessage,
   allowDelete,
+  anchorEl,
+  closeMenu,
   collapseOtherSimpleChatSteps,
   deleteSimpleChatStep,
   editSimpleChatStepValue,
-  isFormLoading,
   folded,
+  isFormLoading,
+  onAddMessageClick,
+  onSimpleChatMessagesSortEnd,
   simpleChatStepIndex,
   setSimpleChatMessagesForm,
   simpleChatStep,
-  onSimpleChatMessagesSortEnd,
 }) => (
   <Section>
     <FormSection
@@ -98,22 +122,63 @@ const SimpleChatStep = ({
             useDragHandle
           />
         )}
-        <AddItemButton disabled={isFormLoading} message="Add Message" onClick={addSimpleChatMessage} />
+        <AddItemButton
+          aria-haspopup="true"
+          aria-owns={anchorEl ? 'new-message-menu' : undefined}
+          disabled={isFormLoading}
+          message="Add Message"
+          onClick={onAddMessageClick}
+        />
+        <StyledMenu
+          anchorEl={anchorEl}
+          disableAutoFocusItem
+          id="new-message-menu"
+          onClose={closeMenu}
+          open={Boolean(anchorEl)}
+        >
+          <MenuItem onClick={addSimpleChatMessage}>
+            <MessageIcon />
+            {'Text'}
+          </MenuItem>
+        </StyledMenu>
       </>
     </FormSection>
   </Section>
 )
 
 export default compose(
+  withState('anchorEl', 'setAnchorEl', null),
   branch(({ simpleChatStep }) => simpleChatStep._destroy, renderNothing),
   shouldUpdate((props, nextProps) => {
     const ignoreProps = ['onChange']
     return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
   }),
   withHandlers({
+    closeMenu: ({ setAnchorEl }) => () => {
+      setAnchorEl(null)
+    },
+    deleteSimpleChatStep: ({ onChange, simpleChatStepIndex, simpleChatStep }) => () => {
+      onChange(
+        {
+          id: simpleChatStep.id,
+          _destroy: true,
+        },
+        simpleChatStepIndex
+      )
+    },
     editSimpleChatStepValue: ({ simpleChatStep, simpleChatStepIndex, onChange }) => event => {
       const name = event.target.name.replace('simpleChatStep_', '')
       onChange(Object.assign({ ...simpleChatStep }, { [name]: event.target.value }), simpleChatStepIndex)
+    },
+    onAddMessageClick: ({ setAnchorEl }) => event => {
+      setAnchorEl(event.currentTarget)
+    },
+    onSimpleChatMessagesSortEnd: ({ onChange, simpleChatStepIndex, simpleChatStep }) => ({ oldIndex, newIndex }) => {
+      const filteredSimpleChatMessages = simpleChatStep.simpleChatMessagesAttributes.filter(
+        simpleChatMessage => !simpleChatMessage._destroy
+      )
+      const orderedSimpleChatMessages = arrayMove(filteredSimpleChatMessages, oldIndex, newIndex)
+      onChange({ ...simpleChatStep, simpleChatMessagesAttributes: orderedSimpleChatMessages }, simpleChatStepIndex)
     },
     setSimpleChatMessagesForm: ({ simpleChatStep, simpleChatStepIndex, onChange }) => (
       simpleChatMessage,
@@ -126,7 +191,10 @@ export default compose(
         simpleChatStepIndex
       )
     },
-    addSimpleChatMessage: ({ onChange, simpleChatStepIndex, simpleChatStep }) => () => {
+  }),
+  withHandlers({
+    addSimpleChatMessage: ({ closeMenu, onChange, simpleChatStepIndex, simpleChatStep }) => () => {
+      closeMenu()
       onChange(
         {
           ...simpleChatStep,
@@ -136,22 +204,6 @@ export default compose(
         },
         simpleChatStepIndex
       )
-    },
-    deleteSimpleChatStep: ({ onChange, simpleChatStepIndex, simpleChatStep }) => () => {
-      onChange(
-        {
-          id: simpleChatStep.id,
-          _destroy: true,
-        },
-        simpleChatStepIndex
-      )
-    },
-    onSimpleChatMessagesSortEnd: ({ onChange, simpleChatStepIndex, simpleChatStep }) => ({ oldIndex, newIndex }) => {
-      const filteredSimpleChatMessages = simpleChatStep.simpleChatMessagesAttributes.filter(
-        simpleChatMessage => !simpleChatMessage._destroy
-      )
-      const orderedSimpleChatMessages = arrayMove(filteredSimpleChatMessages, oldIndex, newIndex)
-      onChange({ ...simpleChatStep, simpleChatMessagesAttributes: orderedSimpleChatMessages }, simpleChatStepIndex)
     },
   })
 )(SimpleChatStep)
