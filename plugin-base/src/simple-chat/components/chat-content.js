@@ -1,5 +1,5 @@
 import chatLog from 'simple-chat/chat-log'
-import ItemDiv from './item-div'
+import ChatLogSection from './chat-log-section'
 import React from 'react'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { convertLogs } from 'tools'
@@ -94,7 +94,7 @@ export default compose(
     {title && <Title>{title}</Title>}
     {logs.map((logSection, index) => (
       /* eslint-disable react/no-array-index-key */
-      <ItemDiv
+      <ChatLogSection
         assessmentOptions={assessmentOptions}
         contentRef={contentRef}
         hideAll={hideAll}

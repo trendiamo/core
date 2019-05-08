@@ -18,27 +18,6 @@ const Container = styled.div`
   }
 `
 
-const ItemDivTemplate = ({ animate, logSection, hide, hideAll, onClick, nothingSelected, setContainerRef }) => (
-  <Container ref={setContainerRef}>
-    {logSection.logs.map((log, index) =>
-      log.type === 'message' ? (
-        /* eslint-disable react/no-array-index-key */
-        <ChatMessage
-          hideAll={hideAll}
-          index={index}
-          key={index}
-          log={log}
-          nothingSelected={nothingSelected}
-          onClick={onClick}
-        />
-      ) : log.type === 'option' ? (
-        /* eslint-disable react/no-array-index-key */
-        <ChatOption animate={animate} chatOption={log} hide={hide} index={index} key={index} onClick={onClick} />
-      ) : null
-    )}
-  </Container>
-)
-
 export default compose(
   withState('hide', 'setHide', false),
   withState('animate', 'setAnimate', false),
@@ -73,4 +52,23 @@ export default compose(
       }
     },
   })
-)(ItemDivTemplate)
+)(({ animate, logSection, hide, hideAll, onClick, nothingSelected, setContainerRef }) => (
+  <Container ref={setContainerRef}>
+    {logSection.logs.map((log, index) =>
+      log.type === 'message' ? (
+        /* eslint-disable react/no-array-index-key */
+        <ChatMessage
+          hideAll={hideAll}
+          index={index}
+          key={index}
+          log={log}
+          nothingSelected={nothingSelected}
+          onClick={onClick}
+        />
+      ) : log.type === 'option' ? (
+        /* eslint-disable react/no-array-index-key */
+        <ChatOption animate={animate} chatOption={log} hide={hide} index={index} key={index} onClick={onClick} />
+      ) : null
+    )}
+  </Container>
+))
