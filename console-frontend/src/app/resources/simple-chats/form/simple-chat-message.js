@@ -26,6 +26,7 @@ const SimpleChatMessage = ({
     foldable
     hideBottom
     hideTop={index === 0}
+    title={simpleChatMessage.id ? simpleChatMessage.text : 'New Message'}
   >
     <Label required style={{ fontSize: '12px' }}>
       {'Message'}
