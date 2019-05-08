@@ -7,14 +7,31 @@ import { arrayMove } from 'react-sortable-hoc'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers, withState } from 'recompose'
 import { isEqual, omit } from 'lodash'
-import { Menu, MenuItem } from '@material-ui/core'
-import { MessageOutlined } from '@material-ui/icons'
+import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
+import { MessageOutlined, Redeem } from '@material-ui/icons'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const MessageIcon = styled(MessageOutlined)`
   font-size: 18px;
   margin-right: 6px;
 `
+
+const ProductIcon = styled(Redeem)`
+  font-size: 18px;
+  margin-right: 6px;
+`
+
+const MenuItem = compose(
+  withHandlers({
+    addSimpleChatMessage: ({ onClick, value }) => () => {
+      onClick(value)
+    },
+  })
+)(({ addSimpleChatMessage, ...props }) => (
+  <MUIMenuItem {...props} onClick={addSimpleChatMessage}>
+    {props.children}
+  </MUIMenuItem>
+))
 
 const StyledMenu = styled(Menu)`
   div:last-child {
@@ -136,9 +153,13 @@ const SimpleChatStep = ({
           onClose={closeMenu}
           open={Boolean(anchorEl)}
         >
-          <MenuItem onClick={addSimpleChatMessage}>
+          <MenuItem onClick={addSimpleChatMessage} value="text">
             <MessageIcon />
             {'Text'}
+          </MenuItem>
+          <MenuItem onClick={addSimpleChatMessage} value="product">
+            <ProductIcon />
+            {'Product'}
           </MenuItem>
         </StyledMenu>
       </>
@@ -148,6 +169,7 @@ const SimpleChatStep = ({
 
 export default compose(
   withState('anchorEl', 'setAnchorEl', null),
+  withState('newMessageType', 'setNewMessageType', 'text'),
   branch(({ simpleChatStep }) => simpleChatStep._destroy, renderNothing),
   shouldUpdate((props, nextProps) => {
     const ignoreProps = ['onChange']
@@ -193,7 +215,14 @@ export default compose(
     },
   }),
   withHandlers({
-    addSimpleChatMessage: ({ closeMenu, onChange, simpleChatStepIndex, simpleChatStep }) => () => {
+    addSimpleChatMessage: ({
+      closeMenu,
+      onChange,
+      simpleChatStepIndex,
+      simpleChatStep,
+      setNewMessageType,
+    }) => newMessageType => {
+      setNewMessageType(newMessageType)
       closeMenu()
       onChange(
         {
