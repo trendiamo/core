@@ -126,7 +126,7 @@ const toolbarConfig = {
   ],
 }
 
-const MarkdownRTE = compose(
+export default compose(
   withState('isMarkdownMode', 'setIsMarkdownMode', false),
   withState('value', 'setValue', ({ simpleChatMessage }) =>
     RichTextEditor.createValueFromString(simpleChatMessage.text, 'markdown')
@@ -179,7 +179,7 @@ const MarkdownRTE = compose(
     value,
   }) => (
     <StyledEditorContainer>
-      <StyledTooltip placement="left" title="Learn About Markdown Syntax">
+      <StyledTooltip placement="left" title="Learn about the Markdown syntax">
         <MarkdownIcon
           href="https://www.markdownguide.org/cheat-sheet"
           isMarkdownMode={isMarkdownMode}
@@ -220,5 +220,3 @@ const MarkdownRTE = compose(
     </StyledEditorContainer>
   )
 )
-
-export default MarkdownRTE

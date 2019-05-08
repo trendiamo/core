@@ -1,5 +1,5 @@
-import MarkdownRTE from './markdown-rte'
 import React from 'react'
+import TextMessageFields from './text-message-fields'
 import { branch, compose, renderNothing, shouldUpdate, withHandlers } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
 import { isEqual, omit } from 'lodash'
@@ -30,7 +30,7 @@ const SimpleChatMessage = ({
     <Label required style={{ fontSize: '12px' }}>
       {'Message'}
     </Label>
-    <MarkdownRTE
+    <TextMessageFields
       disabled={isFormLoading}
       name="simpleChatMessage_text"
       onChange={onChange}
