@@ -61,7 +61,7 @@ const previewConverter = {
   },
 }
 
-const formObjectTransformer = () => json => {
+const formObjectTransformer = json => {
   return {
     id: json.id,
     name: json.name || '',

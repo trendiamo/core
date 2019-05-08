@@ -1,6 +1,6 @@
-import BaseShowcaseForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
+import ShowcaseForm from './form'
 import { apiRequest, apiShowcaseCreate } from 'utils'
 import { useSnackbar } from 'notistack'
 
@@ -29,7 +29,7 @@ const loadFormObject = () => {
   }
 }
 
-const ShowcaseForm = props => {
+const CreateShowcaseForm = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const saveFormObject = useCallback(
@@ -46,10 +46,8 @@ const ShowcaseForm = props => {
   )
 
   return (
-    <BaseShowcaseForm
-      {...props}
+    <ShowcaseForm
       backRoute={routes.showcasesList()}
-      enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
       saveFormObject={saveFormObject}
       title="Create Showcase"
@@ -57,4 +55,4 @@ const ShowcaseForm = props => {
   )
 }
 
-export default ShowcaseForm
+export default CreateShowcaseForm
