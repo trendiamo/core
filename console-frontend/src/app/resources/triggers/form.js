@@ -185,7 +185,9 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
             defaultPlaceholder="Choose a Module"
             disabled={isFormLoading}
             fullWidth
-            initialSelectedItem={form.flowId && { value: form.flowId, label: form.flowLabel }}
+            initialSelectedItem={
+              form.flowId && { value: { id: form.flowId, type: form.flowType }, label: form.flowLabel }
+            }
             initialValueFormatMismatch
             label="Module"
             onChange={selectFlow}
