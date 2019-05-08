@@ -101,3 +101,9 @@ export const onRouteUpdate = () => {
   processDropCaps()
   processInPageScroll()
 }
+
+export const onClientEntry = async () => {
+  if (typeof IntersectionObserver === 'undefined') {
+    await import('intersection-observer')
+  }
+}

@@ -78,11 +78,13 @@ export const query = graphql`
             slideText
           }
           slideImage {
-            fixed(width: 700, toFormat: WEBP) {
+            fixed(width: 700) {
               width
               height
               src
+              srcWebp
               srcSet
+              srcSetWebp
             }
           }
         }

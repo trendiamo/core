@@ -38,10 +38,12 @@ export const query = graphql`
       openerEmailLabel
       openerEmailCta
       openerImage {
-        fluid(maxWidth: 1200, toFormat: WEBP) {
+        fluid(maxWidth: 1200) {
           aspectRatio
           src
+          srcWebp
           srcSet
+          srcSetWebp
           sizes
         }
       }
@@ -51,11 +53,13 @@ export const query = graphql`
         node {
           name
           logo {
-            fluid(maxWidth: 160, toFormat: WEBP) {
+            fluid(maxWidth: 160) {
               aspectRatio
-              sizes
               src
+              srcWebp
               srcSet
+              srcSetWebp
+              sizes
             }
           }
         }
