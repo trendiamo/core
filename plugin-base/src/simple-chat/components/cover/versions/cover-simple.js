@@ -20,9 +20,7 @@ const CoverSimple = ({
   backButtonConfig,
 }) => (
   <CoverBase headerConfig={headerConfig}>
-    {(FlowBackButton && <FlowBackButton />) || (
-      <BackButton backButtonConfig={backButtonConfig} label={backButtonLabel} />
-    )}
+    {FlowBackButton ? <FlowBackButton /> : <BackButton backButtonConfig={backButtonConfig} label={backButtonLabel} />}
     <FlexDiv>
       <CoverImg src={imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
       <PaddedCover>

@@ -17,6 +17,8 @@ const assessProducts = (products, tags) => {
   return productsResult.sort((a, b) => !!b.highlight - !!a.highlight)
 }
 
+const ctaButton = { label: 'Ergebnisse anzeigen' }
+
 const Base = ({
   currentStep,
   goToNextStep,
@@ -43,7 +45,7 @@ const Base = ({
       backButtonLabel={getFrekklsConfig().i18n.backButton}
       clickActions={clickActions}
       clicked={ctaButtonClicked}
-      ctaButton={{ label: 'Ergebnisse anzeigen' }}
+      ctaButton={ctaButton}
       currentStep={currentStep}
       data={step}
       goToPrevStep={goToPrevStep}
