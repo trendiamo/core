@@ -128,12 +128,12 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
 
   const selectPersona = useCallback(
     selected => {
-      selected &&
-        setForm({
-          ...form,
-          personaId: selected.value.id,
-          personaProfilePic: selected.value.profilePicUrl,
-        })
+      if (!selected) return
+      setForm({
+        ...form,
+        personaId: selected.value.id,
+        personaProfilePic: selected.value.profilePicUrl,
+      })
     },
     [form, setForm]
   )
