@@ -100,15 +100,15 @@ const FooterContent = ({ layout, locale }) => (
         <Link to={`${locales[locale].path}/about#jobs`}>{layout.careers}</Link>
       </FooterColumn>
       <FooterColumn>
-        <Link className="js-request-demo" to="#demo">
+        <a className="js-request-demo" href="#demo">
           {layout.demo2}
-        </Link>
-        <Link className="js-legal-notice" to="#legal-notice">
+        </a>
+        <a className="js-legal-notice" href="#legal-notice">
           {layout.legal}
-        </Link>
-        <Link className="js-privacy-cookies" to="#privacy-cookies">
+        </a>
+        <a className="js-privacy-cookies" href="#privacy-cookies">
           {layout.privacy}
-        </Link>
+        </a>
       </FooterColumn>
       <FooterColumn>
         <FollowUsHeader>{'Follow Us'}</FollowUsHeader>
