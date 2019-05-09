@@ -22,8 +22,8 @@ const SpotlightCover = compose(
     return {
       landElements: () => () => {
         if (!transition.isLiftingElements) return
-        if (imgRef) transition.landElement('img', imgRef.base || imgRef)
-        if (nameRef) transition.landElement('name', nameRef.base || nameRef)
+        if (imgRef) transition.landElement('img', imgRef)
+        if (nameRef) transition.landElement('name', nameRef)
       },
       setImgRef: () => ref => (imgRef = ref),
       setNameRef: () => ref => (nameRef = ref),

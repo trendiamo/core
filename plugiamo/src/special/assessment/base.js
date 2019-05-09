@@ -68,10 +68,10 @@ export default compose(
   withState('ctaButtonClicked', 'setCtaButtonClicked', false),
   withState('hideProgressBar', 'setHideProgressBar', false),
   withHandlers(() => {
-    let contentRef
+    let ref
     return {
-      setContentRef: () => ref => (contentRef = ref),
-      contentRef: () => () => contentRef,
+      setContentRef: () => newRef => (ref = newRef),
+      contentRef: () => () => ref,
     }
   }),
   withHandlers({

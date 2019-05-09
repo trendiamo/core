@@ -1,7 +1,7 @@
 import FocusLock from 'react-focus-lock'
-import Portal from 'preact-portal'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose } from 'recompose'
+import { createPortal } from 'preact/compat'
 import { h } from 'preact'
 import { IconClose } from 'plugin-base'
 
@@ -49,13 +49,25 @@ const ModalComp = compose(
   })
 )(ModalTemplate)
 
-const Modal = ({ allowBackgroundClose, closeModal, isOpen, into = 'body', children }) =>
-  isOpen ? (
-    <Portal into={into}>
-      <ModalComp allowBackgroundClose={allowBackgroundClose} closeModal={closeModal}>
-        {children}
-      </ModalComp>
-    </Portal>
-  ) : null
+const Modal = ({ allowBackgroundClose, closeModal, isOpen, container, children }) => {
+  if (!isOpen) return null
+
+  if (!container) {
+    container = document.querySelector('.trendiamo-modal')
+    if (!container) {
+      const trendiamoModal = document.createElement('div')
+      trendiamoModal.classList.add('trendiamo-modal')
+      document.body.appendChild(trendiamoModal)
+      container = trendiamoModal
+    }
+  }
+
+  return createPortal(
+    <ModalComp allowBackgroundClose={allowBackgroundClose} closeModal={closeModal}>
+      {children}
+    </ModalComp>,
+    container
+  )
+}
 
 export default Modal

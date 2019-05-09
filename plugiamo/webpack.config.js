@@ -4,6 +4,7 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
+  mode: 'development',
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     compress: true,
@@ -15,7 +16,6 @@ module.exports = {
     host: '0.0.0.0',
     proxy: { '/graphql': 'http://localhost:5000' },
   },
-  // entry: ['babel-polyfill', './src/index.js'],
   entry: ['./src/index.js'],
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -25,20 +25,19 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: [
-          {
-            options: {
-              presets: ['env', 'stage-2'],
-            },
-            loader: 'babel-loader',
-          },
-        ],
-        include: [path.resolve(__dirname, './src')],
+        use: ['babel-loader'],
+        include: [path.resolve(__dirname, 'src')],
+        type: 'javascript/auto',
+      },
+      {
+        test: /\.mjs$/,
+        include: [/node_modules/],
+        type: 'javascript/auto',
       },
       {
         test: /\.svg$/,
         use: [{ loader: './svg-hoc-loader' }, 'svg-loader'],
-        include: [path.resolve(__dirname, './src')],
+        include: [path.resolve(__dirname, 'src')],
       },
       {
         test: /\.css$/,
@@ -53,8 +52,8 @@ module.exports = {
   plugins: [new Dotenv()],
   resolve: {
     alias: {
-      react: 'preact-compat',
-      'react-dom': 'preact-compat',
+      react: 'preact/compat',
+      'react-dom': 'preact/compat',
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },

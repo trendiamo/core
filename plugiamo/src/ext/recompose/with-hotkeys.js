@@ -10,19 +10,19 @@
 //   },
 // })(YourComponent);
 
-import { Component, h } from 'preact'
+import { Component, createRef, h } from 'preact'
 import { hoistStatics, wrapDisplayName } from 'recompose'
-
-const getIframeContentWindow = base => {
-  const iframes = base && base.getElementsByTagName('iframe')
-  if (iframes.length && iframes[0]) return base.getElementsByTagName('iframe')[0].contentWindow
-}
 
 const withHotkeys = (handlers, useCapture = false) =>
   hoistStatics(
     BaseComponent =>
       class WithHotkeys extends Component {
         displayName = wrapDisplayName(BaseComponent, 'withHotkeys')
+
+        constructor() {
+          super()
+          this.hotkeysRef = createRef()
+        }
 
         componentDidMount() {
           this.manageKeyEvents('add')
@@ -32,15 +32,13 @@ const withHotkeys = (handlers, useCapture = false) =>
           this.manageKeyEvents('remove')
         }
 
-        setRef(ref) {
-          if (!ref) return
-          BaseComponent.hotkeysRef = ref
-        }
-
         manageKeyEvents = type => {
           // we listen for the event in both the element itself and on its containing window. This allows modals to work
-          const { base } = BaseComponent.hotkeysRef
-          const target = base.contentWindow || getIframeContentWindow(base) || window
+          const { hotkeysDocument } = this.props
+          const contentDocument =
+            hotkeysDocument && (typeof hotkeysDocument === 'function' ? hotkeysDocument() : hotkeysDocument)
+          const base = this.hotkeysRef.current
+          const target = base.contentWindow || contentDocument || window
           if (type === 'add') {
             base.addEventListener('keyup', this.handleKeyDown, useCapture)
             target.addEventListener('keyup', this.handleKeyDown, useCapture)
@@ -61,7 +59,11 @@ const withHotkeys = (handlers, useCapture = false) =>
         }
 
         render() {
-          return <BaseComponent ref={this.setRef} {...this.props} />
+          return (
+            <div ref={this.hotkeysRef}>
+              <BaseComponent {...this.props} />
+            </div>
+          )
         }
       }
   )
