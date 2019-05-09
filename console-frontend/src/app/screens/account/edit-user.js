@@ -3,132 +3,39 @@ import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import Link from 'shared/link'
 import PictureUploader, { ProgressBar, uploadPicture } from 'shared/picture-uploader'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import useForm from 'ext/hooks/use-form'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharRegexp } from 'utils'
-import { branch, compose, renderComponent, withHandlers, withState } from 'recompose'
 import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
-const EditUser = ({
-  isFormPristine,
-  onFormSubmit,
-  isCropping,
-  setFieldValue,
-  setProfilePic,
-  setProfilePicUrl,
-  progress,
-  isFormSubmitting,
-  setIsCropping,
-  isFormLoading,
-  form,
-}) => (
-  <form onSubmit={onFormSubmit}>
-    <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-    <PictureUploader
-      disabled={isCropping}
-      label="Picture"
-      onChange={setProfilePicUrl}
-      setDisabled={setIsCropping}
-      setPic={setProfilePic}
-      value={form.profilePicUrl}
-    />
-    <TextField
-      disabled
-      fullWidth
-      id="email"
-      inputProps={{ pattern: '.*S+.*' }}
-      label="Email"
-      margin="normal"
-      required
-      value={form.email}
-    />
-    <TextField
-      disabled={isFormLoading || isCropping}
-      fullWidth
-      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-      label="First Name"
-      margin="normal"
-      name="firstName"
-      onChange={setFieldValue}
-      required
-      value={form.firstName}
-    />
-    <TextField
-      disabled={isFormLoading || isCropping}
-      fullWidth
-      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-      label="Last Name"
-      margin="normal"
-      name="lastName"
-      onChange={setFieldValue}
-      required
-      value={form.lastName}
-    />
-    {progress && <ProgressBar progress={progress} />}
-    <div style={{ marginTop: '1rem' }}>
-      <Button
-        color="primaryGradient"
-        disabled={isFormLoading || isCropping || isFormPristine || isFormSubmitting}
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        tooltipEnabled
-        tooltipPlacement="right"
-        tooltipText="No changes to save"
-        type="submit"
-        variant="contained"
-      >
-        {'Save'}
-      </Button>
-    </div>
-    <div style={{ marginTop: '1rem' }}>
-      <Link to={routes.passwordChange()}>
-        <Button color="primaryText" variant="text">
-          {'Change Password'}
-        </Button>
-      </Link>
-    </div>
-  </form>
-)
-
-const EditUser1 = compose(
-  withHandlers({
-    setProfilePicUrl: ({ form, setForm }) => profilePicUrl => {
-      setForm({ ...form, profilePicUrl })
-    },
-  }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
-)(EditUser)
-
-const EditUser2 = props => {
-  const defaultForm = {
-    email: '',
-    firstName: '',
-    lastName: '',
-    profilePicUrl: '',
-  }
-  const formProps = useForm({ ...props, defaultForm })
-  return <EditUser1 {...props} {...formProps} />
+const defaultForm = {
+  email: '',
+  firstName: '',
+  lastName: '',
+  profilePicUrl: '',
 }
 
-const EditUser3 = compose(
-  withState('isCropping', 'setIsCropping', false),
-  withState('profilePic', 'setProfilePic', null),
-  withState('progress', 'setProgress', null),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        email: json.email || '',
-        firstName: json.firstName || '',
-        lastName: json.lastName || '',
-        profilePicUrl: json.profilePicUrl || '',
-      }
-    },
-  }),
-  withHandlers({
-    saveFormObject: ({ enqueueSnackbar, setProgress, profilePic, setProfilePic }) => async form => {
+const formObjectTransformer = json => {
+  return {
+    email: json.email || '',
+    firstName: json.firstName || '',
+    lastName: json.lastName || '',
+    profilePicUrl: json.profilePicUrl || '',
+  }
+}
+
+const EditUser = () => {
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [isCropping, setIsCropping] = useState(false)
+  const [profilePic, setProfilePic] = useState(null)
+  const [progress, setProgress] = useState(null)
+
+  const saveFormObject = useCallback(
+    async form => {
       // upload the image
       let data
       if (profilePic) {
@@ -151,9 +58,11 @@ const EditUser3 = compose(
       setProfilePic(null)
       return json
     },
-  }),
-  withHandlers({
-    loadFormObject: ({ enqueueSnackbar }) => async () => {
+    [enqueueSnackbar, profilePic, setProfilePic]
+  )
+
+  const loadFormObject = useCallback(
+    async () => {
       const { json, requestError } = await apiRequest(apiMe, [])
       if (requestError) {
         enqueueSnackbar(requestError, { variant: 'error' })
@@ -162,12 +71,93 @@ const EditUser3 = compose(
       auth.setUser(json)
       return json
     },
-  })
-)(EditUser2)
+    [enqueueSnackbar]
+  )
 
-const EditUser4 = props => {
-  const { enqueueSnackbar } = useSnackbar()
-  return <EditUser3 {...props} enqueueSnackbar={enqueueSnackbar} />
+  const { form, isFormLoading, isFormPristine, isFormSubmitting, setForm, onFormSubmit, setFieldValue } = useForm({
+    formObjectTransformer,
+    defaultForm,
+    loadFormObject,
+    saveFormObject,
+  })
+
+  const setProfilePicUrl = useCallback(
+    profilePicUrl => {
+      setForm({ ...form, profilePicUrl })
+    },
+    [form, setForm]
+  )
+
+  if (isFormLoading) return <CircularProgress />
+
+  return (
+    <form onSubmit={onFormSubmit}>
+      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
+      <PictureUploader
+        disabled={isCropping}
+        label="Picture"
+        onChange={setProfilePicUrl}
+        setDisabled={setIsCropping}
+        setPic={setProfilePic}
+        value={form.profilePicUrl}
+      />
+      <TextField
+        disabled
+        fullWidth
+        id="email"
+        inputProps={{ pattern: '.*S+.*' }}
+        label="Email"
+        margin="normal"
+        required
+        value={form.email}
+      />
+      <TextField
+        disabled={isFormLoading || isCropping}
+        fullWidth
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        label="First Name"
+        margin="normal"
+        name="firstName"
+        onChange={setFieldValue}
+        required
+        value={form.firstName}
+      />
+      <TextField
+        disabled={isFormLoading || isCropping}
+        fullWidth
+        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        label="Last Name"
+        margin="normal"
+        name="lastName"
+        onChange={setFieldValue}
+        required
+        value={form.lastName}
+      />
+      {progress && <ProgressBar progress={progress} />}
+      <div style={{ marginTop: '1rem' }}>
+        <Button
+          color="primaryGradient"
+          disabled={isFormLoading || isCropping || isFormPristine || isFormSubmitting}
+          isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
+          tooltipEnabled
+          tooltipPlacement="right"
+          tooltipText="No changes to save"
+          type="submit"
+          variant="contained"
+        >
+          {'Save'}
+        </Button>
+      </div>
+      <div style={{ marginTop: '1rem' }}>
+        <Link to={routes.passwordChange()}>
+          <Button color="primaryText" variant="text">
+            {'Change Password'}
+          </Button>
+        </Link>
+      </div>
+    </form>
+  )
 }
 
-export default EditUser4
+export default EditUser
