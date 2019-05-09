@@ -3,7 +3,7 @@ import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import NavigationItem from './navigation-item'
 import PluginPreview from 'shared/plugin-preview'
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
@@ -11,16 +11,6 @@ import useForm from 'ext/hooks/use-form'
 import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import {
-  branch,
-  compose,
-  renderComponent,
-  shallowEqual,
-  shouldUpdate,
-  withHandlers,
-  withProps,
-  withState,
-} from 'recompose'
 import { findIndex, omit } from 'lodash'
 import { Grid } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
@@ -29,15 +19,7 @@ import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
-const SortableNavigationItem = compose(
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['navigationItem', 'onChange', 'setIsCropping', 'setPicture', 'setNavigationItemsPictures']
-    return (
-      !shallowEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps)) ||
-      !shallowEqual(props.navigationItem, nextProps.navigationItem)
-    )
-  })
-)(SortableElement(NavigationItem))
+const SortableNavigationItem = SortableElement(NavigationItem)
 const NavigationItems = ({
   isFormLoading,
   setNavigationItemForm,
@@ -68,23 +50,11 @@ const NavigationItems = ({
     ))}
   </div>
 )
-const NavigationItemsContainer = compose(
-  shouldUpdate((props, nextProps) => {
-    return (
-      props.isCropping !== nextProps.isCropping ||
-      props.isFormLoading !== nextProps.isFormLoading ||
-      props.form.navigationItemsAttributes.length !== nextProps.form.navigationItemsAttributes.length ||
-      props.form.navigationItemsAttributes.filter((item, index) => {
-        const nextItem = nextProps.form.navigationItemsAttributes && nextProps.form.navigationItemsAttributes[index]
-        return !shallowEqual(item, nextItem)
-      }).length > 0
-    )
-  })
-)(SortableContainer(NavigationItems))
+const NavigationItemsContainer = SortableContainer(NavigationItems)
 
 const options = { suggestionItem: 'withAvatar' }
 
-const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCropping, selectPersona }) => (
+const MainSection = ({ title, isFormLoading, setFieldValue, form, isCropping, selectPersona }) => (
   <Section title={title}>
     <Field
       autoFocus
@@ -149,19 +119,7 @@ const MainFormTemplate = ({ title, isFormLoading, setFieldValue, form, isCroppin
   </Section>
 )
 
-const MainForm = compose(
-  shouldUpdate((props, nextProps) => {
-    const ignoreForm = ['navigationItemsAttributes', '__persona']
-    return (
-      props.isCropping !== nextProps.isCropping ||
-      props.isFormLoading !== nextProps.isFormLoading ||
-      !shallowEqual(omit(props.form, ignoreForm), omit(nextProps.form, ignoreForm)) ||
-      !shallowEqual(props.form.__persona, nextProps.form.__persona)
-    )
-  })
-)(MainFormTemplate)
-
-const NavigationForm = ({
+const BaseNavigationForm = ({
   addNavigationItem,
   formRef,
   form,
@@ -180,7 +138,7 @@ const NavigationForm = ({
   title,
 }) => (
   <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-    <MainForm
+    <MainSection
       form={omit(form, ['navigationItemsAttributes'])}
       isCropping={isCropping}
       isFormLoading={isFormLoading}
@@ -232,32 +190,114 @@ const transform = navigationItems =>
     picture: { url: e.picUrl || defaults.product.pictureUrl },
   }))
 
-const NavigationSuperForm = ({ form, onTileClick, persona, ...props }) => (
-  <Grid container spacing={24}>
-    <Grid item md={6} xs={12}>
-      <NavigationForm form={form} {...props} />
-    </Grid>
-    <Grid item md={6} xs={12}>
-      <PluginPreview persona={persona}>
-        <Navigation
-          navigationItems={transform(form.navigationItemsAttributes)}
-          onTileClick={onTileClick}
-          title={form.title}
-        />
-      </PluginPreview>
-    </Grid>
-  </Grid>
-)
+const onTileClick = ({ url }) => window.open(url, '_blank')
 
-const NavigationSuperForm0 = compose(
-  withHandlers({
-    onTileClick: () => ({ url }) => window.open(url, '_blank'),
-  })
-)(NavigationSuperForm)
+const defaultForm = {
+  personaId: '',
+  name: '',
+  chatBubbleText: '',
+  chatBubbleExtraText: '',
+  navigationItemsAttributes: [
+    {
+      text: '',
+      url: '',
+      picUrl: '',
+    },
+  ],
+}
 
-const NavigationSuperForm1 = compose(
-  withHandlers({
-    addNavigationItem: ({ form, setForm }) => () => {
+const convertPersona = persona => ({
+  name: persona ? persona.name : defaults.persona.name,
+  description: persona ? persona.description : defaults.persona.description,
+  profilePic: {
+    url: persona ? persona.profilePicUrl : defaults.persona.profilePic.url,
+  },
+  instagramUrl: persona ? persona.instagramUrl : '',
+})
+
+const uploadSubPicture = async ({ blob, setProgress, subform }) => {
+  if (blob) {
+    const picUrl = await uploadPicture({
+      blob,
+      setProgress,
+    })
+    return {
+      ...subform,
+      picUrl,
+    }
+  }
+}
+
+const formObjectTransformer = json => {
+  return {
+    id: json.id,
+    personaId: (json.persona && json.persona.id) || '',
+    name: json.name || '',
+    title: json.title || '',
+    chatBubbleText: json.chatBubbleText || '',
+    chatBubbleExtraText: json.chatBubbleExtraText || '',
+    __persona: json.persona,
+    navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
+      id: navigationItem.id,
+      text: navigationItem.text || '',
+      url: navigationItem.url || '',
+      picUrl: navigationItem.picUrl || '',
+    })),
+  }
+}
+
+const NavigationForm = ({ backRoute, title, loadFormObject, location, saveFormObject }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'navigations', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
+
+  const formRef = useRef()
+
+  const [isCropping, setIsCropping] = useState(false)
+  const [navigationItemsPictures, setNavigationItemsPictures] = useState([])
+  const [persona, setPersona] = useState(defaults.persona)
+
+  const uploadSubPictures = useCallback(
+    form => {
+      return navigationItemsPictures.map(async ({ blob, index, setProgress }) => {
+        form.navigationItemsAttributes[index] = await uploadSubPicture({
+          subform: form.navigationItemsAttributes[index],
+          blob,
+          setProgress,
+        })
+      })
+    },
+    [navigationItemsPictures]
+  )
+
+  const newSaveFormObject = useCallback(
+    async form => {
+      await Promise.all(uploadSubPictures(form))
+      setNavigationItemsPictures([])
+      return saveFormObject(form)
+    },
+    [saveFormObject, uploadSubPictures]
+  )
+
+  const afterFormMount = useCallback(formObject => {
+    setPersona(convertPersona(formObject.__persona))
+  }, [])
+
+  const {
+    form,
+    isFormLoading,
+    isFormPristine,
+    isFormSubmitting,
+    setForm,
+    onFormSubmit,
+    setFieldValue,
+    setIsFormSubmitting,
+  } = useForm({ afterFormMount, formObjectTransformer, defaultForm, loadFormObject, saveFormObject: newSaveFormObject })
+
+  const addNavigationItem = useCallback(
+    () => {
       setForm({
         ...form,
         navigationItemsAttributes: [
@@ -270,14 +310,20 @@ const NavigationSuperForm1 = compose(
         ],
       })
     },
-    setNavigationItemForm: ({ form, setForm }) => (navigationItem, index) => {
+    [form, setForm]
+  )
+
+  const setNavigationItemForm = useCallback(
+    (navigationItem, index) => {
       const newNavigationItemsAttributes = [...form.navigationItemsAttributes]
       newNavigationItemsAttributes[index] = navigationItem
       setForm({ ...form, navigationItemsAttributes: newNavigationItemsAttributes })
     },
-  }),
-  withHandlers({
-    selectPersona: ({ convertPersona, form, setForm, setPersona }) => selected => {
+    [form, setForm]
+  )
+
+  const selectPersona = useCallback(
+    selected => {
       selected &&
         setForm({
           ...form,
@@ -285,7 +331,11 @@ const NavigationSuperForm1 = compose(
         })
       selected && setPersona(convertPersona(selected.value))
     },
-    onFormSubmit: ({ location, formRef, history, onFormSubmit, setIsFormSubmitting }) => async event => {
+    [form, setForm]
+  )
+
+  const newOnFormSubmit = useCallback(
+    async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       setIsFormSubmitting(false)
@@ -293,7 +343,27 @@ const NavigationSuperForm1 = compose(
       if (location.pathname !== routes.navigationEdit(result.id)) history.push(routes.navigationEdit(result.id))
       return result
     },
-    setPicture: ({ navigationItemsPictures, setNavigationItemsPictures }) => (index, blob, setProgress) => {
+    [location.pathname, onFormSubmit, setIsFormSubmitting]
+  )
+
+  const appBarContent = useMemo(
+    () => ({
+      Actions: (
+        <Actions
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={newOnFormSubmit}
+          saveDisabled={isFormSubmitting || isCropping || isFormLoading}
+        />
+      ),
+      backRoute,
+      title,
+    }),
+    [backRoute, isCropping, isFormLoading, isFormSubmitting, newOnFormSubmit, title]
+  )
+  useAppBarContent(appBarContent)
+
+  const setPicture = useCallback(
+    (index, blob, setProgress) => {
       const picture = { index, blob, setProgress }
       let newNavigationItemsPictures = [...navigationItemsPictures]
       const navigationItemsPictureIndex = findIndex(newNavigationItemsPictures, { index })
@@ -302,124 +372,46 @@ const NavigationSuperForm1 = compose(
         : newNavigationItemsPictures.push(picture)
       setNavigationItemsPictures(newNavigationItemsPictures)
     },
-    onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
+    [navigationItemsPictures]
+  )
+
+  const onSortEnd = useCallback(
+    ({ oldIndex, newIndex }) => {
       const orderedNavigationItems = arrayMove(form.navigationItemsAttributes, oldIndex, newIndex)
       setForm({ ...form, navigationItemsAttributes: orderedNavigationItems })
     },
-  }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
-)(NavigationSuperForm0)
-
-const NavigationSuperForm2 = props => {
-  const defaultForm = {
-    personaId: '',
-    name: '',
-    chatBubbleText: '',
-    chatBubbleExtraText: '',
-    navigationItemsAttributes: [
-      {
-        text: '',
-        url: '',
-        picUrl: '',
-      },
-    ],
-  }
-  const formProps = useForm({ ...props, defaultForm })
-  return <NavigationSuperForm1 {...props} {...formProps} />
-}
-
-const NavigationSuperForm3 = compose(
-  withProps({ formRef: React.createRef() }),
-  withState('isCropping', 'setIsCropping', false),
-  withState('navigationItemsPictures', 'setNavigationItemsPictures', []),
-  withState('persona', 'setPersona', defaults.persona),
-  withHandlers({
-    convertPersona: () => persona => ({
-      name: persona ? persona.name : defaults.persona.name,
-      description: persona ? persona.description : defaults.persona.description,
-      profilePic: {
-        url: persona ? persona.profilePicUrl : defaults.persona.profilePic.url,
-      },
-      instagramUrl: persona ? persona.instagramUrl : '',
-    }),
-  }),
-  withHandlers({
-    uploadSubPicture: () => async ({ blob, setProgress, subform }) => {
-      if (blob) {
-        const picUrl = await uploadPicture({
-          blob,
-          setProgress,
-        })
-        return {
-          ...subform,
-          picUrl,
-        }
-      }
-    },
-  }),
-  withHandlers({
-    uploadSubPictures: ({ navigationItemsPictures, uploadSubPicture }) => form => {
-      return navigationItemsPictures.map(async ({ blob, index, setProgress }) => {
-        form.navigationItemsAttributes[index] = await uploadSubPicture({
-          subform: form.navigationItemsAttributes[index],
-          blob,
-          setProgress,
-        })
-      })
-    },
-  }),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        id: json.id,
-        personaId: (json.persona && json.persona.id) || '',
-        name: json.name || '',
-        title: json.title || '',
-        chatBubbleText: json.chatBubbleText || '',
-        chatBubbleExtraText: json.chatBubbleExtraText || '',
-        __persona: json.persona,
-        navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
-          id: navigationItem.id,
-          text: navigationItem.text || '',
-          url: navigationItem.url || '',
-          picUrl: navigationItem.picUrl || '',
-        })),
-      }
-    },
-    saveFormObject: ({ saveFormObject, uploadSubPictures, setNavigationItemsPictures }) => async form => {
-      await Promise.all(uploadSubPictures(form))
-      setNavigationItemsPictures([])
-      return saveFormObject(form)
-    },
-    afterFormMount: ({ convertPersona, setPersona }) => formObject => {
-      setPersona(convertPersona(formObject.__persona))
-    },
-  })
-)(NavigationSuperForm2)
-
-const NavigationSuperForm4 = ({ location, ...props }) => {
-  const onboardingHelp = useMemo(
-    () => ({ single: true, stepName: 'navigations', stageName: 'initial', pathname: location.pathname }),
-    [location.pathname]
+    [form, setForm]
   )
-  useOnboardingHelp(onboardingHelp)
-  const { backRoute, title, isCropping, isFormLoading, isFormSubmitting, onFormSubmit } = props
-  const appBarContent = useMemo(
-    () => ({
-      Actions: (
-        <Actions
-          isFormSubmitting={isFormSubmitting}
-          onFormSubmit={onFormSubmit}
-          saveDisabled={isFormSubmitting || isCropping || isFormLoading}
+
+  if (isFormLoading) return <CircularProgress />
+
+  return (
+    <Grid container spacing={24}>
+      <Grid item md={6} xs={12}>
+        <BaseNavigationForm
+          addNavigationItem={addNavigationItem}
+          form={form}
+          isFormPristine={isFormPristine}
+          onFormSubmit={newOnFormSubmit}
+          onSortEnd={onSortEnd}
+          selectPersona={selectPersona}
+          setFieldValue={setFieldValue}
+          setIsCropping={setIsCropping}
+          setNavigationItemForm={setNavigationItemForm}
+          setPicture={setPicture}
         />
-      ),
-      backRoute,
-      title,
-    }),
-    [backRoute, isCropping, isFormLoading, isFormSubmitting, onFormSubmit, title]
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <PluginPreview persona={persona}>
+          <Navigation
+            navigationItems={transform(form.navigationItemsAttributes)}
+            onTileClick={onTileClick}
+            title={form.title}
+          />
+        </PluginPreview>
+      </Grid>
+    </Grid>
   )
-  useAppBarContent(appBarContent)
-  return <NavigationSuperForm3 {...props} location={location} />
 }
 
-export default withRouter(NavigationSuperForm4)
+export default withRouter(NavigationForm)

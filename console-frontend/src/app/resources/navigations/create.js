@@ -1,4 +1,4 @@
-import BaseNavigationForm from './form'
+import NavigationForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiNavigationCreate, apiRequest } from 'utils'
@@ -20,7 +20,7 @@ const loadFormObject = () => {
   }
 }
 
-const NavigationForm = props => {
+const CreateNavigationForm = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const saveFormObject = useCallback(
@@ -36,10 +36,8 @@ const NavigationForm = props => {
   )
 
   return (
-    <BaseNavigationForm
-      {...props}
+    <NavigationForm
       backRoute={routes.navigationsList()}
-      enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
       saveFormObject={saveFormObject}
       title="Create Navigation"
@@ -47,4 +45,4 @@ const NavigationForm = props => {
   )
 }
 
-export default NavigationForm
+export default CreateNavigationForm

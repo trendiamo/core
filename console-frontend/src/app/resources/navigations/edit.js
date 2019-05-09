@@ -1,10 +1,10 @@
-import BaseNavigationForm from './form'
+import NavigationForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiNavigationShow, apiNavigationUpdate, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
-const NavigationForm = ({ match, ...props }) => {
+const EditNavigationForm = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const loadFormObject = useCallback(
@@ -34,10 +34,8 @@ const NavigationForm = ({ match, ...props }) => {
   )
 
   return (
-    <BaseNavigationForm
-      {...props}
+    <NavigationForm
       backRoute={routes.navigationsList()}
-      enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
       match={match}
       saveFormObject={saveFormObject}
@@ -46,4 +44,4 @@ const NavigationForm = ({ match, ...props }) => {
   )
 }
 
-export default NavigationForm
+export default EditNavigationForm
