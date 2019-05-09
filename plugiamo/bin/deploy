@@ -2,11 +2,13 @@
 
 set -e
 
+yarn add ./plugin-base
 [ -f .env ] && cp .env .env~
 aws s3 cp s3://plugiamo/.env .env
-yarn add ./plugin-base
 yarn build
+[ -f .env~ ] && mv .env~ .env
 gzip -9 -c build/plugin.js | aws s3 cp - s3://plugiamo/plugin.js --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600'
+aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/plugin.js s3://javascript/plugin.js --content-type text/javascript --acl public-read --cache-control 'public,max-age=600'
 rm build/plugin.js
 # begin notify rollbar
 # ROLLBAR_DEPLOY_TOKEN=$(grep ROLLBAR_DEPLOY_TOKEN .env | xargs)
@@ -20,4 +22,3 @@ rm build/plugin.js
 #   -F revision=$REVISION \
 #   -F local_username=$LOCAL_USERNAME
 # end notify rollbar
-[ -f .env~ ] && mv .env~ .env
