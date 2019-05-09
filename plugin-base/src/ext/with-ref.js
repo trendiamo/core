@@ -1,12 +1,6 @@
 import { compose, withHandlers } from 'recompose'
 
-const getRef = element => {
-  if (!element || !element.base) return
-  if (element.base.constructor && element.base.constructor.name === 'StyledComponent') {
-    return element.base.base || element.base
-  }
-  return element.base || element
-}
+const getRef = element => (element.base ? getRef(element.base) : element)
 
 const withRef = (refName, setRefName) => BaseComponent =>
   compose(
