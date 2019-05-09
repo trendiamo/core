@@ -15,7 +15,7 @@ function assign(obj, props) {
 const getMatchingChildren = (children, url) =>
   (Array.isArray(children) ? children : [children])
     .map(vnode => {
-      let matches = matchUrl(url, vnode.attributes ? vnode.attributes.path : vnode.props.path)
+      let matches = matchUrl(url, vnode.props.path)
       if (matches) {
         let newProps = { matches, url }
         assign(newProps, matches)

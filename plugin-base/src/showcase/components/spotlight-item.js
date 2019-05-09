@@ -38,8 +38,8 @@ const SpotlightItem = compose(
       setNameRef: () => ref => (nameRef = ref),
       handleClick: ({ onClick, assessment, spotlight }) => () => {
         if (!assessment) {
-          transition.addElement('img', imgRef.base || imgRef)
-          transition.addElement('name', nameRef.base || nameRef)
+          transition.addElement('img', imgRef)
+          transition.addElement('name', nameRef)
         }
         onClick(spotlight)
       },

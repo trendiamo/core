@@ -46,7 +46,7 @@ const ScrollLock = compose(
       setContainerRef: () => ref => (containerRef = ref),
       setElementRef: () => ref => (elementRef = ref),
       setInitialScroll: ({ isEnabled }) => () => {
-        if (isEnabled) containerRef.base.scrollTop = PADDING_TOP
+        if (isEnabled) containerRef.scrollTop = PADDING_TOP
         if (!isEnabled && window.innerWidth < 600) {
           document.body.style.overflow = 'hidden'
         }
@@ -56,7 +56,7 @@ const ScrollLock = compose(
           if (isEnabled) event.target.scrollTop = PADDING_TOP
           return onScroll ? onScroll(event, { at: 'top' }) : { at: 'top' }
         }
-        const limit = elementRef.base.clientHeight - event.target.clientHeight + (isEnabled ? PADDING_TOP : 0)
+        const limit = elementRef.clientHeight - event.target.clientHeight + (isEnabled ? PADDING_TOP : 0)
         if (event.target.scrollTop >= limit) {
           if (isEnabled) event.target.scrollTop = limit
           return onScroll ? onScroll(event, { at: 'bottom' }) : { at: 'bottom' }

@@ -1,4 +1,4 @@
-import { createContext } from 'preact-context'
+import { createContext } from 'preact'
 
 const GraphqlContext = createContext('graphql')
 

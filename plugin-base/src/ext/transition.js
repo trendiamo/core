@@ -70,7 +70,7 @@ const transition = {
     })
   },
   setGhostRef(ref) {
-    if (ref) this.ghostElement = ref.base || ref
+    if (ref) this.ghostElement = ref
   },
 }
 

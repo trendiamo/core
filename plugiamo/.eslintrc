@@ -53,6 +53,7 @@
     "lodash/import-scope": [2, "method-package"],
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
+    "react/jsx-fragments": 0,
     "react/jsx-filename-extension": 0,
     "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "ignore" }],
     "react/jsx-handler-names": 0,

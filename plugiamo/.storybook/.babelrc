@@ -1,4 +1,4 @@
 {
-  "presets": ["env", "stage-2"],
-  "plugins": [["transform-react-jsx", { "pragma": "h" }]]
+  "plugins": [["@babel/plugin-transform-react-jsx", { "pragma": "h" }], "@babel/plugin-proposal-class-properties"],
+  "presets": [["@babel/preset-env", { "useBuiltIns": "entry" }]]
 }
