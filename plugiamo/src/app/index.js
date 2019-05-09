@@ -1,12 +1,10 @@
 import AssessmentCart from 'special/assessment/cart'
 import AssessmentSizeGuide from 'special/assessment/size-guide'
 import Content from './content'
-import datafile from 'optimizely.json'
 import getFrekklsConfig from 'frekkls-config'
 import Launcher from './launcher'
 import LauncherBubbles from './launcher-bubbles'
 import mixpanel from 'ext/mixpanel'
-import optimizely from '@optimizely/optimizely-sdk'
 import Router from './content/router'
 import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
@@ -14,7 +12,7 @@ import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { animateOnMount } from 'plugin-base'
 import { assessmentCart, assessmentHack } from 'special/assessment/utils'
-import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, production, smallLauncherConfig } from 'config'
+import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
 import {
   branch,
   compose,
@@ -67,7 +65,6 @@ const AppBaseTemplate = ({
   position,
   showingContent,
   data,
-  optimizelyClientInstance,
   ContentFrame,
   showAssessmentContent,
   setShowAssessmentContent,
@@ -100,7 +97,6 @@ const AppBaseTemplate = ({
         disappear={disappear}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
-        optimizelyClientInstance={optimizelyClientInstance}
         outroButtonsClick={outroButtonsClick}
         position={position}
         setDisappear={setDisappear}
@@ -113,7 +109,6 @@ const AppBaseTemplate = ({
         disappear={disappear}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
-        optimizelyClientInstance={optimizelyClientInstance}
         persona={persona}
         position={position}
         pulsating={launcherPulsating}
@@ -126,20 +121,19 @@ const AppBaseTemplate = ({
 
 export const AppBase = compose(
   withProps(() => {
-    const frekklsConfig = getFrekklsConfig()
-    if (isSmall()) {
-      return { launcherConfig: { ...smallLauncherConfig, ...frekklsConfig.launcherConfig } }
+    const frekklsLC = getFrekklsConfig().launcherConfig
+    const defaultLC = isSmall()
+      ? smallLauncherConfig
+      : frekklsLC.size === 'small'
+      ? smallLauncherConfig
+      : bigLauncherConfig
+
+    return {
+      launcherConfig: {
+        ...defaultLC,
+        extraElevation: frekklsLC.extraElevation || 0,
+      },
     }
-    if (!production) {
-      return { launcherConfig: { ...bigLauncherConfig, ...frekklsConfig.launcherConfig } }
-    }
-    const optimizelyClientInstance = optimizely.createInstance({ datafile, logger: { log: () => null } })
-    const variation = optimizelyClientInstance.activate('LauncherSize', mixpanel.get_distinct_id())
-    const launcherConfig = {
-      ...(variation === 'Big' ? bigLauncherConfig : smallLauncherConfig),
-      ...frekklsConfig.launcherConfig,
-    }
-    return { launcherConfig, optimizelyClientInstance }
   }),
   withHandlers({
     outroButtonsClick: () => value => {
