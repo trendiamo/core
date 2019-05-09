@@ -39,7 +39,5 @@ const Content = ({ contentRef, Base }) => (
 
 export default compose(
   branch(({ showingContent }) => !showingContent, renderNothing),
-  withProps({
-    contentRef: React.createRef(),
-  })
+  withProps({ contentRef: React.createRef() })
 )(Content)
