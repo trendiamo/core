@@ -25,6 +25,7 @@ const defaultConfig = {
   },
   launcherConfig: {
     extraElevation: 0,
+    size: 'big',
   },
 }
 
