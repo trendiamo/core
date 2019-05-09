@@ -1,6 +1,6 @@
 import { compose, withHandlers } from 'recompose'
 
-const getRef = element => (element.base ? getRef(element.base) : element)
+const getRef = element => (element && element.base ? getRef(element.base) : element)
 
 const withRef = (refName, setRefName) => BaseComponent =>
   compose(
