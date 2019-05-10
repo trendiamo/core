@@ -29,6 +29,7 @@ const formObjectTransformer = json => {
     profilePicUrl: json.profilePicUrl || '',
     instagramUrl: json.instagramUrl || '',
     profilePicAnimationUrl: json.profilePicAnimationUrl || '',
+    lockVersion: json.lockVersion,
   }
 }
 

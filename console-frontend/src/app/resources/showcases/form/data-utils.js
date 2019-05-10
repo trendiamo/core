@@ -70,6 +70,7 @@ const formObjectTransformer = json => {
     subtitle: json.subtitle || '',
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleExtraText: json.chatBubbleExtraText || '',
+    lockVersion: json.lockVersion,
     __persona: json.persona,
     spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
       id: spotlight.id,

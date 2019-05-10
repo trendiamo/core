@@ -67,6 +67,7 @@ const formObjectTransformer = json => {
     flowType: json.flowType || '',
     urlMatchers: json.urlMatchers || [''],
     flowLabel: (json.flow && json.flow.name) || '',
+    lockVersion: json.lockVersion,
   }
 }
 

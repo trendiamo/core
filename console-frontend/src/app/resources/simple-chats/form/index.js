@@ -253,6 +253,7 @@ const SimpleChatForm3 = compose(
         chatBubbleText: json.chatBubbleText || '',
         chatBubbleExtraText: json.chatBubbleExtraText || '',
         personaId: (json.persona && json.persona.id) || '',
+        lockVersion: json.lockVersion,
         __persona: json.persona,
         simpleChatStepsAttributes: json.simpleChatStepsAttributes || [
           {

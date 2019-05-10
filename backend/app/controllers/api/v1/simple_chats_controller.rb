@@ -24,7 +24,7 @@ module Api
         @simple_chat = SimpleChat.new(simple_chat_params)
         authorize @simple_chat
         if @simple_chat.save
-          render json: @simple_chat.as_json, status: :created
+          render json: @simple_chat, status: :created
         else
           render_error
         end
@@ -33,7 +33,7 @@ module Api
       def show
         @simple_chat = SimpleChat.find(params[:id])
         authorize @simple_chat
-        render json: @simple_chat.as_json
+        render json: @simple_chat
       end
 
       def update
@@ -62,7 +62,7 @@ module Api
 
       def simple_chat_params
         result = params.require(:simple_chat).permit(:id, :name, :title, :chat_bubble_text, :chat_bubble_extra_text,
-                                                     :persona_id, :_destroy,
+                                                     :persona_id, :_destroy, :lock_version,
                                                      simple_chat_steps_attributes:
                                                      [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
                                                       %i[id order text _destroy],])

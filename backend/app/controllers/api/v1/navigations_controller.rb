@@ -64,7 +64,7 @@ module Api
 
       def navigation_params
         result = params.require(:navigation).permit(:persona_id, :name, :title, :chat_bubble_text,
-                                                    :chat_bubble_extra_text,
+                                                    :chat_bubble_extra_text, :lock_version,
                                                     navigation_items_attributes: %i[id text url pic_id _destroy])
         add_order_fields(result)
       end

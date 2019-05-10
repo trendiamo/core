@@ -18,7 +18,7 @@ class Trigger < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "order", "url_matchers", "flow_id", "flow_type", "created_at", "updated_at")
+      .slice("id", "order", "url_matchers", "flow_id", "flow_type", "created_at", "updated_at", "lock_version")
       .merge(flow: { id: flow.id, name: flow.name })
   end
 

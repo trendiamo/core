@@ -236,6 +236,7 @@ const formObjectTransformer = json => {
     title: json.title || '',
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleExtraText: json.chatBubbleExtraText || '',
+    lockVersion: json.lockVersion,
     __persona: json.persona,
     navigationItemsAttributes: json.navigationItemsAttributes.map(navigationItem => ({
       id: navigationItem.id,
