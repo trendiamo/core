@@ -126,6 +126,9 @@ const handleRequestError = async (response, isLoginRequest) => {
       throw new Error('Invalid Credentials')
     }
   }
+  if (response.status === 409) {
+    return { requestError: 'Conflict: Please take note of your changes, reload and submit again.' }
+  }
   if (response.status >= 500) {
     return { requestError: 'Server Error' }
   }
@@ -141,7 +144,7 @@ export const apiRequest = async (requestMethod, args, options) => {
   const response = await promise.catch(() => null)
   const { requestError } = await handleRequestError(response, options && options.isLoginRequest)
   const json = requestError
-    ? {}
+    ? null
     : response.headers.get('content-type').startsWith('image')
     ? await response.blob()
     : await response.json()

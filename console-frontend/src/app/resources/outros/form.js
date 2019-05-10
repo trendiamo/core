@@ -154,7 +154,7 @@ const OutroForm2 = ({ backRoute, title, location, history, ...props }) => {
         if (!formRef.current.reportValidity()) return
         const result = await onFormSubmit(event)
         setIsFormSubmitting(false)
-        if (result.error || result.errors) return
+        if (!result || result.error || result.errors) return
         if (location.pathname !== routes.outroEdit(result.id)) history.push(routes.outroEdit(result.id))
         return result
       })()

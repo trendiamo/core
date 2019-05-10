@@ -85,7 +85,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       setIsFormSubmitting(false)
-      if (result.error || result.errors) return
+      if (!result || result.error || result.errors) return
       pluginHistory.replace(pluginRoutes.showcase(result.id))
       if (location.pathname !== routes.showcaseEdit(result.id)) history.push(routes.showcaseEdit(result.id))
       return result

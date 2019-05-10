@@ -31,7 +31,7 @@ const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormO
       event.preventDefault()
       setIsFormSubmitting(true)
       const json = await saveFormObject(state.form)
-      if (json.error || json.errors) return json
+      if (!json || json.error || json.errors) return json
       const formObject = formObjectTransformer(json)
       setInitialForm(formObject)
       setForm(formObject)
