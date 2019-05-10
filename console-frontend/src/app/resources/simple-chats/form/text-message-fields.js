@@ -5,7 +5,7 @@ import React from 'react'
 import RichTextEditor from 'react-rte'
 import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { Tooltip } from '@material-ui/core'
+import { InputLabel as Label, Tooltip } from '@material-ui/core'
 import { trim } from 'lodash'
 
 const StyledRichTextEditor = styled(RichTextEditor)`
@@ -178,45 +178,50 @@ export default compose(
     isMarkdownMode,
     value,
   }) => (
-    <StyledEditorContainer>
-      <StyledTooltip placement="left" title="Learn about the Markdown syntax">
-        <MarkdownIcon
-          href="https://www.markdownguide.org/cheat-sheet"
+    <>
+      <Label required style={{ fontSize: '12px' }}>
+        {'Message'}
+      </Label>
+      <StyledEditorContainer>
+        <StyledTooltip placement="left" title="Learn about the Markdown syntax">
+          <MarkdownIcon
+            href="https://www.markdownguide.org/cheat-sheet"
+            isMarkdownMode={isMarkdownMode}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img alt="" src="/img/icons/markdown.svg" />
+          </MarkdownIcon>
+        </StyledTooltip>
+        <StyledRichTextEditor
+          customControls={[
+            <Tooltip key={0} placement="top" title="Switch to preview to use these commands">
+              <DisabledToolbar isMarkdownMode={isMarkdownMode} />
+            </Tooltip>,
+            <SwitchButtonContainer key={1}>
+              <SwitchButton onClick={onSwitchButtonClick} size="small">
+                {`${isMarkdownMode ? 'preview' : 'markdown'}`}
+              </SwitchButton>
+            </SwitchButtonContainer>,
+          ]}
+          handleReturn={onRTEReturn}
           isMarkdownMode={isMarkdownMode}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <img alt="" src="/img/icons/markdown.svg" />
-        </MarkdownIcon>
-      </StyledTooltip>
-      <StyledRichTextEditor
-        customControls={[
-          <Tooltip key={0} placement="top" title="Switch to preview to use these commands">
-            <DisabledToolbar isMarkdownMode={isMarkdownMode} />
-          </Tooltip>,
-          <SwitchButtonContainer key={1}>
-            <SwitchButton onClick={onSwitchButtonClick} size="small">
-              {`${isMarkdownMode ? 'preview' : 'markdown'}`}
-            </SwitchButton>
-          </SwitchButtonContainer>,
-        ]}
-        handleReturn={onRTEReturn}
-        isMarkdownMode={isMarkdownMode}
-        onChange={onValueChange}
-        placeholder="Insert a message"
-        readOnly={disabled}
-        toolbarConfig={toolbarConfig}
-        value={value}
-      />
-      <StyledContentEditable
-        disabled={disabled}
-        html={value.toString('markdown')}
-        isMarkdownMode={isMarkdownMode}
-        onChange={onValueChange}
-        onKeyDown={onMarkdownKeyDown}
-        onPaste={onMarkdownPaste}
-        placeholder="Insert a message"
-      />
-    </StyledEditorContainer>
+          onChange={onValueChange}
+          placeholder="Insert a message"
+          readOnly={disabled}
+          toolbarConfig={toolbarConfig}
+          value={value}
+        />
+        <StyledContentEditable
+          disabled={disabled}
+          html={value.toString('markdown')}
+          isMarkdownMode={isMarkdownMode}
+          onChange={onValueChange}
+          onKeyDown={onMarkdownKeyDown}
+          onPaste={onMarkdownPaste}
+          placeholder="Insert a message"
+        />
+      </StyledEditorContainer>
+    </>
   )
 )

@@ -1,9 +1,10 @@
 import React from 'react'
 import TextMessageFields from './text-message-fields'
-import { branch, compose, renderNothing, shouldUpdate, withHandlers } from 'recompose'
+import VideoMessageField from './video-message-field'
+import { branch, compose, lifecycle, renderNothing, shouldUpdate, withHandlers, withState } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
+import { extractJson, extractYoutubeId } from 'plugin-base'
 import { isEqual, omit } from 'lodash'
-import { InputLabel as Label } from '@material-ui/core'
 
 const SimpleChatMessage = ({
   allowDelete,
@@ -12,7 +13,9 @@ const SimpleChatMessage = ({
   isFormLoading,
   simpleChatMessage,
   simpleChatMessageIndex,
+  messageType,
   onChange,
+  onFocus,
 }) => (
   <FormSection
     actions={
@@ -28,20 +31,29 @@ const SimpleChatMessage = ({
     hideTop={index === 0}
     title={simpleChatMessage.id ? simpleChatMessage.text : 'New Message'}
   >
-    <Label required style={{ fontSize: '12px' }}>
-      {'Message'}
-    </Label>
-    <TextMessageFields
-      disabled={isFormLoading}
-      name="simpleChatMessage_text"
-      onChange={onChange}
-      simpleChatMessage={simpleChatMessage}
-      simpleChatMessageIndex={simpleChatMessageIndex}
-    />
+    {messageType === 'video' ? (
+      <VideoMessageField
+        isFormLoading={isFormLoading}
+        name="simpleChatMessage_text"
+        onChange={onChange}
+        onFocus={onFocus}
+        simpleChatMessage={simpleChatMessage}
+        simpleChatMessageIndex={simpleChatMessageIndex}
+      />
+    ) : (
+      <TextMessageFields
+        disabled={isFormLoading}
+        name="simpleChatMessage_text"
+        onChange={onChange}
+        simpleChatMessage={simpleChatMessage}
+        simpleChatMessageIndex={simpleChatMessageIndex}
+      />
+    )}
   </FormSection>
 )
 
 export default compose(
+  withState('messageType', 'setMessageType', null),
   shouldUpdate((props, nextProps) => {
     const ignoreProps = ['onChange']
     return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
@@ -56,6 +68,15 @@ export default compose(
         },
         simpleChatMessageIndex
       )
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { simpleChatMessage, simpleChatMessageType, setMessageType } = this.props
+      if (simpleChatMessageType) return setMessageType(simpleChatMessageType)
+      const videoData = extractYoutubeId(simpleChatMessage.text)
+      const productData = !videoData && extractJson(simpleChatMessage.text)
+      setMessageType(videoData ? 'video' : productData ? 'product' : 'text')
     },
   })
 )(SimpleChatMessage)

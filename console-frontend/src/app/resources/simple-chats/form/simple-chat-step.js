@@ -8,7 +8,7 @@ import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers, withState } from 'recompose'
 import { isEqual, omit } from 'lodash'
 import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
-import { MessageOutlined, Redeem } from '@material-ui/icons'
+import { MessageOutlined, OndemandVideo } from '@material-ui/icons'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const MessageIcon = styled(MessageOutlined)`
@@ -16,7 +16,7 @@ const MessageIcon = styled(MessageOutlined)`
   margin-right: 6px;
 `
 
-const ProductIcon = styled(Redeem)`
+const VideoIcon = styled(OndemandVideo)`
   font-size: 18px;
   margin-right: 6px;
 `
@@ -39,9 +39,8 @@ const StyledMenu = styled(Menu)`
     width: 160px;
     transform-origin: top center !important;
     li {
-      justify-content: center;
-      padding-right: 16px;
       color: rgba(0, 0, 0, 0.8);
+      font-size: 15px;
     }
   }
 `
@@ -69,6 +68,7 @@ const SimpleChatMessages = ({ allowDelete, simpleChatMessages, onChange, onFocus
           onFocus={onFocus}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={index}
+          simpleChatMessageType={simpleChatMessage.__type}
         />
       )
     )}
@@ -152,14 +152,15 @@ const SimpleChatStep = ({
           id="new-message-menu"
           onClose={closeMenu}
           open={Boolean(anchorEl)}
+          transitionDuration={150}
         >
           <MenuItem onClick={addSimpleChatMessage} value="text">
             <MessageIcon />
             {'Text'}
           </MenuItem>
-          <MenuItem onClick={addSimpleChatMessage} value="product">
-            <ProductIcon />
-            {'Product'}
+          <MenuItem onClick={addSimpleChatMessage} value="video">
+            <VideoIcon />
+            {'Video'}
           </MenuItem>
         </StyledMenu>
       </>
@@ -169,7 +170,6 @@ const SimpleChatStep = ({
 
 export default compose(
   withState('anchorEl', 'setAnchorEl', null),
-  withState('newMessageType', 'setNewMessageType', 'text'),
   branch(({ simpleChatStep }) => simpleChatStep._destroy, renderNothing),
   shouldUpdate((props, nextProps) => {
     const ignoreProps = ['onChange']
@@ -212,21 +212,14 @@ export default compose(
     },
   }),
   withHandlers({
-    addSimpleChatMessage: ({
-      closeMenu,
-      onChange,
-      simpleChatStepIndex,
-      simpleChatStep,
-      setNewMessageType,
-    }) => newMessageType => {
-      setNewMessageType(newMessageType)
+    addSimpleChatMessage: ({ closeMenu, onChange, simpleChatStepIndex, simpleChatStep }) => messageType => {
       closeMenu()
       onChange(
         {
           ...simpleChatStep,
           simpleChatMessagesAttributes: simpleChatStep.simpleChatMessagesAttributes
-            ? [...simpleChatStep.simpleChatMessagesAttributes, { text: '' }]
-            : [{ text: '' }],
+            ? [...simpleChatStep.simpleChatMessagesAttributes, { text: '', __type: messageType }]
+            : [{ text: '', __type: messageType }],
         },
         simpleChatStepIndex
       )
