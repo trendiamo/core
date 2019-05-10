@@ -5,19 +5,11 @@ import Section from 'shared/section'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers, withProps } from 'recompose'
-import { findIndex, isEqual, omit } from 'lodash'
+import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
+import { findIndex } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
-const SortableProductPick = compose(
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['onChange', 'productPick', 'setProductPicture', 'setIsCropping', 'onFocus']
-    return (
-      !shallowEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps)) ||
-      !shallowEqual(props.productPick, nextProps.productPick)
-    )
-  })
-)(SortableElement(ProductPick))
+const SortableProductPick = SortableElement(ProductPick)
 
 const ProductPicks = ({
   allowDelete,
@@ -53,11 +45,7 @@ const ProductPicks = ({
 )
 
 const ProductPicksContainer = compose(
-  withProps(({ spotlight }) => ({ allowDelete: spotlight.productPicksAttributes.length > 1 })),
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['onChange', 'onFocus', 'onSortEnd', 'setIsCropping', 'setProductPicture']
-    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-  })
+  withProps(({ spotlight }) => ({ allowDelete: spotlight.productPicksAttributes.length > 1 }))
 )(SortableContainer(ProductPicks))
 
 const options = { suggestionItem: 'withAvatar' }

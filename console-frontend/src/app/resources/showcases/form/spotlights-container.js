@@ -1,6 +1,5 @@
-import React, { memo } from 'react'
+import React from 'react'
 import Spotlight from './spotlight'
-import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const SortableSpotlight = SortableElement(Spotlight)
@@ -44,12 +43,6 @@ const Spotlights = ({
   )
 }
 
-const SpotlightsContainer = memo(SortableContainer(Spotlights), (props, nextProps) => {
-  const ignoreProps = ['onFocus', 'onSortEnd', 'form', 'setIsCropping', 'setProductPicksPictures', 'setSpotlightForm']
-  return (
-    isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps)) &&
-    isEqual(props.form.spotlightsAttributes, nextProps.form.spotlightsAttributes)
-  )
-})
+const SpotlightsContainer = SortableContainer(Spotlights)
 
 export default SpotlightsContainer

@@ -7,9 +7,9 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, Field, Form, HelperText } from 'shared/form-elements'
+import { Actions, Field, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
-import { Grid } from '@material-ui/core'
+import { FormHelperText, Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -56,7 +56,7 @@ const OutroForm = ({
         required
         value={form.name}
       />
-      <HelperText>{'The name is useful for you to reference this module in a trigger.'}</HelperText>
+      <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
       <Autocomplete
         autocomplete={apiPersonasAutocomplete}
         defaultPlaceholder="Choose a persona"
@@ -68,7 +68,7 @@ const OutroForm = ({
         options={options}
         required
       />
-      <HelperText>{'The persona will appear in the launcher, and in the content.'}</HelperText>
+      <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
       <Field
         disabled={isFormLoading}
         fullWidth
@@ -81,7 +81,7 @@ const OutroForm = ({
         required
         value={form.chatBubbleText}
       />
-      <HelperText>{'Question on whether users are satisfied with the help they got.'}</HelperText>
+      <FormHelperText>{'Question on whether users are satisfied with the help they got.'}</FormHelperText>
       <Field
         disabled={isFormLoading}
         fullWidth
@@ -94,7 +94,7 @@ const OutroForm = ({
         required
         value={form.chatBubbleButtonYes}
       />
-      <HelperText>{'Button that indicates a positive user response.'}</HelperText>
+      <FormHelperText>{'Button that indicates a positive user response.'}</FormHelperText>
       <Field
         disabled={isFormLoading}
         fullWidth
@@ -107,7 +107,7 @@ const OutroForm = ({
         required
         value={form.chatBubbleButtonNo}
       />
-      <HelperText>{'Button that indicates a negative user response.'}</HelperText>
+      <FormHelperText>{'Button that indicates a negative user response.'}</FormHelperText>
     </Form>
   </Section>
 )

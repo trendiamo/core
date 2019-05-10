@@ -3,7 +3,8 @@ import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React from 'react'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, withHandlers, withState } from 'recompose'
-import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
+import { Cancel, Field, FormSection } from 'shared/form-elements'
+import { FormHelperText } from '@material-ui/core'
 
 const ProductPick = ({
   allowDelete,
@@ -44,11 +45,11 @@ const ProductPick = ({
       type="URL"
       value={productPick.url}
     />
-    <HelperText>
+    <FormHelperText>
       {
         'Use the whole url, eg: https://www.example.com/page1 - you can test it by clicking on the item in the preview. Hint: you can copy/paste links from the URL Generator.'
       }
-    </HelperText>
+    </FormHelperText>
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth

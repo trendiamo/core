@@ -2,7 +2,8 @@ import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
 import Section from 'shared/section'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
-import { Cancel, Field, FormSection, HelperText } from 'shared/form-elements'
+import { Cancel, Field, FormSection } from 'shared/form-elements'
+import { FormHelperText } from '@material-ui/core'
 
 const NavigationItem = ({
   allowDelete,
@@ -78,11 +79,11 @@ const NavigationItem = ({
           type="URL"
           value={navigationItem.url}
         />
-        <HelperText>
+        <FormHelperText>
           {
             'Use the whole url, eg: https://www.example.com/page1 - you can test it by clicking on the item in the preview.'
           }
-        </HelperText>
+        </FormHelperText>
         <Field
           disabled={isCropping || isFormLoading}
           fullWidth

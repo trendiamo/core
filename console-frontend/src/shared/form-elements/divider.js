@@ -1,5 +1,5 @@
 import omit from 'lodash.omit'
-import React, { memo } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Divider as MuiDivider } from '@material-ui/core'
 
@@ -12,7 +12,4 @@ const Divider = styled(props => <MuiDivider {...omit(props, ['folded'])} />)`
   transition: all 0.5s;
 `
 
-export default memo(
-  Divider,
-  (prevProps, nextProps) => prevProps.folded === nextProps.folded && prevProps.color === nextProps.color
-)
+export default Divider

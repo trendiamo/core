@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
@@ -15,11 +15,6 @@ const Counter = styled.div`
 const Container = styled.div`
   position: relative;
 `
-
-const Label = memo(
-  InputLabel,
-  (prevProps, nextProps) => prevProps.children === nextProps.children && prevProps.shrink === nextProps.shrink
-)
 
 const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...props }) => {
   const [textLength, setTextLength] = useState(0)
@@ -65,9 +60,9 @@ const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...prop
   return (
     <Container>
       <FormControl fullWidth margin="normal">
-        <Label required={required} shrink={focused || value.length !== 0}>
+        <InputLabel required={required} shrink={focused || value.length !== 0}>
           {label}
-        </Label>
+        </InputLabel>
         <Input
           required={required}
           {...omit(props, ['setTextLength', 'setIsOutsideLimits', 'setFocused', 'margin'])}
@@ -86,7 +81,4 @@ const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...prop
   )
 }
 
-export default memo(
-  Field,
-  (prevProps, nextProps) => prevProps.value === nextProps.value && prevProps.disabled === nextProps.disabled
-)
+export default Field

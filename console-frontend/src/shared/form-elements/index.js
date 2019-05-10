@@ -8,7 +8,6 @@ import FlexBar from './flex-bar'
 import Form from './form'
 import FormSection from './form-section'
 import Header from './header'
-import HelperText from './helper-text'
 import InlineTypography from './inline-typography'
 import Prompt from './prompt'
 import SaveButton from './save-button'
@@ -27,5 +26,4 @@ export {
   Prompt,
   SaveButton,
   Field,
-  HelperText,
 }

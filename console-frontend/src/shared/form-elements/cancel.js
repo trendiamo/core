@@ -1,5 +1,5 @@
 import MuiDelete from '@material-ui/icons/DeleteOutlined'
-import React, { memo, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { IconButton } from '@material-ui/core'
 
 const Cancel = ({ index, disabled, onClick, ...props }) => {
@@ -12,7 +12,4 @@ const Cancel = ({ index, disabled, onClick, ...props }) => {
   )
 }
 
-export default memo(
-  Cancel,
-  (prevProps, nextProps) => prevProps.disabled === nextProps.disabled && prevProps.index === nextProps.index
-)
+export default Cancel
