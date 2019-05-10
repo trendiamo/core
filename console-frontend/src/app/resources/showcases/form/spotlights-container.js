@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Spotlight from './spotlight'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
@@ -15,7 +15,7 @@ const Spotlights = ({
   setSpotlightForm,
   onFocus,
 }) => {
-  const allowDelete = form.spotlightsAttributes.length > 1
+  const allowDelete = useMemo(() => form.spotlightsAttributes.length > 1, [form.spotlightsAttributes.length])
 
   return (
     <div>

@@ -14,6 +14,10 @@ import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
+const onProductClick = ({ product }) => () => {
+  window.open(product.url, '_blank')
+}
+
 const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormObject, title }) => {
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'showcases', stageName: 'initial', pathname: location.pathname }),
@@ -69,7 +73,8 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     isFormSubmitting,
     onFormSubmit,
     setFieldValue,
-    setForm,
+    mergeForm,
+    mergeFormCallback,
     setIsFormSubmitting,
   } = useForm({ formObjectTransformer, defaultForm: formObject, saveFormObject: newSaveFormObject, loadFormObject })
 
@@ -95,7 +100,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
 
   const addSpotlight = useCallback(
     () => {
-      setForm({
+      mergeFormCallback(form => ({
         ...form,
         spotlightsAttributes: [
           ...form.spotlightsAttributes,
@@ -112,38 +117,41 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
             ],
           },
         ],
-      })
+      }))
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const setSpotlightForm = useCallback(
     (spotlight, index) => {
-      const newSpotlightsAttributes = [...form.spotlightsAttributes]
-      newSpotlightsAttributes[index] = spotlight
-      setForm({ ...form, spotlightsAttributes: newSpotlightsAttributes })
+      mergeFormCallback(form => {
+        const newSpotlightsAttributes = [...form.spotlightsAttributes]
+        newSpotlightsAttributes[index] = spotlight
+        return { ...form, spotlightsAttributes: newSpotlightsAttributes }
+      })
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const selectPersona = useCallback(
     selected => {
       if (!selected) return
-      setForm({
-        ...form,
+      mergeForm({
         personaId: selected.value.id,
         personaProfilePic: selected.value.profilePicUrl,
       })
     },
-    [form, setForm]
+    [mergeForm]
   )
 
   const onSortEnd = useCallback(
     ({ oldIndex, newIndex }) => {
-      const orderedSpotlights = arrayMove(form.spotlightsAttributes, oldIndex, newIndex)
-      setForm({ ...form, spotlightsAttributes: orderedSpotlights })
+      mergeFormCallback(form => {
+        const orderedSpotlights = arrayMove(form.spotlightsAttributes, oldIndex, newIndex)
+        return { ...form, spotlightsAttributes: orderedSpotlights }
+      })
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const routeToShowcase = useCallback(() => pluginHistory.replace(pluginRoutes.showcase(form.id)), [form.id])
@@ -176,13 +184,6 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     [onToggleContent, routeToSpotlight]
   )
 
-  const onProductClick = useCallback(
-    ({ product }) => () => {
-      window.open(product.url, '_blank')
-    },
-    []
-  )
-
   const appBarContent = useMemo(
     () => ({
       Actions: (
@@ -207,7 +208,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
       onSpotlightClick,
       onProductClick,
     }),
-    [onProductClick, onSpotlightClick]
+    [onSpotlightClick]
   )
 
   if (isFormLoading) return <CircularProgress />

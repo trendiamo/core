@@ -4,18 +4,21 @@ import { useCallback, useEffect, useMemo, useReducer } from 'react'
 const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormObject, saveFormObject }) => {
   const [state, dispatch] = useReducer(
     (state, action) => {
-      if (action.type === 'mergeForm') {
-        return { ...state, form: { ...state.form, ...action.value } }
-      } else if (action.type === 'merge') {
+      if (action.type === 'merge') {
         return { ...state, ...action.value }
+      } else if (action.type === 'mergeForm') {
+        return { ...state, form: { ...state.form, ...action.value } }
+      } else if (action.type === 'mergeFormCallback') {
+        return { ...state, form: { ...state.form, ...action.callback(state.form) } }
       } else {
         throw new Error()
       }
     },
     { form: defaultForm, initialForm: defaultForm, isFormLoading: true, isFormSubmitting: false }
   )
-  const mergeForm = useCallback(value => dispatch({ type: 'mergeForm', value }), [dispatch])
   const setForm = useCallback(form => dispatch({ type: 'merge', value: { form } }), [dispatch])
+  const mergeForm = useCallback(value => dispatch({ type: 'mergeForm', value }), [dispatch])
+  const mergeFormCallback = useCallback(callback => dispatch({ type: 'mergeFormCallback', callback }), [dispatch])
   const setInitialForm = useCallback(initialForm => dispatch({ type: 'merge', value: { initialForm } }), [dispatch])
   const setIsFormLoading = useCallback(isFormLoading => dispatch({ type: 'merge', value: { isFormLoading } }), [
     dispatch,
@@ -71,6 +74,7 @@ const useForm = ({ afterFormMount, defaultForm, formObjectTransformer, loadFormO
     isFormPristine,
     isFormSubmitting: state.isFormSubmitting,
     mergeForm,
+    mergeFormCallback,
     onFormSubmit,
     setFieldValue,
     setForm,
