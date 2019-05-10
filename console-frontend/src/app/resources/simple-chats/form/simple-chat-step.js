@@ -59,9 +59,8 @@ const SortableSimpleChatMessage = compose(
 
 const SimpleChatMessages = ({ allowDelete, simpleChatMessages, onChange, onFocus }) => (
   <div>
-    {simpleChatMessages
-      .filter(simpleChatMessage => !simpleChatMessage._destroy)
-      .map((simpleChatMessage, index) => (
+    {simpleChatMessages.map((simpleChatMessage, index) =>
+      simpleChatMessage._destroy ? null : (
         <SortableSimpleChatMessage
           allowDelete={allowDelete}
           index={index}
@@ -71,7 +70,8 @@ const SimpleChatMessages = ({ allowDelete, simpleChatMessages, onChange, onFocus
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={index}
         />
-      ))}
+      )
+    )}
   </div>
 )
 
@@ -196,10 +196,7 @@ export default compose(
       setAnchorEl(event.currentTarget)
     },
     onSimpleChatMessagesSortEnd: ({ onChange, simpleChatStepIndex, simpleChatStep }) => ({ oldIndex, newIndex }) => {
-      const filteredSimpleChatMessages = simpleChatStep.simpleChatMessagesAttributes.filter(
-        simpleChatMessage => !simpleChatMessage._destroy
-      )
-      const orderedSimpleChatMessages = arrayMove(filteredSimpleChatMessages, oldIndex, newIndex)
+      const orderedSimpleChatMessages = arrayMove(simpleChatStep.simpleChatMessagesAttributes, oldIndex, newIndex)
       onChange({ ...simpleChatStep, simpleChatMessagesAttributes: orderedSimpleChatMessages }, simpleChatStepIndex)
     },
     setSimpleChatMessagesForm: ({ simpleChatStep, simpleChatStepIndex, onChange }) => (
