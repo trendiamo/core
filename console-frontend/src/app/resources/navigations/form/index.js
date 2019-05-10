@@ -340,7 +340,7 @@ const NavigationForm = ({ backRoute, title, loadFormObject, location, saveFormOb
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       setIsFormSubmitting(false)
-      if (result.error || result.errors) return
+      if (!result || result.error || result.errors) return
       if (location.pathname !== routes.navigationEdit(result.id)) history.push(routes.navigationEdit(result.id))
       return result
     },

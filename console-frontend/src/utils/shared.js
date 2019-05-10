@@ -13,7 +13,7 @@ const errorMessages = json => {
 }
 
 export const extractErrors = json => {
-  if (!json.errors && !json.error) return false
+  if (!json || (!json.errors && !json.error)) return false
   const message = errorMessages(json)
   return { message, status: 'error' }
 }

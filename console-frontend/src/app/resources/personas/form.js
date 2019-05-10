@@ -81,7 +81,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
         if (!formRef.current.reportValidity()) return
         const result = await onFormSubmit(event)
         setIsFormSubmitting(false)
-        if (result.error || result.errors) return
+        if (!result || result.error || result.errors) return
         setTimeout(() => {
           if (onboardingCreate && (onboarding.stageIndex < 2 && !onboarding.run)) {
             setOnboarding({ ...onboarding, stageIndex: 1, run: true })
