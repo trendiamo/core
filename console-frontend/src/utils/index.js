@@ -150,6 +150,7 @@ export const apiRequest = async (requestMethod, args, options) => {
 }
 
 export const atLeastOneNonBlankCharRegexp = '.*\\S+.*'
+export const youtubeRegexp = '^\\S*(youtu.be/|v/|u/w/|embed/|watch\\?v=|&v=|\\?v=)([^#&?]*).*'
 
 // refreshRoute goes to "/empty", and replaces that history entry by the original route,
 // remounting the original component
