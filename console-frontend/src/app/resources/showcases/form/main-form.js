@@ -1,14 +1,14 @@
 import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
-import React, { memo } from 'react'
+import React from 'react'
 import Section from 'shared/section'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
-import { Field, HelperText } from 'shared/form-elements'
-import { isEqual, omit } from 'lodash'
+import { Field } from 'shared/form-elements'
+import { FormHelperText } from '@material-ui/core'
 
 const options = { suggestionItem: 'withAvatar' }
 
-const MainFormTemplate = ({
+const MainForm = ({
   title,
   isCropping,
   setFieldValue,
@@ -32,7 +32,7 @@ const MainFormTemplate = ({
       required
       value={form.name}
     />
-    <HelperText>{'The name is useful for you to reference this module in a trigger.'}</HelperText>
+    <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
     <Autocomplete
       autocomplete={apiPersonasAutocomplete}
       defaultPlaceholder="Choose a persona"
@@ -45,7 +45,7 @@ const MainFormTemplate = ({
       options={options}
       required
     />
-    <HelperText>{'The persona will appear in the launcher, and in the cover.'}</HelperText>
+    <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
@@ -59,7 +59,7 @@ const MainFormTemplate = ({
       required
       value={form.title}
     />
-    <HelperText>{'The title is shown in the cover.'}</HelperText>
+    <FormHelperText>{'The title is shown in the cover.'}</FormHelperText>
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
@@ -73,7 +73,7 @@ const MainFormTemplate = ({
       required
       value={form.subtitle}
     />
-    <HelperText>{'The subtitle is shown in the cover, below the title.'}</HelperText>
+    <FormHelperText>{'The subtitle is shown in the cover, below the title.'}</FormHelperText>
     <Field
       disabled={isFormLoading}
       fullWidth
@@ -85,7 +85,7 @@ const MainFormTemplate = ({
       onFocus={() => onToggleContent(false)}
       value={form.chatBubbleText}
     />
-    <HelperText>{'Shows as a text bubble next to the plugin launcher.'}</HelperText>
+    <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
     <Field
       disabled={isFormLoading}
       fullWidth
@@ -97,13 +97,8 @@ const MainFormTemplate = ({
       onFocus={() => onToggleContent(false)}
       value={form.chatBubbleExtraText}
     />
-    <HelperText>{'Additional text bubble. Pops up after the first one.'}</HelperText>
+    <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
   </Section>
 )
-
-const MainForm = memo(MainFormTemplate, (props, nextProps) => {
-  const ignoreProps = ['setFieldValue', 'selectPersona', 'onBackClick']
-  return isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-})
 
 export default MainForm

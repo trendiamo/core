@@ -1,6 +1,6 @@
 import debounce from 'debounce-promise'
 import Downshift from 'downshift'
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { apiRequest } from 'utils'
 import { ArrowDropDown } from '@material-ui/icons'
@@ -206,4 +206,4 @@ const Autocomplete = ({
   )
 }
 
-export default memo(Autocomplete)
+export default Autocomplete

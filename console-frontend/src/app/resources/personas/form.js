@@ -6,9 +6,9 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, Field, Form, HelperText } from 'shared/form-elements'
+import { Actions, Field, Form } from 'shared/form-elements'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
-import { Grid } from '@material-ui/core'
+import { FormHelperText, Grid } from '@material-ui/core'
 import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingConsumer, useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -159,7 +159,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
             required
             value={form.description}
           />
-          <HelperText>{"A short text that is shown near the persona's name."}</HelperText>
+          <FormHelperText>{"A short text that is shown near the persona's name."}</FormHelperText>
           <Field
             disabled={isFormLoading || isCropping}
             fullWidth
@@ -169,7 +169,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
             onChange={setFieldValue}
             value={form.instagramUrl}
           />
-          <HelperText>{"Instagram link icon will appear near the persona's name."}</HelperText>
+          <FormHelperText>{"Instagram link icon will appear near the persona's name."}</FormHelperText>
           <Field
             disabled={isFormLoading || isCropping}
             fullWidth
@@ -179,7 +179,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
             onChange={setFieldValue}
             value={form.profilePicAnimationUrl}
           />
-          <HelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</HelperText>
+          <FormHelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</FormHelperText>
           {progress && <ProgressBar progress={progress} />}
         </Form>
       </Grid>

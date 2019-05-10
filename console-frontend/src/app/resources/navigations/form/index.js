@@ -8,11 +8,11 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
+import { Actions, AddItemContainer, Field, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { findIndex, omit } from 'lodash'
-import { Grid } from '@material-ui/core'
+import { FormHelperText, Grid } from '@material-ui/core'
 import { Navigation } from 'plugin-base'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { uploadPicture } from 'shared/picture-uploader'
@@ -68,7 +68,7 @@ const MainSection = ({ title, isFormLoading, setFieldValue, form, isCropping, se
       required
       value={form.name}
     />
-    <HelperText>{'The name is useful for you to reference this module in a trigger.'}</HelperText>
+    <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
     <Field
       disabled={isFormLoading}
       fullWidth
@@ -81,7 +81,7 @@ const MainSection = ({ title, isFormLoading, setFieldValue, form, isCropping, se
       required
       value={form.title}
     />
-    <HelperText>{'The title will appear at the top of the navigation.'}</HelperText>
+    <FormHelperText>{'The title will appear at the top of the navigation.'}</FormHelperText>
     <Autocomplete
       autocomplete={apiPersonasAutocomplete}
       defaultPlaceholder="Choose a persona"
@@ -93,7 +93,7 @@ const MainSection = ({ title, isFormLoading, setFieldValue, form, isCropping, se
       options={options}
       required
     />
-    <HelperText>{'The persona will appear in the launcher, and in the cover.'}</HelperText>
+    <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
     <Field
       disabled={isFormLoading}
       fullWidth
@@ -104,7 +104,7 @@ const MainSection = ({ title, isFormLoading, setFieldValue, form, isCropping, se
       onChange={setFieldValue}
       value={form.chatBubbleText}
     />
-    <HelperText>{'Shows as a text bubble next to the plugin launcher.'}</HelperText>
+    <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
     <Field
       disabled={isFormLoading}
       fullWidth
@@ -115,7 +115,7 @@ const MainSection = ({ title, isFormLoading, setFieldValue, form, isCropping, se
       onChange={setFieldValue}
       value={form.chatBubbleExtraText}
     />
-    <HelperText>{'Additional text bubble. Pops up after the first one.'}</HelperText>
+    <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
   </Section>
 )
 

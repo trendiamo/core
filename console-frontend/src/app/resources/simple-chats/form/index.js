@@ -7,11 +7,11 @@ import Section from 'shared/section'
 import SimpleChatStep from './simple-chat-step'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, AddItemContainer, Field, Form, HelperText } from 'shared/form-elements'
+import { Actions, AddItemContainer, Field, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { branch, compose, renderComponent, shallowEqual, shouldUpdate, withHandlers, withProps } from 'recompose'
-import { Grid } from '@material-ui/core'
+import { FormHelperText, Grid } from '@material-ui/core'
 import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
@@ -82,7 +82,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
         options={options}
         required
       />
-      <HelperText>{'The persona that will appear for this chat.'}</HelperText>
+      <FormHelperText>{'The persona that will appear for this chat.'}</FormHelperText>
       <Field
         disabled={isFormLoading}
         fullWidth
@@ -95,7 +95,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
         required
         value={form.title}
       />
-      <HelperText>{'The title will appear at the top of the chat.'}</HelperText>
+      <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
       <Field
         disabled={isFormLoading}
         fullWidth
@@ -106,7 +106,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
         onChange={setFieldValue}
         value={form.chatBubbleText}
       />
-      <HelperText>{'Shows as a text bubble next to the plugin launcher.'}</HelperText>
+      <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       <Field
         disabled={isFormLoading}
         fullWidth
@@ -117,7 +117,7 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
         onChange={setFieldValue}
         value={form.chatBubbleExtraText}
       />
-      <HelperText>{'Additional text bubble. Pops up after the first one.'}</HelperText>
+      <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
     </Grid>
   </Section>
 )

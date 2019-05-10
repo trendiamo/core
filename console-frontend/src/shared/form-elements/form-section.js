@@ -1,5 +1,5 @@
 import omit from 'lodash.omit'
-import React, { memo, useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Collapse, IconButton } from '@material-ui/core'
 import { Divider, FlexBar, Header } from './index'
@@ -20,16 +20,10 @@ const Content = styled.div`
   margin: 0px 0 16px;
 `
 
-const FoldButtonTemplate = ({ isFoldedByLogic, folded, toggleFolded }) => (
+const FoldButton = ({ isFoldedByLogic, folded, toggleFolded }) => (
   <IconButton aria-expanded={!(isFoldedByLogic || folded)} aria-label="Show more" onClick={toggleFolded}>
     <FoldIcon folded={isFoldedByLogic || folded} />
   </IconButton>
-)
-
-const FoldButton = memo(
-  FoldButtonTemplate,
-  (prevProps, nextProps) =>
-    prevProps.isFoldedByLogic === nextProps.isFoldedByLogic && prevProps.folded === nextProps.folded
 )
 
 const HeaderBar = ({ dragHandle, ellipsize, isFoldedByLogic, toggleFolded, folded, foldable, title, actions }) => (

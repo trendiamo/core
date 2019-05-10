@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Button } from '@material-ui/core'
 
@@ -19,7 +19,4 @@ const AddItemContainer = ({ message, ...props }) => (
   </Container>
 )
 
-export default memo(
-  AddItemContainer,
-  (prevProps, nextProps) => prevProps.message === nextProps.message && prevProps.disabled === nextProps.disabled
-)
+export default AddItemContainer

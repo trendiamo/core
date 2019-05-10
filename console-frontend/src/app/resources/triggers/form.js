@@ -7,9 +7,9 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, AddItemButton, Cancel, Form, HelperText } from 'shared/form-elements'
+import { Actions, AddItemButton, Cancel, Form } from 'shared/form-elements'
 import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow, refreshRoute } from 'utils'
-import { FormControl, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
+import { FormControl, FormHelperText, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -194,7 +194,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
             options={options}
             required
           />
-          <HelperText>{'Choose between Showcases, Navigations, etc.'}</HelperText>
+          <FormHelperText>{'Choose between Showcases, Navigations, etc.'}</FormHelperText>
           <FormControl fullWidth margin="normal">
             <InputLabel shrink>{'Url Matchers'}</InputLabel>
             <div style={{ marginTop: '11px' }}>
@@ -220,10 +220,10 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
             </div>
             <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
           </FormControl>
-          <HelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</HelperText>
-          <HelperText>
+          <FormHelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</FormHelperText>
+          <FormHelperText>
             {'ℹ️ You can use a matching pattern such as /products/:id to match all urls in that form.'}
-          </HelperText>
+          </FormHelperText>
         </Form>
       </Grid>
     </Section>
