@@ -12,6 +12,9 @@ const StyledLink = styled(Link)`
 `
 
 const StyledFeatureCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex: 1;
   max-width: 450px;
   text-align: left;
@@ -20,8 +23,9 @@ const StyledFeatureCard = styled.div`
   background-color: #fff;
 
   img {
-    object-fit: contain;
+    object-fit: cover;
     width: 100%;
+    height: 100%;
   }
 
   h1 {
@@ -74,6 +78,7 @@ const WrittenDetails = styled.div`
 
 const AvatarContainer = styled.div`
   width: 60px;
+  height: 60px;
   margin-right: 10px;
   margin-left: 10px;
 `
