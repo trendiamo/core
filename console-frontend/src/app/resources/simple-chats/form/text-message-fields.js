@@ -22,6 +22,7 @@ const StyledRichTextEditor = styled(RichTextEditor)`
   }
   .EditorToolbar__root___3_Aqz {
     border-color: #e7e8e7;
+    line-height: 0;
     margin: 0 !important;
     padding-bottom: 0 !important;
     position: relative;
@@ -94,7 +95,7 @@ const SwitchButton = styled(Button)`
   color: #ff6641;
   min-height: 0;
   opacity: 0.9 !important;
-  padding: 5.3px 13px;
+  padding: 4px 12px;
 `
 
 const OmittedContentEditable = ({ ...props }) => <ContentEditable {...omit(props, ['isMarkdownMode'])} />
