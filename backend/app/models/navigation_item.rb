@@ -1,6 +1,6 @@
 class NavigationItem < ApplicationRecord
   acts_as_tenant
-  belongs_to :navigation
+  belongs_to :navigation, touch: true
   belongs_to :pic, class_name: "Picture"
 
   validates :text, presence: true
