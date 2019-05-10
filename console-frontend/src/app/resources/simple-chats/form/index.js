@@ -33,17 +33,18 @@ const SimpleChatSteps = ({ allowDelete, simpleChatSteps, onChange }) => (
     />
     {simpleChatSteps
       .slice(1)
-      .filter(simpleChatStep => !simpleChatStep._destroy)
-      .map((simpleChatStep, index) => (
-        <SortableSimpleChatStep
-          allowDelete={allowDelete}
-          index={index + 1}
-          key={simpleChatStep.id || `simple-chat-${index}`}
-          onChange={onChange}
-          simpleChatStep={simpleChatStep}
-          simpleChatStepIndex={index + 1}
-        />
-      ))}
+      .map((simpleChatStep, index) =>
+        simpleChatStep._destroy ? null : (
+          <SortableSimpleChatStep
+            allowDelete={allowDelete}
+            index={index + 1}
+            key={simpleChatStep.id || `simple-chat-${index}`}
+            onChange={onChange}
+            simpleChatStep={simpleChatStep}
+            simpleChatStepIndex={index + 1}
+          />
+        )
+      )}
   </div>
 )
 
@@ -217,8 +218,7 @@ const SimpleChatForm1 = compose(
       return result
     },
     onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
-      const filteredSimpleChatSteps = form.simpleChatStepsAttributes.filter(simpleChat => !simpleChat._destroy)
-      const orderedSimpleChatSteps = arrayMove(filteredSimpleChatSteps, oldIndex, newIndex)
+      const orderedSimpleChatSteps = arrayMove(form.simpleChatStepsAttributes, oldIndex, newIndex)
       setForm({ ...form, simpleChatStepsAttributes: orderedSimpleChatSteps })
     },
   }),

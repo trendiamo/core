@@ -140,8 +140,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
 
   const onSortEnd = useCallback(
     ({ oldIndex, newIndex }) => {
-      const filteredSpotlights = form.spotlightsAttributes.filter(spotlight => !spotlight._destroy)
-      const orderedSpotlights = arrayMove(filteredSpotlights, oldIndex, newIndex)
+      const orderedSpotlights = arrayMove(form.spotlightsAttributes, oldIndex, newIndex)
       setForm({ ...form, spotlightsAttributes: orderedSpotlights })
     },
     [form, setForm]

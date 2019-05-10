@@ -20,9 +20,8 @@ const Spotlights = ({
 
   return (
     <div>
-      {form.spotlightsAttributes
-        .filter(spotlight => !spotlight._destroy)
-        .map((spotlight, index) => (
+      {form.spotlightsAttributes.map((spotlight, index) =>
+        spotlight._destroy ? null : (
           <SortableSpotlight
             allowDelete={allowDelete}
             folded={spotlight.id}
@@ -39,7 +38,8 @@ const Spotlights = ({
             sortIndex={index}
             spotlight={spotlight}
           />
-        ))}
+        )
+      )}
     </div>
   )
 }

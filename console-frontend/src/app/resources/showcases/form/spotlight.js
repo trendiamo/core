@@ -30,9 +30,8 @@ const ProductPicks = ({
   onFocus,
 }) => (
   <div>
-    {spotlight.productPicksAttributes
-      .filter(productPick => !productPick._destroy)
-      .map((productPick, index) => (
+    {spotlight.productPicksAttributes.map((productPick, index) =>
+      productPick._destroy ? null : (
         <SortableProductPick
           allowDelete={allowDelete}
           folded={productPick.id}
@@ -48,7 +47,8 @@ const ProductPicks = ({
           setProductPicture={setProductPicture}
           sortIndex={index}
         />
-      ))}
+      )
+    )}
   </div>
 )
 
@@ -184,8 +184,7 @@ export default compose(
       setProductPicksPictures(newProductPicksPictures)
     },
     onSortEnd: ({ onChange, index, spotlight }) => ({ oldIndex, newIndex }) => {
-      const filteredProductPicks = spotlight.productPicksAttributes.filter(productPick => !productPick._destroy)
-      const orderedProductPicks = arrayMove(filteredProductPicks, oldIndex, newIndex)
+      const orderedProductPicks = arrayMove(spotlight.productPicksAttributes, oldIndex, newIndex)
       onChange({ ...spotlight, productPicksAttributes: orderedProductPicks }, index)
     },
   })
