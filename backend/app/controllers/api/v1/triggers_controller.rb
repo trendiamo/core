@@ -59,7 +59,7 @@ module Api
       private
 
       def trigger_params
-        params.require(:trigger).permit(:flow_id, :flow_type, url_matchers: [])
+        params.require(:trigger).permit(:flow_id, :flow_type, :lock_version, url_matchers: [])
       end
 
       def render_error

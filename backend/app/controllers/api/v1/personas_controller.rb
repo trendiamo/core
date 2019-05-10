@@ -51,8 +51,8 @@ module Api
       private
 
       def persona_params
-        params.require(:persona).permit(:name, :description, :instagram_url,
-                                        :profile_pic_id, :profile_pic_animation_url)
+        params.require(:persona).permit(:name, :description, :instagram_url, :profile_pic_id,
+                                        :profile_pic_animation_url, :lock_version)
       end
 
       def convert_and_assign_picture

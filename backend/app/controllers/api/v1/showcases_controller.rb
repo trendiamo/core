@@ -24,7 +24,7 @@ module Api
       def show
         @showcase = Showcase.find(params[:id])
         authorize @showcase
-        render json: @showcase.as_json
+        render json: @showcase
       end
 
       def update
@@ -64,7 +64,7 @@ module Api
 
       def showcase_params
         result = params.require(:showcase).permit(
-          :name, :title, :subtitle, :chat_bubble_text, :chat_bubble_extra_text, :persona_id,
+          :name, :title, :subtitle, :chat_bubble_text, :chat_bubble_extra_text, :persona_id, :lock_version,
           spotlights_attributes: [
             :id, :persona_id, :_destroy,
             product_picks_attributes: %i[

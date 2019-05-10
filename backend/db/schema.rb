@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190415094918) do
+ActiveRecord::Schema.define(version: 20190510102239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20190415094918) do
     t.string "chat_bubble_text"
     t.string "title", default: "", null: false
     t.string "chat_bubble_extra_text"
+    t.integer "lock_version", default: 1
     t.index ["account_id"], name: "index_navigations_on_account_id"
     t.index ["persona_id"], name: "index_navigations_on_persona_id"
   end
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 20190415094918) do
     t.string "chat_bubble_text"
     t.string "chat_bubble_button_yes"
     t.string "chat_bubble_button_no"
+    t.integer "lock_version", default: 1
     t.index ["account_id"], name: "index_outros_on_account_id"
     t.index ["persona_id"], name: "index_outros_on_persona_id"
   end
@@ -82,6 +84,7 @@ ActiveRecord::Schema.define(version: 20190415094918) do
     t.string "instagram_url"
     t.string "profile_pic_animation_url"
     t.bigint "profile_pic_id"
+    t.integer "lock_version", default: 1
     t.index ["account_id"], name: "index_personas_on_account_id"
     t.index ["profile_pic_id"], name: "index_personas_on_profile_pic_id"
   end
@@ -132,6 +135,7 @@ ActiveRecord::Schema.define(version: 20190415094918) do
     t.string "name", null: false
     t.string "chat_bubble_text"
     t.string "chat_bubble_extra_text"
+    t.integer "lock_version", default: 1
     t.index ["account_id"], name: "index_showcases_on_account_id"
     t.index ["persona_id"], name: "index_showcases_on_persona_id"
   end
@@ -167,6 +171,7 @@ ActiveRecord::Schema.define(version: 20190415094918) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "chat_bubble_extra_text"
+    t.integer "lock_version", default: 1
     t.index ["account_id"], name: "index_simple_chats_on_account_id"
     t.index ["persona_id"], name: "index_simple_chats_on_persona_id"
   end
@@ -191,6 +196,7 @@ ActiveRecord::Schema.define(version: 20190415094918) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id"
+    t.integer "lock_version", default: 1
     t.index ["account_id"], name: "index_triggers_on_account_id"
     t.index ["flow_type", "flow_id"], name: "index_triggers_on_flow_type_and_flow_id"
     t.index ["url_matchers"], name: "index_triggers_on_url_matchers", using: :gin

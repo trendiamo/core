@@ -12,7 +12,8 @@ class Navigation < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "name", "title", "chat_bubble_text", "chat_bubble_extra_text", "created_at", "updated_at")
+      .slice("id", "name", "title", "chat_bubble_text", "chat_bubble_extra_text", "created_at", "updated_at",
+             "lock_version")
       .merge(extra_attributes)
   end
 

@@ -26,6 +26,7 @@ const formObjectTransformer = json => {
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleButtonYes: json.chatBubbleButtonYes || '',
     chatBubbleButtonNo: json.chatBubbleButtonNo || '',
+    lockVersion: json.lockVersion,
     __persona: json.persona,
   }
 }
