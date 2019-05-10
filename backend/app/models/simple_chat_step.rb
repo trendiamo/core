@@ -1,6 +1,6 @@
 class SimpleChatStep < ApplicationRecord
   acts_as_tenant
-  belongs_to :simple_chat
+  belongs_to :simple_chat, touch: true
   has_many :simple_chat_messages, dependent: :destroy
 
   accepts_nested_attributes_for :simple_chat_messages, allow_destroy: true
