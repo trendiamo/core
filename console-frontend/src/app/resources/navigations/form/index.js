@@ -291,7 +291,8 @@ const NavigationForm = ({ backRoute, title, loadFormObject, location, saveFormOb
     isFormLoading,
     isFormPristine,
     isFormSubmitting,
-    setForm,
+    mergeForm,
+    mergeFormCallback,
     onFormSubmit,
     setFieldValue,
     setIsFormSubmitting,
@@ -299,8 +300,7 @@ const NavigationForm = ({ backRoute, title, loadFormObject, location, saveFormOb
 
   const addNavigationItem = useCallback(
     () => {
-      setForm({
-        ...form,
+      mergeFormCallback(form => ({
         navigationItemsAttributes: [
           ...form.navigationItemsAttributes,
           {
@@ -309,30 +309,31 @@ const NavigationForm = ({ backRoute, title, loadFormObject, location, saveFormOb
             picUrl: '',
           },
         ],
-      })
+      }))
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const setNavigationItemForm = useCallback(
     (navigationItem, index) => {
-      const newNavigationItemsAttributes = [...form.navigationItemsAttributes]
-      newNavigationItemsAttributes[index] = navigationItem
-      setForm({ ...form, navigationItemsAttributes: newNavigationItemsAttributes })
+      mergeFormCallback(form => {
+        const newNavigationItemsAttributes = [...form.navigationItemsAttributes]
+        newNavigationItemsAttributes[index] = navigationItem
+        return { navigationItemsAttributes: newNavigationItemsAttributes }
+      })
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const selectPersona = useCallback(
     selected => {
       selected &&
-        setForm({
-          ...form,
+        mergeForm({
           personaId: selected.value.id,
         })
       selected && setPersona(convertPersona(selected.value))
     },
-    [form, setForm]
+    [mergeForm]
   )
 
   const newOnFormSubmit = useCallback(
@@ -378,10 +379,12 @@ const NavigationForm = ({ backRoute, title, loadFormObject, location, saveFormOb
 
   const onSortEnd = useCallback(
     ({ oldIndex, newIndex }) => {
-      const orderedNavigationItems = arrayMove(form.navigationItemsAttributes, oldIndex, newIndex)
-      setForm({ ...form, navigationItemsAttributes: orderedNavigationItems })
+      mergeFormCallback(form => {
+        const orderedNavigationItems = arrayMove(form.navigationItemsAttributes, oldIndex, newIndex)
+        return { navigationItemsAttributes: orderedNavigationItems }
+      })
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   if (isFormLoading) return <CircularProgress />

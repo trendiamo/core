@@ -81,33 +81,44 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
   const formRef = useRef()
   const [hostnames, setHostnames] = useState([])
 
-  const { form, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, setForm, setIsFormSubmitting } = useForm(
-    { formObjectTransformer, defaultForm, loadFormObject, saveFormObject }
-  )
+  const {
+    form,
+    isFormLoading,
+    isFormPristine,
+    isFormSubmitting,
+    onFormSubmit,
+    mergeForm,
+    mergeFormCallback,
+    setIsFormSubmitting,
+  } = useForm({ formObjectTransformer, defaultForm, loadFormObject, saveFormObject })
 
   const addUrlSelect = useCallback(
     () => {
-      setForm({ ...form, urlMatchers: [...form.urlMatchers, ''] })
+      mergeFormCallback(form => ({ urlMatchers: [...form.urlMatchers, ''] }))
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const editUrlValue = useCallback(
     (index, newValue) => {
-      const newUrlMatchers = [...form.urlMatchers]
-      newUrlMatchers[index] = newValue
-      setForm({ ...form, urlMatchers: newUrlMatchers })
+      mergeFormCallback(form => {
+        const newUrlMatchers = [...form.urlMatchers]
+        newUrlMatchers[index] = newValue
+        return { urlMatchers: newUrlMatchers }
+      })
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const deleteUrlMatcher = useCallback(
     index => {
-      let newUrlMatchers = [...form.urlMatchers]
-      newUrlMatchers.splice(index, 1)
-      setForm({ ...form, urlMatchers: newUrlMatchers })
+      mergeFormCallback(form => {
+        let newUrlMatchers = [...form.urlMatchers]
+        newUrlMatchers.splice(index, 1)
+        return { urlMatchers: newUrlMatchers }
+      })
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const newOnFormSubmit = useCallback(
@@ -131,13 +142,12 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
   const selectFlow = useCallback(
     selected => {
       selected &&
-        setForm({
-          ...form,
+        mergeForm({
           flowId: selected.value.id,
           flowType: selected.value.type,
         })
     },
-    [form, setForm]
+    [mergeForm]
   )
 
   const appBarContent = useMemo(
