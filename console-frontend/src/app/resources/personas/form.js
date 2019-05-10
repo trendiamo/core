@@ -69,7 +69,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
     isFormSubmitting,
     onFormSubmit,
     setFieldValue,
-    setForm,
+    mergeForm,
     setIsFormSubmitting,
   } = useForm({ formObjectTransformer, defaultForm, loadFormObject, saveFormObject: newSaveFormObject })
 
@@ -96,9 +96,9 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
 
   const setProfilePicUrl = useCallback(
     profilePicUrl => {
-      setForm({ ...form, profilePicUrl })
+      mergeForm({ profilePicUrl })
     },
-    [form, setForm]
+    [mergeForm]
   )
 
   const appBarContent = useMemo(

@@ -74,7 +74,7 @@ const EditUser = () => {
     [enqueueSnackbar]
   )
 
-  const { form, isFormLoading, isFormPristine, isFormSubmitting, setForm, onFormSubmit, setFieldValue } = useForm({
+  const { form, isFormLoading, isFormPristine, isFormSubmitting, mergeForm, onFormSubmit, setFieldValue } = useForm({
     formObjectTransformer,
     defaultForm,
     loadFormObject,
@@ -83,9 +83,9 @@ const EditUser = () => {
 
   const setProfilePicUrl = useCallback(
     profilePicUrl => {
-      setForm({ ...form, profilePicUrl })
+      mergeForm({ profilePicUrl })
     },
-    [form, setForm]
+    [mergeForm]
   )
 
   if (isFormLoading) return <CircularProgress />
