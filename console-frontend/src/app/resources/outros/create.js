@@ -1,4 +1,4 @@
-import BaseOutroForm from './form'
+import OutroForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiOutroCreate, apiRequest } from 'utils'
@@ -14,7 +14,7 @@ const loadFormObject = () => {
   }
 }
 
-const OutroForm = () => {
+const CreateOutroForm = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const saveFormObject = useCallback(
@@ -31,9 +31,8 @@ const OutroForm = () => {
   )
 
   return (
-    <BaseOutroForm
+    <OutroForm
       backRoute={routes.outrosList()}
-      enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
       saveFormObject={saveFormObject}
       title="Create Outro"
@@ -41,4 +40,4 @@ const OutroForm = () => {
   )
 }
 
-export default OutroForm
+export default CreateOutroForm

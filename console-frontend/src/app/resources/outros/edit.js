@@ -1,10 +1,10 @@
-import BaseOutroForm from './form'
+import OutroForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import { apiOutroShow, apiOutroUpdate, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
-const OutroForm = ({ match, ...props }) => {
+const EditOutroForm = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const loadFormObject = useCallback(
@@ -34,16 +34,13 @@ const OutroForm = ({ match, ...props }) => {
   )
 
   return (
-    <BaseOutroForm
-      {...props}
+    <OutroForm
       backRoute={routes.outrosList()}
-      enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
-      match={match}
       saveFormObject={saveFormObject}
       title="Edit Outro"
     />
   )
 }
 
-export default OutroForm
+export default EditOutroForm
