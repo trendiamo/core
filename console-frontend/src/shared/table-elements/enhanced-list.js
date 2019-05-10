@@ -223,7 +223,6 @@ const EnhancedList = ({
       <Table aria-labelledby={title}>
         <TableHead
           columns={columns}
-          duplicate={!!api.duplicate}
           handleRequestSort={handleRequestSort}
           leftColumns={
             <TableCell>
