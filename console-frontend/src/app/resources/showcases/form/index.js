@@ -101,7 +101,6 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
   const addSpotlight = useCallback(
     () => {
       mergeFormCallback(form => ({
-        ...form,
         spotlightsAttributes: [
           ...form.spotlightsAttributes,
           {
@@ -127,7 +126,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
       mergeFormCallback(form => {
         const newSpotlightsAttributes = [...form.spotlightsAttributes]
         newSpotlightsAttributes[index] = spotlight
-        return { ...form, spotlightsAttributes: newSpotlightsAttributes }
+        return { spotlightsAttributes: newSpotlightsAttributes }
       })
     },
     [mergeFormCallback]
@@ -148,7 +147,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     ({ oldIndex, newIndex }) => {
       mergeFormCallback(form => {
         const orderedSpotlights = arrayMove(form.spotlightsAttributes, oldIndex, newIndex)
-        return { ...form, spotlightsAttributes: orderedSpotlights }
+        return { spotlightsAttributes: orderedSpotlights }
       })
     },
     [mergeFormCallback]

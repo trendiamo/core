@@ -52,43 +52,49 @@ const EditWebsite = () => {
     [enqueueSnackbar, websiteId]
   )
 
-  const { form, isFormLoading, isFormPristine, isFormSubmitting, setForm, onFormSubmit } = useForm({
-    formObjectTransformer,
-    defaultForm,
-    loadFormObject,
-    saveFormObject,
-  })
+  const { form, isFormLoading, isFormPristine, isFormSubmitting, mergeForm, mergeFormCallback, onFormSubmit } = useForm(
+    {
+      formObjectTransformer,
+      defaultForm,
+      loadFormObject,
+      saveFormObject,
+    }
+  )
 
   const addHostnameSelect = useCallback(
     () => {
-      setForm({ ...form, hostnames: [...form.hostnames, ''] })
+      mergeFormCallback(form => ({ hostnames: [...form.hostnames, ''] }))
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const deleteHostname = useCallback(
     index => {
-      let newHostnames = [...form.hostnames]
-      newHostnames.splice(index, 1)
-      setForm({ ...form, hostnames: newHostnames })
+      mergeFormCallback(form => {
+        let newHostnames = [...form.hostnames]
+        newHostnames.splice(index, 1)
+        return { hostnames: newHostnames }
+      })
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const editHostnameValue = useCallback(
     (index, newValue) => {
-      const newHostnames = [...form.hostnames]
-      newHostnames[index] = newValue
-      setForm({ ...form, hostnames: newHostnames })
+      mergeFormCallback(form => {
+        const newHostnames = [...form.hostnames]
+        newHostnames[index] = newValue
+        return { ...form, hostnames: newHostnames }
+      })
     },
-    [form, setForm]
+    [mergeFormCallback]
   )
 
   const setPreviewMode = useCallback(
     (event, checked) => {
-      setForm({ ...form, previewMode: !checked })
+      mergeForm({ previewMode: !checked })
     },
-    [form, setForm]
+    [mergeForm]
   )
 
   if (isFormLoading) return <CircularProgress />
