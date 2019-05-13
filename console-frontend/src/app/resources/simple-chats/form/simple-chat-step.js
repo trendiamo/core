@@ -8,7 +8,7 @@ import { atLeastOneNonBlankCharRegexp } from 'utils'
 import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers, withState } from 'recompose'
 import { isEqual, omit } from 'lodash'
 import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
-import { MessageOutlined, OndemandVideo } from '@material-ui/icons'
+import { MessageOutlined, OndemandVideo, Redeem } from '@material-ui/icons'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const MessageIcon = styled(MessageOutlined)`
@@ -17,6 +17,11 @@ const MessageIcon = styled(MessageOutlined)`
 `
 
 const VideoIcon = styled(OndemandVideo)`
+  font-size: 18px;
+  margin-right: 6px;
+`
+
+const ProductIcon = styled(Redeem)`
   font-size: 18px;
   margin-right: 6px;
 `
@@ -161,6 +166,10 @@ const SimpleChatStep = ({
           <MenuItem onClick={addSimpleChatMessage} value="video">
             <VideoIcon />
             {'Video'}
+          </MenuItem>
+          <MenuItem onClick={addSimpleChatMessage} value="product">
+            <ProductIcon />
+            {'Product'}
           </MenuItem>
         </StyledMenu>
       </>
