@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { rollbarToken } from 'config'
 
 export default () => {

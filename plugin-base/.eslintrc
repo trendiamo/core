@@ -46,6 +46,7 @@
     "object-shorthand": ["error", "always"],
     "jsx-a11y/no-autofocus": 0,
     "local-rules/no-relative-parent-imports": 2,
+    "max-lines": 2,
     "react/no-danger": 0,
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,

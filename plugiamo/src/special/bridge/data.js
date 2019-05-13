@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 const data = {
   'www.buttwrap.com': {
     triggers: [

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 const header = {
   title: 'Nico de Roy',
   subtitle: 'Designer @ Pierre Cardin',
