@@ -74,7 +74,7 @@ const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...prop
       </FormControl>
       {focused && max && (
         <Counter isOutsideLimits={isOutsideLimits}>
-          {isOutsideLimits ? 'Might be too long to display correctly' : max - textLength}
+          {isOutsideLimits ? 'Might be too long to display correctly on all devices' : max - textLength}
         </Counter>
       )}
     </Container>
