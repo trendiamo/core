@@ -43,7 +43,7 @@ export const markGoFwd = () => {
 export const shouldRenderBack = () => {
   try {
     const paths = JSON.parse(sessionStorage.getItem('trnd-history'))
-    return paths.length > 1
+    return paths.length > 1 && !paths[paths.length - 2].includes(paths[paths.length - 1])
   } catch (e) {
     return false
   }
