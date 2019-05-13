@@ -1,5 +1,4 @@
 import BasePictureUploader from './base'
-import omit from 'lodash.omit'
 import React from 'react'
 import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
