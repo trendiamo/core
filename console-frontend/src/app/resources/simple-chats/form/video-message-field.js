@@ -4,13 +4,12 @@ import { youtubeRegexp } from 'utils'
 
 const youtubeInputProps = { pattern: youtubeRegexp }
 
-const VideoMessageField = ({ isFormLoading, name, onChange, onFocus, simpleChatMessage, simpleChatMessageIndex }) => {
+const VideoMessageField = ({ isFormLoading, name, onChange, onFocus, simpleChatMessageIndex, textObject }) => {
   const onValueChange = useCallback(
     event => {
-      const name = event.target.name.replace('simpleChatMessage_', '')
-      onChange(Object.assign({}, simpleChatMessage, { [name]: event.target.value }), simpleChatMessageIndex)
+      onChange({ text: event.target.value || '' }, simpleChatMessageIndex)
     },
-    [onChange, simpleChatMessage, simpleChatMessageIndex]
+    [onChange, simpleChatMessageIndex]
   )
 
   return (
@@ -25,7 +24,7 @@ const VideoMessageField = ({ isFormLoading, name, onChange, onFocus, simpleChatM
       onFocus={onFocus}
       placeholder="Paste your video URL here"
       required
-      value={simpleChatMessage.text}
+      value={textObject.text || ''}
     />
   )
 }

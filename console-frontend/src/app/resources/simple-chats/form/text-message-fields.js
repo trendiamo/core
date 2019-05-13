@@ -150,16 +150,10 @@ export default compose(
     onSwitchButtonClick: ({ isMarkdownMode, setIsMarkdownMode }) => () => {
       setIsMarkdownMode(!isMarkdownMode)
     },
-    onValueChange: ({ name, onChange, setValue, simpleChatMessage, simpleChatMessageIndex }) => event => {
+    onValueChange: ({ onChange, setValue, simpleChatMessageIndex }) => event => {
       const value = event.nativeEvent ? RichTextEditor.createValueFromString(event.target.value, 'markdown') : event
       setValue(value)
-      const newName = name.replace('simpleChatMessage_', '')
-      onChange(
-        Object.assign({}, simpleChatMessage, {
-          [newName]: trim(value.toString('markdown')),
-        }),
-        simpleChatMessageIndex
-      )
+      onChange({ text: trim(value.toString('markdown')) || '' }, simpleChatMessageIndex)
     },
   }),
   lifecycle({
