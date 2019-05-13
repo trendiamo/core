@@ -108,10 +108,6 @@ const uploadPicture = async ({ blob, setProgress }) => {
 }
 
 const PictureUploader = compose(
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['setDisabled', 'setPic', 'onChange']
-    return !shallowEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-  }),
   withProps({ picturePreviewRef: React.createRef() }),
   withState('crop', 'setCrop', {}),
   withState('croppedPicture', 'setCroppedPicture', null),
