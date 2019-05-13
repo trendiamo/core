@@ -3,6 +3,9 @@ class Outro < ApplicationRecord
   belongs_to :persona
   has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
 
+  validates :owner_id, presence: true
+  belongs_to :owner, foreign_key: "id", class_name: "User", inverse_of: "outros"
+
   validates :name, presence: true
   validates :chat_bubble_text, presence: true
   validates :chat_bubble_button_no, presence: true

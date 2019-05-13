@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190510102239) do
+ActiveRecord::Schema.define(version: 20190513124336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,7 +69,9 @@ ActiveRecord::Schema.define(version: 20190510102239) do
     t.string "chat_bubble_button_yes"
     t.string "chat_bubble_button_no"
     t.integer "lock_version", default: 1
+    t.bigint "owner_id"
     t.index ["account_id"], name: "index_outros_on_account_id"
+    t.index ["owner_id"], name: "index_outros_on_owner_id"
     t.index ["persona_id"], name: "index_outros_on_persona_id"
   end
 
@@ -136,7 +138,9 @@ ActiveRecord::Schema.define(version: 20190510102239) do
     t.string "chat_bubble_text"
     t.string "chat_bubble_extra_text"
     t.integer "lock_version", default: 1
+    t.bigint "owner_id"
     t.index ["account_id"], name: "index_showcases_on_account_id"
+    t.index ["owner_id"], name: "index_showcases_on_owner_id"
     t.index ["persona_id"], name: "index_showcases_on_persona_id"
   end
 
@@ -172,7 +176,9 @@ ActiveRecord::Schema.define(version: 20190510102239) do
     t.datetime "updated_at", null: false
     t.string "chat_bubble_extra_text"
     t.integer "lock_version", default: 1
+    t.bigint "owner_id"
     t.index ["account_id"], name: "index_simple_chats_on_account_id"
+    t.index ["owner_id"], name: "index_simple_chats_on_owner_id"
     t.index ["persona_id"], name: "index_simple_chats_on_persona_id"
   end
 
@@ -253,6 +259,7 @@ ActiveRecord::Schema.define(version: 20190510102239) do
   add_foreign_key "navigations", "personas"
   add_foreign_key "outros", "accounts"
   add_foreign_key "outros", "personas"
+  add_foreign_key "outros", "users", column: "owner_id"
   add_foreign_key "personas", "accounts"
   add_foreign_key "personas", "pictures", column: "profile_pic_id"
   add_foreign_key "pictures", "accounts"
@@ -262,12 +269,14 @@ ActiveRecord::Schema.define(version: 20190510102239) do
   add_foreign_key "products", "accounts"
   add_foreign_key "showcases", "accounts"
   add_foreign_key "showcases", "personas"
+  add_foreign_key "showcases", "users", column: "owner_id"
   add_foreign_key "simple_chat_messages", "accounts"
   add_foreign_key "simple_chat_messages", "simple_chat_steps"
   add_foreign_key "simple_chat_steps", "accounts"
   add_foreign_key "simple_chat_steps", "simple_chats"
   add_foreign_key "simple_chats", "accounts"
   add_foreign_key "simple_chats", "personas"
+  add_foreign_key "simple_chats", "users", column: "owner_id"
   add_foreign_key "spotlights", "accounts"
   add_foreign_key "spotlights", "personas"
   add_foreign_key "spotlights", "showcases"

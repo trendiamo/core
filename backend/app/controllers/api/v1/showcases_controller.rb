@@ -14,6 +14,7 @@ module Api
         convert_and_assign_pictures
         @showcase = Showcase.new(showcase_params)
         authorize @showcase
+        @showcase.owner_id = current_user.id
         if @showcase.save
           render json: @showcase, status: :created
         else

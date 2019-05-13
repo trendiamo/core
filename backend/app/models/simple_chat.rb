@@ -4,6 +4,9 @@ class SimpleChat < ApplicationRecord
   has_many :simple_chat_steps, dependent: :destroy
   has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
 
+  validates :owner_id, presence: true
+  belongs_to :owner, foreign_key: "id", class_name: "User", inverse_of: "outros"
+
   accepts_nested_attributes_for :simple_chat_steps, allow_destroy: true
 
   validates :name, presence: true

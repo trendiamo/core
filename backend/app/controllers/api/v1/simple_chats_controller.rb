@@ -23,6 +23,7 @@ module Api
       def create
         @simple_chat = SimpleChat.new(simple_chat_params)
         authorize @simple_chat
+        @simple_chat.owner_id = current_user.id
         if @simple_chat.save
           render json: @simple_chat, status: :created
         else
