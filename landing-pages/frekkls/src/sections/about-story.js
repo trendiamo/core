@@ -32,7 +32,7 @@ const AboutStory = styled(({ className, aboutStory }) => (
   <Section className={className}>
     <StyledContainer>
       <h3>{aboutStory.textSectionHeading}</h3>
-      <p
+      <div
         className="fr-column"
         dangerouslySetInnerHTML={{ __html: aboutStory.textSectionText.childContentfulRichText.html }}
       />
