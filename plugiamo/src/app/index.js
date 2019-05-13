@@ -2,6 +2,7 @@ import AssessmentCart from 'special/assessment/cart'
 import AssessmentSizeGuide from 'special/assessment/size-guide'
 import Content from './content'
 import getFrekklsConfig from 'frekkls-config'
+import googleAnalytics from 'ext/google-analytics'
 import Launcher from './launcher'
 import LauncherBubbles from './launcher-bubbles'
 import mixpanel from 'ext/mixpanel'
@@ -73,6 +74,8 @@ const AppBaseTemplate = ({
   showingLauncher,
   launcherConfig,
   outroButtonsClick,
+  isGAReady,
+  setIsGAReady,
 }) => (
   <AppBaseDiv>
     {showingContent && (
@@ -95,6 +98,7 @@ const AppBaseTemplate = ({
       <LauncherBubbles
         data={data}
         disappear={disappear}
+        isGAReady={isGAReady}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         outroButtonsClick={outroButtonsClick}
@@ -107,11 +111,14 @@ const AppBaseTemplate = ({
       <Launcher
         data={data}
         disappear={disappear}
+        googleAnalytics={googleAnalytics}
+        isGAReady={isGAReady}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         persona={persona}
         position={position}
         pulsating={launcherPulsating}
+        setIsGAReady={setIsGAReady}
         showingContent={showingContent}
       />
     )}
@@ -120,7 +127,8 @@ const AppBaseTemplate = ({
 )
 
 export const AppBase = compose(
-  withProps(() => {
+  withState('isGAReady', 'setIsGAReady', false),
+  withState('launcherConfig', 'setLauncherConfig', () => {
     const frekklsLC = getFrekklsConfig().launcherConfig
     const defaultLC = isSmall()
       ? smallLauncherConfig
@@ -129,10 +137,8 @@ export const AppBase = compose(
       : bigLauncherConfig
 
     return {
-      launcherConfig: {
-        ...defaultLC,
-        extraElevation: frekklsLC.extraElevation || 0,
-      },
+      ...defaultLC,
+      extraElevation: frekklsLC.extraElevation || 0,
     }
   }),
   withHandlers({
@@ -143,9 +149,22 @@ export const AppBase = compose(
   withState('disappear', 'setDisappear', false),
   lifecycle({
     componentDidUpdate(prevProps) {
-      const { launcherDisappear, setDisappear } = this.props
+      const { launcherDisappear, setDisappear, isGAReady, setLauncherConfig } = this.props
       if (launcherDisappear !== prevProps.launcherDisappear) {
         setDisappear(launcherDisappear)
+      }
+      if (isSmall()) return
+      if (!prevProps.isGAReady && isGAReady) {
+        const frekklsLC = getFrekklsConfig().launcherConfig
+        const variation = googleAnalytics.getVariation()
+        const variationLauncher = {
+          ...(variation === 1 ? bigLauncherConfig : smallLauncherConfig),
+        }
+
+        setLauncherConfig({
+          ...variationLauncher,
+          extraElevation: frekklsLC.extraElevation || 0,
+        })
       }
     },
   })

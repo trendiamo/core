@@ -6,7 +6,12 @@ import { emojifyStyles } from 'ext'
 import { StyleSheetManager } from 'styled-components'
 
 const Frame = ({ children, iframeRef, isLoaded, setIframeRef, title, ...rest }) => (
-  <iframe {...omit(rest, ['setIsLoaded'])} ref={setIframeRef} tabIndex="-1" title={title}>
+  <iframe
+    {...omit(rest, ['setIsLoaded', 'googleAnalytics', 'isGAReady', 'setIsGAReady', 'isLoaded'])}
+    ref={setIframeRef}
+    tabIndex="-1"
+    title={title}
+  >
     {isLoaded &&
       iframeRef &&
       iframeRef.contentDocument &&
@@ -29,6 +34,11 @@ body, html {
 }
 ${emojifyStyles}
 `
+
+const addGoogleAnalytics = (iframeRef, googleAnalytics) => {
+  googleAnalytics.iframeRef = iframeRef
+  return googleAnalytics.init(iframeRef.contentDocument, iframeRef.contentWindow)
+}
 
 const addCss = (head, css) => {
   const element = document.createElement('style')
@@ -58,7 +68,7 @@ export default compose(
   withState('isLoaded', 'setIsLoaded', false),
   lifecycle({
     componentDidUpdate(prevProps) {
-      const { iframeRef, setIsLoaded } = this.props
+      const { iframeRef, setIsLoaded, googleAnalytics, setIsGAReady } = this.props
       if (iframeRef && iframeRef !== prevProps.iframeRef) {
         const load = () => {
           // Here we avoid FOIT (Flash of Invisible Text) on the slow network connections. Read more: https://medium.com/@pierluc/enable-font-display-on-google-fonts-with-cloudflare-workers-d7604cb30eab
@@ -71,7 +81,11 @@ export default compose(
           addCss(iframeRef.contentDocument.head, style)
           addBase(iframeRef.contentDocument.head)
           addPlatformClass(iframeRef.contentDocument.body)
-          setIsLoaded(true)
+          if (!googleAnalytics) return setIsLoaded(true)
+          addGoogleAnalytics(iframeRef, googleAnalytics).then(() => {
+            setIsGAReady(true)
+            setIsLoaded(true)
+          })
         }
         if (iframeRef.contentDocument.readyState === 'complete') {
           load()

@@ -46,6 +46,7 @@ const initRootComponent = () => {
 
 const main = () => {
   // initRollbar()
+
   mixpanel.init(mixpanelToken)
   mixpanel.track('Visited Page', { hostname: location.hostname })
   setupDataGathering()
