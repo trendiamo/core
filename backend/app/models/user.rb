@@ -4,6 +4,10 @@ class User < ApplicationRecord
   belongs_to :account, optional: true
   has_many :generated_urls, dependent: :destroy
 
+  has_many :outros, dependent: :destroy, foreign_key: "owner", class_name: "Outro", inverse_of: "owner"
+  has_many :showcases, dependent: :destroy, foreign_key: "owner", class_name: "Showcase", inverse_of: "owner"
+  has_many :simple_chats, dependent: :destroy, foreign_key: "owner", class_name: "SimpleChat", inverse_of: "owner"
+
   validates :account, presence: true, unless: :admin?
   validate :account_set
 

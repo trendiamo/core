@@ -9,7 +9,7 @@ class PopulateShowcases
 
   private
 
-  def create_showcases
+  def create_showcases # rubocop:disable Metrics/MethodLength
     Array.new(3) do
       showcase_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Showcase",
@@ -17,6 +17,7 @@ class PopulateShowcases
         title: Faker::Lorem.sentence,
         subtitle: Faker::Lorem.sentence,
         spotlights_attributes: Array.new(3) { |index| spotlights_attributes(index) },
+        owner_id: User.where(admin: false).sample.id,
       }
       Showcase.create!(showcase_attrs)
     end
@@ -94,6 +95,7 @@ class PopulateSimpleChats
         persona: Persona.order("RANDOM()").first,
         title: "Hello there",
         simple_chat_steps_attributes: chat_steps_attributes,
+        owner_id: User.where(admin: false).sample.id,
       }
       SimpleChat.create!(simple_chat_attrs)
     end
@@ -201,7 +203,7 @@ class Populate
     end
   end
 
-  def create_outros
+  def create_outros # rubocop:disable Metrics/MethodLength
     Array.new(3) do
       outro_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Outro",
@@ -209,6 +211,7 @@ class Populate
         chat_bubble_text: "Awesome! 🤩 Was I helpful?",
         chat_bubble_button_yes: "Yes, thanks!",
         chat_bubble_button_no: "Not really.",
+        owner_id: User.where(admin: false).sample.id,
       }
       Outro.create!(outro_attrs)
     end
