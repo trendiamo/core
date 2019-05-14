@@ -102,6 +102,7 @@ const SimpleChatStep = ({
   simpleChatStepIndex,
   setSimpleChatMessagesForm,
   simpleChatStep,
+  onToggleContent,
 }) => (
   <Section>
     <FormSection
@@ -127,7 +128,7 @@ const SimpleChatStep = ({
             margin="normal"
             name="simpleChatStep_key"
             onChange={editSimpleChatStepValue}
-            onFocus={collapseOtherSimpleChatSteps}
+            onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
             required
             value={simpleChatStep.key}
           />
@@ -138,7 +139,7 @@ const SimpleChatStep = ({
             helperClass="sortable-element"
             isFormLoading={isFormLoading}
             onChange={setSimpleChatMessagesForm}
-            onFocus={collapseOtherSimpleChatSteps}
+            onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
             onSortEnd={onSimpleChatMessagesSortEnd}
             simpleChatMessages={simpleChatStep.simpleChatMessagesAttributes}
             useDragHandle

@@ -33,7 +33,7 @@ const Bubbles = ({
         data={data}
         launcherConfig={launcherConfig}
         offset={{ x: -25, y: -10 }}
-        onToggleContent={onToggleContent}
+        onClick={onToggleContent}
         position={position}
         showingContent={showingContent}
       />

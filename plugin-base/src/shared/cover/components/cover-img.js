@@ -1,11 +1,15 @@
+import PersonaPlaceholderIcon from 'icons/icon-placeholder-persona.svg'
 import React from 'react'
 import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 
+const EmptyPersonaPic = styled(PersonaPlaceholderIcon)`
+  fill: #f2f4f7;
+  margin-top: -2px;
+`
+
 const CoverImg = ({ src, imgRef }) => (
-  <CoverImgContainer ref={imgRef}>
-    <SingleImage src={src} />
-  </CoverImgContainer>
+  <CoverImgContainer ref={imgRef}>{src ? <SingleImage src={src} /> : <EmptyPersonaPic />}</CoverImgContainer>
 )
 
 const CoverImgContainer = styled.div`

@@ -1,152 +1,20 @@
-import Autocomplete from 'shared/autocomplete'
-import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
+import FormContainer from './form-container'
+import PluginPreview from './plugin-preview'
 import React, { useMemo } from 'react'
 import routes from 'app/routes'
-import Section from 'shared/section'
-import SimpleChatStep from './simple-chat-step'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, AddItemContainer, Field, Form } from 'shared/form-elements'
-import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
+import { Actions } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
-import { branch, compose, renderComponent, shallowEqual, shouldUpdate, withHandlers, withProps } from 'recompose'
-import { FormHelperText, Grid } from '@material-ui/core'
-import { isEqual, omit } from 'lodash'
-import { SortableContainer, SortableElement } from 'shared/sortable-elements'
+import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { formObject, formObjectTransformer } from './data-utils'
+import { Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
-const SortableSimpleChatStep = compose(
-  shouldUpdate((props, nextProps) => {
-    return !shallowEqual(props, nextProps) || !shallowEqual(props.simpleChatStep, nextProps.simpleChatStep)
-  })
-)(SortableElement(SimpleChatStep))
-
-const SimpleChatSteps = ({ allowDelete, simpleChatSteps, onChange }) => (
-  <div>
-    <SimpleChatStep
-      allowDelete={false}
-      onChange={onChange}
-      simpleChatStep={simpleChatSteps[0]}
-      simpleChatStepIndex={0}
-    />
-    {simpleChatSteps
-      .slice(1)
-      .map((simpleChatStep, index) =>
-        simpleChatStep._destroy ? null : (
-          <SortableSimpleChatStep
-            allowDelete={allowDelete}
-            index={index + 1}
-            key={simpleChatStep.id || `simple-chat-${index}`}
-            onChange={onChange}
-            simpleChatStep={simpleChatStep}
-            simpleChatStepIndex={index + 1}
-          />
-        )
-      )}
-  </div>
-)
-
-const SimpleChatStepsContainer = compose(
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['onSortEnd', 'onChange']
-    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-  })
-)(SortableContainer(SimpleChatSteps))
-
-const options = { suggestionItem: 'withAvatar' }
-
-const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPersona }) => (
-  <Section title={title}>
-    <Grid item sm={6}>
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
-      />
-      <Autocomplete
-        autocomplete={apiPersonasAutocomplete}
-        defaultPlaceholder="Choose a persona"
-        disabled={isFormLoading}
-        fullWidth
-        initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
-        label="Persona"
-        onChange={selectPersona}
-        options={options}
-        required
-      />
-      <FormHelperText>{'The persona that will appear for this chat.'}</FormHelperText>
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-        label="Title"
-        margin="normal"
-        max={characterLimits.main.title}
-        name="title"
-        onChange={setFieldValue}
-        required
-        value={form.title}
-      />
-      <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        label="Chat Bubble"
-        margin="normal"
-        max={characterLimits.main.chatBubbleText}
-        name="chatBubbleText"
-        onChange={setFieldValue}
-        value={form.chatBubbleText}
-      />
-      <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        label="Extra Chat Bubble Text"
-        margin="normal"
-        max={characterLimits.main.chatBubble}
-        name="chatBubbleExtraText"
-        onChange={setFieldValue}
-        value={form.chatBubbleExtraText}
-      />
-      <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
-    </Grid>
-  </Section>
-)
-
-const MainForm = compose(
-  shouldUpdate((props, nextProps) => {
-    return (
-      props.title !== nextProps.title ||
-      props.isFormLoading !== nextProps.isFormLoading ||
-      !shallowEqual(props.form, nextProps.form)
-    )
-  })
-)(MainFormTemplate)
-
-const SimpleChatForm = ({
-  addSimpleChatStep,
-  backRoute,
-  form,
-  formRef,
-  isFormLoading,
-  isFormPristine,
-  isFormSubmitting,
-  onFormSubmit,
-  onSortEnd,
-  selectPersona,
-  setFieldValue,
-  setSimpleChatStepsForm,
-  title,
-}) => {
+const SimpleChatForm = props => {
+  const { backRoute, title, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine } = props
   const appBarContent = useMemo(
     () => ({
       Actions: (
@@ -166,25 +34,14 @@ const SimpleChatForm = ({
   )
   useAppBarContent(appBarContent)
   return (
-    <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-      <MainForm
-        form={omit(form, ['simpleChatStepsAttributes'])}
-        isFormLoading={isFormLoading}
-        selectPersona={selectPersona}
-        setFieldValue={setFieldValue}
-        title={title}
-      />
-      <SimpleChatStepsContainer
-        allowDelete={form.simpleChatStepsAttributes.length > 1}
-        helperClass="sortable-element"
-        isFormLoading={isFormLoading}
-        onChange={setSimpleChatStepsForm}
-        onSortEnd={onSortEnd}
-        simpleChatSteps={form.simpleChatStepsAttributes}
-        useDragHandle
-      />
-      <AddItemContainer disabled={isFormLoading} message="Add Option" onClick={addSimpleChatStep} />
-    </Form>
+    <Grid container spacing={24}>
+      <Grid item md={6} xs={12}>
+        <FormContainer {...props} />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <PluginPreview {...props} />
+      </Grid>
+    </Grid>
   )
 }
 
@@ -204,10 +61,12 @@ const SimpleChatForm1 = compose(
   }),
   withHandlers({
     selectPersona: ({ form, setForm }) => selected => {
-      setForm({
-        ...form,
-        personaId: selected && selected.value.id,
-      })
+      selected &&
+        setForm({
+          ...form,
+          personaId: selected.value.id,
+          __persona: selected.value,
+        })
     },
     onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async event => {
       if (!formRef.current.reportValidity()) return
@@ -221,48 +80,22 @@ const SimpleChatForm1 = compose(
       const orderedSimpleChatSteps = arrayMove(form.simpleChatStepsAttributes, oldIndex, newIndex)
       setForm({ ...form, simpleChatStepsAttributes: orderedSimpleChatSteps })
     },
+    onToggleContent: ({ setShowingContent, showingContent }) => value => {
+      setShowingContent(value !== undefined ? value : !showingContent)
+    },
   }),
   branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
 )(SimpleChatForm)
 
 const SimpleChatForm2 = props => {
-  const defaultForm = {
-    name: '',
-    title: '',
-    personaId: '',
-    chatBubbleText: '',
-    chatBubbleExtraText: '',
-    simpleChatStepsAttributes: [
-      {
-        simpleChatMessagesAttributes: [{ text: '' }],
-      },
-    ],
-  }
-  const formProps = useForm({ ...props, defaultForm })
+  const formProps = useForm({ ...props, formObject })
   return <SimpleChatForm1 {...props} {...formProps} />
 }
 
 const SimpleChatForm3 = compose(
   withProps({ formRef: React.createRef() }),
-  withHandlers({
-    formObjectTransformer: () => json => {
-      return {
-        id: json.id,
-        name: json.name || '',
-        title: json.title || '',
-        chatBubbleText: json.chatBubbleText || '',
-        chatBubbleExtraText: json.chatBubbleExtraText || '',
-        personaId: (json.persona && json.persona.id) || '',
-        lockVersion: json.lockVersion,
-        __persona: json.persona,
-        simpleChatStepsAttributes: json.simpleChatStepsAttributes || [
-          {
-            simpleChatMessagesAttributes: [{ text: '' }],
-          },
-        ],
-      }
-    },
-  })
+  withState('showingContent', 'setShowingContent', false),
+  withHandlers({ formObjectTransformer })
 )(SimpleChatForm2)
 
 const SimpleChatForm4 = ({ location, ...props }) => {

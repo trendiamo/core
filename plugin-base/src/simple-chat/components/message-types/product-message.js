@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Card, CardContent, CardImg } from 'shared/card'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import { imgixUrl } from 'tools'
 
 const TitleAndPrice = styled.div`
@@ -58,13 +58,12 @@ const Link = styled.a`
   text-decoration: none;
 `
 
-const ProductMessage = ({ product, styleConfig = { card: { minWidth: 260 } }, onClick }) => (
+const defaultStyleConfig = { card: { minWidth: 260 } }
+
+const ProductMessage = ({ product, styleConfig = defaultStyleConfig, onClick, productPicUrl }) => (
   <Link href={product.url} onClick={onClick} rel="noopener noreferrer" target="_blank">
     <ProductCard style={styleConfig.card}>
-      <ProductImage
-        src={imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: styleConfig.image ? styleConfig.image.height : 180 })}
-        style={styleConfig.image}
-      />
+      <ProductImage src={productPicUrl} style={styleConfig.image} />
       <CardContent style={styleConfig.details}>
         <TitleAndPrice>
           <Title style={styleConfig.detailsText}>{product.title}</Title>
@@ -77,6 +76,11 @@ const ProductMessage = ({ product, styleConfig = { card: { minWidth: 260 } }, on
 )
 
 export default compose(
+  withProps(({ product, styleConfig = defaultStyleConfig }) => ({
+    productPicUrl:
+      product.picUrl &&
+      imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: styleConfig.image ? styleConfig.image.height : 180 }),
+  })),
   withHandlers({
     onClick: ({ product, onClick }) => event => {
       if (!product.newTab) {

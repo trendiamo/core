@@ -29,6 +29,7 @@ const MessageField = ({
           disabled={isFormLoading}
           name="simpleChatMessage_text"
           onChange={onSimpleChatMessageTextEdit}
+          onFocus={onFocus}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
         />
@@ -51,6 +52,7 @@ const MessageField = ({
           isFormLoading={isFormLoading}
           name="simpleChatMessage_product"
           onChange={onSimpleChatMessageTextEdit}
+          onFocus={onFocus}
           simpleChatMessageIndex={simpleChatMessageIndex}
           textObject={textObject}
         />

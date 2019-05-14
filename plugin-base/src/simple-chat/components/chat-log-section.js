@@ -2,6 +2,7 @@ import ChatMessage from './message'
 import ChatOption from './option'
 import React from 'react'
 import styled from 'styled-components'
+import timeout from 'ext/timeout'
 import withRef from 'ext/with-ref'
 import { autoScroll } from 'ext'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
@@ -40,16 +41,27 @@ export default compose(
         if (index > 0 && !dontScroll) {
           autoScroll.activate({
             element: contentRef(),
-            destination: () => getContainerRef().offsetTop - 15,
+            destination: () => getContainerRef() && getContainerRef().offsetTop - 15,
             delay: 600,
           })
         }
       }
       if (previousLogs) {
-        setTimeout(() => {
-          setAnimate(true)
-        }, MESSAGE_INTERVAL * previousLogs.logs.length + MESSAGE_RANDOMIZER)
+        timeout.set(
+          'chatLogSectionAnimate',
+          () => setAnimate(true),
+          MESSAGE_INTERVAL * previousLogs.logs.length + MESSAGE_RANDOMIZER
+        )
       }
+    },
+    componentDidUpdate(prevProps) {
+      const { hide, setHide, chatDataChanged } = this.props
+      if (prevProps.chatDataChanged !== chatDataChanged && hide) {
+        setHide(false)
+      }
+    },
+    componentWillUnmount() {
+      timeout.clear('chatLogSectionAnimate')
     },
   })
 )(({ animate, logSection, hide, hideAll, onClick, nothingSelected, setContainerRef }) => (

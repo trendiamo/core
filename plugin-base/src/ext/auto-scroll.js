@@ -49,9 +49,10 @@ const autoScroll = {
   },
   startScrolling({ element, destination, duration, easing, callback }) {
     return () => {
-      if (this.stopped) return
+      if (this.stopped || !element) return
       this.element = element
       this.destination = destination()
+      if (!this.destination) return
       this.duration = duration || 660
       this.easing = easing || 'easeInOutQuad'
       this.callback = callback
@@ -61,6 +62,7 @@ const autoScroll = {
     }
   },
   calculate() {
+    if (!this.element || !this.destination) return this.stop()
     this.start = this.element.scrollTop
     this.startTime = 'now' in window.performance ? performance.now() : new Date().getTime()
     const elementHeight = this.element.scrollHeight

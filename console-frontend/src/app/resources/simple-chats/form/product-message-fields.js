@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { Field } from 'shared/form-elements'
 import { Grid } from '@material-ui/core'
 
-const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading }) => {
+const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading, onFocus }) => {
   return (
     <Grid item sm={6}>
       <Field
@@ -12,6 +12,7 @@ const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading }) => {
         margin="normal"
         name="title"
         onChange={onFormChange}
+        onFocus={onFocus}
         required
         value={textObject.title || ''}
       />
@@ -22,6 +23,7 @@ const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading }) => {
         margin="normal"
         name="picUrl"
         onChange={onFormChange}
+        onFocus={onFocus}
         required
         value={textObject.picUrl || ''}
       />
@@ -32,6 +34,7 @@ const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading }) => {
         margin="normal"
         name="url"
         onChange={onFormChange}
+        onFocus={onFocus}
         required
         value={textObject.url || ''}
       />
@@ -42,6 +45,7 @@ const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading }) => {
         margin="normal"
         name="displayPrice"
         onChange={onFormChange}
+        onFocus={onFocus}
         required
         value={textObject.displayPrice || ''}
       />
@@ -49,7 +53,7 @@ const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading }) => {
   )
 }
 
-const ProductMessageFields = ({ textObject, onChange, simpleChatMessageIndex, isFormLoading }) => {
+const ProductMessageFields = ({ textObject, onChange, simpleChatMessageIndex, isFormLoading, onFocus }) => {
   const onFormChange = useCallback(
     event => {
       let newTextObject = { ...textObject, [event.target.name]: event.target.value }
@@ -58,7 +62,14 @@ const ProductMessageFields = ({ textObject, onChange, simpleChatMessageIndex, is
     [onChange, simpleChatMessageIndex, textObject]
   )
 
-  return <ProductMessagesForm isFormLoading={isFormLoading} onFormChange={onFormChange} textObject={textObject} />
+  return (
+    <ProductMessagesForm
+      isFormLoading={isFormLoading}
+      onFocus={onFocus}
+      onFormChange={onFormChange}
+      textObject={textObject}
+    />
+  )
 }
 
 export default ProductMessageFields
