@@ -12,6 +12,7 @@ export default compose(
   withState('logs', 'setLogs', []),
   withState('isStore', 'setIsStore', false),
   withState('hideAll', 'setHideAll', false),
+  withState('chatDataChanged', 'setChatDataChanged', false),
   withProps(({ assessment, bridge }) => ({ specialFlow: assessment || bridge })),
   withProps(({ data, specialFlow }) => ({
     initialChatStep: !specialFlow && data.simpleChat.simpleChatSteps.find(e => e.key === 'default'),
@@ -36,7 +37,8 @@ export default compose(
       setLogs,
       setHideAll,
       assessment,
-    }) => isAssessmentUpdate => {
+      setChatDataChanged,
+    }) => (isAssessmentUpdate, update) => {
       if (isAssessmentUpdate) {
         setHideAll(false)
         if (isStore) {
@@ -57,18 +59,39 @@ export default compose(
           },
         }
       }
-      const props = { data: compiledData, listeners: [updateLogs], specialFlow, callbacks: chatLogCallbacks }
+      const props = {
+        data: compiledData,
+        listeners: [updateLogs],
+        specialFlow,
+        callbacks: chatLogCallbacks,
+        setChatDataChanged,
+      }
+      if (!isAssessmentUpdate && update) {
+        return chatLog.update(props)
+      }
       timeout.set('chatLogInit', () => (assessment ? data.logs : true) && chatLog.init(props), 0)
     },
   }),
   withHandlers({
-    onClick: ({ onStopChat, configMinHeight, persona, clickActions, data }) => ({ type, item }) => {
+    onClick: ({
+      onStopChat,
+      configMinHeight,
+      persona,
+      clickActions,
+      data,
+      updateLogs,
+      setChatDataChanged,
+      specialFlow,
+    }) => ({ type, item }) => {
       if (type === 'clickChatOption') {
-        clickActions.clickChatOption({ item, persona, flowType: data && data.flowType })
+        clickActions && clickActions.clickChatOption({ item, persona, flowType: data && data.flowType })
         configMinHeight()
-        return item.id === 'stop' ? onStopChat() : chatLog.selectOption(item)
+        return item.id === 'stop'
+          ? onStopChat()
+          : chatLog.selectOption(item) ||
+              (!specialFlow && chatLog.update({ data, listeners: [updateLogs], setChatDataChanged }))
       } else {
-        clickActions[type]({ item, persona, flowType: data && data.flowType })
+        clickActions && clickActions[type]({ item, persona, flowType: data && data.flowType })
       }
     },
   }),
@@ -78,24 +101,39 @@ export default compose(
       initChatLog()
     },
     componentDidUpdate(prevProps) {
-      const { data, specialFlow, lazyLoadActive, setLazyLoadActive, initChatLog, setHideAll } = this.props
+      const {
+        data,
+        specialFlow,
+        lazyLoadActive,
+        setLazyLoadActive,
+        initChatLog,
+        setHideAll,
+        chatDataChanged,
+        setChatDataChanged,
+        resetMinHeight,
+      } = this.props
       if (!isEqual(prevProps.data, data)) {
         if (specialFlow) setHideAll(true)
-        return timeout.set('assessmentNextStep', () => initChatLog(true), specialFlow ? 800 : 0)
+        return timeout.set('assessmentNextStep', () => initChatLog(specialFlow, true), specialFlow ? 800 : 0)
       }
       if (lazyLoadActive && lazyLoadActive !== prevProps.lazyLoadActive) {
         setTimeout(initChatLog, 5)
         setLazyLoadActive(false)
       }
+      if (chatDataChanged) {
+        resetMinHeight()
+        timeout.set('resetChatDataChanged', () => setChatDataChanged(false), 5)
+      }
     },
   })
-)(({ assessmentOptions, logs, title, contentRef, hideAll, setHideAll, onClick }) => (
+)(({ assessmentOptions, logs, title, contentRef, hideAll, setHideAll, onClick, chatDataChanged }) => (
   <div>
     {title && <Title>{title}</Title>}
     {logs.map((logSection, index) => (
       /* eslint-disable react/no-array-index-key */
       <ChatLogSection
         assessmentOptions={assessmentOptions}
+        chatDataChanged={chatDataChanged && index === logs.length - 1}
         contentRef={contentRef}
         hideAll={hideAll}
         index={index}

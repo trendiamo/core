@@ -21,6 +21,10 @@ export default compose(
         setMinHeight(getBackgroundRef().clientHeight)
       }
     },
+    resetMinHeight: ({ minHeight, setMinHeight }) => () => {
+      if (minHeight === 0) return
+      setMinHeight(0)
+    },
     onStopChat: ({ onToggleContent, chatLogCallbacks }) => () => {
       onToggleContent()
       chatLogCallbacks && chatLogCallbacks.onChatStop && chatLogCallbacks.onChatStop()

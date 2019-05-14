@@ -2,6 +2,7 @@ import emojify from 'ext/emojify'
 import React from 'react'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
+import timeout from 'ext/timeout'
 import {
   AssessmentProducts,
   AssessmentStepOptions,
@@ -77,12 +78,14 @@ const ChatMessage = compose(
     componentDidMount() {
       const { setShow, index, setClickable } = this.props
       const delay = index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER)
-      setTimeout(() => {
-        setShow(true)
-        setTimeout(() => {
-          setClickable(true)
-        }, 300)
-      }, delay)
+      timeout.set(
+        'messageAnimation',
+        () => setShow(true) || timeout.set('messageAnimation', () => setClickable(true), 300),
+        delay
+      )
+    },
+    componentWillUnmount() {
+      timeout.clear('messageAnimation')
     },
   })
 )(ChatMessageTemplate)

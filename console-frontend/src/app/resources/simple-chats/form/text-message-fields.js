@@ -172,6 +172,7 @@ export default compose(
     onValueChange,
     isMarkdownMode,
     value,
+    onFocus,
   }) => (
     <>
       <Label required style={{ fontSize: '12px' }}>
@@ -202,6 +203,7 @@ export default compose(
           handleReturn={onRTEReturn}
           isMarkdownMode={isMarkdownMode}
           onChange={onValueChange}
+          onFocus={onFocus}
           placeholder="Insert a message"
           readOnly={disabled}
           toolbarConfig={toolbarConfig}
@@ -212,6 +214,7 @@ export default compose(
           html={value.toString('markdown')}
           isMarkdownMode={isMarkdownMode}
           onChange={onValueChange}
+          onFocus={onFocus}
           onKeyDown={onMarkdownKeyDown}
           onPaste={onMarkdownPaste}
           placeholder="Insert a message"

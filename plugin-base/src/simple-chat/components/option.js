@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { emojify } from 'ext'
 
 const ChatOptionText = styled.div`
@@ -56,6 +56,14 @@ export default compose(
       if (!clicked && !hide && animate) {
         setClicked(true)
         onClick({ type: 'clickChatOption', item: chatOption })
+      }
+    },
+  }),
+  lifecycle({
+    componentDidUpdate(prevProps) {
+      const { hide, setClicked } = this.props
+      if (prevProps.hide !== hide && !hide) {
+        setClicked(false)
       }
     },
   })

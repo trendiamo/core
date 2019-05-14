@@ -133,6 +133,14 @@ const convertLogs = logs => {
   return newLog
 }
 
+const logSectionsToLogs = logSections => {
+  let newLogs = []
+  logSections.forEach(logSection => {
+    logSection.logs.forEach(item => newLogs.push(item))
+  })
+  return newLogs
+}
+
 const listeners = {
   list: [],
   addMany(fns) {
@@ -185,4 +193,5 @@ export {
   MESSAGE_INTERVAL,
   MESSAGE_RANDOMIZER,
   replaceExternalLinks,
+  logSectionsToLogs,
 }

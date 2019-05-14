@@ -21,6 +21,7 @@ const Container = styled.div`
   overflow: hidden;
   outline: 0;
   min-height: 195px;
+  user-select: none;
 
   svg {
     width: 50px;
