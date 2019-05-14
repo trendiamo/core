@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190513124336) do
+ActiveRecord::Schema.define(version: 20190514114802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20190513124336) do
     t.string "chat_bubble_button_yes"
     t.string "chat_bubble_button_no"
     t.integer "lock_version", default: 1
-    t.bigint "owner_id"
+    t.bigint "owner_id", null: false
     t.index ["account_id"], name: "index_outros_on_account_id"
     t.index ["owner_id"], name: "index_outros_on_owner_id"
     t.index ["persona_id"], name: "index_outros_on_persona_id"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 20190513124336) do
     t.string "chat_bubble_text"
     t.string "chat_bubble_extra_text"
     t.integer "lock_version", default: 1
-    t.bigint "owner_id"
+    t.bigint "owner_id", null: false
     t.index ["account_id"], name: "index_showcases_on_account_id"
     t.index ["owner_id"], name: "index_showcases_on_owner_id"
     t.index ["persona_id"], name: "index_showcases_on_persona_id"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 20190513124336) do
     t.datetime "updated_at", null: false
     t.string "chat_bubble_extra_text"
     t.integer "lock_version", default: 1
-    t.bigint "owner_id"
+    t.bigint "owner_id", null: false
     t.index ["account_id"], name: "index_simple_chats_on_account_id"
     t.index ["owner_id"], name: "index_simple_chats_on_owner_id"
     t.index ["persona_id"], name: "index_simple_chats_on_persona_id"
