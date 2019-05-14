@@ -17,7 +17,7 @@ class PopulateShowcases
         title: Faker::Lorem.sentence,
         subtitle: Faker::Lorem.sentence,
         spotlights_attributes: Array.new(3) { |index| spotlights_attributes(index) },
-        owner_id: User.where(admin: false).sample.id,
+        owner: User.where(admin: false).sample,
       }
       Showcase.create!(showcase_attrs)
     end
@@ -95,7 +95,7 @@ class PopulateSimpleChats
         persona: Persona.order("RANDOM()").first,
         title: "Hello there",
         simple_chat_steps_attributes: chat_steps_attributes,
-        owner_id: User.where(admin: false).sample.id,
+        owner: User.where(admin: false).sample,
       }
       SimpleChat.create!(simple_chat_attrs)
     end
@@ -211,7 +211,7 @@ class Populate
         chat_bubble_text: "Awesome! 🤩 Was I helpful?",
         chat_bubble_button_yes: "Yes, thanks!",
         chat_bubble_button_no: "Not really.",
-        owner_id: User.where(admin: false).sample.id,
+        owner: User.where(admin: false).sample,
       }
       Outro.create!(outro_attrs)
     end

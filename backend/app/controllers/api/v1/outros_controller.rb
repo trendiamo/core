@@ -13,7 +13,7 @@ module Api
       def create
         @outro = Outro.new(outro_params)
         authorize @outro
-        @outro.owner_id = current_user.id
+        @outro.owner = current_user
         if @outro.save
           render json: @outro, status: :created
         else
