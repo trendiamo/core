@@ -1,7 +1,8 @@
+import isEqual from 'lodash.isequal'
+import omit from 'lodash.omit'
 import React from 'react'
 import SimpleChatStep from './simple-chat-step'
 import { compose, shallowEqual, shouldUpdate } from 'recompose'
-import { isEqual, omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const SortableSimpleChatStep = compose(

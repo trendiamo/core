@@ -1,3 +1,5 @@
+import isEqual from 'lodash.isequal'
+import omit from 'lodash.omit'
 import ProductMessageFields from './product-message-fields'
 import React from 'react'
 import TextMessageFields from './text-message-fields'
@@ -5,7 +7,6 @@ import VideoMessageField from './video-message-field'
 import { branch, compose, lifecycle, renderNothing, shouldUpdate, withHandlers, withState } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
 import { extractJson, extractYoutubeId } from 'plugin-base'
-import { isEqual, omit } from 'lodash'
 import { tryParseJSON } from 'utils/shared'
 
 const whichTitle = (messageType, simpleChatMessage, simpleChatMessageTextObject) => {

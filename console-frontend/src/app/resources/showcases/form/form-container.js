@@ -1,8 +1,8 @@
 import MainForm from './main-form'
+import omit from 'lodash.omit'
 import React from 'react'
 import SpotlightsContainer from './spotlights-container'
 import { AddItemContainer, Form } from 'shared/form-elements'
-import { omit } from 'lodash'
 
 const FormContainer = ({
   selectPersona,

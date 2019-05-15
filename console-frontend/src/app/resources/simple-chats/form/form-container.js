@@ -1,9 +1,9 @@
 import MainForm from './main-form'
+import omit from 'lodash.omit'
 import React, { useMemo } from 'react'
 import SimpleChatStepsContainer from './simple-chat-steps'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
-import { omit } from 'lodash'
 
 const FormContainer = ({
   addSimpleChatStep,

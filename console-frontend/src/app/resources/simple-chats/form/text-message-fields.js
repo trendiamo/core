@@ -4,9 +4,9 @@ import omit from 'lodash.omit'
 import React from 'react'
 import RichTextEditor from 'react-rte'
 import styled from 'styled-components'
+import trim from 'lodash.trim'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { InputLabel as Label, Tooltip } from '@material-ui/core'
-import { trim } from 'lodash'
 
 const StyledRichTextEditor = styled(RichTextEditor)`
   border: none !important;
