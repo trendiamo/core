@@ -84,6 +84,7 @@ const formObjectTransformer = json => {
             description: productPick.description || '',
             displayPrice: productPick.displayPrice || '',
             picUrl: productPick.picUrl || '',
+            __key: productPick.__key,
           }))
         : [
             {
@@ -92,8 +93,10 @@ const formObjectTransformer = json => {
               description: '',
               displayPrice: '',
               picUrl: '',
+              __key: 'new-0',
             },
           ],
+      __key: spotlight.__key,
     })),
   }
 }
@@ -115,8 +118,10 @@ const formObject = {
           description: '',
           displayPrice: '',
           picUrl: '',
+          __key: 'new-0',
         },
       ],
+      __key: 'new-0',
     },
   ],
 }

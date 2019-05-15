@@ -112,8 +112,10 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
                 description: '',
                 displayPrice: '',
                 picUrl: '',
+                __key: 'new-0',
               },
             ],
+            __key: `new-${form.spotlightsAttributes.length}`,
           },
         ],
       }))

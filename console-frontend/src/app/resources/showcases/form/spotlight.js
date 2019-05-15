@@ -33,7 +33,7 @@ const ProductPicks = ({
             index={index}
             isCropping={isCropping}
             isFormLoading={isFormLoading}
-            key={productPick.id || `new-${index}`}
+            key={productPick.id || productPick.__key}
             onChange={onChange}
             onFocus={onFocus}
             personaId={spotlight && spotlight.personaId}
@@ -93,6 +93,7 @@ const Spotlight = ({
               description: '',
               displayPrice: '',
               picUrl: '',
+              __key: `new-${spotlight.productPicksAttributes.length}`,
             },
           ],
         },

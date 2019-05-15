@@ -26,7 +26,7 @@ const SimpleChatSteps = ({ allowDelete, simpleChatSteps, onChange, onToggleConte
           <SortableSimpleChatStep
             allowDelete={allowDelete}
             index={index + 1}
-            key={simpleChatStep.id || `simple-chat-${index}`}
+            key={simpleChatStep.id || simpleChatStep.__key}
             onChange={onChange}
             onToggleContent={onToggleContent}
             simpleChatStep={simpleChatStep}

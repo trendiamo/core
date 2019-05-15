@@ -40,11 +40,16 @@ const formObjectTransformer = () => json => {
     personaId: (json.persona && json.persona.id) || '',
     lockVersion: json.lockVersion,
     __persona: json.persona,
-    simpleChatStepsAttributes: json.simpleChatStepsAttributes || [
-      {
-        simpleChatMessagesAttributes: [{ text: '' }],
-      },
-    ],
+    simpleChatStepsAttributes: json.simpleChatStepsAttributes
+      ? json.simpleChatStepsAttributes.map(simpleChatStep => ({
+          ...simpleChatStep,
+          __key: simpleChatStep.__key,
+        }))
+      : [
+          {
+            simpleChatMessagesAttributes: [{ text: '', __type: 'text', __key: 'new-0' }],
+          },
+        ],
   }
 }
 
