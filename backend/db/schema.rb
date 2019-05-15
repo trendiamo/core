@@ -234,6 +234,7 @@ ActiveRecord::Schema.define(version: 20190514114802) do
     t.bigint "account_id"
     t.integer "onboarding_stage", default: 0
     t.boolean "admin", default: false, null: false
+    t.integer "role", default: 0
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

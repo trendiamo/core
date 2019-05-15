@@ -11,10 +11,12 @@ class User < ApplicationRecord
   validates :account, presence: true, unless: :admin?
   validate :account_set
 
+  enum role: %i[owner editor]
+
   def as_json(_options = {})
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "profile_pic_url", "onboarding_stage", "admin",
-                               "created_at", "updated_at")
+                               "role", "created_at", "updated_at")
     admin? ? sliced_attributes : sliced_attributes.merge(account: { website_ids: account.website_ids })
   end
 
