@@ -4,7 +4,7 @@ module Api
       before_action :ensure_tenant
 
       def index
-        @showcases = Showcase.all
+        @showcases = policy_scope(Showcase).all
         authorize @showcases
         chain = sorting(pagination(@showcases))
         render json: chain
@@ -12,7 +12,7 @@ module Api
 
       def create
         convert_and_assign_pictures
-        @showcase = Showcase.new(showcase_params)
+        @showcase = policy_scope(Showcase).new(showcase_params)
         authorize @showcase
         @showcase.owner = current_user
         if @showcase.save
@@ -23,13 +23,13 @@ module Api
       end
 
       def show
-        @showcase = Showcase.find(params[:id])
+        @showcase = policy_scope(Showcase).find(params[:id])
         authorize @showcase
         render json: @showcase
       end
 
       def update
-        @showcase = Showcase.find(params[:id])
+        @showcase = policy_scope(Showcase).find(params[:id])
         authorize @showcase
         convert_and_assign_pictures
         if @showcase.update(showcase_params)
@@ -40,7 +40,7 @@ module Api
       end
 
       def destroy
-        @showcases = Showcase.where(id: params[:ids])
+        @showcases = policy_scope(Showcase).where(id: params[:ids])
         authorize @showcases
         if @showcases.destroy_all
           render json: { data: @showcases }
@@ -50,7 +50,7 @@ module Api
       end
 
       def duplicate
-        @showcase = Showcase.find(params[:id])
+        @showcase = policy_scope(Showcase).find(params[:id])
         authorize @showcase
         @cloned_showcase = @showcase.deep_clone(include: { spotlights: :product_picks })
         @cloned_showcase.name = "Copied from - " + @cloned_showcase.name

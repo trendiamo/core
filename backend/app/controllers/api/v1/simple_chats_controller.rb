@@ -4,14 +4,14 @@ module Api
       before_action :ensure_tenant
 
       def index
-        @simple_chats = SimpleChat.includes(:persona).all
+        @simple_chats = policy_scope(SimpleChat).includes(:persona).all
         authorize @simple_chats
         chain = sorting(pagination(@simple_chats))
         render json: chain
       end
 
       def destroy
-        @simple_chats = SimpleChat.where(id: params[:ids])
+        @simple_chats = policy_scope(SimpleChat).where(id: params[:ids])
         authorize @simple_chats
         if @simple_chats.destroy_all
           render json: { data: @simple_chats }
@@ -32,13 +32,13 @@ module Api
       end
 
       def show
-        @simple_chat = SimpleChat.find(params[:id])
+        @simple_chat = policy_scope(SimpleChat).find(params[:id])
         authorize @simple_chat
         render json: @simple_chat
       end
 
       def update
-        @simple_chat = SimpleChat.find(params[:id])
+        @simple_chat = policy_scope(SimpleChat).find(params[:id])
         authorize @simple_chat
         if @simple_chat.update(simple_chat_params)
           render json: @simple_chat
@@ -48,7 +48,7 @@ module Api
       end
 
       def duplicate
-        @simple_chat = SimpleChat.find(params[:id])
+        @simple_chat = policy_scope(SimpleChat).find(params[:id])
         authorize @simple_chat
         @cloned_simple_chat = @simple_chat.deep_clone(include: { simple_chat_steps: :simple_chat_messages })
         @cloned_simple_chat.name = "Copied from - " + @cloned_simple_chat.name

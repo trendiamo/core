@@ -4,20 +4,20 @@ module Api
       before_action :ensure_tenant
 
       def index
-        @personas = Persona.all
+        @personas = policy_scope(Persona).all
         authorize @personas
         chain = sorting(pagination(@personas))
         render json: chain
       end
 
       def show
-        @persona = Persona.find(params[:id])
+        @persona = policy_scope(Persona).find(params[:id])
         authorize @persona
         render json: @persona
       end
 
       def update
-        @persona = Persona.find(params[:id])
+        @persona = policy_scope(Persona).find(params[:id])
         authorize @persona
         convert_and_assign_picture
         if @persona.update(persona_params)
@@ -39,7 +39,7 @@ module Api
       end
 
       def destroy
-        @personas = Persona.where(id: params[:ids])
+        @personas = policy_scope(Persona).where(id: params[:ids])
         authorize @personas
         if @personas.destroy_all
           render json: { data: @personas }

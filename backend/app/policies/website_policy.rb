@@ -1,6 +1,16 @@
 class WebsitePolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if user&.editor? && !user&.admin
+        scope.none
+      else
+        scope
+      end
+    end
+  end
+
   def show?
-    user
+    !user&.editor? || user&.admin
   end
 
   def create?
@@ -8,6 +18,6 @@ class WebsitePolicy < ApplicationPolicy
   end
 
   def update?
-    user
+    !user&.editor? || user&.admin
   end
 end

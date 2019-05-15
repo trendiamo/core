@@ -4,7 +4,7 @@ module Api
       before_action :ensure_tenant
 
       def index
-        @navigations = Navigation.includes(:persona).all
+        @navigations = policy_scope(Navigation).includes(:persona).all
         authorize @navigations
         chain = sorting(pagination(@navigations))
         render json: chain
@@ -22,13 +22,13 @@ module Api
       end
 
       def show
-        @navigation = Navigation.find(params[:id])
+        @navigation = policy_scope(Navigation).find(params[:id])
         authorize @navigation
         render json: @navigation
       end
 
       def update
-        @navigation = Navigation.find(params[:id])
+        @navigation = policy_scope(Navigation).find(params[:id])
         authorize @navigation
         convert_and_assign_pictures
         if @navigation.update(navigation_params)
@@ -39,7 +39,7 @@ module Api
       end
 
       def destroy
-        @navigations = Navigation.where(id: params[:ids])
+        @navigations = policy_scope(Navigation).where(id: params[:ids])
         authorize @navigations
         if @navigations.destroy_all
           render json: { data: @navigations }
@@ -49,7 +49,7 @@ module Api
       end
 
       def duplicate
-        @navigation = Navigation.find(params[:id])
+        @navigation = policy_scope(Navigation).find(params[:id])
         authorize @navigation
         @cloned_navigation = @navigation.deep_clone(include: :navigation_items)
         @cloned_navigation.name = "Copied from - " + @cloned_navigation.name
