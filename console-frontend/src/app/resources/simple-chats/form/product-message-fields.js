@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react'
 import { Field } from 'shared/form-elements'
-import { Grid } from '@material-ui/core'
 
 const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading, onFocus }) => {
   return (
-    <Grid item sm={6}>
+    <>
       <Field
         disabled={isFormLoading}
         fullWidth
@@ -49,7 +48,7 @@ const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading, onFocus 
         required
         value={textObject.displayPrice || ''}
       />
-    </Grid>
+    </>
   )
 }
 
