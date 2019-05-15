@@ -14,6 +14,7 @@ export default compose(
   withState('hideAll', 'setHideAll', false),
   withState('chatDataChanged', 'setChatDataChanged', false),
   withProps(({ assessment, bridge }) => ({ specialFlow: assessment || bridge })),
+  withProps(({ clickActions }) => ({ clickActionsExist: !!clickActions })),
   withProps(({ data, specialFlow }) => ({
     initialChatStep: !specialFlow && data.simpleChat.simpleChatSteps.find(e => e.key === 'default'),
     title: !specialFlow && data.simpleChat.title,
@@ -126,23 +127,36 @@ export default compose(
       }
     },
   })
-)(({ assessmentOptions, logs, title, contentRef, hideAll, setHideAll, onClick, chatDataChanged }) => (
-  <div>
-    {title && <Title>{title}</Title>}
-    {logs.map((logSection, index) => (
-      /* eslint-disable react/no-array-index-key */
-      <ChatLogSection
-        assessmentOptions={assessmentOptions}
-        chatDataChanged={chatDataChanged && index === logs.length - 1}
-        contentRef={contentRef}
-        hideAll={hideAll}
-        index={index}
-        key={index}
-        logSection={logSection}
-        onClick={onClick}
-        previousLogs={index > 0 && logs[index - 1]}
-        setHideAll={setHideAll}
-      />
-    ))}
-  </div>
-))
+)(
+  ({
+    assessmentOptions,
+    logs,
+    title,
+    contentRef,
+    hideAll,
+    setHideAll,
+    onClick,
+    chatDataChanged,
+    clickActionsExist,
+  }) => (
+    <div>
+      {title && <Title>{title}</Title>}
+      {logs.map((logSection, index) => (
+        /* eslint-disable react/no-array-index-key */
+        <ChatLogSection
+          assessmentOptions={assessmentOptions}
+          chatDataChanged={chatDataChanged && index === logs.length - 1}
+          clickActionsExist={clickActionsExist}
+          contentRef={contentRef}
+          hideAll={hideAll}
+          index={index}
+          key={index}
+          logSection={logSection}
+          onClick={onClick}
+          previousLogs={index > 0 && logs[index - 1]}
+          setHideAll={setHideAll}
+        />
+      ))}
+    </div>
+  )
+)

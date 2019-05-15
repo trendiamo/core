@@ -86,6 +86,11 @@ const withChatActions = () => BaseComponent =>
           chatOptionText: item.text,
         })
       },
+      clickLink: () => ({ item }) => {
+        if (item.newTab) return
+        markGoFwd()
+        window.location.href = item.url
+      },
     }),
     withProps(
       ({
@@ -96,6 +101,7 @@ const withChatActions = () => BaseComponent =>
         clickImageCarouselItem,
         touchImageCarousel,
         clickChatOption,
+        clickLink,
       }) => {
         return {
           clickActions: {
@@ -106,6 +112,7 @@ const withChatActions = () => BaseComponent =>
             clickImageCarouselItem,
             touchImageCarousel,
             clickChatOption,
+            clickLink,
           },
         }
       }

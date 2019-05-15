@@ -64,12 +64,13 @@ export default compose(
       timeout.clear('chatLogSectionAnimate')
     },
   })
-)(({ animate, logSection, hide, hideAll, onClick, nothingSelected, setContainerRef }) => (
+)(({ animate, clickActionsExist, logSection, hide, hideAll, onClick, nothingSelected, setContainerRef }) => (
   <Container ref={setContainerRef}>
     {logSection.logs.map((log, index) =>
       log.type === 'message' ? (
         /* eslint-disable react/no-array-index-key */
         <ChatMessage
+          clickActionsExist={clickActionsExist}
           hideAll={hideAll}
           index={index}
           key={index}
