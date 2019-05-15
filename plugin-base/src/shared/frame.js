@@ -30,6 +30,14 @@ body, html {
 ${emojifyStyles}
 `
 
+const loadCss = (head, href) => {
+  const link = document.createElement('link')
+  link.rel = 'stylesheet'
+  link.type = 'text/css'
+  link.href = href
+  head.appendChild(link)
+}
+
 const addCss = (head, css) => {
   const element = document.createElement('style')
   element.setAttribute('type', 'text/css')
@@ -61,13 +69,10 @@ export default compose(
       const { iframeRef, setIsLoaded } = this.props
       if (iframeRef && iframeRef !== prevProps.iframeRef) {
         const load = () => {
-          // Here we avoid FOIT (Flash of Invisible Text) on the slow network connections. Read more: https://medium.com/@pierluc/enable-font-display-on-google-fonts-with-cloudflare-workers-d7604cb30eab
-          fetch('https://fonts.googleapis.com/css?family=Roboto:400,500,700').then(response => {
-            response.text().then(body => {
-              if (!iframeRef || !iframeRef.contentDocument) return
-              addCss(iframeRef.contentDocument.head, body.replace(/}/g, 'font-display: swap; }'))
-            })
-          })
+          loadCss(
+            iframeRef.contentDocument.head,
+            'https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap'
+          )
           addCss(iframeRef.contentDocument.head, style)
           addBase(iframeRef.contentDocument.head)
           addPlatformClass(iframeRef.contentDocument.body)
