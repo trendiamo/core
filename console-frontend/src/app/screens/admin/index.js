@@ -163,7 +163,7 @@ const Admin = () => {
           </form>
         ) : (
           <List component="nav">
-            <AccountsList accounts={accounts} />
+            <AccountsList accounts={accounts} setAccounts={setAccounts} />
           </List>
         )}
       </Section>

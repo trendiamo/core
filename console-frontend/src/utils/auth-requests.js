@@ -167,3 +167,4 @@ export const apiPathAutocomplete = query => apiGetRequest(`${PATH_URL}/autocompl
 
 export const apiAccount = () => apiGetRequest(ACCOUNTS_URL)
 export const apiAccountCreate = body => apiCreateRequest(ACCOUNTS_URL, body)
+export const apiAccountDestroy = id => apiDestroyRequest(`${ACCOUNTS_URL}/${id}`)
