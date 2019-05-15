@@ -4,7 +4,7 @@ module Api
       before_action :ensure_tenant
 
       def index
-        @triggers = Trigger.all.order(:order)
+        @triggers = policy_scope(Trigger).all.order(:order)
         authorize @triggers
         add_hostnames_header
         render json: @triggers
@@ -21,13 +21,13 @@ module Api
       end
 
       def show
-        @trigger = Trigger.find(params[:id])
+        @trigger = policy_scope(Trigger).find(params[:id])
         authorize @trigger
         render json: @trigger
       end
 
       def update
-        @trigger = Trigger.find(params[:id])
+        @trigger = policy_scope(Trigger).find(params[:id])
         authorize @trigger
         if @trigger.update(trigger_params)
           render json: @trigger
@@ -37,7 +37,7 @@ module Api
       end
 
       def sort
-        @triggers = Trigger.where(id: params[:ids])
+        @triggers = policy_scope(Trigger).where(id: params[:ids])
         authorize @triggers
         if @triggers.all? { |trigger| trigger.update(order: params[:ids].index(trigger.id)) }
           render json: @triggers
@@ -47,7 +47,7 @@ module Api
       end
 
       def destroy
-        @triggers = Trigger.where(id: params[:ids])
+        @triggers = policy_scope(Trigger).where(id: params[:ids])
         authorize @triggers
         if @triggers.destroy_all
           render json: { data: @triggers }

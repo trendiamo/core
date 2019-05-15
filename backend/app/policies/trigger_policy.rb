@@ -1,4 +1,14 @@
 class TriggerPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if user&.editor? && !user&.admin
+        scope.none
+      else
+        scope
+      end
+    end
+  end
+
   def index?
     user
   end
@@ -8,11 +18,11 @@ class TriggerPolicy < ApplicationPolicy
   end
 
   def create?
-    user
+    !user&.editor? || user&.admin
   end
 
   def update?
-    user
+    !user&.editor? || user&.admin
   end
 
   def sort?
@@ -20,6 +30,6 @@ class TriggerPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user
+    !user&.editor? || user&.admin
   end
 end

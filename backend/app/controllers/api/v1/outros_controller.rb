@@ -4,7 +4,7 @@ module Api
       before_action :ensure_tenant
 
       def index
-        @outros = Outro.includes(:persona).all
+        @outros = policy_scope(Outro).includes(:persona).all
         authorize @outros
         chain = sorting(pagination(@outros))
         render json: chain
@@ -22,13 +22,13 @@ module Api
       end
 
       def show
-        @outro = Outro.find(params[:id])
+        @outro = policy_scope(Outro).find(params[:id])
         authorize @outro
         render json: @outro
       end
 
       def update
-        @outro = Outro.find(params[:id])
+        @outro = policy_scope(Outro).find(params[:id])
         authorize @outro
         if @outro.update(outro_params)
           render json: @outro
@@ -38,7 +38,7 @@ module Api
       end
 
       def destroy
-        @outros = Outro.where(id: params[:ids])
+        @outros = policy_scope(Outro).where(id: params[:ids])
         authorize @outros
         if @outros.destroy_all
           render json: { data: @outros }
@@ -48,7 +48,7 @@ module Api
       end
 
       def duplicate
-        @outro = Outro.find(params[:id])
+        @outro = policy_scope(Outro).find(params[:id])
         authorize @outro
         @cloned_outro = @outro.deep_clone
         @cloned_outro.name = "Copied from - " + @cloned_outro.name

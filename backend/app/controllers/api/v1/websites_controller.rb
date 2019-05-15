@@ -5,13 +5,13 @@ module Api
       before_action :ensure_tenant
 
       def show
-        @website = Website.find(params[:id])
+        @website = policy_scope(Website).find(params[:id])
         authorize @website
         render json: @website
       end
 
       def update
-        @website = Website.find(params[:id])
+        @website = policy_scope(Website).find(params[:id])
         authorize @website
         if @website.update(website_params)
           render json: @website
