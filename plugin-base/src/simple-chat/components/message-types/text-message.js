@@ -1,6 +1,8 @@
+import React from 'react'
 import styled from 'styled-components'
+import { compose, withHandlers } from 'recompose'
 
-const TextMessage = styled.div`
+const TextMessageContainer = styled.div`
   background-color: #fff;
   overflow: hidden;
   border-radius: 0 12px 12px 12px;
@@ -35,4 +37,19 @@ const TextMessage = styled.div`
   }
 `
 
-export default TextMessage
+const TextMessage = ({ onClick, ...props }) => <TextMessageContainer onClick={onClick} {...props} />
+
+export default compose(
+  withHandlers({
+    onClick: ({ onClick, clickActionsExist }) => event => {
+      if (!clickActionsExist) return event.preventDefault()
+      const element = event.target
+      if (element.tagName !== 'A') return
+      const newTab = element.target === '_blank'
+      if (!newTab) {
+        event.preventDefault()
+      }
+      onClick({ type: 'clickLink', item: { url: element.href, newTab } })
+    },
+  })
+)(TextMessage)

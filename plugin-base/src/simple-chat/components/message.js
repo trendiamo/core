@@ -33,10 +33,14 @@ const MessageContainer = styled.div`
   ${({ clickable }) => !clickable && 'pointer-events: none;'}
 `
 
-const ChatMessageTemplate = ({ data, type, show, hideAll, onClick, clickable, nothingSelected }) => (
+const ChatMessageTemplate = ({ data, type, show, hideAll, onClick, clickable, nothingSelected, clickActionsExist }) => (
   <MessageContainer clickable={clickable} show={type === 'assessmentStepOptions' ? show : !hideAll && show} type={type}>
     {type === 'text' ? (
-      <TextMessage dangerouslySetInnerHTML={{ __html: emojify(replaceExternalLinks(snarkdown(data))) }} />
+      <TextMessage
+        clickActionsExist={clickActionsExist}
+        dangerouslySetInnerHTML={{ __html: emojify(replaceExternalLinks(snarkdown(data))) }}
+        onClick={onClick}
+      />
     ) : type === 'videoUrl' ? (
       <VideoMessage onClick={onClick} youtubeId={data} />
     ) : type === 'product' ? (
