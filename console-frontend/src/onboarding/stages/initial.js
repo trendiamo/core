@@ -1,10 +1,32 @@
+import auth from 'auth'
 import React from 'react'
 import routes from 'app/routes'
 import { Tooltip } from 'onboarding/elements'
 
-const order = ['triggers', 'showcases', 'simpleChats', 'outros', 'pictures', 'personas']
+const editorRoleOrder = ['simpleChats', 'pictures']
 
-const steps = {
+const nonEditorRoleOrder = ['triggers', 'showcases', 'simpleChats', 'outros', 'pictures', 'personas']
+
+const order = auth.getUser().role === 'editor' ? editorRoleOrder : nonEditorRoleOrder
+
+const editorRoleSteps = {
+  simpleChats: {
+    target: '.onboard-simple-chats',
+    content: <Tooltip body="Create your Simple Chats here." nextRoute={routes.picturesList()} />,
+    placement: 'right',
+    disableBeacon: true,
+    title: 'Simple Chats',
+  },
+  pictures: {
+    target: '.onboard-pictures',
+    content: <Tooltip body="Manage your pictures here." toStage1 />,
+    placement: 'right',
+    disableBeacon: true,
+    title: 'Pictures Gallery',
+  },
+}
+
+const nonEditorRoleSteps = {
   triggers: {
     target: '.onboard-triggers',
     content: <Tooltip body="Create your Triggers here." nextRoute={routes.showcasesList()} />,
@@ -48,5 +70,7 @@ const steps = {
     title: 'Personas',
   },
 }
+
+const steps = auth.getUser().role === 'editor' ? editorRoleSteps : nonEditorRoleSteps
 
 export default { steps, order }

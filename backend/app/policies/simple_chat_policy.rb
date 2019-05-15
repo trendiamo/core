@@ -22,25 +22,14 @@ class SimpleChatPolicy < ApplicationPolicy
   end
 
   def update?
-    user && (user.admin? || user.owner? || editor_owner_of_record?)
+    user
   end
 
   def destroy?
-    user && (user.admin? || user.owner? || editor_owner_of_record?)
+    user
   end
 
   def duplicate?
-    user && (user.admin? || user.owner? || editor_owner_of_record?)
-  end
-
-  def editor_owner_of_record?
-    user.editor? && owner_of_record?
-  end
-
-  def owner_of_record?
-    # destroy record is an activerecord::relation not SimpleChat
-    return record&.owner_id == user.id if record&.is_a?(SimpleChat)
-
-    record.all? { |item| item.owner_id == user.id }
+    user
   end
 end

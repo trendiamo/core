@@ -11,9 +11,11 @@ const Account = () => {
   useAppBarContent(appBarContent)
   return (
     <>
-      <Section title="Account">
-        <EditWebsite />
-      </Section>
+      {(auth.isAdmin() || auth.getUser().role !== 'editor') && (
+        <Section title="Account">
+          <EditWebsite />
+        </Section>
+      )}
       {!auth.isAdmin() && (
         <Section title="Your Personal Info">
           <EditUser />
