@@ -17,10 +17,25 @@ module Api
         end
       end
 
+      def destroy
+        @account = Account.find(params[:id])
+        authorize @account
+        if @account.destroy
+          head :ok
+        else
+          render_error
+        end
+      end
+
       private
 
       def account_params
         params.require(:account).permit(:name, websites_attributes: [:name, hostnames: []])
+      end
+
+      def render_error
+        errors = @account.errors.full_messages.map { |string| { title: string } }
+        render json: { errors: errors }, status: :unprocessable_entity
       end
     end
   end

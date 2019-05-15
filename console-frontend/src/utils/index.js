@@ -3,6 +3,7 @@ import routes from 'app/routes'
 import {
   apiAccount,
   apiAccountCreate,
+  apiAccountDestroy,
   apiFlowsAutocomplete,
   apiFlowsList,
   apiGeneratedUrlCreate,
@@ -62,6 +63,7 @@ export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn }
 export {
   apiAccount,
   apiAccountCreate,
+  apiAccountDestroy,
   apiShowcaseCreate,
   apiShowcaseDestroy,
   apiShowcaseDuplicate,
