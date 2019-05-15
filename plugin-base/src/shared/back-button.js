@@ -1,8 +1,8 @@
+import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
 import { animate } from 'shared/animate'
 import { IconChevronLeft } from 'icons'
-import { omit } from 'lodash'
 
 const Chevron = styled(IconChevronLeft)`
   height: 12px;

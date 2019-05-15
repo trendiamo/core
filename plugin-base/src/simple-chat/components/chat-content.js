@@ -1,9 +1,9 @@
 import chatLog from 'simple-chat/chat-log'
 import ChatLogSection from './chat-log-section'
+import isEqual from 'lodash.isequal'
 import React from 'react'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { convertLogs } from 'tools'
-import { isEqual } from 'lodash'
 import { timeout } from 'ext'
 import { Title } from 'shared'
 
