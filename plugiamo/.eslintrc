@@ -7,7 +7,7 @@
     "es6": true,
     "browser": true
   },
-  "plugins": ["react", "prettier", "jsx-a11y", "sort-imports-es6-autofix", "eslint-plugin-local-rules"],
+  "plugins": ["react", "prettier", "jsx-a11y", "sort-imports-es6-autofix", "local-rules", "lodash"],
   "extends": [
     "eslint:recommended",
     "plugin:react/all",
@@ -50,6 +50,7 @@
     "jsx-a11y/no-autofocus": 0,
     "local-rules/no-relative-parent-imports": 2,
     "max-lines": 2,
+    "lodash/import-scope": [2, "method-package"],
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": 0,
