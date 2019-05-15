@@ -64,7 +64,7 @@ export default compose(
   withState('launcherDisappear', 'setLauncherDisappear', false),
   lifecycle({
     componentDidMount() {
-      const { setProduct } = this.props
+      const { setProduct, module } = this.props
       fetchProducts(results => {
         const pathArray = window.location.pathname.split('/')
         const id = pathArray[pathArray.length - 1]
@@ -133,5 +133,5 @@ export default compose(
       if (showingContent) onToggleContent()
     },
   }),
-  withChatActions
+  withChatActions()
 )(Plugin)
