@@ -1,8 +1,10 @@
+import auth from 'auth'
 import classNames from 'classnames'
 import DummyMenu from './dummy-menu'
 import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
 import omit from 'lodash.omit'
+import pickBy from 'lodash.pickby'
 import React from 'react'
 import routes from 'app/routes'
 import styled, { keyframes } from 'styled-components'
@@ -22,16 +24,40 @@ import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const resources = {
-  triggers: { icon: TuneOutlined, label: 'Triggers', class: 'triggers', route: routes.triggersList() },
-  showcases: { icon: PersonPinOutlined, label: 'Showcases', class: 'showcases', route: routes.showcasesList() },
+  triggers: {
+    icon: TuneOutlined,
+    label: 'Triggers',
+    class: 'triggers',
+    isOwnerScoped: true,
+    route: routes.triggersList(),
+  },
+  showcases: {
+    icon: PersonPinOutlined,
+    label: 'Showcases',
+    class: 'showcases',
+    isOwnerScoped: true,
+    route: routes.showcasesList(),
+  },
   simpleChats: {
     icon: SmsOutlined,
     label: 'Simple Chats',
     class: 'simple-chats',
     route: routes.simpleChatsList(),
   },
-  outros: { icon: AssignmentTurnedInOutlined, label: 'Outros', class: 'outros', route: routes.outrosList() },
-  personas: { icon: AccountCircleOutlined, label: 'Personas', class: 'personas', route: routes.personasList() },
+  outros: {
+    icon: AssignmentTurnedInOutlined,
+    label: 'Outros',
+    class: 'outros',
+    isOwnerScoped: true,
+    route: routes.outrosList(),
+  },
+  personas: {
+    icon: AccountCircleOutlined,
+    label: 'Personas',
+    class: 'personas',
+    isOwnerScoped: true,
+    route: routes.personasList(),
+  },
   pictures: {
     icon: PhotoLibrary,
     label: 'Pictures',
@@ -43,12 +69,14 @@ const resources = {
     label: 'Url Generator',
     class: 'urlGenerator',
     route: routes.urlGenerator(),
+    isOwnerScoped: true,
   },
 }
 
 const resourceGroups = {
   main: {
     name: 'Main',
+    isOwnerScoped: true,
     showTitle: false,
     resources: [resources.triggers],
   },
@@ -64,9 +92,20 @@ const resourceGroups = {
   },
   tools: {
     name: 'Tools',
+    isOwnerScoped: true,
     showTitle: true,
     resources: [resources.urlGenerator],
   },
+}
+
+const permittedResourceGroups = () => {
+  if (auth.getUser().role !== 'editor' || auth.isAdmin()) return resourceGroups
+  const filteredObject = pickBy(resourceGroups, group => !group['isOwnerScoped'])
+  Object.keys(filteredObject).forEach(
+    group =>
+      (filteredObject[group]['resources'] = filteredObject[group]['resources'].filter(resource => !resource['isOwnerScoped']))
+  )
+  return filteredObject
 }
 
 const fade = keyframes`
@@ -198,12 +237,11 @@ const Menu = ({ classes, location, menuLoaded, sidebarOpen, toggleOpen, ...rest 
   if (!menuLoaded && onboarding.stageIndex === 0 && location.pathname === routes.root()) {
     return <DummyMenu />
   }
-
   return (
     <Container {...rest}>
       <div style={{ flex: 1 }}>
         <MenuLogo sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-        {Object.keys(resourceGroups).map(group => (
+        {Object.keys(permittedResourceGroups()).map(group => (
           <div key={group}>
             <MenuItemGroup showTitle={resourceGroups[group].showTitle} sidebarOpen={sidebarOpen}>
               <GroupText sidebarOpen={sidebarOpen}>

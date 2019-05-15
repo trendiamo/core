@@ -37,12 +37,20 @@ const jss = create({
 })
 
 // Auth protected route.
-const PrivateRoute = ({ component, path, ...props }) => (
+const PrivateRoute = ({ component, isOwnerScoped, path, ...props }) => (
   <Route
     {...props}
     path={path}
     render={({ match }) =>
-      auth.isLoggedIn() ? React.createElement(component, { match }) : <Redirect to={routes.login()} />
+      auth.isLoggedIn() ? (
+        isOwnerScoped && (auth.getUser().role === 'editor' && !auth.isAdmin()) ? (
+          React.createElement(NotFound, { match })
+        ) : (
+          React.createElement(component, { match })
+        )
+      ) : (
+        <Redirect to={routes.login()} />
+      )
     }
   />
 )
@@ -55,30 +63,44 @@ const ExternalRoute = ({ component, path, ...props }) => (
   />
 )
 
-const RedirectRoot = () => <>{<Redirect to={auth.isLoggedIn() ? routes.triggersList() : routes.login()} />}</>
+const RedirectRoot = () => (
+  <>
+    {
+      <Redirect
+        to={
+          auth.isLoggedIn()
+            ? auth.getUser().role === 'editor' && !auth.isAdmin()
+              ? routes.simpleChatsList()
+              : routes.triggersList()
+            : routes.login()
+        }
+      />
+    }
+  </>
+)
 
 const Routes = () => (
   <Switch>
-    <PrivateRoute component={PersonasList} exact path={routes.personasList()} />
-    <PrivateRoute component={PersonaCreate} exact path={routes.personaCreate()} />
-    <PrivateRoute component={PersonaEdit} exact path={routes.personaEdit(':personaId')} />
+    <PrivateRoute component={PersonasList} exact isOwnerScoped path={routes.personasList()} />
+    <PrivateRoute component={PersonaCreate} exact isOwnerScoped path={routes.personaCreate()} />
+    <PrivateRoute component={PersonaEdit} exact isOwnerScoped path={routes.personaEdit(':personaId')} />
     <PrivateRoute component={PicturesList} exact path={routes.picturesList()} />
-    <PrivateRoute component={ShowcasesList} exact path={routes.showcasesList()} />
-    <PrivateRoute component={ShowcaseCreate} exact path={routes.showcaseCreate()} />
-    <PrivateRoute component={ShowcaseEdit} exact path={routes.showcaseEdit(':showcaseId')} />
+    <PrivateRoute component={ShowcasesList} exact isOwnerScoped path={routes.showcasesList()} />
+    <PrivateRoute component={ShowcaseCreate} exact isOwnerScoped path={routes.showcaseCreate()} />
+    <PrivateRoute component={ShowcaseEdit} exact isOwnerScoped path={routes.showcaseEdit(':showcaseId')} />
     <PrivateRoute component={SimpleChatsList} exact path={routes.simpleChatsList()} />
     <PrivateRoute component={SimpleChatCreate} exact path={routes.simpleChatCreate()} />
     <PrivateRoute component={SimpleChatEdit} exact path={routes.simpleChatEdit(':simpleChatId')} />
-    <PrivateRoute component={OutrosList} exact path={routes.outrosList()} />
-    <PrivateRoute component={OutroCreate} exact path={routes.outroCreate()} />
-    <PrivateRoute component={OutroEdit} exact path={routes.outroEdit(':outroId')} />
-    <PrivateRoute component={TriggersList} exact path={routes.triggersList()} />
-    <PrivateRoute component={TriggerCreate} exact path={routes.triggerCreate()} />
-    <PrivateRoute component={TriggerEdit} exact path={routes.triggerEdit(':triggerId')} />
+    <PrivateRoute component={OutrosList} exact isOwnerScoped path={routes.outrosList()} />
+    <PrivateRoute component={OutroCreate} exact isOwnerScoped path={routes.outroCreate()} />
+    <PrivateRoute component={OutroEdit} exact isOwnerScoped path={routes.outroEdit(':outroId')} />
+    <PrivateRoute component={TriggersList} exact isOwnerScoped path={routes.triggersList()} />
+    <PrivateRoute component={TriggerCreate} exact isOwnerScoped path={routes.triggerCreate()} />
+    <PrivateRoute component={TriggerEdit} exact isOwnerScoped path={routes.triggerEdit(':triggerId')} />
     <PrivateRoute component={Account} exact path={routes.account()} />
-    <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
-    <PrivateRoute component={UrlGenerator} exact path={routes.urlGenerator()} />
-    <PrivateRoute component={Admin} exact path={routes.admin()} />
+    <PrivateRoute component={ChangePassword} exact isOwnerScoped path={routes.passwordChange()} />
+    <PrivateRoute component={UrlGenerator} exact isOwnerScoped path={routes.urlGenerator()} />
+    <PrivateRoute component={Admin} exact isOwnerScoped path={routes.admin()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
     <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
     <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
