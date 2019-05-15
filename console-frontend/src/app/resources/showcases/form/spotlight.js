@@ -1,11 +1,11 @@
 import Autocomplete from 'shared/autocomplete'
+import findIndex from 'lodash.findindex'
 import ProductPick from './product-pick'
 import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import { findIndex } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const SortableProductPick = SortableElement(ProductPick)

@@ -1,8 +1,8 @@
+import omit from 'lodash.omit'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
-import { omit } from 'lodash'
 
 const Counter = styled.div`
   position: absolute;

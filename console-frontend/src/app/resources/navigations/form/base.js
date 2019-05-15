@@ -1,12 +1,12 @@
 import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
 import NavigationItem from './navigation-item'
+import omit from 'lodash.omit'
 import React from 'react'
 import Section from 'shared/section'
 import { AddItemContainer, Field, Form } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
 import { FormHelperText } from '@material-ui/core'
-import { omit } from 'lodash'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const options = { suggestionItem: 'withAvatar' }
