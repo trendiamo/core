@@ -5,5 +5,8 @@ FactoryBot.define do
     sequence(:chat_bubble_text) { Faker::Lorem.words(4) }
     sequence(:chat_bubble_extra_text) { Faker::Lorem.words(4) }
     persona
+    association :owner, factory: :user
+
+    after(:build) { |record| record.account = ActsAsTenant.default_tenant }
   end
 end

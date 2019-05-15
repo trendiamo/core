@@ -5,5 +5,7 @@ FactoryBot.define do
     sequence(:display_price) { Faker::Commerce.price }
     sequence(:name) { Faker::Commerce.product_name }
     pic
+
+    after(:build) { |record| record.account = ActsAsTenant.default_tenant }
   end
 end
