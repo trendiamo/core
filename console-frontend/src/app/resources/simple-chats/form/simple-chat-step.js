@@ -68,7 +68,7 @@ const SimpleChatMessages = ({ allowDelete, simpleChatMessages, onChange, onFocus
         <SortableSimpleChatMessage
           allowDelete={allowDelete}
           index={index}
-          key={simpleChatMessage.id || `simple-chat-message${index}`}
+          key={simpleChatMessage.id || simpleChatMessage.__key}
           onChange={onChange}
           onFocus={onFocus}
           simpleChatMessage={simpleChatMessage}
@@ -228,8 +228,11 @@ export default compose(
         {
           ...simpleChatStep,
           simpleChatMessagesAttributes: simpleChatStep.simpleChatMessagesAttributes
-            ? [...simpleChatStep.simpleChatMessagesAttributes, { text: '', __type: messageType }]
-            : [{ text: '', __type: messageType }],
+            ? [
+                ...simpleChatStep.simpleChatMessagesAttributes,
+                { text: '', __type: messageType, __key: `new-${simpleChatStep.simpleChatMessagesAttributes.length}` },
+              ]
+            : [{ text: '', __type: messageType, __key: 'new-0' }],
         },
         simpleChatStepIndex
       )

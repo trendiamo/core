@@ -15,6 +15,7 @@ const loadFormObject = () => {
         text: '',
         url: '',
         picUrl: '',
+        __key: 'new-0',
       },
     ],
   }

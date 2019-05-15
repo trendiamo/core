@@ -55,7 +55,10 @@ const SimpleChatForm1 = compose(
     addSimpleChatStep: ({ form, setForm }) => () => {
       setForm({
         ...form,
-        simpleChatStepsAttributes: [...form.simpleChatStepsAttributes, { key: '' }],
+        simpleChatStepsAttributes: [
+          ...form.simpleChatStepsAttributes,
+          { key: '', __key: `new-${form.simpleChatStepsAttributes.length}` },
+        ],
       })
     },
   }),

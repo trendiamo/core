@@ -49,6 +49,7 @@ const defaultForm = {
       text: '',
       url: '',
       picUrl: '',
+      __key: 'new-0',
     },
   ],
 }
@@ -90,6 +91,7 @@ const formObjectTransformer = json => {
       text: navigationItem.text || '',
       url: navigationItem.url || '',
       picUrl: navigationItem.picUrl || '',
+      __key: navigationItem.__key,
     })),
   }
 }
@@ -154,6 +156,7 @@ const NavigationForm = ({ backRoute, title, loadFormObject, location, saveFormOb
             text: '',
             url: '',
             picUrl: '',
+            __key: `new-${form.navigationItemsAttributes.length}`,
           },
         ],
       }))
