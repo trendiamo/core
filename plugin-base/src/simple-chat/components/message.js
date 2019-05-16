@@ -65,7 +65,7 @@ const checkForSpecialImageCarousel = data => {
     .split('- ')
     .slice(1)
     .map(item => ({
-      picUrl: imgixUrl(item, { fit: 'crop', w: 260, h: 260 }),
+      picUrl: item,
     }))
 }
 
