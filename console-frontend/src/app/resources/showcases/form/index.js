@@ -14,7 +14,7 @@ import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
-const onProductClick = ({ product }) => () => {
+const onProductClickFactory = product => () => {
   window.open(product.url, '_blank')
 }
 
@@ -177,8 +177,8 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     [form.id, onToggleContent]
   )
 
-  const onSpotlightClick = useCallback(
-    ({ spotlight }) => () => {
+  const onSpotlightClickFactory = useCallback(
+    spotlight => () => {
       onToggleContent(true)
       if (spotlight.personaId) routeToSpotlight(spotlight)
     },
@@ -206,10 +206,10 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
 
   const previewCallbacks = useMemo(
     () => ({
-      onSpotlightClick,
-      onProductClick,
+      onSpotlightClickFactory,
+      onProductClickFactory,
     }),
-    [onSpotlightClick]
+    [onSpotlightClickFactory]
   )
 
   if (isFormLoading) return <CircularProgress />
@@ -227,7 +227,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
           onBackClick={onBackClick}
           onFormSubmit={newOnFormSubmit}
           onSortEnd={onSortEnd}
-          onSpotlightClick={onSpotlightClick}
+          onSpotlightClickFactory={onSpotlightClickFactory}
           onToggleContent={onToggleContent}
           productPicksPictures={productPicksPictures}
           selectPersona={selectPersona}

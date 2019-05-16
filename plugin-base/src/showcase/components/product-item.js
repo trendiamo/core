@@ -38,8 +38,8 @@ const DisplayPrice = styled.div`
   font-weight: bold;
 `
 
-const ProductItem = ({ spotlight, product, onClick, ...props }) => (
-  <ListItem onClick={onClick({ product, spotlight })} {...props}>
+const ProductItem = ({ spotlight, product, onProductClickFactory, ...props }) => (
+  <ListItem onClick={onProductClickFactory(product, spotlight)} {...props}>
     <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', w: 101, h: 101 })} />
     <ListContent>
       <Content>

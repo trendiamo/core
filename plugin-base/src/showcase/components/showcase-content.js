@@ -16,7 +16,7 @@ const ShowcaseContent = ({ isLeaving, spotlights, callbacks, assessmentSpotlight
         {assessmentSpotlight ? (
           <SpotlightItem
             assessment
-            onClick={callbacks.onSpotlightClick({ assessmentSpotlight })}
+            onClick={callbacks.onSpotlightClickFactory(assessmentSpotlight)}
             spotlight={assessmentSpotlight}
           />
         ) : (
@@ -25,7 +25,7 @@ const ShowcaseContent = ({ isLeaving, spotlights, callbacks, assessmentSpotlight
         {spotlights.map((spotlight, index) => (
           <SpotlightItem
             key={spotlight.id || `new-${index}`}
-            onClick={callbacks.onSpotlightClick({ spotlight })}
+            onClick={callbacks.onSpotlightClickFactory(spotlight)}
             spotlight={spotlight}
           />
         ))}

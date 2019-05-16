@@ -13,7 +13,7 @@ const Spotlights = ({
   setProductPicksPictures,
   productPicksPictures,
   setSpotlightForm,
-  onFocus,
+  onSpotlightClickFactory,
 }) => {
   const allowDelete = useMemo(() => form.spotlightsAttributes.length > 1, [form.spotlightsAttributes.length])
 
@@ -29,7 +29,7 @@ const Spotlights = ({
             isFormLoading={isFormLoading}
             key={spotlight.id || spotlight.__key}
             onChange={setSpotlightForm}
-            onFocus={onFocus({ spotlight: { ...spotlight, id: spotlight.id || `new-${index}` } })}
+            onFocus={onSpotlightClickFactory({ ...spotlight, id: spotlight.id || `new-${index}` })}
             personas={personas}
             productPicksPictures={productPicksPictures}
             setIsCropping={setIsCropping}

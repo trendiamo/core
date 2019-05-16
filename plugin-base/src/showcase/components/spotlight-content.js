@@ -20,14 +20,18 @@ const SpotlightContent = compose(
   branch(({ spotlight }) => !spotlight, renderNothing)
 )(({ isLeaving, spotlight, callbacks }) => (
   <Container>
-    <Title dangerouslySetInnerHTML={{ __html: emojify(spotlight.translation.selectedBy) }} />
+    <Title
+      dangerouslySetInnerHTML={{
+        __html: emojify(spotlight.translation.selectedBy),
+      }}
+    />
     <TopSlideAnimation isLeaving={isLeaving} name="content">
       <List objectForResetCheck={spotlight}>
         {spotlight.productPicks.map((product, index) => (
           <ProductItem
             highlight
             key={product.id || `new-${index}`}
-            onClick={callbacks.onProductClick}
+            onProductClickFactory={callbacks.onProductClickFactory}
             product={product}
             spotlight={spotlight}
           />

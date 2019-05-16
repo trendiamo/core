@@ -6,7 +6,7 @@ import { omit } from 'lodash'
 
 const FormContainer = ({
   selectPersona,
-  onSpotlightClick,
+  onSpotlightClickFactory,
   form,
   formRef,
   isFormLoading,
@@ -41,8 +41,8 @@ const FormContainer = ({
       helperClass="sortable-element"
       isCropping={isCropping}
       isFormLoading={isFormLoading}
-      onFocus={onSpotlightClick}
       onSortEnd={onSortEnd}
+      onSpotlightClickFactory={onSpotlightClickFactory}
       onToggleContent={onToggleContent}
       personas={personas}
       productPicksPictures={productPicksPictures}
