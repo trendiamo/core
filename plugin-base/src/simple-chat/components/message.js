@@ -14,6 +14,7 @@ import {
 } from './message-types'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { extractJson, extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
+import { imgixUrl } from 'tools'
 
 const MessageContainer = styled.div`
   max-width: ${({ type }) =>
@@ -57,6 +58,17 @@ const ChatMessageTemplate = ({ data, type, show, hideAll, onClick, clickable, no
   </MessageContainer>
 )
 
+const checkForSpecialImageCarousel = data => {
+  const dataArray = data.split('-IMAGECAROUSEL-')
+  if (dataArray.length < 2) return
+  return dataArray[1]
+    .split('- ')
+    .slice(1)
+    .map(item => ({
+      picUrl: imgixUrl(item, { fit: 'crop', w: 260, h: 260 }),
+    }))
+}
+
 const ChatMessage = compose(
   withState('show', 'setShow', false),
   withState('clickable', 'setClickable', false),
@@ -65,6 +77,10 @@ const ChatMessage = compose(
       const text = log.message.text
       const videoData = extractYoutubeId(text)
       const productData = !videoData && extractJson(text)
+      if (!productData && text.startsWith('-IMAGECAROUSEL-')) {
+        const data = checkForSpecialImageCarousel(text)
+        if (data) return { type: 'imageCarousel', data }
+      }
       const type = videoData ? 'videoUrl' : productData ? 'product' : 'text'
       return { type, data: videoData || productData || text }
     },
