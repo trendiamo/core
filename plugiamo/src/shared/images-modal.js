@@ -9,7 +9,7 @@ let touchstartY = 0
 let touchendX = 0
 let touchendY = 0
 
-const handleGesure = (touchstartX, touchstartY, touchendX, touchendY) => {
+const handleGesture = (touchstartX, touchstartY, touchendX, touchendY) => {
   if (touchendX < touchstartX) {
     return 'right'
   }
@@ -129,7 +129,7 @@ const ImagesModal = compose(
       if (isTwoFingerScroll || originalWindowWidth > window.innerWidth) return
       touchendX = event.changedTouches[0].screenX
       touchendY = event.changedTouches[0].screenY
-      switch (handleGesure(touchstartX, touchstartY, touchendX, touchendY)) {
+      switch (handleGesture(touchstartX, touchstartY, touchendX, touchendY)) {
         case 'right':
           {
             if (selectedImageIndex < urlsArray.length - 1) {
