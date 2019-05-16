@@ -2,10 +2,9 @@ import AspectRatio from 'react-aspect-ratio'
 import Button from 'shared/button'
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
-import React from 'react'
+import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
 import { DialogActionsContainer, StyledButton } from './shared'
 import { Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom'
@@ -78,18 +77,18 @@ const DialogActionsGallery = ({ onDialogClose, onFileUpload, onUrlUploadClick })
   </DialogActionsContainer>
 )
 
-const GalleryPicture = compose(
-  withHandlers({
-    onPictureClick: ({ onPictureClick, picture }) => () => onPictureClick(picture),
-  })
-)(({ isActive, onPictureClick, picture }) => (
-  <Grid item md={2} sm={3} xs={4}>
-    <AspectRatio style={{ width: '100%' }}>
-      <Picture id={`picture-${picture.id}`} isActive={isActive} onClick={onPictureClick} src={picture.url} />
-      {isActive && <CheckBoxIcon src="/img/icons/select.svg" />}
-    </AspectRatio>
-  </Grid>
-))
+const GalleryPicture = ({ isActive, onPictureClick, picture }) => {
+  const newOnPictureClick = useCallback(() => onPictureClick(picture), [onPictureClick, picture])
+
+  return (
+    <Grid item md={2} sm={3} xs={4}>
+      <AspectRatio style={{ width: '100%' }}>
+        <Picture id={`picture-${picture.id}`} isActive={isActive} onClick={newOnPictureClick} src={picture.url} />
+        {isActive && <CheckBoxIcon src="/img/icons/select.svg" />}
+      </AspectRatio>
+    </Grid>
+  )
+}
 
 const GalleryDialog = ({
   activePicture,
