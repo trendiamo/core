@@ -4,7 +4,7 @@ import React from 'react'
 import { Launcher, SimpleChat } from 'plugin-base'
 import { previewConverter } from './data-utils'
 
-const Preview = ({ position, form, onToggleContent, showingContent }) => (
+const Preview = ({ form, onToggleContent, showingContent }) => (
   <PluginPreview
     Base={
       <SimpleChat
@@ -20,14 +20,12 @@ const Preview = ({ position, form, onToggleContent, showingContent }) => (
       <Launcher
         onClick={() => onToggleContent()}
         personaPicUrl={previewConverter.persona(form).profilePic.url}
-        position={position}
         pulsating
         showingContent={showingContent}
       />
     }
     launcherConfig={launcherConfig}
     onToggleContent={onToggleContent}
-    position={position}
     showingContent={showingContent}
   />
 )

@@ -1,27 +1,112 @@
 import CircularProgress from 'shared/circular-progress'
 import FormContainer from './form-container'
 import PluginPreview from './plugin-preview'
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
-import { branch, compose, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { formObject, formObjectTransformer } from './data-utils'
+import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
-const SimpleChatForm = props => {
-  const { backRoute, title, isFormLoading, isFormSubmitting, onFormSubmit, isFormPristine } = props
+const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveFormObject, title }) => {
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'simpleChats', stageName: 'initial', pathname: location.pathname }),
+    [location.pathname]
+  )
+  useOnboardingHelp(onboardingHelp)
+
+  const formRef = useRef()
+  const [showingContent, setShowingContent] = useState(false)
+
+  const {
+    form,
+    isFormLoading,
+    isFormPristine,
+    isFormSubmitting,
+    mergeForm,
+    mergeFormCallback,
+    onFormSubmit,
+    setFieldValue,
+    setIsFormSubmitting,
+  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
+
+  const setSimpleChatStepsForm = useCallback(
+    (simpleChatStep, simpleChatStepIndex) => {
+      mergeFormCallback(form => {
+        let newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
+        newsimpleChatStepsAttributes[simpleChatStepIndex] = simpleChatStep
+        return { ...form, simpleChatStepsAttributes: newsimpleChatStepsAttributes }
+      })
+    },
+    [mergeFormCallback]
+  )
+
+  const addSimpleChatStep = useCallback(
+    () => {
+      mergeFormCallback(form => {
+        return {
+          ...form,
+          simpleChatStepsAttributes: [
+            ...form.simpleChatStepsAttributes,
+            { key: '', __key: `new-${form.simpleChatStepsAttributes.length}` },
+          ],
+        }
+      })
+    },
+    [mergeFormCallback]
+  )
+
+  const selectPersona = useCallback(
+    selected => {
+      selected &&
+        mergeForm({
+          personaId: selected.value.id,
+          __persona: selected.value,
+        })
+    },
+    [mergeForm]
+  )
+
+  const newOnFormSubmit = useCallback(
+    async event => {
+      if (!formRef.current.reportValidity()) return
+      const result = await onFormSubmit(event)
+      setIsFormSubmitting(false)
+      if (!result || result.error || result.errors) return
+      if (location.pathname !== routes.simpleChatEdit(result.id)) history.push(routes.simpleChatEdit(result.id))
+      return result
+    },
+    [history, location.pathname, onFormSubmit, setIsFormSubmitting]
+  )
+
+  const onSortEnd = useCallback(
+    ({ oldIndex, newIndex }) => {
+      mergeFormCallback(form => {
+        const orderedSimpleChatSteps = arrayMove(form.simpleChatStepsAttributes, oldIndex, newIndex)
+        return { ...form, simpleChatStepsAttributes: orderedSimpleChatSteps }
+      })
+    },
+    [mergeFormCallback]
+  )
+
+  const onToggleContent = useCallback(
+    value => {
+      setShowingContent(value !== undefined ? value : !showingContent)
+    },
+    [showingContent]
+  )
+
   const appBarContent = useMemo(
     () => ({
       Actions: (
         <Actions
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
-          onFormSubmit={onFormSubmit}
+          onFormSubmit={newOnFormSubmit}
           saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
           tooltipEnabled
           tooltipText="No changes to save"
@@ -30,84 +115,37 @@ const SimpleChatForm = props => {
       backRoute,
       title,
     }),
-    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, title]
+    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit, title]
   )
   useAppBarContent(appBarContent)
+
+  if (isFormLoading) return <CircularProgress />
+
   return (
     <Grid container spacing={24}>
       <Grid item md={6} xs={12}>
-        <FormContainer {...props} />
+        <FormContainer
+          addSimpleChatStep={addSimpleChatStep}
+          backRoute={backRoute}
+          form={form}
+          formRef={formRef}
+          isFormLoading={isFormLoading}
+          isFormPristine={isFormPristine}
+          isFormSubmitting={isFormSubmitting}
+          onFormSubmit={newOnFormSubmit}
+          onSortEnd={onSortEnd}
+          onToggleContent={onToggleContent}
+          selectPersona={selectPersona}
+          setFieldValue={setFieldValue}
+          setSimpleChatStepsForm={setSimpleChatStepsForm}
+          title={title}
+        />
       </Grid>
       <Grid item md={6} xs={12}>
-        <PluginPreview {...props} />
+        <PluginPreview form={form} onToggleContent={onToggleContent} showingContent={showingContent} />
       </Grid>
     </Grid>
   )
 }
 
-const SimpleChatForm1 = compose(
-  withHandlers({
-    setSimpleChatStepsForm: ({ form, setForm }) => (simpleChatStep, simpleChatStepIndex) => {
-      let newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
-      newsimpleChatStepsAttributes[simpleChatStepIndex] = simpleChatStep
-      setForm({ ...form, simpleChatStepsAttributes: newsimpleChatStepsAttributes })
-    },
-    addSimpleChatStep: ({ form, setForm }) => () => {
-      setForm({
-        ...form,
-        simpleChatStepsAttributes: [
-          ...form.simpleChatStepsAttributes,
-          { key: '', __key: `new-${form.simpleChatStepsAttributes.length}` },
-        ],
-      })
-    },
-  }),
-  withHandlers({
-    selectPersona: ({ form, setForm }) => selected => {
-      selected &&
-        setForm({
-          ...form,
-          personaId: selected.value.id,
-          __persona: selected.value,
-        })
-    },
-    onFormSubmit: ({ formRef, history, location, onFormSubmit, setIsFormSubmitting }) => async event => {
-      if (!formRef.current.reportValidity()) return
-      const result = await onFormSubmit(event)
-      setIsFormSubmitting(false)
-      if (!result || result.error || result.errors) return
-      if (location.pathname !== routes.simpleChatEdit(result.id)) history.push(routes.simpleChatEdit(result.id))
-      return result
-    },
-    onSortEnd: ({ setForm, form }) => ({ oldIndex, newIndex }) => {
-      const orderedSimpleChatSteps = arrayMove(form.simpleChatStepsAttributes, oldIndex, newIndex)
-      setForm({ ...form, simpleChatStepsAttributes: orderedSimpleChatSteps })
-    },
-    onToggleContent: ({ setShowingContent, showingContent }) => value => {
-      setShowingContent(value !== undefined ? value : !showingContent)
-    },
-  }),
-  branch(({ isFormLoading }) => isFormLoading, renderComponent(CircularProgress))
-)(SimpleChatForm)
-
-const SimpleChatForm2 = props => {
-  const formProps = useForm({ ...props, formObject })
-  return <SimpleChatForm1 {...props} {...formProps} />
-}
-
-const SimpleChatForm3 = compose(
-  withProps({ formRef: React.createRef() }),
-  withState('showingContent', 'setShowingContent', false),
-  withHandlers({ formObjectTransformer })
-)(SimpleChatForm2)
-
-const SimpleChatForm4 = ({ location, ...props }) => {
-  const onboardingHelp = useMemo(
-    () => ({ single: true, stepName: 'simpleChats', stageName: 'initial', pathname: location.pathname }),
-    [location.pathname]
-  )
-  useOnboardingHelp(onboardingHelp)
-  return <SimpleChatForm3 {...props} location={location} />
-}
-
-export default withRouter(SimpleChatForm4)
+export default withRouter(SimpleChatForm)

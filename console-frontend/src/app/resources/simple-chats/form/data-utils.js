@@ -30,7 +30,7 @@ const previewConverter = {
   },
 }
 
-const formObjectTransformer = () => json => {
+const formObjectTransformer = json => {
   return {
     id: json.id,
     name: json.name || '',
@@ -47,23 +47,11 @@ const formObjectTransformer = () => json => {
         }))
       : [
           {
+            key: 'default',
             simpleChatMessagesAttributes: [{ text: '', __type: 'text', __key: 'new-0' }],
           },
         ],
   }
 }
 
-const formObject = {
-  name: '',
-  title: '',
-  personaId: '',
-  chatBubbleText: '',
-  chatBubbleExtraText: '',
-  simpleChatStepsAttributes: [
-    {
-      simpleChatMessagesAttributes: [{ text: '' }],
-    },
-  ],
-}
-
-export { previewConverter, formObjectTransformer, formObject }
+export { previewConverter, formObjectTransformer }

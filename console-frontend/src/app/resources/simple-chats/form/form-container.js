@@ -39,6 +39,7 @@ const FormContainer = ({
     [backRoute, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, title]
   )
   useAppBarContent(appBarContent)
+
   return (
     <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <MainForm

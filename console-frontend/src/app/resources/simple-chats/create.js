@@ -1,6 +1,6 @@
-import BaseSimpleChatForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
+import SimpleChatForm from './form'
 import { apiRequest, apiSimpleChatCreate } from 'utils'
 import { useSnackbar } from 'notistack'
 
@@ -20,7 +20,7 @@ const loadFormObject = () => {
   }
 }
 
-const SimpleChatForm = props => {
+const CreateSimpleChatForm = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const saveFormObject = useCallback(
@@ -37,10 +37,8 @@ const SimpleChatForm = props => {
   )
 
   return (
-    <BaseSimpleChatForm
-      {...props}
+    <SimpleChatForm
       backRoute={routes.simpleChatsList()}
-      enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
       saveFormObject={saveFormObject}
       title="Create Simple Chat"
@@ -48,4 +46,4 @@ const SimpleChatForm = props => {
   )
 }
 
-export default SimpleChatForm
+export default CreateSimpleChatForm
