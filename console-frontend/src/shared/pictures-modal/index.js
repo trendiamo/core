@@ -12,7 +12,97 @@ import 'react-aspect-ratio/aspect-ratio.css'
 
 const ENTER_KEYCODE = 13
 
-const PicturesModal = compose(
+const PicturesModal = ({
+  activePicture,
+  crop,
+  croppingState,
+  emptyState,
+  handleClose,
+  isLoading,
+  isPictureLoading,
+  onCancelCropping,
+  onCancelUrlUpload,
+  onCropChange,
+  onCropComplete,
+  onCropKeyup,
+  onDialogClose,
+  onDialogEntering,
+  onDoneCropping,
+  onDoneUrlUpload,
+  onGalleryKeyup,
+  onFileUpload,
+  onPictureClick,
+  onPictureLoaded,
+  onUrlUploadClick,
+  onUrlUploadKeyup,
+  open,
+  pictures,
+  picturePreview,
+  picturePreviewRef,
+  setPictureUrl,
+  urlUploadState,
+}) => {
+  if (!open) return null
+  if (croppingState && picturePreview) {
+    return (
+      <CroppingDialog
+        crop={crop}
+        handleClose={onCancelCropping}
+        onCancelCropping={onCancelCropping}
+        onCropChange={onCropChange}
+        onCropComplete={onCropComplete}
+        onDoneCropping={onDoneCropping}
+        onEntering={onDialogEntering}
+        onKeyUp={onCropKeyup}
+        onPictureLoaded={onPictureLoaded}
+        open={open}
+        picturePreview={picturePreview}
+        picturePreviewRef={picturePreviewRef}
+      />
+    )
+  }
+  if (urlUploadState) {
+    return (
+      <UrlUploadDialog
+        handleClose={handleClose}
+        isPictureLoading={isPictureLoading}
+        onCancelUrlUpload={onCancelUrlUpload}
+        onDoneUrlUpload={onDoneUrlUpload}
+        onFileUpload={onFileUpload}
+        onKeyUp={onUrlUploadKeyup}
+        open={open}
+        setPictureUrl={setPictureUrl}
+      />
+    )
+  }
+  if (isLoading) return <CircularProgress transparent />
+  if (emptyState) {
+    return (
+      <EmptyDialog
+        handleClose={handleClose}
+        onFileUpload={onFileUpload}
+        onUrlUploadClick={onUrlUploadClick}
+        open={open}
+      />
+    )
+  }
+  return (
+    <GalleryDialog
+      activePicture={activePicture}
+      handleClose={handleClose}
+      onDialogClose={onDialogClose}
+      onEntering={onDialogEntering}
+      onFileUpload={onFileUpload}
+      onKeyUp={onGalleryKeyup}
+      onPictureClick={onPictureClick}
+      onUrlUploadClick={onUrlUploadClick}
+      open={open}
+      pictures={pictures}
+    />
+  )
+}
+
+const PicturesModal1 = compose(
   withState('activePicture', 'setActivePicture', null),
   withState('emptyState', 'setEmptyState', false),
   withState('isLoading', 'setIsLoading', false),
@@ -117,91 +207,11 @@ const PicturesModal = compose(
       if (keyCode === ENTER_KEYCODE) onDoneUrlUpload()
     },
   })
-)(
-  ({
-    activePicture,
-    crop,
-    croppingState,
-    emptyState,
-    handleClose,
-    isLoading,
-    isPictureLoading,
-    onCancelCropping,
-    onCancelUrlUpload,
-    onCropChange,
-    onCropComplete,
-    onCropKeyup,
-    onDialogClose,
-    onDialogEntering,
-    onDoneCropping,
-    onDoneUrlUpload,
-    onGalleryKeyup,
-    onFileUpload,
-    onPictureClick,
-    onPictureLoaded,
-    onUrlUploadClick,
-    onUrlUploadKeyup,
-    open,
-    pictures,
-    picturePreview,
-    picturePreviewRef,
-    setPictureUrl,
-    urlUploadState,
-  }) =>
-    !open ? null : croppingState && picturePreview ? (
-      <CroppingDialog
-        crop={crop}
-        handleClose={onCancelCropping}
-        onCancelCropping={onCancelCropping}
-        onCropChange={onCropChange}
-        onCropComplete={onCropComplete}
-        onDoneCropping={onDoneCropping}
-        onEntering={onDialogEntering}
-        onKeyUp={onCropKeyup}
-        onPictureLoaded={onPictureLoaded}
-        open={open}
-        picturePreview={picturePreview}
-        picturePreviewRef={picturePreviewRef}
-      />
-    ) : urlUploadState ? (
-      <UrlUploadDialog
-        handleClose={handleClose}
-        isPictureLoading={isPictureLoading}
-        onCancelUrlUpload={onCancelUrlUpload}
-        onDoneUrlUpload={onDoneUrlUpload}
-        onFileUpload={onFileUpload}
-        onKeyUp={onUrlUploadKeyup}
-        open={open}
-        setPictureUrl={setPictureUrl}
-      />
-    ) : isLoading ? (
-      <CircularProgress transparent />
-    ) : emptyState ? (
-      <EmptyDialog
-        handleClose={handleClose}
-        onFileUpload={onFileUpload}
-        onUrlUploadClick={onUrlUploadClick}
-        open={open}
-      />
-    ) : (
-      <GalleryDialog
-        activePicture={activePicture}
-        handleClose={handleClose}
-        onDialogClose={onDialogClose}
-        onEntering={onDialogEntering}
-        onFileUpload={onFileUpload}
-        onKeyUp={onGalleryKeyup}
-        onPictureClick={onPictureClick}
-        onUrlUploadClick={onUrlUploadClick}
-        open={open}
-        pictures={pictures}
-      />
-    )
-)
+)(PicturesModal)
 
-const PicturesModal1 = props => {
+const PicturesModal2 = props => {
   const { enqueueSnackbar } = useSnackbar()
-  return <PicturesModal {...props} enqueueSnackbar={enqueueSnackbar} />
+  return <PicturesModal1 {...props} enqueueSnackbar={enqueueSnackbar} />
 }
 
-export default PicturesModal1
+export default PicturesModal2
