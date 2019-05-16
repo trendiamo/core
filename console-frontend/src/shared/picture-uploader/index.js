@@ -1,9 +1,8 @@
 import BasePictureUploader from './base'
-import React from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
 import { apiGetSignedUrlFactory } from 'utils'
-import { compose, lifecycle, shallowEqual, shouldUpdate, withHandlers, withProps, withState } from 'recompose'
 import { getPixelCrop } from 'react-image-crop'
 import { LinearProgress } from '@material-ui/core'
 import 'react-image-crop/dist/ReactCrop.css'
@@ -19,16 +18,12 @@ const StatusMessage = styled.div`
   line-height: 2.4;
 `
 
-const ProgressBar = compose(
-  shouldUpdate((props, nextProps) => {
-    return !shallowEqual(props.progress, nextProps.progress)
-  })
-)(({ progress }) => (
+const ProgressBar = ({ progress }) => (
   <div style={{ marginTop: '2rem' }}>
     <StatusMessage>{`${progress.message}...`}</StatusMessage>
     <StyledLinearProgress value={progress.progress} variant="determinate" />
   </div>
-))
+)
 
 const defaultCrop = picture => {
   const pictureAspect = picture.width / picture.height
@@ -106,27 +101,20 @@ const uploadPicture = async ({ blob, setProgress }) => {
   }
 }
 
-const PictureUploader = compose(
-  withProps({ picturePreviewRef: React.createRef() }),
-  withState('crop', 'setCrop', {}),
-  withState('croppedPicture', 'setCroppedPicture', null),
-  withState('doneCropping', 'setDoneCropping', true),
-  withState('picture', 'setPicture', null),
-  withState('previousValue', 'setPreviousValue', null),
-  withState('modalOpen', 'setModalOpen', false),
-  withProps(({ croppedPicture, picture, value }) => ({
-    previewPicture: value ? value : croppedPicture ? croppedPicture : picture ? picture.preview : '',
-  })),
-  withHandlers({
-    onCancelClick: ({
-      picture,
-      previousValue,
-      onChange,
-      setCroppedPicture,
-      setDoneCropping,
-      setModalOpen,
-      setPicture,
-    }) => () => {
+const PictureUploader = ({ disabled, label, onChange, required, setDisabled, setPic, square, value }) => {
+  const picturePreviewRef = useRef()
+  const [crop, setCrop] = useState({})
+  const [croppedPicture, setCroppedPicture] = useState(null)
+  const [doneCropping, setDoneCropping] = useState(true)
+  const [picture, setPicture] = useState(null)
+  const [previousValue, setPreviousValue] = useState(null)
+  const [modalOpen, setModalOpen] = useState(false)
+  const previewPicture = useMemo(
+    () => (value ? value : croppedPicture ? croppedPicture : picture ? picture.preview : ''),
+    [croppedPicture, picture, value]
+  )
+  const onCancelClick = useCallback(
+    () => {
       setDoneCropping(true)
       onChange(previousValue)
       setPicture(null)
@@ -134,16 +122,19 @@ const PictureUploader = compose(
       setModalOpen(false)
       URL.revokeObjectURL(picture.preview)
     },
-    onClick: ({ setModalOpen }) => () => {
-      setModalOpen(true)
-    },
-    onCropChange: ({ setCrop }) => crop => {
-      setCrop(crop)
-    },
-    onCropComplete: ({ picture, picturePreviewRef, onChange, setCrop, setCroppedPicture }) => async (
-      _crop,
-      pixelCrop
-    ) => {
+    [onChange, picture, previousValue]
+  )
+
+  const onClick = useCallback(() => {
+    setModalOpen(true)
+  }, [])
+
+  const onCropChange = useCallback(crop => {
+    setCrop(crop)
+  }, [])
+
+  const onCropComplete = useCallback(
+    async (_crop, pixelCrop) => {
       if (pixelCrop.height === 0 || pixelCrop.width === 0) {
         const crop = defaultCrop(picturePreviewRef.current)
         setCrop(crop)
@@ -153,7 +144,11 @@ const PictureUploader = compose(
       setCroppedPicture(previewUrl)
       onChange(previewUrl)
     },
-    onDoneClick: ({ crop, picture, picturePreviewRef, setDoneCropping, setModalOpen, setPic }) => async () => {
+    [onChange, picture]
+  )
+
+  const onDoneClick = useCallback(
+    async () => {
       setDoneCropping(true)
       setModalOpen(false)
       const blob = await resultingCrop(
@@ -165,7 +160,11 @@ const PictureUploader = compose(
       setPic(blob)
       URL.revokeObjectURL(picture.preview)
     },
-    onFileUpload: ({ onChange, setDoneCropping, setModalOpen, setPicture, setPreviousValue, value }) => files => {
+    [crop, picture, setPic]
+  )
+
+  const onFileUpload = useCallback(
+    files => {
       setDoneCropping(false)
       onChange('')
       setPreviousValue(value)
@@ -179,11 +178,19 @@ const PictureUploader = compose(
       })
       setModalOpen(true)
     },
-    onModalClose: ({ onChange, setModalOpen }) => pictureUrl => {
+    [onChange, value]
+  )
+
+  const onModalClose = useCallback(
+    pictureUrl => {
       setModalOpen(false)
       onChange(pictureUrl)
     },
-    onPictureLoaded: ({ picture, picturePreviewRef, onChange, setCrop, setCroppedPicture }) => async pictureElement => {
+    [onChange]
+  )
+
+  const onPictureLoaded = useCallback(
+    async pictureElement => {
       const crop = defaultCrop(pictureElement)
       setCrop(crop)
       const pixelCrop = getPixelCrop(pictureElement, crop)
@@ -191,25 +198,60 @@ const PictureUploader = compose(
       setCroppedPicture(previewUrl)
       onChange(previewUrl)
     },
-    onRemovePicture: ({ onChange, setPicture, setCroppedPicture, setPic }) => () => {
+    [onChange, picture]
+  )
+
+  const onRemovePicture = useCallback(
+    () => {
       onChange('')
       setPicture(null)
       setPic(null)
       setCroppedPicture(null)
     },
-  }),
-  lifecycle({
-    componentDidUpdate(prevProps) {
-      const { setDisabled, doneCropping, disabled } = this.props
-      if (setDisabled && prevProps.doneCropping !== doneCropping && disabled === doneCropping)
-        setDisabled(!doneCropping)
+    [onChange, setPic]
+  )
+
+  useEffect(
+    () => {
+      if (setDisabled) setDisabled(!doneCropping)
     },
-    componentWillUnmount() {
-      const { picture } = this.props
-      picture && URL.revokeObjectURL(picture.preview)
+    [doneCropping, setDisabled]
+  )
+
+  useEffect(
+    () => {
+      return () => {
+        picture && URL.revokeObjectURL(picture.preview)
+      }
     },
-  })
-)(BasePictureUploader)
+    [picture]
+  )
+
+  return (
+    <BasePictureUploader
+      crop={crop}
+      disabled={disabled}
+      doneCropping={doneCropping}
+      label={label}
+      modalOpen={modalOpen}
+      onCancelClick={onCancelClick}
+      onClick={onClick}
+      onCropChange={onCropChange}
+      onCropComplete={onCropComplete}
+      onDoneClick={onDoneClick}
+      onFileUpload={onFileUpload}
+      onModalClose={onModalClose}
+      onPictureLoaded={onPictureLoaded}
+      onRemovePicture={onRemovePicture}
+      picture={picture}
+      picturePreviewRef={picturePreviewRef}
+      previewPicture={previewPicture}
+      required={required}
+      setModalOpen={setModalOpen}
+      square={square}
+    />
+  )
+}
 
 export { uploadPicture, ProgressBar }
 export default PictureUploader

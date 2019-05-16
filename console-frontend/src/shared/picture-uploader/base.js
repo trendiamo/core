@@ -68,7 +68,7 @@ const Img = styled.img`
   width: 100%;
 `
 
-const Dropzone = ({ disabled, square, onFileUpload, previewPicture, ...props }) => {
+const Dropzone = ({ disabled, onFileUpload, previewPicture, square, ...props }) => {
   const [isDragging, setIsDragging] = useState(false)
 
   const onDragEnter = useCallback(() => {
