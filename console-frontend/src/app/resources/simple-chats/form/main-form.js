@@ -3,13 +3,12 @@ import characterLimits from 'shared/character-limits'
 import React from 'react'
 import Section from 'shared/section'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
-import { compose, shallowEqual, shouldUpdate } from 'recompose'
 import { Field } from 'shared/form-elements'
 import { FormHelperText } from '@material-ui/core'
 
 const options = { suggestionItem: 'withAvatar' }
 
-const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPersona, onToggleContent }) => (
+const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, onToggleContent }) => (
   <Section title={title}>
     <Field
       disabled={isFormLoading}
@@ -75,15 +74,5 @@ const MainFormTemplate = ({ title, isFormLoading, form, setFieldValue, selectPer
     <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
   </Section>
 )
-
-const MainForm = compose(
-  shouldUpdate((props, nextProps) => {
-    return (
-      props.title !== nextProps.title ||
-      props.isFormLoading !== nextProps.isFormLoading ||
-      !shallowEqual(props.form, nextProps.form)
-    )
-  })
-)(MainFormTemplate)
 
 export default MainForm

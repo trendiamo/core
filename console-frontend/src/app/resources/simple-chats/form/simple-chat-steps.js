@@ -1,15 +1,8 @@
-import isEqual from 'lodash.isequal'
-import omit from 'lodash.omit'
 import React from 'react'
 import SimpleChatStep from './simple-chat-step'
-import { compose, shallowEqual, shouldUpdate } from 'recompose'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
-const SortableSimpleChatStep = compose(
-  shouldUpdate((props, nextProps) => {
-    return !shallowEqual(props, nextProps) || !shallowEqual(props.simpleChatStep, nextProps.simpleChatStep)
-  })
-)(SortableElement(SimpleChatStep))
+const SortableSimpleChatStep = SortableElement(SimpleChatStep)
 
 const SimpleChatSteps = ({ allowDelete, simpleChatSteps, onChange, onToggleContent }) => (
   <div>
@@ -38,11 +31,6 @@ const SimpleChatSteps = ({ allowDelete, simpleChatSteps, onChange, onToggleConte
   </div>
 )
 
-const SimpleChatStepsContainer = compose(
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['onSortEnd', 'onChange']
-    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-  })
-)(SortableContainer(SimpleChatSteps))
+const SimpleChatStepsContainer = SortableContainer(SimpleChatSteps)
 
 export default SimpleChatStepsContainer
