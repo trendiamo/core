@@ -90,12 +90,12 @@ const Admin = () => {
   )
 
   const editHostnameValue = useCallback(
-    ({ accountForm, setAccountForm }) => (index, newValue) => {
+    (index, newValue) => {
       const newHostnames = [...accountForm.websitesAttributes[0].hostnames]
       newHostnames[index] = newValue
       setAccountForm({ ...accountForm, websitesAttributes: [{ hostnames: newHostnames }] })
     },
-    []
+    [accountForm, setAccountForm]
   )
 
   const onAccountFormSubmit = useCallback(

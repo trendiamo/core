@@ -12,7 +12,9 @@ const convertSpotlights = spotlights => {
   return spotlights.map(spotlight => {
     return {
       ...spotlight,
-      translation: { selectedBy: getFrekklsConfig().i18n.productsSelectedBy(spotlight.persona.name.split(' ')[0]) },
+      translation: {
+        selectedBy: getFrekklsConfig().i18n.productsSelectedBy(spotlight.persona.name.split(' ')[0]),
+      },
     }
   })
 }
@@ -25,7 +27,11 @@ const assessmentSpotlight = {
 }
 
 const Showcase = compose(
-  withProps({ history, FlowBackButton, backButtonLabel: getFrekklsConfig().i18n.backButton }),
+  withProps({
+    history,
+    FlowBackButton,
+    backButtonLabel: getFrekklsConfig().i18n.backButton,
+  }),
   graphql(
     gql`
       query($id: ID!) {
@@ -82,7 +88,7 @@ const Showcase = compose(
     },
   }),
   withHandlers({
-    onSpotlightClick: ({ routeToSpotlight, setShowAssessmentContent }) => ({ spotlight }) => assessment => {
+    onSpotlightClickFactory: ({ routeToSpotlight, setShowAssessmentContent }) => spotlight => assessment => {
       if (assessment) {
         setTimeout(() => setShowAssessmentContent(true), 300)
         mixpanel.track('Clicked Self-Assessment Spotlight', {
@@ -101,7 +107,7 @@ const Showcase = compose(
       if (assessmentHack()) rememberPersona(spotlight.persona)
       routeToSpotlight(spotlight)
     },
-    onProductClick: () => ({ product, spotlight }) => () => {
+    onProductClickFactory: () => (product, spotlight) => () => {
       mixpanel.track(
         'Clicked Product',
         {
@@ -118,10 +124,10 @@ const Showcase = compose(
       )
     },
   }),
-  withProps(({ onSpotlightClick, onProductClick }) => ({
+  withProps(({ onSpotlightClickFactory, onProductClickFactory }) => ({
     callbacks: {
-      onSpotlightClick,
-      onProductClick,
+      onSpotlightClickFactory,
+      onProductClickFactory,
     },
     assessmentSpotlight: assessmentHack() && assessmentSpotlight,
   }))
