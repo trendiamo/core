@@ -2,12 +2,11 @@ import CloudUpload from '@material-ui/icons/CloudUpload'
 import Delete from '@material-ui/icons/Delete'
 import omit from 'lodash.omit'
 import PicturesModal from 'shared/pictures-modal'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import ReactDropzone from 'react-dropzone'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { Button, FormControl, InputLabel } from '@material-ui/core'
-import { compose, withHandlers, withState } from 'recompose'
 
 const Container = styled.div`
   margin-bottom: 1rem;
@@ -35,9 +34,7 @@ const StyledDelete = styled(Delete)`
   margin-bottom: 2px;
 `
 
-const FilteredReactDropzone = props => (
-  <ReactDropzone {...omit(props, ['isDragging', 'onFileUpload', 'previewPicture', 'setIsDragging'])} />
-)
+const FilteredReactDropzone = props => <ReactDropzone {...omit(props, ['isDragging', 'previewPicture'])} />
 
 const StyledDropzone = styled(FilteredReactDropzone)`
   border-width: 0;
@@ -71,37 +68,44 @@ const Img = styled.img`
   width: 100%;
 `
 
-const Dropzone = compose(
-  withState('isDragging', 'setIsDragging', false),
-  withHandlers({
-    onDragEnter: ({ setIsDragging }) => () => {
-      setIsDragging(true)
-    },
-    onDragLeave: ({ setIsDragging }) => () => {
-      setIsDragging(false)
-    },
-    onDrop: ({ onFileUpload, setIsDragging }) => (acceptedFiles, rejectedFiles) => {
+const Dropzone = ({ disabled, square, onFileUpload, previewPicture, ...props }) => {
+  const [isDragging, setIsDragging] = useState(false)
+
+  const onDragEnter = useCallback(() => {
+    setIsDragging(true)
+  }, [])
+
+  const onDragLeave = useCallback(() => {
+    setIsDragging(false)
+  }, [])
+
+  const onDrop = useCallback(
+    (acceptedFiles, rejectedFiles) => {
       setIsDragging(false)
       onFileUpload(acceptedFiles, rejectedFiles)
     },
-  })
-)(({ disabled, square, isDragging, onDragEnter, onDragLeave, previewPicture, ...props }) => (
-  <StyledDropzone
-    disableClick
-    disabled={disabled}
-    isDragging={isDragging}
-    onDragEnter={onDragEnter}
-    onDragLeave={onDragLeave}
-    previewPicture={previewPicture}
-    {...props}
-  >
-    <Img alt="" square={square} src={previewPicture} />
-    <InnerLabel square={square}>
-      <CloudUpload />
-      <div>{'Drop a file or click to select one'}</div>
-    </InnerLabel>
-  </StyledDropzone>
-))
+    [onFileUpload]
+  )
+
+  return (
+    <StyledDropzone
+      disableClick
+      disabled={disabled}
+      isDragging={isDragging}
+      onDragEnter={onDragEnter}
+      onDragLeave={onDragLeave}
+      onDrop={onDrop}
+      previewPicture={previewPicture}
+      {...props}
+    >
+      <Img alt="" square={square} src={previewPicture} />
+      <InnerLabel square={square}>
+        <CloudUpload />
+        <div>{'Drop a file or click to select one'}</div>
+      </InnerLabel>
+    </StyledDropzone>
+  )
+}
 
 const RemoveButtonContainer = styled.div`
   text-align: center;

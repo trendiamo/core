@@ -2,9 +2,8 @@ import Button from 'shared/button'
 import CircularProgress from 'app/layout/loading'
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers, withState } from 'recompose'
 import { DialogActionsContainer, StyledButton } from './shared'
 import { Input } from '@material-ui/core'
 // import { Link } from 'react-router-dom'
@@ -40,38 +39,44 @@ const UrlIcon = styled(LinkIcon)`
   height: 24px;
 `
 
-const DialogContentUrlUpload = compose(
-  withState('isFocused', 'setIsFocused', null),
-  withHandlers({
-    onChange: ({ setPictureUrl }) => event => {
+const DialogContentUrlUpload = ({ isPictureLoading, setPictureUrl }) => {
+  const [isFocused, setIsFocused] = useState(null)
+
+  const onChange = useCallback(
+    event => {
       setPictureUrl(event.target.value)
     },
-    onFocus: ({ setIsFocused }) => () => {
-      setIsFocused(true)
-    },
-    onBlur: ({ setIsFocused }) => () => {
-      setIsFocused(false)
-    },
-  })
-)(({ isFocused, isPictureLoading, onBlur, onChange, onFocus }) => (
-  <>
-    <UrlInputContainer isFocused={isFocused}>
-      <UrlInput
-        autoFocus
-        disableUnderline
-        fullWidth
-        onBlur={onBlur}
-        onChange={onChange}
-        onFocus={onFocus}
-        placeholder="Paste the URL of the picture to upload:"
-      />
-      <UrlIconContainer>
-        <UrlIcon />
-      </UrlIconContainer>
-    </UrlInputContainer>
-    {isPictureLoading && <CircularProgress />}
-  </>
-))
+    [setPictureUrl]
+  )
+
+  const onFocus = useCallback(() => {
+    setIsFocused(true)
+  }, [])
+
+  const onBlur = useCallback(() => {
+    setIsFocused(false)
+  }, [])
+
+  return (
+    <>
+      <UrlInputContainer isFocused={isFocused}>
+        <UrlInput
+          autoFocus
+          disableUnderline
+          fullWidth
+          onBlur={onBlur}
+          onChange={onChange}
+          onFocus={onFocus}
+          placeholder="Paste the URL of the picture to upload:"
+        />
+        <UrlIconContainer>
+          <UrlIcon />
+        </UrlIconContainer>
+      </UrlInputContainer>
+      {isPictureLoading && <CircularProgress />}
+    </>
+  )
+}
 
 const DialogActionsUrlUpload = ({ handleClose, onCancelUrlUpload, onDoneUrlUpload, onFileUpload }) => (
   <DialogActionsContainer style={{ justifyContent: 'space-between' }}>
