@@ -7,7 +7,6 @@ SSH=${1:-ssh}
 [ -f .env ] && cp .env .env~
 
 cat >.env <<EOL
-NODE_PATH=src/
 NODE_ENV=production
 REACT_APP_NODE_ENV=production
 REACT_APP_API_ENDPOINT=https://api.frekkls.com
