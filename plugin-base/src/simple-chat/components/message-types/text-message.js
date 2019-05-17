@@ -35,6 +35,10 @@ const TextMessageContainer = styled.div`
     text-align: left;
     font-size: 1em;
   }
+
+  pre {
+    white-space: normal;
+  }
 `
 
 const TextMessage = ({ onClick, ...props }) => <TextMessageContainer onClick={onClick} {...props} />

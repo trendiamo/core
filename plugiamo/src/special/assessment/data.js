@@ -53,11 +53,11 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Willkommen bei Pierre Cardin! Ich würde dir gerne die für dich relevantesten Pieces zeigen.',
             },
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Mit welchem Look kann ich dir helfen?',
             },
             {
@@ -94,7 +94,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Alles klar! Womit wollen wir anfangen?',
             },
             {
@@ -130,7 +130,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Alles klar! Womit wollen wir anfangen?',
             },
             {
@@ -177,7 +177,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Alles klar! Wonach schaust du genau?',
             },
             {
@@ -214,7 +214,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text:
                 'Super! Wir haben gerade auf unsere neue Frühling / Sommer Kollektion umgestellt. Welchen Fit sollte die Hose haben? Du kannst mehrere auswählen!',
             },
@@ -244,7 +244,7 @@ const data = {
               ],
             },
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text:
                 'Falls du dir unsicher bist, welche unserer Jeans-Passformen die für dich beste ist, kannst du hier nachschauen: <a target="_blank" rel="noopener noreferrer" href="https://www.pierre-cardin.de/specials/pierre-cardin-specials/denim-guide">Zum Denim Guide</a>',
             },
@@ -257,7 +257,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text:
                 'Ok! Wir haben die verschiedensten Typen im Angebot. Wonach suchst du genau? Du kannst gerne mehrere Optionen auswählen!',
             },
@@ -295,7 +295,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Cool! Womit können wir dir dienen? Du kannst gerne mehrere Optionen auswählen!',
             },
             {
@@ -332,7 +332,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Super Wahl für ein Frühling reifes Smart Casual Outfit! Magst du mir einmal deinen Fit verraten?',
             },
             {
@@ -359,7 +359,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Ok! Magst du mir einmal deinen Fit verraten? ',
             },
             {
@@ -388,7 +388,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text: 'Welchen Fit trägst du normalerweise?',
             },
             {
@@ -415,7 +415,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text:
                 'Von Schlicht bis Hingucker haben wir alles im Angebot! Aber zuerst müsste ich einmal wissen welchen Fit du trägst.',
             },
@@ -443,7 +443,7 @@ const data = {
         logs: {
           default: [
             {
-              type: 'text',
+              type: 'SimpleChatTextMessage',
               text:
                 'Zu jedem guten Business Outfit gehört ein passender Gürtel und ein passendes Einstecktuch oder eine Krawatte. Suchst du nach beidem?',
             },

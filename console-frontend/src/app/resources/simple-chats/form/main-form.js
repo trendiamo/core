@@ -8,10 +8,10 @@ import { FormHelperText } from '@material-ui/core'
 
 const options = { suggestionItem: 'withAvatar' }
 
-const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, onToggleContent }) => (
+const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, onToggleContent, isCropping }) => (
   <Section title={title}>
     <Field
-      disabled={isFormLoading}
+      disabled={isCropping || isFormLoading}
       fullWidth
       inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Name"
@@ -25,7 +25,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
     <Autocomplete
       autocomplete={apiPersonasAutocomplete}
       defaultPlaceholder="Choose a persona"
-      disabled={isFormLoading}
+      disabled={isCropping || isFormLoading}
       fullWidth
       initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
       label="Persona"
@@ -35,7 +35,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
     />
     <FormHelperText>{'The persona that will appear for this chat.'}</FormHelperText>
     <Field
-      disabled={isFormLoading}
+      disabled={isCropping || isFormLoading}
       fullWidth
       inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
       label="Title"
@@ -49,7 +49,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
     />
     <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
     <Field
-      disabled={isFormLoading}
+      disabled={isCropping || isFormLoading}
       fullWidth
       label="Chat Bubble"
       margin="normal"
@@ -61,7 +61,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
     />
     <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
     <Field
-      disabled={isFormLoading}
+      disabled={isCropping || isFormLoading}
       fullWidth
       label="Extra Chat Bubble Text"
       margin="normal"

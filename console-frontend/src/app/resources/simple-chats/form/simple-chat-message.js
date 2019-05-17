@@ -7,55 +7,65 @@ import VideoMessageField from './video-message-field'
 import { branch, compose, lifecycle, renderNothing, shouldUpdate, withHandlers, withState } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
 import { extractJson, extractYoutubeId } from 'plugin-base'
-import { tryParseJSON } from 'utils/shared'
 
-const whichTitle = (messageType, simpleChatMessage, simpleChatMessageTextObject) => {
-  if (messageType === 'product') return simpleChatMessageTextObject.title
-  return simpleChatMessage.text
+const setSimpleChatMessageTitle = simpleChatMessage => {
+  switch (simpleChatMessage.type) {
+    case 'SimpleChatTextMessage':
+      return simpleChatMessage.id ? `Text message: ${simpleChatMessage.text}` : 'New text message'
+    case 'SimpleChatProductMessage':
+      return simpleChatMessage.id ? `Product: ${simpleChatMessage.title}` : 'New product'
+    case 'SimpleChatVideoMessage':
+      return simpleChatMessage.id ? `Video: ${simpleChatMessage.videoUrl}` : 'New video'
+    default:
+      return 'New message'
+  }
 }
 
 const MessageField = ({
-  messageType,
+  isCropping,
   isFormLoading,
-  onSimpleChatMessageTextEdit,
+  onFocus,
+  onSimpleChatMessageEdit,
+  setIsCropping,
+  setSimpleChatMessagePicture,
   simpleChatMessage,
   simpleChatMessageIndex,
-  onFocus,
-  textObject,
 }) => {
-  switch (messageType) {
-    case 'text':
+  switch (simpleChatMessage.type) {
+    case 'SimpleChatTextMessage':
       return (
         <TextMessageFields
           disabled={isFormLoading}
           name="simpleChatMessage_text"
-          onChange={onSimpleChatMessageTextEdit}
+          onChange={onSimpleChatMessageEdit}
           onFocus={onFocus}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
         />
       )
-    case 'video':
+    case 'SimpleChatProductMessage':
+      return (
+        <ProductMessageFields
+          isCropping={isCropping}
+          isFormLoading={isFormLoading}
+          name="simpleChatMessage_product"
+          onChange={onSimpleChatMessageEdit}
+          onFocus={onFocus}
+          setIsCropping={setIsCropping}
+          setSimpleChatMessagePicture={setSimpleChatMessagePicture}
+          simpleChatMessage={simpleChatMessage}
+          simpleChatMessageIndex={simpleChatMessageIndex}
+        />
+      )
+    case 'SimpleChatVideoMessage':
       return (
         <VideoMessageField
           isFormLoading={isFormLoading}
           name="simpleChatMessage_video"
-          onChange={onSimpleChatMessageTextEdit}
+          onChange={onSimpleChatMessageEdit}
           onFocus={onFocus}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
-          textObject={textObject}
-        />
-      )
-    case 'product':
-      return (
-        <ProductMessageFields
-          isFormLoading={isFormLoading}
-          name="simpleChatMessage_product"
-          onChange={onSimpleChatMessageTextEdit}
-          onFocus={onFocus}
-          simpleChatMessageIndex={simpleChatMessageIndex}
-          textObject={textObject}
         />
       )
     default:
@@ -67,18 +77,23 @@ const SimpleChatMessage = ({
   allowDelete,
   deleteSimpleChatMessage,
   index,
+  isCropping,
   isFormLoading,
-  simpleChatMessage,
-  simpleChatMessageIndex,
-  messageType,
-  onSimpleChatMessageTextEdit,
-  simpleChatMessageTextObject,
   onFocus,
+  onSimpleChatMessageEdit,
+  setIsCropping,
+  setSimpleChatMessagePicture,
+  simpleChatMessageIndex,
+  simpleChatMessageObject,
 }) => (
   <FormSection
     actions={
       allowDelete && (
-        <Cancel disabled={isFormLoading} index={simpleChatMessageIndex} onClick={deleteSimpleChatMessage} />
+        <Cancel
+          disabled={isCropping || isFormLoading}
+          index={simpleChatMessageIndex}
+          onClick={deleteSimpleChatMessage}
+        />
       )
     }
     backgroundColor="#fff"
@@ -87,43 +102,36 @@ const SimpleChatMessage = ({
     foldable
     hideBottom
     hideTop={index === 0}
-    title={
-      simpleChatMessage.id ? whichTitle(messageType, simpleChatMessage, simpleChatMessageTextObject) : 'New Message'
-    }
+    title={setSimpleChatMessageTitle(simpleChatMessageObject)}
   >
     <MessageField
+      isCropping={isCropping}
       isFormLoading={isFormLoading}
-      messageType={messageType}
       onFocus={onFocus}
-      onSimpleChatMessageTextEdit={onSimpleChatMessageTextEdit}
-      simpleChatMessage={simpleChatMessage}
+      onSimpleChatMessageEdit={onSimpleChatMessageEdit}
+      setIsCropping={setIsCropping}
+      setSimpleChatMessagePicture={setSimpleChatMessagePicture}
+      simpleChatMessage={simpleChatMessageObject}
       simpleChatMessageIndex={simpleChatMessageIndex}
-      textObject={simpleChatMessageTextObject}
     />
   </FormSection>
 )
 
 export default compose(
-  withState('messageType', 'setMessageType', null),
-  withState('simpleChatMessageTextObject', 'setSimpleChatMessageTextObject', {}),
+  withState('simpleChatMessageObject', 'setSimpleChatMessageObject', {}),
   shouldUpdate((props, nextProps) => {
     const ignoreProps = ['onChange']
     return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
   }),
   branch(({ simpleChatMessage }) => simpleChatMessage._destroy, renderNothing),
   withHandlers({
-    onSimpleChatMessageTextEdit: ({
+    onSimpleChatMessageEdit: ({
       onChange,
-      simpleChatMessage,
       simpleChatMessageIndex,
-      setSimpleChatMessageTextObject,
-    }) => simpleChatTextObject => {
-      let newSimpleChatMessage = {
-        ...simpleChatMessage,
-        text: simpleChatTextObject.text || JSON.stringify(simpleChatTextObject),
-      }
-      setSimpleChatMessageTextObject(simpleChatTextObject)
-      onChange(newSimpleChatMessage, simpleChatMessageIndex)
+      setSimpleChatMessageObject,
+    }) => simpleChatMessageObject => {
+      setSimpleChatMessageObject(simpleChatMessageObject)
+      onChange(simpleChatMessageObject, simpleChatMessageIndex)
     },
     deleteSimpleChatMessage: ({ simpleChatMessage, simpleChatMessageIndex, onChange }) => () => {
       onChange(
@@ -137,13 +145,26 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { simpleChatMessage, simpleChatMessageType, setMessageType, setSimpleChatMessageTextObject } = this.props
-      const simpleChatText = tryParseJSON(simpleChatMessage.text)
-      setSimpleChatMessageTextObject(typeof simpleChatText === 'object' ? simpleChatText : { text: simpleChatText })
-      if (simpleChatMessageType) return setMessageType(simpleChatMessageType)
+      const { setSimpleChatMessageObject, simpleChatMessage } = this.props
+      if (simpleChatMessage.type) return setSimpleChatMessageObject(simpleChatMessage)
+      const simpleChatProductMessage = extractJson(simpleChatMessage.text)
+      if (simpleChatProductMessage)
+        return setSimpleChatMessageObject({
+          id: simpleChatMessage.id,
+          type: 'SimpleChatProductMessage',
+          ...simpleChatProductMessage,
+        })
       const videoData = extractYoutubeId(simpleChatMessage.text)
-      const productData = !videoData && extractJson(simpleChatMessage.text)
-      setMessageType(videoData ? 'video' : productData ? 'product' : 'text')
+      if (videoData)
+        return setSimpleChatMessageObject({
+          id: simpleChatMessage.id,
+          type: 'SimpleChatVideoMessage',
+          videoUrl: simpleChatMessage.text,
+        })
+      setSimpleChatMessageObject({
+        ...simpleChatMessage,
+        type: 'SimpleChatTextMessage',
+      })
     },
   })
 )(SimpleChatMessage)

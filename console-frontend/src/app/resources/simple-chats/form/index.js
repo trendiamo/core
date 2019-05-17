@@ -9,6 +9,7 @@ import { Actions } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
+import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -20,7 +21,47 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
   useOnboardingHelp(onboardingHelp)
 
   const formRef = useRef()
+  const [isCropping, setIsCropping] = useState(false)
+  const [simpleChatMessagesPictures, setSimpleChatMessagesPictures] = useState([])
   const [showingContent, setShowingContent] = useState(false)
+
+  const uploadSubPicture = useCallback(async ({ blob, setProgress, subform }) => {
+    if (blob) {
+      const simpleChatMessagePicUrl = await uploadPicture({
+        blob,
+        setProgress,
+      })
+      return {
+        ...subform,
+        picUrl: simpleChatMessagePicUrl,
+      }
+    }
+  }, [])
+
+  const uploadSubPictures = useCallback(
+    form => {
+      return simpleChatMessagesPictures.map(
+        async ({ blob, simpleChatMessageIndex, setProgress, simpleChatStepIndex }) => {
+          const { simpleChatMessagesAttributes } = form.simpleChatStepsAttributes[simpleChatStepIndex]
+          simpleChatMessagesAttributes[simpleChatMessageIndex] = await uploadSubPicture({
+            subform: simpleChatMessagesAttributes[simpleChatMessageIndex],
+            blob,
+            setProgress,
+          })
+        }
+      )
+    },
+    [simpleChatMessagesPictures, uploadSubPicture]
+  )
+
+  const newSaveFormObject = useCallback(
+    async form => {
+      await Promise.all(uploadSubPictures(form))
+      setSimpleChatMessagesPictures([])
+      return saveFormObject(form)
+    },
+    [saveFormObject, uploadSubPictures]
+  )
 
   const {
     form,
@@ -32,17 +73,18 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     onFormSubmit,
     setFieldValue,
     setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
+  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject: newSaveFormObject })
 
-  const setSimpleChatStepsForm = useCallback(
-    (simpleChatStep, simpleChatStepIndex) => {
-      mergeFormCallback(form => {
-        let newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
-        newsimpleChatStepsAttributes[simpleChatStepIndex] = simpleChatStep
-        return { ...form, simpleChatStepsAttributes: newsimpleChatStepsAttributes }
-      })
+  const newOnFormSubmit = useCallback(
+    async event => {
+      if (!formRef.current.reportValidity()) return
+      const result = await onFormSubmit(event)
+      setIsFormSubmitting(false)
+      if (!result || result.error || result.errors) return
+      if (location.pathname !== routes.simpleChatEdit(result.id)) history.push(routes.simpleChatEdit(result.id))
+      return result
     },
-    [mergeFormCallback]
+    [history, location.pathname, onFormSubmit, setIsFormSubmitting]
   )
 
   const addSimpleChatStep = useCallback(
@@ -60,6 +102,17 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     [mergeFormCallback]
   )
 
+  const setSimpleChatStepsForm = useCallback(
+    (simpleChatStep, simpleChatStepIndex) => {
+      mergeFormCallback(form => {
+        let newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
+        newsimpleChatStepsAttributes[simpleChatStepIndex] = simpleChatStep
+        return { ...form, simpleChatStepsAttributes: newsimpleChatStepsAttributes }
+      })
+    },
+    [mergeFormCallback]
+  )
+
   const selectPersona = useCallback(
     selected => {
       selected &&
@@ -69,18 +122,6 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
         })
     },
     [mergeForm]
-  )
-
-  const newOnFormSubmit = useCallback(
-    async event => {
-      if (!formRef.current.reportValidity()) return
-      const result = await onFormSubmit(event)
-      setIsFormSubmitting(false)
-      if (!result || result.error || result.errors) return
-      if (location.pathname !== routes.simpleChatEdit(result.id)) history.push(routes.simpleChatEdit(result.id))
-      return result
-    },
-    [history, location.pathname, onFormSubmit, setIsFormSubmitting]
   )
 
   const onSortEnd = useCallback(
@@ -129,6 +170,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
           backRoute={backRoute}
           form={form}
           formRef={formRef}
+          isCropping={isCropping}
           isFormLoading={isFormLoading}
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
@@ -137,7 +179,10 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
           onToggleContent={onToggleContent}
           selectPersona={selectPersona}
           setFieldValue={setFieldValue}
+          setIsCropping={setIsCropping}
+          setSimpleChatMessagesPictures={setSimpleChatMessagesPictures}
           setSimpleChatStepsForm={setSimpleChatStepsForm}
+          simpleChatMessagesPictures={simpleChatMessagesPictures}
           title={title}
         />
       </Grid>

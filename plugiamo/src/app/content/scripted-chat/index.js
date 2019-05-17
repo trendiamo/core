@@ -21,7 +21,15 @@ export default compose(
             key
             simpleChatMessages {
               id
+              type
               text
+              title
+              picture {
+                url
+              }
+              url
+              displayPrice
+              videoUrl
             }
           }
         }

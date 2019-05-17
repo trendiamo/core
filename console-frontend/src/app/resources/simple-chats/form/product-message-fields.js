@@ -1,64 +1,99 @@
-import React, { useCallback } from 'react'
+import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
+import React, { useCallback, useState } from 'react'
 import { Field } from 'shared/form-elements'
 
-const ProductMessagesForm = ({ textObject, onFormChange, isFormLoading, onFocus }) => {
-  return (
-    <>
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        label="Title"
-        margin="normal"
-        name="title"
-        onChange={onFormChange}
-        onFocus={onFocus}
-        required
-        value={textObject.title || ''}
-      />
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        label="Picture Url"
-        margin="normal"
-        name="picUrl"
-        onChange={onFormChange}
-        onFocus={onFocus}
-        required
-        value={textObject.picUrl || ''}
-      />
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        label="Url"
-        margin="normal"
-        name="url"
-        onChange={onFormChange}
-        onFocus={onFocus}
-        required
-        value={textObject.url || ''}
-      />
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        label="Display Price"
-        margin="normal"
-        name="displayPrice"
-        onChange={onFormChange}
-        onFocus={onFocus}
-        required
-        value={textObject.displayPrice || ''}
-      />
-    </>
-  )
-}
+const ProductMessagesForm = ({
+  isCropping,
+  isFormLoading,
+  onFocus,
+  onFormChange,
+  progress,
+  setIsCropping,
+  setPicture,
+  setPictureUrl,
+  simpleChatMessage,
+}) => (
+  <>
+    <Field
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Title"
+      margin="normal"
+      name="title"
+      onChange={onFormChange}
+      onFocus={onFocus}
+      required
+      value={simpleChatMessage.title || ''}
+    />
+    <Field
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Url"
+      margin="normal"
+      name="url"
+      onChange={onFormChange}
+      onFocus={onFocus}
+      required
+      value={simpleChatMessage.url || ''}
+    />
+    <Field
+      disabled={isCropping || isFormLoading}
+      fullWidth
+      label="Display Price"
+      margin="normal"
+      name="displayPrice"
+      onChange={onFormChange}
+      onFocus={onFocus}
+      required
+      value={simpleChatMessage.displayPrice || ''}
+    />
+    <PictureUploader
+      disabled={isCropping}
+      label="Picture"
+      name="picUrl"
+      onChange={setPictureUrl}
+      required
+      setDisabled={setIsCropping}
+      setPic={setPicture}
+      square
+      value={simpleChatMessage.picUrl || ''}
+    />
+    {progress && <ProgressBar progress={progress} />}
+  </>
+)
 
-const ProductMessageFields = ({ textObject, onChange, simpleChatMessageIndex, isFormLoading, onFocus }) => {
+const ProductMessageFields = ({
+  isFormLoading,
+  onChange,
+  onFocus,
+  setIsCropping,
+  setSimpleChatMessagePicture,
+  simpleChatMessage,
+  simpleChatMessageIndex,
+}) => {
+  const [progress, setProgress] = useState(null)
+
   const onFormChange = useCallback(
     event => {
-      let newTextObject = { ...textObject, [event.target.name]: event.target.value }
-      onChange(newTextObject, simpleChatMessageIndex)
+      const newSimpleChatMessage = { ...simpleChatMessage, [event.target.name]: event.target.value }
+      onChange(newSimpleChatMessage, simpleChatMessageIndex)
     },
-    [onChange, simpleChatMessageIndex, textObject]
+    [onChange, simpleChatMessageIndex, simpleChatMessage]
+  )
+
+  const setPictureUrl = useCallback(
+    picUrl => {
+      onFocus()
+      onChange({ ...simpleChatMessage, picUrl }, simpleChatMessageIndex)
+    },
+    [onChange, onFocus, simpleChatMessage, simpleChatMessageIndex]
+  )
+
+  const setPicture = useCallback(
+    blob => {
+      setSimpleChatMessagePicture(simpleChatMessageIndex, blob, setProgress)
+    },
+    [setSimpleChatMessagePicture, simpleChatMessageIndex]
   )
 
   return (
@@ -66,7 +101,11 @@ const ProductMessageFields = ({ textObject, onChange, simpleChatMessageIndex, is
       isFormLoading={isFormLoading}
       onFocus={onFocus}
       onFormChange={onFormChange}
-      textObject={textObject}
+      progress={progress}
+      setIsCropping={setIsCropping}
+      setPicture={setPicture}
+      setPictureUrl={setPictureUrl}
+      simpleChatMessage={simpleChatMessage}
     />
   )
 }

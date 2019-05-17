@@ -2,12 +2,11 @@ class SimpleChatMessage < ApplicationRecord
   acts_as_tenant
   belongs_to :simple_chat_step
 
-  validates :text, presence: true
-
   before_create :assign_order, unless: :order_changed?
 
   def as_json(_options = {})
-    attributes.slice("id", "text", "order")
+    attributes.slice("id", "order")
+              .merge(attributes.slice(attributes["type"] ? "type" : "text"))
   end
 
   def assign_order

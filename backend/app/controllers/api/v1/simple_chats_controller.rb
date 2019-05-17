@@ -21,6 +21,7 @@ module Api
       end
 
       def create
+        convert_and_assign_pictures
         @simple_chat = SimpleChat.new(simple_chat_params)
         authorize @simple_chat
         @simple_chat.owner = current_user
@@ -38,6 +39,7 @@ module Api
       end
 
       def update
+        convert_and_assign_pictures
         @simple_chat = policy_scope(SimpleChat).find(params[:id])
         authorize @simple_chat
         if @simple_chat.update(simple_chat_params)
@@ -66,8 +68,8 @@ module Api
                                                      :persona_id, :_destroy, :lock_version,
                                                      simple_chat_steps_attributes:
                                                      [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
-                                                      %i[id order text _destroy],])
-
+                                                    %i[id order type text title pic_id url display_price video_url
+                                                       _destroy],])
         add_order_fields(result[:simple_chat_steps_attributes])
         result
       end
@@ -82,6 +84,16 @@ module Api
 
           chat_step_attributes[:simple_chat_messages_attributes]&.each_with_index do |chat_message_attributes, l|
             chat_message_attributes[:order] = l + 1
+          end
+        end
+      end
+
+      def convert_and_assign_pictures
+        params[:simple_chat][:simple_chat_steps_attributes]&.each do |simple_chat_step_attributes|
+          simple_chat_step_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
+            pic_url = simple_chat_message_attributes[:pic_url]
+            pic_url&.present? && simple_chat_message_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
+            simple_chat_message_attributes.delete(:pic_url)
           end
         end
       end

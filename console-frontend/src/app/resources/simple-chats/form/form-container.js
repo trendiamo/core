@@ -10,16 +10,20 @@ const FormContainer = ({
   backRoute,
   form,
   formRef,
+  isCropping,
   isFormLoading,
   isFormPristine,
   isFormSubmitting,
   onFormSubmit,
   onSortEnd,
+  onToggleContent,
   selectPersona,
   setFieldValue,
+  setIsCropping,
+  setSimpleChatMessagesPictures,
   setSimpleChatStepsForm,
+  simpleChatMessagesPictures,
   title,
-  onToggleContent,
 }) => {
   const appBarContent = useMemo(
     () => ({
@@ -44,6 +48,7 @@ const FormContainer = ({
     <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <MainForm
         form={omit(form, ['simpleChatStepsAttributes'])}
+        isCropping={isCropping}
         isFormLoading={isFormLoading}
         onToggleContent={onToggleContent}
         selectPersona={selectPersona}
@@ -53,14 +58,18 @@ const FormContainer = ({
       <SimpleChatStepsContainer
         allowDelete={form.simpleChatStepsAttributes.length > 1}
         helperClass="sortable-element"
+        isCropping={isCropping}
         isFormLoading={isFormLoading}
         onChange={setSimpleChatStepsForm}
         onSortEnd={onSortEnd}
         onToggleContent={onToggleContent}
+        setIsCropping={setIsCropping}
+        setSimpleChatMessagesPictures={setSimpleChatMessagesPictures}
+        simpleChatMessagesPictures={simpleChatMessagesPictures}
         simpleChatSteps={form.simpleChatStepsAttributes}
         useDragHandle
       />
-      <AddItemContainer disabled={isFormLoading} message="Add Option" onClick={addSimpleChatStep} />
+      <AddItemContainer disabled={isCropping || isFormLoading} message="Add Option" onClick={addSimpleChatStep} />
     </Form>
   )
 }
