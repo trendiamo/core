@@ -66,10 +66,10 @@ const recommendedProducts = results => {
   }
 }
 
-const clickAssessmentProduct = (item, flowType) => {
+const clickAssessmentProduct = item => {
   if (!item.url) return
   mixpanel.track('Clicked Assessment Store Product', {
-    flowType: flowType,
+    flowType: 'asmt-store',
     hostname: location.hostname,
     productUrl: item.url,
     productName: item.title,
