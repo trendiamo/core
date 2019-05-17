@@ -14,7 +14,6 @@ import {
 } from './message-types'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { extractJson, extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
-import { imgixUrl } from 'tools'
 
 const MessageContainer = styled.div`
   max-width: ${({ type }) =>
@@ -36,15 +35,17 @@ const MessageContainer = styled.div`
 
 const ChatMessageTemplate = ({ data, type, show, hideAll, onClick, clickable, nothingSelected, clickActionsExist }) => (
   <MessageContainer clickable={clickable} show={type === 'assessmentStepOptions' ? show : !hideAll && show} type={type}>
-    {type === 'text' ? (
+    {type === 'SimpleChatTextMessage' ? (
       <TextMessage
         clickActionsExist={clickActionsExist}
-        dangerouslySetInnerHTML={{ __html: emojify(replaceExternalLinks(snarkdown(data))) }}
+        dangerouslySetInnerHTML={{
+          __html: emojify(replaceExternalLinks(snarkdown(data))),
+        }}
         onClick={onClick}
       />
-    ) : type === 'videoUrl' ? (
+    ) : type === 'SimpleChatVideoMessage' ? (
       <VideoMessage onClick={onClick} youtubeId={data} />
-    ) : type === 'product' ? (
+    ) : type === 'SimpleChatProductMessage' ? (
       <ProductMessage onClick={onClick} product={data} />
     ) : type === 'productCarousel' ? (
       <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
@@ -58,8 +59,8 @@ const ChatMessageTemplate = ({ data, type, show, hideAll, onClick, clickable, no
   </MessageContainer>
 )
 
-const checkForSpecialImageCarousel = data => {
-  const dataArray = data.split('-IMAGECAROUSEL-')
+const checkForSpecialImageCarousel = text => {
+  const dataArray = text.split('-IMAGECAROUSEL-')
   if (dataArray.length < 2) return
   return dataArray[1]
     .split('- ')
@@ -81,14 +82,34 @@ const ChatMessage = compose(
         const data = checkForSpecialImageCarousel(text)
         if (data) return { type: 'imageCarousel', data }
       }
-      const type = videoData ? 'videoUrl' : productData ? 'product' : 'text'
+      const type = videoData
+        ? 'SimpleChatVideoMessage'
+        : productData
+        ? 'SimpleChatProductMessage'
+        : 'SimpleChatTextMessage'
       return { type, data: videoData || productData || text }
     },
     getDataWithType: ({ log }) => () => {
       const type = log.message.type
       if (!type) return
-      const data = log.message[type]
-      return { type, data: type === 'videoUrl' ? extractYoutubeId(data) : data }
+      if (type === 'SimpleChatTextMessage' && log.message.text.startsWith('-IMAGECAROUSEL-')) {
+        const data = checkForSpecialImageCarousel(log.message.text)
+        if (data) return { type: 'imageCarousel', data }
+      }
+      const data =
+        type === 'SimpleChatTextMessage'
+          ? log.message.text
+          : type === 'SimpleChatProductMessage'
+          ? {
+              title: log.message.title,
+              picUrl: (log.message.picture && log.message.picture.url) || log.message.picUrl,
+              url: log.message.url,
+              displayPrice: log.message.displayPrice,
+            }
+          : type === 'SimpleChatVideoMessage'
+          ? extractYoutubeId(log.message.videoUrl)
+          : log.message[type]
+      return { type, data }
     },
   }),
   withProps(({ getDataWithType, getDataWithoutType }) => {

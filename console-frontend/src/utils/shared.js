@@ -17,13 +17,3 @@ export const extractErrors = json => {
   const message = errorMessages(json)
   return { message, status: 'error' }
 }
-
-export const tryParseJSON = jsonString => {
-  try {
-    let o = JSON.parse(jsonString)
-    if (o && typeof o === 'object') return o
-  } catch (e) {
-    return jsonString
-  }
-  return jsonString
-}

@@ -20,8 +20,14 @@ const Container = styled.div`
   border-radius: 12px;
   overflow: hidden;
   outline: 0;
-  min-height: 195px;
+  height: 195px;
   user-select: none;
+
+  img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   svg {
     width: 50px;
@@ -37,7 +43,7 @@ const VideoMessage = ({ onClick, onKeyUp, youtubePreviewImageUrl, youtubeUrl, yo
     role="button"
     tabIndex={0}
   >
-    <img alt="" src={youtubePreviewImageUrl} style={{ maxWidth: '100%' }} />
+    <img alt="" src={youtubePreviewImageUrl} />
     <IconContainer>
       <IconPlayButton />
     </IconContainer>

@@ -1,3 +1,4 @@
+import findIndex from 'lodash.findindex'
 import isEqual from 'lodash.isequal'
 import omit from 'lodash.omit'
 import React from 'react'
@@ -11,6 +12,11 @@ import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandler
 import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
 import { MessageOutlined, OndemandVideo, Redeem } from '@material-ui/icons'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
+
+const StyledAddItemButton = styled(props => <AddItemButton {...omit(props, ['adjustMargin'])} />)`
+  margin-bottom: -16px;
+  ${({ adjustMargin }) => adjustMargin && 'margin-top: 16px;'}
+`
 
 const MessageIcon = styled(MessageOutlined)`
   font-size: 18px;
@@ -29,9 +35,7 @@ const ProductIcon = styled(Redeem)`
 
 const MenuItem = compose(
   withHandlers({
-    addSimpleChatMessage: ({ onClick, value }) => () => {
-      onClick(value)
-    },
+    addSimpleChatMessage: ({ onClick, value }) => () => onClick(value),
   })
 )(({ addSimpleChatMessage, ...props }) => (
   <MUIMenuItem {...props} onClick={addSimpleChatMessage}>
@@ -62,19 +66,29 @@ const SortableSimpleChatMessage = compose(
   })
 )(SortableElement(SimpleChatMessage))
 
-const SimpleChatMessages = ({ allowDelete, simpleChatMessages, onChange, onFocus }) => (
+const SimpleChatMessages = ({
+  allowDelete,
+  isCropping,
+  onChange,
+  onFocus,
+  setIsCropping,
+  setSimpleChatMessagePicture,
+  simpleChatMessages,
+}) => (
   <div>
     {simpleChatMessages.map((simpleChatMessage, index) =>
       simpleChatMessage._destroy ? null : (
         <SortableSimpleChatMessage
           allowDelete={allowDelete}
           index={index}
+          isCropping={isCropping}
           key={simpleChatMessage.id || simpleChatMessage.__key}
           onChange={onChange}
           onFocus={onFocus}
+          setIsCropping={setIsCropping}
+          setSimpleChatMessagePicture={setSimpleChatMessagePicture}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={index}
-          simpleChatMessageType={simpleChatMessage.__type}
         />
       )
     )}
@@ -104,11 +118,16 @@ const SimpleChatStep = ({
   setSimpleChatMessagesForm,
   simpleChatStep,
   onToggleContent,
+  isCropping,
+  setIsCropping,
+  setSimpleChatMessagePicture,
 }) => (
   <Section>
     <FormSection
       actions={
-        allowDelete && <Cancel disabled={isFormLoading} index={simpleChatStepIndex} onClick={deleteSimpleChatStep} />
+        allowDelete && (
+          <Cancel disabled={isCropping || isFormLoading} index={simpleChatStepIndex} onClick={deleteSimpleChatStep} />
+        )
       }
       dragHandle
       ellipsize
@@ -122,7 +141,7 @@ const SimpleChatStep = ({
       <>
         {simpleChatStep.key !== 'default' && (
           <Field
-            disabled={isFormLoading}
+            disabled={isCropping || isFormLoading}
             fullWidth
             inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
             label="Option"
@@ -138,15 +157,22 @@ const SimpleChatStep = ({
           <SimpleChatMessagesContainer
             allowDelete={simpleChatStep.simpleChatMessagesAttributes.length > 1}
             helperClass="sortable-element"
+            isCropping={isCropping}
             isFormLoading={isFormLoading}
             onChange={setSimpleChatMessagesForm}
             onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
             onSortEnd={onSimpleChatMessagesSortEnd}
+            setIsCropping={setIsCropping}
+            setSimpleChatMessagePicture={setSimpleChatMessagePicture}
             simpleChatMessages={simpleChatStep.simpleChatMessagesAttributes}
             useDragHandle
           />
         )}
-        <AddItemButton
+        <StyledAddItemButton
+          adjustMargin={
+            !simpleChatStep.simpleChatMessagesAttributes ||
+            simpleChatStep.simpleChatMessagesAttributes.every(message => message._destroy)
+          }
           aria-haspopup="true"
           aria-owns={anchorEl ? 'new-message-menu' : undefined}
           disabled={isFormLoading}
@@ -161,17 +187,17 @@ const SimpleChatStep = ({
           open={Boolean(anchorEl)}
           transitionDuration={150}
         >
-          <MenuItem onClick={addSimpleChatMessage} value="text">
+          <MenuItem onClick={addSimpleChatMessage} value="SimpleChatTextMessage">
             <MessageIcon />
             {'Text'}
           </MenuItem>
-          <MenuItem onClick={addSimpleChatMessage} value="video">
-            <VideoIcon />
-            {'Video'}
-          </MenuItem>
-          <MenuItem onClick={addSimpleChatMessage} value="product">
+          <MenuItem onClick={addSimpleChatMessage} value="SimpleChatProductMessage">
             <ProductIcon />
             {'Product'}
+          </MenuItem>
+          <MenuItem onClick={addSimpleChatMessage} value="SimpleChatVideoMessage">
+            <VideoIcon />
+            {'Video'}
           </MenuItem>
         </StyledMenu>
       </>
@@ -210,6 +236,21 @@ export default compose(
       const orderedSimpleChatMessages = arrayMove(simpleChatStep.simpleChatMessagesAttributes, oldIndex, newIndex)
       onChange({ ...simpleChatStep, simpleChatMessagesAttributes: orderedSimpleChatMessages }, simpleChatStepIndex)
     },
+    setSimpleChatMessagePicture: ({
+      setSimpleChatMessagesPictures,
+      simpleChatMessagesPictures,
+      simpleChatStepIndex,
+    }) => (simpleChatMessageIndex, blob, setProgress) => {
+      const picture = { simpleChatStepIndex, simpleChatMessageIndex, blob, setProgress }
+      const simpleChatMessagePictureIndex = findIndex(simpleChatMessagesPictures, {
+        simpleChatStepIndex,
+        simpleChatMessageIndex,
+      })
+      simpleChatMessagePictureIndex >= 0
+        ? simpleChatMessagesPictures.splice(simpleChatMessagePictureIndex, 1, picture)
+        : simpleChatMessagesPictures.push(picture)
+      setSimpleChatMessagesPictures(simpleChatMessagesPictures)
+    },
     setSimpleChatMessagesForm: ({ simpleChatStep, simpleChatStepIndex, onChange }) => (
       simpleChatMessage,
       simpleChatMessageIndex
@@ -225,15 +266,25 @@ export default compose(
   withHandlers({
     addSimpleChatMessage: ({ closeMenu, onChange, simpleChatStepIndex, simpleChatStep }) => messageType => {
       closeMenu()
+      const simpleChatMessageObject =
+        messageType === 'SimpleChatTextMessage'
+          ? { text: '' }
+          : messageType === 'SimpleChatProductMessage'
+          ? { title: '', picUrl: '', url: '', displayPrice: '' }
+          : { videoUrl: '' }
       onChange(
         {
           ...simpleChatStep,
           simpleChatMessagesAttributes: simpleChatStep.simpleChatMessagesAttributes
             ? [
                 ...simpleChatStep.simpleChatMessagesAttributes,
-                { text: '', __type: messageType, __key: `new-${simpleChatStep.simpleChatMessagesAttributes.length}` },
+                {
+                  ...simpleChatMessageObject,
+                  type: messageType,
+                  __key: `new-${simpleChatStep.simpleChatMessagesAttributes.length}`,
+                },
               ]
-            : [{ text: '', __type: messageType, __key: 'new-0' }],
+            : [{ ...simpleChatMessageObject, type: messageType, __key: 'new-0' }],
         },
         simpleChatStepIndex
       )

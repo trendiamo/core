@@ -119,9 +119,35 @@ class PopulateSimpleChats
   end
 
   def simple_chat_messages_attributes
-    Array.new(3) do
+    simple_chat_text_messages_attributes.concat(simple_chat_product_messages_attributes)
+                                        .concat(simple_chat_video_messages_attributes)
+  end
+
+  def simple_chat_text_messages_attributes
+    Array.new(rand(0..3)) do
       {
         text: Faker::Lorem.sentence,
+      }
+    end
+  end
+
+  def simple_chat_product_messages_attributes
+    Array.new(rand(0..3)) do
+      {
+        type: "SimpleChatProductMessage",
+        title: Faker::Lorem.sentence,
+        pic: Picture.find_or_create_by!(url: Faker::LoremPixel.image("300x300", false, "fashion")),
+        url: Faker::Internet.url,
+        display_price: "€#{Faker::Number.decimal(2)}",
+      }
+    end
+  end
+
+  def simple_chat_video_messages_attributes
+    Array.new(rand(0..3)) do
+      {
+        type: "SimpleChatVideoMessage",
+        video_url: "https://www.youtube.com/watch?v=#{%w[ytqp1xD9fgA 99Qs6Vlj-Oc aATDh1G28hM].sample}",
       }
     end
   end
@@ -196,8 +222,8 @@ class Populate
       persona_attrs = {
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
-        profile_pic_url: "https://randomuser.me/api/portraits/men/#{i % 99}.jpg",
-        profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/men/#{i % 99 + 1}.jpg"),
+        profile_pic_url: "https://randomuser.me/api/portraits/women/#{i % 99}.jpg",
+        profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg"),
       }
       Persona.create!(persona_attrs)
     end

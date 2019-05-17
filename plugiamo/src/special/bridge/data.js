@@ -34,24 +34,24 @@ const data = {
           logs: {
             default: [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Buttwraps are made of the best cotton, very soft and extremely comfortable to wear.',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text:
                   'The one I like the most is white. It gives a great shape and you even support elephants with it! 🐘 🔥',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Check out my video!',
               },
               {
-                type: 'videoUrl',
+                type: 'SimpleChatVideoMessage',
                 videoUrl: 'https://youtu.be/x9AAdO7ufHg',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Check out my pictures in my favourite boxer brief!',
               },
               {
@@ -68,17 +68,17 @@ const data = {
             ],
             'Tell me about Buttwrap 📹': [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Check out the video of me and Maggie!',
               },
               {
-                type: 'videoUrl',
+                type: 'SimpleChatVideoMessage',
                 videoUrl: 'https://youtu.be/JEYX07rCmuM',
               },
             ],
             'Why are you recommending this?': [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'I feel really good wearing them! They are soft, flexible and perfect for working out.',
               },
               {
@@ -93,14 +93,14 @@ const data = {
                 ],
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text:
                   'So whenever somebody asks what to give me for my b-day or x-mas, I tell them „get me a pair of buttwraps!“ 😉',
               },
             ],
             'Show me other stuff': [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: "Here's the same boxer brief in other colors:",
               },
               {
@@ -129,7 +129,7 @@ const data = {
                 ],
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'And this is the other style:',
               },
               {
@@ -194,15 +194,15 @@ const data = {
           logs: {
             default: [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'I am 1,80m, weigh 74kg and wear a Buttwrap M. My jeans size is usually 31.',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Here is an overview which size I would recommend to you:',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text:
                   '<table><tr><th>Jeans Size</th><th>Buttwrap Size</th></tr><tr><td>30</td><td>S</td></tr><tr><td>31 or 32</td><td>M</td></tr><tr><td>33 - 34</td><td>L</td></tr><tr><td>35 - 36</td><td>XL</td></tr><tr><td>36+</td><td>XXL</td></tr></table>',
               },
@@ -253,24 +253,24 @@ const data = {
           logs: {
             default: [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Buttwraps are made of the best cotton, very soft and extremely comfortable to wear.',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text:
                   'The one I like the most is red. It gives a great shape and you even support orangutans with it! 🔥',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Check out my video!',
               },
               {
-                type: 'videoUrl',
+                type: 'SimpleChatVideoMessage',
                 videoUrl: 'https://youtu.be/-Inx1Tv6Fko',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Check out my pictures in my favourite boxer brief!',
               },
               {
@@ -287,17 +287,17 @@ const data = {
             ],
             'Tell me about Buttwrap 📹': [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Check out the video of me and Maggie!',
               },
               {
-                type: 'videoUrl',
+                type: 'SimpleChatVideoMessage',
                 videoUrl: 'https://youtu.be/JEYX07rCmuM',
               },
             ],
             'Why are you recommending this?': [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'I feel really good wearing them! They are soft, flexible and perfect for working out.',
               },
               {
@@ -312,14 +312,14 @@ const data = {
                 ],
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text:
                   'So whenever somebody asks what to give me for my b-day or x-mas, I tell them „get me a pair of buttwraps!“ 😉',
               },
             ],
             'Show me other stuff': [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: "Here's the same boxer brief in other colors:",
               },
               {
@@ -348,7 +348,7 @@ const data = {
                 ],
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'And this is the other style:',
               },
               {
@@ -413,15 +413,15 @@ const data = {
           logs: {
             default: [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'I am 1,80m, weigh 74kg and wear a Buttwrap M. My jeans size is usually 31.',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Here is an overview which size I would recommend to you:',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text:
                   '<table><tr><th>Jeans Size</th><th>Buttwrap Size</th></tr><tr><td>30</td><td>S</td></tr><tr><td>31 or 32</td><td>M</td></tr><tr><td>33 - 34</td><td>L</td></tr><tr><td>35 - 36</td><td>XL</td></tr><tr><td>36+</td><td>XXL</td></tr></table>',
               },
@@ -469,11 +469,11 @@ const data = {
           logs: {
             default: [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'I always buy in pairs, plus you get a discount if you buy 3 or more.',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Here are a few other buttwraps I like:',
               },
               {
@@ -514,11 +514,11 @@ const data = {
             ],
             'Tell me about the discounts!': [
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text: 'Here is an overview of what you can save:',
               },
               {
-                type: 'text',
+                type: 'SimpleChatTextMessage',
                 text:
                   '<table><tr><th>Minimum Qty</th><th>Discount</th></tr><tr><td>3+</td><td>15% off</td></tr><tr><td>5+</td><td>20% off</td></tr></table>',
               },

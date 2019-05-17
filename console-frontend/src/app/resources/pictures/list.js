@@ -21,19 +21,24 @@ const BlankState = () => (
   />
 )
 
-const tooltipTextActive = (navigationItems, personas, productPicks) => {
+const tooltipTextActive = (navigationItems, personas, productPicks, simpleChatMessages) => {
   const itemsInUse = []
   if (navigationItems.length > 0)
     itemsInUse.push(`${navigationItems.length} navigation item${navigationItems.length > 1 ? 's' : ''}`)
   if (personas.length > 0) itemsInUse.push(`${personas.length} persona${personas.length > 1 ? 's' : ''}`)
   if (productPicks.length > 0)
     itemsInUse.push(`${productPicks.length} product pick${productPicks.length > 1 ? 's' : ''}`)
+  if (simpleChatMessages.length > 0)
+    itemsInUse.push(`${simpleChatMessages.length} simple chat message${simpleChatMessages.length > 1 ? 's' : ''}`)
   return `Used for ${[itemsInUse.slice(0, -1).join(', '), itemsInUse.slice(-1)[0]].join(
     itemsInUse.length < 2 ? '' : ' and '
   )}`
 }
 
-const PicturesRow = ({ record: { url, navigationItems, personas, productPicks }, highlightInactive }) => (
+const PicturesRow = ({
+  record: { url, navigationItems, personas, productPicks, simpleChatMessages },
+  highlightInactive,
+}) => (
   <>
     <TableCell>
       <Picture disabled={highlightInactive} src={url} />
@@ -47,7 +52,7 @@ const PicturesRow = ({ record: { url, navigationItems, personas, productPicks },
       highlightInactive={highlightInactive}
       symbolTextActive="In use"
       symbolTextInactive="Not in use"
-      tooltipTextActive={tooltipTextActive(navigationItems, personas, productPicks)}
+      tooltipTextActive={tooltipTextActive(navigationItems, personas, productPicks, simpleChatMessages)}
       tooltipTextInactive="Not used yet"
     />
   </>
@@ -61,7 +66,7 @@ const PicturesList = () => (
     columns={columns}
     defaultSorting={{ column: 'status', direction: 'asc' }}
     helpStep="pictures"
-    highlightInactive={['navigationItems', 'personas', 'productPicks']}
+    highlightInactive={['navigationItems', 'personas', 'productPicks', 'simpleChatMessages']}
     ResourceRow={PicturesRow}
     routes={{ create: routes.pictureCreate, edit: routes.pictureEdit }}
     title="Pictures Gallery"

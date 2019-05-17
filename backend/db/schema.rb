@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190514114802) do
+ActiveRecord::Schema.define(version: 20190514154758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,13 +145,20 @@ ActiveRecord::Schema.define(version: 20190514114802) do
   end
 
   create_table "simple_chat_messages", force: :cascade do |t|
-    t.string "text", null: false
+    t.string "text"
     t.integer "order"
     t.bigint "simple_chat_step_id"
     t.bigint "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type", default: "SimpleChatTextMessage"
+    t.string "title"
+    t.string "url"
+    t.string "display_price"
+    t.string "video_url"
+    t.bigint "pic_id"
     t.index ["account_id"], name: "index_simple_chat_messages_on_account_id"
+    t.index ["pic_id"], name: "index_simple_chat_messages_on_pic_id"
     t.index ["simple_chat_step_id"], name: "index_simple_chat_messages_on_simple_chat_step_id"
   end
 
@@ -272,6 +279,7 @@ ActiveRecord::Schema.define(version: 20190514114802) do
   add_foreign_key "showcases", "personas"
   add_foreign_key "showcases", "users", column: "owner_id"
   add_foreign_key "simple_chat_messages", "accounts"
+  add_foreign_key "simple_chat_messages", "pictures", column: "pic_id"
   add_foreign_key "simple_chat_messages", "simple_chat_steps"
   add_foreign_key "simple_chat_steps", "accounts"
   add_foreign_key "simple_chat_steps", "simple_chats"

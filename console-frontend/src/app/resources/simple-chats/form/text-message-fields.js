@@ -6,7 +6,11 @@ import RichTextEditor from 'react-rte'
 import styled from 'styled-components'
 import trim from 'lodash.trim'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { InputLabel as Label, Tooltip } from '@material-ui/core'
+import { InputLabel, Tooltip } from '@material-ui/core'
+
+const Label = styled(InputLabel)`
+  font-size: 12px;
+`
 
 const StyledRichTextEditor = styled(RichTextEditor)`
   border: none !important;
@@ -150,14 +154,14 @@ export default compose(
     onSwitchButtonClick: ({ isMarkdownMode, setIsMarkdownMode }) => () => {
       setIsMarkdownMode(!isMarkdownMode)
     },
-    onValueChange: ({ onChange, setValue, simpleChatMessageIndex }) => event => {
+    onValueChange: ({ onChange, setValue, simpleChatMessage, simpleChatMessageIndex }) => event => {
       const value = event.nativeEvent ? RichTextEditor.createValueFromString(event.target.value, 'markdown') : event
       setValue(value)
-      onChange({ text: trim(value.toString('markdown')) || '' }, simpleChatMessageIndex)
+      onChange({ ...simpleChatMessage, text: trim(value.toString('markdown')) || '' }, simpleChatMessageIndex)
     },
   }),
   lifecycle({
-    // Prevents the component to crash (the base editor Draft.js has some known errors)
+    // Prevents the component to crash (the base editor Draft.js has some known issues)
     componentDidCatch() {
       this.forceUpdate()
     },
@@ -175,9 +179,7 @@ export default compose(
     onFocus,
   }) => (
     <>
-      <Label required style={{ fontSize: '12px' }}>
-        {'Message'}
-      </Label>
+      <Label required>{'Message'}</Label>
       <StyledEditorContainer>
         <StyledTooltip placement="left" title="Learn about the Markdown syntax">
           <MarkdownIcon
