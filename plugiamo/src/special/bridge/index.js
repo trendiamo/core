@@ -25,7 +25,7 @@ const Plugin = ({
   modalsProps,
 }) => (
   <div>
-    <ChatModals {...modalsProps} />
+    <ChatModals flowType={module.flowType} {...modalsProps} />
     <AppBase
       Component={
         <SimpleChat
@@ -133,7 +133,12 @@ export default compose(
       } else if (module.ctaButton.action === 'ok-size') {
         setPluginState('nothing')
       }
-      mixpanel.track('Clicked Button', { hostname: location.hostname, type: 'CTA', action: module.ctaButton.action })
+      mixpanel.track('Clicked Button', {
+        flowType: module.flowType,
+        hostname: location.hostname,
+        type: 'CTA',
+        action: module.ctaButton.action,
+      })
     },
   }),
   withHotkeys({

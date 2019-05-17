@@ -35,8 +35,8 @@ const Content = compose(
   withState('logs', 'setLogs', []),
   withState('minHeight', 'setMinHeight', 0),
   withHandlers({
-    onClick: () => item => {
-      clickAssessmentProduct(item)
+    onClick: ({ flowType }) => item => {
+      clickAssessmentProduct(item, flowType)
     },
   })
 )(ContentTemplate)

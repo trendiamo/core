@@ -15,17 +15,17 @@ const iframeStyle = {
   minHeight: '400px',
 }
 
-const FrameChild = ({ step, results, goToPrevStep }) => (
+const FrameChild = ({ step, results, goToPrevStep, flowType }) => (
   <div>
     <Header goToPrevStep={goToPrevStep} step={step} />
-    <Content results={results} />
+    <Content flowType={flowType} results={results} />
   </div>
 )
 
-const ModalTemplate = ({ closeModal, isOpen, results, goToPrevStep, step }) => (
+const ModalTemplate = ({ closeModal, isOpen, results, goToPrevStep, step, module }) => (
   <Wrapper allowBackgroundClose closeModal={closeModal} isOpen={isOpen}>
     <FrameBase style={iframeStyle}>
-      <FrameChild goToPrevStep={goToPrevStep} results={results} step={step} />
+      <FrameChild flowType={module && module.flowType} goToPrevStep={goToPrevStep} results={results} step={step} />
     </FrameBase>
   </Wrapper>
 )

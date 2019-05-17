@@ -26,7 +26,7 @@ const Plugin = ({
   clickActions,
 }) => (
   <div>
-    <ChatModals {...modalsProps} />
+    <ChatModals flowType={module.flowType} {...modalsProps} />
     <AppBase
       Component={
         <SimpleChat

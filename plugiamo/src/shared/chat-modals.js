@@ -11,10 +11,12 @@ const ChatModals = ({
   setImageModalOpen,
   imagesModalUrls,
   imagesModalTouch,
+  flowType,
 }) => (
   <div>
     <VideoModal closeModal={closeVideoModal} isOpen={videoModalOpen} url={videoItem && videoItem.youtubeEmbedUrl} />
     <ImagesModal
+      flowType={flowType}
       index={imagesModalIndex}
       isOpen={imageModalOpen}
       isTouch={imagesModalTouch}

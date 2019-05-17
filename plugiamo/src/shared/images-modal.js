@@ -91,23 +91,29 @@ const ImagesModal = compose(
     selectedImage: urlsArray[selectedImageIndex],
   })),
   withHandlers({
-    closeModal: ({ setIsOpen, selectedImage }) => () => {
-      mixpanel.track('Closed Carousel Gallery', { hostname: location.hostname, imageUrl: selectedImage })
+    closeModal: ({ setIsOpen, selectedImage, flowType }) => () => {
+      mixpanel.track('Closed Carousel Gallery', {
+        flowType: flowType || 'simpleChat',
+        hostname: location.hostname,
+        imageUrl: selectedImage,
+      })
       setIsOpen(false)
     },
-    onLeftArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImageIndex, selectedImage }) => () => {
+    onLeftArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImageIndex, selectedImage, flowType }) => () => {
       if (selectedImageIndex === 0) return
       setSelectedImageIndex(selectedImageIndex - 1)
       mixpanel.track('Carousel Image Switch', {
+        flowType: flowType || 'simpleChat',
         hostname: location.hostname,
         urlFrom: selectedImage,
         urlTo: urlsArray[selectedImageIndex - 1],
       })
     },
-    onRightArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImageIndex, selectedImage }) => () => {
+    onRightArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImageIndex, selectedImage, flowType }) => () => {
       if (selectedImageIndex >= urlsArray.length - 1) return
       setSelectedImageIndex(selectedImageIndex + 1)
       mixpanel.track('Carousel Image Switch', {
+        flowType: flowType || 'simpleChat',
         hostname: location.hostname,
         urlFrom: selectedImage,
         urlTo: urlsArray[selectedImageIndex + 1],
@@ -125,6 +131,7 @@ const ImagesModal = compose(
       urlsArray,
       setSelectedImageIndex,
       selectedImage,
+      flowType,
     }) => event => {
       if (isTwoFingerScroll || originalWindowWidth > window.innerWidth) return
       touchendX = event.changedTouches[0].screenX
@@ -135,6 +142,7 @@ const ImagesModal = compose(
             if (selectedImageIndex < urlsArray.length - 1) {
               setSelectedImageIndex(selectedImageIndex + 1)
               mixpanel.track('Touch Carousel Image Switch', {
+                flowType: flowType || 'simpleChat',
                 hostname: location.hostname,
                 urlFrom: selectedImage,
                 urlTo: urlsArray[selectedImageIndex + 1],
@@ -146,6 +154,7 @@ const ImagesModal = compose(
           if (0 < selectedImageIndex) {
             setSelectedImageIndex(selectedImageIndex - 1)
             mixpanel.track('Touch Carousel Image Switch', {
+              flowType: flowType || 'simpleChat',
               hostname: location.hostname,
               urlFrom: selectedImage,
               urlTo: urlsArray[selectedImageIndex - 1],
