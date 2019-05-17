@@ -1,6 +1,7 @@
 import ProductMessage from './product-message'
 import React from 'react'
 import styled from 'styled-components'
+import { compose, withHandlers } from 'recompose'
 
 const styleConfigDefault = {
   image: {
@@ -83,9 +84,15 @@ const AssessmentProduct = ({ data, onClick, big, styleConfig = styleConfigDefaul
   <Container cols={big ? 3 : 2} style={styleConfig.container}>
     <InnerContainer>
       {data.highlight && <Highlight highlight={highlightDefault} styleConfig={styleConfig} />}
-      <ProductMessage onClick={() => onClick(data)} product={data} styleConfig={styleConfig} />
+      <ProductMessage onClick={onClick} product={data} styleConfig={styleConfig} />
     </InnerContainer>
   </Container>
 )
 
-export default AssessmentProduct
+export default compose(
+  withHandlers({
+    onClick: ({ onClick, data }) => () => {
+      onClick({ type: 'clickAssessmentProduct', item: data })
+    },
+  })
+)(AssessmentProduct)
