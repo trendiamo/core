@@ -12,8 +12,12 @@ const withChatActions = () => BaseComponent =>
     withState('imagesModalUrls', 'setImagesModalUrls', []),
     withState('imagesModalTouch', 'setImagesModalTouch', false),
     withHandlers({
-      closeVideoModal: ({ videoItem, setVideoModalOpen }) => () => {
-        mixpanel.track('Closed Video', { hostname: location.hostname, url: videoItem.youtubeUrl })
+      closeVideoModal: ({ videoItem, setVideoModalOpen, module }) => () => {
+        mixpanel.track('Closed Video', {
+          flowType: (module && module.flowType) || 'simpleChat',
+          hostname: location.hostname,
+          url: videoItem.youtubeUrl,
+        })
         setVideoModalOpen(false)
       },
     }),
@@ -50,36 +54,57 @@ const withChatActions = () => BaseComponent =>
       clickAssessmentProduct: () => ({ item }) => {
         originalClickAssessmentProduct(item)
       },
-      clickProduct: () => ({ item }) => {
-        mixpanel.track('Clicked Product', { hostname: location.hostname, url: item.url }, () => {
-          if (item.newTab) return
-          markGoFwd()
-          window.location.href = item.url
+      clickProduct: ({ module }) => ({ item }) => {
+        mixpanel.track(
+          'Clicked Product',
+          { flowType: (module && module.flowType) || 'simpleChat', hostname: location.hostname, url: item.url },
+          () => {
+            if (item.newTab) return
+            markGoFwd()
+            window.location.href = item.url
+          }
+        )
+      },
+      clickVideoMessage: ({ setVideoModalOpen, setVideoItem, module }) => ({ item }) => {
+        mixpanel.track('Open Video', {
+          flowType: (module && module.flowType) || 'simpleChat',
+          hostname: location.hostname,
+          url: item.youtubeUrl,
         })
-      },
-      clickVideoMessage: ({ setVideoModalOpen, setVideoItem }) => ({ item }) => {
-        mixpanel.track('Open Video', { hostname: location.hostname, url: item.youtubeUrl })
         setVideoItem(item)
         setVideoModalOpen(true)
       },
-      clickHeaderVideo: ({ setVideoModalOpen, setVideoItem }) => ({ item }) => {
-        mixpanel.track('Open Header Video', { hostname: location.hostname, url: item.youtubeUrl })
+      clickHeaderVideo: ({ setVideoModalOpen, setVideoItem, module }) => ({ item }) => {
+        mixpanel.track('Open Header Video', {
+          flowType: (module && module.flowType) || 'simpleChat',
+          hostname: location.hostname,
+          url: item.youtubeUrl,
+        })
         setVideoItem(item)
         setVideoModalOpen(true)
       },
-      clickImageCarouselItem: ({ setImageModalOpen, setImagesModalIndex, setImagesModalUrls }) => ({ item }) => {
-        mixpanel.track('Opened Carousel Gallery', { hostname: location.hostname, imageUrl: item.urlsArray[item.index] })
+      clickImageCarouselItem: ({ setImageModalOpen, setImagesModalIndex, setImagesModalUrls, module }) => ({
+        item,
+      }) => {
+        mixpanel.track('Opened Carousel Gallery', {
+          flowType: (module && module.flowType) || 'simpleChat',
+          hostname: location.hostname,
+          imageUrl: item.urlsArray[item.index],
+        })
         setImagesModalIndex(item.index)
         setImagesModalUrls(item.urlsArray)
         setImageModalOpen(true)
       },
-      touchImageCarousel: ({ setImagesModalTouch }) => () => {
-        mixpanel.track('Touched Carousel', { hostname: location.hostname })
+      touchImageCarousel: ({ setImagesModalTouch, module }) => () => {
+        mixpanel.track('Touched Carousel', {
+          flowType: (module && module.flowType) || 'simpleChat',
+          hostname: location.hostname,
+        })
         setImagesModalTouch(true)
       },
-      clickChatOption: () => ({ item, persona, flowType }) => {
+      clickChatOption: ({ module }) => ({ item, persona }) => {
         mixpanel.track('Clicked Chat Option', {
-          flowType: flowType || 'simpleChat',
+          flowType: (module && module.flowType) || 'simpleChat',
           hostname: location.hostname,
           personaName: persona.name,
           personaRef: persona.id,

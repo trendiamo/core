@@ -37,7 +37,7 @@ const Base = ({
   clickActions,
 }) => (
   <div>
-    <ChatModals {...modalsProps} />
+    <ChatModals flowType={module.flowType} {...modalsProps} />
     <SimpleChat
       animateOpacity={animateOpacity}
       assessment
@@ -147,9 +147,11 @@ export default compose(
       progress,
       currentStepKey,
       setEndNodeTags,
+      module,
     }) => nextStep => {
       if (nextStep.url) {
         mixpanel.track('Clicked Assessment Step', {
+          flowType: module.flowType,
           hostname: location.hostname,
           step: currentStepKey,
           url: nextStep.url,
@@ -159,6 +161,7 @@ export default compose(
       const nextStepKey = [...tags, nextStep.title].join('/')
       if (nextStep === 'showResults') {
         mixpanel.track('Clicked Assessment Step', {
+          flowType: module.flowType,
           hostname: location.hostname,
           step: currentStepKey,
           tags: endNodeTags,
@@ -171,6 +174,7 @@ export default compose(
       if (!step.multiple && !steps[nextStepKey]) {
         const newTags = [...endNodeTags, nextStepKey]
         mixpanel.track('Clicked Assessment Step', {
+          flowType: module.flowType,
           hostname: location.hostname,
           step: currentStepKey,
           tags: newTags,
@@ -181,6 +185,7 @@ export default compose(
       setProgress(progress + 33)
       setTags([...tags, nextStep.title])
       mixpanel.track('Clicked Assessment Step', {
+        flowType: module.flowType,
         hostname: location.hostname,
         step: currentStepKey,
         tags: [nextStepKey],
