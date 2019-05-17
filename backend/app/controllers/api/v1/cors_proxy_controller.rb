@@ -9,7 +9,7 @@ module Api
       def download
         # rubocop:disable Open, UriEscapeUnescape
         file = open(URI.encode(params[:url]).gsub(%r{^(https|http):/}, '\0/'))
-        # rubocop:enable  Open, UriEscapeUnescape
+        # rubocop:enable Open, UriEscapeUnescape
       rescue StandardError
         render json: { error: "Can't find any file at this URL" }, status: :unprocessable_entity
       else

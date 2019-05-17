@@ -38,16 +38,16 @@ module Api
       end
 
       def sorting(chain)
-        sort_params = begin
-                        JSON.parse(params[:sort])
-                      rescue JSON::ParserError, TypeError
-                        return chain
-                      end
-        column, direction = *sort_params
+        column, direction = *(begin
+                                JSON.parse(params[:sort])
+                              rescue JSON::ParserError, TypeError
+                                return chain
+                              end)
         return sorting_by_active_state(chain, direction) if column.underscore == "active"
         return sorting_by_pictures_state(chain, direction) if column.underscore == "status"
 
         column = ActiveRecord::Base.connection.quote_column_name(column.underscore)
+        direction = direction == "asc" ? "asc" : "desc"
         chain.order("#{column} #{direction}")
       end
 

@@ -24,6 +24,12 @@ REACT_APP_API_ENDPOINT={backend_hostname} yarn build
 hs -p9000 build
 ```
 
+## Code checks
+
+```sh
+yarn eslint src
+```
+
 ## Deploy
 
 ```
