@@ -89,6 +89,7 @@ export default compose(
   withState('showingCtaButton', 'setShowingCtaButton', false),
   withState('ctaButtonClicked', 'setCtaButtonClicked', false),
   withState('hideProgressBar', 'setHideProgressBar', false),
+  withState('results', 'setResults', []),
   withHandlers(() => {
     let contentRef
     return {
@@ -206,6 +207,7 @@ export default compose(
       currentStepKey,
       setCtaButtonClicked,
       setHideProgressBar,
+      setResults,
     }) => () => {
       const tagsLength = tags.length
       if (tagsLength === 0) {
@@ -224,6 +226,7 @@ export default compose(
       if (currentStepKey === 'store') {
         setShowAssessmentContent({ key: newStepKey, progress })
         setHideProgressBar(false)
+        timeout.set('asmt-storeRemove', () => setResults([]), 800)
       }
       setCurrentStepKey(key === 'root' ? key : newStepKey)
       setTags(newTags)
@@ -240,15 +243,12 @@ export default compose(
       setCtaButtonClicked(true)
     },
   }),
-  withState('results', 'setResults', []),
   lifecycle({
     componentDidMount() {
       const { step, setCurrentStep, animateOpacity, setAnimateOpacity, progress, setProgress } = this.props
       rememberPersona(data.assessment.persona)
       if (animateOpacity) {
-        setTimeout(() => {
-          setAnimateOpacity(false)
-        }, 10)
+        setTimeout(() => setAnimateOpacity(false), 10)
       }
       setCurrentStep(step)
       progress === 100 && setTimeout(() => setProgress(progress - 33), 1000)
@@ -262,10 +262,15 @@ export default compose(
       if (prevProps.step !== step) {
         if (currentStepKey === 'store') {
           const _this = this
+          let fetchStartTime = performance.now()
           fetchProducts(results => {
             const { setResults, endNodeTags } = _this.props
             const client = results.find(client => client.hostname === window.location.hostname)
-            setResults(assessProducts(client.products, endNodeTags))
+            timeout.set(
+              'settingResults',
+              () => setResults(assessProducts(client.products, endNodeTags)),
+              Math.max(800 - (performance.now() - fetchStartTime), 10)
+            )
           })
         }
         if (prevProps.currentStepKey === 'store' && progress === 100) {
