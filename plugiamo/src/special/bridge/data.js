@@ -527,27 +527,6 @@ const data = {
           ctaButton: { label: 'Proceed to checkout', action: 'checkout', backgroundColor: '#ff6b02', color: '#fff' },
         },
       },
-      {
-        urlMatchers: ['/:id/checkouts/:checkoutId/thank_you'],
-        module: {
-          flowType: 'ht-outro',
-          launcher: {
-            chatBubble: {
-              message: 'Awesome! 🤩 Was I helpful?',
-            },
-            chatBubbleButtons: {
-              chatBubbleButtonNo: 'Not really.',
-              chatBubbleButtonYes: 'Yes, thanks!',
-            },
-            persona: {
-              name: 'Rodrigo',
-              profilePic: {
-                url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/launcher.png',
-              },
-            },
-          },
-        },
-      },
     ],
   },
 }
