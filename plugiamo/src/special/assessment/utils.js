@@ -13,7 +13,7 @@ const recallPersona = () => JSON.parse(sessionStorage.getItem('trnd-remembered-p
 const assessmentCart = () => assessmentHack() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
 
 const fetchProducts = callback => {
-  fetch('https://improv.ams3.digitaloceanspaces.com/improv/improv-data.js', {
+  fetch('https://improv.ams3.digitaloceanspaces.com/improv/improv-data.json', {
     headers: new Headers({ 'Content-Type': 'application/json' }),
   })
     .then(response => response.json())
