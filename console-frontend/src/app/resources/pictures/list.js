@@ -21,10 +21,8 @@ const BlankState = () => (
   />
 )
 
-const tooltipTextActive = (navigationItems, personas, productPicks, simpleChatMessages) => {
+const tooltipTextActive = (personas, productPicks, simpleChatMessages) => {
   const itemsInUse = []
-  if (navigationItems.length > 0)
-    itemsInUse.push(`${navigationItems.length} navigation item${navigationItems.length > 1 ? 's' : ''}`)
   if (personas.length > 0) itemsInUse.push(`${personas.length} persona${personas.length > 1 ? 's' : ''}`)
   if (productPicks.length > 0)
     itemsInUse.push(`${productPicks.length} product pick${productPicks.length > 1 ? 's' : ''}`)
@@ -35,10 +33,7 @@ const tooltipTextActive = (navigationItems, personas, productPicks, simpleChatMe
   )}`
 }
 
-const PicturesRow = ({
-  record: { url, navigationItems, personas, productPicks, simpleChatMessages },
-  highlightInactive,
-}) => (
+const PicturesRow = ({ record: { url, personas, productPicks, simpleChatMessages }, highlightInactive }) => (
   <>
     <TableCell>
       <Picture disabled={highlightInactive} src={url} />
@@ -52,7 +47,7 @@ const PicturesRow = ({
       highlightInactive={highlightInactive}
       symbolTextActive="In use"
       symbolTextInactive="Not in use"
-      tooltipTextActive={tooltipTextActive(navigationItems, personas, productPicks, simpleChatMessages)}
+      tooltipTextActive={tooltipTextActive(personas, productPicks, simpleChatMessages)}
       tooltipTextInactive="Not used yet"
     />
   </>
@@ -66,7 +61,7 @@ const PicturesList = () => (
     columns={columns}
     defaultSorting={{ column: 'status', direction: 'asc' }}
     helpStep="pictures"
-    highlightInactive={['navigationItems', 'personas', 'productPicks', 'simpleChatMessages']}
+    highlightInactive={['personas', 'productPicks', 'simpleChatMessages']}
     ResourceRow={PicturesRow}
     routes={{ create: routes.pictureCreate, edit: routes.pictureEdit }}
     title="Pictures Gallery"

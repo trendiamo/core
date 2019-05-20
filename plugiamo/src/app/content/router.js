@@ -1,4 +1,3 @@
-import Navigation from './navigation'
 import Showcase from './showcase'
 import SimpleChat from './scripted-chat'
 import { h } from 'preact'
@@ -12,7 +11,6 @@ const Router = ({ persona, isTransitioning, onRouteChange, onToggleContent, setS
       path="/showcase/:id*"
       setShowAssessmentContent={setShowAssessmentContent}
     />
-    <Navigation path="/navigation/:id" persona={persona} />
     <SimpleChat onToggleContent={onToggleContent} path="/simple-chat/:id" persona={persona} />
   </SimpleRouter>
 )

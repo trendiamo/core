@@ -4,7 +4,6 @@ import Launcher from 'launcher'
 import LauncherBubbleFrame from 'launcher/bubbles/launcher-bubble-frame'
 import launcherBubbleKeyframes from 'launcher/bubbles/keyframes'
 import LauncherBubbles from 'launcher/bubbles'
-import Navigation from 'navigation'
 import routes from './routes'
 import Showcase from 'showcase'
 import SimpleChat from 'simple-chat'
@@ -44,7 +43,6 @@ export {
   emojifyStyles,
   imgixUrl,
   matchUrl,
-  Navigation,
   BackButton,
   PaddedCover,
   PersonaDescription,

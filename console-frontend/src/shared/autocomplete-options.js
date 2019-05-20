@@ -2,7 +2,7 @@ import Avatar from 'shared/table-elements/avatar'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import { AssignmentTurnedInOutlined, DirectionsOutlined, PersonPinOutlined, SmsOutlined } from '@material-ui/icons'
+import { AssignmentTurnedInOutlined, PersonPinOutlined, SmsOutlined } from '@material-ui/icons'
 
 const StyledSelectLabel = styled.div`
   display: flex;
@@ -30,8 +30,6 @@ const optionIcon = moduleTtype => {
       return <AssignmentTurnedInOutlined />
     case 'SimpleChat':
       return <SmsOutlined />
-    case 'Navigation':
-      return <DirectionsOutlined />
     default:
       return null
   }

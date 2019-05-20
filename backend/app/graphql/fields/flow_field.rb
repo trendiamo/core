@@ -2,8 +2,6 @@ def flow_class_by_type(type)
   case type
   when "simple-chat"
     SimpleChat
-  when "navigation"
-    Navigation
   when "outro"
     Outro
   when "showcase"

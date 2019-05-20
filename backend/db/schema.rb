@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190520153252) do
+ActiveRecord::Schema.define(version: 20190520153817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,35 +27,6 @@ ActiveRecord::Schema.define(version: 20190520153252) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_generated_urls_on_user_id"
-  end
-
-  create_table "navigation_items", force: :cascade do |t|
-    t.bigint "account_id"
-    t.bigint "navigation_id"
-    t.string "text"
-    t.string "url"
-    t.string "pic_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "order"
-    t.bigint "pic_id"
-    t.index ["account_id"], name: "index_navigation_items_on_account_id"
-    t.index ["navigation_id"], name: "index_navigation_items_on_navigation_id"
-    t.index ["pic_id"], name: "index_navigation_items_on_pic_id"
-  end
-
-  create_table "navigations", force: :cascade do |t|
-    t.bigint "account_id"
-    t.string "name"
-    t.bigint "persona_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "chat_bubble_text"
-    t.string "title", default: "", null: false
-    t.string "chat_bubble_extra_text"
-    t.integer "lock_version", default: 1
-    t.index ["account_id"], name: "index_navigations_on_account_id"
-    t.index ["persona_id"], name: "index_navigations_on_persona_id"
   end
 
   create_table "outros", force: :cascade do |t|
@@ -260,11 +231,6 @@ ActiveRecord::Schema.define(version: 20190520153252) do
   end
 
   add_foreign_key "generated_urls", "users"
-  add_foreign_key "navigation_items", "accounts"
-  add_foreign_key "navigation_items", "navigations"
-  add_foreign_key "navigation_items", "pictures", column: "pic_id"
-  add_foreign_key "navigations", "accounts"
-  add_foreign_key "navigations", "personas"
   add_foreign_key "outros", "accounts"
   add_foreign_key "outros", "personas"
   add_foreign_key "outros", "users", column: "owner_id"

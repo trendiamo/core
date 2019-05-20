@@ -221,7 +221,7 @@ class Populate
     Array.new(11) do |i|
       trigger_attrs = {
         order: i + 1,
-        flow: [Showcase, SimpleChat, Outro, Navigation].sample.all.sample,
+        flow: [Showcase, SimpleChat, Outro].sample.all.sample,
         url_matchers: Array.new(rand(1...5)) { "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-")) },
       }
       Trigger.create!(trigger_attrs)

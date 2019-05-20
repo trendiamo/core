@@ -9,7 +9,7 @@ module Api
 
       def flows_autocomplete
         authorize :autocomplete
-        @flows = [SimpleChat, Outro, Showcase, Navigation].map do |type|
+        @flows = [SimpleChat, Outro, Showcase].map do |type|
           policy_scope(type).where("name ILIKE ?", "#{params[:searchQuery]}%")
         end.flatten
         render json: @flows
@@ -17,7 +17,7 @@ module Api
 
       def path_autocomplete
         authorize :autocomplete
-        @steps = [SimpleChat, Outro, Showcase, Navigation].map do |type|
+        @steps = [SimpleChat, Outro, Showcase].map do |type|
           policy_scope(type).where("name ILIKE ?", "#{params[:searchQuery]}%")
         end.flatten
         render json: @steps.map(&:paths).flatten

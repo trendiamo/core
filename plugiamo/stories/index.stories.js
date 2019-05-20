@@ -3,7 +3,7 @@ import Welcome from './welcome'
 import { Basics, ChatBubble, CoverFixedPositionLogic, PulsatingEffect } from './layout'
 import { h } from 'preact'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose } from 'plugin-base'
-import { Navigation, Outro, ScriptedChat, Showcase, Spotahome } from './modules'
+import { Outro, ScriptedChat, Showcase, Spotahome } from './modules'
 import { storiesOf } from '@storybook/react'
 import './styles.css'
 
@@ -17,7 +17,6 @@ storiesOf('Layout', module)
 
 storiesOf('Modules', module)
   .add('Showcase', Showcase)
-  .add('Navigation', Navigation)
   .add('Scripted Chat', ScriptedChat)
   .add('Outro', Outro)
   .add('Spotahome', Spotahome)
