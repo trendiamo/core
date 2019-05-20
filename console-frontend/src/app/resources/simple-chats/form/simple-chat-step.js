@@ -1,14 +1,12 @@
 import findIndex from 'lodash.findindex'
-import isEqual from 'lodash.isequal'
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import Section from 'shared/section'
 import SimpleChatMessage from './simple-chat-message'
 import styled from 'styled-components'
 import { AddItemButton, Cancel, Field, FormSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { atLeastOneNonBlankCharRegexp } from 'utils'
-import { branch, compose, renderNothing, shallowEqual, shouldUpdate, withHandlers, withState } from 'recompose'
 import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
 import { MessageOutlined, OndemandVideo, Redeem } from '@material-ui/icons'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
@@ -33,15 +31,15 @@ const ProductIcon = styled(Redeem)`
   margin-right: 6px;
 `
 
-const MenuItem = compose(
-  withHandlers({
-    addSimpleChatMessage: ({ onClick, value }) => () => onClick(value),
-  })
-)(({ addSimpleChatMessage, ...props }) => (
-  <MUIMenuItem {...props} onClick={addSimpleChatMessage}>
-    {props.children}
-  </MUIMenuItem>
-))
+const MenuItem = ({ children, onClick, value, ...props }) => {
+  const addSimpleChatMessage = useCallback(() => onClick(value), [onClick, value])
+
+  return (
+    <MUIMenuItem {...props} onClick={addSimpleChatMessage}>
+      {children}
+    </MUIMenuItem>
+  )
+}
 
 const StyledMenu = styled(Menu)`
   div:last-child {
@@ -55,16 +53,7 @@ const StyledMenu = styled(Menu)`
   }
 `
 
-const SortableSimpleChatMessage = compose(
-  shouldUpdate((props, nextProps) => {
-    return (
-      props.isFormLoading !== nextProps.isFormLoading ||
-      props.index !== nextProps.index ||
-      props.allowDelete !== nextProps.allowDelete ||
-      !shallowEqual(props.simpleChatMessage, nextProps.simpleChatMessage)
-    )
-  })
-)(SortableElement(SimpleChatMessage))
+const SortableSimpleChatMessage = SortableElement(SimpleChatMessage)
 
 const SimpleChatMessages = ({
   allowDelete,
@@ -95,128 +84,30 @@ const SimpleChatMessages = ({
   </div>
 )
 
-const SimpleChatMessagesContainer = compose(
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['onSortEnd', 'onChange']
-    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-  })
-)(SortableContainer(SimpleChatMessages))
+const SimpleChatMessagesContainer = SortableContainer(SimpleChatMessages)
 
 const SimpleChatStep = ({
-  addSimpleChatMessage,
   allowDelete,
-  anchorEl,
-  closeMenu,
   collapseOtherSimpleChatSteps,
-  deleteSimpleChatStep,
-  editSimpleChatStepValue,
   folded,
-  isFormLoading,
-  onAddMessageClick,
-  onSimpleChatMessagesSortEnd,
-  simpleChatStepIndex,
-  setSimpleChatMessagesForm,
-  simpleChatStep,
-  onToggleContent,
   isCropping,
+  isFormLoading,
+  onChange,
+  onToggleContent,
   setIsCropping,
-  setSimpleChatMessagePicture,
-}) => (
-  <Section>
-    <FormSection
-      actions={
-        allowDelete && (
-          <Cancel disabled={isCropping || isFormLoading} index={simpleChatStepIndex} onClick={deleteSimpleChatStep} />
-        )
-      }
-      dragHandle
-      ellipsize
-      foldable
-      folded={folded}
-      hideTop
-      title={
-        simpleChatStepIndex === 0 ? 'Initial Step' : simpleChatStep.id ? `Step: ${simpleChatStep.key}` : 'New Option'
-      }
-    >
-      <>
-        {simpleChatStep.key !== 'default' && (
-          <Field
-            disabled={isCropping || isFormLoading}
-            fullWidth
-            inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
-            label="Option"
-            margin="normal"
-            name="simpleChatStep_key"
-            onChange={editSimpleChatStepValue}
-            onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
-            required
-            value={simpleChatStep.key}
-          />
-        )}
-        {simpleChatStep.simpleChatMessagesAttributes && (
-          <SimpleChatMessagesContainer
-            allowDelete={simpleChatStep.simpleChatMessagesAttributes.length > 1}
-            helperClass="sortable-element"
-            isCropping={isCropping}
-            isFormLoading={isFormLoading}
-            onChange={setSimpleChatMessagesForm}
-            onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
-            onSortEnd={onSimpleChatMessagesSortEnd}
-            setIsCropping={setIsCropping}
-            setSimpleChatMessagePicture={setSimpleChatMessagePicture}
-            simpleChatMessages={simpleChatStep.simpleChatMessagesAttributes}
-            useDragHandle
-          />
-        )}
-        <StyledAddItemButton
-          adjustMargin={
-            !simpleChatStep.simpleChatMessagesAttributes ||
-            simpleChatStep.simpleChatMessagesAttributes.every(message => message._destroy)
-          }
-          aria-haspopup="true"
-          aria-owns={anchorEl ? 'new-message-menu' : undefined}
-          disabled={isFormLoading}
-          message="Add Message"
-          onClick={onAddMessageClick}
-        />
-        <StyledMenu
-          anchorEl={anchorEl}
-          disableAutoFocusItem
-          id="new-message-menu"
-          onClose={closeMenu}
-          open={Boolean(anchorEl)}
-          transitionDuration={150}
-        >
-          <MenuItem onClick={addSimpleChatMessage} value="SimpleChatTextMessage">
-            <MessageIcon />
-            {'Text'}
-          </MenuItem>
-          <MenuItem onClick={addSimpleChatMessage} value="SimpleChatProductMessage">
-            <ProductIcon />
-            {'Product'}
-          </MenuItem>
-          <MenuItem onClick={addSimpleChatMessage} value="SimpleChatVideoMessage">
-            <VideoIcon />
-            {'Video'}
-          </MenuItem>
-        </StyledMenu>
-      </>
-    </FormSection>
-  </Section>
-)
+  setSimpleChatMessagesPictures,
+  simpleChatStep,
+  simpleChatStepIndex,
+  simpleChatMessagesPictures,
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null)
 
-export default compose(
-  withState('anchorEl', 'setAnchorEl', null),
-  branch(({ simpleChatStep }) => simpleChatStep._destroy, renderNothing),
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['onChange']
-    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-  }),
-  withHandlers({
-    closeMenu: ({ setAnchorEl }) => () => {
-      setAnchorEl(null)
-    },
-    deleteSimpleChatStep: ({ onChange, simpleChatStepIndex, simpleChatStep }) => () => {
+  const closeMenu = useCallback(() => {
+    setAnchorEl(null)
+  }, [])
+
+  const deleteSimpleChatStep = useCallback(
+    () => {
       onChange(
         {
           id: simpleChatStep.id,
@@ -225,22 +116,31 @@ export default compose(
         simpleChatStepIndex
       )
     },
-    editSimpleChatStepValue: ({ simpleChatStep, simpleChatStepIndex, onChange }) => event => {
+    [onChange, simpleChatStep.id, simpleChatStepIndex]
+  )
+
+  const editSimpleChatStepValue = useCallback(
+    event => {
       const name = event.target.name.replace('simpleChatStep_', '')
       onChange(Object.assign({ ...simpleChatStep }, { [name]: event.target.value }), simpleChatStepIndex)
     },
-    onAddMessageClick: ({ setAnchorEl }) => event => {
-      setAnchorEl(event.currentTarget)
-    },
-    onSimpleChatMessagesSortEnd: ({ onChange, simpleChatStepIndex, simpleChatStep }) => ({ oldIndex, newIndex }) => {
+    [onChange, simpleChatStep, simpleChatStepIndex]
+  )
+
+  const onAddMessageClick = useCallback(event => {
+    setAnchorEl(event.currentTarget)
+  }, [])
+
+  const onSimpleChatMessagesSortEnd = useCallback(
+    ({ oldIndex, newIndex }) => {
       const orderedSimpleChatMessages = arrayMove(simpleChatStep.simpleChatMessagesAttributes, oldIndex, newIndex)
       onChange({ ...simpleChatStep, simpleChatMessagesAttributes: orderedSimpleChatMessages }, simpleChatStepIndex)
     },
-    setSimpleChatMessagePicture: ({
-      setSimpleChatMessagesPictures,
-      simpleChatMessagesPictures,
-      simpleChatStepIndex,
-    }) => (simpleChatMessageIndex, blob, setProgress) => {
+    [onChange, simpleChatStep, simpleChatStepIndex]
+  )
+
+  const setSimpleChatMessagePicture = useCallback(
+    (simpleChatMessageIndex, blob, setProgress) => {
       const picture = { simpleChatStepIndex, simpleChatMessageIndex, blob, setProgress }
       const simpleChatMessagePictureIndex = findIndex(simpleChatMessagesPictures, {
         simpleChatStepIndex,
@@ -251,10 +151,11 @@ export default compose(
         : simpleChatMessagesPictures.push(picture)
       setSimpleChatMessagesPictures(simpleChatMessagesPictures)
     },
-    setSimpleChatMessagesForm: ({ simpleChatStep, simpleChatStepIndex, onChange }) => (
-      simpleChatMessage,
-      simpleChatMessageIndex
-    ) => {
+    [setSimpleChatMessagesPictures, simpleChatMessagesPictures, simpleChatStepIndex]
+  )
+
+  const setSimpleChatMessagesForm = useCallback(
+    (simpleChatMessage, simpleChatMessageIndex) => {
       let newSimpleChatMessagesAttributes = [...simpleChatStep.simpleChatMessagesAttributes]
       newSimpleChatMessagesAttributes[simpleChatMessageIndex] = simpleChatMessage
       onChange(
@@ -262,9 +163,11 @@ export default compose(
         simpleChatStepIndex
       )
     },
-  }),
-  withHandlers({
-    addSimpleChatMessage: ({ closeMenu, onChange, simpleChatStepIndex, simpleChatStep }) => messageType => {
+    [onChange, simpleChatStep, simpleChatStepIndex]
+  )
+
+  const addSimpleChatMessage = useCallback(
+    messageType => {
       closeMenu()
       const simpleChatMessageObject =
         messageType === 'SimpleChatTextMessage'
@@ -289,5 +192,94 @@ export default compose(
         simpleChatStepIndex
       )
     },
-  })
-)(SimpleChatStep)
+    [closeMenu, onChange, simpleChatStep, simpleChatStepIndex]
+  )
+
+  if (simpleChatStep._destroy) return null
+
+  return (
+    <Section>
+      <FormSection
+        actions={
+          allowDelete && (
+            <Cancel disabled={isCropping || isFormLoading} index={simpleChatStepIndex} onClick={deleteSimpleChatStep} />
+          )
+        }
+        dragHandle
+        ellipsize
+        foldable
+        folded={folded}
+        hideTop
+        title={
+          simpleChatStepIndex === 0 ? 'Initial Step' : simpleChatStep.id ? `Step: ${simpleChatStep.key}` : 'New Option'
+        }
+      >
+        <>
+          {simpleChatStep.key !== 'default' && (
+            <Field
+              disabled={isCropping || isFormLoading}
+              fullWidth
+              inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+              label="Option"
+              margin="normal"
+              name="simpleChatStep_key"
+              onChange={editSimpleChatStepValue}
+              onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
+              required
+              value={simpleChatStep.key}
+            />
+          )}
+          {simpleChatStep.simpleChatMessagesAttributes && (
+            <SimpleChatMessagesContainer
+              allowDelete={simpleChatStep.simpleChatMessagesAttributes.length > 1}
+              helperClass="sortable-element"
+              isCropping={isCropping}
+              isFormLoading={isFormLoading}
+              onChange={setSimpleChatMessagesForm}
+              onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
+              onSortEnd={onSimpleChatMessagesSortEnd}
+              setIsCropping={setIsCropping}
+              setSimpleChatMessagePicture={setSimpleChatMessagePicture}
+              simpleChatMessages={simpleChatStep.simpleChatMessagesAttributes}
+              useDragHandle
+            />
+          )}
+          <StyledAddItemButton
+            adjustMargin={
+              !simpleChatStep.simpleChatMessagesAttributes ||
+              simpleChatStep.simpleChatMessagesAttributes.every(message => message._destroy)
+            }
+            aria-haspopup="true"
+            aria-owns={anchorEl ? 'new-message-menu' : undefined}
+            disabled={isFormLoading}
+            message="Add Message"
+            onClick={onAddMessageClick}
+          />
+          <StyledMenu
+            anchorEl={anchorEl}
+            disableAutoFocusItem
+            id="new-message-menu"
+            onClose={closeMenu}
+            open={Boolean(anchorEl)}
+            transitionDuration={150}
+          >
+            <MenuItem onClick={addSimpleChatMessage} value="SimpleChatTextMessage">
+              <MessageIcon />
+              {'Text'}
+            </MenuItem>
+            <MenuItem onClick={addSimpleChatMessage} value="SimpleChatProductMessage">
+              <ProductIcon />
+              {'Product'}
+            </MenuItem>
+            <MenuItem onClick={addSimpleChatMessage} value="SimpleChatVideoMessage">
+              <VideoIcon />
+              {'Video'}
+            </MenuItem>
+          </StyledMenu>
+        </>
+      </FormSection>
+    </Section>
+  )
+}
+
+export default SimpleChatStep

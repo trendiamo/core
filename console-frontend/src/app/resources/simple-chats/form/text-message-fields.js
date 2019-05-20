@@ -1,11 +1,10 @@
 import Button from 'shared/button'
 import ContentEditable from 'react-contenteditable'
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import RichTextEditor from 'react-rte'
 import styled from 'styled-components'
 import trim from 'lodash.trim'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { InputLabel, Tooltip } from '@material-ui/core'
 
 const Label = styled(InputLabel)`
@@ -131,53 +130,44 @@ const toolbarConfig = {
   ],
 }
 
-export default compose(
-  withState('isMarkdownMode', 'setIsMarkdownMode', false),
-  withState('value', 'setValue', ({ simpleChatMessage }) =>
-    RichTextEditor.createValueFromString(simpleChatMessage.text, 'markdown')
-  ),
-  withHandlers({
-    onMarkdownKeyDown: () => event => {
-      if (event.keyCode === 13) {
-        event.preventDefault()
-        document.execCommand('insertHTML', false, '\n')
-      }
-    },
-    onMarkdownPaste: () => event => {
+const TextMessageFields = ({ disabled, onChange, onFocus, simpleChatMessage, simpleChatMessageIndex }) => {
+  const [isMarkdownMode, setIsMarkdownMode] = useState(false)
+  const [value, setValue] = useState(RichTextEditor.createValueFromString(simpleChatMessage.text, 'markdown'))
+
+  const onMarkdownKeyDown = useCallback(event => {
+    if (event.keyCode === 13) {
       event.preventDefault()
-      document.execCommand('insertHTML', false, (event.originalEvent || event).clipboardData.getData('text/plain'))
-    },
-    onRTEReturn: () => () => {
       document.execCommand('insertHTML', false, '\n')
-      return 'handled'
-    },
-    onSwitchButtonClick: ({ isMarkdownMode, setIsMarkdownMode }) => () => {
+    }
+  }, [])
+
+  const onMarkdownPaste = useCallback(event => {
+    event.preventDefault()
+    document.execCommand('insertHTML', false, (event.originalEvent || event).clipboardData.getData('text/plain'))
+  }, [])
+
+  const onRTEReturn = useCallback(() => {
+    document.execCommand('insertHTML', false, '\n')
+    return 'handled'
+  }, [])
+
+  const onSwitchButtonClick = useCallback(
+    () => {
       setIsMarkdownMode(!isMarkdownMode)
     },
-    onValueChange: ({ onChange, setValue, simpleChatMessage, simpleChatMessageIndex }) => event => {
+    [isMarkdownMode]
+  )
+
+  const onValueChange = useCallback(
+    event => {
       const value = event.nativeEvent ? RichTextEditor.createValueFromString(event.target.value, 'markdown') : event
       setValue(value)
       onChange({ ...simpleChatMessage, text: trim(value.toString('markdown')) || '' }, simpleChatMessageIndex)
     },
-  }),
-  lifecycle({
-    // Prevents the component to crash (the base editor Draft.js has some known issues)
-    componentDidCatch() {
-      this.forceUpdate()
-    },
-  })
-)(
-  ({
-    disabled,
-    onMarkdownKeyDown,
-    onMarkdownPaste,
-    onRTEReturn,
-    onSwitchButtonClick,
-    onValueChange,
-    isMarkdownMode,
-    value,
-    onFocus,
-  }) => (
+    [onChange, simpleChatMessage, simpleChatMessageIndex]
+  )
+
+  return (
     <>
       <Label required>{'Message'}</Label>
       <StyledEditorContainer>
@@ -224,4 +214,17 @@ export default compose(
       </StyledEditorContainer>
     </>
   )
-)
+}
+
+class ShieldedTextMessageFields extends React.Component {
+  // the base editor Draft.js has some known issues, so we recover from crashes
+  componentDidCatch() {
+    this.forceUpdate()
+  }
+
+  render() {
+    return <TextMessageFields {...this.props} />
+  }
+}
+
+export default ShieldedTextMessageFields
