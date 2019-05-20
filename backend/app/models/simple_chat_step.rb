@@ -7,7 +7,7 @@ class SimpleChatStep < ApplicationRecord
 
   before_create :assign_order, unless: :order_changed?
 
-  validate :dafault_cannot_be_repeated
+  validate :default_cannot_be_repeated
 
   def as_json(_options = {})
     {
@@ -24,7 +24,7 @@ class SimpleChatStep < ApplicationRecord
 
   private
 
-  def dafault_cannot_be_repeated
+  def default_cannot_be_repeated
     return if key != "default"
 
     other_default_keys = self.class.where(simple_chat_id: simple_chat_id, key: "default").pluck(:id)
