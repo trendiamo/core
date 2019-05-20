@@ -35,6 +35,11 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
         ...subform,
         picUrl: simpleChatMessagePicUrl,
       }
+    } else {
+      return {
+        ...subform,
+        picUrl: '',
+      }
     }
   }, [])
 

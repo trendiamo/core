@@ -11,7 +11,8 @@ module Api
       end
 
       def create
-        convert_and_assign_pictures
+        return render_picture_error unless convert_and_assign_pictures
+
         @showcase = policy_scope(Showcase).new(showcase_params)
         authorize @showcase
         @showcase.owner = current_user
@@ -31,7 +32,8 @@ module Api
       def update
         @showcase = policy_scope(Showcase).find(params[:id])
         authorize @showcase
-        convert_and_assign_pictures
+        return render_picture_error unless convert_and_assign_pictures
+
         if @showcase.update(showcase_params)
           render json: @showcase
         else
@@ -80,7 +82,9 @@ module Api
         params[:showcase][:spotlights_attributes]&.each do |spotlight_attributes|
           spotlight_attributes[:product_picks_attributes]&.each do |product_pick_attributes|
             pic_url = product_pick_attributes[:pic_url]
-            pic_url.present? && product_pick_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
+            return if pic_url.empty?
+
+            product_pick_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
             product_pick_attributes.delete(:pic_url)
           end
         end
@@ -97,6 +101,11 @@ module Api
           end
         end
         showcase_attributes
+      end
+
+      def render_picture_error
+        errors = [{ "title": "Picture can't be blank" }]
+        render json: { errors: errors }, status: :unprocessable_entity
       end
 
       def render_error
