@@ -22,7 +22,7 @@
     "deploy": "bin/deploy",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "fetch-improv": "wget -O bin/tmp/improv-data.js 'https://inprov-3db5.restdb.io/rest/clients' --header='Content-Type: application/json' --header='x-apikey: 5c7fe410cac6621685acbc00'",
+    "fetch-improv": "wget -O bin/tmp/improv-data.json 'https://inprov-3db5.restdb.io/rest/clients' --header='Content-Type: application/json' --header='x-apikey: 5c7fe410cac6621685acbc00'",
     "upload-data": "bin/upload-data"
   },
   "devDependencies": {
