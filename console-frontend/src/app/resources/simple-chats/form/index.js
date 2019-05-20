@@ -94,7 +94,11 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
           ...form,
           simpleChatStepsAttributes: [
             ...form.simpleChatStepsAttributes,
-            { key: '', __key: `new-${form.simpleChatStepsAttributes.length}` },
+            {
+              key: '',
+              __key: `new-${form.simpleChatStepsAttributes.length}`,
+              simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', text: '', __key: 'new-0' }],
+            },
           ],
         }
       })

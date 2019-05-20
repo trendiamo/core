@@ -185,16 +185,14 @@ const SimpleChatStep = ({
       onChange(
         {
           ...simpleChatStep,
-          simpleChatMessagesAttributes: simpleChatStep.simpleChatMessagesAttributes
-            ? [
-                ...simpleChatStep.simpleChatMessagesAttributes,
-                {
-                  ...simpleChatMessageObject,
-                  type: messageType,
-                  __key: `new-${simpleChatStep.simpleChatMessagesAttributes.length}`,
-                },
-              ]
-            : [{ ...simpleChatMessageObject, type: messageType, __key: 'new-0' }],
+          simpleChatMessagesAttributes: [
+            ...simpleChatStep.simpleChatMessagesAttributes,
+            {
+              ...simpleChatMessageObject,
+              type: messageType,
+              __key: `new-${simpleChatStep.simpleChatMessagesAttributes.length}`,
+            },
+          ],
         },
         simpleChatStepIndex
       )
