@@ -4,10 +4,8 @@ class ProductPickTest < ActiveSupport::TestCase
   test "product picks sorted after create" do
     ActsAsTenant.default_tenant = Account.create!
 
-    showcase = create(:showcase)
-    spotlight = create(:spotlight, showcase: showcase)
-    2.times { create(:product_pick, spotlight: spotlight) }
-    result = spotlight.product_picks.pluck(:order)
+    showcase = create(:showcase_with_spotlights, product_picks_count: 2)
+    result = showcase.spotlights.first.product_picks.pluck(:order)
 
     assert_equal [1, 2], result
   end
@@ -15,11 +13,10 @@ class ProductPickTest < ActiveSupport::TestCase
   test "product picks sorted after deleting product pick and creating two new ones" do
     ActsAsTenant.default_tenant = Account.create!
 
-    showcase = create(:showcase)
-    spotlight = create(:spotlight, showcase: showcase)
-    3.times { create(:product_pick, spotlight: spotlight) }
+    showcase = create(:showcase_with_spotlights, product_picks_count: 3).reload
+    spotlight = showcase.spotlights.first
     spotlight.product_picks.first.destroy!
-    2.times { create(:product_pick, spotlight: spotlight) }
+    create_pair(:product_pick, spotlight: spotlight)
     result = spotlight.product_picks.pluck(:order)
 
     assert_equal [2, 3, 4, 5], result
