@@ -19,7 +19,6 @@ const Plugin = ({
   onToggleContent,
   setPluginState,
   showingContent,
-  launcherPulsating,
   onCtaButtonClick,
   clickActions,
   modalsProps,
@@ -43,7 +42,7 @@ const Plugin = ({
       data={module}
       isUnmounting={isUnmounting}
       Launcher={Launcher}
-      launcherPulsating={launcherPulsating}
+      launcherPulsating
       onToggleContent={onToggleContent}
       persona={module.launcher.persona}
       showingContent={showingContent}
@@ -97,9 +96,6 @@ export default compose(
       }
     },
   }),
-  withProps(({ module }) => ({
-    launcherPulsating: module.flowType !== 'ht-outro',
-  })),
   withHandlers({
     onToggleContent: ({ module, setIsUnmounting, setShowingContent, showingContent, pluginState }) => () => {
       if (module.flowType !== 'ht-chat') return
