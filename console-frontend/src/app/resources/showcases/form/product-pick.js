@@ -1,7 +1,7 @@
 import characterLimits from 'shared/character-limits'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
-import { atLeastOneNonBlankCharRegexp } from 'utils'
+import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Cancel, Field, FormSection } from 'shared/form-elements'
 import { FormHelperText } from '@material-ui/core'
 
@@ -82,7 +82,7 @@ const ProductPick = ({
       <Field
         disabled={isCropping || isFormLoading}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Url"
         margin="normal"
         name="productPick_url"
@@ -100,7 +100,7 @@ const ProductPick = ({
       <Field
         disabled={isCropping || isFormLoading}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Name"
         margin="normal"
         max={characterLimits.showcase.productName}
@@ -113,7 +113,7 @@ const ProductPick = ({
       <Field
         disabled={isCropping || isFormLoading}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Description"
         margin="normal"
         max={characterLimits.showcase.productDescription}
@@ -126,7 +126,7 @@ const ProductPick = ({
       <Field
         disabled={isCropping || isFormLoading}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Display Price"
         margin="normal"
         name="productPick_displayPrice"

@@ -2,7 +2,7 @@ import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
 import React from 'react'
 import Section from 'shared/section'
-import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
+import { apiPersonasAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Field } from 'shared/form-elements'
 import { FormHelperText } from '@material-ui/core'
 
@@ -23,7 +23,7 @@ const MainForm = ({
       autoFocus
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+      inputProps={atLeastOneNonBlankCharInputProps}
       label="Name"
       margin="normal"
       name="name"
@@ -49,7 +49,7 @@ const MainForm = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+      inputProps={atLeastOneNonBlankCharInputProps}
       label="Title"
       margin="normal"
       max={characterLimits.main.title}
@@ -63,7 +63,7 @@ const MainForm = ({
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
-      inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+      inputProps={atLeastOneNonBlankCharInputProps}
       label="Subtitle"
       margin="normal"
       max={characterLimits.main.subtitle}

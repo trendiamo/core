@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react'
 import { Field } from 'shared/form-elements'
-import { youtubeRegexp } from 'utils'
-
-const youtubeInputProps = { pattern: youtubeRegexp }
+import { youtubeInputProps } from 'utils'
 
 const VideoMessageField = ({ isFormLoading, name, onChange, onFocus, simpleChatMessage, simpleChatMessageIndex }) => {
   const onValueChange = useCallback(

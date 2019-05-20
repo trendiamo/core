@@ -6,7 +6,7 @@ import PictureUploader, { ProgressBar, uploadPicture } from 'shared/picture-uplo
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import useForm from 'ext/hooks/use-form'
-import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharRegexp } from 'utils'
+import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
@@ -114,7 +114,7 @@ const EditUser = () => {
       <TextField
         disabled={isFormLoading || isCropping}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="First Name"
         margin="normal"
         name="firstName"
@@ -125,7 +125,7 @@ const EditUser = () => {
       <TextField
         disabled={isFormLoading || isCropping}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Last Name"
         margin="normal"
         name="lastName"

@@ -4,7 +4,7 @@ import CircularProgress from 'shared/circular-progress'
 import HostnamesForm from 'shared/hostnames-form'
 import React, { useCallback, useMemo } from 'react'
 import useForm from 'ext/hooks/use-form'
-import { apiRequest, apiWebsiteShow, apiWebsiteUpdate, atLeastOneNonBlankCharRegexp } from 'utils'
+import { apiRequest, apiWebsiteShow, apiWebsiteUpdate, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Checkbox, FormControlLabel, FormHelperText, TextField } from '@material-ui/core'
 import { Prompt } from 'react-router'
 import { useSnackbar } from 'notistack'
@@ -105,7 +105,7 @@ const EditWebsite = () => {
       <TextField
         disabled
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Name"
         margin="normal"
         name="name"

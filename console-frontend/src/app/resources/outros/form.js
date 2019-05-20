@@ -8,7 +8,7 @@ import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, Field, Form } from 'shared/form-elements'
-import { apiPersonasAutocomplete, atLeastOneNonBlankCharRegexp } from 'utils'
+import { apiPersonasAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
 import { FormHelperText, Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -49,7 +49,7 @@ const OutroForm = ({
         autoFocus
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Name"
         margin="normal"
         name="name"
@@ -73,7 +73,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Chat Bubble Text"
         margin="normal"
         max={characterLimits.main.chatBubble}
@@ -86,7 +86,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Chat Bubble 'YES' Button"
         margin="normal"
         max={characterLimits.main.chatBubbleButton}
@@ -99,7 +99,7 @@ const OutroForm = ({
       <Field
         disabled={isFormLoading}
         fullWidth
-        inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+        inputProps={atLeastOneNonBlankCharInputProps}
         label="Chat Bubble 'NO' Button"
         margin="normal"
         max={characterLimits.main.chatBubbleButton}

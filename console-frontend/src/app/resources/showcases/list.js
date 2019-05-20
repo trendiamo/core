@@ -2,7 +2,7 @@ import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
 import { ActiveColumn, Avatar, columns, EnhancedList, TableCell, Text } from 'shared/table-elements'
-import { apiShowcaseDestroy, apiShowcaseDuplicate, apiShowcaseList } from 'utils'
+import { apiShowcaseDestroy, apiShowcaseDuplicate, apiShowcaseList, defaultSorting } from 'utils'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -32,17 +32,21 @@ const ShowcasesRow = ({ record, highlightInactive }) => (
   </>
 )
 
+const api = { fetch: apiShowcaseList, destroy: apiShowcaseDestroy, duplicate: apiShowcaseDuplicate }
+const showcasesRoutes = { create: routes.showcaseCreate, edit: routes.showcaseEdit }
+const highlightInactive = ['triggerIds']
+
 const ShowcasesList = () => (
   <EnhancedList
-    api={{ fetch: apiShowcaseList, destroy: apiShowcaseDestroy, duplicate: apiShowcaseDuplicate }}
+    api={api}
     BlankState={BlankState}
     buttonText="Create new"
     columns={columns}
-    defaultSorting={{ column: 'active', direction: 'asc' }}
+    defaultSorting={defaultSorting}
     helpStep="showcases"
-    highlightInactive={['triggerIds']}
+    highlightInactive={highlightInactive}
     ResourceRow={ShowcasesRow}
-    routes={{ create: routes.showcaseCreate, edit: routes.showcaseEdit }}
+    routes={showcasesRoutes}
     title="Showcases"
   />
 )

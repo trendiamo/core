@@ -2,7 +2,7 @@ import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
 import { ActiveColumn, EnhancedList, Picture, TableCell, Text } from 'shared/table-elements'
-import { apiPictureDestroy, apiPictureList } from 'utils'
+import { apiPictureDestroy, apiPictureList, defaultSorting } from 'utils'
 
 const columns = [
   { name: 'picture' },
@@ -53,17 +53,21 @@ const PicturesRow = ({ record: { url, personas, productPicks, simpleChatMessages
   </>
 )
 
+const api = { fetch: apiPictureList, destroy: apiPictureDestroy }
+const picturesRoutes = { create: routes.pictureCreate, edit: routes.pictureEdit }
+const highlightInactive = ['personas', 'productPicks', 'simpleChatMessages']
+
 const PicturesList = () => (
   <EnhancedList
-    api={{ fetch: apiPictureList, destroy: apiPictureDestroy }}
+    api={api}
     BlankState={BlankState}
     buttonText="Upload new"
     columns={columns}
-    defaultSorting={{ column: 'status', direction: 'asc' }}
+    defaultSorting={defaultSorting}
     helpStep="pictures"
-    highlightInactive={['personas', 'productPicks', 'simpleChatMessages']}
+    highlightInactive={highlightInactive}
     ResourceRow={PicturesRow}
-    routes={{ create: routes.pictureCreate, edit: routes.pictureEdit }}
+    routes={picturesRoutes}
     title="Pictures Gallery"
   />
 )

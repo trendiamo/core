@@ -2,7 +2,7 @@ import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
 import { ActiveColumn, Avatar, columns, EnhancedList, TableCell, Text } from 'shared/table-elements'
-import { apiOutroDestroy, apiOutroDuplicate, apiOutroList } from 'utils'
+import { apiOutroDestroy, apiOutroDuplicate, apiOutroList, defaultSorting } from 'utils'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -32,17 +32,21 @@ const OutrosRow = ({ record, highlightInactive }) => (
   </>
 )
 
+const api = { fetch: apiOutroList, destroy: apiOutroDestroy, duplicate: apiOutroDuplicate }
+const outrosRoutes = { create: routes.outroCreate, edit: routes.outroEdit }
+const highlightInactive = ['triggerIds']
+
 const OutrosList = () => (
   <EnhancedList
-    api={{ fetch: apiOutroList, destroy: apiOutroDestroy, duplicate: apiOutroDuplicate }}
+    api={api}
     BlankState={BlankState}
     buttonText="Create new"
     columns={columns}
-    defaultSorting={{ column: 'active', direction: 'asc' }}
+    defaultSorting={defaultSorting}
     helpStep="outros"
-    highlightInactive={['triggerIds']}
+    highlightInactive={highlightInactive}
     ResourceRow={OutrosRow}
-    routes={{ create: routes.outroCreate, edit: routes.outroEdit }}
+    routes={outrosRoutes}
     title="Outros"
   />
 )

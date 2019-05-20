@@ -7,7 +7,7 @@ import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, Field, Form } from 'shared/form-elements'
-import { atLeastOneNonBlankCharRegexp } from 'utils'
+import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { FormHelperText, Grid } from '@material-ui/core'
 import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingConsumer, useOnboardingHelp } from 'ext/hooks/use-onboarding'
@@ -139,7 +139,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
             autoFocus
             disabled={isFormLoading || isCropping}
             fullWidth
-            inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+            inputProps={atLeastOneNonBlankCharInputProps}
             label="Name"
             margin="normal"
             max={characterLimits.persona.name}
@@ -151,7 +151,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
           <Field
             disabled={isFormLoading || isCropping}
             fullWidth
-            inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+            inputProps={atLeastOneNonBlankCharInputProps}
             label="Description"
             margin="normal"
             max={characterLimits.persona.description}

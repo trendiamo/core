@@ -142,8 +142,10 @@ export const apiRequest = async (requestMethod, args, options) => {
   return { json, requestError, errors, response }
 }
 
-export const atLeastOneNonBlankCharRegexp = '.*\\S+.*'
-export const youtubeRegexp = '^\\S*(youtu.be/|v/|u/w/|embed/|watch\\?v=|&v=|\\?v=)([^#&?]*).*'
+export const atLeastOneNonBlankCharInputProps = { pattern: '.*\\S+.*' }
+export const youtubeInputProps = { pattern: '^\\S*(youtu.be/|v/|u/w/|embed/|watch\\?v=|&v=|\\?v=)([^#&?]*).*' }
+
+export const defaultSorting = { column: 'active', direction: 'asc' }
 
 // refreshRoute goes to "/empty", and replaces that history entry by the original route,
 // remounting the original component

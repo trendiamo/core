@@ -2,7 +2,7 @@ import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
 import { ActiveColumn, Avatar, columns, EnhancedList, TableCell, Text } from 'shared/table-elements'
-import { apiSimpleChatDestroy, apiSimpleChatDuplicate, apiSimpleChatList } from 'utils'
+import { apiSimpleChatDestroy, apiSimpleChatDuplicate, apiSimpleChatList, defaultSorting } from 'utils'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -32,17 +32,21 @@ const SimpleChatsRow = ({ record, highlightInactive }) => (
   </>
 )
 
+const api = { fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate }
+const simpleChatsRoutes = { create: routes.simpleChatCreate, edit: routes.simpleChatEdit }
+const highlightInactive = ['triggerIds']
+
 const SimpleChatsList = () => (
   <EnhancedList
-    api={{ fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate }}
+    api={api}
     BlankState={BlankState}
     buttonText="Create new"
     columns={columns}
-    defaultSorting={{ column: 'active', direction: 'asc' }}
+    defaultSorting={defaultSorting}
     helpStep="simpleChats"
-    highlightInactive={['triggerIds']}
+    highlightInactive={highlightInactive}
     ResourceRow={SimpleChatsRow}
-    routes={{ create: routes.simpleChatCreate, edit: routes.simpleChatEdit }}
+    routes={simpleChatsRoutes}
     title="Simple Chats"
   />
 )

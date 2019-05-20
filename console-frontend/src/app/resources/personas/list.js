@@ -31,15 +31,18 @@ const PersonasRow = ({ record }) => (
   </>
 )
 
+const api = { fetch: apiPersonaList, destroy: apiPersonaDestroy }
+const personasRoutes = { create: routes.personaCreate, edit: routes.personaEdit }
+
 const PersonasList = () => (
   <EnhancedList
-    api={{ fetch: apiPersonaList, destroy: apiPersonaDestroy }}
+    api={api}
     BlankState={BlankState}
     buttonText="Create new"
     columns={columns}
     helpStep="personas"
     ResourceRow={PersonasRow}
-    routes={{ create: routes.personaCreate, edit: routes.personaEdit }}
+    routes={personasRoutes}
     title="Personas"
   />
 )

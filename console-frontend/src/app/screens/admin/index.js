@@ -7,7 +7,7 @@ import HostnamesForm from 'shared/hostnames-form'
 import React, { useCallback, useEffect, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import { apiAccount, apiAccountCreate, apiRequest, apiSignOut, atLeastOneNonBlankCharRegexp } from 'utils'
+import { apiAccount, apiAccountCreate, apiRequest, apiSignOut, atLeastOneNonBlankCharInputProps } from 'utils'
 import { FormControl, IconButton, List, TextField, Tooltip } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -142,7 +142,7 @@ const Admin = () => {
             <FormControl fullWidth margin="normal" required>
               <TextField
                 fullWidth
-                inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+                inputProps={atLeastOneNonBlankCharInputProps}
                 label="Name"
                 margin="normal"
                 name="name"

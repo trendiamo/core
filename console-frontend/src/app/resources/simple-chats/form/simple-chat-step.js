@@ -6,7 +6,7 @@ import SimpleChatMessage from './simple-chat-message'
 import styled from 'styled-components'
 import { AddItemButton, Cancel, Field, FormSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
-import { atLeastOneNonBlankCharRegexp } from 'utils'
+import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
 import { MessageOutlined, OndemandVideo, Redeem } from '@material-ui/icons'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
@@ -224,7 +224,7 @@ const SimpleChatStep = ({
             <Field
               disabled={isCropping || isFormLoading}
               fullWidth
-              inputProps={{ pattern: atLeastOneNonBlankCharRegexp }}
+              inputProps={atLeastOneNonBlankCharInputProps}
               label="Option"
               margin="normal"
               name="simpleChatStep_key"
