@@ -44,39 +44,6 @@ class PopulateShowcases
   end
 end
 
-class PopulateNavigations
-  def self.process
-    new.process
-  end
-
-  def process
-    create_navigations
-  end
-
-  private
-
-  def create_navigations
-    Array.new(3) do
-      navigation_attrs = {
-        name: "#{Faker::Lorem.word.capitalize} Navigation",
-        persona: Persona.order("RANDOM()").first,
-        navigation_items_attributes: Array.new(6) { |index| navigation_item_attributes(index) },
-      }
-      Navigation.create!(navigation_attrs)
-    end
-  end
-
-  def navigation_item_attributes(navigation_item_index)
-    {
-      text: Faker::Lorem.word.capitalize,
-      url: Faker::Internet.url,
-      pic_url: Faker::LoremPixel.image,
-      pic: Picture.find_or_create_by!(url: Faker::LoremPixel.image("300x300", false, "fashion")),
-      order: navigation_item_index + 1,
-    }
-  end
-end
-
 class PopulateSimpleChats
   def self.process
     new.process
@@ -167,7 +134,6 @@ class Populate
     create_outros
     create_simple_chats
     create_showcases
-    create_navigations
     create_triggers
   end
 
@@ -249,10 +215,6 @@ class Populate
 
   def create_showcases
     PopulateShowcases.process
-  end
-
-  def create_navigations
-    PopulateNavigations.process
   end
 
   def create_triggers
