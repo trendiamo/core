@@ -49,9 +49,6 @@ Rails.application.routes.draw do
         resources :outros, only: %i[index show update create]
         delete "/outros", to: "outros#destroy"
         post "/outros/:id/duplicate", to: "outros#duplicate"
-        resources :navigations, only: %i[index show update create]
-        delete "/navigations", to: "navigations#destroy"
-        post "/navigations/:id/duplicate", to: "navigations#duplicate"
         resources :triggers, only: %i[index show update create]
         post "/triggers/sort", to: "triggers#sort"
         delete "/triggers", to: "triggers#destroy"

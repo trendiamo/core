@@ -58,7 +58,7 @@ module Api
 
       def sorting_by_pictures_state(chain, direction)
         sorted_chain = chain.sort_by do |picture|
-          picture.navigation_items.count + picture.personas.count + picture.product_picks.count
+          picture.personas.count + picture.product_picks.count
         end
         return sorted_chain.reverse if direction == "asc"
 

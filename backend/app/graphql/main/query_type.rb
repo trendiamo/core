@@ -7,5 +7,4 @@ Main::QueryType = GraphQL::ObjectType.define do
   field :showcase, Fields::ShowcaseField
   field :simpleChat, Fields::SimpleChatField
   field :outro, Fields::OutroField
-  field :navigation, Fields::NavigationField
 end

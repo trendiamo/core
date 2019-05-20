@@ -205,7 +205,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
             options={options}
             required
           />
-          <FormHelperText>{'Choose between Showcases, Navigations, etc.'}</FormHelperText>
+          <FormHelperText>{'Choose between Showcases, Chats, etc.'}</FormHelperText>
           <FormControl fullWidth margin="normal">
             <InputLabel shrink>{'Url Matchers'}</InputLabel>
             <div style={{ marginTop: '11px' }}>

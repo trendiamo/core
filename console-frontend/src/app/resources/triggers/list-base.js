@@ -78,8 +78,6 @@ const TriggerRow = ({ trigger, selectedIds, setSelectedIds, highlightEnabled, hi
     [selectedIds, setSelectedIds, trigger.id]
   )
 
-  if (trigger.flowType === 'Navigation') return null
-
   return (
     <TableRowStyled highlight={highlightEnabled} hover role="checkbox" tabIndex={-1}>
       <TableCell>
@@ -144,21 +142,19 @@ const SortableTriggerRows = SortableContainer(
   ({ triggers, handleSelectAll, selectedIds, setSelectedIds, testerUrl, hostnames }) => (
     <TableBody>
       {triggers &&
-        triggers.map((trigger, index) =>
-          trigger.flowType === 'Navigation' ? null : (
-            <SortableTriggerRow
-              handleSelectAll={handleSelectAll}
-              highlightEnabled={testerUrl.matches && testerUrl.matches.index === index}
-              highlightUrl={testerUrl.matches && testerUrl.matches.index === index && testerUrl.matches.urlIndex}
-              hostnames={hostnames}
-              index={index}
-              key={trigger.id}
-              selectedIds={selectedIds}
-              setSelectedIds={setSelectedIds}
-              trigger={trigger}
-            />
-          )
-        )}
+        triggers.map((trigger, index) => (
+          <SortableTriggerRow
+            handleSelectAll={handleSelectAll}
+            highlightEnabled={testerUrl.matches && testerUrl.matches.index === index}
+            highlightUrl={testerUrl.matches && testerUrl.matches.index === index && testerUrl.matches.urlIndex}
+            hostnames={hostnames}
+            index={index}
+            key={trigger.id}
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
+            trigger={trigger}
+          />
+        ))}
     </TableBody>
   )
 )

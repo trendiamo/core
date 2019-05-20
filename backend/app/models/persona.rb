@@ -7,7 +7,6 @@ class Persona < ApplicationRecord
   has_many :spotlights, dependent: :destroy
   has_many :simple_chats, dependent: :destroy
   has_many :outros, dependent: :destroy
-  has_many :navigations, dependent: :destroy
   belongs_to :profile_pic, class_name: "Picture"
 
   validates :name, presence: true

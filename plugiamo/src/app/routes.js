@@ -2,9 +2,6 @@ const routes = {
   showcase(showcaseId) {
     return `/showcase/${showcaseId}`
   },
-  navigation(navigationId) {
-    return `/navigation/${navigationId}`
-  },
   isShowcase(path) {
     return path.match(/\/showcase\/([^/]+)/)
   },
