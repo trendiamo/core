@@ -46,7 +46,8 @@ export default {
                 .attr('attribute-id'),
               optionValue,
             }
-          }),
+          })
+          .toArray(),
       },
     }
   },
@@ -92,6 +93,7 @@ export default {
           currency: 'EUR',
         }
       })
+      .toArray()
   },
   checkoutObject() {
     return {
@@ -113,7 +115,7 @@ export default {
   },
   setupDataGathering() {
     const _this = this
-    if (location.pathname.match(/^\/checkout\/cart/)) {
+    if (location.pathname.match(/^\/de\/checkout\/cart/)) {
       jQuery
         .noConflict()(document)
         .on('click', 'button.action.primary.checkout', () => {
