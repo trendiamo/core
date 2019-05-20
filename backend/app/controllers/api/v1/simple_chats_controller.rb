@@ -21,7 +21,8 @@ module Api
       end
 
       def create
-        convert_and_assign_pictures
+        return render_picture_error unless convert_and_assign_pictures
+
         @simple_chat = SimpleChat.new(simple_chat_params)
         authorize @simple_chat
         @simple_chat.owner = current_user
@@ -39,7 +40,8 @@ module Api
       end
 
       def update
-        convert_and_assign_pictures
+        return render_picture_error unless convert_and_assign_pictures
+
         @simple_chat = policy_scope(SimpleChat).find(params[:id])
         authorize @simple_chat
         if @simple_chat.update(simple_chat_params)
@@ -69,7 +71,7 @@ module Api
                                                      simple_chat_steps_attributes:
                                                      [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
                                                     %i[id order type text title pic_id url display_price video_url
-                                                       _destroy],])
+                                                       pic_url _destroy],])
         add_order_fields(result[:simple_chat_steps_attributes])
         result
       end
@@ -92,10 +94,19 @@ module Api
         params[:simple_chat][:simple_chat_steps_attributes]&.each do |simple_chat_step_attributes|
           simple_chat_step_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
             pic_url = simple_chat_message_attributes[:pic_url]
-            pic_url&.present? && simple_chat_message_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
-            simple_chat_message_attributes.delete(:pic_url)
+            unless pic_url.nil?
+              return if pic_url.empty?
+
+              simple_chat_message_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
+              simple_chat_message_attributes.delete(:pic_url)
+            end
           end
         end
+      end
+
+      def render_picture_error
+        errors = [{ "title": "Picture can't be blank" }]
+        render json: { errors: errors }, status: :unprocessable_entity
       end
 
       def render_error

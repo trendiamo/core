@@ -40,6 +40,11 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
         ...subform,
         picUrl: productPickPhotoUrl,
       }
+    } else {
+      return {
+        ...subform,
+        picUrl: '',
+      }
     }
   }, [])
 
