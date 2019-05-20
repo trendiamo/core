@@ -1,6 +1,6 @@
 import findIndex from 'lodash.findindex'
 import omit from 'lodash.omit'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
 import SimpleChatMessage from './simple-chat-message'
 import styled from 'styled-components'
@@ -127,6 +127,13 @@ const SimpleChatStep = ({
     [onChange, simpleChatStep, simpleChatStepIndex]
   )
 
+  const allowDeleteChatMessage = useMemo(
+    () =>
+      simpleChatStep.simpleChatMessagesAttributes &&
+      simpleChatStep.simpleChatMessagesAttributes.filter(simpleChatMessage => !simpleChatMessage._destroy).length > 1,
+    [simpleChatStep.simpleChatMessagesAttributes]
+  )
+
   const onAddMessageClick = useCallback(event => {
     setAnchorEl(event.currentTarget)
   }, [])
@@ -231,7 +238,7 @@ const SimpleChatStep = ({
           )}
           {simpleChatStep.simpleChatMessagesAttributes && (
             <SimpleChatMessagesContainer
-              allowDelete={simpleChatStep.simpleChatMessagesAttributes.length > 1}
+              allowDelete={allowDeleteChatMessage}
               helperClass="sortable-element"
               isCropping={isCropping}
               isFormLoading={isFormLoading}

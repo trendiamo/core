@@ -19,9 +19,10 @@ const ProductPicks = ({
   setProductPicture,
   onFocus,
 }) => {
-  const allowDelete = useMemo(() => spotlight.productPicksAttributes.length > 1, [
-    spotlight.productPicksAttributes.length,
-  ])
+  const allowDelete = useMemo(
+    () => spotlight.productPicksAttributes.filter(productPick => !productPick._destroy).length > 1,
+    [spotlight.productPicksAttributes]
+  )
 
   return (
     <div>

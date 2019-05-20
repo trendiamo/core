@@ -4,6 +4,7 @@ class Showcase < ApplicationRecord
   has_many :spotlights, dependent: :destroy
   has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
 
+  validates :spotlights, presence: true
   validates :owner_id, presence: true
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", inverse_of: "showcases"
 

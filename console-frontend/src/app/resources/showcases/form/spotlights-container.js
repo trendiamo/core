@@ -15,7 +15,9 @@ const Spotlights = ({
   setSpotlightForm,
   onSpotlightClickFactory,
 }) => {
-  const allowDelete = useMemo(() => form.spotlightsAttributes.length > 1, [form.spotlightsAttributes.length])
+  const allowDelete = useMemo(() => form.spotlightsAttributes.filter(spotlight => !spotlight._destroy).length > 1, [
+    form.spotlightsAttributes,
+  ])
 
   return (
     <div>

@@ -4,6 +4,8 @@ class Spotlight < ApplicationRecord
   belongs_to :persona
   has_many :product_picks, dependent: :destroy
 
+  validates :product_picks, presence: true
+
   accepts_nested_attributes_for :product_picks, allow_destroy: true
 
   before_create :assign_order, unless: :order_changed?
