@@ -112,9 +112,18 @@ export default compose(
         chatDataChanged,
         setChatDataChanged,
         resetMinHeight,
+        storeLog,
       } = this.props
+      if (
+        (!prevProps.storeLog || !prevProps.storeLog.logs || prevProps.storeLog.logs.length === 0) &&
+        storeLog &&
+        storeLog.logs.length > 0
+      ) {
+        timeout.set('updateStore', () => initChatLog(true), 100)
+      }
       if (!isEqual(prevProps.data, data)) {
         if (specialFlow) setHideAll(true)
+        if (data.type === 'store') return
         return timeout.set('assessmentNextStep', () => initChatLog(specialFlow, true), specialFlow ? 800 : 0)
       }
       if (lazyLoadActive && lazyLoadActive !== prevProps.lazyLoadActive) {
