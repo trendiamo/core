@@ -6,6 +6,17 @@ FactoryBot.define do
     persona
     association :owner, factory: :user
 
-    after(:build) { |record| record.account = ActsAsTenant.default_tenant }
+    factory :showcase_with_spotlights do
+      transient do
+        spotlights_count { 1 }
+        product_picks_count { 1 }
+      end
+
+      after(:build) do |showcase, evaluator|
+        showcase.spotlights = build_list(:spotlight_with_product_picks, evaluator.spotlights_count,
+                                         product_picks_count: evaluator.product_picks_count, showcase: showcase)
+        showcase.account = ActsAsTenant.default_tenant
+      end
+    end
   end
 end

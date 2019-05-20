@@ -4,8 +4,7 @@ class SpotlightTest < ActiveSupport::TestCase
   test "spotlights sorted after create" do
     ActsAsTenant.default_tenant = Account.create!
 
-    showcase = create(:showcase)
-    2.times { create(:spotlight, showcase: showcase) }
+    showcase = create(:showcase_with_spotlights, spotlights_count: 2)
     result = showcase.spotlights.pluck(:order)
 
     assert_equal [1, 2], result
@@ -14,10 +13,10 @@ class SpotlightTest < ActiveSupport::TestCase
   test "spotlights sorted after deleting spotlight and creating two new ones" do
     ActsAsTenant.default_tenant = Account.create!
 
-    showcase = create(:showcase)
-    3.times { create(:spotlight, showcase: showcase) }
+    # fails to update later changes to showcase.spotlights without the .reload
+    showcase = create(:showcase_with_spotlights, spotlights_count: 3).reload
     showcase.spotlights.first.destroy!
-    2.times { create(:spotlight, showcase: showcase) }
+    create_pair(:spotlight_with_product_picks, showcase: showcase)
     result = showcase.spotlights.pluck(:order)
 
     assert_equal [2, 3, 4, 5], result
