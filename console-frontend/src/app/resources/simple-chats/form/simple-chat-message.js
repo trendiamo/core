@@ -1,10 +1,7 @@
-import isEqual from 'lodash.isequal'
-import omit from 'lodash.omit'
 import ProductMessageFields from './product-message-fields'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import TextMessageFields from './text-message-fields'
 import VideoMessageField from './video-message-field'
-import { branch, compose, lifecycle, renderNothing, shouldUpdate, withHandlers, withState } from 'recompose'
 import { Cancel, FormSection } from 'shared/form-elements'
 import { extractJson, extractYoutubeId } from 'plugin-base'
 
@@ -75,65 +72,28 @@ const MessageField = ({
 
 const SimpleChatMessage = ({
   allowDelete,
-  deleteSimpleChatMessage,
   index,
   isCropping,
   isFormLoading,
+  onChange,
   onFocus,
-  onSimpleChatMessageEdit,
   setIsCropping,
   setSimpleChatMessagePicture,
+  simpleChatMessage,
   simpleChatMessageIndex,
-  simpleChatMessageObject,
-}) => (
-  <FormSection
-    actions={
-      allowDelete && (
-        <Cancel
-          disabled={isCropping || isFormLoading}
-          index={simpleChatMessageIndex}
-          onClick={deleteSimpleChatMessage}
-        />
-      )
-    }
-    backgroundColor="#fff"
-    dragHandle
-    ellipsize
-    foldable
-    hideBottom
-    hideTop={index === 0}
-    title={setSimpleChatMessageTitle(simpleChatMessageObject)}
-  >
-    <MessageField
-      isCropping={isCropping}
-      isFormLoading={isFormLoading}
-      onFocus={onFocus}
-      onSimpleChatMessageEdit={onSimpleChatMessageEdit}
-      setIsCropping={setIsCropping}
-      setSimpleChatMessagePicture={setSimpleChatMessagePicture}
-      simpleChatMessage={simpleChatMessageObject}
-      simpleChatMessageIndex={simpleChatMessageIndex}
-    />
-  </FormSection>
-)
+}) => {
+  const [simpleChatMessageObject, setSimpleChatMessageObject] = useState({})
 
-export default compose(
-  withState('simpleChatMessageObject', 'setSimpleChatMessageObject', {}),
-  shouldUpdate((props, nextProps) => {
-    const ignoreProps = ['onChange']
-    return !isEqual(omit(props, ignoreProps), omit(nextProps, ignoreProps))
-  }),
-  branch(({ simpleChatMessage }) => simpleChatMessage._destroy, renderNothing),
-  withHandlers({
-    onSimpleChatMessageEdit: ({
-      onChange,
-      simpleChatMessageIndex,
-      setSimpleChatMessageObject,
-    }) => simpleChatMessageObject => {
+  const onSimpleChatMessageEdit = useCallback(
+    simpleChatMessageObject => {
       setSimpleChatMessageObject(simpleChatMessageObject)
       onChange(simpleChatMessageObject, simpleChatMessageIndex)
     },
-    deleteSimpleChatMessage: ({ simpleChatMessage, simpleChatMessageIndex, onChange }) => () => {
+    [onChange, simpleChatMessageIndex]
+  )
+
+  const deleteSimpleChatMessage = useCallback(
+    () => {
       onChange(
         {
           id: simpleChatMessage.id,
@@ -142,29 +102,69 @@ export default compose(
         simpleChatMessageIndex
       )
     },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { setSimpleChatMessageObject, simpleChatMessage } = this.props
+    [onChange, simpleChatMessage.id, simpleChatMessageIndex]
+  )
+
+  useEffect(
+    () => {
       if (simpleChatMessage.type) return setSimpleChatMessageObject(simpleChatMessage)
       const simpleChatProductMessage = extractJson(simpleChatMessage.text)
-      if (simpleChatProductMessage)
+      if (simpleChatProductMessage) {
         return setSimpleChatMessageObject({
           id: simpleChatMessage.id,
           type: 'SimpleChatProductMessage',
           ...simpleChatProductMessage,
         })
+      }
       const videoData = extractYoutubeId(simpleChatMessage.text)
-      if (videoData)
+      if (videoData) {
         return setSimpleChatMessageObject({
           id: simpleChatMessage.id,
           type: 'SimpleChatVideoMessage',
           videoUrl: simpleChatMessage.text,
         })
+      }
       setSimpleChatMessageObject({
         ...simpleChatMessage,
         type: 'SimpleChatTextMessage',
       })
     },
-  })
-)(SimpleChatMessage)
+    [simpleChatMessage]
+  )
+
+  if (simpleChatMessage._destroy) return null
+
+  return (
+    <FormSection
+      actions={
+        allowDelete && (
+          <Cancel
+            disabled={isCropping || isFormLoading}
+            index={simpleChatMessageIndex}
+            onClick={deleteSimpleChatMessage}
+          />
+        )
+      }
+      backgroundColor="#fff"
+      dragHandle
+      ellipsize
+      foldable
+      hideBottom
+      hideTop={index === 0}
+      title={setSimpleChatMessageTitle(simpleChatMessageObject)}
+    >
+      <MessageField
+        isCropping={isCropping}
+        isFormLoading={isFormLoading}
+        onFocus={onFocus}
+        onSimpleChatMessageEdit={onSimpleChatMessageEdit}
+        setIsCropping={setIsCropping}
+        setSimpleChatMessagePicture={setSimpleChatMessagePicture}
+        simpleChatMessage={simpleChatMessageObject}
+        simpleChatMessageIndex={simpleChatMessageIndex}
+      />
+    </FormSection>
+  )
+}
+
+export default SimpleChatMessage
