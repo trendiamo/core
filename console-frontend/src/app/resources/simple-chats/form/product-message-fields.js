@@ -1,6 +1,7 @@
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
 import { Field } from 'shared/form-elements'
+import { FormHelperText } from '@material-ui/core'
 
 const ProductMessagesForm = ({
   isCropping,
@@ -34,8 +35,10 @@ const ProductMessagesForm = ({
       onChange={onFormChange}
       onFocus={onFocus}
       required
+      type="URL"
       value={simpleChatMessage.url || ''}
     />
+    <FormHelperText>{'Use the whole url, eg: https://www.example.com/page1'}</FormHelperText>
     <Field
       disabled={isCropping || isFormLoading}
       fullWidth
