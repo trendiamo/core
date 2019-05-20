@@ -7,6 +7,7 @@ class SimpleChatStep < ApplicationRecord
 
   before_create :assign_order, unless: :order_changed?
 
+  validates :simple_chat_messages, presence: true
   validate :default_cannot_be_repeated
 
   def as_json(_options = {})
