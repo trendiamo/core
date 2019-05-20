@@ -71,9 +71,10 @@ const Account = ({ accounts, account, setAccounts }) => {
     () => {
       ;(async () => {
         setDialogOpen(false)
-        const { errors, requestError } = await apiRequest(apiAccountDestroy, [account.id])
+        const { errors, requestError, json } = await apiRequest(apiAccountDestroy, [account.id])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        if (json) enqueueSnackbar(json.message, { variant: 'success' })
         const filteredAccounts = accounts.filter(accountElement => accountElement.id !== account.id)
         setAccounts(filteredAccounts)
       })()

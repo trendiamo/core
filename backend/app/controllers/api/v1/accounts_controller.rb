@@ -21,7 +21,7 @@ module Api
         @account = Account.find(params[:id])
         authorize @account
         if @account.destroy
-          head :ok
+          render json: { message: "Successfully removed account" }
         else
           render_error
         end
