@@ -105,6 +105,7 @@ const ChatMessage = compose(
               picUrl: (log.message.picture && log.message.picture.url) || log.message.picUrl,
               url: log.message.url,
               displayPrice: log.message.displayPrice,
+              newTab: log.message.newTab,
             }
           : type === 'SimpleChatVideoMessage'
           ? extractYoutubeId(log.message.videoUrl)
