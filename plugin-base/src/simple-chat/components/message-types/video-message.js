@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers, withProps, withState } from 'recompose'
+import { branch, compose, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { IconPlayButton } from 'icons'
 
 const IconContainer = styled.div`
@@ -47,6 +47,7 @@ const VideoMessage = ({ onClick, onKeyUp, youtubePreviewImageUrl }) => (
 
 export default compose(
   withState('isOpen', 'setIsOpen', false),
+  branch(({ youtubeId }) => !youtubeId, renderNothing),
   withProps(({ youtubeId }) => ({
     youtubeEmbedUrl: `https://www.youtube.com/embed/${youtubeId}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
     youtubePreviewImageUrl: `https://img.youtube.com/vi/${youtubeId}/0.jpg`,
