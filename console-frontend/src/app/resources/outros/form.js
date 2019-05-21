@@ -13,11 +13,6 @@ import { FormHelperText, Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
-const defaultForm = {
-  personaId: '',
-  name: '',
-}
-
 const formObjectTransformer = json => {
   return {
     id: json.id,
@@ -131,12 +126,7 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
     onFormSubmit,
     setFieldValue,
     setIsFormSubmitting,
-  } = useForm({
-    formObjectTransformer,
-    loadFormObject,
-    saveFormObject,
-    defaultForm,
-  })
+  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
 
   const newOnFormSubmit = useCallback(
     event => {

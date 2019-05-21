@@ -9,12 +9,6 @@ import { Checkbox, FormControlLabel, FormHelperText, TextField } from '@material
 import { Prompt } from 'react-router'
 import { useSnackbar } from 'notistack'
 
-const defaultForm = {
-  hostnames: [''],
-  name: '',
-  previewMode: false,
-}
-
 const formObjectTransformer = json => {
   return {
     hostnames: json.hostnames || [''],
@@ -55,7 +49,6 @@ const EditWebsite = () => {
   const { form, isFormLoading, isFormPristine, isFormSubmitting, mergeForm, mergeFormCallback, onFormSubmit } = useForm(
     {
       formObjectTransformer,
-      defaultForm,
       loadFormObject,
       saveFormObject,
     }

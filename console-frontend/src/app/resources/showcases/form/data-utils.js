@@ -101,29 +101,4 @@ const formObjectTransformer = json => {
   }
 }
 
-const formObject = {
-  name: '',
-  chatBubbleText: '',
-  chatBubbleExtraText: '',
-  personaId: '',
-  title: '',
-  subtitle: '',
-  spotlightsAttributes: [
-    {
-      personaId: '',
-      productPicksAttributes: [
-        {
-          url: '',
-          name: '',
-          description: '',
-          displayPrice: '',
-          picUrl: '',
-          __key: 'new-0',
-        },
-      ],
-      __key: 'new-0',
-    },
-  ],
-}
-
-export { previewConverter, formObjectTransformer, formObject }
+export { previewConverter, formObjectTransformer }

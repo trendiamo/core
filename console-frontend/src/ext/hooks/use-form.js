@@ -1,7 +1,7 @@
 import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useMemo, useReducer } from 'react'
 
-const useForm = ({ defaultForm, formObjectTransformer, loadFormObject, saveFormObject }) => {
+const useForm = ({ formObjectTransformer, loadFormObject, saveFormObject }) => {
   const [state, dispatch] = useReducer(
     (state, action) => {
       if (action.type === 'merge') {
@@ -14,7 +14,7 @@ const useForm = ({ defaultForm, formObjectTransformer, loadFormObject, saveFormO
         throw new Error()
       }
     },
-    { form: defaultForm, initialForm: defaultForm, isFormLoading: true, isFormSubmitting: false }
+    { form: {}, initialForm: {}, isFormLoading: true, isFormSubmitting: false }
   )
   const setForm = useCallback(form => dispatch({ type: 'merge', value: { form } }), [dispatch])
   const mergeForm = useCallback(value => dispatch({ type: 'mergeForm', value }), [dispatch])

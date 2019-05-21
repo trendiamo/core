@@ -54,12 +54,6 @@ const StyledUrlTextField = styled(UrlTextField)`
 
 const options = { suggestionItem: 'withModuleIcon' }
 
-const defaultForm = {
-  flowId: '',
-  flowType: '',
-  urlMatchers: [''],
-}
-
 const formObjectTransformer = json => {
   return {
     id: json.id,
@@ -90,7 +84,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
     mergeForm,
     mergeFormCallback,
     setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, defaultForm, loadFormObject, saveFormObject })
+  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
 
   const addUrlSelect = useCallback(
     () => {

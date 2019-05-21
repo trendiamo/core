@@ -13,14 +13,6 @@ import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingConsumer, useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
-const defaultForm = {
-  name: '',
-  description: '',
-  profilePicUrl: '',
-  instagramUrl: '',
-  profilePicAnimationUrl: '',
-}
-
 const formObjectTransformer = json => {
   return {
     id: json.id,
@@ -71,7 +63,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
     setFieldValue,
     mergeForm,
     setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, defaultForm, loadFormObject, saveFormObject: newSaveFormObject })
+  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject: newSaveFormObject })
 
   const { onboarding, setOnboarding } = useOnboardingConsumer()
 

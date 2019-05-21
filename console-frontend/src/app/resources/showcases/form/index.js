@@ -7,7 +7,7 @@ import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
-import { formObject, formObjectTransformer } from './data-utils'
+import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
 import { history as pluginHistory, routes as pluginRoutes } from 'plugin-base'
 import { uploadPicture } from 'shared/picture-uploader'
@@ -81,7 +81,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     mergeForm,
     mergeFormCallback,
     setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, defaultForm: formObject, saveFormObject: newSaveFormObject, loadFormObject })
+  } = useForm({ formObjectTransformer, saveFormObject: newSaveFormObject, loadFormObject })
 
   useEffect(
     () => {

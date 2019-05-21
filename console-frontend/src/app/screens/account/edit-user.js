@@ -11,13 +11,6 @@ import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
-const defaultForm = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  profilePicUrl: '',
-}
-
 const formObjectTransformer = json => {
   return {
     email: json.email || '',
@@ -78,7 +71,6 @@ const EditUser = () => {
 
   const { form, isFormLoading, isFormPristine, isFormSubmitting, mergeForm, onFormSubmit, setFieldValue } = useForm({
     formObjectTransformer,
-    defaultForm,
     loadFormObject,
     saveFormObject,
   })
