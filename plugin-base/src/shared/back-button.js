@@ -2,6 +2,7 @@ import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
 import { animate } from 'shared/animate'
+import { compose, withHandlers } from 'recompose'
 import { IconChevronLeft } from 'icons'
 
 const Chevron = styled(IconChevronLeft)`
@@ -54,10 +55,14 @@ const Button = animate(styled(({ ...props }) => (
 `)
 
 const BackButton = ({ onClick, label, backButtonConfig = {}, hide, flexibleCover }) => (
-  <Button buttonConfig={backButtonConfig} flexibleCover={flexibleCover} hide={hide} onClick={hide ? () => {} : onClick}>
+  <Button buttonConfig={backButtonConfig} flexibleCover={flexibleCover} hide={hide} onClick={onClick}>
     <Chevron />
     <Span>{label || 'Back'}</Span>
   </Button>
 )
 
-export default BackButton
+export default compose(
+  withHandlers({
+    onClick: ({ hide, onClick }) => (hide ? () => {} : onClick),
+  })
+)(BackButton)

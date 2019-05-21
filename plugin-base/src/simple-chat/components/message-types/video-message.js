@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { compose, withProps, withState } from 'recompose'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import { IconPlayButton } from 'icons'
 
 const IconContainer = styled.div`
@@ -36,13 +36,8 @@ const Container = styled.div`
   }
 `
 
-const VideoMessage = ({ onClick, onKeyUp, youtubePreviewImageUrl, youtubeUrl, youtubeEmbedUrl }) => (
-  <Container
-    onClick={() => onClick({ type: 'clickVideoMessage', item: { youtubeUrl, youtubeEmbedUrl } })}
-    onKeyUp={onKeyUp}
-    role="button"
-    tabIndex={0}
-  >
+const VideoMessage = ({ onClick, onKeyUp, youtubePreviewImageUrl }) => (
+  <Container onClick={onClick} onKeyUp={onKeyUp} role="button" tabIndex={0}>
     <img alt="" src={youtubePreviewImageUrl} />
     <IconContainer>
       <IconPlayButton />
@@ -56,5 +51,9 @@ export default compose(
     youtubeEmbedUrl: `https://www.youtube.com/embed/${youtubeId}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
     youtubePreviewImageUrl: `https://img.youtube.com/vi/${youtubeId}/0.jpg`,
     youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
-  }))
+  })),
+  withHandlers({
+    onClick: ({ onClick, youtubeUrl, youtubeEmbedUrl }) => () =>
+      onClick({ type: 'clickVideoMessage', item: { youtubeUrl, youtubeEmbedUrl } }),
+  })
 )(VideoMessage)
