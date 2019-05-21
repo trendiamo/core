@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import SimpleChatStep from './simple-chat-step'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
@@ -48,6 +48,4 @@ const SimpleChatSteps = ({
   </div>
 )
 
-const SimpleChatStepsContainer = SortableContainer(SimpleChatSteps)
-
-export default SimpleChatStepsContainer
+export default memo(SortableContainer(SimpleChatSteps))

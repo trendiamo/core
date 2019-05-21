@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import HelpOutline from '@material-ui/icons/HelpOutline'
 import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
-import React, { useCallback, useContext } from 'react'
+import React, { memo, useCallback, useContext } from 'react'
 import styled from 'styled-components'
 import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core'
 import { StoreContext } from 'ext/hooks/store'
@@ -26,12 +26,14 @@ const StyledHelp = styled(IconButton)`
 
 const OnboardingButton = withRouter(({ location }) => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
+
   const handleClick = useCallback(
     () => {
       setOnboarding({ ...onboarding, help: { ...onboarding.help, run: true } })
     },
     [onboarding, setOnboarding]
   )
+
   if (location.pathname !== onboarding.help.pathname) return null
 
   return (
@@ -52,7 +54,7 @@ const Title = ({ text, classes, responsive, highlight }) => (
   </Typography>
 )
 
-const AppBarContent = ({ classes }) => {
+const AppBarContent = memo(({ classes }) => {
   const { store } = useContext(StoreContext)
   if (!store.appBarContent) return null
 
@@ -68,13 +70,13 @@ const AppBarContent = ({ classes }) => {
       <Title classes={classes} text={title} />
       {Actions && (
         <ButtonsContainer>
-          {<OnboardingButton />}
+          <OnboardingButton />
           {Actions}
         </ButtonsContainer>
       )}
     </>
   )
-}
+})
 
 const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
   <MuiAppBar
@@ -89,4 +91,4 @@ const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
   </MuiAppBar>
 )
 
-export default AppBar
+export default memo(AppBar)

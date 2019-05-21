@@ -29,6 +29,7 @@ const useForm = ({ formObjectTransformer, loadFormObject, saveFormObject }) => {
   )
 
   const isFormPristine = useMemo(() => isEqual(state.form, state.initialForm), [state.form, state.initialForm])
+
   const onFormSubmit = useCallback(
     async event => {
       event.preventDefault()
@@ -42,12 +43,9 @@ const useForm = ({ formObjectTransformer, loadFormObject, saveFormObject }) => {
     },
     [formObjectTransformer, saveFormObject, setForm, setInitialForm, setIsFormSubmitting, state.form]
   )
-  const setFieldValue = useCallback(
-    event => {
-      mergeForm({ [event.target.name]: event.target.value })
-    },
-    [mergeForm]
-  )
+
+  const setFieldValue = useCallback(event => mergeForm({ [event.target.name]: event.target.value }), [mergeForm])
+
   useEffect(
     () => {
       ;(async () => {
@@ -60,6 +58,7 @@ const useForm = ({ formObjectTransformer, loadFormObject, saveFormObject }) => {
     },
     [formObjectTransformer, loadFormObject, setInitialForm, setForm, setIsFormLoading]
   )
+
   useEffect(
     () => {
       setIsFormSubmitting(false)

@@ -5,7 +5,7 @@ import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
 import omit from 'lodash.omit'
 import pickBy from 'lodash.pickby'
-import React from 'react'
+import React, { memo } from 'react'
 import routes from 'app/routes'
 import styled, { keyframes } from 'styled-components'
 import UserMenu from './user-menu'
@@ -233,14 +233,13 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
   </div>
 )
 
-const Menu = ({ classes, location, menuLoaded, sidebarOpen, toggleOpen, ...rest }) => {
-  const { onboarding } = useOnboardingConsumer()
-
-  if (!menuLoaded && onboarding.stageIndex === 0 && location.pathname === routes.root()) {
+const BaseMenu = memo(({ classes, location, menuLoaded, sidebarOpen, stageIndex, toggleOpen }) => {
+  if (!menuLoaded && stageIndex === 0 && location.pathname === routes.root()) {
     return <DummyMenu />
   }
+
   return (
-    <Container {...rest}>
+    <Container>
       <div style={{ flex: 1 }}>
         <MenuLogo sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
         {Object.keys(permittedResourceGroups()).map(group => (
@@ -258,6 +257,21 @@ const Menu = ({ classes, location, menuLoaded, sidebarOpen, toggleOpen, ...rest 
       </div>
       <UserMenu classes={classes} sidebarOpen={sidebarOpen} />
     </Container>
+  )
+})
+
+const Menu = ({ classes, location, menuLoaded, sidebarOpen, toggleOpen }) => {
+  const { onboarding } = useOnboardingConsumer()
+
+  return (
+    <BaseMenu
+      classes={classes}
+      location={location}
+      menuLoaded={menuLoaded}
+      sidebarOpen={sidebarOpen}
+      stageIndex={onboarding.stageIndex}
+      toggleOpen={toggleOpen}
+    />
   )
 }
 

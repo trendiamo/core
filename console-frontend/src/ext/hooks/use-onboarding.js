@@ -1,7 +1,7 @@
 import auth from 'auth'
 import routes from 'app/routes'
 import { StoreContext } from 'ext/hooks/store'
-import { useCallback, useContext, useEffect, useReducer } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useReducer } from 'react'
 
 const initialOnboardingState = {
   stageIndex: 0,
@@ -12,6 +12,7 @@ const initialOnboardingState = {
 
 export const useOnboarding = location => {
   const { store, setStore } = useContext(StoreContext)
+
   const [onboarding, dispatch] = useReducer((state, action) => {
     if (action.type === 'merge') {
       return { ...state, ...action.value }
@@ -21,8 +22,10 @@ export const useOnboarding = location => {
       throw new Error()
     }
   }, initialOnboardingState)
+
   const setOnboarding = useCallback(value => dispatch({ type: 'merge', value }), [dispatch])
   const setOnboardingHelp = useCallback(value => dispatch({ type: 'mergeHelp', value }), [dispatch])
+
   useEffect(
     () => {
       const stageIndex = auth.getUser().onboardingStage
@@ -34,6 +37,7 @@ export const useOnboarding = location => {
     },
     [location, setOnboarding]
   )
+
   useEffect(
     () => {
       setStore({ onboarding, setOnboarding, setOnboardingHelp })
@@ -46,11 +50,17 @@ export const useOnboarding = location => {
 
 export const useOnboardingConsumer = () => {
   const { store } = useContext(StoreContext)
-  return {
-    onboarding: store.onboarding,
-    setOnboarding: store.setOnboarding,
-    setOnboardingHelp: store.setOnboardingHelp,
-  }
+
+  const onboardingInfo = useMemo(
+    () => ({
+      onboarding: store.onboarding,
+      setOnboarding: store.setOnboarding,
+      setOnboardingHelp: store.setOnboardingHelp,
+    }),
+    [store.onboarding, store.setOnboarding, store.setOnboardingHelp]
+  )
+
+  return onboardingInfo
 }
 
 export const useOnboardingHelp = help => {

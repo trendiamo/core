@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { Button } from '@material-ui/core'
 
@@ -19,4 +19,4 @@ const AddItemContainer = ({ message, ...props }) => (
   </Container>
 )
 
-export default AddItemContainer
+export default memo(AddItemContainer)

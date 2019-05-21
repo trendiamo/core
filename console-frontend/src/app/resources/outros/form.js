@@ -37,76 +37,82 @@ const BaseOutroForm = ({
   isFormPristine,
   onFormSubmit,
   title,
-}) => (
-  <Section title={title}>
-    <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
-      <Field
-        autoFocus
-        disabled={isFormLoading}
-        fullWidth
-        inputProps={atLeastOneNonBlankCharInputProps}
-        label="Name"
-        margin="normal"
-        name="name"
-        onChange={setFieldValue}
-        required
-        value={form.name}
-      />
-      <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
-      <Autocomplete
-        autocomplete={apiPersonasAutocomplete}
-        defaultPlaceholder="Choose a persona"
-        disabled={isFormLoading}
-        fullWidth
-        initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
-        label="Persona"
-        onChange={selectPersona}
-        options={options}
-        required
-      />
-      <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        inputProps={atLeastOneNonBlankCharInputProps}
-        label="Chat Bubble Text"
-        margin="normal"
-        max={characterLimits.main.chatBubble}
-        name="chatBubbleText"
-        onChange={setFieldValue}
-        required
-        value={form.chatBubbleText}
-      />
-      <FormHelperText>{'Question on whether users are satisfied with the help they got.'}</FormHelperText>
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        inputProps={atLeastOneNonBlankCharInputProps}
-        label="Chat Bubble 'YES' Button"
-        margin="normal"
-        max={characterLimits.main.chatBubbleButton}
-        name="chatBubbleButtonYes"
-        onChange={setFieldValue}
-        required
-        value={form.chatBubbleButtonYes}
-      />
-      <FormHelperText>{'Button that indicates a positive user response.'}</FormHelperText>
-      <Field
-        disabled={isFormLoading}
-        fullWidth
-        inputProps={atLeastOneNonBlankCharInputProps}
-        label="Chat Bubble 'NO' Button"
-        margin="normal"
-        max={characterLimits.main.chatBubbleButton}
-        name="chatBubbleButtonNo"
-        onChange={setFieldValue}
-        required
-        value={form.chatBubbleButtonNo}
-      />
-      <FormHelperText>{'Button that indicates a negative user response.'}</FormHelperText>
-    </Form>
-  </Section>
-)
+}) => {
+  const initialSelectedItem = useMemo(() => form.__persona && { value: form.__persona, label: form.__persona.name }, [
+    form.__persona,
+  ])
+
+  return (
+    <Section title={title}>
+      <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
+        <Field
+          autoFocus
+          disabled={isFormLoading}
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Name"
+          margin="normal"
+          name="name"
+          onChange={setFieldValue}
+          required
+          value={form.name}
+        />
+        <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
+        <Autocomplete
+          autocomplete={apiPersonasAutocomplete}
+          defaultPlaceholder="Choose a persona"
+          disabled={isFormLoading}
+          fullWidth
+          initialSelectedItem={initialSelectedItem}
+          label="Persona"
+          onChange={selectPersona}
+          options={options}
+          required
+        />
+        <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
+        <Field
+          disabled={isFormLoading}
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Chat Bubble Text"
+          margin="normal"
+          max={characterLimits.main.chatBubble}
+          name="chatBubbleText"
+          onChange={setFieldValue}
+          required
+          value={form.chatBubbleText}
+        />
+        <FormHelperText>{'Question on whether users are satisfied with the help they got.'}</FormHelperText>
+        <Field
+          disabled={isFormLoading}
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Chat Bubble 'YES' Button"
+          margin="normal"
+          max={characterLimits.main.chatBubbleButton}
+          name="chatBubbleButtonYes"
+          onChange={setFieldValue}
+          required
+          value={form.chatBubbleButtonYes}
+        />
+        <FormHelperText>{'Button that indicates a positive user response.'}</FormHelperText>
+        <Field
+          disabled={isFormLoading}
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Chat Bubble 'NO' Button"
+          margin="normal"
+          max={characterLimits.main.chatBubbleButton}
+          name="chatBubbleButtonNo"
+          onChange={setFieldValue}
+          required
+          value={form.chatBubbleButtonNo}
+        />
+        <FormHelperText>{'Button that indicates a negative user response.'}</FormHelperText>
+      </Form>
+    </Section>
+  )
+}
 
 const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFormObject }) => {
   const onboardingHelp = useMemo(

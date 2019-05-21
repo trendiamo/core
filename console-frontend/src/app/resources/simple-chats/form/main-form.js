@@ -1,6 +1,6 @@
 import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Field } from 'shared/form-elements'
@@ -11,6 +11,10 @@ const options = { suggestionItem: 'withAvatar' }
 const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, onToggleContent, isCropping }) => {
   const onFocus = useCallback(() => onToggleContent(false), [onToggleContent])
   const onTitleFocus = useCallback(() => onToggleContent(true), [onToggleContent])
+
+  const initialSelectedItem = useMemo(() => form.__persona && { value: form.__persona, label: form.__persona.name }, [
+    form.__persona,
+  ])
 
   return (
     <Section title={title}>
@@ -31,7 +35,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
         defaultPlaceholder="Choose a persona"
         disabled={isCropping || isFormLoading}
         fullWidth
-        initialSelectedItem={form.__persona && { value: form.__persona, label: form.__persona.name }}
+        initialSelectedItem={initialSelectedItem}
         label="Persona"
         onChange={selectPersona}
         options={options}

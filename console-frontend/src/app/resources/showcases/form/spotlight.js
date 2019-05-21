@@ -148,6 +148,11 @@ const Spotlight = ({
     [index, onChange, spotlight]
   )
 
+  const initialSelectedItem = useMemo(
+    () => spotlight.__persona && { value: spotlight.__persona, label: spotlight.__persona.name },
+    [spotlight.__persona]
+  )
+
   if (spotlight._destroy) return null
 
   return (
@@ -168,7 +173,7 @@ const Spotlight = ({
           defaultPlaceholder="Choose a persona"
           disabled={isCropping || isFormLoading}
           fullWidth
-          initialSelectedItem={spotlight.__persona && { value: spotlight.__persona, label: spotlight.__persona.name }}
+          initialSelectedItem={initialSelectedItem}
           label="Persona"
           onChange={selectPersona}
           onFocus={onFocus}

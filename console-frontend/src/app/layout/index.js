@@ -1,6 +1,5 @@
 import AppBar from './app-bar'
 import auth from 'auth'
-import Menu from './menu'
 import Onboarding from 'onboarding'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
@@ -26,7 +25,7 @@ const EmptyLayout = ({ classes, children }) => (
   </div>
 )
 
-const FilledLayout = ({ appBarContent, classes, children, location, logout }) => {
+const FilledLayout = ({ classes, children, location }) => {
   const { setStore } = useContext(StoreContext)
   const onboardingReady = useOnboarding(location)
   useEffect(
@@ -59,19 +58,10 @@ const FilledLayout = ({ appBarContent, classes, children, location, logout }) =>
       <div className={classes.appFrame}>
         <Onboarding />
         {!isWelcomePage && (
-          <AppBar
-            appBarContent={appBarContent}
-            classes={classes}
-            hasScrolled={hasScrolled}
-            logout={logout}
-            sidebarOpen={sidebarOpen}
-            toggleOpen={toggleOpen}
-          />
+          <AppBar classes={classes} hasScrolled={hasScrolled} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
         )}
         <main className={classes.contentWithSidebar}>
-          <Sidebar classes={classes} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen}>
-            <Menu classes={classes} logout={logout} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-          </Sidebar>
+          <Sidebar classes={classes} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
           <div className={classes.content}>
             <div className={classes.contentInnerDiv}>{children}</div>
           </div>
@@ -81,13 +71,17 @@ const FilledLayout = ({ appBarContent, classes, children, location, logout }) =>
   )
 }
 
-const Layout = ({ location, ...props }) => {
+const Layout = ({ classes, children, location }) => {
   const isLoggedIn = auth.isLoggedIn()
   const isAdminPage = useMemo(() => location.pathname === routes.admin(), [location.pathname])
 
-  if (!isLoggedIn || isAdminPage) return <EmptyLayout {...props} />
+  if (!isLoggedIn || isAdminPage) return <EmptyLayout classes={classes}>{children}</EmptyLayout>
 
-  return <FilledLayout {...props} location={location} />
+  return (
+    <FilledLayout classes={classes} location={location}>
+      {children}
+    </FilledLayout>
+  )
 }
 
 export default withRouter(withStyles(styles, { index: 1 })(Layout))

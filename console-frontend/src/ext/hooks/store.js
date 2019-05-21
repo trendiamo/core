@@ -11,6 +11,7 @@ export const StoreProvider = ({ children }) => {
       throw new Error()
     }
   }, {})
+
   const setStore = useCallback(value => dispatch({ type: 'merge', value }), [dispatch])
 
   const value = useMemo(() => ({ store, setStore }), [setStore, store])

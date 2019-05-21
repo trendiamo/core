@@ -1,12 +1,13 @@
 import classNames from 'classnames'
-import React, { useEffect, useState } from 'react'
+import Menu from './menu'
+import React, { memo, useEffect, useState } from 'react'
 import { Drawer, Hidden, withWidth } from '@material-ui/core'
 
 const ModalProps = {
   keepMounted: true, // Better open performance on mobile.
 }
 
-const Sidebar = ({ children, classes, sidebarOpen, toggleOpen }) => {
+const Sidebar = ({ classes, sidebarOpen, toggleOpen }) => {
   const [menuLoaded, setMenuLoaded] = useState(false)
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Sidebar = ({ children, classes, sidebarOpen, toggleOpen }) => {
           open={sidebarOpen}
           variant="temporary"
         >
-          {React.cloneElement(children, { menuLoaded })}
+          <Menu classes={classes} menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
         </Drawer>
       </Hidden>
       <Hidden implementation="js" smDown>
@@ -42,7 +43,7 @@ const Sidebar = ({ children, classes, sidebarOpen, toggleOpen }) => {
           open={sidebarOpen}
           variant="permanent"
         >
-          {React.cloneElement(children, { menuLoaded })}
+          <Menu classes={classes} menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
         </Drawer>
       </Hidden>
     </>
@@ -50,4 +51,4 @@ const Sidebar = ({ children, classes, sidebarOpen, toggleOpen }) => {
 }
 
 // withWidth used to initialize the visibility on first render
-export default withWidth({ resizeInterval: Infinity, noSSR: true })(Sidebar)
+export default withWidth({ resizeInterval: Infinity, noSSR: true })(memo(Sidebar))

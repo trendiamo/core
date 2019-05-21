@@ -1,5 +1,5 @@
 import omit from 'lodash.omit'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
@@ -81,4 +81,4 @@ const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...prop
   )
 }
 
-export default Field
+export default memo(Field)

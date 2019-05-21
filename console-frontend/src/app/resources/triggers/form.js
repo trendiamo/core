@@ -171,6 +171,11 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
     [hostnames]
   )
 
+  const initialSelectedItem = useMemo(
+    () => form.flowId && { value: { id: form.flowId, type: form.flowType }, label: form.flowLabel },
+    [form.flowId, form.flowLabel, form.flowType]
+  )
+
   useEffect(
     () => {
       ;(async () => {
@@ -197,9 +202,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
             defaultPlaceholder="Choose a Module"
             disabled={isFormLoading}
             fullWidth
-            initialSelectedItem={
-              form.flowId && { value: { id: form.flowId, type: form.flowType }, label: form.flowLabel }
-            }
+            initialSelectedItem={initialSelectedItem}
             initialValueFormatMismatch
             label="Module"
             onChange={selectFlow}

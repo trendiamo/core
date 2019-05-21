@@ -1,19 +1,21 @@
 import { StoreContext } from 'ext/hooks/store'
 import { useContext, useEffect } from 'react'
 
-const setPageTitle = ({ title }) => {
+const setPageTitle = title => {
   if (!title) return
   document.title = `${title} - Frekkls Admin`
 }
 
 const useAppBarContent = appBarContent => {
   const { setStore } = useContext(StoreContext)
+
   useEffect(
     () => {
-      setPageTitle(appBarContent)
+      setPageTitle(appBarContent.title)
     },
-    [appBarContent]
+    [appBarContent.title]
   )
+
   useEffect(
     () => {
       setStore({ appBarContent })

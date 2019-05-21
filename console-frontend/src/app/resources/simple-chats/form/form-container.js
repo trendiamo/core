@@ -1,7 +1,7 @@
 import MainForm from './main-form'
 import omit from 'lodash.omit'
 import React, { useMemo } from 'react'
-import SimpleChatStepsContainer from './simple-chat-steps'
+import SimpleChatSteps from './simple-chat-steps'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 
@@ -44,10 +44,12 @@ const FormContainer = ({
   )
   useAppBarContent(appBarContent)
 
+  const mainForm = useMemo(() => omit(form, ['simpleChatStepsAttributes']), [form])
+
   return (
     <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <MainForm
-        form={omit(form, ['simpleChatStepsAttributes'])}
+        form={mainForm}
         isCropping={isCropping}
         isFormLoading={isFormLoading}
         onToggleContent={onToggleContent}
@@ -55,7 +57,7 @@ const FormContainer = ({
         setFieldValue={setFieldValue}
         title={title}
       />
-      <SimpleChatStepsContainer
+      <SimpleChatSteps
         allowDelete={form.simpleChatStepsAttributes.length > 1}
         helperClass="sortable-element"
         isCropping={isCropping}

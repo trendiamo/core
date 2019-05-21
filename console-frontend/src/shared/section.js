@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { Divider, FlexBar, Header } from 'shared/form-elements'
 import { Paper } from '@material-ui/core'
@@ -35,4 +35,4 @@ const Section = ({ title, children, actions }) => (
   </StyledPaper>
 )
 
-export default Section
+export default memo(Section)
