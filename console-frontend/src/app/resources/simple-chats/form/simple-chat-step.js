@@ -200,6 +200,11 @@ const SimpleChatStep = ({
     [closeMenu, onChange, simpleChatStep, simpleChatStepIndex]
   )
 
+  const onFocus = useCallback(() => onToggleContent(true) && collapseOtherSimpleChatSteps, [
+    collapseOtherSimpleChatSteps,
+    onToggleContent,
+  ])
+
   if (simpleChatStep._destroy) return null
 
   return (
@@ -229,7 +234,7 @@ const SimpleChatStep = ({
               margin="normal"
               name="simpleChatStep_key"
               onChange={editSimpleChatStepValue}
-              onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
+              onFocus={onFocus}
               required
               value={simpleChatStep.key}
             />
@@ -241,7 +246,7 @@ const SimpleChatStep = ({
               isCropping={isCropping}
               isFormLoading={isFormLoading}
               onChange={setSimpleChatMessagesForm}
-              onFocus={() => onToggleContent(true) && collapseOtherSimpleChatSteps}
+              onFocus={onFocus}
               onSortEnd={onSimpleChatMessagesSortEnd}
               setIsCropping={setIsCropping}
               setSimpleChatMessagePicture={setSimpleChatMessagePicture}
