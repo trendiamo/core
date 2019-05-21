@@ -3,7 +3,7 @@ import PluginPreview from 'shared/plugin-preview/index'
 import React, { useMemo } from 'react'
 import { Launcher } from 'plugin-base'
 
-const Preview = ({ position, form, onToggleContent, showingContent }) => {
+const Preview = ({ form }) => {
   const bubbleButtons = useMemo(
     () => ({
       chatBubbleButtonYes: form.chatBubbleButtonYes,
@@ -21,11 +21,8 @@ const Preview = ({ position, form, onToggleContent, showingContent }) => {
     <PluginPreview
       bubbleButtons={bubbleButtons}
       bubbleText={form.chatBubbleText}
-      Launcher={<Launcher personaPicUrl={personaPicUrl} position={position} showingContent={showingContent} />}
+      Launcher={<Launcher personaPicUrl={personaPicUrl} />}
       launcherConfig={launcherConfig}
-      onToggleContent={onToggleContent}
-      position={position}
-      showingContent={showingContent}
     />
   )
 }

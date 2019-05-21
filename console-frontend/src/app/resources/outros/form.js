@@ -33,7 +33,7 @@ const formObjectTransformer = json => {
 
 const options = { suggestionItem: 'withAvatar' }
 
-const OutroForm = ({
+const BaseOutroForm = ({
   formRef,
   form,
   setFieldValue,
@@ -113,18 +113,7 @@ const OutroForm = ({
   </Section>
 )
 
-const OutroForm1 = props => (
-  <Grid container spacing={24}>
-    <Grid item md={6} xs={12}>
-      <OutroForm {...props} />
-    </Grid>
-    <Grid item md={6} xs={12}>
-      <PluginPreview {...props} />
-    </Grid>
-  </Grid>
-)
-
-const OutroForm2 = ({ backRoute, title, location, history, ...props }) => {
+const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFormObject }) => {
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
@@ -143,8 +132,9 @@ const OutroForm2 = ({ backRoute, title, location, history, ...props }) => {
     setFieldValue,
     setIsFormSubmitting,
   } = useForm({
-    ...props,
     formObjectTransformer,
+    loadFormObject,
+    saveFormObject,
     defaultForm,
   })
 
@@ -195,19 +185,24 @@ const OutroForm2 = ({ backRoute, title, location, history, ...props }) => {
   if (isFormLoading) return <CircularProgress />
 
   return (
-    <OutroForm1
-      {...props}
-      form={form}
-      formRef={formRef}
-      isFormLoading={isFormLoading}
-      isFormPristine={isFormPristine}
-      location={location}
-      onFormSubmit={newOnFormSubmit}
-      selectPersona={selectPersona}
-      setFieldValue={setFieldValue}
-      title={title}
-    />
+    <Grid container spacing={24}>
+      <Grid item md={6} xs={12}>
+        <BaseOutroForm
+          form={form}
+          formRef={formRef}
+          isFormLoading={isFormLoading}
+          isFormPristine={isFormPristine}
+          onFormSubmit={newOnFormSubmit}
+          selectPersona={selectPersona}
+          setFieldValue={setFieldValue}
+          title={title}
+        />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <PluginPreview form={form} />
+      </Grid>
+    </Grid>
   )
 }
 
-export default withRouter(OutroForm2)
+export default withRouter(OutroForm)
