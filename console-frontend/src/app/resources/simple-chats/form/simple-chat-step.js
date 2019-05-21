@@ -8,7 +8,7 @@ import { AddItemButton, Cancel, Field, FormSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
-import { MessageOutlined, OndemandVideo, Redeem } from '@material-ui/icons'
+import { MessageOutlined, OndemandVideo, PhotoLibrary, Redeem } from '@material-ui/icons'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const StyledAddItemButton = styled(props => <AddItemButton {...omit(props, ['adjustMargin'])} />)`
@@ -21,12 +21,17 @@ const MessageIcon = styled(MessageOutlined)`
   margin-right: 6px;
 `
 
-const VideoIcon = styled(OndemandVideo)`
+const ProductIcon = styled(Redeem)`
   font-size: 18px;
   margin-right: 6px;
 `
 
-const ProductIcon = styled(Redeem)`
+const PictureIcon = styled(PhotoLibrary)`
+  font-size: 18px;
+  margin-right: 6px;
+`
+
+const VideoIcon = styled(OndemandVideo)`
   font-size: 18px;
   margin-right: 6px;
 `
@@ -96,9 +101,9 @@ const SimpleChatStep = ({
   onToggleContent,
   setIsCropping,
   setSimpleChatMessagesPictures,
+  simpleChatMessagesPictures,
   simpleChatStep,
   simpleChatStepIndex,
-  simpleChatMessagesPictures,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -107,15 +112,7 @@ const SimpleChatStep = ({
   }, [])
 
   const deleteSimpleChatStep = useCallback(
-    () => {
-      onChange(
-        {
-          id: simpleChatStep.id,
-          _destroy: true,
-        },
-        simpleChatStepIndex
-      )
-    },
+    () => onChange({ id: simpleChatStep.id, _destroy: true }, simpleChatStepIndex),
     [onChange, simpleChatStep.id, simpleChatStepIndex]
   )
 
@@ -181,7 +178,9 @@ const SimpleChatStep = ({
           ? { text: '' }
           : messageType === 'SimpleChatProductMessage'
           ? { title: '', picUrl: '', url: '', displayPrice: '' }
-          : { videoUrl: '' }
+          : messageType === 'SimpleChatVideoMessage'
+          ? { videoUrl: '' }
+          : { picUrl: '' }
       onChange(
         {
           ...simpleChatStep,
@@ -280,6 +279,10 @@ const SimpleChatStep = ({
             <MenuItem onClick={addSimpleChatMessage} value="SimpleChatProductMessage">
               <ProductIcon />
               {'Product'}
+            </MenuItem>
+            <MenuItem onClick={addSimpleChatMessage} value="SimpleChatPictureMessage">
+              <PictureIcon />
+              {'Picture'}
             </MenuItem>
             <MenuItem onClick={addSimpleChatMessage} value="SimpleChatVideoMessage">
               <VideoIcon />

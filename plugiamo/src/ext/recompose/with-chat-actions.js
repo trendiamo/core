@@ -11,6 +11,8 @@ const withChatActions = () => BaseComponent =>
     withState('imagesModalIndex', 'setImagesModalIndex', null),
     withState('imagesModalUrls', 'setImagesModalUrls', []),
     withState('imagesModalTouch', 'setImagesModalTouch', false),
+    withState('pictureModalOpen', 'setPictureModalOpen', false),
+    withState('pictureItem', 'setPictureItem', null),
     withHandlers({
       closeVideoModal: ({ videoItem, setVideoModalOpen, module }) => () => {
         mixpanel.track('Closed Video', {
@@ -19,6 +21,14 @@ const withChatActions = () => BaseComponent =>
           url: videoItem.youtubeUrl,
         })
         setVideoModalOpen(false)
+      },
+      closePictureModal: ({ module, pictureItem, setPictureModalOpen }) => () => {
+        mixpanel.track('Closed Picture', {
+          flowType: (module && module.flowType) || 'simpleChat',
+          hostname: location.hostname,
+          url: pictureItem.url,
+        })
+        setPictureModalOpen(false)
       },
     }),
     withProps(
@@ -34,6 +44,9 @@ const withChatActions = () => BaseComponent =>
         setImagesModalUrls,
         imagesModalTouch,
         setImagesModalTouch,
+        pictureModalOpen,
+        closePictureModal,
+        pictureItem,
       }) => ({
         modalsProps: {
           videoModalOpen,
@@ -47,6 +60,9 @@ const withChatActions = () => BaseComponent =>
           setImagesModalUrls,
           imagesModalTouch,
           setImagesModalTouch,
+          pictureModalOpen,
+          closePictureModal,
+          pictureItem,
         },
       })
     ),
@@ -116,6 +132,15 @@ const withChatActions = () => BaseComponent =>
         markGoFwd()
         window.location.href = item.url
       },
+      clickPictureMessage: ({ module, setPictureItem, setPictureModalOpen }) => ({ item }) => {
+        mixpanel.track('Clicked Picture', {
+          flowType: (module && module.flowType) || 'simpleChat',
+          hostname: location.hostname,
+          url: item.url,
+        })
+        setPictureItem(item)
+        setPictureModalOpen(true)
+      },
     }),
     withProps(
       ({
@@ -127,6 +152,7 @@ const withChatActions = () => BaseComponent =>
         touchImageCarousel,
         clickChatOption,
         clickLink,
+        clickPictureMessage,
       }) => {
         return {
           clickActions: {
@@ -138,6 +164,7 @@ const withChatActions = () => BaseComponent =>
             touchImageCarousel,
             clickChatOption,
             clickLink,
+            clickPictureMessage,
           },
         }
       }

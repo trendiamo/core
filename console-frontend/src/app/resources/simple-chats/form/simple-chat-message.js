@@ -1,3 +1,4 @@
+import PictureMessageField from './picture-message-field'
 import ProductMessageFields from './product-message-fields'
 import React, { useCallback, useEffect, useState } from 'react'
 import TextMessageFields from './text-message-fields'
@@ -13,6 +14,8 @@ const setSimpleChatMessageTitle = simpleChatMessage => {
       return simpleChatMessage.id ? `Product: ${simpleChatMessage.title}` : 'New product'
     case 'SimpleChatVideoMessage':
       return simpleChatMessage.id ? `Video: ${simpleChatMessage.videoUrl}` : 'New video'
+    case 'SimpleChatPictureMessage':
+      return simpleChatMessage.id ? `Picture: ${simpleChatMessage.picUrl.split('/').pop()}` : 'New picture'
     default:
       return 'New message'
   }
@@ -61,6 +64,18 @@ const MessageField = ({
           name="simpleChatMessage_video"
           onChange={onSimpleChatMessageEdit}
           onFocus={onFocus}
+          simpleChatMessage={simpleChatMessage}
+          simpleChatMessageIndex={simpleChatMessageIndex}
+        />
+      )
+    case 'SimpleChatPictureMessage':
+      return (
+        <PictureMessageField
+          isCropping={isCropping}
+          name="simpleChatMessage_picture"
+          onChange={onSimpleChatMessageEdit}
+          setIsCropping={setIsCropping}
+          setSimpleChatMessagePicture={setSimpleChatMessagePicture}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
         />
