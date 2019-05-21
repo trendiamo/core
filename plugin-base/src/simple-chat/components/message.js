@@ -7,6 +7,7 @@ import {
   AssessmentProducts,
   AssessmentStepOptions,
   ImgCarouselMessage,
+  PictureMessage,
   ProductCarouselMessage,
   ProductMessage,
   TextMessage,
@@ -47,6 +48,8 @@ const ChatMessageTemplate = ({ data, type, show, hideAll, onClick, clickable, no
       <VideoMessage onClick={onClick} youtubeId={data} />
     ) : type === 'SimpleChatProductMessage' ? (
       <ProductMessage onClick={onClick} product={data} />
+    ) : type === 'SimpleChatPictureMessage' ? (
+      <PictureMessage onClick={onClick} picUrl={data} />
     ) : type === 'productCarousel' ? (
       <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
     ) : type === 'imageCarousel' ? (
@@ -109,6 +112,8 @@ const ChatMessage = compose(
             }
           : type === 'SimpleChatVideoMessage'
           ? extractYoutubeId(log.message.videoUrl)
+          : type === 'SimpleChatPictureMessage'
+          ? (log.message.picture && log.message.picture.url) || log.message.picUrl
           : log.message[type]
       return { type, data }
     },

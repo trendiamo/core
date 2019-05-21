@@ -37,8 +37,7 @@ class PopulateShowcases
       name: Faker::Lorem.words.join(" ").capitalize,
       description: Faker::Lorem.sentence,
       display_price: "€#{Faker::Number.decimal(2)}",
-      pic_url: Faker::LoremPixel.image,
-      pic: Picture.find_or_create_by!(url: Faker::LoremPixel.image("300x300", false, "fashion")),
+      pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
       order: product_pick_index + 1,
     }
   end
@@ -86,12 +85,14 @@ class PopulateSimpleChats
   end
 
   def simple_chat_messages_attributes
-    simple_chat_text_messages_attributes.concat(simple_chat_product_messages_attributes)
-                                        .concat(simple_chat_video_messages_attributes)
+    simple_chat_text_messages_attributes
+      .concat(simple_chat_product_messages_attributes)
+      .concat(simple_chat_video_messages_attributes)
+      .concat(simple_chat_picture_messages_attributes)
   end
 
   def simple_chat_text_messages_attributes
-    Array.new(rand(0..3)) do
+    Array.new(rand(0..2)) do
       {
         text: Faker::Lorem.sentence,
       }
@@ -99,11 +100,11 @@ class PopulateSimpleChats
   end
 
   def simple_chat_product_messages_attributes
-    Array.new(rand(0..3)) do
+    Array.new(rand(0..2)) do
       {
         type: "SimpleChatProductMessage",
         title: Faker::Lorem.sentence,
-        pic: Picture.find_or_create_by!(url: Faker::LoremPixel.image("300x300", false, "fashion")),
+        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
         url: Faker::Internet.url,
         display_price: "€#{Faker::Number.decimal(2)}",
       }
@@ -111,10 +112,19 @@ class PopulateSimpleChats
   end
 
   def simple_chat_video_messages_attributes
-    Array.new(rand(0..3)) do
+    Array.new(rand(0..2)) do
       {
         type: "SimpleChatVideoMessage",
         video_url: "https://www.youtube.com/watch?v=#{%w[ytqp1xD9fgA 99Qs6Vlj-Oc aATDh1G28hM].sample}",
+      }
+    end
+  end
+
+  def simple_chat_picture_messages_attributes
+    Array.new(rand(0..2)) do
+      {
+        type: "SimpleChatPictureMessage",
+        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
       }
     end
   end
@@ -188,7 +198,6 @@ class Populate
       persona_attrs = {
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
-        profile_pic_url: "https://randomuser.me/api/portraits/women/#{i % 99}.jpg",
         profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg"),
       }
       Persona.create!(persona_attrs)
