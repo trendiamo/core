@@ -56,6 +56,8 @@ const EnhancedList = ({
   )
   useOnboardingHelp(onboardingHelp)
 
+  const { enqueueSnackbar } = useSnackbar()
+
   const [state, dispatch] = useReducer(
     (state, action) => {
       if (action.type === 'setOrder') {
@@ -133,8 +135,6 @@ const EnhancedList = ({
     }),
     [state.page, state.orderBy, state.orderDirection, state.rowsPerPage]
   )
-
-  const { enqueueSnackbar } = useSnackbar()
 
   const inactiveRows = state.records.map(record => {
     return highlightInactive ? highlightInactive.every(column => record[column] && isEmpty(record[column])) : false
