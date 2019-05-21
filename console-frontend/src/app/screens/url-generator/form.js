@@ -82,6 +82,7 @@ const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
 )
 
 const options = {}
+const autocompleteOptions = { suggestionItem: 'withAvatar' }
 
 const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, urlHistory }) => {
   const { enqueueSnackbar } = useSnackbar()
@@ -192,7 +193,7 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
             label="Persona"
             noMargin
             onChange={selectPersona}
-            options={{ suggestionItem: 'withAvatar' }}
+            options={autocompleteOptions}
           />
         ) : (
           <AddOptionButton option="persona" optionLabel="Set Persona" showOption={showOption} />

@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer } from 'react'
+import React, { useCallback, useMemo, useReducer } from 'react'
 import { createContext } from 'react'
 
 export const StoreContext = createContext(null)
@@ -13,5 +13,7 @@ export const StoreProvider = ({ children }) => {
   }, {})
   const setStore = useCallback(value => dispatch({ type: 'merge', value }), [dispatch])
 
-  return <StoreContext.Provider value={{ store, setStore }}>{children}</StoreContext.Provider>
+  const value = useMemo(() => ({ store, setStore }), [setStore, store])
+
+  return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }

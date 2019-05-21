@@ -36,6 +36,10 @@ const extractCountFromHeaders = headers =>
     10
   )
 
+const backIconButtonProps = {
+  'aria-label': 'Previous Page',
+}
+
 const EnhancedList = ({
   api,
   BlankState,
@@ -258,9 +262,7 @@ const EnhancedList = ({
         </TableBody>
       </Table>
       <TablePagination
-        backIconButtonProps={{
-          'aria-label': 'Previous Page',
-        }}
+        backIconButtonProps={backIconButtonProps}
         component="div"
         count={state.recordsCount}
         nextIconButtonProps={{

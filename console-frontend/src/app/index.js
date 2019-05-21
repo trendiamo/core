@@ -145,13 +145,15 @@ const AppBase = () => {
   )
 }
 
+const anchorOrigin = { vertical: 'bottom', horizontal: 'right' }
+
 /* eslint-disable react/jsx-max-depth */
 export const App = ({ history }) => (
   <StoreProvider>
     <Router history={history}>
       <JssProvider generateClassName={generateClassName} jss={jss}>
         <MuiThemeProvider theme={theme}>
-          <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} maxSnack={3}>
+          <SnackbarProvider anchorOrigin={anchorOrigin} maxSnack={3}>
             <AppBase />
           </SnackbarProvider>
         </MuiThemeProvider>

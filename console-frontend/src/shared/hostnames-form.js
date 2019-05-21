@@ -13,9 +13,6 @@ const StyledAddCircleOutline = styled(AddCircleOutline)`
   color: #6c6c6c;
 `
 
-const hostnamePattern =
-  '(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z]|[A-Za-z][A-Za-z0-9-]*[A-Za-z0-9])'
-
 const StyledTypography = styled(Typography)`
   margin-left: 10px;
 `
@@ -49,6 +46,10 @@ const Cancel = ({ index, onClick, disabled, ...props }) => {
   return <MuiCancel {...props} disabled={disabled} onClick={deleteHostname} />
 }
 
+const hostnamePattern =
+  '(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z]|[A-Za-z][A-Za-z0-9-]*[A-Za-z0-9])'
+const inputProps = { pattern: hostnamePattern }
+
 const HostnamesForm = ({ form, addHostnameSelect, editHostnameValue, deleteHostname, isFormLoading }) => (
   <>
     <LabelContainer>
@@ -60,7 +61,7 @@ const HostnamesForm = ({ form, addHostnameSelect, editHostnameValue, deleteHostn
         <StyledHostnameTextField
           disabled={isFormLoading}
           index={index}
-          inputProps={{ pattern: hostnamePattern }}
+          inputProps={inputProps}
           onChange={editHostnameValue}
           required
           value={hostname}

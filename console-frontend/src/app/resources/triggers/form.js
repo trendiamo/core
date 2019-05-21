@@ -170,6 +170,13 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
   )
   useAppBarContent(appBarContent)
 
+  const inputProps = useMemo(
+    () => ({
+      pattern: hostnames.includes('www.pionier-workwear.com') ? pathAndSearchPattern : pathPattern,
+    }),
+    [hostnames]
+  )
+
   useEffect(
     () => {
       ;(async () => {
@@ -216,9 +223,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
                     disabled={isFormLoading}
                     hostnames={hostnames}
                     index={index}
-                    inputProps={{
-                      pattern: hostnames.includes('www.pionier-workwear.com') ? pathAndSearchPattern : pathPattern,
-                    }}
+                    inputProps={inputProps}
                     onChange={editUrlValue}
                     required
                     value={url}

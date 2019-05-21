@@ -17,6 +17,9 @@ const MenuItemThemed = ({ classes, icon, text, ...props }) => (
   </MenuItem>
 )
 
+const anchorOrigin = { horizontal: 'center', vertical: 'top' }
+const transformOrigin = { horizontal: 'center', vertical: 'top' }
+
 const UserMenu = ({ classes, sidebarOpen }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [user, setUser] = useState(auth.getUser())
@@ -25,7 +28,7 @@ const UserMenu = ({ classes, sidebarOpen }) => {
     () => (!user.firstName || !user.lastName ? null : `${user.firstName[0]}${user.lastName[0]}`),
     [user.firstName, user.lastName]
   )
-  const openMenu = useMemo(() => Boolean(anchorEl), [anchorEl])
+  const isMenuOpen = useMemo(() => Boolean(anchorEl), [anchorEl])
   const userIdentifier = useMemo(
     () => (!user.firstName || !user.lastName ? null : `${user.firstName} ${user.lastName}`) || user.email,
     [user.email, user.firstName, user.lastName]
@@ -57,7 +60,7 @@ const UserMenu = ({ classes, sidebarOpen }) => {
     <div>
       <MenuItem
         aria-haspopup="true"
-        aria-owns={openMenu ? 'menu-appbar' : null}
+        aria-owns={isMenuOpen ? 'menu-appbar' : null}
         className={classNames(classes.menuItem)}
         onClick={handleMenu}
         style={{ height: 'auto', ...(!sidebarOpen ? { paddingLeft: '12px', paddingRight: '12px' } : {}) }}
@@ -72,18 +75,12 @@ const UserMenu = ({ classes, sidebarOpen }) => {
       </MenuItem>
       <Menu
         anchorEl={anchorEl}
-        anchorOrigin={{
-          horizontal: 'center',
-          vertical: 'top',
-        }}
+        anchorOrigin={anchorOrigin}
         className={classes.accountMenu}
         id="menu-appbar"
         onClick={handleClose}
-        open={openMenu}
-        transformOrigin={{
-          horizontal: 'center',
-          vertical: 'top',
-        }}
+        open={isMenuOpen}
+        transformOrigin={transformOrigin}
       >
         {auth.isAdmin() && (
           <Link to={routes.admin()}>

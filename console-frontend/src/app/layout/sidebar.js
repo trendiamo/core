@@ -2,6 +2,10 @@ import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { Drawer, Hidden, withWidth } from '@material-ui/core'
 
+const ModalProps = {
+  keepMounted: true, // Better open performance on mobile.
+}
+
 const Sidebar = ({ children, classes, sidebarOpen, toggleOpen }) => {
   const [menuLoaded, setMenuLoaded] = useState(false)
 
@@ -21,9 +25,7 @@ const Sidebar = ({ children, classes, sidebarOpen, toggleOpen }) => {
           classes={{
             paper: classes.drawerPaper,
           }}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
+          ModalProps={ModalProps}
           onClose={toggleOpen}
           open={sidebarOpen}
           variant="temporary"

@@ -27,6 +27,8 @@ const formObjectTransformer = json => {
   }
 }
 
+const inputProps = { pattern: '.*S+.*' }
+
 const EditUser = () => {
   const { enqueueSnackbar } = useSnackbar()
 
@@ -105,7 +107,7 @@ const EditUser = () => {
         disabled
         fullWidth
         id="email"
-        inputProps={{ pattern: '.*S+.*' }}
+        inputProps={inputProps}
         label="Email"
         margin="normal"
         required
