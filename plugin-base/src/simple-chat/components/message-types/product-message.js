@@ -45,13 +45,13 @@ const CtaTextContainer = styled.div`
 `
 
 const ProductCard = styled(Card)`
-  minwidth: 260px;
+  min-width: 260px;
   cursor: pointer;
 `
 
 const ProductImage = styled(CardImg)`
-  object-fit: cover;
   height: 180px;
+  border-radius: 12px 12px 0 0 !important;
 `
 
 const Link = styled.a`

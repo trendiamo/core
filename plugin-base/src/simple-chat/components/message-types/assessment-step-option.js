@@ -45,12 +45,10 @@ const Background = styled.div`
 `
 
 const Box = styled.div`
-  border-radius: 6px;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.11);
+  border-radius: 12px;
   background-color: #fff;
   height: 150px;
   cursor: pointer;
-
   position: relative;
   transition: background-color 0.4s linear;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -141,7 +139,7 @@ const Content = styled.div`
   left: 0;
   right: 0;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 12px;
 
   display: flex;
   flex-direction: column;

@@ -17,10 +17,9 @@ const CardsContainer = styled.div`
 
 const Card = styled.div`
   background-color: #fff;
-  border-radius: 7px;
+  border-radius: 12px;
   overflow: hidden;
   min-width: 112px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   margin-right: 1rem;
 `
 
@@ -30,7 +29,9 @@ const CardContent = styled.div`
 
 const CardImg = styled.img`
   width: 100%;
-  border-radius: 7px 7px 0 0;
+  border-radius: 12px;
+  object-fit: cover;
+  cursor: pointer;
 `
 
 export { Card, CardContent, CardImg, CardsContainer, CardsWrapper }
