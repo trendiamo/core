@@ -52,6 +52,8 @@ module Api
       end
 
       def sorting_by_active_state(chain, direction)
+        return chain if params[:controller] == "api/v1/pictures"
+
         direction = direction == "desc" ? "asc" : "desc"
         chain.left_joins(:triggers).group(:id).order("count(triggers.id) #{direction}")
       end
