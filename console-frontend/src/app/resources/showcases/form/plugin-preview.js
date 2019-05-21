@@ -5,15 +5,7 @@ import { Launcher } from 'plugin-base'
 import { history as pluginHistory, Showcase as ShowcaseBase } from 'plugin-base'
 import { previewConverter } from './data-utils'
 
-const Preview = ({
-  previewCallbacks,
-  routeToShowcase,
-  position,
-  routeToSpotlight,
-  form,
-  onToggleContent,
-  showingContent,
-}) => (
+const Preview = ({ previewCallbacks, routeToShowcase, routeToSpotlight, form, onToggleContent, showingContent }) => (
   <PluginPreview
     Base={
       <ShowcaseBase
@@ -34,14 +26,12 @@ const Preview = ({
       <Launcher
         onClick={() => onToggleContent()}
         personaPicUrl={form.personaProfilePic || (form.__persona && form.__persona.profilePicUrl)}
-        position={position}
         pulsating
         showingContent={showingContent}
       />
     }
     launcherConfig={launcherConfig}
     onToggleContent={onToggleContent}
-    position={position}
     showingContent={showingContent}
   />
 )

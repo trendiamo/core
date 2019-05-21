@@ -7,7 +7,7 @@ import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import LoginPage from 'auth/login'
 import NotFound from 'app/screens/not-found'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
 import theme from 'app/theme'
@@ -37,11 +37,9 @@ const jss = create({
 })
 
 // Auth protected route.
-const PrivateRoute = ({ component, isOwnerScoped, path, ...props }) => (
-  <Route
-    {...props}
-    path={path}
-    render={({ match }) =>
+const PrivateRoute = ({ component, isOwnerScoped, path, ...props }) => {
+  const render = useCallback(
+    ({ match }) =>
       auth.isLoggedIn() ? (
         isOwnerScoped && (auth.getUser().role === 'editor' && !auth.isAdmin()) ? (
           React.createElement(NotFound, { match })
@@ -50,18 +48,20 @@ const PrivateRoute = ({ component, isOwnerScoped, path, ...props }) => (
         )
       ) : (
         <Redirect to={routes.login()} />
-      )
-    }
-  />
-)
+      ),
+    [component, isOwnerScoped]
+  )
 
-const ExternalRoute = ({ component, path, ...props }) => (
-  <Route
-    {...props}
-    path={path}
-    render={() => (auth.isLoggedIn() ? <Redirect to={routes.root()} /> : React.createElement(component))}
-  />
-)
+  return <Route {...props} path={path} render={render} />
+}
+
+const ExternalRoute = ({ component, path, ...props }) => {
+  const render = useCallback(
+    () => (auth.isLoggedIn() ? <Redirect to={routes.root()} /> : React.createElement(component)),
+    [component]
+  )
+  return <Route {...props} path={path} render={render} />
+}
 
 const RedirectRoot = () => (
   <>

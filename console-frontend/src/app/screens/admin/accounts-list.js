@@ -4,7 +4,7 @@ import Dialog from 'shared/dialog'
 import Link from 'shared/link'
 import ListItemText from '@material-ui/core/ListItemText'
 import MUIListItem from '@material-ui/core/ListItem'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -60,8 +60,8 @@ const ListItem = ({ enterAccount, account, hostnames }) => (
 const Account = ({ accounts, account, setAccounts }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
-  const enterAccount = () => auth.setAdminSessionAccount(account)
-  const hostnames = account.websitesAttributes[0].hostnames.join(', ')
+  const enterAccount = useCallback(() => auth.setAdminSessionAccount(account), [account])
+  const hostnames = useMemo(() => account.websitesAttributes[0].hostnames.join(', '), [account.websitesAttributes])
 
   const handleDeleteButtonClick = useCallback(() => {
     setDialogOpen(true)

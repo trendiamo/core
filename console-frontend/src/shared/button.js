@@ -81,6 +81,15 @@ const Button = ({
     [color]
   )
 
+  const wrap = useCallback(
+    children => (
+      <EventFirer onMouseEnter={onButtonHoverStart} onMouseLeave={onButtonHoverEnd}>
+        {children}
+      </EventFirer>
+    ),
+    [onButtonHoverEnd, onButtonHoverStart]
+  )
+
   return (
     <ButtonContainer centered={centered}>
       <Tooltip
@@ -88,14 +97,7 @@ const Button = ({
         placement={tooltipPlacement}
         title={tooltipText || ''}
       >
-        <ConditionalWrap
-          disabled={disabled}
-          wrap={children => (
-            <EventFirer onMouseEnter={onButtonHoverStart} onMouseLeave={onButtonHoverEnd}>
-              {children}
-            </EventFirer>
-          )}
-        >
+        <ConditionalWrap disabled={disabled} wrap={wrap}>
           <StyledMuiButton
             {...omit(props, [
               'color',

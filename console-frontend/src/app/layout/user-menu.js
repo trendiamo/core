@@ -19,6 +19,7 @@ const MenuItemThemed = ({ classes, icon, text, ...props }) => (
 
 const anchorOrigin = { horizontal: 'center', vertical: 'top' }
 const transformOrigin = { horizontal: 'center', vertical: 'top' }
+const clearAdminSessionAccount = auth.clearAdminSessionAccount.bind(auth)
 
 const UserMenu = ({ classes, sidebarOpen }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -87,7 +88,7 @@ const UserMenu = ({ classes, sidebarOpen }) => {
             <MenuItemThemed
               classes={classes}
               icon={<PeopleOutline />}
-              onClick={auth.clearAdminSessionAccount.bind(auth)}
+              onClick={clearAdminSessionAccount}
               text="Back to Accounts"
             />
           </Link>

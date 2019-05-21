@@ -49,14 +49,18 @@ const StyledTypography = styled(Typography)`
   margin-left: 10px;
 `
 
-const AddOptionButton = ({ option, optionLabel, disabled, showOption }) => (
-  <AddButton color="primary" disabled={disabled} fullWidth onClick={() => showOption(option)} size="small">
-    <AddCircleOutline />
-    <StyledTypography color="primary" variant="subtitle1">
-      {optionLabel}
-    </StyledTypography>
-  </AddButton>
-)
+const AddOptionButton = ({ option, optionLabel, disabled, showOption }) => {
+  const onClick = useCallback(() => showOption(option), [option, showOption])
+
+  return (
+    <AddButton color="primary" disabled={disabled} fullWidth onClick={onClick} size="small">
+      <AddCircleOutline />
+      <StyledTypography color="primary" variant="subtitle1">
+        {optionLabel}
+      </StyledTypography>
+    </AddButton>
+  )
+}
 
 const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
   <FormControl style={{ display: 'flex' }}>

@@ -3,6 +3,12 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import React, { useCallback, useState } from 'react'
 
+const SimpleMenuItem = ({ action, handleClose }) => {
+  const onClick = useCallback(event => handleClose(event, action.label), [action.label, handleClose])
+
+  return <MenuItem onClick={onClick}>{action.label}</MenuItem>
+}
+
 const SimpleMenu = ({ isFormPristine, isFormSubmitting, disabled, message, actions, onFormSubmit }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -30,11 +36,8 @@ const SimpleMenu = ({ isFormPristine, isFormSubmitting, disabled, message, actio
         {message || 'Select Action'}
       </Button>
       <Menu anchorEl={anchorEl} id="actions-menu" onClose={closeMenu} open={Boolean(anchorEl)}>
-        {actions.map((action, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <MenuItem key={index} onClick={event => handleClose(event, action.label)}>
-            {action.label}
-          </MenuItem>
+        {actions.map(action => (
+          <SimpleMenuItem action={handleClose} handleClose={handleClose} key={action.label} />
         ))}
       </Menu>
     </div>

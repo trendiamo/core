@@ -103,7 +103,9 @@ const permittedResourceGroups = () => {
   const filteredObject = pickBy(resourceGroups, group => !group['isOwnerScoped'])
   Object.keys(filteredObject).forEach(
     group =>
-      (filteredObject[group]['resources'] = filteredObject[group]['resources'].filter(resource => !resource['isOwnerScoped']))
+      (filteredObject[group]['resources'] = filteredObject[group]['resources'].filter(
+        resource => !resource['isOwnerScoped']
+      ))
   )
   return filteredObject
 }

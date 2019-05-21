@@ -77,6 +77,8 @@ const AutocompleteSuggestion = ({ suggestion, index, itemProps, highlightedIndex
   </StyledMenuItem>
 )
 
+const itemToString = selected => (selected ? selected.label : '')
+
 const Autocomplete = ({
   autocomplete,
   disabled,
@@ -148,7 +150,7 @@ const Autocomplete = ({
     <Downshift
       initialSelectedItem={initialSelectedItem}
       isOpen={menuIsOpen}
-      itemToString={selected => (selected ? selected.label : '')}
+      itemToString={itemToString}
       onChange={onChange}
       onInputValueChange={onInputValueChange}
       onOuterClick={handleOuterClick}

@@ -210,6 +210,10 @@ const EnhancedList = ({
     [api.destroy, cancelable, enqueueSnackbar, fetchRecords, state.selectedIds]
   )
 
+  const handleSelectAll = useCallback(event => dispatch({ type: 'handleSelectAll', checked: event.target.checked }), [])
+
+  const setSelectedIds = useCallback(selectedIds => dispatch({ type: 'setSelectedIds', selectedIds }), [])
+
   useEffect(fetchRecords, [fetchRecords])
 
   if (state.isLoading) return <CircularProgress />
@@ -234,7 +238,7 @@ const EnhancedList = ({
                 checked={state.isSelectAll}
                 checkedIcon={<CheckBoxIcon />}
                 color="primary"
-                onClick={event => dispatch({ type: 'handleSelectAll', checked: event.target.checked })}
+                onClick={handleSelectAll}
               />
             </TableCell>
           }
@@ -246,7 +250,7 @@ const EnhancedList = ({
             state.records.map((record, index) => (
               <TableRow
                 api={api}
-                handleSelectAll={event => dispatch({ type: 'handleSelectAll', checked: event.target.checked })}
+                handleSelectAll={handleSelectAll}
                 highlightInactive={inactiveRows[index]}
                 index={index}
                 key={record.id}
@@ -254,7 +258,7 @@ const EnhancedList = ({
                 resourceEditPath={routes.edit && routes.edit(record.id)}
                 routes={routes}
                 selectedIds={state.selectedIds}
-                setSelectedIds={selectedIds => dispatch({ type: 'setSelectedIds', selectedIds })}
+                setSelectedIds={setSelectedIds}
               >
                 <ResourceRow record={record} />
               </TableRow>
