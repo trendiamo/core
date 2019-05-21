@@ -1,12 +1,12 @@
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
-import routes from 'app/routes'
 import { assessmentHack, rememberPersona } from 'special/assessment/utils'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
 import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
+import { routes } from 'plugin-base'
 
 const convertSpotlights = spotlights => {
   return spotlights.map(spotlight => {

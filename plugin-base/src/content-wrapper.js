@@ -1,5 +1,5 @@
 import React from 'react'
-import routes from 'routes'
+import routes from './routes'
 import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { history, timeout, transition } from 'ext'

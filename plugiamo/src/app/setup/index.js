@@ -1,9 +1,9 @@
 import getFrekklsConfig from 'frekkls-config'
-import routes from 'app/routes'
 import { assessmentHack, recallPersona } from 'special/assessment/utils'
 import { isSmall } from 'utils'
 import { location } from 'config'
 import { pushPath } from './flow-history'
+import { routes } from 'plugin-base'
 
 export const optionsFromHash = () => {
   if (!window.__trendiamoOptionsFromHash) {
