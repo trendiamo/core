@@ -1,11 +1,10 @@
 import CloseButton from './close-button'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { animateOnMount, FrameBase, history, timeout, transition } from 'plugin-base'
+import { animateOnMount, FrameBase, history, positioning, timeout, transition } from 'plugin-base'
 import { compose, lifecycle } from 'recompose'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
-import { positioning } from 'plugin-base'
 
 export const ContentFrameContainerBase = styled.div`
   z-index: 2147483000;
@@ -16,6 +15,7 @@ export const ContentFrameContainerBase = styled.div`
   transform: ${({ entry, isUnmounting }) => (entry || isUnmounting ? 'translateY(100%)' : 'none')};
   transition: opacity 0.25s ease, transform 0.4s ease;
   overscroll-behavior: contain;
+  display: ${({ hidden }) => (hidden ? 'none' : 'block')};
 
   bottom: 0;
   right: 0;
@@ -59,8 +59,14 @@ const IFrame = compose(
   width: 100%;
 `)
 
-const ContentFrame = ({ children, isUnmounting, onToggleContent, position, launcherConfig }) => (
-  <ContentFrameContainer isUnmounting={isUnmounting} launcherConfig={launcherConfig} position={position}>
+const ContentFrame = ({ skipEntry, children, isUnmounting, hidden, onToggleContent, position, launcherConfig }) => (
+  <ContentFrameContainer
+    hidden={hidden}
+    isUnmounting={isUnmounting}
+    launcherConfig={launcherConfig}
+    position={position}
+    skipEntry={skipEntry}
+  >
     <IFrame onToggleContent={onToggleContent}>
       <div>
         {children}

@@ -33,6 +33,7 @@ const withHotkeys = (handlers, useCapture = false) =>
         }
 
         setRef(ref) {
+          if (!ref) return
           BaseComponent.hotkeysRef = ref
         }
 
