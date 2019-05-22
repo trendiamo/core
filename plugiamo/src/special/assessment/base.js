@@ -1,21 +1,12 @@
 import ChatModals from 'shared/chat-modals'
-import data from './data'
-import flatten from 'lodash.flatten'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import StoreModal from './store-modal'
 import withChatActions from 'ext/recompose/with-chat-actions'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
 import { isSmall } from 'utils'
-import { rememberPersona } from './utils'
 import { SimpleChat, timeout } from 'plugin-base'
-
-const assessProducts = (products, tags) => {
-  const productsResult = flatten(tags.map(tag => products.filter(product => product.tag && tag === product.tag)))
-  return productsResult.sort((a, b) => !!b.highlight - !!a.highlight)
-}
 
 const ctaButton = { label: 'Ergebnisse anzeigen' }
 
@@ -67,29 +58,15 @@ const prepareProductsToChat = results => {
 
 export default compose(
   withState('animateOpacity', 'setAnimateOpacity', ({ animateOpacity }) => animateOpacity),
-  withProps({ module: data.assessment }),
-  withState('currentStepKey', 'setCurrentStepKey', ({ showAssessmentContent }) =>
-    typeof showAssessmentContent !== 'boolean' ? showAssessmentContent.key : 'root'
-  ),
   withState('nothingSelected', 'setNothingSelected', false),
-  withProps(({ module, currentStepKey }) => ({
-    step: module && module.steps[currentStepKey],
-    steps: module && module.steps,
-  })),
   withState('coverMinimized', 'setCoverMinimized', ({ step }) => !!step.header.minimized),
   withState('touch', 'setTouch', true),
-  withState('currentStep', 'setCurrentStep', ({ step }) => step),
   withState('tags', 'setTags', ({ showAssessmentContent }) =>
     typeof showAssessmentContent !== 'boolean' ? showAssessmentContent.key.split('/') : []
   ),
-  withState('progress', 'setProgress', ({ showAssessmentContent }) =>
-    typeof showAssessmentContent !== 'boolean' ? showAssessmentContent.progress : 0
-  ),
-  withState('endNodeTags', 'setEndNodeTags', []),
   withState('showingCtaButton', 'setShowingCtaButton', false),
   withState('ctaButtonClicked', 'setCtaButtonClicked', false),
   withState('hideProgressBar', 'setHideProgressBar', false),
-  withState('results', 'setResults', []),
   withHandlers(() => {
     let contentRef
     return {
@@ -246,7 +223,6 @@ export default compose(
   lifecycle({
     componentDidMount() {
       const { step, setCurrentStep, animateOpacity, setAnimateOpacity, progress, setProgress } = this.props
-      rememberPersona(data.assessment.persona)
       if (animateOpacity) {
         setTimeout(() => setAnimateOpacity(false), 10)
       }
@@ -256,35 +232,6 @@ export default compose(
     componentWillUnmount() {
       timeout.clear('exitOnMobile')
       timeout.clear('loadingProgressBar')
-    },
-    componentDidUpdate(prevProps) {
-      const { step, setCurrentStep, currentStepKey, progress, setProgress } = this.props
-      if (prevProps.step !== step) {
-        if (currentStepKey === 'store') {
-          const _this = this
-          let fetchStartTime = performance.now()
-          fetchProducts(results => {
-            const { setResults, endNodeTags } = _this.props
-            const client = results.find(client => client.hostname === window.location.hostname)
-            timeout.set(
-              'settingResults',
-              () => setResults(assessProducts(client.products, endNodeTags)),
-              Math.max(800 - (performance.now() - fetchStartTime), 10)
-            )
-          })
-        }
-        if (prevProps.currentStepKey === 'store' && progress === 100) {
-          setTimeout(() => {
-            setProgress(progress - 33)
-          }, 2000)
-        }
-        setTimeout(
-          () => {
-            setCurrentStep(step)
-          },
-          prevProps.step ? 750 : 0
-        )
-      }
     },
   }),
   withProps(({ results }) => ({

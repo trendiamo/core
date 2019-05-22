@@ -1,3 +1,4 @@
+import Assessment from 'special/assessment'
 import AssessmentCart from 'special/assessment/cart'
 import AssessmentSizeGuide from 'special/assessment/size-guide'
 import Content from './content'
@@ -65,7 +66,6 @@ const AppBaseTemplate = ({
   position,
   showingContent,
   data,
-  ContentFrame,
   showAssessmentContent,
   setShowAssessmentContent,
   setShowingLauncher,
@@ -73,23 +73,31 @@ const AppBaseTemplate = ({
   showingLauncher,
   launcherConfig,
   outroButtonsClick,
+  skipContentEntry,
 }) => (
   <AppBaseDiv>
-    {showingContent && (
-      <Content
-        Component={Component}
-        ContentFrame={ContentFrame}
-        isUnmounting={isUnmounting}
-        launcherConfig={launcherConfig}
+    {showAssessmentContent ? (
+      <Assessment
         onToggleContent={onToggleContent}
-        persona={persona}
-        position={position}
         setShowAssessmentContent={setShowAssessmentContent}
         setShowingContent={setShowingContent}
         setShowingLauncher={setShowingLauncher}
         showAssessmentContent={showAssessmentContent}
-        showingContent={showingContent}
       />
+    ) : (
+      showingContent && (
+        <Content
+          Component={Component}
+          isUnmounting={isUnmounting}
+          launcherConfig={launcherConfig}
+          onToggleContent={onToggleContent}
+          persona={persona}
+          position={position}
+          setShowAssessmentContent={setShowAssessmentContent}
+          showingContent={showingContent}
+          skipEntry={skipContentEntry}
+        />
+      )
     )}
     {showingLauncher && (
       <LauncherBubbles
@@ -207,6 +215,7 @@ export default compose(
   withState('showingContent', 'setShowingContent', false),
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
   withState('showingLauncher', 'setShowingLauncher', true),
+  withState('skipContentEntry', 'setSkipContentEntry', false),
   lifecycle({
     componentDidMount() {
       const { data, pathFromNav, setPersona, setShowingContent } = this.props
@@ -233,8 +242,12 @@ export default compose(
       }
     },
     componentDidUpdate(prevProps) {
-      const { showingContent } = this.props
+      const { showingContent, setSkipContentEntry, showAssessmentContent } = this.props
+      if (showAssessmentContent !== prevProps.showAssessmentContent && !showAssessmentContent) {
+        setSkipContentEntry(true)
+      }
       if (showingContent === prevProps.showingContent) return
+      setSkipContentEntry(showingContent)
       if (showingContent) {
         document.documentElement.classList.add('trnd-open')
       } else {
