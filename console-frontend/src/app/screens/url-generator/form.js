@@ -4,11 +4,10 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
 import { apiGeneratedUrlCreate, apiPathAutocomplete, apiPersonasAutocomplete, apiRequest } from 'utils'
-import { Form } from 'shared/form-elements'
+import { Form, FormHelperText } from 'shared/form-elements'
 import {
   FormControl,
   FormControlLabel,
-  FormHelperText,
   IconButton,
   Input,
   InputAdornment,

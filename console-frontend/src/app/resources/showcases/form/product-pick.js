@@ -2,8 +2,7 @@ import characterLimits from 'shared/character-limits'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
-import { Cancel, Field, FormSection } from 'shared/form-elements'
-import { FormHelperText } from '@material-ui/core'
+import { Cancel, Field, FormHelperText, FormSection } from 'shared/form-elements'
 
 const ProductPick = ({
   allowDelete,

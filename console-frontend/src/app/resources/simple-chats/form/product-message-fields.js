@@ -1,7 +1,6 @@
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
-import { Field } from 'shared/form-elements'
-import { FormHelperText } from '@material-ui/core'
+import { Field, FormHelperText } from 'shared/form-elements'
 
 const ProductMessagesForm = ({
   isCropping,

@@ -3,8 +3,7 @@ import characterLimits from 'shared/character-limits'
 import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Field } from 'shared/form-elements'
-import { FormHelperText } from '@material-ui/core'
+import { Field, FormHelperText } from 'shared/form-elements'
 
 const options = { suggestionItem: 'withAvatar' }
 

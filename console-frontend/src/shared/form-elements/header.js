@@ -1,5 +1,5 @@
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 
@@ -15,4 +15,4 @@ const Header = styled(props => <Typography {...omit(props, ['ellipsize'])} />)`
   }
 `
 
-export default Header
+export default memo(Header)

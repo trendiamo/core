@@ -6,6 +6,7 @@ import Divider from './divider'
 import Field from './field'
 import FlexBar from './flex-bar'
 import Form from './form'
+import FormHelperText from './form-helper-text'
 import FormSection from './form-section'
 import Header from './header'
 import InlineTypography from './inline-typography'
@@ -19,6 +20,7 @@ export {
   Cancel,
   Divider,
   Form,
+  FormHelperText,
   FormSection,
   FlexBar,
   Header,

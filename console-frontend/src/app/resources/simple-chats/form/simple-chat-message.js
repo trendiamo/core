@@ -1,6 +1,6 @@
 import PictureMessageField from './picture-message-field'
 import ProductMessageFields from './product-message-fields'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import TextMessageFields from './text-message-fields'
 import VideoMessageField from './video-message-field'
 import { Cancel, FormSection } from 'shared/form-elements'
@@ -120,6 +120,22 @@ const SimpleChatMessage = ({
     [onChange, simpleChatMessage.id, simpleChatMessageIndex]
   )
 
+  const actions = useMemo(
+    () =>
+      allowDelete && (
+        <Cancel
+          disabled={isCropping || isFormLoading}
+          index={simpleChatMessageIndex}
+          onClick={deleteSimpleChatMessage}
+        />
+      ),
+    [allowDelete, deleteSimpleChatMessage, isCropping, isFormLoading, simpleChatMessageIndex]
+  )
+
+  const hideTop = useMemo(() => index === 0, [index])
+
+  const title = useMemo(() => setSimpleChatMessageTitle(simpleChatMessageObject), [simpleChatMessageObject])
+
   useEffect(
     () => {
       if (simpleChatMessage.type) return setSimpleChatMessageObject(simpleChatMessage)
@@ -151,22 +167,14 @@ const SimpleChatMessage = ({
 
   return (
     <FormSection
-      actions={
-        allowDelete && (
-          <Cancel
-            disabled={isCropping || isFormLoading}
-            index={simpleChatMessageIndex}
-            onClick={deleteSimpleChatMessage}
-          />
-        )
-      }
+      actions={actions}
       backgroundColor="#fff"
       dragHandle
       ellipsize
       foldable
       hideBottom
-      hideTop={index === 0}
-      title={setSimpleChatMessageTitle(simpleChatMessageObject)}
+      hideTop={hideTop}
+      title={title}
     >
       <MessageField
         isCropping={isCropping}
