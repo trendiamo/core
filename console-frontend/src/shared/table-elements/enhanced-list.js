@@ -85,6 +85,11 @@ const EnhancedList = ({
           ...state,
           isLoading: true,
         }
+      } else if (action.type === 'handleChangePage') {
+        return {
+          ...state,
+          page: parse(location.search).page - 1 || 0,
+        }
       } else if (action.type === 'completeFetch') {
         if (action.requestError) enqueueSnackbar(action.requestError, { variant: 'error' })
         if (action.requestError || action.errors) {
@@ -137,7 +142,7 @@ const EnhancedList = ({
       range: JSON.stringify([state.page * state.rowsPerPage, (state.page + 1) * state.rowsPerPage - 1]),
       sort: JSON.stringify([state.orderBy, state.orderDirection]),
     }),
-    [state.page, state.orderBy, state.orderDirection, state.rowsPerPage]
+    [state.page, state.rowsPerPage, state.orderBy, state.orderDirection]
   )
 
   const inactiveRows = state.records.map(record => {
@@ -165,6 +170,7 @@ const EnhancedList = ({
       const uri =
         Object.keys(newSearch).length === 0 ? location.pathname : `${location.pathname}?${stringify(newSearch)}`
       history.push(uri)
+      dispatch({ type: 'handleChangePage' })
     },
     [history, location.pathname, location.search]
   )
