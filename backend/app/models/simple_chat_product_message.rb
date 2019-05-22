@@ -9,6 +9,12 @@ class SimpleChatProductMessage < SimpleChatMessage
 
   def as_json(_options = {})
     super.except(:pic_id).merge(attributes.slice("title", "url", "display_price"),
-                                pic_url: pic_url)
+                                pic_url: valid_pic_url)
+  end
+
+  def valid_pic_url
+    pic_url
+  rescue Module::DelegationError
+    JSON.parse(text)["picUrl"]
   end
 end
