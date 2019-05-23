@@ -11,7 +11,7 @@ const Title = styled.div`
   z-index: 1;
   letter-spacing: 0.6px;
   width: 100%;
-  height: 25%;
+  height: 30px;
   background-color: #fff;
   display: flex;
   justify-content: center;
@@ -20,14 +20,8 @@ const Title = styled.div`
 `
 
 const Background = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  background-image: ${({ imageUrl }) => (imageUrl ? `url('${imageUrl}')` : 'none')};
-  background-size: cover;
+  width: 100%;
+  height: 120px;
   transition: transform 0.2s linear;
   backface-visibility: hidden;
 
@@ -133,11 +127,6 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   overflow: hidden;
   border-radius: 12px;
 
@@ -160,6 +149,12 @@ const Content = styled.div`
   `}
 `
 
+const TileImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+
 const TileDiv = ({ title, imageUrl, handleClick, isClicked, nothingSelected, hideAll, highlight }) => (
   <Container>
     <Box
@@ -170,7 +165,7 @@ const TileDiv = ({ title, imageUrl, handleClick, isClicked, nothingSelected, hid
       onClick={handleClick}
     >
       <Content imageUrl={imageUrl}>
-        {imageUrl && <Background imageUrl={imageUrl} isClicked={isClicked && !nothingSelected} />}
+        <Background>{imageUrl && <TileImage isClicked={isClicked && !nothingSelected} src={imageUrl} />}</Background>
         <Title imageUrl={imageUrl} isClicked={isClicked && !nothingSelected}>
           {title}
         </Title>

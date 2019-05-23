@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { compose, withProps } from 'recompose'
 import { imgixUrl } from 'tools'
 
 const CoverAnimation = styled.img`
@@ -60,11 +61,21 @@ const ImageContainer = styled.div`
   transition: opacity 0.4s ease-in-out;
 `
 
-const Background = ({ minimized, header, headerConfig, hide }) => (
+const Background = ({ minimized, header, imageUrl, animationUrl, headerConfig, hide }) => (
   <ImageContainer header={header} hide={hide} minimized={minimized}>
-    <CoverAnimation headerConfig={headerConfig} minimized={minimized} src={header.animationUrl || header.imageUrl} />
-    <CoverImage image={imgixUrl(header.imageUrl, { fit: 'crop', w: 160, h: 90 })} minimized={minimized} />
+    <CoverAnimation headerConfig={headerConfig} minimized={minimized} src={animationUrl} />
+    <CoverImage image={imageUrl} minimized={minimized} />
   </ImageContainer>
 )
 
-export default Background
+export default compose(
+  withProps(({ header, big }) => {
+    const imageUrl = imgixUrl(header.imageUrl, { fit: 'crop', w: big ? 800 : 160, h: big ? 200 : 90 })
+    const animated = header.animationUrl && header.animationUrl.substr(header.animationUrl.length - 3) === 'gif'
+    const animationUrl = header.animationUrl || imageUrl
+    return {
+      imageUrl,
+      animationUrl: animated ? animationUrl : imgixUrl(animationUrl, { fit: 'crop', w: 220, h: 140 }),
+    }
+  })
+)(Background)

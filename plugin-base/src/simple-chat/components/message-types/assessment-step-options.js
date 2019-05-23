@@ -20,7 +20,7 @@ const AssessmentStepOption = compose(
   <Tile
     hideAll={hideAll}
     highlight
-    imageUrl={imgixUrl(option.picUrl, { fit: 'crop', w: 156, h: 120 })}
+    imageUrl={imgixUrl(option.picUrl, { fit: 'crop', w: 165, h: 120 })}
     nothingSelected={nothingSelected}
     onClick={onClick}
     option={option}

@@ -542,7 +542,7 @@ const data = {
         {
           type: 'SimpleChatProductMessage',
           url: 'https://www.pierre-cardin.de/size-advisor',
-          picUrl: 'https://console-assets-mc.ams3.digitaloceanspaces.com/uploads/assessment-test/size-guide.png',
+          picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/size-guide.jpg',
           title: 'Zur Größentabelle',
           displayPrice: '',
           newTab: true,
