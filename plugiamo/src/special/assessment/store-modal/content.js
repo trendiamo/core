@@ -15,7 +15,6 @@ const styleConfig = {
   card: {
     minWidth: 120,
     margin: 0,
-    borderRadius: '10px',
     boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
   },
   details: {
