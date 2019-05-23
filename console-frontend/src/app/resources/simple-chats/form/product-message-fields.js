@@ -57,7 +57,6 @@ const ProductMessagesForm = ({
       required
       setDisabled={setIsCropping}
       setPic={setPicture}
-      square
       value={simpleChatMessage.picUrl || ''}
     />
     {progress && <ProgressBar progress={progress} />}

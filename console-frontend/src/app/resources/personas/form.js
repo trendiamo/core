@@ -119,6 +119,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
       <Grid item sm={6}>
         <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
           <PictureUploader
+            circle
             disabled={isCropping}
             label="Picture"
             onChange={setProfilePicUrl}

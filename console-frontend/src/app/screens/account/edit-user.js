@@ -88,6 +88,7 @@ const EditUser = () => {
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
       <PictureUploader
+        circle
         disabled={isCropping}
         label="Picture"
         onChange={setProfilePicUrl}

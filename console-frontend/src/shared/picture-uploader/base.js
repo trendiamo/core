@@ -27,7 +27,7 @@ const InnerLabel = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: ${({ square }) => (square ? 'none' : '50%')};
+  border-radius: ${({ circle }) => (circle ? '50%' : 'none')};
 `
 
 const StyledDelete = styled(Delete)`
@@ -61,14 +61,14 @@ const StyledDropzone = styled(FilteredReactDropzone)`
 const Img = styled.img`
   background-color: ${({ src }) => (src ? 'transparent' : '#f5f5f5')};
   border: ${({ src }) => (src ? 'none' : 'dashed 2px')};
-  border-radius: ${({ square }) => (square ? 'none' : '50%')};
+  border-radius: ${({ circle }) => (circle ? '50%' : 'none')};
   display: block;
   height: 100%;
   position: relative;
   width: 100%;
 `
 
-const Dropzone = ({ disabled, onFileUpload, previewPicture, square, ...props }) => {
+const Dropzone = ({ disabled, onFileUpload, previewPicture, circle, ...props }) => {
   const [isDragging, setIsDragging] = useState(false)
 
   const onDragEnter = useCallback(() => {
@@ -98,8 +98,8 @@ const Dropzone = ({ disabled, onFileUpload, previewPicture, square, ...props }) 
       previewPicture={previewPicture}
       {...props}
     >
-      <Img alt="" square={square} src={previewPicture} />
-      <InnerLabel square={square}>
+      <Img alt="" circle={circle} src={previewPicture} />
+      <InnerLabel circle={circle}>
         <CloudUpload />
         <div>{'Drop a file or click to select one'}</div>
       </InnerLabel>
@@ -140,7 +140,7 @@ const BasePictureUploader = ({
   previewPicture,
   required = false,
   setModalOpen,
-  square,
+  circle,
 }) => (
   <>
     <PicturesModal
@@ -164,12 +164,12 @@ const BasePictureUploader = ({
         <InputLabel shrink>{`${label}${required ? ' *' : ''}`}</InputLabel>
         <Dropzone
           accept="image/*"
+          circle={circle}
           disabled={disabled}
           multiple={false}
           onClick={onClick}
           onFileUpload={onFileUpload}
           previewPicture={previewPicture}
-          square={square}
         />
       </FormControl>
       {(picture || previewPicture) && (picture ? doneCropping : true) && (
