@@ -1,3 +1,4 @@
+import AppBase from 'app/base'
 import chatLogCallbacks from 'shared/chat-log-callbacks'
 import ChatModals from 'shared/chat-modals'
 import data from './data'
@@ -6,7 +7,6 @@ import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
 import withChatActions from 'ext/recompose/with-chat-actions'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
@@ -45,6 +45,7 @@ const Plugin = ({
       launcherPulsating
       onToggleContent={onToggleContent}
       persona={module.launcher.persona}
+      showingBubbles
       showingContent={showingContent}
       showingLauncher={showingLauncher}
     />

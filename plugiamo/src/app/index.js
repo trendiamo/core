@@ -1,19 +1,14 @@
-import Assessment from 'special/assessment'
+import AppBase from './base'
 import AssessmentCart from 'special/assessment/cart'
 import AssessmentSizeGuide from 'special/assessment/size-guide'
-import Content from './content'
 import getFrekklsConfig from 'frekkls-config'
 import Launcher from './launcher'
-import LauncherBubbles from './launcher-bubbles'
 import mixpanel from 'ext/mixpanel'
 import Router from './content/router'
 import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
-import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { animateOnMount } from 'plugin-base'
 import { assessmentCart, assessmentHack } from 'special/assessment/utils'
-import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
 import {
   branch,
   compose,
@@ -28,136 +23,8 @@ import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
 import { infoMsgHof } from 'shared/info-msg'
 import { isSmall } from 'utils'
+import { location } from 'config'
 import { timeout } from 'plugin-base'
-
-const Gradient = animateOnMount(styled.div`
-  z-index: 2147482998;
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  bottom: 0;
-  ${({ position }) => (position === 'left' ? 'left: 0;' : 'right: 0;')}
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at bottom ${({ position }) => (position === 'left' ? 'left' : 'right')},
-    rgba(29, 39, 54, 0.16) 0,
-    rgba(29, 39, 54, 0) 72%
-  );
-  opacity: ${({ entry }) => (entry ? 0 : 1)};
-  transition: opacity 0.25s ease, transform 0.25s ease;
-`)
-
-const AppBaseDiv = styled.div`
-  display: none;
-  @media (min-height: ${HEIGHT_BREAKPOINT}px) {
-    display: block;
-  }
-`
-
-const AppBaseTemplate = ({
-  Component,
-  Launcher,
-  disappear,
-  setDisappear,
-  isUnmounting,
-  launcherPulsating,
-  onToggleContent,
-  persona,
-  position,
-  showingContent,
-  data,
-  showAssessmentContent,
-  setShowAssessmentContent,
-  setShowingLauncher,
-  setShowingContent,
-  showingLauncher,
-  launcherConfig,
-  outroButtonsClick,
-  skipContentEntry,
-}) => (
-  <AppBaseDiv>
-    {showAssessmentContent ? (
-      <Assessment
-        onToggleContent={onToggleContent}
-        setShowAssessmentContent={setShowAssessmentContent}
-        setShowingContent={setShowingContent}
-        setShowingLauncher={setShowingLauncher}
-        showAssessmentContent={showAssessmentContent}
-      />
-    ) : (
-      showingContent && (
-        <Content
-          Component={Component}
-          isUnmounting={isUnmounting}
-          launcherConfig={launcherConfig}
-          onToggleContent={onToggleContent}
-          persona={persona}
-          position={position}
-          setShowAssessmentContent={setShowAssessmentContent}
-          showingContent={showingContent}
-          skipEntry={skipContentEntry}
-        />
-      )
-    )}
-    {showingLauncher && (
-      <LauncherBubbles
-        data={data}
-        disappear={disappear}
-        launcherConfig={launcherConfig}
-        onToggleContent={onToggleContent}
-        outroButtonsClick={outroButtonsClick}
-        position={position}
-        setDisappear={setDisappear}
-        showingContent={showingContent}
-      />
-    )}
-    {showingLauncher && (
-      <Launcher
-        data={data}
-        disappear={disappear}
-        launcherConfig={launcherConfig}
-        onToggleContent={onToggleContent}
-        persona={persona}
-        position={position}
-        pulsating={launcherPulsating}
-        showingContent={showingContent}
-      />
-    )}
-    {showingContent && <Gradient position={position} />}
-  </AppBaseDiv>
-)
-
-export const AppBase = compose(
-  withProps(() => {
-    const frekklsLC = getFrekklsConfig().launcherConfig
-    const defaultLC = isSmall()
-      ? smallLauncherConfig
-      : frekklsLC.size === 'small'
-      ? smallLauncherConfig
-      : bigLauncherConfig
-
-    return {
-      launcherConfig: {
-        ...defaultLC,
-        extraElevation: frekklsLC.extraElevation || 0,
-      },
-    }
-  }),
-  withHandlers({
-    outroButtonsClick: () => value => {
-      mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
-    },
-  }),
-  withState('disappear', 'setDisappear', false),
-  lifecycle({
-    componentDidUpdate(prevProps) {
-      const { launcherDisappear, setDisappear } = this.props
-      if (launcherDisappear !== prevProps.launcherDisappear) {
-        setDisappear(launcherDisappear)
-      }
-    },
-  })
-)(AppBaseTemplate)
 
 export default compose(
   branch(() => assessmentCart(), renderComponent(AssessmentCart)),
@@ -210,15 +77,18 @@ export default compose(
   branch(({ data }) => !data.flow && assessmentHack(), renderComponent(AssessmentSizeGuide)),
   branch(({ data }) => !data.flow, infoMsgHof(`no data found for hostname ${location.hostname}`)),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
+  withState('pluginState', 'setPluginState', 'default'),
   withState('persona', 'setPersona'),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
   withState('showingLauncher', 'setShowingLauncher', true),
   withState('skipContentEntry', 'setSkipContentEntry', false),
+  withState('showingBubbles', 'setShowingBubbles', true),
+  withState('disappear', 'setDisappear', false),
   lifecycle({
     componentDidMount() {
-      const { data, pathFromNav, setPersona, setShowingContent } = this.props
+      const { data, pathFromNav, setPersona, setPluginState, setShowingContent, setShowingBubbles } = this.props
       const { flowType, open: autoOpen, persona } = setup(data, pathFromNav)
       setPersona(persona)
       mixpanel.track('Loaded Plugin', {
@@ -235,11 +105,14 @@ export default compose(
 
       getFrekklsConfig().onShow(autoOpen)
 
+      if (data.flow.flowType === 'outro') setPluginState('closed')
+
       if (autoOpen) {
-        if (data.flow.flowType !== 'outro') setShowingContent(true)
-      } else {
-        mixpanel.time_event('Toggled Plugin')
+        setShowingContent(true)
+        return setShowingBubbles(false)
       }
+
+      mixpanel.time_event('Toggled Plugin')
     },
     componentDidUpdate(prevProps) {
       const { showingContent, setSkipContentEntry, showAssessmentContent } = this.props
@@ -259,15 +132,32 @@ export default compose(
     },
   }),
   branch(({ persona }) => !persona, renderNothing),
-  withProps(({ data }) => ({
+  withProps({
     position: getFrekklsConfig().position,
-    launcherPulsating: data.flow.flowType !== 'outro',
-  })),
+  }),
   withHandlers({
-    onToggleContent: ({ data, setIsUnmounting, setShowingContent, showingContent, setShowAssessmentContent }) => () => {
+    onToggleContent: ({
+      data,
+      disappear,
+      setDisappear,
+      setIsUnmounting,
+      setPluginState,
+      setShowAssessmentContent,
+      setShowingBubbles,
+      setShowingContent,
+      showingContent,
+    }) => () => {
       if (data.flow.flowType === 'outro') return
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
+
+      if (showingContent) {
+        setPluginState('closed')
+        timeout.set('hideLauncher', () => setDisappear(true), 10000)
+      } else {
+        setPluginState('opened')
+        timeout.clear('hideLauncher')
+      }
 
       if (showingContent && isSmall()) {
         setIsUnmounting(true)
@@ -280,8 +170,10 @@ export default compose(
           400
         )
       }
+
+      setShowingBubbles(false)
       setShowAssessmentContent(false)
-      return setShowingContent(!showingContent)
+      setShowingContent(disappear ? false : !showingContent)
     },
     outroButtonsClick: () => value => {
       mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
