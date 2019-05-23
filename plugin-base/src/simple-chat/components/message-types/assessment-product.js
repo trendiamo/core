@@ -10,7 +10,7 @@ const styleConfigDefault = {
   card: {
     minWidth: 120,
     margin: 0,
-    borderRadius: '6px',
+    borderRadius: '12px',
   },
   details: {
     padding: '8px 8px 9px',
