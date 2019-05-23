@@ -20,6 +20,7 @@ const Header = ({ step, coverMinimized, goToPrevStep }) => (
   <SimpleChatCover
     assessment
     backButtonLabel={getFrekklsConfig().i18n.backButton}
+    big
     goToPrevStep={goToPrevStep}
     headerConfig={headerConfig}
     minimized={coverMinimized}

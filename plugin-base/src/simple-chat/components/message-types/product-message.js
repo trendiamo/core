@@ -79,7 +79,7 @@ export default compose(
   withProps(({ product, styleConfig = defaultStyleConfig }) => ({
     productPicUrl:
       product.picUrl &&
-      imgixUrl(product.picUrl, { fit: 'crop', w: 180, h: styleConfig.image ? styleConfig.image.height : 180 }),
+      imgixUrl(product.picUrl, { fit: 'crop', w: 260, h: styleConfig.image ? styleConfig.image.height : 180 }),
   })),
   withHandlers({
     onClick: ({ product, onClick }) => event => {

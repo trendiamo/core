@@ -13,6 +13,7 @@ const CoverAssessmentTemplate = ({
   goToPrevStep,
   showBackButton,
   clickActions,
+  big,
 }) => (
   <Cover backgroundColor="#fff" hackathon headerConfig={headerConfig} minimized={minimized}>
     <BackButton
@@ -23,8 +24,8 @@ const CoverAssessmentTemplate = ({
       label={backButtonLabel}
       onClick={goToPrevStep}
     />
-    <Background header={headers[1]} headerConfig={headerConfig} hide={!toggle} minimized={minimized} />
-    <Background header={headers[0]} headerConfig={headerConfig} hide={toggle} minimized={minimized} />
+    <Background big={big} header={headers[1]} headerConfig={headerConfig} hide={!toggle} minimized={minimized} />
+    <Background big={big} header={headers[0]} headerConfig={headerConfig} hide={toggle} minimized={minimized} />
     <Content
       clickActions={clickActions}
       header={headers[toggle ? 1 : 0]}
