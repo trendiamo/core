@@ -98,15 +98,6 @@ const extractYoutubeId = message => {
   return match && match[2].length === 11 && match[2]
 }
 
-const extractJson = message => {
-  if (message[0] !== '{') return
-  try {
-    return JSON.parse(message)
-  } catch (e) {
-    return null
-  }
-}
-
 const isFrameActive = () => {
   return (
     document.activeElement &&
@@ -186,7 +177,6 @@ export {
   imgixUrl,
   positioning,
   extractYoutubeId,
-  extractJson,
   isFrameActive,
   convertLogs,
   listeners,

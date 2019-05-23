@@ -94,6 +94,7 @@ class PopulateSimpleChats
   def simple_chat_text_messages_attributes
     Array.new(rand(0..2)) do
       {
+        type: "SimpleChatTextMessage",
         text: Faker::Lorem.sentence,
       }
     end
