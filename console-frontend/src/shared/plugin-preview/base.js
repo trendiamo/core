@@ -1,6 +1,6 @@
 import Content from './content'
 import LauncherBubbles from './bubbles'
-import React from 'react'
+import React, { memo, useMemo } from 'react'
 import styled from 'styled-components'
 import { withWidth } from '@material-ui/core'
 
@@ -23,7 +23,7 @@ const Alignment = styled.div`
   transform: ${({ width }) => (width === 'xs' || width === 'sm' ? 'translate(50%)' : 'translate(50%, -50%)')};
 `
 
-const PluginPreview = ({
+const BasePluginPreview = ({
   Base,
   width,
   Launcher,
@@ -35,13 +35,16 @@ const PluginPreview = ({
   bubbleButtons,
   position = 'right',
 }) => {
-  const compiledLauncherConfig = {
-    ...launcherConfig,
-    size: showingContent ? launcherConfig.smallSize : launcherConfig.size,
-    frameSize: showingContent ? launcherConfig.smallFrameSize : launcherConfig.frameSize,
-    offsetX: 15,
-    offsetY: 0,
-  }
+  const compiledLauncherConfig = useMemo(
+    () => ({
+      ...launcherConfig,
+      size: showingContent ? launcherConfig.smallSize : launcherConfig.size,
+      frameSize: showingContent ? launcherConfig.smallFrameSize : launcherConfig.frameSize,
+      offsetX: 15,
+      offsetY: 0,
+    }),
+    [launcherConfig, showingContent]
+  )
 
   return (
     <StickyContainer>
@@ -62,4 +65,4 @@ const PluginPreview = ({
   )
 }
 
-export default withWidth({ noSSR: true })(PluginPreview)
+export default withWidth({ noSSR: true })(memo(BasePluginPreview))

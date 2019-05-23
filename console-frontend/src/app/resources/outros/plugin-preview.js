@@ -1,9 +1,9 @@
+import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
-import PluginPreview from 'shared/plugin-preview/index'
 import React, { useMemo } from 'react'
-import { Launcher } from 'plugin-base'
+import { Launcher as BaseLauncher } from 'plugin-base'
 
-const Preview = ({ form }) => {
+const PluginPreview = ({ form }) => {
   const bubbleButtons = useMemo(
     () => ({
       chatBubbleButtonYes: form.chatBubbleButtonYes,
@@ -12,19 +12,19 @@ const Preview = ({ form }) => {
     [form.chatBubbleButtonNo, form.chatBubbleButtonYes]
   )
 
-  const personaPicUrl = useMemo(() => form.personaProfilePic || (form.__persona && form.__persona.profilePicUrl), [
-    form.__persona,
-    form.personaProfilePic,
-  ])
+  const Launcher = useMemo(
+    () => <BaseLauncher personaPicUrl={form.personaProfilePic || (form.__persona && form.__persona.profilePicUrl)} />,
+    [form.__persona, form.personaProfilePic]
+  )
 
   return (
-    <PluginPreview
+    <BasePluginPreview
       bubbleButtons={bubbleButtons}
       bubbleText={form.chatBubbleText}
-      Launcher={<Launcher personaPicUrl={personaPicUrl} />}
+      Launcher={Launcher}
       launcherConfig={launcherConfig}
     />
   )
 }
 
-export default Preview
+export default PluginPreview

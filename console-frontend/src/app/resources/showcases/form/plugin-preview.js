@@ -1,38 +1,55 @@
+import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
-import PluginPreview from 'shared/plugin-preview/index'
-import React, { useCallback } from 'react'
-import { Launcher } from 'plugin-base'
+import React, { useCallback, useMemo } from 'react'
+import { Launcher as BaseLauncher } from 'plugin-base'
 import { history as pluginHistory, Showcase as ShowcaseBase } from 'plugin-base'
 import { previewConverter } from './data-utils'
 
-const Preview = ({ previewCallbacks, routeToShowcase, routeToSpotlight, form, onToggleContent, showingContent }) => {
+const PluginPreview = ({
+  previewCallbacks,
+  routeToShowcase,
+  routeToSpotlight,
+  form,
+  onToggleContent,
+  showingContent,
+}) => {
   const onLauncherClick = useCallback(() => onToggleContent(), [onToggleContent])
 
+  const Base = useMemo(
+    () => (
+      <ShowcaseBase
+        backButtonLabel="Back"
+        callbacks={previewCallbacks}
+        history={pluginHistory}
+        routeToShowcase={routeToShowcase}
+        routeToSpotlight={routeToSpotlight}
+        showcase={form}
+        spotlights={previewConverter.spotlights(form.spotlightsAttributes)}
+        subtitle={previewConverter.subtitle(form.subtitle)}
+        title={previewConverter.title(form.title)}
+      />
+    ),
+    [form, previewCallbacks, routeToShowcase, routeToSpotlight]
+  )
+
+  const Launcher = useMemo(
+    () => (
+      <BaseLauncher
+        onClick={onLauncherClick}
+        personaPicUrl={form.personaProfilePic || (form.__persona && form.__persona.profilePicUrl)}
+        pulsating
+        showingContent={showingContent}
+      />
+    ),
+    [form.__persona, form.personaProfilePic, onLauncherClick, showingContent]
+  )
+
   return (
-    <PluginPreview
-      Base={
-        <ShowcaseBase
-          backButtonLabel="Back"
-          callbacks={previewCallbacks}
-          history={pluginHistory}
-          routeToShowcase={routeToShowcase}
-          routeToSpotlight={routeToSpotlight}
-          showcase={form}
-          spotlights={previewConverter.spotlights(form).spotlights}
-          subtitle={previewConverter.subtitle(form)}
-          title={previewConverter.title(form)}
-        />
-      }
+    <BasePluginPreview
+      Base={Base}
       bubbleExtraText={form.chatBubbleExtraText}
       bubbleText={form.chatBubbleText}
-      Launcher={
-        <Launcher
-          onClick={onLauncherClick}
-          personaPicUrl={form.personaProfilePic || (form.__persona && form.__persona.profilePicUrl)}
-          pulsating
-          showingContent={showingContent}
-        />
-      }
+      Launcher={Launcher}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
       showingContent={showingContent}
@@ -40,4 +57,4 @@ const Preview = ({ previewCallbacks, routeToShowcase, routeToSpotlight, form, on
   )
 }
 
-export default Preview
+export default PluginPreview

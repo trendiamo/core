@@ -1,32 +1,42 @@
+import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
-import PluginPreview from 'shared/plugin-preview/index'
-import React, { useCallback } from 'react'
-import { Launcher, SimpleChat } from 'plugin-base'
+import React, { useCallback, useMemo } from 'react'
+import { Launcher as BaseLauncher, SimpleChat } from 'plugin-base'
 import { previewConverter } from './data-utils'
 
-const Preview = ({ form, onToggleContent, showingContent }) => {
+const PluginPreview = ({ form, onToggleContent, showingContent }) => {
   const onLauncherClick = useCallback(() => onToggleContent(), [onToggleContent])
 
+  const Base = useMemo(
+    () => (
+      <SimpleChat
+        backButtonLabel="Back"
+        data={previewConverter.mainData(form.simpleChatStepsAttributes)}
+        persona={previewConverter.persona(form.__persona)}
+        showBackButton={false}
+      />
+    ),
+    [form.__persona, form.simpleChatStepsAttributes]
+  )
+
+  const Launcher = useMemo(
+    () => (
+      <BaseLauncher
+        onClick={onLauncherClick}
+        personaPicUrl={previewConverter.persona(form.__persona).profilePic.url}
+        pulsating
+        showingContent={showingContent}
+      />
+    ),
+    [form.__persona, onLauncherClick, showingContent]
+  )
+
   return (
-    <PluginPreview
-      Base={
-        <SimpleChat
-          backButtonLabel="Back"
-          data={previewConverter.mainData(form)}
-          persona={previewConverter.persona(form)}
-          showBackButton={false}
-        />
-      }
+    <BasePluginPreview
+      Base={Base}
       bubbleExtraText={form.chatBubbleExtraText}
       bubbleText={form.chatBubbleText}
-      Launcher={
-        <Launcher
-          onClick={onLauncherClick}
-          personaPicUrl={previewConverter.persona(form).profilePic.url}
-          pulsating
-          showingContent={showingContent}
-        />
-      }
+      Launcher={Launcher}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
       showingContent={showingContent}
@@ -34,4 +44,4 @@ const Preview = ({ form, onToggleContent, showingContent }) => {
   )
 }
 
-export default Preview
+export default PluginPreview

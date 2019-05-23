@@ -7,19 +7,15 @@ const defaults = {
 }
 
 const previewConverter = {
-  persona(form) {
-    const formPersona = form.__persona || {}
+  persona(persona = {}) {
     return {
-      name: formPersona.name || defaults.persona.name,
-      description: formPersona.description || defaults.persona.description,
-      profilePic: {
-        url: formPersona.profilePicUrl,
-      },
+      name: persona.name || defaults.persona.name,
+      description: persona.description || defaults.persona.description,
+      profilePic: { url: persona.profilePicUrl },
     }
   },
-  mainData(form) {
-    const newData = { ...form }
-    newData.simpleChatSteps = newData.simpleChatStepsAttributes
+  mainData(simpleChatSteps) {
+    const newData = { simpleChatSteps }
     newData.simpleChatSteps = newData.simpleChatSteps
       .map(simpleChatStep => {
         const messages = simpleChatStep.simpleChatMessagesAttributes

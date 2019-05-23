@@ -8,6 +8,8 @@ const BubblesContainer = styled.div`
   left: 0;
 `
 
+const offset = { x: -25, y: -10 }
+
 const Bubbles = ({
   bubbleButtons,
   bubbleExtraText,
@@ -32,7 +34,7 @@ const Bubbles = ({
       <LauncherBubbles
         data={data}
         launcherConfig={launcherConfig}
-        offset={{ x: -25, y: -10 }}
+        offset={offset}
         onClick={onToggleContent}
         position={position}
         showingContent={showingContent}

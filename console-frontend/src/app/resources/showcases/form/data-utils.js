@@ -11,14 +11,14 @@ const defaults = {
 }
 
 const previewConverter = {
-  title(form) {
-    return form.title || defaults.title
+  title(title) {
+    return title || defaults.title
   },
-  subtitle(form) {
-    return form.subtitle || defaults.subtitle
+  subtitle(subtitle) {
+    return subtitle || defaults.subtitle
   },
-  spotlights(showcase) {
-    const spotlights = showcase.spotlightsAttributes
+  spotlights(spotlights) {
+    return spotlights
       .map((spotlight, i) => {
         const productPicks = this.productPicks(spotlight)
         const profilePic = spotlight.__persona && (spotlight.__persona.profilePic || spotlight.__persona.profilePicUrl)
@@ -42,7 +42,6 @@ const previewConverter = {
         }
       })
       .filter(e => e)
-    return { ...showcase, spotlights }
   },
   productPicks(spotlight) {
     return spotlight.productPicksAttributes
