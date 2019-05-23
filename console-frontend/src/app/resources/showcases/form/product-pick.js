@@ -141,7 +141,6 @@ const ProductPick = ({
         required
         setDisabled={setIsCropping}
         setPic={setPicture}
-        square
         value={productPick.picUrl}
       />
       {progress && <ProgressBar progress={progress} />}

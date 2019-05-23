@@ -101,7 +101,7 @@ const uploadPicture = async ({ blob, setProgress }) => {
   }
 }
 
-const PictureUploader = ({ disabled, label, onChange, required, setDisabled, setPic, square, value }) => {
+const PictureUploader = ({ disabled, label, onChange, required, setDisabled, setPic, circle, value }) => {
   const picturePreviewRef = useRef()
   const [crop, setCrop] = useState({})
   const [croppedPicture, setCroppedPicture] = useState(null)
@@ -229,6 +229,7 @@ const PictureUploader = ({ disabled, label, onChange, required, setDisabled, set
 
   return (
     <BasePictureUploader
+      circle={circle}
       crop={crop}
       disabled={disabled}
       doneCropping={doneCropping}
@@ -248,7 +249,6 @@ const PictureUploader = ({ disabled, label, onChange, required, setDisabled, set
       previewPicture={previewPicture}
       required={required}
       setModalOpen={setModalOpen}
-      square={square}
     />
   )
 }
