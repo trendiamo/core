@@ -75,22 +75,6 @@ export default compose(
     }
   }),
   withHandlers({
-    handleScroll: ({ setCoverMinimized, contentRef, coverMinimized, step, setTouch, touch }) => event => {
-      if (step.header.minimized) return
-      const scrollTop = event.target.scrollTop
-      if (scrollTop <= 0 && coverMinimized) {
-        setTouch(false)
-        setTimeout(() => {
-          setTouch(true)
-        }, 50)
-        return setCoverMinimized(false)
-      }
-      if (scrollTop > 0 && !coverMinimized && touch) {
-        const windowHeight = window.innerHeight
-        const maxHeight = window.innerWidth >= 600 ? Math.min(windowHeight, 500) : windowHeight
-        maxHeight - contentRef().base.scrollHeight <= 90 && setCoverMinimized(true)
-      }
-    },
     handleEndNodeTags: ({ endNodeTags, setEndNodeTags, setShowingCtaButton }) => nextStepKey => {
       const newTags = endNodeTags.includes(nextStepKey)
         ? endNodeTags.filter(tag => tag !== nextStepKey)
