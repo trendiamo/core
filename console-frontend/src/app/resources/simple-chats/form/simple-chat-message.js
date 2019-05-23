@@ -1,10 +1,9 @@
 import PictureMessageField from './picture-message-field'
 import ProductMessageFields from './product-message-fields'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import TextMessageFields from './text-message-fields'
 import VideoMessageField from './video-message-field'
 import { Cancel, FormSection } from 'shared/form-elements'
-import { extractJson, extractYoutubeId } from 'plugin-base'
 
 const setSimpleChatMessageTitle = simpleChatMessage => {
   switch (simpleChatMessage.type) {
@@ -97,12 +96,9 @@ const SimpleChatMessage = ({
   simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
-  const [simpleChatMessageObject, setSimpleChatMessageObject] = useState({})
-
   const onSimpleChatMessageEdit = useCallback(
-    simpleChatMessageObject => {
-      setSimpleChatMessageObject(simpleChatMessageObject)
-      onChange(simpleChatMessageObject, simpleChatMessageIndex)
+    simpleChatMessage => {
+      onChange(simpleChatMessage, simpleChatMessageIndex)
     },
     [onChange, simpleChatMessageIndex]
   )
@@ -134,34 +130,7 @@ const SimpleChatMessage = ({
 
   const hideTop = useMemo(() => index === 0, [index])
 
-  const title = useMemo(() => setSimpleChatMessageTitle(simpleChatMessageObject), [simpleChatMessageObject])
-
-  useEffect(
-    () => {
-      if (simpleChatMessage.type) return setSimpleChatMessageObject(simpleChatMessage)
-      const simpleChatProductMessage = extractJson(simpleChatMessage.text)
-      if (simpleChatProductMessage) {
-        return setSimpleChatMessageObject({
-          id: simpleChatMessage.id,
-          type: 'SimpleChatProductMessage',
-          ...simpleChatProductMessage,
-        })
-      }
-      const videoData = extractYoutubeId(simpleChatMessage.text)
-      if (videoData) {
-        return setSimpleChatMessageObject({
-          id: simpleChatMessage.id,
-          type: 'SimpleChatVideoMessage',
-          videoUrl: simpleChatMessage.text,
-        })
-      }
-      setSimpleChatMessageObject({
-        ...simpleChatMessage,
-        type: 'SimpleChatTextMessage',
-      })
-    },
-    [simpleChatMessage]
-  )
+  const title = useMemo(() => setSimpleChatMessageTitle(simpleChatMessage), [simpleChatMessage])
 
   if (simpleChatMessage._destroy) return null
 
@@ -183,7 +152,7 @@ const SimpleChatMessage = ({
         onSimpleChatMessageEdit={onSimpleChatMessageEdit}
         setIsCropping={setIsCropping}
         setSimpleChatMessagePicture={setSimpleChatMessagePicture}
-        simpleChatMessage={simpleChatMessageObject}
+        simpleChatMessage={simpleChatMessage}
         simpleChatMessageIndex={simpleChatMessageIndex}
       />
     </FormSection>

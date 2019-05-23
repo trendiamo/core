@@ -21,7 +21,6 @@ import { AssessmentProducts } from 'simple-chat/components/message-types'
 import { BelowCover, CoverImg, PaddedCover, PersonaDescription } from 'shared/cover/components'
 import {
   convertLogs,
-  extractJson,
   extractYoutubeId,
   imgixUrl,
   isFrameActive,
@@ -71,7 +70,6 @@ export {
   animateOnMount,
   SimpleChat,
   convertLogs,
-  extractJson,
   extractYoutubeId,
   isFrameActive,
   listeners,

@@ -14,7 +14,7 @@ import {
   VideoMessage,
 } from './message-types'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
-import { extractJson, extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
+import { extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
 
 const MessageContainer = styled.div`
   max-width: ${({ type }) =>
@@ -77,21 +77,6 @@ const ChatMessage = compose(
   withState('show', 'setShow', false),
   withState('clickable', 'setClickable', false),
   withHandlers({
-    getDataWithoutType: ({ log }) => () => {
-      const text = log.message.text
-      const videoData = extractYoutubeId(text)
-      const productData = !videoData && extractJson(text)
-      if (!productData && text.startsWith('-IMAGECAROUSEL-')) {
-        const data = checkForSpecialImageCarousel(text)
-        if (data) return { type: 'imageCarousel', data }
-      }
-      const type = videoData
-        ? 'SimpleChatVideoMessage'
-        : productData
-        ? 'SimpleChatProductMessage'
-        : 'SimpleChatTextMessage'
-      return { type, data: videoData || productData || text }
-    },
     getDataWithType: ({ log }) => () => {
       const type = log.message.type
       if (!type) return
@@ -118,8 +103,8 @@ const ChatMessage = compose(
       return { type, data }
     },
   }),
-  withProps(({ getDataWithType, getDataWithoutType }) => {
-    return getDataWithType() || getDataWithoutType()
+  withProps(({ getDataWithType }) => {
+    return getDataWithType()
   }),
   lifecycle({
     componentDidMount() {
