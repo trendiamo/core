@@ -5,6 +5,7 @@ import { compose, withHandlers, withProps } from 'recompose'
 import { imgixUrl } from 'tools'
 
 const PictureCard = styled(Card)`
+  margin-right: 0;
   min-width: 260px;
 `
 
