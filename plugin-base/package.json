@@ -4,6 +4,7 @@
   "private": true,
   "main": "dist/plugin-base.js",
   "scripts": {
+    "build-dev": "webpack --progress --config webpack.config.js",
     "build": "webpack -p --progress --config webpack.prod.js"
   },
   "devDependencies": {

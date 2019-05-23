@@ -18,7 +18,7 @@
     "lodash.pickby": "^4.6.0",
     "lodash.trim": "^4.5.1",
     "notistack": "^0.8.2",
-    "plugin-base": "./plugin-base",
+    "plugin-base": "../plugin-base",
     "query-string": "^6.2.0",
     "react": "^16.8.6",
     "react-aspect-ratio": "^1.0.40",
