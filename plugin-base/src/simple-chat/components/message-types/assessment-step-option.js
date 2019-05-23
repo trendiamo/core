@@ -94,7 +94,7 @@ const Box = styled.div`
       bottom: 0px;
       right: 0px;
       z-index: 5;
-      border-radius: 6px;
+      border-radius: 12px;
       animation: _frekkls_selected_asmt_item_highlight 1.2s linear infinite;
       animation-delay: 0.125s;
     }`}
@@ -150,7 +150,7 @@ const Content = styled.div`
     `
   &:after {
     content: '';
-    border-radius: 6px;
+    border-radius: 12px;
     position: absolute;
     top: 0;
     left: 0;

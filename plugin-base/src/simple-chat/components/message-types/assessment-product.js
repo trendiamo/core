@@ -21,10 +21,6 @@ const styleConfigDefault = {
   detailsPrice: {
     fontSize: '14px',
   },
-  highlight: {
-    borderWidth: '3px',
-    borderRadius: '6px',
-  },
   highlightText: {
     top: '65%',
   },
@@ -52,7 +48,7 @@ const HighlightContainer = styled.div`
   left: 0;
   right: 0;
   border: 4px solid ${({ highlight }) => highlight.backgroundColor};
-  border-radius: 10px;
+  border-radius: 12px;
   pointer-events: none;
 `
 
