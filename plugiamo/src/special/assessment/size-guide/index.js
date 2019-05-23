@@ -1,3 +1,4 @@
+import AppBase from 'app/base'
 import blacklistTags from './blacklist-tags'
 import ChatModals from 'shared/chat-modals'
 import data from 'special/assessment/data'
@@ -6,7 +7,6 @@ import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
 import withChatActions from 'ext/recompose/with-chat-actions'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { AppBase } from 'app'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { fetchProducts } from 'special/assessment/utils'
 import { getScrollbarWidth, isSmall } from 'utils'
@@ -14,16 +14,16 @@ import { h } from 'preact'
 import { SimpleChat, timeout } from 'plugin-base'
 
 const Plugin = ({
-  showingLauncher,
+  clickActions,
+  disappear,
   isUnmounting,
+  modalsProps,
   module,
   onToggleContent,
+  pluginState,
   setPluginState,
   showingContent,
-  pluginState,
-  launcherDisappear,
-  modalsProps,
-  clickActions,
+  showingLauncher,
 }) => (
   <div>
     <ChatModals flowType={module.flowType} {...modalsProps} />
@@ -38,12 +38,13 @@ const Plugin = ({
         />
       }
       data={module}
+      disappear={disappear}
       isUnmounting={isUnmounting}
       Launcher={showingLauncher && Launcher}
-      launcherDisappear={launcherDisappear}
-      launcherPulsating={pluginState !== 'closed'}
       onToggleContent={onToggleContent}
       persona={module.launcher.persona}
+      pluginState={pluginState}
+      showingBubbles
       showingContent={showingContent}
       showingLauncher={showingLauncher}
     />
@@ -61,7 +62,7 @@ export default compose(
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
   withState('showingLauncher', 'setShowingLauncher', true),
   withState('product', 'setProduct', null),
-  withState('launcherDisappear', 'setLauncherDisappear', false),
+  withState('disappear', 'setDisappear', false),
   lifecycle({
     componentDidMount() {
       const { setProduct, module } = this.props
@@ -95,24 +96,21 @@ export default compose(
   withHandlers({
     onToggleContent: ({
       module,
-      setPluginState,
       pluginState,
+      setDisappear,
       setIsUnmounting,
+      setPluginState,
       setShowingContent,
       showingContent,
-      launcherDisappear,
-      setLauncherDisappear,
     }) => () => {
-      if (module.flowType === 'outro') return
-      if (pluginState === 'closed') {
-        !launcherDisappear && setTimeout(() => setLauncherDisappear(true), 22000)
-        if (!showingContent) return
-      }
-      if (pluginState !== 'closed') {
-        setPluginState('closed')
-      }
+      if (module.flowType === 'outro' || pluginState === 'closed') return
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
+
+      if (showingContent) {
+        setPluginState('closed')
+        timeout.set('hideLauncher', () => setDisappear(true), 22000)
+      }
 
       if (showingContent && isSmall()) {
         setIsUnmounting(true)
@@ -125,7 +123,8 @@ export default compose(
           400
         )
       }
-      return setShowingContent(!showingContent)
+
+      setShowingContent(!showingContent)
     },
   }),
   withHotkeys({

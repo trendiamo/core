@@ -1,5 +1,5 @@
+import AppBase from 'app/base'
 import DefaultLauncher from 'app/launcher/original'
-import { AppBase } from 'app'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 

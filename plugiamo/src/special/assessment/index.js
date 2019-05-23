@@ -57,10 +57,10 @@ const Assessment = ({
         steps={steps}
       />
     }
-    skipEntry
     hideContentFrame={hideContentFrame}
     onToggleContent={onToggleContent}
     setShowAssessmentContent={setShowAssessmentContent}
+    skipEntry
   />
 )
 
