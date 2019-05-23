@@ -1,8 +1,0 @@
-{
-  "main": "./plugin-base.js",
-  "name": "plugin-base",
-  "description": "copied from ../plugin-base",
-  "version": "0.1.0",
-  "dependencies": {},
-  "devDependencies": {}
-}

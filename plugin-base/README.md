@@ -12,7 +12,7 @@ yarn add -P react@^16.0.0 styled-components@^3.4.0 recompose@^0.28.2 lodash.iseq
 ## Build
 
 ```
-yarn build && cp dist/plugin-base.js ../console-frontend/plugin-base/ && cp dist/plugin-base.js ../plugiamo/plugin-base/ && cd ../console-frontend && yarn add ./plugin-base && cd ../plugiamo && yarn add ./plugin-base && cd ../plugin-base
+yarn build-dev && cd ../console-frontend && yarn add ../plugin-base && rm -rf node_modules/plugin-base/node_modules && cd ../plugiamo && yarn add ../plugin-base && rm -rf node_modules/plugin-base/node_modules && cd ../plugin-base
 ```
 
 ## Code checks
@@ -20,13 +20,3 @@ yarn build && cp dist/plugin-base.js ../console-frontend/plugin-base/ && cp dist
 ```sh
 yarn eslint src
 ```
-
-## Linking Yarn
-
-Go to console-frontend and run:
-
-```
-cd plugin-base/ && yarn link && cd ../ && yarn link plugin-base
-```
-
-After that plugin-base will automatically reload in console-frontend yarn system after each build.

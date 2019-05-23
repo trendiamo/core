@@ -12,7 +12,7 @@
     "lodash.isequal": "^4.5.0",
     "lodash.omit": "^4.5.0",
     "mixpanel-browser": "^2.22.4",
-    "plugin-base": "./plugin-base",
+    "plugin-base": "../plugin-base",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.3",
     "preact-context": "^1.1.1",
@@ -21,7 +21,7 @@
     "react-focus-lock": "^1.17.7",
     "recompose": "^0.28.2",
     "snarkdown": "^1.2.2",
-    "styled-components": "^3.4.5"
+    "styled-components": "^3.4.10"
   },
   "scripts": {
     "start": "webpack-dev-server",
