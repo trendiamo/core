@@ -151,6 +151,8 @@ export default compose(
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
 
+      setShowingBubbles(false)
+
       if (showingContent) {
         setPluginState('closed')
         timeout.set('hideLauncher', () => setDisappear(true), 10000)
@@ -161,7 +163,7 @@ export default compose(
 
       if (showingContent && isSmall()) {
         setIsUnmounting(true)
-        return timeout.set(
+        timeout.set(
           'exitOnMobile',
           () => {
             setIsUnmounting(false)
@@ -169,11 +171,11 @@ export default compose(
           },
           400
         )
+      } else {
+        setShowingContent(disappear ? false : !showingContent)
       }
 
-      setShowingBubbles(false)
       setShowAssessmentContent(false)
-      setShowingContent(disappear ? false : !showingContent)
     },
     outroButtonsClick: () => value => {
       mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
