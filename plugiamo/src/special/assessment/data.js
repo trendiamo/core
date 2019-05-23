@@ -498,6 +498,7 @@ const data = {
     logs: {
       default: [
         {
+          type: 'SimpleChatTextMessage',
           text:
             'Hier sind ein paar Produkte die zu deiner bisherigen Auswahl passen und gerne von unseren Kunden kombiniert werden! 🙂',
         },
@@ -534,6 +535,7 @@ const data = {
     logs: {
       default: [
         {
+          type: 'SimpleChatTextMessage',
           text:
             'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
         },
