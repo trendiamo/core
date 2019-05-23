@@ -24,6 +24,10 @@ const AccountContainer = styled.div`
 
 const StyledListItem = styled(MUIListItem)`
   cursor: pointer;
+  ${ListItemText} span {
+    color: #222;
+    font-size: 16px;
+  }
 `
 
 const DeleteButtonContainer = styled.div`
