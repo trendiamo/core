@@ -14,8 +14,8 @@ const previewConverter = {
       profilePic: { url: persona.profilePicUrl },
     }
   },
-  mainData(simpleChatSteps) {
-    const newData = { simpleChatSteps }
+  mainData(title, simpleChatSteps) {
+    const newData = { title, simpleChatSteps }
     newData.simpleChatSteps = newData.simpleChatSteps
       .map(simpleChatStep => {
         const messages = simpleChatStep.simpleChatMessagesAttributes
