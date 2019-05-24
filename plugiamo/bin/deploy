@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ../plugin-base && yarn build && cd ../plugiamo && yarn add ../plugin-base && rm -rf node_modules/plugin-base/node_modules && \
+cd ../plugin-base && yarn build && cd ../plugiamo && cp ../plugin-base/dist/plugin-base.js node_modules/plugin-base/dist/ && \
 ([ -f .env ] && cp .env .env~ || true) && \
 aws s3 cp s3://plugiamo/.env .env && \
 yarn build && \
@@ -8,7 +8,7 @@ yarn build && \
 gzip -9 -c build/plugin.js | aws s3 cp - s3://plugiamo/plugin.js --quiet --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
 aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/plugin.js s3://javascript/plugin.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
 rm build/plugin.js && \
-cd ../plugin-base && yarn build-dev && cd ../plugiamo && yarn add ../plugin-base && rm -rf node_modules/plugin-base/node_modules
+cd ../plugin-base && yarn build-dev && cd ../plugiamo && cp ../plugin-base/dist/plugin-base.js node_modules/plugin-base/dist/
 # begin notify rollbar
 # ROLLBAR_DEPLOY_TOKEN=$(grep ROLLBAR_DEPLOY_TOKEN .env | xargs)
 # IFS='=' read -ra ROLLBAR_DEPLOY_TOKEN <<< "$ROLLBAR_DEPLOY_TOKEN"
