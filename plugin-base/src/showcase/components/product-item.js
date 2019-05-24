@@ -1,6 +1,7 @@
 import emojify from 'ext/emojify'
 import React from 'react'
 import styled from 'styled-components'
+import { compose, withHandlers } from 'recompose'
 import { imgixUrl } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 
@@ -38,8 +39,8 @@ const DisplayPrice = styled.div`
   font-weight: bold;
 `
 
-const ProductItem = ({ spotlight, product, onProductClickFactory, ...props }) => (
-  <ListItem onClick={onProductClickFactory(product, spotlight)} {...props}>
+const ProductItem = ({ selectInList, product, onClick }) => (
+  <ListItem onClick={onClick} selectInList={selectInList}>
     <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', w: 101, h: 101 })} />
     <ListContent>
       <Content>
@@ -51,4 +52,10 @@ const ProductItem = ({ spotlight, product, onProductClickFactory, ...props }) =>
     <ListChevron />
   </ListItem>
 )
-export default ProductItem
+export default compose(
+  withHandlers({
+    onClick: ({ onProductClick, product, spotlight }) => () => {
+      onProductClick(product, spotlight)
+    },
+  })
+)(ProductItem)

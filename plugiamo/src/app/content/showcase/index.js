@@ -88,8 +88,8 @@ const Showcase = compose(
     },
   }),
   withHandlers({
-    onSpotlightClickFactory: ({ routeToSpotlight, setShowAssessmentContent }) => spotlight => assessment => {
-      if (assessment) {
+    onSpotlightClick: ({ routeToSpotlight, setShowAssessmentContent }) => spotlight => {
+      if (!spotlight.productPicks) {
         setTimeout(() => setShowAssessmentContent(true), 300)
         mixpanel.track('Clicked Self-Assessment Spotlight', {
           flowType: 'showcase',
@@ -107,7 +107,7 @@ const Showcase = compose(
       if (assessmentHack()) rememberPersona(spotlight.persona)
       routeToSpotlight(spotlight)
     },
-    onProductClickFactory: () => (product, spotlight) => () => {
+    onProductClick: () => (product, spotlight) => {
       mixpanel.track(
         'Clicked Product',
         {
@@ -124,10 +124,10 @@ const Showcase = compose(
       )
     },
   }),
-  withProps(({ onSpotlightClickFactory, onProductClickFactory }) => ({
+  withProps(({ onSpotlightClick, onProductClick }) => ({
     callbacks: {
-      onSpotlightClickFactory,
-      onProductClickFactory,
+      onSpotlightClick,
+      onProductClick,
     },
     assessmentSpotlight: assessmentHack() && assessmentSpotlight,
   }))

@@ -14,7 +14,7 @@ import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
-const onProductClickFactory = product => () => {
+const onProductClick = product => {
   window.open(product.url, '_blank')
 }
 
@@ -129,10 +129,10 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
   )
 
   const setSpotlightForm = useCallback(
-    (spotlight, index) => {
+    (mergeSpotlightCallback, index) => {
       mergeFormCallback(form => {
         const newSpotlightsAttributes = [...form.spotlightsAttributes]
-        newSpotlightsAttributes[index] = spotlight
+        newSpotlightsAttributes[index] = mergeSpotlightCallback(newSpotlightsAttributes[index])
         return { spotlightsAttributes: newSpotlightsAttributes }
       })
     },
@@ -182,8 +182,8 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     [form.id, onToggleContent]
   )
 
-  const onSpotlightClickFactory = useCallback(
-    spotlight => () => {
+  const onSpotlightClick = useCallback(
+    spotlight => {
       onToggleContent(true)
       if (spotlight.personaId) routeToSpotlight(spotlight)
     },
@@ -211,10 +211,10 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
 
   const previewCallbacks = useMemo(
     () => ({
-      onSpotlightClickFactory,
-      onProductClickFactory,
+      onSpotlightClick,
+      onProductClick,
     }),
-    [onSpotlightClickFactory]
+    [onSpotlightClick]
   )
 
   if (isFormLoading) return <CircularProgress />
@@ -232,7 +232,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
           onBackClick={onBackClick}
           onFormSubmit={newOnFormSubmit}
           onSortEnd={onSortEnd}
-          onSpotlightClickFactory={onSpotlightClickFactory}
+          onSpotlightClick={onSpotlightClick}
           onToggleContent={onToggleContent}
           productPicksPictures={productPicksPictures}
           selectPersona={selectPersona}

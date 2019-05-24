@@ -1,6 +1,6 @@
 import characterLimits from 'shared/character-limits'
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
-import React, { useCallback, useState } from 'react'
+import React, { memo, useCallback, useState } from 'react'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Cancel, Field, FormHelperText, FormSection } from 'shared/form-elements'
 
@@ -40,13 +40,6 @@ const ProductPick = ({
     [index, onChange, productPick]
   )
 
-  const handleFocus = useCallback(
-    () => {
-      onFocus && onFocus()
-    },
-    [onFocus]
-  )
-
   const setPictureUrl = useCallback(
     picUrl => {
       onFocus()
@@ -61,8 +54,6 @@ const ProductPick = ({
     },
     [index, setProductPicture]
   )
-
-  if (productPick._destroy) return null
 
   return (
     <FormSection
@@ -86,7 +77,7 @@ const ProductPick = ({
         margin="normal"
         name="productPick_url"
         onChange={editProductPickValue}
-        onFocus={handleFocus}
+        onFocus={onFocus}
         required
         type="URL"
         value={productPick.url}
@@ -105,7 +96,7 @@ const ProductPick = ({
         max={characterLimits.showcase.productName}
         name="productPick_name"
         onChange={editProductPickValue}
-        onFocus={handleFocus}
+        onFocus={onFocus}
         required
         value={productPick.name}
       />
@@ -118,7 +109,7 @@ const ProductPick = ({
         max={characterLimits.showcase.productDescription}
         name="productPick_description"
         onChange={editProductPickValue}
-        onFocus={handleFocus}
+        onFocus={onFocus}
         required
         value={productPick.description}
       />
@@ -130,7 +121,7 @@ const ProductPick = ({
         margin="normal"
         name="productPick_displayPrice"
         onChange={editProductPickValue}
-        onFocus={handleFocus}
+        onFocus={onFocus}
         required
         value={productPick.displayPrice}
       />
@@ -148,4 +139,4 @@ const ProductPick = ({
   )
 }
 
-export default ProductPick
+export default memo(ProductPick)
