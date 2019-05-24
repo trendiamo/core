@@ -31,7 +31,7 @@ const SpotlightContent = compose(
           <ProductItem
             highlight
             key={product.id || `new-${index}`}
-            onProductClickFactory={callbacks.onProductClickFactory}
+            onProductClick={callbacks.onProductClick}
             product={product}
             spotlight={spotlight}
           />

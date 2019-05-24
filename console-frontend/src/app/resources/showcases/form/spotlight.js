@@ -1,130 +1,80 @@
 import Autocomplete from 'shared/autocomplete'
 import findIndex from 'lodash.findindex'
-import ProductPick from './product-pick'
-import React, { useCallback, useMemo } from 'react'
+import ProductPicks from './product-picks'
+import React, { memo, useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import { SortableContainer, SortableElement } from 'shared/sortable-elements'
-
-const SortableProductPick = SortableElement(ProductPick)
-
-const ProductPicks = ({
-  isFormLoading,
-  isCropping,
-  setIsCropping,
-  spotlight,
-  onChange,
-  setProductPicture,
-  onFocus,
-}) => {
-  const allowDelete = useMemo(
-    () => spotlight.productPicksAttributes.filter(productPick => !productPick._destroy).length > 1,
-    [spotlight.productPicksAttributes]
-  )
-
-  return (
-    <div>
-      {spotlight.productPicksAttributes.map((productPick, index) =>
-        productPick._destroy ? null : (
-          <SortableProductPick
-            allowDelete={allowDelete}
-            folded={productPick.id}
-            index={index}
-            isCropping={isCropping}
-            isFormLoading={isFormLoading}
-            key={productPick.id || productPick.__key}
-            onChange={onChange}
-            onFocus={onFocus}
-            personaId={spotlight && spotlight.personaId}
-            productPick={productPick}
-            setIsCropping={setIsCropping}
-            setProductPicture={setProductPicture}
-            sortIndex={index}
-          />
-        )
-      )}
-    </div>
-  )
-}
-
-const ProductPicksContainer = SortableContainer(ProductPicks)
 
 const options = { suggestionItem: 'withAvatar' }
 
 const Spotlight = ({
   allowDelete,
-  spotlight,
-  isFormLoading,
   folded,
+  index,
+  isCropping,
+  isFormLoading,
+  onSpotlightClick,
   productPicksPictures,
   setIsCropping,
   setProductPicksPictures,
-  index,
-  isCropping,
-  onChange,
-  onFocus,
+  setSpotlightForm,
+  spotlight,
 }) => {
+  const onChange = useCallback(
+    newSpotlight => {
+      setSpotlightForm(oldSpotlight => ({ ...oldSpotlight, ...newSpotlight }), index)
+    },
+    [index, setSpotlightForm]
+  )
+
   const selectPersona = useCallback(
     selected => {
       selected &&
-        onChange(
-          {
-            ...spotlight,
-            personaId: selected.value.id,
-            __persona: selected.value,
-          },
-          index
-        )
+        onChange({
+          personaId: selected.value.id,
+          __persona: selected.value,
+        })
     },
-    [index, onChange, spotlight]
+    [onChange]
   )
 
   const addProductPick = useCallback(
     () => {
-      onChange(
-        {
-          ...spotlight,
-          productPicksAttributes: [
-            ...spotlight.productPicksAttributes,
-            {
-              url: '',
-              name: '',
-              description: '',
-              displayPrice: '',
-              picUrl: '',
-              __key: `new-${spotlight.productPicksAttributes.length}`,
-            },
-          ],
-        },
-        index
-      )
+      onChange({
+        productPicksAttributes: [
+          ...spotlight.productPicksAttributes,
+          {
+            url: '',
+            name: '',
+            description: '',
+            displayPrice: '',
+            picUrl: '',
+            __key: `new-${spotlight.productPicksAttributes.length}`,
+          },
+        ],
+      })
     },
-    [index, onChange, spotlight]
+    [onChange, spotlight]
   )
 
   const deleteSpotlight = useCallback(
     () => {
-      onChange(
-        {
-          ...spotlight,
-          id: spotlight.id,
-          _destroy: true,
-        },
-        index
-      )
+      onChange({ _destroy: true })
     },
-    [index, onChange, spotlight]
+    [onChange]
   )
 
   const setProductPickForm = useCallback(
     (productPick, productPickIndex) => {
-      let newProductPicksAttributes = [...spotlight.productPicksAttributes]
-      newProductPicksAttributes[productPickIndex] = productPick
-      onChange({ ...spotlight, productPicksAttributes: newProductPicksAttributes }, index)
+      setSpotlightForm(oldSpotlight => {
+        let newProductPicksAttributes = [...oldSpotlight.productPicksAttributes]
+        newProductPicksAttributes[productPickIndex] = productPick
+        return { ...oldSpotlight, productPicksAttributes: newProductPicksAttributes }
+      }, index)
     },
-    [index, onChange, spotlight]
+    [index, setSpotlightForm]
   )
 
   const setProductPicture = useCallback(
@@ -142,10 +92,12 @@ const Spotlight = ({
 
   const onSortEnd = useCallback(
     ({ oldIndex, newIndex }) => {
-      const orderedProductPicks = arrayMove(spotlight.productPicksAttributes, oldIndex, newIndex)
-      onChange({ ...spotlight, productPicksAttributes: orderedProductPicks }, index)
+      setSpotlightForm(oldSpotlight => {
+        const orderedProductPicks = arrayMove(oldSpotlight.productPicksAttributes, oldIndex, newIndex)
+        return { ...oldSpotlight, productPicksAttributes: orderedProductPicks }
+      }, index)
     },
-    [index, onChange, spotlight]
+    [index, setSpotlightForm]
   )
 
   const initialSelectedItem = useMemo(
@@ -153,7 +105,17 @@ const Spotlight = ({
     [spotlight.__persona]
   )
 
-  if (spotlight._destroy) return null
+  const onAutocompleteFocus = useCallback(
+    () => onSpotlightClick({ ...spotlight, id: spotlight.id || `new-${index}` }),
+    [index, onSpotlightClick, spotlight]
+  )
+
+  const onProductPickFocus = useCallback(
+    spotlight => {
+      onSpotlightClick({ ...spotlight, id: spotlight.id || `new-${index}` })
+    },
+    [index, onSpotlightClick]
+  )
 
   return (
     <Section>
@@ -176,19 +138,19 @@ const Spotlight = ({
           initialSelectedItem={initialSelectedItem}
           label="Persona"
           onChange={selectPersona}
-          onFocus={onFocus}
+          onFocus={onAutocompleteFocus}
           options={options}
           required
         />
         <div style={{ marginTop: '24px' }}>
           <FormSection foldable title="Product Picks">
             {spotlight.productPicksAttributes && (
-              <ProductPicksContainer
+              <ProductPicks
                 helperClass="sortable-element"
                 isCropping={isCropping}
                 isFormLoading={isFormLoading}
                 onChange={setProductPickForm}
-                onFocus={onFocus}
+                onFocus={onProductPickFocus}
                 onSortEnd={onSortEnd}
                 setIsCropping={setIsCropping}
                 setProductPicture={setProductPicture}
@@ -204,4 +166,4 @@ const Spotlight = ({
   )
 }
 
-export default Spotlight
+export default memo(Spotlight)

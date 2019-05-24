@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 import Spotlight from './spotlight'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
@@ -8,20 +8,20 @@ const Spotlights = ({
   isFormLoading,
   isCropping,
   setIsCropping,
-  form,
+  spotlightsAttributes,
   personas,
   setProductPicksPictures,
   productPicksPictures,
   setSpotlightForm,
-  onSpotlightClickFactory,
+  onSpotlightClick,
 }) => {
-  const allowDelete = useMemo(() => form.spotlightsAttributes.filter(spotlight => !spotlight._destroy).length > 1, [
-    form.spotlightsAttributes,
+  const allowDelete = useMemo(() => spotlightsAttributes.filter(spotlight => !spotlight._destroy).length > 1, [
+    spotlightsAttributes,
   ])
 
   return (
     <div>
-      {form.spotlightsAttributes.map((spotlight, index) =>
+      {spotlightsAttributes.map((spotlight, index) =>
         spotlight._destroy ? null : (
           <SortableSpotlight
             allowDelete={allowDelete}
@@ -30,12 +30,12 @@ const Spotlights = ({
             isCropping={isCropping}
             isFormLoading={isFormLoading}
             key={spotlight.id || spotlight.__key}
-            onChange={setSpotlightForm}
-            onFocus={onSpotlightClickFactory({ ...spotlight, id: spotlight.id || `new-${index}` })}
+            onSpotlightClick={onSpotlightClick}
             personas={personas}
             productPicksPictures={productPicksPictures}
             setIsCropping={setIsCropping}
             setProductPicksPictures={setProductPicksPictures}
+            setSpotlightForm={setSpotlightForm}
             sortIndex={index}
             spotlight={spotlight}
           />
@@ -45,6 +45,4 @@ const Spotlights = ({
   )
 }
 
-const SpotlightsContainer = SortableContainer(Spotlights)
-
-export default SpotlightsContainer
+export default SortableContainer(memo(Spotlights))

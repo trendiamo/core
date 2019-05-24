@@ -1,12 +1,12 @@
 import MainForm from './main-form'
 import omit from 'lodash.omit'
 import React from 'react'
-import SpotlightsContainer from './spotlights-container'
+import Spotlights from './spotlights'
 import { AddItemContainer, Form } from 'shared/form-elements'
 
 const FormContainer = ({
   selectPersona,
-  onSpotlightClickFactory,
+  onSpotlightClick,
   form,
   formRef,
   isFormLoading,
@@ -36,19 +36,19 @@ const FormContainer = ({
       setFieldValue={setFieldValue}
       title={title}
     />
-    <SpotlightsContainer
-      form={form}
+    <Spotlights
       helperClass="sortable-element"
       isCropping={isCropping}
       isFormLoading={isFormLoading}
       onSortEnd={onSortEnd}
-      onSpotlightClickFactory={onSpotlightClickFactory}
+      onSpotlightClick={onSpotlightClick}
       onToggleContent={onToggleContent}
       personas={personas}
       productPicksPictures={productPicksPictures}
       setIsCropping={setIsCropping}
       setProductPicksPictures={setProductPicksPictures}
       setSpotlightForm={setSpotlightForm}
+      spotlightsAttributes={form.spotlightsAttributes}
       useDragHandle
     />
     <AddItemContainer disabled={isCropping || isFormLoading} message="Add new spotlight" onClick={addSpotlight} />
