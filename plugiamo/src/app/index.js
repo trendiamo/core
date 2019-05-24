@@ -88,7 +88,7 @@ export default compose(
   withState('disappear', 'setDisappear', false),
   lifecycle({
     componentDidMount() {
-      const { data, pathFromNav, setPersona, setPluginState, setShowingContent, setShowingBubbles } = this.props
+      const { data, pathFromNav, setPersona, setPluginState, setShowingContent } = this.props
       const { flowType, open: autoOpen, persona } = setup(data, pathFromNav)
       setPersona(persona)
       mixpanel.track('Loaded Plugin', {
@@ -105,14 +105,11 @@ export default compose(
 
       getFrekklsConfig().onShow(autoOpen)
 
-      if (data.flow.flowType === 'outro') setPluginState('closed')
-
       if (autoOpen) {
-        setShowingContent(true)
-        return setShowingBubbles(false)
+        data.flow.flowType === 'outro' ? setPluginState('closed') : setShowingContent(true)
+      } else {
+        mixpanel.time_event('Toggled Plugin')
       }
-
-      mixpanel.time_event('Toggled Plugin')
     },
     componentDidUpdate(prevProps) {
       const { showingContent, setSkipContentEntry, showAssessmentContent } = this.props
