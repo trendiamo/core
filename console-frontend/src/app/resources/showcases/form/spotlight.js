@@ -23,8 +23,8 @@ const Spotlight = ({
   spotlight,
 }) => {
   const onChange = useCallback(
-    newSpotlight => {
-      setSpotlightForm(oldSpotlight => ({ ...oldSpotlight, ...newSpotlight }), index)
+    newSpotlightCallback => {
+      setSpotlightForm(oldSpotlight => ({ ...oldSpotlight, ...newSpotlightCallback(oldSpotlight) }), index)
     },
     [index, setSpotlightForm]
   )
@@ -32,17 +32,17 @@ const Spotlight = ({
   const selectPersona = useCallback(
     selected => {
       selected &&
-        onChange({
+        onChange(() => ({
           personaId: selected.value.id,
           __persona: selected.value,
-        })
+        }))
     },
     [onChange]
   )
 
   const addProductPick = useCallback(
     () => {
-      onChange({
+      onChange(spotlight => ({
         productPicksAttributes: [
           ...spotlight.productPicksAttributes,
           {
@@ -54,27 +54,27 @@ const Spotlight = ({
             __key: `new-${spotlight.productPicksAttributes.length}`,
           },
         ],
-      })
+      }))
     },
-    [onChange, spotlight]
+    [onChange]
   )
 
   const deleteSpotlight = useCallback(
     () => {
-      onChange({ _destroy: true })
+      onChange(() => ({ _destroy: true }))
     },
     [onChange]
   )
 
   const setProductPickForm = useCallback(
-    (productPick, productPickIndex) => {
-      setSpotlightForm(oldSpotlight => {
+    (productPickCb, productPickIndex) => {
+      onChange(oldSpotlight => {
         let newProductPicksAttributes = [...oldSpotlight.productPicksAttributes]
-        newProductPicksAttributes[productPickIndex] = productPick
-        return { ...oldSpotlight, productPicksAttributes: newProductPicksAttributes }
-      }, index)
+        newProductPicksAttributes[productPickIndex] = productPickCb(newProductPicksAttributes[productPickIndex])
+        return { productPicksAttributes: newProductPicksAttributes }
+      })
     },
-    [index, setSpotlightForm]
+    [onChange]
   )
 
   const setProductPicture = useCallback(
@@ -105,16 +105,11 @@ const Spotlight = ({
     [spotlight.__persona]
   )
 
-  const onAutocompleteFocus = useCallback(
-    () => onSpotlightClick({ ...spotlight, id: spotlight.id || `new-${index}` }),
-    [index, onSpotlightClick, spotlight]
-  )
-
-  const onProductPickFocus = useCallback(
-    spotlight => {
-      onSpotlightClick({ ...spotlight, id: spotlight.id || `new-${index}` })
+  const onFocus = useCallback(
+    () => {
+      onSpotlightClick({ id: spotlight.id || `new-${index}` })
     },
-    [index, onSpotlightClick]
+    [index, onSpotlightClick, spotlight.id]
   )
 
   return (
@@ -138,7 +133,7 @@ const Spotlight = ({
           initialSelectedItem={initialSelectedItem}
           label="Persona"
           onChange={selectPersona}
-          onFocus={onAutocompleteFocus}
+          onFocus={onFocus}
           options={options}
           required
         />
@@ -149,12 +144,13 @@ const Spotlight = ({
                 helperClass="sortable-element"
                 isCropping={isCropping}
                 isFormLoading={isFormLoading}
-                onChange={setProductPickForm}
-                onFocus={onProductPickFocus}
+                onFocus={onFocus}
                 onSortEnd={onSortEnd}
+                personaId={spotlight.personaId}
+                productPicksAttributes={spotlight.productPicksAttributes}
                 setIsCropping={setIsCropping}
+                setProductPickForm={setProductPickForm}
                 setProductPicture={setProductPicture}
-                spotlight={spotlight}
                 useDragHandle
               />
             )}

@@ -1,5 +1,5 @@
 import ProductPick from './product-pick'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const SortableProductPick = SortableElement(ProductPick)
@@ -8,26 +8,19 @@ const ProductPicks = ({
   isFormLoading,
   isCropping,
   setIsCropping,
-  spotlight,
-  onChange,
+  productPicksAttributes,
+  setProductPickForm,
   setProductPicture,
   onFocus,
+  personaId,
 }) => {
-  const allowDelete = useMemo(
-    () => spotlight.productPicksAttributes.filter(productPick => !productPick._destroy).length > 1,
-    [spotlight.productPicksAttributes]
-  )
-
-  const handleFocus = useCallback(
-    () => {
-      onFocus(spotlight)
-    },
-    [onFocus, spotlight]
-  )
+  const allowDelete = useMemo(() => productPicksAttributes.filter(productPick => !productPick._destroy).length > 1, [
+    productPicksAttributes,
+  ])
 
   return (
     <div>
-      {spotlight.productPicksAttributes.map((productPick, index) =>
+      {productPicksAttributes.map((productPick, index) =>
         productPick._destroy ? null : (
           <SortableProductPick
             allowDelete={allowDelete}
@@ -36,11 +29,11 @@ const ProductPicks = ({
             isCropping={isCropping}
             isFormLoading={isFormLoading}
             key={productPick.id || productPick.__key}
-            onChange={onChange}
-            onFocus={handleFocus}
-            personaId={spotlight.personaId}
+            onFocus={onFocus}
+            personaId={personaId}
             productPick={productPick}
             setIsCropping={setIsCropping}
+            setProductPickForm={setProductPickForm}
             setProductPicture={setProductPicture}
             sortIndex={index}
           />

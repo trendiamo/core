@@ -9,7 +9,7 @@ const ProductPick = ({
   isCropping,
   isFormLoading,
   index,
-  onChange,
+  setProductPickForm,
   onFocus,
   folded,
   productPick,
@@ -18,34 +18,35 @@ const ProductPick = ({
 }) => {
   const [progress, setProgress] = useState(null)
 
+  const onChange = useCallback(
+    newProductPickCallback => {
+      setProductPickForm(oldProductPick => ({ ...oldProductPick, ...newProductPickCallback(oldProductPick) }), index)
+    },
+    [index, setProductPickForm]
+  )
+
   const editProductPickValue = useCallback(
     event => {
       const name = event.target.name.replace('productPick_', '')
-      onChange(Object.assign({}, productPick, { [name]: event.target.value }), index)
+      const value = event.target.value
+      onChange(productPick => ({ ...productPick, [name]: value }))
     },
-    [index, onChange, productPick]
+    [onChange]
   )
 
   const deleteProductPick = useCallback(
     () => {
-      onChange(
-        {
-          ...productPick,
-          id: productPick.id,
-          _destroy: true,
-        },
-        index
-      )
+      onChange(() => ({ _destroy: true }))
     },
-    [index, onChange, productPick]
+    [onChange]
   )
 
   const setPictureUrl = useCallback(
     picUrl => {
       onFocus()
-      onChange({ ...productPick, picUrl }, index)
+      onChange(productPick => ({ ...productPick, picUrl }))
     },
-    [index, onChange, onFocus, productPick]
+    [onFocus, onChange]
   )
 
   const setPicture = useCallback(

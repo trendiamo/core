@@ -115,8 +115,8 @@ const Showcase = () => (
       Component={
         <ShowcaseBase
           callbacks={{
-            onSpotlightClickFactory: () => () => 0,
-            onProductClickFactry: () => () => 0,
+            onSpotlightClick: () => 0,
+            onProductClick: () => 0,
           }}
           history={history}
           spotlights={spotlights}

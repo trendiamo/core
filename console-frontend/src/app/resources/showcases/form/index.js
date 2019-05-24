@@ -163,7 +163,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
   const routeToShowcase = useCallback(() => pluginHistory.replace(pluginRoutes.showcase(form.id)), [form.id])
 
   const routeToSpotlight = useCallback(
-    spotlight => pluginHistory.replace(pluginRoutes.spotlight(form.id, spotlight.id)),
+    spotlightId => pluginHistory.replace(pluginRoutes.spotlight(form.id, spotlightId)),
     [form.id]
   )
 
@@ -183,9 +183,9 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
   )
 
   const onSpotlightClick = useCallback(
-    spotlight => {
+    ({ id }) => {
       onToggleContent(true)
-      if (spotlight.personaId) routeToSpotlight(spotlight)
+      routeToSpotlight(id)
     },
     [onToggleContent, routeToSpotlight]
   )

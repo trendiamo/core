@@ -81,8 +81,8 @@ const Showcase = compose(
       replaceLastPath(newRoute)
       history.replace(newRoute)
     },
-    routeToSpotlight: ({ showcase }) => spotlight => {
-      const newRoute = routes.spotlight(showcase.id, spotlight.id)
+    routeToSpotlight: ({ showcase }) => spotlightId => {
+      const newRoute = routes.spotlight(showcase.id, spotlightId)
       replaceLastPath(newRoute)
       history.replace(newRoute)
     },
@@ -105,7 +105,7 @@ const Showcase = compose(
         personaOrder: spotlight.order,
       })
       if (assessmentHack()) rememberPersona(spotlight.persona)
-      routeToSpotlight(spotlight)
+      routeToSpotlight(spotlight.id)
     },
     onProductClick: () => (product, spotlight) => {
       mixpanel.track(
