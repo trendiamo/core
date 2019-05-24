@@ -11,12 +11,12 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
     () => (
       <SimpleChat
         backButtonLabel="Back"
-        data={previewConverter.mainData(form.simpleChatStepsAttributes)}
+        data={previewConverter.mainData(form.title, form.simpleChatStepsAttributes)}
         persona={previewConverter.persona(form.__persona)}
         showBackButton={false}
       />
     ),
-    [form.__persona, form.simpleChatStepsAttributes]
+    [form.__persona, form.simpleChatStepsAttributes, form.title]
   )
 
   const Launcher = useMemo(
