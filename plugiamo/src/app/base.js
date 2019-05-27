@@ -6,7 +6,7 @@ import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import { animateOnMount } from 'plugin-base'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
-import { compose, withHandlers, withProps } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 
@@ -34,6 +34,25 @@ const AppBaseDiv = styled.div`
   }
 `
 
+const LoadingFrame = compose(
+  withState('iframeRef', 'setIframeRef', null),
+  lifecycle({
+    componentDidUpdate(prevProps) {
+      const { iframeRef, onLoad } = this.props
+      if (iframeRef && iframeRef !== prevProps.iframeRef) {
+        const load = () => {
+          onLoad && onLoad(iframeRef)
+        }
+        if (iframeRef.contentDocument.readyState === 'complete') {
+          load()
+        } else {
+          iframeRef.onload = load
+        }
+      }
+    },
+  })
+)(({ setIframeRef }) => <iframe ref={setIframeRef} title="loading-frame" />)
+
 const AppBaseTemplate = ({
   Component,
   Launcher,
@@ -55,8 +74,10 @@ const AppBaseTemplate = ({
   outroButtonsClick,
   skipContentEntry,
   pluginState,
+  onLauncherFrameLoad,
 }) => (
   <AppBaseDiv>
+    <LoadingFrame onLoad={onLauncherFrameLoad} />
     {showAssessmentContent ? (
       <Assessment
         onToggleContent={onToggleContent}
@@ -125,6 +146,14 @@ export default compose(
     }
   }),
   withHandlers({
+    onLauncherFrameLoad: ({ googleAnalytics, setIsGAReady }) => iframeRef => {
+      if (!googleAnalytics) {
+        return setIsGAReady && setIsGAReady(true)
+      }
+      googleAnalytics.initGO(iframeRef).then(() => {
+        setIsGAReady(true)
+      })
+    },
     outroButtonsClick: () => value => {
       mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
     },

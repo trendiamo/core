@@ -1,6 +1,9 @@
 const graphQlUrl = process.env.GRAPHQL_URL || '/graphql'
 const mixpanelToken = process.env.MIXPANEL_TOKEN
 const rollbarToken = process.env.ROLLBAR_TOKEN
+const GApropertyId = process.env.GA_PROPERTY_ID
+const GOcontainerId = process.env.GO_CONTAINER_ID
+const GOexperimentId = process.env.GO_EXPERIMENT_ID
 const production = process.env.NODE_ENV === 'production'
 const MAIN_BREAKPOINT = 600 // in pixels. From this width up, we're in large screen mode. Up to this width we're in small (fullscreen mode)
 const HEIGHT_BREAKPOINT = 300 // in pixels. From this height up, the plugin may be shown. Up to this height, the plugin is not shown.
@@ -39,6 +42,9 @@ export {
   WIDTH,
   bigLauncherConfig,
   smallLauncherConfig,
+  GApropertyId,
+  GOcontainerId,
+  GOexperimentId,
 }
 export default {
   graphQlUrl,
@@ -52,4 +58,7 @@ export default {
   WIDTH,
   bigLauncherConfig,
   smallLauncherConfig,
+  GApropertyId,
+  GOcontainerId,
+  GOexperimentId,
 }

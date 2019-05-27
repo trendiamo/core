@@ -14,6 +14,6 @@ const dataGatheringFactory = {
 
 const dataGathering = dataGatheringFactory[window.location.hostname]
 
-const setupDataGathering = () => dataGathering && dataGathering.setupDataGathering()
+const setupDataGathering = googleAnalytics => dataGathering && dataGathering.setupDataGathering(googleAnalytics)
 
 export default setupDataGathering
