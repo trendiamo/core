@@ -34,6 +34,14 @@ const AppBaseDiv = styled.div`
   }
 `
 
+const Frame = styled.iframe`
+  width: 0;
+  border: 0;
+  height: 0;
+  display: none;
+  position: absolute;
+`
+
 const LoadingFrame = compose(
   withState('iframeRef', 'setIframeRef', null),
   lifecycle({
@@ -51,7 +59,7 @@ const LoadingFrame = compose(
       }
     },
   })
-)(({ setIframeRef }) => <iframe ref={setIframeRef} title="loading-frame" />)
+)(({ setIframeRef }) => <Frame ref={setIframeRef} tabIndex="-1" title="loading-frame" />)
 
 const AppBaseTemplate = ({
   Component,
