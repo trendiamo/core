@@ -28,6 +28,7 @@ import { timeout } from 'plugin-base'
 
 export default compose(
   branch(() => assessmentCart(), renderComponent(AssessmentCart)),
+  withState('isGAReady', 'setIsGAReady', false),
   withProps({ Component: <Router /> }),
   withProps({ Launcher }),
   withProps({ pathFromNav: setupFlowHistory() }),
@@ -82,9 +83,9 @@ export default compose(
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
-  withState('showingLauncher', 'setShowingLauncher', true),
+  withState('showingLauncher', 'setShowingLauncher', false),
   withState('skipContentEntry', 'setSkipContentEntry', false),
-  withState('showingBubbles', 'setShowingBubbles', true),
+  withState('showingBubbles', 'setShowingBubbles', false),
   withState('disappear', 'setDisappear', false),
   lifecycle({
     componentDidMount() {
@@ -115,7 +116,22 @@ export default compose(
       mixpanel.time_event('Toggled Plugin')
     },
     componentDidUpdate(prevProps) {
-      const { showingContent, setSkipContentEntry, showAssessmentContent } = this.props
+      const {
+        showAssessmentContent,
+        showingContent,
+        isGAReady,
+        setShowingLauncher,
+        setShowingBubbles,
+        googleAnalytics,
+        setSkipContentEntry,
+      } = this.props
+      if (!prevProps.isGAReady && isGAReady) {
+        const variation = googleAnalytics.getVariation()
+        if (variation !== 'absent') {
+          setShowingLauncher(true)
+          setShowingBubbles(true)
+        }
+      }
       if (showAssessmentContent !== prevProps.showAssessmentContent && !showAssessmentContent) {
         setSkipContentEntry(true)
       }

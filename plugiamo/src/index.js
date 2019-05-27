@@ -4,6 +4,7 @@ import bridgeData from 'special/bridge/data'
 import getFrekklsConfig from 'frekkls-config'
 import { matchUrl } from 'plugin-base'
 // import initRollbar from 'ext/rollbar'
+import googleAnalytics from 'ext/google-analytics'
 import mixpanel from 'ext/mixpanel'
 import setupDataGathering from 'data-gathering'
 import SpotAHome from 'special/spotahome'
@@ -37,7 +38,7 @@ const initRootComponent = () => {
 
   const RootComponent = () => (
     <Provider value={client}>
-      <App />
+      <App googleAnalytics={googleAnalytics} />
     </Provider>
   )
 
@@ -46,9 +47,13 @@ const initRootComponent = () => {
 
 const main = () => {
   // initRollbar()
+
+  const experimentClients = ['www.shopinfo.com.br', 'www.pierre-cardin.de']
+  experimentClients.includes(location.hostname) && googleAnalytics.initGA()
+
   mixpanel.init(mixpanelToken)
   mixpanel.track('Visited Page', { hostname: location.hostname })
-  setupDataGathering()
+  setupDataGathering(googleAnalytics)
 
   const browser = detect()
   const supportedBrowsers = ['chrome', 'firefox', 'safari', 'edge', 'opera', 'ios', 'ios-webview', 'crios', 'fxios']

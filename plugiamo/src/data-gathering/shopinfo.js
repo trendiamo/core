@@ -87,7 +87,7 @@ export default {
       },
     }
   },
-  setupDataGathering() {
+  setupDataGathering(googleAnalytics) {
     const _this = this
     const saveData = resultsObj => {
       mixpanel.track(resultsObj.name, resultsObj.data)
@@ -98,6 +98,13 @@ export default {
         .on('click', location.pathname.match(/^\/checkout\//) ? '.btn-place-order' : '.cartCheckout', () => {
           const json = _this.checkoutObject(location.pathname.match(/^\/checkout\//) ? true : false)
           mixpanel.track(json.name, json.data)
+          googleAnalytics.event({
+            hitType: 'event',
+            eventCategory: 'Page Event',
+            eventAction: 'Click',
+            eventLabel: 'proceedToCheckout',
+            page: location.hostname,
+          })
         })
     } else if (location.pathname.match(/.*\/p$/)) {
       window.$(document).on('click', '.buy-together--add', () => {
