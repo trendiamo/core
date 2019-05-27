@@ -34,6 +34,7 @@ const Assessment = ({
   step,
   steps,
   onToggleContent,
+  isUnmounting,
 }) => (
   <Content
     Component={
@@ -58,6 +59,7 @@ const Assessment = ({
       />
     }
     hideContentFrame={hideContentFrame}
+    isUnmounting={isUnmounting}
     onToggleContent={onToggleContent}
     setShowAssessmentContent={setShowAssessmentContent}
     skipEntry

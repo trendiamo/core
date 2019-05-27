@@ -80,6 +80,7 @@ const AppBaseTemplate = ({
     <LoadingFrame onLoad={onLauncherFrameLoad} />
     {showAssessmentContent ? (
       <Assessment
+        isUnmounting={isUnmounting}
         onToggleContent={onToggleContent}
         setShowAssessmentContent={setShowAssessmentContent}
         setShowingContent={setShowingContent}

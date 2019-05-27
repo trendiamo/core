@@ -181,14 +181,14 @@ export default compose(
           () => {
             setIsUnmounting(false)
             setShowingContent(false)
+            setShowAssessmentContent(false)
           },
           400
         )
       } else {
         setShowingContent(disappear ? false : !showingContent)
+        setShowAssessmentContent(false)
       }
-
-      setShowAssessmentContent(false)
     },
     outroButtonsClick: () => value => {
       mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
