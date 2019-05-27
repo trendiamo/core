@@ -92,7 +92,10 @@ export default {
     const saveData = resultsObj => {
       mixpanel.track(resultsObj.name, resultsObj.data)
     }
-    if (location.pathname.match(/^\/checkout\//) || window.$('.vtexsc-wrap')[0].classList.contains('active')) {
+    if (
+      location.pathname.match(/^\/checkout\//) ||
+      (window.$('.vtexsc-wrap')[0] && window.$('.vtexsc-wrap')[0].classList.contains('active'))
+    ) {
       window
         .$(document)
         .on('click', location.pathname.match(/^\/checkout\//) ? '.btn-place-order' : '.cartCheckout', () => {
