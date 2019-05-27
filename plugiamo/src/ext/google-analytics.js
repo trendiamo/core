@@ -15,7 +15,7 @@ const frekklsGA = {
   iframeRef: null,
   initialized: false,
   initGA() {
-    if (!GApropertyId) return Promise.resolve()
+    if (!GApropertyId || localStorage.getItem('trnd-exp-original')) return Promise.resolve()
     ReactGA.initialize(GApropertyId, {
       optimize_id: GOcontainerId,
       gaOptions: {
