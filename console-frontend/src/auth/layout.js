@@ -84,7 +84,7 @@ const LogotypeContainer = styled.div`
   }
 `
 
-const Logotype = ({ ...props }) => (
+const Logotype = props => (
   <LogotypeContainer>
     <img alt="" src="/img/frekkls-logo.svg" {...props} />
   </LogotypeContainer>

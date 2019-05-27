@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom'
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
 
-const InlineTypography = styled(({ ...props }) => <Typography {...omit(props, ['highlight'])} />)`
+const InlineTypography = styled(props => <Typography {...omit(props, ['highlight'])} />)`
   display: inline-block;
   color: ${({ highlight }) => (highlight ? '#fff' : '')};
 `
@@ -47,7 +47,7 @@ const columns = [
   { name: 'urlMatchers', padding: 'none', label: 'Url Matchers' },
 ]
 
-const StyledChip = styled(({ ...props }) => <Chip {...omit(props, ['highlight', 'enabled'])} />)`
+const StyledChip = styled(props => <Chip {...omit(props, ['highlight', 'enabled'])} />)`
   margin: 0.25rem;
   margin-left: 0;
   background: ${({ highlight, enabled }) => (highlight ? '#fff' : enabled ? 'rgba(255,255,255,0.2)' : '')};

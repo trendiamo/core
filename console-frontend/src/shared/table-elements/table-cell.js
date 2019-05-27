@@ -22,6 +22,6 @@ const StyledCell = styled(MuiTableCell)`
   }
 `
 
-const TableCell = ({ ...props }) => <StyledCell {...props} scope="row" />
+const TableCell = props => <StyledCell {...props} scope="row" />
 
 export default TableCell

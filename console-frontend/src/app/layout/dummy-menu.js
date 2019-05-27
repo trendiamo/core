@@ -65,9 +65,9 @@ const UserMenu = () => (
   </div>
 )
 
-const DummyMenu = ({ classes, sidebarOpen }) => (
+const DummyMenu = ({ sidebarOpen }) => (
   <Container>
-    <UserMenu classes={classes} sidebarOpen={sidebarOpen} />
+    <UserMenu sidebarOpen={sidebarOpen} />
   </Container>
 )
 

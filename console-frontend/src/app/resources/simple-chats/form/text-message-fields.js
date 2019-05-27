@@ -101,7 +101,7 @@ const SwitchButton = styled(Button)`
   padding: 4px 12px;
 `
 
-const OmittedContentEditable = ({ ...props }) => <ContentEditable {...omit(props, ['isMarkdownMode'])} />
+const OmittedContentEditable = props => <ContentEditable {...omit(props, ['isMarkdownMode'])} />
 
 const StyledContentEditable = styled(OmittedContentEditable)`
   display: ${({ isMarkdownMode }) => !isMarkdownMode && 'none'};

@@ -1,5 +1,4 @@
 import auth from 'auth'
-import classNames from 'classnames'
 import DummyMenu from './dummy-menu'
 import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -121,13 +120,13 @@ const fade = keyframes`
 
 const Container = styled.div`
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: flex-start;
+  flex: 1;
   animation: ${fade} 1s;
 `
 
-const GroupText = styled(({ ...props }) => <Typography {...omit(props, ['sidebarOpen'])} />)`
+const GroupText = styled(props => <Typography {...omit(props, ['sidebarOpen'])} />)`
   color: ${({ sidebarOpen }) => (sidebarOpen ? '#222' : '#fff')}
   text-align: left;
   font-size: 12px;
@@ -166,32 +165,41 @@ const MenuItemGroup = styled.div`
     }`}
 `
 
-const Item = withRouter(({ classes, location, resource, sidebarOpen }) => {
-  const isActive = useMemo(() => location.pathname.startsWith(resource.route), [location.pathname, resource.route])
+const StyledMenuItem = styled(props => <MenuItem {...omit(props, ['isActive', 'sidebarOpen'])} />)`
+  flex-shrink: 0;
+  transition: padding 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, height 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
+    visibility 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  visibility: visible;
 
-  const itemClass = classNames(
-    classes.menuItem,
-    isActive && classes.menuItemActive,
-    !sidebarOpen && classes.menuItemClosed
-  )
-  const iconClass = classNames(
-    classes.menuIcon,
-    !sidebarOpen && classes.menuIconClosed,
-    !sidebarOpen && isActive && classes.menuIconClosedActive
-  )
-  const textClass = classNames(classes.menuText, isActive && classes.menuTextActive)
+  ${({ isActive }) => isActive && 'background-color: rgba(0, 0, 0, 0.03);'}
+  ${({ sidebarOpen }) =>
+    !sidebarOpen && 'background-color: transparent; padding-left: 22px; padding-right: 0;'}
+`
+
+const MenuText = styled(props => <Typography {...omit(props, ['isActive'])} />)`
+  color: #222;
+  ${({ isActive }) => isActive && 'font-weight: bold;'}
+`
+
+const StyledSvgIcon = styled(props => <SvgIcon {...omit(props, ['isActive', 'sidebarOpen'])} />)`
+  color: ${({ isActive, sidebarOpen }) => (sidebarOpen ? '#222' : isActive ? '#fff' : 'rgba(255,255,255,0.6)')};
+  padding-right: 20px;
+`
+
+const Item = withRouter(({ location, resource, sidebarOpen }) => {
+  const isActive = useMemo(() => location.pathname.startsWith(resource.route), [location.pathname, resource.route])
 
   return (
     <div className={`onboard-${resource.class}`}>
       <Link key={resource.route} to={resource.route}>
-        <MenuItem className={itemClass}>
-          <SvgIcon className={iconClass}>
+        <StyledMenuItem isActive={isActive} sidebarOpen={sidebarOpen}>
+          <StyledSvgIcon isActive={isActive} sidebarOpen={sidebarOpen}>
             {resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}
-          </SvgIcon>
-          <Typography className={textClass} variant="body1">
+          </StyledSvgIcon>
+          <MenuText isActive={isActive} variant="body1">
             {sidebarOpen ? resource.label : ''}
-          </Typography>
-        </MenuItem>
+          </MenuText>
+        </StyledMenuItem>
       </Link>
     </div>
   )
@@ -231,7 +239,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
 )
 
 const BaseMenu = withRouter(
-  memo(({ classes, location, menuLoaded, sidebarOpen, stageIndex, toggleOpen }) => {
+  memo(({ location, menuLoaded, sidebarOpen, stageIndex, toggleOpen }) => {
     if (!menuLoaded && stageIndex === 0 && location.pathname === routes.root()) {
       return <DummyMenu />
     }
@@ -248,23 +256,22 @@ const BaseMenu = withRouter(
                 </GroupText>
               </MenuItemGroup>
               {resourceGroups[group].resources.map(resource => (
-                <Item classes={classes} key={resource.route} resource={resource} sidebarOpen={sidebarOpen} />
+                <Item key={resource.route} resource={resource} sidebarOpen={sidebarOpen} />
               ))}
             </div>
           ))}
         </div>
-        <UserMenu classes={classes} sidebarOpen={sidebarOpen} />
+        <UserMenu sidebarOpen={sidebarOpen} />
       </Container>
     )
   })
 )
 
-const Menu = ({ classes, menuLoaded, sidebarOpen, toggleOpen }) => {
+const Menu = ({ menuLoaded, sidebarOpen, toggleOpen }) => {
   const { onboarding } = useOnboardingConsumer()
 
   return (
     <BaseMenu
-      classes={classes}
       menuLoaded={menuLoaded}
       sidebarOpen={sidebarOpen}
       stageIndex={onboarding.stageIndex}

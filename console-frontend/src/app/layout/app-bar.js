@@ -1,10 +1,11 @@
 import ArrowBack from '@material-ui/icons/ArrowBack'
-import classNames from 'classnames'
 import HelpOutline from '@material-ui/icons/HelpOutline'
 import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
+import omit from 'lodash.omit'
 import React, { memo, useCallback, useContext } from 'react'
 import styled from 'styled-components'
+import { drawerWidth, drawerWidthClosed } from './layout-styles'
 import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core'
 import { StoreContext } from 'ext/hooks/store'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
@@ -45,16 +46,24 @@ const OnboardingButton = withRouter(({ location }) => {
   )
 })
 
-const Title = ({ text, classes, responsive, highlight }) => (
-  <Typography
-    className={classNames(classes.title, highlight && classes.titleHighlight, responsive && classes.titleResponsive)}
-    variant="h6"
-  >
+const Title = styled(({ className, text }) => (
+  <Typography className={className} variant="h6">
     {text}
   </Typography>
-)
+))`
+  color: #333;
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  font-size: 24px;
+  margin-right: 2px;
 
-const AppBarContent = memo(({ classes }) => {
+  @media (max-width: 959.95px) {
+    font-size: 16px;
+  }
+`
+
+const AppBarContent = memo(() => {
   const { store } = useContext(StoreContext)
   if (!store.appBarContent) return null
 
@@ -67,7 +76,7 @@ const AppBarContent = memo(({ classes }) => {
           <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
         </Link>
       )}
-      <Title classes={classes} text={title} />
+      <Title text={title} />
       {Actions && (
         <ButtonsContainer>
           <OnboardingButton />
@@ -78,17 +87,60 @@ const AppBarContent = memo(({ classes }) => {
   )
 })
 
-const AppBar = ({ classes, hasScrolled, sidebarOpen, toggleOpen }) => (
-  <MuiAppBar
-    className={classNames(classes.appBar, sidebarOpen && classes.appBarShift, hasScrolled && classes.appBarScroll)}
-  >
-    <Toolbar className={classes.topToolbar}>
-      <IconButton aria-label="Open drawer" className={classes.menuButton} color="inherit" onClick={toggleOpen}>
+const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 'sidebarOpen'])} />)`
+  background-color: #f5f5f5;
+  box-shadow: none;
+  color: #333;
+  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  width: calc(100% - ${drawerWidthClosed}px);
+  margin-left: ${drawerWidthClosed}px;
+  z-index: 1201;
+  position: sticky;
+  top: 0;
+
+  @media (max-width: 959.95px) {
+    width: 100%;
+    margin: 0;
+  }
+
+  ${({ sidebarOpen }) =>
+    sidebarOpen &&
+    `
+  @media (min-width: 960px) {
+    margin-left: ${drawerWidth}px;
+    width: calc(100% - ${drawerWidth}px);
+  }
+  `}
+
+  ${({ hasScrolled }) => hasScrolled && 'box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);'}
+`
+
+const TopToolbar = styled(Toolbar)`
+  padding-left: 14px;
+  padding-right: 14px;
+  display: flex;
+  height: 84px;
+`
+
+const MenuButton = styled(IconButton)`
+  display: none;
+
+  @media (max-width: 959.95px) {
+    display: block;
+  }
+}
+`
+
+const AppBar = ({ hasScrolled, sidebarOpen, toggleOpen }) => (
+  <StyledAppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen}>
+    <TopToolbar>
+      <MenuButton aria-label="Open drawer" color="inherit" id="foofoo" onClick={toggleOpen}>
         <MenuIcon />
-      </IconButton>
-      <AppBarContent classes={classes} />
-    </Toolbar>
-  </MuiAppBar>
+      </MenuButton>
+      <AppBarContent />
+    </TopToolbar>
+  </StyledAppBar>
 )
 
 export default memo(AppBar)
