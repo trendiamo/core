@@ -65,13 +65,6 @@ export const styles = theme => ({
   appBarScroll: {
     boxShadow: '0 4px 2px -2px rgba(0, 0, 0, 0.1)',
   },
-  appBarButton: {
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    [theme.breakpoints.down('sm')]: {
-      color: theme.palette.primary.main,
-    },
-  },
   appFrame: {
     display: 'flex',
     flexDirection: 'column',
