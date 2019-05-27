@@ -2,9 +2,7 @@ import Link from 'shared/link'
 import React from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
-import theme from 'app/theme'
 import { Button, Typography } from '@material-ui/core'
-import { styles } from 'app/layout/layout-styles'
 
 const Fullscreen = styled.div`
   position: relative;
@@ -35,7 +33,12 @@ const BoldLink = styled.a`
   cursor: pointer;
 `
 
-const newStyles = styles(theme)
+const StyledButton = styled(Button)`
+  color: #616161;
+  letter-spacing: 1.3px;
+  margin-top: 25px;
+  padding: 12px 80px;
+`
 
 const NotFound = () => (
   <Fullscreen>
@@ -50,9 +53,9 @@ const NotFound = () => (
       </Typography>
       <Typography variant="body2">{'Or come back to home page:'}</Typography>
       <Link to={routes.root()}>
-        <Button size="large" style={newStyles.buttonLarge} variant="outlined">
+        <StyledButton size="large" variant="outlined">
           {'Go Back'}
-        </Button>
+        </StyledButton>
       </Link>
     </Container>
   </Fullscreen>

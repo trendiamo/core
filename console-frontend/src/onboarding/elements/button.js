@@ -11,7 +11,7 @@ const Icon = styled.img`
   -webkit-user-drag: none;
 `
 
-const StyledButton = styled(({ ...props }) => <MuiButton {...omit(props, ['create', 'helpRun'])} />)`
+const StyledButton = styled(props => <MuiButton {...omit(props, ['create', 'helpRun'])} />)`
   ${({ create, helpRun }) =>
     (!create || helpRun) &&
     `background: #fff;

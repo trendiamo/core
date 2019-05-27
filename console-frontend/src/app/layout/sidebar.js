@@ -1,13 +1,72 @@
-import classNames from 'classnames'
 import Menu from './menu'
 import React, { memo, useEffect, useState } from 'react'
+import styled from 'styled-components'
 import { Drawer, Hidden, withWidth } from '@material-ui/core'
+import { drawerWidth, drawerWidthClosed } from './layout-styles'
 
 const ModalProps = {
   keepMounted: true, // Better open performance on mobile.
 }
 
-const Sidebar = ({ classes, sidebarOpen, toggleOpen }) => {
+const StyledDrawer = styled(Drawer)`
+  ${({ variant, open }) =>
+    variant === 'temporary' || open
+      ? `
+> div {
+  background: #fff;
+  border: none;
+  padding-left: 10px;
+  box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.24), 0 0 16px 0 rgba(0, 0, 0, 0.18);
+  flex: 1;
+  margin-top: 0;
+  min-height: 100vh;
+  position: fixed;
+  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  white-space: nowrap;
+  width: ${drawerWidth}px;
+  z-index: 5000;
+
+  &:before {
+    content: '';
+    background-image: linear-gradient(to bottom, #ff843e, #ff6c40 52%, #ff5642);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 10px;
+  }
+}
+`
+      : `
+> div {
+  background-image: linear-gradient(178deg, #ff843e, #ff6c40 52%, #ff5642);
+  border: none;
+  flex: 1;
+  margin-top: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: fixed;
+  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  width: 56px;
+
+  @media (min-width: 600px) {
+    width: ${drawerWidthClosed}px;
+  }
+}
+`}
+`
+
+const DrawerGhost = styled.div`
+  width: ${drawerWidth}px;
+  flex-shrink: 0;
+  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  ${({ isClosed }) => isClosed && `width: ${drawerWidthClosed}px;`}
+  @media (max-width: 959.95px) {
+    width: 0;
+  }
+`
+
+const Sidebar = ({ sidebarOpen, toggleOpen }) => {
   const [menuLoaded, setMenuLoaded] = useState(false)
 
   useEffect(() => {
@@ -21,30 +80,16 @@ const Sidebar = ({ classes, sidebarOpen, toggleOpen }) => {
   return (
     <>
       <Hidden implementation="js" mdUp>
-        <div className={classNames(classes.drawerGhost)} />
-        <Drawer
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          ModalProps={ModalProps}
-          onClose={toggleOpen}
-          open={sidebarOpen}
-          variant="temporary"
-        >
-          <Menu classes={classes} menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-        </Drawer>
+        <DrawerGhost />
+        <StyledDrawer ModalProps={ModalProps} onClose={toggleOpen} open={sidebarOpen} variant="temporary">
+          <Menu menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
+        </StyledDrawer>
       </Hidden>
       <Hidden implementation="js" smDown>
-        <div className={classNames(classes.drawerGhost, !sidebarOpen && classes.drawerGhostClosed)} />
-        <Drawer
-          classes={{
-            paper: sidebarOpen ? classes.drawerPaper : classes.drawerPaperClose,
-          }}
-          open={sidebarOpen}
-          variant="permanent"
-        >
-          <Menu classes={classes} menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-        </Drawer>
+        <DrawerGhost isClosed={!sidebarOpen} />
+        <StyledDrawer open={sidebarOpen} variant="permanent">
+          <Menu menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
+        </StyledDrawer>
       </Hidden>
     </>
   )

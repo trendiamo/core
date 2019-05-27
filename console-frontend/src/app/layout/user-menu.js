@@ -1,27 +1,64 @@
 import AccountCircleOutlined from '@material-ui/icons/AccountCircleOutlined'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'auth'
-import classNames from 'classnames'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import Link from 'shared/link'
+import omit from 'lodash.omit'
 import PeopleOutline from '@material-ui/icons/PeopleOutline'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
+import styled from 'styled-components'
 import { apiSignOut } from 'utils'
 import { Avatar, Menu, MenuItem, Typography } from '@material-ui/core'
+import { drawerWidth } from './layout-styles'
 
-const MenuItemThemed = ({ classes, icon, text, ...props }) => (
-  <MenuItem className={classes.accountMenuItem} {...props}>
+const avatarSize = 46
+
+const StyledAvatar = styled(Avatar)`
+  margin-right: 10px;
+  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, height 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
+    margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  height: ${avatarSize}px;
+  width: ${avatarSize}px;
+`
+
+const StyledMenuItem = styled(props => <MenuItem {...omit(props, ['sidebarOpen'])} />)`
+  flex-shrink: 0;
+  transition: padding 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, height 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
+    visibility 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  visibility: visible;
+  height: auto;
+  ${({ sidebarOpen }) => !sidebarOpen && 'padding-left: 12px; padding-right: 12px;'}
+`
+
+const StyledArrowDropDown = styled(props => <ArrowDropDown {...omit(props, ['sidebarOpen'])} />)`
+  color: #757575;
+  position: absolute;
+  right: 10px;
+  transition: opacity 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  opacity: ${({ sidebarOpen }) => (sidebarOpen ? 1 : 0)};
+`
+
+const MenuItemThemed = styled(({ className, icon, text, ...props }) => (
+  <MenuItem className={className} {...props}>
     {icon}
-    <Typography className={classes.accountMenuText}>{text}</Typography>
+    <Typography style={{ 'margin-left': '10px' }}>{text}</Typography>
   </MenuItem>
-)
+))`
+  padding: 15px 21px;
+  width: ${drawerWidth - 55}px;
+`
+
+const StyledTypography = styled(props => <Typography {...omit(props, ['sidebarOpen'])} />)`
+  color: #222;
+  ${({ sidebarOpen }) => !sidebarOpen && 'display: none;'}
+`
 
 const anchorOrigin = { horizontal: 'center', vertical: 'top' }
 const transformOrigin = { horizontal: 'center', vertical: 'top' }
 const clearAdminSessionAccount = auth.clearAdminSessionAccount.bind(auth)
 
-const UserMenu = ({ classes, sidebarOpen }) => {
+const UserMenu = ({ sidebarOpen }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [user, setUser] = useState(auth.getUser())
 
@@ -59,44 +96,36 @@ const UserMenu = ({ classes, sidebarOpen }) => {
 
   return (
     <div>
-      <MenuItem
+      <StyledMenuItem
         aria-haspopup="true"
         aria-owns={isMenuOpen ? 'menu-appbar' : null}
-        className={classNames(classes.menuItem)}
         onClick={handleMenu}
-        style={{ height: 'auto', ...(!sidebarOpen ? { paddingLeft: '12px', paddingRight: '12px' } : {}) }}
+        sidebarOpen={sidebarOpen}
       >
-        <Avatar className={classNames(classes.avatar)} src={user.profilePicUrl}>
-          {user.profilePicUrl ? null : initials ? initials : ''}
-        </Avatar>
-        <Typography className={classNames(classes.menuText, !sidebarOpen && classes.menuTextHidden)} variant="body1">
+        <StyledAvatar src={user.profilePicUrl}>{user.profilePicUrl ? null : initials ? initials : ''}</StyledAvatar>
+        <StyledTypography sidebarOpen={sidebarOpen} variant="body1">
           {userIdentifier}
-        </Typography>
-        <ArrowDropDown className={classNames(classes.accountArrow, !sidebarOpen && classes.accountArrowHidden)} />
-      </MenuItem>
+        </StyledTypography>
+        <StyledArrowDropDown sidebarOpen={sidebarOpen} />
+      </StyledMenuItem>
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={anchorOrigin}
-        className={classes.accountMenu}
         id="menu-appbar"
         onClick={handleClose}
         open={isMenuOpen}
+        style={{ left: '-10px' }}
         transformOrigin={transformOrigin}
       >
         {auth.isAdmin() && (
           <Link to={routes.admin()}>
-            <MenuItemThemed
-              classes={classes}
-              icon={<PeopleOutline />}
-              onClick={clearAdminSessionAccount}
-              text="Back to Accounts"
-            />
+            <MenuItemThemed icon={<PeopleOutline />} onClick={clearAdminSessionAccount} text="Back to Accounts" />
           </Link>
         )}
         <Link to={routes.account()}>
-          <MenuItemThemed classes={classes} icon={<AccountCircleOutlined />} text="Account" />
+          <MenuItemThemed icon={<AccountCircleOutlined />} text="Account" />
         </Link>
-        <MenuItemThemed classes={classes} icon={<ExitIcon />} onClick={onLogoutButtonClick} text="Logout" />
+        <MenuItemThemed icon={<ExitIcon />} onClick={onLogoutButtonClick} text="Logout" />
       </Menu>
     </div>
   )
