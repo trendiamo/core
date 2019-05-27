@@ -2,11 +2,12 @@ import Assessment from 'special/assessment'
 import Content from './content'
 import getFrekklsConfig from 'frekkls-config'
 import LauncherBubbles from './launcher-bubbles'
+import LoadingFrame from 'shared/loading-frame'
 import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import { animateOnMount } from 'plugin-base'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { compose, withHandlers, withProps } from 'recompose'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 
@@ -33,33 +34,6 @@ const AppBaseDiv = styled.div`
     display: block;
   }
 `
-
-const Frame = styled.iframe`
-  width: 0;
-  border: 0;
-  height: 0;
-  display: none;
-  position: absolute;
-`
-
-const LoadingFrame = compose(
-  withState('iframeRef', 'setIframeRef', null),
-  lifecycle({
-    componentDidUpdate(prevProps) {
-      const { iframeRef, onLoad } = this.props
-      if (iframeRef && iframeRef !== prevProps.iframeRef) {
-        const load = () => {
-          onLoad && onLoad(iframeRef)
-        }
-        if (iframeRef.contentDocument.readyState === 'complete') {
-          load()
-        } else {
-          iframeRef.onload = load
-        }
-      }
-    },
-  })
-)(({ setIframeRef }) => <Frame ref={setIframeRef} tabIndex="-1" title="loading-frame" />)
 
 const AppBaseTemplate = ({
   Component,

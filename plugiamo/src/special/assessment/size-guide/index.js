@@ -24,6 +24,9 @@ const Plugin = ({
   setPluginState,
   showingContent,
   showingLauncher,
+  showingBubbles,
+  setIsGAReady,
+  googleAnalytics,
 }) => (
   <div>
     <ChatModals flowType={module.flowType} {...modalsProps} />
@@ -39,12 +42,14 @@ const Plugin = ({
       }
       data={module}
       disappear={disappear}
+      googleAnalytics={googleAnalytics}
       isUnmounting={isUnmounting}
       Launcher={showingLauncher && Launcher}
       onToggleContent={onToggleContent}
       persona={module.launcher.persona}
       pluginState={pluginState}
-      showingBubbles
+      setIsGAReady={setIsGAReady}
+      showingBubbles={showingBubbles}
       showingContent={showingContent}
       showingLauncher={showingLauncher}
     />
@@ -60,7 +65,8 @@ export default compose(
   }),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
-  withState('showingLauncher', 'setShowingLauncher', true),
+  withState('showingLauncher', 'setShowingLauncher', false),
+  withState('showingBubbles', 'setShowingBubbles', false),
   withState('product', 'setProduct', null),
   withState('disappear', 'setDisappear', false),
   lifecycle({
@@ -80,7 +86,15 @@ export default compose(
       })
     },
     componentDidUpdate(prevProps) {
-      const { showingContent } = this.props
+      const { showingContent, googleAnalytics, isGAReady, setShowingLauncher, setShowingBubbles } = this.props
+      if (!prevProps.isGAReady && isGAReady) {
+        const variation = googleAnalytics.getVariation()
+        if (variation !== 'absent') {
+          setShowingLauncher(true)
+          setShowingBubbles(true)
+        }
+      }
+
       if (showingContent === prevProps.showingContent) return
 
       if (getScrollbarWidth() > 0) {

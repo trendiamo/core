@@ -11,7 +11,18 @@ import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
 import { SimpleChat, timeout } from 'plugin-base'
 
-const Plugin = ({ showingLauncher, isUnmounting, module, onToggleContent, showingContent, products, clickActions }) => (
+const Plugin = ({
+  showingLauncher,
+  isUnmounting,
+  module,
+  onToggleContent,
+  showingContent,
+  products,
+  clickActions,
+  showingBubbles,
+  setIsGAReady,
+  googleAnalytics,
+}) => (
   <AppBase
     Component={
       <SimpleChat
@@ -25,11 +36,14 @@ const Plugin = ({ showingLauncher, isUnmounting, module, onToggleContent, showin
       />
     }
     data={module}
+    googleAnalytics={googleAnalytics}
     isUnmounting={isUnmounting}
     Launcher={showingLauncher && Launcher}
     launcherPulsating
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
+    setIsGAReady={setIsGAReady}
+    showingBubbles={showingBubbles}
     showingContent={showingContent}
     showingLauncher={showingLauncher}
   />
@@ -44,7 +58,8 @@ export default compose(
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
-  withState('showingLauncher', 'setShowingLauncher', true),
+  withState('showingLauncher', 'setShowingLauncher', false),
+  withState('showingBubbles', 'setShowingBubbles', false),
   withChatActions(),
   lifecycle({
     componentDidMount() {
@@ -67,7 +82,14 @@ export default compose(
       if (autoOpen) setShowingContent(true)
     },
     componentDidUpdate(prevProps) {
-      const { showingContent } = this.props
+      const { showingContent, isGAReady, googleAnalytics, setShowingLauncher, setShowingBubbles } = this.props
+      if (!prevProps.isGAReady && isGAReady) {
+        const variation = googleAnalytics.getVariation()
+        if (variation !== 'absent') {
+          setShowingLauncher(true)
+          setShowingBubbles(true)
+        }
+      }
       if (showingContent === prevProps.showingContent) return
 
       if (getScrollbarWidth() > 0) {
