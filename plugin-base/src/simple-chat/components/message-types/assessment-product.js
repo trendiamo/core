@@ -1,7 +1,6 @@
 import ProductMessage from './product-message'
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
 
 const styleConfigDefault = {
   image: {
@@ -76,19 +75,22 @@ const Highlight = ({ highlight, styleConfig }) => (
   </HighlightContainer>
 )
 
-const AssessmentProduct = ({ data, onClick, big, styleConfig = styleConfigDefault }) => (
-  <Container cols={big ? 3 : 2} style={styleConfig.container}>
-    <InnerContainer>
-      {data.highlight && <Highlight highlight={highlightDefault} styleConfig={styleConfig} />}
-      <ProductMessage onClick={onClick} product={data} styleConfig={styleConfig} />
-    </InnerContainer>
-  </Container>
-)
-
-export default compose(
-  withHandlers({
-    onClick: ({ onClick, data }) => () => {
+const AssessmentProduct = ({ data, onClick, big, styleConfig = styleConfigDefault }) => {
+  const newOnClick = useCallback(
+    () => {
       onClick({ type: 'clickAssessmentProduct', item: data })
     },
-  })
-)(AssessmentProduct)
+    [data, onClick]
+  )
+
+  return (
+    <Container cols={big ? 3 : 2} style={styleConfig.container}>
+      <InnerContainer>
+        {data.highlight && <Highlight highlight={highlightDefault} styleConfig={styleConfig} />}
+        <ProductMessage onClick={newOnClick} product={data} styleConfig={styleConfig} />
+      </InnerContainer>
+    </Container>
+  )
+}
+
+export default AssessmentProduct

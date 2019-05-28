@@ -1,8 +1,7 @@
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { animate } from 'shared/animate'
-import { compose, withHandlers } from 'recompose'
 import { IconChevronLeft } from 'icons'
 
 const Chevron = styled(IconChevronLeft)`
@@ -54,15 +53,15 @@ const Button = animate(styled(({ ...props }) => (
   }
 `)
 
-const BackButton = ({ onClick, label, backButtonConfig = {}, hide, flexibleCover }) => (
-  <Button buttonConfig={backButtonConfig} flexibleCover={flexibleCover} hide={hide} onClick={onClick}>
-    <Chevron />
-    <Span>{label || 'Back'}</Span>
-  </Button>
-)
+const BackButton = ({ onClick, label, backButtonConfig = {}, hide, flexibleCover }) => {
+  const newOnClick = useCallback((...args) => hide || onClick(args), [hide, onClick])
 
-export default compose(
-  withHandlers({
-    onClick: ({ hide, onClick }) => (hide ? () => {} : onClick),
-  })
-)(BackButton)
+  return (
+    <Button buttonConfig={backButtonConfig} flexibleCover={flexibleCover} hide={hide} onClick={newOnClick}>
+      <Chevron />
+      <Span>{label || 'Back'}</Span>
+    </Button>
+  )
+}
+
+export default BackButton
