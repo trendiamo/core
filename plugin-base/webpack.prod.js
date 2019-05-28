@@ -9,6 +9,7 @@ module.exports = merge(config, {
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
   ],
+  mode: 'production',
   optimization: {
     minimize: true,
   },
