@@ -1,4 +1,3 @@
-import emojify from 'ext/emojify'
 import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
@@ -56,7 +55,7 @@ const SpotlightItem = compose(
     )}
     <ListContent assessment={assessment}>
       <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>
-      <PersonaDescription dangerouslySetInnerHTML={{ __html: emojify(spotlight.persona.description) }} />
+      <PersonaDescription dangerouslySetInnerHTML={{ __html: spotlight.persona.description }} />
     </ListContent>
     <ListChevron />
   </ListItem>

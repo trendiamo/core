@@ -6,6 +6,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "detect-browser": "^3.0.1",
+    "emoji-js": "^3.4.1",
     "graphql-request": "^1.8.2",
     "jsonp-p": "^2.0.0",
     "lodash.flatten": "^4.4.0",

@@ -6,16 +6,18 @@ import { h } from 'preact'
 
 const Content = ({
   Component,
-  isUnmounting,
+  frameStyleStr,
   hideContentFrame,
+  isUnmounting,
+  launcherConfig,
   onToggleContent,
   position,
   persona,
   setShowAssessmentContent,
-  launcherConfig,
   skipEntry,
 }) => (
   <ContentFrame
+    frameStyleStr={frameStyleStr}
     hidden={hideContentFrame}
     isUnmounting={isUnmounting}
     launcherConfig={launcherConfig}

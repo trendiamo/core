@@ -1,4 +1,3 @@
-import emojify from 'ext/emojify'
 import React from 'react'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
@@ -40,7 +39,7 @@ const ChatMessageTemplate = ({ data, type, show, hideAll, onClick, clickable, no
       <TextMessage
         clickActionsExist={clickActionsExist}
         dangerouslySetInnerHTML={{
-          __html: emojify(replaceExternalLinks(snarkdown(data))),
+          __html: replaceExternalLinks(snarkdown(data)),
         }}
         onClick={onClick}
       />

@@ -4,9 +4,16 @@ import React from 'react'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { buttonContainerStyle, containerStyle } from './styles'
 
-const Button = ({ button, action, animation, clicked, handleClick, position }) => (
+const Button = ({ button, action, animation, clicked, frameStyleStr, handleClick, position }) => (
   <div style={buttonContainerStyle(button.value === 'no')}>
-    <ButtonFrame action={action} animation={animation} button={button} clicked={clicked} position={position}>
+    <ButtonFrame
+      action={action}
+      animation={animation}
+      button={button}
+      clicked={clicked}
+      position={position}
+      styleStr={frameStyleStr}
+    >
       <Content action={action} button={button} clicked={clicked} handleClick={handleClick} />
     </ButtonFrame>
   </div>

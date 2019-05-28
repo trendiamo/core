@@ -18,6 +18,7 @@ const Assessment = ({
   currentStep,
   currentStepKey,
   endNodeTags,
+  frameStyleStr,
   hideContentFrame,
   module,
   progress,
@@ -58,6 +59,7 @@ const Assessment = ({
         steps={steps}
       />
     }
+    frameStyleStr={frameStyleStr}
     hideContentFrame={hideContentFrame}
     isUnmounting={isUnmounting}
     onToggleContent={onToggleContent}

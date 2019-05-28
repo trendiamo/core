@@ -6,17 +6,18 @@ import { defaultBubble, defaultBubbleButtons, defaultBubbleExtra } from './confi
 
 const LauncherBubblesTemplate = ({
   bubble,
-  disappear,
-  onClick,
-  position,
-  showingContent,
   bubbleExtra,
-  setDisappear,
-  launcherConfig,
-  offset,
-  outroButtonsClick,
   bubbleExtraExists,
   bubbleButtons,
+  disappear,
+  frameStyleStr,
+  launcherConfig,
+  offset,
+  onClick,
+  outroButtonsClick,
+  position,
+  setDisappear,
+  showingContent,
 }) => (
   <div>
     <LauncherBubble
@@ -24,6 +25,7 @@ const LauncherBubblesTemplate = ({
       bubbleButtons={bubbleButtons}
       bubbleExtraExists={bubbleExtraExists}
       disappear={disappear}
+      frameStyleStr={frameStyleStr}
       launcherConfig={launcherConfig}
       offset={offset}
       onClick={onClick}
@@ -34,6 +36,7 @@ const LauncherBubblesTemplate = ({
       bubble={bubbleExtra}
       disappear={disappear}
       extraBubble
+      frameStyleStr={frameStyleStr}
       launcherConfig={launcherConfig}
       offset={offset}
       onClick={onClick}
@@ -43,6 +46,7 @@ const LauncherBubblesTemplate = ({
     <BubbleButtons
       bubble={bubbleButtons}
       disappear={disappear}
+      frameStyleStr={frameStyleStr}
       launcherConfig={launcherConfig}
       offset={offset}
       onClick={outroButtonsClick}
@@ -72,8 +76,8 @@ const getBubbles = data => {
   const comesFromApi = !!data.flow
   const source = data.flow || data.launcher
   const buttons = comesFromApi ? source : source.chatBubbleButtons
-  const bubble = comesFromApi ? { message: source.chatBubbleText } : source.chatBubble
-  const bubbleExtra = comesFromApi ? { message: source.chatBubbleExtraText } : source.chatBubbleExtra
+  const bubble = { message: source.chatBubbleText }
+  const bubbleExtra = { message: source.chatBubbleExtraText }
   const bubbleButtons = buttons && {
     buttonYes: buttons.chatBubbleButtonYes && { message: buttons.chatBubbleButtonYes },
     buttonNo: buttons.chatBubbleButtonNo && { message: buttons.chatBubbleButtonNo },

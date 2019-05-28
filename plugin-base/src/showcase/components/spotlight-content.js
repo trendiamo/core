@@ -1,4 +1,3 @@
-import emojify from 'ext/emojify'
 import ProductItem from './product-item'
 import React from 'react'
 import styled from 'styled-components'
@@ -22,7 +21,7 @@ const SpotlightContent = compose(
   <Container>
     <Title
       dangerouslySetInnerHTML={{
-        __html: emojify(spotlight.translation.selectedBy),
+        __html: spotlight.translation.selectedBy,
       }}
     />
     <TopSlideAnimation isLeaving={isLeaving} name="content">

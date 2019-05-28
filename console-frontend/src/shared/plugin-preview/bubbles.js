@@ -22,10 +22,8 @@ const Bubbles = ({
   const data = {
     flowType: bubbleButtons && 'outro',
     launcher: {
-      chatBubble: {
-        message: bubbleText,
-      },
-      ...(bubbleButtons ? { chatBubbleButtons: bubbleButtons } : { chatBubbleExtra: { message: bubbleExtraText } }),
+      chatBubbleText: bubbleText,
+      ...(bubbleButtons ? { chatBubbleButtons: bubbleButtons } : { chatBubbleExtraText: bubbleExtraText }),
     },
   }
 

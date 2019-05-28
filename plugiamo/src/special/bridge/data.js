@@ -11,12 +11,8 @@ const data = {
         module: {
           flowType: 'ht-chat',
           launcher: {
-            chatBubble: {
-              message: "Hey! 👋Cool that you're interested!",
-            },
-            chatBubbleExtra: {
-              message: 'Let me show you more! 👀',
-            },
+            chatBubbleText: "Hey! 👋Cool that you're interested!",
+            chatBubbleExtraText: 'Let me show you more! 👀',
             persona: {
               name: 'Rodrigo',
               profilePic: {
@@ -171,12 +167,8 @@ const data = {
         module: {
           flowType: 'ht-chat',
           launcher: {
-            chatBubble: {
-              message: 'Choose size and Add to Cart',
-            },
-            chatBubbleExtra: {
-              message: 'Or: need help with the sizes?',
-            },
+            chatBubbleText: 'Choose size and Add to Cart',
+            chatBubbleExtraText: 'Or: need help with the sizes?',
             persona: {
               name: 'Rodrigo',
               profilePic: {
@@ -230,12 +222,8 @@ const data = {
         module: {
           flowType: 'ht-chat',
           launcher: {
-            chatBubble: {
-              message: "Hey! 👋Cool that you're interested!",
-            },
-            chatBubbleExtra: {
-              message: 'Let me show you more! 👀',
-            },
+            chatBubbleText: "Hey! 👋Cool that you're interested!",
+            chatBubbleExtraText: 'Let me show you more! 👀',
             persona: {
               name: 'Rodrigo',
               profilePic: {
@@ -390,12 +378,8 @@ const data = {
         module: {
           flowType: 'ht-chat',
           launcher: {
-            chatBubble: {
-              message: 'Choose size and Add to Cart',
-            },
-            chatBubbleExtra: {
-              message: 'Or: need help with the sizes?',
-            },
+            chatBubbleText: 'Choose size and Add to Cart',
+            chatBubbleExtraText: 'Or: need help with the sizes?',
             persona: {
               name: 'Rodrigo',
               profilePic: {
@@ -445,12 +429,8 @@ const data = {
         module: {
           flowType: 'ht-chat',
           launcher: {
-            chatBubble: {
-              message: "I'm glad that you like it! 🎉",
-            },
-            chatBubbleExtra: {
-              message: 'Anything else?',
-            },
+            chatBubbleText: "I'm glad that you like it! 🎉",
+            chatBubbleExtraText: 'Anything else?',
             persona: {
               name: 'Rodrigo',
               profilePic: {

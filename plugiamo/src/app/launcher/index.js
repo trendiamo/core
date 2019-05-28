@@ -5,16 +5,18 @@ import { h } from 'preact'
 import { imgixUrl, Launcher as LauncherBase } from 'plugin-base'
 
 const Launcher = ({
+  compiledLauncherConfig,
+  disappear,
+  frameStyleStr,
   onToggleContent,
   personaPicUrl,
   position,
-  showingContent,
-  disappear,
   pulsating,
-  compiledLauncherConfig,
+  showingContent,
 }) => (
   <LauncherBase
     disappear={disappear}
+    frameStyleStr={frameStyleStr}
     launcherConfig={compiledLauncherConfig}
     onClick={onToggleContent}
     personaPicUrl={personaPicUrl}
@@ -45,7 +47,7 @@ export default compose(
   }),
   withHandlers({
     onToggleContent: ({ data, onToggleContent }) => () => {
-      if ((data.flow && data.flow.flowType === 'outro') || data.flowType === 'ht-outro') return
+      if (data.flow && data.flow.flowType === 'outro') return
 
       onToggleContent()
     },

@@ -1,10 +1,10 @@
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
-import { animateOnMount, Frame as FrameBase } from 'shared'
+import { animateOnMount, Frame } from 'shared'
 
 const LauncherFrame = animateOnMount(styled(props => (
-  <FrameBase {...omit(props, ['position', 'entry', 'setEntry', 'showingContent', 'disappear', 'launcherConfig'])} />
+  <Frame {...omit(props, ['position', 'entry', 'setEntry', 'showingContent', 'disappear', 'launcherConfig'])} />
 )).attrs({
   title: 'Trendiamo Launcher',
 })`
