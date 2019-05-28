@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { branch, compose, renderNothing } from 'recompose'
 import { IconInstagram } from 'icons'
 
 const Link = styled.a`
@@ -42,12 +41,16 @@ const Container = styled.div`
   }
 `
 
-const PersonaInstagram = compose(branch(({ url }) => !url, renderNothing))(({ url, color, size }) => (
-  <Link href={url} rel="noopener noreferrer" target="_blank">
-    <Container color={color} size={size}>
-      <IconInstagram />
-    </Container>
-  </Link>
-))
+const PersonaInstagram = ({ url, color, size }) => {
+  if (!url) return null
+
+  return (
+    <Link href={url} rel="noopener noreferrer" target="_blank">
+      <Container color={color} size={size}>
+        <IconInstagram />
+      </Container>
+    </Link>
+  )
+}
 
 export default PersonaInstagram

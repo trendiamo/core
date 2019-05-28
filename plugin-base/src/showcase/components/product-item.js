@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
 import { imgixUrl } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 
@@ -38,23 +37,27 @@ const DisplayPrice = styled.div`
   font-weight: bold;
 `
 
-const ProductItem = ({ selectInList, product, onClick }) => (
-  <ListItem onClick={onClick} selectInList={selectInList}>
-    <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', w: 101, h: 101 })} />
-    <ListContent>
-      <Content>
-        <Name>{product.name}</Name>
-        <Description dangerouslySetInnerHTML={{ __html: product.description }} />
-        <DisplayPrice>{product.displayPrice}</DisplayPrice>
-      </Content>
-    </ListContent>
-    <ListChevron />
-  </ListItem>
-)
-export default compose(
-  withHandlers({
-    onClick: ({ onProductClick, product, spotlight }) => () => {
+const ProductItem = ({ selectInList, product, onProductClick, spotlight }) => {
+  const onClick = useCallback(
+    () => {
       onProductClick(product, spotlight)
     },
-  })
-)(ProductItem)
+    [onProductClick, product, spotlight]
+  )
+
+  return (
+    <ListItem onClick={onClick} selectInList={selectInList}>
+      <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', w: 101, h: 101 })} />
+      <ListContent>
+        <Content>
+          <Name>{product.name}</Name>
+          <Description dangerouslySetInnerHTML={{ __html: product.description }} />
+          <DisplayPrice>{product.displayPrice}</DisplayPrice>
+        </Content>
+      </ListContent>
+      <ListChevron />
+    </ListItem>
+  )
+}
+
+export default ProductItem
