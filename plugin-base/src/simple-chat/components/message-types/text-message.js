@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
 
 const TextMessageContainer = styled.div`
   background-color: #fff;
@@ -41,11 +40,9 @@ const TextMessageContainer = styled.div`
   }
 `
 
-const TextMessage = ({ onClick, ...props }) => <TextMessageContainer onClick={onClick} {...props} />
-
-export default compose(
-  withHandlers({
-    onClick: ({ onClick, clickActionsExist }) => event => {
+const TextMessage = ({ clickActionsExist, dangerouslySetInnerHTML, onClick }) => {
+  const newOnClick = useCallback(
+    event => {
       if (!clickActionsExist) return event.preventDefault()
       const element = event.target
       if (element.tagName !== 'A') return
@@ -55,5 +52,10 @@ export default compose(
       }
       onClick({ type: 'clickLink', item: { url: element.href, newTab } })
     },
-  })
-)(TextMessage)
+    [clickActionsExist, onClick]
+  )
+
+  return <TextMessageContainer dangerouslySetInnerHTML={dangerouslySetInnerHTML} onClick={newOnClick} />
+}
+
+export default TextMessage
