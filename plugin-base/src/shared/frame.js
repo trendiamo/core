@@ -2,11 +2,10 @@ import omit from 'lodash.omit'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { compose, lifecycle, withState } from 'recompose'
-import { emojifyStyles } from 'ext'
 import { StyleSheetManager } from 'styled-components'
 
 const Frame = ({ children, iframeRef, isLoaded, setIframeRef, title, ...rest }) => (
-  <iframe {...omit(rest, ['setIsLoaded'])} ref={setIframeRef} tabIndex="-1" title={title}>
+  <iframe {...omit(rest, ['setIsLoaded', 'styleStr'])} ref={setIframeRef} tabIndex="-1" title={title}>
     {isLoaded &&
       iframeRef &&
       iframeRef.contentDocument &&
@@ -18,7 +17,7 @@ const Frame = ({ children, iframeRef, isLoaded, setIframeRef, title, ...rest }) 
   </iframe>
 )
 
-const style = `
+const baseStyle = `
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -27,7 +26,6 @@ body, html {
   margin: 0;
   height: 100%;
 }
-${emojifyStyles}
 `
 
 const loadCss = (head, href) => {
@@ -66,14 +64,14 @@ export default compose(
   withState('isLoaded', 'setIsLoaded', false),
   lifecycle({
     componentDidUpdate(prevProps) {
-      const { iframeRef, setIsLoaded } = this.props
+      const { iframeRef, setIsLoaded, styleStr } = this.props
       if (iframeRef && iframeRef !== prevProps.iframeRef) {
         const load = () => {
           loadCss(
             iframeRef.contentDocument.head,
             'https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap'
           )
-          addCss(iframeRef.contentDocument.head, style)
+          addCss(iframeRef.contentDocument.head, `${baseStyle}${styleStr}`)
           addBase(iframeRef.contentDocument.head)
           addPlatformClass(iframeRef.contentDocument.body)
           setIsLoaded(true)

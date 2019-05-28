@@ -32,7 +32,6 @@
     "webpack-merge": "^4.1.4"
   },
   "peerDependencies": {
-    "emoji-js": "^3.4.1",
     "lodash.isequal": "^4.5.0",
     "lodash.omit": "^4.5.0",
     "react": "^16.0.0",

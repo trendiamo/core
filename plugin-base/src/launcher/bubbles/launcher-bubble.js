@@ -3,19 +3,20 @@ import React from 'react'
 import withRef from 'ext/with-ref'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { ChatBubbleBase, Container } from './components'
-import { emojify, timeout } from 'ext'
+import { timeout } from 'ext'
 
 const LauncherBubbleBase = ({
-  position,
-  disappear,
-  bubble,
   animation,
+  bubble,
+  disappear,
+  elevation,
+  frameStyleStr,
+  launcherConfig,
+  offset,
+  onClick,
+  position,
   setTextWidthRef,
   textWidth,
-  onClick,
-  launcherConfig,
-  elevation,
-  offset,
 }) => (
   <LauncherBubbleFrame
     animation={animation}
@@ -25,10 +26,11 @@ const LauncherBubbleBase = ({
     launcherConfig={launcherConfig}
     offset={offset}
     position={position}
+    styleStr={frameStyleStr}
     textWidth={textWidth}
   >
     <Container onClick={onClick}>
-      <ChatBubbleBase dangerouslySetInnerHTML={{ __html: emojify(bubble.message) }} ref={setTextWidthRef} />
+      <ChatBubbleBase dangerouslySetInnerHTML={{ __html: bubble.message }} ref={setTextWidthRef} />
     </Container>
   </LauncherBubbleFrame>
 )

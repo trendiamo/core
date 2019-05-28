@@ -1,7 +1,7 @@
 import CloseButton from './close-button'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { animateOnMount, FrameBase, history, positioning, timeout, transition } from 'plugin-base'
+import { animateOnMount, Frame, history, positioning, timeout, transition } from 'plugin-base'
 import { compose, lifecycle } from 'recompose'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
@@ -48,7 +48,7 @@ const IFrame = compose(
       transition.clear()
     },
   })
-)(styled(FrameBase).attrs({
+)(styled(Frame).attrs({
   title: 'Trendiamo Content',
 })`
   border: 0;
@@ -59,7 +59,16 @@ const IFrame = compose(
   width: 100%;
 `)
 
-const ContentFrame = ({ skipEntry, children, isUnmounting, hidden, onToggleContent, position, launcherConfig }) => (
+const ContentFrame = ({
+  skipEntry,
+  children,
+  frameStyleStr,
+  isUnmounting,
+  hidden,
+  onToggleContent,
+  position,
+  launcherConfig,
+}) => (
   <ContentFrameContainer
     hidden={hidden}
     isUnmounting={isUnmounting}
@@ -67,7 +76,7 @@ const ContentFrame = ({ skipEntry, children, isUnmounting, hidden, onToggleConte
     position={position}
     skipEntry={skipEntry}
   >
-    <IFrame onToggleContent={onToggleContent}>
+    <IFrame onToggleContent={onToggleContent} styleStr={frameStyleStr}>
       <div>
         {children}
         <CloseButton onToggleContent={onToggleContent} />

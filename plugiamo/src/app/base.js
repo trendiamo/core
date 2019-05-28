@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { animateOnMount } from 'plugin-base'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
 import { compose, withHandlers, withProps } from 'recompose'
+import { emojifyStyles } from 'ext/emojify'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 
@@ -35,7 +36,7 @@ const AppBaseDiv = styled.div`
   }
 `
 
-const AppBaseTemplate = ({
+const AppBase = ({
   Component,
   Launcher,
   disappear,
@@ -62,6 +63,7 @@ const AppBaseTemplate = ({
     <LoadingFrame onLoad={onLauncherFrameLoad} />
     {showAssessmentContent ? (
       <Assessment
+        frameStyleStr={emojifyStyles}
         isUnmounting={isUnmounting}
         onToggleContent={onToggleContent}
         setShowAssessmentContent={setShowAssessmentContent}
@@ -73,6 +75,7 @@ const AppBaseTemplate = ({
       showingContent && (
         <Content
           Component={Component}
+          frameStyleStr={emojifyStyles}
           isUnmounting={isUnmounting}
           launcherConfig={launcherConfig}
           onToggleContent={onToggleContent}
@@ -88,6 +91,7 @@ const AppBaseTemplate = ({
       <LauncherBubbles
         data={data}
         disappear={disappear}
+        frameStyleStr={emojifyStyles}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         outroButtonsClick={outroButtonsClick}
@@ -100,6 +104,7 @@ const AppBaseTemplate = ({
       <Launcher
         data={data}
         disappear={disappear}
+        frameStyleStr={emojifyStyles}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         persona={persona}
@@ -141,4 +146,4 @@ export default compose(
       mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
     },
   })
-)(AppBaseTemplate)
+)(AppBase)

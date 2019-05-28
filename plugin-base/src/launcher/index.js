@@ -6,13 +6,23 @@ import PersonaPic from './persona-pic'
 import PulsateEffect from './pulsate-effect'
 import React from 'react'
 
-const Launcher = ({ pulsating, disappear, showingContent, launcherConfig, onClick, position, personaPicUrl }) => (
+const Launcher = ({
+  disappear,
+  frameStyleStr,
+  launcherConfig,
+  onClick,
+  personaPicUrl,
+  position,
+  pulsating,
+  showingContent,
+}) => (
   <Frame
     disappear={disappear}
     launcherConfig={launcherConfig}
     position={position}
     scrolling="no"
     showingContent={showingContent}
+    styleStr={frameStyleStr}
   >
     <div>
       {pulsating && <PulsateEffect active={!showingContent} launcherConfig={launcherConfig} />}

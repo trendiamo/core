@@ -484,10 +484,7 @@ const data = {
     flowType: 'asmt-cart',
     header,
     launcher: {
-      chatBubble: {
-        message: 'Lust auf weitere Ergänzungen?',
-      },
-      chatBubbleExtra: {},
+      chatBubbleText: 'Lust auf weitere Ergänzungen?',
       persona: {
         name: 'Nico de Roy',
         profilePic: {
@@ -509,10 +506,7 @@ const data = {
     flowType: 'asmt-size-guide',
     header,
     launcher: {
-      chatBubble: {
-        message: 'Brauchst du Hilfe bei der Größenwahl?',
-      },
-      chatBubbleExtra: {},
+      chatBubbleText: 'Brauchst du Hilfe bei der Größenwahl?',
       persona: {
         name: 'Nico de Roy',
         profilePic: {
@@ -521,10 +515,7 @@ const data = {
       },
     },
     closedLauncher: {
-      chatBubble: {
-        message: 'Wir sehen uns an der Kasse! 🙂',
-      },
-      chatBubbleExtra: {},
+      chatBubbleText: 'Wir sehen uns an der Kasse! 🙂',
       persona: {
         name: 'Nico de Roy',
         profilePic: {

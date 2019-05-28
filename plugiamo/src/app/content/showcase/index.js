@@ -1,3 +1,4 @@
+import emojify from 'ext/emojify'
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
@@ -8,16 +9,21 @@ import { history, Showcase as ShowcaseBase } from 'plugin-base'
 import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
 import { routes } from 'plugin-base'
 
-const convertSpotlights = spotlights => {
-  return spotlights.map(spotlight => {
-    return {
-      ...spotlight,
-      translation: {
-        selectedBy: getFrekklsConfig().i18n.productsSelectedBy(spotlight.persona.name.split(' ')[0]),
-      },
-    }
-  })
-}
+const convertSpotlights = spotlights =>
+  spotlights.map(spotlight => ({
+    ...spotlight,
+    persona: {
+      ...spotlight.persona,
+      description: emojify(spotlight.persona.description),
+    },
+    productPicks: spotlight.productPicks.map(productPick => ({
+      ...productPick,
+      description: emojify(productPick.description),
+    })),
+    translation: {
+      selectedBy: emojify(getFrekklsConfig().i18n.productsSelectedBy(spotlight.persona.name.split(' ')[0])),
+    },
+  }))
 
 const assessmentSpotlight = {
   persona: {
@@ -72,8 +78,8 @@ const Showcase = compose(
   withProps(({ data }) => ({
     showcase: data.showcase,
     spotlights: data.showcase && convertSpotlights(data.showcase.spotlights),
-    subtitle: data.showcase && data.showcase.subtitle,
-    title: data.showcase && data.showcase.title,
+    subtitle: data.showcase && emojify(data.showcase.subtitle),
+    title: data.showcase && emojify(data.showcase.title),
   })),
   withHandlers({
     routeToShowcase: ({ showcase }) => () => {

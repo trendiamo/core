@@ -1,4 +1,3 @@
-import emojify from 'ext/emojify'
 import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
@@ -45,7 +44,7 @@ const ProductItem = ({ selectInList, product, onClick }) => (
     <ListContent>
       <Content>
         <Name>{product.name}</Name>
-        <Description dangerouslySetInnerHTML={{ __html: emojify(product.description) }} />
+        <Description dangerouslySetInnerHTML={{ __html: product.description }} />
         <DisplayPrice>{product.displayPrice}</DisplayPrice>
       </Content>
     </ListContent>

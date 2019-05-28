@@ -2,7 +2,7 @@ import Content from './content'
 import Header from './header'
 import Wrapper from 'shared/modal'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { FrameBase } from 'plugin-base'
+import { Frame } from 'plugin-base'
 import { h } from 'preact'
 
 const iframeStyle = {
@@ -24,9 +24,9 @@ const FrameChild = ({ step, results, goToPrevStep, flowType }) => (
 
 const ModalTemplate = ({ onCloseModal, isOpen, results, goToPrevStep, step, module }) => (
   <Wrapper allowBackgroundClose closeModal={onCloseModal} isOpen={isOpen}>
-    <FrameBase style={iframeStyle}>
+    <Frame style={iframeStyle}>
       <FrameChild flowType={module && module.flowType} goToPrevStep={goToPrevStep} results={results} step={step} />
-    </FrameBase>
+    </Frame>
   </Wrapper>
 )
 

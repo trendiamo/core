@@ -1,9 +1,9 @@
 import omit from 'lodash.omit'
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { ContentWrapper, FrameBase } from 'plugin-base'
+import { ContentWrapper, Frame } from 'plugin-base'
 
-const StyledFrameBase = styled(props => <FrameBase {...omit(props, ['isEntry', 'isUnmounting'])} />)`
+const StyledFrame = styled(props => <Frame {...omit(props, ['isEntry', 'isUnmounting'])} />)`
   border: 0;
   overflow: hidden;
   border-radius: 8px;
@@ -27,9 +27,9 @@ const ContentContainer = ({ iframeRef, children }) => {
   }, [])
 
   return (
-    <StyledFrameBase iframeRef={iframeRef} isEntry={isEntry}>
+    <StyledFrame iframeRef={iframeRef} isEntry={isEntry}>
       {children}
-    </StyledFrameBase>
+    </StyledFrame>
   )
 }
 

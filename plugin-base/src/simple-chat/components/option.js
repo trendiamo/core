@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { emojify } from 'ext'
 
 const ChatOptionText = styled.div`
   appearance: none;
@@ -41,11 +40,7 @@ const Container = styled.div`
 
 const ChatOption = ({ chatOption, onClick, animate, hide, clicked }) => (
   <Container animate={animate} clicked={clicked} hide={hide}>
-    <ChatOptionText
-      clicked={clicked}
-      dangerouslySetInnerHTML={{ __html: emojify(chatOption.text) }}
-      onClick={onClick}
-    />
+    <ChatOptionText clicked={clicked} dangerouslySetInnerHTML={{ __html: chatOption.text }} onClick={onClick} />
   </Container>
 )
 

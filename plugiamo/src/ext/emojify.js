@@ -9,7 +9,7 @@ const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
 
 // In Linux, at least the distro that we've tested, if we use emoji.replace_unified it actually breaks it, and not
 // doing anything works well.
-const emojify = isLinux || isIos ? e => e : (...args) => Reflect.apply(emoji.replace_unified, emoji, args)
+const emojify = isLinux || isIos ? str => str : str => (!str ? str : Reflect.apply(emoji.replace_unified, emoji, [str]))
 
 // copied from https://github.com/iamcal/js-emoji/blob/master/demo/emoji.css
 export const emojifyStyles = `
