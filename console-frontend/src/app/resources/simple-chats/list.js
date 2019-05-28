@@ -1,3 +1,4 @@
+import auth from 'auth'
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
@@ -35,12 +36,14 @@ const SimpleChatsRow = ({ record, highlightInactive }) => (
 const api = { fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate }
 const simpleChatsRoutes = { create: routes.simpleChatCreate, edit: routes.simpleChatEdit }
 const highlightInactive = ['triggerIds']
+const canEditResource = resource => auth.getUser().role === 'editor' && resource.triggerIds.length > 0
 
 const SimpleChatsList = () => (
   <EnhancedList
     api={api}
     BlankState={BlankState}
     buttonText="Create new"
+    canEditResource={canEditResource}
     columns={columns}
     defaultSorting={defaultSorting}
     helpStep="simpleChats"

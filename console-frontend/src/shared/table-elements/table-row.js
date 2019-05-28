@@ -15,6 +15,7 @@ const TableRow = ({
   selectedIds,
   setSelectedIds,
   api,
+  canEditResource,
   resourceEditPath,
   routes,
   children,
@@ -55,6 +56,7 @@ const TableRow = ({
           checked={selectedIds.includes(resource.id)}
           checkedIcon={<CheckBoxIcon />}
           color="primary"
+          disabled={canEditResource && canEditResource(resource)}
           onChange={handleSelect}
         />
       </TableCell>
@@ -65,7 +67,7 @@ const TableRow = ({
         }}
       >
         {resourceEditPath && (
-          <Button component={Link} to={resourceEditPath}>
+          <Button component={Link} disabled={canEditResource && canEditResource(resource)} to={resourceEditPath}>
             <EditIcon />
           </Button>
         )}
