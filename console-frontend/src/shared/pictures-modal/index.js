@@ -40,18 +40,15 @@ const PicturesModal = ({
   const fetchRemotePicture = useCallback(
     async () => {
       if (isEmpty(pictureUrl.trim())) return enqueueSnackbar('Please enter an URL', { variant: 'error' })
-      try {
-        decodeURIComponent(pictureUrl)
-      } catch {
-        return enqueueSnackbar("Can't find any file at this URL", { variant: 'error' })
-      }
+      const splitUrl = new URL(pictureUrl).pathname.split('/')
+      const filename = splitUrl[splitUrl.length - 1]
       const { json: blob, requestError, errors, response, ...rest } = await apiRequest(apiGetRemotePicture, [
         pictureUrl,
       ])
       if (errors || requestError) {
         enqueueSnackbar(errors.message || requestError, { variant: 'error' })
       } else {
-        onFileUpload([blob])
+        onFileUpload([blob], [filename])
       }
       return { blob, response, errors, requestError, ...rest }
     },

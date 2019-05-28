@@ -88,6 +88,8 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
+    down (4.8.1)
+      addressable (~> 2.5)
     erubi (1.8.0)
     et-orbi (1.1.6)
       tzinfo
@@ -290,6 +292,7 @@ DEPENDENCIES
   deep_cloneable (~> 2.4.0)
   devise
   dotenv-rails
+  down
   factory_bot_rails
   faker
   graphql
