@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import routes from './routes'
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { history, timeout, transition } from 'ext'
 
 const Wrapper = styled.div`
@@ -15,35 +14,37 @@ const Wrapper = styled.div`
   color: #333;
 `
 
-const ContentWrapper = ({ children, ...props }) => <Wrapper>{React.cloneElement(children, { ...props })}</Wrapper>
+const ContentWrapper = ({ children, ...props }) => {
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
-export default compose(
-  withState('isTransitioning', 'setIsTransitioning', false),
-  lifecycle({
-    componentWillUnmount() {
+  useEffect(() => {
+    return () => {
       history.removeListeners()
       timeout.clear('contentWrapper')
       timeout.clear('routeChange')
       transition.clear()
-    },
-  }),
-  withHandlers({
-    onRouteChange: ({ setIsTransitioning }) => (previousRoute, route) => {
-      const exitDuration = 300
-      if (routes.isShowcase(previousRoute) && routes.isSpotlight(route)) {
-        setIsTransitioning(true)
-        transition.liftElements()
-        timeout.set(
-          'contentWrapper',
-          () => {
-            setIsTransitioning(false)
-            timeout.clear('contentWrapper')
-            transition.clear()
-          },
-          exitDuration + transition.duration
-        )
-      }
-      return exitDuration
-    },
-  })
-)(ContentWrapper)
+    }
+  }, [])
+
+  const onRouteChange = useCallback((previousRoute, route) => {
+    const exitDuration = 300
+    if (routes.isShowcase(previousRoute) && routes.isSpotlight(route)) {
+      setIsTransitioning(true)
+      transition.liftElements()
+      timeout.set(
+        'contentWrapper',
+        () => {
+          setIsTransitioning(false)
+          timeout.clear('contentWrapper')
+          transition.clear()
+        },
+        exitDuration + transition.duration
+      )
+    }
+    return exitDuration
+  }, [])
+
+  return <Wrapper>{React.cloneElement(children, { ...props, isTransitioning, onRouteChange })}</Wrapper>
+}
+
+export default ContentWrapper
