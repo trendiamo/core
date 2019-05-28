@@ -6,7 +6,7 @@ import { animateOnMount, Frame } from 'shared'
 const LauncherFrame = animateOnMount(styled(props => (
   <Frame {...omit(props, ['position', 'entry', 'setEntry', 'showingContent', 'disappear', 'launcherConfig'])} />
 )).attrs({
-  title: 'Trendiamo Launcher',
+  title: 'Frekkls Launcher',
 })`
   border: 0;
   z-index: 2147482999;

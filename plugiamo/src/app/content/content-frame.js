@@ -49,7 +49,7 @@ const IFrame = compose(
     },
   })
 )(styled(Frame).attrs({
-  title: 'Trendiamo Content',
+  title: 'Frekkls Content',
 })`
   border: 0;
   position: absolute;

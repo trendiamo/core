@@ -20,7 +20,7 @@ const LauncherBubbleFrame = styled(props => (
     ])}
   />
 )).attrs({
-  title: 'Trendiamo Launcher Bubble',
+  title: 'Frekkls Launcher Bubble',
 })`
   border: 0;
   z-index: ${({ extraBubble }) => (extraBubble ? 2147483001 : 2147483000)};
