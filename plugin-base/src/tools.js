@@ -98,14 +98,6 @@ const extractYoutubeId = message => {
   return match && match[2].length === 11 && match[2]
 }
 
-const isFrameActive = () => {
-  return (
-    document.activeElement &&
-    document.activeElement.tagName.toLowerCase() === 'iframe' &&
-    document.activeElement.title === 'Trendiamo Content'
-  )
-}
-
 const convertLogs = logs => {
   let newLog = []
   let currentList = []
@@ -177,7 +169,6 @@ export {
   imgixUrl,
   positioning,
   extractYoutubeId,
-  isFrameActive,
   convertLogs,
   listeners,
   MESSAGE_INTERVAL,
