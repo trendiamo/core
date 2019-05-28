@@ -82,6 +82,12 @@ const resultingCrop = (picture, pictureElement, pixelCrop) => {
   return new Promise(resolve => canvas.toBlob(resolve, picture.type))
 }
 
+const processFilename = (blob, filename) => {
+  if (filename.endsWith('.jpeg') || filename.endsWith('.jpg') || filename.endsWith('.png')) return filename
+  const extension = blob.type === 'image/jpeg' ? '.jpg' : '.png'
+  return `picture${extension}`
+}
+
 const uploadPicture = async ({ blob, setProgress }) => {
   try {
     const { fileUrl } = await S3Upload({
@@ -164,14 +170,14 @@ const PictureUploader = ({ disabled, label, onChange, required, setDisabled, set
   )
 
   const onFileUpload = useCallback(
-    files => {
+    (files, filenames) => {
       setDoneCropping(false)
       onChange('')
       setPreviousValue(value)
       if (files.length === 0) return
       const file = files[0]
       setPicture({
-        name: file.name || 'upload',
+        name: file.name || processFilename(file, filenames[0]),
         preview: URL.createObjectURL(file),
         size: file.size,
         type: file.type,

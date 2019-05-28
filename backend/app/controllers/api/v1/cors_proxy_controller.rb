@@ -1,4 +1,4 @@
-require "open-uri"
+require "down"
 
 module Api
   module V1
@@ -7,9 +7,9 @@ module Api
       before_action :ensure_tenant
 
       def download
-        # rubocop:disable Open, UriEscapeUnescape
-        file = open(URI.encode(params[:url]).gsub(%r{^(https|http):/}, '\0/'))
-        # rubocop:enable Open, UriEscapeUnescape
+        file = Down.download(params[:url].gsub(%r{^(https|http):/}, '\0/'), max_size: 20_000_000)
+      rescue Down::TooLarge
+        render json: { error: "File size exceed limit" }, status: :unprocessable_entity
       rescue StandardError
         render json: { error: "Can't find any file at this URL" }, status: :unprocessable_entity
       else
@@ -21,8 +21,6 @@ module Api
       def process_file(file)
         if !file.content_type.start_with?("image")
           render json: { error: "Wrong file format" }, status: :unprocessable_entity
-        elsif file.size > 20_000_000
-          render json: { error: "File size exceed limit" }, status: :unprocessable_entity
         else
           send_data(file.read, type: file.content_type)
         end

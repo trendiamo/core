@@ -80,9 +80,9 @@ const Dropzone = ({ disabled, onFileUpload, previewPicture, circle, ...props }) 
   }, [])
 
   const onDrop = useCallback(
-    (acceptedFiles, rejectedFiles) => {
+    acceptedFiles => {
       setIsDragging(false)
-      onFileUpload(acceptedFiles, rejectedFiles)
+      onFileUpload(acceptedFiles)
     },
     [onFileUpload]
   )
