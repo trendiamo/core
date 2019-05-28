@@ -78,7 +78,7 @@ const EnhancedList = ({
       } else if (action.type === 'handleSelectAll') {
         return {
           ...state,
-          isSelectAll: true,
+          isSelectAll: !state.isSelectAll,
           selectedIds: action.checked ? state.records.map(resource => resource.id) : [],
         }
       } else if (action.type === 'setLoading') {
