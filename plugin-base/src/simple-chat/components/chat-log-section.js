@@ -1,9 +1,8 @@
 import ChatMessage from './message'
 import ChatOption from './option'
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import timeout from 'ext/timeout'
-import withRef from 'ext/with-ref'
 import { autoScroll } from 'ext'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { MESSAGE_INTERVAL, MESSAGE_RANDOMIZER } from 'tools'
@@ -19,10 +18,9 @@ const Container = styled.div`
   }
 `
 
-export default compose(
+const ChatLogSection = compose(
   withState('hide', 'setHide', false),
   withState('animate', 'setAnimate', false),
-  withRef('getContainerRef', 'setContainerRef'),
   withHandlers({
     onClick: ({ onClick, assessmentOptions, setHide, setHideAll }) => ({ type, item }) => {
       if (type === 'assessmentOption') {
@@ -36,12 +34,12 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { contentRef, logSection, previousLogs, setAnimate, index, dontScroll, getContainerRef } = this.props
+      const { contentRef, logSection, previousLogs, setAnimate, index, dontScroll, containerRef } = this.props
       if (logSection.type === 'message') {
         if (index > 0 && !dontScroll) {
           autoScroll.activate({
-            element: contentRef(),
-            destination: () => getContainerRef() && getContainerRef().offsetTop - 15,
+            element: contentRef.current,
+            destination: () => containerRef.current.offsetTop - 15,
             delay: 600,
           })
         }
@@ -64,8 +62,8 @@ export default compose(
       timeout.clear('chatLogSectionAnimate')
     },
   })
-)(({ animate, clickActionsExist, logSection, hide, hideAll, onClick, nothingSelected, setContainerRef }) => (
-  <Container ref={setContainerRef}>
+)(({ animate, containerRef, clickActionsExist, logSection, hide, hideAll, onClick, nothingSelected }) => (
+  <Container ref={containerRef}>
     {logSection.logs.map((log, index) =>
       log.type === 'message' ? (
         /* eslint-disable react/no-array-index-key */
@@ -85,3 +83,11 @@ export default compose(
     )}
   </Container>
 ))
+
+const ChatLogSection1 = props => {
+  const containerRef = useRef()
+
+  return <ChatLogSection {...props} containerRef={containerRef} />
+}
+
+export default ChatLogSection1

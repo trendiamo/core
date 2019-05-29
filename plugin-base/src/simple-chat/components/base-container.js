@@ -48,14 +48,16 @@ export default compose(
   withHandlers({
     handleWheel: ({ contentRef }) => event => {
       autoScroll.stop()
-      const content = contentRef()
       const delta = event.deltaY || event.detail || event.wheelDelta
 
-      if (delta < 0 && content.scrollTop == 0) {
+      if (delta < 0 && contentRef.current.scrollTop == 0) {
         event.preventDefault()
       }
 
-      if (delta > 0 && content.scrollHeight - content.clientHeight - content.scrollTop <= 1) {
+      if (
+        delta > 0 &&
+        contentRef.current.scrollHeight - contentRef.current.clientHeight - contentRef.current.scrollTop <= 1
+      ) {
         event.preventDefault()
       }
     },

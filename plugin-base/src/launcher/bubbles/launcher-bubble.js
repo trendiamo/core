@@ -1,11 +1,10 @@
 import LauncherBubbleFrame from './launcher-bubble-frame'
-import React from 'react'
-import withRef from 'ext/with-ref'
+import React, { useRef } from 'react'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { ChatBubbleBase, Container } from './components'
 import { timeout } from 'ext'
 
-const LauncherBubbleBase = ({
+const LauncherBubble = ({
   animation,
   bubble,
   disappear,
@@ -15,8 +14,8 @@ const LauncherBubbleBase = ({
   offset,
   onClick,
   position,
-  setTextWidthRef,
   textWidth,
+  textWidthRef,
 }) => (
   <LauncherBubbleFrame
     animation={animation}
@@ -30,28 +29,26 @@ const LauncherBubbleBase = ({
     textWidth={textWidth}
   >
     <Container onClick={onClick}>
-      <ChatBubbleBase dangerouslySetInnerHTML={{ __html: bubble.message }} ref={setTextWidthRef} />
+      <ChatBubbleBase dangerouslySetInnerHTML={{ __html: bubble.message }} ref={textWidthRef} />
     </Container>
   </LauncherBubbleFrame>
 )
 
-const LauncherBubble = compose(
+const LauncherBubble1 = compose(
   withState('timeEnded', 'setTimeEnded', false),
   withState('hiddenForContent', 'setHiddenForContent', false),
   withState('animation', 'setAnimation', null),
   withState('textWidth', 'setTextWidth', 0),
   withState('elevation', 'setElevation', false),
-  withRef('getTextWidthRef', 'setTextWidthRef'),
   withProps(({ extraBubble }) => ({
     bubbleTimeoutId: `chatBubble${extraBubble && 'Extra'}`,
   })),
   withHandlers({
-    changeTextWidth: ({ setTextWidth, getTextWidthRef }) => () => {
-      const textWidthRef = getTextWidthRef()
-      if (!textWidthRef) return
-      setTextWidth(textWidthRef.offsetWidth)
-      textWidthRef.style.transform = `translate(-${Math.floor(textWidthRef.offsetWidth / 2)}px, 0)`
-      textWidthRef.style.opacity = 1
+    changeTextWidth: ({ setTextWidth, textWidthRef }) => () => {
+      if (!textWidthRef.current) return
+      setTextWidth(textWidthRef.current.offsetWidth)
+      textWidthRef.current.style.transform = `translate(-${Math.floor(textWidthRef.current.offsetWidth / 2)}px, 0)`
+      textWidthRef.current.style.opacity = 1
     },
   }),
   withHandlers({
@@ -154,6 +151,12 @@ const LauncherBubble = compose(
     },
   }),
   branch(({ hiddenForContent, bubble, timeEnded }) => !bubble.message || hiddenForContent || timeEnded, renderNothing)
-)(LauncherBubbleBase)
+)(LauncherBubble)
 
-export default LauncherBubble
+const LauncherBubble2 = props => {
+  const textWidthRef = useRef()
+
+  return <LauncherBubble1 {...props} textWidthRef={textWidthRef} />
+}
+
+export default LauncherBubble2
