@@ -2,14 +2,15 @@ import AppBarButton from 'shared/app-bar-button'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CircularProgress from 'app/layout/loading'
 import isEmpty from 'lodash.isempty'
+import Pagination, { extractCountFromHeaders } from 'shared/pagination'
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useCancelable from 'ext/hooks/use-cancelable'
 import { apiRequest } from 'utils'
-import { Checkbox, Table, TableBody, TablePagination } from '@material-ui/core'
+import { Checkbox, Table, TableBody } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { parse, stringify } from 'query-string'
+import { parse } from 'query-string'
 import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
@@ -27,19 +28,6 @@ const Actions = ({ buttonText, createRoute }) => (
   </AppBarButton>
 )
 
-const extractCountFromHeaders = headers =>
-  parseInt(
-    headers
-      .get('content-range')
-      .split('/')
-      .pop(),
-    10
-  )
-
-const backIconButtonProps = {
-  'aria-label': 'Previous Page',
-}
-
 const EnhancedList = ({
   api,
   BlankState,
@@ -48,7 +36,6 @@ const EnhancedList = ({
   defaultSorting,
   canEditResource,
   helpStep,
-  history,
   highlightInactive,
   location,
   ResourceRow,
@@ -163,18 +150,9 @@ const EnhancedList = ({
     [dispatch]
   )
 
-  const handleChangePage = useCallback(
-    (event, newPage) => {
-      let currentSearch = parse(location.search)
-      delete currentSearch.page
-      const newSearch = newPage === 0 ? currentSearch : { ...currentSearch, page: newPage + 1 }
-      const uri =
-        Object.keys(newSearch).length === 0 ? location.pathname : `${location.pathname}?${stringify(newSearch)}`
-      history.push(uri)
-      dispatch({ type: 'handleChangePage' })
-    },
-    [history, location.pathname, location.search]
-  )
+  const dispatchChangePage = useCallback(type => {
+    dispatch({ type })
+  }, [])
 
   const cancelable = useCancelable()
 
@@ -273,18 +251,13 @@ const EnhancedList = ({
             ))}
         </TableBody>
       </Table>
-      <TablePagination
-        backIconButtonProps={backIconButtonProps}
-        component="div"
-        count={state.recordsCount}
-        nextIconButtonProps={{
-          'aria-label': 'Next Page',
-        }}
-        onChangePage={handleChangePage}
+      <Pagination
+        isDispatched
         onChangeRowsPerPage={handleChangeRowsPerPage}
         page={state.page}
         rowsPerPage={state.rowsPerPage}
-        rowsPerPageOptions={[]}
+        setPage={dispatchChangePage}
+        totalRecordsCount={state.recordsCount}
       />
     </Section>
   )

@@ -4,10 +4,11 @@ import Button from 'shared/button'
 import CircularProgress from 'app/layout/loading'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import HostnamesForm from 'shared/hostnames-form'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import { apiAccount, apiAccountCreate, apiRequest, apiSignOut, atLeastOneNonBlankCharInputProps } from 'utils'
+import { apiAccountCreate, apiAccountList, apiRequest, apiSignOut, atLeastOneNonBlankCharInputProps } from 'utils'
+import { extractCountFromHeaders } from 'shared/pagination'
 import { FormControl, IconButton, List, TextField, Tooltip } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -52,6 +53,8 @@ const signOutButtonClick = async () => {
 const Admin = () => {
   const { enqueueSnackbar } = useSnackbar()
 
+  const [page, setPage] = useState(0)
+  const [totalAccountsCount, setTotalAccountsCount] = useState(0)
   const [accounts, setAccounts] = useState({})
   const [isNewAccount, setIsNewAccount] = useState(false)
   const [accountForm, setAccountForm] = useState({ name: '', websitesAttributes: [{ hostnames: [''] }] })
@@ -115,15 +118,25 @@ const Admin = () => {
     [accountForm, enqueueSnackbar]
   )
 
-  useEffect(
+  const query = useMemo(
+    () => ({
+      range: JSON.stringify([page * 10, (page + 1) * 10 - 1]),
+    }),
+    [page]
+  )
+
+  const fetchRecords = useCallback(
     () => {
       ;(async () => {
-        const { json, requestError } = await apiRequest(apiAccount, [])
+        const { json, requestError, response } = await apiRequest(apiAccountList, [query])
         requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(json)
+        setTotalAccountsCount(extractCountFromHeaders(response.headers))
       })()
     },
-    [enqueueSnackbar]
+    [enqueueSnackbar, query]
   )
+
+  useEffect(fetchRecords, [fetchRecords])
 
   if (!(accounts && accounts.length)) return <CircularProgress />
 
@@ -163,7 +176,13 @@ const Admin = () => {
           </form>
         ) : (
           <List component="nav">
-            <AccountsList accounts={accounts} setAccounts={setAccounts} />
+            <AccountsList
+              accounts={accounts}
+              fetchRecords={fetchRecords}
+              page={page}
+              setPage={setPage}
+              totalAccountsCount={totalAccountsCount}
+            />
           </List>
         )}
       </Section>

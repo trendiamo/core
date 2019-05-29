@@ -4,6 +4,7 @@ import Dialog from 'shared/dialog'
 import Link from 'shared/link'
 import ListItemText from '@material-ui/core/ListItemText'
 import MUIListItem from '@material-ui/core/ListItem'
+import Pagination from 'shared/pagination'
 import React, { useCallback, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
@@ -61,7 +62,7 @@ const ListItem = ({ enterAccount, account, hostnames }) => (
   </ListItemContainer>
 )
 
-const Account = ({ accounts, account, setAccounts }) => {
+const Account = ({ account, fetchRecords }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
   const enterAccount = useCallback(() => auth.setAdminSessionAccount(account), [account])
@@ -79,11 +80,10 @@ const Account = ({ accounts, account, setAccounts }) => {
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (json) enqueueSnackbar(json.message, { variant: 'success' })
-        const filteredAccounts = accounts.filter(accountElement => accountElement.id !== account.id)
-        setAccounts(filteredAccounts)
+        fetchRecords()
       })()
     },
-    [account.id, accounts, enqueueSnackbar, setAccounts]
+    [account.id, enqueueSnackbar, fetchRecords]
   )
 
   const handleDialogButtonClose = useCallback(() => {
@@ -112,8 +112,13 @@ const Account = ({ accounts, account, setAccounts }) => {
   )
 }
 
-const AccountsList = ({ accounts, setAccounts }) =>
-  accounts &&
-  accounts.map(account => <Account account={account} accounts={accounts} key={account.id} setAccounts={setAccounts} />)
+const AccountsList = ({ accounts, page, setPage, totalAccountsCount, fetchRecords }) => {
+  return (
+    <>
+      {accounts && accounts.map(account => <Account account={account} fetchRecords={fetchRecords} key={account.id} />)}
+      <Pagination page={page} setPage={setPage} totalRecordsCount={totalAccountsCount} />
+    </>
+  )
+}
 
 export default AccountsList
