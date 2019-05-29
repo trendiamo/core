@@ -3,10 +3,11 @@ import ChatLogUi from './chat-log-ui'
 import Container from './components/base-container'
 import Cover from './components/cover'
 import ProgressBar from './components/progress-bar'
-import React from 'react'
-import withRef from 'ext/with-ref'
+import React, { useRef } from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 import { CtaButton, ScrollLock } from 'shared'
+
+const finalCoverHeight = 90
 
 const SimpleChat = ({
   animateOpacity,
@@ -18,8 +19,7 @@ const SimpleChat = ({
   ChatBase,
   backButtonLabel,
   onToggleContent,
-  getContentRef,
-  setContentRef,
+  contentRef,
   handleScroll,
   headerConfig,
   ctaButton,
@@ -43,7 +43,7 @@ const SimpleChat = ({
   FlowBackButton,
   chatLogCallbacks,
 }) => (
-  <Container animateOpacity={animateOpacity} contentRef={getContentRef}>
+  <Container animateOpacity={animateOpacity} contentRef={contentRef}>
     <ScrollLock>
       <Cover
         assessment={assessment}
@@ -66,7 +66,7 @@ const SimpleChat = ({
         bridge={bridge}
         chatLogCallbacks={chatLogCallbacks}
         clickActions={clickActions}
-        contentRef={getContentRef}
+        contentRef={contentRef}
         data={data}
         lazyLoadActive={lazyLoadActive}
         lazyLoadingCount={lazyLoadingCount}
@@ -74,7 +74,7 @@ const SimpleChat = ({
         onToggleContent={onToggleContent}
         persona={persona}
         products={products}
-        setContentRef={setContentRef}
+        ref={contentRef}
         setLazyLoadActive={setLazyLoadActive}
         storeLog={storeLog}
         touch={touch}
@@ -95,15 +95,14 @@ const SimpleChat = ({
   </Container>
 )
 
-export default compose(
-  withRef('getContentRef', 'setContentRef'),
+const SimpleChat1 = compose(
   withState('coverMinimized', 'setCoverMinimized', ({ coverIsMinimized }) => coverIsMinimized),
   withState('touch', 'setTouch', true),
   withState('lazyLoadActive', 'setLazyLoadActive', false),
   withHandlers({
     handleScroll: ({
       setCoverMinimized,
-      getContentRef,
+      contentRef,
       coverMinimized,
       coverIsMinimized,
       setTouch,
@@ -123,8 +122,7 @@ export default compose(
       }
       if (scrollTop > 0 && !coverMinimized && touch) {
         const pluginWindowHeight = window.innerWidth >= 600 ? Math.min(window.innerHeight, 500) : window.innerHeight
-        const pluginFullHeight = getContentRef().scrollHeight
-        const finalCoverHeight = 90
+        const pluginFullHeight = contentRef.current.scrollHeight
         if (pluginWindowHeight - pluginFullHeight <= finalCoverHeight) {
           setCoverMinimized(true)
         }
@@ -132,3 +130,11 @@ export default compose(
     },
   })
 )(SimpleChat)
+
+const SimpleChat2 = props => {
+  const contentRef = useRef()
+
+  return <SimpleChat1 {...props} contentRef={contentRef} />
+}
+
+export default SimpleChat2
