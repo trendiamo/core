@@ -1,23 +1,25 @@
 // Taken from react-router, simplified, and added a wait for onChange
 import isEqual from 'lodash.isequal'
 import { cloneElement } from 'react'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { matchUrl } from 'tools'
 import { timeout } from 'ext'
+import { useCallback, useEffect, useReducer } from 'react'
 
-function assign(obj, props) {
+const assign = (obj, props) => {
   for (let i in props) {
     obj[i] = props[i]
   }
   return obj
 }
 
-const getMatchingChildren = (children, url) =>
-  (Array.isArray(children) ? children : [children])
+const findMatchingChild = (route, children) => {
+  if (!route) return null
+
+  const matchingChildren = (Array.isArray(children) ? children : [children])
     .map(vnode => {
-      let matches = matchUrl(url, vnode.props.path)
+      let matches = matchUrl(route, vnode.props.path)
       if (matches) {
-        let newProps = { matches, url }
+        let newProps = { matches, url: route }
         assign(newProps, matches)
         delete newProps.ref
         delete newProps.key
@@ -26,58 +28,84 @@ const getMatchingChildren = (children, url) =>
     })
     .filter(Boolean)
 
-const Router = compose(
-  withState('Component', 'setComponent', null),
-  withState('previousRoute', 'setPreviousRoute', '/'),
-  withHandlers({
-    routeTo: ({ setComponent, setPreviousRoute }) => (route, newComponent) => {
-      setPreviousRoute(route)
-      setComponent(newComponent)
-    },
-    getNewComponent: ({ children }) => route => {
-      const matchingChildren = route && getMatchingChildren(children, route)
-      return matchingChildren ? matchingChildren[0] : null
-    },
-  }),
-  withHandlers({
-    attemptRouteTo: ({ Component, routeTo, onChange, previousRoute, setComponent, getNewComponent }) => (
-      route,
-      isFirstTime
-    ) => {
-      if (!isFirstTime && route === previousRoute) return
-      const newComponent = getNewComponent(route)
-      if (onChange) {
-        const duration = onChange(previousRoute, route)
-        if (Component) {
-          setComponent(cloneElement(Component, { isLeaving: true }))
-        }
+  return matchingChildren ? matchingChildren[0] : null
+}
+
+const Router = ({ children, history, onChange }) => {
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      if (action.type === 'merge') {
+        return { ...state, ...action.value }
+      } else if (action.type === 'attemptRouteTo') {
+        if (action.route === state.previousRoute && !state.isFirstTime) return state
+        if (!onChange) return state
+
+        const NewComponent = findMatchingChild(action.route, children)
+        const duration = onChange(state.previousRoute, action.route)
         timeout.set(
           'routeChange',
-          () => {
-            routeTo(route, newComponent)
-          },
+          () =>
+            dispatch({
+              type: 'merge',
+              value: { previousRoute: action.route, Component: NewComponent, isFirstTime: false },
+            }),
           duration || 10
         )
+        if (state.Component) {
+          return { ...state, Component: cloneElement(state.Component, { isLeaving: true }), isFirstTime: false }
+        } else {
+          return state
+        }
+      } else if (action.type === 'checkForNewComponentProps') {
+        const NewComponent = findMatchingChild(state.previousRoute, action.children)
+        if (state.Component && NewComponent && !isEqual(state.Component.props, NewComponent.props)) {
+          return { ...state, Component: cloneElement(NewComponent), isFirstTime: false }
+        } else {
+          return state
+        }
+      } else {
+        throw new Error()
       }
     },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { history, attemptRouteTo } = this.props
-      attemptRouteTo(history.location, true)
-      // we don't remove this listener in componentWillUnmount because preact doesn't fire it inside iframes
-      // instead we do history.removeListeners in the componentWillUnmount of Content
+    {
+      Component: null,
+      isFirstTime: true,
+      previousRoute: '/',
+    }
+  )
+
+  const attemptRouteTo = useCallback(route => {
+    dispatch({ type: 'attemptRouteTo', route })
+  }, [])
+
+  const checkForNewComponentProps = useCallback(
+    () => {
+      dispatch({ type: 'checkForNewComponentProps', children })
+    },
+    [children]
+  )
+
+  useEffect(
+    () => {
+      attemptRouteTo(history.location)
       history.addListener(attemptRouteTo)
-    },
-    componentDidUpdate() {
-      const { Component, previousRoute, getNewComponent, setComponent } = this.props
-      const newComponent = getNewComponent(previousRoute)
-      if (Component && newComponent && !isEqual(Component.props, newComponent.props)) {
-        setComponent(cloneElement(newComponent))
+      return () => {
+        history.removeListener(attemptRouteTo)
+        timeout.clear('routeChange')
       }
     },
-  })
-)(({ Component }) => Component)
+    [attemptRouteTo, history]
+  )
+
+  useEffect(
+    () => {
+      checkForNewComponentProps()
+    },
+    [checkForNewComponentProps]
+  )
+
+  return state ? state.Component : null
+}
 
 export { matchUrl, Router }
 export default Router

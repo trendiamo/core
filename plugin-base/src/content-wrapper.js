@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from './routes'
 import styled from 'styled-components'
-import { history, timeout, transition } from 'ext'
+import { timeout, transition } from 'ext'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -19,9 +19,7 @@ const ContentWrapper = ({ children, ...props }) => {
 
   useEffect(() => {
     return () => {
-      history.removeListeners()
       timeout.clear('contentWrapper')
-      timeout.clear('routeChange')
       transition.clear()
     }
   }, [])

@@ -7,9 +7,6 @@ const history = {
   removeListener(callback) {
     this.callbacks = this.callbacks.filter(e => e !== callback)
   },
-  removeListeners() {
-    this.callbacks = []
-  },
   replace(url) {
     this.location = url
     this.callbacks.forEach(callback => callback(url))
