@@ -4,7 +4,8 @@ module Api
       def index
         @accounts = Account.order("name ASC")
         authorize @accounts
-        render json: @accounts
+        chain = pagination(@accounts)
+        render json: chain
       end
 
       def create

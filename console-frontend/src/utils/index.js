@@ -1,7 +1,7 @@
 import auth from 'auth'
 import routes from 'app/routes'
 import {
-  apiAccount,
+  apiAccountList,
   apiAccountCreate,
   apiAccountDestroy,
   apiFlowsAutocomplete,
@@ -55,7 +55,7 @@ import { extractErrors } from 'utils/shared'
 
 export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn }
 export {
-  apiAccount,
+  apiAccountList,
   apiAccountCreate,
   apiAccountDestroy,
   apiShowcaseCreate,
