@@ -1,8 +1,8 @@
 import CloseButton from './close-button'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
-import { animateOnMount, Frame, history, positioning, timeout, transition } from 'plugin-base'
-import { compose, lifecycle } from 'recompose'
+import { animateOnMount, Frame, positioning } from 'plugin-base'
+import { compose } from 'recompose'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 
@@ -39,14 +39,6 @@ const ContentFrameContainer = animateOnMount(styled(ContentFrameContainerBase)`
 const IFrame = compose(
   withHotkeys({
     [escapeKey]: ({ onToggleContent }) => onToggleContent,
-  }),
-  lifecycle({
-    componentWillUnmount() {
-      history.removeListeners()
-      timeout.clear('contentWrapper')
-      timeout.clear('routeChange')
-      transition.clear()
-    },
   })
 )(styled(Frame).attrs({
   title: 'Frekkls Content',

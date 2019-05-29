@@ -41,7 +41,6 @@ export default compose(
       if (window.__trndInitialPath) history.replace(window.__trndInitialPath)
     },
     componentWillUnmount() {
-      history.removeListeners()
       document.body.style.overflow = ''
     },
   }),
