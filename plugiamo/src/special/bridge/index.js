@@ -1,4 +1,5 @@
 import AppBase from 'app/base'
+import ChatBase from 'app/content/scripted-chat/chat-base'
 import chatLogCallbacks from 'shared/chat-log-callbacks'
 import ChatModals from 'shared/chat-modals'
 import data from './data'
@@ -30,6 +31,7 @@ const Plugin = ({
         <SimpleChat
           backButtonLabel={getFrekklsConfig().i18n.backButton}
           bridge
+          ChatBase={ChatBase}
           chatLogCallbacks={chatLogCallbacks}
           clickActions={clickActions}
           coverIsMinimized={module.header.minimized}

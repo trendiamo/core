@@ -30,7 +30,6 @@ const CoverSimple = ({
     <FlexDiv>
       <CoverImg
         src={
-          persona &&
           persona.profilePic &&
           persona.profilePic.url &&
           imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })

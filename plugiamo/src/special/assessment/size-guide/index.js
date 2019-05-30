@@ -1,5 +1,6 @@
 import AppBase from 'app/base'
 import blacklistTags from './blacklist-tags'
+import ChatBase from 'app/content/scripted-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
 import data from 'special/assessment/data'
 import getFrekklsConfig from 'frekkls-config'
@@ -34,7 +35,8 @@ const Plugin = ({
       Component={
         <SimpleChat
           backButtonLabel={getFrekklsConfig().i18n.backButton}
-          bridge
+          ChatBase={ChatBase}
+          chatBaseProps={{ assessment: true }}
           clickActions={clickActions}
           data={module}
           setPluginState={setPluginState}

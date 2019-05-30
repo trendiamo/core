@@ -1,4 +1,6 @@
 import ChatBackground from 'simple-chat/components/chat-background'
+import ChatContent from 'simple-chat/components/chat-content'
+import ChatLogUi from 'simple-chat/chat-log-ui'
 import ContentWrapper from 'content-wrapper'
 import Launcher from 'launcher'
 import LauncherBubbleFrame from 'launcher/bubbles/launcher-bubble-frame'
@@ -23,10 +25,13 @@ import {
 } from 'tools'
 import { history, Router, timeout, transition, typeText, withTextTyping } from 'ext'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose, IconPlayButton } from 'icons'
+import { SpotlightItem } from 'showcase/components'
 
 export {
   animate,
   BelowCover,
+  ChatContent,
+  ChatLogUi,
   Cover,
   CoverImg,
   imgixUrl,
@@ -58,6 +63,7 @@ export {
   Frame,
   animateOnMount,
   SimpleChat,
+  SpotlightItem,
   convertLogs,
   extractYoutubeId,
   listeners,

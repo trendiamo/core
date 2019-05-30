@@ -5,12 +5,20 @@ import mixpanel from 'ext/mixpanel'
 import { assessmentHack, rememberPersona } from 'special/assessment/utils'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
+import { h } from 'preact'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
 import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
-import { routes } from 'plugin-base'
+import { routes, SpotlightItem } from 'plugin-base'
 
-const convertSpotlights = spotlights =>
-  spotlights.map(spotlight => ({
+const assessmentSpotlight = {
+  persona: {
+    name: 'Style Assistent',
+    description: 'In wenigen Schritten finden was zu dir passt!',
+  },
+}
+
+const convertSpotlights = (spotlights, onSpotlightClick) => {
+  const results = spotlights.map(spotlight => ({
     ...spotlight,
     persona: {
       ...spotlight.persona,
@@ -25,11 +33,16 @@ const convertSpotlights = spotlights =>
     },
   }))
 
-const assessmentSpotlight = {
-  persona: {
-    name: 'Style Assistent',
-    description: 'In wenigen Schritten finden was zu dir passt!',
-  },
+  if (assessmentHack()) {
+    return [
+      {
+        Component: <SpotlightItem assessment onClick={onSpotlightClick} spotlight={assessmentSpotlight} />,
+      },
+      ...results,
+    ]
+  }
+
+  return results
 }
 
 const Showcase = compose(
@@ -77,9 +90,6 @@ const Showcase = compose(
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
     showcase: data.showcase,
-    spotlights: data.showcase && convertSpotlights(data.showcase.spotlights),
-    subtitle: data.showcase && emojify(data.showcase.subtitle),
-    title: data.showcase && emojify(data.showcase.title),
   })),
   withHandlers({
     routeToShowcase: ({ showcase }) => () => {
@@ -130,12 +140,16 @@ const Showcase = compose(
       )
     },
   }),
+  withProps(({ data, onSpotlightClick }) => ({
+    spotlights: data.showcase && convertSpotlights(data.showcase.spotlights, onSpotlightClick),
+    subtitle: data.showcase && emojify(data.showcase.subtitle),
+    title: data.showcase && emojify(data.showcase.title),
+  })),
   withProps(({ onSpotlightClick, onProductClick }) => ({
     callbacks: {
       onSpotlightClick,
       onProductClick,
     },
-    assessmentSpotlight: assessmentHack() && assessmentSpotlight,
   }))
 )(ShowcaseBase)
 

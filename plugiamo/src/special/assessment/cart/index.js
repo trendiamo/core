@@ -1,4 +1,5 @@
 import AppBase from 'app/base'
+import ChatBase from 'app/content/scripted-chat/chat-base'
 import data from 'special/assessment/data'
 import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics from 'ext/google-analytics'
@@ -27,7 +28,8 @@ const Plugin = ({
     Component={
       <SimpleChat
         backButtonLabel={getFrekklsConfig().i18n.backButton}
-        bridge
+        ChatBase={ChatBase}
+        chatBaseProps={{ assessment: true }}
         clickActions={clickActions}
         ctaButton={module.ctaButton}
         data={module}
