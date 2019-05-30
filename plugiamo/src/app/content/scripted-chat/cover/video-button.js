@@ -1,8 +1,8 @@
-import React from 'react'
 import styled from 'styled-components'
 import VideoIcon from 'icons/ic-play.svg'
 import { compose, withHandlers, withProps, withState } from 'recompose'
-import { extractYoutubeId } from 'tools'
+import { extractYoutubeId } from 'plugin-base'
+import { h } from 'preact'
 
 const VideoButtonContainer = styled.div`
   font-size: 14px;

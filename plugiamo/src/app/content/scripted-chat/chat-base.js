@@ -1,6 +1,7 @@
+import Cover from './cover'
 import CtaButton from 'special/bridge/cta-button'
 import ProgressBar from 'special/assessment/progress-bar'
-import { ChatContent, ChatLogUi, SimpleChatCover } from 'plugin-base'
+import { ChatContent, ChatLogUi } from 'plugin-base'
 import { Fragment, h } from 'preact'
 
 const ChatBase = ({
@@ -35,7 +36,7 @@ const ChatBase = ({
   touch,
 }) => (
   <Fragment>
-    <SimpleChatCover
+    <Cover
       assessment={assessment}
       backButtonLabel={backButtonLabel}
       bridge={bridge}
