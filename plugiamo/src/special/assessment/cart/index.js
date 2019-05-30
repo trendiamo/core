@@ -1,6 +1,7 @@
 import AppBase from 'app/base'
 import data from 'special/assessment/data'
 import getFrekklsConfig from 'frekkls-config'
+import googleAnalytics from 'ext/google-analytics'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
 import withChatActions from 'ext/recompose/with-chat-actions'
@@ -21,7 +22,6 @@ const Plugin = ({
   clickActions,
   showingBubbles,
   setIsGAReady,
-  googleAnalytics,
 }) => (
   <AppBase
     Component={
@@ -36,7 +36,6 @@ const Plugin = ({
       />
     }
     data={module}
-    googleAnalytics={googleAnalytics}
     isUnmounting={isUnmounting}
     Launcher={showingLauncher && Launcher}
     launcherPulsating
@@ -58,8 +57,12 @@ export default compose(
   branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
-  withState('showingLauncher', 'setShowingLauncher', false),
-  withState('showingBubbles', 'setShowingBubbles', false),
+  withState('showingLauncher', 'setShowingLauncher', () =>
+    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
+  ),
+  withState('showingBubbles', 'setShowingBubbles', () =>
+    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
+  ),
   withChatActions(),
   lifecycle({
     componentDidMount() {
@@ -82,14 +85,7 @@ export default compose(
       if (autoOpen) setShowingContent(true)
     },
     componentDidUpdate(prevProps) {
-      const { showingContent, isGAReady, googleAnalytics, setShowingLauncher, setShowingBubbles } = this.props
-      if (!prevProps.isGAReady && isGAReady) {
-        const variation = googleAnalytics.getVariation()
-        if (variation !== 'absent') {
-          setShowingLauncher(true)
-          setShowingBubbles(true)
-        }
-      }
+      const { showingContent } = this.props
       if (showingContent === prevProps.showingContent) return
 
       if (getScrollbarWidth() > 0) {

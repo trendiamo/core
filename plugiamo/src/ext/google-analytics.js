@@ -1,54 +1,83 @@
-import ReactGA from 'react-ga'
 import { GApropertyId, GOcontainerId, GOexperimentId } from 'config'
 
-const loadGA = contentDocument =>
+const loadGAFrame = () => {
+  const iframe = document.createElement('iframe')
+  iframe.title = 'loading-ga-frame'
+  iframe.style.width = '0'
+  iframe.style.height = '0'
+  iframe.style.border = '0'
+  iframe.style.display = 'none'
+  iframe.style.position = 'absolute'
+  document.body.appendChild(iframe)
+  return { promises: [loadGA(iframe), loadGO(iframe)], iframe }
+}
+
+const loadGA = iframe =>
   new Promise((resolve, reject) => {
-    const script = contentDocument.createElement('script')
+    const script = iframe.contentDocument.createElement('script')
+    script.src = 'https://www.google-analytics.com/analytics.js'
+    script.async = true
+    script.onload = resolve
+    script.onerror = reject
+    iframe.contentWindow['GoogleAnalyticsObject'] = 'ga'
+    iframe.contentWindow['ga'] =
+      iframe.contentWindow['ga'] ||
+      function() {
+        ;(iframe.contentWindow['ga'].q = iframe.contentWindow['ga'].q || []).push(
+          iframe.contentWindow,
+          iframe.contentDocument,
+          'script',
+          script.src,
+          'ga'
+        )
+      }
+    iframe.contentWindow['ga'].l = 1 * new Date()
+    iframe.contentDocument.body.appendChild(script)
+  })
+
+const loadGO = iframe =>
+  new Promise((resolve, reject) => {
+    const script = iframe.contentDocument.createElement('script')
     script.src = `https://www.google-analytics.com/cx/api.js?experiment=${GOexperimentId}`
     script.async = true
     script.onload = resolve
     script.onerror = reject
-    contentDocument.body.appendChild(script)
+    iframe.contentDocument.body.appendChild(script)
   })
 
-const frekklsGA = {
+const googleAnalytics = {
+  active: false,
+  cxApi: null,
+  ga(...args) {
+    return document.querySelector('[title="loading-ga-frame"]').contentWindow.ga(...args)
+  },
   iframeRef: null,
-  initialized: false,
+  init(iframe) {
+    this.iframeRef = iframe
+    this.active = true
+    this.initGA()
+    this.initGO()
+  },
   initGA() {
-    if (!GApropertyId || localStorage.getItem('trnd-exp-original')) return Promise.resolve()
-    ReactGA.initialize(GApropertyId, {
-      optimize_id: GOcontainerId,
-      gaOptions: {
-        name: 'frekkls_tracker',
-        cookieDomain: 'auto',
-        cookieName: '_ga_frekkls',
-        storeGac: true,
-      },
+    if (!GApropertyId || localStorage.getItem('trnd-exp-original')) return
+    this.ga('create', GApropertyId, 'auto', {
+      name: 'frekkls_tracker',
+      cookieName: '_ga_frekkls',
+      storeGac: true,
     })
-    this.initialized = true
-    this.pageView()
+    this.ga('frekkls_tracker.set', 'checkProtocolTask', null)
+  },
+  initGO() {
+    if (!GOexperimentId || !GOcontainerId) return Promise.resolve()
+    this.cxApi = this.iframeRef.contentWindow.cxApi
+    const GOvariationId = this.cxApi.chooseVariation()
+    this.cxApi.setChosenVariation(GOvariationId, GOexperimentId)
+    this.ga('frekkls_tracker.set', 'exp', `${GOexperimentId}.${GOvariationId}`)
   },
   event(fieldsObject) {
-    if (!this.initialized) return
-    if (!(this.iframeRef && this.iframeRef.contentWindow.cxApi)) {
-      const GOvariationId = localStorage.getItem('trnd-exp-var')
-      GOvariationId && ReactGA.ga()('frekkls_tracker.set', 'exp', `${GOexperimentId}.${GOvariationId}`)
-    }
-    ReactGA.ga()('frekkls_tracker.send', fieldsObject)
-  },
-  initGO(iframeRef) {
-    this.iframeRef = iframeRef
-    if (!GOexperimentId || !GOcontainerId || !this.initialized) return Promise.resolve()
-    const _this = this
-    return loadGA(iframeRef.contentDocument).then(() => {
-      const GOvariationId = _this.iframeRef.contentWindow.cxApi.chooseVariation()
-      localStorage.setItem('trnd-exp-var', GOvariationId)
-      _this.iframeRef.contentWindow.cxApi.setChosenVariation(GOvariationId, GOexperimentId)
-      ReactGA.ga()('frekkls_tracker.set', 'exp', `${GOexperimentId}.${GOvariationId}`)
-    })
+    this.ga('frekkls_tracker.send', fieldsObject)
   },
   pageView() {
-    if (!this.initialized) return
     this.event({
       hitType: 'pageview',
       eventCategory: 'Page',
@@ -58,11 +87,11 @@ const frekklsGA = {
     })
   },
   getVariation() {
-    if (!this.initialized) return
-    const pluginPresence =
-      this.iframeRef.contentWindow.cxApi.getChosenVariation(GOexperimentId) === 1 ? 'absent' : 'present'
+    const variation = this.cxApi.getChosenVariation(GOexperimentId)
+    const pluginPresence = variation === 1 ? 'absent' : 'present'
     return pluginPresence
   },
 }
 
-export default frekklsGA
+export { loadGAFrame }
+export default googleAnalytics

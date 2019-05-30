@@ -3,6 +3,7 @@ import blacklistTags from './blacklist-tags'
 import ChatModals from 'shared/chat-modals'
 import data from 'special/assessment/data'
 import getFrekklsConfig from 'frekkls-config'
+import googleAnalytics from 'ext/google-analytics'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
 import withChatActions from 'ext/recompose/with-chat-actions'
@@ -26,7 +27,6 @@ const Plugin = ({
   showingLauncher,
   showingBubbles,
   setIsGAReady,
-  googleAnalytics,
 }) => (
   <div>
     <ChatModals flowType={module.flowType} {...modalsProps} />
@@ -42,7 +42,6 @@ const Plugin = ({
       }
       data={module}
       disappear={disappear}
-      googleAnalytics={googleAnalytics}
       isUnmounting={isUnmounting}
       Launcher={showingLauncher && Launcher}
       onToggleContent={onToggleContent}
@@ -65,8 +64,12 @@ export default compose(
   }),
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
-  withState('showingLauncher', 'setShowingLauncher', false),
-  withState('showingBubbles', 'setShowingBubbles', false),
+  withState('showingLauncher', 'setShowingLauncher', () =>
+    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
+  ),
+  withState('showingBubbles', 'setShowingBubbles', () =>
+    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
+  ),
   withState('product', 'setProduct', null),
   withState('disappear', 'setDisappear', false),
   lifecycle({
@@ -86,15 +89,7 @@ export default compose(
       })
     },
     componentDidUpdate(prevProps) {
-      const { showingContent, googleAnalytics, isGAReady, setShowingLauncher, setShowingBubbles } = this.props
-      if (!prevProps.isGAReady && isGAReady) {
-        const variation = googleAnalytics.getVariation()
-        if (variation !== 'absent') {
-          setShowingLauncher(true)
-          setShowingBubbles(true)
-        }
-      }
-
+      const { showingContent } = this.props
       if (showingContent === prevProps.showingContent) return
 
       if (getScrollbarWidth() > 0) {
