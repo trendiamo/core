@@ -1,6 +1,7 @@
 /coverage
 /build
 /node_modules
+/plugin-base
 
 .DS_Store
 .env

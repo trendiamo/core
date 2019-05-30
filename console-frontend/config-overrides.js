@@ -7,5 +7,8 @@ module.exports = function override(config) {
     }
   })
 
+  // Remove the ModuleScopePlugin to be able to include files outside this project's /src
+  config.resolve.plugins.length = 1
+
   return config
 }

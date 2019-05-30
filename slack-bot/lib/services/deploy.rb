@@ -37,7 +37,7 @@ SH
 PLUGIN_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/plugiamo && \
   yarn install --silent --no-progress && \
-  cd ../plugin-base && yarn build && cd ../plugiamo && yarn add ../plugin-base && rm -rf node_modules/plugin-base/node_modules && \
+  cd ../plugin-base && yarn build && cd ../plugiamo && mkdir -p plugin-base && cp ../plugin-base/dist/plugin-base.js plugin-base/ && \
   cp #{ENV['PLUGIN_ENV_FILE']} . && \
   mkdir -p ~/.aws && \
   ([ -f ~/.aws/credentials ] || cp #{ENV['AWS_CREDENTIALS_FILE']} ~/.aws/credentials) && \
@@ -50,7 +50,7 @@ SH
 CONSOLE_FRONTEND_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/console-frontend && \
   yarn install --silent --no-progress && \
-  cd ../plugin-base && yarn build && cd ../console-frontend && yarn add ../plugin-base && rm -rf node_modules/plugin-base/node_modules && \
+  cd ../plugin-base && yarn build && cd ../console-frontend && mkdir -p plugin-base && cp ../plugin-base/dist/plugin-base.js plugin-base/ && \
   bin/deploy 'ssh -o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}'
 SH
 
