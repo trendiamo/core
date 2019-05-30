@@ -23,7 +23,7 @@ const PictureMessage = ({ onPictureClick, url }) => {
 
 export default compose(
   withProps(({ picUrl }) => ({
-    url: picUrl && imgixUrl(picUrl, { fit: 'crop', w: 180, h: 260 }),
+    url: picUrl && imgixUrl(picUrl, { fit: 'crop', w: 260, h: 260 }),
   })),
   withHandlers({
     onPictureClick: ({ onClick, url }) => () => {
