@@ -1,7 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withState } from 'recompose'
-import { timeout } from 'ext'
+import { h } from 'preact'
+import { timeout } from 'plugin-base'
 
 const Button = styled.button`
   appearance: none;

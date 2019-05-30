@@ -2,18 +2,72 @@ import ChatContent from './components/chat-content'
 import ChatLogUi from './chat-log-ui'
 import Container from './components/base-container'
 import Cover from './components/cover'
-import ProgressBar from './components/progress-bar'
 import React, { useRef } from 'react'
 import { compose, withHandlers, withState } from 'recompose'
-import { CtaButton, ScrollLock } from 'shared'
+import { ScrollLock } from 'shared'
 
 const finalCoverHeight = 90
 
+const InnerSimpleChat = ({
+  assessmentOptions,
+  data,
+  persona,
+  backButtonLabel,
+  onToggleContent,
+  contentRef,
+  handleScroll,
+  headerConfig,
+  coverMinimized,
+  lazyLoadingCount,
+  lazyLoadActive,
+  setLazyLoadActive,
+  products,
+  touch,
+  storeLog,
+  goToPrevStep,
+  showBackButton,
+  clickActions,
+  FlowBackButton,
+  chatLogCallbacks,
+}) => (
+  <div>
+    <Cover
+      backButtonLabel={backButtonLabel}
+      clickActions={clickActions}
+      FlowBackButton={FlowBackButton}
+      goToPrevStep={goToPrevStep}
+      header={data.header}
+      headerConfig={headerConfig}
+      minimized={coverMinimized}
+      persona={persona}
+      showBackButton={showBackButton}
+      step={data}
+    />
+    <ChatLogUi
+      assessmentOptions={assessmentOptions}
+      chatLogCallbacks={chatLogCallbacks}
+      clickActions={clickActions}
+      contentRef={contentRef}
+      data={data}
+      lazyLoadActive={lazyLoadActive}
+      lazyLoadingCount={lazyLoadingCount}
+      onScroll={handleScroll}
+      onToggleContent={onToggleContent}
+      persona={persona}
+      products={products}
+      ref={contentRef}
+      setLazyLoadActive={setLazyLoadActive}
+      storeLog={storeLog}
+      touch={touch}
+    >
+      <ChatContent />
+    </ChatLogUi>
+  </div>
+)
+
 const SimpleChat = ({
   animateOpacity,
-  assessment,
   assessmentOptions,
-  bridge,
   data,
   persona,
   ChatBase,
@@ -22,18 +76,11 @@ const SimpleChat = ({
   contentRef,
   handleScroll,
   headerConfig,
-  ctaButton,
-  onCtaButtonClick,
   coverMinimized,
   lazyLoadingCount,
   lazyLoadActive,
   setLazyLoadActive,
   products,
-  progress,
-  hideProgressBar,
-  ctaButtonClicked,
-  setCtaButtonClicked,
-  hideCtaButton,
   touch,
   storeLog,
   goToPrevStep,
@@ -45,49 +92,31 @@ const SimpleChat = ({
 }) => (
   <Container animateOpacity={animateOpacity} contentRef={contentRef}>
     <ScrollLock>
-      <Cover
-        assessment={assessment}
-        backButtonLabel={backButtonLabel}
-        bridge={bridge}
-        clickActions={clickActions}
-        FlowBackButton={FlowBackButton}
-        goToPrevStep={goToPrevStep}
-        header={data.header}
-        headerConfig={headerConfig}
-        minimized={coverMinimized}
-        persona={persona}
-        showBackButton={showBackButton}
-        step={data}
-      />
-      {progress >= 0 && <ProgressBar hide={hideProgressBar} progress={progress} />}
-      <ChatLogUi
-        assessment={assessment}
-        assessmentOptions={assessmentOptions}
-        bridge={bridge}
-        chatLogCallbacks={chatLogCallbacks}
-        clickActions={clickActions}
-        contentRef={contentRef}
-        data={data}
-        lazyLoadActive={lazyLoadActive}
-        lazyLoadingCount={lazyLoadingCount}
-        onScroll={handleScroll}
-        onToggleContent={onToggleContent}
-        persona={persona}
-        products={products}
-        ref={contentRef}
-        setLazyLoadActive={setLazyLoadActive}
-        storeLog={storeLog}
-        touch={touch}
-      >
-        {ChatBase || <ChatContent />}
-      </ChatLogUi>
-      {ctaButton && (
-        <CtaButton
-          clicked={ctaButtonClicked}
-          ctaButton={ctaButton}
-          hide={hideCtaButton}
-          onClick={onCtaButtonClick}
-          setClicked={setCtaButtonClicked}
+      {ChatBase || (
+        <InnerSimpleChat
+          animateOpacity={animateOpacity}
+          assessmentOptions={assessmentOptions}
+          backButtonLabel={backButtonLabel}
+          ChatBase={ChatBase}
+          chatLogCallbacks={chatLogCallbacks}
+          clickActions={clickActions}
+          contentRef={contentRef}
+          coverMinimized={coverMinimized}
+          data={data}
+          FlowBackButton={FlowBackButton}
+          goToPrevStep={goToPrevStep}
+          handleScroll={handleScroll}
+          headerConfig={headerConfig}
+          lazyLoadActive={lazyLoadActive}
+          lazyLoadingCount={lazyLoadingCount}
+          Modals={Modals}
+          onToggleContent={onToggleContent}
+          persona={persona}
+          products={products}
+          setLazyLoadActive={setLazyLoadActive}
+          showBackButton={showBackButton}
+          storeLog={storeLog}
+          touch={touch}
         />
       )}
       {Modals}
