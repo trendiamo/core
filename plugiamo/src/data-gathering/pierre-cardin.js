@@ -119,13 +119,14 @@ export default {
         .on('click', 'button.action.primary.checkout', () => {
           const json = _this.checkoutObject()
           mixpanel.track(json.name, json.data)
-          googleAnalytics.event({
-            hitType: 'event',
-            eventCategory: 'Page Event',
-            eventAction: 'Click',
-            eventLabel: 'proceedToCheckout',
-            page: location.hostname,
-          })
+          googleAnalytics.active &&
+            googleAnalytics.event({
+              hitType: 'event',
+              eventCategory: 'Page Event',
+              eventAction: 'Click',
+              eventLabel: 'proceedToCheckout',
+              page: location.hostname,
+            })
         })
     } else if (jQuery.noConflict()('#product-addtocart-button')[0]) {
       jQuery

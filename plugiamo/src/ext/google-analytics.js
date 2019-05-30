@@ -53,31 +53,19 @@ const googleAnalytics = {
   },
   iframeRef: null,
   init(iframe) {
-    this.iframeRef = iframe
+    if (!GApropertyId || !GOexperimentId || !GOcontainerId || localStorage.getItem('trnd-exp-original')) return
+    this.iframe = iframe
     this.active = true
     this.initGA()
     this.initGO()
   },
   initGA() {
-    if (!GApropertyId || localStorage.getItem('trnd-exp-original')) return
     this.ga('create', GApropertyId, 'auto', {
       name: 'frekkls_tracker',
       cookieName: '_ga_frekkls',
       storeGac: true,
     })
     this.ga('frekkls_tracker.set', 'checkProtocolTask', null)
-  },
-  initGO() {
-    if (!GOexperimentId || !GOcontainerId) return Promise.resolve()
-    this.cxApi = this.iframeRef.contentWindow.cxApi
-    const GOvariationId = this.cxApi.chooseVariation()
-    this.cxApi.setChosenVariation(GOvariationId, GOexperimentId)
-    this.ga('frekkls_tracker.set', 'exp', `${GOexperimentId}.${GOvariationId}`)
-  },
-  event(fieldsObject) {
-    this.ga('frekkls_tracker.send', fieldsObject)
-  },
-  pageView() {
     this.event({
       hitType: 'pageview',
       eventCategory: 'Page',
@@ -85,6 +73,15 @@ const googleAnalytics = {
       eventLabel: 'Page view',
       page: location.href,
     })
+  },
+  initGO() {
+    this.cxApi = this.iframe.contentWindow.cxApi
+    const GOvariationId = this.cxApi.chooseVariation()
+    this.cxApi.setChosenVariation(GOvariationId, GOexperimentId)
+    this.ga('frekkls_tracker.set', 'exp', `${GOexperimentId}.${GOvariationId}`)
+  },
+  event(fieldsObject) {
+    this.ga('frekkls_tracker.send', fieldsObject)
   },
   getVariation() {
     const variation = this.cxApi.getChosenVariation(GOexperimentId)
