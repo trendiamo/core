@@ -1,6 +1,6 @@
-import React from 'react'
 import styled from 'styled-components'
 import VideoButton from './video-button'
+import { h } from 'preact'
 
 const Name = styled.div`
   color: ${({ header }) => header.textColor || '#333'};
@@ -72,11 +72,6 @@ const TextContainer = styled.div`
 
 const HeaderContainer = styled.div`
   position: relative;
-`
-
-export const PersonaName = styled.div`
-  color: #fff;
-  display: inline-block;
 `
 
 const Header = ({ minimized, header, config }) => (

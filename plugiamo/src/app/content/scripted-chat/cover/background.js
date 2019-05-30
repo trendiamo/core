@@ -1,7 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
 import { compose, withProps } from 'recompose'
-import { imgixUrl } from 'tools'
+import { h } from 'preact'
+import { imgixUrl } from 'plugin-base'
 
 const CoverAnimation = styled.img`
   position: absolute;

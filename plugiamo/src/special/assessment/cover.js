@@ -1,10 +1,10 @@
-import Background from 'simple-chat/components/cover/background'
-import Content from 'simple-chat/components/cover/content'
-import React from 'react'
-import { BackButton, Cover } from 'shared'
-import { compose, lifecycle, withState } from 'recompose'
+import Background from 'app/content/scripted-chat/cover/background'
+import Content from 'app/content/scripted-chat/cover/content'
+import { BackButton, Cover, headerConfig as defaultHeaderConfig } from 'plugin-base'
+import { compose, lifecycle, withProps, withState } from 'recompose'
+import { h } from 'preact'
 
-const CoverAssessmentTemplate = ({
+const CoverAssessment = ({
   headers,
   backButtonLabel,
   toggle,
@@ -35,7 +35,10 @@ const CoverAssessmentTemplate = ({
   </Cover>
 )
 
-const CoverAssessment = compose(
+export default compose(
+  withProps(({ headerConfig }) => ({
+    headerConfig: { ...defaultHeaderConfig, ...headerConfig },
+  })),
   withState('toggle', 'setToggle', false),
   withState('headers', 'setHeaders', ({ step }) => [step.header, step.header]),
   lifecycle({
@@ -50,6 +53,4 @@ const CoverAssessment = compose(
       }
     },
   })
-)(CoverAssessmentTemplate)
-
-export default CoverAssessment
+)(CoverAssessment)

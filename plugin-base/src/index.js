@@ -2,6 +2,7 @@ import ChatBackground from 'simple-chat/components/chat-background'
 import ChatContent from 'simple-chat/components/chat-content'
 import ChatLogUi from 'simple-chat/chat-log-ui'
 import ContentWrapper from 'content-wrapper'
+import headerConfig from 'simple-chat/components/cover/header-config'
 import Launcher from 'launcher'
 import LauncherBubbleFrame from 'launcher/bubbles/launcher-bubble-frame'
 import launcherBubbleKeyframes from 'launcher/bubbles/keyframes'
@@ -72,4 +73,5 @@ export {
   ChatBackground,
   SimpleChatCover,
   AssessmentProducts,
+  headerConfig,
 }
