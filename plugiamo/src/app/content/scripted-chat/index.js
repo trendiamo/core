@@ -1,3 +1,4 @@
+import ChatBase from './chat-base'
 import chatLogCallbacks from 'shared/chat-log-callbacks'
 import ChatModals from 'shared/chat-modals'
 import emojify from 'ext/emojify'
@@ -5,8 +6,8 @@ import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import withChatActions from 'ext/recompose/with-chat-actions'
 import { branch, compose, renderNothing, withProps } from 'recompose'
+import { Fragment, h } from 'preact'
 import { gql, graphql } from 'ext/recompose/graphql'
-import { h } from 'preact'
 import { SimpleChat } from 'plugin-base'
 
 const emojifySimpleChat = simpleChat => {
@@ -62,13 +63,11 @@ export default compose(
   branch(({ data }) => !data || data.loading || data.error, renderNothing)
 )(
   ({
-    modalsProps,
     animateOpacity,
     assessment,
     assessmentOptions,
     backButtonLabel,
     bridge,
-    ChatBase,
     chatLogCallbacks,
     clickActions,
     coverIsMinimized,
@@ -82,6 +81,7 @@ export default compose(
     hideProgressBar,
     lazyLoadingCount,
     Modals,
+    modalsProps,
     onCtaButtonClick,
     onToggleContent,
     persona,
@@ -91,19 +91,16 @@ export default compose(
     showBackButton,
     storeLog,
   }) => (
-    <div>
+    <Fragment>
       <ChatModals {...modalsProps} />
       <SimpleChat
         animateOpacity={animateOpacity}
-        assessment={assessment}
-        assessmentOptions={assessmentOptions}
         backButtonLabel={backButtonLabel}
-        bridge={bridge}
         ChatBase={ChatBase}
+        chatBaseProps={{ assessment, assessmentOptions, bridge, ctaButton }}
         chatLogCallbacks={chatLogCallbacks}
         clickActions={clickActions}
         coverIsMinimized={coverIsMinimized}
-        ctaButton={ctaButton}
         ctaButtonClicked={ctaButtonClicked}
         data={{ ...data, simpleChat: emojifySimpleChat(data.simpleChat) }}
         FlowBackButton={FlowBackButton}
@@ -122,6 +119,6 @@ export default compose(
         showBackButton={showBackButton}
         storeLog={storeLog}
       />
-    </div>
+    </Fragment>
   )
 )

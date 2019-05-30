@@ -1,3 +1,4 @@
+import ChatBase from 'app/content/scripted-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
@@ -31,12 +32,11 @@ const Base = ({
     <ChatModals flowType={module.flowType} {...modalsProps} />
     <SimpleChat
       animateOpacity={animateOpacity}
-      assessment
-      assessmentOptions={{ step, goToNextStep }}
       backButtonLabel={getFrekklsConfig().i18n.backButton}
+      ChatBase={ChatBase}
+      chatBaseProps={{ assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }}
       clickActions={clickActions}
       clicked={ctaButtonClicked}
-      ctaButton={ctaButton}
       currentStep={currentStep}
       data={step}
       goToPrevStep={goToPrevStep}
