@@ -42,7 +42,7 @@ const StyledArrowDropDown = styled(props => <ArrowDropDown {...omit(props, ['sid
 const MenuItemThemed = styled(({ className, icon, text, ...props }) => (
   <MenuItem className={className} {...props}>
     {icon}
-    <Typography style={{ 'margin-left': '10px' }}>{text}</Typography>
+    <Typography style={{ marginLeft: '10px' }}>{text}</Typography>
   </MenuItem>
 ))`
   padding: 15px 21px;
