@@ -2,7 +2,6 @@ import Assessment from 'special/assessment'
 import Content from './content'
 import getFrekklsConfig from 'frekkls-config'
 import LauncherBubbles from './launcher-bubbles'
-import LoadingFrame from 'shared/loading-frame'
 import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
 import { animateOnMount } from 'plugin-base'
@@ -57,10 +56,8 @@ const AppBase = ({
   outroButtonsClick,
   skipContentEntry,
   pluginState,
-  onLauncherFrameLoad,
 }) => (
   <AppBaseDiv>
-    <LoadingFrame onLoad={onLauncherFrameLoad} />
     {showAssessmentContent ? (
       <Assessment
         frameStyleStr={emojifyStyles}
@@ -134,14 +131,6 @@ export default compose(
     }
   }),
   withHandlers({
-    onLauncherFrameLoad: ({ googleAnalytics, setIsGAReady }) => iframeRef => {
-      if (!googleAnalytics) {
-        return setIsGAReady && setIsGAReady(true)
-      }
-      googleAnalytics.initGO(iframeRef).then(() => {
-        setIsGAReady(true)
-      })
-    },
     outroButtonsClick: () => value => {
       mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
     },

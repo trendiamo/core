@@ -41,7 +41,7 @@ const recommendedProducts = results => {
 
   const filteredSuggestions = Object.keys(suggestions)
     .filter(suggestionTag => {
-      return shopcartProducts.find(product => product.tag.includes(suggestionTag))
+      return shopcartProducts.find(product => (product.tag || '').includes(suggestionTag))
     })
     .reduce((res, key) => ((res[key] = suggestions[key]), res), {})
 
@@ -56,6 +56,7 @@ const recommendedProducts = results => {
 
   const recommendedProducts = productReferences.filter(
     product =>
+      product.tag &&
       product.tag !== '' &&
       !shopcartProductIds.includes(product.id) &&
       uniqueTags.filter(tagToRecommend => tagToRecommend.includes(product.tag)).length > 0

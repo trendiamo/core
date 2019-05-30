@@ -2,6 +2,7 @@ import AppBase from './base'
 import AssessmentCart from 'special/assessment/cart'
 import AssessmentSizeGuide from 'special/assessment/size-guide'
 import getFrekklsConfig from 'frekkls-config'
+import googleAnalytics from 'ext/google-analytics'
 import Launcher from './launcher'
 import mixpanel from 'ext/mixpanel'
 import Router from './content/router'
@@ -27,7 +28,6 @@ import { location } from 'config'
 import { timeout } from 'plugin-base'
 
 export default compose(
-  withState('isGAReady', 'setIsGAReady', false),
   withProps({ Component: <Router /> }),
   withProps({ Launcher }),
   withProps({ pathFromNav: setupFlowHistory() }),
@@ -83,9 +83,13 @@ export default compose(
   withState('isUnmounting', 'setIsUnmounting', false),
   withState('showingContent', 'setShowingContent', false),
   withState('showAssessmentContent', 'setShowAssessmentContent', false),
-  withState('showingLauncher', 'setShowingLauncher', false),
+  withState('showingLauncher', 'setShowingLauncher', () =>
+    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
+  ),
   withState('skipContentEntry', 'setSkipContentEntry', false),
-  withState('showingBubbles', 'setShowingBubbles', false),
+  withState('showingBubbles', 'setShowingBubbles', () =>
+    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
+  ),
   withState('disappear', 'setDisappear', false),
   lifecycle({
     componentDidMount() {
@@ -113,22 +117,7 @@ export default compose(
       }
     },
     componentDidUpdate(prevProps) {
-      const {
-        showAssessmentContent,
-        showingContent,
-        isGAReady,
-        setShowingLauncher,
-        setShowingBubbles,
-        googleAnalytics,
-        setSkipContentEntry,
-      } = this.props
-      if (!prevProps.isGAReady && isGAReady) {
-        const variation = googleAnalytics.getVariation()
-        if (variation !== 'absent') {
-          setShowingLauncher(true)
-          setShowingBubbles(true)
-        }
-      }
+      const { showAssessmentContent, showingContent, setSkipContentEntry } = this.props
       if (showAssessmentContent !== prevProps.showAssessmentContent && !showAssessmentContent) {
         setSkipContentEntry(true)
       }
