@@ -25,6 +25,7 @@ def old_url_uploaded_upload_file!(old_pic_url, new_pic_uri)
 end
 
 Picture.where("url LIKE ?", "%-upload").map do |picture|
+  sleep 3 # Note we got a Aws::S3::Errors::SlowDown when not using this
   body = download_file(picture.url)
   content_type = body.meta["content-type"]
   new_pic_uri = old_url_uploaded_digital_ocean_uri(picture, content_type)

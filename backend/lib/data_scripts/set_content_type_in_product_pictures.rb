@@ -53,6 +53,8 @@ end
 SimpleChatMessage.where(type: "SimpleChatProductMessage").where.not(text: nil).map do |e|
   next unless e.pic.url.ends_with?("-upload")
 
+  sleep 3 # Note we got a Aws::S3::Errors::SlowDown when not using this
+
   original_pic_url = JSON.parse(e.text)["picUrl"]
   content_type = find_content_type(original_pic_url)
 
@@ -63,5 +65,4 @@ SimpleChatMessage.where(type: "SimpleChatProductMessage").where.not(text: nil).m
   client.put_object(bucket: ENV["DO_BUCKET"], key: destination_key, body: download_image(original_pic_url),
                     content_type: content_type, acl: "public-read")
   e.pic.update!(url: "#{e.pic.url}.#{extension}")
-  sleep 3 # Note we got a Aws::S3::Errors::SlowDown when not using this
 end
