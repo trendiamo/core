@@ -1,6 +1,4 @@
 import ChatBackground from 'simple-chat/components/chat-background'
-import ChatContent from 'simple-chat/components/chat-content'
-import ChatLogUi from 'simple-chat/chat-log-ui'
 import ContentWrapper from 'content-wrapper'
 import Launcher from 'launcher'
 import LauncherBubbleFrame from 'launcher/bubbles/launcher-bubble-frame'
@@ -29,8 +27,6 @@ import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose, Ico
 export {
   animate,
   BelowCover,
-  ChatContent,
-  ChatLogUi,
   Cover,
   CoverImg,
   imgixUrl,

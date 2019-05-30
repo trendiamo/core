@@ -1,6 +1,7 @@
 import animateOnMount from './animate-on-mount'
 import BackButton from './back-button'
 import Cover from './cover'
+import CtaButton from './cta-button'
 import Frame from './frame'
 import PersonaInstagram from './persona-instagram'
 import ScrollLock from './scroll-lock'
@@ -19,5 +20,6 @@ export {
   Cover,
   Tile,
   TilesWrapper,
+  CtaButton,
   Title,
 }
