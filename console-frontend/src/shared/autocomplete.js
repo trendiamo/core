@@ -93,7 +93,9 @@ const Autocomplete = ({
   initialSelectedItem,
   onFocus,
 }) => {
-  const debouncedAutocomplete = debounce(async searchQuery => await apiRequest(autocomplete, [{ searchQuery }]), 250)
+  const debouncedAutocomplete = debounce(searchQuery => {
+    return apiRequest(autocomplete, [{ searchQuery }])
+  }, 250)
 
   const [menuIsOpen, setMenuIsOpen] = useState(false)
   const [suggestions, setSuggestions] = useState([])
