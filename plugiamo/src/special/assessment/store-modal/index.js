@@ -22,7 +22,7 @@ const FrameChild = ({ step, results, goToPrevStep, flowType }) => (
   </div>
 )
 
-const ModalTemplate = ({ onCloseModal, isOpen, results, goToPrevStep, step, module }) => (
+const Modal = ({ onCloseModal, isOpen, results, goToPrevStep, step, module }) => (
   <Wrapper allowBackgroundClose closeModal={onCloseModal} isOpen={isOpen}>
     <Frame style={iframeStyle}>
       <FrameChild flowType={module && module.flowType} goToPrevStep={goToPrevStep} results={results} step={step} />
@@ -30,7 +30,7 @@ const ModalTemplate = ({ onCloseModal, isOpen, results, goToPrevStep, step, modu
   </Wrapper>
 )
 
-const Modal = compose(
+export default compose(
   withState('isOpen', 'setIsOpen', true),
   withHandlers({
     goToPrevStep: ({ goToPrevStep, setIsOpen, setShowingLauncher, setShowingContent }) => () => {
@@ -52,6 +52,4 @@ const Modal = compose(
       setShowingLauncher(false)
     },
   })
-)(ModalTemplate)
-
-export default Modal
+)(Modal)
