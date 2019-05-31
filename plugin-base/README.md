@@ -12,7 +12,7 @@ yarn add -P react@^16.0.0 styled-components@^4.2.0 recompose@^0.28.2 lodash.iseq
 ## Build
 
 ```
-yarn build-dev && mkdir -p ../console-frontend/plugin-base && cp dist/plugin-base.js ../console-frontend/plugin-base && mkdir -p ../plugiamo/plugin-base && cp dist/plugin-base.js ../plugiamo/plugin-base
+yarn 🚄
 ```
 
 ## Code checks

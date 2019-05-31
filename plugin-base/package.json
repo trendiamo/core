@@ -5,7 +5,8 @@
   "main": "dist/plugin-base.js",
   "scripts": {
     "build-dev": "webpack --progress --config webpack.config.js",
-    "build": "webpack -p --progress --config webpack.prod.js"
+    "build": "webpack -p --progress --config webpack.prod.js",
+    "🚄": "yarn build-dev && mkdir -p ../console-frontend/plugin-base && cp dist/plugin-base.js ../console-frontend/plugin-base && mkdir -p ../plugiamo/plugin-base && cp dist/plugin-base.js ../plugiamo/plugin-base"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
