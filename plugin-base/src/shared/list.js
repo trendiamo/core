@@ -9,7 +9,7 @@ const ListChevron = styled(IconChevronRight)`
   height: 16px;
   width: 16px;
   position: absolute;
-  right: ${({ assessment }) => (assessment ? '8px' : '10px')};
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
 `
@@ -49,13 +49,13 @@ const ListContent = styled.div`
   position: absolute;
   top: 8px;
   bottom: 8px;
-  left: ${({ assessment }) => (assessment ? '16px' : '110px')};
+  left: ${({ withoutPicture }) => (withoutPicture ? '16px' : '110px')};
   right: 30px;
   .Win32 & {
     letter-spacing: -0.2px;
   }
-  ${({ assessment }) =>
-    assessment &&
+  ${({ withoutPicture }) =>
+    withoutPicture &&
     `
     display: flex;
     flex-direction: column;
@@ -103,13 +103,13 @@ const ListItem = compose(
   margin-bottom: 1rem;
   align-items: center;
   cursor: pointer;
-  height: ${({ assessment }) => (assessment ? '90px' : '101px')};
+  height: ${({ bordered }) => (bordered ? '90px' : '101px')};
   color: #4a4a4a;
   background-color: #fff;
   backface-visibility: hidden;
   transition: all 0.3s ease-out;
-  ${({ assessment }) =>
-    assessment &&
+  ${({ bordered }) =>
+    bordered &&
     `
     border: 2px solid #fa0;
   `}

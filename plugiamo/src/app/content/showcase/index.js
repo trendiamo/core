@@ -36,7 +36,7 @@ const convertSpotlights = (spotlights, onSpotlightClick) => {
   if (assessmentHack()) {
     return [
       {
-        Component: <SpotlightItem assessment onClick={onSpotlightClick} spotlight={assessmentSpotlight} />,
+        Component: <SpotlightItem bordered onClick={onSpotlightClick} spotlight={assessmentSpotlight} withoutPicture />,
       },
       ...results,
     ]

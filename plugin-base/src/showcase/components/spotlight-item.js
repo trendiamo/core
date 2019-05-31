@@ -35,8 +35,8 @@ const SpotlightItem = compose(
     return {
       setImgRef: () => ref => (imgRef = ref),
       setNameRef: () => ref => (nameRef = ref),
-      handleClick: ({ onClick, assessment, spotlight }) => () => {
-        if (!assessment) {
+      handleClick: ({ onClick, withoutPicture, spotlight }) => () => {
+        if (!withoutPicture) {
           transition.addElement('img', imgRef)
           transition.addElement('name', nameRef)
         }
@@ -44,16 +44,16 @@ const SpotlightItem = compose(
       },
     }
   })
-)(({ setImgRef, setNameRef, spotlight, handleClick, selectInList, listSelected, assessment }) => (
-  <ListItem assessment={assessment} listSelected={listSelected} onClick={handleClick} selectInList={selectInList}>
-    {!assessment && (
+)(({ setImgRef, setNameRef, spotlight, handleClick, selectInList, listSelected, withoutPicture, bordered }) => (
+  <ListItem bordered={bordered} listSelected={listSelected} onClick={handleClick} selectInList={selectInList}>
+    {!withoutPicture && (
       <ListImg
         animation={spotlight.persona.profilePicAnimationUrl}
         imgRef={setImgRef}
         picture={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 101, h: 101 })}
       />
     )}
-    <ListContent assessment={assessment}>
+    <ListContent withoutPicture={withoutPicture}>
       <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>
       <PersonaDescription dangerouslySetInnerHTML={{ __html: spotlight.persona.description }} />
     </ListContent>
