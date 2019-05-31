@@ -3,6 +3,7 @@ import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import HostnamesForm from 'shared/hostnames-form'
 import React, { useCallback, useMemo } from 'react'
+import Section from 'shared/section'
 import useForm from 'ext/hooks/use-form'
 import { apiRequest, apiWebsiteShow, apiWebsiteUpdate, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core'
@@ -94,47 +95,49 @@ const EditWebsite = () => {
   if (isFormLoading) return <CircularProgress />
 
   return (
-    <form onSubmit={onFormSubmit}>
-      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <TextField
-        disabled
-        fullWidth
-        inputProps={atLeastOneNonBlankCharInputProps}
-        label="Name"
-        margin="normal"
-        name="name"
-        required
-        value={form.name}
-      />
-      <FormControlLabel
-        control={<Checkbox checked={!form.previewMode} color="primary" onChange={setPreviewMode} />}
-        disabled={isFormLoading}
-        label="Live"
-      />
-      <FormHelperText>{'Dangerous: this controls whether or not the plugin appears on your website.'}</FormHelperText>
-      <HostnamesForm
-        addHostnameSelect={addHostnameSelect}
-        deleteHostname={deleteHostname}
-        editHostnameValue={editHostnameValue}
-        form={form}
-        isFormLoading={isFormLoading}
-      />
-      <div style={{ marginTop: '1rem' }}>
-        <Button
-          color="primaryGradient"
-          disabled={isFormLoading || isFormPristine || isFormSubmitting}
-          isFormPristine={isFormPristine}
-          isFormSubmitting={isFormSubmitting}
-          tooltipEnabled
-          tooltipPlacement="right"
-          tooltipText="No changes to save"
-          type="submit"
-          variant="contained"
-        >
-          {'Save'}
-        </Button>
-      </div>
-    </form>
+    <Section title="Website">
+      <form onSubmit={onFormSubmit}>
+        <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
+        <TextField
+          disabled
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Name"
+          margin="normal"
+          name="name"
+          required
+          value={form.name}
+        />
+        <FormControlLabel
+          control={<Checkbox checked={!form.previewMode} color="primary" onChange={setPreviewMode} />}
+          disabled={isFormLoading}
+          label="Live"
+        />
+        <FormHelperText>{'Dangerous: this controls whether or not the plugin appears on your website.'}</FormHelperText>
+        <HostnamesForm
+          addHostnameSelect={addHostnameSelect}
+          deleteHostname={deleteHostname}
+          editHostnameValue={editHostnameValue}
+          form={form}
+          isFormLoading={isFormLoading}
+        />
+        <div style={{ marginTop: '1rem' }}>
+          <Button
+            color="primaryGradient"
+            disabled={isFormLoading || isFormPristine || isFormSubmitting}
+            isFormPristine={isFormPristine}
+            isFormSubmitting={isFormSubmitting}
+            tooltipEnabled
+            tooltipPlacement="right"
+            tooltipText="No changes to save"
+            type="submit"
+            variant="contained"
+          >
+            {'Save'}
+          </Button>
+        </div>
+      </form>
+    </Section>
   )
 }
 

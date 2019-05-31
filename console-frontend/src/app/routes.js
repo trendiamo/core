@@ -74,6 +74,12 @@ const routes = {
   urlGenerator() {
     return '/url-generator'
   },
+  userCreate() {
+    return '/account/users/create'
+  },
+  userEdit(id) {
+    return `/account/users/${id}/edit`
+  },
   admin() {
     return '/admin'
   },

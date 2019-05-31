@@ -27,6 +27,7 @@ import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from './resources/s
 import { SnackbarProvider } from 'notistack'
 import { StoreProvider } from 'ext/hooks/store'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
+import { UserCreate } from 'app/screens/account/users'
 import { useSnackbar } from 'notistack'
 import 'assets/css/fonts.css'
 
@@ -98,6 +99,7 @@ const Routes = () => (
     <PrivateRoute component={TriggerCreate} exact isOwnerScoped path={routes.triggerCreate()} />
     <PrivateRoute component={TriggerEdit} exact isOwnerScoped path={routes.triggerEdit(':triggerId')} />
     <PrivateRoute component={Account} exact path={routes.account()} />
+    <PrivateRoute component={UserCreate} exact isOwnerScoped path={routes.userCreate()} />
     <PrivateRoute component={ChangePassword} exact isOwnerScoped path={routes.passwordChange()} />
     <PrivateRoute component={UrlGenerator} exact isOwnerScoped path={routes.urlGenerator()} />
     <PrivateRoute component={Admin} exact isOwnerScoped path={routes.admin()} />

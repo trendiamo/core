@@ -52,6 +52,8 @@ Rails.application.routes.draw do
         resources :triggers, only: %i[index show update create]
         post "/triggers/sort", to: "triggers#sort"
         delete "/triggers", to: "triggers#destroy"
+        resources :users, only: %i[index create]
+        delete "/users", to: "users#destroy"
         resources :flows, only: %i[index]
       end
     end

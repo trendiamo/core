@@ -56,23 +56,19 @@ const TableRow = ({
           checked={selectedIds.includes(resource.id)}
           checkedIcon={<CheckBoxIcon />}
           color="primary"
-          disabled={canEditResource && canEditResource(resource)}
+          disabled={canEditResource && !canEditResource(resource)}
           onChange={handleSelect}
         />
       </TableCell>
       {React.cloneElement(children, { highlightInactive })}
-      <TableCell
-        style={{
-          whiteSpace: 'nowrap',
-        }}
-      >
+      <TableCell style={{ whiteSpace: 'nowrap' }}>
         {resourceEditPath && (
-          <Button component={Link} disabled={canEditResource && canEditResource(resource)} to={resourceEditPath}>
+          <Button component={Link} disabled={canEditResource && !canEditResource(resource)} to={resourceEditPath}>
             <EditIcon />
           </Button>
         )}
         {api.duplicate && (
-          <Button onClick={duplicateResource}>
+          <Button disabled={canEditResource && !canEditResource(resource)} onClick={duplicateResource}>
             <CopyIcon />
           </Button>
         )}

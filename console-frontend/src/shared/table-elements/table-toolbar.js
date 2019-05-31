@@ -6,6 +6,7 @@ import { Toolbar as MuiToolbar, Typography } from '@material-ui/core'
 const SimpleToolbar = styled(MuiToolbar)`
   display: flex;
   justify-content: space-between;
+  padding: 0;
 `
 
 const Title = styled.div`

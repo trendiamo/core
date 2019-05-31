@@ -36,7 +36,7 @@ const SimpleChatsRow = ({ record, highlightInactive }) => (
 const api = { fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate }
 const simpleChatsRoutes = { create: routes.simpleChatCreate, edit: routes.simpleChatEdit }
 const highlightInactive = ['triggerIds']
-const canEditResource = resource => auth.getUser().role === 'editor' && resource.triggerIds.length > 0
+const canEditResource = resource => auth.getUser().role !== 'editor' || resource.triggerIds.length < 1
 
 const SimpleChatsList = () => (
   <EnhancedList

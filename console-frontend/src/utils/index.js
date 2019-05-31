@@ -47,6 +47,9 @@ import {
   apiTriggerShow,
   apiTriggerSort,
   apiTriggerUpdate,
+  apiUserCreate,
+  apiUserDestroy,
+  apiUserList,
   apiWebsiteShow,
   apiWebsiteUpdate,
 } from './auth-requests'
@@ -101,6 +104,9 @@ export {
   apiTriggerSort,
   apiGeneratedUrlCreate,
   apiGeneratedUrlList,
+  apiUserCreate,
+  apiUserDestroy,
+  apiUserList,
   apiWebsiteShow,
   apiWebsiteUpdate,
 }

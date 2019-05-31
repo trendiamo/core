@@ -1,26 +1,35 @@
+import AppBarButton from 'shared/app-bar-button'
 import auth from 'auth'
-import EditUser from './edit-user'
+import EditMe from './edit-me'
 import EditWebsite from './edit-website'
 import React from 'react'
-import Section from 'shared/section'
+import routes from 'app/routes'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
+import { Link } from 'react-router-dom'
+import { UsersList } from './users'
 
-const appBarContent = { title: 'Account' }
+const Actions = () => {
+  return auth.isAdmin() ? (
+    <AppBarButton color="primary" component={Link} to={routes.userCreate()} variant="contained">
+      {'Add User'}
+    </AppBarButton>
+  ) : null
+}
+
+const appBarContent = { Actions: <Actions />, title: 'Account' }
 
 const Account = () => {
   useAppBarContent(appBarContent)
+
   return (
     <>
       {(auth.isAdmin() || auth.getUser().role !== 'editor') && (
-        <Section title="Account">
+        <>
           <EditWebsite />
-        </Section>
+          <UsersList />
+        </>
       )}
-      {!auth.isAdmin() && (
-        <Section title="Your Personal Info">
-          <EditUser />
-        </Section>
-      )}
+      {!auth.isAdmin() && <EditMe />}
     </>
   )
 }

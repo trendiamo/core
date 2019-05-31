@@ -12,6 +12,7 @@ import Header from './header'
 import InlineTypography from './inline-typography'
 import Prompt from './prompt'
 import SaveButton from './save-button'
+import Select from './select'
 
 export {
   Actions,
@@ -28,4 +29,5 @@ export {
   Prompt,
   SaveButton,
   Field,
+  Select,
 }
