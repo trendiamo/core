@@ -1,6 +1,6 @@
 import getFrekklsConfig from 'frekkls-config'
+import SimpleChatCover from 'app/content/scripted-chat/cover'
 import { h } from 'preact'
-import { SimpleChatCover } from 'plugin-base'
 
 const headerConfig = {
   heights: { min: 200, max: 200 },
