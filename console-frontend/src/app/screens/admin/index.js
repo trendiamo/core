@@ -199,6 +199,7 @@ const Admin = () => {
           <>
             <FormControl margin="normal" required>
               <TextField
+                autoFocus
                 fullWidth
                 label="Search"
                 margin="normal"
