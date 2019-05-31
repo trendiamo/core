@@ -1,5 +1,4 @@
 import ChatBackground from 'simple-chat/components/chat-background'
-import ChatContent from 'simple-chat/components/chat-content'
 import ChatLogUi from 'simple-chat/chat-log-ui'
 import ContentWrapper from 'content-wrapper'
 import headerConfig from 'simple-chat/components/cover/header-config'
@@ -31,7 +30,6 @@ import { SpotlightItem } from 'showcase/components'
 export {
   animate,
   BelowCover,
-  ChatContent,
   ChatLogUi,
   Cover,
   CoverImg,

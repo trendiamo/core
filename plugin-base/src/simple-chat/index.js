@@ -1,4 +1,3 @@
-import ChatContent from './components/chat-content'
 import ChatLogUi from './chat-log-ui'
 import Container from './components/base-container'
 import Cover from './components/cover'
@@ -58,9 +57,7 @@ const InnerSimpleChat = ({
       setLazyLoadActive={setLazyLoadActive}
       storeLog={storeLog}
       touch={touch}
-    >
-      <ChatContent />
-    </ChatLogUi>
+    />
   </Fragment>
 )
 
@@ -71,7 +68,11 @@ const SimpleChat = props => {
     <Container animateOpacity={animateOpacity} contentRef={contentRef}>
       <ScrollLock>
         {ChatBase ? (
-          <ChatBase contentRef={contentRef} {...props} {...chatBaseProps} />
+          <ChatBase
+            contentRef={contentRef}
+            {...omit(props, ['ChatBase', 'chatBaseProps', 'Modals'])}
+            {...chatBaseProps}
+          />
         ) : (
           <InnerSimpleChat contentRef={contentRef} {...omit(props, ['ChatBase', 'chatBaseProps', 'Modals'])} />
         )}

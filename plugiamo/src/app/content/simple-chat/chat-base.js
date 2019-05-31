@@ -1,7 +1,7 @@
 import Cover from './cover'
 import CtaButton from 'special/bridge/cta-button'
 import ProgressBar from 'special/assessment/progress-bar'
-import { ChatContent, ChatLogUi } from 'plugin-base'
+import { ChatLogUi } from 'plugin-base'
 import { Fragment, h } from 'preact'
 
 const ChatBase = ({
@@ -69,9 +69,7 @@ const ChatBase = ({
       setLazyLoadActive={setLazyLoadActive}
       storeLog={storeLog}
       touch={touch}
-    >
-      <ChatContent />
-    </ChatLogUi>
+    />
     {ctaButton && (
       <CtaButton
         clicked={ctaButtonClicked}
