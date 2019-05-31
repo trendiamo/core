@@ -26,8 +26,8 @@ export default compose(
     url: picUrl && imgixUrl(picUrl, { fit: 'crop', w: 260, h: 260 }),
   })),
   withHandlers({
-    onPictureClick: ({ onClick, url }) => () => {
-      onClick({ type: 'clickPictureMessage', item: { url } })
+    onPictureClick: ({ onClick, picUrl }) => () => {
+      onClick({ type: 'clickPictureMessage', item: { url: picUrl } })
     },
   })
 )(PictureMessage)
