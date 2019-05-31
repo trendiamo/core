@@ -15,9 +15,8 @@ export default compose(
   withState('chatDataChanged', 'setChatDataChanged', false),
   withProps(({ assessment, bridge }) => ({ specialFlow: assessment || bridge })),
   withProps(({ clickActions }) => ({ clickActionsExist: !!clickActions })),
-  withProps(({ data, specialFlow }) => ({
-    initialChatStep: !specialFlow && data.simpleChat.simpleChatSteps.find(e => e.key === 'default'),
-    title: !specialFlow && data.simpleChat.title,
+  withProps(({ data }) => ({
+    title: data.simpleChat.title,
   })),
   withHandlers({
     updateLogs: ({ setLogs }) => ({ data }) => setLogs(convertLogs(data)),
@@ -29,7 +28,6 @@ export default compose(
       products,
       setCountOfRows,
       countOfRows,
-      specialFlow,
       lazyLoadingCount,
       chatLogCallbacks,
       isStore,
@@ -39,7 +37,7 @@ export default compose(
       setHideAll,
       assessment,
       setChatDataChanged,
-    }) => (isAssessmentUpdate, update) => {
+    }) => ({ isAssessmentUpdate, update } = {}) => {
       if (isAssessmentUpdate) {
         setHideAll(false)
         if (isStore) {
@@ -55,22 +53,29 @@ export default compose(
         assessmentProducts.splice(countOfRows)
         compiledData = {
           ...data,
-          logs: {
-            default: [...data.logs.default, { type: 'assessmentProducts', assessmentProducts }],
+          simpleChat: {
+            simpleChatSteps: [
+              {
+                key: 'default',
+                simpleChatMessages: [
+                  ...data.simpleChat.simpleChatSteps[0].simpleChatMessages,
+                  { type: 'assessmentProducts', assessmentProducts },
+                ],
+              },
+            ],
           },
         }
       }
-      const props = {
+      const chatLogProps = {
         data: compiledData,
         listeners: [updateLogs],
-        specialFlow,
         callbacks: chatLogCallbacks,
         setChatDataChanged,
       }
       if (!isAssessmentUpdate && update) {
-        return chatLog.update(props)
+        return chatLog.update(chatLogProps)
       }
-      timeout.set('chatLogInit', () => (assessment ? data.logs : true) && chatLog.init(props), 0)
+      timeout.set('chatLogInit', () => (assessment ? data.simpleChat : true) && chatLog.init(chatLogProps), 0)
     },
   }),
   withHandlers({
@@ -119,12 +124,16 @@ export default compose(
         storeLog &&
         storeLog.logs.length > 0
       ) {
-        timeout.set('updateStore', () => initChatLog(true), 100)
+        timeout.set('updateStore', () => initChatLog({ isAssessmentUpdate: true }), 100)
       }
       if (!isEqual(prevProps.data, data)) {
         if (specialFlow) setHideAll(true)
         if (data.type === 'store') return
-        return timeout.set('assessmentNextStep', () => initChatLog(specialFlow, true), specialFlow ? 800 : 0)
+        return timeout.set(
+          'assessmentNextStep',
+          () => initChatLog({ isAssessmentUpdate: specialFlow, update: true }),
+          specialFlow ? 800 : 0
+        )
       }
       if (lazyLoadActive && lazyLoadActive !== prevProps.lazyLoadActive) {
         setTimeout(initChatLog, 5)
