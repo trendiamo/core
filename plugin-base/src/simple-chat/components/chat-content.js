@@ -89,15 +89,16 @@ export default compose(
       setChatDataChanged,
       specialFlow,
     }) => ({ type, item }) => {
-      if (type === 'clickChatOption') {
-        clickActions && clickActions.clickChatOption({ item, persona, flowType: data && data.flowType })
-        configMinHeight()
-        return item.id === 'stop'
-          ? onStopChat()
-          : chatLog.selectOption(item) ||
-              (!specialFlow && chatLog.update({ data, listeners: [updateLogs], setChatDataChanged }))
+      clickActions && clickActions[type]({ item, persona, flowType: data && data.flowType })
+      if (type !== 'clickChatOption') return
+
+      configMinHeight()
+
+      if (item.id === 'stop') {
+        onStopChat()
       } else {
-        clickActions && clickActions[type]({ item, persona, flowType: data && data.flowType })
+        chatLog.selectOption(item)
+        if (!specialFlow) chatLog.update({ data, listeners: [updateLogs], setChatDataChanged })
       }
     },
   }),
