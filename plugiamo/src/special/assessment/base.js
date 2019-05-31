@@ -1,4 +1,4 @@
-import ChatBase from 'app/content/scripted-chat/chat-base'
+import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'

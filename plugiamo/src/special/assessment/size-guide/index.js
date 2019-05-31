@@ -1,6 +1,6 @@
 import AppBase from 'app/base'
 import blacklistTags from './blacklist-tags'
-import ChatBase from 'app/content/scripted-chat/chat-base'
+import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
 import data from 'special/assessment/data'
 import getFrekklsConfig from 'frekkls-config'

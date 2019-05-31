@@ -1,5 +1,5 @@
-import Background from 'app/content/scripted-chat/cover/background'
-import Content from 'app/content/scripted-chat/cover/content'
+import Background from 'app/content/simple-chat/cover/background'
+import Content from 'app/content/simple-chat/cover/content'
 import { compose, withProps } from 'recompose'
 import { Cover, headerConfig as defaultHeaderConfig } from 'plugin-base'
 import { h } from 'preact'

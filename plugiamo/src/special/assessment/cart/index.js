@@ -1,5 +1,5 @@
 import AppBase from 'app/base'
-import ChatBase from 'app/content/scripted-chat/chat-base'
+import ChatBase from 'app/content/simple-chat/chat-base'
 import data from 'special/assessment/data'
 import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics from 'ext/google-analytics'

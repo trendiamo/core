@@ -1,5 +1,5 @@
 import AppBase from 'app/base'
-import ChatBase from 'app/content/scripted-chat/chat-base'
+import ChatBase from 'app/content/simple-chat/chat-base'
 import chatLogCallbacks from 'shared/chat-log-callbacks'
 import ChatModals from 'shared/chat-modals'
 import data from './data'

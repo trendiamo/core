@@ -1,5 +1,5 @@
 import Showcase from './showcase'
-import SimpleChat from './scripted-chat'
+import SimpleChat from './simple-chat'
 import { Router as BaseRouter, history } from 'plugin-base'
 import { h } from 'preact'
 

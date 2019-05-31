@@ -1,5 +1,5 @@
 import getFrekklsConfig from 'frekkls-config'
-import SimpleChatCover from 'app/content/scripted-chat/cover'
+import SimpleChatCover from 'app/content/simple-chat/cover'
 import { h } from 'preact'
 
 const headerConfig = {
