@@ -53,7 +53,7 @@ export default {
   },
   getProductsFromCart() {
     return jQuery
-      .noConflict()('.cart.item')
+      .noConflict()('.cart.item:not(.message)')
       .map((i, item) => {
         const itemName = jQuery
           .noConflict()(item)
