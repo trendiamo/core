@@ -16,7 +16,7 @@ export default compose(
   withProps(({ assessment, bridge }) => ({ specialFlow: assessment || bridge })),
   withProps(({ clickActions }) => ({ clickActionsExist: !!clickActions })),
   withProps(({ data }) => ({
-    title: data.simpleChat.title,
+    title: data.simpleChat && data.simpleChat.title,
   })),
   withHandlers({
     updateLogs: ({ setLogs }) => ({ data }) => setLogs(convertLogs(data)),
