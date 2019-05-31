@@ -19,6 +19,7 @@ const ONBOARDING_URL = `${BASE_API_URL}/users/onboarding`
 const GENERATED_URLS_URL = `${BASE_API_URL}/generated_urls`
 const PATH_URL = `${BASE_API_URL}/path`
 const ACCOUNTS_URL = `${BASE_API_URL}/accounts`
+const USERS_URL = `${BASE_API_URL}/users`
 const CORS_PROXY_URL = `${BASE_API_URL}/cors_proxy`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
@@ -160,3 +161,7 @@ export const apiPathAutocomplete = query => apiGetRequest(`${PATH_URL}/autocompl
 export const apiAccountList = query => apiGetRequest(`${ACCOUNTS_URL}/?${stringify(query)}`)
 export const apiAccountCreate = body => apiCreateRequest(ACCOUNTS_URL, body)
 export const apiAccountDestroy = id => apiDestroyRequest(`${ACCOUNTS_URL}/${id}`)
+
+export const apiUserList = query => apiListRequest(`${USERS_URL}/?${stringify(query)}`)
+export const apiUserCreate = body => apiCreateRequest(USERS_URL, body)
+export const apiUserDestroy = body => apiDestroyMultipleRequest(USERS_URL, body)

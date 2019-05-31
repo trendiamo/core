@@ -59,14 +59,20 @@ const EnhancedList = ({
       } else if (action.type === 'setSelectedIds') {
         return {
           ...state,
-          isSelectAll: action.selectedIds.length === state.records.length,
+          isSelectAll:
+            action.selectedIds.length ===
+            state.records.filter(resource => (canEditResource ? canEditResource(resource) : true)).length,
           selectedIds: action.selectedIds,
         }
       } else if (action.type === 'handleSelectAll') {
         return {
           ...state,
           isSelectAll: !state.isSelectAll,
-          selectedIds: action.checked ? state.records.map(resource => resource.id) : [],
+          selectedIds: action.checked
+            ? state.records
+                .filter(resource => (canEditResource ? canEditResource(resource) : true))
+                .map(resource => resource.id)
+            : [],
         }
       } else if (action.type === 'setLoading') {
         return {
@@ -203,7 +209,7 @@ const EnhancedList = ({
 
   if (state.isLoading) return <CircularProgress />
 
-  if (state.recordsCount === 0) return <BlankState />
+  if (state.recordsCount === 0) return BlankState ? <BlankState /> : null
 
   return (
     <Section>
@@ -223,6 +229,7 @@ const EnhancedList = ({
                 checked={state.isSelectAll}
                 checkedIcon={<CheckBoxIcon />}
                 color="primary"
+                disabled={canEditResource && state.records.every(record => !canEditResource(record))}
                 onClick={handleSelectAll}
               />
             </TableCell>

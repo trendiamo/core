@@ -35,7 +35,7 @@ const OnboardingButton = withRouter(({ location }) => {
     [onboarding, setOnboarding]
   )
 
-  if (location.pathname !== onboarding.help.pathname) return null
+  if (location.pathname !== onboarding.help.pathname || !onboarding.help.stepName) return null
 
   return (
     <Hidden smDown>

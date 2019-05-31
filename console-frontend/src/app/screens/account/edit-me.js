@@ -5,6 +5,7 @@ import Link from 'shared/link'
 import PictureUploader, { ProgressBar, uploadPicture } from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
+import Section from 'shared/section'
 import useForm from 'ext/hooks/use-form'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Prompt } from 'react-router'
@@ -22,7 +23,7 @@ const formObjectTransformer = json => {
 
 const inputProps = { pattern: '.*S+.*' }
 
-const EditUser = () => {
+const EditMe = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const [isCropping, setIsCropping] = useState(false)
@@ -85,74 +86,74 @@ const EditUser = () => {
   if (isFormLoading) return <CircularProgress />
 
   return (
-    <form onSubmit={onFormSubmit}>
-      <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <PictureUploader
-        circle
-        disabled={isCropping}
-        label="Picture"
-        onChange={setProfilePicUrl}
-        setDisabled={setIsCropping}
-        setPic={setProfilePic}
-        value={form.profilePicUrl}
-      />
-      <TextField
-        disabled
-        fullWidth
-        id="email"
-        inputProps={inputProps}
-        label="Email"
-        margin="normal"
-        required
-        value={form.email}
-      />
-      <TextField
-        disabled={isFormLoading || isCropping}
-        fullWidth
-        inputProps={atLeastOneNonBlankCharInputProps}
-        label="First Name"
-        margin="normal"
-        name="firstName"
-        onChange={setFieldValue}
-        required
-        value={form.firstName}
-      />
-      <TextField
-        disabled={isFormLoading || isCropping}
-        fullWidth
-        inputProps={atLeastOneNonBlankCharInputProps}
-        label="Last Name"
-        margin="normal"
-        name="lastName"
-        onChange={setFieldValue}
-        required
-        value={form.lastName}
-      />
-      {progress && <ProgressBar progress={progress} />}
-      <div style={{ marginTop: '1rem' }}>
-        <Button
-          color="primaryGradient"
-          disabled={isFormLoading || isCropping || isFormPristine || isFormSubmitting}
-          isFormPristine={isFormPristine}
-          isFormSubmitting={isFormSubmitting}
-          tooltipEnabled
-          tooltipPlacement="right"
-          tooltipText="No changes to save"
-          type="submit"
-          variant="contained"
-        >
-          {'Save'}
-        </Button>
-      </div>
-      <div style={{ marginTop: '1rem' }}>
-        <Link to={routes.passwordChange()}>
-          <Button color="primaryText" variant="text">
-            {'Change Password'}
+    <Section title="Your Personal Info">
+      <form onSubmit={onFormSubmit}>
+        <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
+        <PictureUploader
+          circle
+          disabled={isCropping}
+          label="Picture"
+          onChange={setProfilePicUrl}
+          setDisabled={setIsCropping}
+          setPic={setProfilePic}
+          value={form.profilePicUrl}
+        />
+        <TextField
+          disabled
+          fullWidth
+          id="email"
+          inputProps={inputProps}
+          label="Email"
+          margin="normal"
+          required
+          value={form.email}
+        />
+        <TextField
+          disabled={isFormLoading || isCropping}
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="First Name"
+          margin="normal"
+          name="firstName"
+          onChange={setFieldValue}
+          required
+          value={form.firstName}
+        />
+        <TextField
+          disabled={isFormLoading || isCropping}
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Last Name"
+          margin="normal"
+          name="lastName"
+          onChange={setFieldValue}
+          required
+          value={form.lastName}
+        />
+        {progress && <ProgressBar progress={progress} />}
+        <div style={{ marginTop: '1rem' }}>
+          <Button
+            color="primaryGradient"
+            disabled={isFormLoading || isCropping || isFormPristine || isFormSubmitting}
+            isFormPristine={isFormPristine}
+            isFormSubmitting={isFormSubmitting}
+            tooltipEnabled
+            tooltipPlacement="right"
+            tooltipText="No changes to save"
+            type="submit"
+            variant="contained"
+          >
+            {'Save'}
           </Button>
-        </Link>
-      </div>
-    </form>
+          <Link to={routes.passwordChange()}>
+            <Button color="primaryText" variant="text">
+              {'Change Password'}
+            </Button>
+          </Link>
+        </div>
+      </form>
+    </Section>
   )
 }
 
-export default EditUser
+export default EditMe
