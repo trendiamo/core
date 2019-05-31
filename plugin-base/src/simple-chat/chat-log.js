@@ -9,9 +9,9 @@ const chatOptions = {
   get() {
     return this.list
   },
-  load({ option, data, specialFlow = false }) {
+  load({ option, data }) {
     if (!this.list) {
-      this.list = this.getFromData(data, specialFlow)
+      this.list = this.getFromData(data)
       this.postProcess()
     }
     this.filter(option)
@@ -23,15 +23,12 @@ const chatOptions = {
     if (!this.callbacks.processChatOptions) return
     this.list = this.callbacks.processChatOptions(this.list)
   },
-  getFromData(data, specialFlow) {
-    if (!specialFlow) {
-      return data.simpleChat.simpleChatSteps.map((chatStep, index) => ({
-        index,
-        text: chatStep.key,
-        type: 'option',
-      }))
-    }
-    return Object.keys(data.logs).map(text => ({ type: 'option', text }))
+  getFromData(data) {
+    return data.simpleChat.simpleChatSteps.map((chatStep, index) => ({
+      index,
+      text: chatStep.key,
+      type: 'option',
+    }))
   },
   specifyCallbacks(callbacks) {
     this.callbacks = callbacks || {}
@@ -40,17 +37,15 @@ const chatOptions = {
 
 const logs = {
   list: [],
-  specialFlow: false,
-  init({ data, specialFlow, callbacks }) {
+  init({ data, callbacks }) {
     this.list = []
-    this.specialFlow = specialFlow
     this.data = data
     chatOptions.reset()
     chatOptions.specifyCallbacks(callbacks)
     this.load({ text: 'default' })
   },
   load(option) {
-    chatOptions.load({ option, data: this.data, specialFlow: this.specialFlow })
+    chatOptions.load({ option, data: this.data })
     const messages = this.findMessages(option)
     if (messages) {
       const messageLogs = messages.map(message => ({ type: 'message', relatedOption: option, message }))
@@ -132,9 +127,6 @@ const logs = {
     return
   },
   findMessages(option) {
-    if (this.specialFlow) {
-      return this.data.logs[option.text]
-    }
     return this.data.simpleChat.simpleChatSteps.find(e => e.key === option.text).simpleChatMessages
   },
   add(data) {
