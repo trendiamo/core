@@ -2,6 +2,7 @@ import AccountsList from './accounts-list'
 import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'app/layout/loading'
+import debounce from 'debounce-promise'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import HostnamesForm from 'shared/hostnames-form'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -52,12 +53,14 @@ const signOutButtonClick = async () => {
 
 const Admin = () => {
   const { enqueueSnackbar } = useSnackbar()
-
   const [page, setPage] = useState(0)
   const [totalAccountsCount, setTotalAccountsCount] = useState(0)
   const [accounts, setAccounts] = useState({})
   const [isNewAccount, setIsNewAccount] = useState(false)
   const [accountForm, setAccountForm] = useState({ name: '', websitesAttributes: [{ hostnames: [''] }] })
+  const [searchValue, setSearchValue] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [fetched, setFetched] = useState(false)
 
   const toggleNewAccountForm = useCallback(
     () => {
@@ -125,20 +128,38 @@ const Admin = () => {
     [page]
   )
 
+  const debouncedAutocomplete = useMemo(
+    () =>
+      debounce(searchValue => {
+        setSearchQuery(searchValue)
+      }, 250),
+    []
+  )
+
   const fetchRecords = useCallback(
     () => {
       ;(async () => {
-        const { json, requestError, response } = await apiRequest(apiAccountList, [query])
+        const { json, requestError, response } = await apiRequest(apiAccountList, [{ ...query, searchQuery }])
         requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(json)
         setTotalAccountsCount(extractCountFromHeaders(response.headers))
+        setFetched(true)
       })()
     },
-    [enqueueSnackbar, query]
+    [enqueueSnackbar, query, searchQuery]
+  )
+
+  const onChangeSearchField = useCallback(
+    async event => {
+      setPage(0)
+      setSearchValue(event.target.value)
+      debouncedAutocomplete(event.target.value)
+    },
+    [debouncedAutocomplete, setSearchValue, setPage]
   )
 
   useEffect(fetchRecords, [fetchRecords])
 
-  if (!(accounts && accounts.length)) return <CircularProgress />
+  if (!fetched) return <CircularProgress />
 
   return (
     <SectionContainer>
@@ -175,15 +196,32 @@ const Admin = () => {
             </SaveButton>
           </form>
         ) : (
-          <List component="nav">
-            <AccountsList
-              accounts={accounts}
-              fetchRecords={fetchRecords}
-              page={page}
-              setPage={setPage}
-              totalAccountsCount={totalAccountsCount}
-            />
-          </List>
+          <>
+            <FormControl margin="normal" required>
+              <TextField
+                fullWidth
+                label="Search"
+                margin="normal"
+                name="search"
+                onChange={onChangeSearchField}
+                type="search"
+                value={searchValue}
+              />
+            </FormControl>
+            <List component="nav">
+              {accounts && accounts.length ? (
+                <AccountsList
+                  accounts={accounts}
+                  fetchRecords={fetchRecords}
+                  page={page}
+                  setPage={setPage}
+                  totalAccountsCount={totalAccountsCount}
+                />
+              ) : (
+                <p>{'No accounts match your search...'}</p>
+              )}
+            </List>
+          </>
         )}
       </Section>
     </SectionContainer>

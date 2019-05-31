@@ -2,7 +2,7 @@ module Api
   module V1
     class AccountsController < RestAdminController
       def index
-        @accounts = Account.order("name ASC")
+        @accounts = Account.where("name ILIKE ?", "%#{params[:searchQuery]}%").order("name ASC")
         authorize @accounts
         chain = pagination(@accounts)
         render json: chain
