@@ -71,7 +71,7 @@ module Api
                                                      simple_chat_steps_attributes:
                                                      [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
                                                     %i[id order type text title pic_id url display_price video_url
-                                                       pic_url _destroy],])
+                                                       pic_url group_with_adjacent _destroy],])
         add_order_fields(result[:simple_chat_steps_attributes])
         result
       end

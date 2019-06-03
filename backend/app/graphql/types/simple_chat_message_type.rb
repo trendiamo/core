@@ -5,9 +5,9 @@ Types::SimpleChatMessageType = GraphQL::ObjectType.define do
   field :type, types.String
   field :text, types.String
   field :title, types.String
-  field :picture, Types::PicType do
+  field :picUrl, types.String do
     resolve ->(obj, _args, _ctx) {
-      { url: obj.pic_url } if %w[SimpleChatPictureMessage SimpleChatProductMessage].include?(obj.class.name)
+      obj.pic_url if %w[SimpleChatPictureMessage SimpleChatProductMessage].include?(obj.class.name)
     }
   end
   field :url, types.String
@@ -19,6 +19,11 @@ Types::SimpleChatMessageType = GraphQL::ObjectType.define do
   field :videoUrl, types.String do
     resolve ->(obj, _args, _ctx) {
       obj.video_url if obj.class.name == "SimpleChatVideoMessage"
+    }
+  end
+  field :groupWithAdjacent, types.Boolean do
+    resolve ->(obj, _args, _ctx) {
+      obj.group_with_adjacent if %w[SimpleChatPictureMessage SimpleChatProductMessage].include?(obj.class.name)
     }
   end
 end

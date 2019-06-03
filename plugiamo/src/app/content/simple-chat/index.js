@@ -41,12 +41,11 @@ export default compose(
               type
               text
               title
-              picture {
-                url
-              }
+              picUrl
               url
               displayPrice
               videoUrl
+              groupWithAdjacent
             }
           }
         }

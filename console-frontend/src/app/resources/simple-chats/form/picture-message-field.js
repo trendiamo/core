@@ -1,7 +1,17 @@
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
 
-const PictureMessageForm = ({ isCropping, progress, setIsCropping, setPicture, setPictureUrl, simpleChatMessage }) => (
+const PictureMessageForm = ({
+  isCropping,
+  isFormLoading,
+  progress,
+  setIsCropping,
+  setPicture,
+  setPictureUrl,
+  simpleChatMessage,
+  onFormChange,
+}) => (
   <>
     <PictureUploader
       disabled={isCropping}
@@ -14,6 +24,18 @@ const PictureMessageForm = ({ isCropping, progress, setIsCropping, setPicture, s
       value={simpleChatMessage.picUrl || ''}
     />
     {progress && <ProgressBar progress={progress} />}
+    <FormControlLabel
+      control={
+        <Checkbox
+          checked={simpleChatMessage.groupWithAdjacent}
+          color="primary"
+          name="groupWithAdjacent"
+          onChange={onFormChange}
+        />
+      }
+      disabled={isFormLoading}
+      label="Group with adjacent"
+    />
   </>
 )
 
@@ -25,6 +47,18 @@ const PictureMessageField = ({
   simpleChatMessageIndex,
 }) => {
   const [progress, setProgress] = useState(null)
+
+  const onFormChange = useCallback(
+    event => {
+      const isCheckbox = event.target.type === 'checkbox'
+      const newSimpleChatMessage = {
+        ...simpleChatMessage,
+        [event.target.name]: isCheckbox ? event.target.checked : event.target.value,
+      }
+      onChange(newSimpleChatMessage, simpleChatMessageIndex)
+    },
+    [onChange, simpleChatMessageIndex, simpleChatMessage]
+  )
 
   const setPicture = useCallback(
     blob => {
@@ -41,6 +75,7 @@ const PictureMessageField = ({
 
   return (
     <PictureMessageForm
+      onFormChange={onFormChange}
       progress={progress}
       setIsCropping={setIsCropping}
       setPicture={setPicture}

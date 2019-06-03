@@ -47,7 +47,7 @@ const ProductItem = ({ selectInList, product, onProductClick, spotlight }) => {
 
   return (
     <ListItem onClick={onClick} selectInList={selectInList}>
-      <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', w: 101, h: 101 })} />
+      <ListImg picture={imgixUrl(product.picUrl, { fit: 'crop', w: 101, h: 101 })} />
       <ListContent>
         <Content>
           <Name>{product.name}</Name>
