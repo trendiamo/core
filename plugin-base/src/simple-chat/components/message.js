@@ -2,9 +2,9 @@ import React from 'react'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
 import timeout from 'ext/timeout'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
 import {
-  AssessmentProducts,
-  AssessmentStepOptions,
   ImgCarouselMessage,
   PictureMessage,
   ProductCarouselMessage,
@@ -12,14 +12,9 @@ import {
   TextMessage,
   VideoMessage,
 } from './message-types'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
-import { extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
 
 const MessageContainer = styled.div`
-  max-width: ${({ type }) =>
-    ['productCarousel', 'imageCarousel', 'assessmentStepOptions', 'assessmentProducts'].includes(type)
-      ? 'none'
-      : '260px'};
+  max-width: ${({ maxWidth }) => maxWidth};
   & + * {
     margin-top: 5px;
   }
@@ -33,34 +28,6 @@ const MessageContainer = styled.div`
   ${({ clickable }) => !clickable && 'pointer-events: none;'}
 `
 
-const ChatMessageTemplate = ({ data, type, show, hideAll, onClick, clickable, nothingSelected, clickActionsExist }) => (
-  <MessageContainer clickable={clickable} show={type === 'assessmentStepOptions' ? show : !hideAll && show} type={type}>
-    {type === 'SimpleChatTextMessage' ? (
-      <TextMessage
-        clickActionsExist={clickActionsExist}
-        dangerouslySetInnerHTML={{
-          __html: replaceExternalLinks(snarkdown(data)),
-        }}
-        onClick={onClick}
-      />
-    ) : type === 'SimpleChatVideoMessage' ? (
-      <VideoMessage onClick={onClick} youtubeId={data} />
-    ) : type === 'SimpleChatProductMessage' ? (
-      <ProductMessage onClick={onClick} product={data} />
-    ) : type === 'SimpleChatPictureMessage' ? (
-      <PictureMessage onClick={onClick} picUrl={data} />
-    ) : type === 'productCarousel' ? (
-      <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
-    ) : type === 'imageCarousel' ? (
-      <ImgCarouselMessage carouselType={type} imageCarousel={data} onClick={onClick} />
-    ) : type === 'assessmentStepOptions' ? (
-      <AssessmentStepOptions hideAll={hideAll} nothingSelected={nothingSelected} onClick={onClick} options={data} />
-    ) : type === 'assessmentProducts' ? (
-      <AssessmentProducts data={data} onClick={onClick} />
-    ) : null}
-  </MessageContainer>
-)
-
 const checkForSpecialImageCarousel = text => {
   const dataArray = text.split('-IMAGECAROUSEL-')
   if (dataArray.length < 2) return
@@ -72,7 +39,64 @@ const checkForSpecialImageCarousel = text => {
     }))
 }
 
-const ChatMessage = compose(
+const messageMaxWidth = ({ getMessageMaxWidthByType, type }) => {
+  const result = getMessageMaxWidthByType && getMessageMaxWidthByType(type)
+  return result || ['productCarousel', 'imageCarousel'].includes(type) ? 'none' : '260px'
+}
+
+const messageShow = ({ hideAll, getMessageShowByType, show, type }) => {
+  const result = getMessageShowByType ? getMessageShowByType(type, show) : null
+  return result == null ? !hideAll && show : result
+}
+
+const ChatMessage = ({
+  data,
+  type,
+  show,
+  hideAll,
+  messageFactory,
+  getMessageMaxWidthByType,
+  getMessageShowByType,
+  nothingSelected,
+  onClick,
+  clickable,
+  clickActionsExist,
+}) => {
+  const customMessage = messageFactory && messageFactory({ data, hideAll, nothingSelected, onClick, type })
+
+  return (
+    <MessageContainer
+      clickable={clickable}
+      maxWidth={messageMaxWidth({ getMessageMaxWidthByType, type })}
+      show={messageShow({ hideAll, getMessageShowByType, show, type })}
+      type={type}
+    >
+      {customMessage ? (
+        customMessage
+      ) : type === 'SimpleChatTextMessage' ? (
+        <TextMessage
+          clickActionsExist={clickActionsExist}
+          dangerouslySetInnerHTML={{
+            __html: replaceExternalLinks(snarkdown(data)),
+          }}
+          onClick={onClick}
+        />
+      ) : type === 'SimpleChatVideoMessage' ? (
+        <VideoMessage onClick={onClick} youtubeId={data} />
+      ) : type === 'SimpleChatProductMessage' ? (
+        <ProductMessage onClick={onClick} product={data} />
+      ) : type === 'SimpleChatPictureMessage' ? (
+        <PictureMessage onClick={onClick} picUrl={data} />
+      ) : type === 'productCarousel' ? (
+        <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
+      ) : type === 'imageCarousel' ? (
+        <ImgCarouselMessage carouselType={type} imageCarousel={data} onClick={onClick} />
+      ) : null}
+    </MessageContainer>
+  )
+}
+
+export default compose(
   withState('show', 'setShow', false),
   withState('clickable', 'setClickable', false),
   withHandlers({
@@ -123,6 +147,4 @@ const ChatMessage = compose(
       timeout.clear('messageAnimation')
     },
   })
-)(ChatMessageTemplate)
-
-export default ChatMessage
+)(ChatMessage)

@@ -1,7 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { timeout } from 'ext'
+import { h } from 'preact'
+import { timeout } from 'plugin-base'
 
 const Title = styled.div`
   font-size: 14px;

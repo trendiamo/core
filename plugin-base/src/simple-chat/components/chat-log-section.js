@@ -63,12 +63,15 @@ const ChatLogSection = compose(
     animate,
     containerRef,
     clickActionsExist,
-    logSection,
+    doneAnimation,
     hide,
     hideAll,
-    onClick,
+    logSection,
+    messageFactory,
+    getMessageMaxWidthByType,
+    getMessageShowByType,
     nothingSelected,
-    doneAnimation,
+    onClick,
     setDoneAnimation,
   }) => (
     <Container ref={containerRef}>
@@ -78,11 +81,14 @@ const ChatLogSection = compose(
           <ChatMessage
             clickActionsExist={clickActionsExist}
             doneAnimation={doneAnimation}
+            getMessageMaxWidthByType={getMessageMaxWidthByType}
+            getMessageShowByType={getMessageShowByType}
             hideAll={hideAll}
             index={index}
             isLastMessage={index === logSection.logs.length - 1}
             key={index}
             log={log}
+            messageFactory={messageFactory}
             nothingSelected={nothingSelected}
             onClick={onClick}
             setDoneAnimation={setDoneAnimation}

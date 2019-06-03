@@ -1,6 +1,6 @@
 import AssessmentProduct from './assessment-product'
-import React from 'react'
 import styled from 'styled-components'
+import { h } from 'preact'
 
 const Container = styled.div`
   align-content: baseline;
