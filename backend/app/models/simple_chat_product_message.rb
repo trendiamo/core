@@ -8,7 +8,7 @@ class SimpleChatProductMessage < SimpleChatMessage
   delegate :url, to: :pic, prefix: :pic
 
   def as_json(_options = {})
-    super.except(:pic_id).merge(attributes.slice("title", "url", "display_price"),
+    super.except(:pic_id).merge(attributes.slice("title", "url", "display_price", "group_with_adjacent"),
                                 pic_url: pic_url)
   end
 end

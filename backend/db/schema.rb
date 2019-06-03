@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190530113552) do
+ActiveRecord::Schema.define(version: 20190531093002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 20190530113552) do
     t.string "display_price"
     t.string "video_url"
     t.bigint "pic_id"
+    t.boolean "group_with_adjacent", default: false
     t.index ["account_id"], name: "index_simple_chat_messages_on_account_id"
     t.index ["pic_id"], name: "index_simple_chat_messages_on_pic_id"
     t.index ["simple_chat_step_id"], name: "index_simple_chat_messages_on_simple_chat_step_id"

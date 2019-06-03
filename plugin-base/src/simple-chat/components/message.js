@@ -89,7 +89,7 @@ const ChatMessage = compose(
           : type === 'SimpleChatProductMessage'
           ? {
               title: log.message.title,
-              picUrl: (log.message.picture && log.message.picture.url) || log.message.picUrl,
+              picUrl: log.message.picUrl,
               url: log.message.url,
               displayPrice: log.message.displayPrice,
               newTab: log.message.newTab,
@@ -97,7 +97,7 @@ const ChatMessage = compose(
           : type === 'SimpleChatVideoMessage'
           ? extractYoutubeId(log.message.videoUrl)
           : type === 'SimpleChatPictureMessage'
-          ? (log.message.picture && log.message.picture.url) || log.message.picUrl
+          ? log.message.picUrl
           : log.message[type]
       return { type, data }
     },

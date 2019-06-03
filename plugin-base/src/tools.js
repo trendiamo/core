@@ -98,7 +98,41 @@ const extractYoutubeId = message => {
   return match && match[2].length === 11 && match[2]
 }
 
+const getGroupedLogs = logs => {
+  let finalArray = []
+  let temporaryGroup = []
+  logs.forEach((log, index) => {
+    const nextLog = logs[index + 1]
+    if (
+      log.type === 'message' &&
+      (log.message.type === 'SimpleChatProductMessage' || log.message.type === 'SimpleChatPictureMessage') &&
+      log.message.groupWithAdjacent &&
+      nextLog &&
+      nextLog.type === 'message' &&
+      log.message.type === nextLog.message.type &&
+      nextLog.message.groupWithAdjacent
+    ) {
+      temporaryGroup.push(log.message)
+      return
+    }
+    if (index !== 0) {
+      const prevLog = logs[index - 1]
+      if (prevLog.type === 'message' && prevLog.message.groupWithAdjacent && temporaryGroup.length > 0) {
+        temporaryGroup.push(log.message)
+        const messageType = prevLog.message.type === 'SimpleChatPictureMessage' ? 'imageCarousel' : 'productCarousel'
+        const message = { type: messageType, [messageType]: temporaryGroup }
+        finalArray.push({ ...log, message })
+        temporaryGroup = []
+        return
+      }
+    }
+    finalArray.push(log)
+  })
+  return finalArray
+}
+
 const convertLogs = logs => {
+  logs = getGroupedLogs(logs)
   let newLog = []
   let currentList = []
   logs.map((log, index) => {

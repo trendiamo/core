@@ -177,10 +177,10 @@ const SimpleChatStep = ({
         messageType === 'SimpleChatTextMessage'
           ? { text: '' }
           : messageType === 'SimpleChatProductMessage'
-          ? { title: '', picUrl: '', url: '', displayPrice: '' }
+          ? { title: '', picUrl: '', url: '', displayPrice: '', groupWithAdjacent: false }
           : messageType === 'SimpleChatVideoMessage'
           ? { videoUrl: '' }
-          : { picUrl: '' }
+          : { picUrl: '', groupWithAdjacent: false }
       onChange(
         {
           ...simpleChatStep,

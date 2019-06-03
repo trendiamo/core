@@ -1,5 +1,6 @@
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Field, FormHelperText } from 'shared/form-elements'
 
 const ProductMessagesForm = ({
@@ -60,6 +61,18 @@ const ProductMessagesForm = ({
       value={simpleChatMessage.picUrl || ''}
     />
     {progress && <ProgressBar progress={progress} />}
+    <FormControlLabel
+      control={
+        <Checkbox
+          checked={simpleChatMessage.groupWithAdjacent}
+          color="primary"
+          name="groupWithAdjacent"
+          onChange={onFormChange}
+        />
+      }
+      disabled={isFormLoading}
+      label="Group with adjacent"
+    />
   </>
 )
 
@@ -76,7 +89,11 @@ const ProductMessageFields = ({
 
   const onFormChange = useCallback(
     event => {
-      const newSimpleChatMessage = { ...simpleChatMessage, [event.target.name]: event.target.value }
+      const isCheckbox = event.target.type === 'checkbox'
+      const newSimpleChatMessage = {
+        ...simpleChatMessage,
+        [event.target.name]: isCheckbox ? event.target.checked : event.target.value,
+      }
       onChange(newSimpleChatMessage, simpleChatMessageIndex)
     },
     [onChange, simpleChatMessageIndex, simpleChatMessage]
