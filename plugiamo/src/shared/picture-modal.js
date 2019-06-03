@@ -22,7 +22,7 @@ const styles = {
 
 const PictureModal = ({ closeModal, isOpen, url }) => (
   <Modal allowBackgroundClose closeModal={closeModal} isOpen={isOpen}>
-    <div style={styles.container}>
+    <div style={styles.container} tabIndex="-1">
       <img alt="" src={url} style={styles.image} />
     </div>
   </Modal>
