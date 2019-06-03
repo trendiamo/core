@@ -81,22 +81,38 @@ export default compose(
       }
     },
   })
-)(({ logs, title, contentRef, hideAll, onClick, chatDataChanged, clickActionsExist }) => (
-  <div>
-    {title && <Title>{title}</Title>}
-    {logs.map((logSection, index) => (
-      /* eslint-disable react/no-array-index-key */
-      <ChatLogSection
-        chatDataChanged={chatDataChanged && index === logs.length - 1}
-        clickActionsExist={clickActionsExist}
-        contentRef={contentRef}
-        hideAll={hideAll}
-        index={index}
-        key={index}
-        logSection={logSection}
-        onClick={onClick}
-        previousLogs={index > 0 && logs[index - 1]}
-      />
-    ))}
-  </div>
-))
+)(
+  ({
+    logs,
+    title,
+    contentRef,
+    messageFactory,
+    getMessageMaxWidthByType,
+    getMessageShowByType,
+    hideAll,
+    onClick,
+    chatDataChanged,
+    clickActionsExist,
+  }) => (
+    <div>
+      {title && <Title>{title}</Title>}
+      {logs.map((logSection, index) => (
+        /* eslint-disable react/no-array-index-key */
+        <ChatLogSection
+          chatDataChanged={chatDataChanged && index === logs.length - 1}
+          clickActionsExist={clickActionsExist}
+          contentRef={contentRef}
+          getMessageMaxWidthByType={getMessageMaxWidthByType}
+          getMessageShowByType={getMessageShowByType}
+          hideAll={hideAll}
+          index={index}
+          key={index}
+          logSection={logSection}
+          messageFactory={messageFactory}
+          onClick={onClick}
+          previousLogs={index > 0 && logs[index - 1]}
+        />
+      ))}
+    </div>
+  )
+)

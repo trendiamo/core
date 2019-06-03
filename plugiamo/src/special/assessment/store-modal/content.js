@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { AssessmentProducts } from 'plugin-base'
+import { AssessmentProducts } from 'special/assessment/message-types'
 import { clickAssessmentProduct } from 'special/assessment/utils'
 import { compose, withHandlers, withState } from 'recompose'
 import { h } from 'preact'

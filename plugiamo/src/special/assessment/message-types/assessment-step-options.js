@@ -1,8 +1,8 @@
-import React from 'react'
 import styled from 'styled-components'
 import Tile from './assessment-step-option'
 import { compose, withHandlers } from 'recompose'
-import { imgixUrl } from 'tools'
+import { h } from 'preact'
+import { imgixUrl } from 'plugin-base'
 
 const TilesWrapperDiv = styled.div`
   align-content: baseline;

@@ -2,9 +2,28 @@ import Cover from './cover'
 import CtaButton from 'special/bridge/cta-button'
 import isEqual from 'lodash.isequal'
 import ProgressBar from 'special/assessment/progress-bar'
+import { AssessmentProducts, AssessmentStepOptions } from 'special/assessment/message-types'
 import { ChatLogUi, timeout } from 'plugin-base'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { Fragment, h } from 'preact'
+
+const messageFactory = ({ data, hideAll, nothingSelected, onClick, type }) => {
+  if (type === 'assessmentStepOptions') {
+    return (
+      <AssessmentStepOptions hideAll={hideAll} nothingSelected={nothingSelected} onClick={onClick} options={data} />
+    )
+  } else if (type === 'assessmentProducts') {
+    return <AssessmentProducts data={data} onClick={onClick} />
+  }
+}
+
+const getMessageMaxWidthByType = type => {
+  return ['assessmentProducts', 'assessmentStepOptions'].includes(type) ? '260px' : null
+}
+
+const getMessageShowByType = (type, show) => {
+  return type === 'assessmentStepOptions' ? show : null
+}
 
 const ChatBase = ({
   assessment,
@@ -61,12 +80,15 @@ const ChatBase = ({
       clickActions={clickActions}
       contentRef={contentRef}
       data={data}
+      getMessageMaxWidthByType={getMessageMaxWidthByType}
+      getMessageShowByType={getMessageShowByType}
       handleClick={handleClick}
       handleUpdate={handleUpdate}
       hideAll={hideAll}
       initChatLog={initChatLog}
       lazyLoadActive={lazyLoadActive}
       lazyLoadingCount={lazyLoadingCount}
+      messageFactory={messageFactory}
       onScroll={handleScroll}
       onToggleContent={onToggleContent}
       persona={persona}
