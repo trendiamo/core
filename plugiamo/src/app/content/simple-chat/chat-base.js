@@ -1,12 +1,13 @@
 import Cover from './cover'
 import CtaButton from 'special/bridge/cta-button'
+import isEqual from 'lodash.isequal'
 import ProgressBar from 'special/assessment/progress-bar'
-import { ChatLogUi } from 'plugin-base'
+import { ChatLogUi, timeout } from 'plugin-base'
+import { compose, withHandlers, withProps, withState } from 'recompose'
 import { Fragment, h } from 'preact'
 
 const ChatBase = ({
   assessment,
-  assessmentOptions,
   backButtonLabel,
   bridge,
   chatLogCallbacks,
@@ -18,10 +19,14 @@ const ChatBase = ({
   data,
   FlowBackButton,
   goToPrevStep,
+  handleClick,
   handleScroll,
+  handleUpdate,
   headerConfig,
+  hideAll,
   hideCtaButton,
   hideProgressBar,
+  initChatLog,
   lazyLoadingCount,
   lazyLoadActive,
   onToggleContent,
@@ -52,13 +57,14 @@ const ChatBase = ({
     />
     {progress >= 0 && <ProgressBar hide={hideProgressBar} progress={progress} />}
     <ChatLogUi
-      assessment={assessment}
-      assessmentOptions={assessmentOptions}
-      bridge={bridge}
       chatLogCallbacks={chatLogCallbacks}
       clickActions={clickActions}
       contentRef={contentRef}
       data={data}
+      handleClick={handleClick}
+      handleUpdate={handleUpdate}
+      hideAll={hideAll}
+      initChatLog={initChatLog}
       lazyLoadActive={lazyLoadActive}
       lazyLoadingCount={lazyLoadingCount}
       onScroll={handleScroll}
@@ -82,4 +88,94 @@ const ChatBase = ({
   </Fragment>
 )
 
-export default ChatBase
+export default compose(
+  withState('hideAll', 'setHideAll', false),
+  withState('countOfRows', 'setCountOfRows', 6),
+  withState('isStore', 'setIsStore', false),
+  withProps(({ assessment, bridge }) => ({ specialFlow: assessment || bridge })),
+  withHandlers({
+    handleClick: ({ assessmentOptions, setHideAll }) => ({ type, item }) => {
+      if (type === 'assessmentOption') {
+        assessmentOptions.goToNextStep(item)
+        if (!assessmentOptions.step.multiple) setHideAll(true)
+        return true
+      }
+    },
+    initChatLog: ({
+      data,
+      products,
+      setCountOfRows,
+      countOfRows,
+      lazyLoadingCount,
+      chatLogCallbacks,
+      isStore,
+      storeLog,
+      setIsStore,
+      setHideAll,
+      assessment,
+      setChatDataChanged,
+    }) => ({ chatLog, isAssessmentUpdate, update, updateLogs, setLogs }) => {
+      if (isAssessmentUpdate) {
+        setHideAll(false)
+        if (isStore) {
+          setIsStore(false)
+        }
+        if (!isStore && storeLog && storeLog.logs) return setIsStore(true) || setLogs([storeLog])
+        setLogs([])
+      }
+      let compiledData = data
+      if (lazyLoadingCount) {
+        setCountOfRows(countOfRows + lazyLoadingCount)
+        let assessmentProducts = [...products.assessmentProducts]
+        assessmentProducts.splice(countOfRows)
+        compiledData = {
+          ...data,
+          simpleChat: {
+            simpleChatSteps: [
+              {
+                key: 'default',
+                simpleChatMessages: [
+                  ...data.simpleChat.simpleChatSteps[0].simpleChatMessages,
+                  { type: 'assessmentProducts', assessmentProducts },
+                ],
+              },
+            ],
+          },
+        }
+      }
+      const chatLogProps = {
+        data: compiledData,
+        listeners: [updateLogs],
+        callbacks: chatLogCallbacks,
+        setChatDataChanged,
+      }
+      if (!isAssessmentUpdate && update) {
+        chatLog.update(chatLogProps)
+      } else {
+        timeout.set('chatLogInit', () => (assessment ? data.simpleChat : true) && chatLog.init(chatLogProps), 0)
+      }
+    },
+  }),
+  withHandlers({
+    handleUpdate: ({ initChatLog, specialFlow, setHideAll }) => (newProps, prevProps, chatLog) => {
+      const { data, setLogs, storeLog, updateLogs } = newProps
+      if (
+        (!prevProps.storeLog || !prevProps.storeLog.logs || prevProps.storeLog.logs.length === 0) &&
+        storeLog &&
+        storeLog.logs.length > 0
+      ) {
+        timeout.set('updateStore', () => initChatLog({ chatLog, isAssessmentUpdate: true, setLogs, updateLogs }), 100)
+      }
+      if (!isEqual(prevProps.data, data)) {
+        if (specialFlow) setHideAll(true)
+        if (data.type === 'store') return true
+        timeout.set(
+          'updateChatLog',
+          () => initChatLog({ chatLog, isAssessmentUpdate: specialFlow, update: true, setLogs, updateLogs }),
+          specialFlow ? 800 : 0
+        )
+        return true
+      }
+    },
+  })
+)(ChatBase)

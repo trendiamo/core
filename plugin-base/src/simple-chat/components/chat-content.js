@@ -8,12 +8,8 @@ import { timeout } from 'ext'
 import { Title } from 'shared'
 
 export default compose(
-  withState('countOfRows', 'setCountOfRows', 6),
   withState('logs', 'setLogs', []),
-  withState('isStore', 'setIsStore', false),
-  withState('hideAll', 'setHideAll', false),
   withState('chatDataChanged', 'setChatDataChanged', false),
-  withProps(({ assessment, bridge }) => ({ specialFlow: assessment || bridge })),
   withProps(({ clickActions }) => ({ clickActionsExist: !!clickActions })),
   withProps(({ data }) => ({
     title: data.simpleChat && data.simpleChat.title,
@@ -22,73 +18,26 @@ export default compose(
     updateLogs: ({ setLogs }) => ({ data }) => setLogs(convertLogs(data)),
   }),
   withHandlers({
-    initChatLog: ({
-      data,
-      updateLogs,
-      products,
-      setCountOfRows,
-      countOfRows,
-      lazyLoadingCount,
-      chatLogCallbacks,
-      isStore,
-      storeLog,
-      setIsStore,
-      setLogs,
-      setHideAll,
-      assessment,
-      setChatDataChanged,
-    }) => ({ isAssessmentUpdate, update } = {}) => {
-      if (isAssessmentUpdate) {
-        setHideAll(false)
-        if (isStore) {
-          setIsStore(false)
-        }
-        if (!isStore && storeLog && storeLog.logs) return setIsStore(true) || setLogs([storeLog])
-        setLogs([])
-      }
-      let compiledData = data
-      if (lazyLoadingCount) {
-        setCountOfRows(countOfRows + lazyLoadingCount)
-        let assessmentProducts = [...products.assessmentProducts]
-        assessmentProducts.splice(countOfRows)
-        compiledData = {
-          ...data,
-          simpleChat: {
-            simpleChatSteps: [
-              {
-                key: 'default',
-                simpleChatMessages: [
-                  ...data.simpleChat.simpleChatSteps[0].simpleChatMessages,
-                  { type: 'assessmentProducts', assessmentProducts },
-                ],
-              },
-            ],
-          },
-        }
-      }
+    initChatLog: ({ data, initChatLog, chatLogCallbacks, setChatDataChanged, setLogs, updateLogs }) => (args = {}) => {
+      if (initChatLog) return initChatLog({ ...args, chatLog, setLogs, updateLogs })
       const chatLogProps = {
-        data: compiledData,
+        data,
         listeners: [updateLogs],
         callbacks: chatLogCallbacks,
         setChatDataChanged,
       }
-      if (!isAssessmentUpdate && update) {
-        return chatLog.update(chatLogProps)
+      if (args.update) {
+        chatLog.update(chatLogProps)
+      } else {
+        timeout.set('chatLogInit', () => chatLog.init(chatLogProps), 0)
       }
-      timeout.set('chatLogInit', () => (assessment ? data.simpleChat : true) && chatLog.init(chatLogProps), 0)
     },
   }),
   withHandlers({
-    onClick: ({
-      onStopChat,
-      configMinHeight,
-      persona,
-      clickActions,
-      data,
-      updateLogs,
-      setChatDataChanged,
-      specialFlow,
-    }) => ({ type, item }) => {
+    onClick: ({ handleClick, onStopChat, configMinHeight, persona, clickActions, data }) => ({ type, item }) => {
+      const handled = handleClick && handleClick({ type, item })
+      if (handled) return
+
       clickActions && clickActions[type]({ item, persona, flowType: data && data.flowType })
       if (type !== 'clickChatOption') return
 
@@ -98,7 +47,6 @@ export default compose(
         onStopChat()
       } else {
         chatLog.selectOption(item)
-        if (!specialFlow) chatLog.update({ data, listeners: [updateLogs], setChatDataChanged })
       }
     },
   }),
@@ -109,32 +57,19 @@ export default compose(
     },
     componentDidUpdate(prevProps) {
       const {
-        data,
-        specialFlow,
-        lazyLoadActive,
-        setLazyLoadActive,
-        initChatLog,
-        setHideAll,
         chatDataChanged,
-        setChatDataChanged,
+        data,
+        handleUpdate,
+        initChatLog,
+        lazyLoadActive,
         resetMinHeight,
-        storeLog,
+        setChatDataChanged,
+        setLazyLoadActive,
       } = this.props
-      if (
-        (!prevProps.storeLog || !prevProps.storeLog.logs || prevProps.storeLog.logs.length === 0) &&
-        storeLog &&
-        storeLog.logs.length > 0
-      ) {
-        timeout.set('updateStore', () => initChatLog({ isAssessmentUpdate: true }), 100)
-      }
+      const handled = handleUpdate && handleUpdate(this.props, prevProps, chatLog)
+      if (handled) return
       if (!isEqual(prevProps.data, data)) {
-        if (specialFlow) setHideAll(true)
-        if (data.type === 'store') return
-        return timeout.set(
-          'assessmentNextStep',
-          () => initChatLog({ isAssessmentUpdate: specialFlow, update: true }),
-          specialFlow ? 800 : 0
-        )
+        timeout.set('updateChatLog', () => initChatLog({ update: true }), 0)
       }
       if (lazyLoadActive && lazyLoadActive !== prevProps.lazyLoadActive) {
         setTimeout(initChatLog, 5)
@@ -146,36 +81,22 @@ export default compose(
       }
     },
   })
-)(
-  ({
-    assessmentOptions,
-    logs,
-    title,
-    contentRef,
-    hideAll,
-    setHideAll,
-    onClick,
-    chatDataChanged,
-    clickActionsExist,
-  }) => (
-    <div>
-      {title && <Title>{title}</Title>}
-      {logs.map((logSection, index) => (
-        /* eslint-disable react/no-array-index-key */
-        <ChatLogSection
-          assessmentOptions={assessmentOptions}
-          chatDataChanged={chatDataChanged && index === logs.length - 1}
-          clickActionsExist={clickActionsExist}
-          contentRef={contentRef}
-          hideAll={hideAll}
-          index={index}
-          key={index}
-          logSection={logSection}
-          onClick={onClick}
-          previousLogs={index > 0 && logs[index - 1]}
-          setHideAll={setHideAll}
-        />
-      ))}
-    </div>
-  )
-)
+)(({ logs, title, contentRef, hideAll, onClick, chatDataChanged, clickActionsExist }) => (
+  <div>
+    {title && <Title>{title}</Title>}
+    {logs.map((logSection, index) => (
+      /* eslint-disable react/no-array-index-key */
+      <ChatLogSection
+        chatDataChanged={chatDataChanged && index === logs.length - 1}
+        clickActionsExist={clickActionsExist}
+        contentRef={contentRef}
+        hideAll={hideAll}
+        index={index}
+        key={index}
+        logSection={logSection}
+        onClick={onClick}
+        previousLogs={index > 0 && logs[index - 1]}
+      />
+    ))}
+  </div>
+))

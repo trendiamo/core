@@ -23,12 +23,7 @@ const ChatLogSection = compose(
   withState('animate', 'setAnimate', false),
   withState('doneAnimation', 'setDoneAnimation', false),
   withHandlers({
-    onClick: ({ onClick, assessmentOptions, setHide, setHideAll }) => ({ type, item }) => {
-      if (type === 'assessmentOption') {
-        assessmentOptions.goToNextStep(item)
-        if (!assessmentOptions.step.multiple) setHideAll(true)
-        return
-      }
+    onClick: ({ onClick, setHide }) => ({ type, item }) => {
       onClick({ type, item })
       setHide(true)
     },
