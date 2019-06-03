@@ -1,8 +1,7 @@
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
-import routes from 'app/routes'
 import { ActiveColumn, EnhancedList, Picture, TableCell, Text } from 'shared/table-elements'
-import { apiPictureDestroy, apiPictureList, defaultSorting } from 'utils'
+import { apiPictureDestroy, apiPictureList } from 'utils'
 
 const columns = [
   { name: 'picture' },
@@ -21,7 +20,7 @@ const BlankState = () => (
   />
 )
 
-const tooltipTextActive = (personas, productPicks, simpleChatMessages) => {
+const tooltipTextActive = ({ personas, productPicks, simpleChatMessages }) => {
   const itemsInUse = []
   if (personas.length > 0) itemsInUse.push(`${personas.length} persona${personas.length > 1 ? 's' : ''}`)
   if (productPicks.length > 0)
@@ -33,35 +32,38 @@ const tooltipTextActive = (personas, productPicks, simpleChatMessages) => {
   )}`
 }
 
-const PicturesRow = ({ record: { url, personas, productPicks, simpleChatMessages }, highlightInactive }) => (
+const PicturesRow = ({ record, highlightInactive }) => (
   <>
     <TableCell>
-      <Picture disabled={highlightInactive} src={url} />
+      <Picture disabled={highlightInactive} src={record.url} />
     </TableCell>
     <TableCell width="100%">
       <Text disabled={highlightInactive} style={{ wordBreak: 'break-all' }}>
-        {url}
+        {record.url}
       </Text>
     </TableCell>
     <ActiveColumn
       highlightInactive={highlightInactive}
       symbolTextActive="In use"
       symbolTextInactive="Not in use"
-      tooltipTextActive={tooltipTextActive(personas, productPicks, simpleChatMessages)}
+      tooltipTextActive={tooltipTextActive(record)}
       tooltipTextInactive="Not used yet"
     />
   </>
 )
 
 const api = { fetch: apiPictureList, destroy: apiPictureDestroy }
-const picturesRoutes = { create: routes.pictureCreate, edit: routes.pictureEdit }
+const picturesRoutes = {}
+const canEditResource = ({ personas, productPicks, simpleChatMessages }) =>
+  (personas + productPicks + simpleChatMessages).length < 1
+const defaultSorting = { column: 'status', direction: 'asc' }
 const highlightInactive = ['personas', 'productPicks', 'simpleChatMessages']
 
 const PicturesList = () => (
   <EnhancedList
     api={api}
     BlankState={BlankState}
-    buttonText="Upload new"
+    canEditResource={canEditResource}
     columns={columns}
     defaultSorting={defaultSorting}
     helpStep="pictures"

@@ -32,9 +32,6 @@ const routes = {
   picturesList() {
     return '/pictures'
   },
-  pictureCreate() {
-    return '/pictures/create'
-  },
   outrosList() {
     return '/outros'
   },
