@@ -107,11 +107,15 @@ const ChatMessage = compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { setShow, index, setClickable } = this.props
-      const delay = index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER)
+      const { setShow, index, setClickable, isLastMessage, doneAnimation, setDoneAnimation } = this.props
+      const delay = doneAnimation ? 100 : index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER)
       timeout.set(
         'messageAnimation',
-        () => setShow(true) || timeout.set('messageAnimation', () => setClickable(true), 300),
+        () => {
+          setShow(true)
+          isLastMessage && setDoneAnimation(true)
+          timeout.set('messageAnimation', () => setClickable(true), 300)
+        },
         delay
       )
     },
