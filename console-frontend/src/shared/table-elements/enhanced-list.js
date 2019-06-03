@@ -16,17 +16,18 @@ import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
 
-const Actions = ({ buttonText, createRoute }) => (
-  <AppBarButton
-    color="primary"
-    component={Link}
-    style={{ display: createRoute.includes('picture') ? 'none' : 'inline-flex' }}
-    to={createRoute}
-    variant="contained"
-  >
-    {buttonText}
-  </AppBarButton>
-)
+const Actions = ({ buttonText, createRoute }) =>
+  createRoute && (
+    <AppBarButton
+      color="primary"
+      component={Link}
+      style={{ display: 'inline-flex' }}
+      to={createRoute}
+      variant="contained"
+    >
+      {buttonText}
+    </AppBarButton>
+  )
 
 const EnhancedList = ({
   api,
@@ -124,7 +125,7 @@ const EnhancedList = ({
 
   const appBarContent = useMemo(
     () => ({
-      Actions: <Actions buttonText={buttonText} createRoute={routes.create()} />,
+      Actions: <Actions buttonText={buttonText} createRoute={routes.create ? routes.create() : null} />,
       title: state.page === 0 ? title : `${title} p.${state.page + 1}`,
     }),
     [buttonText, routes, state.page, title]
@@ -213,12 +214,7 @@ const EnhancedList = ({
 
   return (
     <Section>
-      <TableToolbar
-        createRoute={routes.create()}
-        deleteRecords={deleteRecords}
-        label={title}
-        selectedIds={state.selectedIds}
-      />
+      <TableToolbar deleteRecords={deleteRecords} label={title} selectedIds={state.selectedIds} />
       <Table aria-labelledby={title}>
         <TableHead
           columns={columns}
