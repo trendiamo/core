@@ -21,6 +21,7 @@ const Container = styled.div`
 const ChatLogSection = compose(
   withState('hide', 'setHide', false),
   withState('animate', 'setAnimate', false),
+  withState('doneAnimation', 'setDoneAnimation', false),
   withHandlers({
     onClick: ({ onClick, assessmentOptions, setHide, setHideAll }) => ({ type, item }) => {
       if (type === 'assessmentOption') {
@@ -62,27 +63,43 @@ const ChatLogSection = compose(
       timeout.clear('chatLogSectionAnimate')
     },
   })
-)(({ animate, containerRef, clickActionsExist, logSection, hide, hideAll, onClick, nothingSelected }) => (
-  <Container ref={containerRef}>
-    {logSection.logs.map((log, index) =>
-      log.type === 'message' ? (
-        /* eslint-disable react/no-array-index-key */
-        <ChatMessage
-          clickActionsExist={clickActionsExist}
-          hideAll={hideAll}
-          index={index}
-          key={index}
-          log={log}
-          nothingSelected={nothingSelected}
-          onClick={onClick}
-        />
-      ) : log.type === 'option' ? (
-        /* eslint-disable react/no-array-index-key */
-        <ChatOption animate={animate} chatOption={log} hide={hide} index={index} key={index} onClick={onClick} />
-      ) : null
-    )}
-  </Container>
-))
+)(
+  ({
+    animate,
+    containerRef,
+    clickActionsExist,
+    logSection,
+    hide,
+    hideAll,
+    onClick,
+    nothingSelected,
+    doneAnimation,
+    setDoneAnimation,
+  }) => (
+    <Container ref={containerRef}>
+      {logSection.logs.map((log, index) =>
+        log.type === 'message' ? (
+          /* eslint-disable react/no-array-index-key */
+          <ChatMessage
+            clickActionsExist={clickActionsExist}
+            doneAnimation={doneAnimation}
+            hideAll={hideAll}
+            index={index}
+            isLastMessage={index === logSection.logs.length - 1}
+            key={index}
+            log={log}
+            nothingSelected={nothingSelected}
+            onClick={onClick}
+            setDoneAnimation={setDoneAnimation}
+          />
+        ) : log.type === 'option' ? (
+          /* eslint-disable react/no-array-index-key */
+          <ChatOption animate={animate} chatOption={log} hide={hide} index={index} key={index} onClick={onClick} />
+        ) : null
+      )}
+    </Container>
+  )
+)
 
 const ChatLogSection1 = props => {
   const containerRef = useRef()
