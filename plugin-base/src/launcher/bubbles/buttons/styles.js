@@ -11,10 +11,10 @@ const containerStyle = ({ position, action, launcherConfig, offset }) => ({
   ...positioning.get({ type: 'launcherBubbles', position, noStyle: true, reset: true, launcherConfig, offset }),
 })
 
-const buttonContainerStyle = margin => ({
+const buttonContainerStyle = ({ hasMargin }) => ({
   flex: 1,
   display: 'flex',
-  [margin && 'marginRight']: '10px',
+  [hasMargin && 'marginRight']: '10px',
   justifyContent: 'center',
   alignItems: 'center',
 })
