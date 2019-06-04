@@ -50,15 +50,16 @@ const BasePluginPreview = ({
     <StickyContainer>
       <Alignment width={width}>
         <Content Base={Base} position={position} showingContent={showingContent} />
-        <LauncherBubbles
-          bubbleButtons={bubbleButtons}
-          bubbleExtraText={bubbleExtraText}
-          bubbleText={bubbleText}
-          launcherConfig={compiledLauncherConfig}
-          onToggleContent={onToggleContent}
-          position={position}
-          showingContent={showingContent}
-        />
+        {!showingContent && (
+          <LauncherBubbles
+            bubbleButtons={bubbleButtons}
+            bubbleExtraText={bubbleExtraText}
+            bubbleText={bubbleText}
+            launcherConfig={compiledLauncherConfig}
+            onToggleContent={onToggleContent}
+            position={position}
+          />
+        )}
         {React.cloneElement(Launcher, { launcherConfig: compiledLauncherConfig })}
       </Alignment>
     </StickyContainer>

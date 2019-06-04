@@ -84,7 +84,7 @@ const AppBase = ({
         />
       )
     )}
-    {showingBubbles && (
+    {!showAssessmentContent && !showingContent && showingBubbles && (
       <LauncherBubbles
         data={data}
         disappear={disappear}
@@ -94,7 +94,6 @@ const AppBase = ({
         outroButtonsClick={outroButtonsClick}
         position={position}
         setDisappear={setDisappear}
-        showingContent={showingContent}
       />
     )}
     {showingLauncher && (

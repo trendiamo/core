@@ -3,7 +3,7 @@ import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
 
-const ButtonFrame = styled(props => <Frame {...omit(props, ['action', 'button', 'left', 'clicked'])} />)`
+const ButtonFrame = styled(props => <Frame {...omit(props, ['action', 'isDelayed', 'left', 'clicked', 'value'])} />)`
   height: ${({ action }) => (action === 'disappear' || action === 'fadeOut' ? '40px' : 0)};
   width: ${({ action }) => (action === 'disappear' || action === 'fadeOut' ? '100%' : 0)};
   border: 2px solid #999;
@@ -13,11 +13,11 @@ const ButtonFrame = styled(props => <Frame {...omit(props, ['action', 'button', 
   overflow: hidden;
   opacity: ${({ action }) => (action !== 'appear' ? 1 : 0)}
   ${({ action }) => action && `animation-name: _frekkls_bubble_button_${action};`}
-  animation-delay: ${({ button }) => button.appearsAfter}s;
+  animation-delay: ${({ isDelayed }) => (isDelayed ? 0.2 : 0)}s;
   animation-duration: 0.4s;
   animation-fill-mode: forwards;
-  ${({ button, clicked }) =>
-    button.value === clicked &&
+  ${({ clicked, value }) =>
+    value === clicked &&
     `
     transition: background 0.1s;
     animation-delay: 1s;

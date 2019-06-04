@@ -1,14 +1,13 @@
 import Frame from 'shared/frame'
-import keyframes from './keyframes'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
+import { keyframes, rollDuration } from './utils'
 import { positioning } from 'tools'
 
 const LauncherBubbleFrame = styled(props => (
   <Frame
     {...omit(props, [
-      'bubble',
       'bubbleTimeoutId',
       'extraBubble',
       'position',
@@ -49,8 +48,7 @@ const LauncherBubbleFrame = styled(props => (
   `}
   animation-name: ${({ animation }) =>
     animation === 'roll' ? '_frekkls_bubble_roll' : animation === 'unroll' && '_frekkls_bubble_unroll'};
-  animation-duration: ${({ animation, bubble }) =>
-    animation === 'roll' ? bubble.timeStartDuration : bubble.timeEndDuration}s;
+  animation-duration: ${rollDuration}s;
   cursor: pointer;
   outline: none;
   user-select: none;

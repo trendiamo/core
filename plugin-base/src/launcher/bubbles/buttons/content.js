@@ -33,9 +33,10 @@ const Text = styled.div`
   pointer-events: none;
 `
 
-const Content = ({ action, clicked, handleClick, button }) => (
-  <Container action={action} clicked={clicked} onClick={handleClick(button.value)}>
-    <Text>{button.message}</Text>
+const Content = ({ action, onClick, message }) => (
+  <Container action={action} onClick={onClick}>
+    <Text>{message}</Text>
   </Container>
 )
+
 export default Content

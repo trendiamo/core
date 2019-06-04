@@ -4,7 +4,6 @@ import ContentWrapper from 'content-wrapper'
 import headerConfig from 'simple-chat/components/cover/header-config'
 import Launcher from 'launcher'
 import LauncherBubbleFrame from 'launcher/bubbles/launcher-bubble-frame'
-import launcherBubbleKeyframes from 'launcher/bubbles/keyframes'
 import LauncherBubbles from 'launcher/bubbles'
 import routes from './routes'
 import Showcase from 'showcase'
@@ -56,7 +55,6 @@ export {
   withTextTyping,
   Launcher,
   LauncherBubbles,
-  launcherBubbleKeyframes,
   positioning,
   LauncherBubbleFrame,
   Frame,

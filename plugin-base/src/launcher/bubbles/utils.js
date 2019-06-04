@@ -1,4 +1,6 @@
-export default ({ position }) =>
+export const rollDuration = 0.4
+
+export const keyframes = ({ position }) =>
   `
   @keyframes _frekkls_bubble_roll {
     0%{

@@ -77,8 +77,8 @@ const positioning = {
     // which is roughly the result of both Math.cos(45 * Math.PI / 180) and Math.sin(45 * Math.PI / 180)
     this.bubblesOffset = this.bubblesOffset || launcherConfig.frameSize / 2 + 10 + (launcherConfig.size * 0.707) / 2 + 2
     return {
-      [position === 'left' ? 'left' : 'right']: this.bubblesOffset + offset.x,
-      bottom: this.bubblesOffset + launcherConfig.extraElevation + (elevation ? 50 : 0) + offset.y,
+      [position === 'left' ? 'left' : 'right']: Math.floor(this.bubblesOffset + offset.x),
+      bottom: Math.floor(this.bubblesOffset + launcherConfig.extraElevation + (elevation ? 50 : 0) + offset.y),
     }
   },
   toStyle(object) {

@@ -1,10 +1,27 @@
 import emojify from 'ext/emojify'
-import { compose, withHandlers, withProps } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
-import { LauncherBubbles as LauncherBubblesBase } from 'plugin-base'
+import { LauncherBubbles as LauncherBubblesBase, timeout } from 'plugin-base'
+
+const TIME_END = 20 // 20 seconds
+
+// emojify and pass only what we want
+const convertData = (data, step) => {
+  const newData = JSON.parse(JSON.stringify(data))
+  const oldFlow = newData.flow || newData.launcher
+  const flow = {
+    chatBubbleText: step >= 1 ? emojify(oldFlow.chatBubbleText) : null,
+    chatBubbleExtraText: step >= 2 ? emojify(oldFlow.chatBubbleExtraText) : null,
+    chatBubbleButtonNo: step >= 2 ? emojify(oldFlow.chatBubbleButtonNo) : null,
+    chatBubbleButtonYes: step >= 2 ? emojify(oldFlow.chatBubbleButtonYes) : null,
+    timeEnd: oldFlow.chatBubbleButtonNo || oldFlow.chatBubbleButtonYes ? null : TIME_END,
+  }
+
+  return { flow }
+}
 
 const LauncherBubbles = ({
-  data,
+  computedData,
   disappear,
   frameStyleStr,
   launcherConfig,
@@ -12,10 +29,9 @@ const LauncherBubbles = ({
   outroButtonsClick,
   position,
   setDisappear,
-  showingContent,
 }) => (
   <LauncherBubblesBase
-    data={data}
+    data={computedData}
     disappear={disappear}
     frameStyleStr={frameStyleStr}
     launcherConfig={launcherConfig}
@@ -23,29 +39,28 @@ const LauncherBubbles = ({
     outroButtonsClick={outroButtonsClick}
     position={position}
     setDisappear={setDisappear}
-    showingContent={showingContent}
   />
 )
 
 export default compose(
-  withProps(({ data }) => {
-    const newData = JSON.parse(JSON.stringify(data))
-    if (newData.flow) {
-      newData.flow.chatBubbleText = emojify(newData.flow.chatBubbleText)
-      newData.flow.chatBubbleExtraText = emojify(newData.flow.chatBubbleExtraText)
-    } else if (newData.launcher) {
-      newData.launcher.chatBubbleText = emojify(newData.launcher.chatBubbleText)
-      newData.launcher.chatBubbleExtraText = emojify(newData.launcher.chatBubbleExtraText)
-    }
-    return {
-      data: newData,
-    }
-  }),
+  withState('computedData', 'setComputedData', null),
   withHandlers({
     onToggleContent: ({ data, onToggleContent }) => () => {
       if (data.flow && data.flow.flowType === 'outro') return
 
       onToggleContent()
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { data, setComputedData } = this.props
+
+      setComputedData(convertData(data, 0))
+      timeout.set('LauncherBubblesUpdate', () => setComputedData(convertData(data, 1)), 500)
+      timeout.set('LauncherBubblesUpdate', () => setComputedData(convertData(data, 2)), 2000)
+    },
+    componentWillUnmount() {
+      timeout.clear('LauncherBubblesUpdate')
     },
   })
 )(LauncherBubbles)

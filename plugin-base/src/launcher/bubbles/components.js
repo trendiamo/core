@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 const TextBar = styled.div`
@@ -29,7 +30,28 @@ const TextBar = styled.div`
   }
 `
 
-const ChatBubbleBase = styled.div`
+const ChatBubbleBase = styled(({ className, message, setTextWidth, textWidth }) => {
+  const ref = useRef()
+
+  const changeTextWidth = useCallback(
+    () => {
+      const { offsetWidth } = ref.current
+      // sometimes offsetWidth is off by 1 back and forth, which would cause an infinite loop
+      if (Math.abs(textWidth - offsetWidth) > 1) setTextWidth(offsetWidth)
+      ref.current.style.transform = `translate(-${Math.floor(offsetWidth / 2)}px, 0)`
+    },
+    [setTextWidth, textWidth]
+  )
+
+  useEffect(() => {
+    ref.current.style.opacity = 1
+    changeTextWidth()
+  })
+
+  useEffect(changeTextWidth, [message, changeTextWidth])
+
+  return <div className={className} dangerouslySetInnerHTML={{ __html: message }} ref={ref} />
+})`
   font-size: 12px;
   line-height: 1.4;
   font-weight: bold;

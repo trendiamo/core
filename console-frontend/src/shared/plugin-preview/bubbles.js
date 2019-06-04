@@ -10,20 +10,12 @@ const BubblesContainer = styled.div`
 
 const offset = { x: -25, y: -10 }
 
-const Bubbles = ({
-  bubbleButtons,
-  bubbleExtraText,
-  bubbleText,
-  showingContent,
-  position,
-  onToggleContent,
-  launcherConfig,
-}) => {
+const Bubbles = ({ bubbleButtons, bubbleExtraText, bubbleText, position, onToggleContent, launcherConfig }) => {
   const data = {
     flowType: bubbleButtons && 'outro',
-    launcher: {
+    flow: {
       chatBubbleText: bubbleText,
-      ...(bubbleButtons ? { chatBubbleButtons: bubbleButtons } : { chatBubbleExtraText: bubbleExtraText }),
+      ...(bubbleButtons ? { ...bubbleButtons } : { chatBubbleExtraText: bubbleExtraText }),
     },
   }
 
@@ -35,7 +27,6 @@ const Bubbles = ({
         offset={offset}
         onClick={onToggleContent}
         position={position}
-        showingContent={showingContent}
       />
     </BubblesContainer>
   )
