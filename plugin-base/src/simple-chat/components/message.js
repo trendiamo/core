@@ -28,17 +28,6 @@ const MessageContainer = styled.div`
   ${({ clickable }) => !clickable && 'pointer-events: none;'}
 `
 
-const checkForSpecialImageCarousel = text => {
-  const dataArray = text.split('-IMAGECAROUSEL-')
-  if (dataArray.length < 2) return
-  return dataArray[1]
-    .split('- ')
-    .slice(1)
-    .map(item => ({
-      picUrl: item,
-    }))
-}
-
 const messageMaxWidth = ({ getMessageMaxWidthByType, type }) => {
   const result = getMessageMaxWidthByType && getMessageMaxWidthByType(type)
   return result || ['productCarousel', 'imageCarousel'].includes(type) ? 'none' : '260px'
@@ -103,10 +92,6 @@ export default compose(
     getDataWithType: ({ log }) => () => {
       const type = log.message.type
       if (!type) return
-      if (type === 'SimpleChatTextMessage' && log.message.text.startsWith('-IMAGECAROUSEL-')) {
-        const data = checkForSpecialImageCarousel(log.message.text)
-        if (data) return { type: 'imageCarousel', data }
-      }
       const data =
         type === 'SimpleChatTextMessage'
           ? log.message.text
