@@ -4,6 +4,7 @@ import corinthiansConfig from './corinthians'
 import eoticaConfig from './eotica'
 import frekklsDemoConfig from './frekkls-demo'
 import impressoraJatoConfig from './impressora-jato'
+import pampling from './pampling'
 import pierreCardinConfig from './pierre-cardin'
 import pionierConfig from './pionier'
 import rihappyConfig from './rihappy'
@@ -19,6 +20,7 @@ const defaultConfig = {
   onCtaClick: () => null, // action => null,
   onChatStop: () => null,
   processChatOptions: chatOptions => chatOptions,
+  processOptions: options => options,
   i18n: {
     backButton: 'Back',
     productsSelectedBy: firstName => `Products selected by ${firstName}`,
@@ -45,6 +47,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'www.eotica.com.br') return eoticaConfig
   if (location.hostname === 'www.rihappy.com.br') return rihappyConfig
   if (location.hostname === 'villadonatello.com') return villaDonatelloConfig
+  if (location.hostname === 'www.pampling.com') return pampling
   return {}
 }
 
