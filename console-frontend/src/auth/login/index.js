@@ -2,7 +2,7 @@ import auth from 'auth'
 import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
 import Link from 'shared/link'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignIn } from 'utils'
@@ -63,6 +63,16 @@ const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
 
 const Login1 = () => {
   const { enqueueSnackbar } = useSnackbar()
+
+  useEffect(
+    () => {
+      if (window.location.hash === '#confirmed')
+        enqueueSnackbar('Your e-mail was successfully verified!', { variant: 'success' })
+      if (window.location.hash === '#error')
+        enqueueSnackbar('There was a problem with your email verification', { variant: 'error' })
+    },
+    [enqueueSnackbar]
+  )
 
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
 
