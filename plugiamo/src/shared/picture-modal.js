@@ -1,6 +1,6 @@
 import Modal from './modal'
-import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
+import { useCallback, useState } from 'preact/hooks'
 
 const styles = {
   container: {
@@ -13,26 +13,35 @@ const styles = {
     bottom: 50,
     left: 0,
   },
-  image: {
+  picture: {
     width: '100%',
     height: '100%',
     objectFit: 'contain',
   },
 }
 
-const PictureModal = ({ closeModal, isOpen, url }) => (
-  <Modal allowBackgroundClose closeModal={closeModal} isOpen={isOpen}>
-    <div style={styles.container} tabIndex="-1">
-      <img alt="" src={url} style={styles.image} />
-    </div>
-  </Modal>
-)
+const PictureModal = ({ closeModal, isOpen, setIsResourceLoaded, url }) => {
+  const [isPictureLoaded, setIsPictureLoaded] = useState(false)
 
-export default compose(
-  withHandlers({
-    closeModal: ({ closeModal }) => event => {
+  const closePictureModal = useCallback(
+    event => {
       event.stopPropagation()
       closeModal()
     },
-  })
-)(PictureModal)
+    [closeModal]
+  )
+
+  const onPictureLoad = useCallback(() => {
+    setIsPictureLoaded(true)
+  }, [setIsResourceLoaded])
+
+  return (
+    <Modal allowBackgroundClose closeModal={closePictureModal} isOpen={isOpen} isResourceLoaded={isPictureLoaded}>
+      <div style={styles.container} tabIndex="-1">
+        <img alt="" onLoad={onPictureLoad} src={url} style={styles.picture} />
+      </div>
+    </Modal>
+  )
+}
+
+export default PictureModal
