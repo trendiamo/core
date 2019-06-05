@@ -52,7 +52,7 @@ const CarouselModalArrows = ({ selectedImageIndex, onLeftArrowClick, onRightArro
     >
       <RightArrowIcon
         style={{
-          display: 0 < selectedImageIndex < urlsArray.length - 1 ? 'block' : 'none',
+          display: selectedImageIndex < urlsArray.length - 1 ? 'block' : 'none',
           fill: '#fff',
           width: '42px',
           height: '42px',

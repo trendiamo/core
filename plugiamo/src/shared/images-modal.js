@@ -32,9 +32,11 @@ const ImagesModalTemplate = ({
   selectedImage,
   onTouchEnd,
   isTouch,
+  isPictureLoaded,
+  onPictureLoad,
 }) => (
   <div>
-    <Modal allowBackgroundClose={false} closeModal={closeModal} isOpen={isOpen}>
+    <Modal allowBackgroundClose={false} closeModal={closeModal} isOpen={isOpen} isResourceLoaded={isPictureLoaded}>
       {!isTouch && (
         <CarouselModalArrows
           onLeftArrowClick={onLeftArrowClick}
@@ -59,8 +61,10 @@ const ImagesModalTemplate = ({
       >
         <img
           alt=""
+          onLoad={onPictureLoad}
           src={selectedImage}
           style={{
+            opacity: isPictureLoaded ? 1 : 0,
             width: '100%',
             height: '100%',
             objectFit: 'contain',
@@ -76,6 +80,7 @@ const ImagesModal = compose(
   withState('selectedImage', 'setSelectedImage', null),
   withState('selectedImageIndex', 'setSelectedImageIndex', 0),
   withState('originalWindowWidth', 'setOriginalWindowWidth', window.innerWidth),
+  withState('isPictureLoaded', 'setIsPictureLoaded', false),
   lifecycle({
     componentDidUpdate(prevProps) {
       const { setSelectedImageIndex, index, isOpen } = this.props
@@ -99,8 +104,19 @@ const ImagesModal = compose(
       })
       setIsOpen(false)
     },
-    onLeftArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImageIndex, selectedImage, flowType }) => () => {
+    onPictureLoad: ({ setIsPictureLoaded }) => () => {
+      setIsPictureLoaded(true)
+    },
+    onLeftArrowClick: ({
+      selectedImageIndex,
+      urlsArray,
+      setSelectedImageIndex,
+      selectedImage,
+      flowType,
+      setIsPictureLoaded,
+    }) => () => {
       if (selectedImageIndex === 0) return
+      setIsPictureLoaded(false)
       setSelectedImageIndex(selectedImageIndex - 1)
       mixpanel.track('Carousel Image Switch', {
         flowType: flowType || 'simpleChat',
@@ -109,8 +125,16 @@ const ImagesModal = compose(
         urlTo: urlsArray[selectedImageIndex - 1],
       })
     },
-    onRightArrowClick: ({ selectedImageIndex, urlsArray, setSelectedImageIndex, selectedImage, flowType }) => () => {
+    onRightArrowClick: ({
+      selectedImageIndex,
+      urlsArray,
+      setSelectedImageIndex,
+      selectedImage,
+      flowType,
+      setIsPictureLoaded,
+    }) => () => {
       if (selectedImageIndex >= urlsArray.length - 1) return
+      setIsPictureLoaded(false)
       setSelectedImageIndex(selectedImageIndex + 1)
       mixpanel.track('Carousel Image Switch', {
         flowType: flowType || 'simpleChat',
@@ -132,6 +156,7 @@ const ImagesModal = compose(
       setSelectedImageIndex,
       selectedImage,
       flowType,
+      setIsPictureLoaded,
     }) => event => {
       if (isTwoFingerScroll || originalWindowWidth > window.innerWidth) return
       touchendX = event.changedTouches[0].screenX
@@ -162,6 +187,7 @@ const ImagesModal = compose(
           }
         }
       }
+      setIsPictureLoaded(false)
     },
   })
 )(ImagesModalTemplate)
