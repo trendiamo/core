@@ -5,18 +5,21 @@ import { location } from 'config'
 import { pushPath } from './flow-history'
 import { routes } from 'plugin-base'
 
+export const resolveHash = () => {
+  const result = {}
+  if (!location.hash) return result
+  const match = /trnd:([^&]+)/.exec(location.hash)
+  if (!match) return result
+  match[1].split(',').forEach(pairStr => {
+    const matches = /(.+):(.+)/.exec(pairStr)
+    result[matches[1]] = matches[2]
+  })
+  return result
+}
+
 export const optionsFromHash = () => {
-  if (!window.__trendiamoOptionsFromHash) {
-    const result = {}
-    if (!location.hash) return result
-    const match = /trnd:([^&]+)/.exec(location.hash)
-    if (!match) return result
-    match[1].split(',').forEach(pairStr => {
-      const matches = /(.+):(.+)/.exec(pairStr)
-      result[matches[1]] = matches[2]
-    })
-    window.__trendiamoOptionsFromHash = result
-  }
+  const result = resolveHash()
+  window.__trendiamoOptionsFromHash = getFrekklsConfig().processOptions(result)
   return window.__trendiamoOptionsFromHash
 }
 
