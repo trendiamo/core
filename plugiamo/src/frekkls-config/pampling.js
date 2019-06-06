@@ -21,7 +21,7 @@ export default {
     const currentModuleMatcher = moduleMatchers.find(item => item.personaId === pamplingObject.persona)
     if (!currentModuleMatcher) return options
     const currentPath =
-      location.pathname === '/'
+      location.pathname === '/' || location.pathname === '/index'
         ? currentModuleMatcher.homepagePath
         : isProductPage() && currentModuleMatcher.productsPath
     if (!currentPath) return options
