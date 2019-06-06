@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190531093002) do
+ActiveRecord::Schema.define(version: 20190606143201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20190531093002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_generated_urls_on_user_id"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer "role", default: 0
+    t.bigint "user_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_memberships_on_account_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "outros", force: :cascade do |t|
@@ -230,6 +238,8 @@ ActiveRecord::Schema.define(version: 20190531093002) do
   end
 
   add_foreign_key "generated_urls", "users"
+  add_foreign_key "memberships", "accounts"
+  add_foreign_key "memberships", "users"
   add_foreign_key "outros", "accounts"
   add_foreign_key "outros", "personas"
   add_foreign_key "outros", "users", column: "owner_id"
