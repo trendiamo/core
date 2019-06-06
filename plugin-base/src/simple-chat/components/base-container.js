@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { autoScroll } from 'ext'
-import { compose, withHandlers } from 'recompose'
 
 const ContainerDiv = styled.div`
   flex: 1;
@@ -38,15 +37,9 @@ const ContainerDiv = styled.div`
   }
 `
 
-const Container = ({ handleWheel, handleTouch, children, animateOpacity }) => (
-  <ContainerDiv animateOpacity={animateOpacity} onTouchMove={handleTouch} onWheel={handleWheel}>
-    {children}
-  </ContainerDiv>
-)
-
-export default compose(
-  withHandlers({
-    handleWheel: ({ contentRef }) => event => {
+const Container = ({ children, contentRef, animateOpacity }) => {
+  const handleWheel = useCallback(
+    event => {
       autoScroll.stop()
       const delta = event.deltaY || event.detail || event.wheelDelta
 
@@ -61,8 +54,14 @@ export default compose(
         event.preventDefault()
       }
     },
-    handleTouch: () => () => {
-      autoScroll.stop()
-    },
-  })
-)(Container)
+    [contentRef]
+  )
+
+  return (
+    <ContainerDiv animateOpacity={animateOpacity} onTouchMove={autoScroll.stop} onWheel={handleWheel}>
+      {children}
+    </ContainerDiv>
+  )
+}
+
+export default Container

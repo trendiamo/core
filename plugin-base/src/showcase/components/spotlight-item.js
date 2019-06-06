@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useCallback, useRef } from 'react'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
 import { imgixUrl, stringifyRect } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 import { transition } from 'ext'
@@ -29,41 +28,42 @@ const PersonaDescription = styled.div`
   }
 `
 
-const SpotlightItem = compose(
-  withHandlers(() => {
-    let imgRef, nameRef
-    return {
-      setImgRef: () => ref => (imgRef = ref),
-      setNameRef: () => ref => (nameRef = ref),
-      handleClick: ({ onClick, withoutPicture, spotlight }) => () => {
-        if (!withoutPicture) {
-          transition.addElement('img', imgRef)
-          transition.addElement('name', nameRef)
-        }
-        onClick(spotlight)
-      },
-    }
-  })
-)(({ setImgRef, setNameRef, spotlight, handleClick, selectInList, listSelected, withoutPicture, bordered }) => (
-  <ListItem bordered={bordered} listSelected={listSelected} onClick={handleClick} selectInList={selectInList}>
-    {!withoutPicture && (
-      <ListImg
-        animation={spotlight.persona.profilePicAnimationUrl}
-        imgRef={setImgRef}
-        picture={imgixUrl(spotlight.persona.profilePic.url, {
-          rect: stringifyRect(spotlight.persona.profilePic.picRect || spotlight.persona.picRect),
-          fit: 'crop',
-          w: 101,
-          h: 101,
-        })}
-      />
-    )}
-    <ListContent withoutPicture={withoutPicture}>
-      <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>
-      <PersonaDescription dangerouslySetInnerHTML={{ __html: spotlight.persona.description }} />
-    </ListContent>
-    <ListChevron />
-  </ListItem>
-))
+const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, withoutPicture, bordered }) => {
+  const imgRef = useRef()
+  const nameRef = useRef()
+
+  const newOnClick = useCallback(
+    () => {
+      if (!withoutPicture) {
+        transition.addElement('img', imgRef.current)
+        transition.addElement('name', nameRef.current)
+      }
+      onClick(spotlight)
+    },
+    [onClick, spotlight, withoutPicture]
+  )
+
+  return (
+    <ListItem bordered={bordered} listSelected={listSelected} onClick={newOnClick} setListSelected={setListSelected}>
+      {!withoutPicture && (
+        <ListImg
+          animation={spotlight.persona.profilePicAnimationUrl}
+          picture={imgixUrl(spotlight.persona.profilePic.url, {
+            rect: stringifyRect(spotlight.persona.profilePic.picRect || spotlight.persona.picRect),
+            fit: 'crop',
+            w: 101,
+            h: 101,
+          })}
+          ref={imgRef}
+        />
+      )}
+      <ListContent withoutPicture={withoutPicture}>
+        <PersonaName ref={nameRef}>{spotlight.persona.name}</PersonaName>
+        <PersonaDescription dangerouslySetInnerHTML={{ __html: spotlight.persona.description }} />
+      </ListContent>
+      <ListChevron />
+    </ListItem>
+  )
+}
 
 export default SpotlightItem

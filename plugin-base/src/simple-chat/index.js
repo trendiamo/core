@@ -2,8 +2,7 @@ import ChatLogUi from './chat-log-ui'
 import Container from './components/base-container'
 import Cover from './components/cover'
 import omit from 'lodash.omit'
-import React, { Fragment, useRef } from 'react'
-import { compose, withHandlers, withState } from 'recompose'
+import React, { Fragment, useCallback, useRef, useState } from 'react'
 import { ScrollLock } from 'shared'
 
 const finalCoverHeight = 90
@@ -62,41 +61,16 @@ const InnerSimpleChat = ({
 )
 
 const SimpleChat = props => {
-  const { animateOpacity, ChatBase, chatBaseProps, contentRef, Modals } = props
+  const { animateOpacity, ChatBase, coverIsMinimized, chatBaseProps, Modals, lazyLoadingCount } = props
 
-  return (
-    <Container animateOpacity={animateOpacity} contentRef={contentRef}>
-      <ScrollLock>
-        {ChatBase ? (
-          <ChatBase
-            contentRef={contentRef}
-            {...omit(props, ['ChatBase', 'chatBaseProps', 'Modals'])}
-            {...chatBaseProps}
-          />
-        ) : (
-          <InnerSimpleChat contentRef={contentRef} {...omit(props, ['ChatBase', 'chatBaseProps', 'Modals'])} />
-        )}
-        {Modals}
-      </ScrollLock>
-    </Container>
-  )
-}
+  const contentRef = useRef()
 
-const SimpleChat1 = compose(
-  withState('coverMinimized', 'setCoverMinimized', ({ coverIsMinimized }) => coverIsMinimized),
-  withState('touch', 'setTouch', true),
-  withState('lazyLoadActive', 'setLazyLoadActive', false),
-  withHandlers({
-    handleScroll: ({
-      setCoverMinimized,
-      contentRef,
-      coverMinimized,
-      coverIsMinimized,
-      setTouch,
-      touch,
-      setLazyLoadActive,
-      lazyLoadingCount,
-    }) => event => {
+  const [coverMinimized, setCoverMinimized] = useState(coverIsMinimized)
+  const [touch, setTouch] = useState(true)
+  const [lazyLoadActive, setLazyLoadActive] = useState(false)
+
+  const handleScroll = useCallback(
+    event => {
       if (coverIsMinimized !== undefined) return
       const scrollTop = event.target.scrollTop
       if (lazyLoadingCount && event.target.scrollHeight - event.target.scrollTop <= event.target.clientHeight) {
@@ -115,13 +89,38 @@ const SimpleChat1 = compose(
         }
       }
     },
-  })
-)(SimpleChat)
+    [coverIsMinimized, coverMinimized, lazyLoadingCount, touch]
+  )
 
-const SimpleChat2 = props => {
-  const contentRef = useRef()
-
-  return <SimpleChat1 {...props} contentRef={contentRef} />
+  return (
+    <Container animateOpacity={animateOpacity} contentRef={contentRef}>
+      <ScrollLock>
+        {ChatBase ? (
+          <ChatBase
+            contentRef={contentRef}
+            coverMinimized={coverMinimized}
+            handleScroll={handleScroll}
+            lazyLoadActive={lazyLoadActive}
+            setLazyLoadActive={setLazyLoadActive}
+            touch={touch}
+            {...omit(props, ['ChatBase', 'chatBaseProps', 'Modals'])}
+            {...chatBaseProps}
+          />
+        ) : (
+          <InnerSimpleChat
+            contentRef={contentRef}
+            coverMinimized={coverMinimized}
+            handleScroll={handleScroll}
+            lazyLoadActive={lazyLoadActive}
+            setLazyLoadActive={setLazyLoadActive}
+            touch={touch}
+            {...omit(props, ['ChatBase', 'chatBaseProps', 'Modals'])}
+          />
+        )}
+        {Modals}
+      </ScrollLock>
+    </Container>
+  )
 }
 
-export default SimpleChat2
+export default SimpleChat

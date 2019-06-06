@@ -1,21 +1,8 @@
-import omit from 'lodash.omit'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { compose, lifecycle, withState } from 'recompose'
 import { StyleSheetManager } from 'styled-components'
 
-const Frame = ({ children, iframeRef, isLoaded, setIframeRef, title, ...rest }) => (
-  <iframe {...omit(rest, ['setIsLoaded', 'styleStr'])} ref={setIframeRef} tabIndex="-1" title={title}>
-    {isLoaded &&
-      iframeRef &&
-      iframeRef.contentDocument &&
-      iframeRef.contentDocument.body &&
-      ReactDOM.createPortal(
-        <StyleSheetManager target={iframeRef.contentDocument.head}>{children}</StyleSheetManager>,
-        iframeRef.contentDocument.body
-      )}
-  </iframe>
-)
+const robotoFontUrl = 'https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap'
 
 const baseStyle = `
 *, *::before, *::after {
@@ -59,29 +46,38 @@ const addPlatformClass = body => {
   body.classList.add(platformClass)
 }
 
-export default compose(
-  withState('iframeRef', 'setIframeRef', null),
-  withState('isLoaded', 'setIsLoaded', false),
-  lifecycle({
-    componentDidUpdate(prevProps) {
-      const { iframeRef, setIsLoaded, styleStr } = this.props
-      if (iframeRef && iframeRef !== prevProps.iframeRef) {
-        const load = () => {
-          loadCss(
-            iframeRef.contentDocument.head,
-            'https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap'
-          )
-          addCss(iframeRef.contentDocument.head, `${baseStyle}${styleStr}`)
-          addBase(iframeRef.contentDocument.head)
-          addPlatformClass(iframeRef.contentDocument.body)
-          setIsLoaded(true)
-        }
-        if (iframeRef.contentDocument.readyState === 'complete') {
-          load()
-        } else {
-          iframeRef.onload = load
-        }
+const Frame = ({ children, styleStr, title, ...rest }) => {
+  const iframeRef = useRef()
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(
+    () => {
+      const { contentDocument } = iframeRef.current
+      const load = () => {
+        loadCss(contentDocument.head, robotoFontUrl)
+        addCss(contentDocument.head, `${baseStyle}${styleStr}`)
+        addBase(contentDocument.head)
+        addPlatformClass(contentDocument.body)
+        setIsLoaded(true)
+      }
+      if (contentDocument.readyState === 'complete') {
+        load()
+      } else {
+        iframeRef.current.onload = load
       }
     },
-  })
-)(Frame)
+    [styleStr]
+  )
+
+  return (
+    <iframe {...rest} ref={iframeRef} tabIndex="-1" title={title}>
+      {isLoaded &&
+        ReactDOM.createPortal(
+          <StyleSheetManager target={iframeRef.current.contentDocument.head}>{children}</StyleSheetManager>,
+          iframeRef.current.contentDocument.body
+        )}
+    </iframe>
+  )
+}
+
+export default Frame

@@ -1,7 +1,7 @@
 import omit from 'lodash.omit'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { animate } from 'shared/animate'
+import useIsEntering from 'shared/use-is-entering'
 import { IconChevronLeft } from 'icons'
 
 const Chevron = styled(IconChevronLeft)`
@@ -15,8 +15,8 @@ const Span = styled.span`
   vertical-align: middle;
 `
 
-const Button = animate(styled(({ ...props }) => (
-  <button type="button" {...omit(props, ['buttonConfig', 'flexibleCover', 'hide', 'isEntering', 'setIsEntering'])} />
+const Button = styled(props => (
+  <button type="button" {...omit(props, ['buttonConfig', 'flexibleCover', 'hide', 'isEntering'])} />
 ))`
   color: ${({ buttonConfig = {} }) => buttonConfig.textColor || '#aaa'};
   cursor: pointer;
@@ -51,13 +51,20 @@ const Button = animate(styled(({ ...props }) => (
   svg {
     fill: ${({ buttonConfig = {} }) => buttonConfig.textColor || '#aaa'};
   }
-`)
+`
 
 const BackButton = ({ onClick, label, backButtonConfig = {}, hide, flexibleCover }) => {
+  const isEntering = useIsEntering()
   const newOnClick = useCallback((...args) => hide || onClick(args), [hide, onClick])
 
   return (
-    <Button buttonConfig={backButtonConfig} flexibleCover={flexibleCover} hide={hide} onClick={newOnClick}>
+    <Button
+      buttonConfig={backButtonConfig}
+      flexibleCover={flexibleCover}
+      hide={hide}
+      isEntering={isEntering}
+      onClick={newOnClick}
+    >
       <Chevron />
       <Span>{label || 'Back'}</Span>
     </Button>

@@ -1,15 +1,23 @@
-import { compose, lifecycle, withState } from 'recompose'
+import { timeout } from 'ext'
+import { useEffect, useState } from 'react'
 
-const animateOnMount = (component, timeout) =>
-  compose(
-    withState('entry', 'setEntry', ({ skipEntry }) => !skipEntry),
-    lifecycle({
-      componentDidMount() {
-        const { setEntry, skipEntry } = this.props
-        if (skipEntry) return
-        setTimeout(() => setEntry(false), timeout || 10)
-      },
-    })
-  )(component)
+const useAnimateOnMount = ({ delay, skipEntry } = {}) => {
+  const [entry, setEntry] = useState(!skipEntry)
 
-export default animateOnMount
+  useEffect(
+    () => {
+      if (skipEntry) return
+      timeout.set('animateOnMount', () => setEntry(false), delay || 10)
+    },
+    [delay, skipEntry]
+  )
+
+  // useEffect(() => () => {
+  //   console.log('useAnimateOnMount clear')
+  //   timeout.clear('animateOnMount')
+  // })
+
+  return { entry }
+}
+
+export default useAnimateOnMount

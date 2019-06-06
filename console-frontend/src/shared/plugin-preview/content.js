@@ -1,5 +1,5 @@
 import omit from 'lodash.omit'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ContentWrapper, Frame } from 'plugin-base'
 
@@ -18,7 +18,7 @@ const StyledFrame = styled(props => <Frame {...omit(props, ['isEntry', 'isUnmoun
   z-index: 10;
 `
 
-const ContentContainer = ({ iframeRef, children }) => {
+const ContentContainer = ({ children }) => {
   const [isEntry, setIsEntry] = useState(true)
   useEffect(() => {
     setTimeout(() => {
@@ -26,19 +26,14 @@ const ContentContainer = ({ iframeRef, children }) => {
     }, 10)
   }, [])
 
-  return (
-    <StyledFrame iframeRef={iframeRef} isEntry={isEntry}>
-      {children}
-    </StyledFrame>
-  )
+  return <StyledFrame isEntry={isEntry}>{children}</StyledFrame>
 }
 
 const Content = ({ Base, showingContent }) => {
-  const contentRef = useRef
   if (!showingContent) return null
 
   return (
-    <ContentContainer iframeRef={contentRef}>
+    <ContentContainer>
       <ContentWrapper>{Base}</ContentWrapper>
     </ContentContainer>
   )

@@ -1,6 +1,5 @@
 import Cover from './cover'
 import CtaButton from 'special/bridge/cta-button'
-import isEqual from 'lodash.isequal'
 import ProgressBar from 'special/assessment/progress-bar'
 import { AssessmentProducts, AssessmentStepOptions } from 'special/assessment/message-types'
 import { ChatLogUi, timeout } from 'plugin-base'
@@ -40,7 +39,8 @@ const ChatBase = ({
   goToPrevStep,
   handleClick,
   handleScroll,
-  handleUpdate,
+  handleDataUpdate,
+  handleLogsUpdate,
   headerConfig,
   hideAll,
   hideCtaButton,
@@ -83,7 +83,8 @@ const ChatBase = ({
       getMessageMaxWidthByType={getMessageMaxWidthByType}
       getMessageShowByType={getMessageShowByType}
       handleClick={handleClick}
-      handleUpdate={handleUpdate}
+      handleDataUpdate={handleDataUpdate}
+      handleLogsUpdate={handleLogsUpdate}
       hideAll={hideAll}
       initChatLog={initChatLog}
       lazyLoadActive={lazyLoadActive}
@@ -179,25 +180,19 @@ export default compose(
     },
   }),
   withHandlers({
-    handleUpdate: ({ initChatLog, specialFlow, setHideAll }) => (newProps, prevProps, chatLog) => {
-      const { data, setLogs, storeLog, updateLogs } = newProps
-      if (
-        (!prevProps.storeLog || !prevProps.storeLog.logs || prevProps.storeLog.logs.length === 0) &&
-        storeLog &&
-        storeLog.logs.length > 0
-      ) {
-        timeout.set('updateStore', () => initChatLog({ chatLog, isAssessmentUpdate: true, setLogs, updateLogs }), 100)
-      }
-      if (!isEqual(prevProps.data, data)) {
-        if (specialFlow) setHideAll(true)
-        if (data.type === 'store') return true
-        timeout.set(
-          'updateChatLog',
-          () => initChatLog({ chatLog, isAssessmentUpdate: specialFlow, update: true, setLogs, updateLogs }),
-          specialFlow ? 800 : 0
-        )
-        return true
-      }
+    handleLogsUpdate: ({ initChatLog }) => ({ chatLog, setLogs, updateLogs }) => {
+      timeout.set('updateStore', () => initChatLog({ chatLog, isAssessmentUpdate: true, setLogs, updateLogs }), 100)
+      return true
+    },
+    handleDataUpdate: ({ data, initChatLog, setHideAll, specialFlow }) => ({ chatLog, setLogs, updateLogs }) => {
+      if (specialFlow) setHideAll(true)
+      if (data.type === 'store') return true
+      timeout.set(
+        'updateChatLog',
+        () => initChatLog({ chatLog, isAssessmentUpdate: specialFlow, update: true, setLogs, updateLogs }),
+        specialFlow ? 800 : 0
+      )
+      return true
     },
   })
 )(ChatBase)

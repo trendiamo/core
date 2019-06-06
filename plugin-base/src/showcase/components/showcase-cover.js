@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { CoverInner } from 'shared/cover/components'
-import { TopSlideAnimation } from 'shared/animate'
+import { TopSlideAnimation } from 'shared'
 
 const Title = styled.div`
   color: #fff;
