@@ -3,6 +3,6 @@ import history from './history'
 import Router from './router'
 import timeout from './timeout'
 import transition from './transition'
-import typeText, { withTextTyping } from './type-text'
+import useTextTyping from './use-text-typing'
 
-export { autoScroll, history, Router, transition, timeout, typeText, withTextTyping }
+export { autoScroll, history, Router, transition, timeout, useTextTyping }

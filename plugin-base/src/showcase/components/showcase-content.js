@@ -2,7 +2,7 @@ import React from 'react'
 import SpotlightItem from './spotlight-item'
 import styled from 'styled-components'
 import { List } from 'shared/list'
-import { TopSlideAnimation } from 'shared/animate'
+import { TopSlideAnimation } from 'shared'
 
 const Container = styled.div`
   flex: 1;

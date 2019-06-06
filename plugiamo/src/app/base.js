@@ -4,14 +4,14 @@ import getFrekklsConfig from 'frekkls-config'
 import LauncherBubbles from './launcher-bubbles'
 import mixpanel from 'ext/mixpanel'
 import styled from 'styled-components'
-import { animateOnMount } from 'plugin-base'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
 import { compose, withHandlers, withProps } from 'recompose'
 import { emojifyStyles } from 'ext/emojify'
 import { h } from 'preact'
 import { isSmall } from 'utils'
+import { useAnimateOnMount } from 'plugin-base'
 
-const Gradient = animateOnMount(styled.div`
+const StyledDiv = styled.div`
   z-index: 2147482998;
   position: fixed;
   width: 500px;
@@ -26,7 +26,13 @@ const Gradient = animateOnMount(styled.div`
   );
   opacity: ${({ entry }) => (entry ? 0 : 1)};
   transition: opacity 0.25s ease, transform 0.25s ease;
-`)
+`
+
+const Gradient = props => {
+  const { entry } = useAnimateOnMount()
+
+  return <StyledDiv {...props} entry={entry} />
+}
 
 const AppBaseDiv = styled.div`
   display: none;

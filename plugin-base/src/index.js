@@ -9,7 +9,7 @@ import routes from './routes'
 import Showcase from 'showcase'
 import SimpleChat from 'simple-chat'
 import SimpleChatCover from 'simple-chat/components/cover'
-import { animate, animateOnMount, BackButton, Cover, Frame, PersonaInstagram, TopSlideAnimation } from 'shared'
+import { BackButton, Cover, Frame, PersonaInstagram, TopSlideAnimation, useAnimateOnMount } from 'shared'
 import { BelowCover, CoverImg, PaddedCover, PersonaDescription } from 'shared/cover/components'
 import {
   convertLogs,
@@ -22,13 +22,12 @@ import {
   positioning,
   stringifyRect,
 } from 'tools'
-import { history, Router, timeout, transition, typeText, withTextTyping } from 'ext'
+import { history, Router, timeout, transition } from 'ext'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose, IconPlayButton } from 'icons'
 import { ProductMessage } from 'simple-chat/components/message-types'
 import { SpotlightItem } from 'showcase/components'
 
 export {
-  animate,
   BelowCover,
   ChatLogUi,
   Cover,
@@ -53,14 +52,12 @@ export {
   IconPlayButton,
   timeout,
   PersonaInstagram,
-  typeText,
-  withTextTyping,
   Launcher,
   LauncherBubbles,
   positioning,
   LauncherBubbleFrame,
   Frame,
-  animateOnMount,
+  useAnimateOnMount,
   SimpleChat,
   SpotlightItem,
   convertLogs,

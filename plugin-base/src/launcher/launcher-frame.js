@@ -1,10 +1,10 @@
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
-import { animateOnMount, Frame } from 'shared'
+import { Frame, useAnimateOnMount } from 'shared'
 
-const LauncherFrame = animateOnMount(styled(props => (
-  <Frame {...omit(props, ['position', 'entry', 'setEntry', 'showingContent', 'disappear', 'launcherConfig'])} />
+const StyledFrame = styled(props => (
+  <Frame {...omit(props, ['position', 'entry', 'showingContent', 'disappear', 'launcherConfig'])} />
 )).attrs({
   title: 'Frekkls Launcher',
 })`
@@ -26,6 +26,12 @@ const LauncherFrame = animateOnMount(styled(props => (
       visibility: hidden;
       opacity: 0;
   `}
-`)
+`
+
+const LauncherFrame = ({ skipEntry, ...props }) => {
+  const { entry } = useAnimateOnMount({ skipEntry })
+
+  return <StyledFrame {...props} entry={entry} />
+}
 
 export default LauncherFrame

@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import snarkdown from 'snarkdown'
 import styled from 'styled-components'
 import timeout from 'ext/timeout'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
 import {
   ImgCarouselMessage,
@@ -39,19 +38,74 @@ const messageShow = ({ hideAll, getMessageShowByType, show, type }) => {
 }
 
 const ChatMessage = ({
-  data,
-  type,
-  show,
-  hideAll,
-  messageFactory,
+  clickActionsExist,
+  doneAnimation,
   getMessageMaxWidthByType,
   getMessageShowByType,
+  hideAll,
+  index,
+  isLastMessage,
+  log,
+  messageFactory,
   nothingSelected,
   onClick,
-  clickable,
-  clickActionsExist,
+  setDoneAnimation,
 }) => {
+  const [show, setShow] = useState(false)
+  const [clickable, setClickable] = useState(false)
+
+  const type = useMemo(() => log.message.type, [log.message.type])
+
+  const data = useMemo(
+    () => {
+      if (!type) return
+      return type === 'SimpleChatTextMessage'
+        ? log.message.text
+        : type === 'SimpleChatProductMessage'
+        ? {
+            title: log.message.title,
+            picUrl: log.message.picUrl,
+            picRect: log.message.picRect,
+            url: log.message.url,
+            displayPrice: log.message.displayPrice,
+            newTab: log.message.newTab,
+          }
+        : type === 'SimpleChatVideoMessage'
+        ? extractYoutubeId(log.message.videoUrl)
+        : type === 'SimpleChatPictureMessage'
+        ? {
+            picUrl: log.message.picUrl,
+            picRect: log.message.picRect,
+          }
+        : log.message[type]
+    },
+    [log.message, type]
+  )
+
   const customMessage = messageFactory && messageFactory({ data, hideAll, nothingSelected, onClick, type })
+
+  useEffect(
+    () => () => {
+      timeout.clear('messageAnimation')
+    },
+    []
+  )
+
+  useEffect(
+    () => {
+      const delay = doneAnimation ? 100 : index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER)
+      timeout.set(
+        'messageAnimation',
+        () => {
+          setShow(true)
+          isLastMessage && setDoneAnimation(true)
+          timeout.set('messageAnimation', () => setClickable(true), 300)
+        },
+        delay
+      )
+    },
+    [doneAnimation, index, isLastMessage, setDoneAnimation]
+  )
 
   return (
     <MessageContainer
@@ -85,55 +139,4 @@ const ChatMessage = ({
   )
 }
 
-export default compose(
-  withState('show', 'setShow', false),
-  withState('clickable', 'setClickable', false),
-  withHandlers({
-    getDataWithType: ({ log }) => () => {
-      const type = log.message.type
-      if (!type) return
-      const data =
-        type === 'SimpleChatTextMessage'
-          ? log.message.text
-          : type === 'SimpleChatProductMessage'
-          ? {
-              title: log.message.title,
-              picUrl: log.message.picUrl,
-              picRect: log.message.picRect,
-              url: log.message.url,
-              displayPrice: log.message.displayPrice,
-              newTab: log.message.newTab,
-            }
-          : type === 'SimpleChatVideoMessage'
-          ? extractYoutubeId(log.message.videoUrl)
-          : type === 'SimpleChatPictureMessage'
-          ? {
-              picUrl: log.message.picUrl,
-              picRect: log.message.picRect,
-            }
-          : log.message[type]
-      return { type, data }
-    },
-  }),
-  withProps(({ getDataWithType }) => {
-    return getDataWithType()
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { setShow, index, setClickable, isLastMessage, doneAnimation, setDoneAnimation } = this.props
-      const delay = doneAnimation ? 100 : index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER)
-      timeout.set(
-        'messageAnimation',
-        () => {
-          setShow(true)
-          isLastMessage && setDoneAnimation(true)
-          timeout.set('messageAnimation', () => setClickable(true), 300)
-        },
-        delay
-      )
-    },
-    componentWillUnmount() {
-      timeout.clear('messageAnimation')
-    },
-  })
-)(ChatMessage)
+export default ChatMessage

@@ -1,7 +1,6 @@
 import isEqual from 'lodash.isequal'
-import React from 'react'
+import React, { forwardRef, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { IconChevronRight } from 'icons'
 import { timeout } from 'ext'
 
@@ -20,28 +19,28 @@ const Ul = styled.ul`
   padding: 0;
 `
 
-const List = compose(
-  withState('listSelected', 'setListSelected', false),
-  withState('currentObject', 'setCurrentObject', null),
-  withHandlers({
-    selectInList: ({ setListSelected }) => () => {
-      setListSelected(true)
-    },
-  }),
-  lifecycle({
-    componentDidUpdate() {
-      const { currentObject, objectForResetCheck, setListSelected, setCurrentObject } = this.props
+const List = ({ children, objectForResetCheck }) => {
+  const [listSelected, setListSelected] = useState(false)
+  const [currentObject, setCurrentObject] = useState(null)
+
+  useEffect(
+    () => {
       if (objectForResetCheck !== undefined && !isEqual(currentObject, objectForResetCheck)) {
         setListSelected(false)
         setCurrentObject(objectForResetCheck)
       }
     },
-  })
-)(({ children, selectInList, listSelected }) => (
-  <Ul>
-    {React.Children.map(children, (child, index) => React.cloneElement(child, { selectInList, listSelected, index }))}
-  </Ul>
-))
+    [currentObject, objectForResetCheck]
+  )
+
+  return (
+    <Ul>
+      {React.Children.map(children, (child, index) =>
+        React.cloneElement(child, { setListSelected, listSelected, index })
+      )}
+    </Ul>
+  )
+}
 
 // 101px makes it so 3 lines of text fit with no need for scroll
 const ListContent = styled.div`
@@ -63,36 +62,7 @@ const ListContent = styled.div`
   `}
 `
 
-const ListItem = compose(
-  withState('isClicked', 'setIsClicked', false),
-  lifecycle({
-    componentWillUnmount() {
-      timeout.clear('listItem')
-      timeout.clear('pluginClickItem')
-    },
-    componentDidUpdate() {
-      const { listSelected, isClicked, setIsClicked } = this.props
-      if (isClicked && !listSelected) {
-        setIsClicked(false)
-      }
-    },
-  }),
-  withHandlers({
-    onClick: ({ onClick, setIsClicked, selectInList, listSelected, highlight }) => () => {
-      if (!listSelected) {
-        setIsClicked(true)
-        selectInList()
-        timeout.set(
-          'pluginClickItem',
-          () => {
-            return onClick()
-          },
-          highlight ? 300 : 10
-        )
-      }
-    },
-  })
-)(styled.li`
+const Li = styled.li`
   position: relative;
   border-radius: 8px;
   box-shadow: ${({ isClicked, highlight }) =>
@@ -108,11 +78,7 @@ const ListItem = compose(
   background-color: #fff;
   backface-visibility: hidden;
   transition: all 0.3s ease-out;
-  ${({ bordered }) =>
-    bordered &&
-    `
-    border: 2px solid #fa0;
-  `}
+  ${({ bordered }) => bordered && 'border: 2px solid #fa0;'}
   @keyframes _frekkls_selected_item_highlight {
     0% {
       box-shadow: 0 1px 15px 1px #00adef;
@@ -144,20 +110,61 @@ const ListItem = compose(
     isClicked &&
     highlight &&
     `
-    transition: 0.6s all;
-    &:after{
-      content: '';
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      bottom: 0px;
-      right: 0px;
-      z-index: 1;
-      border-radius: 8px;
-      animation: _frekkls_selected_item_highlight 1.2s linear infinite;
-      animation-delay: 0.125s;
-    }`}
-`)
+      transition: 0.6s all;
+      &:after{
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        z-index: 1;
+        border-radius: 8px;
+        animation: _frekkls_selected_item_highlight 1.2s linear infinite;
+        animation-delay: 0.125s;
+      }`}
+`
+
+const ListItem = ({ bordered, children, highlight, listSelected, onClick, setListSelected }) => {
+  const [isClicked, setIsClicked] = useState(false)
+
+  useEffect(
+    () => () => {
+      timeout.clear('pluginClickItem')
+    },
+    []
+  )
+
+  useEffect(
+    () => {
+      if (isClicked && !listSelected) setIsClicked(false)
+    },
+    [isClicked, listSelected]
+  )
+
+  const newOnClick = useCallback(
+    () => {
+      if (!listSelected) {
+        setIsClicked(true)
+        setListSelected(true)
+        timeout.set('pluginClickItem', onClick, highlight ? 300 : 10)
+      }
+    },
+    [highlight, listSelected, onClick, setListSelected]
+  )
+
+  return (
+    <Li
+      bordered={bordered}
+      highlight={highlight}
+      isClicked={isClicked}
+      listSelected={listSelected}
+      onClick={newOnClick}
+    >
+      {children}
+    </Li>
+  )
+}
 
 const ImageContainer = styled.div`
   position: absolute;
@@ -206,11 +213,11 @@ const AnimatedImage = styled.img`
   }
 `
 
-const ListImg = ({ picture, animation, imgRef }) => (
-  <ImageContainer ref={imgRef}>
+const ListImg = forwardRef(({ picture, animation }, ref) => (
+  <ImageContainer ref={ref}>
     <SingleImage src={picture} />
     {animation && <AnimatedImage src={animation} />}
   </ImageContainer>
-)
+))
 
 export { List, ListContent, ListImg, ListChevron, ListItem, SingleImage, AnimatedImage }

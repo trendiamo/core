@@ -1,24 +1,41 @@
 import chatLog from 'simple-chat/chat-log'
 import ChatLogSection from './chat-log-section'
-import isEqual from 'lodash.isequal'
-import React from 'react'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { convertLogs } from 'tools'
 import { timeout } from 'ext'
 import { Title } from 'shared'
 
-export default compose(
-  withState('logs', 'setLogs', []),
-  withState('chatDataChanged', 'setChatDataChanged', false),
-  withProps(({ clickActions }) => ({ clickActionsExist: !!clickActions })),
-  withProps(({ data }) => ({
-    title: data.simpleChat && data.simpleChat.title,
-  })),
-  withHandlers({
-    updateLogs: ({ setLogs }) => ({ data }) => setLogs(convertLogs(data)),
-  }),
-  withHandlers({
-    initChatLog: ({ data, initChatLog, chatLogCallbacks, setChatDataChanged, setLogs, updateLogs }) => (args = {}) => {
+const ChatContent = ({
+  chatLogCallbacks,
+  clickActions,
+  configMinHeight,
+  contentRef,
+  data,
+  getMessageMaxWidthByType,
+  getMessageShowByType,
+  handleClick,
+  handleDataUpdate,
+  handleLogsUpdate,
+  hideAll,
+  initChatLog,
+  lazyLoadActive,
+  messageFactory,
+  onStopChat,
+  persona,
+  resetMinHeight,
+  setLazyLoadActive,
+  storeLog,
+}) => {
+  const [logs, setLogs] = useState([])
+  const [chatDataChanged, setChatDataChanged] = useState(false)
+
+  const clickActionsExist = useMemo(() => !!clickActions, [clickActions])
+  const title = useMemo(() => data.simpleChat && data.simpleChat.title, [data.simpleChat])
+
+  const updateLogs = useCallback(({ data }) => setLogs(convertLogs(data)), [])
+
+  const newInitChatLog = useCallback(
+    (args = {}) => {
       if (initChatLog) return initChatLog({ ...args, chatLog, setLogs, updateLogs })
       const chatLogProps = {
         data,
@@ -32,9 +49,11 @@ export default compose(
         timeout.set('chatLogInit', () => chatLog.init(chatLogProps), 0)
       }
     },
-  }),
-  withHandlers({
-    onClick: ({ handleClick, onStopChat, configMinHeight, persona, clickActions, data }) => ({ type, item }) => {
+    [chatLogCallbacks, data, initChatLog, updateLogs]
+  )
+
+  const onClick = useCallback(
+    ({ type, item }) => {
       const handled = handleClick && handleClick({ type, item })
       if (handled) return
 
@@ -49,51 +68,58 @@ export default compose(
         chatLog.selectOption(item)
       }
     },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { initChatLog } = this.props
-      initChatLog()
+    [clickActions, configMinHeight, data, handleClick, onStopChat, persona]
+  )
+
+  useEffect(
+    () => {
+      newInitChatLog()
+      return () => {
+        timeout.clear('chatLogInit')
+        timeout.clear('updateChatLog')
+        timeout.clear('resetChatDataChanged')
+      }
     },
-    componentDidUpdate(prevProps) {
-      const {
-        chatDataChanged,
-        data,
-        handleUpdate,
-        initChatLog,
-        lazyLoadActive,
-        resetMinHeight,
-        setChatDataChanged,
-        setLazyLoadActive,
-      } = this.props
-      const handled = handleUpdate && handleUpdate(this.props, prevProps, chatLog)
+    [newInitChatLog]
+  )
+
+  useEffect(
+    () => {
+      if (storeLog && storeLog.logs.length > 0) {
+        handleLogsUpdate && handleLogsUpdate({ chatLog, setLogs, updateLogs })
+      }
+    },
+    [handleLogsUpdate, storeLog, updateLogs]
+  )
+
+  useEffect(
+    () => {
+      const handled = handleDataUpdate && handleDataUpdate({ chatLog, setLogs, updateLogs })
       if (handled) return
-      if (!isEqual(prevProps.data, data)) {
-        timeout.set('updateChatLog', () => initChatLog({ update: true }), 0)
-      }
-      if (lazyLoadActive && lazyLoadActive !== prevProps.lazyLoadActive) {
-        setTimeout(initChatLog, 5)
-        setLazyLoadActive(false)
-      }
-      if (chatDataChanged) {
-        resetMinHeight()
-        timeout.set('resetChatDataChanged', () => setChatDataChanged(false), 5)
-      }
+      timeout.set('updateChatLog', () => newInitChatLog({ update: true }), 0)
     },
-  })
-)(
-  ({
-    logs,
-    title,
-    contentRef,
-    messageFactory,
-    getMessageMaxWidthByType,
-    getMessageShowByType,
-    hideAll,
-    onClick,
-    chatDataChanged,
-    clickActionsExist,
-  }) => (
+    [data, handleDataUpdate, newInitChatLog, updateLogs]
+  )
+
+  useEffect(
+    () => {
+      if (!lazyLoadActive) return
+      setTimeout(newInitChatLog, 5)
+      setLazyLoadActive(false)
+    },
+    [newInitChatLog, lazyLoadActive, setLazyLoadActive]
+  )
+
+  useEffect(
+    () => {
+      if (!chatDataChanged) return
+      resetMinHeight()
+      timeout.set('resetChatDataChanged', () => setChatDataChanged(false), 5)
+    },
+    [chatDataChanged, resetMinHeight]
+  )
+
+  return (
     <div>
       {title && <Title>{title}</Title>}
       {logs.map((logSection, index) => (
@@ -115,4 +141,6 @@ export default compose(
       ))}
     </div>
   )
-)
+}
+
+export default ChatContent

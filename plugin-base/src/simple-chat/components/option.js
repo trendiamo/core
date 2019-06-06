@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
 const ChatOptionText = styled.div`
   appearance: none;
@@ -38,28 +37,31 @@ const Container = styled.div`
   `}
 `
 
-const ChatOption = ({ chatOption, onClick, animate, hide, clicked }) => (
-  <Container animate={animate} clicked={clicked} hide={hide}>
-    <ChatOptionText clicked={clicked} dangerouslySetInnerHTML={{ __html: chatOption.text }} onClick={onClick} />
-  </Container>
-)
+const ChatOption = ({ chatOption, onClick, animate, hide }) => {
+  const [clicked, setClicked] = useState(false)
 
-export default compose(
-  withState('clicked', 'setClicked', false),
-  withHandlers({
-    onClick: ({ chatOption, onClick, hide, clicked, setClicked, animate }) => () => {
+  const newOnClick = useCallback(
+    () => {
       if (!clicked && !hide && animate) {
         setClicked(true)
         onClick({ type: 'clickChatOption', item: chatOption })
       }
     },
-  }),
-  lifecycle({
-    componentDidUpdate(prevProps) {
-      const { hide, setClicked } = this.props
-      if (prevProps.hide !== hide && !hide) {
-        setClicked(false)
-      }
+    [animate, chatOption, clicked, hide, onClick]
+  )
+
+  useEffect(
+    () => {
+      if (!hide) setClicked(false)
     },
-  })
-)(ChatOption)
+    [hide]
+  )
+
+  return (
+    <Container animate={animate} clicked={clicked} hide={hide}>
+      <ChatOptionText clicked={clicked} dangerouslySetInnerHTML={{ __html: chatOption.text }} onClick={newOnClick} />
+    </Container>
+  )
+}
+
+export default ChatOption

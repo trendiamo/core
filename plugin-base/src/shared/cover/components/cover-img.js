@@ -1,5 +1,5 @@
 import PersonaPlaceholderIcon from 'icons/icon-placeholder-persona.svg'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 
@@ -18,8 +18,8 @@ const CoverImgContainer = styled.div`
   overflow: hidden;
 `
 
-const CoverImg = ({ src, imgRef }) => (
-  <CoverImgContainer ref={imgRef}>{src ? <SingleImage src={src} /> : <EmptyPersonaPic />}</CoverImgContainer>
-)
+const CoverImg = forwardRef(({ src }, ref) => (
+  <CoverImgContainer ref={ref}>{src ? <SingleImage src={src} /> : <EmptyPersonaPic />}</CoverImgContainer>
+))
 
 export default CoverImg

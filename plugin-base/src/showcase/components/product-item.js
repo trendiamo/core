@@ -37,7 +37,7 @@ const DisplayPrice = styled.div`
   font-weight: bold;
 `
 
-const ProductItem = ({ selectInList, product, onProductClick, spotlight }) => {
+const ProductItem = ({ setListSelected, product, onProductClick, spotlight }) => {
   const onClick = useCallback(
     () => {
       onProductClick(product, spotlight)
@@ -46,7 +46,7 @@ const ProductItem = ({ selectInList, product, onProductClick, spotlight }) => {
   )
 
   return (
-    <ListItem onClick={onClick} selectInList={selectInList}>
+    <ListItem onClick={onClick} setListSelected={setListSelected}>
       <ListImg
         picture={imgixUrl(product.picture.url, { rect: stringifyRect(product.picRect), fit: 'crop', w: 101, h: 101 })}
       />

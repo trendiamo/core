@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { Card, CardContent, CardImg } from 'shared/card'
-import { compose, withHandlers, withProps } from 'recompose'
 import { imgixUrl, stringifyRect } from 'tools'
 
 const TitleAndPrice = styled.div`
@@ -60,24 +59,9 @@ const Link = styled.a`
 
 const defaultStyleConfig = { card: { minWidth: 260 } }
 
-const ProductMessage = ({ product, styleConfig = defaultStyleConfig, onClick, productPicUrl }) => (
-  <Link href={product.url} onClick={onClick} rel="noopener noreferrer" target="_blank">
-    <ProductCard style={styleConfig.card}>
-      <ProductImage src={productPicUrl} style={styleConfig.image} />
-      <CardContent style={styleConfig.details}>
-        <TitleAndPrice>
-          <Title style={styleConfig.detailsText}>{product.title}</Title>
-          <Price style={styleConfig.detailsPrice}>{product.displayPrice}</Price>
-        </TitleAndPrice>
-      </CardContent>
-      {product.cardCta && <CtaTextContainer>{product.cardCta}</CtaTextContainer>}
-    </ProductCard>
-  </Link>
-)
-
-export default compose(
-  withProps(({ product, styleConfig = defaultStyleConfig }) => ({
-    productPicUrl:
+const ProductMessage = ({ product, styleConfig = defaultStyleConfig, onClick }) => {
+  const productPicUrl = useMemo(
+    () =>
       product.picUrl &&
       imgixUrl(product.picUrl, {
         rect: stringifyRect(product.picRect),
@@ -85,13 +69,33 @@ export default compose(
         w: 260,
         h: styleConfig.image ? styleConfig.image.height : 180,
       }),
-  })),
-  withHandlers({
-    onClick: ({ product, onClick }) => event => {
+    [product.picRect, product.picUrl, styleConfig.image]
+  )
+
+  const newOnClick = useCallback(
+    event => {
       if (!product.newTab) {
         event.preventDefault()
       }
       onClick && onClick({ type: 'clickProduct', item: product })
     },
-  })
-)(ProductMessage)
+    [onClick, product]
+  )
+
+  return (
+    <Link href={product.url} onClick={newOnClick} rel="noopener noreferrer" target="_blank">
+      <ProductCard style={styleConfig.card}>
+        <ProductImage src={productPicUrl} style={styleConfig.image} />
+        <CardContent style={styleConfig.details}>
+          <TitleAndPrice>
+            <Title style={styleConfig.detailsText}>{product.title}</Title>
+            <Price style={styleConfig.detailsPrice}>{product.displayPrice}</Price>
+          </TitleAndPrice>
+        </CardContent>
+        {product.cardCta && <CtaTextContainer>{product.cardCta}</CtaTextContainer>}
+      </ProductCard>
+    </Link>
+  )
+}
+
+export default ProductMessage

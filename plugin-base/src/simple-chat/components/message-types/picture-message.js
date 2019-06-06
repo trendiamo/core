@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import styled from 'styled-components'
 import { Card, CardImg } from 'shared/card'
-import { compose, withHandlers, withProps } from 'recompose'
 import { imgixUrl, stringifyRect } from 'tools'
 
 const PictureCard = styled(Card)`
@@ -13,17 +12,9 @@ const Picture = styled(CardImg)`
   height: 260px;
 `
 
-const PictureMessage = ({ onPictureClick, url }) => {
-  return (
-    <PictureCard onClick={onPictureClick}>
-      <Picture src={url} />
-    </PictureCard>
-  )
-}
-
-export default compose(
-  withProps(({ picture }) => ({
-    url:
+const PictureMessage = ({ onClick, picture }) => {
+  const url = useMemo(
+    () =>
       picture.picUrl &&
       imgixUrl(picture.picUrl, {
         rect: stringifyRect(picture.picRect),
@@ -31,10 +22,20 @@ export default compose(
         w: 260,
         h: 260,
       }),
-  })),
-  withHandlers({
-    onPictureClick: ({ onClick, picture }) => () => {
-      onClick({ type: 'clickPictureMessage', item: { url: picture.picUrl, picRect: picture.picRect } })
+    [picture.picRect, picture.picUrl]
+  )
+  const onPictureClick = useCallback(
+    () => {
+      onClick({ type: 'clickPictureMessage', item: { url: picture.picUrl } })
     },
-  })
-)(PictureMessage)
+    [onClick, picture.picUrl]
+  )
+
+  return (
+    <PictureCard onClick={onPictureClick}>
+      <Picture src={url} />
+    </PictureCard>
+  )
+}
+
+export default PictureMessage

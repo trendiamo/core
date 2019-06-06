@@ -1,7 +1,6 @@
 import isEqual from 'lodash.isequal'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { timeout } from 'ext'
 
 const TilesWrapperDiv = styled.div`
@@ -12,28 +11,28 @@ const TilesWrapperDiv = styled.div`
   margin-right: -0.5rem;
 `
 
-const TilesWrapper = compose(
-  withState('listSelected', 'setListSelected', false),
-  withState('currentObject', 'setCurrentObject', null),
-  withHandlers({
-    selectInList: ({ setListSelected }) => () => {
-      setListSelected(true)
-    },
-  }),
-  lifecycle({
-    componentDidUpdate() {
-      const { currentObject, objectForResetCheck, setListSelected, setCurrentObject } = this.props
+const TilesWrapper = ({ children, objectForResetCheck }) => {
+  const [listSelected, setListSelected] = useState(false)
+  const [currentObject, setCurrentObject] = useState(null)
+
+  useEffect(
+    () => {
       if (objectForResetCheck !== undefined && !isEqual(currentObject, objectForResetCheck)) {
         setListSelected(false)
         setCurrentObject(objectForResetCheck)
       }
     },
-  })
-)(({ children, selectInList, listSelected }) => (
-  <TilesWrapperDiv>
-    {React.Children.map(children, (child, index) => React.cloneElement(child, { selectInList, listSelected, index }))}
-  </TilesWrapperDiv>
-))
+    [currentObject, objectForResetCheck]
+  )
+
+  return (
+    <TilesWrapperDiv>
+      {React.Children.map(children, (child, index) =>
+        React.cloneElement(child, { setListSelected, listSelected, index })
+      )}
+    </TilesWrapperDiv>
+  )
+}
 
 const Title = styled.div`
   font-size: 14px;
@@ -193,55 +192,54 @@ const Content = styled.div`
   `}
 `
 
-const TileDiv = ({ title, Icon, imageUrl, handleClick, isClicked, listSelected, highlight }) => (
-  <Container>
-    <Box
-      highlight={highlight}
-      imageUrl={imageUrl}
-      isClicked={isClicked}
-      listSelected={listSelected}
-      onClick={handleClick}
-    >
-      <Content imageUrl={imageUrl}>
-        {imageUrl && <Background imageUrl={imageUrl} isClicked={isClicked} />}
-        {Icon && <Icon />}
-        <Title imageUrl={imageUrl} isClicked={isClicked}>
-          {title}
-        </Title>
-      </Content>
-    </Box>
-  </Container>
-)
+const Tile = ({ highlight, Icon, imageUrl, listSelected, onClick, setListSelected, title }) => {
+  const [isClicked, setIsClicked] = useState(false)
 
-const Tile = compose(
-  withState('isClicked', 'setIsClicked', false),
-  withHandlers({
-    handleClick: ({ setIsClicked, listSelected, selectInList, onClick, highlight }) => () => {
-      if (!listSelected) {
-        setIsClicked(true)
-        selectInList()
-        timeout.set(
-          'pluginClickItem',
-          () => {
-            return onClick()
-          },
-          highlight ? 300 : 10
-        )
-      }
-    },
-  }),
-  lifecycle({
-    componentWillUnmount() {
+  useEffect(
+    () => () => {
       timeout.clear('pluginClickItem')
     },
-    componentDidUpdate() {
-      const { listSelected, isClicked, setIsClicked } = this.props
-      if (isClicked && !listSelected) {
-        setIsClicked(false)
+    []
+  )
+
+  useEffect(
+    () => {
+      if (isClicked && !listSelected) setIsClicked(false)
+    },
+    [isClicked, listSelected]
+  )
+
+  const newOnClick = useCallback(
+    () => {
+      if (!listSelected) {
+        setIsClicked(true)
+        setListSelected(true)
+        timeout.set('pluginClickItem', onClick, highlight ? 300 : 10)
       }
     },
-  })
-)(TileDiv)
+    [highlight, listSelected, onClick, setListSelected]
+  )
+
+  return (
+    <Container>
+      <Box
+        highlight={highlight}
+        imageUrl={imageUrl}
+        isClicked={isClicked}
+        listSelected={listSelected}
+        onClick={newOnClick}
+      >
+        <Content imageUrl={imageUrl}>
+          {imageUrl && <Background imageUrl={imageUrl} isClicked={isClicked} />}
+          {Icon && <Icon />}
+          <Title imageUrl={imageUrl} isClicked={isClicked}>
+            {title}
+          </Title>
+        </Content>
+      </Box>
+    </Container>
+  )
+}
 
 export { Tile, TilesWrapper }
 export default Tile
