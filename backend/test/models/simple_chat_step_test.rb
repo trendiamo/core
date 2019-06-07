@@ -9,7 +9,7 @@ class SimpleChatStepTest < ActiveSupport::TestCase
       create(:simple_chat_step_with_simple_chat_messages,
              simple_chat: simple_chat, key: Faker::Lorem.sentence)
     end
-    result = simple_chat.simple_chat_steps.each(&:attributes).pluck(:order)
+    result = simple_chat.simple_chat_steps.pluck(:order)
 
     assert_equal [1, 2, 3, 4], result
   end
@@ -25,7 +25,7 @@ class SimpleChatStepTest < ActiveSupport::TestCase
     create(:simple_chat_step_with_simple_chat_messages, simple_chat: simple_chat, order: 1)
     create(:simple_chat_step_with_simple_chat_messages, simple_chat: simple_chat, order: 3, key: Faker::Lorem.sentence)
 
-    result = simple_chat.simple_chat_steps.each(&:attributes).pluck(:order)
+    result = simple_chat.simple_chat_steps.pluck(:order)
 
     assert_equal [2, 8, 1, 3], result
   end

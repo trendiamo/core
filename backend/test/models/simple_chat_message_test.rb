@@ -6,7 +6,7 @@ class SimpleChatMessageTest < ActiveSupport::TestCase
 
     simple_chat = create(:simple_chat_with_simple_chat_steps, simple_chat_messages_count: 4)
 
-    result = simple_chat.simple_chat_steps.first.simple_chat_messages.each(&:attributes).pluck(:order)
+    result = simple_chat.simple_chat_steps.first.simple_chat_messages.pluck(:order)
 
     assert_equal [1, 2, 3, 4], result
   end
@@ -23,7 +23,7 @@ class SimpleChatMessageTest < ActiveSupport::TestCase
     create(:simple_chat_message, simple_chat_step: simple_chat_step, order: 1)
     create(:simple_chat_message, simple_chat_step: simple_chat_step, order: 3)
 
-    result = simple_chat.simple_chat_steps.first.simple_chat_messages.each(&:attributes).pluck(:order)
+    result = simple_chat.simple_chat_steps.first.simple_chat_messages.pluck(:order)
 
     assert_equal [2, 8, 1, 3], result
   end
