@@ -8,14 +8,16 @@ const auth = {
     localStorage.removeItem('CSRF-TOKEN')
     localStorage.removeItem('authUser')
     localStorage.removeItem('loggedIn')
-    this.clearAdminSessionAccount()
+    this.clearSessionData()
     window.location.href = routes.login()
   },
   getHeaders() {
-    const csrfHeader = { 'X-CSRF-TOKEN': localStorage.getItem('CSRF-TOKEN') }
-    return this.isAdmin() && window.location.pathname !== routes.admin()
-      ? { ...csrfHeader, 'X-MANAGE-ACCOUNT': this.getAdminSessionAccount().id }
-      : csrfHeader
+    const headers = {
+      'X-CSRF-TOKEN': localStorage.getItem('CSRF-TOKEN'),
+    }
+    return window.location.pathname === routes.accounts()
+      ? headers
+      : { ...headers, 'X-SESSION-ACCOUNT': this.getSessionAccount().id }
   },
   setCsrfToken(json) {
     localStorage.setItem('CSRF-TOKEN', json.token)
@@ -28,21 +30,42 @@ const auth = {
   isLoggedIn() {
     return localStorage.getItem('loggedIn') === 'true'
   },
-  setAdminSessionAccount(account) {
-    this.adminSessionAccount = account
-    localStorage.setItem('adminSessionAccount', JSON.stringify(account))
+  setSessionAccount(account) {
+    this.sessionAccount = account
+    localStorage.setItem('sessionAccount', JSON.stringify(account))
   },
-  getAdminSessionAccount() {
-    if (!this.adminSessionAccount)
-      this.adminSessionAccount = JSON.parse(localStorage.getItem('adminSessionAccount') || '{}')
-    return this.adminSessionAccount
+  getSessionAccount() {
+    if (!this.sessionAccount) this.sessionAccount = JSON.parse(localStorage.getItem('sessionAccount') || '{}')
+    return this.sessionAccount
   },
-  clearAdminSessionAccount() {
-    this.adminSessionAccount = null
-    localStorage.removeItem('adminSessionAccount')
+  clearSessionAccount() {
+    this.sessionAccount = null
+    localStorage.removeItem('sessionAccount')
+  },
+  setSessionRole(role) {
+    this.sessionRole = role
+    localStorage.setItem('sessionRole', JSON.stringify(role))
+  },
+  getSessionRole() {
+    if (!this.sessionRole) this.sessionRole = JSON.parse(localStorage.getItem('sessionRole') || '{}')
+    return this.sessionRole
+  },
+  clearSessionRole() {
+    this.sessionRole = null
+    localStorage.removeItem('sessionRole')
+  },
+  clearSessionData() {
+    this.clearSessionAccount()
+    this.clearSessionRole()
   },
   isAdmin() {
     return this.getUser().admin
+  },
+  isRole(role) {
+    return this.getSessionRole() === role
+  },
+  isSingleAccount() {
+    return !auth.isAdmin() && Object.keys(auth.getUser().roles).length === 1
   },
   listeners: [],
   removeListener(fn) {
@@ -55,7 +78,8 @@ const auth = {
     localStorage.setItem('loggedIn', true)
   },
   user: null,
-  adminSessionAccount: null,
+  sessionAccount: null,
+  sessionRole: null,
 }
 
 export default auth

@@ -77,8 +77,8 @@ const routes = {
   userEdit(id) {
     return `/account/users/${id}/edit`
   },
-  admin() {
-    return '/admin'
+  accounts() {
+    return '/accounts'
   },
   nullRoute() {
     return '/empty'

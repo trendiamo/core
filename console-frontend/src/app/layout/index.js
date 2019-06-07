@@ -53,7 +53,7 @@ const ContentWithSidebar = styled.main`
   min-height: 100vh;
 `
 
-const FilledLayout = ({ children, location }) => {
+const FilledLayout = ({ children, location, isAccountsPage }) => {
   const onboardingReady = useOnboarding(location)
 
   const [hasScrolled, setHasScrolled] = useState(false)
@@ -77,7 +77,7 @@ const FilledLayout = ({ children, location }) => {
   return (
     <Root>
       <AppFrame>
-        <Onboarding />
+        {!isAccountsPage && <Onboarding />}
         {!isWelcomePage && <AppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />}
         <ContentWithSidebar>
           <Sidebar sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
@@ -92,11 +92,15 @@ const FilledLayout = ({ children, location }) => {
 
 const Layout = ({ children, location }) => {
   const isLoggedIn = auth.isLoggedIn()
-  const isAdminPage = useMemo(() => location.pathname === routes.admin(), [location.pathname])
+  const isAccountsPage = useMemo(() => location.pathname === routes.accounts(), [location.pathname])
 
-  if (!isLoggedIn || isAdminPage) return <EmptyLayout>{children}</EmptyLayout>
+  if (!isLoggedIn || isAccountsPage) return <EmptyLayout>{children}</EmptyLayout>
 
-  return <FilledLayout location={location}>{children}</FilledLayout>
+  return (
+    <FilledLayout isAccountsPage={isAccountsPage} location={location}>
+      {children}
+    </FilledLayout>
+  )
 }
 
 export default withRouter(Layout)

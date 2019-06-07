@@ -50,23 +50,37 @@ const StyledTypography = styled(Typography)`
 
 const DeleteConfirmation = () => <StyledTypography>{'Are you sure you want to delete this account?'}</StyledTypography>
 
-const ListItem = ({ enterAccount, account, hostnames }) => (
-  <ListItemContainer>
-    <Tooltip placement="top" title="enter account">
-      <Link to={routes.root()}>
-        <StyledListItem button onClick={enterAccount}>
-          <ListItemText primary={account.name} secondary={hostnames} />
-        </StyledListItem>
-      </Link>
-    </Tooltip>
-  </ListItemContainer>
-)
+const ListItem = ({ enterAccount, account, hostnames }) => {
+  return (
+    <ListItemContainer>
+      <Tooltip placement="top" title="enter account">
+        <Link to={routes.root()}>
+          <StyledListItem button onClick={enterAccount}>
+            <ListItemText
+              primary={account.name}
+              secondary={auth.isAdmin() ? hostnames : auth.getUser().roles[account.id]}
+            />
+          </StyledListItem>
+        </Link>
+      </Tooltip>
+    </ListItemContainer>
+  )
+}
 
-const Account = ({ account, fetchRecords }) => {
+const Account = ({ account, fetchAccounts }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
-  const enterAccount = useCallback(() => auth.setAdminSessionAccount(account), [account])
-  const hostnames = useMemo(() => account.websitesAttributes[0].hostnames.join(', '), [account.websitesAttributes])
+  const enterAccount = useCallback(
+    () => {
+      auth.setSessionAccount(account)
+      auth.setSessionRole(auth.getUser().roles ? auth.getUser().roles[account.id] : '')
+    },
+    [account]
+  )
+
+  const hostnames = useMemo(() => account.websitesAttributes && account.websitesAttributes[0].hostnames.join(', '), [
+    account,
+  ])
 
   const handleDeleteButtonClick = useCallback(() => {
     setDialogOpen(true)
@@ -80,10 +94,10 @@ const Account = ({ account, fetchRecords }) => {
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (json) enqueueSnackbar(json.message, { variant: 'success' })
-        fetchRecords()
+        fetchAccounts()
       })()
     },
-    [account.id, enqueueSnackbar, fetchRecords]
+    [account.id, enqueueSnackbar, fetchAccounts]
   )
 
   const handleDialogButtonClose = useCallback(() => {
@@ -96,9 +110,11 @@ const Account = ({ account, fetchRecords }) => {
         <ListItem account={account} enterAccount={enterAccount} hostnames={hostnames} />
       </ListItemContainer>
       <DeleteButtonContainer>
-        <Button color="actions" onClick={handleDeleteButtonClick} variant="contained">
-          {'delete'}
-        </Button>
+        {auth.isAdmin() && (
+          <Button color="actions" onClick={handleDeleteButtonClick} variant="contained">
+            {'delete'}
+          </Button>
+        )}
       </DeleteButtonContainer>
       <Dialog
         content={<DeleteConfirmation />}
@@ -112,10 +128,11 @@ const Account = ({ account, fetchRecords }) => {
   )
 }
 
-const AccountsList = ({ accounts, page, setPage, totalAccountsCount, fetchRecords }) => {
+const AccountsList = ({ page, setPage, totalAccountsCount, fetchAccounts, accounts }) => {
   return (
     <>
-      {accounts && accounts.map(account => <Account account={account} fetchRecords={fetchRecords} key={account.id} />)}
+      {accounts &&
+        accounts.map(account => <Account account={account} fetchAccounts={fetchAccounts} key={account.id} />)}
       <Pagination page={page} setPage={setPage} totalRecordsCount={totalAccountsCount} />
     </>
   )

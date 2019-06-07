@@ -1,6 +1,20 @@
 class AccountPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if !user.admin?
+        user.accounts
+      else
+        scope.all
+      end
+    end
+  end
+
   def index?
-    user&.admin
+    user
+  end
+
+  def show?
+    user
   end
 
   def create?

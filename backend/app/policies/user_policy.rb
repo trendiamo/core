@@ -1,7 +1,7 @@
 class UserPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.editor? && !user&.admin
+      if user.active_membership&.editor?
         scope.none
       else
         scope
@@ -10,7 +10,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    !user&.editor? || user&.admin
+    !user.active_membership&.editor?
   end
 
   def create?

@@ -2,7 +2,7 @@ module Api
   module V1
     class AccountsController < RestAdminController
       def index
-        @accounts = Account.where("name ILIKE ?", "%#{params[:searchQuery]}%").order("name ASC")
+        @accounts = policy_scope(Account).where("name ILIKE ?", "%#{params[:searchQuery]}%").order("name ASC")
         authorize @accounts
         chain = pagination(@accounts)
         render json: chain
@@ -18,8 +18,14 @@ module Api
         end
       end
 
+      def show
+        @account = policy_scope(Account).find(params[:id])
+        authorize @account
+        render json: @account
+      end
+
       def destroy
-        @account = Account.find(params[:id])
+        @account = policy_scope(Account).find(params[:id])
         authorize @account
         if @account.destroy
           render json: { message: "Successfully removed account" }

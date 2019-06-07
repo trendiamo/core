@@ -1,7 +1,7 @@
 class WebsitePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.editor? && !user&.admin
+      if user.active_membership&.editor?
         scope.none
       else
         scope
@@ -10,7 +10,7 @@ class WebsitePolicy < ApplicationPolicy
   end
 
   def show?
-    !user&.editor? || user&.admin
+    !user.active_membership&.editor?
   end
 
   def create?
@@ -18,6 +18,6 @@ class WebsitePolicy < ApplicationPolicy
   end
 
   def update?
-    !user&.editor? || user&.admin
+    !user.active_membership&.editor?
   end
 end

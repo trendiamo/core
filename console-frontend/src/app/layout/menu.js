@@ -3,7 +3,6 @@ import DummyMenu from './dummy-menu'
 import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
 import omit from 'lodash.omit'
-import pickBy from 'lodash.pickby'
 import React, { memo, useMemo } from 'react'
 import routes from 'app/routes'
 import styled, { keyframes } from 'styled-components'
@@ -27,14 +26,12 @@ const resources = {
     icon: TuneOutlined,
     label: 'Triggers',
     class: 'triggers',
-    isOwnerScoped: true,
     route: routes.triggersList(),
   },
   showcases: {
     icon: PersonPinOutlined,
     label: 'Showcases',
     class: 'showcases',
-    isOwnerScoped: true,
     route: routes.showcasesList(),
   },
   simpleChats: {
@@ -47,14 +44,12 @@ const resources = {
     icon: AssignmentTurnedInOutlined,
     label: 'Outros',
     class: 'outros',
-    isOwnerScoped: true,
     route: routes.outrosList(),
   },
   personas: {
     icon: AccountCircleOutlined,
     label: 'Personas',
     class: 'personas',
-    isOwnerScoped: true,
     route: routes.personasList(),
   },
   pictures: {
@@ -68,14 +63,12 @@ const resources = {
     label: 'Url Generator',
     class: 'urlGenerator',
     route: routes.urlGenerator(),
-    isOwnerScoped: true,
   },
 }
 
 const resourceGroups = {
   main: {
     name: 'Main',
-    isOwnerScoped: true,
     showTitle: false,
     resources: [resources.triggers],
   },
@@ -91,22 +84,22 @@ const resourceGroups = {
   },
   tools: {
     name: 'Tools',
-    isOwnerScoped: true,
     showTitle: true,
     resources: [resources.urlGenerator],
   },
 }
 
-const permittedResourceGroups = () => {
-  if (auth.getUser().role !== 'editor' || auth.isAdmin()) return resourceGroups
-  const filteredObject = pickBy(resourceGroups, group => !group['isOwnerScoped'])
-  Object.keys(filteredObject).forEach(
-    group =>
-      (filteredObject[group]['resources'] = filteredObject[group]['resources'].filter(
-        resource => !resource['isOwnerScoped']
-      ))
-  )
-  return filteredObject
+const editorResourceGroups = {
+  modules: {
+    name: 'Modules',
+    showTitle: true,
+    resources: [resources.simpleChats],
+  },
+  basic: {
+    name: 'Basic',
+    showTitle: true,
+    resources: [resources.pictures],
+  },
 }
 
 const fade = keyframes`
@@ -244,18 +237,20 @@ const BaseMenu = withRouter(
       return <DummyMenu />
     }
 
+    const userRoleResourceGoups = useMemo(() => (auth.isRole('editor') ? editorResourceGroups : resourceGroups), [])
+
     return (
       <Container>
         <div style={{ flex: 1 }}>
           <MenuLogo sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-          {Object.keys(permittedResourceGroups()).map(group => (
-            <div key={group}>
-              <MenuItemGroup showTitle={resourceGroups[group].showTitle} sidebarOpen={sidebarOpen}>
+          {Object.keys(userRoleResourceGoups).map(groupName => (
+            <div key={groupName}>
+              <MenuItemGroup showTitle={userRoleResourceGoups[groupName].showTitle} sidebarOpen={sidebarOpen}>
                 <GroupText sidebarOpen={sidebarOpen}>
-                  {resourceGroups[group].showTitle && resourceGroups[group].name}
+                  {userRoleResourceGoups[groupName].showTitle && userRoleResourceGoups[groupName].name}
                 </GroupText>
               </MenuItemGroup>
-              {resourceGroups[group].resources.map(resource => (
+              {userRoleResourceGoups[groupName].resources.map(resource => (
                 <Item key={resource.route} resource={resource} sidebarOpen={sidebarOpen} />
               ))}
             </div>

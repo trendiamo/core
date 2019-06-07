@@ -1,7 +1,7 @@
 class OutroPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.editor? && !user&.admin
+      if user.active_membership&.editor?
         scope.none
       else
         scope
@@ -18,18 +18,18 @@ class OutroPolicy < ApplicationPolicy
   end
 
   def create?
-    !user&.editor? || user&.admin
+    !user.active_membership&.editor?
   end
 
   def update?
-    !user&.editor? || user&.admin
+    !user.active_membership&.editor?
   end
 
   def destroy?
-    !user&.editor? || user&.admin
+    !user.active_membership&.editor?
   end
 
   def duplicate?
-    !user&.editor? || user&.admin
+    !user.active_membership&.editor?
   end
 end

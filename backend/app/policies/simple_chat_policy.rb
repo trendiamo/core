@@ -1,7 +1,7 @@
 class SimpleChatPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.editor? && !user&.admin
+      if user.active_membership&.editor?
         scope.where(owner: user)
       else
         scope
@@ -14,7 +14,7 @@ class SimpleChatPolicy < ApplicationPolicy
   end
 
   def show?
-    user && (!user.editor? || user.admin || record.triggers.empty?)
+    user && (!user.active_membership&.editor? || record.triggers.empty?)
   end
 
   def create?
@@ -22,12 +22,12 @@ class SimpleChatPolicy < ApplicationPolicy
   end
 
   def update?
-    user && (!user.editor? || user.admin || record.triggers.empty?)
+    user && (!user.active_membership&.editor? || record.triggers.empty?)
   end
 
   def destroy?
     triggers_arrays = record.map { |record| record.triggers.pluck(:id) }
-    user && (!user.editor? || user.admin || triggers_arrays.flatten.empty?)
+    user && (!user.active_membership&.editor? || triggers_arrays.flatten.empty?)
   end
 
   def duplicate?

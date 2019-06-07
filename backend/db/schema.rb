@@ -216,11 +216,8 @@ ActiveRecord::Schema.define(version: 20190606143201) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.boolean "subscribed_to_newsletter", default: false, null: false
-    t.bigint "account_id"
     t.integer "onboarding_stage", default: 0
     t.boolean "admin", default: false, null: false
-    t.integer "role", default: 0
-    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -265,6 +262,5 @@ ActiveRecord::Schema.define(version: 20190606143201) do
   add_foreign_key "spotlights", "personas"
   add_foreign_key "spotlights", "showcases"
   add_foreign_key "triggers", "accounts"
-  add_foreign_key "users", "accounts"
   add_foreign_key "websites", "accounts"
 end

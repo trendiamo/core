@@ -1,7 +1,7 @@
 class GeneratedUrlPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.editor? && !user&.admin
+      if user.active_membership&.editor?
         scope.none
       else
         scope
@@ -14,6 +14,6 @@ class GeneratedUrlPolicy < ApplicationPolicy
   end
 
   def create?
-    !user&.editor? || user&.admin
+    !user.active_membership&.editor?
   end
 end

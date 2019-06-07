@@ -1,26 +1,33 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :validatable
 
-  belongs_to :account, optional: true
   has_many :generated_urls, dependent: :destroy
 
   has_many :outros, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
   has_many :showcases, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
   has_many :simple_chats, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
 
-  validates :account, presence: true, unless: :admin?
-  validate :account_set
+  has_many :memberships, dependent: :destroy
+  has_many :accounts, through: :memberships
 
-  enum role: %i[owner editor]
+  validate :memberships_empty_when_admin
 
   def as_json(_options = {})
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "profile_pic_url", "onboarding_stage", "admin",
-                               "role", "created_at", "updated_at")
-    admin? ? sliced_attributes : sliced_attributes.merge(account: { website_ids: account.website_ids })
+                               "created_at", "updated_at")
+    admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
   end
 
-  def account_set
-    errors.add(:admin, "must be false when account field is set") if !account.nil? && admin?
+  def memberships_empty_when_admin
+    errors.add(:memberships, "must be empty when user is an admin") if !memberships.empty? && admin?
+  end
+
+  def mapped_roles
+    Hash[memberships.pluck(:account_id, :role)]
+  end
+
+  def active_membership
+    memberships.find_by(account: ActsAsTenant.current_tenant)
   end
 end
