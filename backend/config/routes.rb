@@ -27,7 +27,7 @@ Rails.application.routes.draw do
           put "/users/onboarding", to: "mes#update_onboarding"
         end
 
-        resources :accounts, only: %i[index create destroy]
+        resources :accounts, only: %i[index show create destroy]
         resources :websites, only: %i[show update]
 
         get "/personas/autocomplete", to: "autocompletes#personas_autocomplete"

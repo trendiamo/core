@@ -1,5 +1,5 @@
 import Account from 'app/screens/account'
-import Admin from 'app/screens/admin'
+import Accounts from 'app/screens/accounts'
 import auth from 'auth'
 import ChangePassword from 'app/screens/change-password'
 import ForgotPassword from 'auth/forgot-password'
@@ -42,7 +42,7 @@ const PrivateRoute = ({ component, isOwnerScoped, path, ...props }) => {
   const render = useCallback(
     ({ match }) =>
       auth.isLoggedIn() ? (
-        isOwnerScoped && (auth.getUser().role === 'editor' && !auth.isAdmin()) ? (
+        isOwnerScoped && auth.isRole('editor') ? (
           React.createElement(NotFound, { match })
         ) : (
           React.createElement(component, { match })
@@ -70,7 +70,7 @@ const RedirectRoot = () => (
       <Redirect
         to={
           auth.isLoggedIn()
-            ? auth.getUser().role === 'editor' && !auth.isAdmin()
+            ? auth.isRole('editor')
               ? routes.simpleChatsList()
               : routes.triggersList()
             : routes.login()
@@ -102,7 +102,7 @@ const Routes = () => (
     <PrivateRoute component={UserCreate} exact isOwnerScoped path={routes.userCreate()} />
     <PrivateRoute component={ChangePassword} exact isOwnerScoped path={routes.passwordChange()} />
     <PrivateRoute component={UrlGenerator} exact isOwnerScoped path={routes.urlGenerator()} />
-    <PrivateRoute component={Admin} exact isOwnerScoped path={routes.admin()} />
+    <PrivateRoute component={Accounts} exact isOwnerScoped path={routes.accounts()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
     <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
     <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />

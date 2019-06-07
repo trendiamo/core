@@ -180,9 +180,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
     () => {
       ;(async () => {
         const { json, requestError } = await apiRequest(apiWebsiteShow, [
-          auth.isAdmin()
-            ? auth.getAdminSessionAccount().websitesAttributes[0].id
-            : auth.getUser().account.websiteIds[0],
+          auth.getSessionAccount().websitesAttributes[0].id,
         ])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         setHostnames(json.hostnames)

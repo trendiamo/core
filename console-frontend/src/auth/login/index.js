@@ -5,7 +5,7 @@ import Link from 'shared/link'
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
-import { apiRequest, apiSignIn } from 'utils'
+import { apiAccountsShow, apiRequest, apiSignIn } from 'utils'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -76,6 +76,11 @@ const Login1 = () => {
 
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
 
+  const requestSessionAccount = useCallback(async accountId => {
+    const { json } = await apiRequest(apiAccountsShow, [accountId])
+    return json
+  }, [])
+
   const loginSubmit = useCallback(
     event => {
       ;(async () => {
@@ -88,10 +93,19 @@ const Login1 = () => {
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (!requestError && !errors) auth.setUser(json.user)
-        if (auth.isLoggedIn()) window.location.href = auth.isAdmin() ? routes.admin() : routes.root()
+        const accountIds = !json.user.admin && Object.keys(json.user.roles)
+        if (auth.isLoggedIn()) {
+          if (auth.isSingleAccount()) {
+            const account = await requestSessionAccount(accountIds[0])
+            auth.setSessionAccount(account)
+            auth.setSessionRole(json.user.roles[accountIds[0]])
+            return (window.location.href = routes.root())
+          }
+          window.location.href = routes.accounts()
+        }
       })()
     },
-    [enqueueSnackbar, loginForm.email, loginForm.password]
+    [enqueueSnackbar, loginForm.email, loginForm.password, requestSessionAccount]
   )
 
   const setLoginValue = useCallback(event => setLoginForm({ ...loginForm, [event.target.name]: event.target.value }), [

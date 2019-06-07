@@ -7,8 +7,8 @@ module Api
       private
 
       def current_tenant
-        manage_account = current_user&.admin && Account.find_by(id: request.headers["X-Manage-Account"])
-        set_current_tenant(manage_account || current_user&.account)
+        session_account = Account.find_by(id: request.headers["X-Session-Account"])
+        set_current_tenant(session_account)
       end
 
       def add_pagination_headers(chain, range)

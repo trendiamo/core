@@ -7,7 +7,7 @@ const editorRoleOrder = ['simpleChats', 'pictures']
 
 const nonEditorRoleOrder = ['triggers', 'showcases', 'simpleChats', 'outros', 'pictures', 'personas']
 
-const order = auth.getUser().role === 'editor' ? editorRoleOrder : nonEditorRoleOrder
+const order = auth.isRole('editor') ? editorRoleOrder : nonEditorRoleOrder
 
 const editorRoleSteps = {
   simpleChats: {
@@ -71,6 +71,6 @@ const nonEditorRoleSteps = {
   },
 }
 
-const steps = auth.getUser().role === 'editor' ? editorRoleSteps : nonEditorRoleSteps
+const steps = auth.isRole('editor') ? editorRoleSteps : nonEditorRoleSteps
 
 export default { steps, order }

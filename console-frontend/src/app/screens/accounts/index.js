@@ -51,7 +51,7 @@ const signOutButtonClick = async () => {
   auth.clear()
 }
 
-const Admin = () => {
+const Accounts = () => {
   const { enqueueSnackbar } = useSnackbar()
   const [page, setPage] = useState(0)
   const [totalAccountsCount, setTotalAccountsCount] = useState(0)
@@ -136,7 +136,7 @@ const Admin = () => {
     []
   )
 
-  const fetchRecords = useCallback(
+  const fetchAccounts = useCallback(
     () => {
       ;(async () => {
         const { json, requestError, response } = await apiRequest(apiAccountList, [{ ...query, searchQuery }])
@@ -157,7 +157,7 @@ const Admin = () => {
     [debouncedAutocomplete, setSearchValue, setPage]
   )
 
-  useEffect(fetchRecords, [fetchRecords])
+  useEffect(fetchAccounts, [fetchAccounts])
 
   if (!fetched) return <CircularProgress />
 
@@ -213,7 +213,7 @@ const Admin = () => {
               {accounts && accounts.length ? (
                 <AccountsList
                   accounts={accounts}
-                  fetchRecords={fetchRecords}
+                  fetchAccounts={fetchAccounts}
                   page={page}
                   setPage={setPage}
                   totalAccountsCount={totalAccountsCount}
@@ -229,4 +229,4 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default Accounts

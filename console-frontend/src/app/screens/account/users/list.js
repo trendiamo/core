@@ -26,7 +26,9 @@ const BlankState = () => (
   </Section>
 )
 
-const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, role } }) => {
+const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles } }) => {
+  const role = useMemo(() => roles[auth.getSessionAccount().id], [roles])
+
   const initials = useMemo(() => (!firstName || !lastName ? null : `${firstName[0]}${lastName[0]}`), [
     firstName,
     lastName,

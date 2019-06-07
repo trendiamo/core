@@ -1,11 +1,13 @@
 class Account < ApplicationRecord
-  has_many :users, dependent: :destroy
   has_many :websites, dependent: :destroy
   has_many :personas, dependent: :destroy
   has_many :pictures, dependent: :destroy
 
   has_many :simple_chat_steps, dependent: :destroy
   has_many :simple_chat_messages, dependent: :destroy
+
+  has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
 
   accepts_nested_attributes_for :websites, allow_destroy: true
 

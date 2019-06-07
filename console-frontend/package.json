@@ -15,7 +15,6 @@
     "lodash.findindex": "^4.6.0",
     "lodash.isempty": "^4.4.0",
     "lodash.omit": "^4.5.0",
-    "lodash.pickby": "^4.6.0",
     "lodash.snakecase": "^4.1.1",
     "lodash.trim": "^4.5.1",
     "notistack": "^0.8.2",
