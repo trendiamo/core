@@ -93,7 +93,7 @@ const Login1 = () => {
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (!requestError && !errors) auth.setUser(json.user)
-        const accountIds = !json.user.admin && Object.keys(json.user.roles)
+        const accountIds = json.user && !json.user.admin && Object.keys(json.user.roles)
         if (auth.isLoggedIn()) {
           if (auth.isSingleAccount()) {
             const account = await requestSessionAccount(accountIds[0])
