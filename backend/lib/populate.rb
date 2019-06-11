@@ -139,6 +139,7 @@ class Populate
   def process
     create_account
     create_users
+    create_memberships
     create_websites
     ActsAsTenant.default_tenant = Account.where(name: "Trendiamo Demo").first
     create_personas
@@ -187,11 +188,17 @@ class Populate
   def create_users
     users_attrs = team_members.map do |team_member|
       user = user_format(team_member)
-      user[:account] = Account.where(name: "Trendiamo Demo").first unless team_member[:admin]
       user[:admin] = team_member[:admin] == true
       user
     end
     User.create!(users_attrs)
+  end
+
+  def create_memberships
+    User.where(admin: false).each do |user|
+      Membership.create!(account: Account.where(name: "Trendiamo Demo").first,
+                         user: user, role: "owner")
+    end
   end
 
   def create_personas
