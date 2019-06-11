@@ -15,7 +15,7 @@ export default {
       localStorage.setItem('trnd-pampling', JSON.stringify({ path, persona }))
     }
     if (
-      !document.referrer.startsWith('https://pampling.com') &&
+      !document.referrer.startsWith('https://www.pampling.com') &&
       !persona &&
       !path &&
       localStorage.getItem('trnd-pampling')
