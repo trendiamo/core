@@ -15,7 +15,7 @@ class User < ApplicationRecord
   def as_json(_options = {})
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "profile_pic_url", "onboarding_stage", "admin",
-                               "created_at", "updated_at")
+                               "pic_rect", "created_at", "updated_at")
     admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
   end
 

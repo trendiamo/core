@@ -7,6 +7,7 @@ import ReactDropzone from 'react-dropzone'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { Button, FormControl, InputLabel } from '@material-ui/core'
+import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const Container = styled.div`
   margin-bottom: 1rem;
@@ -59,6 +60,7 @@ const StyledDropzone = styled(FilteredReactDropzone)`
 `
 
 const Img = styled.img`
+  object-fit: contain;
   background-color: ${({ src }) => (src ? 'transparent' : '#f5f5f5')};
   border: ${({ src }) => (src ? 'none' : 'dashed 2px')};
   border-radius: ${({ circle }) => (circle ? '50%' : 'none')};
@@ -127,10 +129,10 @@ const BasePictureUploader = ({
   label,
   modalOpen,
   onCancelClick,
-  onClick,
+  onDropzoneClick,
   onCropChange,
   onCropComplete,
-  onDoneClick,
+  onCropDoneClick,
   onFileUpload,
   onModalClose,
   onPictureLoaded,
@@ -141,6 +143,9 @@ const BasePictureUploader = ({
   required = false,
   setModalOpen,
   circle,
+  onGalleryDoneClick,
+  progress,
+  value,
 }) => (
   <>
     <PicturesModal
@@ -149,14 +154,16 @@ const BasePictureUploader = ({
       onCancelClick={onCancelClick}
       onCropChange={onCropChange}
       onCropComplete={onCropComplete}
-      onDoneClick={onDoneClick}
+      onCropDoneClick={onCropDoneClick}
       onFileUpload={onFileUpload}
+      onGalleryDoneClick={onGalleryDoneClick}
       onModalClose={onModalClose}
       onPictureLoaded={onPictureLoaded}
       open={modalOpen}
-      picturePreview={picture && picture.preview}
+      picture={picture}
       picturePreviewRef={picturePreviewRef}
       previewPicture={previewPicture}
+      progress={progress}
       setOpen={setModalOpen}
     />
     <Container>
@@ -167,9 +174,9 @@ const BasePictureUploader = ({
           circle={circle}
           disabled={disabled}
           multiple={false}
-          onClick={onClick}
+          onClick={onDropzoneClick}
           onFileUpload={onFileUpload}
-          previewPicture={previewPicture}
+          previewPicture={imgixUrl(value.picUrl, { rect: stringifyRect(value.picRect) })}
         />
       </FormControl>
       {(picture || previewPicture) && (picture ? doneCropping : true) && (

@@ -18,7 +18,8 @@ class Showcase < ApplicationRecord
     attributes
       .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "created_at",
              "updated_at", "lock_version")
-      .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name },
+      .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name,
+                        pic_rect: persona.pic_rect, },
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",
              trigger_ids: triggers.ids)
@@ -42,20 +43,24 @@ class Showcase < ApplicationRecord
       instagram_url: spotlight.persona.instagram_url,
       profile_pic_url: spotlight.persona.profile_pic_url,
       profile_pic_animation_url: spotlight.persona.profile_pic_animation_url,
+      pic_rect: spotlight.persona.pic_rect,
     }
   end
 
   def product_picks_attributes(product_picks)
-    product_picks.order(:order).map do |product_pick|
-      {
-        id: product_pick.id,
-        url: product_pick.url,
-        name: product_pick.name,
-        description: product_pick.description,
-        display_price: product_pick.display_price,
-        pic_url: product_pick.pic_url,
-      }
-    end
+    product_picks.order(:order).map { |product_pick| product_pick_attributes(product_pick) }
+  end
+
+  def product_pick_attributes(product_pick)
+    {
+      id: product_pick.id,
+      url: product_pick.url,
+      name: product_pick.name,
+      description: product_pick.description,
+      display_price: product_pick.display_price,
+      pic_url: product_pick.pic_url,
+      pic_rect: product_pick.pic_rect,
+    }
   end
 
   def paths

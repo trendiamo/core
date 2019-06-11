@@ -5,6 +5,7 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import { apiUserDestroy, apiUserList } from 'utils'
 import { Avatar, EnhancedList, TableCell } from 'shared/table-elements'
+import { imgixUrl, stringifyRect } from 'plugin-base'
 import { Typography } from '@material-ui/core'
 
 const StyledAvatar = styled(Avatar)`
@@ -26,7 +27,7 @@ const BlankState = () => (
   </Section>
 )
 
-const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles } }) => {
+const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles, picRect } }) => {
   const role = useMemo(() => roles[auth.getSessionAccount().id], [roles])
 
   const initials = useMemo(() => (!firstName || !lastName ? null : `${firstName[0]}${lastName[0]}`), [
@@ -37,7 +38,9 @@ const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles }
   return (
     <>
       <TableCell>
-        <StyledAvatar src={profilePicUrl}>{profilePicUrl ? null : initials ? initials : ''}</StyledAvatar>
+        <StyledAvatar src={profilePicUrl && imgixUrl(profilePicUrl, { rect: stringifyRect(picRect) })}>
+          {profilePicUrl ? null : initials ? initials : ''}
+        </StyledAvatar>
       </TableCell>
       <TableCell width="40%">
         {firstName} {lastName}

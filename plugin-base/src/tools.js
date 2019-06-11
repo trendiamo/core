@@ -47,6 +47,8 @@ const matchUrl = (url, route) => {
   return matches
 }
 
+const stringifyRect = picRect => picRect && `${picRect.x},${picRect.y},${picRect.width},${picRect.height}`
+
 const imgixUrl = (url, imgixParams) => {
   if (url.lastIndexOf('https://console-assets.ams3.digitaloceanspaces.com', 0) !== 0) return url
   const urlObj = new URL(url)
@@ -200,6 +202,7 @@ const MESSAGE_RANDOMIZER = 320
 
 export {
   matchUrl,
+  stringifyRect,
   imgixUrl,
   positioning,
   extractYoutubeId,

@@ -13,8 +13,15 @@ const PluginPreview = ({ form }) => {
   )
 
   const Launcher = useMemo(
-    () => <BaseLauncher personaPicUrl={form.personaProfilePic || (form.__persona && form.__persona.profilePicUrl)} />,
-    [form.__persona, form.personaProfilePic]
+    () => (
+      <BaseLauncher
+        personaPic={{
+          url: (form.persona && form.persona.profilePicUrl) || (form.__persona && form.__persona.profilePicUrl),
+          picRect: (form.persona && form.persona.picRect) || (form.__persona && form.__persona.picRect),
+        }}
+      />
+    ),
+    [form.__persona, form.persona]
   )
 
   return (

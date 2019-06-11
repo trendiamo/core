@@ -11,6 +11,7 @@ const DialogCroppingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: ${({ crop }) => (JSON.stringify(crop) === '{}' ? 0 : 1)};
 `
 
 const StyledReactCrop = styled(ReactCrop)`
@@ -23,16 +24,9 @@ const HiddenImg = styled.img`
   display: none;
 `
 
-const DialogContentCropping = ({
-  crop,
-  onCropChange,
-  onCropComplete,
-  onPictureLoaded,
-  picturePreview,
-  picturePreviewRef,
-}) => (
-  <DialogCroppingContainer>
-    <HiddenImg alt="" ref={picturePreviewRef} src={picturePreview} />
+const DialogContentCropping = ({ crop, onCropChange, onCropComplete, onPictureLoaded, picture, picturePreviewRef }) => (
+  <DialogCroppingContainer crop={crop}>
+    <HiddenImg alt="" ref={picturePreviewRef} src={picture} />
     <StyledReactCrop
       crop={crop}
       keepSelection
@@ -41,7 +35,7 @@ const DialogContentCropping = ({
       onChange={onCropChange}
       onComplete={onCropComplete}
       onImageLoaded={onPictureLoaded}
-      src={picturePreview}
+      src={picture}
     />
   </DialogCroppingContainer>
 )
@@ -62,13 +56,12 @@ const CroppingDialog = ({
   onCropChange,
   onCropComplete,
   onPictureLoaded,
-  picturePreview,
+  picture,
   picturePreviewRef,
   onCancelCropping,
   onDoneCropping,
   handleClose,
   open,
-  onEntering,
   onKeyUp,
 }) => (
   <Dialog
@@ -78,7 +71,7 @@ const CroppingDialog = ({
         onCropChange={onCropChange}
         onCropComplete={onCropComplete}
         onPictureLoaded={onPictureLoaded}
-        picturePreview={picturePreview}
+        picture={picture}
         picturePreviewRef={picturePreviewRef}
       />
     }
@@ -86,7 +79,6 @@ const CroppingDialog = ({
     fullWidth
     handleClose={handleClose}
     maxWidth="md"
-    onEntering={onEntering}
     onKeyUp={onKeyUp}
     open={open}
     title="Crop the picture, or leave it as default:"

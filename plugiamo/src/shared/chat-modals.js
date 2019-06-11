@@ -24,10 +24,11 @@ const ChatModals = ({
       index={imagesModalIndex}
       isOpen={imageModalOpen}
       isTouch={imagesModalTouch}
+      pictureItem={pictureItem}
       setIsOpen={setImageModalOpen}
       urlsArray={imagesModalUrls}
     />
-    <PictureModal closeModal={closePictureModal} isOpen={pictureModalOpen} url={pictureItem && pictureItem.url} />
+    <PictureModal closeModal={closePictureModal} isOpen={pictureModalOpen} pictureItem={pictureItem} />
   </div>
 )
 

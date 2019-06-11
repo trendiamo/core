@@ -1,6 +1,6 @@
 import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
-import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
+import PictureUploader from 'shared/picture-uploader'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
@@ -9,7 +9,6 @@ import useForm from 'ext/hooks/use-form'
 import { Actions, Field, Form, FormHelperText } from 'shared/form-elements'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Grid } from '@material-ui/core'
-import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingConsumer, useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -22,6 +21,7 @@ const formObjectTransformer = json => {
     instagramUrl: json.instagramUrl || '',
     profilePicAnimationUrl: json.profilePicAnimationUrl || '',
     lockVersion: json.lockVersion,
+    picRect: json.picRect || '',
   }
 }
 
@@ -34,25 +34,6 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
 
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
-  const [profilePic, setProfilePic] = useState(null)
-  const [progress, setProgress] = useState(null)
-
-  const newSaveFormObject = useCallback(
-    form => {
-      return (async () => {
-        if (profilePic) {
-          const profilePicUrl = await uploadPicture({
-            blob: profilePic,
-            setProgress,
-          })
-          setProfilePic(null)
-          return saveFormObject({ ...form, profilePicUrl })
-        }
-        return saveFormObject(form)
-      })()
-    },
-    [profilePic, saveFormObject]
-  )
 
   const {
     form,
@@ -63,7 +44,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
     setFieldValue,
     mergeForm,
     setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject: newSaveFormObject })
+  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
 
   const { onboarding, setOnboarding } = useOnboardingConsumer()
 
@@ -86,9 +67,9 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
     [history, location.pathname, onFormSubmit, onboarding, onboardingCreate, setIsFormSubmitting, setOnboarding]
   )
 
-  const setProfilePicUrl = useCallback(
-    profilePicUrl => {
-      mergeForm({ profilePicUrl })
+  const setPicture = useCallback(
+    picture => {
+      mergeForm({ profilePicUrl: picture.picUrl, picRect: picture.picRect })
     },
     [mergeForm]
   )
@@ -119,14 +100,14 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
       <Grid item sm={6}>
         <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
           <PictureUploader
+            aspectRatio={1}
             circle
             disabled={isCropping}
             label="Picture"
-            onChange={setProfilePicUrl}
+            onChange={setPicture}
             required
             setDisabled={setIsCropping}
-            setPic={setProfilePic}
-            value={form.profilePicUrl}
+            value={{ picUrl: form.profilePicUrl, picRect: form.picRect }}
           />
           <Field
             autoFocus
@@ -174,7 +155,6 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
             value={form.profilePicAnimationUrl}
           />
           <FormHelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</FormHelperText>
-          {progress && <ProgressBar progress={progress} />}
         </Form>
       </Grid>
     </Section>

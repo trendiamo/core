@@ -2,14 +2,14 @@ import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { bigLauncherConfig } from 'config'
 import { compose, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
-import { imgixUrl, Launcher as LauncherBase } from 'plugin-base'
+import { Launcher as LauncherBase } from 'plugin-base'
 
 const Launcher = ({
   compiledLauncherConfig,
   disappear,
   frameStyleStr,
   onToggleContent,
-  personaPicUrl,
+  personaPic,
   position,
   pulsating,
   showingContent,
@@ -19,7 +19,7 @@ const Launcher = ({
     frameStyleStr={frameStyleStr}
     launcherConfig={compiledLauncherConfig}
     onClick={onToggleContent}
-    personaPicUrl={personaPicUrl}
+    personaPic={personaPic}
     position={position}
     pulsating={pulsating}
     showingContent={showingContent}
@@ -37,8 +37,11 @@ export default compose(
       offsetY: -10,
     },
   })),
-  withProps(({ persona, launcherConfig }) => ({
-    personaPicUrl: imgixUrl(persona.profilePic.url, { fit: 'crop', w: launcherConfig.size, h: launcherConfig.size }),
+  withProps(({ persona }) => ({
+    personaPic: {
+      url: persona.profilePic.url,
+      picRect: persona.picRect,
+    },
   })),
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {

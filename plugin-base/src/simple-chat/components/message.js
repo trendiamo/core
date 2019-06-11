@@ -75,7 +75,7 @@ const ChatMessage = ({
       ) : type === 'SimpleChatProductMessage' ? (
         <ProductMessage onClick={onClick} product={data} />
       ) : type === 'SimpleChatPictureMessage' ? (
-        <PictureMessage onClick={onClick} picUrl={data} />
+        <PictureMessage onClick={onClick} picture={data} />
       ) : type === 'productCarousel' ? (
         <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
       ) : type === 'imageCarousel' ? (
@@ -99,6 +99,7 @@ export default compose(
           ? {
               title: log.message.title,
               picUrl: log.message.picUrl,
+              picRect: log.message.picRect,
               url: log.message.url,
               displayPrice: log.message.displayPrice,
               newTab: log.message.newTab,
@@ -106,7 +107,10 @@ export default compose(
           : type === 'SimpleChatVideoMessage'
           ? extractYoutubeId(log.message.videoUrl)
           : type === 'SimpleChatPictureMessage'
-          ? log.message.picUrl
+          ? {
+              picUrl: log.message.picUrl,
+              picRect: log.message.picRect,
+            }
           : log.message[type]
       return { type, data }
     },

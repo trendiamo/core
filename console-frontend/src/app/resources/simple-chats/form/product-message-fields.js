@@ -1,5 +1,5 @@
 import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Field, FormHelperText } from 'shared/form-elements'
 
@@ -10,9 +10,8 @@ const ProductMessagesForm = ({
   onFormChange,
   progress,
   setIsCropping,
-  setPicture,
-  setPictureUrl,
   simpleChatMessage,
+  setPicture,
 }) => (
   <>
     <Field
@@ -54,11 +53,10 @@ const ProductMessagesForm = ({
       disabled={isCropping}
       label="Picture"
       name="picUrl"
-      onChange={setPictureUrl}
+      onChange={setPicture}
       required
       setDisabled={setIsCropping}
-      setPic={setPicture}
-      value={simpleChatMessage.picUrl || ''}
+      value={{ picUrl: simpleChatMessage.picUrl, picRect: simpleChatMessage.picRect }}
     />
     {progress && <ProgressBar progress={progress} />}
     <FormControlLabel
@@ -81,12 +79,9 @@ const ProductMessageFields = ({
   onChange,
   onFocus,
   setIsCropping,
-  setSimpleChatMessagePicture,
   simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
-  const [progress, setProgress] = useState(null)
-
   const onFormChange = useCallback(
     event => {
       const isCheckbox = event.target.type === 'checkbox'
@@ -99,19 +94,12 @@ const ProductMessageFields = ({
     [onChange, simpleChatMessageIndex, simpleChatMessage]
   )
 
-  const setPictureUrl = useCallback(
-    picUrl => {
+  const setPicture = useCallback(
+    picture => {
       onFocus()
-      onChange({ ...simpleChatMessage, picUrl }, simpleChatMessageIndex)
+      onChange({ ...simpleChatMessage, ...picture }, simpleChatMessageIndex)
     },
     [onChange, onFocus, simpleChatMessage, simpleChatMessageIndex]
-  )
-
-  const setPicture = useCallback(
-    blob => {
-      setSimpleChatMessagePicture(simpleChatMessageIndex, blob, setProgress)
-    },
-    [setSimpleChatMessagePicture, simpleChatMessageIndex]
   )
 
   return (
@@ -119,10 +107,8 @@ const ProductMessageFields = ({
       isFormLoading={isFormLoading}
       onFocus={onFocus}
       onFormChange={onFormChange}
-      progress={progress}
       setIsCropping={setIsCropping}
       setPicture={setPicture}
-      setPictureUrl={setPictureUrl}
       simpleChatMessage={simpleChatMessage}
     />
   )

@@ -52,6 +52,12 @@ export default compose(
             profilePic {
               url
             }
+            picRect {
+              x
+              y
+              width
+              height
+            }
             instagramUrl
           }
         }
@@ -61,6 +67,12 @@ export default compose(
           description
           profilePic {
             url
+          }
+          picRect {
+            x
+            y
+            width
+            height
           }
         }
       }

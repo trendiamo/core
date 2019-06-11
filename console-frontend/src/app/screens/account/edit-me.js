@@ -2,7 +2,7 @@ import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import Link from 'shared/link'
-import PictureUploader, { ProgressBar, uploadPicture } from 'shared/picture-uploader'
+import PictureUploader from 'shared/picture-uploader'
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
@@ -18,6 +18,7 @@ const formObjectTransformer = json => {
     firstName: json.firstName || '',
     lastName: json.lastName || '',
     profilePicUrl: json.profilePicUrl || '',
+    picRect: json.picRect || '',
   }
 }
 
@@ -27,34 +28,19 @@ const EditMe = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const [isCropping, setIsCropping] = useState(false)
-  const [profilePic, setProfilePic] = useState(null)
-  const [progress, setProgress] = useState(null)
 
   const saveFormObject = useCallback(
     async form => {
-      // upload the image
-      let data
-      if (profilePic) {
-        const profilePicUrl = await uploadPicture({
-          blob: profilePic,
-          setProgress,
-        })
-        data = { ...form, profilePicUrl }
-      } else {
-        data = form
-      }
-      // update user data
-      const { json, errors, requestError } = await apiRequest(apiMeUpdate, [{ user: data }])
+      const { json, errors, requestError } = await apiRequest(apiMeUpdate, [{ user: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) {
         enqueueSnackbar('Successfully updated personal info', { variant: 'success' })
         auth.setUser(json)
       }
-      setProfilePic(null)
       return json
     },
-    [enqueueSnackbar, profilePic, setProfilePic]
+    [enqueueSnackbar]
   )
 
   const loadFormObject = useCallback(
@@ -76,9 +62,9 @@ const EditMe = () => {
     saveFormObject,
   })
 
-  const setProfilePicUrl = useCallback(
-    profilePicUrl => {
-      mergeForm({ profilePicUrl })
+  const setPicture = useCallback(
+    picture => {
+      mergeForm({ profilePicUrl: picture.picUrl, picRect: picture.picRect })
     },
     [mergeForm]
   )
@@ -90,13 +76,13 @@ const EditMe = () => {
       <form onSubmit={onFormSubmit}>
         <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
         <PictureUploader
+          aspectRatio={1}
           circle
           disabled={isCropping}
           label="Picture"
-          onChange={setProfilePicUrl}
+          onChange={setPicture}
           setDisabled={setIsCropping}
-          setPic={setProfilePic}
-          value={form.profilePicUrl}
+          value={{ picUrl: form.profilePicUrl, picRect: form.picRect }}
         />
         <TextField
           disabled
@@ -130,7 +116,6 @@ const EditMe = () => {
           required
           value={form.lastName}
         />
-        {progress && <ProgressBar progress={progress} />}
         <div style={{ marginTop: '1rem' }}>
           <Button
             color="primaryGradient"

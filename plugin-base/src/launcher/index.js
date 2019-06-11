@@ -11,7 +11,7 @@ const Launcher = ({
   frameStyleStr,
   launcherConfig,
   onClick,
-  personaPicUrl,
+  personaPic,
   position,
   pulsating,
   showingContent,
@@ -33,8 +33,8 @@ const Launcher = ({
         position={position}
         pulsating={pulsating}
       >
-        {personaPicUrl ? (
-          <PersonaPic active={!showingContent} url={personaPicUrl} />
+        {personaPic ? (
+          <PersonaPic active={!showingContent} launcherConfig={launcherConfig} personaPic={personaPic} />
         ) : (
           <EmptyPersonaPic active={!showingContent} />
         )}

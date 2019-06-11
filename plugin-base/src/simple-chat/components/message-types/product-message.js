@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Card, CardContent, CardImg } from 'shared/card'
 import { compose, withHandlers, withProps } from 'recompose'
-import { imgixUrl } from 'tools'
+import { imgixUrl, stringifyRect } from 'tools'
 
 const TitleAndPrice = styled.div`
   display: flex;
@@ -79,7 +79,12 @@ export default compose(
   withProps(({ product, styleConfig = defaultStyleConfig }) => ({
     productPicUrl:
       product.picUrl &&
-      imgixUrl(product.picUrl, { fit: 'crop', w: 260, h: styleConfig.image ? styleConfig.image.height : 180 }),
+      imgixUrl(product.picUrl, {
+        rect: stringifyRect(product.picRect),
+        fit: 'crop',
+        w: 260,
+        h: styleConfig.image ? styleConfig.image.height : 180,
+      }),
   })),
   withHandlers({
     onClick: ({ product, onClick }) => event => {

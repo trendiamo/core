@@ -99,9 +99,13 @@ const withChatActions = () => BaseComponent =>
         setVideoItem(item)
         setVideoModalOpen(true)
       },
-      clickImageCarouselItem: ({ setImageModalOpen, setImagesModalIndex, setImagesModalUrls, module }) => ({
-        item,
-      }) => {
+      clickImageCarouselItem: ({
+        setImageModalOpen,
+        setImagesModalIndex,
+        setImagesModalUrls,
+        module,
+        setPictureItem,
+      }) => ({ item }) => {
         mixpanel.track('Opened Carousel Gallery', {
           flowType: (module && module.flowType) || 'simpleChat',
           hostname: location.hostname,
@@ -110,6 +114,7 @@ const withChatActions = () => BaseComponent =>
         setImagesModalIndex(item.index)
         setImagesModalUrls(item.urlsArray)
         setImageModalOpen(true)
+        setPictureItem(item.picture)
       },
       touchImageCarousel: ({ setImagesModalTouch, module }) => () => {
         mixpanel.track('Touched Carousel', {

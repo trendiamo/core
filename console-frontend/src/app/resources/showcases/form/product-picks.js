@@ -10,7 +10,6 @@ const ProductPicks = ({
   setIsCropping,
   productPicksAttributes,
   setProductPickForm,
-  setProductPicture,
   onFocus,
   personaId,
 }) => {
@@ -34,7 +33,6 @@ const ProductPicks = ({
             productPick={productPick}
             setIsCropping={setIsCropping}
             setProductPickForm={setProductPickForm}
-            setProductPicture={setProductPicture}
             sortIndex={index}
           />
         )

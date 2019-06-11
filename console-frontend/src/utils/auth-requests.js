@@ -118,6 +118,7 @@ export const apiPersonaDestroy = body => apiDestroyMultipleRequest(PERSONAS_URL,
 export const apiPersonasAutocomplete = query => apiGetRequest(`${PERSONAS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiPictureList = query => apiListRequest(`${PICTURES_URL}/?${stringify(query)}`)
+export const apiPictureCreate = body => apiCreateRequest(PICTURES_URL, body)
 export const apiPictureDestroy = body => apiDestroyMultipleRequest(PICTURES_URL, body)
 
 export const apiGetRemotePicture = url => apiGetRequest(`${CORS_PROXY_URL}/${url}`)

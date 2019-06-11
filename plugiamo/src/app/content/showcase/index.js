@@ -68,6 +68,12 @@ const Showcase = compose(
               profilePic {
                 url
               }
+              picRect {
+                x
+                y
+                width
+                height
+              }
               instagramUrl
               profilePicAnimationUrl
             }
@@ -79,6 +85,12 @@ const Showcase = compose(
               displayPrice
               picture {
                 url
+              }
+              picRect {
+                x
+                y
+                width
+                height
               }
             }
           }

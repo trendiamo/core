@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { AssignmentTurnedInOutlined, PersonPinOutlined, SmsOutlined } from '@material-ui/icons'
+import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const StyledSelectLabel = styled.div`
   display: flex;
@@ -44,7 +45,11 @@ const SuggestionWithModuleIcon = ({ suggestion }) => (
 
 const SuggestionWithAvatar = ({ suggestion }) => (
   <StyledSelectLabel>
-    <Avatar alt={suggestion.value.name} src={suggestion.value.profilePicUrl} style={{ marginRight: '0.5rem' }} />
+    <Avatar
+      alt={suggestion.value.name}
+      src={imgixUrl(suggestion.value.profilePicUrl, { rect: stringifyRect(suggestion.value.picRect) })}
+      style={{ marginRight: '0.5rem' }}
+    />
     <SelectLabelText>{suggestion.label}</SelectLabelText>
   </StyledSelectLabel>
 )

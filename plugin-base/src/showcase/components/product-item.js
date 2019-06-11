@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { imgixUrl } from 'tools'
+import { imgixUrl, stringifyRect } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 
 const Content = styled.div`
@@ -47,7 +47,9 @@ const ProductItem = ({ selectInList, product, onProductClick, spotlight }) => {
 
   return (
     <ListItem onClick={onClick} selectInList={selectInList}>
-      <ListImg picture={imgixUrl(product.picture.url, { fit: 'crop', w: 101, h: 101 })} />
+      <ListImg
+        picture={imgixUrl(product.picture.url, { rect: stringifyRect(product.picRect), fit: 'crop', w: 101, h: 101 })}
+      />
       <ListContent>
         <Content>
           <Name>{product.name}</Name>

@@ -36,12 +36,15 @@ const PluginPreview = ({
     () => (
       <BaseLauncher
         onClick={onLauncherClick}
-        personaPicUrl={form.personaProfilePic || (form.__persona && form.__persona.profilePicUrl)}
+        personaPic={{
+          url: (form.persona && form.persona.profilePicUrl) || (form.__persona && form.__persona.profilePicUrl),
+          picRect: (form.persona && form.persona.picRect) || (form.__persona && form.__persona.picRect),
+        }}
         pulsating
         showingContent={showingContent}
       />
     ),
-    [form.__persona, form.personaProfilePic, onLauncherClick, showingContent]
+    [form, onLauncherClick, showingContent]
   )
 
   return (

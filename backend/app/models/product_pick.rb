@@ -14,7 +14,7 @@ class ProductPick < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "spotlight_id", "name", "account_id", "url", "description", "display_price",
+      .slice("id", "spotlight_id", "name", "account_id", "url", "description", "display_price", "pic_rect",
              "created_at", "updated_at")
       .merge(pic_url: pic_url)
   end

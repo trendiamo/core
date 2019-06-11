@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Card, CardImg } from 'shared/card'
 import { compose, withHandlers, withProps } from 'recompose'
-import { imgixUrl } from 'tools'
+import { imgixUrl, stringifyRect } from 'tools'
 
 const PictureCard = styled(Card)`
   margin-right: 0;
@@ -22,12 +22,19 @@ const PictureMessage = ({ onPictureClick, url }) => {
 }
 
 export default compose(
-  withProps(({ picUrl }) => ({
-    url: picUrl && imgixUrl(picUrl, { fit: 'crop', w: 260, h: 260 }),
+  withProps(({ picture }) => ({
+    url:
+      picture.picUrl &&
+      imgixUrl(picture.picUrl, {
+        rect: stringifyRect(picture.picRect),
+        fit: 'crop',
+        w: 260,
+        h: 260,
+      }),
   })),
   withHandlers({
-    onPictureClick: ({ onClick, picUrl }) => () => {
-      onClick({ type: 'clickPictureMessage', item: { url: picUrl } })
+    onPictureClick: ({ onClick, picture }) => () => {
+      onClick({ type: 'clickPictureMessage', item: { url: picture.picUrl, picRect: picture.picRect } })
     },
   })
 )(PictureMessage)

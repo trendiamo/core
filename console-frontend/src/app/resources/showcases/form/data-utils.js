@@ -22,6 +22,7 @@ const previewConverter = {
       .map((spotlight, i) => {
         const productPicks = this.productPicks(spotlight)
         const profilePic = spotlight.__persona && (spotlight.__persona.profilePic || spotlight.__persona.profilePicUrl)
+        const picRect = spotlight.__persona && spotlight.__persona.picRect
         const personaName = spotlight.__persona && spotlight.__persona.name
         const personaDescription = spotlight.__persona && spotlight.__persona.description
         if (spotlight._destroy) return null
@@ -33,7 +34,7 @@ const previewConverter = {
             ...spotlight.__persona,
             name: personaName || defaults.spotlightName,
             description: personaDescription || defaults.spotlightDescription,
-            profilePic: { url: profilePic || defaults.avatarPic },
+            profilePic: { url: profilePic || defaults.avatarPic, picRect },
             profilePicUrl: profilePic || defaults.avatarPic,
           },
           translation: {
@@ -53,7 +54,7 @@ const previewConverter = {
           name: productPick.name || defaults.productName,
           description: productPick.description || defaults.productDescription,
           displayPrice: productPick.displayPrice || defaults.productPrice,
-          picture: { url: productPick.picUrl || defaults.productPic },
+          picture: { url: productPick.picUrl || defaults.productPic, picRect: productPick.picRect },
         }
       })
       .filter(e => e)
@@ -83,6 +84,7 @@ const formObjectTransformer = json => {
             description: productPick.description || '',
             displayPrice: productPick.displayPrice || '',
             picUrl: productPick.picUrl || '',
+            picRect: productPick.picRect || '',
             __key: productPick.__key,
           }))
         : [
@@ -92,6 +94,7 @@ const formObjectTransformer = json => {
               description: '',
               displayPrice: '',
               picUrl: '',
+              picRect: '',
               __key: 'new-0',
             },
           ],
