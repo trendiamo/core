@@ -16,6 +16,7 @@ export default {
     }
     if (
       !document.referrer.startsWith('https://www.pampling.com') &&
+      !document.referrer.startsWith('https://pampling.com') &&
       !persona &&
       !path &&
       localStorage.getItem('trnd-pampling')
