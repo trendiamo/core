@@ -26,7 +26,7 @@ const WelcomePage = ({ history, width }) => {
     () => {
       changeStage(1)
       setOnboarding({ ...onboarding, run: false, stageIndex: 1 })
-      history.push(routes.triggersList())
+      !auth.isRole('editor') ? history.push(routes.triggersList()) : history.push(routes.simpleChatsList())
     },
     [history, onboarding, setOnboarding]
   )
