@@ -66,6 +66,7 @@ const googleAnalytics = {
       storeGac: true,
     })
     this.ga('frekkls_tracker.set', 'checkProtocolTask', null)
+    this.ga('frekkls_tracker.set', 'hostname', location.hostname)
     this.event({
       hitType: 'pageview',
       eventCategory: 'Page',
