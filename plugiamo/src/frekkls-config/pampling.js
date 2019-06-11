@@ -14,6 +14,15 @@ export default {
     if (persona && path) {
       localStorage.setItem('trnd-pampling', JSON.stringify({ path, persona }))
     }
+    if (
+      !document.referrer.startsWith('https://pampling.com') &&
+      !persona &&
+      !path &&
+      localStorage.getItem('trnd-pampling')
+    ) {
+      localStorage.removeItem('trnd-pampling')
+      return options
+    }
     const pamplingStorageItem = localStorage.getItem('trnd-pampling')
     if (!pamplingStorageItem) return options
     const pamplingObject = JSON.parse(pamplingStorageItem)
