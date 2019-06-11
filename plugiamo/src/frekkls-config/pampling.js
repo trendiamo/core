@@ -12,9 +12,9 @@ export default {
   processOptions: options => {
     const { persona, path } = options
     if (persona && path) {
-      localStorage.setItem('trnd-pampling', JSON.stringify({ path, persona }))
+      sessionStorage.setItem('trnd-pampling', JSON.stringify({ path, persona }))
     }
-    const pamplingStorageItem = localStorage.getItem('trnd-pampling')
+    const pamplingStorageItem = sessionStorage.getItem('trnd-pampling')
     if (!pamplingStorageItem) return options
     const pamplingObject = JSON.parse(pamplingStorageItem)
     if (!pamplingObject) return options
