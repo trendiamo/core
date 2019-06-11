@@ -1,6 +1,6 @@
 import characterLimits from 'shared/character-limits'
-import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
-import React, { memo, useCallback, useState } from 'react'
+import PictureUploader from 'shared/picture-uploader'
+import React, { memo, useCallback } from 'react'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Cancel, Field, FormHelperText, FormSection } from 'shared/form-elements'
 
@@ -14,10 +14,7 @@ const ProductPick = ({
   folded,
   productPick,
   setIsCropping,
-  setProductPicture,
 }) => {
-  const [progress, setProgress] = useState(null)
-
   const onChange = useCallback(
     newProductPickCallback => {
       setProductPickForm(oldProductPick => ({ ...oldProductPick, ...newProductPickCallback(oldProductPick) }), index)
@@ -41,19 +38,12 @@ const ProductPick = ({
     [onChange]
   )
 
-  const setPictureUrl = useCallback(
-    picUrl => {
-      onFocus()
-      onChange(productPick => ({ ...productPick, picUrl }))
-    },
-    [onFocus, onChange]
-  )
-
   const setPicture = useCallback(
-    blob => {
-      setProductPicture(index, blob, setProgress)
+    picture => {
+      onFocus()
+      onChange(productPick => ({ ...productPick, ...picture }))
     },
-    [index, setProductPicture]
+    [onChange, onFocus]
   )
 
   return (
@@ -127,15 +117,14 @@ const ProductPick = ({
         value={productPick.displayPrice}
       />
       <PictureUploader
+        aspectRatio={1}
         disabled={isCropping}
         label="Picture"
-        onChange={setPictureUrl}
+        onChange={setPicture}
         required
         setDisabled={setIsCropping}
-        setPic={setPicture}
-        value={productPick.picUrl}
+        value={{ picUrl: productPick.picUrl, picRect: productPick.picRect }}
       />
-      {progress && <ProgressBar progress={progress} />}
     </FormSection>
   )
 }

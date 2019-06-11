@@ -3,8 +3,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
 import { apiGetSignedUrlFactory } from 'utils'
+import { apiPictureCreate, apiRequest } from 'utils'
 import { getPixelCrop } from 'react-image-crop'
 import { LinearProgress } from '@material-ui/core'
+import { useSnackbar } from 'notistack'
 import 'react-image-crop/dist/ReactCrop.css'
 
 const StyledLinearProgress = styled(LinearProgress)`
@@ -25,7 +27,7 @@ const ProgressBar = ({ progress }) => (
   </div>
 )
 
-const defaultCrop = picture => {
+const defaultCrop = (picture, aspectRatio) => {
   const pictureAspect = picture.width / picture.height
   let height, width
   if (pictureAspect < 1) {
@@ -35,51 +37,13 @@ const defaultCrop = picture => {
     height = 100
     width = height / pictureAspect
   }
-  return {
-    aspect: 1,
+  const defaultRect = {
     height,
     width,
     x: 0,
     y: 0,
   }
-}
-
-const previewCrop = async (picture, pictureElement, pixelCrop) => {
-  const canvas = document.createElement('canvas')
-  canvas.width = pixelCrop.width
-  canvas.height = pixelCrop.height
-  const ctx = canvas.getContext('2d')
-  ctx.drawImage(
-    pictureElement,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-    0,
-    0,
-    pixelCrop.width,
-    pixelCrop.height
-  )
-  return canvas.toDataURL(picture.type)
-}
-
-const resultingCrop = (picture, pictureElement, pixelCrop) => {
-  const canvas = document.createElement('canvas')
-  canvas.width = pixelCrop.width
-  canvas.height = pixelCrop.height
-  const ctx = canvas.getContext('2d')
-  ctx.drawImage(
-    pictureElement,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-    0,
-    0,
-    pixelCrop.width,
-    pixelCrop.height
-  )
-  return new Promise(resolve => canvas.toBlob(resolve, picture.type))
+  return aspectRatio ? { ...defaultRect, aspect: aspectRatio } : defaultRect
 }
 
 const processFilename = (blob, filename) => {
@@ -107,31 +71,33 @@ const uploadPicture = async ({ blob, setProgress }) => {
   }
 }
 
-const PictureUploader = ({ disabled, label, onChange, required, setDisabled, setPic, circle, value }) => {
+const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, setDisabled, circle, value }) => {
   const picturePreviewRef = useRef()
   const [crop, setCrop] = useState({})
-  const [croppedPicture, setCroppedPicture] = useState(null)
+  const [rect, setRect] = useState(null)
+  const [progress, setProgress] = useState(null)
   const [doneCropping, setDoneCropping] = useState(true)
   const [picture, setPicture] = useState(null)
-  const [previousValue, setPreviousValue] = useState(null)
+  const [previousValue, setPreviousValue] = useState(value)
   const [modalOpen, setModalOpen] = useState(false)
-  const previewPicture = useMemo(
-    () => (value ? value : croppedPicture ? croppedPicture : picture ? picture.preview : ''),
-    [croppedPicture, picture, value]
-  )
+  const previewPicture = useMemo(() => (value && value.picUrl ? value.picUrl : picture ? picture : ''), [
+    picture,
+    value,
+  ])
+
   const onCancelClick = useCallback(
     () => {
       setDoneCropping(true)
       onChange(previousValue)
       setPicture(null)
-      setCroppedPicture(null)
       setModalOpen(false)
+      setCrop({})
       URL.revokeObjectURL(picture.preview)
     },
     [onChange, picture, previousValue]
   )
 
-  const onClick = useCallback(() => {
+  const onDropzoneClick = useCallback(() => {
     setModalOpen(true)
   }, [])
 
@@ -142,79 +108,84 @@ const PictureUploader = ({ disabled, label, onChange, required, setDisabled, set
   const onCropComplete = useCallback(
     async (_crop, pixelCrop) => {
       if (pixelCrop.height === 0 || pixelCrop.width === 0) {
-        const crop = defaultCrop(picturePreviewRef.current)
+        const crop = defaultCrop(picturePreviewRef.current, aspectRatio)
         setCrop(crop)
         pixelCrop = getPixelCrop(picturePreviewRef.current, crop)
       }
-      const previewUrl = await previewCrop(picture, picturePreviewRef.current, pixelCrop)
-      setCroppedPicture(previewUrl)
-      onChange(previewUrl)
+      setRect(pixelCrop)
+      onChange({ ...value, picRect: pixelCrop })
     },
-    [onChange, picture]
+    [aspectRatio, onChange, value]
   )
 
-  const onDoneClick = useCallback(
+  const onCropDoneClick = useCallback(
     async () => {
       setDoneCropping(true)
       setModalOpen(false)
-      const blob = await resultingCrop(
-        picture,
-        picturePreviewRef.current,
-        getPixelCrop(picturePreviewRef.current, crop)
-      )
-      blob.name = picture.name
-      setPic(blob)
-      URL.revokeObjectURL(picture.preview)
+      setCrop({})
+      onChange({ picUrl: picture, picRect: rect })
     },
-    [crop, picture, setPic]
+    [onChange, picture, rect]
   )
+
+  const onGalleryDoneClick = useCallback(
+    picture => {
+      setPreviousValue(value)
+      onChange({ picUrl: picture && picture.url, picRect: rect })
+      setPicture(picture && picture.url)
+      setModalOpen(true)
+      setDoneCropping(false)
+    },
+    [onChange, rect, value]
+  )
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const onFileUpload = useCallback(
-    (files, filenames) => {
+    async (files, filenames) => {
       setDoneCropping(false)
-      onChange('')
       setPreviousValue(value)
+      onChange({ picUrl: '', picRect: null })
       if (files.length === 0) return
       const file = files[0]
-      setPicture({
-        name: file.name || processFilename(file, filenames[0]),
-        preview: URL.createObjectURL(file),
-        size: file.size,
-        type: file.type,
+      if (!file.name) file.name = processFilename(file, filenames[0])
+      const pictureUrl = await uploadPicture({
+        blob: file,
+        setProgress,
       })
-      setModalOpen(true)
+      const { errors, requestError } = await apiRequest(apiPictureCreate, [{ url: pictureUrl }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!errors && !requestError) {
+        onChange({ picUrl: pictureUrl, picRect: null })
+        setPicture(pictureUrl)
+        setModalOpen(true)
+      }
     },
-    [onChange, value]
+    [enqueueSnackbar, onChange, value]
   )
 
-  const onModalClose = useCallback(
-    pictureUrl => {
-      setModalOpen(false)
-      onChange(pictureUrl)
-    },
-    [onChange]
-  )
+  const onModalClose = useCallback(() => {
+    setModalOpen(false)
+  }, [])
 
   const onPictureLoaded = useCallback(
     async pictureElement => {
-      const crop = defaultCrop(pictureElement)
+      const crop = defaultCrop(pictureElement, aspectRatio)
       setCrop(crop)
       const pixelCrop = getPixelCrop(pictureElement, crop)
-      const previewUrl = await previewCrop(picture, picturePreviewRef.current, pixelCrop)
-      setCroppedPicture(previewUrl)
-      onChange(previewUrl)
+      onChange({ ...value, picRect: pixelCrop })
+      setRect(pixelCrop)
     },
-    [onChange, picture]
+    [aspectRatio, onChange, value]
   )
 
   const onRemovePicture = useCallback(
     () => {
-      onChange('')
       setPicture(null)
-      setPic(null)
-      setCroppedPicture(null)
+      onChange({ picUrl: '', picRect: null })
     },
-    [onChange, setPic]
+    [onChange]
   )
 
   useEffect(
@@ -222,15 +193,6 @@ const PictureUploader = ({ disabled, label, onChange, required, setDisabled, set
       if (setDisabled) setDisabled(!doneCropping)
     },
     [doneCropping, setDisabled]
-  )
-
-  useEffect(
-    () => {
-      return () => {
-        picture && URL.revokeObjectURL(picture.preview)
-      }
-    },
-    [picture]
   )
 
   return (
@@ -242,19 +204,22 @@ const PictureUploader = ({ disabled, label, onChange, required, setDisabled, set
       label={label}
       modalOpen={modalOpen}
       onCancelClick={onCancelClick}
-      onClick={onClick}
       onCropChange={onCropChange}
       onCropComplete={onCropComplete}
-      onDoneClick={onDoneClick}
+      onCropDoneClick={onCropDoneClick}
+      onDropzoneClick={onDropzoneClick}
       onFileUpload={onFileUpload}
+      onGalleryDoneClick={onGalleryDoneClick}
       onModalClose={onModalClose}
       onPictureLoaded={onPictureLoaded}
       onRemovePicture={onRemovePicture}
       picture={picture}
       picturePreviewRef={picturePreviewRef}
       previewPicture={previewPicture}
+      progress={progress}
       required={required}
       setModalOpen={setModalOpen}
+      value={value}
     />
   )
 }

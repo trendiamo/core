@@ -36,7 +36,7 @@ module Api
 
       def user_params
         params.require(:user).permit(:email, :first_name, :last_name, :profile_pic_url,
-                                     :password, :password_confirmation)
+                                     :password, :password_confirmation, pic_rect: %i[x y width height])
       end
 
       def render_membership_error

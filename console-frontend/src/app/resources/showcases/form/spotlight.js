@@ -1,5 +1,4 @@
 import Autocomplete from 'shared/autocomplete'
-import findIndex from 'lodash.findindex'
 import ProductPicks from './product-picks'
 import React, { memo, useCallback, useMemo } from 'react'
 import Section from 'shared/section'
@@ -16,9 +15,7 @@ const Spotlight = ({
   isCropping,
   isFormLoading,
   onSpotlightClick,
-  productPicksPictures,
   setIsCropping,
-  setProductPicksPictures,
   setSpotlightForm,
   spotlight,
 }) => {
@@ -51,6 +48,7 @@ const Spotlight = ({
             description: '',
             displayPrice: '',
             picUrl: '',
+            picRect: '',
             __key: `new-${spotlight.productPicksAttributes.length}`,
           },
         ],
@@ -75,19 +73,6 @@ const Spotlight = ({
       })
     },
     [onChange]
-  )
-
-  const setProductPicture = useCallback(
-    (productPickIndex, blob, setProgress) => {
-      const picture = { spotlightIndex: index, productPickIndex, blob, setProgress }
-      let newProductPicksPictures = [...productPicksPictures]
-      const productPickPictureIndex = findIndex(newProductPicksPictures, { spotlightIndex: index, productPickIndex })
-      productPickPictureIndex >= 0
-        ? newProductPicksPictures.splice(productPickPictureIndex, 1, picture)
-        : newProductPicksPictures.push(picture)
-      setProductPicksPictures(newProductPicksPictures)
-    },
-    [index, productPicksPictures, setProductPicksPictures]
   )
 
   const onSortEnd = useCallback(
@@ -150,7 +135,6 @@ const Spotlight = ({
                 productPicksAttributes={spotlight.productPicksAttributes}
                 setIsCropping={setIsCropping}
                 setProductPickForm={setProductPickForm}
-                setProductPicture={setProductPicture}
                 useDragHandle
               />
             )}

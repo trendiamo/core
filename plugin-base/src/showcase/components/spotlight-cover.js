@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { BackButton } from 'shared'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps } from 'recompose'
 import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover/components'
-import { imgixUrl } from 'tools'
+import { imgixUrl, stringifyRect } from 'tools'
 import { transition, withTextTyping } from 'ext'
 
 const FlexDiv = styled.div`
@@ -44,7 +44,15 @@ const SpotlightCover = compose(
   <CoverInner>
     <BackButton isLeaving={isLeaving} label={backButtonLabel} onClick={routeToShowcase} />
     <FlexDiv>
-      <CoverImg imgRef={setImgRef} src={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })} />
+      <CoverImg
+        imgRef={setImgRef}
+        src={imgixUrl(spotlight.persona.profilePic.url, {
+          rect: stringifyRect(spotlight.persona.profilePic.picRect || spotlight.persona.picRect),
+          fit: 'crop',
+          w: 45,
+          h: 45,
+        })}
+      />
       <PaddedCover>
         <PersonaName ref={setNameRef}>{spotlight.persona.name}</PersonaName>
         <PersonaInstagram url={spotlight.persona.instagramUrl} />

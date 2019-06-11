@@ -70,8 +70,8 @@ module Api
           :name, :title, :subtitle, :chat_bubble_text, :chat_bubble_extra_text, :persona_id, :lock_version,
           spotlights_attributes: [
             :id, :persona_id, :_destroy,
-            product_picks_attributes: %i[
-              id url name description display_price pic_id _destroy
+            product_picks_attributes: [
+              :id, :url, :name, :description, :display_price, :pic_id, :_destroy, pic_rect: %i[x y width height],
             ],
           ]
         )

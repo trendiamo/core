@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190606143201) do
+ActiveRecord::Schema.define(version: 20190606172302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20190606143201) do
     t.string "profile_pic_animation_url"
     t.bigint "profile_pic_id"
     t.integer "lock_version", default: 1
+    t.json "pic_rect", default: {}
     t.index ["account_id"], name: "index_personas_on_account_id"
     t.index ["profile_pic_id"], name: "index_personas_on_profile_pic_id"
   end
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 20190606143201) do
     t.datetime "updated_at", null: false
     t.integer "order"
     t.bigint "pic_id"
+    t.json "pic_rect", default: {}
     t.index ["account_id"], name: "index_product_picks_on_account_id"
     t.index ["pic_id"], name: "index_product_picks_on_pic_id"
     t.index ["spotlight_id"], name: "index_product_picks_on_spotlight_id"
@@ -135,6 +137,7 @@ ActiveRecord::Schema.define(version: 20190606143201) do
     t.string "video_url"
     t.bigint "pic_id"
     t.boolean "group_with_adjacent", default: false
+    t.json "pic_rect", default: {}
     t.index ["account_id"], name: "index_simple_chat_messages_on_account_id"
     t.index ["pic_id"], name: "index_simple_chat_messages_on_pic_id"
     t.index ["simple_chat_step_id"], name: "index_simple_chat_messages_on_simple_chat_step_id"
@@ -218,6 +221,7 @@ ActiveRecord::Schema.define(version: 20190606143201) do
     t.boolean "subscribed_to_newsletter", default: false, null: false
     t.integer "onboarding_stage", default: 0
     t.boolean "admin", default: false, null: false
+    t.json "pic_rect", default: {}
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

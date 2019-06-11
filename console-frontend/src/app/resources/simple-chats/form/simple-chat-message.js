@@ -26,7 +26,6 @@ const MessageField = ({
   onFocus,
   onSimpleChatMessageEdit,
   setIsCropping,
-  setSimpleChatMessagePicture,
   simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
@@ -51,7 +50,6 @@ const MessageField = ({
           onChange={onSimpleChatMessageEdit}
           onFocus={onFocus}
           setIsCropping={setIsCropping}
-          setSimpleChatMessagePicture={setSimpleChatMessagePicture}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
         />
@@ -74,7 +72,6 @@ const MessageField = ({
           name="simpleChatMessage_picture"
           onChange={onSimpleChatMessageEdit}
           setIsCropping={setIsCropping}
-          setSimpleChatMessagePicture={setSimpleChatMessagePicture}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
         />
@@ -92,7 +89,6 @@ const SimpleChatMessage = ({
   onChange,
   onFocus,
   setIsCropping,
-  setSimpleChatMessagePicture,
   simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
@@ -151,7 +147,6 @@ const SimpleChatMessage = ({
         onFocus={onFocus}
         onSimpleChatMessageEdit={onSimpleChatMessageEdit}
         setIsCropping={setIsCropping}
-        setSimpleChatMessagePicture={setSimpleChatMessagePicture}
         simpleChatMessage={simpleChatMessage}
         simpleChatMessageIndex={simpleChatMessageIndex}
       />

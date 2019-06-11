@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import { apiSignOut } from 'utils'
 import { Avatar, Menu, MenuItem, Typography } from '@material-ui/core'
 import { drawerWidth } from './layout-styles'
+import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const avatarSize = 46
 
@@ -102,7 +103,9 @@ const UserMenu = ({ sidebarOpen }) => {
         onClick={handleMenu}
         sidebarOpen={sidebarOpen}
       >
-        <StyledAvatar src={user.profilePicUrl}>{user.profilePicUrl ? null : initials ? initials : ''}</StyledAvatar>
+        <StyledAvatar src={user.profilePicUrl && imgixUrl(user.profilePicUrl, { rect: stringifyRect(user.picRect) })}>
+          {user.profilePicUrl ? null : initials ? initials : ''}
+        </StyledAvatar>
         <StyledTypography sidebarOpen={sidebarOpen} variant="body1">
           {userIdentifier}
         </StyledTypography>

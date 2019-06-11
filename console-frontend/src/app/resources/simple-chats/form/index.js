@@ -9,7 +9,6 @@ import { Actions } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
-import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -22,51 +21,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
 
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
-  const [simpleChatMessagesPictures, setSimpleChatMessagesPictures] = useState([])
   const [showingContent, setShowingContent] = useState(false)
-
-  const uploadSubPicture = useCallback(async ({ blob, setProgress, subform }) => {
-    if (blob) {
-      const simpleChatMessagePicUrl = await uploadPicture({
-        blob,
-        setProgress,
-      })
-      return {
-        ...subform,
-        picUrl: simpleChatMessagePicUrl,
-      }
-    } else {
-      return {
-        ...subform,
-        picUrl: '',
-      }
-    }
-  }, [])
-
-  const uploadSubPictures = useCallback(
-    form => {
-      return simpleChatMessagesPictures.map(
-        async ({ blob, simpleChatMessageIndex, setProgress, simpleChatStepIndex }) => {
-          const { simpleChatMessagesAttributes } = form.simpleChatStepsAttributes[simpleChatStepIndex]
-          simpleChatMessagesAttributes[simpleChatMessageIndex] = await uploadSubPicture({
-            subform: simpleChatMessagesAttributes[simpleChatMessageIndex],
-            blob,
-            setProgress,
-          })
-        }
-      )
-    },
-    [simpleChatMessagesPictures, uploadSubPicture]
-  )
-
-  const newSaveFormObject = useCallback(
-    async form => {
-      await Promise.all(uploadSubPictures(form))
-      setSimpleChatMessagesPictures([])
-      return saveFormObject(form)
-    },
-    [saveFormObject, uploadSubPictures]
-  )
 
   const {
     form,
@@ -78,7 +33,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     onFormSubmit,
     setFieldValue,
     setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject: newSaveFormObject })
+  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
 
   const newOnFormSubmit = useCallback(
     async event => {
@@ -189,9 +144,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
           selectPersona={selectPersona}
           setFieldValue={setFieldValue}
           setIsCropping={setIsCropping}
-          setSimpleChatMessagesPictures={setSimpleChatMessagesPictures}
           setSimpleChatStepsForm={setSimpleChatStepsForm}
-          simpleChatMessagesPictures={simpleChatMessagesPictures}
           title={title}
         />
       </Grid>

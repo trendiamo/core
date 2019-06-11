@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { compose, withHandlers } from 'recompose'
-import { imgixUrl } from 'tools'
+import { imgixUrl, stringifyRect } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
 import { transition } from 'ext'
 
@@ -50,7 +50,12 @@ const SpotlightItem = compose(
       <ListImg
         animation={spotlight.persona.profilePicAnimationUrl}
         imgRef={setImgRef}
-        picture={imgixUrl(spotlight.persona.profilePic.url, { fit: 'crop', w: 101, h: 101 })}
+        picture={imgixUrl(spotlight.persona.profilePic.url, {
+          rect: stringifyRect(spotlight.persona.profilePic.picRect || spotlight.persona.picRect),
+          fit: 'crop',
+          w: 101,
+          h: 101,
+        })}
       />
     )}
     <ListContent withoutPicture={withoutPicture}>

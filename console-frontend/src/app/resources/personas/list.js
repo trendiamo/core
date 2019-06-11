@@ -4,6 +4,7 @@ import React from 'react'
 import routes from 'app/routes'
 import { apiPersonaDestroy, apiPersonaList } from 'utils'
 import { EnhancedList, TableCell } from 'shared/table-elements'
+import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const columns = [
   { name: 'avatar' },
@@ -24,7 +25,11 @@ const BlankState = () => (
 const PersonasRow = ({ record }) => (
   <>
     <TableCell>
-      <Avatar alt={record.name} src={record.profilePicUrl} style={{ marginRight: '0.5rem' }} />
+      <Avatar
+        alt={record.name}
+        src={imgixUrl(record.profilePicUrl, { rect: stringifyRect(record.picRect) })}
+        style={{ marginRight: '0.5rem' }}
+      />
     </TableCell>
     <TableCell width="30%">{record.name}</TableCell>
     <TableCell width="70%">{record.description}</TableCell>

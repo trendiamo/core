@@ -4,6 +4,7 @@ import React from 'react'
 import routes from 'app/routes'
 import { ActiveColumn, Avatar, columns, EnhancedList, TableCell, Text } from 'shared/table-elements'
 import { apiSimpleChatDestroy, apiSimpleChatDuplicate, apiSimpleChatList, defaultSorting } from 'utils'
+import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -18,7 +19,11 @@ const BlankState = () => (
 const SimpleChatsRow = ({ record, highlightInactive }) => (
   <>
     <TableCell width="20%">
-      <Avatar alt="" disabled={highlightInactive} src={record.persona.profilePicUrl} />
+      <Avatar
+        alt=""
+        disabled={highlightInactive}
+        src={imgixUrl(record.persona.profilePicUrl, { rect: stringifyRect(record.persona.picRect) })}
+      />
     </TableCell>
     <TableCell width="80%">
       <Text disabled={highlightInactive}>{record.name}</Text>

@@ -8,6 +8,16 @@ module Api
         render json: chain
       end
 
+      def create
+        @picture = Picture.new(picture_params)
+        authorize @picture
+        if @picture.save
+          render json: @picture, status: :created
+        else
+          render_error
+        end
+      end
+
       def destroy
         @pictures = Picture.where(id: params[:ids])
         authorize @pictures
@@ -19,6 +29,10 @@ module Api
       end
 
       private
+
+      def picture_params
+        params.require(:picture).permit(:url)
+      end
 
       def destroy_all
         has_restriction_errors = false

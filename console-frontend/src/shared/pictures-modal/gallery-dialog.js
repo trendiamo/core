@@ -2,7 +2,7 @@ import AspectRatio from 'react-aspect-ratio'
 import Button from 'shared/button'
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { DialogActionsContainer, StyledButton } from './shared'
@@ -10,6 +10,7 @@ import { Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
 const Picture = styled.img`
+  object-fit: cover;
   width: 100%;
   border-radius: 6px;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -61,21 +62,39 @@ const DialogContentGallery = ({ activePicture, onPictureClick, pictures }) => (
   </Grid>
 )
 
-const DialogActionsGallery = ({ onDialogClose, onFileUpload, onUrlUploadClick }) => (
-  <DialogActionsContainer style={{ justifyContent: 'space-between' }}>
-    <div style={{ display: 'flex' }}>
-      <StyledButton color="secondaryText" onClick={onUrlUploadClick}>
-        {'Add from url'}
-      </StyledButton>
-      <StyledButton color="secondaryText" withUploader>
-        <FileUploader accept="image/*" content="Upload new" name="file-uploader" onChange={onFileUpload} />
-      </StyledButton>
-    </div>
-    <Button color="primaryGradient" onClick={onDialogClose}>
-      {'Done'}
-    </Button>
-  </DialogActionsContainer>
-)
+const DialogActionsGallery = ({ activePicture, onGalleryDoneClick, onFileUpload, onUrlUploadClick }) => {
+  const [isDoneButtonDisabled, setIsDoneButtonDisabled] = useState(() => !!activePicture)
+
+  const newOnDoneButtonClick = useCallback(
+    () => {
+      onGalleryDoneClick(activePicture)
+    },
+    [onGalleryDoneClick, activePicture]
+  )
+
+  useEffect(
+    () => {
+      setIsDoneButtonDisabled(!activePicture)
+    },
+    [activePicture]
+  )
+
+  return (
+    <DialogActionsContainer style={{ justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex' }}>
+        <StyledButton color="secondaryText" onClick={onUrlUploadClick}>
+          {'Add from url'}
+        </StyledButton>
+        <StyledButton color="secondaryText" withUploader>
+          <FileUploader accept="image/*" content="Upload new" name="file-uploader" onChange={onFileUpload} />
+        </StyledButton>
+      </div>
+      <Button color="primaryGradient" disabled={isDoneButtonDisabled} onClick={newOnDoneButtonClick}>
+        {'Done'}
+      </Button>
+    </DialogActionsContainer>
+  )
+}
 
 const GalleryPicture = ({ isActive, onPictureClick, picture }) => {
   const newOnPictureClick = useCallback(() => onPictureClick(picture), [onPictureClick, picture])
@@ -101,13 +120,16 @@ const GalleryDialog = ({
   onUrlUploadClick,
   open,
   pictures,
+  onGalleryDoneClick,
 }) => (
   <Dialog
     content={<DialogContentGallery activePicture={activePicture} onPictureClick={onPictureClick} pictures={pictures} />}
     dialogActions={
       <DialogActionsGallery
+        activePicture={activePicture}
         onDialogClose={onDialogClose}
         onFileUpload={onFileUpload}
+        onGalleryDoneClick={onGalleryDoneClick}
         onUrlUploadClick={onUrlUploadClick}
       />
     }

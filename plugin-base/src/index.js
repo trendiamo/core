@@ -20,6 +20,7 @@ import {
   MESSAGE_INTERVAL,
   MESSAGE_RANDOMIZER,
   positioning,
+  stringifyRect,
 } from 'tools'
 import { history, Router, timeout, transition, typeText, withTextTyping } from 'ext'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose, IconPlayButton } from 'icons'
@@ -32,6 +33,7 @@ export {
   ChatLogUi,
   Cover,
   CoverImg,
+  stringifyRect,
   imgixUrl,
   matchUrl,
   BackButton,

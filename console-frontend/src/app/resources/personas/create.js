@@ -10,6 +10,7 @@ const loadFormObject = () => {
     description: '',
     profilePicUrl: '',
     instagramUrl: '',
+    picRect: '',
   }
 }
 

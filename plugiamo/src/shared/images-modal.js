@@ -3,6 +3,7 @@ import mixpanel from 'ext/mixpanel'
 import Modal from 'shared/modal'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
+import { imgixUrl, stringifyRect } from 'plugin-base'
 
 let touchstartX = 0
 let touchstartY = 0
@@ -62,7 +63,13 @@ const ImagesModalTemplate = ({
         <img
           alt=""
           onLoad={onPictureLoad}
-          src={selectedImage}
+          src={
+            selectedImage &&
+            selectedImage.url &&
+            imgixUrl(selectedImage.url, {
+              rect: stringifyRect(selectedImage.picRect),
+            })
+          }
           style={{
             opacity: isPictureLoaded ? 1 : 0,
             width: '100%',
@@ -92,15 +99,18 @@ const ImagesModal = compose(
       }
     },
   }),
-  withProps(({ selectedImageIndex, urlsArray }) => ({
-    selectedImage: urlsArray[selectedImageIndex],
+  withProps(({ selectedImageIndex, urlsArray, pictureItem }) => ({
+    selectedImage: {
+      url: urlsArray[selectedImageIndex],
+      picRect: pictureItem && pictureItem.picRect,
+    },
   })),
   withHandlers({
     closeModal: ({ setIsOpen, selectedImage, flowType }) => () => {
       mixpanel.track('Closed Carousel Gallery', {
         flowType: flowType || 'simpleChat',
         hostname: location.hostname,
-        imageUrl: selectedImage,
+        imageUrl: selectedImage && selectedImage.url,
       })
       setIsOpen(false)
     },
@@ -121,7 +131,7 @@ const ImagesModal = compose(
       mixpanel.track('Carousel Image Switch', {
         flowType: flowType || 'simpleChat',
         hostname: location.hostname,
-        urlFrom: selectedImage,
+        urlFrom: selectedImage && selectedImage.url,
         urlTo: urlsArray[selectedImageIndex - 1],
       })
     },
@@ -139,7 +149,7 @@ const ImagesModal = compose(
       mixpanel.track('Carousel Image Switch', {
         flowType: flowType || 'simpleChat',
         hostname: location.hostname,
-        urlFrom: selectedImage,
+        urlFrom: selectedImage && selectedImage.url,
         urlTo: urlsArray[selectedImageIndex + 1],
       })
     },
@@ -169,7 +179,7 @@ const ImagesModal = compose(
               mixpanel.track('Touch Carousel Image Switch', {
                 flowType: flowType || 'simpleChat',
                 hostname: location.hostname,
-                urlFrom: selectedImage,
+                urlFrom: selectedImage && selectedImage.url,
                 urlTo: urlsArray[selectedImageIndex + 1],
               })
             }
@@ -181,7 +191,7 @@ const ImagesModal = compose(
             mixpanel.track('Touch Carousel Image Switch', {
               flowType: flowType || 'simpleChat',
               hostname: location.hostname,
-              urlFrom: selectedImage,
+              urlFrom: selectedImage && selectedImage.url,
               urlTo: urlsArray[selectedImageIndex - 1],
             })
           }

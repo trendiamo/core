@@ -10,8 +10,6 @@ const Spotlights = ({
   setIsCropping,
   spotlightsAttributes,
   personas,
-  setProductPicksPictures,
-  productPicksPictures,
   setSpotlightForm,
   onSpotlightClick,
 }) => {
@@ -32,9 +30,7 @@ const Spotlights = ({
             key={spotlight.id || spotlight.__key}
             onSpotlightClick={onSpotlightClick}
             personas={personas}
-            productPicksPictures={productPicksPictures}
             setIsCropping={setIsCropping}
-            setProductPicksPictures={setProductPicksPictures}
             setSpotlightForm={setSpotlightForm}
             sortIndex={index}
             spotlight={spotlight}

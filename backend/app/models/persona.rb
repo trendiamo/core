@@ -17,6 +17,6 @@ class Persona < ApplicationRecord
   def as_json(_options = {})
     attributes
       .slice("id", "name", "description", "account_id", "graphcms_ref", "instagram_url", "profile_pic_animation_url",
-             "created_at", "updated_at", "lock_version").merge(profile_pic_url: profile_pic_url)
+             "pic_rect", "created_at", "updated_at", "lock_version").merge(profile_pic_url: profile_pic_url)
   end
 end

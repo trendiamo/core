@@ -15,8 +15,6 @@ const FormContainer = ({
   setFieldValue,
   setSpotlightForm,
   addSpotlight,
-  productPicksPictures,
-  setProductPicksPictures,
   isCropping,
   setIsCropping,
   onBackClick,
@@ -44,9 +42,7 @@ const FormContainer = ({
       onSpotlightClick={onSpotlightClick}
       onToggleContent={onToggleContent}
       personas={personas}
-      productPicksPictures={productPicksPictures}
       setIsCropping={setIsCropping}
-      setProductPicksPictures={setProductPicksPictures}
       setSpotlightForm={setSpotlightForm}
       spotlightsAttributes={form.spotlightsAttributes}
       useDragHandle

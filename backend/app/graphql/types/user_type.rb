@@ -6,4 +6,7 @@ Types::UserType = GraphQL::ObjectType.define do
   field :profilePicUrl, types.String do
     resolve ->(obj, _args, _ctx) { obj.profile_pic_url }
   end
+  field :picRect, Types::PicRectType do
+    resolve ->(obj, _args, _ctx) { obj.pic_rect }
+  end
 end

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { imgixUrl, stringifyRect } from 'tools'
 
 const PersonaPic = styled.div`
   position: absolute;
@@ -10,7 +11,17 @@ const PersonaPic = styled.div`
   border-radius: 50%;
   background-position: center;
   background-size: cover;
-  background-image: ${({ url }) => (url ? `url('${url}')` : 'none')};
+  background-image: ${({ personaPic, launcherConfig }) =>
+    personaPic && personaPic.url
+      ? launcherConfig
+        ? `url('${imgixUrl(personaPic.url, {
+            rect: stringifyRect(personaPic.picRect),
+            fit: 'crop',
+            w: launcherConfig.size,
+            h: launcherConfig.size,
+          })}')`
+        : `url('${imgixUrl(personaPic.url, { rect: stringifyRect(personaPic.picRect) })}')`
+      : 'none'};
   transform: ${({ active }) => (active ? 'none' : 'rotate(30deg) scale(0)')};
   opacity: ${({ active }) => (active ? 1 : 0)};
   transition: opacity 0.25s ease, transform 0.25s ease;

@@ -1,5 +1,6 @@
 import Modal from './modal'
 import { h } from 'preact'
+import { imgixUrl, stringifyRect } from 'plugin-base'
 import { useCallback, useState } from 'preact/hooks'
 
 const styles = {
@@ -20,7 +21,7 @@ const styles = {
   },
 }
 
-const PictureModal = ({ closeModal, isOpen, setIsResourceLoaded, url }) => {
+const PictureModal = ({ closeModal, isOpen, setIsResourceLoaded, pictureItem }) => {
   const [isPictureLoaded, setIsPictureLoaded] = useState(false)
 
   const closePictureModal = useCallback(
@@ -38,7 +39,18 @@ const PictureModal = ({ closeModal, isOpen, setIsResourceLoaded, url }) => {
   return (
     <Modal allowBackgroundClose closeModal={closePictureModal} isOpen={isOpen} isResourceLoaded={isPictureLoaded}>
       <div style={styles.container} tabIndex="-1">
-        <img alt="" onLoad={onPictureLoad} src={url} style={styles.picture} />
+        <img
+          alt=""
+          onLoad={onPictureLoad}
+          src={
+            pictureItem &&
+            pictureItem.url &&
+            imgixUrl(pictureItem.url, {
+              rect: stringifyRect(pictureItem.picRect),
+            })
+          }
+          style={styles.picture}
+        />
       </div>
     </Modal>
   )

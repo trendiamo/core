@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { BackButton, Cover as CoverBase, PersonaInstagram } from 'shared'
 import { compose, withProps } from 'recompose'
 import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover/components'
-import { imgixUrl } from 'tools'
+import { imgixUrl, stringifyRect } from 'tools'
 import { withTextTyping } from 'ext'
 
 const PersonaName = styled.div`
@@ -37,7 +37,12 @@ const Cover = ({
         src={
           persona.profilePic &&
           persona.profilePic.url &&
-          imgixUrl(persona.profilePic.url, { fit: 'crop', w: 45, h: 45 })
+          imgixUrl(persona.profilePic.url, {
+            rect: stringifyRect(persona.profilePic.picRect || persona.picRect),
+            fit: 'crop',
+            w: 45,
+            h: 45,
+          })
         }
       />
       <PaddedCover>

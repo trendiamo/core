@@ -23,7 +23,7 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
     () => (
       <BaseLauncher
         onClick={onLauncherClick}
-        personaPicUrl={previewConverter.persona(form.__persona).profilePic.url}
+        personaPic={previewConverter.persona(form.__persona).profilePic}
         pulsating
         showingContent={showingContent}
       />

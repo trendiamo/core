@@ -1,37 +1,47 @@
 import React from 'react'
 import { Carousel, CarouselElement } from './carousel'
 import { compose, withHandlers, withProps, withState } from 'recompose'
-import { imgixUrl } from 'tools'
+import { imgixUrl, stringifyRect } from 'tools'
 
 const ImgCarouselElement = compose(
   withHandlers({
-    onClick: ({ onClick, index, urlsArray }) => () =>
-      onClick({ type: 'clickImageCarouselItem', item: { index, urlsArray } }),
-    onTouchEnd: ({ onClick, index, urlsArray }) => () =>
-      onClick({ type: 'touchImageCarousel', item: { index, urlsArray } }),
+    onClick: ({ onClick, index, urlsArray, picture }) => () =>
+      onClick({ type: 'clickImageCarouselItem', item: { index, urlsArray, picture } }),
+    onTouchEnd: ({ onClick, index, urlsArray, picture }) => () =>
+      onClick({ type: 'touchImageCarousel', item: { index, urlsArray, picture } }),
   })
-)(({ carouselType, imgUrl, onClick, onTouchEnd }) => (
+)(({ carouselType, picture, onClick, onTouchEnd }) => (
   <CarouselElement carouselType={carouselType} onClick={onClick} onTouchEnd={onTouchEnd}>
-    <img alt="" src={imgixUrl(imgUrl, { fit: 'crop', w: 260, h: 260 })} />
+    <img
+      alt=""
+      src={imgixUrl(picture.picUrl, {
+        rect: stringifyRect(picture.picRect),
+        fit: 'crop',
+        w: 260,
+        h: 260,
+      })}
+    />
   </CarouselElement>
 ))
 
 const ImgCarouselMessage = compose(
   withState('isTouch', 'setIsTouch', false),
   withProps(({ imageCarousel }) => ({
-    urlsArray: imageCarousel.map(image => image.picUrl),
+    pictures: imageCarousel.map(image => {
+      return { picUrl: image.picUrl, picRect: image.picRect }
+    }),
   }))
-)(({ urlsArray, carouselType, onClick }) => (
+)(({ pictures, carouselType, onClick }) => (
   <div>
     <Carousel carouselType={carouselType}>
-      {urlsArray.map((imgUrl, index) => (
+      {pictures.map((picture, index) => (
         <ImgCarouselElement
           carouselType={carouselType}
-          imgUrl={imgUrl}
           index={index}
-          key={imgUrl}
+          key={picture.picUrl}
           onClick={onClick}
-          urlsArray={urlsArray}
+          picture={picture}
+          urlsArray={pictures.map(picture => picture.picUrl)}
         />
       ))}
     </Carousel>

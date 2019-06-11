@@ -20,9 +20,7 @@ const FormContainer = ({
   selectPersona,
   setFieldValue,
   setIsCropping,
-  setSimpleChatMessagesPictures,
   setSimpleChatStepsForm,
-  simpleChatMessagesPictures,
   title,
 }) => {
   const appBarContent = useMemo(
@@ -66,8 +64,6 @@ const FormContainer = ({
         onSortEnd={onSortEnd}
         onToggleContent={onToggleContent}
         setIsCropping={setIsCropping}
-        setSimpleChatMessagesPictures={setSimpleChatMessagesPictures}
-        simpleChatMessagesPictures={simpleChatMessagesPictures}
         simpleChatSteps={form.simpleChatStepsAttributes}
         useDragHandle
       />

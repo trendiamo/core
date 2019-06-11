@@ -42,6 +42,12 @@ export default compose(
               text
               title
               picUrl
+              picRect {
+                x
+                y
+                width
+                height
+              }
               url
               displayPrice
               videoUrl

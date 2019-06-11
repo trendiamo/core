@@ -1,4 +1,3 @@
-import findIndex from 'lodash.findindex'
 import omit from 'lodash.omit'
 import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
@@ -60,15 +59,7 @@ const StyledMenu = styled(Menu)`
 
 const SortableSimpleChatMessage = SortableElement(SimpleChatMessage)
 
-const SimpleChatMessages = ({
-  allowDelete,
-  isCropping,
-  onChange,
-  onFocus,
-  setIsCropping,
-  setSimpleChatMessagePicture,
-  simpleChatMessages,
-}) => (
+const SimpleChatMessages = ({ allowDelete, isCropping, onChange, onFocus, setIsCropping, simpleChatMessages }) => (
   <div>
     {simpleChatMessages.map((simpleChatMessage, index) =>
       simpleChatMessage._destroy ? null : (
@@ -80,7 +71,6 @@ const SimpleChatMessages = ({
           onChange={onChange}
           onFocus={onFocus}
           setIsCropping={setIsCropping}
-          setSimpleChatMessagePicture={setSimpleChatMessagePicture}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={index}
         />
@@ -100,8 +90,6 @@ const SimpleChatStep = ({
   onChange,
   onToggleContent,
   setIsCropping,
-  setSimpleChatMessagesPictures,
-  simpleChatMessagesPictures,
   simpleChatStep,
   simpleChatStepIndex,
 }) => {
@@ -143,21 +131,6 @@ const SimpleChatStep = ({
     [onChange, simpleChatStep, simpleChatStepIndex]
   )
 
-  const setSimpleChatMessagePicture = useCallback(
-    (simpleChatMessageIndex, blob, setProgress) => {
-      const picture = { simpleChatStepIndex, simpleChatMessageIndex, blob, setProgress }
-      const simpleChatMessagePictureIndex = findIndex(simpleChatMessagesPictures, {
-        simpleChatStepIndex,
-        simpleChatMessageIndex,
-      })
-      simpleChatMessagePictureIndex >= 0
-        ? simpleChatMessagesPictures.splice(simpleChatMessagePictureIndex, 1, picture)
-        : simpleChatMessagesPictures.push(picture)
-      setSimpleChatMessagesPictures(simpleChatMessagesPictures)
-    },
-    [setSimpleChatMessagesPictures, simpleChatMessagesPictures, simpleChatStepIndex]
-  )
-
   const setSimpleChatMessagesForm = useCallback(
     (simpleChatMessage, simpleChatMessageIndex) => {
       let newSimpleChatMessagesAttributes = [...simpleChatStep.simpleChatMessagesAttributes]
@@ -177,10 +150,10 @@ const SimpleChatStep = ({
         messageType === 'SimpleChatTextMessage'
           ? { text: '' }
           : messageType === 'SimpleChatProductMessage'
-          ? { title: '', picUrl: '', url: '', displayPrice: '', groupWithAdjacent: false }
+          ? { title: '', picUrl: '', picRect: '', url: '', displayPrice: '', groupWithAdjacent: false }
           : messageType === 'SimpleChatVideoMessage'
           ? { videoUrl: '' }
-          : { picUrl: '', groupWithAdjacent: false }
+          : { picUrl: '', picRect: '', groupWithAdjacent: false }
       onChange(
         {
           ...simpleChatStep,
@@ -248,7 +221,6 @@ const SimpleChatStep = ({
               onFocus={onFocus}
               onSortEnd={onSimpleChatMessagesSortEnd}
               setIsCropping={setIsCropping}
-              setSimpleChatMessagePicture={setSimpleChatMessagePicture}
               simpleChatMessages={simpleChatStep.simpleChatMessagesAttributes}
               useDragHandle
             />

@@ -10,7 +10,6 @@ import { arrayMove } from 'react-sortable-hoc'
 import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
 import { history as pluginHistory, routes as pluginRoutes } from 'plugin-base'
-import { uploadPicture } from 'shared/picture-uploader'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -27,49 +26,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
 
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
-  const [productPicksPictures, setProductPicksPictures] = useState([])
   const [showingContent, setShowingContent] = useState(false)
-
-  const uploadSubPicture = useCallback(async ({ blob, setProgress, subform }) => {
-    if (blob) {
-      const productPickPhotoUrl = await uploadPicture({
-        blob,
-        setProgress,
-      })
-      return {
-        ...subform,
-        picUrl: productPickPhotoUrl,
-      }
-    } else {
-      return {
-        ...subform,
-        picUrl: '',
-      }
-    }
-  }, [])
-
-  const uploadSubPictures = useCallback(
-    form => {
-      return productPicksPictures.map(async ({ blob, productPickIndex, setProgress, spotlightIndex }) => {
-        const { productPicksAttributes } = form.spotlightsAttributes[spotlightIndex]
-        productPicksAttributes[productPickIndex] = await uploadSubPicture({
-          subform: productPicksAttributes[productPickIndex],
-          blob,
-          setProgress,
-        })
-      })
-    },
-    [productPicksPictures, uploadSubPicture]
-  )
-
-  const newSaveFormObject = useCallback(
-    async form => {
-      await Promise.all(uploadSubPictures(form))
-      setProductPicksPictures([])
-      return saveFormObject(form)
-    },
-    [saveFormObject, uploadSubPictures]
-  )
 
   const {
     form,
@@ -81,7 +38,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     mergeForm,
     mergeFormCallback,
     setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, saveFormObject: newSaveFormObject, loadFormObject })
+  } = useForm({ formObjectTransformer, saveFormObject, loadFormObject })
 
   useEffect(
     () => {
@@ -117,6 +74,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
                 description: '',
                 displayPrice: '',
                 picUrl: '',
+                picRect: '',
                 __key: 'new-0',
               },
             ],
@@ -234,11 +192,9 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
           onSortEnd={onSortEnd}
           onSpotlightClick={onSpotlightClick}
           onToggleContent={onToggleContent}
-          productPicksPictures={productPicksPictures}
           selectPersona={selectPersona}
           setFieldValue={setFieldValue}
           setIsCropping={setIsCropping}
-          setProductPicksPictures={setProductPicksPictures}
           setSpotlightForm={setSpotlightForm}
           title={title}
         />

@@ -39,7 +39,7 @@ class SimpleChat < ApplicationRecord
   def persona_attributes
     {
       id: persona.id, name: persona.name, description: persona.description, profile_pic_url: persona.profile_pic_url,
-      instagram_url: persona.instagram_url,
+      instagram_url: persona.instagram_url, picRect: persona.pic_rect,
     }
   end
 end
