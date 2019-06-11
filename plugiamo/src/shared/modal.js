@@ -54,7 +54,7 @@ const ModalTemplate = ({ allowBackgroundClose, closeModal, children, isResourceL
   <div onClick={allowBackgroundClose && closeModal} role="presentation" style={styles.modal} tabIndex="-1">
     <IconClose onClick={closeModal} style={styles.iconClose} />
     <div role="dialog" style={styles.dialog}>
-      {!isResourceLoaded && (
+      {isResourceLoaded === false && (
         <div style={styles.loaderContainer}>
           <Loader style={styles.loader} />
         </div>
