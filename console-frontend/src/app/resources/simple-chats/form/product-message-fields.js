@@ -10,6 +10,8 @@ const ProductMessagesForm = ({
   onFormChange,
   progress,
   setIsCropping,
+  isNextSameType,
+  isPreviousSameType,
   simpleChatMessage,
   setPicture,
 }) => (
@@ -62,14 +64,15 @@ const ProductMessagesForm = ({
     <FormControlLabel
       control={
         <Checkbox
-          checked={simpleChatMessage.groupWithAdjacent}
+          checked={(isNextSameType || isPreviousSameType) && simpleChatMessage.groupWithAdjacent}
           color="primary"
+          disabled={!(isNextSameType || isPreviousSameType)}
           name="groupWithAdjacent"
           onChange={onFormChange}
         />
       }
       disabled={isFormLoading}
-      label="Group with adjacent"
+      label="Group with adjacent products"
     />
   </>
 )
@@ -79,6 +82,8 @@ const ProductMessageFields = ({
   onChange,
   onFocus,
   setIsCropping,
+  isNextSameType,
+  isPreviousSameType,
   simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
@@ -105,6 +110,8 @@ const ProductMessageFields = ({
   return (
     <ProductMessagesForm
       isFormLoading={isFormLoading}
+      isNextSameType={isNextSameType}
+      isPreviousSameType={isPreviousSameType}
       onFocus={onFocus}
       onFormChange={onFormChange}
       setIsCropping={setIsCropping}
