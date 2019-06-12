@@ -161,7 +161,7 @@ export default compose(
       setShowingContent,
       showingContent,
     }) => () => {
-      if (data.flow.flowType === 'outro') return
+      if (data.flow && data.flow.flowType === 'outro') return
       mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
       mixpanel.time_event('Toggled Plugin')
 
@@ -171,7 +171,7 @@ export default compose(
         setPluginState('closed')
         timeout.set('hideLauncher', () => setDisappear(true), 10000)
       } else {
-        setPluginState('opened')
+        setPluginState('default')
         timeout.clear('hideLauncher')
       }
 

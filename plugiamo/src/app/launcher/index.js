@@ -1,6 +1,6 @@
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { bigLauncherConfig } from 'config'
-import { compose, withHandlers, withProps, withState } from 'recompose'
+import { compose, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { Launcher as LauncherBase } from 'plugin-base'
 
@@ -46,13 +46,6 @@ export default compose(
   withHotkeys({
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()
-    },
-  }),
-  withHandlers({
-    onToggleContent: ({ data, onToggleContent }) => () => {
-      if (data.flow && data.flow.flowType === 'outro') return
-
-      onToggleContent()
     },
   })
 )(Launcher)
