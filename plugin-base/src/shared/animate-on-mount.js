@@ -1,4 +1,3 @@
-import { timeout } from 'ext'
 import { useEffect, useState } from 'react'
 
 const useAnimateOnMount = ({ delay, skipEntry } = {}) => {
@@ -7,15 +6,14 @@ const useAnimateOnMount = ({ delay, skipEntry } = {}) => {
   useEffect(
     () => {
       if (skipEntry) return
-      timeout.set('animateOnMount', () => setEntry(false), delay || 10)
+      let didCancel = false
+      setTimeout(() => {
+        didCancel || setEntry(false)
+      }, delay || 10)
+      return () => (didCancel = true)
     },
     [delay, skipEntry]
   )
-
-  // useEffect(() => () => {
-  //   console.log('useAnimateOnMount clear')
-  //   timeout.clear('animateOnMount')
-  // })
 
   return { entry }
 }
