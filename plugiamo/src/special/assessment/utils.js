@@ -2,8 +2,7 @@ import dataGathering from 'data-gathering/pierre-cardin'
 import mixpanel from 'ext/mixpanel'
 import { suggestions } from './data'
 
-const assessmentHack = () =>
-  process.env.ASSESSMENT || localStorage.getItem('trnd-plugin-account') === 'PierreCardinGermany'
+const assessmentHack = () => process.env.ASSESSMENT || location.hostname === 'www.pierre-cardin.de'
 
 const rememberPersona = persona => sessionStorage.setItem('trnd-remembered-persona', JSON.stringify(persona))
 

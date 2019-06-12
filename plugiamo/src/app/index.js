@@ -87,7 +87,7 @@ export default compose(
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   branch(() => assessmentCart(), renderComponent(AssessmentCart)),
-  branch(({ data }) => !data.flow && assessmentHack(), renderComponent(AssessmentSizeGuide)),
+  branch(() => assessmentHack(), renderComponent(AssessmentSizeGuide)),
   branch(({ data }) => !data.flow, infoMsgHof(`no data found for hostname ${location.hostname}`)),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
   withState('pluginState', 'setPluginState', 'default'),
@@ -116,9 +116,6 @@ export default compose(
         personaName: persona.name,
         personaRef: persona.id,
       })
-
-      // we could store this in the store, but for ease of access for now, just in localStorage
-      localStorage.setItem('trnd-plugin-account', data.website.name)
 
       getFrekklsConfig().onShow(autoOpen)
 
