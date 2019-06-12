@@ -73,8 +73,9 @@ export default compose(
         const products = results.find(item => item.hostname === 'www.pierre-cardin.de').products
         const product = products.find(item => item.id === id && !blacklistTags.includes(item.tag))
         setProduct(product)
-        if (product && tagSizeGuides[product.tag]) {
-          setProductType(tagSizeGuides[product.tag])
+        const foundKey = Object.keys(tagSizeGuides).find(item => product.tag.includes(item))
+        if (product && foundKey) {
+          setProductType(tagSizeGuides[foundKey])
         }
       })
     },
