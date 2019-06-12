@@ -59,11 +59,20 @@ const StyledMenu = styled(Menu)`
 
 const SortableSimpleChatMessage = SortableElement(SimpleChatMessage)
 
-const SimpleChatMessages = ({ allowDelete, isCropping, onChange, onFocus, setIsCropping, simpleChatMessages }) => (
+const SimpleChatMessages = ({
+  allowDelete,
+  isCropping,
+  onChange,
+  onFocus,
+  setIsCropping,
+  simpleChatMessages,
+  activeSimpleChatMessages,
+}) => (
   <div>
     {simpleChatMessages.map((simpleChatMessage, index) =>
       simpleChatMessage._destroy ? null : (
         <SortableSimpleChatMessage
+          activeSimpleChatMessages={activeSimpleChatMessages}
           allowDelete={allowDelete}
           index={index}
           isCropping={isCropping}
@@ -112,10 +121,10 @@ const SimpleChatStep = ({
     [onChange, simpleChatStep, simpleChatStepIndex]
   )
 
-  const allowDeleteChatMessage = useMemo(
+  const activeSimpleChatMessages = useMemo(
     () =>
       simpleChatStep.simpleChatMessagesAttributes &&
-      simpleChatStep.simpleChatMessagesAttributes.filter(simpleChatMessage => !simpleChatMessage._destroy).length > 1,
+      simpleChatStep.simpleChatMessagesAttributes.filter(simpleChatMessage => !simpleChatMessage._destroy),
     [simpleChatStep.simpleChatMessagesAttributes]
   )
 
@@ -213,7 +222,8 @@ const SimpleChatStep = ({
           )}
           {simpleChatStep.simpleChatMessagesAttributes && (
             <SimpleChatMessagesContainer
-              allowDelete={allowDeleteChatMessage}
+              activeSimpleChatMessages={activeSimpleChatMessages}
+              allowDelete={activeSimpleChatMessages.length > 1}
               helperClass="sortable-element"
               isCropping={isCropping}
               isFormLoading={isFormLoading}

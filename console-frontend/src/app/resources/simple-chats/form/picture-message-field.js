@@ -8,6 +8,8 @@ const PictureMessageForm = ({
   progress,
   setIsCropping,
   setPicture,
+  isNextSameType,
+  isPreviousSameType,
   simpleChatMessage,
   onFormChange,
 }) => (
@@ -26,19 +28,27 @@ const PictureMessageForm = ({
     <FormControlLabel
       control={
         <Checkbox
-          checked={simpleChatMessage.groupWithAdjacent}
+          checked={(isNextSameType || isPreviousSameType) && simpleChatMessage.groupWithAdjacent}
           color="primary"
+          disabled={!(isNextSameType || isPreviousSameType)}
           name="groupWithAdjacent"
           onChange={onFormChange}
         />
       }
       disabled={isFormLoading}
-      label="Group with adjacent"
+      label="Group with adjacent pictures"
     />
   </>
 )
 
-const PictureMessageField = ({ onChange, setIsCropping, simpleChatMessage, simpleChatMessageIndex }) => {
+const PictureMessageField = ({
+  onChange,
+  setIsCropping,
+  simpleChatMessage,
+  isNextSameType,
+  isPreviousSameType,
+  simpleChatMessageIndex,
+}) => {
   const onFormChange = useCallback(
     event => {
       const isCheckbox = event.target.type === 'checkbox'
@@ -59,6 +69,8 @@ const PictureMessageField = ({ onChange, setIsCropping, simpleChatMessage, simpl
 
   return (
     <PictureMessageForm
+      isNextSameType={isNextSameType}
+      isPreviousSameType={isPreviousSameType}
       onFormChange={onFormChange}
       setIsCropping={setIsCropping}
       setPicture={setPicture}

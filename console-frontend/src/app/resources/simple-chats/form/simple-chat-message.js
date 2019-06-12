@@ -26,6 +26,8 @@ const MessageField = ({
   onFocus,
   onSimpleChatMessageEdit,
   setIsCropping,
+  isNextSameType,
+  isPreviousSameType,
   simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
@@ -46,6 +48,8 @@ const MessageField = ({
         <ProductMessageFields
           isCropping={isCropping}
           isFormLoading={isFormLoading}
+          isNextSameType={isNextSameType}
+          isPreviousSameType={isPreviousSameType}
           name="simpleChatMessage_product"
           onChange={onSimpleChatMessageEdit}
           onFocus={onFocus}
@@ -69,6 +73,8 @@ const MessageField = ({
       return (
         <PictureMessageField
           isCropping={isCropping}
+          isNextSameType={isNextSameType}
+          isPreviousSameType={isPreviousSameType}
           name="simpleChatMessage_picture"
           onChange={onSimpleChatMessageEdit}
           setIsCropping={setIsCropping}
@@ -83,13 +89,13 @@ const MessageField = ({
 
 const SimpleChatMessage = ({
   allowDelete,
-  index,
   isCropping,
   isFormLoading,
   onChange,
   onFocus,
   setIsCropping,
   simpleChatMessage,
+  activeSimpleChatMessages,
   simpleChatMessageIndex,
 }) => {
   const onSimpleChatMessageEdit = useCallback(
@@ -124,12 +130,34 @@ const SimpleChatMessage = ({
     [allowDelete, deleteSimpleChatMessage, isCropping, isFormLoading, simpleChatMessageIndex]
   )
 
-  const hideTop = useMemo(() => index === 0, [index])
+  const hideTop = useMemo(() => simpleChatMessageIndex === 0, [simpleChatMessageIndex])
 
   const title = useMemo(() => setSimpleChatMessageTitle(simpleChatMessage), [simpleChatMessage])
 
-  if (simpleChatMessage._destroy) return null
+  const filteredSimpleChatMessageIndex = useMemo(() => activeSimpleChatMessages.indexOf(simpleChatMessage), [
+    activeSimpleChatMessages,
+    simpleChatMessage,
+  ])
 
+  const isNextSameType = useMemo(
+    () =>
+      filteredSimpleChatMessageIndex + 1 < activeSimpleChatMessages.length &&
+      simpleChatMessage.type ===
+        (activeSimpleChatMessages[filteredSimpleChatMessageIndex + 1] &&
+          activeSimpleChatMessages[filteredSimpleChatMessageIndex + 1].type),
+    [filteredSimpleChatMessageIndex, activeSimpleChatMessages, simpleChatMessage.type]
+  )
+
+  const isPreviousSameType = useMemo(
+    () =>
+      0 <= filteredSimpleChatMessageIndex - 1 &&
+      simpleChatMessage.type ===
+        (activeSimpleChatMessages[filteredSimpleChatMessageIndex - 1] &&
+          activeSimpleChatMessages[filteredSimpleChatMessageIndex - 1].type),
+    [filteredSimpleChatMessageIndex, activeSimpleChatMessages, simpleChatMessage.type]
+  )
+
+  if (simpleChatMessage._destroy) return null
   return (
     <FormSection
       actions={actions}
@@ -144,6 +172,8 @@ const SimpleChatMessage = ({
       <MessageField
         isCropping={isCropping}
         isFormLoading={isFormLoading}
+        isNextSameType={isNextSameType}
+        isPreviousSameType={isPreviousSameType}
         onFocus={onFocus}
         onSimpleChatMessageEdit={onSimpleChatMessageEdit}
         setIsCropping={setIsCropping}
