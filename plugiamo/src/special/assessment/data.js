@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-const header = {
+export const header = {
   title: 'Nico de Roy',
   subtitle: 'Designer @ Pierre Cardin',
   imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy_small.jpg',
@@ -562,50 +562,6 @@ const data = {
               type: 'SimpleChatTextMessage',
               text:
                 'Hier sind ein paar Produkte die zu deiner bisherigen Auswahl passen und gerne von unseren Kunden kombiniert werden! 🙂',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  sizeGuide: {
-    flowType: 'asmt-size-guide',
-    header,
-    launcher: {
-      chatBubbleText: 'Brauchst du Hilfe bei der Größenwahl?',
-      persona: {
-        name: 'Nico de Roy',
-        profilePic: {
-          url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
-        },
-      },
-    },
-    closedLauncher: {
-      chatBubbleText: 'Wir sehen uns an der Kasse! 🙂',
-      persona: {
-        name: 'Nico de Roy',
-        profilePic: {
-          url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
-        },
-      },
-    },
-    simpleChat: {
-      simpleChatSteps: [
-        {
-          key: 'default',
-          simpleChatMessages: [
-            {
-              type: 'SimpleChatTextMessage',
-              text:
-                'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
-            },
-            {
-              type: 'SimpleChatProductMessage',
-              url: 'https://www.pierre-cardin.de/size-advisor',
-              picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/size-guide.jpg',
-              title: 'Zur Größentabelle',
-              displayPrice: '',
-              newTab: true,
             },
           ],
         },

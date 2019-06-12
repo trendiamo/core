@@ -2,7 +2,7 @@ import AppBase from 'app/base'
 import blacklistTags from './blacklist-tags'
 import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
-import data from 'special/assessment/data'
+import data, { tagSizeGuides } from './data'
 import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics from 'ext/google-analytics'
 import Launcher from 'app/launcher'
@@ -59,7 +59,26 @@ const Plugin = ({
 
 export default compose(
   withState('pluginState', 'setPluginState', 'default'),
-  withProps({ module: data.sizeGuide }),
+  withState('product', 'setProduct', null),
+  withState('productType', 'setProductType', null),
+  withProps(({ productType }) => ({
+    module: productType && data(productType),
+  })),
+  lifecycle({
+    componentDidMount() {
+      const { setProduct, setProductType } = this.props
+      fetchProducts(results => {
+        const pathArray = window.location.pathname.split('/')
+        const id = pathArray[pathArray.length - 1]
+        const products = results.find(item => item.hostname === 'www.pierre-cardin.de').products
+        const product = products.find(item => item.id === id && !blacklistTags.includes(item.tag))
+        setProduct(product)
+        if (product && tagSizeGuides[product.tag]) {
+          setProductType(tagSizeGuides[product.tag])
+        }
+      })
+    },
+  }),
   branch(({ module }) => !module, renderNothing),
   withProps(({ module, pluginState }) => {
     module.launcher = pluginState === 'closed' ? module.closedLauncher : module.launcher
@@ -72,22 +91,14 @@ export default compose(
   withState('showingBubbles', 'setShowingBubbles', () =>
     googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
   ),
-  withState('product', 'setProduct', null),
   withState('disappear', 'setDisappear', false),
   lifecycle({
     componentDidMount() {
-      const { setProduct, module } = this.props
-      fetchProducts(results => {
-        const pathArray = window.location.pathname.split('/')
-        const id = pathArray[pathArray.length - 1]
-        const products = results.find(item => item.hostname === 'www.pierre-cardin.de').products
-        const product = products.find(item => item.id === id && !blacklistTags.includes(item.tag))
-        setProduct(product)
-        mixpanel.track('Loaded Plugin', {
-          flowType: module.flowType,
-          hash: location.hash,
-          hostname: location.hostname,
-        })
+      const { module } = this.props
+      mixpanel.track('Loaded Plugin', {
+        flowType: module.flowType,
+        hash: location.hash,
+        hostname: location.hostname,
       })
     },
     componentDidUpdate(prevProps) {
@@ -103,7 +114,7 @@ export default compose(
       }
     },
   }),
-  branch(({ product }) => !product, renderNothing),
+  branch(({ product, productType }) => !product || !productType, renderNothing),
   withHandlers({
     onToggleContent: ({
       module,
