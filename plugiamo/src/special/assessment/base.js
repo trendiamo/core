@@ -128,7 +128,7 @@ export default compose(
           step: currentStepKey,
           tags: endNodeTags,
         })
-        return goToStore(currentStepKey)
+        return goToStore()
       }
       if (step.multiple && !steps[nextStepKey]) {
         return handleEndNodeTags(nextStepKey)
@@ -142,7 +142,7 @@ export default compose(
           tags: newTags,
         })
         setEndNodeTags(newTags)
-        return goToStore(currentStepKey)
+        return goToStore()
       }
       setProgress(progress + 33)
       setTags([...tags, nextStep.title])
@@ -170,15 +170,14 @@ export default compose(
       setHideProgressBar,
       setResults,
     }) => () => {
-      const tagsLength = tags.length
-      if (tagsLength === 0) {
+      if (tags.length === 0) {
         setAnimateOpacity(true)
         return setTimeout(() => setShowAssessmentContent(false), 300)
       }
       let key = tags
       let newTags = tags
       if (currentStepKey !== 'store') {
-        key = tagsLength > 1 ? tags[tagsLength - 1] : 'root'
+        key = tags.length > 1 ? tags[tags.length - 1] : 'root'
         newTags = [...tags]
         newTags.pop()
         setProgress(key === 'root' ? 0 : progress - 33)

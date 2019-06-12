@@ -27,6 +27,7 @@ const ChatContent = ({
   storeLog,
 }) => {
   const [previousData, setPreviousData] = useState(null)
+  const [previousStoreLog, setPreviousStoreLog] = useState(null)
   const [logs, setLogs] = useState([])
   const [chatDataChanged, setChatDataChanged] = useState(false)
 
@@ -98,11 +99,15 @@ const ChatContent = ({
 
   useEffect(
     () => {
-      if (storeLog && storeLog.logs.length > 0) {
+      if (
+        (!previousStoreLog || !previousStoreLog.logs || previousStoreLog.logs.length === 0) &&
+        storeLog &&
+        storeLog.logs.length > 0
+      ) {
         handleLogsUpdate && handleLogsUpdate({ chatLog, setLogs, updateLogs })
       }
     },
-    [handleLogsUpdate, storeLog, updateLogs]
+    [handleLogsUpdate, previousStoreLog, storeLog, updateLogs]
   )
 
   useEffect(
@@ -110,6 +115,13 @@ const ChatContent = ({
       setPreviousData(data)
     },
     [data]
+  )
+
+  useEffect(
+    () => {
+      setPreviousStoreLog(storeLog)
+    },
+    [storeLog]
   )
 
   useEffect(
