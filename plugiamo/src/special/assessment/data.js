@@ -58,10 +58,12 @@ const data = {
                 {
                   type: 'SimpleChatTextMessage',
                   text: 'Willkommen bei Pierre Cardin! Ich würde dir gerne die für dich relevantesten Pieces zeigen.',
+                  id: 'root-default-0',
                 },
                 {
                   type: 'SimpleChatTextMessage',
                   text: 'Mit welchem Look kann ich dir helfen?',
+                  id: 'root-default-1',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -88,6 +90,7 @@ const data = {
                       url: 'https://www.pierre-cardin.de/specials/pierre-cardin-specials/summer-specials',
                     },
                   ],
+                  id: 'root-default-2',
                 },
               ],
             },
@@ -104,6 +107,7 @@ const data = {
                 {
                   type: 'SimpleChatTextMessage',
                   text: 'Alles klar! Womit wollen wir anfangen?',
+                  id: 'Casual-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -129,6 +133,7 @@ const data = {
                       title: 'Sakkos',
                     },
                   ],
+                  id: 'Casual-default-1',
                 },
               ],
             },
@@ -145,6 +150,7 @@ const data = {
                 {
                   type: 'SimpleChatTextMessage',
                   text: 'Alles klar! Womit wollen wir anfangen?',
+                  id: 'Business-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -180,6 +186,7 @@ const data = {
                       title: 'Accessoires',
                     },
                   ],
+                  id: 'Business-default-1',
                 },
               ],
             },
@@ -197,6 +204,7 @@ const data = {
                 {
                   type: 'SimpleChatTextMessage',
                   text: 'Alles klar! Wonach schaust du genau?',
+                  id: 'Basics-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -222,6 +230,7 @@ const data = {
                       title: 'Jacken',
                     },
                   ],
+                  id: 'Basics-default-1',
                 },
               ],
             },
@@ -240,6 +249,7 @@ const data = {
                   type: 'SimpleChatTextMessage',
                   text:
                     'Super! Wir haben gerade auf unsere neue Frühling / Sommer Kollektion umgestellt. Welchen Fit sollte die Hose haben? Du kannst mehrere auswählen!',
+                  id: 'Casual/Jeans und Hosen-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -265,11 +275,13 @@ const data = {
                       title: 'Comfort Fit',
                     },
                   ],
+                  id: 'Casual/Jeans und Hosen-default-1',
                 },
                 {
                   type: 'SimpleChatTextMessage',
                   text:
                     'Falls du dir unsicher bist, welche unserer Jeans-Passformen die für dich beste ist, kannst du hier nachschauen: <a target="_blank" rel="noopener noreferrer" href="https://www.pierre-cardin.de/specials/pierre-cardin-specials/denim-guide">Zum Denim Guide</a>',
+                  id: 'Casual/Jeans und Hosen-default-2',
                 },
               ],
             },
@@ -288,6 +300,7 @@ const data = {
                   type: 'SimpleChatTextMessage',
                   text:
                     'Ok! Wir haben die verschiedensten Typen im Angebot. Wonach suchst du genau? Du kannst gerne mehrere Optionen auswählen!',
+                  id: 'Casual/Jacken-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -313,6 +326,7 @@ const data = {
                       title: 'Westen',
                     },
                   ],
+                  id: 'Casual/Jacken-default-1',
                 },
               ],
             },
@@ -330,6 +344,7 @@ const data = {
                 {
                   type: 'SimpleChatTextMessage',
                   text: 'Cool! Womit können wir dir dienen? Du kannst gerne mehrere Optionen auswählen!',
+                  id: 'Casual/Oberteile-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -355,6 +370,7 @@ const data = {
                       title: 'Pullover',
                     },
                   ],
+                  id: 'Casual/Oberteile-default-1',
                 },
               ],
             },
@@ -373,6 +389,7 @@ const data = {
                   type: 'SimpleChatTextMessage',
                   text:
                     'Super Wahl für ein Frühling reifes Smart Casual Outfit! Magst du mir einmal deinen Fit verraten?',
+                  id: 'Casual/Sakkos-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -388,6 +405,7 @@ const data = {
                       title: 'Regular Fit',
                     },
                   ],
+                  id: 'Casual/Sakkos-default-1',
                 },
               ],
             },
@@ -405,6 +423,7 @@ const data = {
                 {
                   type: 'SimpleChatTextMessage',
                   text: 'Ok! Magst du mir einmal deinen Fit verraten? ',
+                  id: 'Business/Sakkos-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -422,6 +441,7 @@ const data = {
                       endNode: true,
                     },
                   ],
+                  id: 'Business/Sakkos-default-1',
                 },
               ],
             },
@@ -439,6 +459,7 @@ const data = {
                 {
                   type: 'SimpleChatTextMessage',
                   text: 'Welchen Fit trägst du normalerweise?',
+                  id: 'Business/Anzughosen-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -454,6 +475,7 @@ const data = {
                       title: 'Regular Fit',
                     },
                   ],
+                  id: 'Business/Anzughosen-default-1',
                 },
               ],
             },
@@ -472,6 +494,7 @@ const data = {
                   type: 'SimpleChatTextMessage',
                   text:
                     'Von Schlicht bis Hingucker haben wir alles im Angebot! Aber zuerst müsste ich einmal wissen welchen Fit du trägst.',
+                  id: 'Business/Hemden-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -487,6 +510,7 @@ const data = {
                       title: 'Shaped Fit',
                     },
                   ],
+                  id: 'Business/Hemden-default-1',
                 },
               ],
             },
@@ -505,6 +529,7 @@ const data = {
                   type: 'SimpleChatTextMessage',
                   text:
                     'Zu jedem guten Business Outfit gehört ein passender Gürtel und ein passendes Einstecktuch oder eine Krawatte. Suchst du nach beidem?',
+                  id: 'Business/Accessoires-default-0',
                 },
                 {
                   type: 'assessmentStepOptions',
@@ -520,6 +545,7 @@ const data = {
                       title: 'Krawatten & Einstecktücher',
                     },
                   ],
+                  id: 'Business/Accessoires-default-1',
                 },
               ],
             },
@@ -562,6 +588,7 @@ const data = {
               type: 'SimpleChatTextMessage',
               text:
                 'Hier sind ein paar Produkte die zu deiner bisherigen Auswahl passen und gerne von unseren Kunden kombiniert werden! 🙂',
+              id: 'Cart-default-0',
             },
           ],
         },

@@ -93,7 +93,16 @@ const ChatMessage = ({
 
   useEffect(
     () => {
-      const delay = doneAnimation ? 100 : index * MESSAGE_INTERVAL + Math.floor(Math.random() + MESSAGE_RANDOMIZER)
+      if (!hideAll) return
+      setDoneAnimation(false)
+    },
+    [hideAll, setDoneAnimation]
+  )
+
+  useEffect(
+    () => {
+      if (show) return
+      const delay = doneAnimation ? 100 : index * MESSAGE_INTERVAL + Math.floor(Math.random() * MESSAGE_RANDOMIZER)
       timeout.set(
         'messageAnimation',
         () => {
@@ -104,7 +113,7 @@ const ChatMessage = ({
         delay
       )
     },
-    [doneAnimation, index, isLastMessage, setDoneAnimation]
+    [doneAnimation, index, isLastMessage, setDoneAnimation, show]
   )
 
   return (

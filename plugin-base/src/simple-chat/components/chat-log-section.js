@@ -84,7 +84,6 @@ const ChatLogSection = ({
     <Container ref={containerRef}>
       {logSection.logs.map((log, index) =>
         log.type === 'message' ? (
-          /* eslint-disable react/no-array-index-key */
           <ChatMessage
             clickActionsExist={clickActionsExist}
             doneAnimation={doneAnimation}
@@ -93,7 +92,7 @@ const ChatLogSection = ({
             hideAll={hideAll}
             index={index}
             isLastMessage={index === logSection.logs.length - 1}
-            key={index}
+            key={log.message.id}
             log={log}
             messageFactory={messageFactory}
             nothingSelected={nothingSelected}
@@ -101,8 +100,14 @@ const ChatLogSection = ({
             setDoneAnimation={setDoneAnimation}
           />
         ) : log.type === 'option' ? (
-          /* eslint-disable react/no-array-index-key */
-          <ChatOption animate={animate} chatOption={log} hide={hide} index={index} key={index} onClick={newOnClick} />
+          <ChatOption
+            animate={animate}
+            chatOption={log}
+            hide={hide}
+            index={index}
+            key={log.text}
+            onClick={newOnClick}
+          />
         ) : null
       )}
     </Container>

@@ -1,8 +1,8 @@
 import chatLog from 'simple-chat/chat-log'
 import ChatLogSection from './chat-log-section'
+import isEqual from 'lodash.isequal'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { convertLogs } from 'tools'
-import { timeout } from 'ext'
 import { Title } from 'shared'
 
 const ChatContent = ({
@@ -26,6 +26,7 @@ const ChatContent = ({
   setLazyLoadActive,
   storeLog,
 }) => {
+  const [previousData, setPreviousData] = useState(null)
   const [logs, setLogs] = useState([])
   const [chatDataChanged, setChatDataChanged] = useState(false)
 
@@ -34,22 +35,34 @@ const ChatContent = ({
 
   const updateLogs = useCallback(({ data }) => setLogs(convertLogs(data)), [])
 
-  const newInitChatLog = useCallback(
-    (args = {}) => {
-      if (initChatLog) return initChatLog({ ...args, chatLog, setLogs, updateLogs })
+  const defaultInitChatLog = useCallback(
+    ({ chatLog, update, updateLogs }) => {
       const chatLogProps = {
         data,
         listeners: [updateLogs],
         callbacks: chatLogCallbacks,
         setChatDataChanged,
       }
-      if (args.update) {
+      if (update) {
         chatLog.update(chatLogProps)
       } else {
-        timeout.set('chatLogInit', () => chatLog.init(chatLogProps), 0)
+        chatLog.init(chatLogProps)
       }
     },
-    [chatLogCallbacks, data, initChatLog, updateLogs]
+    [chatLogCallbacks, data]
+  )
+
+  const newInitChatLog = useCallback(
+    ({ update }) => {
+      if (initChatLog) {
+        // this is used from plugiamo
+        return initChatLog({ chatLog, setLogs, update, updateLogs })
+      } else {
+        // this is used from admin
+        return defaultInitChatLog({ chatLog, update, updateLogs })
+      }
+    },
+    [defaultInitChatLog, initChatLog, updateLogs]
   )
 
   const onClick = useCallback(
@@ -73,14 +86,14 @@ const ChatContent = ({
 
   useEffect(
     () => {
-      newInitChatLog()
-      return () => {
-        timeout.clear('chatLogInit')
-        timeout.clear('updateChatLog')
-        timeout.clear('resetChatDataChanged')
+      if (isEqual(previousData, data)) return
+      if (previousData && handleDataUpdate) {
+        handleDataUpdate({ chatLog, setLogs, updateLogs })
+      } else {
+        newInitChatLog({ update: !!previousData })
       }
     },
-    [newInitChatLog]
+    [chatLogCallbacks, data, handleDataUpdate, initChatLog, newInitChatLog, previousData, updateLogs]
   )
 
   useEffect(
@@ -94,27 +107,25 @@ const ChatContent = ({
 
   useEffect(
     () => {
-      const handled = handleDataUpdate && handleDataUpdate({ chatLog, setLogs, updateLogs })
-      if (handled) return
-      timeout.set('updateChatLog', () => newInitChatLog({ update: true }), 0)
+      setPreviousData(data)
     },
-    [data, handleDataUpdate, newInitChatLog, updateLogs]
+    [data]
   )
 
   useEffect(
     () => {
       if (!lazyLoadActive) return
-      setTimeout(newInitChatLog, 5)
+      newInitChatLog({ update: false })
       setLazyLoadActive(false)
     },
-    [newInitChatLog, lazyLoadActive, setLazyLoadActive]
+    [lazyLoadActive, newInitChatLog, setLazyLoadActive]
   )
 
   useEffect(
     () => {
       if (!chatDataChanged) return
       resetMinHeight()
-      timeout.set('resetChatDataChanged', () => setChatDataChanged(false), 5)
+      setChatDataChanged(false)
     },
     [chatDataChanged, resetMinHeight]
   )

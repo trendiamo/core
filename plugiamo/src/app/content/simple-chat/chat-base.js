@@ -3,7 +3,7 @@ import CtaButton from 'special/bridge/cta-button'
 import ProgressBar from 'special/assessment/progress-bar'
 import { AssessmentProducts, AssessmentStepOptions } from 'special/assessment/message-types'
 import { ChatLogUi, timeout } from 'plugin-base'
-import { compose, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { Fragment, h } from 'preact'
 
 const messageFactory = ({ data, hideAll, nothingSelected, onClick, type }) => {
@@ -174,25 +174,28 @@ export default compose(
       }
       if (!isAssessmentUpdate && update) {
         chatLog.update(chatLogProps)
-      } else {
-        timeout.set('chatLogInit', () => (assessment ? data.simpleChat : true) && chatLog.init(chatLogProps), 0)
+      } else if (!assessment || data.simpleChat) {
+        chatLog.init(chatLogProps)
       }
     },
   }),
   withHandlers({
     handleLogsUpdate: ({ initChatLog }) => ({ chatLog, setLogs, updateLogs }) => {
       timeout.set('updateStore', () => initChatLog({ chatLog, isAssessmentUpdate: true, setLogs, updateLogs }), 100)
-      return true
     },
     handleDataUpdate: ({ data, initChatLog, setHideAll, specialFlow }) => ({ chatLog, setLogs, updateLogs }) => {
       if (specialFlow) setHideAll(true)
-      if (data.type === 'store') return true
+      if (data.type === 'store') return
       timeout.set(
         'updateChatLog',
         () => initChatLog({ chatLog, isAssessmentUpdate: specialFlow, update: true, setLogs, updateLogs }),
         specialFlow ? 800 : 0
       )
-      return true
+    },
+  }),
+  lifecycle({
+    componentWillUnmount() {
+      timeout.clear('updateChatLog')
     },
   })
 )(ChatBase)

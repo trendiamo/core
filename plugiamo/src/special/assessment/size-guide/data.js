@@ -32,6 +32,7 @@ const simpleChatSteps = {
           type: 'SimpleChatTextMessage',
           text:
             'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
+          id: 'SizeGuide-shirts-default-0',
         },
         {
           type: 'imageCarousel',
@@ -44,11 +45,13 @@ const simpleChatSteps = {
                 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/size-guide/Hemden_Kasual.png',
             },
           ],
+          id: 'SizeGuide-shirts-default-1',
         },
         {
           type: 'SimpleChatTextMessage',
           text:
             'Wir zeigen Ihnen, wie Sie in fünf Schritten Maß nehmen, um Ihre passende <a href="https://www.pierre-cardin.de/size-advisor#hemdgroesse">Hemdgröße</a> zu ermitteln.',
+          id: 'SizeGuide-shirts-default-2',
         },
       ],
     },
@@ -61,6 +64,7 @@ const simpleChatSteps = {
           type: 'SimpleChatTextMessage',
           text:
             'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
+          id: 'SizeGuide-jeansUndHosen-default-0',
         },
         {
           type: 'imageCarousel',
@@ -73,11 +77,13 @@ const simpleChatSteps = {
                 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/size-guide/JeansUndHosen.png',
             },
           ],
+          id: 'SizeGuide-jeansUndHosen-default-1',
         },
         {
           type: 'SimpleChatTextMessage',
           text:
             'Erfahren Sie hier, wie Sie Ihre <a href="https://www.pierre-cardin.de/size-advisor#hosengroesse">Hosengröße</a> in nur drei Schritten richtig messen.',
+          id: 'SizeGuide-jeansUndHosen-default-2',
         },
       ],
     },
@@ -90,6 +96,7 @@ const simpleChatSteps = {
           type: 'SimpleChatTextMessage',
           text:
             'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
+          id: 'SizeGuide-suit-default-0',
         },
         {
           type: 'imageCarousel',
@@ -102,11 +109,13 @@ const simpleChatSteps = {
                 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/size-guide/Konfection.png',
             },
           ],
+          id: 'SizeGuide-suit-default-1',
         },
         {
           type: 'SimpleChatTextMessage',
           text:
             'Wir erklären Ihnen, wie Sie Ihre <a href="https://www.pierre-cardin.de/size-advisor#konfektionsgroesse">Konfektionsgröße</a> richtig messen.',
+          id: 'SizeGuide-suit-default-2',
         },
       ],
     },
