@@ -114,7 +114,6 @@ const ChatBase = ({
 export default compose(
   withState('hideAll', 'setHideAll', false),
   withState('countOfRows', 'setCountOfRows', 6),
-  withState('isStore', 'setIsStore', false),
   withProps(({ assessment, bridge }) => ({ specialFlow: assessment || bridge })),
   withHandlers({
     handleClick: ({ assessmentOptions, setHideAll }) => ({ type, item }) => {
@@ -131,20 +130,14 @@ export default compose(
       countOfRows,
       lazyLoadingCount,
       chatLogCallbacks,
-      isStore,
       storeLog,
-      setIsStore,
       setHideAll,
       assessment,
       setChatDataChanged,
     }) => ({ chatLog, isAssessmentUpdate, update, updateLogs, setLogs }) => {
       if (isAssessmentUpdate) {
         setHideAll(false)
-        if (isStore) {
-          setIsStore(false)
-        }
-        if (!isStore && storeLog && storeLog.logs) return setIsStore(true) || setLogs([storeLog])
-        setLogs([])
+        setLogs(storeLog && storeLog.logs ? [storeLog] : [])
       }
       let compiledData = data
       if (lazyLoadingCount) {

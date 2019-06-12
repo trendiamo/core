@@ -92,7 +92,7 @@ const ChatLogSection = ({
             hideAll={hideAll}
             index={index}
             isLastMessage={index === logSection.logs.length - 1}
-            key={log.message.id}
+            key={log.message.id || log.message.__key || `new-${index}`}
             log={log}
             messageFactory={messageFactory}
             nothingSelected={nothingSelected}
@@ -105,7 +105,7 @@ const ChatLogSection = ({
             chatOption={log}
             hide={hide}
             index={index}
-            key={log.text}
+            key={log.text || `new-${index}`}
             onClick={newOnClick}
           />
         ) : null
