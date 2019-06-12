@@ -6,17 +6,5 @@ import ScrollLock from './scroll-lock'
 import Title from './title'
 import TopSlideAnimation from './top-slide-animation'
 import useAnimateOnMount from './animate-on-mount'
-import { Tile, TilesWrapper } from './tiles'
 
-export {
-  BackButton,
-  TopSlideAnimation,
-  ScrollLock,
-  PersonaInstagram,
-  Frame,
-  Cover,
-  Tile,
-  TilesWrapper,
-  Title,
-  useAnimateOnMount,
-}
+export { BackButton, TopSlideAnimation, ScrollLock, PersonaInstagram, Frame, Cover, Title, useAnimateOnMount }

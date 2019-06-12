@@ -35,23 +35,28 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Buttwraps are made of the best cotton, very soft and extremely comfortable to wear.',
+                    id: 1,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text:
                       'The one I like the most is white. It gives a great shape and you even support elephants with it! 🐘 🔥',
+                    id: 2,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Check out my video!',
+                    id: 3,
                   },
                   {
                     type: 'SimpleChatVideoMessage',
                     videoUrl: 'https://youtu.be/x9AAdO7ufHg',
+                    id: 4,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Check out my pictures in my favourite boxer brief!',
+                    id: 5,
                   },
                   {
                     type: 'imageCarousel',
@@ -63,6 +68,7 @@ const data = {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White2.jpg',
                       },
                     ],
+                    id: 6,
                   },
                 ],
               },
@@ -72,10 +78,12 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Check out the video of me and Maggie!',
+                    id: 7,
                   },
                   {
                     type: 'SimpleChatVideoMessage',
                     videoUrl: 'https://youtu.be/JEYX07rCmuM',
+                    id: 8,
                   },
                 ],
               },
@@ -85,6 +93,7 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'I feel really good wearing them! They are soft, flexible and perfect for working out.',
+                    id: 9,
                   },
                   {
                     type: 'imageCarousel',
@@ -96,11 +105,13 @@ const data = {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White4.jpg',
                       },
                     ],
+                    id: 10,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text:
                       'So whenever somebody asks what to give me for my b-day or x-mas, I tell them „get me a pair of buttwraps!“ 😉',
+                    id: 11,
                   },
                 ],
               },
@@ -110,6 +121,7 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: "Here's the same boxer brief in other colors:",
+                    id: 12,
                   },
                   {
                     type: 'productCarousel',
@@ -135,10 +147,12 @@ const data = {
                         cardCta: 'I want this one instead',
                       },
                     ],
+                    id: 13,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'And this is the other style:',
+                    id: 14,
                   },
                   {
                     type: 'productCarousel',
@@ -164,6 +178,7 @@ const data = {
                         cardCta: 'I want this one instead',
                       },
                     ],
+                    id: 15,
                   },
                 ],
               },
@@ -205,15 +220,18 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'I am 1,80m, weigh 74kg and wear a Buttwrap M. My jeans size is usually 31.',
+                    id: 16,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Here is an overview which size I would recommend to you:',
+                    id: 17,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text:
                       '<table><tr><th>Jeans Size</th><th>Buttwrap Size</th></tr><tr><td>30</td><td>S</td></tr><tr><td>31 or 32</td><td>M</td></tr><tr><td>33 - 34</td><td>L</td></tr><tr><td>35 - 36</td><td>XL</td></tr><tr><td>36+</td><td>XXL</td></tr></table>',
+                    id: 18,
                   },
                 ],
               },
@@ -265,23 +283,28 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Buttwraps are made of the best cotton, very soft and extremely comfortable to wear.',
+                    id: 19,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text:
                       'The one I like the most is red. It gives a great shape and you even support orangutans with it! 🔥',
+                    id: 20,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Check out my video!',
+                    id: 21,
                   },
                   {
                     type: 'SimpleChatVideoMessage',
                     videoUrl: 'https://youtu.be/-Inx1Tv6Fko',
+                    id: 22,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Check out my pictures in my favourite boxer brief!',
+                    id: 23,
                   },
                   {
                     type: 'imageCarousel',
@@ -293,6 +316,7 @@ const data = {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red2.jpg',
                       },
                     ],
+                    id: 24,
                   },
                 ],
               },
@@ -302,10 +326,12 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Check out the video of me and Maggie!',
+                    id: 25,
                   },
                   {
                     type: 'SimpleChatVideoMessage',
                     videoUrl: 'https://youtu.be/JEYX07rCmuM',
+                    id: 26,
                   },
                 ],
               },
@@ -315,6 +341,7 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'I feel really good wearing them! They are soft, flexible and perfect for working out.',
+                    id: 27,
                   },
                   {
                     type: 'imageCarousel',
@@ -326,11 +353,13 @@ const data = {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red4.jpg',
                       },
                     ],
+                    id: 28,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text:
                       'So whenever somebody asks what to give me for my b-day or x-mas, I tell them „get me a pair of buttwraps!“ 😉',
+                    id: 29,
                   },
                 ],
               },
@@ -340,6 +369,7 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: "Here's the same boxer brief in other colors:",
+                    id: 30,
                   },
                   {
                     type: 'productCarousel',
@@ -365,10 +395,12 @@ const data = {
                         cardCta: 'I want this one instead',
                       },
                     ],
+                    id: 31,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'And this is the other style:',
+                    id: 32,
                   },
                   {
                     type: 'productCarousel',
@@ -394,6 +426,7 @@ const data = {
                         cardCta: 'I want this one instead',
                       },
                     ],
+                    id: 33,
                   },
                 ],
               },
@@ -435,15 +468,18 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'I am 1,80m, weigh 74kg and wear a Buttwrap M. My jeans size is usually 31.',
+                    id: 34,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Here is an overview which size I would recommend to you:',
+                    id: 35,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text:
                       '<table><tr><th>Jeans Size</th><th>Buttwrap Size</th></tr><tr><td>30</td><td>S</td></tr><tr><td>31 or 32</td><td>M</td></tr><tr><td>33 - 34</td><td>L</td></tr><tr><td>35 - 36</td><td>XL</td></tr><tr><td>36+</td><td>XXL</td></tr></table>',
+                    id: 36,
                   },
                 ],
               },
@@ -492,10 +528,12 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'I always buy in pairs, plus you get a discount if you buy 3 or more.',
+                    id: 37,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Here are a few other buttwraps I like:',
+                    id: 38,
                   },
                   {
                     type: 'productCarousel',
@@ -531,6 +569,7 @@ const data = {
                         cardCta: 'I want this one instead',
                       },
                     ],
+                    id: 39,
                   },
                 ],
               },
@@ -540,11 +579,13 @@ const data = {
                   {
                     type: 'SimpleChatTextMessage',
                     text: 'Here is an overview of what you can save:',
+                    id: 40,
                   },
                   {
                     type: 'SimpleChatTextMessage',
                     text:
                       '<table><tr><th>Minimum Qty</th><th>Discount</th></tr><tr><td>3+</td><td>15% off</td></tr><tr><td>5+</td><td>20% off</td></tr></table>',
+                    id: 41,
                   },
                 ],
               },

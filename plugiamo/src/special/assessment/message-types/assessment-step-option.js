@@ -174,14 +174,13 @@ const TileDiv = ({ title, imageUrl, handleClick, isClicked, nothingSelected, hid
   </Container>
 )
 
-const Tile = compose(
+const AssessmentStepOption = compose(
   withState('isClicked', 'setIsClicked', false),
   withHandlers({
     handleClick: ({ isClicked, setIsClicked, hideAll, onClick, title, imageUrl }) => () => {
-      if (!hideAll) {
-        setIsClicked(!isClicked)
-        onClick({ type: 'assessmentStepOption', item: { title, imageUrl } })
-      }
+      if (hideAll) return
+      setIsClicked(!isClicked)
+      onClick({ type: 'assessmentStepOption', item: { title, imageUrl } })
     },
   }),
   lifecycle({
@@ -191,4 +190,4 @@ const Tile = compose(
   })
 )(TileDiv)
 
-export default Tile
+export default AssessmentStepOption
