@@ -134,10 +134,10 @@ export default compose(
         setSkipContentEntry(true)
       }
       if (showingContent === prevProps.showingContent) return
-      setSkipContentEntry(showingContent)
       if (showingContent) {
         document.documentElement.classList.add('trnd-open')
       } else {
+        setSkipContentEntry(false)
         document.documentElement.classList.remove('trnd-open')
       }
     },
