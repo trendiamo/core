@@ -63,9 +63,11 @@ const data = {
                     imageCarousel: [
                       {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White1.jpg',
+                        id: 1,
                       },
                       {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White2.jpg',
+                        id: 2,
                       },
                     ],
                     id: 6,
@@ -100,9 +102,11 @@ const data = {
                     imageCarousel: [
                       {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White3.jpg',
+                        id: 3,
                       },
                       {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/White4.jpg',
+                        id: 4,
                       },
                     ],
                     id: 10,
@@ -311,9 +315,11 @@ const data = {
                     imageCarousel: [
                       {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red1.jpg',
+                        id: 5,
                       },
                       {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red2.jpg',
+                        id: 6,
                       },
                     ],
                     id: 24,
@@ -348,9 +354,11 @@ const data = {
                     imageCarousel: [
                       {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red3.jpg',
+                        id: 7,
                       },
                       {
                         picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/buttwrap/Red4.jpg',
+                        id: 8,
                       },
                     ],
                     id: 28,

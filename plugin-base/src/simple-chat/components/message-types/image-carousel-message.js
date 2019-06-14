@@ -35,7 +35,7 @@ const ImgCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
   const pictures = useMemo(
     () =>
       imageCarousel.map(image => {
-        return { picUrl: image.picUrl, picRect: image.picRect }
+        return { picUrl: image.picUrl, picRect: image.picRect, id: image.id }
       }),
     [imageCarousel]
   )
@@ -47,7 +47,7 @@ const ImgCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
           <ImgCarouselElement
             carouselType={carouselType}
             index={index}
-            key={picture.picUrl}
+            key={picture.id || `new-${index}`}
             onClick={onClick}
             picture={picture}
             urlsArray={pictures.map(picture => picture.picUrl)}

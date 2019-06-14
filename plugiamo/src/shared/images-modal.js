@@ -126,7 +126,7 @@ const ImagesModal = compose(
       setIsPictureLoaded,
     }) => () => {
       if (selectedImageIndex === 0) return
-      setIsPictureLoaded(false)
+      if (selectedImage.url !== urlsArray[selectedImageIndex - 1]) setIsPictureLoaded(false)
       setSelectedImageIndex(selectedImageIndex - 1)
       mixpanel.track('Carousel Image Switch', {
         flowType: flowType || 'simpleChat',
@@ -144,7 +144,7 @@ const ImagesModal = compose(
       setIsPictureLoaded,
     }) => () => {
       if (selectedImageIndex >= urlsArray.length - 1) return
-      setIsPictureLoaded(false)
+      if (selectedImage.url !== urlsArray[selectedImageIndex + 1]) setIsPictureLoaded(false)
       setSelectedImageIndex(selectedImageIndex + 1)
       mixpanel.track('Carousel Image Switch', {
         flowType: flowType || 'simpleChat',
