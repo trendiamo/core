@@ -4,53 +4,60 @@ import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import StoreModal from './store-modal'
 import withChatActions from 'ext/recompose/with-chat-actions'
-import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 import { SimpleChat, timeout } from 'plugin-base'
 
 const ctaButton = { label: 'Ergebnisse anzeigen' }
 
-const Base = ({
-  currentStep,
-  goToNextStep,
-  animateOpacity,
-  progress,
-  showingCtaButton,
-  step,
-  goToPrevStep,
-  nothingSelected,
-  ctaButtonClicked,
-  setCtaButtonClicked,
-  storeLog,
-  onCtaButtonClick,
-  hideProgressBar,
-  modalsProps,
-  clickActions,
-}) => (
-  <div>
-    <ChatModals flowType={module.flowType} {...modalsProps} />
-    <SimpleChat
-      animateOpacity={animateOpacity}
-      backButtonLabel={getFrekklsConfig().i18n.backButton}
-      ChatBase={ChatBase}
-      chatBaseProps={{ assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }}
-      clickActions={clickActions}
-      clicked={ctaButtonClicked}
-      currentStep={currentStep}
-      data={step}
-      goToPrevStep={goToPrevStep}
-      hideCtaButton={currentStep.type === 'store' || !showingCtaButton}
-      hideProgressBar={hideProgressBar}
-      nothingSelected={nothingSelected}
-      onCtaButtonClick={onCtaButtonClick}
-      progress={progress}
-      setCtaButtonClicked={setCtaButtonClicked}
-      showBackButton
-      storeLog={storeLog}
-    />
-  </div>
-)
+const Base = props => {
+  const {
+    currentStep,
+    goToNextStep,
+    animateOpacity,
+    progress,
+    showingCtaButton,
+    step,
+    goToPrevStep,
+    nothingSelected,
+    ctaButtonClicked,
+    setCtaButtonClicked,
+    storeLog,
+    onCtaButtonClick,
+    hideProgressBar,
+    modalsProps,
+    clickActions,
+    currentStepKey,
+  } = props
+
+  if (!isSmall() && currentStepKey === 'store') return <StoreModal {...props} />
+
+  return (
+    <div>
+      <ChatModals flowType={module.flowType} {...modalsProps} />
+      <SimpleChat
+        animateOpacity={animateOpacity}
+        backButtonLabel={getFrekklsConfig().i18n.backButton}
+        ChatBase={ChatBase}
+        chatBaseProps={{ assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }}
+        clickActions={clickActions}
+        clicked={ctaButtonClicked}
+        currentStep={currentStep}
+        data={step}
+        goToPrevStep={goToPrevStep}
+        hideCtaButton={currentStep.type === 'store' || !showingCtaButton}
+        hideProgressBar={hideProgressBar}
+        nothingSelected={nothingSelected}
+        onCtaButtonClick={onCtaButtonClick}
+        progress={progress}
+        setCtaButtonClicked={setCtaButtonClicked}
+        showBackButton
+        storeLog={storeLog}
+      />
+    </div>
+  )
+}
 
 const prepareProductsToChat = results => {
   return [{ message: { assessmentProducts: [...results], type: 'assessmentProducts' }, type: 'message' }]
@@ -223,6 +230,5 @@ export default compose(
       logs: results.length > 0 && prepareProductsToChat(results),
     },
   })),
-  withChatActions(),
-  branch(({ currentStepKey }) => !isSmall() && currentStepKey === 'store', renderComponent(StoreModal))
+  withChatActions()
 )(Base)
