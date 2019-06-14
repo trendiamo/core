@@ -68,15 +68,15 @@ export default compose(
     componentDidMount() {
       const { setProduct, setProductType } = this.props
       fetchProducts(results => {
-        const pathArray = window.location.pathname.split('/')
+        const pathArray = location.pathname.split('/')
         const id = pathArray[pathArray.length - 1]
         const products = results.find(item => item.hostname === 'www.pierre-cardin.de').products
         const product = products.find(item => item.id === id && !blacklistTags.includes(item.tag))
         setProduct(product)
+        if (!product) return
         const foundKey = Object.keys(tagSizeGuides).find(item => product.tag.includes(item))
-        if (product && foundKey) {
-          setProductType(tagSizeGuides[foundKey])
-        }
+        if (!foundKey) return
+        setProductType(tagSizeGuides[foundKey])
       })
     },
   }),
