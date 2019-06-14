@@ -4,10 +4,10 @@ class PicturePolicy < ApplicationPolicy
   end
 
   def create?
-    user
+    user.active_membership && !user.active_membership&.editor?
   end
 
   def destroy?
-    user
+    user.active_membership && !user.active_membership&.editor?
   end
 end
