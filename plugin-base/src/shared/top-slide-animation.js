@@ -8,11 +8,11 @@ const StyledDiv = styled.div`
   transition: opacity 0.25s ease, transform 0.25s ease;
 `
 
-const TopSlideAnimation = ({ children, delay, ...props }) => {
+const TopSlideAnimation = ({ children, delay, isLeaving }) => {
   const isEntering = useIsEntering(delay)
 
   return (
-    <StyledDiv {...props} isEntering={isEntering}>
+    <StyledDiv isEntering={isEntering} isLeaving={isLeaving}>
       {children}
     </StyledDiv>
   )

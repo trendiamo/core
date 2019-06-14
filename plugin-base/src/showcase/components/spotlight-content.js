@@ -23,7 +23,7 @@ const SpotlightContent = ({ isLeaving, spotlightId, spotlights, callbacks }) => 
           __html: spotlight.translation.selectedBy,
         }}
       />
-      <TopSlideAnimation isLeaving={isLeaving} name="content">
+      <TopSlideAnimation isLeaving={isLeaving}>
         <List objectForResetCheck={spotlight}>
           {spotlight.productPicks.map((product, index) => (
             <ProductItem
