@@ -1,6 +1,6 @@
 import FocusLock from 'react-focus-lock'
 import Loader from 'icons/loader.svg'
-import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { compose } from 'recompose'
 import { createPortal } from 'preact/compat'
 import { h } from 'preact'

@@ -1,5 +1,5 @@
 import ContentFrame from './content-frame'
-import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { compose, lifecycle } from 'recompose'
 import { ContentWrapper, history } from 'plugin-base'
 import { h } from 'preact'

@@ -1,4 +1,4 @@
-import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
+import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { bigLauncherConfig } from 'config'
 import { compose, withProps, withState } from 'recompose'
 import { h } from 'preact'
