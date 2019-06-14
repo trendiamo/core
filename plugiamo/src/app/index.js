@@ -87,7 +87,7 @@ export default compose(
   ),
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   branch(() => assessmentCart(), renderComponent(AssessmentCart)),
-  branch(() => assessmentHack(), renderComponent(AssessmentSizeGuide)),
+  branch(({ data }) => !data.flow && assessmentHack(), renderComponent(AssessmentSizeGuide)),
   branch(({ data }) => !data.flow, infoMsgHof(`no data found for hostname ${location.hostname}`)),
   branch(({ data }) => data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview'), renderNothing),
   withState('pluginState', 'setPluginState', 'default'),
