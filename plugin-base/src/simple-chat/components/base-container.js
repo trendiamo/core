@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { autoScroll } from 'ext'
 
@@ -38,6 +38,7 @@ const ContainerDiv = styled.div`
 `
 
 const Container = ({ children, contentRef, animateOpacity }) => {
+  const ref = useRef()
   const handleWheel = useCallback(
     event => {
       autoScroll.stop()
@@ -57,8 +58,19 @@ const Container = ({ children, contentRef, animateOpacity }) => {
     [contentRef]
   )
 
+  useEffect(
+    () => {
+      const element = ref.current
+      element.addEventListener('wheel', handleWheel)
+      return () => {
+        element.removeEventListener('wheel', handleWheel)
+      }
+    },
+    [handleWheel]
+  )
+
   return (
-    <ContainerDiv animateOpacity={animateOpacity} onTouchMove={autoScroll.stop} onWheel={handleWheel}>
+    <ContainerDiv animateOpacity={animateOpacity} onTouchMove={autoScroll.stop} ref={ref}>
       {children}
     </ContainerDiv>
   )
