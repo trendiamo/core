@@ -102,7 +102,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
       if (!selected) return
       mergeForm({
         personaId: selected.value.id,
-        personaProfilePic: selected.value.profilePicUrl,
+        __persona: selected.value,
       })
     },
     [mergeForm]
