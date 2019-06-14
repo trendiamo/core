@@ -2,7 +2,6 @@
 
 const timeout = {
   list: {},
-  namesCount: 0,
   set(name, callback, delay, isInterval) {
     if (!this.list[name]) this.list[name] = []
     const generate = () => (isInterval ? setInterval(callback, delay) : setTimeout(callback, delay))
@@ -15,11 +14,6 @@ const timeout = {
       })
       delete this.list[name]
     }
-  },
-  generateTimeoutName() {
-    const name = `timeout_${this.namesCount}`
-    this.namesCount++
-    return name
   },
 }
 
