@@ -10,7 +10,7 @@ class WebsitePolicy < ApplicationPolicy
   end
 
   def show?
-    !user.active_membership&.editor?
+    user.active_membership && !user.active_membership&.editor?
   end
 
   def create?
@@ -18,6 +18,6 @@ class WebsitePolicy < ApplicationPolicy
   end
 
   def update?
-    !user.active_membership&.editor?
+    user.active_membership && !user.active_membership&.editor?
   end
 end
