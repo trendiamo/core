@@ -4,8 +4,8 @@ import ChatModals from 'shared/chat-modals'
 import emojify from 'ext/emojify'
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
-import withChatActions from 'ext/recompose/with-chat-actions'
-import { branch, compose, renderNothing, withProps } from 'recompose'
+import useChatActions from 'ext/hooks/use-chat-actions'
+import { compose } from 'recompose'
 import { Fragment, h } from 'preact'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { SimpleChat } from 'plugin-base'
@@ -58,35 +58,23 @@ export default compose(
       }
     `,
     ({ id }) => ({ id })
-  ),
-  withChatActions(),
-  withProps({
-    backButtonLabel: getFrekklsConfig().i18n.backButton,
-    FlowBackButton,
-    chatLogCallbacks,
-  }),
-  branch(({ data }) => !data || data.loading || data.error, renderNothing)
+  )
 )(
   ({
     animateOpacity,
     assessment,
     assessmentOptions,
-    backButtonLabel,
     bridge,
-    chatLogCallbacks,
-    clickActions,
     coverIsMinimized,
     ctaButton,
     ctaButtonClicked,
     data,
-    FlowBackButton,
     goToPrevStep,
     headerConfig,
     hideCtaButton,
     hideProgressBar,
     lazyLoadingCount,
     Modals,
-    modalsProps,
     onCtaButtonClick,
     onToggleContent,
     persona,
@@ -95,35 +83,41 @@ export default compose(
     setCtaButtonClicked,
     showBackButton,
     storeLog,
-  }) => (
-    <Fragment>
-      <ChatModals {...modalsProps} />
-      <SimpleChat
-        animateOpacity={animateOpacity}
-        backButtonLabel={backButtonLabel}
-        ChatBase={ChatBase}
-        chatBaseProps={{ assessment, assessmentOptions, bridge, ctaButton }}
-        chatLogCallbacks={chatLogCallbacks}
-        clickActions={clickActions}
-        coverIsMinimized={coverIsMinimized}
-        ctaButtonClicked={ctaButtonClicked}
-        data={{ ...data, simpleChat: emojifySimpleChat(data.simpleChat) }}
-        FlowBackButton={FlowBackButton}
-        goToPrevStep={goToPrevStep}
-        headerConfig={headerConfig}
-        hideCtaButton={hideCtaButton}
-        hideProgressBar={hideProgressBar}
-        lazyLoadingCount={lazyLoadingCount}
-        Modals={Modals}
-        onCtaButtonClick={onCtaButtonClick}
-        onToggleContent={onToggleContent}
-        persona={persona}
-        products={products}
-        progress={progress}
-        setCtaButtonClicked={setCtaButtonClicked}
-        showBackButton={showBackButton}
-        storeLog={storeLog}
-      />
-    </Fragment>
-  )
+  }) => {
+    const { clickActions, modalsProps } = useChatActions('simpleChat')
+
+    if (!data || data.loading || data.error) return null
+
+    return (
+      <Fragment>
+        <ChatModals {...modalsProps} />
+        <SimpleChat
+          animateOpacity={animateOpacity}
+          backButtonLabel={getFrekklsConfig().i18n.backButton}
+          ChatBase={ChatBase}
+          chatBaseProps={{ assessment, assessmentOptions, bridge, ctaButton }}
+          chatLogCallbacks={chatLogCallbacks}
+          clickActions={clickActions}
+          coverIsMinimized={coverIsMinimized}
+          ctaButtonClicked={ctaButtonClicked}
+          data={{ ...data, simpleChat: emojifySimpleChat(data.simpleChat) }}
+          FlowBackButton={FlowBackButton}
+          goToPrevStep={goToPrevStep}
+          headerConfig={headerConfig}
+          hideCtaButton={hideCtaButton}
+          hideProgressBar={hideProgressBar}
+          lazyLoadingCount={lazyLoadingCount}
+          Modals={Modals}
+          onCtaButtonClick={onCtaButtonClick}
+          onToggleContent={onToggleContent}
+          persona={persona}
+          products={products}
+          progress={progress}
+          setCtaButtonClicked={setCtaButtonClicked}
+          showBackButton={showBackButton}
+          storeLog={storeLog}
+        />
+      </Fragment>
+    )
+  }
 )

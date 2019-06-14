@@ -6,7 +6,7 @@ import data from './data'
 import getFrekklsConfig from 'frekkls-config'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
-import withChatActions from 'ext/recompose/with-chat-actions'
+import useChatActions from 'ext/hooks/use-chat-actions'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { getScrollbarWidth, isSmall } from 'utils'
@@ -21,38 +21,40 @@ const Plugin = ({
   setPluginState,
   showingContent,
   onCtaButtonClick,
-  clickActions,
-  modalsProps,
-}) => (
-  <div>
-    <ChatModals flowType={module.flowType} {...modalsProps} />
-    <AppBase
-      Component={
-        <SimpleChat
-          backButtonLabel={getFrekklsConfig().i18n.backButton}
-          bridge
-          ChatBase={ChatBase}
-          chatLogCallbacks={chatLogCallbacks}
-          clickActions={clickActions}
-          coverIsMinimized={module.header.minimized}
-          ctaButton={module.ctaButton}
-          data={module}
-          onCtaButtonClick={onCtaButtonClick}
-          setPluginState={setPluginState}
-        />
-      }
-      data={module}
-      isUnmounting={isUnmounting}
-      Launcher={Launcher}
-      launcherPulsating
-      onToggleContent={onToggleContent}
-      persona={module.launcher.persona}
-      showingBubbles
-      showingContent={showingContent}
-      showingLauncher={showingLauncher}
-    />
-  </div>
-)
+}) => {
+  const { clickActions, modalsProps } = useChatActions(module.flowType)
+
+  return (
+    <div>
+      <ChatModals flowType={module.flowType} {...modalsProps} />
+      <AppBase
+        Component={
+          <SimpleChat
+            backButtonLabel={getFrekklsConfig().i18n.backButton}
+            bridge
+            ChatBase={ChatBase}
+            chatLogCallbacks={chatLogCallbacks}
+            clickActions={clickActions}
+            coverIsMinimized={module.header.minimized}
+            ctaButton={module.ctaButton}
+            data={module}
+            onCtaButtonClick={onCtaButtonClick}
+            setPluginState={setPluginState}
+          />
+        }
+        data={module}
+        isUnmounting={isUnmounting}
+        Launcher={Launcher}
+        launcherPulsating
+        onToggleContent={onToggleContent}
+        persona={module.launcher.persona}
+        showingBubbles
+        showingContent={showingContent}
+        showingLauncher={showingLauncher}
+      />
+    </div>
+  )
+}
 
 export default compose(
   withState('pluginState', 'setPluginState', 'default'),
@@ -144,6 +146,5 @@ export default compose(
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()
     },
-  }),
-  withChatActions()
+  })
 )(Plugin)
