@@ -153,7 +153,7 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
       selected &&
         mergeForm({
           personaId: selected.value.id,
-          personaProfilePic: selected.value.profilePicUrl,
+          __persona: selected.value,
         })
     },
     [mergeForm]
