@@ -3,7 +3,7 @@ import ChatModals from 'shared/chat-modals'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import StoreModal from './store-modal'
-import withChatActions from 'ext/recompose/with-chat-actions'
+import useChatActions from 'ext/hooks/use-chat-actions'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { isSmall } from 'utils'
@@ -20,16 +20,17 @@ const Base = props => {
     showingCtaButton,
     step,
     goToPrevStep,
+    module,
     nothingSelected,
     ctaButtonClicked,
     setCtaButtonClicked,
     storeLog,
     onCtaButtonClick,
     hideProgressBar,
-    modalsProps,
-    clickActions,
     currentStepKey,
   } = props
+
+  const { clickActions, modalsProps } = useChatActions(module.flowType)
 
   if (!isSmall() && currentStepKey === 'store') return <StoreModal {...props} />
 
@@ -229,6 +230,5 @@ export default compose(
       type: 'message',
       logs: results.length > 0 && prepareProductsToChat(results),
     },
-  })),
-  withChatActions()
+  }))
 )(Base)

@@ -5,7 +5,7 @@ import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics from 'ext/google-analytics'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
-import withChatActions from 'ext/recompose/with-chat-actions'
+import useChatActions from 'ext/hooks/use-chat-actions'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { fetchProducts, recommendedProducts } from 'special/assessment/utils'
@@ -50,22 +50,7 @@ const Plugin = ({
   />
 )
 
-export default compose(
-  withState('pluginState', 'setPluginState', 'default'),
-  withState('productsData', 'setProductsData', []),
-  withState('products', 'setProducts', []),
-  withProps({ module: data.cart }),
-  branch(({ module }) => !module, renderNothing),
-  branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
-  withState('isUnmounting', 'setIsUnmounting', false),
-  withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
-  withState('showingLauncher', 'setShowingLauncher', () =>
-    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
-  ),
-  withState('showingBubbles', 'setShowingBubbles', () =>
-    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
-  ),
-  withChatActions(),
+const Plugin0 = compose(
   lifecycle({
     componentDidMount() {
       const { module, setShowingContent, setProductsData, setProducts } = this.props
@@ -126,3 +111,26 @@ export default compose(
     },
   })
 )(Plugin)
+
+const Plugin1 = props => {
+  const { module } = props
+  const { clickActions, modalsProps } = useChatActions(module.flowType)
+  return <Plugin0 {...props} clickActions={clickActions} modalsProps={modalsProps} />
+}
+
+export default compose(
+  withState('pluginState', 'setPluginState', 'default'),
+  withState('productsData', 'setProductsData', []),
+  withState('products', 'setProducts', []),
+  withProps({ module: data.cart }),
+  branch(({ module }) => !module, renderNothing),
+  branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
+  withState('isUnmounting', 'setIsUnmounting', false),
+  withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
+  withState('showingLauncher', 'setShowingLauncher', () =>
+    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
+  ),
+  withState('showingBubbles', 'setShowingBubbles', () =>
+    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
+  )
+)(Plugin1)

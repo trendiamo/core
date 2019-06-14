@@ -7,7 +7,7 @@ import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics from 'ext/google-analytics'
 import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
-import withChatActions from 'ext/recompose/with-chat-actions'
+import useChatActions from 'ext/hooks/use-chat-actions'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { fetchProducts } from 'special/assessment/utils'
@@ -16,10 +16,8 @@ import { h } from 'preact'
 import { SimpleChat, timeout } from 'plugin-base'
 
 const Plugin = ({
-  clickActions,
   disappear,
   isUnmounting,
-  modalsProps,
   module,
   onToggleContent,
   pluginState,
@@ -28,34 +26,38 @@ const Plugin = ({
   showingLauncher,
   showingBubbles,
   setIsGAReady,
-}) => (
-  <div>
-    <ChatModals flowType={module.flowType} {...modalsProps} />
-    <AppBase
-      Component={
-        <SimpleChat
-          backButtonLabel={getFrekklsConfig().i18n.backButton}
-          ChatBase={ChatBase}
-          chatBaseProps={{ assessment: true }}
-          clickActions={clickActions}
-          data={module}
-          setPluginState={setPluginState}
-        />
-      }
-      data={module}
-      disappear={disappear}
-      isUnmounting={isUnmounting}
-      Launcher={showingLauncher && Launcher}
-      onToggleContent={onToggleContent}
-      persona={module.launcher.persona}
-      pluginState={pluginState}
-      setIsGAReady={setIsGAReady}
-      showingBubbles={showingBubbles}
-      showingContent={showingContent}
-      showingLauncher={showingLauncher}
-    />
-  </div>
-)
+}) => {
+  const { clickActions, modalsProps } = useChatActions(module.flowType)
+
+  return (
+    <div>
+      <ChatModals flowType={module.flowType} {...modalsProps} />
+      <AppBase
+        Component={
+          <SimpleChat
+            backButtonLabel={getFrekklsConfig().i18n.backButton}
+            ChatBase={ChatBase}
+            chatBaseProps={{ assessment: true }}
+            clickActions={clickActions}
+            data={module}
+            setPluginState={setPluginState}
+          />
+        }
+        data={module}
+        disappear={disappear}
+        isUnmounting={isUnmounting}
+        Launcher={showingLauncher && Launcher}
+        onToggleContent={onToggleContent}
+        persona={module.launcher.persona}
+        pluginState={pluginState}
+        setIsGAReady={setIsGAReady}
+        showingBubbles={showingBubbles}
+        showingContent={showingContent}
+        showingLauncher={showingLauncher}
+      />
+    </div>
+  )
+}
 
 export default compose(
   withState('pluginState', 'setPluginState', 'default'),
@@ -154,6 +156,5 @@ export default compose(
     [escapeKey]: ({ onToggleContent, showingContent }) => () => {
       if (showingContent) onToggleContent()
     },
-  }),
-  withChatActions()
+  })
 )(Plugin)
