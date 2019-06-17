@@ -73,7 +73,12 @@ const withChatActions = () => BaseComponent =>
       clickProduct: ({ module }) => ({ item }) => {
         mixpanel.track(
           'Clicked Product',
-          { flowType: (module && module.flowType) || 'simpleChat', hostname: location.hostname, url: item.url },
+          {
+            flowType: (module && module.flowType) || 'simpleChat',
+            hostname: location.hostname,
+            url: item.url,
+            title: item.title,
+          },
           () => {
             if (item.newTab) return
             markGoFwd()
