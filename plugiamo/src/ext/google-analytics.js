@@ -1,14 +1,6 @@
 import { GApropertyId, GOcontainerId, GOexperimentId } from 'config'
 
-const loadGAFrame = () => {
-  const iframe = document.createElement('iframe')
-  iframe.title = 'loading-ga-frame'
-  iframe.style.width = '0'
-  iframe.style.height = '0'
-  iframe.style.border = '0'
-  iframe.style.display = 'none'
-  iframe.style.position = 'absolute'
-  document.body.appendChild(iframe)
+const loadGoogle = iframe => {
   return { promises: [loadGA(iframe), loadGO(iframe)], iframe }
 }
 
@@ -49,7 +41,7 @@ const googleAnalytics = {
   active: false,
   cxApi: null,
   ga(...args) {
-    return document.querySelector('[title="loading-ga-frame"]').contentWindow.ga(...args)
+    return document.querySelector('[title="frekkls-loading-frame"]').contentWindow.ga(...args)
   },
   iframeRef: null,
   init(iframe) {
@@ -91,5 +83,5 @@ const googleAnalytics = {
   },
 }
 
-export { loadGAFrame }
+export { loadGoogle }
 export default googleAnalytics

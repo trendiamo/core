@@ -1,4 +1,5 @@
 import CloseButton from './close-button'
+import ErrorBoundaries from 'ext/recompose/error-boundaries'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/recompose/with-hotkeys'
 import { compose } from 'recompose'
@@ -71,10 +72,12 @@ const ContentFrame = ({
       skipEntry={skipEntry}
     >
       <IFrame onToggleContent={onToggleContent} styleStr={frameStyleStr}>
-        <div>
-          {children}
-          <CloseButton onToggleContent={onToggleContent} />
-        </div>
+        <ErrorBoundaries>
+          <div>
+            {children}
+            <CloseButton onToggleContent={onToggleContent} />
+          </div>
+        </ErrorBoundaries>
       </IFrame>
     </StyledDiv>
   )

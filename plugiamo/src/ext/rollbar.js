@@ -1,7 +1,19 @@
 /* eslint-disable max-lines */
 import { rollbarToken } from 'config'
 
-export default () => {
+export const Rollbar = {
+  error(...args) {
+    return document.querySelector('[title="frekkls-loading-frame"]').contentWindow.Rollbar.error(...args)
+  },
+  warning(...args) {
+    return document.querySelector('[title="frekkls-loading-frame"]').contentWindow.Rollbar.warning(...args)
+  },
+  critical(...args) {
+    return document.querySelector('[title="frekkls-loading-frame"]').contentWindow.Rollbar.critical(...args)
+  },
+}
+
+export const loadRollbar = iframe => {
   /* eslint-disable sort-vars,no-empty,no-unused-vars */
   var _rollbarConfig = {
     enabled: !!rollbarToken,
@@ -13,6 +25,8 @@ export default () => {
     },
   }
 
+  const window = iframe.contentWindow
+  const document = iframe.contentDocument
   // Rollbar Snippet
   !(function(r) {
     function e(n) {

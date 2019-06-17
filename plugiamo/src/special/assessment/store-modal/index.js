@@ -1,4 +1,5 @@
 import Content from './content'
+import ErrorBoundaries from 'ext/recompose/error-boundaries'
 import Header from './header'
 import Wrapper from 'shared/modal'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
@@ -25,7 +26,9 @@ const FrameChild = ({ step, results, goToPrevStep, flowType }) => (
 const Modal = ({ onCloseModal, isOpen, results, goToPrevStep, step, module }) => (
   <Wrapper allowBackgroundClose closeModal={onCloseModal} isOpen={isOpen}>
     <Frame style={iframeStyle}>
-      <FrameChild flowType={module && module.flowType} goToPrevStep={goToPrevStep} results={results} step={step} />
+      <ErrorBoundaries>
+        <FrameChild flowType={module && module.flowType} goToPrevStep={goToPrevStep} results={results} step={step} />
+      </ErrorBoundaries>
     </Frame>
   </Wrapper>
 )
