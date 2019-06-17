@@ -72,6 +72,8 @@ const Frame = ({ children, styleStr, title, ...rest }) => {
   return (
     <iframe {...rest} ref={iframeRef} tabIndex="-1" title={title}>
       {isLoaded &&
+        iframeRef.current &&
+        iframeRef.current.contentDocument &&
         ReactDOM.createPortal(
           <StyleSheetManager target={iframeRef.current.contentDocument.head}>{children}</StyleSheetManager>,
           iframeRef.current.contentDocument.body
