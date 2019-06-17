@@ -27,7 +27,7 @@ const SpotlightCover = ({ backButtonLabel, isLeaving, routeToShowcase, spotlight
 
   const spotlight = useMemo(() => spotlights.find(e => e.id == spotlightId), [spotlightId, spotlights])
 
-  const currentDescription = useTextTyping(spotlight.persona.description, 500)
+  const currentDescription = useTextTyping(spotlight ? spotlight.persona.description : '', 500)
 
   if (!spotlight) return null
 
