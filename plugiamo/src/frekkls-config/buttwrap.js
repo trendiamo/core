@@ -1,21 +1,3 @@
-const scrollToCart = () => {
-  window.$('html, body').animate(
-    {
-      scrollTop: window.$('form.product-single__form').offset().top - (20 + window.$('.site-header').outerHeight()),
-    },
-    500
-  )
-}
-
-const scrollToCheckout = () => {
-  window.$('html, body').animate(
-    {
-      scrollTop: window.$('form.cart').offset().top - (20 + window.$('.site-header').outerHeight()),
-    },
-    500
-  )
-}
-
 export default {
   addPicture: picture => {
     const sectionId = window.ShopifyAnalytics.meta.product.id
@@ -50,12 +32,5 @@ export default {
 </div>`
     productPhotos.append(window.$(photoTemplate))
     window.$('body').trigger('matchLarge') // this makes it so slicks are re-generated
-  },
-  onCtaClick: action => {
-    if (action === 'want' || action === 'ok-size') {
-      scrollToCart()
-    } else if (action === 'checkout') {
-      scrollToCheckout()
-    }
   },
 }

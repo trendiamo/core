@@ -1,6 +1,4 @@
 import App from 'app'
-import BridgeApp from 'special/bridge'
-import bridgeData from 'special/bridge/data'
 import ErrorBoundaries from 'ext/recompose/error-boundaries'
 import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics, { loadGoogle } from 'ext/google-analytics'
@@ -11,8 +9,6 @@ import { GraphQLClient } from 'graphql-request'
 import { graphQlUrl, location, mixpanelToken, overrideAccount } from './config'
 import { h, render } from 'preact'
 import { loadRollbar } from 'ext/rollbar'
-import { matchUrl } from 'plugin-base'
-import { optionsFromHash } from 'app/setup'
 import { Provider } from 'ext/graphql-context'
 import './styles.css'
 
@@ -30,26 +26,7 @@ const addFrekklsLoadingFrame = () => {
   return iframe
 }
 
-const detectAndMarkBridge = () => {
-  if (!Object.keys(bridgeData).includes(process.env.BRIDGE || location.hostname)) return false
-  if ((optionsFromHash().hckt || '').match(/1|true/)) localStorage.setItem('trnd-bridge', 1)
-  if (!localStorage.getItem('trnd-bridge')) return false
-  const trigger = bridgeData[process.env.BRIDGE || location.hostname].triggers.find(trigger =>
-    trigger.urlMatchers.some(urlMatcher => matchUrl(location.pathname, urlMatcher))
-  )
-  return !!trigger
-}
-
 const initRootComponent = () => {
-  if (detectAndMarkBridge()) {
-    const Bridge = () => (
-      <ErrorBoundaries>
-        <BridgeApp />
-      </ErrorBoundaries>
-    )
-    return Bridge
-  }
-
   const client = new GraphQLClient(
     graphQlUrl,
     overrideAccount ? { headers: { 'Override-Account': overrideAccount } } : undefined
