@@ -10,7 +10,7 @@ class GeneratedUrlPolicy < ApplicationPolicy
   end
 
   def index?
-    user
+    user.active_membership&.owner? || user.admin
   end
 
   def create?

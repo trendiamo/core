@@ -10,11 +10,11 @@ class OutroPolicy < ApplicationPolicy
   end
 
   def index?
-    user
+    user.active_membership&.owner? || user.admin
   end
 
   def show?
-    user
+    user.active_membership&.owner? || user.admin
   end
 
   def create?

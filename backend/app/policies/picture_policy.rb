@@ -1,6 +1,6 @@
 class PicturePolicy < ApplicationPolicy
   def index?
-    user
+    user.active_membership || user.admin
   end
 
   def create?
