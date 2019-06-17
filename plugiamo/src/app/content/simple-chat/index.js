@@ -64,7 +64,6 @@ export default compose(
     animateOpacity,
     assessment,
     assessmentOptions,
-    bridge,
     coverIsMinimized,
     ctaButton,
     ctaButtonClicked,
@@ -95,7 +94,7 @@ export default compose(
           animateOpacity={animateOpacity}
           backButtonLabel={getFrekklsConfig().i18n.backButton}
           ChatBase={ChatBase}
-          chatBaseProps={{ assessment, assessmentOptions, bridge, ctaButton }}
+          chatBaseProps={{ assessment, assessmentOptions, ctaButton }}
           chatLogCallbacks={chatLogCallbacks}
           clickActions={clickActions}
           coverIsMinimized={coverIsMinimized}

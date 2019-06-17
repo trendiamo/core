@@ -1,9 +1,9 @@
 import Cover from './cover'
-import CtaButton from 'special/bridge/cta-button'
+import CtaButton from 'special/cta-button'
 import ProgressBar from 'special/assessment/progress-bar'
 import { AssessmentProducts, AssessmentStepOptions } from 'special/assessment/message-types'
 import { ChatLogUi, timeout } from 'plugin-base'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Fragment, h } from 'preact'
 
 const messageFactory = ({ data, hideAll, nothingSelected, onClick, type }) => {
@@ -27,7 +27,6 @@ const getMessageShowByType = (type, show) => {
 const ChatBase = ({
   assessment,
   backButtonLabel,
-  bridge,
   chatLogCallbacks,
   clickActions,
   contentRef,
@@ -63,7 +62,6 @@ const ChatBase = ({
     <Cover
       assessment={assessment}
       backButtonLabel={backButtonLabel}
-      bridge={bridge}
       clickActions={clickActions}
       FlowBackButton={FlowBackButton}
       goToPrevStep={goToPrevStep}
@@ -114,7 +112,6 @@ const ChatBase = ({
 export default compose(
   withState('hideAll', 'setHideAll', false),
   withState('countOfRows', 'setCountOfRows', 6),
-  withProps(({ assessment, bridge }) => ({ specialFlow: assessment || bridge })),
   withHandlers({
     handleClick: ({ assessmentOptions, setHideAll }) => ({ type, item }) => {
       if (type === 'assessmentOption') {
@@ -176,13 +173,13 @@ export default compose(
     handleLogsUpdate: ({ initChatLog }) => ({ chatLog, setLogs, updateLogs }) => {
       timeout.set('updateStore', () => initChatLog({ chatLog, isAssessmentUpdate: true, setLogs, updateLogs }), 100)
     },
-    handleDataUpdate: ({ data, initChatLog, setHideAll, specialFlow }) => ({ chatLog, setLogs, updateLogs }) => {
-      if (specialFlow) setHideAll(true)
+    handleDataUpdate: ({ data, initChatLog, setHideAll, assessment }) => ({ chatLog, setLogs, updateLogs }) => {
+      if (assessment) setHideAll(true)
       if (data.type === 'store') return
       timeout.set(
         'updateChatLog',
-        () => initChatLog({ chatLog, isAssessmentUpdate: specialFlow, update: true, setLogs, updateLogs }),
-        specialFlow ? 800 : 0
+        () => initChatLog({ chatLog, isAssessmentUpdate: assessment, update: true, setLogs, updateLogs }),
+        assessment ? 800 : 0
       )
     },
   }),
