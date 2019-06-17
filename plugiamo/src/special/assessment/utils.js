@@ -1,8 +1,15 @@
 import dataGathering from 'data-gathering/pierre-cardin'
 import mixpanel from 'ext/mixpanel'
-import { suggestions } from './data'
+import { suggestions } from './data/pierre-cardin'
 
-const assessmentHack = () => process.env.ASSESSMENT || location.hostname === 'www.pierre-cardin.de'
+const assessmentHack = () =>
+  process.env.ASSESSMENT === 'www.pierre-cardin.de' || location.hostname === 'www.pierre-cardin.de'
+
+const deliusPathnames = ['/', '/en/', '/de/']
+
+const isDeliusAssessment = () =>
+  (process.env.ASSESSMENT === 'www.delius-contract.de' || location.hostname === 'www.delius-contract.de') &&
+  deliusPathnames.includes(location.pathname)
 
 const rememberPersona = persona => sessionStorage.setItem('trnd-remembered-persona', JSON.stringify(persona))
 
@@ -85,4 +92,5 @@ export {
   recommendedProducts,
   assessmentCart,
   fetchProducts,
+  isDeliusAssessment,
 }
