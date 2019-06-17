@@ -1,5 +1,5 @@
 import App from 'app'
-import ErrorBoundaries from 'ext/recompose/error-boundaries'
+import ErrorBoundaries from 'ext/error-boundaries'
 import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics, { loadGoogle } from 'ext/google-analytics'
 import mixpanel from 'ext/mixpanel'

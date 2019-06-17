@@ -1,5 +1,5 @@
 import Content from './content'
-import ErrorBoundaries from 'ext/recompose/error-boundaries'
+import ErrorBoundaries from 'ext/error-boundaries'
 import Header from './header'
 import Wrapper from 'shared/modal'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'

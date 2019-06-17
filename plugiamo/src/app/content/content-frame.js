@@ -1,5 +1,5 @@
 import CloseButton from './close-button'
-import ErrorBoundaries from 'ext/recompose/error-boundaries'
+import ErrorBoundaries from 'ext/error-boundaries'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { compose } from 'recompose'
