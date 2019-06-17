@@ -1,10 +1,9 @@
 import App from 'app'
-import Bridge from 'special/bridge'
+import BridgeApp from 'special/bridge'
 import bridgeData from 'special/bridge/data'
+import ErrorBoundaries from 'ext/recompose/error-boundaries'
 import getFrekklsConfig from 'frekkls-config'
-import { matchUrl } from 'plugin-base'
-// import initRollbar from 'ext/rollbar'
-import googleAnalytics, { loadGAFrame } from 'ext/google-analytics'
+import googleAnalytics, { loadGoogle } from 'ext/google-analytics'
 import mixpanel from 'ext/mixpanel'
 import setupDataGathering from 'data-gathering'
 import SpotAHome from 'special/spotahome'
@@ -12,9 +11,25 @@ import { detect } from 'detect-browser'
 import { GraphQLClient } from 'graphql-request'
 import { graphQlUrl, location, mixpanelToken, overrideAccount } from './config'
 import { h, render } from 'preact'
+import { loadRollbar } from 'ext/rollbar'
+import { matchUrl } from 'plugin-base'
 import { optionsFromHash } from 'app/setup'
 import { Provider } from 'ext/graphql-context'
 import './styles.css'
+
+const addFrekklsLoadingFrame = () => {
+  const iframe = document.createElement('iframe')
+  iframe.title = 'frekkls-loading-frame'
+  iframe.style.width = '0'
+  iframe.style.height = '0'
+  iframe.style.border = '0'
+  iframe.style.display = 'none'
+  iframe.style.position = 'absolute'
+  document.body.appendChild(iframe)
+  const script = document.createElement('script')
+  iframe.contentDocument.body.appendChild(script)
+  return iframe
+}
 
 const detectAndMarkBridge = () => {
   if (!Object.keys(bridgeData).includes(process.env.BRIDGE || location.hostname)) return false
@@ -27,7 +42,14 @@ const detectAndMarkBridge = () => {
 }
 
 const initRootComponent = () => {
-  if (detectAndMarkBridge()) return Bridge
+  if (detectAndMarkBridge()) {
+    const Bridge = () => (
+      <ErrorBoundaries>
+        <BridgeApp />
+      </ErrorBoundaries>
+    )
+    return Bridge
+  }
   // here we haven't requested info yet, so we do need to base this off of location.hostname
   if (location.hostname === 'www.spotahome.com') return SpotAHome
 
@@ -38,7 +60,9 @@ const initRootComponent = () => {
 
   const RootComponent = () => (
     <Provider value={client}>
-      <App />
+      <ErrorBoundaries>
+        <App />
+      </ErrorBoundaries>
     </Provider>
   )
 
@@ -66,11 +90,12 @@ const initApp = googleAnalytics => {
 }
 
 const main = () => {
-  // initRollbar()
+  const frekklsLoadingFrame = addFrekklsLoadingFrame()
+  loadRollbar(frekklsLoadingFrame)
 
   const experimentClients = ['www.shopinfo.com.br', 'www.pierre-cardin.de']
   if (experimentClients.includes(location.hostname)) {
-    const { promises, iframe } = loadGAFrame()
+    const { promises, iframe } = loadGoogle(frekklsLoadingFrame)
     Promise.all(promises).then(() => {
       googleAnalytics.init(iframe)
       initApp(googleAnalytics)
