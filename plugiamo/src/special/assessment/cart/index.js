@@ -22,7 +22,6 @@ const Plugin = ({
   products,
   clickActions,
   showingBubbles,
-  setIsGAReady,
 }) => (
   <AppBase
     Component={
@@ -43,7 +42,6 @@ const Plugin = ({
     launcherPulsating
     onToggleContent={onToggleContent}
     persona={module.launcher.persona}
-    setIsGAReady={setIsGAReady}
     showingBubbles={showingBubbles}
     showingContent={showingContent}
     showingLauncher={showingLauncher}

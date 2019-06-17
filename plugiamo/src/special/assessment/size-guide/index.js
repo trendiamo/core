@@ -25,7 +25,6 @@ const Plugin = ({
   showingContent,
   showingLauncher,
   showingBubbles,
-  setIsGAReady,
 }) => {
   const { clickActions, modalsProps } = useChatActions(module.flowType)
 
@@ -50,7 +49,6 @@ const Plugin = ({
         onToggleContent={onToggleContent}
         persona={module.launcher.persona}
         pluginState={pluginState}
-        setIsGAReady={setIsGAReady}
         showingBubbles={showingBubbles}
         showingContent={showingContent}
         showingLauncher={showingLauncher}
