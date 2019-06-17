@@ -1,4 +1,5 @@
 import AppBase from './base'
+import Assessment from 'special/assessment'
 import AssessmentCart from 'special/assessment/cart'
 import AssessmentSizeGuide from 'special/assessment/size-guide'
 import getFrekklsConfig from 'frekkls-config'
@@ -10,7 +11,7 @@ import Router from './content/router'
 import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
 import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
-import { assessmentCart, assessmentHack } from 'special/assessment/utils'
+import { assessmentCart, assessmentHack, isDeliusAssessment } from 'special/assessment/utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { gql, graphql } from 'ext/recompose/graphql'
 import { h } from 'preact'
@@ -141,6 +142,7 @@ const AppBase3 = props => {
   const { data } = props
 
   if (!data || data.loading || data.error) return null
+  if (isDeliusAssessment()) return <Assessment {...props} />
   if (assessmentCart()) return <AssessmentCart {...props} />
   if (!data.flow && assessmentHack()) return <AssessmentSizeGuide {...props} />
   if (!data.flow) {

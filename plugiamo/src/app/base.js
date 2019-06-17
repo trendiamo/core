@@ -1,4 +1,4 @@
-import Assessment from 'special/assessment'
+import AssessmentContent from 'special/assessment/content'
 import Content from './content'
 import getFrekklsConfig from 'frekkls-config'
 import LauncherBubbles from './launcher-bubbles'
@@ -62,17 +62,21 @@ const AppBase = ({
   outroButtonsClick,
   skipContentEntry,
   pluginState,
+  assessmentIsMainFlow,
 }) => (
   <AppBaseDiv>
     {showAssessmentContent ? (
-      <Assessment
+      <AssessmentContent
+        assessmentIsMainFlow={assessmentIsMainFlow}
         frameStyleStr={emojifyStyles}
         isUnmounting={isUnmounting}
+        launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         setShowAssessmentContent={setShowAssessmentContent}
         setShowingContent={setShowingContent}
         setShowingLauncher={setShowingLauncher}
         showAssessmentContent={showAssessmentContent}
+        showingContent={showingContent}
       />
     ) : (
       showingContent && (

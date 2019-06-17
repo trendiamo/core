@@ -27,12 +27,14 @@ const Base = props => {
     storeLog,
     onCtaButtonClick,
     hideProgressBar,
+    isFinalStep,
     currentStepKey,
+    assessmentIsMainFlow,
   } = props
 
   const { clickActions, modalsProps } = useChatActions(module.flowType)
 
-  if (!isSmall() && currentStepKey === 'store') return <StoreModal {...props} />
+  if (!isSmall() && isFinalStep) return <StoreModal {...props} />
 
   return (
     <div>
@@ -47,13 +49,13 @@ const Base = props => {
         currentStep={currentStep}
         data={step}
         goToPrevStep={goToPrevStep}
-        hideCtaButton={currentStep.type === 'store' || !showingCtaButton}
+        hideCtaButton={isFinalStep || !showingCtaButton}
         hideProgressBar={hideProgressBar}
         nothingSelected={nothingSelected}
         onCtaButtonClick={onCtaButtonClick}
         progress={progress}
         setCtaButtonClicked={setCtaButtonClicked}
-        showBackButton
+        showBackButton={!assessmentIsMainFlow || currentStepKey !== 'root'}
         storeLog={storeLog}
       />
     </div>
@@ -82,6 +84,9 @@ export default compose(
       contentRef: () => () => ref,
     }
   }),
+  withProps(({ currentStepKey }) => ({
+    isFinalStep: currentStepKey === 'store',
+  })),
   withHandlers({
     handleEndNodeTags: ({ endNodeTags, setEndNodeTags, setShowingCtaButton }) => nextStepKey => {
       const newTags = endNodeTags.includes(nextStepKey)
@@ -95,12 +100,14 @@ export default compose(
       setProgress(100)
       setCurrentStepKey('store')
     },
-    resetAssessment: ({ setTags, setEndNodeTags, setCurrentStepKey, setStepIndex, setShowingCtaButton }) => () => {
+    resetAssessment: ({ setTags, setEndNodeTags, setCurrentStepKey, setShowingCtaButton }) => () => {
       setTags([])
       setEndNodeTags([])
       setCurrentStepKey('root')
-      setStepIndex(0)
       setShowingCtaButton(false)
+    },
+    resetProgressFromFinalStep: ({ progress, setProgress }) => () => {
+      progress === 100 && setTimeout(() => setProgress(progress - 33), 1000)
     },
   }),
   withHandlers({
@@ -173,10 +180,12 @@ export default compose(
       setAnimateOpacity,
       setNothingSelected,
       setEndNodeTags,
-      currentStepKey,
       setCtaButtonClicked,
       setHideProgressBar,
       setResults,
+      isFinalStep,
+      resetProgressFromFinalStep,
+      assessmentIsMainFlow,
     }) => () => {
       if (tags.length === 0) {
         setAnimateOpacity(true)
@@ -184,17 +193,18 @@ export default compose(
       }
       let key = tags
       let newTags = tags
-      if (currentStepKey !== 'store') {
+      if (!isFinalStep) {
         key = tags.length > 1 ? tags[tags.length - 1] : 'root'
         newTags = [...tags]
         newTags.pop()
         setProgress(key === 'root' ? 0 : progress - 33)
       }
       const newStepKey = newTags.join('/')
-      if (currentStepKey === 'store') {
+      if (isFinalStep) {
         setShowAssessmentContent({ key: newStepKey, progress })
         setHideProgressBar(false)
         timeout.set('asmt-storeRemove', () => setResults([]), 800)
+        assessmentIsMainFlow && resetProgressFromFinalStep()
       }
       setCurrentStepKey(key === 'root' ? key : newStepKey)
       setTags(newTags)
@@ -213,12 +223,12 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { step, setCurrentStep, animateOpacity, setAnimateOpacity, progress, setProgress } = this.props
+      const { step, setCurrentStep, animateOpacity, setAnimateOpacity, resetProgressFromFinalStep } = this.props
       if (animateOpacity) {
         setTimeout(() => setAnimateOpacity(false), 10)
       }
       setCurrentStep(step)
-      progress === 100 && setTimeout(() => setProgress(progress - 33), 1000)
+      resetProgressFromFinalStep()
     },
     componentWillUnmount() {
       timeout.clear('exitOnMobile')

@@ -1,6 +1,7 @@
 import baldessariniConfig from './baldessarini'
 import buttwrapConfig from './buttwrap'
 import corinthiansConfig from './corinthians'
+import deliusConfig from './delius'
 import eoticaConfig from './eotica'
 import frekklsDemoConfig from './frekkls-demo'
 import impressoraJatoConfig from './impressora-jato'
@@ -39,6 +40,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'www.buttwrap.com') return buttwrapConfig
   if (location.hostname === 'www.pierre-cardin.de') return pierreCardinConfig
   if (location.hostname === 'www.pionier-workwear.com') return pionierConfig
+  if (location.hostname === 'www.delius-contract.de') return deliusConfig
   if (location.hostname === 'www.shopinfo.com.br') return shopinfoConfig
   if (['www.impressorajato.com.br', 'ia.luanda.supercopy.com.br'].includes(location.hostname))
     return impressoraJatoConfig

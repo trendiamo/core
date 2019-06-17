@@ -1,4 +1,4 @@
-import { header } from 'special/assessment/data'
+import { header } from 'special/assessment/data/pierre-cardin'
 
 export const tagSizeGuides = {
   'Casual/Jeans und Hosen/': 'jeansUndHosen',
