@@ -10,7 +10,7 @@ class SimpleChatPolicy < ApplicationPolicy
   end
 
   def index?
-    user
+    user.active_membership || user.admin
   end
 
   def show?
@@ -18,7 +18,7 @@ class SimpleChatPolicy < ApplicationPolicy
   end
 
   def create?
-    user.active_membership
+    user.active_membership || user.admin
   end
 
   def update?
@@ -31,6 +31,6 @@ class SimpleChatPolicy < ApplicationPolicy
   end
 
   def duplicate?
-    user
+    user.active_membership || user.admin
   end
 end

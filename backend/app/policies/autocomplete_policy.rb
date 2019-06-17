@@ -10,7 +10,7 @@ class AutocompletePolicy < ApplicationPolicy
   end
 
   def personas_autocomplete?
-    user
+    user.active_membership || user.admin
   end
 
   def flows_autocomplete?

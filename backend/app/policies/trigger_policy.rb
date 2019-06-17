@@ -10,11 +10,11 @@ class TriggerPolicy < ApplicationPolicy
   end
 
   def index?
-    user
+    user.active_membership&.owner? || user.admin
   end
 
   def show?
-    user
+    user.active_membership&.owner? || user.admin
   end
 
   def create?
@@ -26,7 +26,7 @@ class TriggerPolicy < ApplicationPolicy
   end
 
   def sort?
-    user
+    user.active_membership&.owner? || user.admin
   end
 
   def destroy?
