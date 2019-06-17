@@ -10,7 +10,7 @@ class Picture < ApplicationRecord
   has_many :simple_chat_product_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
   has_many :simple_chat_picture_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
 
-  validates :url, presence: true, uniqueness: true
+  validates :url, presence: true, uniqueness: true, picture_url: true
 
   def as_json(_options = {})
     attributes

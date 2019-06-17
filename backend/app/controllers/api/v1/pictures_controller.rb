@@ -14,7 +14,7 @@ module Api
         if @picture.save
           render json: @picture, status: :created
         else
-          render_error
+          render_error(@picture.errors[:url][0] || "Cannot create picture.")
         end
       end
 
@@ -24,7 +24,7 @@ module Api
         if destroy_all
           render json: { data: @pictures }
         else
-          render_error
+          render_error("Cannot delete at least one record.")
         end
       end
 
@@ -44,8 +44,8 @@ module Api
         !has_restriction_errors
       end
 
-      def render_error
-        errors = [{ title: "Cannot delete at least one record." }]
+      def render_error(title)
+        errors = [{ title: title }]
         render json: { errors: errors }, status: :unprocessable_entity
       end
     end

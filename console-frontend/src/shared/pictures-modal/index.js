@@ -46,6 +46,15 @@ const PicturesModal = ({
     [croppingState, picture, previewPicture, progress]
   )
 
+  const safeUpload = useCallback(
+    (files, filename) =>
+      onFileUpload(files, filename, ({ errors, requestError }) => {
+        if (errors || requestError) {
+          setIsLoading(false)
+        }
+      }),
+    [onFileUpload, setIsLoading]
+  )
   const fetchRemotePicture = useCallback(
     async () => {
       if (isEmpty(pictureUrl.trim())) return enqueueSnackbar('Please enter an URL', { variant: 'error' })
@@ -57,19 +66,20 @@ const PicturesModal = ({
       if (errors || requestError) {
         enqueueSnackbar(errors.message || requestError, { variant: 'error' })
       } else {
-        onFileUpload([blob], [filename])
+        safeUpload([blob], [filename])
       }
       return { blob, response, errors, requestError, ...rest }
     },
-    [enqueueSnackbar, onFileUpload, pictureUrl]
+    [enqueueSnackbar, pictureUrl, safeUpload]
   )
 
   const handleClose = useCallback(
     () => {
       setUrlUploadState(false)
       setOpen(false)
+      onCropDoneClick()
     },
-    [setOpen, setUrlUploadState]
+    [onCropDoneClick, setOpen]
   )
 
   const fetchPictures = useCallback(
@@ -127,9 +137,9 @@ const PicturesModal = ({
   const newOnFileUpload = useCallback(
     ({ target: { files } }) => {
       if (urlUploadState) setUrlUploadState(false)
-      onFileUpload(files)
+      safeUpload(files)
     },
-    [onFileUpload, urlUploadState]
+    [safeUpload, urlUploadState]
   )
 
   const onPictureClick = useCallback(
@@ -144,7 +154,7 @@ const PicturesModal = ({
       setPictureUrl('')
       setUrlUploadState(true)
     },
-    [setPictureUrl, setUrlUploadState]
+    [setUrlUploadState]
   )
 
   const onCropKeyup = useCallback(
