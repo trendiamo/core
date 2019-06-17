@@ -5,15 +5,16 @@ const useAnimateOnMount = ({ delay, skipEntry } = {}) => {
 
   useEffect(
     () => {
-      if (skipEntry) return
       let didCancel = false
       setTimeout(() => {
         didCancel || setEntry(false)
       }, delay || 10)
       return () => (didCancel = true)
     },
-    [delay, skipEntry]
+    [delay]
   )
+
+  if (skipEntry) return { entry: false }
 
   return { entry }
 }
