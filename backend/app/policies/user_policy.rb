@@ -10,7 +10,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    user.active_membership && !user.active_membership&.editor?
+    user.active_membership&.owner? || user.admin
   end
 
   def create?

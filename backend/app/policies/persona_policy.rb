@@ -18,14 +18,14 @@ class PersonaPolicy < ApplicationPolicy
   end
 
   def create?
-    user.active_membership && !user.active_membership&.editor?
+    user.active_membership&.owner? || user.admin
   end
 
   def update?
-    user.active_membership && !user.active_membership&.editor?
+    user.active_membership&.owner? || user.admin
   end
 
   def destroy?
-    user.active_membership && !user.active_membership&.editor?
+    user.active_membership&.owner? || user.admin
   end
 end

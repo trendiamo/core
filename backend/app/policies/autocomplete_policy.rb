@@ -14,10 +14,10 @@ class AutocompletePolicy < ApplicationPolicy
   end
 
   def flows_autocomplete?
-    user.active_membership && !user.active_membership&.editor?
+    user.active_membership&.owner? || user.admin
   end
 
   def path_autocomplete?
-    user.active_membership && !user.active_membership&.editor?
+    user.active_membership&.owner? || user.admin
   end
 end

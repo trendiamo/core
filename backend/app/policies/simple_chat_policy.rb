@@ -14,7 +14,7 @@ class SimpleChatPolicy < ApplicationPolicy
   end
 
   def show?
-    user && (user.active_membership && !user.active_membership&.editor? || record.triggers.empty?)
+    user && (user.active_membership&.owner? || user.admin || record.triggers.empty?)
   end
 
   def create?
@@ -22,12 +22,12 @@ class SimpleChatPolicy < ApplicationPolicy
   end
 
   def update?
-    user && (user.active_membership && !user.active_membership&.editor? || record.triggers.empty?)
+    user && (user.active_membership&.owner? || user.admin || record.triggers.empty?)
   end
 
   def destroy?
     triggers_arrays = record.map { |record| record.triggers.pluck(:id) }
-    user && (user.active_membership && !user.active_membership&.editor? || triggers_arrays.flatten.empty?)
+    user && (user.active_membership&.owner? || user.admin || triggers_arrays.flatten.empty?)
   end
 
   def duplicate?
