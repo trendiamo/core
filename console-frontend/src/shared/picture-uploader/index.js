@@ -123,6 +123,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
       setDoneCropping(true)
       setModalOpen(false)
       setCrop({})
+      if (!picture) return
       onChange({ picUrl: picture, picRect: rect })
     },
     [onChange, picture, rect]
@@ -142,7 +143,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
   const { enqueueSnackbar } = useSnackbar()
 
   const onFileUpload = useCallback(
-    async (files, filenames) => {
+    async (files, filenames, callback) => {
       setDoneCropping(false)
       setPreviousValue(value)
       onChange({ picUrl: '', picRect: null })
@@ -161,6 +162,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
         setPicture(pictureUrl)
         setModalOpen(true)
       }
+      callback({ errors, requestError })
     },
     [enqueueSnackbar, onChange, value]
   )
