@@ -1,20 +1,5 @@
 import styled from 'styled-components'
 
-const CardsWrapper = styled.div`
-  overflow-x: scroll;
-  margin-left: -1rem;
-  margin-right: -1rem;
-  padding: 0 1rem;
-  padding-bottom: 1rem;
-`
-
-const CardsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-right: 1rem;
-`
-
 const Card = styled.div`
   background-color: #fff;
   border-radius: 12px;
@@ -34,4 +19,4 @@ const CardImg = styled.img`
   cursor: pointer;
 `
 
-export { Card, CardContent, CardImg, CardsContainer, CardsWrapper }
+export { Card, CardContent, CardImg }

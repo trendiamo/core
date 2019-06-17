@@ -6,7 +6,6 @@ import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics, { loadGoogle } from 'ext/google-analytics'
 import mixpanel from 'ext/mixpanel'
 import setupDataGathering from 'data-gathering'
-import SpotAHome from 'special/spotahome'
 import { detect } from 'detect-browser'
 import { GraphQLClient } from 'graphql-request'
 import { graphQlUrl, location, mixpanelToken, overrideAccount } from './config'
@@ -50,8 +49,6 @@ const initRootComponent = () => {
     )
     return Bridge
   }
-  // here we haven't requested info yet, so we do need to base this off of location.hostname
-  if (location.hostname === 'www.spotahome.com') return SpotAHome
 
   const client = new GraphQLClient(
     graphQlUrl,
