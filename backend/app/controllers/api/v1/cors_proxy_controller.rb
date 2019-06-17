@@ -7,11 +7,11 @@ module Api
       before_action :ensure_tenant
 
       def download
-        file = Down.download(params[:url].gsub(%r{^(https|http):/}, '\0/'), max_size: 20_000_000)
+        file = Down.download(CGI.unescape(params[:url]), max_size: 20_000_000)
       rescue Down::TooLarge
         render json: { error: "File size exceed limit" }, status: :unprocessable_entity
-      rescue StandardError
-        render json: { error: "Can't find any file at this URL" }, status: :unprocessable_entity
+      rescue Down::NotFound
+        render json: { error: "Can't download file from this URL" }, status: :unprocessable_entity
       else
         process_file(file)
       end

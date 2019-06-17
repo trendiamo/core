@@ -121,7 +121,7 @@ export const apiPictureList = query => apiListRequest(`${PICTURES_URL}/?${string
 export const apiPictureCreate = body => apiCreateRequest(PICTURES_URL, body)
 export const apiPictureDestroy = body => apiDestroyMultipleRequest(PICTURES_URL, body)
 
-export const apiGetRemotePicture = url => apiGetRequest(`${CORS_PROXY_URL}/${url}`)
+export const apiGetRemotePicture = url => apiGetRequest(`${CORS_PROXY_URL}/${encodeURIComponent(url)}`)
 
 export const apiOutroList = query => apiListRequest(`${OUTROS_URL}/?${stringify(query)}`)
 export const apiOutroDestroy = body => apiDestroyMultipleRequest(OUTROS_URL, body)
