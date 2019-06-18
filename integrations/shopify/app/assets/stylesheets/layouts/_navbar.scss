@@ -1,8 +1,12 @@
 .navbar {
   background: linear-gradient(148deg, #ff843e, #ff6c40 52%, #ff5642);
-  height: 70px;
-  max-width: 100%;
-  padding: 0 40px;
+  height: 45px;
+  width: 100%;
+  padding: 0 25px;
   display: flex;
   align-items: center;
+
+  .navbar-logo {
+    width: 75px;
+  }
 }
