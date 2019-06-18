@@ -16,6 +16,8 @@ class PopulateShowcases
         persona: Persona.order("RANDOM()").first,
         title: Faker::Lorem.sentence,
         subtitle: Faker::Lorem.sentence,
+        chat_bubble_text: Faker::Movie.quote,
+        chat_bubble_extra_text: Faker::Movie.quote,
         spotlights_attributes: Array.new(3) { |index| spotlights_attributes(index) },
         owner: User.where(admin: false).sample,
       }
@@ -34,16 +36,16 @@ class PopulateShowcases
   def product_picks_attributes(product_pick_index)
     {
       url: Faker::Internet.url,
-      name: Faker::Lorem.words.join(" ").capitalize,
+      name: Faker::Commerce.product_name,
       description: Faker::Lorem.sentence,
-      display_price: "€#{Faker::Number.decimal(2)}",
+      display_price: "€#{Faker::Commerce.price}",
       pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
       order: product_pick_index + 1,
     }
   end
 end
 
-class PopulateSimpleChats
+class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
   def self.process
     new.process
   end
@@ -54,12 +56,14 @@ class PopulateSimpleChats
 
   private
 
-  def create_simple_chats
-    Array.new(9) do
+  def create_simple_chats # rubocop:disable Metrics/MethodLength
+    Array.new(3) do
       simple_chat_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Chat",
         persona: Persona.order("RANDOM()").first,
         title: "Hello there",
+        chat_bubble_text: Faker::Movie.quote,
+        chat_bubble_extra_text: Faker::Movie.quote,
         simple_chat_steps_attributes: chat_steps_attributes,
         owner: User.where(admin: false).sample,
       }
@@ -70,7 +74,7 @@ class PopulateSimpleChats
   def chat_steps_attributes
     result = [
       {
-        simple_chat_messages_attributes: simple_chat_messages_attributes,
+        simple_chat_messages_attributes: update_order(simple_chat_messages_attributes),
       },
     ]
     3.times { result.push(simple_chat_step) }
@@ -80,15 +84,23 @@ class PopulateSimpleChats
   def simple_chat_step
     {
       key: Faker::Lorem.sentence,
-      simple_chat_messages_attributes: simple_chat_messages_attributes,
+      simple_chat_messages_attributes: update_order(simple_chat_messages_attributes),
     }
   end
 
   def simple_chat_messages_attributes
     simple_chat_text_messages_attributes
       .concat(simple_chat_product_messages_attributes)
+      .concat(simple_chat_product_messages_carousel_attributes)
       .concat(simple_chat_video_messages_attributes)
       .concat(simple_chat_picture_messages_attributes)
+      .concat(simple_chat_picture_messages_carousel_attributes)
+  end
+
+  def update_order(flows)
+    flows.map.with_index do |flow, index|
+      flow.merge(order: index + 1)
+    end
   end
 
   def simple_chat_text_messages_attributes
@@ -101,19 +113,32 @@ class PopulateSimpleChats
   end
 
   def simple_chat_product_messages_attributes
-    Array.new(rand(0..2)) do
+    Array.new(1) do
       {
         type: "SimpleChatProductMessage",
-        title: Faker::Lorem.sentence,
+        title: Faker::Commerce.product_name,
         pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
         url: Faker::Internet.url,
-        display_price: "€#{Faker::Number.decimal(2)}",
+        display_price: "€#{Faker::Commerce.price}",
+      }
+    end
+  end
+
+  def simple_chat_product_messages_carousel_attributes
+    Array.new(2) do
+      {
+        type: "SimpleChatProductMessage",
+        title: Faker::Commerce.product_name,
+        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
+        url: Faker::Internet.url,
+        display_price: "€#{Faker::Commerce.price}",
+        group_with_adjacent: true,
       }
     end
   end
 
   def simple_chat_video_messages_attributes
-    Array.new(rand(0..2)) do
+    Array.new(rand(1..2)) do
       {
         type: "SimpleChatVideoMessage",
         video_url: "https://www.youtube.com/watch?v=#{%w[ytqp1xD9fgA 99Qs6Vlj-Oc aATDh1G28hM].sample}",
@@ -122,16 +147,26 @@ class PopulateSimpleChats
   end
 
   def simple_chat_picture_messages_attributes
-    Array.new(rand(0..2)) do
+    Array.new(1) do
       {
         type: "SimpleChatPictureMessage",
         pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
       }
     end
   end
+
+  def simple_chat_picture_messages_carousel_attributes
+    Array.new(2) do
+      {
+        type: "SimpleChatPictureMessage",
+        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
+        group_with_adjacent: true,
+      }
+    end
+  end
 end
 
-class Populate
+class Populate # rubocop:disable Metrics/ClassLength
   def self.process
     new.process
   end
@@ -151,8 +186,12 @@ class Populate
 
   private
 
-  def team_members
+  def team_members # rubocop:disable Metrics/MethodLength
     [
+      { email: "admin", name: "Admin User", admin: true },
+      { email: "owner", name: "Owner User" },
+      { email: "editor", name: "Editor User", role: "editor" },
+      { email: "mm", name: "Multiple Memberships User", multiple_memberships: true },
       { email: "db", name: "David Bennett" },
       { email: "dh", name: "Dylan Henderson" },
       { email: "frb", name: "Fabian Brooks" },
@@ -179,7 +218,8 @@ class Populate
   end
 
   def create_websites
-    Website.create!(name: "Trendiamo Demo", hostnames: %w[demo.frekkls.com],
+    # 0.0.0.0:8080 is there to redirect the user to a trigger's page in console-frontend
+    Website.create!(name: "Trendiamo Demo", hostnames: %w[0.0.0.0:8080 0.0.0.0 localhost demo.frekkls.com],
                     account: Account.where(name: "Trendiamo Demo").first)
     Website.create!(name: "Intercom", hostnames: %w[www.intercom.com],
                     account: Account.where(name: "Intercom").first)
@@ -195,14 +235,21 @@ class Populate
   end
 
   def create_memberships
-    User.where(admin: false).each do |user|
+    team_members.each do |team_member|
+      user = User.find_by(email: "#{team_member[:email]}@trendiamo.com")
+      next if user.admin
+
       Membership.create!(account: Account.where(name: "Trendiamo Demo").first,
-                         user: user, role: "owner")
+                         user: user, role: team_member[:role] || "owner")
+      if team_member[:multiple_memberships]
+        Membership.create!(account: Account.where(name: "Intercom").first,
+                           user: user, role: "editor")
+      end
     end
   end
 
   def create_personas
-    Array.new(22) do |i|
+    Array.new(6) do |i|
       persona_attrs = {
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
@@ -234,12 +281,20 @@ class Populate
     PopulateShowcases.process
   end
 
+  def create_default_triggers(flows)
+    flows.each do |flow|
+      url_matchers = flow == SimpleChat ? ["/simple-chat", "/chat"] : ["/#{flow.name.underscore.tr('\_', '-')}"]
+      Trigger.create!(flow: flow.first, url_matchers: url_matchers)
+    end
+  end
+
   def create_triggers
-    Array.new(11) do |i|
+    flows = [Showcase, SimpleChat, Outro]
+    create_default_triggers(flows)
+    Array.new(3) do
       trigger_attrs = {
-        order: i + 1,
-        flow: [Showcase, SimpleChat, Outro].sample.all.sample,
-        url_matchers: Array.new(rand(1...5)) { "/" + Faker::Internet.slug(Faker::Lorem.words(2).join("-")) },
+        flow: flows.sample.all.sample,
+        url_matchers: Array.new(rand(1...3)) { "/#{Faker::Internet.slug(nil, '-')}" },
       }
       Trigger.create!(trigger_attrs)
     end
