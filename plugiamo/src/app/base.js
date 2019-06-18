@@ -1,15 +1,17 @@
-import AssessmentContent from 'special/assessment/content'
 import Content from './content'
 import getFrekklsConfig from 'frekkls-config'
+import Launcher from './launcher'
 import LauncherBubbles from './launcher-bubbles'
 import mixpanel from 'ext/mixpanel'
+import Router from './content/router'
 import styled from 'styled-components'
+import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
-import { compose, withHandlers, withProps } from 'recompose'
 import { emojifyStyles } from 'ext/emojify'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 import { useAnimateOnMount } from 'plugin-base'
+import { useCallback, useMemo } from 'preact/hooks'
 
 const StyledDiv = styled.div`
   z-index: 2147482998;
@@ -43,46 +45,47 @@ const AppBaseDiv = styled.div`
 
 const AppBase = ({
   Component,
-  Launcher,
+  data,
   disappear,
-  setDisappear,
+  hideContentFrame,
   isUnmounting,
   onToggleContent,
   persona,
-  position,
-  showingContent,
-  data,
-  showAssessmentContent,
-  setShowAssessmentContent,
-  setShowingLauncher,
-  setShowingContent,
-  showingLauncher,
-  showingBubbles,
-  launcherConfig,
-  outroButtonsClick,
-  skipContentEntry,
   pluginState,
-  assessmentIsMainFlow,
-}) => (
-  <AppBaseDiv>
-    {showAssessmentContent ? (
-      <AssessmentContent
-        assessmentIsMainFlow={assessmentIsMainFlow}
-        frameStyleStr={emojifyStyles}
-        isUnmounting={isUnmounting}
-        launcherConfig={launcherConfig}
-        onToggleContent={onToggleContent}
-        setShowAssessmentContent={setShowAssessmentContent}
-        setShowingContent={setShowingContent}
-        setShowingLauncher={setShowingLauncher}
-        showAssessmentContent={showAssessmentContent}
-        showingContent={showingContent}
-      />
-    ) : (
-      showingContent && (
+  position,
+  setDisappear,
+  setShowAssessmentContent,
+  showAssessmentContent,
+  showingBubbles,
+  showingContent,
+  showingLauncher,
+  skipContentEntry,
+}) => {
+  const launcherConfig = useMemo(() => {
+    const frekklsLC = getFrekklsConfig().launcherConfig
+    const defaultLC = isSmall()
+      ? smallLauncherConfig
+      : frekklsLC.size === 'small'
+      ? smallLauncherConfig
+      : bigLauncherConfig
+
+    return {
+      ...defaultLC,
+      extraElevation: frekklsLC.extraElevation || 0,
+    }
+  }, [])
+
+  const outroButtonsClick = useCallback(value => {
+    mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
+  }, [])
+
+  return (
+    <AppBaseDiv>
+      {(showAssessmentContent || showingContent) && (
         <Content
-          Component={Component}
+          Component={Component || <Router />}
           frameStyleStr={emojifyStyles}
+          hideContentFrame={hideContentFrame}
           isUnmounting={isUnmounting}
           launcherConfig={launcherConfig}
           onToggleContent={onToggleContent}
@@ -92,56 +95,39 @@ const AppBase = ({
           showingContent={showingContent}
           skipEntry={skipContentEntry}
         />
-      )
-    )}
-    {!showAssessmentContent && !showingContent && showingBubbles && (
-      <LauncherBubbles
-        data={data}
-        disappear={disappear}
-        frameStyleStr={emojifyStyles}
-        launcherConfig={launcherConfig}
-        onToggleContent={onToggleContent}
-        outroButtonsClick={outroButtonsClick}
-        position={position}
-        setDisappear={setDisappear}
-      />
-    )}
-    {showingLauncher && (
-      <Launcher
-        data={data}
-        disappear={disappear}
-        frameStyleStr={emojifyStyles}
-        launcherConfig={launcherConfig}
-        onToggleContent={onToggleContent}
-        persona={persona}
-        position={position}
-        pulsating={pluginState !== 'closed'}
-        showingContent={showingContent}
-      />
-    )}
-    {showingContent && <Gradient position={position} />}
-  </AppBaseDiv>
-)
+      )}
+      {!showingContent && showingBubbles && (
+        <LauncherBubbles
+          data={data}
+          disappear={disappear}
+          frameStyleStr={emojifyStyles}
+          launcherConfig={launcherConfig}
+          onToggleContent={onToggleContent}
+          outroButtonsClick={outroButtonsClick}
+          position={position}
+          setDisappear={setDisappear}
+        />
+      )}
+      {showingLauncher && (
+        <Launcher
+          data={data}
+          disappear={disappear}
+          frameStyleStr={emojifyStyles}
+          launcherConfig={launcherConfig}
+          onToggleContent={onToggleContent}
+          persona={persona}
+          position={position}
+          pulsating={pluginState !== 'closed'}
+          showingContent={showingContent}
+        />
+      )}
+      {showingContent && <Gradient position={position} />}
+    </AppBaseDiv>
+  )
+}
 
-export default compose(
-  withProps(() => {
-    const frekklsLC = getFrekklsConfig().launcherConfig
-    const defaultLC = isSmall()
-      ? smallLauncherConfig
-      : frekklsLC.size === 'small'
-      ? smallLauncherConfig
-      : bigLauncherConfig
-
-    return {
-      launcherConfig: {
-        ...defaultLC,
-        extraElevation: frekklsLC.extraElevation || 0,
-      },
-    }
-  }),
-  withHandlers({
-    outroButtonsClick: () => value => {
-      mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
-    },
-  })
-)(AppBase)
+export default withHotkeys({
+  [escapeKey]: ({ onToggleContent, showingContent }) => () => {
+    if (showingContent) onToggleContent()
+  },
+})(AppBase)

@@ -1,7 +1,7 @@
 import Content from './content'
 import ErrorBoundaries from 'ext/error-boundaries'
 import Header from './header'
-import Wrapper from 'shared/modal'
+import Modal from 'shared/modal'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Frame } from 'plugin-base'
 import { h } from 'preact'
@@ -16,22 +16,26 @@ const iframeStyle = {
   minHeight: '400px',
 }
 
-const FrameChild = ({ step, results, goToPrevStep, flowType }) => (
-  <div>
-    <Header goToPrevStep={goToPrevStep} step={step} />
-    <Content flowType={flowType} results={results} />
-  </div>
-)
+const FrameChild = ({ step, results, goToPrevStep, flowType }) => {
+  return (
+    <div>
+      <Header goToPrevStep={goToPrevStep} step={step} />
+      <Content flowType={flowType} results={results} />
+    </div>
+  )
+}
 
-const Modal = ({ onCloseModal, isOpen, results, goToPrevStep, step, module }) => (
-  <Wrapper allowBackgroundClose closeModal={onCloseModal} isOpen={isOpen}>
-    <Frame style={iframeStyle}>
-      <ErrorBoundaries>
-        <FrameChild flowType={module && module.flowType} goToPrevStep={goToPrevStep} results={results} step={step} />
-      </ErrorBoundaries>
-    </Frame>
-  </Wrapper>
-)
+const StoreModal = ({ onCloseModal, isOpen, results, goToPrevStep, step, module }) => {
+  return (
+    <Modal allowBackgroundClose closeModal={onCloseModal} isOpen={isOpen}>
+      <Frame style={iframeStyle}>
+        <ErrorBoundaries>
+          <FrameChild flowType={module && module.flowType} goToPrevStep={goToPrevStep} results={results} step={step} />
+        </ErrorBoundaries>
+      </Frame>
+    </Modal>
+  )
+}
 
 export default compose(
   withState('isOpen', 'setIsOpen', true),
@@ -55,4 +59,4 @@ export default compose(
       setShowingLauncher(false)
     },
   })
-)(Modal)
+)(StoreModal)

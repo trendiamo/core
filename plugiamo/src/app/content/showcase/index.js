@@ -3,13 +3,12 @@ import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import { assessmentHack, rememberPersona } from 'special/assessment/utils'
-import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
 import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
 import { routes, SpotlightItem } from 'plugin-base'
-import { useMemo } from 'preact/hooks'
+import { useCallback, useMemo } from 'preact/hooks'
 
 const assessmentSpotlight = {
   persona: {
@@ -46,25 +45,24 @@ const convertSpotlights = (spotlights, onSpotlightClick) => {
   return results
 }
 
-const Showcase0 = compose(
-  branch(({ data }) => !data || data.loading || data.error, renderNothing),
-  withProps(({ data }) => ({
-    showcase: data.showcase,
-  })),
-  withHandlers({
-    routeToShowcase: ({ showcase }) => () => {
-      const newRoute = routes.showcase(showcase.id)
-      replaceLastPath(newRoute)
-      history.replace(newRoute)
-    },
-    routeToSpotlight: ({ showcase }) => spotlightId => {
+const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
+  const routeToShowcase = useCallback(() => {
+    const newRoute = routes.showcase(showcase.id)
+    replaceLastPath(newRoute)
+    history.replace(newRoute)
+  }, [showcase.id])
+
+  const routeToSpotlight = useCallback(
+    spotlightId => {
       const newRoute = routes.spotlight(showcase.id, spotlightId)
       replaceLastPath(newRoute)
       history.replace(newRoute)
     },
-  }),
-  withHandlers({
-    onSpotlightClick: ({ routeToSpotlight, setShowAssessmentContent }) => spotlight => {
+    [showcase.id]
+  )
+
+  const onSpotlightClick = useCallback(
+    spotlight => {
       if (!spotlight.productPicks) {
         setTimeout(() => setShowAssessmentContent(true), 300)
         mixpanel.track('Clicked Self-Assessment Spotlight', {
@@ -83,37 +81,57 @@ const Showcase0 = compose(
       if (assessmentHack()) rememberPersona(spotlight.persona)
       routeToSpotlight(spotlight.id)
     },
-    onProductClick: () => (product, spotlight) => {
-      mixpanel.track(
-        'Clicked Product',
-        {
-          flowType: 'showcase',
-          personaName: spotlight.persona.name,
-          personaRef: spotlight.persona.id,
-          hostname: location.hostname,
-          productName: product.name,
-        },
-        () => {
-          markGoFwd()
-          window.location = product.url
-        }
-      )
-    },
-  }),
-  withProps(({ data, onSpotlightClick }) => ({
-    spotlights: data.showcase && convertSpotlights(data.showcase.spotlights, onSpotlightClick),
-    subtitle: data.showcase && emojify(data.showcase.subtitle),
-    title: data.showcase && emojify(data.showcase.title),
-  })),
-  withProps(({ onSpotlightClick, onProductClick }) => ({
-    callbacks: {
+    [routeToSpotlight, setShowAssessmentContent]
+  )
+
+  const onProductClick = useCallback((product, spotlight) => {
+    mixpanel.track(
+      'Clicked Product',
+      {
+        flowType: 'showcase',
+        personaName: spotlight.persona.name,
+        personaRef: spotlight.persona.id,
+        hostname: location.hostname,
+        productName: product.name,
+      },
+      () => {
+        markGoFwd()
+        window.location = product.url
+      }
+    )
+  }, [])
+
+  const spotlights = useMemo(() => convertSpotlights(showcase.spotlights, onSpotlightClick), [
+    onSpotlightClick,
+    showcase.spotlights,
+  ])
+  const subtitle = useMemo(() => emojify(showcase.subtitle), [showcase.subtitle])
+  const title = useMemo(() => emojify(showcase.title), [showcase.title])
+  const callbacks = useMemo(
+    () => ({
       onSpotlightClick,
       onProductClick,
-    },
-  }))
-)(ShowcaseBase)
+    }),
+    [onProductClick, onSpotlightClick]
+  )
 
-const Showcase1 = ({ id, ...props }) => {
+  return (
+    <ShowcaseBase
+      {...props}
+      backButtonLabel={getFrekklsConfig().i18n.backButton}
+      callbacks={callbacks}
+      FlowBackButton={FlowBackButton}
+      history={history}
+      routeToShowcase={routeToShowcase}
+      showcase={showcase}
+      spotlights={spotlights}
+      subtitle={subtitle}
+      title={title}
+    />
+  )
+}
+
+const ShowcaseGraphql = ({ id, ...props }) => {
   const variables = useMemo(() => ({ id: id.replace(/\/.+/, '') }), [id])
 
   const data = useGraphql(
@@ -165,15 +183,9 @@ const Showcase1 = ({ id, ...props }) => {
     variables
   )
 
-  return <Showcase0 {...props} data={data} />
+  if (!data || data.loading || data.error || !data.showcase) return null
+
+  return <Showcase {...props} showcase={data.showcase} />
 }
 
-const Showcase = compose(
-  withProps({
-    history,
-    FlowBackButton,
-    backButtonLabel: getFrekklsConfig().i18n.backButton,
-  })
-)(Showcase1)
-
-export default Showcase
+export default ShowcaseGraphql

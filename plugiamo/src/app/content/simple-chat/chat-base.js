@@ -3,8 +3,8 @@ import CtaButton from 'special/cta-button'
 import ProgressBar from 'special/assessment/progress-bar'
 import { AssessmentProducts, AssessmentStepOptions } from 'special/assessment/message-types'
 import { ChatLogUi, timeout } from 'plugin-base'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Fragment, h } from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const messageFactory = ({ data, hideAll, nothingSelected, onClick, type }) => {
   if (type === 'assessmentStepOptions') {
@@ -26,6 +26,7 @@ const getMessageShowByType = (type, show) => {
 
 const ChatBase = ({
   assessment,
+  assessmentOptions,
   backButtonLabel,
   chatLogCallbacks,
   clickActions,
@@ -36,15 +37,10 @@ const ChatBase = ({
   data,
   FlowBackButton,
   goToPrevStep,
-  handleClick,
   handleScroll,
-  handleDataUpdate,
-  handleLogsUpdate,
   headerConfig,
-  hideAll,
   hideCtaButton,
   hideProgressBar,
-  initChatLog,
   lazyLoadingCount,
   lazyLoadActive,
   onToggleContent,
@@ -52,86 +48,29 @@ const ChatBase = ({
   persona,
   products,
   progress,
-  setLazyLoadActive,
+  setChatDataChanged,
   setCtaButtonClicked,
+  setLazyLoadActive,
   showBackButton,
   storeLog,
   touch,
-}) => (
-  <Fragment>
-    <Cover
-      assessment={assessment}
-      backButtonLabel={backButtonLabel}
-      clickActions={clickActions}
-      FlowBackButton={FlowBackButton}
-      goToPrevStep={goToPrevStep}
-      header={data.header}
-      headerConfig={headerConfig}
-      minimized={coverMinimized}
-      persona={persona}
-      showBackButton={showBackButton}
-      step={data}
-    />
-    {progress >= 0 && <ProgressBar hide={hideProgressBar} progress={progress} />}
-    <ChatLogUi
-      chatLogCallbacks={chatLogCallbacks}
-      clickActions={clickActions}
-      contentRef={contentRef}
-      data={data}
-      getMessageMaxWidthByType={getMessageMaxWidthByType}
-      getMessageShowByType={getMessageShowByType}
-      handleClick={handleClick}
-      handleDataUpdate={handleDataUpdate}
-      handleLogsUpdate={handleLogsUpdate}
-      hideAll={hideAll}
-      initChatLog={initChatLog}
-      lazyLoadActive={lazyLoadActive}
-      lazyLoadingCount={lazyLoadingCount}
-      messageFactory={messageFactory}
-      onScroll={handleScroll}
-      onToggleContent={onToggleContent}
-      persona={persona}
-      products={products}
-      ref={contentRef}
-      setLazyLoadActive={setLazyLoadActive}
-      storeLog={storeLog}
-      touch={touch}
-    />
-    {ctaButton && (
-      <CtaButton
-        clicked={ctaButtonClicked}
-        ctaButton={ctaButton}
-        hide={hideCtaButton}
-        onClick={onCtaButtonClick}
-        setClicked={setCtaButtonClicked}
-      />
-    )}
-  </Fragment>
-)
+}) => {
+  const [hideAll, setHideAll] = useState(false)
+  const [countOfRows, setCountOfRows] = useState(6)
 
-export default compose(
-  withState('hideAll', 'setHideAll', false),
-  withState('countOfRows', 'setCountOfRows', 6),
-  withHandlers({
-    handleClick: ({ assessmentOptions, setHideAll }) => ({ type, item }) => {
+  const handleClick = useCallback(
+    ({ type, item }) => {
       if (type === 'assessmentOption') {
         assessmentOptions.goToNextStep(item)
         if (!assessmentOptions.step.multiple) setHideAll(true)
         return true
       }
     },
-    initChatLog: ({
-      data,
-      products,
-      setCountOfRows,
-      countOfRows,
-      lazyLoadingCount,
-      chatLogCallbacks,
-      storeLog,
-      setHideAll,
-      assessment,
-      setChatDataChanged,
-    }) => ({ chatLog, isAssessmentUpdate, update, updateLogs, setLogs }) => {
+    [assessmentOptions]
+  )
+
+  const initChatLog = useCallback(
+    ({ chatLog, isAssessmentUpdate, update, updateLogs, setLogs }) => {
       if (isAssessmentUpdate) {
         setHideAll(false)
         setLogs(storeLog && storeLog.logs ? [storeLog] : [])
@@ -168,12 +107,18 @@ export default compose(
         chatLog.init(chatLogProps)
       }
     },
-  }),
-  withHandlers({
-    handleLogsUpdate: ({ initChatLog }) => ({ chatLog, setLogs, updateLogs }) => {
+    [assessment, chatLogCallbacks, countOfRows, data, lazyLoadingCount, products, setChatDataChanged, storeLog]
+  )
+
+  const handleLogsUpdate = useCallback(
+    ({ chatLog, setLogs, updateLogs }) => {
       timeout.set('updateStore', () => initChatLog({ chatLog, isAssessmentUpdate: true, setLogs, updateLogs }), 100)
     },
-    handleDataUpdate: ({ data, initChatLog, setHideAll, assessment }) => ({ chatLog, setLogs, updateLogs }) => {
+    [initChatLog]
+  )
+
+  const handleDataUpdate = useCallback(
+    ({ chatLog, setLogs, updateLogs }) => {
       if (assessment) setHideAll(true)
       if (data.type === 'store') return
       timeout.set(
@@ -182,10 +127,62 @@ export default compose(
         assessment ? 800 : 0
       )
     },
-  }),
-  lifecycle({
-    componentWillUnmount() {
-      timeout.clear('updateChatLog')
-    },
-  })
-)(ChatBase)
+    [assessment, data.type, initChatLog]
+  )
+
+  useEffect(() => () => timeout.clear('updateChatLog'), [])
+
+  return (
+    <Fragment>
+      <Cover
+        assessment={assessment}
+        backButtonLabel={backButtonLabel}
+        clickActions={clickActions}
+        FlowBackButton={FlowBackButton}
+        goToPrevStep={goToPrevStep}
+        header={data.header}
+        headerConfig={headerConfig}
+        minimized={coverMinimized}
+        persona={persona}
+        showBackButton={showBackButton}
+        step={data}
+      />
+      {progress >= 0 && <ProgressBar hide={hideProgressBar} progress={progress} />}
+      <ChatLogUi
+        chatLogCallbacks={chatLogCallbacks}
+        clickActions={clickActions}
+        contentRef={contentRef}
+        data={data}
+        getMessageMaxWidthByType={getMessageMaxWidthByType}
+        getMessageShowByType={getMessageShowByType}
+        handleClick={handleClick}
+        handleDataUpdate={handleDataUpdate}
+        handleLogsUpdate={handleLogsUpdate}
+        hideAll={hideAll}
+        initChatLog={initChatLog}
+        lazyLoadActive={lazyLoadActive}
+        lazyLoadingCount={lazyLoadingCount}
+        messageFactory={messageFactory}
+        onScroll={handleScroll}
+        onToggleContent={onToggleContent}
+        persona={persona}
+        products={products}
+        ref={contentRef}
+        setLazyLoadActive={setLazyLoadActive}
+        storeLog={storeLog}
+        touch={touch}
+      />
+      {ctaButton && (
+        <CtaButton
+          clicked={ctaButtonClicked}
+          ctaButton={ctaButton}
+          hide={hideCtaButton}
+          onClick={onCtaButtonClick}
+          setClicked={setCtaButtonClicked}
+        />
+      )}
+    </Fragment>
+  )
+}
+
+export default ChatBase

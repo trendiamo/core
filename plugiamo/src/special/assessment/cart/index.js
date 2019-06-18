@@ -1,134 +1,83 @@
 import AppBase from 'app/base'
 import ChatBase from 'app/content/simple-chat/chat-base'
+import ChatModals from 'shared/chat-modals'
 import data from 'special/assessment/data/pierre-cardin'
 import getFrekklsConfig from 'frekkls-config'
-import googleAnalytics from 'ext/google-analytics'
-import Launcher from 'app/launcher'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
-import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withProps, withState } from 'recompose'
 import { fetchProducts, recommendedProducts } from 'special/assessment/utils'
-import { getScrollbarWidth, isSmall } from 'utils'
 import { h } from 'preact'
+import { isSmall } from 'utils'
 import { SimpleChat, timeout } from 'plugin-base'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
-const Plugin = ({
-  showingLauncher,
-  isUnmounting,
-  module,
-  onToggleContent,
-  showingContent,
-  products,
-  clickActions,
-  showingBubbles,
-}) => (
-  <AppBase
-    Component={
-      <SimpleChat
-        backButtonLabel={getFrekklsConfig().i18n.backButton}
-        ChatBase={ChatBase}
-        chatBaseProps={{ assessment: true }}
-        clickActions={clickActions}
-        ctaButton={module.ctaButton}
-        data={module}
-        lazyLoadingCount={6}
-        products={products}
-      />
-    }
-    data={module}
-    isUnmounting={isUnmounting}
-    Launcher={showingLauncher && Launcher}
-    launcherPulsating
-    onToggleContent={onToggleContent}
-    persona={module.launcher.persona}
-    showingBubbles={showingBubbles}
-    showingContent={showingContent}
-    showingLauncher={showingLauncher}
-  />
-)
+const module = data.cart
 
-const Plugin0 = compose(
-  lifecycle({
-    componentDidMount() {
-      const { module, setShowingContent, setProductsData, setProducts } = this.props
+const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {
+  const [products, setProducts] = useState([])
+  const [isUnmounting, setIsUnmounting] = useState(false)
 
-      fetchProducts(results => {
-        const products = recommendedProducts(results)
-        if (products.assessmentProducts.length === 0) return
-        setProductsData(results)
-        setProducts(products)
-        mixpanel.track('Loaded Plugin', {
-          autoOpen,
-          flowType: module.flowType,
-          hash: location.hash,
-          hostname: location.hostname,
-        })
-      })
-
-      const autoOpen = isSmall() ? false : module.flowType === 'ht-chat'
-      if (autoOpen) setShowingContent(true)
-    },
-    componentDidUpdate(prevProps) {
-      const { showingContent } = this.props
-      if (showingContent === prevProps.showingContent) return
-
-      if (getScrollbarWidth() > 0) {
-        if (showingContent) {
-          document.documentElement.classList.add('trnd-open')
-        } else {
-          document.documentElement.classList.remove('trnd-open')
-        }
-      }
-    },
-  }),
-  withHandlers({
-    onToggleContent: ({ module, setIsUnmounting, setShowingContent, showingContent }) => () => {
-      if (module.flowType === 'outro') return
-      mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
-      mixpanel.time_event('Toggled Plugin')
-
-      if (showingContent && isSmall()) {
-        setIsUnmounting(true)
-        return timeout.set(
-          'exitOnMobile',
-          () => {
-            setIsUnmounting(false)
-            setShowingContent(false)
-          },
-          400
-        )
-      }
-      return setShowingContent(!showingContent)
-    },
-  }),
-  branch(({ products }) => products.length === 0, renderNothing),
-  withHotkeys({
-    [escapeKey]: ({ onToggleContent, showingContent }) => () => {
-      if (showingContent) onToggleContent()
-    },
-  })
-)(Plugin)
-
-const Plugin1 = props => {
-  const { module } = props
   const { clickActions, modalsProps } = useChatActions(module.flowType)
-  return <Plugin0 {...props} clickActions={clickActions} modalsProps={modalsProps} />
+
+  useEffect(() => {
+    fetchProducts().then(results => {
+      const products = recommendedProducts(results)
+      if (products.assessmentProducts.length === 0) return
+      setProducts(products)
+      mixpanel.track('Loaded Plugin', {
+        autoOpen: false,
+        flowType: module.flowType,
+        hash: location.hash,
+        hostname: location.hostname,
+      })
+    })
+  }, [])
+
+  const onToggleContent = useCallback(() => {
+    mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
+    mixpanel.time_event('Toggled Plugin')
+
+    if (showingContent && isSmall()) {
+      setIsUnmounting(true)
+      return timeout.set(
+        'exitOnMobile',
+        () => {
+          setIsUnmounting(false)
+          setShowingContent(false)
+        },
+        400
+      )
+    }
+    return setShowingContent(!showingContent)
+  }, [setShowingContent, showingContent])
+
+  if (products.length === 0) return null
+
+  return (
+    <div>
+      <ChatModals flowType={module.flowType} {...modalsProps} />
+      <AppBase
+        Component={
+          <SimpleChat
+            backButtonLabel={getFrekklsConfig().i18n.backButton}
+            ChatBase={ChatBase}
+            chatBaseProps={{ assessment: true }}
+            clickActions={clickActions}
+            data={module}
+            lazyLoadingCount={6}
+            products={products}
+          />
+        }
+        data={module}
+        isUnmounting={isUnmounting}
+        onToggleContent={onToggleContent}
+        persona={module.launcher.persona}
+        showingBubbles={showingBubbles}
+        showingContent={showingContent}
+        showingLauncher={showingLauncher}
+      />
+    </div>
+  )
 }
 
-export default compose(
-  withState('pluginState', 'setPluginState', 'default'),
-  withState('productsData', 'setProductsData', []),
-  withState('products', 'setProducts', []),
-  withProps({ module: data.cart }),
-  branch(({ module }) => !module, renderNothing),
-  branch(({ module }) => module.flowType === 'ht-nothing', renderNothing),
-  withState('isUnmounting', 'setIsUnmounting', false),
-  withState('showingContent', 'setShowingContent', ({ showingContent }) => showingContent),
-  withState('showingLauncher', 'setShowingLauncher', () =>
-    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
-  ),
-  withState('showingBubbles', 'setShowingBubbles', () =>
-    googleAnalytics.active ? googleAnalytics.getVariation() !== 'absent' : true
-  )
-)(Plugin1)
+export default Plugin

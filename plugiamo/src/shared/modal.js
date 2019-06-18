@@ -1,7 +1,6 @@
 import FocusLock from 'react-focus-lock'
 import Loader from 'icons/loader.svg'
 import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
-import { compose } from 'recompose'
 import { createPortal } from 'preact/compat'
 import { h } from 'preact'
 import { IconClose } from 'plugin-base'
@@ -50,25 +49,25 @@ const styles = {
   },
 }
 
-const ModalTemplate = ({ allowBackgroundClose, closeModal, children, isResourceLoaded }) => (
-  <div onClick={allowBackgroundClose && closeModal} role="presentation" style={styles.modal} tabIndex="-1">
-    <IconClose onClick={closeModal} style={styles.iconClose} />
-    <div role="dialog" style={styles.dialog}>
-      {isResourceLoaded === false && (
-        <div style={styles.loaderContainer}>
-          <Loader style={styles.loader} />
-        </div>
-      )}
-      <FocusLock>{children}</FocusLock>
+const ModalTemplate = ({ allowBackgroundClose, closeModal, children, isResourceLoaded }) => {
+  return (
+    <div onClick={allowBackgroundClose && closeModal} role="presentation" style={styles.modal} tabIndex="-1">
+      <IconClose onClick={closeModal} style={styles.iconClose} />
+      <div role="dialog" style={styles.dialog}>
+        {isResourceLoaded === false && (
+          <div style={styles.loaderContainer}>
+            <Loader style={styles.loader} />
+          </div>
+        )}
+        <FocusLock>{children}</FocusLock>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
-const ModalComp = compose(
-  withHotkeys({
-    [escapeKey]: ({ closeModal }) => closeModal,
-  })
-)(ModalTemplate)
+const ModalComp = withHotkeys({
+  [escapeKey]: ({ closeModal }) => closeModal,
+})(ModalTemplate)
 
 const Modal = ({ allowBackgroundClose, closeModal, isOpen, container, children, isResourceLoaded }) => {
   if (!isOpen) return null
