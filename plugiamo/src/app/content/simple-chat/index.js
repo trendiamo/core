@@ -5,10 +5,10 @@ import emojify from 'ext/emojify'
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import useChatActions from 'ext/hooks/use-chat-actions'
-import { compose } from 'recompose'
 import { Fragment, h } from 'preact'
-import { gql, graphql } from 'ext/recompose/graphql'
-import { SimpleChat } from 'plugin-base'
+import { gql, useGraphql } from 'ext/hooks/use-graphql'
+import { SimpleChat as SimpleChatBase } from 'plugin-base'
+import { useMemo } from 'preact/hooks'
 
 const emojifySimpleChat = simpleChat => {
   return {
@@ -25,8 +25,32 @@ const emojifySimpleChat = simpleChat => {
   }
 }
 
-export default compose(
-  graphql(
+const SimpleChat = ({
+  animateOpacity,
+  assessment,
+  assessmentOptions,
+  coverIsMinimized,
+  ctaButton,
+  ctaButtonClicked,
+  goToPrevStep,
+  headerConfig,
+  hideCtaButton,
+  hideProgressBar,
+  id,
+  lazyLoadingCount,
+  Modals,
+  onCtaButtonClick,
+  onToggleContent,
+  persona,
+  products,
+  progress,
+  setCtaButtonClicked,
+  showBackButton,
+  storeLog,
+}) => {
+  const variables = useMemo(() => ({ id }), [id])
+
+  const data = useGraphql(
     gql`
       query($id: ID!) {
         simpleChat(id: $id) {
@@ -57,66 +81,44 @@ export default compose(
         }
       }
     `,
-    ({ id }) => ({ id })
+    variables
   )
-)(
-  ({
-    animateOpacity,
-    assessment,
-    assessmentOptions,
-    coverIsMinimized,
-    ctaButton,
-    ctaButtonClicked,
-    data,
-    goToPrevStep,
-    headerConfig,
-    hideCtaButton,
-    hideProgressBar,
-    lazyLoadingCount,
-    Modals,
-    onCtaButtonClick,
-    onToggleContent,
-    persona,
-    products,
-    progress,
-    setCtaButtonClicked,
-    showBackButton,
-    storeLog,
-  }) => {
-    const { clickActions, modalsProps } = useChatActions('simpleChat')
 
-    if (!data || data.loading || data.error) return null
+  const { clickActions, modalsProps } = useChatActions('simpleChat')
 
-    return (
-      <Fragment>
-        <ChatModals {...modalsProps} />
-        <SimpleChat
-          animateOpacity={animateOpacity}
-          backButtonLabel={getFrekklsConfig().i18n.backButton}
-          ChatBase={ChatBase}
-          chatBaseProps={{ assessment, assessmentOptions, ctaButton }}
-          chatLogCallbacks={chatLogCallbacks}
-          clickActions={clickActions}
-          coverIsMinimized={coverIsMinimized}
-          ctaButtonClicked={ctaButtonClicked}
-          data={{ ...data, simpleChat: emojifySimpleChat(data.simpleChat) }}
-          FlowBackButton={FlowBackButton}
-          goToPrevStep={goToPrevStep}
-          headerConfig={headerConfig}
-          hideCtaButton={hideCtaButton}
-          hideProgressBar={hideProgressBar}
-          lazyLoadingCount={lazyLoadingCount}
-          Modals={Modals}
-          onCtaButtonClick={onCtaButtonClick}
-          onToggleContent={onToggleContent}
-          persona={persona}
-          products={products}
-          progress={progress}
-          setCtaButtonClicked={setCtaButtonClicked}
-          showBackButton={showBackButton}
-          storeLog={storeLog}
-        />
-      </Fragment>
-    )
-  }
-)
+  if (!data || data.loading || data.error) return null
+
+  return (
+    <Fragment>
+      <ChatModals {...modalsProps} />
+      <SimpleChatBase
+        animateOpacity={animateOpacity}
+        backButtonLabel={getFrekklsConfig().i18n.backButton}
+        ChatBase={ChatBase}
+        chatBaseProps={{ assessment, assessmentOptions, ctaButton }}
+        chatLogCallbacks={chatLogCallbacks}
+        clickActions={clickActions}
+        coverIsMinimized={coverIsMinimized}
+        ctaButtonClicked={ctaButtonClicked}
+        data={{ ...data, simpleChat: emojifySimpleChat(data.simpleChat) }}
+        FlowBackButton={FlowBackButton}
+        goToPrevStep={goToPrevStep}
+        headerConfig={headerConfig}
+        hideCtaButton={hideCtaButton}
+        hideProgressBar={hideProgressBar}
+        lazyLoadingCount={lazyLoadingCount}
+        Modals={Modals}
+        onCtaButtonClick={onCtaButtonClick}
+        onToggleContent={onToggleContent}
+        persona={persona}
+        products={products}
+        progress={progress}
+        setCtaButtonClicked={setCtaButtonClicked}
+        showBackButton={showBackButton}
+        storeLog={storeLog}
+      />
+    </Fragment>
+  )
+}
+
+export default SimpleChat

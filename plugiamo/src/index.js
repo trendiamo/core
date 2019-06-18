@@ -5,11 +5,9 @@ import googleAnalytics, { loadGoogle } from 'ext/google-analytics'
 import mixpanel from 'ext/mixpanel'
 import setupDataGathering from 'data-gathering'
 import { detect } from 'detect-browser'
-import { GraphQLClient } from 'graphql-request'
-import { graphQlUrl, location, mixpanelToken, overrideAccount } from './config'
 import { h, render } from 'preact'
 import { loadRollbar } from 'ext/rollbar'
-import { Provider } from 'ext/graphql-context'
+import { location, mixpanelToken } from './config'
 import './styles.css'
 
 const addFrekklsLoadingFrame = () => {
@@ -26,22 +24,11 @@ const addFrekklsLoadingFrame = () => {
   return iframe
 }
 
-const initRootComponent = () => {
-  const client = new GraphQLClient(
-    graphQlUrl,
-    overrideAccount ? { headers: { 'Override-Account': overrideAccount } } : undefined
-  )
-
-  const RootComponent = () => (
-    <Provider value={client}>
-      <ErrorBoundaries>
-        <App />
-      </ErrorBoundaries>
-    </Provider>
-  )
-
-  return RootComponent
-}
+const RootComponent = () => (
+  <ErrorBoundaries>
+    <App />
+  </ErrorBoundaries>
+)
 
 const initApp = googleAnalytics => {
   setupDataGathering(googleAnalytics)
@@ -56,11 +43,10 @@ const initApp = googleAnalytics => {
   const onInitResult = getFrekklsConfig().onInit()
   if (onInitResult === false) return
 
-  const Component = initRootComponent()
   const trendiamoContainer = document.createElement('div')
   trendiamoContainer.classList.add('trendiamo-container')
   document.body.appendChild(trendiamoContainer)
-  render(<Component />, trendiamoContainer)
+  render(<RootComponent />, trendiamoContainer)
 }
 
 const main = () => {
