@@ -2,6 +2,7 @@ const moduleMatchers = [
   { personaId: '211', homepagePath: '/simple-chat/288', productsPath: '/simple-chat/287' },
   { personaId: '223', homepagePath: '/simple-chat/295', productsPath: '/simple-chat/292' },
   { personaId: '222', homepagePath: '/simple-chat/297', productsPath: '/simple-chat/291' },
+  { personaId: '224', homepagePath: '/simple-chat/298', productsPath: '/simple-chat/300' },
 ]
 
 const isProductPage = () => {
