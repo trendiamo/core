@@ -20,7 +20,7 @@ const useChatActions = flowType => {
       url: videoItem.youtubeUrl,
     })
     setVideoModalOpen(false)
-  }, [videoItem])
+  }, [flowType, videoItem])
 
   const closePictureModal = useCallback(() => {
     mixpanel.track('Closed Picture', {
@@ -29,7 +29,7 @@ const useChatActions = flowType => {
       url: pictureItem.url,
     })
     setPictureModalOpen(false)
-  }, [pictureItem])
+  }, [flowType, pictureItem])
 
   const modalsProps = useMemo(
     () => ({
@@ -70,17 +70,20 @@ const useChatActions = flowType => {
     originalClickAssessmentProduct(item)
   }, [])
 
-  const clickProduct = useCallback(({ item }) => {
-    mixpanel.track(
-      'Clicked Product',
-      { flowType, hostname: location.hostname, url: item.url, title: item.title },
-      () => {
-        if (item.newTab) return
-        markGoFwd()
-        window.location.href = item.url
-      }
-    )
-  }, [])
+  const clickProduct = useCallback(
+    ({ item }) => {
+      mixpanel.track(
+        'Clicked Product',
+        { flowType, hostname: location.hostname, url: item.url, title: item.title },
+        () => {
+          if (item.newTab) return
+          markGoFwd()
+          window.location.href = item.url
+        }
+      )
+    },
+    [flowType]
+  )
 
   const clickVideoMessage = useCallback(
     ({ item }) => {
@@ -92,7 +95,7 @@ const useChatActions = flowType => {
       setVideoItem(item)
       setVideoModalOpen(true)
     },
-    [setVideoModalOpen, setVideoItem]
+    [flowType]
   )
 
   const clickHeaderVideo = useCallback(
@@ -105,7 +108,7 @@ const useChatActions = flowType => {
       setVideoItem(item)
       setVideoModalOpen(true)
     },
-    [setVideoItem, setVideoModalOpen]
+    [flowType]
   )
 
   const clickImageCarouselItem = useCallback(
@@ -120,7 +123,7 @@ const useChatActions = flowType => {
       setImageModalOpen(true)
       setPictureItem(item.picture)
     },
-    [setImagesModalIndex, setImagesModalUrls, setImageModalOpen, setPictureItem]
+    [flowType]
   )
 
   const touchImageCarousel = useCallback(() => {
@@ -129,17 +132,20 @@ const useChatActions = flowType => {
       hostname: location.hostname,
     })
     setImagesModalTouch(true)
-  }, [setImagesModalTouch])
+  }, [flowType])
 
-  const clickChatOption = useCallback(({ item, persona }) => {
-    mixpanel.track('Clicked Chat Option', {
-      flowType,
-      hostname: location.hostname,
-      personaName: persona.name,
-      personaRef: persona.id,
-      chatOptionText: item.text,
-    })
-  }, [])
+  const clickChatOption = useCallback(
+    ({ item, persona }) => {
+      mixpanel.track('Clicked Chat Option', {
+        flowType,
+        hostname: location.hostname,
+        personaName: persona.name,
+        personaRef: persona.id,
+        chatOptionText: item.text,
+      })
+    },
+    [flowType]
+  )
 
   const clickLink = useCallback(({ item }) => {
     if (item.newTab) return
@@ -157,7 +163,7 @@ const useChatActions = flowType => {
       setPictureItem(item)
       setPictureModalOpen(true)
     },
-    [setPictureItem, setPictureModalOpen]
+    [flowType]
   )
 
   const clickActions = useMemo(
