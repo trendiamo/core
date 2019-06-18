@@ -74,7 +74,10 @@ const Assessment = ({
 )
 
 export default compose(
-  withProps({ module: data[process.env.ASSESSMENT || location.hostname].assessment }),
+  withProps({
+    module:
+      data[process.env.ASSESSMENT || location.hostname] && data[process.env.ASSESSMENT || location.hostname].assessment,
+  }),
   withState('currentStepKey', 'setCurrentStepKey', ({ showAssessmentContent }) =>
     typeof showAssessmentContent !== 'boolean' ? showAssessmentContent.key : 'root'
   ),
