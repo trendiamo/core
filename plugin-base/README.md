@@ -11,6 +11,14 @@ yarn add -P react@^16.0.0 styled-components@^4.2.0 lodash.isequal@^4.5.0 react-d
 
 ## Build
 
+To build on every file change run:
+
+```
+yarn watch
+```
+
+To build only once, run:
+
 ```
 yarn 🚄
 ```

@@ -1,5 +1,6 @@
 /* eslint-disable */
 const path = require('path')
+const exec = require('child_process').exec
 
 module.exports = {
   entry: ['./src/index.js'],
@@ -50,6 +51,21 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    {
+      apply: compiler => {
+        compiler.hooks.afterEmit.tap('AfterEmitPlugin', compilation => {
+          exec(
+            'mkdir -p ../console-frontend/plugin-base && cp dist/plugin-base.js ../console-frontend/plugin-base && mkdir -p ../plugiamo/plugin-base && cp dist/plugin-base.js ../plugiamo/plugin-base',
+            (err, stdout, stderr) => {
+              if (stdout) process.stdout.write(stdout)
+              if (stderr) process.stderr.write(stderr)
+            }
+          )
+        })
+      },
+    },
+  ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
