@@ -21,7 +21,7 @@ const styles = {
   },
 }
 
-const PictureModal = ({ closeModal, isOpen, setIsResourceLoaded, pictureItem }) => {
+const PictureModal = ({ closeModal, isOpen, pictureItem }) => {
   const [isPictureLoaded, setIsPictureLoaded] = useState(false)
 
   const closePictureModal = useCallback(
@@ -34,7 +34,7 @@ const PictureModal = ({ closeModal, isOpen, setIsResourceLoaded, pictureItem }) 
 
   const onPictureLoad = useCallback(() => {
     setIsPictureLoaded(true)
-  }, [setIsResourceLoaded])
+  }, [])
 
   return (
     <Modal allowBackgroundClose closeModal={closePictureModal} isOpen={isOpen} isResourceLoaded={isPictureLoaded}>

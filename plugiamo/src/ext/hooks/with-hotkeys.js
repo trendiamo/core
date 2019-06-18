@@ -17,36 +17,39 @@ const withHotkeys = (handlers, useCapture = false) => BaseComponent => {
   const WithHotkeys = props => {
     const hotkeysRef = useRef()
 
-    const handleKeyDown = useCallback(event => {
-      const handler = handlers[event.keyCode]
-      if (!handler) return
-      const handlerWithProps = Reflect.apply(handler, this, [props])
+    const handleKeyDown = useCallback(
+      event => {
+        const handler = handlers[event.keyCode]
+        if (!handler) return
+        const handlerWithProps = Reflect.apply(handler, this, [props])
 
-      event.preventDefault()
-      event.stopPropagation()
-      Reflect.apply(handlerWithProps, this, [event])
-    }, [])
+        event.preventDefault()
+        event.stopPropagation()
+        Reflect.apply(handlerWithProps, this, [event])
+      },
+      [props]
+    )
 
-    const manageKeyEvents = useCallback(type => {
-      // we listen for the event in both the element itself and on its containing window. This allows modals to work
-      const { hotkeysDocument } = props
-      const contentDocument =
-        hotkeysDocument && (typeof hotkeysDocument === 'function' ? hotkeysDocument() : hotkeysDocument)
-      const base = hotkeysRef.current
-      const target = base.contentWindow || contentDocument || window
-      if (type === 'add') {
-        base.addEventListener('keyup', handleKeyDown, useCapture)
-        target.addEventListener('keyup', handleKeyDown, useCapture)
-        return
-      }
-      base.removeEventListener('keyup', handleKeyDown, useCapture)
-      target.removeEventListener('keyup', handleKeyDown, useCapture)
-    }, [])
+    const manageKeyEvents = useCallback(
+      type => {
+        // we listen for the event in both the element itself and on its containing window. This allows modals to work
+        const base = hotkeysRef.current
+        const target = base.contentWindow || window
+        if (type === 'add') {
+          base.addEventListener('keyup', handleKeyDown, useCapture)
+          target.addEventListener('keyup', handleKeyDown, useCapture)
+          return
+        }
+        base.removeEventListener('keyup', handleKeyDown, useCapture)
+        target.removeEventListener('keyup', handleKeyDown, useCapture)
+      },
+      [handleKeyDown]
+    )
 
     useEffect(() => {
       manageKeyEvents('add')
       return () => manageKeyEvents('remove')
-    }, [])
+    }, [manageKeyEvents])
 
     return (
       <div ref={hotkeysRef}>
