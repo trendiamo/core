@@ -1,6 +1,6 @@
 import AppBase from 'app/base'
 import ChatBase from 'app/content/simple-chat/chat-base'
-import data from 'special/assessment/data'
+import data from 'special/assessment/data/pierre-cardin'
 import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics from 'ext/google-analytics'
 import Launcher from 'app/launcher'
