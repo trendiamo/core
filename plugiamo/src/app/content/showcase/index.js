@@ -4,11 +4,12 @@ import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import { assessmentHack, rememberPersona } from 'special/assessment/utils'
 import { branch, compose, renderNothing, withHandlers, withProps } from 'recompose'
-import { gql, graphql } from 'ext/recompose/graphql'
+import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
 import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
 import { routes, SpotlightItem } from 'plugin-base'
+import { useMemo } from 'preact/hooks'
 
 const assessmentSpotlight = {
   persona: {
@@ -45,60 +46,7 @@ const convertSpotlights = (spotlights, onSpotlightClick) => {
   return results
 }
 
-const Showcase = compose(
-  withProps({
-    history,
-    FlowBackButton,
-    backButtonLabel: getFrekklsConfig().i18n.backButton,
-  }),
-  graphql(
-    gql`
-      query($id: ID!) {
-        showcase(id: $id) {
-          id
-          title
-          subtitle
-          spotlights {
-            id
-            order
-            persona {
-              id
-              name
-              description
-              profilePic {
-                url
-              }
-              picRect {
-                x
-                y
-                width
-                height
-              }
-              instagramUrl
-              profilePicAnimationUrl
-            }
-            productPicks {
-              id
-              url
-              name
-              description
-              displayPrice
-              picture {
-                url
-              }
-              picRect {
-                x
-                y
-                width
-                height
-              }
-            }
-          }
-        }
-      }
-    `,
-    ({ id }) => ({ id: id.replace(/\/.+/, '') })
-  ),
+const Showcase0 = compose(
   branch(({ data }) => !data || data.loading || data.error, renderNothing),
   withProps(({ data }) => ({
     showcase: data.showcase,
@@ -164,5 +112,68 @@ const Showcase = compose(
     },
   }))
 )(ShowcaseBase)
+
+const Showcase1 = ({ id, ...props }) => {
+  const variables = useMemo(() => ({ id: id.replace(/\/.+/, '') }), [id])
+
+  const data = useGraphql(
+    gql`
+      query($id: ID!) {
+        showcase(id: $id) {
+          id
+          title
+          subtitle
+          spotlights {
+            id
+            order
+            persona {
+              id
+              name
+              description
+              profilePic {
+                url
+              }
+              picRect {
+                x
+                y
+                width
+                height
+              }
+              instagramUrl
+              profilePicAnimationUrl
+            }
+            productPicks {
+              id
+              url
+              name
+              description
+              displayPrice
+              picture {
+                url
+              }
+              picRect {
+                x
+                y
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+    `,
+    variables
+  )
+
+  return <Showcase0 {...props} data={data} />
+}
+
+const Showcase = compose(
+  withProps({
+    history,
+    FlowBackButton,
+    backButtonLabel: getFrekklsConfig().i18n.backButton,
+  })
+)(Showcase1)
 
 export default Showcase

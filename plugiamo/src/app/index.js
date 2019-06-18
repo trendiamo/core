@@ -13,11 +13,12 @@ import setupFlowHistory from './setup/flow-history'
 import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { assessmentCart, assessmentHack, isDeliusAssessment } from 'special/assessment/utils'
 import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
-import { gql, graphql } from 'ext/recompose/graphql'
+import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 import { location } from 'config'
 import { timeout } from 'plugin-base'
+import { useMemo } from 'preact/hooks'
 
 const AppBase0 = compose(
   withProps({
@@ -139,26 +140,18 @@ const AppBase2 = compose(
 )(AppBase1)
 
 const AppBase3 = props => {
-  const { data } = props
+  const variables = useMemo(
+    () => ({
+      hasPersona: !!optionsFromHash().persona,
+      pathname:
+        location.hostname === 'www.pionier-workwear.com' ? `${location.pathname}${location.search}` : location.pathname,
+      personaId: optionsFromHash().persona,
+      pluginPath: optionsFromHash().path,
+    }),
+    []
+  )
 
-  if (!data || data.loading || data.error) return null
-  if (isDeliusAssessment()) return <Assessment {...props} />
-  if (assessmentCart()) return <AssessmentCart {...props} />
-  if (!data.flow && assessmentHack()) return <AssessmentSizeGuide {...props} />
-  if (!data.flow) {
-    infoMsg(`no data found for hostname ${location.hostname}`)
-    return null
-  }
-  if (data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview')) return null
-
-  return <AppBase2 {...props} />
-}
-
-export default compose(
-  withProps({ Component: <Router /> }),
-  withProps({ Launcher }),
-  withProps({ pathFromNav: setupFlowHistory() }),
-  graphql(
+  const data = useGraphql(
     gql`
       query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
         website {
@@ -204,12 +197,24 @@ export default compose(
         }
       }
     `,
-    {
-      hasPersona: !!optionsFromHash().persona,
-      pathname:
-        location.hostname === 'www.pionier-workwear.com' ? `${location.pathname}${location.search}` : location.pathname,
-      personaId: optionsFromHash().persona,
-      pluginPath: optionsFromHash().path,
-    }
+    variables
   )
+
+  if (!data || data.loading || data.error) return null
+  if (isDeliusAssessment()) return <Assessment {...props} />
+  if (assessmentCart()) return <AssessmentCart {...props} />
+  if (!data.flow && assessmentHack()) return <AssessmentSizeGuide {...props} />
+  if (!data.flow) {
+    infoMsg(`no data found for hostname ${location.hostname}`)
+    return null
+  }
+  if (data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview')) return null
+
+  return <AppBase2 {...props} data={data} />
+}
+
+export default compose(
+  withProps({ Component: <Router /> }),
+  withProps({ Launcher }),
+  withProps({ pathFromNav: setupFlowHistory() })
 )(AppBase3)
