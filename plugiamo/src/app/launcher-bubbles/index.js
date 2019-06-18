@@ -1,7 +1,7 @@
 import emojify from 'ext/emojify'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 import { LauncherBubbles as LauncherBubblesBase, timeout } from 'plugin-base'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const TIME_END = 20 // 20 seconds
 
@@ -21,7 +21,7 @@ const convertData = (data, step) => {
 }
 
 const LauncherBubbles = ({
-  computedData,
+  data,
   disappear,
   frameStyleStr,
   launcherConfig,
@@ -29,38 +29,33 @@ const LauncherBubbles = ({
   outroButtonsClick,
   position,
   setDisappear,
-}) => (
-  <LauncherBubblesBase
-    data={computedData}
-    disappear={disappear}
-    frameStyleStr={frameStyleStr}
-    launcherConfig={launcherConfig}
-    onClick={onToggleContent}
-    outroButtonsClick={outroButtonsClick}
-    position={position}
-    setDisappear={setDisappear}
-  />
-)
+}) => {
+  const [computedData, setComputedData] = useState(null)
+  const newOnToggleContent = useCallback(() => {
+    if (data.flow && data.flow.flowType === 'outro') return
 
-export default compose(
-  withState('computedData', 'setComputedData', null),
-  withHandlers({
-    onToggleContent: ({ data, onToggleContent }) => () => {
-      if (data.flow && data.flow.flowType === 'outro') return
+    onToggleContent()
+  }, [data.flow, onToggleContent])
 
-      onToggleContent()
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { data, setComputedData } = this.props
+  useEffect(() => {
+    setComputedData(convertData(data, 0))
+    timeout.set('LauncherBubblesUpdate', () => setComputedData(convertData(data, 1)), 500)
+    timeout.set('LauncherBubblesUpdate', () => setComputedData(convertData(data, 2)), 2000)
+    return () => timeout.clear('LauncherBubblesUpdate')
+  }, [data])
 
-      setComputedData(convertData(data, 0))
-      timeout.set('LauncherBubblesUpdate', () => setComputedData(convertData(data, 1)), 500)
-      timeout.set('LauncherBubblesUpdate', () => setComputedData(convertData(data, 2)), 2000)
-    },
-    componentWillUnmount() {
-      timeout.clear('LauncherBubblesUpdate')
-    },
-  })
-)(LauncherBubbles)
+  return (
+    <LauncherBubblesBase
+      data={computedData}
+      disappear={disappear}
+      frameStyleStr={frameStyleStr}
+      launcherConfig={launcherConfig}
+      onClick={newOnToggleContent}
+      outroButtonsClick={outroButtonsClick}
+      position={position}
+      setDisappear={setDisappear}
+    />
+  )
+}
+
+export default LauncherBubbles

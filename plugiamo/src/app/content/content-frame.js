@@ -2,16 +2,13 @@ import CloseButton from './close-button'
 import ErrorBoundaries from 'ext/error-boundaries'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
-import { compose } from 'recompose'
 import { Frame, positioning, useAnimateOnMount } from 'plugin-base'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 
-const IFrame = compose(
-  withHotkeys({
-    [escapeKey]: ({ onToggleContent }) => onToggleContent,
-  })
-)(styled(Frame).attrs({
+const IFrame = withHotkeys({
+  [escapeKey]: ({ onToggleContent }) => onToggleContent,
+})(styled(Frame).attrs({
   title: 'Frekkls Content',
 })`
   border: 0;

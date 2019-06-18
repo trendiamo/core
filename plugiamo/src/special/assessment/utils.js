@@ -18,13 +18,10 @@ const cartIsNotEmpty = () => getShopcartProductIds().length > 0
 const recallPersona = () => JSON.parse(sessionStorage.getItem('trnd-remembered-persona'))
 const assessmentCart = () => assessmentHack() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
 
-const fetchProducts = callback => {
+const fetchProducts = () =>
   fetch('https://improv.ams3.digitaloceanspaces.com/improv/improv-data.json', {
     headers: new Headers({ 'Content-Type': 'application/json' }),
-  })
-    .then(response => response.json())
-    .then(results => callback(results))
-}
+  }).then(response => response.json())
 
 const shuffle = a => {
   for (let i = a.length - 1; i > 0; i--) {

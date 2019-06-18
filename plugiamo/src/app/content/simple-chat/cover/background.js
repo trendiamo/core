@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { compose, withProps } from 'recompose'
 import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
+import { useMemo } from 'preact/hooks'
 
 const CoverAnimation = styled.img`
   position: absolute;
@@ -61,21 +61,23 @@ const ImageContainer = styled.div`
   transition: opacity 0.4s ease-in-out;
 `
 
-const Background = ({ minimized, header, imageUrl, animationUrl, headerConfig, hide }) => (
-  <ImageContainer header={header} hide={hide} minimized={minimized}>
-    <CoverAnimation headerConfig={headerConfig} minimized={minimized} src={animationUrl} />
-    <CoverImage image={imageUrl} minimized={minimized} />
-  </ImageContainer>
-)
-
-export default compose(
-  withProps(({ header, big }) => {
-    const imageUrl = imgixUrl(header.imageUrl, { fit: 'crop', w: big ? 800 : 160, h: big ? 200 : 90 })
+const Background = ({ big, minimized, header, headerConfig, hide }) => {
+  const imageUrl = useMemo(() => imgixUrl(header.imageUrl, { fit: 'crop', w: big ? 800 : 160, h: big ? 200 : 90 }), [
+    big,
+    header.imageUrl,
+  ])
+  const animationUrl = useMemo(() => {
     const animated = header.animationUrl && header.animationUrl.substr(header.animationUrl.length - 3) === 'gif'
     const animationUrl = header.animationUrl || imageUrl
-    return {
-      imageUrl,
-      animationUrl: animated ? animationUrl : imgixUrl(animationUrl, { fit: 'crop', w: 220, h: 140 }),
-    }
-  })
-)(Background)
+    return animated ? animationUrl : imgixUrl(animationUrl, { fit: 'crop', w: 220, h: 140 })
+  }, [header.animationUrl, imageUrl])
+
+  return (
+    <ImageContainer header={header} hide={hide} minimized={minimized}>
+      <CoverAnimation headerConfig={headerConfig} minimized={minimized} src={animationUrl} />
+      <CoverImage image={imageUrl} minimized={minimized} />
+    </ImageContainer>
+  )
+}
+
+export default Background

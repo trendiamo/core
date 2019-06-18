@@ -15,14 +15,6 @@ const header = {
 const data = {
   assessment: {
     flowType: 'ht-assessment-v2',
-    persona: {
-      description: 'This is our designer!',
-      name: 'Frekkie',
-      profilePic: {
-        url:
-          'https://console-assets.ams3.digitaloceanspaces.com/uploads/personas-profile-pics/cd2692b6/Nico-de-Roy.jpg',
-      },
-    },
     launcher: {
       chatBubbleText: 'Hallo! 👋 Willkommen bei Delius',
       chatBubbleExtraText: 'Wie kann ich Ihnen helfen?',

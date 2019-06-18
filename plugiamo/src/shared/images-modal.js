@@ -1,9 +1,9 @@
 import CarouselModalArrows from './carousel-modal-arrows'
 import mixpanel from 'ext/mixpanel'
 import Modal from 'shared/modal'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { h } from 'preact'
 import { imgixUrl, stringifyRect } from 'plugin-base'
+import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 let touchstartX = 0
 let touchstartY = 0
@@ -22,152 +22,70 @@ const handleGesture = (touchstartX, touchstartY, touchendX, touchendY) => {
   }
 }
 
-const ImagesModalTemplate = ({
-  selectedImageIndex,
-  urlsArray,
-  onRightArrowClick,
-  onLeftArrowClick,
-  onTouchStart,
-  isOpen,
-  closeModal,
-  selectedImage,
-  onTouchEnd,
-  isTouch,
-  isPictureLoaded,
-  onPictureLoad,
-}) => (
-  <div>
-    <Modal allowBackgroundClose={false} closeModal={closeModal} isOpen={isOpen} isResourceLoaded={isPictureLoaded}>
-      {!isTouch && (
-        <CarouselModalArrows
-          onLeftArrowClick={onLeftArrowClick}
-          onRightArrowClick={onRightArrowClick}
-          selectedImageIndex={selectedImageIndex}
-          urlsArray={urlsArray}
-        />
-      )}
-      <div
-        onTouchEnd={onTouchEnd}
-        onTouchStart={onTouchStart}
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 50,
-          left: 0,
-        }}
-      >
-        <img
-          alt=""
-          onLoad={onPictureLoad}
-          src={
-            selectedImage &&
-            selectedImage.url &&
-            imgixUrl(selectedImage.url, {
-              rect: stringifyRect(selectedImage.picRect),
-            })
-          }
-          style={{
-            opacity: isPictureLoaded ? 1 : 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-          }}
-        />
-      </div>
-    </Modal>
-  </div>
-)
+const ImagesModal = ({ flowType, index, isOpen, isTouch, pictureItem, setIsOpen, urlsArray }) => {
+  const [isTwoFingerScroll, setIsTwoFingerScroll] = useState(false)
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [isPictureLoaded, setIsPictureLoaded] = useState(false)
 
-const ImagesModal = compose(
-  withState('isTwoFingerScroll', 'setIsTwoFingerScroll', false),
-  withState('selectedImage', 'setSelectedImage', null),
-  withState('selectedImageIndex', 'setSelectedImageIndex', 0),
-  withState('originalWindowWidth', 'setOriginalWindowWidth', window.innerWidth),
-  withState('isPictureLoaded', 'setIsPictureLoaded', false),
-  lifecycle({
-    componentDidUpdate(prevProps) {
-      const { setSelectedImageIndex, index, isOpen } = this.props
-      if (prevProps.index !== index) {
-        setSelectedImageIndex(index)
-      }
-      if (prevProps.isOpen !== isOpen) {
-        setSelectedImageIndex(index)
-      }
-    },
-  }),
-  withProps(({ selectedImageIndex, urlsArray, pictureItem }) => ({
-    selectedImage: {
+  useEffect(() => {
+    setSelectedImageIndex(index)
+  }, [index, isOpen])
+
+  const originalWindowWidth = useMemo(() => window.innerWidth, [])
+
+  const selectedImage = useMemo(
+    () => ({
       url: urlsArray[selectedImageIndex],
       picRect: pictureItem && pictureItem.picRect,
-    },
-  })),
-  withHandlers({
-    closeModal: ({ setIsOpen, selectedImage, flowType }) => () => {
-      mixpanel.track('Closed Carousel Gallery', {
-        flowType: flowType || 'simpleChat',
-        hostname: location.hostname,
-        imageUrl: selectedImage && selectedImage.url,
-      })
-      setIsOpen(false)
-    },
-    onPictureLoad: ({ setIsPictureLoaded }) => () => {
-      setIsPictureLoaded(true)
-    },
-    onLeftArrowClick: ({
-      selectedImageIndex,
-      urlsArray,
-      setSelectedImageIndex,
-      selectedImage,
-      flowType,
-      setIsPictureLoaded,
-    }) => () => {
-      if (selectedImageIndex === 0) return
-      if (selectedImage.url !== urlsArray[selectedImageIndex - 1]) setIsPictureLoaded(false)
-      setSelectedImageIndex(selectedImageIndex - 1)
-      mixpanel.track('Carousel Image Switch', {
-        flowType: flowType || 'simpleChat',
-        hostname: location.hostname,
-        urlFrom: selectedImage && selectedImage.url,
-        urlTo: urlsArray[selectedImageIndex - 1],
-      })
-    },
-    onRightArrowClick: ({
-      selectedImageIndex,
-      urlsArray,
-      setSelectedImageIndex,
-      selectedImage,
-      flowType,
-      setIsPictureLoaded,
-    }) => () => {
-      if (selectedImageIndex >= urlsArray.length - 1) return
-      if (selectedImage.url !== urlsArray[selectedImageIndex + 1]) setIsPictureLoaded(false)
-      setSelectedImageIndex(selectedImageIndex + 1)
-      mixpanel.track('Carousel Image Switch', {
-        flowType: flowType || 'simpleChat',
-        hostname: location.hostname,
-        urlFrom: selectedImage && selectedImage.url,
-        urlTo: urlsArray[selectedImageIndex + 1],
-      })
-    },
-    onTouchStart: ({ setIsTwoFingerScroll }) => event => {
-      setIsTwoFingerScroll(1 < event.touches.length)
-      touchstartX = event.changedTouches[0].screenX
-      touchstartY = event.changedTouches[0].screenY
-    },
-    onTouchEnd: ({
-      originalWindowWidth,
-      isTwoFingerScroll,
-      selectedImageIndex,
-      urlsArray,
-      setSelectedImageIndex,
-      selectedImage,
-      flowType,
-      setIsPictureLoaded,
-    }) => event => {
+    }),
+    [pictureItem, selectedImageIndex, urlsArray]
+  )
+
+  const closeModal = useCallback(() => {
+    mixpanel.track('Closed Carousel Gallery', {
+      flowType: flowType || 'simpleChat',
+      hostname: location.hostname,
+      imageUrl: selectedImage && selectedImage.url,
+    })
+    setIsOpen(false)
+  }, [flowType, selectedImage, setIsOpen])
+
+  const onPictureLoad = useCallback(() => {
+    setIsPictureLoaded(true)
+  }, [])
+
+  const onLeftArrowClick = useCallback(() => {
+    if (selectedImageIndex === 0) return
+    if (selectedImage.url !== urlsArray[selectedImageIndex - 1]) setIsPictureLoaded(false)
+    setSelectedImageIndex(selectedImageIndex - 1)
+    mixpanel.track('Carousel Image Switch', {
+      flowType: flowType || 'simpleChat',
+      hostname: location.hostname,
+      urlFrom: selectedImage && selectedImage.url,
+      urlTo: urlsArray[selectedImageIndex - 1],
+    })
+  }, [flowType, selectedImage, selectedImageIndex, urlsArray])
+
+  const onRightArrowClick = useCallback(() => {
+    if (selectedImageIndex >= urlsArray.length - 1) return
+    if (selectedImage.url !== urlsArray[selectedImageIndex + 1]) setIsPictureLoaded(false)
+    setSelectedImageIndex(selectedImageIndex + 1)
+    mixpanel.track('Carousel Image Switch', {
+      flowType: flowType || 'simpleChat',
+      hostname: location.hostname,
+      urlFrom: selectedImage && selectedImage.url,
+      urlTo: urlsArray[selectedImageIndex + 1],
+    })
+  }, [flowType, selectedImage, selectedImageIndex, urlsArray])
+
+  const onTouchStart = useCallback(event => {
+    setIsTwoFingerScroll(1 < event.touches.length)
+    touchstartX = event.changedTouches[0].screenX
+    touchstartY = event.changedTouches[0].screenY
+  }, [])
+
+  const onTouchEnd = useCallback(
+    event => {
       if (isTwoFingerScroll || originalWindowWidth > window.innerWidth) return
       touchendX = event.changedTouches[0].screenX
       touchendY = event.changedTouches[0].screenY
@@ -199,7 +117,55 @@ const ImagesModal = compose(
       }
       setIsPictureLoaded(false)
     },
-  })
-)(ImagesModalTemplate)
+    [flowType, isTwoFingerScroll, selectedImage, originalWindowWidth, selectedImageIndex, urlsArray]
+  )
+
+  return (
+    <div>
+      <Modal allowBackgroundClose={false} closeModal={closeModal} isOpen={isOpen} isResourceLoaded={isPictureLoaded}>
+        {!isTouch && (
+          <CarouselModalArrows
+            onLeftArrowClick={onLeftArrowClick}
+            onRightArrowClick={onRightArrowClick}
+            selectedImageIndex={selectedImageIndex}
+            urlsArray={urlsArray}
+          />
+        )}
+        <div
+          onTouchEnd={onTouchEnd}
+          onTouchStart={onTouchStart}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 50,
+            left: 0,
+          }}
+        >
+          <img
+            alt=""
+            onLoad={onPictureLoad}
+            src={
+              selectedImage &&
+              selectedImage.url &&
+              imgixUrl(selectedImage.url, {
+                rect: stringifyRect(selectedImage.picRect),
+              })
+            }
+            style={{
+              opacity: isPictureLoaded ? 1 : 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+            }}
+          />
+        </div>
+      </Modal>
+    </div>
+  )
+}
 
 export default ImagesModal
