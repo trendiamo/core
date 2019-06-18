@@ -10,7 +10,8 @@ class Picture < ApplicationRecord
   has_many :simple_chat_product_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
   has_many :simple_chat_picture_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
 
-  validates :url, presence: true, uniqueness: true, picture_url: true
+  validate :url_must_be_valid
+  validates :url, presence: true, uniqueness: true
 
   def as_json(_options = {})
     attributes
@@ -18,5 +19,11 @@ class Picture < ApplicationRecord
       .merge(personas: personas,
              product_picks: product_picks,
              simple_chat_messages: simple_chat_product_messages + simple_chat_picture_messages)
+  end
+
+  def url_must_be_valid
+    return if url&.starts_with?("http")
+
+    errors.add(:url, "is invalid")
   end
 end
