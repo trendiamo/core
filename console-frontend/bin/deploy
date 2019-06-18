@@ -12,7 +12,7 @@ REACT_APP_NODE_ENV=production
 REACT_APP_API_ENDPOINT=https://api.frekkls.com
 EOL
 
-cd ../plugin-base && yarn build
+cd ../plugin-base && yarn build && cd ../console-frontend
 
 yarn build
 
@@ -32,4 +32,4 @@ EOL
 rsync -azh -e $SSH --delete-after --ignore-errors build/ root@139.59.128.112:/var/www/admin.frekkls.com/html
 
 rm -rf build/
-cd ../plugin-base && yarn build-dev
+cd ../plugin-base && yarn build-dev && cd ../console-frontend
