@@ -10,7 +10,14 @@ import { loadRollbar } from 'ext/rollbar'
 import { location, mixpanelToken } from './config'
 import './styles.css'
 
-const addFrekklsLoadingFrame = () => {
+const renderTrendiamoContainer = () => {
+  const trendiamoContainer = document.createElement('div')
+  trendiamoContainer.classList.add('trendiamo-container')
+  document.body.appendChild(trendiamoContainer)
+  return trendiamoContainer
+}
+
+const addFrekklsLoadingFrame = trendiamoContainer => {
   const iframe = document.createElement('iframe')
   iframe.title = 'frekkls-loading-frame'
   iframe.style.width = '0'
@@ -18,7 +25,7 @@ const addFrekklsLoadingFrame = () => {
   iframe.style.border = '0'
   iframe.style.display = 'none'
   iframe.style.position = 'absolute'
-  document.body.appendChild(iframe)
+  trendiamoContainer.appendChild(iframe)
   const script = document.createElement('script')
   iframe.contentDocument.body.appendChild(script)
   return iframe
@@ -30,7 +37,7 @@ const RootComponent = () => (
   </ErrorBoundaries>
 )
 
-const initApp = googleAnalytics => {
+const initApp = (trendiamoContainer, googleAnalytics) => {
   setupDataGathering(googleAnalytics)
 
   mixpanel.init(mixpanelToken)
@@ -43,14 +50,12 @@ const initApp = googleAnalytics => {
   const onInitResult = getFrekklsConfig().onInit()
   if (onInitResult === false) return
 
-  const trendiamoContainer = document.createElement('div')
-  trendiamoContainer.classList.add('trendiamo-container')
-  document.body.appendChild(trendiamoContainer)
   render(<RootComponent />, trendiamoContainer)
 }
 
 const main = () => {
-  const frekklsLoadingFrame = addFrekklsLoadingFrame()
+  const trendiamoContainer = renderTrendiamoContainer()
+  const frekklsLoadingFrame = addFrekklsLoadingFrame(trendiamoContainer)
   loadRollbar(frekklsLoadingFrame)
 
   const experimentClients = ['www.shopinfo.com.br', 'www.pierre-cardin.de']
@@ -58,10 +63,10 @@ const main = () => {
     const { promises, iframe } = loadGoogle(frekklsLoadingFrame)
     Promise.all(promises).then(() => {
       googleAnalytics.init(iframe)
-      initApp(googleAnalytics)
+      initApp(trendiamoContainer, googleAnalytics)
     })
   } else {
-    initApp()
+    initApp(trendiamoContainer)
   }
 }
 
