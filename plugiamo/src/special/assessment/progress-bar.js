@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { compose, lifecycle, withState } from 'recompose'
 import { h } from 'preact'
 import { timeout } from 'plugin-base'
+import { useEffect, useState } from 'preact/hooks'
 
 const Container = styled.div`
   position: relative;
@@ -23,34 +23,29 @@ const Bar = styled.div`
   transition: width 0.6s ease-out;
 `
 
-const ProgressBarTemplate = ({ progress, remove, opacity }) => (
-  <Container opacity={opacity} remove={remove}>
-    <Bar progress={progress} />
-  </Container>
-)
+const ProgressBar = ({ hide, progress }) => {
+  const [remove, setRemove] = useState(false)
+  const [opacity, setOpacity] = useState(1)
 
-const ProgressBar = compose(
-  withState('remove', 'setRemove', false),
-  withState('opacity', 'setOpacity', 1),
-  lifecycle({
-    componentDidUpdate(prevProps) {
-      const { hide, setRemove, setOpacity } = this.props
-      if (prevProps.hide !== hide) {
-        hide && setOpacity(0)
-        timeout.set(
-          'progressBarUpdate',
-          () => {
-            setRemove(hide)
-            !hide && timeout.set('progressBarUpdate', () => setOpacity(1), 10)
-          },
-          400
-        )
-      }
-    },
-    componentWillUnmount() {
-      timeout.clear('progressBarUpdate')
-    },
-  })
-)(ProgressBarTemplate)
+  useEffect(() => () => timeout.clear('progressBarUpdate'), [])
+
+  useEffect(() => {
+    hide && setOpacity(0)
+    timeout.set(
+      'progressBarUpdate',
+      () => {
+        setRemove(hide)
+        !hide && timeout.set('progressBarUpdate', () => setOpacity(1), 10)
+      },
+      400
+    )
+  }, [hide])
+
+  return (
+    <Container opacity={opacity} remove={remove}>
+      <Bar progress={progress} />
+    </Container>
+  )
+}
 
 export default ProgressBar

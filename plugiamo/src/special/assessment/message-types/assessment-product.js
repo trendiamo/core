@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 import { ProductMessage } from 'plugin-base'
+import { useCallback } from 'preact/hooks'
 
 const styleConfigDefault = {
   image: {
@@ -76,19 +76,19 @@ const Highlight = ({ highlight, styleConfig }) => (
   </HighlightContainer>
 )
 
-const AssessmentProduct = ({ data, onClick, big, styleConfig = styleConfigDefault }) => (
-  <Container cols={big ? 3 : 2} style={styleConfig.container}>
-    <InnerContainer>
-      {data.highlight && <Highlight highlight={highlightDefault} styleConfig={styleConfig} />}
-      <ProductMessage onClick={onClick} product={data} styleConfig={styleConfig} />
-    </InnerContainer>
-  </Container>
-)
+const AssessmentProduct = ({ data, onClick, big, styleConfig = styleConfigDefault }) => {
+  const newOnClick = useCallback(() => {
+    onClick({ type: 'clickAssessmentProduct', item: data })
+  }, [data, onClick])
 
-export default compose(
-  withHandlers({
-    onClick: ({ data, onClick }) => () => {
-      onClick({ type: 'clickAssessmentProduct', item: data })
-    },
-  })
-)(AssessmentProduct)
+  return (
+    <Container cols={big ? 3 : 2} style={styleConfig.container}>
+      <InnerContainer>
+        {data.highlight && <Highlight highlight={highlightDefault} styleConfig={styleConfig} />}
+        <ProductMessage onClick={newOnClick} product={data} styleConfig={styleConfig} />
+      </InnerContainer>
+    </Container>
+  )
+}
+
+export default AssessmentProduct

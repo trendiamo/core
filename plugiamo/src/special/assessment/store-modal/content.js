@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import { AssessmentProducts } from 'special/assessment/message-types'
 import { clickAssessmentProduct } from 'special/assessment/utils'
-import { compose, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
+import { useCallback } from 'preact/hooks'
 
 const Container = styled.div`
   padding: 20px;
@@ -25,20 +25,16 @@ const styleConfig = {
   },
 }
 
-const ContentTemplate = ({ results, onClick }) => (
-  <Container>
-    <AssessmentProducts big data={results} onClick={onClick} styleConfig={styleConfig} />
-  </Container>
-)
+const Content = ({ results }) => {
+  const onClick = useCallback(({ item }) => {
+    clickAssessmentProduct(item)
+  }, [])
 
-const Content = compose(
-  withState('logs', 'setLogs', []),
-  withState('minHeight', 'setMinHeight', 0),
-  withHandlers({
-    onClick: () => ({ item }) => {
-      clickAssessmentProduct(item)
-    },
-  })
-)(ContentTemplate)
+  return (
+    <Container>
+      <AssessmentProducts big data={results} onClick={onClick} styleConfig={styleConfig} />
+    </Container>
+  )
+}
 
 export default Content
