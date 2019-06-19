@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
 import data from './data'
@@ -81,8 +80,6 @@ const Base0 = compose(
   withState('nothingSelected', 'setNothingSelected', false),
   withState('coverMinimized', 'setCoverMinimized', ({ step }) => !!step.header.minimized),
   withState('touch', 'setTouch', true),
-  withState('tags', 'setTags', ({ assessmentState }) => (assessmentState.key ? assessmentState.key.split('/') : [])),
-  withState('showingCtaButton', 'setShowingCtaButton', false),
   withState('ctaButtonClicked', 'setCtaButtonClicked', false),
   withState('hideProgressBar', 'setHideProgressBar', false),
   withHandlers(() => {
@@ -107,12 +104,6 @@ const Base0 = compose(
       setTimeout(() => setHideProgressBar(true), 800)
       setProgress(100)
       setCurrentStepKey('store')
-    },
-    resetAssessment: ({ setTags, setEndNodeTags, setCurrentStepKey, setShowingCtaButton }) => () => {
-      setTags([])
-      setEndNodeTags([])
-      setCurrentStepKey('root')
-      setShowingCtaButton(false)
     },
     resetProgressFromFinalStep: ({ progress, setProgress }) => () => {
       progress === 100 && setTimeout(() => setProgress(progress - 33), 1000)
@@ -265,7 +256,6 @@ const Base1 = compose(
   withState('currentStep', 'setCurrentStep', ({ step }) => step),
   withState('progress', 'setProgress', ({ assessmentState }) => assessmentState.progress || 0),
   withState('results', 'setResults', []),
-  withState('endNodeTags', 'setEndNodeTags', []),
   lifecycle({
     componentDidMount() {
       const { module } = this.props

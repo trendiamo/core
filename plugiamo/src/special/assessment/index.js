@@ -27,11 +27,21 @@ const Plugin = ({
   const [disappear, setDisappear] = useState(false)
   const [isUnmounting, setIsUnmounting] = useState(false)
   const [assessmentState, setAssessmentState] = useState({})
+  const [tags, setTags] = useState(assessmentState.key ? assessmentState.key.split('/') : [])
+  const [endNodeTags, setEndNodeTags] = useState([])
+  const [showingCtaButton, setShowingCtaButton] = useState(false)
   const [currentStepKey, setCurrentStepKey] = useState(assessmentState.key || 'root')
 
   const hideContentFrame = useMemo(() => !isSmall() && currentStepKey === 'store', [currentStepKey])
 
   const { clickActions, modalsProps } = useChatActions(module && module.flowType)
+
+  const resetAssessment = useCallback(() => {
+    setTags([])
+    setEndNodeTags([])
+    setCurrentStepKey('root')
+    setShowingCtaButton(false)
+  }, [])
 
   const onCloseModal = useCallback(() => {
     setShowingLauncher(true)
@@ -45,6 +55,7 @@ const Plugin = ({
     mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
     mixpanel.time_event('Toggled Plugin')
     if (showingContent) {
+      resetAssessment()
       setPluginState('closed')
       timeout.set('hideLauncher', () => setDisappear(true), 10000)
     } else {
@@ -69,7 +80,7 @@ const Plugin = ({
     if (showingContent) setShowAssessmentContent(false)
 
     setShowingBubbles(false)
-  }, [disappear, setShowAssessmentContent, setShowingBubbles, setShowingContent, showingContent])
+  }, [disappear, resetAssessment, setShowAssessmentContent, setShowingBubbles, setShowingContent, showingContent])
 
   useEffect(() => {
     if (showingContent && hostname === 'www.delius-contract.de') setShowAssessmentContent(true)
@@ -87,12 +98,19 @@ const Plugin = ({
             assessmentState={assessmentState}
             clickActions={clickActions}
             currentStepKey={currentStepKey}
+            endNodeTags={endNodeTags}
             module={module}
             onCloseModal={onCloseModal}
+            resetAssessment={resetAssessment}
             setAssessmentState={setAssessmentState}
             setCurrentStepKey={setCurrentStepKey}
+            setEndNodeTags={setEndNodeTags}
             setShowingContent={setShowingContent}
+            setShowingCtaButton={setShowingCtaButton}
             setShowingLauncher={setShowingLauncher}
+            setTags={setTags}
+            showingCtaButton={showingCtaButton}
+            tags={tags}
           />
         }
         data={module}
