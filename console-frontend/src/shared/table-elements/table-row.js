@@ -60,6 +60,7 @@ const TableRow = ({
           onChange={handleSelect}
         />
       </TableCell>
+      <TableCell>{resource.id}</TableCell>
       {React.cloneElement(children, { highlightInactive })}
       <TableCell style={{ whiteSpace: 'nowrap' }}>
         {resourceEditPath && (
