@@ -7,6 +7,7 @@ import { EnhancedList, TableCell } from 'shared/table-elements'
 import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const columns = [
+  { name: 'id', label: 'id', sortable: true },
   { name: 'avatar' },
   { name: 'name', label: 'name', sortable: true },
   { name: 'description', label: 'description' },

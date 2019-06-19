@@ -43,6 +43,7 @@ const StyledReorderIcon = styled(ReorderIcon)`
 `
 
 const columns = [
+  { name: 'id', label: 'id' },
   { name: 'module', padding: 'none', label: 'module' },
   { name: 'urlMatchers', padding: 'none', label: 'Url Matchers' },
 ]
@@ -91,6 +92,7 @@ const TriggerRow = ({ trigger, selectedIds, setSelectedIds, highlightEnabled, hi
           style={{ color: highlightEnabled ? '#fff' : '' }}
         />
       </TableCell>
+      <TableCell>{trigger.id}</TableCell>
       <TableCell style={{ whiteSpace: 'nowrap' }} width="50%">
         <InlineTypography highlight={highlightEnabled} variant="subtitle2">{`${trigger.flowType}: '${
           trigger.flow.name

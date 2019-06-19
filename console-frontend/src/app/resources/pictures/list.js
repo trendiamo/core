@@ -4,6 +4,7 @@ import { ActiveColumn, EnhancedList, Picture, TableCell, Text } from 'shared/tab
 import { apiPictureDestroy, apiPictureList } from 'utils'
 
 const columns = [
+  { name: 'id', label: 'id', sortable: true },
   { name: 'picture' },
   { name: 'url', label: 'url', sortable: true },
   { name: 'status', label: 'status', sortable: true },
