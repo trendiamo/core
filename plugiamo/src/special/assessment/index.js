@@ -33,45 +33,43 @@ const Plugin = ({
 
   const { clickActions, modalsProps } = useChatActions(module && module.flowType)
 
-  const onToggleContent = useCallback(
-    (event, isModal) => {
-      if (isModal) {
-        setShowingLauncher(true)
-        setShowingContent(false)
-      } else {
-        mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
-        mixpanel.time_event('Toggled Plugin')
-      }
-      if (showingContent || isModal) {
-        setPluginState('closed')
-        timeout.set('hideLauncher', () => setDisappear(true), 10000)
-      } else {
-        setPluginState('opened')
-        timeout.clear('hideLauncher')
-      }
+  const onCloseModal = useCallback(() => {
+    setShowingLauncher(true)
+    setShowingContent(false)
+    setShowAssessmentContent(false)
+    setPluginState('closed')
+    timeout.set('hideLauncher', () => setDisappear(true), 10000)
+  }, [setShowAssessmentContent, setShowingContent, setShowingLauncher])
 
-      if (showingContent && isSmall()) {
-        setIsUnmounting(true)
-        return timeout.set(
-          'exitOnMobile',
-          () => {
-            setIsUnmounting(false)
-            setShowingContent(false)
-            setShowAssessmentContent(false)
-          },
-          400
-        )
-      }
+  const onToggleContent = useCallback(() => {
+    mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
+    mixpanel.time_event('Toggled Plugin')
+    if (showingContent) {
+      setPluginState('closed')
+      timeout.set('hideLauncher', () => setDisappear(true), 10000)
+    } else {
+      setPluginState('opened')
+      timeout.clear('hideLauncher')
+    }
 
-      if (!isModal) {
-        setShowingContent(disappear ? false : !showingContent)
-        if (showingContent) setShowAssessmentContent(false)
-      }
+    if (showingContent && isSmall()) {
+      setIsUnmounting(true)
+      return timeout.set(
+        'exitOnMobile',
+        () => {
+          setIsUnmounting(false)
+          setShowingContent(false)
+          setShowAssessmentContent(false)
+        },
+        400
+      )
+    }
 
-      setShowingBubbles(false)
-    },
-    [disappear, setShowAssessmentContent, setShowingBubbles, setShowingContent, setShowingLauncher, showingContent]
-  )
+    setShowingContent(disappear ? false : !showingContent)
+    if (showingContent) setShowAssessmentContent(false)
+
+    setShowingBubbles(false)
+  }, [disappear, setShowAssessmentContent, setShowingBubbles, setShowingContent, showingContent])
 
   useEffect(() => {
     if (showingContent && hostname === 'www.delius-contract.de') setShowAssessmentContent(true)
@@ -90,6 +88,7 @@ const Plugin = ({
             clickActions={clickActions}
             currentStepKey={currentStepKey}
             module={module}
+            onCloseModal={onCloseModal}
             setAssessmentState={setAssessmentState}
             setCurrentStepKey={setCurrentStepKey}
             setShowingContent={setShowingContent}

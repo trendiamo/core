@@ -46,10 +46,10 @@ export default compose(
       setShowingContent(true)
       goToPrevStep()
     },
-    onCloseModal: ({ onToggleContent, setIsOpen, setShowingLauncher }) => () => {
+    onCloseModal: ({ onCloseModal, resetAssessment, setIsOpen }) => () => {
       setIsOpen(false)
-      setShowingLauncher(true)
-      onToggleContent()
+      resetAssessment()
+      onCloseModal()
     },
   }),
   lifecycle({
