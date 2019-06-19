@@ -2,9 +2,9 @@ import Content from './content'
 import ErrorBoundaries from 'ext/error-boundaries'
 import Header from './header'
 import Modal from 'shared/modal'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { Frame } from 'plugin-base'
 import { h } from 'preact'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const iframeStyle = {
   width: '100%',
@@ -25,38 +25,50 @@ const FrameChild = ({ step, results, goToPrevStep, flowType }) => {
   )
 }
 
-const StoreModal = ({ onCloseModal, isOpen, results, goToPrevStep, step, module }) => {
+const StoreModal = ({
+  onCloseModal,
+  resetAssessment,
+  results,
+  goToPrevStep,
+  step,
+  module,
+  setShowingLauncher,
+  setShowingContent,
+}) => {
+  const [isOpen, setIsOpen] = useState(true)
+
+  const newGoToPrevStep = useCallback(() => {
+    setIsOpen(false)
+    setShowingLauncher(true)
+    setShowingContent(true)
+    goToPrevStep()
+  }, [goToPrevStep, setShowingContent, setShowingLauncher])
+
+  const newOnCloseModal = useCallback(() => {
+    setIsOpen(false)
+    resetAssessment()
+    onCloseModal()
+  }, [onCloseModal, resetAssessment])
+
+  useEffect(() => {
+    setShowingContent(false)
+    setShowingLauncher(false)
+  }, [setShowingContent, setShowingLauncher])
+
   return (
-    <Modal allowBackgroundClose closeModal={onCloseModal} isOpen={isOpen}>
+    <Modal allowBackgroundClose closeModal={newOnCloseModal} isOpen={isOpen}>
       <Frame style={iframeStyle}>
         <ErrorBoundaries>
-          <FrameChild flowType={module && module.flowType} goToPrevStep={goToPrevStep} results={results} step={step} />
+          <FrameChild
+            flowType={module && module.flowType}
+            goToPrevStep={newGoToPrevStep}
+            results={results}
+            step={step}
+          />
         </ErrorBoundaries>
       </Frame>
     </Modal>
   )
 }
 
-export default compose(
-  withState('isOpen', 'setIsOpen', true),
-  withHandlers({
-    goToPrevStep: ({ goToPrevStep, setIsOpen, setShowingLauncher, setShowingContent }) => () => {
-      setIsOpen(false)
-      setShowingLauncher(true)
-      setShowingContent(true)
-      goToPrevStep()
-    },
-    onCloseModal: ({ onCloseModal, resetAssessment, setIsOpen }) => () => {
-      setIsOpen(false)
-      resetAssessment()
-      onCloseModal()
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { setShowingLauncher, setShowingContent } = this.props
-      setShowingContent(false)
-      setShowingLauncher(false)
-    },
-  })
-)(StoreModal)
+export default StoreModal
