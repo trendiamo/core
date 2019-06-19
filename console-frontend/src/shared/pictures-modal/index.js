@@ -173,9 +173,9 @@ const PicturesModal = ({
 
   const onGalleryKeyup = useCallback(
     ({ keyCode }) => {
-      if (keyCode === ENTER_KEYCODE) onDialogClose()
+      if (keyCode === ENTER_KEYCODE && activePicture) onGalleryDoneClick(activePicture)
     },
-    [onDialogClose]
+    [activePicture, onGalleryDoneClick]
   )
 
   const onDialogEntering = useCallback(
