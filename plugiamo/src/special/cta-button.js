@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { branch, compose, lifecycle, renderNothing, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 import { timeout } from 'plugin-base'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const Button = styled.button`
   appearance: none;
@@ -34,34 +34,32 @@ const Button = styled.button`
   overflow: hidden;
 `
 
-const CtaButton = ({ onClick, animation, ctaButton }) => (
-  <Button animation={animation} ctaButton={ctaButton} onClick={onClick} type="button">
-    {ctaButton.label}
-  </Button>
-)
+const CtaButton = ({ clicked, ctaButton, hide, onClick, setClicked }) => {
+  const [animation, setAnimation] = useState(hide ? 'remove' : 'show')
 
-export default compose(
-  withState('animation', 'setAnimation', ({ hide }) => (hide ? 'remove' : 'show')),
-  lifecycle({
-    componentWillUnmount() {
-      timeout.clear('ctaButtonAnimation')
-    },
-    componentDidUpdate(prevProps) {
-      const { hide, setAnimation, clicked } = this.props
-      if (hide !== undefined && hide !== prevProps.hide) {
-        setAnimation(hide ? 'hide' : 'init')
-        if (clicked) return
-        timeout.clear('ctaButtonAnimation')
-        timeout.set('ctaButtonAnimation', () => setAnimation(hide ? 'remove' : 'show'), hide ? 600 : 30)
-      }
-    },
-  }),
-  branch(({ animation }) => animation === 'remove', renderNothing),
-  withHandlers({
-    onClick: ({ setClicked, clicked, onClick }) => () => {
-      if (clicked) return
-      setClicked && setClicked(true)
-      onClick && onClick()
-    },
-  })
-)(CtaButton)
+  useEffect(() => () => timeout.clear('ctaButtonAnimation'), [])
+
+  useEffect(() => {
+    if (hide === undefined) return
+    setAnimation(hide ? 'hide' : 'init')
+    if (clicked) return
+    timeout.clear('ctaButtonAnimation')
+    timeout.set('ctaButtonAnimation', () => setAnimation(hide ? 'remove' : 'show'), hide ? 600 : 30)
+  }, [clicked, hide])
+
+  const newOnClick = useCallback(() => {
+    if (clicked) return
+    setClicked && setClicked(true)
+    onClick && onClick()
+  }, [clicked, onClick, setClicked])
+
+  if (animation === 'remove') return null
+
+  return (
+    <Button animation={animation} ctaButton={ctaButton} onClick={newOnClick} type="button">
+      {ctaButton.label}
+    </Button>
+  )
+}
+
+export default CtaButton
