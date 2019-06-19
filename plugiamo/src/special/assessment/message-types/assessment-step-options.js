@@ -1,8 +1,8 @@
 import AssessmentStepOption from './assessment-step-option'
 import styled from 'styled-components'
-import { compose, withHandlers } from 'recompose'
 import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
+import { useCallback } from 'preact/hooks'
 
 const TilesWrapperDiv = styled.div`
   align-content: baseline;
@@ -12,21 +12,21 @@ const TilesWrapperDiv = styled.div`
   margin-right: -5px;
 `
 
-const Element = compose(
-  withHandlers({
-    onClick: ({ onClick, option }) => () => onClick({ type: 'assessmentOption', item: option }),
-  })
-)(({ hideAll, nothingSelected, onClick, option }) => (
-  <AssessmentStepOption
-    hideAll={hideAll}
-    highlight
-    imageUrl={imgixUrl(option.picUrl, { fit: 'crop', w: 165, h: 120 })}
-    nothingSelected={nothingSelected}
-    onClick={onClick}
-    option={option}
-    title={option.title}
-  />
-))
+const Element = ({ hideAll, nothingSelected, onClick, option }) => {
+  const newOnClick = useCallback(() => onClick({ type: 'assessmentOption', item: option }), [onClick, option])
+
+  return (
+    <AssessmentStepOption
+      hideAll={hideAll}
+      highlight
+      imageUrl={imgixUrl(option.picUrl, { fit: 'crop', w: 165, h: 120 })}
+      nothingSelected={nothingSelected}
+      onClick={newOnClick}
+      option={option}
+      title={option.title}
+    />
+  )
+}
 
 const AssessmentStepOptions = ({ onClick, options, hideAll, nothingSelected }) => (
   <TilesWrapperDiv>
