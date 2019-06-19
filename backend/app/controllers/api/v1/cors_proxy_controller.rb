@@ -8,6 +8,7 @@ module Api
 
       def download
         file = Down.download(CGI.unescape(params[:url]), max_size: 20_000_000)
+        return render json: { error: "File content error" }, status: :unprocessable_entity if file.size.zero?
       rescue Down::TooLarge
         render json: { error: "File size exceed limit" }, status: :unprocessable_entity
       rescue Down::NotFound
