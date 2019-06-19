@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { h } from 'preact'
 import { timeout } from 'plugin-base'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const Title = styled.div`
   font-size: 14px;
@@ -155,39 +155,35 @@ const TileImage = styled.img`
   object-fit: cover;
 `
 
-const TileDiv = ({ title, imageUrl, handleClick, isClicked, nothingSelected, hideAll, highlight }) => (
-  <Container>
-    <Box
-      highlight={highlight}
-      imageUrl={imageUrl}
-      isClicked={isClicked && !nothingSelected}
-      listSelected={hideAll}
-      onClick={handleClick}
-    >
-      <Content imageUrl={imageUrl}>
-        <Background>{imageUrl && <TileImage isClicked={isClicked && !nothingSelected} src={imageUrl} />}</Background>
-        <Title imageUrl={imageUrl} isClicked={isClicked && !nothingSelected}>
-          {title}
-        </Title>
-      </Content>
-    </Box>
-  </Container>
-)
+const AssessmentStepOption = ({ hideAll, highlight, imageUrl, nothingSelected, onClick, title }) => {
+  const [isClicked, setIsClicked] = useState(false)
 
-const AssessmentStepOption = compose(
-  withState('isClicked', 'setIsClicked', false),
-  withHandlers({
-    handleClick: ({ isClicked, setIsClicked, hideAll, onClick, title, imageUrl }) => () => {
-      if (hideAll) return
-      setIsClicked(!isClicked)
-      onClick({ type: 'assessmentStepOption', item: { title, imageUrl } })
-    },
-  }),
-  lifecycle({
-    componentWillUnmount() {
-      timeout.clear('pluginClickItem')
-    },
-  })
-)(TileDiv)
+  const handleClick = useCallback(() => {
+    if (hideAll) return
+    setIsClicked(!isClicked)
+    onClick({ type: 'assessmentStepOption', item: { title, imageUrl } })
+  }, [hideAll, imageUrl, isClicked, onClick, title])
+
+  useEffect(() => () => timeout.clear('pluginClickItem'), [])
+
+  return (
+    <Container>
+      <Box
+        highlight={highlight}
+        imageUrl={imageUrl}
+        isClicked={isClicked && !nothingSelected}
+        listSelected={hideAll}
+        onClick={handleClick}
+      >
+        <Content imageUrl={imageUrl}>
+          <Background>{imageUrl && <TileImage isClicked={isClicked && !nothingSelected} src={imageUrl} />}</Background>
+          <Title imageUrl={imageUrl} isClicked={isClicked && !nothingSelected}>
+            {title}
+          </Title>
+        </Content>
+      </Box>
+    </Container>
+  )
+}
 
 export default AssessmentStepOption
