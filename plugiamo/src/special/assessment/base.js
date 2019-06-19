@@ -6,12 +6,12 @@ import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import StoreModal from './store-modal'
 import useChatActions from 'ext/hooks/use-chat-actions'
-import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose'
 import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 import { rememberPersona } from './utils'
 import { SimpleChat, timeout } from 'plugin-base'
+import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 const assessProducts = (products, tags) => {
   const productsResult = flatten(tags.map(tag => products.filter(product => product.tag && tag === product.tag)))
@@ -20,111 +20,87 @@ const assessProducts = (products, tags) => {
 
 const ctaButton = { label: 'Ergebnisse anzeigen' }
 
-const Base = props => {
-  const {
-    currentStep,
-    goToNextStep,
-    animateOpacity,
-    progress,
-    showingCtaButton,
-    step,
-    goToPrevStep,
-    module,
-    nothingSelected,
-    ctaButtonClicked,
-    setCtaButtonClicked,
-    storeLog,
-    onCtaButtonClick,
-    hideProgressBar,
-    isFinalStep,
-    currentStepKey,
-    assessmentIsMainFlow,
-  } = props
-
-  const { clickActions, modalsProps } = useChatActions(module.flowType)
-
-  if (!isSmall() && isFinalStep) return <StoreModal {...props} />
-
-  return (
-    <div>
-      <ChatModals flowType={module.flowType} {...modalsProps} />
-      <SimpleChat
-        animateOpacity={animateOpacity}
-        backButtonLabel={getFrekklsConfig().i18n.backButton}
-        ChatBase={ChatBase}
-        chatBaseProps={{ assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }}
-        clickActions={clickActions}
-        clicked={ctaButtonClicked}
-        currentStep={currentStep}
-        data={step}
-        goToPrevStep={goToPrevStep}
-        hideCtaButton={isFinalStep || !showingCtaButton}
-        hideProgressBar={hideProgressBar}
-        nothingSelected={nothingSelected}
-        onCtaButtonClick={onCtaButtonClick}
-        progress={progress}
-        setCtaButtonClicked={setCtaButtonClicked}
-        showBackButton={!assessmentIsMainFlow || currentStepKey !== 'root'}
-        storeLog={storeLog}
-      />
-    </div>
-  )
-}
-
 const prepareProductsToChat = results => {
   return [{ message: { assessmentProducts: [...results], type: 'assessmentProducts' }, type: 'message' }]
 }
 
-const Base0 = compose(
-  withState('animateOpacity', 'setAnimateOpacity', ({ animateOpacity }) => animateOpacity),
-  withState('nothingSelected', 'setNothingSelected', false),
-  withState('coverMinimized', 'setCoverMinimized', ({ step }) => !!step.header.minimized),
-  withState('touch', 'setTouch', true),
-  withState('ctaButtonClicked', 'setCtaButtonClicked', false),
-  withState('hideProgressBar', 'setHideProgressBar', false),
-  withHandlers(() => {
-    let ref
-    return {
-      setContentRef: () => newRef => (ref = newRef),
-      contentRef: () => () => ref,
+const hostname = process.env.ASSESSMENT || location.hostname
+
+const Base = ({
+  assessmentIsMainFlow,
+  assessmentState,
+  currentStepKey,
+  onCloseModal,
+  resetAssessment,
+  setAssessmentState,
+  setCurrentStepKey,
+  setShowAssessmentContent,
+  setShowingContent,
+  setShowingCtaButton,
+  setShowingLauncher,
+  setTags,
+  showingCtaButton,
+  tags,
+}) => {
+  const module = useMemo(() => data[hostname] && data[hostname].assessment, [])
+  const step = useMemo(() => module && module.steps[currentStepKey], [currentStepKey, module])
+  const steps = useMemo(() => module && module.steps, [module])
+
+  const [currentStep, setCurrentStep] = useState(step)
+  const [progress, setProgress] = useState(assessmentState.progress || 0)
+  const [results, setResults] = useState([])
+  const [endNodeTags, setEndNodeTags] = useState([])
+
+  useEffect(() => {
+    rememberPersona(module.persona)
+  }, [module.persona])
+
+  useEffect(() => {
+    if (currentStepKey === 'store') {
+      let fetchStartTime = performance.now()
+      fetchProducts().then(results => {
+        const client = results.find(client => client.hostname === location.hostname)
+        timeout.set(
+          'settingResults',
+          () => {
+            setResults(assessProducts(client.products, endNodeTags))
+          },
+          Math.max(800 - (performance.now() - fetchStartTime), 10)
+        )
+      })
     }
-  }),
-  withProps(({ currentStepKey }) => ({
-    isFinalStep: currentStepKey === 'store',
-  })),
-  withHandlers({
-    handleEndNodeTags: ({ endNodeTags, setEndNodeTags, setShowingCtaButton }) => nextStepKey => {
+  }, [currentStepKey, endNodeTags, progress, step])
+
+  const [animateOpacity, setAnimateOpacity] = useState(false)
+  const [nothingSelected, setNothingSelected] = useState(false)
+  const [ctaButtonClicked, setCtaButtonClicked] = useState(false)
+  const [hideProgressBar, setHideProgressBar] = useState(false)
+
+  const isFinalStep = useMemo(() => currentStepKey === 'store', [currentStepKey])
+
+  const handleEndNodeTags = useCallback(
+    nextStepKey => {
       const newTags = endNodeTags.includes(nextStepKey)
         ? endNodeTags.filter(tag => tag !== nextStepKey)
         : [...endNodeTags, nextStepKey]
       setShowingCtaButton(newTags.length > 0)
       return setEndNodeTags(newTags)
     },
-    goToStore: ({ setProgress, setCurrentStepKey, setHideProgressBar }) => () => {
-      setTimeout(() => setHideProgressBar(true), 800)
-      setProgress(100)
-      setCurrentStepKey('store')
-    },
-    resetProgressFromFinalStep: ({ progress, setProgress }) => () => {
-      progress === 100 && setTimeout(() => setProgress(progress - 33), 1000)
-    },
-  }),
-  withHandlers({
-    goToNextStep: ({
-      endNodeTags,
-      steps,
-      setCurrentStepKey,
-      setProgress,
-      setTags,
-      tags,
-      handleEndNodeTags,
-      step,
-      goToStore,
-      progress,
-      currentStepKey,
-      setEndNodeTags,
-      module,
-    }) => nextStep => {
+    [endNodeTags, setEndNodeTags, setShowingCtaButton]
+  )
+
+  const goToStore = useCallback(() => {
+    setTimeout(() => setHideProgressBar(true), 800)
+    setProgress(100)
+    setTimeout(() => setCurrentStepKey('store'), 600)
+  }, [setCurrentStepKey, setProgress])
+
+  const resetProgressFromFinalStep = useCallback(() => {
+    setTimeout(() => setProgress(progress - 33), 300)
+  }, [progress, setProgress])
+
+  const goToNextStep = useCallback(
+    nextStep => {
       if (nextStep.url) {
         mixpanel.track('Clicked Assessment Step', {
           flowType: module.flowType,
@@ -168,131 +144,128 @@ const Base0 = compose(
       })
       setCurrentStepKey(nextStepKey)
     },
-    goToPrevStep: ({
-      tags,
+    [
+      currentStepKey,
+      endNodeTags,
+      goToStore,
+      handleEndNodeTags,
+      module.flowType,
+      progress,
       setCurrentStepKey,
       setTags,
-      progress,
-      setShowAssessmentContent,
-      setProgress,
-      setShowingCtaButton,
-      setAnimateOpacity,
-      setAssessmentState,
-      setNothingSelected,
-      setEndNodeTags,
-      setCtaButtonClicked,
-      setHideProgressBar,
-      setResults,
-      isFinalStep,
-      resetProgressFromFinalStep,
-      assessmentIsMainFlow,
-    }) => () => {
-      if (tags.length === 0) {
-        setAnimateOpacity(true)
-        return setTimeout(() => setShowAssessmentContent(false), 300)
-      }
-      let key = tags
-      let newTags = tags
-      if (!isFinalStep) {
-        key = tags.length > 1 ? tags[tags.length - 1] : 'root'
-        newTags = [...tags]
-        newTags.pop()
-        setProgress(key === 'root' ? 0 : progress - 33)
-      }
-      const newStepKey = newTags.join('/')
-      if (isFinalStep) {
-        setAssessmentState({ key: newStepKey, progress })
-        setHideProgressBar(false)
-        timeout.set('asmt-storeRemove', () => setResults([]), 800)
-        assessmentIsMainFlow && resetProgressFromFinalStep()
-      }
-      setCurrentStepKey(key === 'root' ? key : newStepKey)
-      setTags(newTags)
-      setShowingCtaButton(false)
-      setEndNodeTags([])
-      setNothingSelected(true)
-      setTimeout(() => setNothingSelected(false), 800)
-      setCtaButtonClicked(false)
-    },
-  }),
-  withHandlers({
-    onCtaButtonClick: ({ goToNextStep, setCtaButtonClicked }) => () => {
-      goToNextStep('showResults')
-      setCtaButtonClicked(true)
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { step, setCurrentStep, animateOpacity, setAnimateOpacity, resetProgressFromFinalStep } = this.props
-      if (animateOpacity) {
-        setTimeout(() => setAnimateOpacity(false), 10)
-      }
-      setCurrentStep(step)
+      step.multiple,
+      steps,
+      tags,
+    ]
+  )
+
+  const goToPrevStep = useCallback(() => {
+    if (tags.length === 0) {
+      setAnimateOpacity(true)
+      return setTimeout(() => setShowAssessmentContent(false), 300)
+    }
+    let key = tags
+    let newTags = tags
+    if (!isFinalStep) {
+      key = tags.length > 1 ? tags[tags.length - 1] : 'root'
+      newTags = [...tags]
+      newTags.pop()
+      setProgress(key === 'root' ? 0 : progress - 33)
+    }
+    const newStepKey = newTags.join('/')
+    if (isFinalStep) {
+      setAssessmentState({ key: newStepKey, progress })
+      setHideProgressBar(false)
+      timeout.set('asmt-storeRemove', () => setResults([]), 800)
       resetProgressFromFinalStep()
-    },
-    componentWillUnmount() {
+    }
+    setCurrentStepKey(key === 'root' ? key : newStepKey)
+    setTags(newTags)
+    setShowingCtaButton(false)
+    setEndNodeTags([])
+    setNothingSelected(true)
+    setTimeout(() => setNothingSelected(false), 800)
+    setCtaButtonClicked(false)
+  }, [
+    isFinalStep,
+    progress,
+    resetProgressFromFinalStep,
+    setAssessmentState,
+    setCurrentStepKey,
+    setShowAssessmentContent,
+    setShowingCtaButton,
+    setTags,
+    tags,
+  ])
+
+  const onCtaButtonClick = useCallback(() => {
+    goToNextStep('showResults')
+    setCtaButtonClicked(true)
+  }, [goToNextStep])
+
+  useEffect(() => {
+    if (animateOpacity) setTimeout(() => setAnimateOpacity(false), 10)
+    setCurrentStep(step)
+    return () => {
       timeout.clear('exitOnMobile')
       timeout.clear('loadingProgressBar')
-    },
-  }),
-  withProps(({ results }) => ({
-    storeLog: {
+    }
+  }, [animateOpacity, step])
+
+  const storeLog = useMemo(
+    () => ({
       type: 'message',
       logs: results.length > 0 && prepareProductsToChat(results),
-    },
-  }))
-)(Base)
+    }),
+    [results]
+  )
 
-const hostname = process.env.ASSESSMENT || location.hostname
+  const { clickActions, modalsProps } = useChatActions(module.flowType)
 
-const Base1 = compose(
-  withProps({
-    module: data[hostname] && data[hostname].assessment,
-  }),
-  withProps(({ module, currentStepKey }) => ({
-    step: module && module.steps[currentStepKey],
-    steps: module && module.steps,
-  })),
-  withState('currentStep', 'setCurrentStep', ({ step }) => step),
-  withState('progress', 'setProgress', ({ assessmentState }) => assessmentState.progress || 0),
-  withState('results', 'setResults', []),
-  lifecycle({
-    componentDidMount() {
-      const { module } = this.props
-      rememberPersona(module.persona)
-    },
-    componentDidUpdate(prevProps) {
-      const { step, setCurrentStep, currentStepKey, progress, setProgress } = this.props
-      if (prevProps.step !== step) {
-        if (currentStepKey === 'store') {
-          const _this = this
-          let fetchStartTime = performance.now()
-          fetchProducts().then(results => {
-            const { setResults, endNodeTags } = _this.props
-            const client = results.find(client => client.hostname === location.hostname)
-            timeout.set(
-              'settingResults',
-              () => {
-                setResults(assessProducts(client.products, endNodeTags))
-              },
-              Math.max(800 - (performance.now() - fetchStartTime), 10)
-            )
-          })
-        }
-        if (prevProps.currentStepKey === 'store' && progress === 100) {
-          setTimeout(() => {
-            setProgress(progress - 33)
-          }, 2000)
-        }
-        setTimeout(
-          () => {
-            setCurrentStep(step)
-          },
-          prevProps.step ? 750 : 0
-        )
-      }
-    },
-  })
-)(Base0)
+  const chatBaseProps = useMemo(() => ({ assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }), [
+    goToNextStep,
+    step,
+  ])
 
-export default Base1
+  if (!isSmall() && isFinalStep) {
+    return (
+      <StoreModal
+        goToPrevStep={goToPrevStep}
+        module={module}
+        onCloseModal={onCloseModal}
+        resetAssessment={resetAssessment}
+        results={results}
+        setShowingContent={setShowingContent}
+        setShowingLauncher={setShowingLauncher}
+        step={step}
+      />
+    )
+  }
+
+  return (
+    <div>
+      <ChatModals flowType={module.flowType} {...modalsProps} />
+      <SimpleChat
+        animateOpacity={animateOpacity}
+        backButtonLabel={getFrekklsConfig().i18n.backButton}
+        ChatBase={ChatBase}
+        chatBaseProps={chatBaseProps}
+        clickActions={clickActions}
+        clicked={ctaButtonClicked}
+        currentStep={currentStep}
+        data={step}
+        goToPrevStep={goToPrevStep}
+        hideCtaButton={isFinalStep || !showingCtaButton}
+        hideProgressBar={hideProgressBar}
+        nothingSelected={nothingSelected}
+        onCtaButtonClick={onCtaButtonClick}
+        progress={progress}
+        setCtaButtonClicked={setCtaButtonClicked}
+        showBackButton={!assessmentIsMainFlow || currentStepKey !== 'root'}
+        storeLog={storeLog}
+      />
+    </div>
+  )
+}
+
+export default Base
