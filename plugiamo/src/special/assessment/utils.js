@@ -31,13 +31,15 @@ const shuffle = a => {
 }
 
 const getShopcartProductIds = () =>
-  dataGathering
-    .getProductsFromCart()
-    .map((key, value) => value.id)
-    .toArray()
+  process.env.ASSESSMENT_PRODUCT_ID
+    ? [process.env.ASSESSMENT_PRODUCT_ID]
+    : dataGathering
+        .getProductsFromCart()
+        .map((key, value) => value.id)
+        .toArray()
 
 const recommendedProducts = results => {
-  const productReferences = results.find(item => item.hostname === location.hostname).products
+  const productReferences = results.find(item => item.hostname === hostname).products
   const shopcartProductIds = getShopcartProductIds()
   const shopcartProducts = productReferences.filter(product => shopcartProductIds.includes(product.id))
 
