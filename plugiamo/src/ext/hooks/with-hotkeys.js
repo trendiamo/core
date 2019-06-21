@@ -52,7 +52,7 @@ const withHotkeys = (handlers, useCapture = false) => BaseComponent => {
     }, [manageKeyEvents])
 
     return (
-      <div ref={hotkeysRef}>
+      <div data="frekkls-with-hotkeys" ref={hotkeysRef}>
         <BaseComponent {...props} />
       </div>
     )

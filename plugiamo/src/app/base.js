@@ -6,7 +6,6 @@ import LauncherBubbles from './launcher-bubbles'
 import mixpanel from 'ext/mixpanel'
 import Router from './content/router'
 import styled from 'styled-components'
-import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { bigLauncherConfig, HEIGHT_BREAKPOINT, location, smallLauncherConfig } from 'config'
 import { emojifyStyles } from 'ext/emojify'
 import { h } from 'preact'
@@ -103,8 +102,4 @@ const AppBase = ({
   )
 }
 
-export default withHotkeys({
-  [escapeKey]: ({ onToggleContent, showingContent }) => () => {
-    if (showingContent) onToggleContent()
-  },
-})(AppBase)
+export default AppBase

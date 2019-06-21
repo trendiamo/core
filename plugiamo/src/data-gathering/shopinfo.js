@@ -24,7 +24,7 @@ export default {
                 name: 'Add To Cart',
                 data: {
                   hostname: location.hostname,
-                  withPlugin: !!window.$('.trendiamo-container')[0],
+                  withPlugin: !!window.$('.frekkls-container')[0],
                   productId: data[0].productId,
                   productName: data[0].productName,
                   productBrand: data[0].brand,
@@ -78,7 +78,7 @@ export default {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
-        withPlugin: !!window.$('.trendiamo-container')[0],
+        withPlugin: !!window.$('.frekkls-container')[0],
         products: this.getProductsFromCart(isCheckoutForm),
         currency: 'BRL',
         subTotalInCents: convertToCents(

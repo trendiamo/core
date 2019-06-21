@@ -10,25 +10,36 @@ import { loadRollbar } from 'ext/rollbar'
 import { location, mixpanelToken } from './config'
 import './styles.css'
 
-const renderTrendiamoContainer = () => {
-  const trendiamoContainer = document.createElement('div')
-  trendiamoContainer.classList.add('trendiamo-container')
-  document.body.appendChild(trendiamoContainer)
-  return trendiamoContainer
-}
-
-const addFrekklsLoadingFrame = trendiamoContainer => {
+const addFrekklsLoadingFrame = frekklsContainer => {
   const iframe = document.createElement('iframe')
-  iframe.title = 'frekkls-loading-frame'
+  iframe.className = 'frekkls-loading-frame'
+  iframe.title = 'Frekkls Loading Frame'
   iframe.style.width = '0'
   iframe.style.height = '0'
   iframe.style.border = '0'
   iframe.style.display = 'none'
   iframe.style.position = 'absolute'
-  trendiamoContainer.appendChild(iframe)
+  frekklsContainer.appendChild(iframe)
   const script = document.createElement('script')
   iframe.contentDocument.body.appendChild(script)
   return iframe
+}
+
+const addFrekklsReactRoot = frekklsContainer => {
+  const reactRoot = document.createElement('div')
+  reactRoot.classList.add('frekkls-react-root')
+  frekklsContainer.appendChild(reactRoot)
+  return reactRoot
+}
+
+const addFrekklsElements = () => {
+  const frekklsContainer = document.createElement('div')
+  frekklsContainer.classList.add('frekkls-container')
+  document.body.appendChild(frekklsContainer)
+  const frekklsLoadingFrame = addFrekklsLoadingFrame(frekklsContainer)
+  const frekklsReactRoot = addFrekklsReactRoot(frekklsContainer)
+
+  return { frekklsLoadingFrame, frekklsReactRoot }
 }
 
 const RootComponent = () => (
@@ -37,7 +48,7 @@ const RootComponent = () => (
   </ErrorBoundaries>
 )
 
-const initApp = (trendiamoContainer, googleAnalytics) => {
+const initApp = (frekklsReactRoot, googleAnalytics) => {
   setupDataGathering(googleAnalytics)
 
   mixpanel.init(mixpanelToken)
@@ -50,12 +61,11 @@ const initApp = (trendiamoContainer, googleAnalytics) => {
   const onInitResult = getFrekklsConfig().onInit()
   if (onInitResult === false) return
 
-  render(<RootComponent />, trendiamoContainer)
+  render(<RootComponent />, frekklsReactRoot)
 }
 
 const main = () => {
-  const trendiamoContainer = renderTrendiamoContainer()
-  const frekklsLoadingFrame = addFrekklsLoadingFrame(trendiamoContainer)
+  const { frekklsLoadingFrame, frekklsReactRoot } = addFrekklsElements()
   loadRollbar(frekklsLoadingFrame)
 
   const experimentClients = ['www.shopinfo.com.br', 'www.pierre-cardin.de']
@@ -63,10 +73,10 @@ const main = () => {
     const { promises, iframe } = loadGoogle(frekklsLoadingFrame)
     Promise.all(promises).then(() => {
       googleAnalytics.init(iframe)
-      initApp(trendiamoContainer, googleAnalytics)
+      initApp(frekklsReactRoot, googleAnalytics)
     })
   } else {
-    initApp(trendiamoContainer)
+    initApp(frekklsReactRoot)
   }
 }
 

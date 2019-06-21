@@ -7,7 +7,7 @@ export default {
       name: 'Add To Cart',
       data: {
         hostname: location.hostname,
-        withPlugin: !!window.$('.trendiamo-container')[0],
+        withPlugin: !!window.$('.frekkls-container')[0],
         productId: formFields.find(element => element.name === 'id').value,
         productName: window.$('.product-single__title').html(),
         subTotalInCents: Number(
@@ -42,7 +42,7 @@ export default {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
-        withPlugin: !!window.$('.trendiamo-container')[0],
+        withPlugin: !!window.$('.frekkls-container')[0],
         products: this.getProductsFromCart(),
         currency: moneySpans.attr('data-currency') || 'EUR',
         subTotalInCents: Number(moneySpans.text().replace(/\D/g, '')),

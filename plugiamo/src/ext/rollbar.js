@@ -3,13 +3,13 @@ import { rollbarToken } from 'config'
 
 export const Rollbar = {
   error(...args) {
-    return document.querySelector('[title="frekkls-loading-frame"]').contentWindow.Rollbar.error(...args)
+    return document.querySelector('.frekkls-loading-frame').contentWindow.Rollbar.error(...args)
   },
   warning(...args) {
-    return document.querySelector('[title="frekkls-loading-frame"]').contentWindow.Rollbar.warning(...args)
+    return document.querySelector('.frekkls-loading-frame').contentWindow.Rollbar.warning(...args)
   },
   critical(...args) {
-    return document.querySelector('[title="frekkls-loading-frame"]').contentWindow.Rollbar.critical(...args)
+    return document.querySelector('.frekkls-loading-frame').contentWindow.Rollbar.critical(...args)
   },
 }
 
