@@ -10,7 +10,7 @@ export default {
       name: 'Add To Cart',
       data: {
         hostname: location.hostname,
-        withPlugin: !!jQuery.noConflict()('.trendiamo-container')[0],
+        withPlugin: !!jQuery.noConflict()('.frekkls-container')[0],
         productId: formFields.find(element => element.name === 'product').value,
         productName: jQuery
           .noConflict()("[data-ui-id='page-title-wrapper']")
@@ -98,7 +98,7 @@ export default {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
-        withPlugin: !!jQuery.noConflict()('.trendiamo-container')[0],
+        withPlugin: !!jQuery.noConflict()('.frekkls-container')[0],
         products: this.getProductsFromCart(),
         subTotalInCents: Number(
           jQuery

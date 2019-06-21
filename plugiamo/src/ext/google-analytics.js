@@ -41,7 +41,7 @@ const googleAnalytics = {
   active: false,
   cxApi: null,
   ga(...args) {
-    return document.querySelector('[title="frekkls-loading-frame"]').contentWindow.ga(...args)
+    return document.querySelector('.frekkls-loading-frame').contentWindow.ga(...args)
   },
   iframeRef: null,
   init(iframe) {

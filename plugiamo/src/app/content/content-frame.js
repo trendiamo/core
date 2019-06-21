@@ -1,25 +1,14 @@
 import CloseButton from './close-button'
 import ErrorBoundaries from 'ext/error-boundaries'
+import omit from 'lodash.omit'
 import styled from 'styled-components'
-import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { Frame, positioning, useAnimateOnMount } from 'plugin-base'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 
-const IFrame = withHotkeys({
-  [escapeKey]: ({ onToggleContent }) => onToggleContent,
-})(styled(Frame).attrs({
+const IFrame = styled(props => <Frame {...omit(props, ['launcherConfig', 'position', 'skipEntry'])} />).attrs({
   title: 'Frekkls Content',
 })`
-  border: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-`)
-
-export const StyledDiv = styled.div`
   z-index: 2147483000;
   position: fixed;
   overflow-x: hidden;
@@ -30,6 +19,7 @@ export const StyledDiv = styled.div`
   overscroll-behavior: contain;
   display: ${({ hidden }) => (hidden ? 'none' : 'block')};
 
+  border: 0;
   bottom: 0;
   right: 0;
   width: 100%;
@@ -60,23 +50,24 @@ const ContentFrame = ({
   const { entry } = useAnimateOnMount({ skipEntry })
 
   return (
-    <StyledDiv
+    <IFrame
       entry={entry}
       hidden={hidden}
       isUnmounting={isUnmounting}
       launcherConfig={launcherConfig}
+      onToggleContent={onToggleContent}
       position={position}
       skipEntry={skipEntry}
+      styleStr={frameStyleStr}
     >
-      <IFrame onToggleContent={onToggleContent} styleStr={frameStyleStr}>
-        <ErrorBoundaries>
-          <div>
-            {children}
-            <CloseButton onToggleContent={onToggleContent} />
-          </div>
-        </ErrorBoundaries>
-      </IFrame>
-    </StyledDiv>
+      {/* We don't know why, but both ErrorBoundaries and the div are required here, to catch errors in content */}
+      <ErrorBoundaries>
+        <div>
+          {children}
+          <CloseButton onToggleContent={onToggleContent} />
+        </div>
+      </ErrorBoundaries>
+    </IFrame>
   )
 }
 
