@@ -25,6 +25,7 @@
     "start": "webpack-dev-server",
     "build": "webpack -p --progress --config webpack.prod.js",
     "deploy": "bin/deploy",
+    "analyze": "yarn webpack-bundle-analyzer build/stats.json",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -55,6 +56,7 @@
     "prettier": "^1.16.4",
     "svg-loader": "^0.0.2",
     "webpack": "^4.29.6",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1"

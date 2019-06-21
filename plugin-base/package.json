@@ -7,6 +7,7 @@
     "build-dev": "webpack --progress --config webpack.config.js",
     "build": "webpack -p --progress --config webpack.prod.js",
     "watch": "webpack --progress --watch --config webpack.config.js",
+    "analyze": "yarn webpack-bundle-analyzer dist/stats.json",
     "🚄": "yarn build-dev"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "prettier": "^1.15.3",
     "svg-loader": "^0.0.2",
     "webpack": "^4.29.6",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.2.3",
     "webpack-merge": "^4.1.4"
   },

@@ -1,4 +1,5 @@
 /* eslint-disable */
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
 const webpack = require('webpack')
@@ -49,7 +50,7 @@ module.exports = {
     maxAssetSize: 300000,
     maxEntrypointSize: 300000,
   },
-  plugins: [new Dotenv()],
+  plugins: [new Dotenv(), new BundleAnalyzerPlugin({ analyzerMode: 'disabled', generateStatsFile: true })],
   resolve: {
     alias: {
       react: 'preact/compat',
