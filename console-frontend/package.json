@@ -57,6 +57,7 @@
   "scripts": {
     "start": "cross-env PORT=9000 react-app-rewired start",
     "build": "react-app-rewired build",
+    "analyze": "npx source-map-explorer 'build/static/js/*.js'",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "deploy": "bin/deploy",

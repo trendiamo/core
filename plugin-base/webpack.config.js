@@ -1,4 +1,5 @@
 /* eslint-disable */
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require('path')
 const exec = require('child_process').exec
 
@@ -65,6 +66,7 @@ module.exports = {
         })
       },
     },
+    new BundleAnalyzerPlugin({ analyzerMode: 'disabled', generateStatsFile: true }),
   ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
