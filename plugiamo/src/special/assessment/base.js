@@ -218,7 +218,7 @@ const Base = ({
     [results]
   )
 
-  const { clickActions, modalsProps } = useChatActions(module.flowType)
+  const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType })
 
   const chatBaseProps = useMemo(() => ({ assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }), [
     goToNextStep,

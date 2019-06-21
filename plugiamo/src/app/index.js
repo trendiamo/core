@@ -1,6 +1,7 @@
 import AppBase from './base'
 import Assessment from 'special/assessment'
 import AssessmentCart from 'special/assessment/cart'
+import AssessmentForm from 'special/assessment/form'
 import AssessmentSizeGuide from 'special/assessment/size-guide'
 import getFrekklsConfig from 'frekkls-config'
 import googleAnalytics from 'ext/google-analytics'
@@ -11,7 +12,7 @@ import setupFlowHistory from './setup/flow-history'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
-import { isDeliusAssessment, isPCAssessment, isPCAssessmentCart } from 'special/assessment/utils'
+import { isDeliusAssessment, isDeliusPDP, isPCAssessment, isPCAssessmentCart } from 'special/assessment/utils'
 import { location } from 'config'
 import { timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
@@ -135,6 +136,17 @@ const AppHacks = ({ data }) => {
       document.documentElement.classList.remove('trnd-open')
     }
   }, [showingContent])
+
+  if (isDeliusPDP()) {
+    return (
+      <AssessmentForm
+        setShowingContent={setShowingContent}
+        showingBubbles={showingBubbles}
+        showingContent={showingContent}
+        showingLauncher={showingLauncher}
+      />
+    )
+  }
 
   if (showAssessmentContent || isDeliusAssessment()) {
     return (

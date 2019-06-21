@@ -84,7 +84,7 @@ const SimpleChat = ({
     variables
   )
 
-  const { clickActions, modalsProps } = useChatActions('simpleChat')
+  const { clickActions, modalsProps } = useChatActions({ flowType: 'simpleChat' })
 
   if (!data || data.loading || data.error) return null
 

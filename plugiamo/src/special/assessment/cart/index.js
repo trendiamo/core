@@ -17,7 +17,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   const [products, setProducts] = useState([])
   const [isUnmounting, setIsUnmounting] = useState(false)
 
-  const { clickActions, modalsProps } = useChatActions(module.flowType)
+  const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType })
 
   useEffect(() => {
     fetchProducts().then(results => {

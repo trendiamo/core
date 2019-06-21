@@ -10,6 +10,8 @@ const deliusPathnames = ['/', '/en/', '/de/']
 
 const isDeliusAssessment = () => hostname === 'www.delius-contract.de' && deliusPathnames.includes(location.pathname)
 
+const isDeliusPDP = () => hostname === 'www.delius-contract.de' && location.pathname.match(/\/de\/produkte\/.+\/.+/)
+
 const rememberPersona = persona => sessionStorage.setItem('trnd-remembered-persona', JSON.stringify(persona))
 
 const cartIsNotEmpty = () => getShopcartProductIds().length > 0
@@ -91,4 +93,5 @@ export {
   isPCAssessmentCart,
   fetchProducts,
   isDeliusAssessment,
+  isDeliusPDP,
 }

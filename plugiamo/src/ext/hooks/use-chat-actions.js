@@ -3,7 +3,7 @@ import { markGoFwd } from 'app/setup/flow-history'
 import { clickAssessmentProduct as originalClickAssessmentProduct } from 'special/assessment/utils'
 import { useCallback, useMemo, useState } from 'preact/hooks'
 
-const useChatActions = flowType => {
+const useChatActions = ({ flowType, mergeAssessmentForm }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false)
   const [videoItem, setVideoItem] = useState(null)
   const [imageModalOpen, setImageModalOpen] = useState(false)
@@ -166,6 +166,13 @@ const useChatActions = flowType => {
     [flowType]
   )
 
+  const changeAssessmentForm = useCallback(
+    ({ item }) => {
+      mergeAssessmentForm(item)
+    },
+    [mergeAssessmentForm]
+  )
+
   const clickActions = useMemo(
     () => ({
       clickAssessmentProduct,
@@ -177,6 +184,7 @@ const useChatActions = flowType => {
       clickChatOption,
       clickLink,
       clickPictureMessage,
+      changeAssessmentForm,
     }),
     [
       clickAssessmentProduct,
@@ -188,6 +196,7 @@ const useChatActions = flowType => {
       clickChatOption,
       clickLink,
       clickPictureMessage,
+      changeAssessmentForm,
     ]
   )
 
