@@ -45,7 +45,7 @@ const PicturesModal = ({
       try {
         const url = new URL(pictureUrl)
         if (!['http:', 'https:'].includes(url.protocol)) {
-          return enqueueSnackbar('Please enter a valid URL', { variant: 'error' })
+          throw TypeError('Invalid protocol')
         }
         splitUrl = url.pathname.split('/')
       } catch (e) {
