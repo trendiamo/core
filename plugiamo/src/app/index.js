@@ -8,10 +8,10 @@ import infoMsg from 'shared/info-msg'
 import mixpanel from 'ext/mixpanel'
 import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
-import { assessmentCart, assessmentHack, isDeliusAssessment } from 'special/assessment/utils'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
+import { isDeliusAssessment, isPCAssessment, isPCAssessmentCart } from 'special/assessment/utils'
 import { location } from 'config'
 import { timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
@@ -28,10 +28,11 @@ const App = ({
   showingLauncher,
   skipContentEntry,
 }) => {
-  const [pluginState, setPluginState] = useState('default')
-  const [persona, setPersona] = useState(null)
-  const [isUnmounting, setIsUnmounting] = useState(false)
   const [disappear, setDisappear] = useState(false)
+  const [isUnmounting, setIsUnmounting] = useState(false)
+  const [pluginState, setPluginState] = useState('default')
+
+  const [persona, setPersona] = useState(null)
 
   useEffect(() => () => timeout.clear('exitOnMobile'), [])
 
@@ -149,7 +150,7 @@ const AppHacks = ({ data }) => {
       />
     )
   }
-  if (assessmentCart()) {
+  if (isPCAssessmentCart()) {
     return (
       <AssessmentCart
         setShowingContent={setShowingContent}
@@ -159,7 +160,7 @@ const AppHacks = ({ data }) => {
       />
     )
   }
-  if (!data.flow && assessmentHack()) {
+  if (!data.flow && isPCAssessment()) {
     return (
       <AssessmentSizeGuide
         setShowingContent={setShowingContent}
@@ -173,7 +174,6 @@ const AppHacks = ({ data }) => {
     infoMsg(`no data found for hostname ${location.hostname}`)
     return null
   }
-  if (data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview')) return null
 
   return (
     <App
@@ -251,6 +251,7 @@ const AppGraphql = () => {
   )
 
   if (!data || data.loading || data.error) return null
+  if (data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview')) return null
 
   return <AppHacks data={data} />
 }

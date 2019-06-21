@@ -2,10 +2,10 @@ import emojify from 'ext/emojify'
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
-import { assessmentHack, rememberPersona } from 'special/assessment/utils'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
+import { isPCAssessment, rememberPersona } from 'special/assessment/utils'
 import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
 import { routes, SpotlightItem } from 'plugin-base'
 import { useCallback, useMemo } from 'preact/hooks'
@@ -33,7 +33,7 @@ const convertSpotlights = (spotlights, onSpotlightClick) => {
     },
   }))
 
-  if (assessmentHack()) {
+  if (isPCAssessment()) {
     return [
       {
         Component: <SpotlightItem bordered onClick={onSpotlightClick} spotlight={assessmentSpotlight} withoutPicture />,
@@ -78,7 +78,7 @@ const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
         personaRef: spotlight.persona.id,
         personaOrder: spotlight.order,
       })
-      if (assessmentHack()) rememberPersona(spotlight.persona)
+      if (isPCAssessment()) rememberPersona(spotlight.persona)
       routeToSpotlight(spotlight.id)
     },
     [routeToSpotlight, setShowAssessmentContent]

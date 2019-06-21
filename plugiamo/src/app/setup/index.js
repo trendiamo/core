@@ -1,5 +1,5 @@
 import getFrekklsConfig from 'frekkls-config'
-import { assessmentHack, recallPersona } from 'special/assessment/utils'
+import { isPCAssessment, recallPersona } from 'special/assessment/utils'
 import { isSmall } from 'utils'
 import { location } from 'config'
 import { pushPath } from './flow-history'
@@ -25,7 +25,7 @@ export const optionsFromHash = () => {
 
 const getMatchedPersona = ({ flow, data }) => {
   if (data.persona) return data.persona
-  if (assessmentHack() && flow.flowType === 'outro' && recallPersona()) return recallPersona()
+  if (isPCAssessment() && flow.flowType === 'outro' && recallPersona()) return recallPersona()
   if (flow) return flow.persona
 }
 

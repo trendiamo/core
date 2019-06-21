@@ -25,6 +25,8 @@ const prepareProductsToChat = results => {
 }
 
 const hostname = process.env.ASSESSMENT || location.hostname
+const module = data[hostname] && data[hostname].assessment
+const steps = module && module.steps
 
 const Base = ({
   assessmentIsMainFlow,
@@ -42,9 +44,7 @@ const Base = ({
   showingCtaButton,
   tags,
 }) => {
-  const module = useMemo(() => data[hostname] && data[hostname].assessment, [])
-  const step = useMemo(() => module && module.steps[currentStepKey], [currentStepKey, module])
-  const steps = useMemo(() => module && module.steps, [module])
+  const step = useMemo(() => steps && steps[currentStepKey], [currentStepKey])
 
   const [currentStep, setCurrentStep] = useState(step)
   const [progress, setProgress] = useState(assessmentState.progress || 0)
@@ -53,7 +53,7 @@ const Base = ({
 
   useEffect(() => {
     rememberPersona(module.persona)
-  }, [module.persona])
+  }, [])
 
   useEffect(() => {
     if (currentStepKey === 'store') {
@@ -149,12 +149,10 @@ const Base = ({
       endNodeTags,
       goToStore,
       handleEndNodeTags,
-      module.flowType,
       progress,
       setCurrentStepKey,
       setTags,
       step.multiple,
-      steps,
       tags,
     ]
   )
