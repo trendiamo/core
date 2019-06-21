@@ -120,10 +120,10 @@ const AppHacks = ({ data }) => {
   const [skipContentEntry, setSkipContentEntry] = useState(false)
 
   useEffect(() => {
-    if (!showAssessmentContent) {
+    if (!showAssessmentContent && data.flow) {
       setSkipContentEntry(true)
     }
-  }, [showAssessmentContent])
+  }, [data.flow, showAssessmentContent])
 
   useEffect(() => {
     setSkipContentEntry(showingContent)
