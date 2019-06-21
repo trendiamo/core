@@ -3,7 +3,7 @@ import { h } from 'preact'
 import { imgixUrl } from 'plugin-base'
 import { useMemo } from 'preact/hooks'
 
-const CoverAnimation = styled.img`
+const CoverImage = styled.img`
   position: absolute;
   top: 0;
   right: 0;
@@ -16,20 +16,7 @@ const CoverAnimation = styled.img`
   object-fit: cover;
   transition: all 0.4s ease-in-out;
   z-index: 10;
-  opacity: ${({ minimized }) => (minimized ? 0 : 1)};
-`
-
-const CoverImage = styled.div`
-  background-image: url('${({ image }) => image}');
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: ${({ minimized }) => (minimized ? 200 : 140)}px;
-  height: 100%;
-  background-size: cover;
-  transition: all 0.4s ease-in-out;
-  opacity: ${({ minimized }) => (minimized ? 1 : 0)};
+  opacity: ${({ minimized, firstLayer }) => firstLayer ^ minimized};
 `
 
 const ImageContainer = styled.div`
@@ -74,8 +61,8 @@ const Background = ({ big, minimized, header, headerConfig, hide }) => {
 
   return (
     <ImageContainer header={header} hide={hide} minimized={minimized}>
-      <CoverAnimation headerConfig={headerConfig} minimized={minimized} src={animationUrl} />
-      <CoverImage image={imageUrl} minimized={minimized} />
+      <CoverImage firstLayer headerConfig={headerConfig} minimized={minimized} src={animationUrl} />
+      <CoverImage headerConfig={headerConfig} minimized={minimized} src={imageUrl} />
     </ImageContainer>
   )
 }
