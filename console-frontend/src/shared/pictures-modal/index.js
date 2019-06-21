@@ -26,12 +26,12 @@ const PicturesModal = ({
   picture,
   picturePreviewRef,
   previewPicture,
-  progress,
   setOpen,
+  setIsLoading,
+  isLoading,
 }) => {
   const [activePicture, setActivePicture] = useState(null)
   const [emptyState, setEmptyState] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const [isPictureLoading, setIsPictureLoading] = useState(false)
   const [pictures, setPictures] = useState([])
   const [pictureUrl, setPictureUrl] = useState('')
@@ -39,22 +39,6 @@ const PicturesModal = ({
 
   const { enqueueSnackbar } = useSnackbar()
 
-  useEffect(
-    () => {
-      setIsLoading(progress || (croppingState && !picture))
-    },
-    [croppingState, picture, previewPicture, progress]
-  )
-
-  const safeUpload = useCallback(
-    (files, filename) =>
-      onFileUpload(files, filename, ({ errors, requestError }) => {
-        if (errors || requestError) {
-          setIsLoading(false)
-        }
-      }),
-    [onFileUpload, setIsLoading]
-  )
   const fetchRemotePicture = useCallback(
     async () => {
       if (isEmpty(pictureUrl.trim())) return enqueueSnackbar('Please enter an URL', { variant: 'error' })
@@ -66,11 +50,11 @@ const PicturesModal = ({
       if (errors || requestError) {
         enqueueSnackbar(errors.message || requestError, { variant: 'error' })
       } else {
-        safeUpload([blob], [filename])
+        onFileUpload([blob], [filename])
       }
       return { blob, response, errors, requestError, ...rest }
     },
-    [enqueueSnackbar, pictureUrl, safeUpload]
+    [enqueueSnackbar, onFileUpload, pictureUrl]
   )
 
   const handleClose = useCallback(
@@ -137,9 +121,9 @@ const PicturesModal = ({
   const newOnFileUpload = useCallback(
     ({ target: { files } }) => {
       if (urlUploadState) setUrlUploadState(false)
-      safeUpload(files)
+      onFileUpload(files)
     },
-    [safeUpload, urlUploadState]
+    [onFileUpload, urlUploadState]
   )
 
   const onPictureClick = useCallback(

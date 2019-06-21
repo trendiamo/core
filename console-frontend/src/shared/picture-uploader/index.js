@@ -80,10 +80,18 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
   const [picture, setPicture] = useState(null)
   const [previousValue, setPreviousValue] = useState(value)
   const [modalOpen, setModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const previewPicture = useMemo(() => (value && value.picUrl ? value.picUrl : picture ? picture : ''), [
     picture,
     value,
   ])
+
+  useEffect(
+    () => {
+      setIsLoading(progress || (!doneCropping && !picture))
+    },
+    [doneCropping, picture, progress, setIsLoading]
+  )
 
   const onCancelClick = useCallback(
     () => {
@@ -143,7 +151,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
   const { enqueueSnackbar } = useSnackbar()
 
   const onFileUpload = useCallback(
-    async (files, filenames, callback) => {
+    async (files, filenames) => {
       setDoneCropping(false)
       setPreviousValue(value)
       onChange({ picUrl: '', picRect: null })
@@ -161,10 +169,11 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
         onChange({ picUrl: pictureUrl, picRect: null })
         setPicture(pictureUrl)
         setModalOpen(true)
+      } else {
+        setIsLoading(false)
       }
-      callback({ errors, requestError })
     },
-    [enqueueSnackbar, onChange, value]
+    [enqueueSnackbar, onChange, value, setIsLoading]
   )
 
   const onModalClose = useCallback(() => {
@@ -203,6 +212,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
       crop={crop}
       disabled={disabled}
       doneCropping={doneCropping}
+      isLoading={isLoading}
       label={label}
       modalOpen={modalOpen}
       onCancelClick={onCancelClick}
@@ -220,6 +230,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
       previewPicture={previewPicture}
       progress={progress}
       required={required}
+      setIsLoading={setIsLoading}
       setModalOpen={setModalOpen}
       value={value}
     />

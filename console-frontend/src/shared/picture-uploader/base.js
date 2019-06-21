@@ -146,11 +146,14 @@ const BasePictureUploader = ({
   onGalleryDoneClick,
   progress,
   value,
+  isLoading,
+  setIsLoading,
 }) => (
   <>
     <PicturesModal
       crop={crop}
       croppingState={!doneCropping}
+      isLoading={isLoading}
       onCancelClick={onCancelClick}
       onCropChange={onCropChange}
       onCropComplete={onCropComplete}
@@ -164,6 +167,7 @@ const BasePictureUploader = ({
       picturePreviewRef={picturePreviewRef}
       previewPicture={previewPicture}
       progress={progress}
+      setIsLoading={setIsLoading}
       setOpen={setModalOpen}
     />
     <Container>
