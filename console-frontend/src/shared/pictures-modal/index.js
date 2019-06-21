@@ -3,7 +3,7 @@ import CroppingDialog from './cropping-dialog'
 import EmptyDialog from './empty-dialog'
 import GalleryDialog from './gallery-dialog'
 import isEmpty from 'lodash.isempty'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import UrlUploadDialog from './url-upload-dialog'
 import { apiGetRemotePicture, apiPictureList, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
@@ -41,8 +41,16 @@ const PicturesModal = ({
 
   const fetchRemotePicture = useCallback(
     async () => {
-      if (isEmpty(pictureUrl.trim())) return enqueueSnackbar('Please enter an URL', { variant: 'error' })
-      const splitUrl = new URL(pictureUrl).pathname.split('/')
+      let splitUrl
+      try {
+        const url = new URL(pictureUrl)
+        if (!['http:', 'https:'].includes(url.protocol)) {
+          return enqueueSnackbar('Please enter a valid URL', { variant: 'error' })
+        }
+        splitUrl = url.pathname.split('/')
+      } catch (e) {
+        return enqueueSnackbar('Please enter a valid URL', { variant: 'error' })
+      }
       const filename = splitUrl[splitUrl.length - 1]
       const { json: blob, requestError, errors, response, ...rest } = await apiRequest(apiGetRemotePicture, [
         pictureUrl,
