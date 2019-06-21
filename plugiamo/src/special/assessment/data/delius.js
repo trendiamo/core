@@ -1766,6 +1766,75 @@ const data = {
       },
     },
   },
+  assessmentForm: {
+    flowType: 'ht-assessment-form',
+    header: {
+      title: 'Sprechen Sie mit uns',
+      subtitle: '',
+      minimized: true,
+      imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
+      animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
+      backgroundColor: '#fff',
+      textColor: '#333',
+      backButton: {
+        textColor: '#fff',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+      },
+    },
+    launcher: {
+      chatBubbleText: '',
+      chatBubbleExtraText: '',
+      persona: {
+        name: 'Elisa',
+        profilePic: {
+          url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
+          picRect: {},
+        },
+      },
+    },
+    closedLauncher: {
+      chatBubbleText: 'Vielen Dank!',
+      chatBubbleExtraText: 'Wir melden uns schnellstmöglich.',
+      persona: {
+        name: 'Elisa',
+        profilePic: {
+          url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
+        },
+      },
+    },
+    ctaButton: {
+      label: 'JETZT KONTAKTIERT WERDEN',
+      backgroundColor: '#ff6b02',
+      backgroundColorDisabled: '#333',
+      color: '#fff',
+      colorDisabled: '#555',
+    },
+    simpleChat: {
+      simpleChatSteps: [
+        {
+          key: 'default',
+          simpleChatMessages: [
+            {
+              id: 1,
+              type: 'SimpleChatTextMessage',
+              text:
+                'Vielen Dank, für Ihr Interesse an unserem Produkt! Schicken Sie uns gerne eine Anfrage und ein Experte wird sich mit Ihnen in Verbindung setzen.',
+            },
+            {
+              id: 2,
+              type: 'assessmentForm',
+              assessmentForm: [
+                { name: 'name', placeholder: 'Name', required: true },
+                { name: 'email', placeholder: 'E-Mail Adresse', required: true },
+                { name: 'phone', placeholder: 'Telefon', required: true },
+                { name: 'message', placeholder: 'Kommentar (optional)', multiline: true },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
 }
 
 export default data

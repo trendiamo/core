@@ -15,26 +15,30 @@ const Button = styled.button`
   font-family: Roboto, sans-serif;
   font-weight: 500;
   z-index: 1;
-  background-color: ${({ ctaButton }) => ctaButton.backgroundColor || '#111'};
-  color: ${({ ctaButton }) => ctaButton.color || '#fff'};
+  background-color: ${({ ctaButton, disabled }) =>
+    disabled && ctaButton.backgroundColorDisabled
+      ? ctaButton.backgroundColorDisabled
+      : ctaButton.backgroundColor || '#111'};
+  color: ${({ ctaButton, disabled }) =>
+    disabled && ctaButton.colorDisabled ? ctaButton.colorDisabled : ctaButton.color || '#fff'};
   padding: 25px 5px;
   font-size: 18px;
   line-height: 0;
   text-transform: uppercase;
   cursor: pointer;
   max-height: 50px;
-  transition: color 0.3s 0.3s, padding 0.3s, max-height 0.3s 0.3s;
+  transition: color 0.3s 0.3s, padding 0.3s, max-height 0.3s 0.3s, background-color 0.4s 0.2s;
   ${({ animation }) =>
     (animation === 'hide' || animation === 'init') &&
     `max-height: 0px;
       padding: 0;
       color: transparent;
-      transition: color 0.29s 0.01s, padding 0.3s 0.3s, max-height 0.3s 0.3s;
+      transition: color 0.29s 0.01s, padding 0.3s 0.3s, max-height 0.3s 0.3s, background-color 0.8s;
     `}
   overflow: hidden;
 `
 
-const CtaButton = ({ clicked, ctaButton, hide, onClick, setClicked }) => {
+const CtaButton = ({ clicked, ctaButton, hide, onClick, setClicked, disabled }) => {
   const [animation, setAnimation] = useState(hide ? 'remove' : 'show')
 
   useEffect(() => () => timeout.clear('ctaButtonAnimation'), [])
@@ -56,7 +60,7 @@ const CtaButton = ({ clicked, ctaButton, hide, onClick, setClicked }) => {
   if (animation === 'remove') return null
 
   return (
-    <Button animation={animation} ctaButton={ctaButton} onClick={newOnClick} type="button">
+    <Button animation={animation} ctaButton={ctaButton} disabled={disabled} onClick={newOnClick} type="button">
       {ctaButton.label}
     </Button>
   )

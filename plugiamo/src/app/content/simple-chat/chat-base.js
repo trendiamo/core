@@ -1,7 +1,7 @@
 import Cover from './cover'
 import CtaButton from 'special/cta-button'
 import ProgressBar from 'special/assessment/progress-bar'
-import { AssessmentProducts, AssessmentStepOptions } from 'special/assessment/message-types'
+import { AssessmentForm, AssessmentProducts, AssessmentStepOptions } from 'special/assessment/message-types'
 import { ChatLogUi, timeout } from 'plugin-base'
 import { Fragment, h } from 'preact'
 import { useCallback, useEffect, useState } from 'preact/hooks'
@@ -13,11 +13,13 @@ const messageFactory = ({ data, hideAll, nothingSelected, onClick, type }) => {
     )
   } else if (type === 'assessmentProducts') {
     return <AssessmentProducts data={data} onClick={onClick} />
+  } else if (type === 'assessmentForm') {
+    return <AssessmentForm data={data} onChange={onClick} />
   }
 }
 
 const getMessageMaxWidthByType = type => {
-  return ['assessmentProducts', 'assessmentStepOptions'].includes(type) ? '260px' : null
+  return ['assessmentProducts', 'assessmentStepOptions', 'assessmentForm'].includes(type) ? '260px' : null
 }
 
 const getMessageShowByType = (type, show) => {
@@ -34,6 +36,7 @@ const ChatBase = ({
   coverMinimized,
   ctaButton,
   ctaButtonClicked,
+  ctaButtonDisabled,
   data,
   FlowBackButton,
   goToPrevStep,
@@ -176,6 +179,7 @@ const ChatBase = ({
         <CtaButton
           clicked={ctaButtonClicked}
           ctaButton={ctaButton}
+          disabled={ctaButtonDisabled}
           hide={hideCtaButton}
           onClick={onCtaButtonClick}
           setClicked={setCtaButtonClicked}

@@ -29,7 +29,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
     [pluginState, productType]
   )
 
-  const { clickActions, modalsProps } = useChatActions('asmt-size-guide')
+  const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType })
 
   useEffect(() => {
     fetchProducts().then(results => {
