@@ -72,12 +72,12 @@ bin/deploy
 # To install certificates
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d api.trendiamo.com -d api.frekkls.com -d shopify.frekkls.com
+certbot certonly --standalone --preferred-challenges http -d api.frekkls.com -d shopify.frekkls.com
 service nginx start
 
 mkdir keycert
-cp /etc/letsencrypt/live/api.trendiamo.com/fullchain.pem keycert/certificate.crt
-cp /etc/letsencrypt/live/api.trendiamo.com/privkey.pem keycert/key.key
+cp /etc/letsencrypt/live/api.frekkls.com/fullchain.pem keycert/certificate.crt
+cp /etc/letsencrypt/live/api.frekkls.com/privkey.pem keycert/key.key
 tar -cvf keycert.tar keycert
 cat keycert.tar | dokku certs:add console-backend
 cat keycert.tar | dokku certs:add shopify-app
@@ -88,8 +88,10 @@ rmdir keycert
 
 # To test renew: `certbot renew --dry-run`
 certbot renew
-cp /etc/letsencrypt/live/api.trendiamo.com/fullchain.pem /home/dokku/console-backend/tls/server.crt
-cp /etc/letsencrypt/live/api.trendiamo.com/privkey.pem /home/dokku/console-backend/tls/server.key
+cp /etc/letsencrypt/live/api.frekkls.com/fullchain.pem /home/dokku/console-backend/tls/server.crt
+cp /etc/letsencrypt/live/api.frekkls.com/privkey.pem /home/dokku/console-backend/tls/server.key
+cp /etc/letsencrypt/live/api.frekkls.com/fullchain.pem /home/dokku/shopify-app/tls/server.crt
+cp /etc/letsencrypt/live/api.frekkls.com/privkey.pem /home/dokku/shopify-app/tls/server.key
 service nginx restart
 
 # Backups
