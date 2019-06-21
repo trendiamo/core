@@ -2,21 +2,20 @@ import dataGathering from 'data-gathering/pierre-cardin'
 import mixpanel from 'ext/mixpanel'
 import { suggestions } from './data/pierre-cardin'
 
-const assessmentHack = () =>
-  process.env.ASSESSMENT === 'www.pierre-cardin.de' || location.hostname === 'www.pierre-cardin.de'
+const hostname = process.env.ASSESSMENT || location.hostname
+
+const isPCAssessment = () => hostname === 'www.pierre-cardin.de'
 
 const deliusPathnames = ['/', '/en/', '/de/']
 
-const isDeliusAssessment = () =>
-  (process.env.ASSESSMENT === 'www.delius-contract.de' || location.hostname === 'www.delius-contract.de') &&
-  deliusPathnames.includes(location.pathname)
+const isDeliusAssessment = () => hostname === 'www.delius-contract.de' && deliusPathnames.includes(location.pathname)
 
 const rememberPersona = persona => sessionStorage.setItem('trnd-remembered-persona', JSON.stringify(persona))
 
 const cartIsNotEmpty = () => getShopcartProductIds().length > 0
 
 const recallPersona = () => JSON.parse(sessionStorage.getItem('trnd-remembered-persona'))
-const assessmentCart = () => assessmentHack() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
+const isPCAssessmentCart = () => isPCAssessment() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
 
 const fetchProducts = () =>
   fetch('https://improv.ams3.digitaloceanspaces.com/improv/improv-data.json', {
@@ -82,12 +81,12 @@ const clickAssessmentProduct = item => {
 }
 
 export {
-  assessmentHack,
   clickAssessmentProduct,
+  isPCAssessment,
   rememberPersona,
   recallPersona,
   recommendedProducts,
-  assessmentCart,
+  isPCAssessmentCart,
   fetchProducts,
   isDeliusAssessment,
 }

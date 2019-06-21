@@ -1,16 +1,13 @@
 import AppBase from 'app/base'
 import AssessmentBase from './base'
-import ChatModals from 'shared/chat-modals'
 import data from 'special/assessment/data'
 import mixpanel from 'ext/mixpanel'
-import useChatActions from 'ext/hooks/use-chat-actions'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 import { timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 const hostname = process.env.ASSESSMENT || location.hostname
-
 const module = data[hostname] && data[hostname].assessment
 
 const Plugin = ({
@@ -23,9 +20,10 @@ const Plugin = ({
   showingContent,
   showingLauncher,
 }) => {
-  const [pluginState, setPluginState] = useState('default')
   const [disappear, setDisappear] = useState(false)
   const [isUnmounting, setIsUnmounting] = useState(false)
+  const [pluginState, setPluginState] = useState('default')
+
   const [assessmentState, setAssessmentState] = useState({})
   const [tags, setTags] = useState(assessmentState.key ? assessmentState.key.split('/') : [])
   const [endNodeTags, setEndNodeTags] = useState([])
@@ -33,8 +31,6 @@ const Plugin = ({
   const [currentStepKey, setCurrentStepKey] = useState(assessmentState.key || 'root')
 
   const hideContentFrame = useMemo(() => !isSmall() && currentStepKey === 'store', [currentStepKey])
-
-  const { clickActions, modalsProps } = useChatActions(module && module.flowType)
 
   const resetAssessment = useCallback(() => {
     setTags([])
@@ -89,45 +85,41 @@ const Plugin = ({
   if (!module) return
 
   return (
-    <div>
-      <ChatModals flowType={module.flowType} {...modalsProps} />
-      <AppBase
-        Component={
-          <AssessmentBase
-            assessmentIsMainFlow={hostname === 'www.delius-contract.de'}
-            assessmentState={assessmentState}
-            clickActions={clickActions}
-            currentStepKey={currentStepKey}
-            endNodeTags={endNodeTags}
-            module={module}
-            onCloseModal={onCloseModal}
-            resetAssessment={resetAssessment}
-            setAssessmentState={setAssessmentState}
-            setCurrentStepKey={setCurrentStepKey}
-            setEndNodeTags={setEndNodeTags}
-            setShowingContent={setShowingContent}
-            setShowingCtaButton={setShowingCtaButton}
-            setShowingLauncher={setShowingLauncher}
-            setTags={setTags}
-            showingCtaButton={showingCtaButton}
-            tags={tags}
-          />
-        }
-        data={module}
-        disappear={disappear}
-        hideContentFrame={hideContentFrame}
-        isUnmounting={isUnmounting}
-        onToggleContent={onToggleContent}
-        persona={module.persona || module.launcher.persona}
-        pluginState={pluginState}
-        setShowAssessmentContent={setShowAssessmentContent}
-        showAssessmentContent={showAssessmentContent}
-        showingBubbles={showingBubbles}
-        showingContent={showingContent}
-        showingLauncher={showingLauncher}
-        skipContentEntry={hostname === 'www.pierre-cardin.de'}
-      />
-    </div>
+    <AppBase
+      Component={
+        <AssessmentBase
+          assessmentIsMainFlow={hostname === 'www.delius-contract.de'}
+          assessmentState={assessmentState}
+          currentStepKey={currentStepKey}
+          endNodeTags={endNodeTags}
+          module={module}
+          onCloseModal={onCloseModal}
+          resetAssessment={resetAssessment}
+          setAssessmentState={setAssessmentState}
+          setCurrentStepKey={setCurrentStepKey}
+          setEndNodeTags={setEndNodeTags}
+          setShowingContent={setShowingContent}
+          setShowingCtaButton={setShowingCtaButton}
+          setShowingLauncher={setShowingLauncher}
+          setTags={setTags}
+          showingCtaButton={showingCtaButton}
+          tags={tags}
+        />
+      }
+      data={module}
+      disappear={disappear}
+      hideContentFrame={hideContentFrame}
+      isUnmounting={isUnmounting}
+      onToggleContent={onToggleContent}
+      persona={module.persona || module.launcher.persona}
+      pluginState={pluginState}
+      setShowAssessmentContent={setShowAssessmentContent}
+      showAssessmentContent={showAssessmentContent}
+      showingBubbles={showingBubbles}
+      showingContent={showingContent}
+      showingLauncher={showingLauncher}
+      skipContentEntry={hostname === 'www.pierre-cardin.de'}
+    />
   )
 }
 

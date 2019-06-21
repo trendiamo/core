@@ -13,11 +13,12 @@ import { SimpleChat, timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {
+  const [disappear, setDisappear] = useState(false)
+  const [isUnmounting, setIsUnmounting] = useState(false)
   const [pluginState, setPluginState] = useState('default')
+
   const [product, setProduct] = useState(null)
   const [productType, setProductType] = useState(null)
-  const [isUnmounting, setIsUnmounting] = useState(false)
-  const [disappear, setDisappear] = useState(false)
 
   const module = useMemo(
     () => ({
