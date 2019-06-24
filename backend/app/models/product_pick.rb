@@ -10,15 +10,10 @@ class ProductPick < ApplicationRecord
     self.order = current_value + 1
   end
 
-  # to remove :pic_url once backend and console-frontend is deployed
-  delegate :url, to: :pic, prefix: :pic
-
   def as_json(_options = {})
     attributes
       .slice("id", "spotlight_id", "name", "account_id", "url", "description", "display_price", "pic_rect",
              "created_at", "updated_at")
-      .merge(picture: { url: pic.url },
-             # to remove :pic_url once backend and console-frontend is deployed
-             pic_url: pic_url)
+      .merge(picture: { url: pic.url })
   end
 end

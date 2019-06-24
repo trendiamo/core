@@ -5,12 +5,6 @@ Types::SimpleChatMessageType = GraphQL::ObjectType.define do
   field :type, types.String
   field :text, types.String
   field :title, types.String
-  # to remove :pic_url once backend and console-frontend is deployed
-  field :picUrl, types.String do
-    resolve ->(obj, _args, _ctx) {
-      obj.pic_url if %w[SimpleChatPictureMessage SimpleChatProductMessage].include?(obj.class.name)
-    }
-  end
   field :picRect, Types::PicRectType do
     resolve ->(obj, _args, _ctx) { obj.pic_rect }
   end

@@ -12,14 +12,9 @@ class Persona < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
-  delegate :url, to: :profile_pic, prefix: :profile_pic
-
   def as_json(_options = {})
     attributes
       .slice("id", "name", "description", "account_id", "graphcms_ref", "instagram_url", "profile_pic_animation_url",
-             "pic_rect", "created_at", "updated_at", "lock_version").merge(profile_pic: { url: profile_pic_url },
-                                                                           # to remove :pic_url once backend and console-frontend is deployed, will also get rid of linter error # rubocop:disable Metrics/LineLength
-                                                                           # rubocop:enable Metrics/LineLength
-                                                                           profile_pic_url: profile_pic_url)
+             "pic_rect", "created_at", "updated_at", "lock_version").merge(profile_pic: { url: profile_pic.url })
   end
 end
