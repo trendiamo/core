@@ -12,23 +12,23 @@ const Picture = styled(CardImg)`
   height: 260px;
 `
 
-const PictureMessage = ({ onClick, picture }) => {
+const PictureMessage = ({ onClick, pictureMessage }) => {
   const url = useMemo(
     () =>
-      picture.picUrl &&
-      imgixUrl(picture.picUrl, {
-        rect: stringifyRect(picture.picRect),
+      pictureMessage.picture.url &&
+      imgixUrl(pictureMessage.picture.url, {
+        rect: stringifyRect(pictureMessage.picRect),
         fit: 'crop',
         w: 260,
         h: 260,
       }),
-    [picture.picRect, picture.picUrl]
+    [pictureMessage.picRect, pictureMessage.picture.url]
   )
   const onPictureClick = useCallback(
     () => {
-      onClick({ type: 'clickPictureMessage', item: { url: picture.picUrl } })
+      onClick({ type: 'clickPictureMessage', item: { url: pictureMessage.picture.url } })
     },
-    [onClick, picture.picUrl]
+    [onClick, pictureMessage.picture.url]
   )
 
   return (

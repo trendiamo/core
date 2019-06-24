@@ -16,7 +16,7 @@ const PluginPreview = ({ form }) => {
     () => (
       <BaseLauncher
         personaPic={{
-          url: (form.persona && form.persona.profilePicUrl) || (form.__persona && form.__persona.profilePicUrl),
+          url: (form.persona && form.persona.profilePic.url) || (form.__persona && form.__persona.profilePic.url),
           picRect: (form.persona && form.persona.picRect) || (form.__persona && form.__persona.picRect),
         }}
       />

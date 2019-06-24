@@ -30,7 +30,6 @@ const SpotlightCover = ({ backButtonLabel, isLeaving, routeToShowcase, spotlight
   const currentDescription = useTextTyping(spotlight ? spotlight.persona.description : '', 500)
 
   if (!spotlight) return null
-
   return (
     <CoverInner>
       <BackButton isLeaving={isLeaving} label={backButtonLabel} onClick={routeToShowcase} />

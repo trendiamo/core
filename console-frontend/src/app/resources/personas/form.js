@@ -17,7 +17,7 @@ const formObjectTransformer = json => {
     id: json.id,
     name: json.name || '',
     description: json.description || '',
-    profilePicUrl: json.profilePicUrl || '',
+    profilePic: json.profilePic || { profilePic: { url: '' } },
     instagramUrl: json.instagramUrl || '',
     profilePicAnimationUrl: json.profilePicAnimationUrl || '',
     lockVersion: json.lockVersion,
@@ -69,7 +69,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
 
   const setPicture = useCallback(
     picture => {
-      mergeForm({ profilePicUrl: picture.picUrl, picRect: picture.picRect })
+      mergeForm({ profilePic: { url: picture.url }, picRect: picture.picRect })
     },
     [mergeForm]
   )
@@ -107,7 +107,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
             onChange={setPicture}
             required
             setDisabled={setIsCropping}
-            value={{ picUrl: form.profilePicUrl, picRect: form.picRect }}
+            value={{ url: form.profilePic.url, picRect: form.picRect }}
           />
           <Field
             autoFocus

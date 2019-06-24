@@ -22,7 +22,7 @@ const SimpleChatsRow = ({ record, highlightInactive }) => (
       <Avatar
         alt=""
         disabled={highlightInactive}
-        src={imgixUrl(record.persona.profilePicUrl, { rect: stringifyRect(record.persona.picRect) })}
+        src={imgixUrl(record.persona.profilePic.url, { rect: stringifyRect(record.persona.picRect) })}
       />
     </TableCell>
     <TableCell width="80%">

@@ -35,14 +35,16 @@ const Container = styled.div`
   }
 `
 
-const VideoMessage = ({ onClick, onKeyUp, youtubeId }) => {
+const VideoMessage = ({ onClick, onKeyUp, videoMessage }) => {
   const youtubeEmbedUrl = useMemo(
     () =>
-      `https://www.youtube.com/embed/${youtubeId}?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
-    [youtubeId]
+      `https://www.youtube.com/embed/${
+        videoMessage.id
+      }?autoplay=1&amp;mute=0&amp;controls=1&amp;playsinline=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1`,
+    [videoMessage]
   )
-  const youtubePreviewImageUrl = useMemo(() => `https://img.youtube.com/vi/${youtubeId}/0.jpg`, [youtubeId])
-  const youtubeUrl = useMemo(() => `https://www.youtube.com/watch?v=${youtubeId}`, [youtubeId])
+  const youtubePreviewImageUrl = useMemo(() => `https://img.youtube.com/vi/${videoMessage.id}/0.jpg`, [videoMessage])
+  const youtubeUrl = useMemo(() => `https://www.youtube.com/watch?v=${videoMessage.id}`, [videoMessage])
 
   const newOnClick = useCallback(
     () => {
@@ -51,7 +53,7 @@ const VideoMessage = ({ onClick, onKeyUp, youtubeId }) => {
     [onClick, youtubeEmbedUrl, youtubeUrl]
   )
 
-  if (!youtubeId) return null
+  if (!videoMessage.id) return null
 
   return (
     <Container onClick={newOnClick} onKeyUp={onKeyUp} role="button" tabIndex={0}>

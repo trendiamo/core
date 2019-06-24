@@ -85,7 +85,7 @@ const AssessmentProduct = ({ data, onClick, big, styleConfig = styleConfigDefaul
     <Container cols={big ? 3 : 2} style={styleConfig.container}>
       <InnerContainer>
         {data.highlight && <Highlight highlight={highlightDefault} styleConfig={styleConfig} />}
-        <ProductMessage onClick={newOnClick} product={data} styleConfig={styleConfig} />
+        <ProductMessage onClick={newOnClick} productMessage={data} styleConfig={styleConfig} />
       </InnerContainer>
     </Container>
   )

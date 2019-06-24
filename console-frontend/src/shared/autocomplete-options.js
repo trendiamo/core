@@ -47,7 +47,7 @@ const SuggestionWithAvatar = ({ suggestion }) => (
   <StyledSelectLabel>
     <Avatar
       alt={suggestion.value.name}
-      src={imgixUrl(suggestion.value.profilePicUrl, { rect: stringifyRect(suggestion.value.picRect) })}
+      src={imgixUrl(suggestion.value.profilePic.url, { rect: stringifyRect(suggestion.value.picRect) })}
       style={{ marginRight: '0.5rem' }}
     />
     <SelectLabelText>{suggestion.label}</SelectLabelText>

@@ -64,7 +64,7 @@ const EditMe = () => {
 
   const setPicture = useCallback(
     picture => {
-      mergeForm({ profilePicUrl: picture.picUrl, picRect: picture.picRect })
+      mergeForm({ profilePicUrl: picture.url, picRect: picture.picRect })
     },
     [mergeForm]
   )
@@ -82,7 +82,7 @@ const EditMe = () => {
           label="Picture"
           onChange={setPicture}
           setDisabled={setIsCropping}
-          value={{ picUrl: form.profilePicUrl, picRect: form.picRect }}
+          value={{ url: form.profilePicUrl, picRect: form.picRect }}
         />
         <TextField
           disabled

@@ -1,4 +1,5 @@
 import AssessmentProduct from './assessment-product'
+import omit from 'lodash.omit'
 import styled from 'styled-components'
 import { h } from 'preact'
 
@@ -12,7 +13,13 @@ const Container = styled.div`
 const AssessmentProducts = ({ data, big, styleConfig, onClick }) => (
   <Container big={big}>
     {data.map(product => (
-      <AssessmentProduct big={big} data={product} key={product.id} onClick={onClick} styleConfig={styleConfig} />
+      <AssessmentProduct
+        big={big}
+        data={omit({ ...product, picture: { url: product.picUrl } }, ['picUrl'])}
+        key={product.id}
+        onClick={onClick}
+        styleConfig={styleConfig}
+      />
     ))}
   </Container>
 )

@@ -58,7 +58,7 @@ const ProductMessagesForm = ({
       onChange={setPicture}
       required
       setDisabled={setIsCropping}
-      value={{ picUrl: simpleChatMessage.picUrl, picRect: simpleChatMessage.picRect }}
+      value={{ url: simpleChatMessage.picture.url, picRect: simpleChatMessage.picRect }}
     />
     {progress && <ProgressBar progress={progress} />}
     <FormControlLabel
@@ -102,7 +102,10 @@ const ProductMessageFields = ({
   const setPicture = useCallback(
     picture => {
       onFocus()
-      onChange({ ...simpleChatMessage, ...picture }, simpleChatMessageIndex)
+      onChange(
+        { ...simpleChatMessage, picture: { url: picture.url }, picRect: picture.picRect },
+        simpleChatMessageIndex
+      )
     },
     [onChange, onFocus, simpleChatMessage, simpleChatMessageIndex]
   )

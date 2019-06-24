@@ -41,7 +41,7 @@ const ProductPick = ({
   const setPicture = useCallback(
     picture => {
       onFocus()
-      onChange(productPick => ({ ...productPick, ...picture }))
+      onChange(productPick => ({ ...productPick, picture: { url: picture.url }, picRect: picture.picRect }))
     },
     [onChange, onFocus]
   )
@@ -123,7 +123,7 @@ const ProductPick = ({
         onChange={setPicture}
         required
         setDisabled={setIsCropping}
-        value={{ picUrl: productPick.picUrl, picRect: productPick.picRect }}
+        value={{ url: productPick.picture.url, picRect: productPick.picRect }}
       />
     </FormSection>
   )
