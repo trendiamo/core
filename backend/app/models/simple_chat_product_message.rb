@@ -5,10 +5,13 @@ class SimpleChatProductMessage < SimpleChatMessage
   validates :url, presence: true
   validates :display_price, presence: true
 
+  # to remove :pic_url once backend and console-frontend is deployed
   delegate :url, to: :pic, prefix: :pic
 
   def as_json(_options = {})
-    super.except(:pic_id).merge(attributes.slice("title", "url", "display_price", "group_with_adjacent", "pic_rect"),
-                                pic_url: pic_url)
+    super.except(:pic_id).merge(attributes.slice("title", "url", "display_price", "group_with_adjacent", "pic_rect"))
+         .merge(picture: { url: pic.url },
+                # to remove :pic_url once backend and console-frontend is deployed
+                pic_url: pic_url)
   end
 end

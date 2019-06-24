@@ -81,10 +81,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
   const [previousValue, setPreviousValue] = useState(value)
   const [modalOpen, setModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const previewPicture = useMemo(() => (value && value.picUrl ? value.picUrl : picture ? picture : ''), [
-    picture,
-    value,
-  ])
+  const previewPicture = useMemo(() => (value && value.url ? value.url : picture ? picture : ''), [picture, value])
 
   useEffect(
     () => {
@@ -132,7 +129,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
       setModalOpen(false)
       setCrop({})
       if (!picture) return
-      onChange({ picUrl: picture, picRect: rect })
+      onChange({ url: picture, picRect: rect })
     },
     [onChange, picture, rect]
   )
@@ -140,7 +137,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
   const onGalleryDoneClick = useCallback(
     picture => {
       setPreviousValue(value)
-      onChange({ picUrl: picture && picture.url, picRect: rect })
+      onChange({ url: picture && picture.url, picRect: rect })
       setPicture(picture && picture.url)
       setModalOpen(true)
       setDoneCropping(false)
@@ -154,7 +151,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
     async (files, filenames) => {
       setDoneCropping(false)
       setPreviousValue(value)
-      onChange({ picUrl: '', picRect: null })
+      onChange({ url: '', picRect: null })
       if (files.length === 0) return
       const file = files[0]
       if (!file.name) file.name = processFilename(file, filenames[0])
@@ -166,7 +163,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) {
-        onChange({ picUrl: pictureUrl, picRect: null })
+        onChange({ url: pictureUrl, picRect: null })
         setPicture(pictureUrl)
         setModalOpen(true)
       } else {
@@ -194,7 +191,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
   const onRemovePicture = useCallback(
     () => {
       setPicture(null)
-      onChange({ picUrl: '', picRect: null })
+      onChange({ url: '', picRect: null })
     },
     [onChange]
   )

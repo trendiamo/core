@@ -8,7 +8,7 @@ Types::PersonaType = GraphQL::ObjectType.define do
     resolve ->(obj, _args, _ctx) { obj.instagram_url }
   end
   field :profilePic, Types::PicType do
-    resolve ->(obj, _args, _ctx) { { url: obj.profile_pic_url } }
+    resolve ->(obj, _args, _ctx) { { url: obj.profile_pic.url } }
   end
   field :picRect, Types::PicRectType do
     resolve ->(obj, _args, _ctx) { obj.pic_rect }

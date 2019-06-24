@@ -28,7 +28,7 @@ const PersonasRow = ({ record }) => (
     <TableCell>
       <Avatar
         alt={record.name}
-        src={imgixUrl(record.profilePicUrl, { rect: stringifyRect(record.picRect) })}
+        src={imgixUrl(record.profilePic.url, { rect: stringifyRect(record.picRect) })}
         style={{ marginRight: '0.5rem' }}
       />
     </TableCell>

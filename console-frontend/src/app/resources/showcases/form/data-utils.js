@@ -34,7 +34,7 @@ const previewConverter = {
             ...spotlight.__persona,
             name: personaName || defaults.spotlightName,
             description: personaDescription || defaults.spotlightDescription,
-            profilePic: { url: profilePic || defaults.avatarPic, picRect },
+            profilePic: { url: profilePic.url || defaults.avatarPic, picRect },
             profilePicUrl: profilePic || defaults.avatarPic,
           },
           translation: {
@@ -54,7 +54,7 @@ const previewConverter = {
           name: productPick.name || defaults.productName,
           description: productPick.description || defaults.productDescription,
           displayPrice: productPick.displayPrice || defaults.productPrice,
-          picture: { url: productPick.picUrl || defaults.productPic, picRect: productPick.picRect },
+          picture: { url: productPick.picture.url || defaults.productPic, picRect: productPick.picRect },
         }
       })
       .filter(e => e)
@@ -83,7 +83,7 @@ const formObjectTransformer = json => {
             name: productPick.name || '',
             description: productPick.description || '',
             displayPrice: productPick.displayPrice || '',
-            picUrl: productPick.picUrl || '',
+            picture: productPick.picture || { url: '' },
             picRect: productPick.picRect || '',
             __key: productPick.__key,
           }))
@@ -93,7 +93,7 @@ const formObjectTransformer = json => {
               name: '',
               description: '',
               displayPrice: '',
-              picUrl: '',
+              picture: { url: '' },
               picRect: '',
               __key: 'new-0',
             },

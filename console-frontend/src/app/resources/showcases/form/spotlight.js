@@ -47,7 +47,7 @@ const Spotlight = ({
             name: '',
             description: '',
             displayPrice: '',
-            picUrl: '',
+            picture: { url: '' },
             picRect: '',
             __key: `new-${spotlight.productPicksAttributes.length}`,
           },

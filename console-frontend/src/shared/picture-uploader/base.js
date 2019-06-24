@@ -180,7 +180,7 @@ const BasePictureUploader = ({
           multiple={false}
           onClick={onDropzoneClick}
           onFileUpload={onFileUpload}
-          previewPicture={value.picUrl && imgixUrl(value.picUrl, { rect: stringifyRect(value.picRect) })}
+          previewPicture={value.url && imgixUrl(value.url, { rect: stringifyRect(value.picRect) })}
         />
       </FormControl>
       {(picture || previewPicture) && (picture ? doneCropping : true) && (

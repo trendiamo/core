@@ -14,7 +14,7 @@ const setSimpleChatMessageTitle = simpleChatMessage => {
     case 'SimpleChatVideoMessage':
       return simpleChatMessage.id ? `Video: ${simpleChatMessage.videoUrl}` : 'New video'
     case 'SimpleChatPictureMessage':
-      return simpleChatMessage.id ? `Picture: ${simpleChatMessage.picUrl.split('/').pop()}` : 'New picture'
+      return simpleChatMessage.id ? `Picture: ${simpleChatMessage.picture.url.split('/').pop()}` : 'New picture'
     default:
       return 'New message'
   }

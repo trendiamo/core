@@ -14,12 +14,15 @@ class Showcase < ApplicationRecord
   validates :title, presence: true
   validates :subtitle, presence: true
 
-  def as_json(_options = {})
+  def as_json(_options = {}) # rubocop:disable Metrics/AbcSize
     attributes
       .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "created_at",
              "updated_at", "lock_version")
-      .merge(persona: { id: persona.id, profile_pic_url: persona.profile_pic_url, name: persona.name,
-                        pic_rect: persona.pic_rect, },
+      .merge(persona: { id: persona.id, profile_pic: { url: persona.profile_pic_url }, name: persona.name,
+                        pic_rect: persona.pic_rect,
+                        # to remove :pic_url once backend and console-frontend is deployed, will also get rid of linter error # rubocop:disable Metrics/LineLength
+                        # rubocop:enable Metrics/LineLength
+                        profile_pic_url: persona.profile_pic_url, },
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",
              trigger_ids: triggers.ids)
@@ -35,13 +38,15 @@ class Showcase < ApplicationRecord
     end
   end
 
-  def persona_attributes(spotlight)
+  def persona_attributes(spotlight) # rubocop:disable Metrics/AbcSize
     {
       id: spotlight.persona.id,
       name: spotlight.persona.name,
       description: spotlight.persona.description,
       instagram_url: spotlight.persona.instagram_url,
+      # to remove :profile_pic_url once backend and console-frontend is deployed
       profile_pic_url: spotlight.persona.profile_pic_url,
+      profile_pic: { url: spotlight.persona.profile_pic.url },
       profile_pic_animation_url: spotlight.persona.profile_pic_animation_url,
       pic_rect: spotlight.persona.pic_rect,
     }
@@ -58,8 +63,10 @@ class Showcase < ApplicationRecord
       name: product_pick.name,
       description: product_pick.description,
       display_price: product_pick.display_price,
-      pic_url: product_pick.pic_url,
+      picture: { url: product_pick.pic.url },
       pic_rect: product_pick.pic_rect,
+      # to remove :pic_url once backend and console-frontend is deployed
+      pic_url: product_pick.pic_url,
     }
   end
 

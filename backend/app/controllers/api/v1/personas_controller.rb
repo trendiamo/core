@@ -55,8 +55,9 @@ module Api
                                         :profile_pic_animation_url, :lock_version, pic_rect: %i[x y width height])
       end
 
-      def convert_and_assign_picture
-        pic_url = params[:persona][:profile_pic_url]
+      def convert_and_assign_picture # rubocop:disable Metrics/AbcSize
+        # to remove :profile_pic_url once backend and console-frontend is deployed, will also get rid of linter error
+        pic_url = params[:persona][:profile_pic_url] || params[:persona][:profile_pic][:url]
         pic_url.present? && params[:persona][:profile_pic_id] = Picture.find_or_create_by!(url: pic_url).id
         params[:persona].delete(:profile_pic_url)
       end

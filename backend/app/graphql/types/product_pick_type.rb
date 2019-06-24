@@ -12,7 +12,7 @@ Types::ProductPickType = GraphQL::ObjectType.define do
   end
   field :picture, !Types::PicType do
     resolve ->(obj, _args, _ctx) {
-      { url: obj.pic_url }
+      { url: obj.pic.url }
     }
   end
   field :picRect, Types::PicRectType do

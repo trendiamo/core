@@ -21,7 +21,7 @@ const loadFormObject = () => {
             name: '',
             description: '',
             displayPrice: '',
-            picUrl: '',
+            picture: { url: '' },
             picRect: '',
             __key: 'new-0',
           },

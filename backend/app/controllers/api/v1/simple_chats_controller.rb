@@ -71,7 +71,7 @@ module Api
                                                      simple_chat_steps_attributes:
                                                      [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
                                                     [:id, :order, :type, :text, :title, :pic_id, :url, :display_price,
-                                                     :video_url, :pic_url, :group_with_adjacent, :_destroy,
+                                                     :video_url, :group_with_adjacent, :_destroy,
                                                      pic_rect: %i[x y width height],],])
 
         add_order_fields(result[:simple_chat_steps_attributes])
@@ -92,10 +92,11 @@ module Api
         end
       end
 
-      def convert_and_assign_pictures
+      def convert_and_assign_pictures # rubocop:disable Metrics/AbcSize
         params[:simple_chat][:simple_chat_steps_attributes]&.each do |simple_chat_step_attributes|
           simple_chat_step_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
-            pic_url = simple_chat_message_attributes[:pic_url]
+            # to remove :pic_url once backend and console-frontend is deployed, will also get rid of linter error
+            pic_url = (simple_chat_message_attributes[:picture] && simple_chat_message_attributes[:picture][:url]) || simple_chat_message_attributes[:pic_url] # rubocop:disable Metrics/LineLength
             unless pic_url.nil?
               return if pic_url.empty?
 

@@ -20,7 +20,7 @@ const ImgCarouselElement = ({ carouselType, picture, index, onClick, urlsArray }
     <CarouselElement carouselType={carouselType} onClick={newOnClick} onTouchEnd={onTouchEnd}>
       <img
         alt=""
-        src={imgixUrl(picture.picUrl, {
+        src={imgixUrl(picture.url, {
           rect: stringifyRect(picture.picRect),
           fit: 'crop',
           w: 260,
@@ -34,8 +34,8 @@ const ImgCarouselElement = ({ carouselType, picture, index, onClick, urlsArray }
 const ImgCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
   const pictures = useMemo(
     () =>
-      imageCarousel.map(image => {
-        return { picUrl: image.picUrl, picRect: image.picRect, id: image.id }
+      imageCarousel.map(pictureData => {
+        return { url: pictureData.picUrl || pictureData.picture.url, picRect: pictureData.picRect, id: pictureData.id }
       }),
     [imageCarousel]
   )
@@ -50,7 +50,7 @@ const ImgCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
             key={picture.id || `new-${index}`}
             onClick={onClick}
             picture={picture}
-            urlsArray={pictures.map(picture => picture.picUrl)}
+            urlsArray={pictures.map(picture => picture.url)}
           />
         ))}
       </Carousel>

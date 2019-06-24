@@ -6,7 +6,7 @@ const ProductCarouselMessage = ({ carouselType, productCarousel, onClick }) => (
   <Carousel carouselType={carouselType}>
     {productCarousel.map(product => (
       <CarouselElement carouselType={carouselType} key={product.id || product.__key}>
-        <ProductMessage onClick={onClick} product={product} />
+        <ProductMessage onClick={onClick} productMessage={product} />
       </CarouselElement>
     ))}
   </Carousel>

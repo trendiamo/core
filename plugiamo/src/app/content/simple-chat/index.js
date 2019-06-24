@@ -65,7 +65,9 @@ const SimpleChat = ({
               type
               text
               title
-              picUrl
+              picture {
+                url
+              }
               picRect {
                 x
                 y

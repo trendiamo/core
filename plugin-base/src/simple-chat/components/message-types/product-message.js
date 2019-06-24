@@ -59,40 +59,40 @@ const Link = styled.a`
 
 const defaultStyleConfig = { card: { minWidth: 260 } }
 
-const ProductMessage = ({ product, styleConfig = defaultStyleConfig, onClick }) => {
+const ProductMessage = ({ productMessage, styleConfig = defaultStyleConfig, onClick }) => {
   const productPicUrl = useMemo(
     () =>
-      product.picUrl &&
-      imgixUrl(product.picUrl, {
-        rect: stringifyRect(product.picRect),
+      productMessage.picture.url &&
+      imgixUrl(productMessage.picture.url, {
+        rect: stringifyRect(productMessage.picRect),
         fit: 'crop',
         w: 260,
         h: styleConfig.image ? styleConfig.image.height : 180,
       }),
-    [product.picRect, product.picUrl, styleConfig.image]
+    [productMessage.picRect, productMessage.picture.url, styleConfig.image]
   )
 
   const newOnClick = useCallback(
     event => {
-      if (!product.newTab) {
+      if (!productMessage.newTab) {
         event.preventDefault()
       }
-      onClick && onClick({ type: 'clickProduct', item: product })
+      onClick && onClick({ type: 'clickProduct', item: productMessage })
     },
-    [onClick, product]
+    [onClick, productMessage]
   )
 
   return (
-    <Link href={product.url} onClick={newOnClick} rel="noopener noreferrer" target="_blank">
+    <Link href={productMessage.url} onClick={newOnClick} rel="noopener noreferrer" target="_blank">
       <ProductCard style={styleConfig.card}>
         <ProductImage src={productPicUrl} style={styleConfig.image} />
         <CardContent style={styleConfig.details}>
           <TitleAndPrice>
-            <Title style={styleConfig.detailsText}>{product.title}</Title>
-            <Price style={styleConfig.detailsPrice}>{product.displayPrice}</Price>
+            <Title style={styleConfig.detailsText}>{productMessage.title}</Title>
+            <Price style={styleConfig.detailsPrice}>{productMessage.displayPrice}</Price>
           </TitleAndPrice>
         </CardContent>
-        {product.cardCta && <CtaTextContainer>{product.cardCta}</CtaTextContainer>}
+        {productMessage.cardCta && <CtaTextContainer>{productMessage.cardCta}</CtaTextContainer>}
       </ProductCard>
     </Link>
   )

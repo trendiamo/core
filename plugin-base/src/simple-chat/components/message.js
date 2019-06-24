@@ -55,7 +55,6 @@ const ChatMessage = ({
   const [clickable, setClickable] = useState(false)
 
   const type = useMemo(() => log.message.type, [log.message.type])
-
   const data = useMemo(
     () => {
       if (!type) return
@@ -64,17 +63,17 @@ const ChatMessage = ({
         : type === 'SimpleChatProductMessage'
         ? {
             title: log.message.title,
-            picUrl: log.message.picUrl,
+            picture: log.message.picture,
             picRect: log.message.picRect,
             url: log.message.url,
             displayPrice: log.message.displayPrice,
             newTab: log.message.newTab,
           }
         : type === 'SimpleChatVideoMessage'
-        ? extractYoutubeId(log.message.videoUrl)
+        ? { id: extractYoutubeId(log.message.videoUrl) }
         : type === 'SimpleChatPictureMessage'
         ? {
-            picUrl: log.message.picUrl,
+            picture: log.message.picture,
             picRect: log.message.picRect,
           }
         : log.message[type]
@@ -134,11 +133,11 @@ const ChatMessage = ({
           onClick={onClick}
         />
       ) : type === 'SimpleChatVideoMessage' ? (
-        <VideoMessage onClick={onClick} youtubeId={data} />
+        <VideoMessage onClick={onClick} videoMessage={data} />
       ) : type === 'SimpleChatProductMessage' ? (
-        <ProductMessage onClick={onClick} product={data} />
+        <ProductMessage onClick={onClick} productMessage={data} />
       ) : type === 'SimpleChatPictureMessage' ? (
-        <PictureMessage onClick={onClick} picture={data} />
+        <PictureMessage onClick={onClick} pictureMessage={data} />
       ) : type === 'productCarousel' ? (
         <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
       ) : type === 'imageCarousel' ? (
