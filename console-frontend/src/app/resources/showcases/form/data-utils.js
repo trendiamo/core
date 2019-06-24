@@ -34,7 +34,7 @@ const previewConverter = {
             ...spotlight.__persona,
             name: personaName || defaults.spotlightName,
             description: personaDescription || defaults.spotlightDescription,
-            profilePic: { url: profilePic.url || defaults.avatarPic, picRect },
+            profilePic: { url: (profilePic && profilePic.url) || defaults.avatarPic, picRect },
             profilePicUrl: profilePic || defaults.avatarPic,
           },
           translation: {
