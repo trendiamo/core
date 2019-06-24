@@ -81,8 +81,7 @@ module Api
       def convert_and_assign_pictures
         params[:showcase][:spotlights_attributes]&.each do |spotlight_attributes|
           spotlight_attributes[:product_picks_attributes]&.each do |product_pick_attributes|
-            # to remove :pic_url once backend and console-frontend is deployed
-            pic_url = (product_pick_attributes[:picture] && product_pick_attributes[:picture][:url]) || product_pick_attributes[:pic_url] # rubocop:disable Metrics/LineLength
+            pic_url = (product_pick_attributes[:picture] && product_pick_attributes[:picture][:url])
             return if pic_url.empty?
 
             product_pick_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id

@@ -40,8 +40,6 @@ class SimpleChat < ApplicationRecord
     {
       id: persona.id, name: persona.name, description: persona.description,
       profile_pic: { url: persona.profile_pic_url }, instagram_url: persona.instagram_url, picRect: persona.pic_rect,
-      # to remove :pic_url once backend and console-frontend is deployed
-      profile_pic_url: persona.profile_pic_url,
     }
   end
 end

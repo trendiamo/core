@@ -92,11 +92,10 @@ module Api
         end
       end
 
-      def convert_and_assign_pictures # rubocop:disable Metrics/AbcSize
+      def convert_and_assign_pictures
         params[:simple_chat][:simple_chat_steps_attributes]&.each do |simple_chat_step_attributes|
           simple_chat_step_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
-            # to remove :pic_url once backend and console-frontend is deployed, will also get rid of linter error
-            pic_url = (simple_chat_message_attributes[:picture] && simple_chat_message_attributes[:picture][:url]) || simple_chat_message_attributes[:pic_url] # rubocop:disable Metrics/LineLength
+            pic_url = (simple_chat_message_attributes[:picture] && simple_chat_message_attributes[:picture][:url])
             unless pic_url.nil?
               return if pic_url.empty?
 
