@@ -6,6 +6,7 @@ import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import StoreModal from './store-modal'
 import useChatActions from 'ext/hooks/use-chat-actions'
+import { assessmentHostname } from 'config'
 import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
 import { isSmall } from 'utils'
@@ -24,8 +25,7 @@ const prepareProductsToChat = results => {
   return [{ message: { assessmentProducts: [...results], type: 'assessmentProducts' }, type: 'message' }]
 }
 
-const hostname = process.env.ASSESSMENT || location.hostname
-const module = data[hostname] && data[hostname].assessment
+const module = data[assessmentHostname] && data[assessmentHostname].assessment
 const steps = module && module.steps
 
 const Base = ({

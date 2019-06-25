@@ -2,13 +2,13 @@ import AppBase from 'app/base'
 import AssessmentBase from './base'
 import data from 'special/assessment/data'
 import mixpanel from 'ext/mixpanel'
+import { assessmentHostname } from 'config'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 import { timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
-const hostname = process.env.ASSESSMENT || location.hostname
-const module = data[hostname] && data[hostname].assessment
+const module = data[assessmentHostname] && data[assessmentHostname].assessment
 
 const Plugin = ({
   setShowAssessmentContent,
@@ -79,7 +79,7 @@ const Plugin = ({
   }, [disappear, resetAssessment, setShowAssessmentContent, setShowingBubbles, setShowingContent, showingContent])
 
   useEffect(() => {
-    if (showingContent && hostname === 'www.delius-contract.de') setShowAssessmentContent(true)
+    if (showingContent && assessmentHostname === 'www.delius-contract.de') setShowAssessmentContent(true)
   }, [setShowAssessmentContent, showingContent])
 
   if (!module) return
@@ -88,7 +88,7 @@ const Plugin = ({
     <AppBase
       Component={
         <AssessmentBase
-          assessmentIsMainFlow={hostname === 'www.delius-contract.de'}
+          assessmentIsMainFlow={assessmentHostname === 'www.delius-contract.de'}
           assessmentState={assessmentState}
           currentStepKey={currentStepKey}
           endNodeTags={endNodeTags}
@@ -118,7 +118,7 @@ const Plugin = ({
       showingBubbles={showingBubbles}
       showingContent={showingContent}
       showingLauncher={showingLauncher}
-      skipContentEntry={hostname === 'www.pierre-cardin.de'}
+      skipContentEntry={assessmentHostname === 'www.pierre-cardin.de'}
     />
   )
 }

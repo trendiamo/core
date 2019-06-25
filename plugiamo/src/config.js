@@ -26,11 +26,14 @@ const location = {
   ...window.location,
 }
 
+const assessmentHostname = production ? location.hostname : process.env.ASSESSMENT
+
 const overrideAccount =
   localStorage.getItem('trnd-plugin-override-account') || (production ? undefined : process.env.ACCOUNT)
 
 // export as both a default object and indivudal items
 export {
+  assessmentHostname,
   graphQlUrl,
   location,
   mixpanelToken,
@@ -47,6 +50,7 @@ export {
   GOexperimentId,
 }
 export default {
+  assessmentHostname,
   graphQlUrl,
   location,
   mixpanelToken,

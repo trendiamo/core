@@ -1,16 +1,17 @@
 import dataGathering from 'data-gathering/pierre-cardin'
 import mixpanel from 'ext/mixpanel'
+import { assessmentHostname } from 'config'
 import { suggestions } from './data/pierre-cardin'
 
-const hostname = process.env.ASSESSMENT || location.hostname
-
-const isPCAssessment = () => hostname === 'www.pierre-cardin.de'
+const isPCAssessment = () => assessmentHostname === 'www.pierre-cardin.de'
 
 const deliusPathnames = ['/', '/en/', '/de/']
 
-const isDeliusAssessment = () => hostname === 'www.delius-contract.de' && deliusPathnames.includes(location.pathname)
+const isDeliusAssessment = () =>
+  assessmentHostname === 'www.delius-contract.de' && deliusPathnames.includes(location.pathname)
 
-const isDeliusPDP = () => hostname === 'www.delius-contract.de' && location.pathname.match(/\/de\/produkte\/.+\/.+/)
+const isDeliusPDP = () =>
+  assessmentHostname === 'www.delius-contract.de' && location.pathname.match(/\/de\/produkte\/.+\/.+/)
 
 const rememberPersona = persona => sessionStorage.setItem('trnd-remembered-persona', JSON.stringify(persona))
 
@@ -41,7 +42,7 @@ const getShopcartProductIds = () =>
         .toArray()
 
 const recommendedProducts = results => {
-  const productReferences = results.find(item => item.hostname === hostname).products
+  const productReferences = results.find(item => item.hostname === assessmentHostname).products
   const shopcartProductIds = getShopcartProductIds()
   const shopcartProducts = productReferences.filter(product => shopcartProductIds.includes(product.id))
 

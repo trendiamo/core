@@ -9,11 +9,11 @@ import infoMsg from 'shared/info-msg'
 import mixpanel from 'ext/mixpanel'
 import setup, { optionsFromHash } from './setup'
 import setupFlowHistory from './setup/flow-history'
+import { assessmentHostname, location } from 'config'
 import { getScrollbarWidth, isSmall } from 'utils'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { isDeliusAssessment, isDeliusPDP, isPCAssessment, isPCAssessmentCart } from 'special/assessment/utils'
-import { location } from 'config'
 import { timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
@@ -113,8 +113,7 @@ const App = ({
   )
 }
 
-const hostname = process.env.ASSESSMENT || location.hostname
-const defaultShowingContent = isDeliusAssessment() ? hostname === 'www.pierre-cardin.de' : false
+const defaultShowingContent = isDeliusAssessment() ? assessmentHostname === 'www.pierre-cardin.de' : false
 
 const AppHacks = ({ data }) => {
   const [showAssessmentContent, setShowAssessmentContent] = useState(false)
