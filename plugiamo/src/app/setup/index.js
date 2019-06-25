@@ -32,7 +32,7 @@ const getMatchedPersona = ({ flow, data }) => {
 const setup = (data, pathFromNav) => {
   const { /* persona,*/ open: openOpt, path: pathOpt, picture } = optionsFromHash()
   const { flow, type: flowType } = { flow: data.flow, type: data.flow.flowType }
-  const open = pathFromNav ? true : isSmall() ? false : (openOpt && openOpt.match(/1|true/)) || flowType === 'outro'
+  const open = pathFromNav ? true : isSmall() ? false : openOpt && openOpt.match(/1|true/)
 
   if (picture) getFrekklsConfig().addPicture(picture)
 
