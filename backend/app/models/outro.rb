@@ -15,7 +15,7 @@ class Outro < ApplicationRecord
     attributes
       .slice("id", "name", "chat_bubble_text", "chat_bubble_button_no", "chat_bubble_button_yes", "created_at",
              "updated_at", "lock_version")
-      .merge(persona: { id: persona.id, profile_pic: { url: persona.profile_pic_url }, name: persona.name,
+      .merge(persona: { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name,
                         pic_rect: persona.pic_rect, instagram_url: persona.instagram_url, },
 
              type: "Outro",
