@@ -202,13 +202,19 @@ const Base = ({
   }, [goToNextStep])
 
   useEffect(() => {
-    if (animateOpacity) setTimeout(() => setAnimateOpacity(false), 10)
     setCurrentStep(step)
+  }, [step])
+
+  useEffect(() => {
+    if (animateOpacity) setTimeout(() => setAnimateOpacity(false), 10)
+  }, [animateOpacity])
+
+  useEffect(() => {
     return () => {
       timeout.clear('exitOnMobile')
       timeout.clear('loadingProgressBar')
     }
-  }, [animateOpacity, step])
+  }, [])
 
   const storeLog = useMemo(
     () => ({
