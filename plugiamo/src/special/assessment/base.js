@@ -1,23 +1,17 @@
 import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
 import data from './data'
-import flatten from 'lodash.flatten'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import StoreModal from './store-modal'
 import useChatActions from 'ext/hooks/use-chat-actions'
 import { assessmentHostname } from 'config'
+import { assessProducts, rememberPersona } from './utils'
 import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
 import { isSmall } from 'utils'
-import { rememberPersona } from './utils'
 import { SimpleChat, timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
-
-const assessProducts = (products, tags) => {
-  const productsResult = flatten(tags.map(tag => products.filter(product => product.tag && tag === product.tag)))
-  return productsResult.sort((a, b) => !!b.highlight - !!a.highlight)
-}
 
 const ctaButton = { label: 'Ergebnisse anzeigen' }
 
@@ -59,7 +53,7 @@ const Base = ({
     if (currentStepKey === 'store') {
       let fetchStartTime = performance.now()
       fetchProducts().then(results => {
-        const client = results.find(client => client.hostname === location.hostname)
+        const client = results.find(client => client.hostname === assessmentHostname)
         timeout.set(
           'settingResults',
           () => {

@@ -1,4 +1,5 @@
 import dataGathering from 'data-gathering/pierre-cardin'
+import flatten from 'lodash.flatten'
 import mixpanel from 'ext/mixpanel'
 import { assessmentHostname } from 'config'
 import { suggestions } from './data/pierre-cardin'
@@ -19,6 +20,21 @@ const cartIsNotEmpty = () => getShopcartProductIds().length > 0
 
 const recallPersona = () => JSON.parse(sessionStorage.getItem('trnd-remembered-persona'))
 const isPCAssessmentCart = () => isPCAssessment() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
+
+const assessProducts = (products, tags) => {
+  const productsResult = flatten(
+    tags.map(tag => {
+      return products.filter(product => {
+        if (product.tags) {
+          const uniqueTag = tag.substring(tag.indexOf('/') + 1)
+          return product.tags.includes(uniqueTag)
+        }
+        return product.tag && tag === product.tag
+      })
+    })
+  )
+  return productsResult.sort((a, b) => !!b.highlight - !!a.highlight)
+}
 
 const fetchProducts = () =>
   fetch('https://improv.ams3.digitaloceanspaces.com/improv/improv-data.json', {
@@ -95,4 +111,5 @@ export {
   fetchProducts,
   isDeliusAssessment,
   isDeliusPDP,
+  assessProducts,
 }
