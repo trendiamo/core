@@ -1,10 +1,10 @@
 import Content from './content'
 import ErrorBoundaries from 'ext/error-boundaries'
+import Frame from './frame'
 import Header from './header'
 import Modal from 'shared/modal'
-import { Frame } from 'plugin-base'
 import { h } from 'preact'
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const iframeStyle = {
   width: '100%',
@@ -37,8 +37,6 @@ const StoreModal = ({
 }) => {
   const [isOpen, setIsOpen] = useState(true)
 
-  const ref = useRef(null)
-
   const newGoToPrevStep = useCallback(() => {
     setIsOpen(false)
     setShowingLauncher(true)
@@ -59,7 +57,7 @@ const StoreModal = ({
 
   return (
     <Modal allowBackgroundClose closeModal={newOnCloseModal} isOpen={isOpen}>
-      <Frame ref={ref} style={iframeStyle}>
+      <Frame style={iframeStyle}>
         <ErrorBoundaries>
           <FrameChild
             flowType={module && module.flowType}
