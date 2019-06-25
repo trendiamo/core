@@ -2,11 +2,16 @@ import CloseButton from './close-button'
 import ErrorBoundaries from 'ext/error-boundaries'
 import omit from 'lodash.omit'
 import styled from 'styled-components'
-import { Frame, positioning, useAnimateOnMount } from 'plugin-base'
+import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
+import { forwardRef } from 'preact/compat'
+import { Frame, positioning } from 'plugin-base'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
+import { useEffect } from 'preact/hooks'
 
-const IFrame = styled(props => <Frame {...omit(props, ['launcherConfig', 'position', 'skipEntry'])} />).attrs({
+const IFrame = (props, ref) => <Frame {...omit(props, ['launcherConfig', 'position', 'skipEntry'])} ref={ref} />
+
+const StyledFrame = styled(forwardRef(IFrame)).attrs({
   title: 'Frekkls Content',
 })`
   z-index: 2147483000;
@@ -37,26 +42,21 @@ const IFrame = styled(props => <Frame {...omit(props, ['launcherConfig', 'positi
   }
 `
 
-const ContentFrame = ({
-  skipEntry,
-  children,
-  frameStyleStr,
-  isUnmounting,
-  hidden,
-  onToggleContent,
-  position,
-  launcherConfig,
-}) => {
-  const { entry } = useAnimateOnMount({ skipEntry })
+const ContentFrame = (
+  { entry, skipEntry, children, frameStyleStr, isUnmounting, hidden, onToggleContent, position, launcherConfig },
+  ref
+) => {
+  useEffect(() => ref.current.focus(), [ref])
 
   return (
-    <IFrame
+    <StyledFrame
       entry={entry}
       hidden={hidden}
       isUnmounting={isUnmounting}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
       position={position}
+      ref={ref}
       skipEntry={skipEntry}
       styleStr={frameStyleStr}
     >
@@ -67,8 +67,12 @@ const ContentFrame = ({
           <CloseButton onToggleContent={onToggleContent} />
         </div>
       </ErrorBoundaries>
-    </IFrame>
+    </StyledFrame>
   )
 }
 
-export default ContentFrame
+export default withHotkeys({
+  [escapeKey]: ({ onToggleContent, showingContent }) => () => {
+    if (showingContent) onToggleContent()
+  },
+})(forwardRef(ContentFrame))

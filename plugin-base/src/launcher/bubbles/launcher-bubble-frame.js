@@ -1,24 +1,29 @@
 import Frame from 'shared/frame'
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { keyframes, rollDuration } from './utils'
 import { positioning } from 'tools'
 
-const LauncherBubbleFrame = styled(props => (
-  <Frame
-    {...omit(props, [
-      'bubbleTimeoutId',
-      'extraBubble',
-      'position',
-      'textWidth',
-      'animation',
-      'elevation',
-      'disappear',
-      'launcherConfig',
-    ])}
-  />
-)).attrs({
+const LauncherBubbleFrame = styled(props => {
+  const ref = useRef(null)
+
+  return (
+    <Frame
+      {...omit(props, [
+        'bubbleTimeoutId',
+        'extraBubble',
+        'position',
+        'textWidth',
+        'animation',
+        'elevation',
+        'disappear',
+        'launcherConfig',
+      ])}
+      ref={ref}
+    />
+  )
+}).attrs({
   title: 'Frekkls Launcher Bubble',
 })`
   border: 0;

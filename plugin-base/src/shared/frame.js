@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { StyleSheetManager } from 'styled-components'
 
@@ -46,13 +46,13 @@ const addPlatformClass = body => {
   body.classList.add(platformClass)
 }
 
-const Frame = ({ children, styleStr, title, ...rest }) => {
-  const iframeRef = useRef()
+const Frame = forwardRef(({ children, styleStr, title, ...rest }, ref) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(
     () => {
-      const { contentDocument } = iframeRef.current
+      if (isLoaded) return
+      const { contentDocument } = ref.current
       const load = () => {
         loadCss(contentDocument.head, robotoFontUrl)
         addCss(contentDocument.head, `${baseStyle}${styleStr}`)
@@ -63,23 +63,23 @@ const Frame = ({ children, styleStr, title, ...rest }) => {
       if (contentDocument.readyState === 'complete') {
         load()
       } else {
-        iframeRef.current.onload = load
+        ref.current.onload = load
       }
     },
-    [styleStr]
+    [isLoaded, ref, styleStr]
   )
 
   return (
-    <iframe {...rest} ref={iframeRef} tabIndex="-1" title={title}>
+    <iframe {...rest} ref={ref} tabIndex="-1" title={title}>
       {isLoaded &&
-        iframeRef.current &&
-        iframeRef.current.contentDocument &&
+        ref.current &&
+        ref.current.contentDocument &&
         ReactDOM.createPortal(
-          <StyleSheetManager target={iframeRef.current.contentDocument.head}>{children}</StyleSheetManager>,
-          iframeRef.current.contentDocument.body
+          <StyleSheetManager target={ref.current.contentDocument.head}>{children}</StyleSheetManager>,
+          ref.current.contentDocument.body
         )}
     </iframe>
   )
-}
+})
 
 export default Frame

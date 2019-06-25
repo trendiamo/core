@@ -1,11 +1,13 @@
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { Frame, useAnimateOnMount } from 'shared'
 
-const StyledFrame = styled(props => (
-  <Frame {...omit(props, ['position', 'entry', 'showingContent', 'disappear', 'launcherConfig'])} />
-)).attrs({
+const StyledFrame = styled(props => {
+  const ref = useRef(null)
+
+  return <Frame {...omit(props, ['position', 'entry', 'showingContent', 'disappear', 'launcherConfig'])} ref={ref} />
+}).attrs({
   title: 'Frekkls Launcher',
 })`
   border: 0;

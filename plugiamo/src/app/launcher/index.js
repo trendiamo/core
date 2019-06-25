@@ -1,4 +1,3 @@
-import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { h } from 'preact'
 import { Launcher as LauncherBase } from 'plugin-base'
 import { useMemo } from 'preact/hooks'
@@ -46,8 +45,4 @@ const Launcher = ({
   )
 }
 
-export default withHotkeys({
-  [escapeKey]: ({ onToggleContent, showingContent }) => () => {
-    if (showingContent) onToggleContent()
-  },
-})(Launcher)
+export default Launcher

@@ -20,6 +20,8 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       url: videoItem.youtubeUrl,
     })
     setVideoModalOpen(false)
+    const frekklsContent = document.querySelector('iframe[title="Frekkls Content"]')
+    frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
   }, [flowType, videoItem])
 
   const closePictureModal = useCallback(() => {
@@ -29,6 +31,8 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       url: pictureItem.url,
     })
     setPictureModalOpen(false)
+    const frekklsContent = document.querySelector('iframe[title="Frekkls Content"]')
+    frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
   }, [flowType, pictureItem])
 
   const modalsProps = useMemo(
