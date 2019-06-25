@@ -51,8 +51,10 @@ const App = ({
 
     getFrekklsConfig().onShow(autoOpen)
 
+    if (data.flow.flowType === 'outro') return setPluginState('closed')
+
     if (autoOpen) {
-      data.flow.flowType === 'outro' ? setPluginState('closed') : setShowingContent(true)
+      setShowingContent(true)
     } else {
       mixpanel.time_event('Toggled Plugin')
     }
