@@ -1,7 +1,7 @@
-import data from 'tagger/data'
 import React from 'react'
 import styled from 'styled-components'
 import Tag from './tag'
+import tagList from 'tagger/tag-list'
 
 const Container = styled.div`
   max-height: 300px;
@@ -50,7 +50,7 @@ const getGroupedTags = data => {
 
 const Tags = ({ currentProduct, toggleTag }) => (
   <Container>
-    {getGroupedTags(data).map(group => (
+    {getGroupedTags(tagList).map(group => (
       <GroupContainer key={group.name}>
         <Title>{group.name}</Title>
         {group.tags.map(tag => (

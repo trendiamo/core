@@ -1,4 +1,4 @@
-const data = [
+const tagList = [
   'Casual/Jeans und Hosen/Regular Fit',
   'Casual/Jeans und Hosen/Comfort Fit',
   'Casual/Jeans und Hosen/Tapered Fit',
@@ -42,4 +42,4 @@ const data = [
   { key: 'highlight', name: 'Highlight' },
 ]
 
-export default data
+export default tagList
