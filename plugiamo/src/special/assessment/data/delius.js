@@ -282,7 +282,7 @@ const data = {
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Pflegeheim.jpg',
-                      title: 'Pflegeheime',
+                      title: 'Pflegeheim',
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Krankenhaus.jpg',
@@ -593,7 +593,7 @@ const data = {
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
-                      title: 'Gardinen',
+                      title: 'Gardine',
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
@@ -869,7 +869,7 @@ const data = {
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
-                      title: 'Gardinen',
+                      title: 'Gardine',
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
@@ -1013,7 +1013,7 @@ const data = {
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
-                      title: 'Gardinen',
+                      title: 'Gardine',
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
@@ -1422,7 +1422,7 @@ const data = {
           ],
         },
       },
-      'Einkaufsgesellschaft/Pflegeheime': {
+      'Einkaufsgesellschaft/Pflegeheim': {
         multiple: true,
         header,
         simpleChat: {

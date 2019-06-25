@@ -1,12 +1,21 @@
 import Buttons from './components/buttons'
-import data from './data'
 import ProductsAndTags from './components/products-and-tags'
 import React from 'react'
 import Spinner from 'shared/loading-spinner'
 import styled from 'styled-components'
+import tagList from './tag-list'
 import withHotkeys from 'ext/recompose/with-hotkeys'
 import { branch, compose, lifecycle, renderComponent, withHandlers, withProps, withState } from 'recompose'
-import { copyToClipboard, createClientRecord, getClient, parseProducts, updateClientRecords } from 'utils'
+import {
+  copyToClipboard,
+  createClientRecord,
+  getClient,
+  hostname,
+  impl,
+  parseProducts,
+  updateClientRecords,
+  useMultipleTagging,
+} from 'utils'
 
 const keyboard = {
   a: 65,
@@ -41,7 +50,7 @@ const Flex = styled.div`
 const Tagger = ({ onCopyResult, ...props }) => (
   <Flex>
     <H1>{'Products Tagger'}</H1>
-    <ProductsAndTags data={data} {...props} />
+    <ProductsAndTags tagList={tagList} {...props} />
     <HelpText>{'Hotkeys: 1-9: tagging; W|S: navigate products'}</HelpText>
     <Buttons onCopyResult={onCopyResult} />
   </Flex>
@@ -59,15 +68,33 @@ export default compose(
     currentProduct: products && products[productIndex],
   })),
   withHandlers({
-    changeProducts: ({ products }) => ({ tag, productIds }) => {
+    changeTag: () => ({ product, tag }) => {
+      if (tag.key) {
+        return { ...product, [tag.key]: !product[tag.key] }
+      }
+      if (useMultipleTagging) {
+        const productHasTags = !!product.tags
+        let newTags = []
+        if (productHasTags) {
+          const productHasExactTag = product.tags.includes(tag)
+          if (productHasExactTag) {
+            newTags = product.tags.map(productTag => productTag !== tag && productTag).filter(e => e)
+          } else {
+            newTags = [...product.tags, tag]
+          }
+        } else {
+          newTags = [tag]
+        }
+        return { ...product, tags: newTags }
+      }
+      return { ...product, tag: product.tag === tag ? '' : tag || product.tag }
+    },
+  }),
+  withHandlers({
+    changeProducts: ({ products, changeTag }) => ({ tag, productIds }) => {
       return products.map((product, index) => {
         if (productIds.indexOf(index) === -1) return product
-        if (tag.key) {
-          product[tag.key] = !product[tag.key]
-        } else {
-          product.tag = product.tag === tag ? '' : tag || product.tag
-        }
-        return product
+        return changeTag({ product, tag })
       })
     },
   }),
@@ -79,13 +106,14 @@ export default compose(
   }),
   withHandlers({
     onCopyResult: ({ setChangedProducts, client, products, setClient, setIsLoading }) => async () => {
-      copyToClipboard(JSON.stringify({ products }))
+      const newProducts = impl.filterFinalData ? impl.filterFinalData(products) : products
+      copyToClipboard(JSON.stringify({ products: newProducts }))
       setIsLoading(true)
       if (client) {
-        await updateClientRecords(client._id, { products })
+        await updateClientRecords(client._id, { products: newProducts })
         setChangedProducts([])
       } else {
-        const json = await createClientRecord({ hostname: location.hostname, products })
+        const json = await createClientRecord({ hostname, products: newProducts })
         setClient(json)
         setChangedProducts([])
       }
@@ -144,7 +172,8 @@ export default compose(
   lifecycle({
     async componentDidMount() {
       const { setClient, setIsLoading, products, setProducts, getModalState, setPageProducts } = this.props
-      const client = await getClient(location.hostname)
+      const client = await getClient(hostname)
+      setPageProducts(products)
       if (client && !getModalState()) return
       if (client.length > 0) {
         setClient(client[0])
@@ -152,13 +181,16 @@ export default compose(
           const clientProduct = client[0].products.find(o => o.id === product.id)
           const clientProductIndex = client[0].products.findIndex(o => o.id === product.id)
           if (clientProduct) {
-            product.tag = clientProduct.tag
+            if (clientProduct.tags) {
+              product.tags = clientProduct.tags || []
+            } else {
+              product.tag = clientProduct.tag || ''
+            }
             product.highlight = clientProduct.highlight
             client[0].products.splice(clientProductIndex, 1)
           }
         })
         setProducts([...products, ...client[0].products])
-        setPageProducts(products)
       }
       setIsLoading(false)
     },

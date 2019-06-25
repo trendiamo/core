@@ -1,4 +1,10 @@
+import omit from 'lodash.omit'
+
 const $$ = (selector, callback) => Array.prototype.map.call(document.querySelectorAll(selector), callback)
+
+export const hostname = process.env.NODE_ENV === 'production' ? location.hostname : process.env.CLIENT
+
+export const useMultipleTagging = hostname !== 'www.pierre-cardin.de'
 
 const implFactory = {
   'www.baldessarini.com': {
@@ -214,9 +220,68 @@ const implFactory = {
       ]
     },
   },
+  'www.delius-contract.de': {
+    iconsMatch: {
+      'purpose-deligard.svg': 'DELIGARD',
+      'purpose-dimout.svg': 'Verdunkelungsstoffe',
+      'purpose-delitherm.svg': 'DELITHERM',
+      'purpose-akustik.svg': 'Akustik',
+      'purpose-ship.svg': 'Ship',
+      'purpose-delicare.svg': 'DELICARE',
+      'purpose-delimar.svg': 'DELIMAR',
+    },
+    parseProducts() {
+      const products = $$('.product', e => {
+        const url = e.querySelector('a').href
+        const title = e.querySelector('.product--name').innerText
+        const picUrl = e.querySelectorAll('.img-responsive')[0].src
+        const id = e.querySelector('h3 .pull-right').innerText
+        const filters = []
+        e.querySelectorAll('.product-icons .pull-left img').forEach(item => {
+          filters.push(item.alt)
+        })
+        return {
+          id,
+          url,
+          title,
+          picUrl,
+          filters,
+          displayPrice: id,
+        }
+      })
+      return products.filter(product => !!product)
+    },
+    filter: [],
+    getFilter() {
+      if (this.filter.length === 0) {
+        const filterDiv = document.querySelectorAll('form[name=filter] ul')
+        if (filterDiv.length === 0) return
+        const checkboxDivs = filterDiv[1].querySelectorAll('.checkbox')
+        checkboxDivs.forEach(checkboxDiv => {
+          if (checkboxDiv.querySelector('input').id === 'deliflamm') return
+          const checkbox = checkboxDiv.querySelector('[id^="purpose-"]')
+          const icon = checkboxDiv.querySelector('img')
+          const filterName = this.iconsMatch[icon.alt]
+          const imgUrl = icon.src
+          const object = {
+            name: filterName,
+            checked: checkbox.checked,
+            imgUrl,
+          }
+          this.filter.push(object)
+        })
+      }
+      return this.filter
+    },
+    filterFinalData(products) {
+      return products.map(product => {
+        return omit({ ...product }, ['filters'])
+      })
+    },
+  },
 }
 
-const impl = implFactory[location.hostname]
+export const impl = implFactory[hostname]
 
 export const parseProducts = () => impl && impl.parseProducts()
 
