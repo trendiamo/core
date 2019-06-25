@@ -37,14 +37,6 @@ ngrok http 8080
 yarn eslint src
 ```
 
-## Storybook
-
-https://storybook.js.org/
-
-```
-yarn storybook
-```
-
 ## Deploy
 
 ```

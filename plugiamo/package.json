@@ -24,9 +24,7 @@
     "start": "webpack-dev-server",
     "build": "webpack -p --progress --config webpack.prod.js",
     "deploy": "bin/deploy",
-    "analyze": "yarn webpack-bundle-analyzer build/stats.json",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "analyze": "yarn webpack-bundle-analyzer build/stats.json"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -34,13 +32,10 @@
     "@babel/plugin-transform-react-jsx": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/runtime": "^7.0.0",
-    "@storybook/addon-actions": "^5.0.0",
-    "@storybook/addon-links": "^5.0.0",
-    "@storybook/addons": "^5.0.0",
-    "@storybook/react": "^5.0.0",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.0",
     "babel-plugin-transform-imports": "^1.5.1",
+    "css-loader": "^3.0.0",
     "dotenv-webpack": "^1.5.7",
     "eslint": "^5.15.1",
     "eslint-config-prettier": "^4.1.0",
@@ -53,6 +48,7 @@
     "eslint-plugin-react-hooks": "^1.6.0",
     "eslint-plugin-sort-imports-es6-autofix": "^0.4.0",
     "prettier": "^1.16.4",
+    "style-loader": "^0.23.1",
     "svg-loader": "^0.0.2",
     "webpack": "^4.29.6",
     "webpack-bundle-analyzer": "^3.3.2",
