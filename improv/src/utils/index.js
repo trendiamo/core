@@ -235,18 +235,23 @@ const implFactory = {
         const url = e.querySelector('a').href
         const title = e.querySelector('.product--name').innerText
         const picUrl = e.querySelectorAll('.img-responsive')[0].src
-        const id = e.querySelector('h3 .pull-right').innerText
+        const idDiv = e.querySelector('h3 .pull-right')
+        const id = idDiv ? idDiv.innerText : title
+        const showPrice = !!idDiv
         const filters = []
-        e.querySelectorAll('.product-icons .pull-left img').forEach(item => {
-          filters.push(item.alt)
-        })
+        const iconDivs = e.querySelectorAll('.product-icons .pull-left img')
+        if (iconDivs) {
+          iconDivs.forEach(item => {
+            filters.push(item.alt)
+          })
+        }
         return {
           id,
           url,
           title,
           picUrl,
           filters,
-          displayPrice: id,
+          displayPrice: showPrice && id,
         }
       })
       return products.filter(product => !!product)
