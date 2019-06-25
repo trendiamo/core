@@ -1,6 +1,5 @@
 import ContentFrame from './content-frame'
-import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
-import { ContentWrapper, history } from 'plugin-base'
+import { ContentWrapper, history, useAnimateOnMount } from 'plugin-base'
 import { h } from 'preact'
 import { useEffect } from 'preact/hooks'
 
@@ -14,8 +13,11 @@ const Content = ({
   position,
   persona,
   setShowAssessmentContent,
+  showingContent,
   skipEntry,
 }) => {
+  const { entry } = useAnimateOnMount({ skipEntry })
+
   useEffect(() => {
     if (window.__trndInitialPath) history.replace(window.__trndInitialPath)
     return () => (document.body.style.overflow = '')
@@ -23,12 +25,14 @@ const Content = ({
 
   return (
     <ContentFrame
+      entry={entry}
       frameStyleStr={frameStyleStr}
       hidden={hideContentFrame}
       isUnmounting={isUnmounting}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
       position={position}
+      showingContent={showingContent}
       skipEntry={skipEntry}
     >
       <ContentWrapper
@@ -42,8 +46,4 @@ const Content = ({
   )
 }
 
-export default withHotkeys({
-  [escapeKey]: ({ onToggleContent, showingContent }) => () => {
-    if (showingContent) onToggleContent()
-  },
-})(Content)
+export default Content

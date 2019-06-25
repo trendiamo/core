@@ -48,6 +48,8 @@ const ImagesModal = ({ flowType, index, isOpen, isTouch, pictureItem, setIsOpen,
       imageUrl: selectedImage && selectedImage.url,
     })
     setIsOpen(false)
+    const frekklsContent = document.querySelector('iframe[title="Frekkls Content"]')
+    frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
   }, [flowType, selectedImage, setIsOpen])
 
   const onPictureLoad = useCallback(() => {

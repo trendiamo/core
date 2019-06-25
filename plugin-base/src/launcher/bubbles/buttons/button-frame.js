@@ -1,9 +1,13 @@
 import Frame from 'shared/frame'
 import omit from 'lodash.omit'
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 
-const ButtonFrame = styled(props => <Frame {...omit(props, ['action', 'isDelayed', 'left', 'clicked', 'value'])} />)`
+const ButtonFrame = styled(props => {
+  const ref = useRef(null)
+
+  return <Frame {...omit(props, ['action', 'isDelayed', 'left', 'clicked', 'value'])} ref={ref} />
+})`
   height: ${({ action }) => (action === 'disappear' || action === 'fadeOut' ? '40px' : 0)};
   width: ${({ action }) => (action === 'disappear' || action === 'fadeOut' ? '100%' : 0)};
   border: 2px solid #999;
