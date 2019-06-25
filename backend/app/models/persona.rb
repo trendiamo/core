@@ -12,6 +12,8 @@ class Persona < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
+  delegate :url, to: :profile_pic, prefix: :profile_pic
+
   def as_json(_options = {})
     attributes
       .slice("id", "name", "description", "account_id", "graphcms_ref", "instagram_url", "profile_pic_animation_url",
