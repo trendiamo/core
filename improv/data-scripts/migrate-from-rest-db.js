@@ -1,14 +1,16 @@
+// run with: node migrate-from-rest-db.js
+
 const fetch = require('node-fetch')
 const dotenv = require('dotenv')
 dotenv.config()
 
-const inprovApiKey = process.env.INPROV_API_KEY
+const restDbApiKey = process.env.REST_DB_API_KEY
 
 const optionsCopyClients = {
   method: 'GET',
   headers: {
     'cache-control': 'no-cache',
-    'x-apikey': inprovApiKey,
+    'x-apikey': restDbApiKey,
     'Content-Type': 'application/json',
   },
 }
