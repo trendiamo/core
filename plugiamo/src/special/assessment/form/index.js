@@ -131,6 +131,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
       onToggleContent()
       setPluginState('closed')
       timeout.set('hideLauncher', () => setDisappear(true), 10000)
+      sessionStorage.removeItem('frekkls-asmt-tags')
     })
   }, [assessmentForm, onToggleContent])
 
