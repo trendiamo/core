@@ -82,8 +82,8 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType, mergeAssessmentForm })
 
   useEffect(() => {
-    const assessmentOptions = localStorage.getItem('trnd-assessment-data')
-    if (assessmentOptions) setShowingContent(true)
+    const assessmentTags = sessionStorage.getItem('frekkls-asmt-tags')
+    if (assessmentTags) setShowingContent(true)
     mixpanel.track('Loaded Plugin', {
       autoOpen: false,
       flowType: module.flowType,
