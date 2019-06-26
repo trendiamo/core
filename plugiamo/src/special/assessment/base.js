@@ -15,7 +15,14 @@ import { SimpleChat, timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 const assessProducts = (products, tags) => {
-  const productsResult = flatten(tags.map(tag => products.filter(product => product.tag && tag === product.tag)))
+  const productsResult =
+    assessmentHostname === 'www.delius-contract.de'
+      ? flatten(
+          tags.map(tag =>
+            products.filter(product => product.tags && product.tags.find(productTag => tag.includes(productTag)))
+          )
+        )
+      : flatten(tags.map(tag => products.filter(product => product.tag && tag === product.tag)))
   return productsResult.sort((a, b) => !!b.highlight - !!a.highlight)
 }
 
@@ -59,7 +66,7 @@ const Base = ({
     if (currentStepKey === 'store') {
       let fetchStartTime = performance.now()
       fetchProducts().then(results => {
-        const client = results.find(client => client.hostname === location.hostname)
+        const client = results.find(client => client.hostname === assessmentHostname)
         timeout.set(
           'settingResults',
           () => {
