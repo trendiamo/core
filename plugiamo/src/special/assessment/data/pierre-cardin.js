@@ -43,8 +43,7 @@ const data = {
       description: 'Designer der Hosen. Ich würde Dir gern meine Key Looks für die neue Saison vorstellen!',
       name: 'Nico de Roy',
       profilePic: {
-        url:
-          'https://console-assets.ams3.digitaloceanspaces.com/uploads/personas-profile-pics/cd2692b6/Nico-de-Roy.jpg',
+        url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
       },
     },
     steps: {
