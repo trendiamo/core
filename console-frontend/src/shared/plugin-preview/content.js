@@ -1,9 +1,11 @@
 import omit from 'lodash.omit'
-import React, { useEffect, useState } from 'react'
+import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { ContentWrapper, Frame } from 'plugin-base'
 
-const StyledFrame = styled(props => <Frame {...omit(props, ['isEntry', 'isUnmounting'])} />)`
+const StyledFrame = styled(
+  forwardRef((props, ref) => <Frame {...omit(props, ['isEntry', 'isUnmounting'])} ref={ref} />)
+)`
   border: 0;
   overflow: hidden;
   border-radius: 8px;
@@ -20,13 +22,17 @@ const StyledFrame = styled(props => <Frame {...omit(props, ['isEntry', 'isUnmoun
 
 const ContentContainer = ({ children }) => {
   const [isEntry, setIsEntry] = useState(true)
+  const ref = useRef()
+
   useEffect(() => {
-    setTimeout(() => {
-      setIsEntry(false)
-    }, 10)
+    setTimeout(() => setIsEntry(false), 10)
   }, [])
 
-  return <StyledFrame isEntry={isEntry}>{children}</StyledFrame>
+  return (
+    <StyledFrame isEntry={isEntry} ref={ref}>
+      {children}
+    </StyledFrame>
+  )
 }
 
 const Content = ({ Base, showingContent }) => {
