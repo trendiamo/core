@@ -206,7 +206,8 @@ const Base = ({
   const onCtaButtonClick = useCallback(() => {
     goToNextStep('showResults')
     setCtaButtonClicked(true)
-  }, [goToNextStep])
+    sessionStorage.setItem('frekkls-asmt-tags', JSON.stringify(endNodeTags))
+  }, [endNodeTags, goToNextStep])
 
   useEffect(() => {
     setCurrentStep(step)

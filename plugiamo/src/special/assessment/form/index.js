@@ -34,6 +34,20 @@ const inquiryMutation = variables => {
     .catch(error => error)
 }
 
+const processTags = () => {
+  const sessionStorageTags = sessionStorage.getItem('frekkls-asmt-tags')
+  if (!sessionStorageTags) return ''
+  let stepCount, stringifiedTags
+  let lastStepTags = []
+  JSON.parse(sessionStorageTags).forEach(tagsArrays => {
+    let tagsArray = tagsArrays.split('/')
+    stepCount = tagsArray.length
+    lastStepTags.push(tagsArray.pop())
+    stringifiedTags = tagsArray.map((tag, index) => `Step ${index + 1}: ${tag}`).join('; ')
+  })
+  return [stringifiedTags, `Step ${stepCount}: ${lastStepTags.join('/')}`].join('; ')
+}
+
 const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {
   const [isUnmounting, setIsUnmounting] = useState(false)
   const [assessmentForm, setAssessmentForm] = useState({})
@@ -109,7 +123,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   }, [isMessageSent, setShowingContent, showingContent])
 
   const onCtaButtonClick = useCallback(() => {
-    let fields = { url: location.href }
+    let fields = { url: location.href, tags: processTags() }
     Object.keys(assessmentForm).map(key => (fields[key] = assessmentForm[key].value))
     const variables = { fields }
     inquiryMutation(variables).then(() => {
