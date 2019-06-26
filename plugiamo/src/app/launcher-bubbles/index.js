@@ -1,12 +1,12 @@
-import emojify from 'ext/emojify'
+import useEmojify from 'ext/hooks/use-emojify'
 import { h } from 'preact'
-import { LauncherBubbles as LauncherBubblesBase, timeout } from 'plugin-base'
+import { LauncherBubbles as LauncherBubblesBase } from 'plugin-base'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const TIME_END = 20 // 20 seconds
 
 // emojify and pass only what we want
-const convertData = (data, step) => {
+const convertData = (emojify, data, step) => {
   const newData = JSON.parse(JSON.stringify(data))
   const oldFlow = newData.flow || newData.launcher
   const flow = {
@@ -31,18 +31,22 @@ const LauncherBubbles = ({
   setDisappear,
 }) => {
   const [computedData, setComputedData] = useState(null)
+
   const newOnToggleContent = useCallback(() => {
     if (data.flow && data.flow.flowType === 'outro') return
 
     onToggleContent()
   }, [data.flow, onToggleContent])
 
+  const emojify = useEmojify()
   useEffect(() => {
-    setComputedData(convertData(data, 0))
-    timeout.set('LauncherBubblesUpdate', () => setComputedData(convertData(data, 1)), 500)
-    timeout.set('LauncherBubblesUpdate', () => setComputedData(convertData(data, 2)), 2000)
-    return () => timeout.clear('LauncherBubblesUpdate')
-  }, [data])
+    if (!emojify) return
+    let didCancel = false
+    setComputedData(convertData(emojify, data, 0))
+    setTimeout(() => didCancel || setComputedData(convertData(emojify, data, 1)), 500)
+    setTimeout(() => didCancel || setComputedData(convertData(emojify, data, 2)), 2000)
+    return () => (didCancel = true)
+  }, [data, emojify])
 
   return (
     <LauncherBubblesBase
