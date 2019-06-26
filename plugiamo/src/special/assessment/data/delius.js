@@ -1782,7 +1782,7 @@ const data = {
       },
     },
     launcher: {
-      chatBubbleText: '',
+      chatBubbleText: 'Sprechen Sie mit einem Experten',
       chatBubbleExtraText: '',
       persona: {
         name: 'Elisa',
