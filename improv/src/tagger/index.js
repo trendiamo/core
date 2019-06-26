@@ -110,7 +110,7 @@ export default compose(
       copyToClipboard(JSON.stringify({ products: newProducts }))
       setIsLoading(true)
       if (client) {
-        await updateClientRecords(client._id, { products: newProducts })
+        await updateClientRecords(client.id, { client: { payload: { products: newProducts } } })
         setChangedProducts([])
       } else {
         const json = await createClientRecord({ hostname, products: newProducts })
@@ -178,8 +178,8 @@ export default compose(
       if (client.length > 0) {
         setClient(client[0])
         products.forEach(product => {
-          const clientProduct = client[0].products.find(o => o.id === product.id)
-          const clientProductIndex = client[0].products.findIndex(o => o.id === product.id)
+          const clientProduct = client[0].payload.products.find(o => o.id === product.id)
+          const clientProductIndex = client[0].payload.products.findIndex(o => o.id === product.id)
           if (clientProduct) {
             if (clientProduct.tags) {
               product.tags = clientProduct.tags || []
@@ -187,10 +187,10 @@ export default compose(
               product.tag = clientProduct.tag || ''
             }
             product.highlight = clientProduct.highlight
-            client[0].products.splice(clientProductIndex, 1)
+            client[0].payload.products.splice(clientProductIndex, 1)
           }
         })
-        setProducts([...products, ...client[0].products])
+        setProducts([...products, ...client[0].payload.products])
       }
       setIsLoading(false)
     },
