@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-const useAnimateOnMount = ({ delay, skipEntry } = {}) => {
-  const [entry, setEntry] = useState(!skipEntry)
+const useAnimateOnMount = ({ delay } = {}) => {
+  const [entry, setEntry] = useState(true)
 
   useEffect(
     () => {
@@ -13,8 +13,6 @@ const useAnimateOnMount = ({ delay, skipEntry } = {}) => {
     },
     [delay]
   )
-
-  if (skipEntry) return { entry: false }
 
   return { entry }
 }

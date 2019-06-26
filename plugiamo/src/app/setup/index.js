@@ -25,13 +25,14 @@ export const optionsFromHash = () => {
 
 const getMatchedPersona = ({ flow, data }) => {
   if (data.persona) return data.persona
+  if (data.launcher && data.launcher.persona) return data.launcher.persona
   if (isPCAssessment() && flow.flowType === 'outro' && recallPersona()) return recallPersona()
   if (flow) return flow.persona
 }
 
 const setup = (data, pathFromNav) => {
   const { /* persona,*/ open: openOpt, path: pathOpt, picture } = optionsFromHash()
-  const { flow, type: flowType } = { flow: data.flow, type: data.flow.flowType }
+  const { flow, type: flowType } = { flow: data.flow, type: data.flowType || data.flow.flowType }
   const open = pathFromNav ? true : isSmall() ? false : openOpt && openOpt.match(/1|true/)
 
   if (picture) getFrekklsConfig().addPicture(picture)

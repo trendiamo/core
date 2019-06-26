@@ -6,6 +6,7 @@ import data from 'special/assessment/data/pierre-cardin'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
+import useTimeout from 'ext/hooks/use-timeout'
 import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
 import { isSmall } from 'utils'
@@ -16,9 +17,12 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   const [disappear, setDisappear] = useState(false)
   const [isUnmounting, setIsUnmounting] = useState(false)
   const [pluginState, setPluginState] = useState('default')
+  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
 
   const [product, setProduct] = useState(null)
   const [productType, setProductType] = useState(null)
+
+  useEffect(() => () => timeout.clear('exitOnMobile'), [])
 
   const module = useMemo(
     () => ({
@@ -45,6 +49,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
       if (!foundKey) return
       setProductType(data.sizeGuide.tagSizeGuides[foundKey])
       mixpanel.track('Loaded Plugin', {
+        autoOpen: false,
         flowType: 'asmt-size-guide',
         hash: location.hash,
         hostname: location.hostname,
@@ -59,7 +64,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
 
     if (showingContent) {
       setPluginState('closed')
-      timeout.set('hideLauncher', () => setDisappear(true), 22000)
+      setDisappearTimeout(() => setDisappear(true), 22000)
     }
 
     if (showingContent && isSmall()) {
@@ -75,7 +80,11 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
     }
 
     setShowingContent(!showingContent)
-  }, [pluginState, setShowingContent, showingContent])
+  }, [pluginState, setDisappearTimeout, setShowingContent, showingContent])
+
+  useEffect(() => {
+    if (showingContent) clearDisappearTimeout()
+  }, [clearDisappearTimeout, showingContent])
 
   if (!product || !productType || !data.sizeGuide.steps[productType]) return null
 
