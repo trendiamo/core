@@ -67,10 +67,11 @@ const Base = ({
       let fetchStartTime = performance.now()
       fetchProducts().then(results => {
         const client = results.find(client => client.hostname === assessmentHostname)
+        if (!client || !client.payload || !client.payload.products) return
         timeout.set(
           'settingResults',
           () => {
-            setResults(assessProducts(client.products, endNodeTags))
+            setResults(assessProducts(client.payload.products, endNodeTags))
           },
           Math.max(800 - (performance.now() - fetchStartTime), 10)
         )
