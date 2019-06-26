@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 const header = {
   title: 'Ihr DELIUS Assistent',
-  subtitle: '',
+  subtitle: 'In 3 Schritten zum richtigen Produkt',
   imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
   animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
   backgroundColor: '#fff',
@@ -37,12 +37,13 @@ const data = {
                 {
                   id: 2,
                   type: 'SimpleChatTextMessage',
-                  text: 'Willkommen bei Delius...',
+                  text:
+                    'Willkommen bei Delius! 🙂 Kategorisieren Sie kurz, wonach Sie ungefähr suchen und wir zeigen Ihnen die für Sie relevantesten Produkte.',
                 },
                 {
                   id: 3,
                   type: 'SimpleChatTextMessage',
-                  text: '….in der Welt der Objekttextilien',
+                  text: 'Was beschreibt Ihre Branche am besten?',
                 },
                 {
                   id: 4,
@@ -90,7 +91,7 @@ const data = {
                 {
                   id: 5,
                   type: 'SimpleChatTextMessage',
-                  text: 'Message',
+                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 6,
@@ -116,10 +117,6 @@ const data = {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Buero.jpg',
                       title: 'Büro',
                     },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Ladenbau.jpg',
-                      title: 'Ladenbau',
-                    },
                   ],
                 },
               ],
@@ -137,7 +134,7 @@ const data = {
                 {
                   id: 7,
                   type: 'SimpleChatTextMessage',
-                  text: 'Message',
+                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 8,
@@ -163,10 +160,6 @@ const data = {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Buero.jpg',
                       title: 'Büro',
                     },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Ladenbau.jpg',
-                      title: 'Ladenbau',
-                    },
                   ],
                 },
               ],
@@ -184,7 +177,7 @@ const data = {
                 {
                   id: 9,
                   type: 'SimpleChatTextMessage',
-                  text: 'Message',
+                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 10,
@@ -197,10 +190,6 @@ const data = {
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
                       title: 'Health & Care',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Ladenbau.jpg',
-                      title: 'Ladenbau',
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Privatkunden.jpg',
@@ -223,7 +212,7 @@ const data = {
                 {
                   id: 11,
                   type: 'SimpleChatTextMessage',
-                  text: 'Message',
+                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 12,
@@ -249,10 +238,6 @@ const data = {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Privatkunden.jpg',
                       title: 'Privatkunden',
                     },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Ladenbau.jpg',
-                      title: 'Ladenbau',
-                    },
                   ],
                 },
               ],
@@ -270,7 +255,7 @@ const data = {
                 {
                   id: 13,
                   type: 'SimpleChatTextMessage',
-                  text: 'Message',
+                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 14,
@@ -305,7 +290,7 @@ const data = {
                 {
                   id: 15,
                   type: 'SimpleChatTextMessage',
-                  text: 'Message',
+                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 16,
@@ -346,7 +331,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 17, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 17,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 18,
                   type: 'assessmentStepOptions',
@@ -398,7 +387,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 19, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 19,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 20,
                   type: 'assessmentStepOptions',
@@ -408,7 +401,7 @@ const data = {
                       title: 'Neuheiten',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
@@ -416,11 +409,11 @@ const data = {
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
@@ -446,7 +439,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 21, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 21,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 22,
                   type: 'assessmentStepOptions',
@@ -490,7 +487,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 23, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 23,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 24,
                   type: 'assessmentStepOptions',
@@ -534,7 +535,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 25, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 25,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 26,
                   type: 'assessmentStepOptions',
@@ -570,50 +575,6 @@ const data = {
           ],
         },
       },
-      'Architekt/Ladenbau': {
-        multiple: true,
-        header,
-        simpleChat: {
-          simpleChatSteps: [
-            {
-              key: 'default',
-              simpleChatMessages: [
-                { id: 27, type: 'SimpleChatTextMessage', text: 'message' },
-                {
-                  id: 28,
-                  type: 'assessmentStepOptions',
-                  assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kabinenvorhang.jpg',
-                      title: 'Kabininvorhang',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
-                      title: 'Vorhänge',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
-                      title: 'Gardine',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
-                      title: 'Möbelstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
-                      title: 'Akustikstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
-                      title: 'Wandbeläge',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      },
       'Objekteur/Hotel': {
         multiple: true,
         header,
@@ -622,7 +583,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 29, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 29,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 30,
                   type: 'assessmentStepOptions',
@@ -674,7 +639,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 31, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 31,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 32,
                   type: 'assessmentStepOptions',
@@ -684,7 +653,7 @@ const data = {
                       title: 'Neuheiten',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
@@ -692,11 +661,11 @@ const data = {
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
@@ -722,7 +691,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 33, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 33,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 34,
                   type: 'assessmentStepOptions',
@@ -766,7 +739,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 35, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 35,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 36,
                   type: 'assessmentStepOptions',
@@ -810,7 +787,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 37, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 37,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 38,
                   type: 'assessmentStepOptions',
@@ -846,50 +827,6 @@ const data = {
           ],
         },
       },
-      'Objekteur/Ladenbau': {
-        multiple: true,
-        header,
-        simpleChat: {
-          simpleChatSteps: [
-            {
-              key: 'default',
-              simpleChatMessages: [
-                { id: 39, type: 'SimpleChatTextMessage', text: 'message' },
-                {
-                  id: 40,
-                  type: 'assessmentStepOptions',
-                  assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kabinenvorhang.jpg',
-                      title: 'Kabininvorhang',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
-                      title: 'Vorhänge',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
-                      title: 'Gardine',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
-                      title: 'Möbelstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
-                      title: 'Akustikstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
-                      title: 'Wandbeläge',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      },
       'Raumaustatter/Hotel': {
         multiple: true,
         header,
@@ -898,7 +835,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 41, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 41,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 42,
                   type: 'assessmentStepOptions',
@@ -950,7 +891,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 43, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 43,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 44,
                   type: 'assessmentStepOptions',
@@ -960,7 +905,7 @@ const data = {
                       title: 'Neuheiten',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
@@ -968,55 +913,11 @@ const data = {
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
-                      title: 'Möbelstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
-                      title: 'Akustikstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
-                      title: 'Wandbeläge',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      },
-      'Raumaustatter/Ladenbau': {
-        multiple: true,
-        header,
-        simpleChat: {
-          simpleChatSteps: [
-            {
-              key: 'default',
-              simpleChatMessages: [
-                { id: 45, type: 'SimpleChatTextMessage', text: 'message' },
-                {
-                  id: 46,
-                  type: 'assessmentStepOptions',
-                  assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kabinenvorhang.jpg',
-                      title: 'Kabininvorhang',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
-                      title: 'Vorhänge',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
-                      title: 'Gardine',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
@@ -1042,7 +943,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 47, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 47,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 48,
                   type: 'assessmentStepOptions',
@@ -1086,7 +991,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 49, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 49,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 50,
                   type: 'assessmentStepOptions',
@@ -1138,7 +1047,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 51, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 51,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 52,
                   type: 'assessmentStepOptions',
@@ -1148,7 +1061,7 @@ const data = {
                       title: 'Neuheiten',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
@@ -1156,11 +1069,11 @@ const data = {
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
@@ -1190,7 +1103,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 53, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 53,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 54,
                   type: 'assessmentStepOptions',
@@ -1238,7 +1155,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 55, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 55,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 56,
                   type: 'assessmentStepOptions',
@@ -1282,7 +1203,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 57, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 57,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 58,
                   type: 'assessmentStepOptions',
@@ -1318,58 +1243,6 @@ const data = {
           ],
         },
       },
-      'Händler/Ladenbau': {
-        multiple: true,
-        header,
-        simpleChat: {
-          simpleChatSteps: [
-            {
-              key: 'default',
-              simpleChatMessages: [
-                { id: 59, type: 'SimpleChatTextMessage', text: 'message' },
-                {
-                  id: 60,
-                  type: 'assessmentStepOptions',
-                  assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
-                      title: 'Vorhänge',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
-                      title: 'Dimout/Blackout',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
-                      title: 'Gardine',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
-                      title: 'Möbelstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
-                      title: 'Akustikstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
-                      title: 'Wandbeläge',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Sonnenschutz.jpg',
-                      title: 'Sonnenschutz',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      },
       'Einkaufsgesellschaft/Hotel': {
         multiple: true,
         header,
@@ -1378,7 +1251,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 61, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 61,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 62,
                   type: 'assessmentStepOptions',
@@ -1430,7 +1307,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 63, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 63,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 64,
                   type: 'assessmentStepOptions',
@@ -1440,7 +1321,7 @@ const data = {
                       title: 'Neuheiten',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
@@ -1448,11 +1329,11 @@ const data = {
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
@@ -1470,7 +1351,7 @@ const data = {
           ],
         },
       },
-      'Einkaufsgesellschaft/Krankenhäuser': {
+      'Einkaufsgesellschaft/Krankenhaus': {
         multiple: true,
         header,
         simpleChat: {
@@ -1478,7 +1359,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 65, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 65,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 66,
                   type: 'assessmentStepOptions',
@@ -1488,15 +1373,15 @@ const data = {
                       title: 'Neuheiten',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
@@ -1522,7 +1407,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 67, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 67,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 68,
                   type: 'assessmentStepOptions',
@@ -1574,7 +1463,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 69, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 69,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 70,
                   type: 'assessmentStepOptions',
@@ -1584,7 +1477,7 @@ const data = {
                       title: 'Neuheiten',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
@@ -1592,11 +1485,11 @@ const data = {
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
@@ -1622,7 +1515,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 71, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 71,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 72,
                   type: 'assessmentStepOptions',
@@ -1632,15 +1529,15 @@ const data = {
                       title: 'Neuheiten',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
@@ -1666,7 +1563,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 73, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 73,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 74,
                   type: 'assessmentStepOptions',
@@ -1714,7 +1615,11 @@ const data = {
             {
               key: 'default',
               simpleChatMessages: [
-                { id: 75, type: 'SimpleChatTextMessage', text: 'message' },
+                {
+                  id: 75,
+                  type: 'SimpleChatTextMessage',
+                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                },
                 {
                   id: 76,
                   type: 'assessmentStepOptions',
@@ -1754,7 +1659,7 @@ const data = {
         id: 77,
         type: 'store',
         header: {
-          title: 'ASSESSMENT FORM',
+          title: 'Wir empfehlen Ihnen folgende Produkte',
           imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
           backgroundColor: '#111',
           textColor: '#fff',
