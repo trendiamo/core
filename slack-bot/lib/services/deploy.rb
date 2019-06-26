@@ -43,8 +43,10 @@ PLUGIN_CMD = <<~SH.freeze
   ([ -f ~/.aws/credentials ] || cp #{ENV['AWS_CREDENTIALS_FILE']} ~/.aws/credentials) && \
   yarn build && \
   gzip -9 -c build/plugin.js | aws s3 --region eu-central-1 cp - s3://plugiamo/plugin.js --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
+  gzip -9 -c build/vendors~emoji.js | aws s3 cp - s3://plugiamo/vendors~emoji.js --quiet --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
   aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/plugin.js s3://javascript/plugin.js --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
-  rm build/plugin.js
+  aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/vendors~emoji.js s3://javascript/vendors~emoji.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
+  rm build/*.js
 SH
 
 CONSOLE_FRONTEND_CMD = <<~SH.freeze

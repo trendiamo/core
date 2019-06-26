@@ -1,18 +1,15 @@
-import Emoji from 'emoji-js'
-
-const emoji = new Emoji()
-emoji.img_sets.apple.sheet = 'https://plugin-assets.ams3.cdn.digitaloceanspaces.com/sheet_apple_32.png'
-emoji.use_sheet = true
-
 const isLinux = navigator.platform === 'Linux x86_64'
+const isMac = navigator.platform === 'MacIntel'
 const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
 
-// In Linux, at least the distro that we've tested, if we use emoji.replace_unified it actually breaks it, and not
-// doing anything works well.
-const emojify = isLinux || isIos ? str => str : str => (!str ? str : Reflect.apply(emoji.replace_unified, emoji, [str]))
+// In Linux, at least the distro that we've tested, if we use emoji.replace_unified it actually breaks it, so we don't
+// use it there. In ios and mac it also just works.
+const nativeEmojiSupported = isLinux || isIos || isMac
 
-// copied from https://github.com/iamcal/js-emoji/blob/master/demo/emoji.css
-export const emojifyStyles = `
+// css copied from https://github.com/iamcal/js-emoji/blob/master/demo/emoji.css
+export const emojifyStyles = nativeEmojiSupported
+  ? ''
+  : `
 span.emoji {
   display: -moz-inline-box;
   -moz-box-orient: vertical;
@@ -61,4 +58,17 @@ img.emoji {
 }
 `
 
-export default emojify
+const compatEmojifyFactory = async () => {
+  const Emoji = await import(/* webpackChunkName: "emoji" */ 'emoji-js')
+  const emoji = new Emoji.default()
+  emoji.img_sets.apple.sheet = 'https://plugin-assets.ams3.cdn.digitaloceanspaces.com/sheet_apple_32.png'
+  emoji.use_sheet = true
+
+  return str => (str ? Reflect.apply(emoji.replace_unified, emoji, [str]) : str)
+}
+
+const noOpEmojify = new Promise(resolve => resolve(str => str))
+
+const emojifyPromise = nativeEmojiSupported ? noOpEmojify : compatEmojifyFactory()
+
+export default emojifyPromise

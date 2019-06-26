@@ -1,14 +1,14 @@
-import emojify from 'ext/emojify'
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
+import useEmojify from 'ext/hooks/use-emojify'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
 import { isPCAssessment, rememberPersona } from 'special/assessment/utils'
 import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
 import { routes, SpotlightItem } from 'plugin-base'
-import { useCallback, useMemo } from 'preact/hooks'
+import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 const assessmentSpotlight = {
   persona: {
@@ -17,7 +17,7 @@ const assessmentSpotlight = {
   },
 }
 
-const convertSpotlights = (spotlights, onSpotlightClick) => {
+const convertSpotlights = (emojify, spotlights, onSpotlightClick) => {
   const results = spotlights.map(spotlight => ({
     ...spotlight,
     persona: {
@@ -46,6 +46,10 @@ const convertSpotlights = (spotlights, onSpotlightClick) => {
 }
 
 const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
+  const [spotlights, setSpotlights] = useState([])
+  const [subtitle, setSubtitle] = useState('')
+  const [title, setTitle] = useState('')
+
   const routeToShowcase = useCallback(() => {
     const newRoute = routes.showcase(showcase.id)
     replaceLastPath(newRoute)
@@ -101,12 +105,14 @@ const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
     )
   }, [])
 
-  const spotlights = useMemo(() => convertSpotlights(showcase.spotlights, onSpotlightClick), [
-    onSpotlightClick,
-    showcase.spotlights,
-  ])
-  const subtitle = useMemo(() => emojify(showcase.subtitle), [showcase.subtitle])
-  const title = useMemo(() => emojify(showcase.title), [showcase.title])
+  const emojify = useEmojify()
+  useEffect(() => {
+    if (!emojify) return
+    setSpotlights(convertSpotlights(emojify, showcase.spotlights, onSpotlightClick))
+    setSubtitle(emojify(showcase.subtitle))
+    setTitle(emojify(showcase.title))
+  }, [emojify, onSpotlightClick, showcase.spotlights, showcase.subtitle, showcase.title])
+
   const callbacks = useMemo(
     () => ({
       onSpotlightClick,
@@ -114,6 +120,8 @@ const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
     }),
     [onProductClick, onSpotlightClick]
   )
+
+  if (spotlights.length === 0) return null
 
   return (
     <ShowcaseBase

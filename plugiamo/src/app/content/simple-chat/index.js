@@ -1,29 +1,27 @@
 import ChatBase from './chat-base'
 import chatLogCallbacks from 'shared/chat-log-callbacks'
 import ChatModals from 'shared/chat-modals'
-import emojify from 'ext/emojify'
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import useChatActions from 'ext/hooks/use-chat-actions'
+import useEmojify from 'ext/hooks/use-emojify'
 import { Fragment, h } from 'preact'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { SimpleChat as SimpleChatBase } from 'plugin-base'
-import { useMemo } from 'preact/hooks'
+import { useEffect, useMemo, useState } from 'preact/hooks'
 
-const emojifySimpleChat = simpleChat => {
-  return {
-    ...simpleChat,
-    simpleChatSteps: simpleChat.simpleChatSteps.map(simpleChatStep => ({
-      ...simpleChatStep,
-      key: simpleChatStep.key === 'default' ? simpleChatStep.key : emojify(simpleChatStep.key),
-      simpleChatMessages: simpleChatStep.simpleChatMessages.map(simpleChatMessage => ({
-        ...simpleChatMessage,
-        html:
-          simpleChatMessage.type === 'SimpleChatTextMessage' ? emojify(simpleChatMessage.html) : simpleChatMessage.html,
-      })),
+const emojifySimpleChat = (emojify, simpleChat) => ({
+  ...simpleChat,
+  simpleChatSteps: simpleChat.simpleChatSteps.map(simpleChatStep => ({
+    ...simpleChatStep,
+    key: simpleChatStep.key === 'default' ? simpleChatStep.key : emojify(simpleChatStep.key),
+    simpleChatMessages: simpleChatStep.simpleChatMessages.map(simpleChatMessage => ({
+      ...simpleChatMessage,
+      html:
+        simpleChatMessage.type === 'SimpleChatTextMessage' ? emojify(simpleChatMessage.html) : simpleChatMessage.html,
     })),
-  }
-}
+  })),
+})
 
 const SimpleChat = ({
   animateOpacity,
@@ -48,6 +46,8 @@ const SimpleChat = ({
   showBackButton,
   storeLog,
 }) => {
+  const [simpleChat, setSimpleChat] = useState(null)
+
   const variables = useMemo(() => ({ id }), [id])
 
   const data = useGraphql(
@@ -88,7 +88,13 @@ const SimpleChat = ({
 
   const { clickActions, modalsProps } = useChatActions({ flowType: 'simpleChat' })
 
-  if (!data || data.loading || data.error) return null
+  const emojify = useEmojify()
+  useEffect(() => {
+    if (!emojify || !data.simpleChat) return
+    setSimpleChat(emojifySimpleChat(emojify, data.simpleChat))
+  }, [data.simpleChat, emojify])
+
+  if (!data || data.loading || data.error || !simpleChat) return null
 
   return (
     <Fragment>
@@ -102,7 +108,7 @@ const SimpleChat = ({
         clickActions={clickActions}
         coverIsMinimized={coverIsMinimized}
         ctaButtonClicked={ctaButtonClicked}
-        data={{ ...data, simpleChat: emojifySimpleChat(data.simpleChat) }}
+        data={{ ...data, simpleChat }}
         FlowBackButton={FlowBackButton}
         goToPrevStep={goToPrevStep}
         headerConfig={headerConfig}
