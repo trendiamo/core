@@ -61,6 +61,7 @@ const LauncherBubbleFrame = styled(props => {
   ${({ disappear }) =>
     disappear &&
     `
+    pointer-events: none;
     transition: all 1s;
     opacity: 0;
     visibility: hidden;

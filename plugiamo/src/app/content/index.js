@@ -1,7 +1,7 @@
 import ContentFrame from './content-frame'
-import { ContentWrapper, history, useAnimateOnMount } from 'plugin-base'
+import { ContentWrapper, history } from 'plugin-base'
 import { h } from 'preact'
-import { useEffect } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 
 const Content = ({
   Component,
@@ -14,9 +14,18 @@ const Content = ({
   persona,
   setShowAssessmentContent,
   showingContent,
-  skipEntry,
 }) => {
-  const { entry } = useAnimateOnMount({ skipEntry })
+  const [entry, setEntry] = useState(true)
+
+  useEffect(() => {
+    if (!showingContent) return setEntry(true)
+
+    let didCancel = false
+    setTimeout(() => {
+      didCancel || setEntry(false)
+    }, 10)
+    return () => (didCancel = true)
+  }, [showingContent])
 
   useEffect(() => {
     if (window.__trndInitialPath) history.replace(window.__trndInitialPath)
@@ -33,7 +42,6 @@ const Content = ({
       onToggleContent={onToggleContent}
       position={position}
       showingContent={showingContent}
-      skipEntry={skipEntry}
     >
       <ContentWrapper
         onToggleContent={onToggleContent}

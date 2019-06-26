@@ -9,7 +9,9 @@ import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 import { useEffect } from 'preact/hooks'
 
-const IFrame = (props, ref) => <Frame {...omit(props, ['launcherConfig', 'position', 'skipEntry'])} ref={ref} />
+const IFrame = (props, ref) => (
+  <Frame {...omit(props, ['entry', 'launcherConfig', 'position', 'showingContent'])} ref={ref} />
+)
 
 const StyledFrame = styled(forwardRef(IFrame)).attrs({
   title: 'Frekkls Content',
@@ -22,7 +24,7 @@ const StyledFrame = styled(forwardRef(IFrame)).attrs({
   transform: ${({ entry, isUnmounting }) => (entry || isUnmounting ? 'translateY(100%)' : 'none')};
   transition: opacity 0.25s ease, transform 0.4s ease;
   overscroll-behavior: contain;
-  display: ${({ hidden }) => (hidden ? 'none' : 'block')};
+  display: ${({ hidden, showingContent }) => (hidden || !showingContent ? 'none' : 'block')};
 
   border: 0;
   bottom: 0;
@@ -43,7 +45,7 @@ const StyledFrame = styled(forwardRef(IFrame)).attrs({
 `
 
 const ContentFrame = (
-  { entry, skipEntry, children, frameStyleStr, isUnmounting, hidden, onToggleContent, position, launcherConfig },
+  { entry, children, frameStyleStr, isUnmounting, hidden, onToggleContent, position, launcherConfig, showingContent },
   ref
 ) => {
   useEffect(() => ref.current.focus(), [ref])
@@ -57,7 +59,7 @@ const ContentFrame = (
       onToggleContent={onToggleContent}
       position={position}
       ref={ref}
-      skipEntry={skipEntry}
+      showingContent={showingContent}
       styleStr={frameStyleStr}
     >
       {/* We don't know why, but both ErrorBoundaries and the div are required here, to catch errors in content */}

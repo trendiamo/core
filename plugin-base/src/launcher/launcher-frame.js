@@ -24,14 +24,15 @@ const StyledFrame = styled(props => {
   ${({ disappear }) =>
     disappear &&
     `
+      pointer-events: none;
       transition: all 1s;
-      visibility: hidden;
       opacity: 0;
+      visibility: hidden;
   `}
 `
 
-const LauncherFrame = ({ skipEntry, ...props }) => {
-  const { entry } = useAnimateOnMount({ skipEntry })
+const LauncherFrame = props => {
+  const { entry } = useAnimateOnMount()
 
   return <StyledFrame {...props} entry={entry} />
 }

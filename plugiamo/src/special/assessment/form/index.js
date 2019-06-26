@@ -5,6 +5,7 @@ import data from 'special/assessment/data/delius'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
+import useTimeout from 'ext/hooks/use-timeout'
 import { client, gql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { isSmall } from 'utils'
@@ -58,6 +59,9 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   const [ctaButtonDisabled, setCtaButtonDisabled] = useState(true)
   const [pluginState, setPluginState] = useState('closed')
   const [disappear, setDisappear] = useState(false)
+  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
+
+  useEffect(() => () => timeout.clear('exitOnMobile'), [])
 
   const module = useMemo(
     () => ({
@@ -132,10 +136,14 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
       setIsMessageSent(true)
       onToggleContent()
       setPluginState('closed')
-      timeout.set('hideLauncher', () => setDisappear(true), 10000)
+      setDisappearTimeout(() => setDisappear(true), 10000)
       sessionStorage.removeItem('frekkls-asmt-tags')
     })
-  }, [assessmentForm, onToggleContent])
+  }, [assessmentForm, onToggleContent, setDisappearTimeout])
+
+  useEffect(() => {
+    if (showingContent) clearDisappearTimeout()
+  }, [clearDisappearTimeout, showingContent])
 
   return (
     <div>
