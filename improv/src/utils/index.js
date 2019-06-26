@@ -311,7 +311,7 @@ const authFetch = async (url, options) =>
   await fetch(url, {
     headers: new Headers({
       'Content-Type': 'application/json',
-      'x-apikey': `${process.env.RESTDB_KEY}`,
+      Authorization: `Plain ${process.env.RESTDB_KEY}`,
     }),
     ...options,
   })
@@ -339,8 +339,7 @@ const apiUpdateRequest = async (url, body) => {
   return await response.json()
 }
 
-export const getClient = hostname =>
-  apiGetRequest(`${process.env.RESTDB_CLIENTS_ENDPOINT}?q={"hostname": "${hostname}"}`)
+export const getClient = hostname => apiGetRequest(`${process.env.RESTDB_CLIENTS_ENDPOINT}/?hostname=${hostname}`)
 export const getClientRecords = id => apiGetRequest(process.env.RESTDB_CLIENTS_ENDPOINT + '/' + id)
 export const createClientRecord = body => apiCreateRequest(process.env.RESTDB_CLIENTS_ENDPOINT, body)
 export const updateClientRecords = (id, body) => apiUpdateRequest(process.env.RESTDB_CLIENTS_ENDPOINT + '/' + id, body)

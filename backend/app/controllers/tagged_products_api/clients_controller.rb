@@ -3,7 +3,11 @@ module TaggedProductsApi
     before_action :authenticate
 
     def index
-      @clients = TaggedProductsClient.all
+      if params[:hostname]
+        @clients = TaggedProductsClient.where(hostname: params[:hostname])
+      else
+        @clients = TaggedProductsClient.all
+      end
       chain = @clients
       render json: chain
     end
