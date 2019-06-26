@@ -5,16 +5,33 @@ import data from 'special/assessment/data/delius'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
+import { client, gql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { isSmall } from 'utils'
-import { SimpleChat, timeout } from 'plugin-base'
+import { SimpleChat, timeout, validateEmail } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 const validateForm = form => {
   const formKeys = Object.keys(form)
   const requiredFields = formKeys.filter(itemKey => form[itemKey].required)
   if (requiredFields.length === 0) return
-  return requiredFields.find(itemKey => form[itemKey].value === '')
+  return requiredFields.find(itemKey => form[itemKey].value === '') || !validateEmail(form['email'].value)
+}
+
+const inquiryMutation = variables => {
+  return client
+    .request(
+      gql`
+        mutation inquiry($fields: DeliusAsmtInquiryInput!) {
+          inquiry(fields: $fields) {
+            errors
+          }
+        }
+      `,
+      variables
+    )
+    .then(data => data)
+    .catch(error => error)
 }
 
 const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {
@@ -92,11 +109,16 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   }, [isMessageSent, setShowingContent, showingContent])
 
   const onCtaButtonClick = useCallback(() => {
-    setIsMessageSent(true)
-    onToggleContent()
-    setPluginState('closed')
-    timeout.set('hideLauncher', () => setDisappear(true), 10000)
-  }, [onToggleContent, setDisappear])
+    let fields = { url: location.href }
+    Object.keys(assessmentForm).map(key => (fields[key] = assessmentForm[key].value))
+    const variables = { fields }
+    inquiryMutation(variables).then(() => {
+      setIsMessageSent(true)
+      onToggleContent()
+      setPluginState('closed')
+      timeout.set('hideLauncher', () => setDisappear(true), 10000)
+    })
+  }, [assessmentForm, onToggleContent])
 
   return (
     <div>

@@ -21,6 +21,7 @@ import {
   MESSAGE_RANDOMIZER,
   positioning,
   stringifyRect,
+  validateEmail,
 } from 'tools'
 import { history, Router, timeout, transition } from 'ext'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose, IconPlayButton } from 'icons'
@@ -69,4 +70,5 @@ export {
   SimpleChatCover,
   headerConfig,
   ProductMessage,
+  validateEmail,
 }

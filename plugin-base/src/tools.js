@@ -47,6 +47,11 @@ const matchUrl = (url, route) => {
   return matches
 }
 
+const validateEmail = email => {
+  const re = /^\S+@\S+$/
+  return re.test(String(email).toLowerCase())
+}
+
 const stringifyRect = picRect => picRect && `${picRect.x},${picRect.y},${picRect.width},${picRect.height}`
 
 const imgixUrl = (url, imgixParams) => {
@@ -212,4 +217,5 @@ export {
   MESSAGE_RANDOMIZER,
   replaceExternalLinks,
   logSectionsToLogs,
+  validateEmail,
 }
