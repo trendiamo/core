@@ -4,7 +4,7 @@ import { useEffect, useState } from 'preact/hooks'
 
 export const gql = strings => strings.join('')
 
-const client = new GraphQLClient(
+export const client = new GraphQLClient(
   graphQlUrl,
   overrideAccount ? { headers: { 'Override-Account': overrideAccount } } : undefined
 )
