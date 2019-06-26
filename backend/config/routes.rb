@@ -63,6 +63,10 @@ Rails.application.routes.draw do
         resources :products, only: %i[index show create update destroy]
       end
     end
+
+    namespace :tagged_products_api do
+      resources :clients, only: %i[index show create update destroy]
+    end
   end
   # post :stripe, to: 'stripe#webhook'
   # resources :payments, only: :create
