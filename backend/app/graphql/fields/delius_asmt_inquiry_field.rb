@@ -6,6 +6,6 @@ Fields::DeliusAsmtInquiryField = GraphQL::Field.define do
     form_fields = args[:fields]
     return { errors: ["Invalid email"] } unless form_fields.email.match?(Devise.email_regexp)
 
-    DeviseSparkpostMailer.delius_asmt_inquiry(form_fields)
+    SparkpostMailer.delius_asmt_inquiry(form_fields).deliver_now
   })
 end

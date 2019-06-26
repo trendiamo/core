@@ -26,20 +26,6 @@ class DeviseSparkpostMailer < Devise::Mailer
     mail(to: record.email, sparkpost_data: sparkpost_data)
   end
 
-  def delius_asmt_inquiry(record) # rubocop:disable Metrics/MethodLength
-    sparkpost_data = {
-      substitution_data: {
-        inquiry_name: record.name,
-        inquiry_phone: record.phone,
-        inquiry_message: record.message,
-        inquiry_url: record.url,
-        inquiry_email: record.email,
-      },
-      template_id: "asmt-inquiry",
-    }
-    mail(to: ENV["DELIUS_ASMT_EMAIL"], sparkpost_data: sparkpost_data)
-  end
-
   private
 
   def mail(*args)
