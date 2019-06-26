@@ -21,7 +21,7 @@ const recallPersona = () => JSON.parse(sessionStorage.getItem('trnd-remembered-p
 const isPCAssessmentCart = () => isPCAssessment() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
 
 const fetchProducts = () =>
-  fetch('https://improv.ams3.digitaloceanspaces.com/improv/improv-data.json', {
+  fetch('https://api.frekkls.com/tagged_products_api/clients', {
     headers: new Headers({ 'Content-Type': 'application/json' }),
   }).then(response => response.json())
 
@@ -42,7 +42,9 @@ const getShopcartProductIds = () =>
         .toArray()
 
 const recommendedProducts = results => {
-  const productReferences = results.find(item => item.hostname === assessmentHostname).products
+  const client = results.find(item => item.hostname === assessmentHostname)
+  if (!client || !client.payload || !client.payload.products) return
+  const productReferences = client.payload.products
   const shopcartProductIds = getShopcartProductIds()
   const shopcartProducts = productReferences.filter(product => shopcartProductIds.includes(product.id))
 

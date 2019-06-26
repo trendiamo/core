@@ -35,7 +35,9 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
     fetchProducts().then(results => {
       const pathArray = location.pathname.split('/')
       const id = process.env.ASSESSMENT_PRODUCT_ID || pathArray[pathArray.length - 1]
-      const products = results.find(item => item.hostname === 'www.pierre-cardin.de').products
+      const client = results.find(client => client.hostname === 'www.pierre-cardin.de')
+      if (!client || !client.payload || !client.payload.products) return
+      const products = client.payload.products
       const product = products.find(item => item.id === id && !blacklistTags.includes(item.tag))
       setProduct(product)
       if (!product) return
