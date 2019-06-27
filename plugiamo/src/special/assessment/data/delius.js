@@ -323,7 +323,7 @@ const data = {
           ],
         },
       },
-      'Architekt/Hotel': {
+      'Architekt>Hotel': {
         multiple: true,
         header,
         simpleChat: {
@@ -379,7 +379,7 @@ const data = {
           ],
         },
       },
-      'Architekt/Health & Care': {
+      'Architekt>Health & Care': {
         multiple: true,
         header,
         simpleChat: {
@@ -431,7 +431,7 @@ const data = {
           ],
         },
       },
-      'Architekt/Schifffahrt': {
+      'Architekt>Schifffahrt': {
         multiple: true,
         header,
         simpleChat: {
@@ -479,7 +479,7 @@ const data = {
           ],
         },
       },
-      'Architekt/Kino / Theater': {
+      'Architekt>Kino / Theater': {
         multiple: true,
         header,
         simpleChat: {
@@ -527,7 +527,7 @@ const data = {
           ],
         },
       },
-      'Architekt/Büro': {
+      'Architekt>Büro': {
         multiple: true,
         header,
         simpleChat: {
@@ -575,7 +575,7 @@ const data = {
           ],
         },
       },
-      'Objekteur/Hotel': {
+      'Objekteur>Hotel': {
         multiple: true,
         header,
         simpleChat: {
@@ -631,7 +631,7 @@ const data = {
           ],
         },
       },
-      'Objekteur/Health & Care': {
+      'Objekteur>Health & Care': {
         multiple: true,
         header,
         simpleChat: {
@@ -683,7 +683,7 @@ const data = {
           ],
         },
       },
-      'Objekteur/Schifffahrt': {
+      'Objekteur>Schifffahrt': {
         multiple: true,
         header,
         simpleChat: {
@@ -731,7 +731,7 @@ const data = {
           ],
         },
       },
-      'Objekteur/Kino / Theater': {
+      'Objekteur>Kino / Theater': {
         multiple: true,
         header,
         simpleChat: {
@@ -779,7 +779,7 @@ const data = {
           ],
         },
       },
-      'Objekteur/Büro': {
+      'Objekteur>Büro': {
         multiple: true,
         header,
         simpleChat: {
@@ -827,7 +827,7 @@ const data = {
           ],
         },
       },
-      'Raumaustatter/Hotel': {
+      'Raumaustatter>Hotel': {
         multiple: true,
         header,
         simpleChat: {
@@ -883,7 +883,7 @@ const data = {
           ],
         },
       },
-      'Raumaustatter/Health & Care': {
+      'Raumaustatter>Health & Care': {
         multiple: true,
         header,
         simpleChat: {
@@ -935,7 +935,7 @@ const data = {
           ],
         },
       },
-      'Raumaustatter/Privatkunden': {
+      'Raumaustatter>Privatkunden': {
         multiple: true,
         header,
         simpleChat: {
@@ -983,7 +983,7 @@ const data = {
           ],
         },
       },
-      'Händler/Hotel': {
+      'Händler>Hotel': {
         multiple: true,
         header,
         simpleChat: {
@@ -1039,7 +1039,7 @@ const data = {
           ],
         },
       },
-      'Händler/Health & Care': {
+      'Händler>Health & Care': {
         multiple: true,
         header,
         simpleChat: {
@@ -1095,7 +1095,7 @@ const data = {
           ],
         },
       },
-      'Händler/Schifffahrt': {
+      'Händler>Schifffahrt': {
         multiple: true,
         header,
         simpleChat: {
@@ -1147,7 +1147,7 @@ const data = {
           ],
         },
       },
-      'Händler/Kino / Theater': {
+      'Händler>Kino / Theater': {
         multiple: true,
         header,
         simpleChat: {
@@ -1195,7 +1195,7 @@ const data = {
           ],
         },
       },
-      'Händler/Privatkunden': {
+      'Händler>Privatkunden': {
         multiple: true,
         header,
         simpleChat: {
@@ -1243,7 +1243,7 @@ const data = {
           ],
         },
       },
-      'Einkaufsgesellschaft/Hotel': {
+      'Einkaufsgesellschaft>Hotel': {
         multiple: true,
         header,
         simpleChat: {
@@ -1299,7 +1299,7 @@ const data = {
           ],
         },
       },
-      'Einkaufsgesellschaft/Pflegeheim': {
+      'Einkaufsgesellschaft>Pflegeheim': {
         multiple: true,
         header,
         simpleChat: {
@@ -1351,7 +1351,7 @@ const data = {
           ],
         },
       },
-      'Einkaufsgesellschaft/Krankenhaus': {
+      'Einkaufsgesellschaft>Krankenhaus': {
         multiple: true,
         header,
         simpleChat: {
@@ -1399,7 +1399,7 @@ const data = {
           ],
         },
       },
-      'Betreiber/Hotel': {
+      'Betreiber>Hotel': {
         multiple: true,
         header,
         simpleChat: {
@@ -1455,7 +1455,7 @@ const data = {
           ],
         },
       },
-      'Betreiber/Pflegeheim': {
+      'Betreiber>Pflegeheim': {
         multiple: true,
         header,
         simpleChat: {
@@ -1507,7 +1507,7 @@ const data = {
           ],
         },
       },
-      'Betreiber/Krankenhaus': {
+      'Betreiber>Krankenhaus': {
         multiple: true,
         header,
         simpleChat: {
@@ -1555,7 +1555,7 @@ const data = {
           ],
         },
       },
-      'Betreiber/Wohnheim': {
+      'Betreiber>Wohnheim': {
         multiple: true,
         header,
         simpleChat: {
@@ -1607,7 +1607,7 @@ const data = {
           ],
         },
       },
-      'Betreiber/Kino / Theater': {
+      'Betreiber>Kino / Theater': {
         multiple: true,
         header,
         simpleChat: {

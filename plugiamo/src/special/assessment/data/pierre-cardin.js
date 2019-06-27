@@ -13,27 +13,27 @@ const header = {
 }
 
 export const suggestions = {
-  'Casual/Jeans und Hosen': ['Casual/Oberteile/Polos', 'Casual/Sakkos', 'Casual/Oberteile/Pullover'],
-  'Casual/Jacken/Blousons': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Pullover', 'Casual/Oberteile/Polos'],
-  'Casual/Jacken/Mäntel': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Hemden'],
-  'Casual/Jacken/Jacken': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Polos'],
-  'Casual/Jacken/Westen': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Pullover'],
-  'Casual/Oberteile/T-Shirts': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Pullover'],
-  'Casual/Oberteile/Polos': ['Casual/Jeans und Hosen', 'Casual/Jacken/Jacken'],
-  'Casual/Oberteile/Hemden': ['Casual/Jeans und Hosen', 'Casual/Sakkos', 'Casual/Oberteile/Pullover'],
-  'Casual/Oberteile/Pullover': ['Casual/Jeans und Hosen', 'Casual/Jacken/Blousons'],
-  'Casual/Sakkos': ['Casual/Jeans und Hosen', 'Casual/Oberteile/Hemden'],
-  'Business/Komplettanzüge': ['Business/Hemden', 'Business/Westen', 'Business/Accessoires/Krawatten & Einstecktücher'],
-  'Business/Sakkos': ['Business/Hemden', 'Business/Anzughosen'],
-  'Business/Westen': ['Business/Hemden', 'Business/Sakkos'],
-  'Business/Anzughosen': ['Business/Hemden', 'Business/Sakkos'],
-  'Business/Hemden': ['Business/Sakkos', 'Business/Komplettanzüge'],
-  'Business/Accessoires/Gürtel': ['Business/Komplettanzüge', 'Business/Anzughosen'],
-  'Business/Accessoires/Krawatten & Einstecktücher': ['Business/Komplettanzüge', 'Business/Sakkos'],
-  'Basics/Wäsche': ['Basics/Jeans und Hosen', 'Basics/Oberteile'],
-  'Basics/Jeans und Hosen': ['Basics/Oberteile', 'Basics/Jacken'],
-  'Basics/Oberteile': ['Basics/Jeans und Hosen', 'Basics/Jacken'],
-  'Basics/Jacken': ['Basics/Jeans und Hosen', 'Basics/Oberteile'],
+  'Casual>Jeans und Hosen': ['Casual>Oberteile>Polos', 'Casual>Sakkos', 'Casual>Oberteile>Pullover'],
+  'Casual>Jacken>Blousons': ['Casual>Jeans und Hosen', 'Casual>Oberteile>Pullover', 'Casual>Oberteile>Polos'],
+  'Casual>Jacken>Mäntel': ['Casual>Jeans und Hosen', 'Casual>Oberteile>Hemden'],
+  'Casual>Jacken>Jacken': ['Casual>Jeans und Hosen', 'Casual>Oberteile>Polos'],
+  'Casual>Jacken>Westen': ['Casual>Jeans und Hosen', 'Casual>Oberteile>Pullover'],
+  'Casual>Oberteile>T-Shirts': ['Casual>Jeans und Hosen', 'Casual>Oberteile>Pullover'],
+  'Casual>Oberteile>Polos': ['Casual>Jeans und Hosen', 'Casual>Jacken>Jacken'],
+  'Casual>Oberteile>Hemden': ['Casual>Jeans und Hosen', 'Casual>Sakkos', 'Casual>Oberteile>Pullover'],
+  'Casual>Oberteile>Pullover': ['Casual>Jeans und Hosen', 'Casual>Jacken>Blousons'],
+  'Casual>Sakkos': ['Casual>Jeans und Hosen', 'Casual>Oberteile>Hemden'],
+  'Business>Komplettanzüge': ['Business>Hemden', 'Business>Westen', 'Business>Accessoires>Krawatten & Einstecktücher'],
+  'Business>Sakkos': ['Business>Hemden', 'Business>Anzughosen'],
+  'Business>Westen': ['Business>Hemden', 'Business>Sakkos'],
+  'Business>Anzughosen': ['Business>Hemden', 'Business>Sakkos'],
+  'Business>Hemden': ['Business>Sakkos', 'Business>Komplettanzüge'],
+  'Business>Accessoires>Gürtel': ['Business>Komplettanzüge', 'Business>Anzughosen'],
+  'Business>Accessoires>Krawatten & Einstecktücher': ['Business>Komplettanzüge', 'Business>Sakkos'],
+  'Basics>Wäsche': ['Basics>Jeans und Hosen', 'Basics>Oberteile'],
+  'Basics>Jeans und Hosen': ['Basics>Oberteile', 'Basics>Jacken'],
+  'Basics>Oberteile': ['Basics>Jeans und Hosen', 'Basics>Jacken'],
+  'Basics>Jacken': ['Basics>Jeans und Hosen', 'Basics>Oberteile'],
 }
 
 const data = {
@@ -236,7 +236,7 @@ const data = {
           ],
         },
       },
-      'Casual/Jeans und Hosen': {
+      'Casual>Jeans und Hosen': {
         multiple: true,
         header,
         simpleChat: {
@@ -287,7 +287,7 @@ const data = {
           ],
         },
       },
-      'Casual/Jacken': {
+      'Casual>Jacken': {
         multiple: true,
         header,
         simpleChat: {
@@ -332,7 +332,7 @@ const data = {
           ],
         },
       },
-      'Casual/Oberteile': {
+      'Casual>Oberteile': {
         multiple: true,
         header,
         simpleChat: {
@@ -376,7 +376,7 @@ const data = {
           ],
         },
       },
-      'Casual/Sakkos': {
+      'Casual>Sakkos': {
         multiple: true,
         header,
         simpleChat: {
@@ -411,7 +411,7 @@ const data = {
           ],
         },
       },
-      'Business/Sakkos': {
+      'Business>Sakkos': {
         multiple: true,
         header,
         simpleChat: {
@@ -447,7 +447,7 @@ const data = {
           ],
         },
       },
-      'Business/Anzughosen': {
+      'Business>Anzughosen': {
         multiple: true,
         header,
         simpleChat: {
@@ -481,7 +481,7 @@ const data = {
           ],
         },
       },
-      'Business/Hemden': {
+      'Business>Hemden': {
         multiple: true,
         header,
         simpleChat: {
@@ -516,7 +516,7 @@ const data = {
           ],
         },
       },
-      'Business/Accessoires': {
+      'Business>Accessoires': {
         multiple: true,
         header,
         simpleChat: {
@@ -719,26 +719,26 @@ const data = {
       ],
     },
     tagSizeGuides: {
-      'Casual/Jeans und Hosen/': 'jeansUndHosen',
-      'Casual/Jacken/Blousons': 'shirts',
-      'Casual/Jacken/Mäntel': 'shirts',
-      'Casual/Jacken/Jacken': 'shirts',
-      'Casual/Jacken/Westen': 'shirts',
-      'Casual/Oberteile/T-Shirts': 'shirts',
-      'Casual/Oberteile/Polos': 'shirts',
-      'Casual/Oberteile/Hemden': 'shirts',
-      'Casual/Oberteile/Pullover': 'shirts',
-      'Casual/Sakkos/': 'suit',
+      'Casual>Jeans und Hosen': 'jeansUndHosen',
+      'Casual>Jacken>Blousons': 'shirts',
+      'Casual>Jacken>Mäntel': 'shirts',
+      'Casual>Jacken>Jacken': 'shirts',
+      'Casual>Jacken>Westen': 'shirts',
+      'Casual>Oberteile>T-Shirts': 'shirts',
+      'Casual>Oberteile>Polos': 'shirts',
+      'Casual>Oberteile>Hemden': 'shirts',
+      'Casual>Oberteile>Pullover': 'shirts',
+      'Casual>Sakkos': 'suit',
 
-      'Business/Komplettanzüge': 'suit',
-      'Business/Sakkos/': 'suit',
-      'Business/Westen': 'suit',
-      'Business/Anzughosen/': 'suit',
-      'Business/Hemden/': 'suit',
-      'Business/Accessoires/Gürtel': 'suit',
-      'Business/Accessoires/Krawatten & Einstecktücher': 'suit',
+      'Business>Komplettanzüge': 'suit',
+      'Business>Sakkos': 'suit',
+      'Business>Westen': 'suit',
+      'Business>Anzughosen': 'suit',
+      'Business>Hemden': 'suit',
+      'Business>Accessoires>Gürtel': 'suit',
+      'Business>Accessoires>Krawatten & Einstecktücher': 'suit',
 
-      'Basics/Jeans und Hosen': 'jeansUndHosen',
+      'Basics>Jeans und Hosen': 'jeansUndHosen',
     },
   },
 }

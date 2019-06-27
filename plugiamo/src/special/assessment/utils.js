@@ -21,7 +21,7 @@ const recallPersona = () => JSON.parse(sessionStorage.getItem('trnd-remembered-p
 const isPCAssessmentCart = () => isPCAssessment() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
 
 const fetchProducts = () =>
-  fetch('https://api.frekkls.com/tagged_products_api/clients', {
+  fetch(process.env.TAGGED_PRODUCTS_URL, {
     headers: new Headers({ 'Content-Type': 'application/json' }),
   }).then(response => response.json())
 

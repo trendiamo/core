@@ -25,7 +25,7 @@ const Plugin = ({
   const [pluginState, setPluginState] = useState('default')
 
   const [assessmentState, setAssessmentState] = useState({})
-  const [tags, setTags] = useState(assessmentState.key ? assessmentState.key.split('/') : [])
+  const [tags, setTags] = useState(assessmentState.key ? assessmentState.key.split('>') : [])
   const [endNodeTags, setEndNodeTags] = useState([])
   const [showingCtaButton, setShowingCtaButton] = useState(false)
   const [currentStepKey, setCurrentStepKey] = useState(assessmentState.key || 'root')

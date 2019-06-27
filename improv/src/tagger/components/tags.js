@@ -30,7 +30,7 @@ const getGroupedTags = data => {
   let groupName
   const groups = data
     .map(tag => {
-      const tagGroupName = typeof tag === 'string' ? tag.split('/')[0] : '_additional'
+      const tagGroupName = typeof tag === 'string' ? tag.split('>')[0] : '_additional'
       if (!groupName || groupName !== tagGroupName) {
         groupName = tagGroupName
         return groupName
@@ -42,7 +42,7 @@ const getGroupedTags = data => {
       const tags = data.filter(tag => typeof tag !== 'string')
       return { name: 'Additional', tags }
     }
-    const tags = data.filter(tag => typeof tag === 'string' && tag.split('/')[0] === group)
+    const tags = data.filter(tag => typeof tag === 'string' && tag.split('>')[0] === group)
     return { name: group, tags }
   })
   return groupedTags

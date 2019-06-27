@@ -118,7 +118,7 @@ const Base = ({
         })
         return setProgress(100, timeout.set('loadingProgressBar', () => (window.location.href = nextStep.url), 600))
       }
-      const nextStepKey = [...tags, nextStep.title].join('/')
+      const nextStepKey = [...tags, nextStep.title].join('>')
       if (nextStep === 'showResults') {
         mixpanel.track('Clicked Assessment Step', {
           flowType: module.flowType,
@@ -178,7 +178,7 @@ const Base = ({
       newTags.pop()
       setProgress(key === 'root' ? 0 : progress - 33)
     }
-    const newStepKey = newTags.join('/')
+    const newStepKey = newTags.join('>')
     if (isFinalStep) {
       setAssessmentState({ key: newStepKey, progress })
       setHideProgressBar(false)
