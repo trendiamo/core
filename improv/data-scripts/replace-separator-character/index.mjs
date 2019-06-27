@@ -41,11 +41,9 @@ fetch(`${process.env.BACKEND_API_URL}/tagged_products_api/clients`, requestOptio
       fetch(`${process.env.BACKEND_API_URL}/tagged_products_api/clients/${client.id}`, {
         ...requestOptions,
         method: 'PUT',
-        body: { client: newClient },
+        body: JSON.stringify({ client: newClient }),
       })
         .then(res => res.json())
-        .then(client => {
-          console.log(client.hostname, client.payload.products.length + ' products', 'OK')
-        })
+        .then(console.log)
     })
   })
