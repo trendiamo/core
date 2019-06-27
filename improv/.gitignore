@@ -1,6 +1,6 @@
 /coverage
 /build
-/node_modules
+node_modules
 /bin/tmp
 
 .DS_Store

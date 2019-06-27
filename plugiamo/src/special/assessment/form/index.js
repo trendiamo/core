@@ -40,12 +40,12 @@ const processTags = () => {
   let stepCount, stringifiedTags
   let lastStepTags = []
   JSON.parse(sessionStorageTags).forEach(tagsArrays => {
-    let tagsArray = tagsArrays.split('/')
+    let tagsArray = tagsArrays.split('>')
     stepCount = tagsArray.length
     lastStepTags.push(tagsArray.pop())
     stringifiedTags = tagsArray.map((tag, index) => `Step ${index + 1}: ${tag}`).join('; ')
   })
-  return [stringifiedTags, `Step ${stepCount}: ${lastStepTags.join('/')}`].join('; ')
+  return [stringifiedTags, `Step ${stepCount}: ${lastStepTags.join(', ')}`].join('; ')
 }
 
 const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {

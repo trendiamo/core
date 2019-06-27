@@ -1,0 +1,11 @@
+{
+  "name": "data-scripts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "node-fetch": "^2.6.0"
+  }
+}
