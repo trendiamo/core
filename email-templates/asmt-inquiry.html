@@ -120,7 +120,7 @@
                               <b>Name:</b>
                             </td>
                             <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                              {{inquiry_name}}
+                              {{name}}
                             </td>
                           </tr>
                           <tr>
@@ -128,7 +128,7 @@
                               <b>Email:</b>
                             </td>
                             <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                              {{inquiry_email}}
+                              {{email}}
                             </td>
                           </tr>
                           <tr>
@@ -136,7 +136,7 @@
                               <b>Telefon:</b>
                             </td>
                             <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                              {{inquiry_phone}}
+                              {{phone}}
                             </td>
                           </tr>
                           <tr>
@@ -144,7 +144,7 @@
                               <b>Kommentar:</b>
                             </td>
                             <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                              {{inquiry_message or 'keine Angabe'}}
+                              {{message or 'keine Angabe'}}
                             </td>
                           </tr>
                         </table>
@@ -157,7 +157,7 @@
                               <b>Branche:</b>
                             </td>
                             <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                              {{inquiry_asmt_step1_choice}}
+                              {{asmt_step1_choice}}
                             </td>
                           </tr>
                           <tr>
@@ -165,7 +165,7 @@
                               <b>Bereich:</b>
                             </td>
                             <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                              {{inquiry_asmt_step2_choice}}
+                              {{asmt_step2_choice}}
                             </td>
                           </tr>
                           <tr>
@@ -173,13 +173,13 @@
                               <b>Produktkategorie:</b>
                             </td>
                             <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                              {{inquiry_asmt_step3_choices}}
+                              {{asmt_step3_choices}}
                             </td>
                           </tr>
                         </table>
                         <br>
                         {{end}}
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Der Kunde ist interessiert an folgendem Produkt: {{inquiry_url}}</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Der Kunde ist interessiert an folgendem Produkt: {{ render_dynamic_content(dynamic_html.url) }}</p>
                       </td>
                     </tr>
                   </table>

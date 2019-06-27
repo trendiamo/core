@@ -1,18 +1,19 @@
 class SparkpostMailer < ApplicationMailer
-  def delius_asmt_inquiry(record)
+  def delius_asmt_inquiry(hash)
     sparkpost_data = {
-      substitution_data: {
-        inquiry_name: record.name, inquiry_phone: record.phone, inquiry_message: record.message,
-        inquiry_url: record.url, inquiry_email: record.email, inquiry_asmt: record.asmt,
-        inquiry_asmt_step1_choice: record.asmt_step1_choice, inquiry_asmt_step2_choice: record.asmt_step2_choice,
-        inquiry_asmt_step3_choices: record.asmt_step3_choices,
-      },
+      substitution_data: substitution_data(hash),
       template_id: "asmt-inquiry",
     }
     mail(to: ENV["DELIUS_ASMT_EMAIL"], sparkpost_data: sparkpost_data)
   end
 
   private
+
+  # url needs to be passed separately, see
+  # https://developers.sparkpost.com/api/template-language/#header-links
+  def substitution_data(hash)
+    hash.except(:url).merge(dynamic_html: { url: %(<a href="#{hash[:url]}">#{hash[:url]}</a>) })
+  end
 
   def mail(*args)
     if ENV["SPARKPOST_API_KEY"]
