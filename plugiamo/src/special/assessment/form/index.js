@@ -18,8 +18,28 @@ const validateForm = form => {
   return requiredFields.find(itemKey => form[itemKey].value === '') || !validateEmail(form['email'].value)
 }
 
-const inquiryMutation = variables => {
-  return client
+const buildInquiryVariables = assessmentForm => {
+  const fields = { url: location.href }
+  Object.keys(assessmentForm).forEach(key => (fields[key] = assessmentForm[key].value))
+
+  const sessionStorageTags = sessionStorage.getItem('frekkls-asmt-tags')
+  fields.asmt = !!sessionStorageTags
+  if (sessionStorageTags) {
+    const tags = JSON.parse(sessionStorageTags)
+    tags[0]
+      .split('>')
+      .slice(0, -1)
+      .forEach((e, i) => {
+        fields[`asmtStep${i + 1}Choice`] = e
+      })
+    fields.asmtStep3Choices = tags.map(tag => tag.split('>').pop()).join(', ')
+  }
+
+  return { fields }
+}
+
+const inquiryMutation = variables =>
+  client
     .request(
       gql`
         mutation inquiry($fields: DeliusAsmtInquiryInput!) {
@@ -32,21 +52,6 @@ const inquiryMutation = variables => {
     )
     .then(data => data)
     .catch(error => error)
-}
-
-const processTags = () => {
-  const sessionStorageTags = sessionStorage.getItem('frekkls-asmt-tags')
-  if (!sessionStorageTags) return ''
-  let stepCount, stringifiedTags
-  let lastStepTags = []
-  JSON.parse(sessionStorageTags).forEach(tagsArrays => {
-    let tagsArray = tagsArrays.split('>')
-    stepCount = tagsArray.length
-    lastStepTags.push(tagsArray.pop())
-    stringifiedTags = tagsArray.map((tag, index) => `Step ${index + 1}: ${tag}`).join('; ')
-  })
-  return [stringifiedTags, `Step ${stepCount}: ${lastStepTags.join(', ')}`].join('; ')
-}
 
 const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {
   const [isUnmounting, setIsUnmounting] = useState(false)
@@ -123,10 +128,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   }, [isMessageSent, setShowingContent, showingContent])
 
   const onCtaButtonClick = useCallback(() => {
-    let fields = { url: location.href, tags: processTags() }
-    Object.keys(assessmentForm).map(key => (fields[key] = assessmentForm[key].value))
-    const variables = { fields }
-    inquiryMutation(variables).then(() => {
+    inquiryMutation(buildInquiryVariables(assessmentForm)).then(() => {
       setIsMessageSent(true)
       onToggleContent()
       setPluginState('closed')
