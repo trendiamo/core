@@ -37,13 +37,13 @@ const data = {
                 {
                   id: 2,
                   type: 'SimpleChatTextMessage',
-                  text:
+                  html:
                     'Willkommen bei Delius! 🙂 Kategorisieren Sie kurz, wonach Sie ungefähr suchen und wir zeigen Ihnen die für Sie relevantesten Produkte.',
                 },
                 {
                   id: 3,
                   type: 'SimpleChatTextMessage',
-                  text: 'Was beschreibt Ihre Branche am besten?',
+                  html: 'Was beschreibt Ihre Branche am besten?',
                 },
                 {
                   id: 4,
@@ -91,7 +91,7 @@ const data = {
                 {
                   id: 5,
                   type: 'SimpleChatTextMessage',
-                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 6,
@@ -134,7 +134,7 @@ const data = {
                 {
                   id: 7,
                   type: 'SimpleChatTextMessage',
-                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 8,
@@ -177,7 +177,7 @@ const data = {
                 {
                   id: 9,
                   type: 'SimpleChatTextMessage',
-                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 10,
@@ -212,7 +212,7 @@ const data = {
                 {
                   id: 11,
                   type: 'SimpleChatTextMessage',
-                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 12,
@@ -255,7 +255,7 @@ const data = {
                 {
                   id: 13,
                   type: 'SimpleChatTextMessage',
-                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 14,
@@ -290,7 +290,7 @@ const data = {
                 {
                   id: 15,
                   type: 'SimpleChatTextMessage',
-                  text: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
                 },
                 {
                   id: 16,
@@ -334,7 +334,7 @@ const data = {
                 {
                   id: 17,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 18,
@@ -390,7 +390,7 @@ const data = {
                 {
                   id: 19,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 20,
@@ -442,7 +442,7 @@ const data = {
                 {
                   id: 21,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 22,
@@ -490,7 +490,7 @@ const data = {
                 {
                   id: 23,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 24,
@@ -538,7 +538,7 @@ const data = {
                 {
                   id: 25,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 26,
@@ -586,7 +586,7 @@ const data = {
                 {
                   id: 29,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 30,
@@ -642,7 +642,7 @@ const data = {
                 {
                   id: 31,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 32,
@@ -694,7 +694,7 @@ const data = {
                 {
                   id: 33,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 34,
@@ -742,7 +742,7 @@ const data = {
                 {
                   id: 35,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 36,
@@ -790,7 +790,7 @@ const data = {
                 {
                   id: 37,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 38,
@@ -838,7 +838,7 @@ const data = {
                 {
                   id: 41,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 42,
@@ -894,7 +894,7 @@ const data = {
                 {
                   id: 43,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 44,
@@ -946,7 +946,7 @@ const data = {
                 {
                   id: 47,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 48,
@@ -994,7 +994,7 @@ const data = {
                 {
                   id: 49,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 50,
@@ -1050,7 +1050,7 @@ const data = {
                 {
                   id: 51,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 52,
@@ -1106,7 +1106,7 @@ const data = {
                 {
                   id: 53,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 54,
@@ -1158,7 +1158,7 @@ const data = {
                 {
                   id: 55,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 56,
@@ -1206,7 +1206,7 @@ const data = {
                 {
                   id: 57,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 58,
@@ -1254,7 +1254,7 @@ const data = {
                 {
                   id: 61,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 62,
@@ -1310,7 +1310,7 @@ const data = {
                 {
                   id: 63,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 64,
@@ -1362,7 +1362,7 @@ const data = {
                 {
                   id: 65,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 66,
@@ -1410,7 +1410,7 @@ const data = {
                 {
                   id: 67,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 68,
@@ -1466,7 +1466,7 @@ const data = {
                 {
                   id: 69,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 70,
@@ -1518,7 +1518,7 @@ const data = {
                 {
                   id: 71,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 72,
@@ -1566,7 +1566,7 @@ const data = {
                 {
                   id: 73,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 74,
@@ -1618,7 +1618,7 @@ const data = {
                 {
                   id: 75,
                   type: 'SimpleChatTextMessage',
-                  text: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
+                  html: 'Super! Abschließend ist wichtig zu verstehen, wofür der Stoff verwendet werden soll.',
                 },
                 {
                   id: 76,

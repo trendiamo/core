@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20190626095856) do
     t.bigint "pic_id"
     t.boolean "group_with_adjacent", default: false
     t.json "pic_rect", default: {}
+    t.string "html"
     t.index ["account_id"], name: "index_simple_chat_messages_on_account_id"
     t.index ["pic_id"], name: "index_simple_chat_messages_on_pic_id"
     t.index ["simple_chat_step_id"], name: "index_simple_chat_messages_on_simple_chat_step_id"

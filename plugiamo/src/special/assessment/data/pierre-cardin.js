@@ -56,12 +56,12 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text: 'Willkommen bei Pierre Cardin! Ich würde dir gerne die für dich relevantesten Pieces zeigen.',
+                  html: 'Willkommen bei Pierre Cardin! Ich würde dir gerne die für dich relevantesten Pieces zeigen.',
                   id: 'root-default-0',
                 },
                 {
                   type: 'SimpleChatTextMessage',
-                  text: 'Mit welchem Look kann ich dir helfen?',
+                  html: 'Mit welchem Look kann ich dir helfen?',
                   id: 'root-default-1',
                 },
                 {
@@ -105,7 +105,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text: 'Alles klar! Womit wollen wir anfangen?',
+                  html: 'Alles klar! Womit wollen wir anfangen?',
                   id: 'Casual-default-0',
                 },
                 {
@@ -148,7 +148,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text: 'Alles klar! Womit wollen wir anfangen?',
+                  html: 'Alles klar! Womit wollen wir anfangen?',
                   id: 'Business-default-0',
                 },
                 {
@@ -202,7 +202,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text: 'Alles klar! Wonach schaust du genau?',
+                  html: 'Alles klar! Wonach schaust du genau?',
                   id: 'Basics-default-0',
                 },
                 {
@@ -246,7 +246,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text:
+                  html:
                     'Super! Wir haben gerade auf unsere neue Frühling / Sommer Kollektion umgestellt. Welchen Fit sollte die Hose haben? Du kannst mehrere auswählen!',
                   id: 'Casual/Jeans und Hosen-default-0',
                 },
@@ -278,7 +278,7 @@ const data = {
                 },
                 {
                   type: 'SimpleChatTextMessage',
-                  text:
+                  html:
                     'Falls du dir unsicher bist, welche unserer Jeans-Passformen die für dich beste ist, kannst du hier nachschauen: <a target="_blank" rel="noopener noreferrer" href="https://www.pierre-cardin.de/specials/pierre-cardin-specials/denim-guide">Zum Denim Guide</a>',
                   id: 'Casual/Jeans und Hosen-default-2',
                 },
@@ -297,7 +297,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text:
+                  html:
                     'Ok! Wir haben die verschiedensten Typen im Angebot. Wonach suchst du genau? Du kannst gerne mehrere Optionen auswählen!',
                   id: 'Casual/Jacken-default-0',
                 },
@@ -342,7 +342,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text: 'Cool! Womit können wir dir dienen? Du kannst gerne mehrere Optionen auswählen!',
+                  html: 'Cool! Womit können wir dir dienen? Du kannst gerne mehrere Optionen auswählen!',
                   id: 'Casual/Oberteile-default-0',
                 },
                 {
@@ -386,7 +386,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text:
+                  html:
                     'Super Wahl für ein Frühling reifes Smart Casual Outfit! Magst du mir einmal deinen Fit verraten?',
                   id: 'Casual/Sakkos-default-0',
                 },
@@ -421,7 +421,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text: 'Ok! Magst du mir einmal deinen Fit verraten? ',
+                  html: 'Ok! Magst du mir einmal deinen Fit verraten? ',
                   id: 'Business/Sakkos-default-0',
                 },
                 {
@@ -457,7 +457,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text: 'Welchen Fit trägst du normalerweise?',
+                  html: 'Welchen Fit trägst du normalerweise?',
                   id: 'Business/Anzughosen-default-0',
                 },
                 {
@@ -491,7 +491,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text:
+                  html:
                     'Von Schlicht bis Hingucker haben wir alles im Angebot! Aber zuerst müsste ich einmal wissen welchen Fit du trägst.',
                   id: 'Business/Hemden-default-0',
                 },
@@ -526,7 +526,7 @@ const data = {
               simpleChatMessages: [
                 {
                   type: 'SimpleChatTextMessage',
-                  text:
+                  html:
                     'Zu jedem guten Business Outfit gehört ein passender Gürtel und ein passendes Einstecktuch oder eine Krawatte. Suchst du nach beidem?',
                   id: 'Business/Accessoires-default-0',
                 },
@@ -585,7 +585,7 @@ const data = {
           simpleChatMessages: [
             {
               type: 'SimpleChatTextMessage',
-              text:
+              html:
                 'Hier sind ein paar Produkte die zu deiner bisherigen Auswahl passen und gerne von unseren Kunden kombiniert werden! 🙂',
               id: 'Cart-default-0',
             },
@@ -624,7 +624,7 @@ const data = {
           simpleChatMessages: [
             {
               type: 'SimpleChatTextMessage',
-              text:
+              html:
                 'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
               id: 'SizeGuide-shirts-default-0',
             },
@@ -644,7 +644,7 @@ const data = {
             },
             {
               type: 'SimpleChatTextMessage',
-              text:
+              html:
                 'Wir zeigen Ihnen, wie Sie in fünf Schritten Maß nehmen, um Ihre passende <a href="https://www.pierre-cardin.de/size-advisor#hemdgroesse">Hemdgröße</a> zu ermitteln.',
               id: 'SizeGuide-shirts-default-2',
             },
@@ -657,7 +657,7 @@ const data = {
           simpleChatMessages: [
             {
               type: 'SimpleChatTextMessage',
-              text:
+              html:
                 'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
               id: 'SizeGuide-jeansUndHosen-default-0',
             },
@@ -677,7 +677,7 @@ const data = {
             },
             {
               type: 'SimpleChatTextMessage',
-              text:
+              html:
                 'Erfahren Sie hier, wie Sie Ihre <a href="https://www.pierre-cardin.de/size-advisor#hosengroesse">Hosengröße</a> in nur drei Schritten richtig messen.',
               id: 'SizeGuide-jeansUndHosen-default-2',
             },
@@ -690,7 +690,7 @@ const data = {
           simpleChatMessages: [
             {
               type: 'SimpleChatTextMessage',
-              text:
+              html:
                 'Falls du dir unsicher bist, welche Größe du wählen solltest, kannst du mehr in unserem Größenberater erfahren. Hier sind alle unsere Maße erklärt! 🙂',
               id: 'SizeGuide-suit-default-0',
             },
@@ -710,7 +710,7 @@ const data = {
             },
             {
               type: 'SimpleChatTextMessage',
-              text:
+              html:
                 'Wir erklären Ihnen, wie Sie Ihre <a href="https://www.pierre-cardin.de/size-advisor#konfektionsgroesse">Konfektionsgröße</a> richtig messen.',
               id: 'SizeGuide-suit-default-2',
             },

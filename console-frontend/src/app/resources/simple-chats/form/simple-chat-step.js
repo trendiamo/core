@@ -157,7 +157,7 @@ const SimpleChatStep = ({
       closeMenu()
       const simpleChatMessageObject =
         messageType === 'SimpleChatTextMessage'
-          ? { text: '' }
+          ? { html: '' }
           : messageType === 'SimpleChatProductMessage'
           ? { title: '', picture: { url: '' }, picRect: '', url: '', displayPrice: '', groupWithAdjacent: false }
           : messageType === 'SimpleChatVideoMessage'

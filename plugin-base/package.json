@@ -42,7 +42,6 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "recompose": "^0.28.2",
-    "snarkdown": "^1.2.2",
     "styled-components": "^4.2.0"
   }
 }

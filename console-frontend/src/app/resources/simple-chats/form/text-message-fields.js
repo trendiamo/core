@@ -1,230 +1,278 @@
-import Button from 'shared/button'
-import ContentEditable from 'react-contenteditable'
-import omit from 'lodash.omit'
-import React, { useCallback, useState } from 'react'
-import RichTextEditor from 'react-rte'
+import CodeMirror from 'react-codemirror'
+import jsBeautify from 'js-beautify'
+import Quill from 'react-quill'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
-import trim from 'lodash.trim'
-import { InputLabel, Tooltip } from '@material-ui/core'
+import Tooltip from 'shared/tooltip'
+import { Code as IconCode } from '@material-ui/icons'
+import 'codemirror/addon/display/placeholder'
+import 'codemirror/addon/edit/closetag'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/htmlmixed/htmlmixed'
+import 'react-quill/dist/quill.snow.css'
 
-const Label = styled(InputLabel)`
-  font-size: 12px;
-`
-
-const StyledRichTextEditor = styled(RichTextEditor)`
-  border: none !important;
-  line-height: 25px !important;
-  padding-top: 5px;
-  word-break: break-word;
-  .RichTextEditor__editor___1QqIU {
-    display: ${({ isMarkdownMode }) => isMarkdownMode && 'none'};
-    font-family: Roboto, Helvetica, Arial, sans-serif !important;
-    line-height: 25px;
-    padding-top: 5px;
-    word-break: break-word;
-  }
-  .EditorToolbar__root___3_Aqz {
-    border-color: #e7e8e7;
-    line-height: 0;
-    margin: 0 !important;
-    padding-bottom: 0 !important;
+const StyledToolbar = styled.div`
+  &.ql-snow.ql-toolbar {
+    background-color: #f5f5f5;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
     position: relative;
-    & > div {
-      border-right: 1px solid #e7e8e7;
-      margin: 0;
-      &:last-child {
-        border-right: none;
-        padding-right: none;
-      }
-    }
-    & button {
-      border: none;
-      border-radius: 0 !important;
-      cursor: pointer;
-      opacity: 0.6;
-      outline-color: #ff6641;
-    }
-    & input {
-      outline: none;
-      &:focus {
-        border-color: #ff6641;
-      }
-    }
   }
 `
 
-const StyledEditorContainer = styled.div`
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
-  position: relative;
-`
-
-const StyledTooltip = styled(Tooltip)`
-  margin: 6px 0;
-`
-
-const MarkdownIcon = styled.a`
-  display: ${({ isMarkdownMode }) => !isMarkdownMode && 'none'};
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  z-index: 5;
-  & img {
-    filter: brightness(0);
-    &:hover {
-      filter: none;
-    }
-  }
-`
-
-const DisabledToolbar = styled.div`
-  display: ${({ isMarkdownMode }) => !isMarkdownMode && 'none'};
-  background-color: rgba(255, 255, 255, 0.6) !important;
-  border: none !important;
-  cursor: not-allowed;
-  height: 30px;
-  position: absolute;
-  top: 10px;
-  width: 170px;
-  z-index: 10;
-`
-
-const SwitchButtonContainer = styled.div`
+const ToolbarSection = styled.div`
   display: inline-block;
-`
+  margin-right: 15px;
+  vertical-align: middle;
 
-const SwitchButton = styled(Button)`
-  border-radius: 0;
-  color: #ff6641;
-  min-height: 0;
-  opacity: 0.9 !important;
-  padding: 4px 12px;
-`
-
-const OmittedContentEditable = props => <ContentEditable {...omit(props, ['isMarkdownMode'])} />
-
-const StyledContentEditable = styled(OmittedContentEditable)`
-  display: ${({ isMarkdownMode }) => !isMarkdownMode && 'none'};
-  font-size: 16px;
-  line-height: 25px;
-  outline: none;
-  padding: 15px 10px 10px;
-  white-space: pre-wrap;
-  word-break: break-word;
-  &:empty::before {
-    color: #9197a3;
-    content: attr(placeholder);
-    display: block;
-    margin: -1px 0 1px -1px;
-  }
-  &:empty:focus::before {
-    color: #bdc1c9;
+  &:last-child {
+    position: absolute;
+    right: 0;
   }
 `
 
-const toolbarConfig = {
-  display: ['INLINE_STYLE_BUTTONS', 'LINK_BUTTONS', 'HISTORY_BUTTONS'],
-  INLINE_STYLE_BUTTONS: [
-    { label: 'Bold (Cmd+Shift+B)', style: 'BOLD' },
-    { label: 'Italic (Cmd+Shift+I)', style: 'ITALIC' },
-  ],
+const ToolbarButton = styled.button`
+  &&&:disabled,
+  &&&:disabled:hover {
+    cursor: default;
+
+    .ql-fill {
+      fill: #bbb;
+    }
+
+    .ql-stroke {
+      stroke: #bbb;
+    }
+  }
+
+  &:focus svg,
+  &:hover svg {
+    color: #ff6641;
+  }
+
+  svg {
+    ${({ active }) => active && 'color: #ff6641;'}
+    width: 100%;
+  }
+`
+
+const Toolbar = ({ id, isHTMLMode, toggleSource }) => (
+  <StyledToolbar id={id}>
+    <ToolbarSection>
+      <Tooltip disabled={isHTMLMode} placement="top" title="Bold (Cmd + B)">
+        <ToolbarButton className="ql-bold" disabled={isHTMLMode} />
+      </Tooltip>
+      <Tooltip disabled={isHTMLMode} placement="top" title="Italic (Cmd + I)">
+        <ToolbarButton className="ql-italic" disabled={isHTMLMode} />
+      </Tooltip>
+      <Tooltip disabled={isHTMLMode} placement="top" title="Underline (Cmd + U)">
+        <ToolbarButton className="ql-underline" disabled={isHTMLMode} />
+      </Tooltip>
+    </ToolbarSection>
+    <ToolbarSection>
+      <Tooltip disabled={isHTMLMode} placement="top" title="Link">
+        <ToolbarButton className="ql-link" disabled={isHTMLMode} />
+      </Tooltip>
+    </ToolbarSection>
+    <ToolbarSection>
+      <Tooltip disabled={isHTMLMode} placement="top" title="Ordered list">
+        <ToolbarButton className="ql-list" disabled={isHTMLMode} value="ordered" />
+      </Tooltip>
+      <Tooltip disabled={isHTMLMode} placement="top" title="Bullet list">
+        <ToolbarButton className="ql-list" disabled={isHTMLMode} value="bullet" />
+      </Tooltip>
+    </ToolbarSection>
+    <ToolbarSection>
+      <Tooltip placement="top" title="Toggle source">
+        <ToolbarButton active={isHTMLMode} onClick={toggleSource} type="button">
+          <IconCode />
+        </ToolbarButton>
+      </Tooltip>
+    </ToolbarSection>
+  </StyledToolbar>
+)
+
+const TextEditor = styled(Quill)`
+  ${({ hidden }) => hidden && 'display: none;'}
+
+  .ql-container {
+    border-radius: 0 0 4px 4px;
+  }
+
+  .ql-editor ol,
+  .ql-editor ul {
+    padding-left: 5px;
+    margin: 10px 0;
+  }
+
+  .ql-editor ul > li::before {
+    text-align: center;
+  }
+
+  .ql-editor.ql-blank::before {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .ql-editor *:first-child {
+    margin-top: 0;
+  }
+
+  .ql-editor *:last-child {
+    margin-bottom: 0;
+  }
+
+  &&& .ql-tooltip {
+    border-radius: 4px;
+    padding: 6px 12px;
+    transform: translate(125px, 5px);
+    z-index: 5000;
+
+    input {
+      border-radius: 2px;
+      transition: 200ms;
+    }
+
+    input:focus {
+      border-color: #ff6641;
+      outline: none;
+    }
+  }
+`
+
+const HTMLEditor = styled(CodeMirror)`
+  .CodeMirror {
+    border: 1px solid #ccc;
+    border-radius: 0 0 4px 4px;
+    display: grid;
+    height: 100%;
+    padding: 8px 15px;
+
+    &-placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    &-line {
+      height: 18px;
+
+      .cm-tag {
+        color: #3a8c3e;
+      }
+
+      .cm-attribute {
+        color: #06c;
+      }
+
+      .cm-string {
+        color: #ff6641;
+      }
+
+      .cm-comment {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .cm-error {
+        background: rgba(221, 70, 76, 0.25);
+      }
+    }
+  }
+`
+
+// https://quilljs.com/docs/configuration
+const textEditorConfig = {
+  formats: ['bold', 'italic', 'underline', 'link', 'list', 'bullet', 'image'],
+  modules: {
+    clipboard: {
+      matchVisual: false,
+    },
+    keyboard: {
+      bindings: {
+        tab: null,
+      },
+    },
+  },
+}
+
+// https://codemirror.net/doc/manual.html#config
+const htmlEditorConfig = {
+  autoCloseTags: true,
+  indentWithTabs: true,
+  mode: 'text/html',
+  placeholder: 'Edit the HTML',
+  scrollbarStyle: null,
+  smartIndent: true,
+  tabSize: 2,
+  theme: 'default',
+}
+
+// https://github.com/beautify-web/js-beautify#css--html
+const beautifyHTML = value => {
+  if (value === '<p><br></p>') return ''
+  return jsBeautify.html(value, {
+    'indent-with-tabs': true,
+  })
 }
 
 const TextMessageFields = ({ disabled, onChange, onFocus, simpleChatMessage, simpleChatMessageIndex }) => {
-  const [isMarkdownMode, setIsMarkdownMode] = useState(false)
-  const [value, setValue] = useState(RichTextEditor.createValueFromString(simpleChatMessage.text, 'markdown'))
+  const textEditorRef = useRef(null)
+  const [isHTMLMode, setIsHTMLMode] = useState(false)
+  const [value, setValue] = useState(simpleChatMessage.html)
 
-  const onMarkdownKeyDown = useCallback(event => {
-    if (event.keyCode === 13) {
-      event.preventDefault()
-      document.execCommand('insertHTML', false, '\n')
-    }
+  const toolbarId = useMemo(() => `toolbar-${simpleChatMessage.id || simpleChatMessage.__key}`, [simpleChatMessage])
+
+  const textEditorModules = useMemo(() => ({ toolbar: `#${toolbarId}`, ...textEditorConfig.modules }), [toolbarId])
+
+  const htmlEditorOptions = useMemo(() => ({ readOnly: disabled, ...htmlEditorConfig }), [disabled])
+
+  useEffect(() => {
+    // Change default input placeholder on mount
+    textEditorRef.current.editor.theme.tooltip.textbox.dataset.link = 'https://frekkls.com'
   }, [])
-
-  const onMarkdownPaste = useCallback(event => {
-    event.preventDefault()
-    document.execCommand('insertHTML', false, (event.originalEvent || event).clipboardData.getData('text/plain'))
-  }, [])
-
-  const onRTEReturn = useCallback(() => {
-    document.execCommand('insertHTML', false, '\n')
-    return 'handled'
-  }, [])
-
-  const onSwitchButtonClick = useCallback(
-    () => {
-      setIsMarkdownMode(!isMarkdownMode)
-    },
-    [isMarkdownMode]
-  )
 
   const onValueChange = useCallback(
-    event => {
-      const value = event.nativeEvent ? RichTextEditor.createValueFromString(event.target.value, 'markdown') : event
+    value => {
       setValue(value)
-      onChange({ ...simpleChatMessage, text: trim(value.toString('markdown')) || '' }, simpleChatMessageIndex)
+      const html = textEditorRef.current && textEditorRef.current.getEditorContents()
+      onChange({ ...simpleChatMessage, html: beautifyHTML(html) }, simpleChatMessageIndex)
     },
     [onChange, simpleChatMessage, simpleChatMessageIndex]
   )
 
+  const toggleSource = useCallback(
+    async () => {
+      !isHTMLMode && setValue(beautifyHTML(value))
+      await setIsHTMLMode(!isHTMLMode)
+      isHTMLMode && textEditorRef.current.focus()
+    },
+    [isHTMLMode, value]
+  )
+
+  const onFocusChange = useCallback(focused => focused && onFocus(), [onFocus])
+
   return (
     <>
-      <Label required>{'Message'}</Label>
-      <StyledEditorContainer>
-        <StyledTooltip placement="left" title="Learn about the Markdown syntax">
-          <MarkdownIcon
-            href="https://www.markdownguide.org/cheat-sheet"
-            isMarkdownMode={isMarkdownMode}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <img alt="" src="/img/icons/markdown.svg" />
-          </MarkdownIcon>
-        </StyledTooltip>
-        <StyledRichTextEditor
-          customControls={[
-            <Tooltip key={0} placement="top" title="Switch to preview to use these commands">
-              <DisabledToolbar isMarkdownMode={isMarkdownMode} />
-            </Tooltip>,
-            <SwitchButtonContainer key={1}>
-              <SwitchButton onClick={onSwitchButtonClick} size="small">
-                {`${isMarkdownMode ? 'preview' : 'markdown'}`}
-              </SwitchButton>
-            </SwitchButtonContainer>,
-          ]}
-          handleReturn={onRTEReturn}
-          isMarkdownMode={isMarkdownMode}
+      <Toolbar id={toolbarId} isHTMLMode={isHTMLMode} toggleSource={toggleSource} />
+      <TextEditor
+        formats={textEditorConfig.formats}
+        hidden={isHTMLMode}
+        modules={textEditorModules}
+        onChange={isHTMLMode ? null : onValueChange}
+        onFocus={onFocus}
+        placeholder="Write your message"
+        readOnly={disabled}
+        ref={textEditorRef}
+        value={value}
+      />
+      {isHTMLMode && (
+        <HTMLEditor
+          autoFocus
           onChange={onValueChange}
-          onFocus={onFocus}
-          placeholder="Insert a message"
-          readOnly={disabled}
-          toolbarConfig={toolbarConfig}
+          onFocusChange={onFocusChange}
+          options={htmlEditorOptions}
           value={value}
         />
-        <StyledContentEditable
-          disabled={disabled}
-          html={value.toString('markdown')}
-          isMarkdownMode={isMarkdownMode}
-          onChange={onValueChange}
-          onFocus={onFocus}
-          onKeyDown={onMarkdownKeyDown}
-          onPaste={onMarkdownPaste}
-          placeholder="Insert a message"
-        />
-      </StyledEditorContainer>
+      )}
     </>
   )
 }
 
-class ShieldedTextMessageFields extends React.Component {
-  // the base editor Draft.js has some known issues, so we recover from crashes
-  componentDidCatch() {
-    this.forceUpdate()
-  }
-
-  render() {
-    return <TextMessageFields {...this.props} />
-  }
-}
-
-export default ShieldedTextMessageFields
+export default TextMessageFields

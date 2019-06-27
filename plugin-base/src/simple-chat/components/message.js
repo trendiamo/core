@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import snarkdown from 'snarkdown'
 import styled from 'styled-components'
 import timeout from 'ext/timeout'
 import { extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
@@ -59,7 +58,7 @@ const ChatMessage = ({
     () => {
       if (!type) return
       return type === 'SimpleChatTextMessage'
-        ? log.message.text
+        ? log.message.html
         : type === 'SimpleChatProductMessage'
         ? {
             title: log.message.title,
@@ -128,7 +127,7 @@ const ChatMessage = ({
         <TextMessage
           clickActionsExist={clickActionsExist}
           dangerouslySetInnerHTML={{
-            __html: replaceExternalLinks(snarkdown(data)),
+            __html: replaceExternalLinks(data),
           }}
           onClick={onClick}
         />

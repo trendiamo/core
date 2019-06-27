@@ -14,7 +14,7 @@ const loadFormObject = () => {
     simpleChatStepsAttributes: [
       {
         key: 'default',
-        simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', text: '', __key: 'new-0' }],
+        simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', html: '', __key: 'new-0' }],
       },
     ],
   }
