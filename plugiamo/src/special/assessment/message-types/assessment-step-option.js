@@ -105,10 +105,14 @@ const Box = styled.div`
 
   :hover {
     ${Background} {
-      transform: ${({ isClicked }) => !isClicked && 'scale(1.1)'};
-      &:after {
-        opacity: ${({ isClicked }) => !isClicked && '0.2'};
-      }
+      ${({ isClicked }) =>
+        !isClicked &&
+        `
+        transform: scale(1.1);
+        &:after {
+          opacity: 0.2;
+        }
+      `}
     }
   }
 `
@@ -134,6 +138,8 @@ const Content = styled.div`
   flex-direction: column;
   align-items: ${({ imageUrl }) => (imageUrl ? 'start' : 'center')};
   justify-content: ${({ imageUrl }) => (imageUrl ? 'flex-end' : 'space-evenly')};
+  transform: translate3d(0, 0, 0);
+
   ${({ imageUrl }) =>
     imageUrl &&
     `
