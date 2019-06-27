@@ -44,7 +44,7 @@ const formObjectTransformer = json => {
       : [
           {
             key: 'default',
-            simpleChatMessagesAttributes: [{ text: '', type: 'SimpleChatTextMessage', __key: 'new-0' }],
+            simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', html: '', __key: 'new-0' }],
           },
         ],
   }

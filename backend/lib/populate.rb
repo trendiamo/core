@@ -107,7 +107,7 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
     Array.new(rand(1..2)) do
       {
         type: "SimpleChatTextMessage",
-        text: Faker::Lorem.sentence,
+        html: "<p>#{Faker::Lorem.sentence}</p>",
       }
     end
   end

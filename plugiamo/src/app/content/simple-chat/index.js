@@ -18,8 +18,8 @@ const emojifySimpleChat = simpleChat => {
       key: simpleChatStep.key === 'default' ? simpleChatStep.key : emojify(simpleChatStep.key),
       simpleChatMessages: simpleChatStep.simpleChatMessages.map(simpleChatMessage => ({
         ...simpleChatMessage,
-        text:
-          simpleChatMessage.type === 'SimpleChatTextMessage' ? emojify(simpleChatMessage.text) : simpleChatMessage.text,
+        html:
+          simpleChatMessage.type === 'SimpleChatTextMessage' ? emojify(simpleChatMessage.html) : simpleChatMessage.html,
       })),
     })),
   }
@@ -63,7 +63,7 @@ const SimpleChat = ({
             simpleChatMessages {
               id
               type
-              text
+              html
               title
               picture {
                 url

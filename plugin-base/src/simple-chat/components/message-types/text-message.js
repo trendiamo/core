@@ -25,6 +25,32 @@ const TextMessageContainer = styled.div`
     border-right: 10px solid #fff;
   }
 
+  *:first-child {
+    margin-top: 0;
+  }
+
+  *:last-child {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  ul,
+  ol {
+    padding-left: 20px;
+    margin: 10px 0;
+  }
+
   img {
     max-width: 100%;
   }

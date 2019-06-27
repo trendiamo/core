@@ -2159,15 +2159,17 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.6.tgz#9c03d3fed70a8d517c191b7734da2879b50ca26c"
   integrity sha512-ZBFR7TROLVzCkswA3Fmqq+IIJt62/T7aY/Dmz+QkU7CaW2QFqAitCE8Ups7IzmGhcN1YWMBT4Qcoc07jU9hOJQ==
 
-"@types/prop-types@^15.5.6":
-  version "15.7.1"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
-  integrity sha512-CFzn9idOEpHrgdw8JsoTkaDDyRWk1jrzIV8djzcgpq0y9tG4B4lFT+Nxh52DVpDXV+n4+NPNv7M1Dj5uMp6XFg==
-
 "@types/q@^1.5.1":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
+
+"@types/quill@1.3.10":
+  version "1.3.10"
+  resolved "https://registry.yarnpkg.com/@types/quill/-/quill-1.3.10.tgz#dc1f7b6587f7ee94bdf5291bc92289f6f0497613"
+  integrity sha512-IhW3fPW+bkt9MLNlycw8u8fWb7oO7W5URC9MfZYHBlA24rex9rs23D5DETChu1zvgVdc5ka64ICjJOgQMr6Shw==
+  dependencies:
+    parchment "^1.1.2"
 
 "@types/react-image-crop@^3.0.1":
   version "3.0.1"
@@ -3453,7 +3455,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
+babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -4095,11 +4097,6 @@ circular-json@^0.3.1:
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
   integrity sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
 
-class-autobind@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/class-autobind/-/class-autobind-0.1.4.tgz#34516c49167cf8d3f639ddc186bcfa2268afff34"
-  integrity sha1-NFFsSRZ8+NP2Od3Bhrz6Imiv/zQ=
-
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -4188,6 +4185,11 @@ clone-deep@^2.0.1:
     kind-of "^6.0.0"
     shallow-clone "^1.0.0"
 
+clone@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
+  integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -4213,6 +4215,11 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
+
+codemirror@^5.18.2:
+  version "5.48.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.48.0.tgz#66e6dae6ca79b955e34b322881ebb7b5512f3cc5"
+  integrity sha512-3Ter+tYtRlTNtxtYdYNPxGxBL/b3cMcvPdPm70gvmcOO2Rauv/fUEewWa0tT596Hosv6ea2mtpx28OXBy1mQCg==
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -4543,7 +4550,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.2:
+create-react-class@^15.5.1, create-react-class@^15.5.2, create-react-class@^15.6.0:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   integrity sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
@@ -5345,57 +5352,6 @@ downshift@^3.1.12:
     prop-types "^15.6.0"
     react-is "^16.5.2"
 
-draft-js-export-html@>=0.6.0:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/draft-js-export-html/-/draft-js-export-html-1.3.3.tgz#c1e8d86b4223324a082af225523a6686211197ad"
-  integrity sha512-gYf4CvZvLv519FRUfGwg/9tZ23Ms90IklOM4vhhKxkrNyFBq93A1wKI8ikqCKKkNpaJyPp7XUkEsvOBUo3THBQ==
-  dependencies:
-    draft-js-utils "^1.3.3"
-
-draft-js-export-markdown@>=0.3.0:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/draft-js-export-markdown/-/draft-js-export-markdown-1.3.3.tgz#fcdfdd408b6d380ff9cc788aecf4ef352c0efae3"
-  integrity sha512-sp3zJQMSnQ97eAZXWjbFSDifgZAVNM5KTiTRldNNel9/K1IzKyMfAaMoxsIEL0fXTxDwfpFSaE7dKAwkdROayA==
-  dependencies:
-    draft-js-utils "^1.3.3"
-
-draft-js-import-element@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/draft-js-import-element/-/draft-js-import-element-1.3.3.tgz#e4b5e87f72bc57adb459d786a3d0d58b498b2fa1"
-  integrity sha512-E1hiuWuhM9XmX5QFBzKY0blkuPxz+yuK88R1y/xIfLgJtVyfQOnc8vfkGH6tEPbNtdbIcnKI8aCGfCkqgvt5CA==
-  dependencies:
-    draft-js-utils "^1.3.3"
-    synthetic-dom "^1.3.3"
-
-draft-js-import-html@>=0.4.0:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/draft-js-import-html/-/draft-js-import-html-1.3.3.tgz#20359f87299333b6d4aa129881e715e9d3f50c00"
-  integrity sha512-+BCEEenLEX3F4wg3obEdqrhCqs6taFmyjibinjCKA+Cy6dcU+LKsOqqpt10Muo9ARXQYzUyPhLcd8Th9PVCWMw==
-  dependencies:
-    draft-js-import-element "^1.3.3"
-
-draft-js-import-markdown@>=0.3.0:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/draft-js-import-markdown/-/draft-js-import-markdown-1.3.3.tgz#cc5e703dc31888757743e94a4eafd25bf012f9ab"
-  integrity sha512-O9wQPAVB4TQLZGPYUQDHD1XGK/H7DZKNrSuwDn7RTadWWFycZV4sP46TZPFD4D240xas/h9QwjbxfAg8ZLQwrw==
-  dependencies:
-    draft-js-import-element "^1.3.3"
-    synthetic-dom "^1.3.3"
-
-draft-js-utils@>=0.2.0, draft-js-utils@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-1.3.3.tgz#2330ab98218c835d58dc08eacdba6708b201eb27"
-  integrity sha512-ZIF3KE2+dRD6zEoqQyu9HzeG56NWtktfazRnDZFC9GD4NnHgJE5qI+TqGgmjRjSrKzuSQonl5rsx+D4N5m6yhQ==
-
-draft-js@>=0.10.0:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.10.5.tgz#bfa9beb018fe0533dbb08d6675c371a6b08fa742"
-  integrity sha512-LE6jSCV9nkPhfVX2ggcRLA4FKs6zWq9ceuO/88BpXdNCS7mjRTgs0NsV6piUCJX9YxMsB9An33wnkMmU2sD2Zg==
-  dependencies:
-    fbjs "^0.8.15"
-    immutable "~3.7.4"
-    object-assign "^4.1.0"
-
 duplexer@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
@@ -5945,6 +5901,11 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
+eventemitter3@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
+  integrity sha1-teEHm1n7XhuidxwKmTvgYKWMmbo=
+
 eventemitter3@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
@@ -6141,7 +6102,7 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
     assign-symbols "^1.0.0"
     is-extendable "^1.0.1"
 
-extend@^3.0.0, extend@~3.0.2:
+extend@^3.0.0, extend@^3.0.1, extend@^3.0.2, extend@~3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
@@ -6198,6 +6159,11 @@ fast-deep-equal@^2.0.1:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
 
+fast-diff@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.1.2.tgz#4b62c42b8e03de3f848460b639079920695d0154"
+  integrity sha512-KaJUt+M9t1qaIteSvjc6P3RbMdXsNhK61GRftR6SNxqmhthcd9MGIi4T+o0jD8LUSpSnSKXE20nLtJ3fOHxQig==
+
 fast-diff@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
@@ -6253,7 +6219,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.0, fbjs@^0.8.1, fbjs@^0.8.15, fbjs@^0.8.5, fbjs@^0.8.9:
+fbjs@^0.8.0, fbjs@^0.8.1, fbjs@^0.8.5, fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
@@ -7256,16 +7222,6 @@ immer@^1.12.0:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.12.1.tgz#40c6e5b292c00560836c2993bda3a24379d466f5"
   integrity sha512-3fmKM6ovaqDt0CdC9daXpNi5x/YCYS3i4cwLdTVkhJdk5jrDXoPs7lCm3IqM3yhfSnz4tjjxbRG2CziQ7m8ztg==
-
-immutable@^3.8.1:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
-  integrity sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=
-
-immutable@~3.7.4:
-  version "3.7.6"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.7.6.tgz#13b4d3cb12befa15482a26fe1b2ebae640071e4b"
-  integrity sha1-E7TTyxK++hVIKib+Gy665kAHHks=
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -9975,6 +9931,11 @@ param-case@2.1.x:
   dependencies:
     no-case "^2.2.0"
 
+parchment@^1.1.2, parchment@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/parchment/-/parchment-1.1.4.tgz#aeded7ab938fe921d4c34bc339ce1168bc2ffde5"
+  integrity sha512-J5FBQt/pM2inLzg4hEWmzQx/8h8D0CiDxaG3vyp9rKrQRSDgBlhjdP5jQGgosEajXPSQouXGHOmVdgo7QmJuOg==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
@@ -11195,6 +11156,27 @@ querystringify@^2.0.0:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
   integrity sha512-eTPo5t/4bgaMNZxyjWx6N2a6AuE0mq51KWvpc7nU/MAqixcI6v6KrGUKES0HaomdnolQBBXU/++X6/QQ9KL4tw==
 
+quill-delta@^3.6.2:
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/quill-delta/-/quill-delta-3.6.3.tgz#b19fd2b89412301c60e1ff213d8d860eac0f1032"
+  integrity sha512-wdIGBlcX13tCHOXGMVnnTVFtGRLoP0imqxM696fIPwIf5ODIYUHIvHbZcyvGlZFiFhK5XzDC2lpjbxRhnM05Tg==
+  dependencies:
+    deep-equal "^1.0.1"
+    extend "^3.0.2"
+    fast-diff "1.1.2"
+
+quill@^1.2.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/quill/-/quill-1.3.6.tgz#99f4de1fee85925a0d7d4163b6d8328f23317a4d"
+  integrity sha512-K0mvhimWZN6s+9OQ249CH2IEPZ9JmkFuCQeHAOQax3EZ2nDJ3wfGh59mnlQaZV2i7u8eFarx6wAtvQKgShojug==
+  dependencies:
+    clone "^2.1.1"
+    deep-equal "^1.0.1"
+    eventemitter3 "^2.0.3"
+    extend "^3.0.1"
+    parchment "^1.1.4"
+    quill-delta "^3.6.2"
+
 raf@3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
@@ -11306,13 +11288,17 @@ react-clientside-effect@^1.2.0:
     "@babel/runtime" "^7.0.0"
     shallowequal "^1.1.0"
 
-react-contenteditable@^3.2.6:
-  version "3.2.6"
-  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.2.6.tgz#66c26e1c4fbbcf2e50ed9243329163e6396b2167"
-  integrity sha512-jmr/wnuaU0teJ7U5ePUtEV4xDqaJS3jAFaXMF/3Dyr0COLV6gegcH0Yj727BdT7DnHWVoXVpR7m1s9hDgmSBTw==
+react-codemirror@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-codemirror/-/react-codemirror-1.0.0.tgz#91467b53b1f5d80d916a2fd0b4c7adb85a9001ba"
+  integrity sha1-kUZ7U7H12A2Rai/QtMetuFqQAbo=
   dependencies:
-    "@types/prop-types" "^15.5.6"
-    fast-deep-equal "^2.0.1"
+    classnames "^2.2.5"
+    codemirror "^5.18.2"
+    create-react-class "^15.5.1"
+    lodash.debounce "^4.0.8"
+    lodash.isequal "^4.5.0"
+    prop-types "^15.5.4"
 
 react-dev-utils@^7.0.0, react-dev-utils@^7.0.1:
   version "7.0.5"
@@ -11387,6 +11373,11 @@ react-docgen@^3.0.0:
     doctrine "^2.0.0"
     node-dir "^0.1.10"
     recast "^0.16.0"
+
+react-dom-factories@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-dom-factories/-/react-dom-factories-1.0.2.tgz#eb7705c4db36fb501b3aa38ff759616aa0ff96e0"
+  integrity sha1-63cFxNs2+1AbOqOP91lhaqD/luA=
 
 react-dom@^16.8.1, react-dom@^16.8.6:
   version "16.8.6"
@@ -11573,6 +11564,19 @@ react-proptype-conditional-require@^1.0.4:
   resolved "https://registry.yarnpkg.com/react-proptype-conditional-require/-/react-proptype-conditional-require-1.0.4.tgz#69c2d5741e6df5e08f230f36bbc2944ee1222555"
   integrity sha1-acLVdB5t9eCPIw82u8KUTuEiJVU=
 
+react-quill@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-quill/-/react-quill-1.3.3.tgz#95b8e088ad4e4acc6c79c2f85bdc0460eebe08eb"
+  integrity sha512-T9RubLaWJ8gCfp7sOqmFupjiTiEp/EdGqhCG+PWGKc5UHiK6xIWNKWYsOHHEhQ+sZCKs8u/DPx47gc1VfFmcLg==
+  dependencies:
+    "@types/quill" "1.3.10"
+    "@types/react" "*"
+    create-react-class "^15.6.0"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
+    quill "^1.2.6"
+    react-dom-factories "^1.0.0"
+
 react-resize-detector@^3.2.1:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/react-resize-detector/-/react-resize-detector-3.4.0.tgz#2ccd399958a0efe9b7c52c5db5a13d87e47cd585"
@@ -11607,22 +11611,6 @@ react-router@^4.3.1:
     path-to-regexp "^1.7.0"
     prop-types "^15.6.1"
     warning "^4.0.1"
-
-react-rte@^0.16.1:
-  version "0.16.1"
-  resolved "https://registry.yarnpkg.com/react-rte/-/react-rte-0.16.1.tgz#e345664c87e992d15ec053b406f51ffac6e86622"
-  integrity sha512-CD5kf+6CHqOgJ1yB0i9tkMMch13wOXW5/FQx60gb7nzhXC1ZeFJjtW9dYfCVlfw1AvksHf+lMmKTjhIwyfZR7w==
-  dependencies:
-    babel-runtime "^6.23.0"
-    class-autobind "^0.1.4"
-    classnames "^2.2.5"
-    draft-js ">=0.10.0"
-    draft-js-export-html ">=0.6.0"
-    draft-js-export-markdown ">=0.3.0"
-    draft-js-import-html ">=0.4.0"
-    draft-js-import-markdown ">=0.3.0"
-    draft-js-utils ">=0.2.0"
-    immutable "^3.8.1"
 
 react-s3-uploader@^4.8.0:
   version "4.8.0"
@@ -13195,11 +13183,6 @@ symbol.prototype.description@^1.0.0:
   integrity sha512-I9mrbZ5M96s7QeJDv95toF1svkUjeBybe8ydhY7foPaBmr0SPJMFupArmMkDrOKTTj0sJVr+nvQNxWLziQ7nDQ==
   dependencies:
     has-symbols "^1.0.0"
-
-synthetic-dom@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/synthetic-dom/-/synthetic-dom-1.3.3.tgz#a01865fef513c76c6936f968f90140eb6959a034"
-  integrity sha512-ILjWWiiHIAYphm+F3w0V+A4a79HHF3ELZc6v7H3/kVzCvoxqHWTySN10M7vUOMpZFeRkwz/LmXsW10eFu79bdQ==
 
 table@4.0.2:
   version "4.0.2"

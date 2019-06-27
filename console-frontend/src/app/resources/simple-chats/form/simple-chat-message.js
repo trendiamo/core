@@ -8,7 +8,11 @@ import { Cancel, FormSection } from 'shared/form-elements'
 const setSimpleChatMessageTitle = simpleChatMessage => {
   switch (simpleChatMessage.type) {
     case 'SimpleChatTextMessage':
-      return simpleChatMessage.id ? `Text message: ${simpleChatMessage.text}` : 'New text message'
+      if (simpleChatMessage.id) {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = simpleChatMessage.html
+        return `Message: ${wrapper.firstElementChild ? wrapper.firstElementChild.innerText : wrapper.innerText}`
+      } else return 'New message'
     case 'SimpleChatProductMessage':
       return simpleChatMessage.id ? `Product: ${simpleChatMessage.title}` : 'New product'
     case 'SimpleChatVideoMessage':

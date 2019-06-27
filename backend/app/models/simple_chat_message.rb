@@ -5,8 +5,7 @@ class SimpleChatMessage < ApplicationRecord
   before_create :assign_order, unless: :order_changed?
 
   def as_json(_options = {})
-    attributes.slice("id", "order")
-              .merge(attributes.slice(attributes["type"] ? "type" : "text"))
+    attributes.slice("id", "order", "type")
   end
 
   def assign_order
