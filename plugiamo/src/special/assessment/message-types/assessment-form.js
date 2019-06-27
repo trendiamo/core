@@ -17,6 +17,10 @@ const FieldInput = styled.input`
   margin-top: 4px;
 `
 
+const HiddenInput = styled.input`
+  display: none;
+`
+
 const MultilineField = styled.textarea`
   font-family: Roboto, sans-serif;
   resize: none;
@@ -46,8 +50,11 @@ const Field = ({ setField, form, field }) => {
   if (field.multiline) {
     return <MultilineField onChange={onChange} placeholder={field.placeholder} value={currentFormValue} />
   }
-
-  return <FieldInput onChange={onChange} placeholder={field.placeholder} value={currentFormValue} />
+  return field.hidden ? (
+    <HiddenInput autocomplete="off" onChange={onChange} tabindex="-1" type="checkbox" value="1" />
+  ) : (
+    <FieldInput onChange={onChange} placeholder={field.placeholder} value={currentFormValue} />
+  )
 }
 
 const AssessmentForm = ({ data, onChange }) => {

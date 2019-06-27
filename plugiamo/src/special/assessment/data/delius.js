@@ -1733,6 +1733,7 @@ const data = {
                 { name: 'email', placeholder: 'E-Mail Adresse', required: true },
                 { name: 'phone', placeholder: 'Telefon', required: true },
                 { name: 'message', placeholder: 'Kommentar (optional)', multiline: true },
+                { name: 'verification', hidden: true, checkbox: true },
               ],
             },
           ],

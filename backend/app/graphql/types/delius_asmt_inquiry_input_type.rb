@@ -7,4 +7,5 @@ Types::DeliusAsmtInquiryInputType = GraphQL::InputObjectType.define do
   argument :message, types.String
   argument :url, types.String
   argument :tags, types.String
+  argument :verification, types.String
 end
