@@ -271,7 +271,7 @@ const data = {
                     },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Krankenhaus.jpg',
-                      title: 'Krankenhäuser',
+                      title: 'Krankenhaus',
                     },
                   ],
                 },
