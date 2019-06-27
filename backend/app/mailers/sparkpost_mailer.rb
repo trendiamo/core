@@ -3,7 +3,9 @@ class SparkpostMailer < ApplicationMailer
     sparkpost_data = {
       substitution_data: {
         inquiry_name: record.name, inquiry_phone: record.phone, inquiry_message: record.message,
-        inquiry_url: record.url, inquiry_email: record.email, inquiry_tags: record.tags,
+        inquiry_url: record.url, inquiry_email: record.email, inquiry_asmt: record.asmt,
+        inquiry_asmt_step1_choice: record.asmt_step1_choice, inquiry_asmt_step2_choice: record.asmt_step2_choice,
+        inquiry_asmt_step3_choices: record.asmt_step3_choices,
       },
       template_id: "asmt-inquiry",
     }
