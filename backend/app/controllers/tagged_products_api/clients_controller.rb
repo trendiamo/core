@@ -1,15 +1,13 @@
 module TaggedProductsApi
   class ClientsController < RestController
-    before_action :authenticate, only: [:create, :update, :destroy]
+    before_action :authenticate, only: %i[create update destroy]
 
     def index
       if params[:hostname]
-        @clients = TaggedProductsClient.where(hostname: params[:hostname])
+        render json: TaggedProductsClient.where(hostname: params[:hostname])
       else
-        @clients = TaggedProductsClient.all
+        render json: TaggedProductsClient.all
       end
-      chain = @clients
-      render json: chain
     end
 
     def create

@@ -18,24 +18,27 @@ class Showcase < ApplicationRecord
     attributes
       .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "created_at",
              "updated_at", "lock_version")
-      .merge(persona: { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name,
-                        pic_rect: persona.pic_rect, },
+      .merge(persona: persona_attributes(persona),
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",
              trigger_ids: triggers.ids)
+  end
+
+  def persona_attributes(persona)
+    { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name, pic_rect: persona.pic_rect }
   end
 
   def spotlights_attributes(spotlights)
     spotlights.order(:order).map do |spotlight|
       {
         id: spotlight.id,
-        persona: persona_attributes(spotlight),
+        persona: spotlight_persona_attributes(spotlight),
         product_picks_attributes: product_picks_attributes(spotlight.product_picks),
       }
     end
   end
 
-  def persona_attributes(spotlight)
+  def spotlight_persona_attributes(spotlight)
     {
       id: spotlight.persona.id,
       name: spotlight.persona.name,

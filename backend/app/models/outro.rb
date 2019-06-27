@@ -15,11 +15,12 @@ class Outro < ApplicationRecord
     attributes
       .slice("id", "name", "chat_bubble_text", "chat_bubble_button_no", "chat_bubble_button_yes", "created_at",
              "updated_at", "lock_version")
-      .merge(persona: { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name,
-                        pic_rect: persona.pic_rect, instagram_url: persona.instagram_url, },
+      .merge(persona: persona_attributes(persona), type: "Outro", trigger_ids: triggers.ids)
+  end
 
-             type: "Outro",
-             trigger_ids: triggers.ids)
+  def persona_attributes(persona)
+    { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name,
+      pic_rect: persona.pic_rect, instagram_url: persona.instagram_url, }
   end
 
   def paths
