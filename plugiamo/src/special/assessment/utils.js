@@ -1,4 +1,5 @@
 import dataGathering from 'data-gathering/pierre-cardin'
+import flatten from 'lodash.flatten'
 import mixpanel from 'ext/mixpanel'
 import { assessmentHostname } from 'config'
 import { suggestions } from './data/pierre-cardin'
@@ -31,6 +32,38 @@ const shuffle = a => {
     ;[a[i], a[j]] = [a[j], a[i]]
   }
   return a
+}
+
+const isProductHighlighted = ({ product, tags }) => {
+  if (assessmentHostname !== 'www.delius-contract.de') return product.highlight
+  return product.highlight && product.highlight.find(highlightTag => tags.find(tag => tag.includes(highlightTag)))
+}
+
+const isProductMatchingTag = ({ product, tag }) => {
+  return assessmentHostname === 'www.delius-contract.de'
+    ? product.tags && product.tags.find(productTag => tag.includes(productTag))
+    : product.tag && tag === product.tag
+}
+
+const sortProductsInStore = ({ products, tags }) => {
+  return products.sort(
+    (a, b) => !!isProductHighlighted({ product: b, tags }) - !!isProductHighlighted({ product: a, tags })
+  )
+}
+
+const convertHighlights = ({ products, tags }) => {
+  if (assessmentHostname !== 'www.delius-contract.de') return products
+  return products.map(product => {
+    return { ...product, highlight: isProductHighlighted({ product, tags }) }
+  })
+}
+
+const assessProducts = (products, tags) => {
+  const newProducts = flatten(tags.map(tag => products.filter(product => isProductMatchingTag({ product, tag }))))
+  return sortProductsInStore({
+    products: convertHighlights({ products: newProducts, tags }),
+    tags,
+  })
 }
 
 const getShopcartProductIds = () =>
@@ -97,4 +130,6 @@ export {
   fetchProducts,
   isDeliusAssessment,
   isDeliusPDP,
+  isProductHighlighted,
+  assessProducts,
 }
