@@ -70,8 +70,8 @@ module Api
                                                      :persona_id, :_destroy, :lock_version,
                                                      simple_chat_steps_attributes:
                                                      [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
-                                                    [:id, :order, :type, :text, :html, :title, :pic_id, :url,
-                                                     :display_price, :video_url, :group_with_adjacent, :_destroy,
+                                                    [:id, :order, :type, :html, :title, :pic_id, :url, :display_price,
+                                                     :video_url, :group_with_adjacent, :_destroy,
                                                      pic_rect: %i[x y width height],],])
         add_order_fields(result[:simple_chat_steps_attributes])
         result

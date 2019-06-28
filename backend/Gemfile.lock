@@ -200,7 +200,6 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    redcarpet (3.4.0)
     redis (3.3.1)
     redis-actionpack (5.0.2)
       actionpack (>= 4.0, < 6)
@@ -308,7 +307,6 @@ DEPENDENCIES
   pundit
   rack-cors
   rails (~> 5.1.4)
-  redcarpet
   redis-rails (~> 5)
   resque
   resque-scheduler
