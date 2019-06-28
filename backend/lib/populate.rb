@@ -176,7 +176,7 @@ class Populate # rubocop:disable Metrics/ClassLength
     create_users
     create_memberships
     create_websites
-    ActsAsTenant.default_tenant = Account.where(name: "Test Account").first
+    ActsAsTenant.default_tenant = Account.find_by(name: "Test Account")
     create_personas
     create_outros
     create_simple_chats
@@ -220,9 +220,9 @@ class Populate # rubocop:disable Metrics/ClassLength
   def create_websites
     # 0.0.0.0:8080 is there to redirect the user to a trigger's page in console-frontend
     Website.create!(name: "Test Account", hostnames: %w[0.0.0.0:8080 0.0.0.0 localhost],
-                    account: Account.where(name: "Test Account").first)
+                    account: Account.find_by(name: "Test Account"))
     Website.create!(name: "Other Account", hostnames: %w[www.other-account.com],
-                    account: Account.where(name: "Other Account").first)
+                    account: Account.find_by(name: "Other Account"))
   end
 
   def create_users
@@ -239,10 +239,10 @@ class Populate # rubocop:disable Metrics/ClassLength
       user = User.find_by(email: "#{team_member[:email]}@trendiamo.com")
       next if user.admin
 
-      Membership.create!(account: Account.where(name: "Test Account").first,
+      Membership.create!(account: Account.find_by(name: "Test Account"),
                          user: user, role: team_member[:role] || "owner")
       if team_member[:multiple_memberships]
-        Membership.create!(account: Account.where(name: "Other Account").first,
+        Membership.create!(account: Account.find_by(name: "Other Account"),
                            user: user, role: "editor")
       end
     end
