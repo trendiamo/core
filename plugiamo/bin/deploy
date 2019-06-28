@@ -20,4 +20,4 @@ curl https://api.rollbar.com/api/1/deploy/ \
   -F revision=$REVISION \
   -F local_username=$LOCAL_USERNAME
 # end notify rollbar
-([ -f .env~ ] && mv .env~ .env || true) && \
+([ -f .env~ ] && mv .env~ .env || true)
