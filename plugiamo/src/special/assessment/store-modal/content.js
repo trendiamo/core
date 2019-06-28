@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { AssessmentProducts } from 'special/assessment/message-types'
 import { clickAssessmentProduct } from 'special/assessment/utils'
 import { h } from 'preact'
+import { priceColor } from 'special/assessment/message-types/assessment-product'
 import { useCallback } from 'preact/hooks'
 
 const Container = styled.div`
@@ -22,6 +23,9 @@ const styleConfig = {
   },
   highlightText: {
     padding: '4px 14px 4px 12px',
+  },
+  detailsPrice: {
+    color: priceColor,
   },
 }
 

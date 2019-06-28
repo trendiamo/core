@@ -1,7 +1,10 @@
 import styled from 'styled-components'
+import { assessmentHostname } from 'config'
 import { h } from 'preact'
 import { ProductMessage } from 'plugin-base'
 import { useCallback } from 'preact/hooks'
+
+export const priceColor = assessmentHostname === 'www.delius-contract.de' && '#333'
 
 const styleConfigDefault = {
   image: {
@@ -20,6 +23,7 @@ const styleConfigDefault = {
   },
   detailsPrice: {
     fontSize: '14px',
+    color: priceColor,
   },
   highlightText: {
     top: '65%',
