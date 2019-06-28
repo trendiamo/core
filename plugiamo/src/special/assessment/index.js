@@ -39,21 +39,24 @@ const Plugin = ({
     setShowingCtaButton(false)
   }, [])
 
+  const isDelius = useMemo(() => assessmentHostname === 'www.delius-contract.de', [])
+
   const onCloseModal = useCallback(() => {
     setShowingLauncher(true)
     setShowingContent(false)
     setShowAssessmentContent(false)
     setPluginState('closed')
-    timeout.set('hideLauncher', () => setDisappear(true), 10000)
-  }, [setShowAssessmentContent, setShowingContent, setShowingLauncher])
+    timeout.set('hideLauncher', () => setDisappear(true), isDelius ? 500 : 10000)
+  }, [isDelius, setShowAssessmentContent, setShowingContent, setShowingLauncher])
 
   const onToggleContent = useCallback(() => {
+    if (isDelius && pluginState === 'closed') return
     mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
     mixpanel.time_event('Toggled Plugin')
     if (showingContent) {
       resetAssessment()
       setPluginState('closed')
-      timeout.set('hideLauncher', () => setDisappear(true), 10000)
+      timeout.set('hideLauncher', () => setDisappear(true), isDelius ? 500 : 10000)
     } else {
       setPluginState('opened')
       timeout.clear('hideLauncher')
@@ -76,11 +79,20 @@ const Plugin = ({
     if (showingContent) setShowAssessmentContent(false)
 
     setShowingBubbles(false)
-  }, [disappear, resetAssessment, setShowAssessmentContent, setShowingBubbles, setShowingContent, showingContent])
+  }, [
+    disappear,
+    isDelius,
+    pluginState,
+    resetAssessment,
+    setShowAssessmentContent,
+    setShowingBubbles,
+    setShowingContent,
+    showingContent,
+  ])
 
   useEffect(() => {
-    if (showingContent && assessmentHostname === 'www.delius-contract.de') setShowAssessmentContent(true)
-  }, [setShowAssessmentContent, showingContent])
+    if (showingContent && isDelius) setShowAssessmentContent(true)
+  }, [setShowAssessmentContent, isDelius, showingContent])
 
   if (!module) return
 
@@ -88,7 +100,7 @@ const Plugin = ({
     <AppBase
       Component={
         <AssessmentBase
-          assessmentIsMainFlow={assessmentHostname === 'www.delius-contract.de'}
+          assessmentIsMainFlow={isDelius}
           assessmentState={assessmentState}
           currentStepKey={currentStepKey}
           endNodeTags={endNodeTags}
