@@ -176,7 +176,7 @@ class Populate # rubocop:disable Metrics/ClassLength
     create_users
     create_memberships
     create_websites
-    ActsAsTenant.default_tenant = Account.where(name: "Trendiamo Demo").first
+    ActsAsTenant.default_tenant = Account.where(name: "Test Account").first
     create_personas
     create_outros
     create_simple_chats
@@ -213,16 +213,16 @@ class Populate # rubocop:disable Metrics/ClassLength
   end
 
   def create_account
-    Account.create!(name: "Trendiamo Demo")
-    Account.create!(name: "Intercom")
+    Account.create!(name: "Test Account")
+    Account.create!(name: "Other Account")
   end
 
   def create_websites
     # 0.0.0.0:8080 is there to redirect the user to a trigger's page in console-frontend
-    Website.create!(name: "Trendiamo Demo", hostnames: %w[0.0.0.0:8080 0.0.0.0 localhost demo.frekkls.com],
-                    account: Account.where(name: "Trendiamo Demo").first)
-    Website.create!(name: "Intercom", hostnames: %w[www.intercom.com],
-                    account: Account.where(name: "Intercom").first)
+    Website.create!(name: "Test Account", hostnames: %w[0.0.0.0:8080 0.0.0.0 localhost],
+                    account: Account.where(name: "Test Account").first)
+    Website.create!(name: "Other Account", hostnames: %w[www.other-account.com],
+                    account: Account.where(name: "Other Account").first)
   end
 
   def create_users
@@ -239,10 +239,10 @@ class Populate # rubocop:disable Metrics/ClassLength
       user = User.find_by(email: "#{team_member[:email]}@trendiamo.com")
       next if user.admin
 
-      Membership.create!(account: Account.where(name: "Trendiamo Demo").first,
+      Membership.create!(account: Account.where(name: "Test Account").first,
                          user: user, role: team_member[:role] || "owner")
       if team_member[:multiple_memberships]
-        Membership.create!(account: Account.where(name: "Intercom").first,
+        Membership.create!(account: Account.where(name: "Other Account").first,
                            user: user, role: "editor")
       end
     end
