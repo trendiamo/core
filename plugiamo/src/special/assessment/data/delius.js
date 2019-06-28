@@ -1646,7 +1646,7 @@ const data = {
             {
               id: 1,
               type: 'SimpleChatTextMessage',
-              text:
+              html:
                 'Vielen Dank, für Ihr Interesse an unserem Produkt! Schicken Sie uns gerne eine Anfrage und ein Experte wird sich mit Ihnen in Verbindung setzen.',
             },
             {
