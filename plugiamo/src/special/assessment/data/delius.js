@@ -341,10 +341,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
@@ -396,10 +392,6 @@ const data = {
                   id: 20,
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
@@ -467,10 +459,6 @@ const data = {
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
-                    },
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
-                      title: 'Wandbeläge',
                     },
                   ],
                 },
@@ -593,10 +581,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
@@ -648,10 +632,6 @@ const data = {
                   id: 32,
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
@@ -845,10 +825,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
@@ -901,10 +877,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
@@ -953,10 +925,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
@@ -1000,10 +968,6 @@ const data = {
                   id: 50,
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
@@ -1057,10 +1021,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
@@ -1112,10 +1072,6 @@ const data = {
                   id: 54,
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
@@ -1213,10 +1169,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
@@ -1260,10 +1212,6 @@ const data = {
                   id: 62,
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
@@ -1317,10 +1265,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
@@ -1369,10 +1313,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
@@ -1416,10 +1356,6 @@ const data = {
                   id: 68,
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
@@ -1473,10 +1409,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
@@ -1525,10 +1457,6 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
-                    {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
@@ -1572,10 +1500,6 @@ const data = {
                   id: 74,
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
-                    {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Neuheiten.jpg',
-                      title: 'Neuheiten',
-                    },
                     {
                       picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
