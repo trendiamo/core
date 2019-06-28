@@ -3,7 +3,6 @@ Types::SimpleChatMessageType = GraphQL::ObjectType.define do
 
   field :id, !types.ID
   field :type, types.String
-  field :text, types.String
   field :html, types.String do
     resolve ->(obj, _args, _ctx) {
       obj.html if obj.class.name == "SimpleChatTextMessage"
