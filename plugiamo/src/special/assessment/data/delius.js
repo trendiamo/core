@@ -16,7 +16,7 @@ const data = {
   assessment: {
     flowType: 'ht-assessment-v2',
     launcher: {
-      chatBubbleText: 'Hallo! 👋 Willkommen bei Delius',
+      chatBubbleText: 'Hallo! 👋 Willkommen bei DELIUS.',
       chatBubbleExtraText: 'Wie kann ich Ihnen helfen?',
       persona: {
         name: 'Elisa',
@@ -38,7 +38,7 @@ const data = {
                   id: 2,
                   type: 'SimpleChatTextMessage',
                   html:
-                    'Willkommen bei Delius! 🙂 Kategorisieren Sie kurz, wonach Sie ungefähr suchen und wir zeigen Ihnen die für Sie relevantesten Produkte.',
+                    'Willkommen bei DELIUS! 🙂 Kategorisieren Sie kurz, wonach Sie ungefähr suchen und wir zeigen Ihnen die für Sie relevantesten Produkte.',
                 },
                 {
                   id: 3,
@@ -91,7 +91,7 @@ const data = {
                 {
                   id: 5,
                   type: 'SimpleChatTextMessage',
-                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Stoffe?',
                 },
                 {
                   id: 6,
@@ -134,7 +134,7 @@ const data = {
                 {
                   id: 7,
                   type: 'SimpleChatTextMessage',
-                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Stoffe?',
                 },
                 {
                   id: 8,
@@ -177,7 +177,7 @@ const data = {
                 {
                   id: 9,
                   type: 'SimpleChatTextMessage',
-                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Stoffe?',
                 },
                 {
                   id: 10,
@@ -212,7 +212,7 @@ const data = {
                 {
                   id: 11,
                   type: 'SimpleChatTextMessage',
-                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Stoffe?',
                 },
                 {
                   id: 12,
@@ -255,7 +255,7 @@ const data = {
                 {
                   id: 13,
                   type: 'SimpleChatTextMessage',
-                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Stoffe?',
                 },
                 {
                   id: 14,
@@ -290,7 +290,7 @@ const data = {
                 {
                   id: 15,
                   type: 'SimpleChatTextMessage',
-                  html: 'Okay! Für welchen Bereich benötigen Sie Textilien?',
+                  html: 'Okay! Für welchen Bereich benötigen Sie Stoffe?',
                 },
                 {
                   id: 16,
@@ -1687,7 +1687,7 @@ const data = {
       },
     },
     launcher: {
-      chatBubbleText: 'Sprechen Sie mit einem Experten',
+      chatBubbleText: 'Sprechen Sie mit einem Experten.',
       chatBubbleExtraText: '',
       persona: {
         name: 'Elisa',
