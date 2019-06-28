@@ -70,7 +70,7 @@ const tagList = [
   'Wohnheim>Wandbeläge',
   'Wohnheim>Sonnenschutz',
 
-  { key: 'highlight', name: 'Highlight' },
+  { key: 'highlight', name: 'Highlight', splitByTags: true },
 ]
 
 export default tagList

@@ -35,26 +35,34 @@ const TagBase = styled.div`
   font-weight: ${({ selected }) => (selected ? '500' : 'normal')};
 `
 
-const Tag = compose(
-  withHandlers({
-    onClick: ({ onClick, tag }) => () => onClick(tag),
-  }),
-  withProps(({ currentProduct, tag }) => {
-    const selected = tag.key
-      ? currentProduct[tag.key]
-      : useMultipleTagging
-      ? currentProduct.tags && currentProduct.tags.includes(tag)
-      : currentProduct.tag === tag
-    return {
-      selected,
-      label: typeof tag === 'string' ? tag : tag.name,
-    }
-  })
-)(({ keyCode, label, onClick, selected }) => (
+const isTagSelected = ({ currentTagKey, tag, currentProduct }) => {
+  if (currentTagKey) {
+    return currentProduct[currentTagKey] && currentProduct[currentTagKey].includes(tag)
+  }
+  if (tag.key) {
+    return currentProduct[tag.key]
+  }
+  if (useMultipleTagging) {
+    return currentProduct.tags && currentProduct.tags.includes(tag)
+  }
+  return currentProduct.tag === tag
+}
+
+const TagContainer = ({ keyCode, label, onClick, selected }) => (
   <TagBase onClick={onClick} selected={selected}>
     <Key selected={selected}>{keyCode}</Key>
     <Label>{label}</Label>
   </TagBase>
-))
+)
+
+const Tag = compose(
+  withHandlers({
+    onClick: ({ onClick, tag }) => () => onClick(tag),
+  }),
+  withProps(({ currentProduct, currentTagKey, tag }) => ({
+    selected: isTagSelected({ currentTagKey, tag, currentProduct }),
+    label: typeof tag === 'string' ? tag : tag.name,
+  }))
+)(TagContainer)
 
 export default Tag

@@ -56,6 +56,22 @@ const Tagger = ({ onCopyResult, ...props }) => (
   </Flex>
 )
 
+const switchTagsInArray = ({ tagsArray, tag }) => {
+  const productHasTags = !!tagsArray
+  let newTags = []
+  if (productHasTags) {
+    const productHasExactTag = tagsArray.includes(tag)
+    if (productHasExactTag) {
+      newTags = tagsArray.map(productTag => productTag !== tag && productTag).filter(e => e)
+    } else {
+      newTags = [...tagsArray, tag]
+    }
+  } else {
+    newTags = [tag]
+  }
+  return newTags
+}
+
 export default compose(
   withState('products', 'setProducts', () => parseProducts()),
   withState('pageProducts', 'setPageProducts', []),
@@ -70,22 +86,15 @@ export default compose(
   withHandlers({
     changeTag: () => ({ product, tag }) => {
       if (tag.key) {
+        if (tag.splitByTags) {
+          const tags = switchTagsInArray({ tagsArray: product[tag.key], tag: tag.tag })
+          return { ...product, [tag.key]: tags }
+        }
         return { ...product, [tag.key]: !product[tag.key] }
       }
       if (useMultipleTagging) {
-        const productHasTags = !!product.tags
-        let newTags = []
-        if (productHasTags) {
-          const productHasExactTag = product.tags.includes(tag)
-          if (productHasExactTag) {
-            newTags = product.tags.map(productTag => productTag !== tag && productTag).filter(e => e)
-          } else {
-            newTags = [...product.tags, tag]
-          }
-        } else {
-          newTags = [tag]
-        }
-        return { ...product, tags: newTags }
+        const tags = switchTagsInArray({ tagsArray: product.tags, tag })
+        return { ...product, tags }
       }
       return { ...product, tag: product.tag === tag ? '' : tag || product.tag }
     },
