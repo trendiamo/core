@@ -39,10 +39,13 @@ const CoverAssessment = ({
     dispatch({ type: 'switchHeaders', value: step.header })
   }, [step.header])
 
-  const { toggle } = state
-  const firstHeader = state.headers[0]
-  const secondHeader = state.headers[1]
-  const activeHeader = state.headers[toggle ? 1 : 0]
+  const { headers, toggle } = state
+
+  if (!headers) return
+
+  const firstHeader = headers[0]
+  const secondHeader = headers[1]
+  const activeHeader = headers[toggle ? 1 : 0]
 
   return (
     <Cover backgroundColor="#fff" hackathon headerConfig={newHeaderConfig} minimized={minimized}>
