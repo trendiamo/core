@@ -51,8 +51,10 @@ const Field = ({ setField, form, field }) => {
 }
 
 const AssessmentForm = ({ data, onChange }) => {
-  const formObject = []
-  data.forEach(item => (formObject[item.name] = { value: '', required: item.required }))
+  const formObject = data.reduce((res, e) => {
+    res[e.name] = { value: '', required: e.required }
+    return res
+  }, {})
   const [form, setForm] = useState(formObject)
 
   const setField = useCallback(
