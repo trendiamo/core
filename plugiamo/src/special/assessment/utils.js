@@ -40,8 +40,20 @@ const isProductMatchingTag = ({ product, tag }) => {
     : product.tag && tag === product.tag
 }
 
-const sortProductsInStore = ({ products }) => {
+const sortAlphabetically = products => {
+  return products.sort((a, b) => {
+    var titleA = a.title.toUpperCase()
+    var titleB = b.title.toUpperCase()
+    return titleA < titleB ? -1 : titleA > titleB ? 1 : 0
+  })
+}
+
+const sortByHighlight = products => {
   return products.sort((a, b) => !!b.highlight - !!a.highlight)
+}
+
+const sortProductsInStore = ({ products }) => {
+  return sortByHighlight(sortAlphabetically(products))
 }
 
 const convertHighlights = ({ products, tags }) => {
