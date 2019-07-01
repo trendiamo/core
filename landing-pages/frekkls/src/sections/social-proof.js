@@ -14,20 +14,18 @@ import styled from 'styled-components'
 
 const SocialProof = styled(({ className }) => (
   <div className={className}>
-    <div className="social-proof-pad">
-      <p className="h4">{'You are in good company.'}</p>
-      <div className="logos-container">
-        <LogoPierreCardin className="logo" />
-        <LogoShopinfo className="logo" />
-        <LogoSupercommerce className="logo" />
-        <LogoBaldessarini className="logo" />
-        <LogoTimeblock className="logo" />
-        <LogoPampling className="logo" />
-        <LogoTontonEtFils className="logo" />
-        <LogoPionier className="logo" />
-        <LogoExitwell className="logo" />
-        <LogoVilladonatello className="logo" />
-      </div>
+    <p className="h4">{'You are in good company.'}</p>
+    <div className="logos-container">
+      <LogoPierreCardin className="logo" />
+      <LogoShopinfo className="logo" />
+      <LogoSupercommerce className="logo" />
+      <LogoBaldessarini className="logo" />
+      <LogoTimeblock className="logo" />
+      <LogoPampling className="logo" />
+      <LogoTontonEtFils className="logo" />
+      <LogoPionier className="logo" />
+      <LogoExitwell className="logo" />
+      <LogoVilladonatello className="logo" />
     </div>
   </div>
 ))`
@@ -35,14 +33,14 @@ const SocialProof = styled(({ className }) => (
   align-items: center;
   flex-direction: column;
   position: relative;
-  height: 64vh;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
 
   .h4 {
     width: 100%;
     font-size: 4vw;
     font-weight: bold;
-    line-height: 1.25;
-    margin: 8vh 0;
+    line-height: 3;
     text-align: center;
   }
 
