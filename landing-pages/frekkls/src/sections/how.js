@@ -22,8 +22,11 @@ const How = styled(({ className }) => (
     </div>
   </Section>
 ))`
-  flex-direction: row;
-  background: linear-gradient(to right, #fdbcd0 0%, #fdbcd0 50%, #fff 50%, #fff 100%);
+  flex-direction: column;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+  }
 
   & > div {
     flex: 1;
@@ -31,11 +34,24 @@ const How = styled(({ className }) => (
 
   .how-img-container {
     align-self: flex-end;
+    width: 100vw;
+  }
+  @media (min-width: 900px) {
+    width: auto;
   }
 
   .right-how-pad {
     padding-right: 4vw;
     padding-left: 4vw;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+  }
+
+  @media (min-width: 900px) {
+    .right-how-pad {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
   }
 
   .h4 {
