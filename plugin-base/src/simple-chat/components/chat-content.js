@@ -67,11 +67,11 @@ const ChatContent = ({
   )
 
   const onClick = useCallback(
-    ({ type, item }) => {
-      const handled = handleClick && handleClick({ type, item })
+    ({ type, item, ...rest }) => {
+      const handled = handleClick && handleClick({ type, item, ...rest })
       if (handled) return
 
-      clickActions && clickActions[type]({ item, persona, flowType: data && data.flowType })
+      clickActions && clickActions[type]({ item, persona, flowType: data && data.flowType, ...rest })
       if (type !== 'clickChatOption') return
 
       configMinHeight()

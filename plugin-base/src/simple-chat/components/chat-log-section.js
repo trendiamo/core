@@ -38,8 +38,8 @@ const ChatLogSection = ({
   const [doneAnimation, setDoneAnimation] = useState(false)
 
   const newOnClick = useCallback(
-    ({ type, item }) => {
-      onClick({ type, item })
+    args => {
+      onClick(args)
       setHide(true)
     },
     [onClick]

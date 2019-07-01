@@ -170,13 +170,6 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
     [flowType]
   )
 
-  const changeAssessmentForm = useCallback(
-    ({ item }) => {
-      mergeAssessmentForm(item)
-    },
-    [mergeAssessmentForm]
-  )
-
   const clickActions = useMemo(
     () => ({
       clickAssessmentProduct,
@@ -188,7 +181,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       clickChatOption,
       clickLink,
       clickPictureMessage,
-      changeAssessmentForm,
+      mergeAssessmentForm,
     }),
     [
       clickAssessmentProduct,
@@ -200,7 +193,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       clickChatOption,
       clickLink,
       clickPictureMessage,
-      changeAssessmentForm,
+      mergeAssessmentForm,
     ]
   )
 

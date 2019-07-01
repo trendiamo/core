@@ -1656,6 +1656,7 @@ const data = {
                 { name: 'name', placeholder: 'Name', required: true },
                 { name: 'email', placeholder: 'E-Mail Adresse', required: true },
                 { name: 'phone', placeholder: 'Telefon', required: true },
+                { name: 'country', placeholder: 'Land', required: true, type: 'country-select' },
                 { name: 'message', placeholder: 'Kommentar (optional)', multiline: true },
               ],
             },
