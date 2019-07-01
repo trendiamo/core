@@ -11,17 +11,15 @@ import { isSmall } from 'utils'
 import { SimpleChat, timeout, validateEmail } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
-const validateForm = form => {
-  const formKeys = Object.keys(form)
-  const requiredFields = formKeys.filter(itemKey => form[itemKey].required)
-  if (requiredFields.length === 0) return
-  return requiredFields.find(itemKey => form[itemKey].value === '') || !validateEmail(form['email'].value)
+const validateForm = (form, data) => {
+  const requiredFields = data.filter(e => e.required).map(e => e.name)
+  return !requiredFields.find(itemKey => form[itemKey] === '') && validateEmail(form.email)
 }
 
 const buildInquiryVariables = assessmentForm => {
-  const fields = { url: location.href }
-  Object.keys(assessmentForm).forEach(key => (fields[key] = assessmentForm[key].value))
+  const fields = { ...assessmentForm }
 
+  fields.url = location.href
   const sessionStorageTags = sessionStorage.getItem('frekkls-asmt-tags')
   fields.asmt = !!sessionStorageTags
   if (sessionStorageTags) {
@@ -70,18 +68,13 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   )
 
   const mergeAssessmentForm = useCallback(
-    form => {
-      const newForm = { ...assessmentForm, ...form }
+    ({ item, data }) => {
+      const newForm = { ...assessmentForm, ...item }
       setAssessmentForm(newForm)
-      const formIsEmpty = validateForm(newForm)
-      if (!ctaButtonDisabled && formIsEmpty) {
-        setCtaButtonDisabled(true)
-      }
-      if (ctaButtonDisabled && !formIsEmpty) {
-        setCtaButtonDisabled(false)
-      }
+      const isFormValid = validateForm(newForm, data)
+      setCtaButtonDisabled(!isFormValid)
     },
-    [assessmentForm, ctaButtonDisabled]
+    [assessmentForm]
   )
 
   const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType, mergeAssessmentForm })
@@ -106,7 +99,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
     )
     formMessages.map(item => (finalForm[item.name] = { value: '', required: item.required }))
     setAssessmentForm(finalForm)
-  }, [module.flowType, module.simpleChat.simpleChatSteps, setAssessmentForm, setShowingContent])
+  }, [module.flowType, module.simpleChat.simpleChatSteps, setShowingContent])
 
   const onToggleContent = useCallback(() => {
     if (isMessageSent) return
