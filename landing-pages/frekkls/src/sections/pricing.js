@@ -11,8 +11,8 @@ const Pricing = styled(({ className }) => (
       <div className="pricing tool">
         <div className="title">{'Just the tool'}</div>
         <div className="details-container">
-          <div className="price">{'49€ — 490€'}</div>
-          <div className="price-label">{'Based on company size'}</div>
+          <div className="price">{'From 99€/month'}</div>
+          <div className="price-label">{'Based on monthly traffic'}</div>
           <ul>
             <li>{'Frekkls plugin on your site'}</li>
             <li>{'Admin Panel Access'}</li>
@@ -30,9 +30,17 @@ const Pricing = styled(({ className }) => (
             <li>{'Content created by sellers'}</li>
             <li>{'As much traffic as you want'}</li>
             <li>{'Unlimited access to sellers'}</li>
-            <li>{'Performance based'}</li>
+            <li>{'Performance based sales commissions only'}</li>
           </ul>
         </div>
+      </div>
+    </div>
+    <div className="pricing-container center">
+      <div>{'Boost your sales by showing user generated content of your fans, customers and employees.'}</div>
+      <div>
+        {
+          'Unleash the full salesforce potential by integrating content created by our sellers, influencers and sales experts.'
+        }
       </div>
     </div>
   </Section>
@@ -45,6 +53,16 @@ const Pricing = styled(({ className }) => (
     display: flex;
     width: 60vw;
     justify-content: space-between;
+  }
+
+  .center {
+    text-align: center;
+  }
+  .center > div {
+    width: 25vw;
+    padding-top: 2rem;
+    font-size: 1.4vw;
+    line-height: 1.4;
   }
 
   .pricing {
