@@ -55,21 +55,10 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
 }
 
 const StyledHeader = styled(React.forwardRef(Header))`
-  padding: 2rem;
-
-  background: #f35c39;
-  @media (min-width: 900px) {
-    background: linear-gradient(to right, #fff 0%, #fff 50%, #f35c39 50%, #f35c39 100%);
-  }
-
+  padding: 1rem 2rem;
+  position: absolute;
   width: 100vw;
-
-  &.fixed {
-    position: fixed;
-    padding: 10px 1rem;
-    z-index: 10;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  }
+  z-index: 1;
 
   nav,
   & {
