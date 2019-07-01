@@ -16,17 +16,36 @@ const Hero = styled(({ className }) => (
         </Button>
       </div>
     </div>
-    <div>
+    <div className="hero-img-container">
       <HeroImg />
     </div>
   </Section>
 ))`
-  flex-direction: row;
-  background: linear-gradient(to right, #fff 0%, #fff 50%, #f35c39 50%, #f35c39 100%);
+  flex-direction: column-reverse;
+  @media (min-width: 900px) {
+    flex-direction: row;
+    background: linear-gradient(to right, #fff 0%, #fff 50%, #f35c39 50%, #f35c39 100%);
+  }
+
+  .hero-img-container {
+    width: 100vw;
+  }
+  @media (min-width: 900px) {
+    width: auto;
+  }
 
   .left-hero-pad {
     padding-left: 4vw;
     padding-right 4vw;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+  }
+
+  @media (min-width: 900px) {
+    .left-hero-pad {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
   }
 
   h2 {

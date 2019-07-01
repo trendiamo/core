@@ -57,7 +57,11 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
 const StyledHeader = styled(React.forwardRef(Header))`
   padding: 2rem;
 
-  background: linear-gradient(to right, #fff 0%, #fff 50%, #f35c39 50%, #f35c39 100%);
+  background: #f35c39;
+  @media (min-width: 900px) {
+    background: linear-gradient(to right, #fff 0%, #fff 50%, #f35c39 50%, #f35c39 100%);
+  }
+
   width: 100vw;
 
   &.fixed {
