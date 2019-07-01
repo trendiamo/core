@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import ArrowOrange from '../images/orange-arrow.svg'
 import FakeChatWbImg from '../images/fake-chat-wb'
 import Section from '../components/section'
 import WhatLeftImg from '../images/what-left'
 import WhatRightImg from '../images/what-right'
-import ArrowOrange from '../images/orange-arrow.svg'
 
 const What = styled(({ className }) => (
   <Section className={className} id="what-you-get">
@@ -13,7 +13,7 @@ const What = styled(({ className }) => (
     <div className="what-content">
       <div className="what-img-container">
         <WhatLeftImg />
-        <img className="what-arrow" src={ArrowOrange} />
+        <img alt="" className="what-arrow" src={ArrowOrange} />
       </div>
       <div className="what-right-container">
         <WhatRightImg />
@@ -53,11 +53,11 @@ const What = styled(({ className }) => (
   }
 
   .social-headline {
-    color: #56ACEB;
+    color: #56aceb;
   }
 
   .tool-headline {
-    color: #F7603D;
+    color: #f7603d;
   }
 
   .what-text {
