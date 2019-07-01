@@ -1,4 +1,5 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 
 import Future from '../sections/future'
 import Hero from '../sections/hero'
@@ -9,8 +10,8 @@ import SocialProof from '../sections/social-proof'
 import Visuals from '../sections/visuals'
 import What from '../sections/what'
 
-const IndexPage = ({ className }) => (
-  <Layout className={className}>
+const IndexPage = ({ className, data }) => (
+  <Layout className={className} layout={data.layout}>
     <Hero />
     <What />
     <How />
@@ -20,5 +21,27 @@ const IndexPage = ({ className }) => (
     <SocialProof />
   </Layout>
 )
+
+export const query = graphql`
+  query HomePage {
+    layout: contentfulLayout(name: { eq: "Layout-v2" }, node_locale: { eq: "en-US" }) {
+      legalNotice {
+        childContentfulRichText {
+          html
+        }
+      }
+      privacyPolicy {
+        childContentfulRichText {
+          html
+        }
+      }
+      requestDemo {
+        childContentfulRichText {
+          html
+        }
+      }
+    }
+  }
+`
 
 export default IndexPage

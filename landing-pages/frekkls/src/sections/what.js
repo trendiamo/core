@@ -8,7 +8,7 @@ import WhatRightImg from '../images/what-right'
 import ArrowOrange from '../images/orange-arrow.svg'
 
 const What = styled(({ className }) => (
-  <Section className={className}>
+  <Section className={className} id="what-you-get">
     <h3>{'What you get'}</h3>
     <div className="what-content">
       <div className="what-img-container">

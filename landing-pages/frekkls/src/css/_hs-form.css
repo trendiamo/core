@@ -18,7 +18,6 @@
   appearance: none;
   font-size: 16px;
   padding: 16px 20px 16px 20px;
-  border-radius: 12px;
   border: none;
   background-color: #fff;
   width: 100%;
@@ -42,7 +41,6 @@
   font-weight: 500;
   max-width: 600px;
   height: 64px;
-  border-radius: 12px;
   box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.05), 0 11px 14px 0 rgba(255, 91, 46, 0.23);
 }
 
@@ -127,12 +125,9 @@
 
 .request-demo-form .hs-button {
   appearance: none;
-  border: 0;
-  border-radius: 12px;
+  border: 2px solid #ff683f;
   letter-spacing: 0.8px;
-  background-image: linear-gradient(137deg, #ff843e, #ff683f 100%);
-  box-shadow: 0 5px 14px 0 rgba(255, 104, 63, 0.25);
-  color: #fff;
+  color: #ff683f;
   font-weight: 500;
   padding: 13px 20px;
   margin: 0 auto;

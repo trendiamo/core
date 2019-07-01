@@ -1,7 +1,5 @@
 import tingle from 'tingle.js'
-import 'dropcap.js'
 
-const $$ = (selector, callback) => Array.prototype.map.call(document.querySelectorAll(selector), callback)
 const Modal = tingle.modal
 
 const processEmailInputs = () => {
@@ -34,33 +32,8 @@ const processEmailInputs = () => {
 }
 
 const processModalTriggers = () => {
-  $$('.js-legal-notice', node => {
-    node.addEventListener('click', event => {
-      const legalNoticeContent = document.querySelector('.legal-notice-modal-content').innerHTML
-      const modal = new Modal()
-      modal.setContent(legalNoticeContent)
-      modal.open()
-
-      event.preventDefault()
-      return false
-    })
-  })
-
-  $$('.js-privacy-cookies', node => {
-    node.addEventListener('click', event => {
-      const privacyCookiesContent = document.querySelector('.privacy-cookies-modal-content').innerHTML
-      const modal = new Modal()
-      modal.setContent(privacyCookiesContent)
-      modal.open()
-
-      event.preventDefault()
-      return false
-    })
-  })
-
-  if (!window.hbspt) return
-  $$('.js-request-demo', element => {
-    element.addEventListener('click', event => {
+  document.addEventListener('click', event => {
+    if (window.hbspt && event.target.classList.contains('js-request-demo')) {
       const requestDemoContent = document.querySelector('.request-demo-modal-content').innerHTML
       const modal = new Modal({ cssClass: ['request-demo-modal'] })
       modal.setContent(requestDemoContent)
@@ -74,7 +47,27 @@ const processModalTriggers = () => {
 
       event.preventDefault()
       return false
-    })
+    }
+
+    if (event.target.classList.contains('js-privacy-cookies')) {
+      const privacyCookiesContent = document.querySelector('.privacy-cookies-modal-content').innerHTML
+      const modal = new Modal()
+      modal.setContent(privacyCookiesContent)
+      modal.open()
+
+      event.preventDefault()
+      return false
+    }
+
+    if (event.target.classList.contains('js-legal-notice')) {
+      const legalNoticeContent = document.querySelector('.legal-notice-modal-content').innerHTML
+      const modal = new Modal()
+      modal.setContent(legalNoticeContent)
+      modal.open()
+
+      event.preventDefault()
+      return false
+    }
   })
 }
 

@@ -6,7 +6,7 @@ import Section from '../components/section'
 
 /* eslint-disable react/jsx-max-depth */
 const Pricing = styled(({ className }) => (
-  <Section className={className}>
+  <Section className={className} id="pricing">
     <h3>{'Customized to your needs'}</h3>
     <div className="pricing-container">
       <div className="pricing tool">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import Button from '../components/button'
@@ -61,21 +61,37 @@ const removeMobileMenu = () => {
   document.body.classList.remove('mobile-menu-open')
 }
 
-const MobileMenu = ({ siteTitle, toggleMobileMenu }) => (
-  <Container className="mobile-menu">
-    <a href="/" onClick={removeMobileMenu}>
-      <img alt={siteTitle} src={LogoGrey} />
-    </a>
-    <StyledCloseIcon onClick={toggleMobileMenu} />
-    <Content>
-      <a href="#what">{'What you get'}</a>
-      <a href="#product">{'Product'}</a>
-      <a href="#pricing">{'Pricing'}</a>
-      <Button className="js-request-demo" color="#fff">
-        {'Get Started'}
-      </Button>
-    </Content>
-  </Container>
-)
+const MobileMenu = ({ siteTitle, toggleMobileMenu }) => {
+  const onClick = useCallback(event => {
+    event.preventDefault()
+    toggleMobileMenu()
+    const element = document.querySelector(event.target.getAttribute('href'))
+    if (!element) return
+    element.scrollIntoView({ behavior: 'smooth' })
+  })
+
+  return (
+    <Container className="mobile-menu">
+      <a href="/" onClick={removeMobileMenu}>
+        <img alt={siteTitle} src={LogoGrey} />
+      </a>
+      <StyledCloseIcon onClick={toggleMobileMenu} />
+      <Content>
+        <a href="#what-you-get" onClick={onClick}>
+          {'What you get'}
+        </a>
+        <a href="#product" onClick={onClick}>
+          {'Product'}
+        </a>
+        <a href="#pricing" onClick={onClick}>
+          {'Pricing'}
+        </a>
+        <Button className="js-request-demo" color="#000">
+          {'Get Started'}
+        </Button>
+      </Content>
+    </Container>
+  )
+}
 
 export default MobileMenu

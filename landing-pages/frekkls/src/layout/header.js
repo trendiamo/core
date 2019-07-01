@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import Button from '../components/button'
@@ -21,29 +21,38 @@ const toggleMobileMenu = () => {
   document.body.classList.toggle('mobile-menu-open')
 }
 
-const Header = ({ className, layout, locale, siteTitle }, ref) => (
-  <header className={className} ref={ref}>
-    <a className="logo-link" href="/">
-      <img alt={siteTitle} src={LogoGrey} />
-    </a>
-    <nav>
-      <a className="header-link" href="#what">
-        {'What you get'}
+const Header = ({ className, layout, locale, siteTitle }, ref) => {
+  const onClick = useCallback(event => {
+    event.preventDefault()
+    const element = document.querySelector(event.target.getAttribute('href'))
+    if (!element) return
+    element.scrollIntoView({ behavior: 'smooth' })
+  })
+
+  return (
+    <header className={className} ref={ref}>
+      <a className="logo-link" href="/">
+        <img alt={siteTitle} src={LogoGrey} />
       </a>
-      <a className="header-link" href="#product">
-        {'Product'}
-      </a>
-      <a className="header-link" href="#pricing">
-        {'Pricing'}
-      </a>
-      <Button className="js-request-demo" color="#fff">
-        {'Get Started'}
-      </Button>
-      <StyledMenuIcon onClick={toggleMobileMenu} />
-    </nav>
-    <MobileMenu layout={layout} locale={locale} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
-  </header>
-)
+      <nav>
+        <a className="header-link" href="#what-you-get" onClick={onClick}>
+          {'What you get'}
+        </a>
+        <a className="header-link" href="#product" onClick={onClick}>
+          {'Product'}
+        </a>
+        <a className="header-link" href="#pricing" onClick={onClick}>
+          {'Pricing'}
+        </a>
+        <Button className="js-request-demo" color="#fff">
+          {'Get Started'}
+        </Button>
+        <StyledMenuIcon onClick={toggleMobileMenu} />
+      </nav>
+      <MobileMenu layout={layout} locale={locale} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
+    </header>
+  )
+}
 
 const StyledHeader = styled(React.forwardRef(Header))`
   padding: 2rem;
@@ -96,11 +105,11 @@ const StyledHeader = styled(React.forwardRef(Header))`
     white-space: nowrap;
   }
 
-  ${Button} {
+  nav > ${Button} {
     display: none;
   }
   @media (min-width: 900px) {
-    ${Button} {
+    nav > ${Button} {
       display: block;
     }
   }

@@ -7,7 +7,7 @@ import FakeStoreImg from '../images/fake-store'
 import Section from '../components/section'
 
 const Visuals = styled(({ className }) => (
-  <Section className={className}>
+  <Section className={className} id="product">
     <div className="visuals-container">
       <FakeStoreImg />
       <FakePostImg className="fake-post-img" />

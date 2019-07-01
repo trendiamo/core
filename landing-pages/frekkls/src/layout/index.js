@@ -9,7 +9,7 @@ import { graphql, StaticQuery } from 'gatsby'
 
 import Footer from './footer'
 import Header from './header'
-// import ModalContents from './modal-contents'
+import ModalContents from './modal-contents'
 import Seo from './seo'
 
 import favicon from '../images/favicon.png'
@@ -33,7 +33,7 @@ const MainContent = styled.div`
   }
 `
 
-const Layout = ({ children, className }) => (
+const Layout = ({ children, className, layout }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -55,7 +55,7 @@ const Layout = ({ children, className }) => (
         <MainContent>
           {children}
           <Footer />
-          {/* <ModalContents /> */}
+          <ModalContents layout={layout} />
         </MainContent>
       </Main>
     )}
