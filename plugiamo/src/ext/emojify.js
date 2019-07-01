@@ -58,13 +58,14 @@ img.emoji {
 }
 `
 
-const compatEmojifyFactory = async () => {
-  const Emoji = await import(/* webpackChunkName: "emoji" */ 'emoji-js')
-  const emoji = new Emoji.default()
-  emoji.img_sets.apple.sheet = 'https://plugin-assets.ams3.cdn.digitaloceanspaces.com/sheet_apple_32.png'
-  emoji.use_sheet = true
+const compatEmojifyFactory = () => {
+  return import(/* webpackChunkName: "emoji" */ 'emoji-js').then(Emoji => {
+    const emoji = new Emoji.default()
+    emoji.img_sets.apple.sheet = 'https://plugin-assets.ams3.cdn.digitaloceanspaces.com/sheet_apple_32.png'
+    emoji.use_sheet = true
 
-  return str => (str ? Reflect.apply(emoji.replace_unified, emoji, [str]) : str)
+    return str => (str ? Reflect.apply(emoji.replace_unified, emoji, [str]) : str)
+  })
 }
 
 const noOpEmojify = new Promise(resolve => resolve(str => str))
