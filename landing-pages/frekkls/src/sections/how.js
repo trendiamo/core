@@ -7,7 +7,7 @@ import Section from '../components/section'
 
 const How = styled(({ className }) => (
   <Section className={className}>
-    <div>
+    <div className="how-img-container">
       <HowImg />
     </div>
     <div>
@@ -27,6 +27,10 @@ const How = styled(({ className }) => (
 
   & > div {
     flex: 1;
+  }
+
+  .how-image-container {
+    align-self: flex-end;
   }
 
   .right-how-pad {

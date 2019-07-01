@@ -9,7 +9,7 @@ const What = styled(({ className }) => (
   <Section className={className}>
     <h3>{'What you get'}</h3>
     <div className="what-content">
-      <div>
+      <div className="what-img-container">
         <WhatLeftImg />
       </div>
       <div>
@@ -28,6 +28,10 @@ const What = styled(({ className }) => (
 
   .what-content > div {
     flex: 1;
+  }
+
+  .what-img-container {
+    align-self: flex-end;
   }
 `
 
