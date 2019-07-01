@@ -29,7 +29,7 @@ const How = styled(({ className }) => (
     flex: 1;
   }
 
-  .how-image-container {
+  .how-img-container {
     align-self: flex-end;
   }
 
