@@ -51,8 +51,8 @@ const Content = styled.div`
 
   a {
     text-decoration: none;
-    font-size: 3vw;
-    line-height: 2;
+    font-size: 8vw;
+    line-height: 4;
     color: #000;
   }
 `
