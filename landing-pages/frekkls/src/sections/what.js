@@ -16,6 +16,24 @@ const What = styled(({ className }) => (
         <WhatRightImg />
       </div>
     </div>
+    <div className="what-content bg2">
+      <div className="what-text">
+        <b>{'Social Salesforce'}</b>
+        <p>
+          {
+            'Let over 100.000 influencers become your personal salesforce matched perfectly with your products and values on page. Take advantage of their reach and expertise and humanize your online sales in seconds with real people.'
+          }
+        </p>
+      </div>
+      <div className="what-text">
+        <b>{'Sales Technology'}</b>
+        <p>
+          {
+            'Integrate those people and their content with our smart tool directly into your shop and bridge seamlessly their social power with your shop checkouts to increase your conversions and sales for any kind of products and businesses.'
+          }
+        </p>
+      </div>
+    </div>
   </Section>
 ))`
   .what-content {
@@ -24,6 +42,21 @@ const What = styled(({ className }) => (
     display: flex;
     align-items: center;
     background: linear-gradient(to right, #f07643 0%, #f07643 50%, #fff 50%, #fff 100%);
+  }
+
+  .bg2 {
+    background: #fafafa;
+  }
+
+  .what-text {
+    padding: 1.8vw;
+  }
+
+  b {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.8vw;
   }
 
   .what-content > div {
