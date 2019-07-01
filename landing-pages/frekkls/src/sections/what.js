@@ -86,7 +86,9 @@ const What = styled(({ className }) => (
   .what-arrow {
     position: absolute;
     top: 40%;
-    left: 50%;
+    left: calc(50% - 1px);
+    width: 5%;
+    max-width: 80px;
     z-index: 999;
   }
 
@@ -98,7 +100,7 @@ const What = styled(({ className }) => (
     position: absolute !important;
     bottom: 0;
     right: 0;
-    width: 30vw;
+    width: 21vw;
   }
 `
 
