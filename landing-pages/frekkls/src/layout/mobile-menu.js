@@ -52,8 +52,9 @@ const Content = styled.div`
   a {
     text-decoration: none;
     font-size: 8vw;
-    line-height: 4;
+    line-height: 3;
     color: #000;
+    text-transform: uppercase;
   }
 `
 
