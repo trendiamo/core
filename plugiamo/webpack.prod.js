@@ -8,5 +8,8 @@ module.exports = merge(config, {
   optimization: {
     minimize: true,
   },
+  output: {
+    publicPath: 'https://js.frekkls.com/',
+  },
   watch: false,
 })
