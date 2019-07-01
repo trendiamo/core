@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import FakeChatWbImg from '../images/fake-chat-wb'
 import Section from '../components/section'
 import WhatLeftImg from '../images/what-left'
 import WhatRightImg from '../images/what-right'
@@ -12,8 +13,9 @@ const What = styled(({ className }) => (
       <div className="what-img-container">
         <WhatLeftImg />
       </div>
-      <div>
+      <div className="what-right-container">
         <WhatRightImg />
+        <FakeChatWbImg className="fake-chat-wb-img" />
       </div>
     </div>
     <div className="what-content bg2">
@@ -65,6 +67,17 @@ const What = styled(({ className }) => (
 
   .what-img-container {
     align-self: flex-end;
+  }
+
+  .what-right-container {
+    position: relative;
+  }
+
+  .fake-chat-wb-img.gatsby-image-wrapper {
+    position: absolute !important;
+    bottom: 0;
+    right: 0;
+    width: 30vw;
   }
 `
 
