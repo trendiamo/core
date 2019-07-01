@@ -7,7 +7,7 @@ const Button = styled.button.attrs({
   background-color: transparent;
   border: 2px solid ${({ color }) => color};
   color: ${({ color }) => color};
-  font-size: 1vw;
+  font-size: 1.25vw;
   font-weight: 500;
   padding: 0.8vw 1vw;
   margin: 0 auto;
