@@ -17,7 +17,7 @@ const Future = styled(({ className }) => (
         </Button>
       </div>
     </div>
-    <div>
+    <div className="future-img-container">
       <FutureImg />
     </div>
   </Section>
@@ -45,6 +45,10 @@ const Future = styled(({ className }) => (
   .h5 {
     font-size: 2.1vw;
     line-height: 1.25;
+  }
+
+  .future-img-container {
+    align-self: flex-end;
   }
 `
 
