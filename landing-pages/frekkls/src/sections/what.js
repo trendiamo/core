@@ -5,6 +5,7 @@ import FakeChatWbImg from '../images/fake-chat-wb'
 import Section from '../components/section'
 import WhatLeftImg from '../images/what-left'
 import WhatRightImg from '../images/what-right'
+import ArrowOrange from '../images/orange-arrow.svg'
 
 const What = styled(({ className }) => (
   <Section className={className}>
@@ -12,6 +13,7 @@ const What = styled(({ className }) => (
     <div className="what-content">
       <div className="what-img-container">
         <WhatLeftImg />
+        <img className="what-arrow" src={ArrowOrange} />
       </div>
       <div className="what-right-container">
         <WhatRightImg />
@@ -20,7 +22,7 @@ const What = styled(({ className }) => (
     </div>
     <div className="what-content bg2">
       <div className="what-text">
-        <b>{'Social Salesforce'}</b>
+        <b className="social-headline">{'Social Salesforce'}</b>
         <p>
           {
             'Let over 100.000 influencers become your personal salesforce matched perfectly with your products and values on page. Take advantage of their reach and expertise and humanize your online sales in seconds with real people.'
@@ -28,7 +30,7 @@ const What = styled(({ className }) => (
         </p>
       </div>
       <div className="what-text">
-        <b>{'Sales Technology'}</b>
+        <b className="tool-headline">{'Sales Technology'}</b>
         <p>
           {
             'Integrate those people and their content with our smart tool directly into your shop and bridge seamlessly their social power with your shop checkouts to increase your conversions and sales for any kind of products and businesses.'
@@ -50,8 +52,20 @@ const What = styled(({ className }) => (
     background: #fafafa;
   }
 
+  .social-headline {
+    color: #56ACEB;
+  }
+
+  .tool-headline {
+    color: #F7603D;
+  }
+
   .what-text {
     padding: 1.8vw;
+  }
+
+  .what-text p {
+    line-height: 1.5rem;
   }
 
   b {
@@ -67,6 +81,13 @@ const What = styled(({ className }) => (
 
   .what-img-container {
     align-self: flex-end;
+  }
+
+  .what-arrow {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    z-index: 999;
   }
 
   .what-right-container {
