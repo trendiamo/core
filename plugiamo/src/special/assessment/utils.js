@@ -34,27 +34,24 @@ const shuffle = a => {
   return a
 }
 
-const isProductHighlighted = ({ product, tags }) => {
-  if (assessmentHostname !== 'www.delius-contract.de') return product.highlight
-  return product.highlight && product.highlight.find(highlightTag => tags.find(tag => tag.includes(highlightTag)))
-}
-
 const isProductMatchingTag = ({ product, tag }) => {
   return assessmentHostname === 'www.delius-contract.de'
     ? product.tags && product.tags.find(productTag => tag.includes(productTag))
     : product.tag && tag === product.tag
 }
 
-const sortProductsInStore = ({ products, tags }) => {
-  return products.sort(
-    (a, b) => !!isProductHighlighted({ product: b, tags }) - !!isProductHighlighted({ product: a, tags })
-  )
+const sortProductsInStore = ({ products }) => {
+  return products.sort((a, b) => !!b.highlight - !!a.highlight)
 }
 
 const convertHighlights = ({ products, tags }) => {
   if (assessmentHostname !== 'www.delius-contract.de') return products
   return products.map(product => {
-    return { ...product, highlight: isProductHighlighted({ product, tags }) }
+    return {
+      ...product,
+      highlight:
+        product.highlight && !!product.highlight.find(highlightTag => tags.find(tag => tag.includes(highlightTag))),
+    }
   })
 }
 
@@ -130,6 +127,5 @@ export {
   fetchProducts,
   isDeliusAssessment,
   isDeliusPDP,
-  isProductHighlighted,
   assessProducts,
 }
