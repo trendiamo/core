@@ -78,16 +78,6 @@ const processModalTriggers = () => {
   })
 }
 
-const processDropCaps = () => {
-  const p = document.querySelector('.blog-text p')
-  if (!p) return
-  const content = p.innerHTML
-  const letter = content.slice(0, 1)
-  p.innerHTML = `<span class="dropcap">${letter}</span>${content.slice(1)}`
-  const dropcaps = document.querySelectorAll('.dropcap')
-  window.Dropcap.layout(dropcaps, 2)
-}
-
 const processInPageScroll = () => {
   if (!location.hash) return
   const element = document.querySelector(location.hash)
@@ -98,7 +88,6 @@ const processInPageScroll = () => {
 export const onRouteUpdate = () => {
   processEmailInputs()
   processModalTriggers()
-  processDropCaps()
   processInPageScroll()
 }
 
