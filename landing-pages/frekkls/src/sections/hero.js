@@ -64,6 +64,27 @@ const Hero = styled(({ className }) => (
   & > div {
     flex: 1;
   }
+
+  @media (max-width: 899px) {
+    h2 {
+      font-size: 10vw;
+    }
+
+    .left-hero-pad {
+      margin-top: -20px;
+    }
+
+    p {
+      font-size: 6vw;
+    }
+
+    button {
+      width: 100%;
+      font-size: 6vw;
+      padding: 10px;
+    }
+  }
+
 `
 
 export default Hero
