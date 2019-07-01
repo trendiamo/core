@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import Checkbox from '../images/checkbox.svg'
 import Section from '../components/section'
 
 /* eslint-disable react/jsx-max-depth */
@@ -14,10 +15,30 @@ const Pricing = styled(({ className }) => (
           <div className="price">{'From 99€/month'}</div>
           <div className="price-label">{'Based on monthly traffic'}</div>
           <ul>
-            <li>{'Frekkls plugin on your site'}</li>
-            <li>{'Admin Panel Access'}</li>
-            <li>{'Unlimited Flows'}</li>
-            <li>{'Data Insights'}</li>
+            <li>
+              <div className="pricing-item-container">
+                <img alt="" className="checkbox" src={Checkbox} />
+                <p>{'Frekkls plugin on your site'}</p>
+              </div>
+            </li>
+            <li>
+              <div className="pricing-item-container">
+                <img alt="" className="checkbox" src={Checkbox} />
+                <p>{'Admin Panel Access'}</p>
+              </div>
+            </li>
+            <li>
+              <div className="pricing-item-container">
+                <img alt="" className="checkbox" src={Checkbox} />
+                <p>{'Unlimited Flows'}</p>
+              </div>
+            </li>
+            <li>
+              <div className="pricing-item-container">
+                <img alt="" className="checkbox" src={Checkbox} />
+                <p>{'Data Insights'}</p>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -27,10 +48,30 @@ const Pricing = styled(({ className }) => (
           <div className="price">{'10% — 20%'}</div>
           <div className="price-label">{'Commission'}</div>
           <ul>
-            <li>{'Content created by sellers'}</li>
-            <li>{'As much traffic as you want'}</li>
-            <li>{'Unlimited access to sellers'}</li>
-            <li>{'Performance based sales commissions only'}</li>
+            <li>
+              <div className="pricing-item-container">
+                <img alt="" className="checkbox" src={Checkbox} />
+                <p>{'Content created by sellers'}</p>
+              </div>
+            </li>
+            <li>
+              <div className="pricing-item-container">
+                <img alt="" className="checkbox" src={Checkbox} />
+                <p>{'As much traffic as you want'}</p>
+              </div>
+            </li>
+            <li>
+              <div className="pricing-item-container">
+                <img alt="" className="checkbox" src={Checkbox} />
+                <p>{'Unlimited access to sellers'}</p>
+              </div>
+            </li>
+            <li>
+              <div className="pricing-item-container">
+                <img alt="" className="checkbox" src={Checkbox} />
+                <p>{'Performance based sales commissions only'}</p>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -52,6 +93,7 @@ const Pricing = styled(({ className }) => (
     flex: 1;
     display: flex;
     width: 60vw;
+    height: 50vh;
     justify-content: space-between;
   }
 
@@ -84,7 +126,7 @@ const Pricing = styled(({ className }) => (
   }
 
   .details-container {
-    padding: 1rem;
+    padding: 0 1rem;
   }
 
   .price {
@@ -123,9 +165,23 @@ const Pricing = styled(({ className }) => (
   ul {
     margin-top: 4vh;
   }
-  li {
-    font-size: 1.25vw;
-    line-height: 2;
+
+  .pricing-item-container {
+    margin: 2vh 0;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+
+    .checkbox {
+      height: 1.5vw;
+      margin-right: 1vw;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1.25vw;
+      line-height: 1.3;
+    }
   }
 `
 /* eslint-enable react/jsx-max-depth */
