@@ -31,8 +31,6 @@ fetch('https://inprov-3db5.restdb.io/rest/clients', optionsCopyClients)
 
       fetch(`${process.env.BACKEND_API_URL}/tagged_products_api/clients`, optionsPasteClients)
         .then(res => res.json())
-        .then(client => {
-          console.log(client.hostname, client.payload.products.length + ' products', 'OK')
-        })
+        .then(console.info)
     })
   })

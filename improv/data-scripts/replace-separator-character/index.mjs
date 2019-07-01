@@ -44,6 +44,6 @@ fetch(`${process.env.BACKEND_API_URL}/tagged_products_api/clients`, requestOptio
         body: JSON.stringify({ client: newClient }),
       })
         .then(res => res.json())
-        .then(console.log)
+        .then(console.info)
     })
   })
