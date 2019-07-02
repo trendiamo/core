@@ -129,7 +129,8 @@
   letter-spacing: 0.8px;
   color: #ff683f;
   font-weight: 500;
-  padding: 13px 20px;
+  text-transform: uppercase;
+  padding: 15px 30px;
   margin: 0 auto;
   font-size: 16px;
   outline: none;
@@ -141,7 +142,8 @@
 
 @media (min-width: 700px) {
   .request-demo-form .hs-button {
-    font-size: 24px;
+    padding: 12px 20px;
+    font-size: 20px;
   }
 }
 
@@ -163,6 +165,10 @@
 
 .request-demo-modal .tingle-modal-box {
   max-width: 600px;
+}
+
+.request-demo-modal .hs-submit {
+  justify-content: center;
 }
 
 .request-demo-modal .actions {

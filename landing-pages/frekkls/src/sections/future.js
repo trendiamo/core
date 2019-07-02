@@ -37,7 +37,6 @@ const Future = styled(({ className }) => (
     padding-top: 4vw;
     padding-bottom: 4vw;
   }
-
   @media (min-width: 900px) {
     .left-future-pad {
       padding-top: 0;
@@ -63,7 +62,14 @@ const Future = styled(({ className }) => (
     width: 100vw;
   }
   @media (min-width: 900px) {
-    width: auto;
+    .future-img-container {
+      width: auto;
+      height: 100vh;
+
+      & > div {
+        height: 100%;
+      }
+    }
   }
 
   @media (max-width: 899px) {

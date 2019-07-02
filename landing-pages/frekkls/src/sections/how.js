@@ -23,7 +23,6 @@ const How = styled(({ className }) => (
   </Section>
 ))`
   flex-direction: column;
-
   @media (min-width: 900px) {
     flex-direction: row;
   }
@@ -37,7 +36,14 @@ const How = styled(({ className }) => (
     width: 100vw;
   }
   @media (min-width: 900px) {
-    width: auto;
+    .how-img-container {
+      width: auto;
+      height: 100vh;
+
+      & > div {
+        height: 100%;
+      }
+    }
   }
 
   .right-how-pad {
@@ -46,7 +52,6 @@ const How = styled(({ className }) => (
     padding-top: 4vw;
     padding-bottom: 4vw;
   }
-
   @media (min-width: 900px) {
     .right-how-pad {
       padding-top: 0;
