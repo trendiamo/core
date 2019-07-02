@@ -53,8 +53,8 @@ const Visuals = styled(({ className }) => (
     .fake-chat-jj-img.gatsby-image-wrapper {
       position: absolute !important;
       bottom: 2vw;
-      right: -6vw;
-      width: 16vw;
+      right: -10vw;
+      width: 20vw;
     }
   }
 
