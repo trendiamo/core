@@ -80,7 +80,7 @@ const Hero = styled(({ className }) => (
 
     button {
       width: 100%;
-      font-size: 6vw;
+      font-size: 5vw;
       padding: 10px;
     }
   }
