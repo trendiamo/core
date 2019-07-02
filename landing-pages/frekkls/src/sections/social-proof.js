@@ -56,6 +56,16 @@ const SocialProof = styled(({ className }) => (
     width: 15vw;
     margin: 1rem;
   }
+
+  @media (max-width: 899px) {
+    .h4 {
+      font-size: 8vw;
+    }
+
+    .logo {
+      width: 30vw;
+    }
+  }
 `
 
 export default SocialProof
