@@ -8,7 +8,7 @@ const HeroImg = ({ alt, className }) => (
       query {
         file: file(relativePath: { eq: "hero.jpg" }) {
           childImageSharp {
-            fluid {
+            fluid(quality: 100) {
               ...GatsbyImageSharpFluid_noBase64
             }
           }

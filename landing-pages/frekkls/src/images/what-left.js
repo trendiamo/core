@@ -8,7 +8,7 @@ const WhatRightImg = ({ alt, className }) => (
       query {
         file: file(relativePath: { eq: "what-left.jpg" }) {
           childImageSharp {
-            fluid {
+            fluid(quality: 100) {
               ...GatsbyImageSharpFluid_noBase64
             }
           }

@@ -8,7 +8,7 @@ const FakeChatJJImg = ({ alt, className }) => (
       query {
         file: file(relativePath: { eq: "fake-chat-jj.png" }) {
           childImageSharp {
-            fluid {
+            fluid(quality: 100) {
               ...GatsbyImageSharpFluid_noBase64
             }
           }

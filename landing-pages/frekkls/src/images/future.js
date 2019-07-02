@@ -8,7 +8,7 @@ const FutureImg = ({ alt, className }) => (
       query {
         file: file(relativePath: { eq: "future.jpg" }) {
           childImageSharp {
-            fluid {
+            fluid(quality: 100) {
               ...GatsbyImageSharpFluid_noBase64
             }
           }
