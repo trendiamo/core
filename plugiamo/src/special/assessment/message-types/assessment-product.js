@@ -6,6 +6,8 @@ import { useCallback } from 'preact/hooks'
 
 export const priceColor = assessmentHostname === 'www.delius-contract.de' && '#333'
 
+const highlightColor = assessmentHostname === 'www.delius-contract.de' && '#c3261b'
+
 const styleConfigDefault = {
   image: {
     height: 200,
@@ -35,7 +37,7 @@ const styleConfigDefault = {
 
 const highlightDefault = {
   text: 'Best Seller',
-  backgroundColor: '#fa0',
+  backgroundColor: highlightColor || '#fa0',
   textColor: '#fff',
 }
 
