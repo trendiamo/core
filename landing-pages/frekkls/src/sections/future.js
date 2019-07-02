@@ -7,6 +7,9 @@ import Section from '../components/section'
 
 const Future = styled(({ className }) => (
   <Section className={className}>
+    <div className="future-img-container">
+      <FutureImg />
+    </div>
     <div>
       <div className="left-future-pad">
         <h3>{'Future of e-commerce'}</h3>
@@ -17,13 +20,12 @@ const Future = styled(({ className }) => (
         </Button>
       </div>
     </div>
-    <div className="future-img-container">
-      <FutureImg />
-    </div>
   </Section>
 ))`
-  flex-direction: row;
-  background: linear-gradient(to right, #fff 0%, #fff 50%, #8cd0e2 50%, #8cd0e2 100%);
+  flex-direction: column;
+  @media (min-width: 900px) {
+    flex-direction: row-reverse;
+  }
 
   & > div {
     flex: 1;
@@ -32,6 +34,15 @@ const Future = styled(({ className }) => (
   .left-future-pad {
     padding-left: 4vw;
     padding-right 4vw;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+  }
+
+  @media (min-width: 900px) {
+    .left-future-pad {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
   }
 
   .h4 {
@@ -49,6 +60,10 @@ const Future = styled(({ className }) => (
 
   .future-img-container {
     align-self: flex-end;
+    width: 100vw;
+  }
+  @media (min-width: 900px) {
+    width: auto;
   }
 `
 
