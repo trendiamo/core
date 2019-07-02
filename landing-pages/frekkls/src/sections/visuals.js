@@ -9,35 +9,53 @@ import Section from '../components/section'
 const Visuals = styled(({ className }) => (
   <Section className={className} id="product">
     <div className="visuals-container">
-      <FakeStoreImg />
       <FakePostImg className="fake-post-img" />
+      <FakeStoreImg />
       <FakeChatJJImg className="fake-chat-jj-img" />
     </div>
   </Section>
 ))`
-  background: linear-gradient(to right, #fafafa 0%, #fafafa 50%, #fff 50%, #fff 100%);
+  background: #fafafa;
+  @media (min-width: 900px) {
+    background: linear-gradient(to right, #fafafa 0%, #fafafa 50%, #fff 50%, #fff 100%);
+  }
 
   .visuals-container {
     flex: 1;
-    width: 60vw;
+    width: 100vw;
     position: relative;
     padding-top: 12vw;
     padding-bottom: 6vw;
+    padding-right: 21px;
+    padding-left: 21px;
   }
 
-  .fake-post-img.gatsby-image-wrapper {
-    position: absolute !important;
-    top: 6vw;
-    left: -10vw;
-    width: 28vw;
-    box-shadow: 0 0 9px 2px rgba(0, 0, 0, 0.3);
+  @media (min-width: 900px) {
+    .visuals-container {
+      width: 60vw;
+      padding-right: 0;
+      padding-left: 0;
+    }
   }
 
-  .fake-chat-jj-img.gatsby-image-wrapper {
-    position: absolute !important;
-    bottom: 2vw;
-    right: -6vw;
-    width: 16vw;
+  @media (min-width: 900px) {
+    .fake-post-img.gatsby-image-wrapper {
+      z-index: 1;
+      position: absolute !important;
+      top: 6vw;
+      left: -10vw;
+      width: 28vw;
+      box-shadow: 0 0 9px 2px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .fake-chat-jj-img.gatsby-image-wrapper {
+      position: absolute !important;
+      bottom: 2vw;
+      right: -6vw;
+      width: 16vw;
+    }
   }
 `
 
