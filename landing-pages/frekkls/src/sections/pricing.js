@@ -211,6 +211,45 @@ const Pricing = styled(({ className }) => (
       line-height: 1.3;
     }
   }
+
+  @media (max-width: 899px) {
+    h3 {
+      font-size: 6vw;
+    }
+
+    .pricing-container {
+      width: 90vw;
+    }
+
+    .title {
+      font-size: 6vw;
+    }
+
+    .price {
+      font-size: 8vw;
+    }
+
+    .price-label {
+      font-size: 4vw;
+    }
+
+    .pricing-item-container .checkbox {
+      height: 4vw;
+      margin-right: 10px;
+    }
+
+    .pricing-item-container p {
+      font-size: 4vw;
+    }
+
+    .details-container {
+      margin-bottom: 20px;
+    }
+
+    .center div {
+      font-size: 4vw;
+    }
+  }
 `
 /* eslint-enable react/jsx-max-depth */
 
