@@ -13,7 +13,6 @@ const Container = styled.div`
   right: 0;
   background: rgba(255, 255, 255, 0.96);
   z-index: 1;
-  padding-top: 50px;
 
   display: none;
   @media (max-width: 900px) {
@@ -29,6 +28,18 @@ const Container = styled.div`
     display: block;
     text-align: center;
     padding: 10px;
+  }
+
+  a img {
+    margin-top: 23px;
+    margin-left: 32px;
+    width: 100px;
+  }
+
+  ${Button} {
+    font-size: 40px;
+    padding: 20px 30px;
+    margin-top: 1rem;
   }
 `
 
@@ -51,8 +62,8 @@ const Content = styled.div`
 
   a {
     text-decoration: none;
-    font-size: 8vw;
-    line-height: 3;
+    font-size: 40px;
+    line-height: 2;
     color: #000;
     text-transform: uppercase;
   }

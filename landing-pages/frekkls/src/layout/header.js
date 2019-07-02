@@ -81,7 +81,12 @@ const StyledHeader = styled(React.forwardRef(Header))`
   }
 
   .logo-link img {
-    width: 11vw;
+    width: 100px;
+  }
+  @media (min-width: 900px) {
+    .logo-link img {
+      width: 11vw;
+    }
   }
 
   .header-link {
