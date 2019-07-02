@@ -66,7 +66,7 @@ const What = styled(({ className }) => (
   }
 
   .what-text {
-    padding: 1.8vw;
+    padding: 4vw;
     flex: 1;
   }
 

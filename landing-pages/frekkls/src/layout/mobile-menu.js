@@ -37,9 +37,11 @@ const Container = styled.div`
   }
 
   ${Button} {
-    font-size: 40px;
+    font-size: 20px;
     padding: 20px 30px;
     margin-top: 1rem;
+    color: #f75c35;
+    border-color: #f75c35;
   }
 `
 

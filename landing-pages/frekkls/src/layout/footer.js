@@ -28,6 +28,17 @@ const FooterFlex = styled.div`
     padding-top: 2rem;
     align-items: end;
   }
+
+  @media (max-width: 899px) {
+    .footer-links {
+      padding: 4vw;
+    }
+
+    .footer-links a,
+    .footer-links p {
+      font-size: 4vw;
+    }
+  }
 `
 
 const FooterSection = styled.div`
@@ -56,6 +67,10 @@ const FooterHeader = styled.div`
   text-transform: uppercase;
   font-weight: 700;
   line-height: 4;
+
+  @media (max-width: 899px) {
+    font-size: 4vw;
+  }
 `
 
 const FooterContent = () => (
