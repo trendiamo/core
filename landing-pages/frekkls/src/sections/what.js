@@ -111,6 +111,17 @@ const What = styled(({ className }) => (
       width: 21vw;
     }
   }
+
+  @media (max-width: 900px) {
+    h3 {
+      font-size: 8vw;
+    }
+
+    .social-headline, .tool-headline {
+      font-size: 8vw;
+      margin-top: 10px;
+    }
+  }
 `
 
 export default What
