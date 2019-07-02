@@ -9,102 +9,125 @@ const Pricing = styled(({ className }) => (
   <Section className={className} id="pricing">
     <h3>{'Customized to your needs'}</h3>
     <div className="pricing-container">
-      <div className="pricing tool">
-        <div className="title">{'Just the tool'}</div>
-        <div className="details-container">
-          <div className="price">{'From 99€/month'}</div>
-          <div className="price-label">{'Based on monthly traffic'}</div>
-          <ul>
-            <li>
-              <div className="pricing-item-container">
-                <img alt="" className="checkbox" src={Checkbox} />
-                <p>{'Frekkls plugin on your site'}</p>
-              </div>
-            </li>
-            <li>
-              <div className="pricing-item-container">
-                <img alt="" className="checkbox" src={Checkbox} />
-                <p>{'Admin Panel Access'}</p>
-              </div>
-            </li>
-            <li>
-              <div className="pricing-item-container">
-                <img alt="" className="checkbox" src={Checkbox} />
-                <p>{'Unlimited Flows'}</p>
-              </div>
-            </li>
-            <li>
-              <div className="pricing-item-container">
-                <img alt="" className="checkbox" src={Checkbox} />
-                <p>{'Data Insights'}</p>
-              </div>
-            </li>
-          </ul>
+      <div className="tool">
+        <div className="pricing">
+          <div className="title">{'Just the tool'}</div>
+          <div className="details-container">
+            <div className="price">{'From 99€/month'}</div>
+            <div className="price-label">{'Based on monthly traffic'}</div>
+            <ul>
+              <li>
+                <div className="pricing-item-container">
+                  <img alt="" className="checkbox" src={Checkbox} />
+                  <p>{'Frekkls plugin on your site'}</p>
+                </div>
+              </li>
+              <li>
+                <div className="pricing-item-container">
+                  <img alt="" className="checkbox" src={Checkbox} />
+                  <p>{'Admin Panel Access'}</p>
+                </div>
+              </li>
+              <li>
+                <div className="pricing-item-container">
+                  <img alt="" className="checkbox" src={Checkbox} />
+                  <p>{'Unlimited Flows'}</p>
+                </div>
+              </li>
+              <li>
+                <div className="pricing-item-container">
+                  <img alt="" className="checkbox" src={Checkbox} />
+                  <p>{'Data Insights'}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="center">
+          <div>{'Boost your sales by showing user generated content of your fans, customers and employees.'}</div>
         </div>
       </div>
-      <div className="pricing service">
-        <div className="title">{'Seller service'}</div>
-        <div className="details-container">
-          <div className="price">{'10% — 20%'}</div>
-          <div className="price-label">{'Commission'}</div>
-          <ul>
-            <li>
-              <div className="pricing-item-container">
-                <img alt="" className="checkbox" src={Checkbox} />
-                <p>{'Content created by sellers'}</p>
-              </div>
-            </li>
-            <li>
-              <div className="pricing-item-container">
-                <img alt="" className="checkbox" src={Checkbox} />
-                <p>{'As much traffic as you want'}</p>
-              </div>
-            </li>
-            <li>
-              <div className="pricing-item-container">
-                <img alt="" className="checkbox" src={Checkbox} />
-                <p>{'Unlimited access to sellers'}</p>
-              </div>
-            </li>
-            <li>
-              <div className="pricing-item-container">
-                <img alt="" className="checkbox" src={Checkbox} />
-                <p>{'Performance based sales commissions only'}</p>
-              </div>
-            </li>
-          </ul>
+      <div className="service">
+        <div className="pricing">
+          <div className="title">{'Seller service'}</div>
+          <div className="details-container">
+            <div className="price">{'10% — 20%'}</div>
+            <div className="price-label">{'Commission'}</div>
+            <ul>
+              <li>
+                <div className="pricing-item-container">
+                  <img alt="" className="checkbox" src={Checkbox} />
+                  <p>{'Content created by sellers'}</p>
+                </div>
+              </li>
+              <li>
+                <div className="pricing-item-container">
+                  <img alt="" className="checkbox" src={Checkbox} />
+                  <p>{'As much traffic as you want'}</p>
+                </div>
+              </li>
+              <li>
+                <div className="pricing-item-container">
+                  <img alt="" className="checkbox" src={Checkbox} />
+                  <p>{'Unlimited access to sellers'}</p>
+                </div>
+              </li>
+              <li>
+                <div className="pricing-item-container">
+                  <img alt="" className="checkbox" src={Checkbox} />
+                  <p>{'Performance based sales commissions only'}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </div>
-    <div className="pricing-container center">
-      <div>{'Boost your sales by showing user generated content of your fans, customers and employees.'}</div>
-      <div>
-        {
-          'Unleash the full salesforce potential by integrating content created by our sellers, influencers and sales experts.'
-        }
+        <div className="center">
+          <div>
+            {
+              'Unleash the full salesforce potential by integrating content created by our sellers, influencers and sales experts.'
+            }
+          </div>
+        </div>
       </div>
     </div>
   </Section>
 ))`
   background: #fafafa;
-  padding-bottom: 15vh;
+  padding-bottom: 10vh;
 
   .pricing-container {
     flex: 1;
+    flex-direction: column;
     display: flex;
     width: 60vw;
-    height: 50vh;
     justify-content: space-between;
+  }
+
+  @media (min-width: 900px) {
+    .pricing-container {
+      flex-direction: row;
+      height: 50vh;
+    }
+  }
+
+  .pricing-container > div {
+    display: flex;
+    flex-direction: column;
   }
 
   .center {
     text-align: center;
   }
   .center > div {
-    width: 25vw;
     padding-top: 2rem;
+    padding-bottom: 2rem;
     font-size: 1.4vw;
     line-height: 1.4;
+  }
+  @media (min-width: 900px) {
+    .center > div {
+      width: 25vw;
+    }
   }
 
   .pricing {
@@ -112,7 +135,12 @@ const Pricing = styled(({ className }) => (
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 25vw;
+    flex: 1;
+  }
+  @media (min-width: 900px) {
+    .pricing {
+      width: 25vw;
+    }
   }
 
   .title {
@@ -148,14 +176,14 @@ const Pricing = styled(({ className }) => (
     text-transform: uppercase;
   }
 
-  .pricing.tool {
+  .tool .pricing {
     background: #fd8b61;
     .title {
       background: #ff7242;
     }
   }
 
-  .pricing.service {
+  .service .pricing {
     background: #8ec6f0;
     .title {
       background: #56aceb;
