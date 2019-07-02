@@ -10,7 +10,7 @@ const Visuals = styled(({ className }) => (
   <Section className={className} id="product">
     <div className="visuals-container">
       <FakePostImg className="fake-post-img" />
-      <FakeStoreImg />
+      <FakeStoreImg className="fake-store-img"/>
       <FakeChatJJImg className="fake-chat-jj-img" />
     </div>
   </Section>
@@ -55,6 +55,13 @@ const Visuals = styled(({ className }) => (
       bottom: 2vw;
       right: -6vw;
       width: 16vw;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .fake-store-img {
+      width: 300%;
+      margin-left: -170%;
     }
   }
 `
