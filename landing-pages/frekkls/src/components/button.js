@@ -12,7 +12,6 @@ const Button = styled.button.attrs({
   padding: 0.8vw 1vw;
   margin: 0 auto;
   outline: none;
-  line-height: 1;
   cursor: pointer;
   overflow: hidden;
   text-transform: uppercase;

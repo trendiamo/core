@@ -57,6 +57,11 @@ const What = styled(({ className }) => (
     }
   }
 
+  .what-social,
+  .what-sales {
+    flex-basis: 50%;
+  }
+
   .social-headline {
     color: #56aceb;
   }
