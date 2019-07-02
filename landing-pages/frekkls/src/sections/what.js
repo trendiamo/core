@@ -47,7 +47,8 @@ const What = styled(({ className }) => (
     flex-direction: column;
     width: 100vw;
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
+    background: #fafafa;
   }
 
   @media (min-width: 900px) {
@@ -66,7 +67,6 @@ const What = styled(({ className }) => (
 
   .what-text {
     padding: 1.8vw;
-    background: #fafafa;
     flex: 1;
   }
 
