@@ -1656,6 +1656,12 @@ const data = {
                 { name: 'message', placeholder: 'Kommentar (optional)', multiline: true },
               ],
             },
+            {
+              id: 3,
+              type: 'SimpleChatTextMessage',
+              html:
+                'Durch das Ausfüllen und Absenden des Formulars bestätigen Sie die Nutzung Ihrer Daten, um Sie bezüglich einer Kaufberatung zu kontaktieren.',
+            },
           ],
         },
       ],
