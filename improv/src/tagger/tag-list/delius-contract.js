@@ -5,7 +5,7 @@ const tagList = [
   'Hotel>Möbelstoffe',
   'Hotel>Akustikstoffe',
   'Hotel>Wandbeläge',
-  'Hotel>Sonnenschutz',
+  'Hotel>Outdoor',
 
   'Health & Care>Vorhänge',
   'Health & Care>Dimout/Blackout',
@@ -13,13 +13,13 @@ const tagList = [
   'Health & Care>Möbelstoffe',
   'Health & Care>Akustikstoffe',
   'Health & Care>Wandbeläge',
-  'Health & Care>Sonnenschutz',
 
   'Schifffahrt>Vorhänge',
   'Schifffahrt>Dimout/Blackout',
   'Schifffahrt>Gardine',
   'Schifffahrt>Möbelstoffe',
   'Schifffahrt>Akustikstoffe',
+  'Schifffahrt>Outdoor',
 
   'Kino / Theater>Veloure',
   'Kino / Theater>Vorhänge',
@@ -33,7 +33,6 @@ const tagList = [
   'Büro>Möbelstoffe',
   'Büro>Akustikstoffe',
   'Büro>Wandbeläge',
-  'Büro>Sonnenschutz',
 
   'Ladenbau>Kabinenvorhang',
   'Ladenbau>Vorhänge',
@@ -42,13 +41,12 @@ const tagList = [
   'Ladenbau>Möbelstoffe',
   'Ladenbau>Akustikstoffe',
   'Ladenbau>Wandbeläge',
-  'Ladenbau>Sonnenschutz',
 
   'Privatkunden>Vorhänge',
   'Privatkunden>Dimout/Blackout',
   'Privatkunden>Gardine',
   'Privatkunden>Möbelstoffe',
-  'Privatkunden>Sonnenschutz',
+  'Privatkunden>Outdoor',
 
   'Pflegeheim>Vorhänge',
   'Pflegeheim>Dimout/Blackout',
@@ -68,7 +66,6 @@ const tagList = [
   'Wohnheim>Gardine',
   'Wohnheim>Möbelstoffe',
   'Wohnheim>Wandbeläge',
-  'Wohnheim>Sonnenschutz',
 
   { key: 'highlight', name: 'Highlight', splitByTags: true },
 ]
