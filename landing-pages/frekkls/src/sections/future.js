@@ -65,6 +65,27 @@ const Future = styled(({ className }) => (
   @media (min-width: 900px) {
     width: auto;
   }
+
+  @media (max-width: 899px) {
+    h3 {
+      font-size: 4vw;
+      line-height: 5vw;
+    }
+
+    .h4 {
+      font-size: 8vw;
+    }
+
+    .h5 {
+      font-size: 5vw;
+    }
+
+    button {
+      width: 100%;
+      font-size: 5vw;
+      padding: 10px;
+    }
+  }
 `
 
 export default Future
