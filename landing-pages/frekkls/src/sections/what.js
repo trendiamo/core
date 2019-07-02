@@ -11,7 +11,7 @@ const What = styled(({ className }) => (
   <Section className={className} id="what-you-get">
     <h3>{'What you get'}</h3>
     <div className="what-content">
-      <div clasName="what-social">
+      <div className="what-social">
         <div className="what-img-container">
           <WhatLeftImg />
           <img alt="" className="what-arrow" src={ArrowOrange} />
@@ -117,7 +117,8 @@ const What = styled(({ className }) => (
       font-size: 8vw;
     }
 
-    .social-headline, .tool-headline {
+    .social-headline,
+    .tool-headline {
       font-size: 8vw;
       margin-top: 10px;
     }

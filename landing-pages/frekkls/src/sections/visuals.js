@@ -10,7 +10,7 @@ const Visuals = styled(({ className }) => (
   <Section className={className} id="product">
     <div className="visuals-container">
       <FakePostImg className="fake-post-img" />
-      <FakeStoreImg className="fake-store-img"/>
+      <FakeStoreImg className="fake-store-img" />
       <FakeChatJJImg className="fake-chat-jj-img" />
     </div>
   </Section>
