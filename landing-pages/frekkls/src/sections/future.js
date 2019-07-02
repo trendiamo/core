@@ -15,9 +15,9 @@ const Future = styled(({ className }) => (
         <h3>{'Future of e-commerce'}</h3>
         <p className="h4">{'Next Generation Sales Channel.'}</p>
         <p className="h5">{'Learn how we turn Influencer Marketing into Influencer Sales.'}</p>
-        <Button className="js-request-demo" color="#000">
-          {'Read our magazine'}
-        </Button>
+        <a href="https://medium.com/@frekkls">
+          <Button color="#000">{'Read our magazine'}</Button>
+        </a>
       </div>
     </div>
   </Section>

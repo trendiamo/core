@@ -29,9 +29,16 @@ const Hero = styled(({ className }) => (
 
   .hero-img-container {
     width: 100vw;
+
+    > div {
+      height: 100%;
+    }
   }
   @media (min-width: 900px) {
-    width: auto;
+    .hero-img-container {
+      width: auto;
+      height: 100vh;
+    }
   }
 
   .left-hero-pad {

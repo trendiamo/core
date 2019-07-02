@@ -131,7 +131,7 @@
   font-weight: 500;
   padding: 13px 20px;
   margin: 0 auto;
-  font-size: 14px;
+  font-size: 16px;
   outline: none;
   line-height: 1;
   cursor: pointer;
@@ -148,11 +148,13 @@
 .request-demo-form .hs-button:hover {
   background-color: #ff683f;
   background-image: none;
+  color: #fff;
 }
 
 .request-demo-form .hs-button:active {
   background-color: #ff8240;
   background-image: none;
+  color: #fff;
 }
 
 #btn-opener-demo {
@@ -165,4 +167,10 @@
 
 .request-demo-modal .actions {
   text-align: center;
+}
+
+@media (max-width: 900px) {
+  .request-demo-modal h3 {
+    font-size: 16px;
+  }
 }

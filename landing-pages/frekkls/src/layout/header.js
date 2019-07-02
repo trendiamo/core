@@ -2,16 +2,23 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import Button from '../components/button'
-import LogoGrey from '../images/logo-grey.svg'
+import Logo from '../images/logo-grey.svg'
 import MobileMenu from './mobile-menu'
 
 import menuIcon from '../images/menu-icon.svg'
+
+const StyledLogo = styled.img`
+  @media (max-width: 900px) {
+    filter: invert(1);
+  }
+`
 
 const StyledMenuIcon = styled.img.attrs({
   src: menuIcon,
 })`
   padding-left: 30px;
   height: 35px;
+  cursor: pointer;
   @media (min-width: 900px) {
     display: none;
   }
@@ -32,7 +39,7 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
   return (
     <header className={className} ref={ref}>
       <a className="logo-link" href="/">
-        <img alt={siteTitle} src={LogoGrey} />
+        <StyledLogo alt={siteTitle} src={Logo} />
       </a>
       <nav>
         <a className="header-link" href="#what-you-get" onClick={onClick}>

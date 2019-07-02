@@ -42,6 +42,11 @@ const Container = styled.div`
     margin-top: 1rem;
     color: #f75c35;
     border-color: #f75c35;
+
+    &:hover {
+      background-color: #f75c35;
+      color: #fff;
+    }
   }
 `
 
@@ -51,8 +56,8 @@ const StyledCloseIcon = styled.img.attrs({
   height: 35px;
   cursor: pointer;
   position: absolute;
-  top: 30px;
-  right: 20px;
+  top: 17px;
+  right: 37px;
 `
 
 const Content = styled.div`

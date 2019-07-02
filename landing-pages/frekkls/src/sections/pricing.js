@@ -210,10 +210,14 @@ const Pricing = styled(({ className }) => (
       font-size: 1.25vw;
       line-height: 1.3;
     }
+
+    &:last-child {
+      align-items: flex-start;
+    }
   }
 
   @media (max-width: 899px) {
-    h3 {
+    h3 {
       font-size: 6vw;
     }
 
