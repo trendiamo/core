@@ -2,9 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const FooterFlex = styled.div`
-  max-width: 1200px;
+  width: 100%;
   display: flex;
-  align-items: flex-start;
   text-align: center;
   flex-direction: column;
   align-items: center;
@@ -22,11 +21,11 @@ const FooterFlex = styled.div`
   }
 
   @media (min-width: 900px) {
+    max-width: 1200px;
     justify-content: space-between;
     text-align: left;
     flex-direction: row;
     padding-top: 2rem;
-    align-items: end;
   }
 
   @media (max-width: 899px) {
@@ -93,9 +92,9 @@ const FooterContent = () => (
         </a>
       </FooterColumn>
       <FooterColumn flex="3">
-        <FooterHeader>{'Newsletter'}</FooterHeader>
+        {/* <FooterHeader>{'Newsletter'}</FooterHeader>
         <p>{'The way online sales work will change drastically in 2019!'}</p>
-        <p>{"Sign up to our newsletter and make sure you don't miss any of the good bits!"}</p>
+        <p>{"Sign up to our newsletter and make sure you don't miss any of the good bits!"}</p> */}
       </FooterColumn>
     </FooterSection>
   </FooterFlex>
