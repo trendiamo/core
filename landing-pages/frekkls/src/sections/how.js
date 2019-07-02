@@ -74,7 +74,7 @@ const How = styled(({ className }) => (
     }
 
     .h4 {
-      font-size: 8vw;
+      font-size: 6vw;
     }
 
     .h5 {
