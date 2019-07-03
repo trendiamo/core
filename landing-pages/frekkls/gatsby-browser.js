@@ -42,8 +42,8 @@ const processModalTriggers = () => {
         portalId: '5559593',
         formId: '0b907c64-003d-40d2-8cc5-d10db6be1fe1',
         target: '.request-demo-form',
+        onFormReady: () => modal.open(),
       })
-      modal.open()
 
       event.preventDefault()
       return false

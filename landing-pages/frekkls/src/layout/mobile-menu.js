@@ -89,6 +89,10 @@ const MobileMenu = ({ siteTitle, toggleMobileMenu }) => {
     element.scrollIntoView({ behavior: 'smooth' })
   })
 
+  const onButtonClick = useCallback(() => {
+    toggleMobileMenu()
+  }, [])
+
   return (
     <Container className="mobile-menu">
       <a href="/" onClick={removeMobileMenu}>
@@ -105,7 +109,7 @@ const MobileMenu = ({ siteTitle, toggleMobileMenu }) => {
         <a href="#pricing" onClick={onClick}>
           {'Pricing'}
         </a>
-        <Button className="js-request-demo" color="#000">
+        <Button className="js-request-demo" color="#000" onClick={onButtonClick}>
           {'Get Started'}
         </Button>
       </Content>
