@@ -44,27 +44,37 @@ const Base = ({
   const [progress, setProgress] = useState(assessmentState.progress || 0)
   const [results, setResults] = useState([])
   const [endNodeTags, setEndNodeTags] = useState([])
+  const [client, setClient] = useState(null)
 
   useEffect(() => {
     rememberPersona(module.persona)
   }, [])
 
+  const processResults = useCallback(
+    startTime => {
+      if (!client || !client.payload || !client.payload.products) return
+      return timeout.set(
+        'settingResults',
+        () => {
+          setResults(assessProducts(client.payload.products, endNodeTags))
+        },
+        Math.max(800 - (performance.now() - startTime), 10)
+      )
+    },
+    [client, endNodeTags]
+  )
+
   useEffect(() => {
     if (currentStepKey === 'store') {
-      let fetchStartTime = performance.now()
-      fetchProducts().then(results => {
-        const client = results.find(client => client.hostname === assessmentHostname)
-        if (!client || !client.payload || !client.payload.products) return
-        timeout.set(
-          'settingResults',
-          () => {
-            setResults(assessProducts(client.payload.products, endNodeTags))
-          },
-          Math.max(800 - (performance.now() - fetchStartTime), 10)
-        )
-      })
+      const fetchStartTime = performance.now()
+      client
+        ? processResults(fetchStartTime)
+        : fetchProducts().then(results => {
+            setClient(results.find(client => client.hostname === assessmentHostname))
+            processResults(fetchStartTime)
+          })
     }
-  }, [currentStepKey, endNodeTags, progress, step])
+  }, [client, currentStepKey, endNodeTags, processResults, progress, step])
 
   const [animateOpacity, setAnimateOpacity] = useState(false)
   const [nothingSelected, setNothingSelected] = useState(false)

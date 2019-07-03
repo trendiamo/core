@@ -22,7 +22,7 @@ const recallPersona = () => JSON.parse(sessionStorage.getItem('trnd-remembered-p
 const isPCAssessmentCart = () => isPCAssessment() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
 
 const fetchProducts = () =>
-  fetch(process.env.TAGGED_PRODUCTS_URL, {
+  fetch(`${process.env.TAGGED_PRODUCTS_URL}?hostname=${assessmentHostname}`, {
     headers: new Headers({ 'Content-Type': 'application/json' }),
   }).then(response => response.json())
 
