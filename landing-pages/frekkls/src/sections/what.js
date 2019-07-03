@@ -117,7 +117,7 @@ const What = styled(({ className }) => (
     }
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 899px) {
     h3 {
       font-size: 8vw;
     }

@@ -15,7 +15,7 @@ const Container = styled.div`
   z-index: 1;
 
   display: none;
-  @media (max-width: 900px) {
+  @media (max-width: 899px) {
     body.mobile-menu-open & {
       display: block;
     }

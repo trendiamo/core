@@ -8,7 +8,7 @@ import MobileMenu from './mobile-menu'
 import menuIcon from '../images/menu-icon.svg'
 
 const StyledLogo = styled.img`
-  @media (max-width: 900px) {
+  @media (max-width: 899px) {
     filter: invert(1);
   }
 `
