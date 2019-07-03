@@ -7,7 +7,10 @@ import Section from '../components/section'
 
 const Hero = styled(({ className }) => (
   <Section className={className}>
-    <div>
+    <div className="hero-img-container">
+      <HeroImg />
+    </div>
+    <div className="hero-text-container">
       <div className="left-hero-pad">
         <h2>{'Turn Socials into Sellers.'}</h2>
         <p>{'Integrate people and their content as sellers directly into your shop.'}</p>
@@ -16,19 +19,26 @@ const Hero = styled(({ className }) => (
         </Button>
       </div>
     </div>
-    <div className="hero-img-container">
-      <HeroImg />
-    </div>
   </Section>
 ))`
-  flex-direction: column-reverse;
+  flex-direction: column;
   @media (min-width: 900px) {
-    flex-direction: row;
-    background: linear-gradient(to right, #fff 0%, #fff 50%, #f35c39 50%, #f35c39 100%);
+    flex-direction: row-reverse;
+    align-items: stretch;
+  }
+
+  .hero-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .hero-img-container {
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(to bottom, #f76040 0%, #f76040 50%, #f45b39 50%, #f45b39 100%);
   }
   @media (min-width: 900px) {
     .hero-img-container {
