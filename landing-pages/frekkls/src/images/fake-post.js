@@ -8,7 +8,7 @@ const FakePostImg = ({ alt, className }) => (
       query {
         file: file(relativePath: { eq: "fake-post.png" }) {
           childImageSharp {
-            fluid(quality: 100) {
+            fluid(quality: 85) {
               ...GatsbyImageSharpFluid_noBase64
             }
           }
