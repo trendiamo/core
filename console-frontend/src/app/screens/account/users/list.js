@@ -15,6 +15,7 @@ const StyledAvatar = styled(Avatar)`
 `
 
 const columns = [
+  { name: 'id', label: 'id', sortable: true },
   { name: 'avatar' },
   { name: 'firstName', label: 'name', sortable: true },
   { name: 'email', label: 'email', sortable: true },
@@ -37,16 +38,16 @@ const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles, 
 
   return (
     <>
-      <TableCell>
+      <TableCell width="20%">
         <StyledAvatar src={profilePicUrl && imgixUrl(profilePicUrl, { rect: stringifyRect(picRect) })}>
           {profilePicUrl ? null : initials ? initials : ''}
         </StyledAvatar>
       </TableCell>
-      <TableCell width="40%">
+      <TableCell width="35%">
         {firstName} {lastName}
       </TableCell>
-      <TableCell width="40%">{email}</TableCell>
-      <TableCell width="20%">{role.charAt(0).toUpperCase() + role.slice(1)}</TableCell>
+      <TableCell width="35%">{email}</TableCell>
+      <TableCell width="10%">{role.charAt(0).toUpperCase() + role.slice(1)}</TableCell>
     </>
   )
 }
