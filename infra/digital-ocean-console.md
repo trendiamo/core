@@ -37,7 +37,7 @@ dokku postgres:link console-backend-pg console-backend
 dokku redis:create console-backend-redis
 dokku redis:link console-backend-redis console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
-dokku config:set console-backend CORS_ORIGIN=admin.frekkls.com FRONTEND_BASE_URL=https://admin.frekkls.com MAILER_HOST=api.frekkls.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=... SHOP_API_TOKEN=... DELIUS_ASMT_EMAIL=... TAGGED_PRODUCTS_API_TOKEN=...
+dokku config:set console-backend CORS_ORIGIN=admin.frekkls.com FRONTEND_BASE_URL=https://admin.frekkls.com MAILER_HOST=api.frekkls.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=... SHOP_API_TOKEN=... DELIUS_ASMT_EMAIL=... DELIUS_ASMT_EMAIL_BCC=... TAGGED_PRODUCTS_API_TOKEN=...
 dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
 dokku domains:add console-backend api.frekkls.com

@@ -4,7 +4,7 @@ class SparkpostMailer < ApplicationMailer
       substitution_data: substitution_data(hash),
       template_id: "asmt-inquiry",
     }
-    mail(to: ENV["DELIUS_ASMT_EMAIL"], sparkpost_data: sparkpost_data)
+    mail(to: ENV["DELIUS_ASMT_EMAIL"], bcc: ENV["DELIUS_ASMT_EMAIL_BCC"], sparkpost_data: sparkpost_data)
   end
 
   private
