@@ -99,9 +99,6 @@ const StyledHeader = styled(React.forwardRef(Header))`
   .header-link {
     font-size: 1.25vw;
     font-weight: 500;
-    line-height: 30px;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
     border-bottom: 2px solid transparent;
     color: #fff;
     text-decoration: none;
