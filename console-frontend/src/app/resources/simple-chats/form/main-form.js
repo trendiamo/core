@@ -51,7 +51,6 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
         name="title"
         onChange={setFieldValue}
         onFocus={onTitleFocus}
-        required
         value={form.title}
       />
       <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>

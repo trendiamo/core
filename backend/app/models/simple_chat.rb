@@ -10,7 +10,6 @@ class SimpleChat < ApplicationRecord
   accepts_nested_attributes_for :simple_chat_steps, allow_destroy: true
 
   validates :name, presence: true
-  validates :title, presence: true
 
   def as_json(_options = {})
     attributes
