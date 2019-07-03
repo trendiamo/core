@@ -55,7 +55,7 @@ const Layout = ({ children, className, layout }) => (
         <MainContent>
           {children}
           <Footer />
-          <ModalContents layout={layout} />
+          {layout && <ModalContents layout={layout} />}
         </MainContent>
       </Main>
     )}
