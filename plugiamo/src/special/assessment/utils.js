@@ -6,7 +6,7 @@ import { suggestions } from './data/pierre-cardin'
 
 const isPCAssessment = () => assessmentHostname === 'www.pierre-cardin.de'
 
-const deliusPathnames = ['/', '/en/', '/de/']
+const deliusPathnames = ['/', '/de/']
 
 const isDeliusAssessment = () =>
   assessmentHostname === 'www.delius-contract.de' && deliusPathnames.includes(location.pathname)
