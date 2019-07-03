@@ -72,10 +72,6 @@ const Hero = styled(({ className }) => (
       font-size: 10vw;
     }
 
-    .left-hero-pad {
-      margin-top: -20px;
-    }
-
     p {
       font-size: 6vw;
     }
