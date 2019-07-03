@@ -121,7 +121,14 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
   }, [isMessageSent, setShowingContent, showingContent])
 
   const onCtaButtonClick = useCallback(() => {
-    inquiryMutation(buildInquiryVariables(assessmentForm)).then(() => {
+    const inquiryVariables = buildInquiryVariables(assessmentForm)
+    const { country, message } = inquiryVariables.fields
+    const tags = Object.keys(inquiryVariables.fields)
+      .filter(key => key.startsWith('asmtStep'))
+      .reduce((obj, key) => ({ ...obj, [key]: inquiryVariables.fields[key] }), {})
+
+    inquiryMutation(inquiryVariables).then(() => {
+      mixpanel.track('Submitted Form', { hostname: location.hostname, country, message, tags })
       setIsMessageSent(true)
       onToggleContent()
       setPluginState('closed')
