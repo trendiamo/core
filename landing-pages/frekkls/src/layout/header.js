@@ -2,8 +2,8 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import Button from '../components/button'
-import Logo from '../images/logo-grey.svg'
-import menuIcon from '../images/menu-icon.svg'
+import LogoGrey from '../images/logo-grey.svg'
+import MenuIcon from '../images/menu-icon.svg'
 import MobileMenu from './mobile-menu'
 
 const StyledLogo = styled.img`
@@ -13,7 +13,7 @@ const StyledLogo = styled.img`
 `
 
 const StyledMenuIcon = styled.img.attrs({
-  src: menuIcon,
+  src: MenuIcon,
 })`
   padding-left: 30px;
   height: 35px;
@@ -38,7 +38,7 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
   return (
     <header className={className} ref={ref}>
       <a className="logo-link" href="/">
-        <StyledLogo alt={siteTitle} src={Logo} />
+        <StyledLogo alt={siteTitle} src={LogoGrey} />
       </a>
       <nav>
         <a className="header-link" href="#what-you-get" onClick={onClick}>
