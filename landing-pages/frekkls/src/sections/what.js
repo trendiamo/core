@@ -76,7 +76,7 @@ const What = styled(({ className }) => (
   }
 
   .what-text p {
-    line-height: 1.5rem;
+    line-height: 1.5;
   }
 
   b {

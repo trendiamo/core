@@ -24,7 +24,7 @@
   outline: none;
   margin: 0;
   height: 64px;
-  line-height: 64px;
+  line-height: 4;
 }
 
 .hs-form .hs-input::placeholder {
@@ -108,7 +108,7 @@
 }
 
 .email-input .submitted-message {
-  line-height: 64px;
+  line-height: 4;
 }
 
 .request-demo-form {
