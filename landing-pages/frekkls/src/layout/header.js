@@ -3,9 +3,8 @@ import styled from 'styled-components'
 
 import Button from '../components/button'
 import Logo from '../images/logo-grey.svg'
-import MobileMenu from './mobile-menu'
-
 import menuIcon from '../images/menu-icon.svg'
+import MobileMenu from './mobile-menu'
 
 const StyledLogo = styled.img`
   @media (max-width: 899px) {
