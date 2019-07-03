@@ -4,12 +4,14 @@ import styled from 'styled-components'
 import FakeChatJJImg from '../images/fake-chat-jj'
 import FakePostImg from '../images/fake-post'
 import FakeStoreImg from '../images/fake-store'
+import FakeStoreMobileImg from '../images/fake-store-mobile'
 import Section from '../components/section'
 
 const Visuals = styled(({ className }) => (
   <Section className={className} id="product">
     <div className="visuals-container">
       <FakePostImg className="fake-post-img" />
+      <FakeStoreMobileImg className="fake-store-mobile-img" />
       <FakeStoreImg className="fake-store-img" />
       <FakeChatJJImg className="fake-chat-jj-img" />
     </div>
@@ -38,6 +40,21 @@ const Visuals = styled(({ className }) => (
     }
   }
 
+  .fake-store-img {
+    display: none;
+  }
+  .fake-store-mobile-img {
+    margin-left: -21px;
+  }
+  @media (min-width: 900px) {
+    .fake-store-img {
+      display: block;
+    }
+    .fake-store-mobile-img {
+      display: none;
+    }
+  }
+
   @media (min-width: 900px) {
     .fake-post-img.gatsby-image-wrapper {
       z-index: 1;
@@ -55,13 +72,6 @@ const Visuals = styled(({ className }) => (
       bottom: 2vw;
       right: -10vw;
       width: 20vw;
-    }
-  }
-
-  @media (max-width: 899px) {
-    .fake-store-img {
-      width: 300%;
-      margin-left: -170%;
     }
   }
 `
