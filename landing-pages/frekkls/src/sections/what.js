@@ -86,8 +86,8 @@ const What = styled(({ className }) => (
     font-size: 1.8vw;
   }
 
-  .what-img-container {
-    align-self: flex-end;
+  .what-img-container,
+  .what-right-container {
     position: relative;
   }
 
@@ -98,10 +98,6 @@ const What = styled(({ className }) => (
     width: 5%;
     max-width: 80px;
     z-index: 999;
-  }
-
-  .what-right-container {
-    position: relative;
   }
 
   .fake-chat-wb-img.gatsby-image-wrapper {
