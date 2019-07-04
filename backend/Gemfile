@@ -23,6 +23,7 @@ gem "rack-cors"
 gem "redis-rails", "~> 5"
 gem "resque"
 gem "resque-scheduler"
+gem "rest-client"
 gem "rubocop"
 # changed to support the EU endpoint. https://github.com/the-refinery/sparkpost_rails/pull/58
 gem "sparkpost_rails", github: "dsgh/sparkpost_rails", branch: "custom-api-endpoint"
