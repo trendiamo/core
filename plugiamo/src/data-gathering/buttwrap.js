@@ -51,7 +51,9 @@ export default {
   },
   setupDataGathering() {
     const _this = this
-    if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
+    if (location.pathname.match(/\/thank_you$/)) {
+      mixpanel.track('Purchase Success', { hostname: location.hostname })
+    } else if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
       if (window.$('#CartPageAgree').is(':checked')) {
         window.$(document).on('click', '.cart__checkout--page', () => {
           const json = _this.checkoutObject()
