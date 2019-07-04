@@ -10,6 +10,7 @@ import UserMenu from './user-menu'
 import {
   AccountCircleOutlined,
   AssignmentTurnedInOutlined,
+  BarChart,
   ViewList as DefaultIcon,
   Link as LinkIcon,
   PersonPinOutlined,
@@ -22,6 +23,12 @@ import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const resources = {
+  dataDashboard: {
+    icon: BarChart,
+    label: 'Data Dashboard',
+    class: 'dataDashboard',
+    route: routes.dataDashboard(),
+  },
   triggers: {
     icon: TuneOutlined,
     label: 'Triggers',
@@ -70,7 +77,7 @@ const resourceGroups = {
   main: {
     name: 'Main',
     showTitle: false,
-    resources: [resources.triggers],
+    resources: auth.isAdmin() ? [resources.dataDashboard, resources.triggers] : [resources.triggers],
   },
   modules: {
     name: 'Modules',
@@ -237,20 +244,20 @@ const BaseMenu = withRouter(
       return <DummyMenu />
     }
 
-    const userRoleResourceGoups = useMemo(() => (auth.isRole('editor') ? editorResourceGroups : resourceGroups), [])
+    const userRoleResourceGroups = useMemo(() => (auth.isRole('editor') ? editorResourceGroups : resourceGroups), [])
 
     return (
       <Container>
         <div style={{ flex: 1 }}>
           <MenuLogo sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-          {Object.keys(userRoleResourceGoups).map(groupName => (
+          {Object.keys(userRoleResourceGroups).map(groupName => (
             <div key={groupName}>
-              <MenuItemGroup showTitle={userRoleResourceGoups[groupName].showTitle} sidebarOpen={sidebarOpen}>
+              <MenuItemGroup showTitle={userRoleResourceGroups[groupName].showTitle} sidebarOpen={sidebarOpen}>
                 <GroupText sidebarOpen={sidebarOpen}>
-                  {userRoleResourceGoups[groupName].showTitle && userRoleResourceGoups[groupName].name}
+                  {userRoleResourceGroups[groupName].showTitle && userRoleResourceGroups[groupName].name}
                 </GroupText>
               </MenuItemGroup>
-              {userRoleResourceGoups[groupName].resources.map(resource => (
+              {userRoleResourceGroups[groupName].resources.map(resource => (
                 <Item key={resource.route} resource={resource} sidebarOpen={sidebarOpen} />
               ))}
             </div>
