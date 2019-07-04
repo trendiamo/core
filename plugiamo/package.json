@@ -49,6 +49,7 @@
     "eslint-plugin-react-hooks": "^1.6.0",
     "eslint-plugin-sort-imports-es6-autofix": "^0.4.0",
     "prettier": "^1.16.4",
+    "rollbar-sourcemap-webpack-plugin": "^2.5.1",
     "style-loader": "^0.23.1",
     "svg-loader": "^0.0.2",
     "webpack": "^4.29.6",
