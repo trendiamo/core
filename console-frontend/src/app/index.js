@@ -2,6 +2,7 @@ import Account from 'app/screens/account'
 import Accounts from 'app/screens/accounts'
 import auth from 'auth'
 import ChangePassword from 'app/screens/change-password'
+import DataDashboard from 'app/screens/data-dashboard'
 import ForgotPassword from 'auth/forgot-password'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
@@ -38,11 +39,11 @@ const jss = create({
 })
 
 // Auth protected route.
-const PrivateRoute = ({ component, isOwnerScoped, path, ...props }) => {
+const PrivateRoute = ({ component, isAdminScoped, isOwnerScoped, path, ...props }) => {
   const render = useCallback(
     ({ match }) =>
       auth.isLoggedIn() ? (
-        isOwnerScoped && auth.isRole('editor') ? (
+        (isOwnerScoped && auth.isRole('editor')) || (isAdminScoped && !auth.isAdmin()) ? (
           React.createElement(NotFound, { match })
         ) : (
           React.createElement(component, { match })
@@ -50,7 +51,7 @@ const PrivateRoute = ({ component, isOwnerScoped, path, ...props }) => {
       ) : (
         <Redirect to={routes.login()} />
       ),
-    [component, isOwnerScoped]
+    [component, isAdminScoped, isOwnerScoped]
   )
 
   return <Route {...props} path={path} render={render} />
@@ -103,6 +104,7 @@ const Routes = () => (
     <PrivateRoute component={ChangePassword} exact isOwnerScoped path={routes.passwordChange()} />
     <PrivateRoute component={UrlGenerator} exact isOwnerScoped path={routes.urlGenerator()} />
     <PrivateRoute component={Accounts} exact isOwnerScoped path={routes.accounts()} />
+    <PrivateRoute component={DataDashboard} exact isAdminScoped path={routes.dataDashboard()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
     <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
     <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />

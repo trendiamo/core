@@ -80,6 +80,9 @@ const routes = {
   accounts() {
     return '/accounts'
   },
+  dataDashboard() {
+    return '/data-dashboard'
+  },
   nullRoute() {
     return '/empty'
   },

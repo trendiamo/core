@@ -10,11 +10,11 @@ module Api
 
       def jql_params
         hostname = current_tenant.websites.first.hostnames.first
-        { dates: dates_params.to_h, hostname: hostname }.to_json
+        { dates: JSON.parse(dates_params), hostname: hostname }.to_json
       end
 
       def dates_params
-        params.require(:dates).permit(:from_date, :to_date)
+        params.require(:dates)
       end
     end
   end
