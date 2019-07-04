@@ -135,6 +135,8 @@ export default {
           const json = _this.addToCartObject()
           mixpanel.track(json.name, json.data)
         })
+    } else if (location.pathname.match(/onepage\/success/)) {
+      mixpanel.track('Purchase Success', location.hostname)
     }
   },
 }

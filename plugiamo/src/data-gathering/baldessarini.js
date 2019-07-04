@@ -115,7 +115,7 @@ export default {
   },
   setupDataGathering() {
     const _this = this
-    if (location.pathname.match(/onepage\/success\//)) {
+    if (location.pathname.match(/onepage\/success/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     } else if (location.pathname.match(/^\/de\/checkout\/cart/)) {
       jQuery

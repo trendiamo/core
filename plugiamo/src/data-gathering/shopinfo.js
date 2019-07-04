@@ -113,6 +113,8 @@ export default {
       window.$(document).on('click', '.buy-button', () => {
         _this.addToCartObject(saveData, location.pathname)
       })
+    } else if (location.pathname.match(/orderPlaced/)) {
+      mixpanel.track('Purchase Success', location.hostname)
     }
   },
 }
