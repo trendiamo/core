@@ -6,41 +6,37 @@ const convertToCents = selector => {
 
 export default {
   addToCartObject(callback, path, returnObj) {
-    const getData = (url, callback) => {
-      window.$.ajax({
-        url,
-        type: 'GET',
-        dataType: 'json',
-      }).then(data => {
-        if (returnObj) {
-          returnObj.productId = data[0].productId
-          returnObj.productName = data[0].productName
-          returnObj.productBrand = data[0].brand
+    window.$.ajax({
+      url: '/api/catalog_system/pub/products/search/' + path,
+      type: 'GET',
+      dataType: 'json',
+    }).then(results => {
+      if (!results || results.length === 0) return
+      const data = results[0]
+      if (returnObj) {
+        returnObj.productId = data.productId
+        returnObj.productName = data.productName
+        returnObj.productBrand = data.brand
+      }
+      callback(
+        returnObj || {
+          name: 'Add To Cart',
+          data: {
+            hostname: location.hostname,
+            withPlugin: !!window.$('.frekkls-container')[0],
+            productId: data.productId,
+            productName: data.productName,
+            productBrand: data.brand,
+            currency: 'BRL',
+            subTotalInCents: {
+              noBoleto: convertToCents(window.$('.skuBestPrice')[0].innerText),
+              inTenInstalments: convertToCents(window.$('.skuBestInstallmentValue')[0].innerText),
+              aVistaNoCartao: convertToCents(window.$('.valor-por-real')[0].lastChild.innerText),
+            },
+          },
         }
-        callback(
-          returnObj
-            ? returnObj
-            : {
-                name: 'Add To Cart',
-                data: {
-                  hostname: location.hostname,
-                  withPlugin: !!window.$('.frekkls-container')[0],
-                  productId: data[0].productId,
-                  productName: data[0].productName,
-                  productBrand: data[0].brand,
-                  currency: 'BRL',
-                  subTotalInCents: {
-                    noBoleto: convertToCents(window.$('.skuBestPrice')[0].innerText),
-                    inTenInstalments: convertToCents(window.$('.skuBestInstallmentValue')[0].innerText),
-                    aVistaNoCartao: convertToCents(window.$('.valor-por-real')[0].lastChild.innerText),
-                  },
-                },
-              }
-        )
-      })
-    }
-
-    getData('/api/catalog_system/pub/products/search/' + path, callback)
+      )
+    })
   },
   getProductsFromCart(isCheckoutForm) {
     const _this = this
