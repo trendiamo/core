@@ -55,7 +55,19 @@ const initApp = (frekklsReactRoot, googleAnalytics) => {
   mixpanel.track('Visited Page', { hostname: location.hostname })
 
   const browser = detect()
-  const supportedBrowsers = ['chrome', 'firefox', 'safari', 'edge', 'opera', 'ios', 'ios-webview', 'crios', 'fxios']
+
+  const supportedBrowsers = [
+    'chrome',
+    'firefox',
+    'safari',
+    'edge',
+    'opera',
+    'ios',
+    'ios-webview',
+    'crios',
+    'fxios',
+    'instagram',
+  ]
   if (!browser || !supportedBrowsers.includes(browser.name)) return
 
   const onInitResult = getFrekklsConfig().onInit()
