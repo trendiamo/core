@@ -5,7 +5,7 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  mode: 'development',
+  entry: ['./src/index.js'],
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     compress: true,
@@ -17,13 +17,7 @@ module.exports = {
     host: '0.0.0.0',
     proxy: { '/graphql': 'http://localhost:5000' },
   },
-  entry: ['./src/index.js'],
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: 'http://0.0.0.0:8080/',
-    chunkFilename: '[name].js',
-    filename: 'plugin.js',
-  },
+  mode: 'development',
   module: {
     rules: [
       {
@@ -47,6 +41,12 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
     ],
+  },
+  output: {
+    path: path.resolve(__dirname, 'build'),
+    publicPath: 'http://0.0.0.0:8080/',
+    chunkFilename: '[name].js',
+    filename: 'plugin.js',
   },
   performance: {
     maxAssetSize: 300000,
