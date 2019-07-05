@@ -1,7 +1,7 @@
 module Mixpanel
   class RunQuery
     attr_reader :params, :script, :key
-    JQL_HTTP_API_URL = "https://mixpanel.com/api/2.0/jqlx".freeze
+    JQL_HTTP_API_URL = "https://mixpanel.com/api/2.0/jql".freeze
 
     def initialize(params, script)
       @params = params
