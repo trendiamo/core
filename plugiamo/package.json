@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack -p --progress --config webpack.prod.js",
+    "build": "webpack -p --config webpack.prod.js --hide-modules",
     "deploy": "bin/deploy",
     "analyze": "yarn webpack-bundle-analyzer build/stats.json"
   },

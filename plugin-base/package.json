@@ -4,8 +4,8 @@
   "private": true,
   "main": "dist/plugin-base.js",
   "scripts": {
-    "build-dev": "webpack --progress --config webpack.config.js",
-    "build": "webpack -p --progress --config webpack.prod.js",
+    "build-dev": "webpack --hide-modules",
+    "build": "webpack -p --config webpack.prod.js --hide-modules",
     "watch": "webpack --progress --watch --config webpack.config.js",
     "analyze": "yarn webpack-bundle-analyzer dist/stats.json",
     "🚄": "yarn build-dev"
