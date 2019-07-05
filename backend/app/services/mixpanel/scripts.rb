@@ -27,5 +27,11 @@ module Mixpanel
         }
       JS
     end
+
+    def self.conversion_rate_dummy(params)
+      (Date.parse(params[:dates][:from_date])..Date.parse(params[:dates][:to_date])).map do |date|
+        { date: date.to_s, conversionRate: rand }
+      end
+    end
   end
 end
