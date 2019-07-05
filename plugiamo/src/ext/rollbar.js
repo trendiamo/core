@@ -21,7 +21,11 @@ export const loadRollbar = iframe => {
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
-      code_version: process.env.VERSION,
+      client: {
+        javascript: {
+          code_version: process.env.VERSION,
+        },
+      },
       environment: process.env.NODE_ENV,
       url: location.href,
     },
