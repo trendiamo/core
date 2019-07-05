@@ -24,6 +24,7 @@ export const loadRollbar = iframe => {
       client: {
         javascript: {
           code_version: process.env.VERSION,
+          source_map_enabled: true,
         },
       },
       environment: process.env.NODE_ENV,
