@@ -82,7 +82,9 @@ export default {
   },
   setupDataGathering() {
     const _this = this
-    if (jQuery.noConflict()('.product-view').length === 1) {
+    if (location.pathname.match(/onepage\/success/)) {
+      mixpanel.track('Purchase Success', { hostname: location.hostname })
+    } else if (jQuery.noConflict()('.product-view').length === 1) {
       // pdp
       jQuery
         .noConflict()('.product-shop')
@@ -99,8 +101,6 @@ export default {
           const json = _this.checkoutObject()
           mixpanel.track(json.name, json.data)
         })
-    } else if (location.pathname.match(/onepage\/success/)) {
-      mixpanel.track('Purchase Success', location.hostname)
     }
   },
 }

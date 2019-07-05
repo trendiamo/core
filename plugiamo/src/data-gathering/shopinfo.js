@@ -88,7 +88,9 @@ export default {
     const saveData = resultsObj => {
       mixpanel.track(resultsObj.name, resultsObj.data)
     }
-    if (
+    if (location.pathname.match(/orderPlaced/)) {
+      mixpanel.track('Purchase Success', { hostname: location.hostname })
+    } else if (
       location.pathname.match(/^\/checkout\//) ||
       (window.$('.vtexsc-wrap')[0] && window.$('.vtexsc-wrap')[0].classList.contains('active'))
     ) {
@@ -113,8 +115,6 @@ export default {
       window.$(document).on('click', '.buy-button', () => {
         _this.addToCartObject(saveData, location.pathname)
       })
-    } else if (location.pathname.match(/orderPlaced/)) {
-      mixpanel.track('Purchase Success', location.hostname)
     }
   },
 }
