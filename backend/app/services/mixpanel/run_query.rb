@@ -21,7 +21,7 @@ module Mixpanel
     private
 
     def perform_request
-      RestClient::Request.execute(method: :get, url: JQL_HTTP_API_URL, headers: headers, payload: payload)
+      RestClient::Request.execute(method: :get, url: JQL_HTTP_API_URL, headers: headers, payload: payload).to_s
     rescue RestClient::Exception => e
       e
     end
