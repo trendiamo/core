@@ -1,8 +1,17 @@
 /* eslint-disable */
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const cp = require('child_process')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
 const webpack = require('webpack')
+
+let version
+try {
+  version = cp.execSync('git rev-parse -q --verify HEAD', { cwd: __dirname, encoding: 'utf8' })
+} catch (err) {
+  console.error('Error getting revision', err)
+  process.exit(1)
+}
 
 module.exports = {
   entry: ['./src/index.js'],
@@ -52,7 +61,11 @@ module.exports = {
     maxAssetSize: 300000,
     maxEntrypointSize: 300000,
   },
-  plugins: [new Dotenv(), new BundleAnalyzerPlugin({ analyzerMode: 'disabled', generateStatsFile: true })],
+  plugins: [
+    new webpack.DefinePlugin({ 'process.env.VERSION': JSON.stringify(version) }),
+    new Dotenv(),
+    new BundleAnalyzerPlugin({ analyzerMode: 'disabled', generateStatsFile: true }),
+  ],
   resolve: {
     alias: {
       react: 'preact/compat',
