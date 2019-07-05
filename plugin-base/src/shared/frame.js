@@ -49,6 +49,8 @@ const addPlatformClass = body => {
 const Frame = forwardRef(({ children, styleStr, title, ...rest }, ref) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
+  ref = ref || isLoaded // hack for lost ref
+
   useEffect(
     () => {
       if (isLoaded) return
@@ -58,7 +60,7 @@ const Frame = forwardRef(({ children, styleStr, title, ...rest }, ref) => {
         addCss(contentDocument.head, `${baseStyle}${styleStr}`)
         addBase(contentDocument.head)
         addPlatformClass(contentDocument.body)
-        setIsLoaded(true)
+        setIsLoaded(ref) // hack for lost ref
       }
       if (contentDocument.readyState === 'complete') {
         load()
