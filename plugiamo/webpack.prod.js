@@ -30,6 +30,12 @@ module.exports = merge(config, {
         publicPath: 'https://js.frekkls.com',
         version,
       }),
+    dotenv.ROLLBAR_DEPLOY_TOKEN &&
+      new RollbarSourcemapPlugin({
+        accessToken: dotenv.ROLLBAR_DEPLOY_TOKEN,
+        publicPath: 'https://plugiamo.s3.eu-central-1.amazonaws.com',
+        version,
+      }),
   ].filter(p => p),
   watch: false,
 })
