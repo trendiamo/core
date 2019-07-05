@@ -1,9 +1,18 @@
 /* eslint-disable */
 const config = require('./webpack.config.js')
+const cp = require('child_process')
 const dotenv = require('dotenv').config({ path: __dirname + '/.env' }).parsed
 const merge = require('webpack-merge')
 const RollbarSourcemapPlugin = require('rollbar-sourcemap-webpack-plugin')
 const webpack = require('webpack')
+
+let version
+try {
+  version = cp.execSync('git rev-parse -q --verify HEAD', { cwd: __dirname, encoding: 'utf8' })
+} catch (err) {
+  console.error('Error getting revision', err)
+  process.exit(1)
+}
 
 module.exports = merge(config, {
   devtool: 'hidden-source-map',
