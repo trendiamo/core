@@ -35,6 +35,8 @@ const options = {
       {
         ticks: {
           callback: value => `${value}%`,
+          min: 0,
+          max: 100,
         },
       },
     ],
