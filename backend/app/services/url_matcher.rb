@@ -32,7 +32,7 @@ class UrlMatcher
     if match_data && match_data[1]
       p = match_data[1].split("&")
       p.each do |e|
-        next if e.blank?
+        next if e.blank? || !e.index("=")
 
         r = e.split("=")
         matches[CGI.unescape(r[0])] = CGI.unescape(r.slice(1))
