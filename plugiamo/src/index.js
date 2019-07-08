@@ -49,10 +49,9 @@ const RootComponent = () => (
 )
 
 const initApp = (frekklsReactRoot, googleAnalytics) => {
-  setupDataGathering(googleAnalytics)
-
   mixpanel.init(mixpanelToken)
   mixpanel.track('Visited Page', { hostname: location.hostname })
+  setupDataGathering(googleAnalytics)
 
   const browser = detect()
 
