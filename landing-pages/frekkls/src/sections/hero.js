@@ -14,7 +14,7 @@ const Hero = styled(({ className }) => (
       <div className="left-hero-pad">
         <h2>{'Turn Socials into Sellers.'}</h2>
         <p>{'Integrate people and their content as sellers directly into your shop.'}</p>
-        <Button className="js-request-demo" color="#f75c35">
+        <Button big className="js-request-demo" color="#f75c35">
           {'Get Started'}
         </Button>
       </div>

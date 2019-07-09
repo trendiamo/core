@@ -15,7 +15,7 @@ const How = styled(({ className }) => (
         <h3>{'How it works'}</h3>
         <p className="h4">{'A seamless shopping experience starts here.'}</p>
         <p className="h5">{'Provide an inspiring user journey from the website entry all the way to the checkout.'}</p>
-        <Button className="js-request-demo" color="#000">
+        <Button big className="js-request-demo" color="#000">
           {'Learn more'}
         </Button>
       </div>

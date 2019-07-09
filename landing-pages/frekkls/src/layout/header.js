@@ -50,7 +50,7 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
         <a className="header-link" href="#pricing" onClick={onClick}>
           {'Pricing'}
         </a>
-        <Button className="js-request-demo" color="#fff">
+        <Button bg="rgba(255, 255, 255, 0.3)" className="js-request-demo" color="#fff">
           {'Get Started'}
         </Button>
         <StyledMenuIcon onClick={toggleMobileMenu} />
@@ -98,7 +98,6 @@ const StyledHeader = styled(React.forwardRef(Header))`
   .header-link {
     font-size: 1.25vw;
     font-weight: 500;
-    border-bottom: 2px solid transparent;
     color: #fff;
     text-decoration: none;
     text-transform: uppercase;

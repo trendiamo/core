@@ -20,7 +20,9 @@ const Future = styled(({ className }) => (
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Button color="#000">{'Read our magazine'}</Button>
+          <Button big color="#000">
+            {'Read our magazine'}
+          </Button>
         </a>
       </div>
     </div>
