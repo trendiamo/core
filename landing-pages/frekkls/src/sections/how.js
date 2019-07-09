@@ -73,11 +73,6 @@ const How = styled(({ className }) => (
   }
 
   @media (max-width: 899px) {
-    h3 {
-      font-size: 4vw;
-      line-height: 1.25;
-    }
-
     .h4 {
       font-size: 6vw;
     }

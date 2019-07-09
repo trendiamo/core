@@ -44,7 +44,9 @@ const Visuals = styled(({ className }) => (
     display: none;
   }
   .fake-store-mobile-img {
+    margin-top: 3rem;
     margin-left: -21px;
+    margin-right: 40px;
   }
   @media (min-width: 900px) {
     .fake-store-img {

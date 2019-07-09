@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const FooterFlex = styled.div`
   width: 100%;
   display: flex;
-  text-align: center;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
@@ -55,10 +54,13 @@ const FooterSection = styled.div`
 const FooterColumn = styled.div`
   flex: ${({ flex }) => flex};
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
   margin-left: 1vw;
   margin-right: 1vw;
+  align-items: center;
+  @media (min-width: 900px) {
+    align-items: flex-start;
+  }
 `
 
 const FooterHeader = styled.div`
@@ -190,7 +192,6 @@ const Footer = styled(({ className, layout, locale }) => (
   }
 
   h3 {
-    font-weight: 500;
     margin-bottom: 2rem;
   }
 `

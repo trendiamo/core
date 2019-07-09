@@ -121,12 +121,13 @@ const Pricing = styled(({ className }) => (
   .center > div {
     padding-top: 2rem;
     padding-bottom: 2rem;
-    font-size: 1.4vw;
+    font-size: 5vw;
     line-height: 1.4;
   }
   @media (min-width: 900px) {
     .center > div {
       width: 25vw;
+      font-size: 1.4vw;
     }
   }
 
@@ -216,11 +217,20 @@ const Pricing = styled(({ className }) => (
     }
   }
 
-  @media (max-width: 899px) {
+  h3 {
+    font-size: 6vw;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  @media (min-width: 900px) {
     h3 {
-      font-size: 6vw;
+      font-size: 4vw;
+      margin-top: 2vw;
+      margin-bottom: 2vw;
     }
+  }
 
+  @media (max-width: 899px) {
     .pricing-container {
       width: 90vw;
     }
@@ -248,10 +258,6 @@ const Pricing = styled(({ className }) => (
 
     .details-container {
       margin-bottom: 20px;
-    }
-
-    .center div {
-      font-size: 4vw;
     }
   }
 `

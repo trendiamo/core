@@ -31,7 +31,7 @@ const Container = styled.div`
   }
 
   a img {
-    margin-top: 23px;
+    margin-top: 16px;
     margin-left: 32px;
     width: 100px;
   }
@@ -53,11 +53,11 @@ const Container = styled.div`
 const StyledCloseIcon = styled.img.attrs({
   src: CloseIcon,
 })`
-  height: 35px;
+  height: 20px;
   cursor: pointer;
   position: absolute;
-  top: 17px;
-  right: 37px;
+  top: 16px;
+  right: 32px;
 `
 
 const Content = styled.div`

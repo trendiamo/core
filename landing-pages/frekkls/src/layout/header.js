@@ -16,7 +16,7 @@ const StyledMenuIcon = styled.img.attrs({
   src: MenuIcon,
 })`
   padding-left: 30px;
-  height: 35px;
+  height: 20px;
   cursor: pointer;
   @media (min-width: 900px) {
     display: none;
@@ -65,11 +65,15 @@ const StyledHeader = styled(React.forwardRef(Header))`
   position: absolute;
   width: 100vw;
   z-index: 1;
+  align-items: flex-start;
+
+  nav {
+    align-items: center;
+  }
 
   nav,
   & {
     display: flex;
-    align-items: center;
     justify-content: space-between;
   }
 

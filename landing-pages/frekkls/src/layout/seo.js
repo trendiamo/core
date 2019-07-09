@@ -1,8 +1,9 @@
 import Helmet from 'react-helmet'
 import React from 'react'
+import TitleImage from '../images/title-image.jpg'
 import { graphql, StaticQuery } from 'gatsby'
 
-const Seo = ({ description, lang, meta, keywords, title, imageSrc }) => (
+const Seo = ({ description, meta, keywords, title }) => (
   <StaticQuery
     query={detailsQuery}
     render={data => {
@@ -10,7 +11,7 @@ const Seo = ({ description, lang, meta, keywords, title, imageSrc }) => (
       return (
         <Helmet
           htmlAttributes={{
-            lang,
+            lang: data.site.siteMetadata.lang,
           }}
           meta={[
             {
@@ -31,7 +32,7 @@ const Seo = ({ description, lang, meta, keywords, title, imageSrc }) => (
             },
             {
               property: 'og:image',
-              content: imageSrc || '',
+              content: TitleImage,
             },
             {
               name: 'twitter:card',
@@ -58,7 +59,7 @@ const Seo = ({ description, lang, meta, keywords, title, imageSrc }) => (
                   }
                 : []
             )
-            .concat(meta)}
+            .concat(meta || [])}
           title={title}
         />
       )

@@ -9,7 +9,7 @@ import WhatRightImg from '../images/what-right'
 
 const What = styled(({ className }) => (
   <Section className={className} id="what-you-get">
-    <h3>{'What you get'}</h3>
+    <h3 className="large-screen">{'What you get'}</h3>
     <div className="what-content">
       <div className="what-social">
         <div className="what-img-container">
@@ -17,6 +17,7 @@ const What = styled(({ className }) => (
           <img alt="" className="what-arrow" src={ArrowOrange} />
         </div>
         <div className="what-text">
+          <h3 className="small-screen">{'What you get'}</h3>
           <b className="social-headline">{'Social Salesforce'}</b>
           <p>
             {
@@ -31,6 +32,7 @@ const What = styled(({ className }) => (
           <FakeChatWbImg className="fake-chat-wb-img" />
         </div>
         <div className="what-text">
+          <h3 className="small-screen">{'What you get'}</h3>
           <b className="tool-headline">{'Sales Technology'}</b>
           <p>
             {
@@ -79,6 +81,18 @@ const What = styled(({ className }) => (
     line-height: 1.5;
   }
 
+  h3.large-screen {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    h3.large-screen {
+      display: block;
+    }
+    h3.small-screen {
+      display: none;
+    }
+  }
+
   b {
     font-weight: 500;
     display: block;
@@ -114,10 +128,6 @@ const What = styled(({ className }) => (
   }
 
   @media (max-width: 899px) {
-    h3 {
-      font-size: 8vw;
-    }
-
     .social-headline,
     .tool-headline {
       font-size: 8vw;

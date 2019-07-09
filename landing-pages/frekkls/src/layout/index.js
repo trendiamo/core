@@ -46,7 +46,7 @@ const Layout = ({ children, className, layout }) => (
     `}
     render={data => (
       <Main className={className}>
-        <Seo keywords={[]} lang="en" meta={[]} title="Frekkls" />
+        <Seo />
         <Helmet>
           <link href={favicon} rel="shortcut icon" type="image/png" />
           <meta name="hbspt-locale" value="en" />

@@ -13,9 +13,11 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: 'Frekkls',
-    description: '',
+    title: 'Turn Socials into Sellers',
+    description:
+      'Integrate people and their content as sellers directly into your shop and boost your conversion rate!',
     author: '@trendiamo',
+    lang: 'en',
   },
   plugins: [
     'gatsby-plugin-remove-trailing-slashes',
