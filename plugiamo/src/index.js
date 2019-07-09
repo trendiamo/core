@@ -67,7 +67,11 @@ const initApp = (frekklsReactRoot, googleAnalytics) => {
     'fxios',
     'instagram',
   ]
-  if (!browser || !supportedBrowsers.includes(browser.name)) return
+
+  const isBrowserVersionSupported = () =>
+    browser.name !== 'safari' || (browser.version && browser.version.substring(0, 2) > 10)
+
+  if (!browser || !supportedBrowsers.includes(browser.name) || !isBrowserVersionSupported()) return
 
   const onInitResult = getFrekklsConfig().onInit()
   if (onInitResult === false) return
