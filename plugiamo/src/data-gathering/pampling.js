@@ -148,12 +148,10 @@ export default {
         mixpanel.track(json.name, json.data)
       })
     } else if (location.pathname.match(/^\/|\/index$/)) {
-      $('.btn.btn-comprar').click(() => {
-        $('.capa-tallas').on('click', '.talla', event => {
-          const isProductFromModal = true
-          const json = _this.addToCartObject(isProductFromModal, event.target)
-          mixpanel.track(json.name, json.data)
-        })
+      $('.modal .capa-tallas').on('click', '.talla', event => {
+        const isProductFromModal = true
+        const json = _this.addToCartObject(isProductFromModal, event.target)
+        mixpanel.track(json.name, json.data)
       })
     }
   },
