@@ -1,19 +1,10 @@
 import CircularProgress from 'shared/circular-progress'
+import ErrorMessage from './error-message'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import Section from 'shared/section'
-import styled from 'styled-components'
 import { apiEventList, apiRequest } from 'utils'
 import { Line } from 'react-chartjs-2'
 import { useSnackbar } from 'notistack'
-
-const ErrorMessage = styled.p`
-  color: #32333d;
-  font-size: 15px;
-  font-weight: lighter;
-  margin-top: 35px;
-  text-align: center;
-`
 
 const config = {
   fill: false,
@@ -36,7 +27,6 @@ const options = {
         ticks: {
           callback: value => `${value}%`,
           min: 0,
-          max: 100,
         },
       },
     ],
@@ -49,12 +39,7 @@ const options = {
   },
 }
 
-const dates = {
-  from_date: '2019-06-01',
-  to_date: '2019-07-01',
-}
-
-const ConversionRate = () => {
+const ConversionRate = ({ dates }) => {
   const [chartData, setChartData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [hasErrors, setHasErrors] = useState(false)
@@ -64,7 +49,9 @@ const ConversionRate = () => {
   useEffect(
     () => {
       ;(async () => {
-        const { json, requestError } = await apiRequest(apiEventList, [{ dates: JSON.stringify(dates) }])
+        const { json, requestError } = await apiRequest(apiEventList, [
+          { dates: JSON.stringify(dates), chart: 'conversion_rate' },
+        ])
         if (requestError) {
           enqueueSnackbar(requestError, { variant: 'error' })
           setHasErrors(true)
@@ -76,20 +63,16 @@ const ConversionRate = () => {
         setIsLoading(false)
       })()
     },
-    [enqueueSnackbar]
+    [dates, enqueueSnackbar]
   )
 
-  return (
-    <Section title="Conversion Rate">
-      {isLoading ? (
-        <CircularProgress />
-      ) : hasErrors ? (
-        <ErrorMessage>{'⚠️ There was a problem loading your data, please try again or contact us.'}</ErrorMessage>
-      ) : (
-        <Line data={chartData} options={options} />
-      )}
-    </Section>
-  )
+  if (isLoading) return <CircularProgress />
+
+  if (hasErrors) {
+    return <ErrorMessage>{'⚠️ There was a problem loading your data, please try again or contact us.'}</ErrorMessage>
+  }
+
+  return <Line data={chartData} options={options} />
 }
 
 export default ConversionRate

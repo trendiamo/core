@@ -18,8 +18,8 @@ const StyledPaper = styled(Paper)`
   }
 `
 
-const Section = ({ title, children, actions }) => (
-  <StyledPaper>
+const Section = ({ actions, className, children, title }) => (
+  <StyledPaper className={className}>
     <StyledDiv>
       {title && (
         <>
