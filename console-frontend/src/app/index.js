@@ -100,7 +100,7 @@ const Routes = () => (
     <PrivateRoute component={TriggerCreate} exact isOwnerScoped path={routes.triggerCreate()} />
     <PrivateRoute component={TriggerEdit} exact isOwnerScoped path={routes.triggerEdit(':triggerId')} />
     <PrivateRoute component={Account} exact path={routes.account()} />
-    <PrivateRoute component={UserCreate} exact isOwnerScoped path={routes.userCreate()} />
+    <PrivateRoute component={UserCreate} exact isAdminScoped isOwnerScoped path={routes.userCreate()} />
     <PrivateRoute component={ChangePassword} exact isOwnerScoped path={routes.passwordChange()} />
     <PrivateRoute component={UrlGenerator} exact isOwnerScoped path={routes.urlGenerator()} />
     <PrivateRoute component={Accounts} exact isOwnerScoped path={routes.accounts()} />
