@@ -10,9 +10,11 @@ module Mixpanel
     end
 
     def perform
+      return Mixpanel::Scripts.send("#{script}_dummy", params) unless ENV["MIXPANEL_API_KEY"]
+
       result = Rails.cache.read(key)
       unless result
-        result = ENV["MIXPANEL_API_KEY"] ? perform_request : Mixpanel::Scripts.conversion_rate_dummy(params)
+        result = perform_request
         Rails.cache.write(key, result) unless result.is_a?(RestClient::Exception)
       end
       result
