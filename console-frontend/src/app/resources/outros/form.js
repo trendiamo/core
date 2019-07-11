@@ -2,12 +2,12 @@ import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import PluginPreview from './plugin-preview'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, Field, Form, FormHelperText } from 'shared/form-elements'
+import { Actions, Field, Form, FormHelperText, PreviewModal } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
@@ -21,6 +21,7 @@ const formObjectTransformer = json => {
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleButtonYes: json.chatBubbleButtonYes || '',
     chatBubbleButtonNo: json.chatBubbleButtonNo || '',
+    triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
     __persona: json.persona,
   }
@@ -123,6 +124,8 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
 
   const formRef = useRef(null)
 
+  const [isPreviewModalOpened, setIsPreviewModalOpened] = useState(false)
+
   const {
     form,
     isFormLoading,
@@ -133,6 +136,13 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
     setFieldValue,
     setIsFormSubmitting,
   } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
+
+  const onPreviewClick = useCallback(
+    () => {
+      setIsPreviewModalOpened(!isPreviewModalOpened)
+    },
+    [isPreviewModalOpened]
+  )
 
   const newOnFormSubmit = useCallback(
     event => {
@@ -166,6 +176,8 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
           onFormSubmit={newOnFormSubmit}
+          onPreviewClick={onPreviewClick}
+          previewEnabled={!!form.id}
           saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
           tooltipEnabled
           tooltipText="No changes to save"
@@ -174,30 +186,35 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
       backRoute,
       title,
     }),
-    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit, title]
+    [backRoute, form.id, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit, onPreviewClick, title]
   )
   useAppBarContent(appBarContent)
+
+  const module = useMemo(() => ({ id: form.id, type: 'outro', triggerIds: form.triggerIds }), [form])
 
   if (isFormLoading) return <CircularProgress />
 
   return (
-    <Grid container spacing={24}>
-      <Grid item md={6} xs={12}>
-        <BaseOutroForm
-          form={form}
-          formRef={formRef}
-          isFormLoading={isFormLoading}
-          isFormPristine={isFormPristine}
-          onFormSubmit={newOnFormSubmit}
-          selectPersona={selectPersona}
-          setFieldValue={setFieldValue}
-          title={title}
-        />
+    <>
+      {form.id && <PreviewModal module={module} open={isPreviewModalOpened} setOpen={setIsPreviewModalOpened} />}
+      <Grid container spacing={24}>
+        <Grid item md={6} xs={12}>
+          <BaseOutroForm
+            form={form}
+            formRef={formRef}
+            isFormLoading={isFormLoading}
+            isFormPristine={isFormPristine}
+            onFormSubmit={newOnFormSubmit}
+            selectPersona={selectPersona}
+            setFieldValue={setFieldValue}
+            title={title}
+          />
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <PluginPreview form={form} />
+        </Grid>
       </Grid>
-      <Grid item md={6} xs={12}>
-        <PluginPreview form={form} />
-      </Grid>
-    </Grid>
+    </>
   )
 }
 

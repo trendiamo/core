@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions } from 'shared/form-elements'
+import { Actions, PreviewModal } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
@@ -27,6 +27,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
   const [showingContent, setShowingContent] = useState(false)
+  const [isPreviewModalOpened, setIsPreviewModalOpened] = useState(false)
 
   const {
     form,
@@ -45,6 +46,13 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
       pluginHistory.replace(pluginRoutes.showcase(form.id))
     },
     [form.id]
+  )
+
+  const onPreviewClick = useCallback(
+    () => {
+      setIsPreviewModalOpened(!isPreviewModalOpened)
+    },
+    [isPreviewModalOpened]
   )
 
   const newOnFormSubmit = useCallback(
@@ -155,6 +163,8 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
           onFormSubmit={newOnFormSubmit}
+          onPreviewClick={onPreviewClick}
+          previewEnabled={!!form.id}
           saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine}
           tooltipEnabled
           tooltipText="No changes to save"
@@ -163,7 +173,17 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
       backRoute,
       title,
     }),
-    [backRoute, isCropping, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit, title]
+    [
+      backRoute,
+      form.id,
+      isCropping,
+      isFormLoading,
+      isFormPristine,
+      isFormSubmitting,
+      newOnFormSubmit,
+      onPreviewClick,
+      title,
+    ]
   )
   useAppBarContent(appBarContent)
 
@@ -175,41 +195,46 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     [onSpotlightClick]
   )
 
+  const module = useMemo(() => ({ id: form.id, type: 'showcase', triggerIds: form.triggerIds }), [form])
+
   if (isFormLoading) return <CircularProgress />
 
   return (
-    <Grid container spacing={24}>
-      <Grid item md={6} xs={12}>
-        <FormContainer
-          addSpotlight={addSpotlight}
-          form={form}
-          formRef={formRef}
-          isCropping={isCropping}
-          isFormLoading={isFormLoading}
-          isFormPristine={isFormPristine}
-          onBackClick={onBackClick}
-          onFormSubmit={newOnFormSubmit}
-          onSortEnd={onSortEnd}
-          onSpotlightClick={onSpotlightClick}
-          onToggleContent={onToggleContent}
-          selectPersona={selectPersona}
-          setFieldValue={setFieldValue}
-          setIsCropping={setIsCropping}
-          setSpotlightForm={setSpotlightForm}
-          title={title}
-        />
+    <>
+      {form.id && <PreviewModal module={module} open={isPreviewModalOpened} setOpen={setIsPreviewModalOpened} />}
+      <Grid container spacing={24}>
+        <Grid item md={6} xs={12}>
+          <FormContainer
+            addSpotlight={addSpotlight}
+            form={form}
+            formRef={formRef}
+            isCropping={isCropping}
+            isFormLoading={isFormLoading}
+            isFormPristine={isFormPristine}
+            onBackClick={onBackClick}
+            onFormSubmit={newOnFormSubmit}
+            onSortEnd={onSortEnd}
+            onSpotlightClick={onSpotlightClick}
+            onToggleContent={onToggleContent}
+            selectPersona={selectPersona}
+            setFieldValue={setFieldValue}
+            setIsCropping={setIsCropping}
+            setSpotlightForm={setSpotlightForm}
+            title={title}
+          />
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <PluginPreview
+            form={form}
+            onToggleContent={onToggleContent}
+            previewCallbacks={previewCallbacks}
+            routeToShowcase={routeToShowcase}
+            routeToSpotlight={routeToSpotlight}
+            showingContent={showingContent}
+          />
+        </Grid>
       </Grid>
-      <Grid item md={6} xs={12}>
-        <PluginPreview
-          form={form}
-          onToggleContent={onToggleContent}
-          previewCallbacks={previewCallbacks}
-          routeToShowcase={routeToShowcase}
-          routeToSpotlight={routeToSpotlight}
-          showingContent={showingContent}
-        />
-      </Grid>
-    </Grid>
+    </>
   )
 }
 

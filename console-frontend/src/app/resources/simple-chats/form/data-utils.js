@@ -34,6 +34,7 @@ const formObjectTransformer = json => {
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleExtraText: json.chatBubbleExtraText || '',
     personaId: (json.persona && json.persona.id) || '',
+    triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
     __persona: json.persona,
     simpleChatStepsAttributes: json.simpleChatStepsAttributes
