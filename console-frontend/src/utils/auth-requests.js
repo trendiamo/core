@@ -101,6 +101,7 @@ export const apiGetSignedUrlFactory = () => (file, callback) =>
       }
     })
     .then(callback)
+    .catch(callback)
 
 export const apiPasswordChange = body => apiUpdateRequest(PASSWORD_CHANGE_URL, body)
 
