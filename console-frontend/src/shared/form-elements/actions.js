@@ -1,4 +1,5 @@
 import ActionsMenu from './simple-menu'
+import PreviewButton from './preview-button'
 import React, { useCallback } from 'react'
 import SaveButton from './save-button'
 import styled from 'styled-components'
@@ -48,7 +49,9 @@ const Actions = ({
   isFormPristine,
   tooltipText,
   saveAndCreateNewEnabled,
+  previewEnabled,
   width,
+  onPreviewClick,
 }) => (
   <>
     {saveAndCreateNewEnabled ? (
@@ -77,14 +80,23 @@ const Actions = ({
         </Container>
       )
     ) : (
-      <SaveButton
-        disabled={saveDisabled}
-        isFormPristine={isFormPristine}
-        isFormSubmitting={isFormSubmitting}
-        onClick={onFormSubmit}
-        tooltipEnabled={tooltipEnabled}
-        tooltipText={tooltipText}
-      />
+      <Container>
+        {previewEnabled && (
+          <FlexDiv>
+            <PreviewButton color="actions" onClick={onPreviewClick} />
+          </FlexDiv>
+        )}
+        <FlexDiv>
+          <SaveButton
+            disabled={saveDisabled}
+            isFormPristine={isFormPristine}
+            isFormSubmitting={isFormSubmitting}
+            onClick={onFormSubmit}
+            tooltipEnabled={tooltipEnabled}
+            tooltipText={tooltipText}
+          />
+        </FlexDiv>
+      </Container>
     )}
   </>
 )

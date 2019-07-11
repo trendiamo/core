@@ -10,6 +10,8 @@ import FormHelperText from './form-helper-text'
 import FormSection from './form-section'
 import Header from './header'
 import InlineTypography from './inline-typography'
+import PreviewButton from './preview-button'
+import PreviewModal from './preview-modal'
 import Prompt from './prompt'
 import SaveButton from './save-button'
 import Select from './select'
@@ -30,4 +32,6 @@ export {
   SaveButton,
   Field,
   Select,
+  PreviewButton,
+  PreviewModal,
 }
