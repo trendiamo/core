@@ -149,10 +149,13 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
 
   const onFileUpload = useCallback(
     async (files, filenames) => {
+      if (files.length === 0 || !files[0].type.includes('image')) {
+        enqueueSnackbar('Wrong file format', { variant: 'error' })
+        return setIsLoading(false)
+      }
       setDoneCropping(false)
       setPreviousValue(value)
       onChange({ url: '', picRect: null })
-      if (files.length === 0) return
       const file = files[0]
       if (!file.name) file.name = processFilename(file, filenames[0])
       const pictureUrl = await uploadPicture({
@@ -170,7 +173,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
         setIsLoading(false)
       }
     },
-    [enqueueSnackbar, onChange, value, setIsLoading]
+    [value, onChange, enqueueSnackbar]
   )
 
   const onModalClose = useCallback(() => {

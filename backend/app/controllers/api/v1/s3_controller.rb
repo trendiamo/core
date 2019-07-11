@@ -3,6 +3,7 @@ module Api
     class S3Controller < RestAdminController
       before_action :authenticate_user!
       before_action :ensure_tenant
+      before_action :process_file
 
       def sign
         render json: {
@@ -29,6 +30,12 @@ module Api
 
       def s3_presigner
         @s3_presigner ||= Aws::S3::Presigner.new
+      end
+
+      def process_file
+        return if params[:content_type].start_with?("image")
+
+        render json: { error: "Wrong file format" }, status: :unprocessable_entity
       end
     end
   end
