@@ -16,6 +16,7 @@ const formObjectTransformer = json => {
     hostnames: json.hostnames || [''],
     name: json.name || '',
     previewMode: json.previewMode,
+    isECommerce: json.isECommerce,
   }
 }
 
@@ -83,9 +84,9 @@ const EditWebsite = () => {
     [mergeFormCallback]
   )
 
-  const setPreviewMode = useCallback(
-    (event, checked) => {
-      mergeForm({ previewMode: !checked })
+  const toggleCheckbox = useCallback(
+    formFieldName => event => {
+      mergeForm({ [formFieldName]: event.target.checked })
     },
     [mergeForm]
   )
@@ -107,11 +108,17 @@ const EditWebsite = () => {
           value={form.name}
         />
         <FormControlLabel
-          control={<Checkbox checked={!form.previewMode} color="primary" onChange={setPreviewMode} />}
+          control={<Checkbox checked={form.previewMode} color="primary" onChange={toggleCheckbox('previewMode')} />}
           disabled={isFormLoading}
           label="Live"
         />
         <FormHelperText>{'Dangerous: this controls whether or not the plugin appears on your website.'}</FormHelperText>
+        <FormControlLabel
+          control={<Checkbox checked={form.isECommerce} color="primary" onChange={toggleCheckbox('isECommerce')} />}
+          disabled={isFormLoading}
+          label="E-Commerce"
+        />
+        <FormHelperText>{'Controls whether or not the data from your sales funnel is processed.'}</FormHelperText>
         <HostnamesForm
           addHostnameSelect={addHostnameSelect}
           deleteHostname={deleteHostname}
