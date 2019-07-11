@@ -1,26 +1,32 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import Button from '../components/button'
 import HeroImg from '../images/hero'
 import Section from '../components/section'
 
-const Hero = styled(({ className }) => (
-  <Section className={className}>
-    <div className="hero-img-container">
-      <HeroImg />
-    </div>
-    <div className="hero-text-container">
-      <div className="left-hero-pad">
-        <h2>{'Turn Socials into Sellers.'}</h2>
-        <p>{'Integrate people and their content as sellers directly into your shop.'}</p>
-        <Button big className="js-request-demo" color="#f75c35">
-          {'Get Started'}
-        </Button>
+const Hero = styled(({ className }) => {
+  const onCtaButtonClick = useCallback(() => {
+    window.frekklsOpenDemoModal()
+  }, [])
+
+  return (
+    <Section className={className}>
+      <div className="hero-img-container">
+        <HeroImg />
       </div>
-    </div>
-  </Section>
-))`
+      <div className="hero-text-container">
+        <div className="left-hero-pad">
+          <h2>{'Turn Socials into Sellers.'}</h2>
+          <p>{'Integrate people and their content as sellers directly into your shop.'}</p>
+          <Button big color="#f75c35" onClick={onCtaButtonClick}>
+            {'Get Started'}
+          </Button>
+        </div>
+      </div>
+    </Section>
+  )
+})`
   flex-direction: column;
   @media (min-width: 900px) {
     flex-direction: row-reverse;

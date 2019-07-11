@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 const FooterFlex = styled.div`
@@ -74,33 +74,47 @@ const FooterHeader = styled.div`
   }
 `
 
-const FooterContent = () => (
-  <FooterFlex>
-    <FooterSection className="footer-links" flex="2">
-      <FooterColumn flex="1">
-        <FooterHeader>{'Follow Us'}</FooterHeader>
-        <a href="https://medium.com/@frekkls">{'Medium'}</a>
-        <a href="https://www.linkedin.com/company/frekkls/">{'Linkedin'}</a>
-        <a href="https://www.facebook.com/frekklsapp/">{'Facebook'}</a>
-        <a href="https://www.instagram.com/frekkls.app/">{'Instagram'}</a>
-      </FooterColumn>
-      <FooterColumn flex="1">
-        <FooterHeader>{'Information'}</FooterHeader>
-        <a className="js-legal-notice" href="#legal-notice">
-          {'Legal Notice'}
-        </a>
-        <a className="js-privacy-cookies" href="#privacy-cookies">
-          {'Privacy & Cookies'}
-        </a>
-      </FooterColumn>
-      <FooterColumn flex="3">
-        {/* <FooterHeader>{'Newsletter'}</FooterHeader>
-        <p>{'The way online sales work will change drastically in 2019!'}</p>
-        <p>{"Sign up to our newsletter and make sure you don't miss any of the good bits!"}</p> */}
-      </FooterColumn>
-    </FooterSection>
-  </FooterFlex>
-)
+const FooterContent = () => {
+  const onLegalNoticeClick = useCallback(() => {
+    window.frekklsOpenLegalNoticeModal()
+    event.preventDefault()
+    return false
+  }, [])
+
+  const onPrivacyCookiesClick = useCallback(() => {
+    window.frekklsOpenPrivacyCookiesModal()
+    event.preventDefault()
+    return false
+  }, [])
+
+  return (
+    <FooterFlex>
+      <FooterSection className="footer-links" flex="2">
+        <FooterColumn flex="1">
+          <FooterHeader>{'Follow Us'}</FooterHeader>
+          <a href="https://medium.com/@frekkls">{'Medium'}</a>
+          <a href="https://www.linkedin.com/company/frekkls/">{'Linkedin'}</a>
+          <a href="https://www.facebook.com/frekklsapp/">{'Facebook'}</a>
+          <a href="https://www.instagram.com/frekkls.app/">{'Instagram'}</a>
+        </FooterColumn>
+        <FooterColumn flex="1">
+          <FooterHeader>{'Information'}</FooterHeader>
+          <a href="#legal-notice" onClick={onLegalNoticeClick}>
+            {'Legal Notice'}
+          </a>
+          <a href="#privacy-cookies" onClick={onPrivacyCookiesClick}>
+            {'Privacy & Cookies'}
+          </a>
+        </FooterColumn>
+        <FooterColumn flex="3">
+          {/* <FooterHeader>{'Newsletter'}</FooterHeader>
+          <p>{'The way online sales work will change drastically in 2019!'}</p>
+          <p>{"Sign up to our newsletter and make sure you don't miss any of the good bits!"}</p> */}
+        </FooterColumn>
+      </FooterSection>
+    </FooterFlex>
+  )
+}
 
 const CopyrightDiv = styled.div`
   height: 6rem;

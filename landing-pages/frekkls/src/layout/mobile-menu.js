@@ -89,8 +89,9 @@ const MobileMenu = ({ siteTitle, toggleMobileMenu }) => {
     element.scrollIntoView({ behavior: 'smooth' })
   })
 
-  const onButtonClick = useCallback(() => {
+  const onCtaButtonClick = useCallback(() => {
     toggleMobileMenu()
+    window.frekklsOpenDemoModal()
   }, [])
 
   return (
@@ -109,7 +110,7 @@ const MobileMenu = ({ siteTitle, toggleMobileMenu }) => {
         <a href="#pricing" onClick={onClick}>
           {'Pricing'}
         </a>
-        <Button className="js-request-demo" color="#000" onClick={onButtonClick}>
+        <Button color="#000" onClick={onCtaButtonClick}>
           {'Get Started'}
         </Button>
       </Content>

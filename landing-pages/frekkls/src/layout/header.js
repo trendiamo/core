@@ -35,6 +35,10 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
     element.scrollIntoView({ behavior: 'smooth' })
   })
 
+  const onCtaButtonClick = useCallback(() => {
+    window.frekklsOpenDemoModal()
+  }, [])
+
   return (
     <header className={className} ref={ref}>
       <a className="logo-link" href="/">
@@ -50,7 +54,7 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
         <a className="header-link" href="#pricing" onClick={onClick}>
           {'Pricing'}
         </a>
-        <Button bg="rgba(255, 255, 255, 0.3)" className="js-request-demo" color="#fff">
+        <Button bg="rgba(255, 255, 255, 0.3)" color="#fff" onClick={onCtaButtonClick}>
           {'Get Started'}
         </Button>
         <StyledMenuIcon onClick={toggleMobileMenu} />

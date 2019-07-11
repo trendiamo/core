@@ -1,27 +1,35 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import Button from '../components/button'
 import HowImg from '../images/how'
 import Section from '../components/section'
 
-const How = styled(({ className }) => (
-  <Section className={className}>
-    <div className="how-img-container">
-      <HowImg />
-    </div>
-    <div>
-      <div className="right-how-pad">
-        <h3>{'How it works'}</h3>
-        <p className="h4">{'A seamless shopping experience starts here.'}</p>
-        <p className="h5">{'Provide an inspiring user journey from the website entry all the way to the checkout.'}</p>
-        <Button big className="js-request-demo" color="#000">
-          {'Learn more'}
-        </Button>
+const How = styled(({ className }) => {
+  const onCtaButtonClick = useCallback(() => {
+    window.frekklsOpenDemoModal()
+  }, [])
+
+  return (
+    <Section className={className}>
+      <div className="how-img-container">
+        <HowImg />
       </div>
-    </div>
-  </Section>
-))`
+      <div>
+        <div className="right-how-pad">
+          <h3>{'How it works'}</h3>
+          <p className="h4">{'A seamless shopping experience starts here.'}</p>
+          <p className="h5">
+            {'Provide an inspiring user journey from the website entry all the way to the checkout.'}
+          </p>
+          <Button big color="#000" onClick={onCtaButtonClick}>
+            {'Learn more'}
+          </Button>
+        </div>
+      </div>
+    </Section>
+  )
+})`
   flex-direction: column;
   @media (min-width: 900px) {
     flex-direction: row;
