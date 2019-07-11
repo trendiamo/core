@@ -110,6 +110,7 @@ const MobileMenu = ({ siteTitle, toggleMobileMenu }) => {
         <a href="#pricing" onClick={onClick}>
           {'Pricing'}
         </a>
+        <a href="mailto:hello@frekkls.com">{'Contact'}</a>
         <Button color="#000" onClick={onCtaButtonClick}>
           {'Get Started'}
         </Button>

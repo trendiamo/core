@@ -54,6 +54,9 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
         <a className="header-link" href="#pricing" onClick={onClick}>
           {'Pricing'}
         </a>
+        <a className="header-link" href="mailto:hello@frekkls.com">
+          {'Contact'}
+        </a>
         <Button bg="rgba(255, 255, 255, 0.3)" color="#fff" onClick={onCtaButtonClick}>
           {'Get Started'}
         </Button>
