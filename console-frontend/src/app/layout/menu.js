@@ -73,40 +73,48 @@ const resources = {
   },
 }
 
-const resourceGroups = {
-  main: {
-    name: 'Main',
-    showTitle: false,
-    resources: auth.isAdmin() ? [resources.dataDashboard, resources.triggers] : [resources.triggers],
-  },
-  modules: {
-    name: 'Modules',
-    showTitle: true,
-    resources: [resources.showcases, resources.simpleChats, resources.outros],
-  },
-  basic: {
-    name: 'Basic',
-    showTitle: true,
-    resources: [resources.pictures, resources.personas],
-  },
-  tools: {
-    name: 'Tools',
-    showTitle: true,
-    resources: [resources.urlGenerator],
-  },
+const resourceGroups = () => {
+  return {
+    main: {
+      name: 'Main',
+      showTitle: false,
+      resources: auth.isAdmin()
+        ? auth.getSessionAccount().websitesAttributes[0].isECommerce
+          ? [resources.dataDashboard, resources.triggers]
+          : [resources.triggers]
+        : [resources.triggers],
+    },
+    modules: {
+      name: 'Modules',
+      showTitle: true,
+      resources: [resources.showcases, resources.simpleChats, resources.outros],
+    },
+    basic: {
+      name: 'Basic',
+      showTitle: true,
+      resources: [resources.pictures, resources.personas],
+    },
+    tools: {
+      name: 'Tools',
+      showTitle: true,
+      resources: [resources.urlGenerator],
+    },
+  }
 }
 
-const editorResourceGroups = {
-  modules: {
-    name: 'Modules',
-    showTitle: true,
-    resources: [resources.simpleChats],
-  },
-  basic: {
-    name: 'Basic',
-    showTitle: true,
-    resources: [resources.pictures],
-  },
+const editorResourceGroups = () => {
+  return {
+    modules: {
+      name: 'Modules',
+      showTitle: true,
+      resources: [resources.simpleChats],
+    },
+    basic: {
+      name: 'Basic',
+      showTitle: true,
+      resources: [resources.pictures],
+    },
+  }
 }
 
 const fade = keyframes`
@@ -244,7 +252,10 @@ const BaseMenu = withRouter(
       return <DummyMenu />
     }
 
-    const userRoleResourceGroups = useMemo(() => (auth.isRole('editor') ? editorResourceGroups : resourceGroups), [])
+    const userRoleResourceGroups = useMemo(
+      () => (auth.isRole('editor') ? editorResourceGroups() : resourceGroups()),
+      []
+    )
 
     return (
       <Container>

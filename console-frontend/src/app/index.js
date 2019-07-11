@@ -43,7 +43,9 @@ const PrivateRoute = ({ component, isAdminScoped, isOwnerScoped, path, ...props 
   const render = useCallback(
     ({ match }) =>
       auth.isLoggedIn() ? (
-        (isOwnerScoped && auth.isRole('editor')) || (isAdminScoped && !auth.isAdmin()) ? (
+        (isOwnerScoped && auth.isRole('editor')) ||
+        (isAdminScoped && !auth.isAdmin()) ||
+        (path === routes.dataDashboard() && !auth.getSessionAccount().websitesAttributes[0].isECommerce) ? (
           React.createElement(NotFound, { match })
         ) : (
           React.createElement(component, { match })
@@ -51,7 +53,7 @@ const PrivateRoute = ({ component, isAdminScoped, isOwnerScoped, path, ...props 
       ) : (
         <Redirect to={routes.login()} />
       ),
-    [component, isAdminScoped, isOwnerScoped]
+    [component, isAdminScoped, isOwnerScoped, path]
   )
 
   return <Route {...props} path={path} render={render} />

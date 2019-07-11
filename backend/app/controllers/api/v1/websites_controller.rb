@@ -24,7 +24,7 @@ module Api
       private
 
       def website_params
-        params.require(:website).permit(:preview_mode, hostnames: [])
+        params.require(:website).permit(:preview_mode, :is_e_commerce, hostnames: [])
       end
     end
   end
