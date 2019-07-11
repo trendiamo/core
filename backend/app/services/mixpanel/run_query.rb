@@ -6,7 +6,7 @@ module Mixpanel
     def initialize(params, script)
       @params = params
       @script = script
-      @key = { params: params, script: script, version: "2" }.to_json
+      @key = { params: params, script: script, version: "3" }.to_json
     end
 
     def perform

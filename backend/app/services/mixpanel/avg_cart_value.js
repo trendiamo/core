@@ -9,16 +9,22 @@ function main() {
     )
     .groupByUser((acc, events) => {
       acc = acc || {
-        amount: 0,
+        countWithPlugin: 0,
+        countWithoutPlugin: 0,
+        amountWithPlugin: 0,
+        amountWithoutPlugin: 0,
         currency: "EUR",
         draftAmount: 0,
         date: null,
-        withPlugin: false
+        toggledPlugin: false,
+        proceedToCheckout: false
       };
       for (let i = 0; i < events.length; ++i) {
         if (events[i].name === "Toggled Plugin") {
-          if (!acc.date) acc.withPlugin = true;
+          acc.toggledPlugin = true;
+          if (!acc.date) acc.date = formatDate(new Date(events[i].time));
         } else if (events[i].name === "Proceed To Checkout") {
+          acc.proceedToCheckout = true;
           acc.currency = events[i].properties.currency;
           acc.draftAmount = Math.round(
             events[i].properties.subTotalInCents / 100
@@ -56,39 +62,37 @@ function main() {
               events[i].properties.$current_url.includes("orderPlaced")))
           /* end TODO */
         ) {
-          acc.amount = acc.draftAmount;
-          acc.draftAmount = 0;
-          acc.date = formatDate(new Date(events[i].time));
+          if (acc.proceedToCheckout) {
+            if (acc.toggledPlugin) {
+              acc.amountWithPlugin += acc.draftAmount;
+              acc.countWithPlugin += 1;
+            } else {
+              acc.amountWithoutPlugin += acc.draftAmount;
+              acc.countWithoutPlugin += 1;
+            }
+            acc.draftAmount = 0;
+            acc.toggledPlugin = false;
+            acc.proceedToCheckout = false;
+            if (!acc.date) acc.date = formatDate(new Date(events[i].time));
+          }
         }
       }
       return acc;
     })
-    .filter(r => r.value && r.value.amount > 0)
     .groupBy(
-      ["value.date", "value.withPlugin", "value.currency"],
-      mixpanel.reducer.avg("value.amount")
+      ["value.date", "value.currency"],
+      [
+        mixpanel.reducer.sum("value.countWithPlugin"),
+        mixpanel.reducer.sum("value.amountWithPlugin"),
+        mixpanel.reducer.sum("value.countWithoutPlugin"),
+        mixpanel.reducer.sum("value.amountWithoutPlugin")
+      ]
     )
-    .groupBy(["key.0", "key.2"], (accs, entries) => {
-      const acc = { withPluginTotal: 0, withoutPluginTotal: 0 };
-      for (let i = 0; i < entries.length; ++i) {
-        const withPlugin = entries[i].key[1];
-        if (withPlugin) {
-          acc.withPluginTotal += entries[i].value;
-        } else {
-          acc.withoutPluginTotal += entries[i].value;
-        }
-      }
-      for (let i = 0; i < accs.length; ++i) {
-        acc.withPluginTotal += accs[i].withPluginTotal;
-        acc.withoutPluginTotal += accs[i].withoutPluginTotal;
-      }
-      return acc;
-    })
     .map(entry => ({
       date: entry.key[0],
       currency: entry.key[1],
-      withPluginTotal: entry.value.withPluginTotal || undefined,
-      withoutPluginTotal: entry.value.withoutPluginTotal || undefined
+      withPluginTotal: entry.value[1] / entry.value[0],
+      withoutPluginTotal: entry.value[3] / entry.value[2]
     }))
-    .filter(entry => entry.withPluginTotal && entry.withoutPluginTotal);
+    .filter(r => r.withPluginTotal > 0);
 }

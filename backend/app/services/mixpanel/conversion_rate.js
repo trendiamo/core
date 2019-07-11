@@ -10,15 +10,18 @@ function main() {
     .groupByUser((acc, events) => {
       acc = acc || {
         date: null,
-        draftTotal: 0,
-        total: 0,
-        withPlugin: false
+        toggledPlugin: false,
+        proceedToCheckout: false,
+        counts: 0,
+        conversions: 0
       };
       for (let i = 0; i < events.length; ++i) {
         if (events[i].name === "Toggled Plugin") {
-          if (!acc.date) acc.withPlugin = true;
+          acc.toggledPlugin = true;
+          acc.counts = 1;
+          if (!acc.date) acc.date = formatDate(new Date(events[i].time));
         } else if (events[i].name === "Proceed To Checkout") {
-          acc.draftTotal = 1;
+          acc.proceedToCheckout = true;
         } else if (
           /* TODO: use Purchase Success event instead when it's available */
           events[i].name === "Visited Page" &&
@@ -52,37 +55,25 @@ function main() {
               events[i].properties.$current_url.includes("orderPlaced")))
           /* end TODO */
         ) {
-          acc.total = acc.draftTotal;
-          acc.draftTotal = 0;
-          acc.date = formatDate(new Date(events[i].time));
+          if (acc.toggledPlugin && acc.proceedToCheckout) {
+            acc.conversions += 1;
+            acc.toggledPlugin = false;
+            acc.proceedToCheckout = false;
+          }
         }
       }
       return acc;
     })
     .filter(entry => entry.value.date)
     .groupBy(
-      ["value.date", "value.withPlugin"],
-      mixpanel.reducer.sum("value.total")
+      ["value.date"],
+      [
+        mixpanel.reducer.sum("value.conversions"),
+        mixpanel.reducer.sum("value.counts")
+      ]
     )
-    .groupBy(["key.0"], (accs, entries) => {
-      const acc = { withPluginTotal: 0, withoutPluginTotal: 0 };
-      for (let i = 0; i < entries.length; ++i) {
-        const withPlugin = entries[i].key[1];
-        if (withPlugin) {
-          acc.withPluginTotal += entries[i].value;
-        } else {
-          acc.withoutPluginTotal += entries[i].value;
-        }
-      }
-      for (let i = 0; i < accs.length; ++i) {
-        acc.withPluginTotal += accs[i].withPluginTotal;
-        acc.withoutPluginTotal += accs[i].withoutPluginTotal;
-      }
-      return acc;
-    })
     .map(entry => ({
       date: entry.key[0],
-      conversionRate:
-        entry.value.withPluginTotal / entry.value.withoutPluginTotal
+      conversionRate: entry.value[0] / entry.value[1]
     }));
 }
