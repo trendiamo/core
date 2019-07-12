@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ../plugin-base && yarn build && cd ../plugiamo && \
+cd ../plugin-base && yarn && yarn build && cd ../plugiamo && \
 ([ -f .env ] && cp .env .env~ || true) && \
 aws s3 cp s3://plugiamo/.env .env && \
 yarn build && \
