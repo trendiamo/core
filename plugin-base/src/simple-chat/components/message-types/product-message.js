@@ -51,6 +51,7 @@ const ProductCard = styled(Card)`
 const ProductImage = styled(CardImg)`
   height: 180px;
   border-radius: 12px 12px 0 0 !important;
+  user-select: none;
 `
 
 const Link = styled.a`

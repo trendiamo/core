@@ -1,14 +1,22 @@
 import React, { useCallback, useMemo } from 'react'
+import styled from 'styled-components'
 import { Carousel, CarouselElement } from './carousel'
 import { imgixUrl, stringifyRect } from 'tools'
 
-const ImgCarouselElement = ({ carouselType, picture, index, onClick, urlsArray }) => {
+const StyledCarouselElement = styled(CarouselElement)`
+  img {
+    cursor: zoom-in;
+  }
+`
+
+const PictureCarouselElement = ({ carouselType, picture, index, onClick, urlsArray }) => {
   const newOnClick = useCallback(
     () => {
       onClick({ type: 'clickImageCarouselItem', item: { index, urlsArray } })
     },
     [index, onClick, urlsArray]
   )
+
   const onTouchEnd = useCallback(
     () => {
       onClick({ type: 'touchImageCarousel', item: { index, urlsArray } })
@@ -17,7 +25,7 @@ const ImgCarouselElement = ({ carouselType, picture, index, onClick, urlsArray }
   )
 
   return (
-    <CarouselElement carouselType={carouselType} onClick={newOnClick} onTouchEnd={onTouchEnd}>
+    <StyledCarouselElement carouselType={carouselType} onClick={newOnClick} onTouchEnd={onTouchEnd}>
       <img
         alt=""
         src={imgixUrl(picture.url, {
@@ -27,11 +35,11 @@ const ImgCarouselElement = ({ carouselType, picture, index, onClick, urlsArray }
           h: 260,
         })}
       />
-    </CarouselElement>
+    </StyledCarouselElement>
   )
 }
 
-const ImgCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
+const PictureCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
   const pictures = useMemo(
     () =>
       imageCarousel.map(pictureData => {
@@ -44,7 +52,7 @@ const ImgCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
     <div>
       <Carousel carouselType={carouselType}>
         {pictures.map((picture, index) => (
-          <ImgCarouselElement
+          <PictureCarouselElement
             carouselType={carouselType}
             index={index}
             key={picture.id || `new-${index}`}
@@ -58,4 +66,4 @@ const ImgCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
   )
 }
 
-export default ImgCarouselMessage
+export default PictureCarouselMessage
