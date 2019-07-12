@@ -1,8 +1,8 @@
 import CircularProgress from 'shared/circular-progress'
 import ErrorMessage from './error-message'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { apiEventList, apiRequest } from 'utils'
+import { format } from 'date-fns'
 import { Line } from 'react-chartjs-2'
 import { useSnackbar } from 'notistack'
 
@@ -34,7 +34,7 @@ const options = {
   tooltips: {
     callbacks: {
       label: tooltipItem => `${tooltipItem.yLabel}% conversion`,
-      title: tooltipItem => moment(tooltipItem[0].xLabel, 'MMM D').format('MMMM D'),
+      title: tooltipItem => format(new Date(tooltipItem[0].xLabel), 'MMMM d'),
     },
   },
 }
@@ -56,7 +56,7 @@ const ConversionRate = ({ dates }) => {
           enqueueSnackbar(requestError, { variant: 'error' })
           setHasErrors(true)
         } else {
-          const labels = json.map(record => moment(record.date).format('MMM D'))
+          const labels = json.map(record => format(new Date(record.date), 'MMM d'))
           const data = json.map(record => Math.round(record.conversionRate * 100))
           setChartData({ labels, datasets: [{ data, ...config }] })
         }

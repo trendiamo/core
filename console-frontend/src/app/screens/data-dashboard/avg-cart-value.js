@@ -1,9 +1,9 @@
 import CircularProgress from 'shared/circular-progress'
 import ErrorMessage from './error-message'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { apiEventList, apiRequest } from 'utils'
 import { Bar } from 'react-chartjs-2'
+import { format } from 'date-fns'
 import { useSnackbar } from 'notistack'
 
 const withPluginDatasetConfig = {
@@ -43,7 +43,7 @@ const chartOptions = ({ currency }) => {
       callbacks: {
         label: (tooltipItem, info) =>
           `${info.datasets[tooltipItem.datasetIndex].label}: ${currencyFormatter.format(tooltipItem.yLabel)}`,
-        title: tooltipItem => moment(tooltipItem[0].xLabel, 'MMM D').format('MMMM D'),
+        title: tooltipItem => format(new Date(tooltipItem[0].xLabel), 'MMMM d'),
       },
     },
   }
@@ -66,7 +66,7 @@ const AvgCartValue = ({ dates }) => {
           enqueueSnackbar(requestError, { variant: 'error' })
           setHasErrors(true)
         } else {
-          const labels = json.map(record => moment(record.date).format('MMM D'))
+          const labels = json.map(record => format(new Date(record.date), 'MMM d'))
           const withPluginData = json.map(record => record.withPluginTotal)
           const withoutPluginData = json.map(record => record.withoutPluginTotal)
           setChartData({

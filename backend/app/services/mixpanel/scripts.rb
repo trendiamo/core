@@ -29,7 +29,11 @@ module Mixpanel
     end
 
     def self.date_range(params)
-      Date.parse(params[:dates][:from_date])..Date.parse(params[:dates][:to_date])
+      date_threshold(Date.parse(params[:dates][:from_date]))..date_threshold(Date.parse(params[:dates][:to_date]))
+    end
+
+    def self.date_threshold(date)
+      DateTime.current.to_date < date ? DateTime.current.to_date.to_s : date.to_s
     end
   end
 end

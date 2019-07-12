@@ -3,6 +3,7 @@ import Accounts from 'app/screens/accounts'
 import auth from 'auth'
 import ChangePassword from 'app/screens/change-password'
 import DataDashboard from 'app/screens/data-dashboard'
+import DateFnsUtils from '@date-io/date-fns'
 import ForgotPassword from 'auth/forgot-password'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
@@ -19,6 +20,7 @@ import { create } from 'jss'
 import { createGenerateClassName, jssPreset, MuiThemeProvider } from '@material-ui/core/styles'
 import { createGlobalStyle } from 'styled-components'
 import { CssBaseline } from '@material-ui/core'
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
 import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
 import { PicturesList } from './resources/pictures'
@@ -159,9 +161,11 @@ export const App = ({ history }) => (
     <Router history={history}>
       <JssProvider generateClassName={generateClassName} jss={jss}>
         <MuiThemeProvider theme={theme}>
-          <SnackbarProvider anchorOrigin={anchorOrigin} maxSnack={3}>
-            <AppBase />
-          </SnackbarProvider>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <SnackbarProvider anchorOrigin={anchorOrigin} maxSnack={3}>
+              <AppBase />
+            </SnackbarProvider>
+          </MuiPickersUtilsProvider>
         </MuiThemeProvider>
       </JssProvider>
     </Router>
