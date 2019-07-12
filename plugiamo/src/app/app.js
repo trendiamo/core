@@ -32,11 +32,13 @@ const App = ({
   const autoOpen = useRef(null)
   const flowType = useRef(null)
   const persona = useRef(null)
+  const [hasPersona, setHasPersona] = useState(false)
   const config = useMemo(() => setup(data, setupFlowHistory()), [data])
 
   useEffect(() => () => timeout.clear('exitOnMobile'), [])
 
   useEffect(() => {
+    if (!persona.current && config.persona) setHasPersona(true)
     flowType.current = config.flowType
     autoOpen.current = config.open
     persona.current = config.persona
@@ -110,6 +112,8 @@ const App = ({
   useEffect(() => {
     if (showingContent) clearDisappearTimeout()
   }, [clearDisappearTimeout, showingContent])
+
+  if (!hasPersona) return null
 
   return (
     <AppBase
