@@ -680,9 +680,9 @@ babel-plugin-check-es2015-constants@^6.22.0:
     babel-runtime "^6.22.0"
 
 "babel-plugin-styled-components@>= 1":
-  version "1.10.4"
-  resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-1.10.4.tgz#c9a01d7992e41dc45338792be5ce2cd805e4d868"
-  integrity sha512-LI4xaSF//yp9+CWG+TkAIbH1Xt50ptMY04WQgzi27184JyHVt4D3biCfDppJg+FJ4cOAtuuvdLXpFNoOWSEpQQ==
+  version "1.10.6"
+  resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-1.10.6.tgz#f8782953751115faf09a9f92431436912c34006b"
+  integrity sha512-gyQj/Zf1kQti66100PhrCRjI5ldjaze9O0M3emXRPAN80Zsf8+e1thpTpaXJXVHXtaM4/+dJEgZHyS9Its+8SA==
   dependencies:
     "@babel/helper-annotate-as-pure" "^7.0.0"
     "@babel/helper-module-imports" "^7.0.0"
@@ -3198,9 +3198,9 @@ mem@^4.0.0:
     p-is-promise "^2.0.0"
 
 memoize-one@^5.0.0:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.0.4.tgz#005928aced5c43d890a4dfab18ca908b0ec92cbc"
-  integrity sha512-P0z5IeAH6qHHGkJIXWw0xC2HNEgkx/9uWWBQw64FJj3/ol14VYdfVGWWr0fXfjhhv3TKVIqUq65os6O4GUNksA==
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.0.5.tgz#8cd3809555723a07684afafcd6f756072ac75d7e"
+  integrity sha512-ey6EpYv0tEaIbM/nTDOpHciXUvd+ackQrJgEzBwemhZZIWZjcyodqEcrmqDy2BKRTM3a65kKBV4WtLXJDt26SQ==
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"

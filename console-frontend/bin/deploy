@@ -12,7 +12,7 @@ REACT_APP_NODE_ENV=production
 REACT_APP_API_ENDPOINT=https://api.frekkls.com
 EOL
 
-cd ../plugin-base && yarn && yarn build && cd ../console-frontend
+cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend
 
 yarn build
 

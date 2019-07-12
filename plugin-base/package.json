@@ -4,6 +4,7 @@
   "private": true,
   "main": "dist/plugin-base.js",
   "scripts": {
+    "install-p": "yarn install --silent --no-progress && yarn add -P react@^16.0.0 styled-components@^4.2.0 lodash.isequal@^4.5.0 react-dom@^16.0.0 lodash.omit@^4.5.0",
     "build-dev": "yarn webpack --hide-modules",
     "build": "yarn webpack -p --config webpack.prod.js --hide-modules",
     "watch": "yarn webpack --progress --watch --config webpack.config.js",
