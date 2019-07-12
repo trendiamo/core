@@ -18,6 +18,8 @@ const withPluginDatasetConfig = {
 }
 
 const chartOptions = ({ currency }) => {
+  if (!currency) return {}
+
   const currencyFormatter = new Intl.NumberFormat('de', {
     style: 'currency',
     currency,
@@ -69,14 +71,16 @@ const AvgCartValue = ({ dates }) => {
           const labels = json.map(record => format(new Date(record.date), 'MMM d'))
           const withPluginData = json.map(record => record.withPluginTotal)
           const withoutPluginData = json.map(record => record.withoutPluginTotal)
-          setChartData({
-            labels,
-            currency: json[0].currency,
-            datasets: [
-              { data: withoutPluginData, label: 'Without plugin' },
-              { ...withPluginDatasetConfig, data: withPluginData, label: 'With plugin' },
-            ],
-          })
+          if (json.length > 0) {
+            setChartData({
+              labels,
+              currency: json[0].currency,
+              datasets: [
+                { data: withoutPluginData, label: 'Without plugin' },
+                { ...withPluginDatasetConfig, data: withPluginData, label: 'With plugin' },
+              ],
+            })
+          }
         }
         setIsLoading(false)
       })()
