@@ -66,8 +66,8 @@ SH
 
 module Services
   class Deploy
-    def self.perform(project)
-      new(project).send(:perform)
+    def self.perform(project, &block)
+      new(project).send(:perform, &block)
     end
 
     private
@@ -76,26 +76,26 @@ module Services
       @project = project
     end
 
-    def perform
-      clone_core unless core_exists?
-      fetch_core
-      Open3.capture3(deploy_cmd)
-    end
-
-    def clone_core
-      `#{CLONE_CORE_CMD}`
+    def perform(&block)
+      clone_core(&block) unless core_exists?
+      fetch_core(&block)
+      deploy(&block)
     end
 
     def core_exists?
       File.directory?("#{ENV['BUILD_FOLDER']}/core")
     end
 
-    def fetch_core
-      `#{FETCH_CORE_CMD}`
+    def clone_core(&block)
+      Open3.popen2e(CLONE_CORE_CMD, &block)
     end
 
-    def deploy_cmd
-      "#{@project.to_s.upcase}_CMD".constantize
+    def fetch_core(&block)
+      Open3.popen2e(FETCH_CORE_CMD, &block)
+    end
+
+    def deploy(&block)
+      Open3.popen2e("#{@project.to_s.upcase}_CMD".constantize, &block)
     end
   end
 end
