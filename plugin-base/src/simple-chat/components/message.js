@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import timeout from 'ext/timeout'
 import { extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
 import {
-  ImgCarouselMessage,
+  PictureCarouselMessage,
   PictureMessage,
   ProductCarouselMessage,
   ProductMessage,
@@ -140,7 +140,7 @@ const ChatMessage = ({
       ) : type === 'productCarousel' ? (
         <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
       ) : type === 'imageCarousel' ? (
-        <ImgCarouselMessage carouselType={type} imageCarousel={data} onClick={onClick} />
+        <PictureCarouselMessage carouselType={type} imageCarousel={data} onClick={onClick} />
       ) : null}
     </MessageContainer>
   )

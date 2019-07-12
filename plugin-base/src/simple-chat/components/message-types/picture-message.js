@@ -10,6 +10,7 @@ const PictureCard = styled(Card)`
 
 const Picture = styled(CardImg)`
   height: 260px;
+  cursor: zoom-in;
 `
 
 const PictureMessage = ({ onClick, pictureMessage }) => {
