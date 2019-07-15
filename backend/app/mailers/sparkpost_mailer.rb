@@ -12,7 +12,8 @@ class SparkpostMailer < ApplicationMailer
   # url needs to be passed separately, see
   # https://developers.sparkpost.com/api/template-language/#header-links
   def substitution_data(hash)
-    hash.except(:url).merge(dynamic_html: { url: %(<a href="#{hash[:url]}">#{hash[:url]}</a>) })
+    new_attrs = { inquiry_email: hash[:email], dynamic_html: { url: %(<a href="#{hash[:url]}">#{hash[:url]}</a>) } }
+    hash.except(:email, :url).merge(new_attrs)
   end
 
   def mail(*args)
