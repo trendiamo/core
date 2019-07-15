@@ -71,8 +71,8 @@ const PreviewUrlBox = ({ module }) => {
 
   const onUrlChange = useCallback(event => {
     setUrl(event.target.value)
-    const hostname = event.target.value.replace(/^https:\/\//i, '').split('/')[0]
-    const isProtocolValid = event.target.value.match(/^https?:/)
+    const hostname = event.target.value.replace(/^https?:\/\//i, '').split('/')[0]
+    const isProtocolValid = event.target.value.match(/^https?:\/\//)
     setIsValidUrl(validHostnames().includes(hostname) && isProtocolValid)
   }, [])
 
