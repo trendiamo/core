@@ -10,7 +10,7 @@ cat >.env <<EOL
 NODE_ENV=production
 REACT_APP_NODE_ENV=production
 REACT_APP_API_ENDPOINT=https://api.frekkls.com
-POST_CLIENT_ITEM_ACCESS_TOKEN=e3db531697704c2cb51ac37fc5f3321b
+REACT_APP_POST_CLIENT_ITEM_ACCESS_TOKEN=e3db531697704c2cb51ac37fc5f3321b
 EOL
 
 cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend
