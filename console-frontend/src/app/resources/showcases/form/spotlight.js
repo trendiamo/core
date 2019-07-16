@@ -14,8 +14,10 @@ const Spotlight = ({
   index,
   isCropping,
   isFormLoading,
+  isUploaderLoading,
   onSpotlightClick,
   setIsCropping,
+  setIsUploaderLoading,
   setSpotlightForm,
   spotlight,
 }) => {
@@ -48,7 +50,7 @@ const Spotlight = ({
             description: '',
             displayPrice: '',
             picture: { url: '' },
-            picRect: '',
+            picRect: {},
             __key: `new-${spotlight.productPicksAttributes.length}`,
           },
         ],
@@ -101,7 +103,13 @@ const Spotlight = ({
     <Section>
       <FormSection
         actions={
-          allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteSpotlight} />
+          allowDelete && (
+            <Cancel
+              disabled={isCropping || isFormLoading || isUploaderLoading}
+              index={index}
+              onClick={deleteSpotlight}
+            />
+          )
         }
         dragHandle
         ellipsize
@@ -113,7 +121,7 @@ const Spotlight = ({
         <Autocomplete
           autocomplete={apiPersonasAutocomplete}
           defaultPlaceholder="Choose a persona"
-          disabled={isCropping || isFormLoading}
+          disabled={isCropping || isFormLoading || isUploaderLoading}
           fullWidth
           initialSelectedItem={initialSelectedItem}
           label="Persona"
@@ -129,16 +137,22 @@ const Spotlight = ({
                 helperClass="sortable-element"
                 isCropping={isCropping}
                 isFormLoading={isFormLoading}
+                isUploaderLoading={isUploaderLoading}
                 onFocus={onFocus}
                 onSortEnd={onSortEnd}
                 personaId={spotlight.personaId}
                 productPicksAttributes={spotlight.productPicksAttributes}
                 setIsCropping={setIsCropping}
+                setIsUploaderLoading={setIsUploaderLoading}
                 setProductPickForm={setProductPickForm}
                 useDragHandle
               />
             )}
-            <AddItemButton disabled={isCropping || isFormLoading} message="Add Product Pick" onClick={addProductPick} />{' '}
+            <AddItemButton
+              disabled={isCropping || isFormLoading || isUploaderLoading}
+              message="Add Product Pick"
+              onClick={addProductPick}
+            />{' '}
           </FormSection>
         </div>
       </FormSection>

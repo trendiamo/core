@@ -67,7 +67,9 @@ ActiveRecord::Schema.define(version: 20190712135753) do
     t.bigint "profile_pic_id"
     t.integer "lock_version", default: 1
     t.json "pic_rect", default: {}
+    t.bigint "profile_pic_animation_id"
     t.index ["account_id"], name: "index_personas_on_account_id"
+    t.index ["profile_pic_animation_id"], name: "index_personas_on_profile_pic_animation_id"
     t.index ["profile_pic_id"], name: "index_personas_on_profile_pic_id"
   end
 
@@ -254,6 +256,7 @@ ActiveRecord::Schema.define(version: 20190712135753) do
   add_foreign_key "outros", "personas"
   add_foreign_key "outros", "users", column: "owner_id"
   add_foreign_key "personas", "accounts"
+  add_foreign_key "personas", "pictures", column: "profile_pic_animation_id"
   add_foreign_key "personas", "pictures", column: "profile_pic_id"
   add_foreign_key "pictures", "accounts"
   add_foreign_key "product_picks", "accounts"

@@ -4,14 +4,25 @@ import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const SortableSimpleChatStep = SortableElement(SimpleChatStep)
 
-const SimpleChatSteps = ({ allowDelete, isCropping, onChange, onToggleContent, setIsCropping, simpleChatSteps }) => (
+const SimpleChatSteps = ({
+  allowDelete,
+  isCropping,
+  isUploaderLoading,
+  onChange,
+  onToggleContent,
+  setIsCropping,
+  setIsUploaderLoading,
+  simpleChatSteps,
+}) => (
   <div>
     <SimpleChatStep
       allowDelete={false}
       isCropping={isCropping}
+      isUploaderLoading={isUploaderLoading}
       onChange={onChange}
       onToggleContent={onToggleContent}
       setIsCropping={setIsCropping}
+      setIsUploaderLoading={setIsUploaderLoading}
       simpleChatStep={simpleChatSteps[0]}
       simpleChatStepIndex={0}
     />
@@ -23,10 +34,12 @@ const SimpleChatSteps = ({ allowDelete, isCropping, onChange, onToggleContent, s
             allowDelete={allowDelete}
             index={index + 1}
             isCropping={isCropping}
+            isUploaderLoading={isUploaderLoading}
             key={simpleChatStep.id || simpleChatStep.__key}
             onChange={onChange}
             onToggleContent={onToggleContent}
             setIsCropping={setIsCropping}
+            setIsUploaderLoading={setIsUploaderLoading}
             simpleChatStep={simpleChatStep}
             simpleChatStepIndex={index + 1}
           />

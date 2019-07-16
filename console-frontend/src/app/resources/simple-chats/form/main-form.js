@@ -7,7 +7,16 @@ import { Field, FormHelperText } from 'shared/form-elements'
 
 const options = { suggestionItem: 'withAvatar' }
 
-const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, onToggleContent, isCropping }) => {
+const MainForm = ({
+  form,
+  isCropping,
+  isFormLoading,
+  isUploaderLoading,
+  onToggleContent,
+  selectPersona,
+  setFieldValue,
+  title,
+}) => {
   const onFocus = useCallback(() => onToggleContent(false), [onToggleContent])
   const onTitleFocus = useCallback(() => onToggleContent(true), [onToggleContent])
 
@@ -18,7 +27,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
   return (
     <Section title={title}>
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Name"
@@ -32,7 +41,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
       <Autocomplete
         autocomplete={apiPersonasAutocomplete}
         defaultPlaceholder="Choose a persona"
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         initialSelectedItem={initialSelectedItem}
         label="Persona"
@@ -42,7 +51,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
       />
       <FormHelperText>{'The persona that will appear for this chat.'}</FormHelperText>
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Title"
@@ -55,7 +64,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
       />
       <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         label="Chat Bubble"
         margin="normal"
@@ -67,7 +76,7 @@ const MainForm = ({ title, isFormLoading, form, setFieldValue, selectPersona, on
       />
       <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         label="Extra Chat Bubble Text"
         margin="normal"

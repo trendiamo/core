@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { Field } from 'shared/form-elements'
 import { youtubeInputProps } from 'utils'
 
-const VideoMessageField = ({ isFormLoading, name, onChange, onFocus, simpleChatMessage, simpleChatMessageIndex }) => {
+const VideoMessageField = ({ disabled, name, onChange, onFocus, simpleChatMessage, simpleChatMessageIndex }) => {
   const onValueChange = useCallback(
     event => {
       onChange({ ...simpleChatMessage, videoUrl: event.target.value || '' }, simpleChatMessageIndex)
@@ -12,7 +12,7 @@ const VideoMessageField = ({ isFormLoading, name, onChange, onFocus, simpleChatM
 
   return (
     <Field
-      disabled={isFormLoading}
+      disabled={disabled}
       fullWidth
       inputProps={youtubeInputProps}
       label="YouTube URL"

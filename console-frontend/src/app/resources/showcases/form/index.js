@@ -26,8 +26,9 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
 
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
-  const [showingContent, setShowingContent] = useState(false)
   const [isPreviewModalOpened, setIsPreviewModalOpened] = useState(false)
+  const [isUploaderLoading, setIsUploaderLoading] = useState(false)
+  const [showingContent, setShowingContent] = useState(false)
 
   const {
     form,
@@ -82,7 +83,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
                 description: '',
                 displayPrice: '',
                 picture: { url: '' },
-                picRect: '',
+                picRect: {},
                 __key: 'new-0',
               },
             ],
@@ -165,7 +166,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
           onFormSubmit={newOnFormSubmit}
           onPreviewClick={onPreviewClick}
           previewEnabled={!!form.id}
-          saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine}
+          saveDisabled={isFormSubmitting || isCropping || isFormLoading || isFormPristine || isUploaderLoading}
           tooltipEnabled
           tooltipText="No changes to save"
         />
@@ -180,6 +181,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
       isFormLoading,
       isFormPristine,
       isFormSubmitting,
+      isUploaderLoading,
       newOnFormSubmit,
       onPreviewClick,
       title,
@@ -211,6 +213,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
             isCropping={isCropping}
             isFormLoading={isFormLoading}
             isFormPristine={isFormPristine}
+            isUploaderLoading={isUploaderLoading}
             onBackClick={onBackClick}
             onFormSubmit={newOnFormSubmit}
             onSortEnd={onSortEnd}
@@ -219,6 +222,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
             selectPersona={selectPersona}
             setFieldValue={setFieldValue}
             setIsCropping={setIsCropping}
+            setIsUploaderLoading={setIsUploaderLoading}
             setSpotlightForm={setSpotlightForm}
             title={title}
           />

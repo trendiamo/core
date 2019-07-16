@@ -60,13 +60,15 @@ const StyledMenu = styled(Menu)`
 const SortableSimpleChatMessage = SortableElement(SimpleChatMessage)
 
 const SimpleChatMessages = ({
+  activeSimpleChatMessages,
   allowDelete,
   isCropping,
+  isUploaderLoading,
   onChange,
   onFocus,
   setIsCropping,
+  setIsUploaderLoading,
   simpleChatMessages,
-  activeSimpleChatMessages,
 }) => (
   <div>
     {simpleChatMessages.map((simpleChatMessage, index) =>
@@ -76,10 +78,12 @@ const SimpleChatMessages = ({
           allowDelete={allowDelete}
           index={index}
           isCropping={isCropping}
+          isUploaderLoading={isUploaderLoading}
           key={simpleChatMessage.id || simpleChatMessage.__key}
           onChange={onChange}
           onFocus={onFocus}
           setIsCropping={setIsCropping}
+          setIsUploaderLoading={setIsUploaderLoading}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={index}
         />
@@ -96,9 +100,11 @@ const SimpleChatStep = ({
   folded,
   isCropping,
   isFormLoading,
+  isUploaderLoading,
   onChange,
   onToggleContent,
   setIsCropping,
+  setIsUploaderLoading,
   simpleChatStep,
   simpleChatStepIndex,
 }) => {
@@ -159,10 +165,10 @@ const SimpleChatStep = ({
         messageType === 'SimpleChatTextMessage'
           ? { html: '' }
           : messageType === 'SimpleChatProductMessage'
-          ? { title: '', picture: { url: '' }, picRect: '', url: '', displayPrice: '', groupWithAdjacent: false }
+          ? { title: '', picture: { url: '' }, picRect: {}, url: '', displayPrice: '', groupWithAdjacent: false }
           : messageType === 'SimpleChatVideoMessage'
           ? { videoUrl: '' }
-          : { picture: { url: '' }, picRect: '', groupWithAdjacent: false }
+          : { picture: { url: '' }, picRect: {}, groupWithAdjacent: false }
       onChange(
         {
           ...simpleChatStep,
@@ -193,7 +199,11 @@ const SimpleChatStep = ({
       <FormSection
         actions={
           allowDelete && (
-            <Cancel disabled={isCropping || isFormLoading} index={simpleChatStepIndex} onClick={deleteSimpleChatStep} />
+            <Cancel
+              disabled={isCropping || isFormLoading || isUploaderLoading}
+              index={simpleChatStepIndex}
+              onClick={deleteSimpleChatStep}
+            />
           )
         }
         dragHandle
@@ -208,7 +218,7 @@ const SimpleChatStep = ({
         <>
           {simpleChatStep.key !== 'default' && (
             <Field
-              disabled={isCropping || isFormLoading}
+              disabled={isCropping || isFormLoading || isUploaderLoading}
               fullWidth
               inputProps={atLeastOneNonBlankCharInputProps}
               label="Option"
@@ -227,10 +237,12 @@ const SimpleChatStep = ({
               helperClass="sortable-element"
               isCropping={isCropping}
               isFormLoading={isFormLoading}
+              isUploaderLoading={isUploaderLoading}
               onChange={setSimpleChatMessagesForm}
               onFocus={onFocus}
               onSortEnd={onSimpleChatMessagesSortEnd}
               setIsCropping={setIsCropping}
+              setIsUploaderLoading={setIsUploaderLoading}
               simpleChatMessages={simpleChatStep.simpleChatMessagesAttributes}
               useDragHandle
             />
@@ -242,7 +254,7 @@ const SimpleChatStep = ({
             }
             aria-haspopup="true"
             aria-owns={anchorEl ? 'new-message-menu' : undefined}
-            disabled={isFormLoading}
+            disabled={isFormLoading || isUploaderLoading}
             message="Add Message"
             onClick={onAddMessageClick}
           />

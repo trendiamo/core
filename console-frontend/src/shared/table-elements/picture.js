@@ -9,6 +9,7 @@ const Img = styled.img`
   vertical-align: middle;
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   margin-right: 8px;
+  object-fit: cover;
 `
 
 const Picture = ({ src, disabled }) => <Img alt="" disabled={disabled} src={src} />

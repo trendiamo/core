@@ -47,12 +47,12 @@ const defaultCrop = (picture, aspectRatio) => {
 }
 
 const processFilename = (blob, filename) => {
-  if (filename.endsWith('.jpeg') || filename.endsWith('.jpg') || filename.endsWith('.png')) return filename
-  const extension = blob.type === 'image/jpeg' ? '.jpg' : '.png'
-  return `picture${extension}`
+  if (filename.match(/.+\.(gif|jpg|jpeg|png)$/)) return filename
+  const extension = blob.type === 'image/gif' ? 'gif' : blob.type === 'image/jpeg' ? 'jpg' : 'png'
+  return `picture.${extension}`
 }
 
-const uploadPicture = async ({ blob, setProgress }) => {
+const uploadPicture = async ({ blob, setHasNewUpload, setProgress }) => {
   try {
     const { fileUrl } = await S3Upload({
       contentDisposition: 'auto',
@@ -63,6 +63,7 @@ const uploadPicture = async ({ blob, setProgress }) => {
       uploadRequestHeaders: { 'x-amz-acl': 'public-read' },
     })
     setProgress(null)
+    setHasNewUpload(true)
     return fileUrl
   } catch (error) {
     console.error(error)
@@ -71,16 +72,29 @@ const uploadPicture = async ({ blob, setProgress }) => {
   }
 }
 
-const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, setDisabled, circle, value }) => {
+const PictureUploader = ({
+  aspectRatio,
+  circle,
+  disabled,
+  label,
+  onChange,
+  required,
+  setDisabled,
+  setIsUploaderLoading,
+  type,
+  value,
+}) => {
   const picturePreviewRef = useRef()
   const [crop, setCrop] = useState({})
-  const [rect, setRect] = useState(null)
-  const [progress, setProgress] = useState(null)
   const [doneCropping, setDoneCropping] = useState(true)
+  const [hasNewUpload, setHasNewUpload] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isPictureLoading, setIsPictureLoading] = useState(!!value.url)
+  const [modalOpen, setModalOpen] = useState(false)
   const [picture, setPicture] = useState(null)
   const [previousValue, setPreviousValue] = useState(value)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [progress, setProgress] = useState(null)
+  const [rect, setRect] = useState(null)
   const previewPicture = useMemo(() => (value && value.url ? value.url : picture ? picture : ''), [picture, value])
 
   useEffect(
@@ -137,12 +151,18 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
   const onGalleryDoneClick = useCallback(
     picture => {
       setPreviousValue(value)
-      onChange({ url: picture && picture.url, picRect: rect })
       setPicture(picture && picture.url)
-      setModalOpen(true)
-      setDoneCropping(false)
+      picture.url !== value.url && setIsPictureLoading(true)
+      if (type === 'animationUploader') {
+        onChange({ url: picture && picture.url, picRect: {} })
+        setModalOpen(false)
+      } else {
+        onChange({ url: picture && picture.url, picRect: rect })
+        setDoneCropping(false)
+        setModalOpen(true)
+      }
     },
-    [onChange, rect, value]
+    [onChange, rect, type, value]
   )
 
   const { enqueueSnackbar } = useSnackbar()
@@ -153,27 +173,38 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
         enqueueSnackbar('Wrong file format', { variant: 'error' })
         return setIsLoading(false)
       }
-      setDoneCropping(false)
       setPreviousValue(value)
-      onChange({ url: '', picRect: null })
+      if (files.length === 0) return
       const file = files[0]
+      if (type === 'animationUploader') {
+        if (file.type !== 'image/gif') return enqueueSnackbar('Must be an animated picture', { variant: 'error' })
+        setModalOpen(false)
+      } else {
+        if (file.type === 'image/gif')
+          return enqueueSnackbar("You can't use an animated picture here", { variant: 'error' })
+        setPicture(null)
+        setDoneCropping(false)
+      }
+      setIsPictureLoading(true)
       if (!file.name) file.name = processFilename(file, filenames[0])
       const pictureUrl = await uploadPicture({
         blob: file,
+        setHasNewUpload,
         setProgress,
       })
       const { errors, requestError } = await apiRequest(apiPictureCreate, [{ url: pictureUrl }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) {
-        onChange({ url: pictureUrl, picRect: null })
+        onChange({ url: pictureUrl, picRect: {} })
         setPicture(pictureUrl)
-        setModalOpen(true)
+        type !== 'animationUploader' && setModalOpen(true)
       } else {
         setIsLoading(false)
+        setIsPictureLoading(false)
       }
     },
-    [value, onChange, enqueueSnackbar]
+    [enqueueSnackbar, onChange, type, value]
   )
 
   const onModalClose = useCallback(() => {
@@ -194,7 +225,7 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
   const onRemovePicture = useCallback(
     () => {
       setPicture(null)
-      onChange({ url: '', picRect: null })
+      onChange({ url: '', picRect: {} })
     },
     [onChange]
   )
@@ -210,9 +241,11 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
     <BasePictureUploader
       circle={circle}
       crop={crop}
-      disabled={disabled}
+      disabled={disabled || isPictureLoading}
       doneCropping={doneCropping}
+      hasNewUpload={hasNewUpload}
       isLoading={isLoading}
+      isPictureLoading={isPictureLoading}
       label={label}
       modalOpen={modalOpen}
       onCancelClick={onCancelClick}
@@ -230,8 +263,12 @@ const PictureUploader = ({ aspectRatio, disabled, label, onChange, required, set
       previewPicture={previewPicture}
       progress={progress}
       required={required}
+      setHasNewUpload={setHasNewUpload}
       setIsLoading={setIsLoading}
+      setIsPictureLoading={setIsPictureLoading}
+      setIsUploaderLoading={setIsUploaderLoading}
       setModalOpen={setModalOpen}
+      type={type}
       value={value}
     />
   )

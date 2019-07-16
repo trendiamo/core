@@ -191,9 +191,10 @@ const AnimatedImage = styled.img`
   left: 0;
   right: 0;
   height: 100%;
+  width: 100%;
+  object-fit: cover;
   opacity: 0;
   transition: opacity 1s;
-  opacity: 1;
   animation: _frekkls_item_img_shared_animation 1s;
   animation-fill-mode: forwards;
   li:hover & {

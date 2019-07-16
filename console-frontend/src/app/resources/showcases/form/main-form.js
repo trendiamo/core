@@ -8,14 +8,15 @@ import { Field, FormHelperText } from 'shared/form-elements'
 const options = { suggestionItem: 'withAvatar' }
 
 const MainForm = ({
-  title,
-  isCropping,
-  setFieldValue,
-  onBackClick,
   form,
+  isCropping,
   isFormLoading,
-  selectPersona,
+  isUploaderLoading,
+  onBackClick,
   onToggleContent,
+  selectPersona,
+  setFieldValue,
+  title,
 }) => {
   const onFocus = useCallback(() => onToggleContent(false), [onToggleContent])
 
@@ -27,7 +28,7 @@ const MainForm = ({
     <Section title={title}>
       <Field
         autoFocus
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Name"
@@ -42,7 +43,7 @@ const MainForm = ({
       <Autocomplete
         autocomplete={apiPersonasAutocomplete}
         defaultPlaceholder="Choose a persona"
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         initialSelectedItem={initialSelectedItem}
         label="Persona"
@@ -53,7 +54,7 @@ const MainForm = ({
       />
       <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Title"
@@ -67,7 +68,7 @@ const MainForm = ({
       />
       <FormHelperText>{'The title is shown in the cover.'}</FormHelperText>
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Subtitle"
@@ -81,7 +82,7 @@ const MainForm = ({
       />
       <FormHelperText>{'The subtitle is shown in the cover, below the title.'}</FormHelperText>
       <Field
-        disabled={isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         label="Chat Bubble Text"
         margin="normal"
@@ -93,7 +94,7 @@ const MainForm = ({
       />
       <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       <Field
-        disabled={isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         label="Extra Chat Bubble Text"
         margin="normal"

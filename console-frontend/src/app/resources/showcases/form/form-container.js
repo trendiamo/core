@@ -5,29 +5,32 @@ import Spotlights from './spotlights'
 import { AddItemContainer, Form } from 'shared/form-elements'
 
 const FormContainer = ({
-  selectPersona,
-  onSpotlightClick,
+  addSpotlight,
   form,
   formRef,
+  isCropping,
   isFormLoading,
   isFormPristine,
-  onFormSubmit,
-  setFieldValue,
-  setSpotlightForm,
-  addSpotlight,
-  isCropping,
-  setIsCropping,
+  isUploaderLoading,
   onBackClick,
-  title,
+  onFormSubmit,
   onSortEnd,
-  personas,
   onToggleContent,
+  onSpotlightClick,
+  personas,
+  selectPersona,
+  setFieldValue,
+  setIsCropping,
+  setIsUploaderLoading,
+  setSpotlightForm,
+  title,
 }) => (
   <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
     <MainForm
       form={omit(form, ['spotlightsAttributes'])}
       isCropping={isCropping}
       isFormLoading={isFormLoading}
+      isUploaderLoading={isUploaderLoading}
       onBackClick={onBackClick}
       onToggleContent={onToggleContent}
       selectPersona={selectPersona}
@@ -38,16 +41,22 @@ const FormContainer = ({
       helperClass="sortable-element"
       isCropping={isCropping}
       isFormLoading={isFormLoading}
+      isUploaderLoading={isUploaderLoading}
       onSortEnd={onSortEnd}
       onSpotlightClick={onSpotlightClick}
       onToggleContent={onToggleContent}
       personas={personas}
       setIsCropping={setIsCropping}
+      setIsUploaderLoading={setIsUploaderLoading}
       setSpotlightForm={setSpotlightForm}
       spotlightsAttributes={form.spotlightsAttributes}
       useDragHandle
     />
-    <AddItemContainer disabled={isCropping || isFormLoading} message="Add new spotlight" onClick={addSpotlight} />
+    <AddItemContainer
+      disabled={isCropping || isFormLoading || isUploaderLoading}
+      message="Add new spotlight"
+      onClick={addSpotlight}
+    />
   </Form>
 )
 

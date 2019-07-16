@@ -165,8 +165,10 @@ const ShowcaseGraphql = ({ id, ...props }) => {
                 width
                 height
               }
+              profilePicAnimation {
+                url
+              }
               instagramUrl
-              profilePicAnimationUrl
             }
             productPicks {
               id

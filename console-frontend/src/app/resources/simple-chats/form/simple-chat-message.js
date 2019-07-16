@@ -27,11 +27,13 @@ const setSimpleChatMessageTitle = simpleChatMessage => {
 const MessageField = ({
   isCropping,
   isFormLoading,
+  isNextSameType,
+  isPreviousSameType,
+  isUploaderLoading,
   onFocus,
   onSimpleChatMessageEdit,
   setIsCropping,
-  isNextSameType,
-  isPreviousSameType,
+  setIsUploaderLoading,
   simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
@@ -39,7 +41,7 @@ const MessageField = ({
     case 'SimpleChatTextMessage':
       return (
         <TextMessageFields
-          disabled={isFormLoading}
+          disabled={isFormLoading || isUploaderLoading}
           name="simpleChatMessage_text"
           onChange={onSimpleChatMessageEdit}
           onFocus={onFocus}
@@ -54,10 +56,12 @@ const MessageField = ({
           isFormLoading={isFormLoading}
           isNextSameType={isNextSameType}
           isPreviousSameType={isPreviousSameType}
+          isUploaderLoading={isUploaderLoading}
           name="simpleChatMessage_product"
           onChange={onSimpleChatMessageEdit}
           onFocus={onFocus}
           setIsCropping={setIsCropping}
+          setIsUploaderLoading={setIsUploaderLoading}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
         />
@@ -65,7 +69,7 @@ const MessageField = ({
     case 'SimpleChatVideoMessage':
       return (
         <VideoMessageField
-          isFormLoading={isFormLoading}
+          disabled={isFormLoading || isUploaderLoading}
           name="simpleChatMessage_video"
           onChange={onSimpleChatMessageEdit}
           onFocus={onFocus}
@@ -79,9 +83,11 @@ const MessageField = ({
           isCropping={isCropping}
           isNextSameType={isNextSameType}
           isPreviousSameType={isPreviousSameType}
+          isUploaderLoading={isUploaderLoading}
           name="simpleChatMessage_picture"
           onChange={onSimpleChatMessageEdit}
           setIsCropping={setIsCropping}
+          setIsUploaderLoading={setIsUploaderLoading}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
         />
@@ -95,9 +101,11 @@ const SimpleChatMessage = ({
   allowDelete,
   isCropping,
   isFormLoading,
+  isUploaderLoading,
   onChange,
   onFocus,
   setIsCropping,
+  setIsUploaderLoading,
   simpleChatMessage,
   activeSimpleChatMessages,
   simpleChatMessageIndex,
@@ -178,9 +186,11 @@ const SimpleChatMessage = ({
         isFormLoading={isFormLoading}
         isNextSameType={isNextSameType}
         isPreviousSameType={isPreviousSameType}
+        isUploaderLoading={isUploaderLoading}
         onFocus={onFocus}
         onSimpleChatMessageEdit={onSimpleChatMessageEdit}
         setIsCropping={setIsCropping}
+        setIsUploaderLoading={setIsUploaderLoading}
         simpleChatMessage={simpleChatMessage}
         simpleChatMessageIndex={simpleChatMessageIndex}
       />

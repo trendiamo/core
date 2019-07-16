@@ -6,14 +6,16 @@ import { Cancel, Field, FormHelperText, FormSection } from 'shared/form-elements
 
 const ProductPick = ({
   allowDelete,
+  folded,
+  index,
   isCropping,
   isFormLoading,
-  index,
-  setProductPickForm,
+  isUploaderLoading,
   onFocus,
-  folded,
   productPick,
   setIsCropping,
+  setIsUploaderLoading,
+  setProductPickForm,
 }) => {
   const onChange = useCallback(
     newProductPickCallback => {
@@ -49,7 +51,13 @@ const ProductPick = ({
   return (
     <FormSection
       actions={
-        allowDelete && <Cancel disabled={isCropping || isFormLoading} index={index} onClick={deleteProductPick} />
+        allowDelete && (
+          <Cancel
+            disabled={isCropping || isFormLoading || isUploaderLoading}
+            index={index}
+            onClick={deleteProductPick}
+          />
+        )
       }
       backgroundColor="#fff"
       dragHandle
@@ -61,7 +69,7 @@ const ProductPick = ({
       title={productPick.id ? productPick.name : 'New Product Pick'}
     >
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Url"
@@ -79,7 +87,7 @@ const ProductPick = ({
         }
       </FormHelperText>
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Name"
@@ -92,7 +100,7 @@ const ProductPick = ({
         value={productPick.name}
       />
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Description"
@@ -105,7 +113,7 @@ const ProductPick = ({
         value={productPick.description}
       />
       <Field
-        disabled={isCropping || isFormLoading}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Display Price"
@@ -118,11 +126,12 @@ const ProductPick = ({
       />
       <PictureUploader
         aspectRatio={1}
-        disabled={isCropping}
+        disabled={isCropping || isFormLoading || isUploaderLoading}
         label="Picture"
         onChange={setPicture}
         required
         setDisabled={setIsCropping}
+        setIsUploaderLoading={setIsUploaderLoading}
         value={{ url: productPick.picture.url, picRect: productPick.picRect }}
       />
     </FormSection>

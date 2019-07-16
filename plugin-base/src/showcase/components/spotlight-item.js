@@ -47,7 +47,7 @@ const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, with
     <ListItem bordered={bordered} listSelected={listSelected} onClick={newOnClick} setListSelected={setListSelected}>
       {!withoutPicture && (
         <ListImg
-          animation={spotlight.persona.profilePicAnimationUrl}
+          animation={spotlight.persona.profilePicAnimation && spotlight.persona.profilePicAnimation.url}
           picture={imgixUrl(spotlight.persona.profilePic.url, {
             rect: stringifyRect(spotlight.persona.profilePic.picRect || spotlight.persona.picRect),
             fit: 'crop',

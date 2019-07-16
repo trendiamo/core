@@ -2,7 +2,7 @@ import AspectRatio from 'react-aspect-ratio'
 import Button from 'shared/button'
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { DialogActionsContainer, StyledButton } from './shared'
@@ -115,33 +115,42 @@ const GalleryDialog = ({
   onDialogClose,
   onEntering,
   onFileUpload,
+  onGalleryDoneClick,
   onKeyUp,
   onPictureClick,
   onUrlUploadClick,
   open,
   pictures,
-  onGalleryDoneClick,
-}) => (
-  <Dialog
-    content={<DialogContentGallery activePicture={activePicture} onPictureClick={onPictureClick} pictures={pictures} />}
-    dialogActions={
-      <DialogActionsGallery
-        activePicture={activePicture}
-        onDialogClose={onDialogClose}
-        onFileUpload={onFileUpload}
-        onGalleryDoneClick={onGalleryDoneClick}
-        onUrlUploadClick={onUrlUploadClick}
-      />
-    }
-    fullWidth
-    handleClose={handleClose}
-    maxWidth="lg"
-    onEntering={onEntering}
-    onKeyUp={onKeyUp}
-    open={open}
-    subtitle={<DialogSubtitleLink to={routes.picturesList()}>{'Or go to your pictures gallery >'}</DialogSubtitleLink>}
-    title="Select a picture from the gallery:"
-  />
-)
+  type,
+}) => {
+  const title = useMemo(() => `Select a${type === 'animationsModal' ? 'n animation' : ' picture'} from the gallery:`, [type])
+
+  return (
+    <Dialog
+      content={
+        <DialogContentGallery activePicture={activePicture} onPictureClick={onPictureClick} pictures={pictures} />
+      }
+      dialogActions={
+        <DialogActionsGallery
+          activePicture={activePicture}
+          onDialogClose={onDialogClose}
+          onFileUpload={onFileUpload}
+          onGalleryDoneClick={onGalleryDoneClick}
+          onUrlUploadClick={onUrlUploadClick}
+        />
+      }
+      fullWidth
+      handleClose={handleClose}
+      maxWidth="lg"
+      onEntering={onEntering}
+      onKeyUp={onKeyUp}
+      open={open}
+      subtitle={
+        <DialogSubtitleLink to={routes.picturesList()}>{'Or go to your pictures gallery >'}</DialogSubtitleLink>
+      }
+      title={title}
+    />
+  )
+}
 
 export default GalleryDialog
