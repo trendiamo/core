@@ -71,7 +71,7 @@ const TriggerRow = ({ trigger, selectedIds, setSelectedIds, highlightEnabled, hi
       if (event.target.checked) {
         setSelectedIds([...selectedIds, trigger.id])
       } else {
-        let newIdsToDelete = [...selectedIds]
+        const newIdsToDelete = [...selectedIds]
         newIdsToDelete.splice(selectedIds.indexOf(trigger.id), 1)
         setSelectedIds(newIdsToDelete)
       }

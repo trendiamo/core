@@ -107,7 +107,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
   const deleteUrlMatcher = useCallback(
     index => {
       mergeFormCallback(form => {
-        let newUrlMatchers = [...form.urlMatchers]
+        const newUrlMatchers = [...form.urlMatchers]
         newUrlMatchers.splice(index, 1)
         return { urlMatchers: newUrlMatchers }
       })

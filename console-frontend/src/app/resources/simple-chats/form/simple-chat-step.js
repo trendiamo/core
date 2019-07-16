@@ -142,7 +142,7 @@ const SimpleChatStep = ({
 
   const setSimpleChatMessagesForm = useCallback(
     (simpleChatMessage, simpleChatMessageIndex) => {
-      let newSimpleChatMessagesAttributes = [...simpleChatStep.simpleChatMessagesAttributes]
+      const newSimpleChatMessagesAttributes = [...simpleChatStep.simpleChatMessagesAttributes]
       newSimpleChatMessagesAttributes[simpleChatMessageIndex] = simpleChatMessage
       onChange(
         { ...simpleChatStep, simpleChatMessagesAttributes: newSimpleChatMessagesAttributes },
