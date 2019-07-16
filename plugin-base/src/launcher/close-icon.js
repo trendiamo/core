@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { IconClose } from 'icons'
+import { ThemeContext } from 'ext'
 
 const StyledIconClose = styled(IconClose)`
-  fill: white;
+  fill: ${({ theme }) => theme.textColor};
   width: 20px;
   height: 20px;
 `
@@ -23,10 +24,14 @@ const CloseIconContainer = styled.div`
   transition: all 0.25s ease;
 `
 
-const CloseIcon = ({ active, launcherConfig }) => (
-  <CloseIconContainer active={active} launcherConfig={launcherConfig}>
-    <StyledIconClose />
-  </CloseIconContainer>
-)
+const CloseIcon = ({ active, launcherConfig }) => {
+  const theme = useContext(ThemeContext)
+
+  return (
+    <CloseIconContainer active={active} launcherConfig={launcherConfig}>
+      <StyledIconClose theme={theme} />
+    </CloseIconContainer>
+  )
+}
 
 export default CloseIcon

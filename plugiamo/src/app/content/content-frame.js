@@ -4,10 +4,10 @@ import omit from 'lodash.omit'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
 import { forwardRef } from 'preact/compat'
-import { Frame, positioning } from 'plugin-base'
+import { Frame, positioning, ThemeContext } from 'plugin-base'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
-import { useEffect } from 'preact/hooks'
+import { useContext, useEffect } from 'preact/hooks'
 
 const IFrame = (props, ref) => (
   <Frame {...omit(props, ['entry', 'launcherConfig', 'position', 'showingContent'])} ref={ref} />
@@ -25,6 +25,7 @@ const StyledFrame = styled(forwardRef(IFrame)).attrs({
   transition: opacity 0.25s ease, transform 0.4s ease;
   overscroll-behavior: contain;
   display: ${({ hidden, showingContent }) => (hidden || !showingContent ? 'none' : 'block')};
+  border-radius: ${({ theme }) => (theme.roundEdges ? '8px' : 0)};
 
   border: 0;
   bottom: 0;
@@ -33,7 +34,6 @@ const StyledFrame = styled(forwardRef(IFrame)).attrs({
   height: 100%;
 
   @media (min-width: ${MAIN_BREAKPOINT}px) {
-    border-radius: 8px;
     ${({ position, launcherConfig }) => positioning.get({ type: 'content', position, launcherConfig })}
     width: ${WIDTH}px;
     height: calc(100vh - 150px);
@@ -49,6 +49,7 @@ const ContentFrame = (
   ref
 ) => {
   useEffect(() => ref.current.focus(), [ref])
+  const theme = useContext(ThemeContext)
 
   return (
     <StyledFrame
@@ -61,6 +62,7 @@ const ContentFrame = (
       ref={ref}
       showingContent={showingContent}
       styleStr={frameStyleStr}
+      theme={theme}
     >
       {/* We don't know why, but both ErrorBoundaries and the div are required here, to catch errors in content */}
       <ErrorBoundaries>

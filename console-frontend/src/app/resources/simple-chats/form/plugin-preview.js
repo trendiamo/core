@@ -1,8 +1,10 @@
 import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { apiRequest, apiWebsiteSettingsShow } from 'utils'
 import { Launcher as BaseLauncher, SimpleChat } from 'plugin-base'
 import { previewConverter } from './data-utils'
+import { useSnackbar } from 'notistack'
 
 const PluginPreview = ({ form, onToggleContent, showingContent }) => {
   const onLauncherClick = useCallback(() => onToggleContent(), [onToggleContent])
@@ -31,6 +33,23 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
     [form.__persona, onLauncherClick, showingContent]
   )
 
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [pluginTheme, setPluginTheme] = useState(null)
+
+  useEffect(
+    () => {
+      ;(async () => {
+        const { json, requestError } = await apiRequest(apiWebsiteSettingsShow, [])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        setPluginTheme(json)
+      })()
+    },
+    [enqueueSnackbar]
+  )
+
+  if (!pluginTheme) return null
+
   return (
     <BasePluginPreview
       Base={Base}
@@ -39,6 +58,7 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
       Launcher={Launcher}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
+      pluginTheme={pluginTheme}
       showingContent={showingContent}
     />
   )

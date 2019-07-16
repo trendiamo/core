@@ -81,9 +81,7 @@ const FilledLayout = ({ children, location, showOnboarding }) => {
         {!isWelcomePage && <AppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />}
         <ContentWithSidebar>
           <Sidebar sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-          <Content>
-            <div>{children}</div>
-          </Content>
+          <Content>{children}</Content>
         </ContentWithSidebar>
       </AppFrame>
     </Root>

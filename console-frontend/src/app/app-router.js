@@ -10,6 +10,7 @@ import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
 import SignupPage from 'auth/signup'
 import UrlGenerator from 'app/screens/url-generator'
+import WebsiteSettings from 'app/screens/website-settings'
 import WelcomePage from 'app/screens/welcome'
 import { AccountRedirect, ExternalRoute, PrivateRoute, RootRedirect } from './app-router-helpers'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
@@ -199,6 +200,14 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         exact
         fetchedAccount={fetchedAccount}
         path={routes.accountRoot(':accountSlug')}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={WebsiteSettings}
+        exact
+        fetchedAccount={fetchedAccount}
+        isOwnerScoped
+        path={routes.settingsTheme(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute

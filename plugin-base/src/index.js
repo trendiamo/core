@@ -23,7 +23,7 @@ import {
   stringifyRect,
   validateEmail,
 } from 'tools'
-import { history, Router, timeout, transition } from 'ext'
+import { history, Router, ThemeContext, timeout, transition } from 'ext'
 import { IconAnimatedEllipsis, IconChevronLeft, IconChevronRight, IconClose, IconPlayButton } from 'icons'
 import { ProductMessage } from 'simple-chat/components/message-types'
 import { SpotlightItem } from 'showcase/components'
@@ -68,6 +68,7 @@ export {
   MESSAGE_RANDOMIZER,
   ChatBackground,
   SimpleChatCover,
+  ThemeContext,
   headerConfig,
   ProductMessage,
   validateEmail,

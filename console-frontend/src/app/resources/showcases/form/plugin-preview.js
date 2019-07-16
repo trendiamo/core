@@ -1,9 +1,11 @@
 import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { apiRequest, apiWebsiteSettingsShow } from 'utils'
 import { Launcher as BaseLauncher } from 'plugin-base'
 import { history as pluginHistory, Showcase as ShowcaseBase } from 'plugin-base'
 import { previewConverter } from './data-utils'
+import { useSnackbar } from 'notistack'
 
 const PluginPreview = ({
   previewCallbacks,
@@ -23,7 +25,6 @@ const PluginPreview = ({
         history={pluginHistory}
         routeToShowcase={routeToShowcase}
         routeToSpotlight={routeToSpotlight}
-        showcase={form}
         spotlights={previewConverter.spotlights(form.spotlightsAttributes)}
         subtitle={previewConverter.subtitle(form.subtitle)}
         title={previewConverter.title(form.title)}
@@ -47,6 +48,23 @@ const PluginPreview = ({
     [form, onLauncherClick, showingContent]
   )
 
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [pluginTheme, setPluginTheme] = useState(null)
+
+  useEffect(
+    () => {
+      ;(async () => {
+        const { json, requestError } = await apiRequest(apiWebsiteSettingsShow, [])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        setPluginTheme(json)
+      })()
+    },
+    [enqueueSnackbar]
+  )
+
+  if (!pluginTheme) return null
+
   return (
     <BasePluginPreview
       Base={Base}
@@ -55,6 +73,7 @@ const PluginPreview = ({
       Launcher={Launcher}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
+      pluginTheme={pluginTheme}
       showingContent={showingContent}
     />
   )

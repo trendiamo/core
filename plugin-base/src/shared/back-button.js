@@ -1,8 +1,9 @@
 import omit from 'lodash.omit'
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import styled from 'styled-components'
 import useIsEntering from 'shared/use-is-entering'
 import { IconChevronLeft } from 'icons'
+import { ThemeContext } from 'ext'
 
 const Chevron = styled(IconChevronLeft)`
   height: 12px;
@@ -18,7 +19,8 @@ const Span = styled.span`
 const Button = styled(props => (
   <button type="button" {...omit(props, ['buttonConfig', 'flexibleCover', 'hide', 'isEntering'])} />
 ))`
-  color: ${({ buttonConfig = {} }) => buttonConfig.textColor || '#aaa'};
+  color: ${({ buttonConfig = {}, theme }) => buttonConfig.textColor || theme.textColor};
+  opacity: ${({ buttonConfig = {} }) => (buttonConfig.textColor ? '1' : '0.6')};
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -49,13 +51,14 @@ const Button = styled(props => (
     border-radius: 4px;
   `}
   svg {
-    fill: ${({ buttonConfig = {} }) => buttonConfig.textColor || '#aaa'};
+    fill: ${({ buttonConfig = {}, theme }) => buttonConfig.textColor || theme.textColor};
   }
 `
 
 const BackButton = ({ onClick, label, backButtonConfig = {}, hide, flexibleCover }) => {
   const isEntering = useIsEntering()
   const newOnClick = useCallback((...args) => hide || onClick(args), [hide, onClick])
+  const theme = useContext(ThemeContext)
 
   return (
     <Button
@@ -64,6 +67,7 @@ const BackButton = ({ onClick, label, backButtonConfig = {}, hide, flexibleCover
       hide={hide}
       isEntering={isEntering}
       onClick={newOnClick}
+      theme={theme}
     >
       <Chevron />
       <Span>{label || 'Back'}</Span>

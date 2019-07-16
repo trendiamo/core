@@ -1,13 +1,13 @@
 import defaultHeaderConfig from './header-config'
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import { BackButton, Cover as CoverBase, PersonaInstagram } from 'shared'
 import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover/components'
 import { imgixUrl, stringifyRect } from 'tools'
-import { useTextTyping } from 'ext'
+import { ThemeContext, useTextTyping } from 'ext'
 
 const PersonaName = styled.div`
-  color: #fff;
+  color: ${({ theme }) => theme.textColor};
   display: inline-block;
 `
 
@@ -19,6 +19,8 @@ const Cover = ({ persona, backButtonLabel, FlowBackButton, headerConfig, backBut
   const currentDescription = useTextTyping(persona.description, 300)
 
   const newHeaderConfig = useMemo(() => ({ ...defaultHeaderConfig, ...headerConfig }), [headerConfig])
+
+  const theme = useContext(ThemeContext)
 
   return (
     <CoverBase headerConfig={newHeaderConfig}>
@@ -42,7 +44,7 @@ const Cover = ({ persona, backButtonLabel, FlowBackButton, headerConfig, backBut
           }
         />
         <PaddedCover>
-          <PersonaName>{persona.name}</PersonaName>
+          <PersonaName theme={theme}>{persona.name}</PersonaName>
           <PersonaInstagram url={persona.instagramUrl} />
           <PersonaDescription text={persona.description} typingText={currentDescription} />
         </PaddedCover>

@@ -3,6 +3,7 @@ import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { location } from 'config'
 import { optionsFromHash } from './setup'
+import { ThemeContext } from 'plugin-base'
 import { useMemo } from 'preact/hooks'
 
 const AppGraphql = () => {
@@ -23,6 +24,11 @@ const AppGraphql = () => {
         website {
           name
           previewMode
+          theme {
+            roundEdges
+            themeColor
+            textColor
+          }
         }
         flow(pathname: $pathname, pluginPath: $pluginPath) {
           id
@@ -68,7 +74,11 @@ const AppGraphql = () => {
 
   if (data.website && data.website.previewMode && !localStorage.getItem('trnd-plugin-enable-preview')) return null
 
-  return <AppHacks data={data} />
+  return (
+    <ThemeContext.Provider value={data && data.website && data.website.theme}>
+      <AppHacks data={data} />
+    </ThemeContext.Provider>
+  )
 }
 
 export default AppGraphql

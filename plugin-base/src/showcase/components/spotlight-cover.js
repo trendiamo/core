@@ -1,17 +1,17 @@
 import PersonaInstagram from 'shared/persona-instagram'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { BackButton } from 'shared'
 import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover/components'
 import { imgixUrl, stringifyRect } from 'tools'
-import { transition, useTextTyping } from 'ext'
+import { ThemeContext, transition, useTextTyping } from 'ext'
 
 const FlexDiv = styled.div`
   display: flex;
 `
 
 const PersonaName = styled.div`
-  color: #fff;
+  color: ${({ theme }) => theme.textColor};
   display: inline-block;
 `
 
@@ -29,7 +29,10 @@ const SpotlightCover = ({ backButtonLabel, isLeaving, routeToShowcase, spotlight
 
   const currentDescription = useTextTyping(spotlight ? spotlight.persona.description : '', 500)
 
+  const theme = useContext(ThemeContext)
+
   if (!spotlight) return null
+
   return (
     <CoverInner>
       <BackButton isLeaving={isLeaving} label={backButtonLabel} onClick={routeToShowcase} />
@@ -44,9 +47,11 @@ const SpotlightCover = ({ backButtonLabel, isLeaving, routeToShowcase, spotlight
           })}
         />
         <PaddedCover>
-          <PersonaName ref={nameRef}>{spotlight.persona.name}</PersonaName>
+          <PersonaName ref={nameRef} theme={theme}>
+            {spotlight.persona.name}
+          </PersonaName>
           <PersonaInstagram url={spotlight.persona.instagramUrl} />
-          <PersonaDescription text={spotlight.persona.description} typingText={currentDescription} />
+          <PersonaDescription text={spotlight.persona.description} theme={theme} typingText={currentDescription} />
         </PaddedCover>
       </FlexDiv>
     </CoverInner>

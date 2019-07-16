@@ -1,11 +1,14 @@
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { ThemeContext } from 'ext'
 
 const defaultHeaderConfig = {
   heights: { min: 90, max: 140 },
 }
 
-const Cover = styled.div`
-  background-color: ${({ hackathon, backgroundColor = '#fff' }) => (hackathon ? backgroundColor : '#232323')};
+const CoverDiv = styled.div`
+  background-color: ${({ hackathon, backgroundColor = '#fff', theme }) =>
+    hackathon ? backgroundColor : theme.themeColor};
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
@@ -28,5 +31,11 @@ const Cover = styled.div`
   box-shadow: 0px 5px 10px rgba(25, 39, 54, 0.13);
   flex-shrink: 0;
 `
+
+const Cover = props => {
+  const theme = useContext(ThemeContext)
+
+  return <CoverDiv {...props} theme={theme} />
+}
 
 export default Cover

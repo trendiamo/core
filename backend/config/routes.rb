@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
         resources :accounts, only: %i[index show create destroy], param: :slug
         resources :websites, only: %i[show update]
+        resources :website_settings, only: %i[update]
+        get "/website_settings", to: "website_settings#show"
 
         get "/personas/autocomplete", to: "autocompletes#personas_autocomplete"
         get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"

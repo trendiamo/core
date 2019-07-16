@@ -1,8 +1,8 @@
 import isEqual from 'lodash.isequal'
-import React, { forwardRef, useCallback, useEffect, useState } from 'react'
+import React, { forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { IconChevronRight } from 'icons'
-import { timeout } from 'ext'
+import { ThemeContext, timeout } from 'ext'
 
 const ListChevron = styled(IconChevronRight)`
   height: 16px;
@@ -64,7 +64,7 @@ const ListContent = styled.div`
 
 const Li = styled.li`
   position: relative;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => (theme.roundEdges ? '8px' : 0)};
   box-shadow: ${({ isClicked, highlight }) =>
     isClicked && !highlight ? '0 3px 25px rgba(0, 0, 0, 0.3)' : '0 2px 12px rgba(0, 0, 0, 0.26)'};
   padding-left: 100px;
@@ -119,7 +119,7 @@ const Li = styled.li`
         bottom: 0px;
         right: 0px;
         z-index: 1;
-        border-radius: 8px;
+        border-radius: ${({ theme }) => (theme.roundEdges ? '8px' : 0)};
         animation: _frekkls_selected_item_highlight 1.2s linear infinite;
         animation-delay: 0.125s;
       }`}
@@ -153,6 +153,8 @@ const ListItem = ({ bordered, children, highlight, listSelected, onClick, setLis
     [highlight, listSelected, onClick, setListSelected]
   )
 
+  const theme = useContext(ThemeContext)
+
   return (
     <Li
       bordered={bordered}
@@ -160,6 +162,7 @@ const ListItem = ({ bordered, children, highlight, listSelected, onClick, setLis
       isClicked={isClicked}
       listSelected={listSelected}
       onClick={newOnClick}
+      theme={theme}
     >
       {children}
     </Li>
@@ -173,7 +176,7 @@ const ImageContainer = styled.div`
   bottom: 0;
   width: 100px;
   overflow: hidden;
-  border-radius: 8px 0 0 8px;
+  border-radius: ${({ theme }) => (theme.roundEdges ? '8px 0 0 8px' : 0)};
 `
 const SingleImage = styled.img`
   position: absolute;
@@ -214,11 +217,15 @@ const AnimatedImage = styled.img`
   }
 `
 
-const ListImg = forwardRef(({ picture, animation }, ref) => (
-  <ImageContainer ref={ref}>
-    <SingleImage src={picture} />
-    {animation && <AnimatedImage src={animation} />}
-  </ImageContainer>
-))
+const ListImg = forwardRef(({ picture, animation }, ref) => {
+  const theme = useContext(ThemeContext)
+
+  return (
+    <ImageContainer ref={ref} theme={theme}>
+      <SingleImage src={picture} />
+      {animation && <AnimatedImage src={animation} />}
+    </ImageContainer>
+  )
+})
 
 export { List, ListContent, ListImg, ListChevron, ListItem, SingleImage, AnimatedImage }
