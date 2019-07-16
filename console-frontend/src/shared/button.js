@@ -7,7 +7,7 @@ import { Button as MuiButton, Tooltip } from '@material-ui/core'
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: ${({ centered }) => (centered ? 'center' : '')};
+  justify-content: ${({ centered }) => (centered ? 'center' : 'normal')};
 `
 
 const ButtonContents = styled.div`
