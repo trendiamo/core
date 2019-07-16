@@ -12,6 +12,7 @@ import NotFound from 'app/screens/not-found'
 import React, { useCallback, useEffect, useState } from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
+import SignupPage from 'auth/signup'
 import theme from 'app/theme'
 import UrlGenerator from 'app/screens/url-generator'
 import WelcomePage from 'app/screens/welcome'
@@ -110,6 +111,7 @@ const Routes = () => (
     <PrivateRoute component={Accounts} exact isOwnerScoped path={routes.accounts()} />
     <PrivateRoute component={DataDashboard} exact isAdminScoped path={routes.dataDashboard()} />
     <ExternalRoute component={LoginPage} path={routes.login()} />
+    <ExternalRoute component={SignupPage} path={routes.signup()} />
     <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
     <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
     <Route

@@ -4,23 +4,14 @@ import Button from 'shared/button'
 import Link from 'shared/link'
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
-import styled from 'styled-components'
 import { apiAccountsShow, apiRequest, apiSignIn } from 'utils'
+import { AuthStyledForm } from 'auth/components'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (min-width: 900px) {
-    display: block;
-  }
-`
-
 const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout title="Let's log you in!">
-    <StyledForm onSubmit={loginSubmit}>
+    <AuthStyledForm onSubmit={loginSubmit}>
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
         <Input
@@ -30,6 +21,7 @@ const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
           name="email"
           onChange={setLoginValue}
           required
+          type="email"
           value={loginForm.email}
         />
       </FormControl>
@@ -57,7 +49,11 @@ const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
           </Button>
         </Link>
       </div>
-    </StyledForm>
+      <div style={{ marginTop: '1rem' }}>
+        {"Don't have an account? "}
+        <Link to={routes.signup()}>{'Signup'}</Link>
+      </div>
+    </AuthStyledForm>
   </AuthLayout>
 )
 

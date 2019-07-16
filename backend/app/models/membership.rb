@@ -4,6 +4,8 @@ class Membership < ApplicationRecord
 
   enum role: %i[owner editor]
 
+  accepts_nested_attributes_for :account
+
   validate :one_membership_per_account
   validate :admins_cannot_have_memberships
 
