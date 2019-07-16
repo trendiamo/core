@@ -2,7 +2,7 @@ require "test_helper"
 
 class TriggerTest < ActiveSupport::TestCase
   test ".find_matching, no triggers exist" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
 
     result = Trigger.find_matching("/")
 
@@ -10,7 +10,7 @@ class TriggerTest < ActiveSupport::TestCase
   end
 
   test ".find_matching, with just one direct-matching trigger" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
     trigger = create(:trigger, url_matchers: %w[/])
 
     result = Trigger.find_matching("/")
@@ -19,7 +19,7 @@ class TriggerTest < ActiveSupport::TestCase
   end
 
   test ".find_matching, with just one star-matching trigger" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
     trigger = create(:trigger, url_matchers: %w[*])
 
     result = Trigger.find_matching("/abc")
@@ -28,7 +28,7 @@ class TriggerTest < ActiveSupport::TestCase
   end
 
   test ".find_matching, with just one param-matching trigger" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
     trigger = create(:trigger, url_matchers: %w[/products/:productId])
 
     result = Trigger.find_matching("/products/34")
@@ -37,7 +37,7 @@ class TriggerTest < ActiveSupport::TestCase
   end
 
   test ".find_matching, with just one non-matching trigger" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
     build(:trigger, url_matchers: %w[/])
 
     result = Trigger.find_matching("/def")
@@ -46,7 +46,7 @@ class TriggerTest < ActiveSupport::TestCase
   end
 
   test "triggers sorted after create" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
 
     2.times { create(:trigger) }
     result = Trigger.pluck(:order)
@@ -55,7 +55,7 @@ class TriggerTest < ActiveSupport::TestCase
   end
 
   test "triggers sorted after deleting trigger and creating two new ones" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
 
     3.times { create(:trigger) }
     Trigger.first.destroy!

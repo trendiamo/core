@@ -26,6 +26,6 @@ class Account < ApplicationRecord
   end
 
   def set_slug
-    self.slug = name.parameterize
+    self.slug = (name || "").parameterize
   end
 end

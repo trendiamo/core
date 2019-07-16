@@ -2,7 +2,7 @@ require "test_helper"
 
 class SimpleChatStepTest < ActiveSupport::TestCase
   test "simple chat steps sorted after create, without order field" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
 
     simple_chat = create(:simple_chat_with_simple_chat_steps).reload
     3.times do
@@ -15,7 +15,7 @@ class SimpleChatStepTest < ActiveSupport::TestCase
   end
 
   test "simple chat messages steps after create, with order field" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
 
     simple_chat = create(:simple_chat_with_simple_chat_steps).reload
     simple_chat.simple_chat_steps.first.destroy!

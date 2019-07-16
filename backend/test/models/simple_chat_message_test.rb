@@ -2,7 +2,7 @@ require "test_helper"
 
 class SimpleChatMessageTest < ActiveSupport::TestCase
   test "simple chat messages sorted after create, without order field" do
-    ActsAsTenant.default_tenant = Account.create!
+    ActsAsTenant.default_tenant = create(:account)
 
     simple_chat = create(:simple_chat_with_simple_chat_steps, simple_chat_messages_count: 4)
 
