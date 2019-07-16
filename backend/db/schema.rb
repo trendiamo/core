@@ -237,6 +237,18 @@ ActiveRecord::Schema.define(version: 20190717110752) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "website_settings", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "website_id", null: false
+    t.string "theme_color", default: "#232323"
+    t.integer "text_color", default: 0
+    t.boolean "round_edges", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_website_settings_on_account_id"
+    t.index ["website_id"], name: "index_website_settings_on_website_id"
+  end
+
   create_table "websites", force: :cascade do |t|
     t.string "name", null: false
     t.string "hostnames", null: false, array: true
@@ -278,5 +290,7 @@ ActiveRecord::Schema.define(version: 20190717110752) do
   add_foreign_key "spotlights", "personas"
   add_foreign_key "spotlights", "showcases"
   add_foreign_key "triggers", "accounts"
+  add_foreign_key "website_settings", "accounts"
+  add_foreign_key "website_settings", "websites"
   add_foreign_key "websites", "accounts"
 end

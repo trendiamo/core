@@ -53,6 +53,8 @@ import {
   apiUserCreate,
   apiUserDestroy,
   apiUserList,
+  apiWebsiteSettingsShow,
+  apiWebsiteSettingsUpdate,
   apiWebsiteShow,
   apiWebsiteUpdate,
 } from './auth-requests'
@@ -115,6 +117,8 @@ export {
   apiUserList,
   apiWebsiteShow,
   apiWebsiteUpdate,
+  apiWebsiteSettingsShow,
+  apiWebsiteSettingsUpdate,
 }
 
 const handleRequestError = async (response, isLoginRequest) => {

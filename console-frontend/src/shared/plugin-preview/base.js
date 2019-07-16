@@ -2,6 +2,7 @@ import Content from './content'
 import LauncherBubbles from './bubbles'
 import React, { memo, useMemo } from 'react'
 import styled from 'styled-components'
+import { ThemeContext } from 'plugin-base'
 import { withWidth } from '@material-ui/core'
 
 const StickyContainer = styled.div`
@@ -25,15 +26,16 @@ const Alignment = styled.div`
 
 const BasePluginPreview = ({
   Base,
-  width,
   Launcher,
   launcherConfig,
-  showingContent,
   onToggleContent,
   bubbleText,
   bubbleExtraText,
   bubbleButtons,
   position = 'right',
+  pluginTheme,
+  showingContent,
+  width,
 }) => {
   const compiledLauncherConfig = useMemo(
     () => ({
@@ -49,18 +51,20 @@ const BasePluginPreview = ({
   return (
     <StickyContainer>
       <Alignment width={width}>
-        <Content Base={Base} position={position} showingContent={showingContent} />
-        {!showingContent && (
-          <LauncherBubbles
-            bubbleButtons={bubbleButtons}
-            bubbleExtraText={bubbleExtraText}
-            bubbleText={bubbleText}
-            launcherConfig={compiledLauncherConfig}
-            onToggleContent={onToggleContent}
-            position={position}
-          />
-        )}
-        {React.cloneElement(Launcher, { launcherConfig: compiledLauncherConfig })}
+        <ThemeContext.Provider value={pluginTheme}>
+          <Content Base={Base} pluginTheme={pluginTheme} position={position} showingContent={showingContent} />
+          {!showingContent && (
+            <LauncherBubbles
+              bubbleButtons={bubbleButtons}
+              bubbleExtraText={bubbleExtraText}
+              bubbleText={bubbleText}
+              launcherConfig={compiledLauncherConfig}
+              onToggleContent={onToggleContent}
+              position={position}
+            />
+          )}
+          {React.cloneElement(Launcher, { launcherConfig: compiledLauncherConfig })}
+        </ThemeContext.Provider>
       </Alignment>
     </StickyContainer>
   )

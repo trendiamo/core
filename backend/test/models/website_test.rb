@@ -52,4 +52,12 @@ class WebsiteTest < ActiveSupport::TestCase
     assert_equal website2, Website.find_with_hostname("c.com")
     assert_nil Website.find_with_hostname("d.com")
   end
+
+  test "creates WebsiteSettings on create" do
+    ActsAsTenant.default_tenant = create(:account)
+
+    @website = create(:website, hostnames: ["acme.com"])
+
+    assert_predicate @website.website_settings.first, :present?
+  end
 end

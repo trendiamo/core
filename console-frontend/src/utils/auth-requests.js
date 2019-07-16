@@ -12,6 +12,7 @@ const SIMPLE_CHATS_URL = `${BASE_API_URL}/simple_chats`
 const TRIGGERS_URL = `${BASE_API_URL}/triggers`
 const ME_URL = `${BASE_API_URL}/me`
 const WEBSITES_URL = `${BASE_API_URL}/websites`
+const WEBSITE_SETTINGS_URL = `${BASE_API_URL}/website_settings`
 const FLOWS_URL = `${BASE_API_URL}/flows`
 const SIGNOUT_URL = `${BASE_API_URL}/users/sign_out`
 const PASSWORD_CHANGE_URL = `${BASE_API_URL}/users/change_password`
@@ -107,6 +108,9 @@ export const apiPasswordChange = body => apiUpdateRequest(PASSWORD_CHANGE_URL, b
 
 export const apiWebsiteShow = id => apiGetRequest(`${WEBSITES_URL}/${id}`)
 export const apiWebsiteUpdate = (id, body) => apiUpdateRequest(`${WEBSITES_URL}/${id}`, body)
+
+export const apiWebsiteSettingsShow = () => apiGetRequest(WEBSITE_SETTINGS_URL)
+export const apiWebsiteSettingsUpdate = (id, body) => apiUpdateRequest(`${WEBSITE_SETTINGS_URL}/${id}`, body)
 
 export const apiMe = () => apiGetRequest(ME_URL)
 export const apiMeUpdate = body => apiUpdateRequest(ME_URL, body)

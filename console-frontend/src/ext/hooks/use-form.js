@@ -44,7 +44,11 @@ const useForm = ({ formObjectTransformer, loadFormObject, saveFormObject }) => {
     [formObjectTransformer, saveFormObject, setForm, setInitialForm, setIsFormSubmitting, state.form]
   )
 
-  const setFieldValue = useCallback(event => mergeForm({ [event.target.name]: event.target.value }), [mergeForm])
+  const setFieldValue = useCallback(
+    event =>
+      mergeForm({ [event.target.name]: event.target.type === 'checkbox' ? event.target.checked : event.target.value }),
+    [mergeForm]
+  )
 
   useEffect(
     () => {

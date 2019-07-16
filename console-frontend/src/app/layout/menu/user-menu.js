@@ -10,7 +10,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiSignOut } from 'utils'
 import { Avatar, Menu, MenuItem, Typography } from '@material-ui/core'
-import { drawerWidth } from './layout-styles'
+import { drawerWidth } from 'app/layout/layout-styles'
 import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const avatarSize = 46

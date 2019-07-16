@@ -7,115 +7,11 @@ import React, { memo, useMemo } from 'react'
 import routes from 'app/routes'
 import styled, { keyframes } from 'styled-components'
 import UserMenu from './user-menu'
-import {
-  AccountCircleOutlined,
-  AssignmentTurnedInOutlined,
-  BarChart,
-  ViewList as DefaultIcon,
-  Link as LinkIcon,
-  PersonPinOutlined,
-  PhotoLibrary,
-  SmsOutlined,
-  TuneOutlined,
-} from '@material-ui/icons'
+import { ViewList as DefaultIcon } from '@material-ui/icons'
 import { Divider, IconButton, MenuItem, SvgIcon, Typography } from '@material-ui/core'
+import { editorResourceGroups, resourceGroups } from './resource-groups'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
-
-const resources = {
-  dataDashboard: {
-    icon: BarChart,
-    label: 'Data Dashboard',
-    class: 'dataDashboard',
-    route: () => routes.dataDashboard(),
-  },
-  triggers: {
-    icon: TuneOutlined,
-    label: 'Triggers',
-    class: 'triggers',
-    route: () => routes.triggersList(),
-  },
-  showcases: {
-    icon: PersonPinOutlined,
-    label: 'Showcases',
-    class: 'showcases',
-    route: () => routes.showcasesList(),
-  },
-  simpleChats: {
-    icon: SmsOutlined,
-    label: 'Simple Chats',
-    class: 'simple-chats',
-    route: () => routes.simpleChatsList(),
-  },
-  outros: {
-    icon: AssignmentTurnedInOutlined,
-    label: 'Outros',
-    class: 'outros',
-    route: () => routes.outrosList(),
-  },
-  personas: {
-    icon: AccountCircleOutlined,
-    label: 'Personas',
-    class: 'personas',
-    route: () => routes.personasList(),
-  },
-  pictures: {
-    icon: PhotoLibrary,
-    label: 'Pictures',
-    class: 'pictures',
-    route: () => routes.picturesList(),
-  },
-  urlGenerator: {
-    icon: LinkIcon,
-    label: 'Url Generator',
-    class: 'urlGenerator',
-    route: () => routes.urlGenerator(),
-  },
-}
-
-const resourceGroups = () => {
-  return {
-    main: {
-      name: 'Main',
-      showTitle: false,
-      resources: auth.isAdmin()
-        ? auth.getAccount().websitesAttributes[0].isECommerce
-          ? [resources.dataDashboard, resources.triggers]
-          : [resources.triggers]
-        : [resources.triggers],
-    },
-    modules: {
-      name: 'Modules',
-      showTitle: true,
-      resources: [resources.showcases, resources.simpleChats, resources.outros],
-    },
-    basic: {
-      name: 'Basic',
-      showTitle: true,
-      resources: [resources.pictures, resources.personas],
-    },
-    tools: {
-      name: 'Tools',
-      showTitle: true,
-      resources: [resources.urlGenerator],
-    },
-  }
-}
-
-const editorResourceGroups = () => {
-  return {
-    modules: {
-      name: 'Modules',
-      showTitle: true,
-      resources: [resources.simpleChats],
-    },
-    basic: {
-      name: 'Basic',
-      showTitle: true,
-      resources: [resources.pictures],
-    },
-  }
-}
 
 const fade = keyframes`
   0%{

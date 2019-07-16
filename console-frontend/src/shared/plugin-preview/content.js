@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import { ContentWrapper, Frame } from 'plugin-base'
 
 const StyledFrame = styled(
-  forwardRef((props, ref) => <Frame {...omit(props, ['isEntry', 'isUnmounting'])} ref={ref} />)
+  forwardRef((props, ref) => <Frame {...omit(props, ['isEntry', 'isUnmounting', 'pluginTheme'])} ref={ref} />)
 )`
   border: 0;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: ${({ pluginTheme }) => (pluginTheme.roundEdges ? '8px' : '0')};
   width: 360px;
   height: 500px;
   box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
@@ -20,7 +20,7 @@ const StyledFrame = styled(
   z-index: 10;
 `
 
-const ContentContainer = ({ children }) => {
+const ContentContainer = ({ children, pluginTheme }) => {
   const [isEntry, setIsEntry] = useState(true)
   const ref = useRef()
 
@@ -29,17 +29,17 @@ const ContentContainer = ({ children }) => {
   }, [])
 
   return (
-    <StyledFrame isEntry={isEntry} ref={ref}>
+    <StyledFrame isEntry={isEntry} pluginTheme={pluginTheme} ref={ref}>
       {children}
     </StyledFrame>
   )
 }
 
-const Content = ({ Base, showingContent }) => {
+const Content = ({ Base, pluginTheme, showingContent }) => {
   if (!showingContent) return null
 
   return (
-    <ContentContainer>
+    <ContentContainer pluginTheme={pluginTheme}>
       <ContentWrapper>{Base}</ContentWrapper>
     </ContentContainer>
   )

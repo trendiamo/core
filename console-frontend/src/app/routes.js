@@ -94,6 +94,9 @@ const routes = {
   userEdit(id, accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/account/users/${id}/edit`
   },
+  settingsTheme(accountSlug = auth.getSlug()) {
+    return `/a/${accountSlug}/settings/theme`
+  },
   nullRoute() {
     return '/empty'
   },
