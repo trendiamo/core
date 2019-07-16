@@ -9,8 +9,9 @@ const loadFormObject = () => {
     name: '',
     description: '',
     profilePic: { url: '' },
+    profilePicAnimation: { url: '' },
     instagramUrl: '',
-    picRect: '',
+    picRect: {},
   }
 }
 

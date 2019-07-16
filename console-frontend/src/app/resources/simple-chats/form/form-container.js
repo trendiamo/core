@@ -14,12 +14,14 @@ const FormContainer = ({
   isFormLoading,
   isFormPristine,
   isFormSubmitting,
+  isUploaderLoading,
   onFormSubmit,
   onSortEnd,
   onToggleContent,
   selectPersona,
   setFieldValue,
   setIsCropping,
+  setIsUploaderLoading,
   setSimpleChatStepsForm,
   title,
 }) => {
@@ -30,7 +32,7 @@ const FormContainer = ({
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
           onFormSubmit={onFormSubmit}
-          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine || isUploaderLoading}
           tooltipEnabled
           tooltipText="No changes to save"
         />
@@ -38,7 +40,7 @@ const FormContainer = ({
       backRoute,
       title,
     }),
-    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, title]
+    [backRoute, isFormLoading, isFormPristine, isFormSubmitting, isUploaderLoading, onFormSubmit, title]
   )
   useAppBarContent(appBarContent)
 
@@ -50,6 +52,7 @@ const FormContainer = ({
         form={mainForm}
         isCropping={isCropping}
         isFormLoading={isFormLoading}
+        isUploaderLoading={isUploaderLoading}
         onToggleContent={onToggleContent}
         selectPersona={selectPersona}
         setFieldValue={setFieldValue}
@@ -60,10 +63,12 @@ const FormContainer = ({
         helperClass="sortable-element"
         isCropping={isCropping}
         isFormLoading={isFormLoading}
+        isUploaderLoading={isUploaderLoading}
         onChange={setSimpleChatStepsForm}
         onSortEnd={onSortEnd}
         onToggleContent={onToggleContent}
         setIsCropping={setIsCropping}
+        setIsUploaderLoading={setIsUploaderLoading}
         simpleChatSteps={form.simpleChatStepsAttributes}
         useDragHandle
       />

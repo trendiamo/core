@@ -19,7 +19,7 @@ module Api
       def update
         @persona = policy_scope(Persona).find(params[:id])
         authorize @persona
-        convert_and_assign_picture
+        convert_and_assign_pictures
         if @persona.update(persona_params)
           render json: @persona
         else
@@ -28,7 +28,7 @@ module Api
       end
 
       def create
-        convert_and_assign_picture
+        convert_and_assign_pictures
         @persona = Persona.new(persona_params)
         authorize @persona
         if @persona.save
@@ -52,13 +52,15 @@ module Api
 
       def persona_params
         params.require(:persona).permit(:name, :description, :instagram_url, :profile_pic_id,
-                                        :profile_pic_animation_url, :lock_version, pic_rect: %i[x y width height])
+                                        :profile_pic_animation_id, :lock_version, pic_rect: %i[x y width height])
       end
 
-      def convert_and_assign_picture
-        pic_url = params[:persona][:profile_pic][:url]
-        pic_url.present? && params[:persona][:profile_pic_id] = Picture.find_or_create_by!(url: pic_url).id
-        params[:persona].delete(:profile_pic_url)
+      def convert_and_assign_pictures
+        %i[profile_pic profile_pic_animation].each do |pic|
+          pic_url = params[:persona][pic][:url]
+          params[:persona]["#{pic}_id"] = pic_url.present? ? Picture.find_or_create_by!(url: pic_url).id : nil
+          params[:persona].delete("#{pic}_url")
+        end
       end
 
       def render_error

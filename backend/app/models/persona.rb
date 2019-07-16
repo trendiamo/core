@@ -8,13 +8,15 @@ class Persona < ApplicationRecord
   has_many :simple_chats, dependent: :destroy
   has_many :outros, dependent: :destroy
   belongs_to :profile_pic, class_name: "Picture"
+  belongs_to :profile_pic_animation, class_name: "Picture", optional: true
 
   validates :name, presence: true
   validates :description, presence: true
 
   def as_json(_options = {})
     attributes
-      .slice("id", "name", "description", "account_id", "graphcms_ref", "instagram_url", "profile_pic_animation_url",
-             "pic_rect", "created_at", "updated_at", "lock_version").merge(profile_pic: { url: profile_pic.url })
+      .slice("id", "name", "description", "account_id", "graphcms_ref", "instagram_url", "pic_rect",
+             "created_at", "updated_at", "lock_version")
+      .merge(profile_pic: { url: profile_pic.url }, profile_pic_animation: { url: profile_pic_animation&.url })
   end
 end

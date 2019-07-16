@@ -18,7 +18,7 @@ const formObjectTransformer = json => {
     firstName: json.firstName || '',
     lastName: json.lastName || '',
     profilePicUrl: json.profilePicUrl || '',
-    picRect: json.picRect || '',
+    picRect: json.picRect || {},
   }
 }
 
@@ -28,6 +28,7 @@ const EditMe = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const [isCropping, setIsCropping] = useState(false)
+  const [isUploaderLoading, setIsUploaderLoading] = useState(false)
 
   const saveFormObject = useCallback(
     async form => {
@@ -78,10 +79,11 @@ const EditMe = () => {
         <PictureUploader
           aspectRatio={1}
           circle
-          disabled={isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           label="Picture"
           onChange={setPicture}
           setDisabled={setIsCropping}
+          setIsUploaderLoading={setIsUploaderLoading}
           value={{ url: form.profilePicUrl, picRect: form.picRect }}
         />
         <TextField
@@ -95,7 +97,7 @@ const EditMe = () => {
           value={form.email}
         />
         <TextField
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           fullWidth
           inputProps={atLeastOneNonBlankCharInputProps}
           label="First Name"
@@ -106,7 +108,7 @@ const EditMe = () => {
           value={form.firstName}
         />
         <TextField
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           fullWidth
           inputProps={atLeastOneNonBlankCharInputProps}
           label="Last Name"
@@ -119,7 +121,7 @@ const EditMe = () => {
         <div style={{ marginTop: '1rem' }}>
           <Button
             color="primaryGradient"
-            disabled={isFormLoading || isCropping || isFormPristine || isFormSubmitting}
+            disabled={isFormLoading || isCropping || isFormPristine || isFormSubmitting || isUploaderLoading}
             isFormPristine={isFormPristine}
             isFormSubmitting={isFormSubmitting}
             tooltipEnabled

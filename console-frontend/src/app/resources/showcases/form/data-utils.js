@@ -85,7 +85,7 @@ const formObjectTransformer = json => {
             description: productPick.description || '',
             displayPrice: productPick.displayPrice || '',
             picture: productPick.picture || { url: '' },
-            picRect: productPick.picRect || '',
+            picRect: productPick.picRect || {},
             __key: productPick.__key,
           }))
         : [
@@ -95,7 +95,7 @@ const formObjectTransformer = json => {
               description: '',
               displayPrice: '',
               picture: { url: '' },
-              picRect: '',
+              picRect: {},
               __key: 'new-0',
             },
           ],

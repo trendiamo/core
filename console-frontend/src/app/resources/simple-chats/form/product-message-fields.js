@@ -6,18 +6,20 @@ import { Field, FormHelperText } from 'shared/form-elements'
 const ProductMessagesForm = ({
   isCropping,
   isFormLoading,
+  isNextSameType,
+  isPreviousSameType,
+  isUploaderLoading,
   onFocus,
   onFormChange,
   progress,
   setIsCropping,
-  isNextSameType,
-  isPreviousSameType,
-  simpleChatMessage,
+  setIsUploaderLoading,
   setPicture,
+  simpleChatMessage,
 }) => (
   <>
     <Field
-      disabled={isCropping || isFormLoading}
+      disabled={isCropping || isFormLoading || isUploaderLoading}
       fullWidth
       label="Title"
       margin="normal"
@@ -28,7 +30,7 @@ const ProductMessagesForm = ({
       value={simpleChatMessage.title || ''}
     />
     <Field
-      disabled={isCropping || isFormLoading}
+      disabled={isCropping || isFormLoading || isUploaderLoading}
       fullWidth
       label="Url"
       margin="normal"
@@ -41,7 +43,7 @@ const ProductMessagesForm = ({
     />
     <FormHelperText>{'Use the whole url, eg: https://www.example.com/page1'}</FormHelperText>
     <Field
-      disabled={isCropping || isFormLoading}
+      disabled={isCropping || isFormLoading || isUploaderLoading}
       fullWidth
       label="Display Price"
       margin="normal"
@@ -52,12 +54,13 @@ const ProductMessagesForm = ({
       value={simpleChatMessage.displayPrice || ''}
     />
     <PictureUploader
-      disabled={isCropping}
+      disabled={isCropping || isFormLoading || isUploaderLoading}
       label="Picture"
       name="picUrl"
       onChange={setPicture}
       required
       setDisabled={setIsCropping}
+      setIsUploaderLoading={setIsUploaderLoading}
       value={{ url: simpleChatMessage.picture.url, picRect: simpleChatMessage.picRect }}
     />
     {progress && <ProgressBar progress={progress} />}
@@ -78,12 +81,15 @@ const ProductMessagesForm = ({
 )
 
 const ProductMessageFields = ({
+  isCropping,
   isFormLoading,
+  isNextSameType,
+  isPreviousSameType,
+  isUploaderLoading,
   onChange,
   onFocus,
   setIsCropping,
-  isNextSameType,
-  isPreviousSameType,
+  setIsUploaderLoading,
   simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
@@ -112,12 +118,15 @@ const ProductMessageFields = ({
 
   return (
     <ProductMessagesForm
+      isCropping={isCropping}
       isFormLoading={isFormLoading}
       isNextSameType={isNextSameType}
       isPreviousSameType={isPreviousSameType}
+      isUploaderLoading={isUploaderLoading}
       onFocus={onFocus}
       onFormChange={onFormChange}
       setIsCropping={setIsCropping}
+      setIsUploaderLoading={setIsUploaderLoading}
       setPicture={setPicture}
       simpleChatMessage={simpleChatMessage}
     />

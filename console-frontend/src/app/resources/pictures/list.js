@@ -1,25 +1,17 @@
 import BlankStateTemplate from 'shared/blank-state'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { ActiveColumn, EnhancedList, Picture, TableCell, Text } from 'shared/table-elements'
 import { apiPictureDestroy, apiPictureList } from 'utils'
 
 const columns = [
   { name: 'id', label: 'id', sortable: true },
   { name: 'picture' },
+  { name: 'type', label: 'type', sortable: true },
   { name: 'url', label: 'url', sortable: true },
   { name: 'status', label: 'status', sortable: true },
 ]
 
-const BlankState = () => (
-  <BlankStateTemplate
-    // buttonText="Upload new"
-    // description="You don't have any picture yet. Let's add some?"
-    imageSource="/img/background/img-welcome.png"
-    // route={routes.pictureCreate()}
-    // title="Add new pictures"
-    title="No pictures yet"
-  />
-)
+const BlankState = () => <BlankStateTemplate imageSource="/img/background/img-welcome.png" title="No pictures yet" />
 
 const tooltipTextActive = ({ personas, productPicks, simpleChatMessages }) => {
   const itemsInUse = []
@@ -33,25 +25,39 @@ const tooltipTextActive = ({ personas, productPicks, simpleChatMessages }) => {
   )}`
 }
 
-const PicturesRow = ({ record, highlightInactive }) => (
-  <>
-    <TableCell>
-      <Picture disabled={highlightInactive} src={record.url} />
-    </TableCell>
-    <TableCell width="100%">
-      <Text disabled={highlightInactive} style={{ wordBreak: 'break-all' }}>
-        {record.url}
-      </Text>
-    </TableCell>
-    <ActiveColumn
-      highlightInactive={highlightInactive}
-      symbolTextActive="In use"
-      symbolTextInactive="Not in use"
-      tooltipTextActive={tooltipTextActive(record)}
-      tooltipTextInactive="Not used yet"
-    />
-  </>
-)
+const PicturesRow = ({ record, highlightInactive }) => {
+  const recordType = useMemo(
+    () =>
+      record.url
+        .split('.')
+        .pop()
+        .toUpperCase(),
+    [record.url]
+  )
+
+  return (
+    <>
+      <TableCell width="5%">
+        <Picture disabled={highlightInactive} src={record.url} />
+      </TableCell>
+      <TableCell width="10%">
+        <Text disabled={highlightInactive}>{recordType}</Text>
+      </TableCell>
+      <TableCell width="85%">
+        <Text disabled={highlightInactive} style={{ wordBreak: 'break-all' }}>
+          {record.url}
+        </Text>
+      </TableCell>
+      <ActiveColumn
+        highlightInactive={highlightInactive}
+        symbolTextActive="In use"
+        symbolTextInactive="Not in use"
+        tooltipTextActive={tooltipTextActive(record)}
+        tooltipTextInactive="Not used yet"
+      />
+    </>
+  )
+}
 
 const api = { fetch: apiPictureList, destroy: apiPictureDestroy }
 const picturesRoutes = {}

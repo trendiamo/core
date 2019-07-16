@@ -5,13 +5,15 @@ import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 const SortableSpotlight = SortableElement(Spotlight)
 
 const Spotlights = ({
-  isFormLoading,
   isCropping,
-  setIsCropping,
-  spotlightsAttributes,
-  personas,
-  setSpotlightForm,
+  isFormLoading,
+  isUploaderLoading,
   onSpotlightClick,
+  personas,
+  setIsCropping,
+  setIsUploaderLoading,
+  setSpotlightForm,
+  spotlightsAttributes,
 }) => {
   const allowDelete = useMemo(() => spotlightsAttributes.filter(spotlight => !spotlight._destroy).length > 1, [
     spotlightsAttributes,
@@ -27,10 +29,12 @@ const Spotlights = ({
             index={index}
             isCropping={isCropping}
             isFormLoading={isFormLoading}
+            isUploaderLoading={isUploaderLoading}
             key={spotlight.id || spotlight.__key}
             onSpotlightClick={onSpotlightClick}
             personas={personas}
             setIsCropping={setIsCropping}
+            setIsUploaderLoading={setIsUploaderLoading}
             setSpotlightForm={setSpotlightForm}
             sortIndex={index}
             spotlight={spotlight}

@@ -1,27 +1,79 @@
+import AddItemButton from 'shared/form-elements/add-item-button'
 import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
 import PictureUploader from 'shared/picture-uploader'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
+import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, Field, Form, FormHelperText } from 'shared/form-elements'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
-import { Grid } from '@material-ui/core'
+import { HelpOutline } from '@material-ui/icons'
+import { Tooltip } from '@material-ui/core'
 import { useOnboardingConsumer, useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
+
+const UploadersContainer = styled.div`
+  display: flex;
+  width: 100%;
+`
+
+const AddAnimationUploaderButton = styled(AddItemButton)`
+  align-self: center;
+  margin-left: 24px;
+
+  p {
+    padding-left: 6px;
+    line-height: 1;
+  }
+  svg {
+    font-size: 20px;
+  }
+`
+
+const AnimationUploaderContainer = styled.div`
+  position: relative;
+  margin-left: 24px;
+`
+
+const AnimationUploaderHelp = styled(HelpOutline)`
+  width: 16px;
+  fill: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 11px;
+  right: 38px;
+  z-index: 1;
+`
+
+const AnimationUploader = ({ circle, disabled, label, setAnimation, setIsUploaderLoading, value }) => (
+  <AnimationUploaderContainer>
+    <Tooltip placement="top" title="The animated GIF will appear when moving the mouse over a showcase items">
+      <AnimationUploaderHelp />
+    </Tooltip>
+    <PictureUploader
+      circle={circle}
+      disabled={disabled}
+      label={label}
+      onChange={setAnimation}
+      setIsUploaderLoading={setIsUploaderLoading}
+      type="animationUploader"
+      value={value}
+    />
+  </AnimationUploaderContainer>
+)
 
 const formObjectTransformer = json => {
   return {
     id: json.id,
     name: json.name || '',
     description: json.description || '',
-    profilePic: json.profilePic || { profilePic: { url: '' } },
+    profilePic: { url: json.profilePic.url || '' },
+    picRect: json.picRect || {},
+    profilePicAnimation: { url: json.profilePicAnimation.url || '' },
     instagramUrl: json.instagramUrl || '',
-    profilePicAnimationUrl: json.profilePicAnimationUrl || '',
     lockVersion: json.lockVersion,
-    picRect: json.picRect || '',
   }
 }
 
@@ -34,6 +86,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
 
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
+  const [isUploaderLoading, setIsUploaderLoading] = useState(false)
 
   const {
     form,
@@ -74,6 +127,17 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
     [mergeForm]
   )
 
+  const [withAnimationUploader, setWithAnimationUploader] = useState(false)
+
+  const addAnimationUploader = useCallback(() => setWithAnimationUploader(true), [])
+
+  const setAnimation = useCallback(
+    animation => {
+      mergeForm({ profilePicAnimation: { url: animation.url } })
+    },
+    [mergeForm]
+  )
+
   const appBarContent = useMemo(
     () => ({
       Actions: (
@@ -81,7 +145,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
           onFormSubmit={newOnFormSubmit}
-          saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine}
+          saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine || isUploaderLoading}
           tooltipEnabled
           tooltipText="No changes to save"
         />
@@ -89,7 +153,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
       backRoute,
       title,
     }),
-    [backRoute, isCropping, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit, title]
+    [backRoute, isCropping, isFormLoading, isFormPristine, isFormSubmitting, isUploaderLoading, newOnFormSubmit, title]
   )
   useAppBarContent(appBarContent)
 
@@ -97,66 +161,69 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
 
   return (
     <Section title={title}>
-      <Grid item sm={6}>
-        <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
+      <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
+        <UploadersContainer>
           <PictureUploader
             aspectRatio={1}
             circle
-            disabled={isCropping}
+            disabled={isFormLoading || isCropping || isUploaderLoading}
             label="Picture"
             onChange={setPicture}
             required
             setDisabled={setIsCropping}
+            setIsUploaderLoading={setIsUploaderLoading}
             value={{ url: form.profilePic.url, picRect: form.picRect }}
           />
-          <Field
-            autoFocus
-            disabled={isFormLoading || isCropping}
-            fullWidth
-            inputProps={atLeastOneNonBlankCharInputProps}
-            label="Name"
-            margin="normal"
-            max={characterLimits.persona.name}
-            name="name"
-            onChange={setFieldValue}
-            required
-            value={form.name}
-          />
-          <Field
-            disabled={isFormLoading || isCropping}
-            fullWidth
-            inputProps={atLeastOneNonBlankCharInputProps}
-            label="Description"
-            margin="normal"
-            max={characterLimits.persona.description}
-            name="description"
-            onChange={setFieldValue}
-            required
-            value={form.description}
-          />
-          <FormHelperText>{"A short text that is shown near the persona's name."}</FormHelperText>
-          <Field
-            disabled={isFormLoading || isCropping}
-            fullWidth
-            label="Instagram Profile URL"
-            margin="normal"
-            name="instagramUrl"
-            onChange={setFieldValue}
-            value={form.instagramUrl}
-          />
-          <FormHelperText>{"Instagram link icon will appear near the persona's name."}</FormHelperText>
-          <Field
-            disabled={isFormLoading || isCropping}
-            fullWidth
-            label="Animated picture URL"
-            margin="normal"
-            name="profilePicAnimationUrl"
-            onChange={setFieldValue}
-            value={form.profilePicAnimationUrl}
-          />
-          <FormHelperText>{'Animated GIF will appear when hovering the mouse over the showcase items.'}</FormHelperText>
-        </Form>
-      </Grid>
+          {withAnimationUploader || form.profilePicAnimation.url ? (
+            <AnimationUploader
+              circle
+              disabled={isFormLoading || isCropping || isUploaderLoading}
+              label="Animated Picture"
+              setAnimation={setAnimation}
+              setIsUploaderLoading={setIsUploaderLoading}
+              value={{ url: form.profilePicAnimation.url }}
+            />
+          ) : (
+            <AddAnimationUploaderButton message="Add animation" onClick={addAnimationUploader} />
+          )}
+        </UploadersContainer>
+        <Field
+          autoFocus
+          disabled={isFormLoading || isCropping || isUploaderLoading}
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Name"
+          margin="normal"
+          max={characterLimits.persona.name}
+          name="name"
+          onChange={setFieldValue}
+          required
+          value={form.name}
+        />
+        <Field
+          disabled={isFormLoading || isCropping || isUploaderLoading}
+          fullWidth
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Description"
+          margin="normal"
+          max={characterLimits.persona.description}
+          name="description"
+          onChange={setFieldValue}
+          required
+          value={form.description}
+        />
+        <FormHelperText>{"A short text that is shown near the persona's name."}</FormHelperText>
+        <Field
+          disabled={isFormLoading || isCropping || isUploaderLoading}
+          fullWidth
+          label="Instagram Profile URL"
+          margin="normal"
+          name="instagramUrl"
+          onChange={setFieldValue}
+          value={form.instagramUrl}
+        />
+        <FormHelperText>{"Instagram link icon will appear near the persona's name."}</FormHelperText>
+      </Form>
     </Section>
   )
 }

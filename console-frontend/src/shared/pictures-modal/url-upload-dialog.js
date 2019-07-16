@@ -2,11 +2,10 @@ import Button from 'shared/button'
 import CircularProgress from 'app/layout/loading'
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { DialogActionsContainer, StyledButton } from './shared'
 import { Input } from '@material-ui/core'
-// import { Link } from 'react-router-dom'
 import { Link as LinkIcon } from '@material-ui/icons'
 
 const UrlInputContainer = styled.div`
@@ -39,7 +38,7 @@ const UrlIcon = styled(LinkIcon)`
   height: 24px;
 `
 
-const DialogContentUrlUpload = ({ isPictureLoading, setPictureUrl }) => {
+const DialogContentUrlUpload = ({ isPictureLoading, resource, setPictureUrl }) => {
   const [isFocused, setIsFocused] = useState(null)
 
   const onChange = useCallback(
@@ -67,7 +66,7 @@ const DialogContentUrlUpload = ({ isPictureLoading, setPictureUrl }) => {
           onBlur={onBlur}
           onChange={onChange}
           onFocus={onFocus}
-          placeholder="Paste the URL of the picture to upload:"
+          placeholder={`Paste the URL of the ${resource} to upload:`}
         />
         <UrlIconContainer>
           <UrlIcon />
@@ -103,23 +102,30 @@ const UrlUploadDialog = ({
   onKeyUp,
   open,
   setPictureUrl,
-}) => (
-  <Dialog
-    content={<DialogContentUrlUpload isPictureLoading={isPictureLoading} setPictureUrl={setPictureUrl} />}
-    dialogActions={
-      <DialogActionsUrlUpload
-        onCancelUrlUpload={onCancelUrlUpload}
-        onDoneUrlUpload={onDoneUrlUpload}
-        onFileUpload={onFileUpload}
-      />
-    }
-    fullWidth
-    handleClose={handleClose}
-    maxWidth="lg"
-    onKeyUp={onKeyUp}
-    open={open}
-    title="Upload picture from URL:"
-  />
-)
+  type,
+}) => {
+  const resource = useMemo(() => (type === 'animationsModal' ? 'animation' : 'picture'), [type])
+
+  return (
+    <Dialog
+      content={
+        <DialogContentUrlUpload isPictureLoading={isPictureLoading} resource={resource} setPictureUrl={setPictureUrl} />
+      }
+      dialogActions={
+        <DialogActionsUrlUpload
+          onCancelUrlUpload={onCancelUrlUpload}
+          onDoneUrlUpload={onDoneUrlUpload}
+          onFileUpload={onFileUpload}
+        />
+      }
+      fullWidth
+      handleClose={handleClose}
+      maxWidth="lg"
+      onKeyUp={onKeyUp}
+      open={open}
+      title={`Upload ${resource} from URL:`}
+    />
+  )
+}
 
 export default UrlUploadDialog

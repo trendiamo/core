@@ -5,23 +5,26 @@ import { Checkbox, FormControlLabel } from '@material-ui/core'
 const PictureMessageForm = ({
   isCropping,
   isFormLoading,
-  progress,
-  setIsCropping,
-  setPicture,
   isNextSameType,
   isPreviousSameType,
+  isUploaderLoading,
+  progress,
+  setIsCropping,
+  setIsUploaderLoading,
+  setPicture,
   simpleChatMessage,
   onFormChange,
 }) => (
   <>
     <PictureUploader
       aspectRatio={1}
-      disabled={isCropping}
+      disabled={isCropping || isFormLoading || isUploaderLoading}
       label="Picture"
       name="picUrl"
       onChange={setPicture}
       required
       setDisabled={setIsCropping}
+      setIsUploaderLoading={setIsUploaderLoading}
       value={{ url: simpleChatMessage.picture.url, picRect: simpleChatMessage.picRect }}
     />
     {progress && <ProgressBar progress={progress} />}
@@ -42,11 +45,14 @@ const PictureMessageForm = ({
 )
 
 const PictureMessageField = ({
-  onChange,
-  setIsCropping,
-  simpleChatMessage,
+  isCropping,
   isNextSameType,
   isPreviousSameType,
+  isUploaderLoading,
+  onChange,
+  setIsCropping,
+  setIsUploaderLoading,
+  simpleChatMessage,
   simpleChatMessageIndex,
 }) => {
   const onFormChange = useCallback(
@@ -72,10 +78,13 @@ const PictureMessageField = ({
 
   return (
     <PictureMessageForm
+      isCropping={isCropping}
       isNextSameType={isNextSameType}
       isPreviousSameType={isPreviousSameType}
+      isUploaderLoading={isUploaderLoading}
       onFormChange={onFormChange}
       setIsCropping={setIsCropping}
+      setIsUploaderLoading={setIsUploaderLoading}
       setPicture={setPicture}
       simpleChatMessage={simpleChatMessage}
     />

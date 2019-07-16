@@ -14,6 +14,7 @@ const formObjectTransformer = json => {
   return {
     id: json.id,
     profilePicUrl: json.profilePicUrl || '',
+    picRect: json.picRect || {},
     firstName: json.firstName || '',
     lastName: json.lastName || '',
     role: json.role || '',
@@ -27,6 +28,7 @@ const formObjectTransformer = json => {
 const loadFormObject = () => {
   return {
     profilePicUrl: '',
+    picRect: {},
     firstName: '',
     lastName: '',
     role: '',
@@ -44,6 +46,7 @@ const UserCreate = ({ history }) => {
 
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
+  const [isUploaderLoading, setIsUploaderLoading] = useState(false)
   const [profilePic, setProfilePic] = useState(null)
   const [progress, setProgress] = useState(null)
 
@@ -102,9 +105,9 @@ const UserCreate = ({ history }) => {
     [history, onFormSubmit, setIsFormSubmitting]
   )
 
-  const setProfilePicUrl = useCallback(
-    profilePicUrl => {
-      mergeForm({ profilePicUrl })
+  const setPicture = useCallback(
+    picture => {
+      mergeForm({ profilePicUrl: picture.url, picRect: picture.picRect })
     },
     [mergeForm]
   )
@@ -116,13 +119,13 @@ const UserCreate = ({ history }) => {
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
           onFormSubmit={newOnFormSubmit}
-          saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine}
+          saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine || isUploaderLoading}
         />
       ),
       backRoute: routes.account(),
       title: 'Add User',
     }),
-    [isCropping, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit]
+    [isCropping, isFormLoading, isFormPristine, isFormSubmitting, isUploaderLoading, newOnFormSubmit]
   )
   useAppBarContent(appBarContent)
 
@@ -132,17 +135,19 @@ const UserCreate = ({ history }) => {
     <Section title="Add User">
       <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
         <PictureUploader
+          aspectRatio={1}
           circle
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           label="Picture"
-          onChange={setProfilePicUrl}
+          onChange={setPicture}
           setDisabled={setIsCropping}
+          setIsUploaderLoading={setIsUploaderLoading}
           setPic={setProfilePic}
-          value={form.profilePicUrl}
+          value={{ url: form.profilePicUrl, picRect: form.picRect }}
         />
         {progress && <ProgressBar progress={progress} />}
         <Field
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           fullWidth
           inputProps={atLeastOneNonBlankCharInputProps}
           label="First Name"
@@ -154,7 +159,7 @@ const UserCreate = ({ history }) => {
           value={form.firstName}
         />
         <Field
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           fullWidth
           inputProps={atLeastOneNonBlankCharInputProps}
           label="Last Name"
@@ -166,7 +171,7 @@ const UserCreate = ({ history }) => {
           value={form.lastName}
         />
         <Select
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           fullWidth
           label="Role"
           margin="normal"
@@ -177,7 +182,7 @@ const UserCreate = ({ history }) => {
           value={form.role}
         />
         <Field
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           fullWidth
           label="Email"
           margin="normal"
@@ -188,7 +193,7 @@ const UserCreate = ({ history }) => {
           value={form.email}
         />
         <Field
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           fullWidth
           inputProps={passwordInputProps}
           label="Password"
@@ -200,7 +205,7 @@ const UserCreate = ({ history }) => {
           value={form.password}
         />
         <Field
-          disabled={isFormLoading || isCropping}
+          disabled={isFormLoading || isCropping || isUploaderLoading}
           fullWidth
           label="Password Confirmation"
           margin="normal"

@@ -3,7 +3,7 @@ import CroppingDialog from './cropping-dialog'
 import EmptyDialog from './empty-dialog'
 import GalleryDialog from './gallery-dialog'
 import isEmpty from 'lodash.isempty'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import UrlUploadDialog from './url-upload-dialog'
 import { apiGetRemotePicture, apiPictureList, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
@@ -14,6 +14,8 @@ const ENTER_KEYCODE = 13
 const PicturesModal = ({
   crop,
   croppingState,
+  hasNewUpload,
+  isLoading,
   onCancelClick,
   onCropChange,
   onGalleryDoneClick,
@@ -26,9 +28,10 @@ const PicturesModal = ({
   picture,
   picturePreviewRef,
   previewPicture,
-  setOpen,
+  setHasNewUpload,
   setIsLoading,
-  isLoading,
+  setOpen,
+  type,
 }) => {
   const [activePicture, setActivePicture] = useState(null)
   const [emptyState, setEmptyState] = useState(false)
@@ -36,6 +39,18 @@ const PicturesModal = ({
   const [pictures, setPictures] = useState([])
   const [pictureUrl, setPictureUrl] = useState('')
   const [urlUploadState, setUrlUploadState] = useState(false)
+
+  useEffect(
+    () => {
+      if (hasNewUpload) {
+        setPictures([])
+        setEmptyState(false)
+        setHasNewUpload(false)
+        setUrlUploadState(false)
+      }
+    },
+    [hasNewUpload, setHasNewUpload]
+  )
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -81,21 +96,26 @@ const PicturesModal = ({
       if (requestError || errors) {
         setPictures([])
         handleClose()
-      } else if (isEmpty(json)) {
-        setEmptyState(true)
       } else {
-        setPictures(json)
+        const animations = json.filter(picture => picture.url.split('.').pop() === 'gif')
+        const pictures = json.filter(picture => !animations.includes(picture))
+        if (type === 'animationsModal') {
+          if (isEmpty(animations)) return setEmptyState(true)
+          setPictures(animations)
+        } else {
+          if (isEmpty(pictures)) return setEmptyState(true)
+          setPictures(pictures)
+        }
         const activePicture = json.find(picture => picture.url === previewPicture)
         if (activePicture) setActivePicture(activePicture)
       }
       return { json, response, errors, requestError, ...rest }
     },
-    [enqueueSnackbar, handleClose, previewPicture, setActivePicture, setEmptyState, setPictures]
+    [enqueueSnackbar, handleClose, previewPicture, setActivePicture, setEmptyState, setPictures, type]
   )
 
   const onCancelCropping = useCallback(
-    async () => {
-      setPictures([])
+    () => {
       onCancelClick()
       setUrlUploadState(false)
       setActivePicture(null)
@@ -119,7 +139,6 @@ const PicturesModal = ({
 
   const onDoneCropping = useCallback(
     () => {
-      setPictures([])
       onCropDoneClick()
       setUrlUploadState(false)
     },
@@ -128,10 +147,9 @@ const PicturesModal = ({
 
   const newOnFileUpload = useCallback(
     ({ target: { files } }) => {
-      if (urlUploadState) setUrlUploadState(false)
       onFileUpload(files)
     },
-    [onFileUpload, urlUploadState]
+    [onFileUpload]
   )
 
   const onPictureClick = useCallback(
@@ -176,9 +194,11 @@ const PicturesModal = ({
         setIsLoading(true)
         await fetchPictures()
         setIsLoading(false)
+      } else {
+        setActivePicture(pictures.find(picture => picture.url === previewPicture))
       }
     },
-    [emptyState, fetchPictures, pictures, setIsLoading]
+    [emptyState, fetchPictures, pictures, previewPicture, setIsLoading]
   )
 
   const onUrlUploadKeyup = useCallback(
@@ -221,6 +241,7 @@ const PicturesModal = ({
         onKeyUp={onUrlUploadKeyup}
         open={open}
         setPictureUrl={setPictureUrl}
+        type={type}
       />
     )
   }
@@ -232,6 +253,7 @@ const PicturesModal = ({
         onFileUpload={newOnFileUpload}
         onUrlUploadClick={onUrlUploadClick}
         open={open}
+        type={type}
       />
     )
   }
@@ -250,6 +272,7 @@ const PicturesModal = ({
       open={open}
       pictures={pictures}
       setIsPictureLoading={setIsPictureLoading}
+      type={type}
     />
   )
 }

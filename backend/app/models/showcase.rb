@@ -38,14 +38,14 @@ class Showcase < ApplicationRecord
     end
   end
 
-  def spotlight_persona_attributes(spotlight)
+  def spotlight_persona_attributes(spotlight) # rubocop:disable Metrics/AbcSize
     {
       id: spotlight.persona.id,
       name: spotlight.persona.name,
       description: spotlight.persona.description,
       instagram_url: spotlight.persona.instagram_url,
       profile_pic: { url: spotlight.persona.profile_pic.url },
-      profile_pic_animation_url: spotlight.persona.profile_pic_animation_url,
+      profile_pic_animation: { url: spotlight.persona.profile_pic_animation&.url },
       pic_rect: spotlight.persona.pic_rect,
     }
   end

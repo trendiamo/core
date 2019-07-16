@@ -5,13 +5,15 @@ import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 const SortableProductPick = SortableElement(ProductPick)
 
 const ProductPicks = ({
-  isFormLoading,
   isCropping,
-  setIsCropping,
-  productPicksAttributes,
-  setProductPickForm,
+  isFormLoading,
+  isUploaderLoading,
   onFocus,
   personaId,
+  productPicksAttributes,
+  setIsCropping,
+  setIsUploaderLoading,
+  setProductPickForm,
 }) => {
   const allowDelete = useMemo(() => productPicksAttributes.filter(productPick => !productPick._destroy).length > 1, [
     productPicksAttributes,
@@ -27,11 +29,13 @@ const ProductPicks = ({
             index={index}
             isCropping={isCropping}
             isFormLoading={isFormLoading}
+            isUploaderLoading={isUploaderLoading}
             key={productPick.id || productPick.__key}
             onFocus={onFocus}
             personaId={personaId}
             productPick={productPick}
             setIsCropping={setIsCropping}
+            setIsUploaderLoading={setIsUploaderLoading}
             setProductPickForm={setProductPickForm}
             sortIndex={index}
           />

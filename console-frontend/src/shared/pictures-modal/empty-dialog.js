@@ -1,6 +1,6 @@
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { StyledButton } from './shared'
 import { Typography } from '@material-ui/core'
@@ -22,13 +22,17 @@ const DialogEmptyIcon = styled.img`
   margin-bottom: 10px;
 `
 
-const DialogContentEmpty = () => (
-  <DialogEmptyContainer>
-    <DialogEmptyIcon alt="" src="/img/icons/ic_emoji_thinking.png" />
-    <Typography variant="h5">{'No pictures found'}</Typography>
-    <Typography variant="subtitle1">{"You don't have any picture in your gallery. Let's upload one?"}</Typography>
-  </DialogEmptyContainer>
-)
+const DialogContentEmpty = ({ type }) => {
+  const resource = useMemo(() => (type === 'animationsModal' ? 'animation' : 'picture'), [type])
+
+  return (
+    <DialogEmptyContainer>
+      <DialogEmptyIcon alt="" src="/img/icons/ic_emoji_thinking.png" />
+      <Typography variant="h5">{`No ${resource}s found`}</Typography>
+      <Typography variant="subtitle1">{`You don't have any ${resource} in your gallery. Let's upload one?`}</Typography>
+    </DialogEmptyContainer>
+  )
+}
 
 const DialogActionsEmpty = ({ handleClose, onFileUpload, onUrlUploadClick }) => (
   <DialogActionsEmptyContainer>
@@ -41,9 +45,9 @@ const DialogActionsEmpty = ({ handleClose, onFileUpload, onUrlUploadClick }) => 
   </DialogActionsEmptyContainer>
 )
 
-const EmptyDialog = ({ handleClose, onFileUpload, onUrlUploadClick, open }) => (
+const EmptyDialog = ({ handleClose, onFileUpload, onUrlUploadClick, open, type }) => (
   <Dialog
-    content={<DialogContentEmpty />}
+    content={<DialogContentEmpty type={type} />}
     dialogActions={<DialogActionsEmpty onFileUpload={onFileUpload} onUrlUploadClick={onUrlUploadClick} />}
     handleClose={handleClose}
     open={open}

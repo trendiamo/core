@@ -21,8 +21,9 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
 
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
-  const [showingContent, setShowingContent] = useState(false)
   const [isPreviewModalOpened, setIsPreviewModalOpened] = useState(false)
+  const [isUploaderLoading, setIsUploaderLoading] = useState(false)
+  const [showingContent, setShowingContent] = useState(false)
 
   const {
     form,
@@ -122,7 +123,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
           onFormSubmit={newOnFormSubmit}
           onPreviewClick={onPreviewClick}
           previewEnabled={!!form.id}
-          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine}
+          saveDisabled={isFormSubmitting || isFormLoading || isFormPristine || isUploaderLoading}
           tooltipEnabled
           tooltipText="No changes to save"
         />
@@ -130,7 +131,17 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
       backRoute,
       title,
     }),
-    [backRoute, form.id, isFormLoading, isFormPristine, isFormSubmitting, newOnFormSubmit, onPreviewClick, title]
+    [
+      backRoute,
+      form.id,
+      isFormLoading,
+      isFormPristine,
+      isFormSubmitting,
+      isUploaderLoading,
+      newOnFormSubmit,
+      onPreviewClick,
+      title,
+    ]
   )
   useAppBarContent(appBarContent)
 
@@ -152,12 +163,14 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
             isFormLoading={isFormLoading}
             isFormPristine={isFormPristine}
             isFormSubmitting={isFormSubmitting}
+            isUploaderLoading={isUploaderLoading}
             onFormSubmit={newOnFormSubmit}
             onSortEnd={onSortEnd}
             onToggleContent={onToggleContent}
             selectPersona={selectPersona}
             setFieldValue={setFieldValue}
             setIsCropping={setIsCropping}
+            setIsUploaderLoading={setIsUploaderLoading}
             setSimpleChatStepsForm={setSimpleChatStepsForm}
             title={title}
           />
