@@ -7,6 +7,7 @@ import { IconButton, InputLabel, TextField, Typography } from '@material-ui/core
 
 const LabelContainer = styled.div`
   margin-top: 1rem;
+  margin-bottom: -10px;
 `
 
 const StyledAddCircleOutline = styled(AddCircleOutline)`
@@ -40,38 +41,54 @@ const StyledHostnameTextField = styled(HostnameTextField)`
   margin: 8px 0;
 `
 
-const Cancel = ({ index, onClick, disabled, ...props }) => {
-  const deleteHostname = useCallback(() => !disabled && onClick(index), [disabled, index, onClick])
-
-  return <MuiCancel {...props} disabled={disabled} onClick={deleteHostname} />
-}
-
 const hostnamePattern =
   '((([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z]|[A-Za-z][A-Za-z0-9-]*[A-Za-z0-9])|(([0-9]{1,3}.){3}[0-9]{1,3}))(:[0-9]{4})?$'
 const inputProps = { pattern: hostnamePattern }
 
+const HostnameField = ({ allowDelete, editHostnameValue, index, isFormLoading, hostname, deleteHostname }) => {
+  const newDeleteHostname = useCallback(() => !isFormLoading && deleteHostname(index), [
+    isFormLoading,
+    index,
+    deleteHostname,
+  ])
+
+  return (
+    <FlexDiv>
+      <StyledHostnameTextField
+        disabled={isFormLoading}
+        index={index}
+        inputProps={inputProps}
+        onChange={editHostnameValue}
+        required
+        value={hostname}
+      />
+      {allowDelete && (
+        <IconButton onClick={newDeleteHostname}>
+          <MuiCancel disabled={isFormLoading} />
+        </IconButton>
+      )}
+    </FlexDiv>
+  )
+}
+
 const HostnamesForm = ({ form, addHostnameSelect, editHostnameValue, deleteHostname, isFormLoading }) => (
   <>
     <LabelContainer>
-      <InputLabel required>{'Hostnames'}</InputLabel>
+      <InputLabel required style={{ transform: 'scale(0.75)', display: 'inline-block' }}>
+        {'Hostnames'}
+      </InputLabel>
     </LabelContainer>
     {form.hostnames.map((hostname, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <FlexDiv key={index}>
-        <StyledHostnameTextField
-          disabled={isFormLoading}
-          index={index}
-          inputProps={inputProps}
-          onChange={editHostnameValue}
-          required
-          value={hostname}
-        />
-        {form.hostnames.length > 1 && (
-          <IconButton>
-            <Cancel disabled={isFormLoading} index={index} onClick={deleteHostname} />
-          </IconButton>
-        )}
-      </FlexDiv>
+      <HostnameField
+        allowDelete={form.hostnames.length > 1}
+        deleteHostname={deleteHostname}
+        editHostnameValue={editHostnameValue}
+        hostname={hostname}
+        index={index}
+        isFormLoading={isFormLoading}
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+      />
     ))}
     <AddHostnameButton addHostnameSelect={addHostnameSelect} disabled={isFormLoading} />
   </>

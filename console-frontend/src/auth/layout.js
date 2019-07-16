@@ -7,7 +7,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 const AuthMain = styled.main`
   display: block;
   padding: 0 20px;
-  margin: 20px auto 120px;
+  margin: 0 auto 120px;
   width: 100%;
 
   @media (min-width: 900px) {
@@ -36,7 +36,7 @@ const AuthStyledDiv = styled.div`
   flex-shrink: 0;
 
   @media (min-width: 900px) {
-    padding: 48px 24px 32px 0px;
+    padding: 0 24px 32px 0px;
     text-align: left;
     display: block;
     width: 380px;

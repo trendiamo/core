@@ -56,10 +56,10 @@ import {
   apiWebsiteShow,
   apiWebsiteUpdate,
 } from './auth-requests'
-import { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn } from './requests'
+import { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn, apiSignUp } from './requests'
 import { extractErrors } from 'utils/shared'
 
-export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn }
+export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn, apiSignUp }
 export {
   apiAccountList,
   apiAccountCreate,

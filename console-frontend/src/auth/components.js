@@ -52,4 +52,13 @@ const AuthMessage = styled.div`
   }
 `
 
-export { AuthButton, AuthLink, AuthTitle, AuthText, AuthMessage }
+const AuthStyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: 900px) {
+    display: block;
+  }
+`
+
+export { AuthButton, AuthLink, AuthStyledForm, AuthTitle, AuthText, AuthMessage }

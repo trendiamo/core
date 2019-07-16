@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :accounts, through: :memberships
 
+  accepts_nested_attributes_for :memberships
+
   validate :memberships_empty_when_admin
 
   def as_json(_options = {})
