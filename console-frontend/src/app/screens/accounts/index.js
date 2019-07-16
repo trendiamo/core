@@ -88,7 +88,7 @@ const Accounts = () => {
 
   const deleteHostname = useCallback(
     index => {
-      let newHostnames = [...accountForm.websitesAttributes[0].hostnames]
+      const newHostnames = [...accountForm.websitesAttributes[0].hostnames]
       newHostnames.splice(index, 1)
       setAccountForm({ ...accountForm, websitesAttributes: [{ hostnames: newHostnames }] })
     },

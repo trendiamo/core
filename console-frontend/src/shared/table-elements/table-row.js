@@ -29,7 +29,7 @@ const TableRow = ({
       if (event.target.checked) {
         setSelectedIds([...selectedIds, resource.id])
       } else {
-        let newSelectedIds = [...selectedIds]
+        const newSelectedIds = [...selectedIds]
         newSelectedIds.splice(selectedIds.indexOf(resource.id), 1)
         setSelectedIds(newSelectedIds)
       }

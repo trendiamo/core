@@ -67,7 +67,7 @@ const Spotlight = ({
   const setProductPickForm = useCallback(
     (productPickCb, productPickIndex) => {
       onChange(oldSpotlight => {
-        let newProductPicksAttributes = [...oldSpotlight.productPicksAttributes]
+        const newProductPicksAttributes = [...oldSpotlight.productPicksAttributes]
         newProductPicksAttributes[productPickIndex] = productPickCb(newProductPicksAttributes[productPickIndex])
         return { productPicksAttributes: newProductPicksAttributes }
       })

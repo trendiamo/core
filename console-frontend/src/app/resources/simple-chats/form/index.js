@@ -77,7 +77,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
   const setSimpleChatStepsForm = useCallback(
     (simpleChatStep, simpleChatStepIndex) => {
       mergeFormCallback(form => {
-        let newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
+        const newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
         newsimpleChatStepsAttributes[simpleChatStepIndex] = simpleChatStep
         return { ...form, simpleChatStepsAttributes: newsimpleChatStepsAttributes }
       })

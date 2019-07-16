@@ -65,7 +65,7 @@ const EditWebsite = () => {
   const deleteHostname = useCallback(
     index => {
       mergeFormCallback(form => {
-        let newHostnames = [...form.hostnames]
+        const newHostnames = [...form.hostnames]
         newHostnames.splice(index, 1)
         return { hostnames: newHostnames }
       })
