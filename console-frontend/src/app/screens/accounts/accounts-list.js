@@ -54,7 +54,7 @@ const ListItem = ({ enterAccount, account, hostnames }) => {
   return (
     <ListItemContainer>
       <Tooltip placement="top" title="enter account">
-        <Link to={routes.root(account.slug)}>
+        <Link to={auth.isRole('editor') ? routes.simpleChatsList(account.slug) : routes.triggersList(account.slug)}>
           <StyledListItem button onClick={enterAccount}>
             <ListItemText
               primary={account.name}

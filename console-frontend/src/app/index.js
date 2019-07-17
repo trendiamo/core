@@ -76,9 +76,11 @@ const RedirectRoot = () => (
       <Redirect
         to={
           auth.isLoggedIn()
-            ? auth.isRole('editor')
-              ? routes.simpleChatsList()
-              : routes.triggersList()
+            ? auth.isSingleAccount()
+              ? auth.isRole('editor')
+                ? routes.simpleChatsList(Object.keys(auth.getUser().roles)[0])
+                : routes.triggersList(Object.keys(auth.getUser().roles)[0])
+              : routes.accounts()
             : routes.login()
         }
       />
@@ -88,7 +90,8 @@ const RedirectRoot = () => (
 
 const Routes = ({ setIsNotFoundPage }) => {
   const NotFoundPage = useCallback(
-    () => (auth.isLoggedIn() ? <NotFound setIsNotFoundPage={setIsNotFoundPage} /> : <RedirectRoot />),
+    ({ match }) =>
+      auth.isLoggedIn() && !match.path === '/' ? <NotFound setIsNotFoundPage={setIsNotFoundPage} /> : <RedirectRoot />,
     [setIsNotFoundPage]
   )
 
