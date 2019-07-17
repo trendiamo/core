@@ -55,7 +55,8 @@ const validateEmail = email => {
 const stringifyRect = picRect => picRect && `${picRect.x},${picRect.y},${picRect.width},${picRect.height}`
 
 const imgixUrl = (url, imgixParams) => {
-  if (url.lastIndexOf('https://console-assets.ams3.digitaloceanspaces.com', 0) !== 0) return url
+  if (url.lastIndexOf('https://console-assets.ams3.digitaloceanspaces.com', 0) !== 0 || url.match(/.+\.gif$/i))
+    return url
   const urlObj = new URL(url)
   const dpr = window.devicePixelRatio || 1
   const search = { ...parse(urlObj.search.substr(1)), dpr, ...imgixParams }
