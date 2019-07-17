@@ -27,49 +27,49 @@ const resources = {
     icon: BarChart,
     label: 'Data Dashboard',
     class: 'dataDashboard',
-    route: routes.dataDashboard(),
+    route: () => routes.dataDashboard(),
   },
   triggers: {
     icon: TuneOutlined,
     label: 'Triggers',
     class: 'triggers',
-    route: routes.triggersList(),
+    route: () => routes.triggersList(),
   },
   showcases: {
     icon: PersonPinOutlined,
     label: 'Showcases',
     class: 'showcases',
-    route: routes.showcasesList(),
+    route: () => routes.showcasesList(),
   },
   simpleChats: {
     icon: SmsOutlined,
     label: 'Simple Chats',
     class: 'simple-chats',
-    route: routes.simpleChatsList(),
+    route: () => routes.simpleChatsList(),
   },
   outros: {
     icon: AssignmentTurnedInOutlined,
     label: 'Outros',
     class: 'outros',
-    route: routes.outrosList(),
+    route: () => routes.outrosList(),
   },
   personas: {
     icon: AccountCircleOutlined,
     label: 'Personas',
     class: 'personas',
-    route: routes.personasList(),
+    route: () => routes.personasList(),
   },
   pictures: {
     icon: PhotoLibrary,
     label: 'Pictures',
     class: 'pictures',
-    route: routes.picturesList(),
+    route: () => routes.picturesList(),
   },
   urlGenerator: {
     icon: LinkIcon,
     label: 'Url Generator',
     class: 'urlGenerator',
-    route: routes.urlGenerator(),
+    route: () => routes.urlGenerator(),
   },
 }
 
@@ -195,11 +195,11 @@ const StyledSvgIcon = styled(props => <SvgIcon {...omit(props, ['isActive', 'sid
 `
 
 const Item = withRouter(({ location, resource, sidebarOpen }) => {
-  const isActive = useMemo(() => location.pathname.startsWith(resource.route), [location.pathname, resource.route])
+  const isActive = useMemo(() => location.pathname.startsWith(resource.route()), [location.pathname, resource])
 
   return (
     <div className={`onboard-${resource.class}`}>
-      <Link key={resource.route} to={resource.route}>
+      <Link key={resource.route()} to={resource.route()}>
         <StyledMenuItem isActive={isActive} sidebarOpen={sidebarOpen}>
           <StyledSvgIcon isActive={isActive} sidebarOpen={sidebarOpen}>
             {resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}
@@ -269,7 +269,7 @@ const BaseMenu = withRouter(
                 </GroupText>
               </MenuItemGroup>
               {userRoleResourceGroups[groupName].resources.map(resource => (
-                <Item key={resource.route} resource={resource} sidebarOpen={sidebarOpen} />
+                <Item key={resource.route()} resource={resource} sidebarOpen={sidebarOpen} />
               ))}
             </div>
           ))}

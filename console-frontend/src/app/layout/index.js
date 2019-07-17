@@ -90,11 +90,11 @@ const FilledLayout = ({ children, location, isAccountsPage }) => {
   )
 }
 
-const Layout = ({ children, location }) => {
+const Layout = ({ children, location, isNotFoundPage }) => {
   const isLoggedIn = auth.isLoggedIn()
   const isAccountsPage = useMemo(() => location.pathname === routes.accounts(), [location.pathname])
 
-  if (!isLoggedIn || isAccountsPage) return <EmptyLayout>{children}</EmptyLayout>
+  if (!isLoggedIn || isAccountsPage || isNotFoundPage) return <EmptyLayout>{children}</EmptyLayout>
 
   return (
     <FilledLayout isAccountsPage={isAccountsPage} location={location}>

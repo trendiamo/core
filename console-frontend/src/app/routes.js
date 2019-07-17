@@ -1,6 +1,8 @@
+import { getSlug } from 'utils/shared'
+
 const routes = {
-  account() {
-    return '/account'
+  account(accountSlug = getSlug()) {
+    return `/${accountSlug}/account`
   },
   isPasswordReset() {
     return window.location.pathname.includes('/password-reset')
@@ -12,7 +14,7 @@ const routes = {
     return '/signup'
   },
   passwordChange() {
-    return '/account/change-password'
+    return '/change-password'
   },
   passwordReset() {
     return '/password-reset'
@@ -20,71 +22,71 @@ const routes = {
   requestPasswordReset() {
     return '/request-password-reset'
   },
-  root() {
-    return '/'
+  root(accountSlug = getSlug()) {
+    return accountSlug ? `/${accountSlug}/` : '/'
   },
-  personasList() {
-    return '/personas'
+  personasList(accountSlug = getSlug()) {
+    return `/${accountSlug}/personas`
   },
-  personaCreate() {
-    return '/personas/create'
+  personaCreate(accountSlug = getSlug()) {
+    return `/${accountSlug}/personas/create`
   },
-  personaEdit(id) {
-    return `/personas/${id}/edit`
+  personaEdit(id, accountSlug = getSlug()) {
+    return `/${accountSlug}/personas/${id}/edit`
   },
-  picturesList() {
-    return '/pictures'
+  picturesList(accountSlug = getSlug()) {
+    return `/${accountSlug}/pictures`
   },
-  outrosList() {
-    return '/outros'
+  outrosList(accountSlug = getSlug()) {
+    return `/${accountSlug}/outros`
   },
-  outroCreate() {
-    return '/outros/create'
+  outroCreate(accountSlug = getSlug()) {
+    return `/${accountSlug}/outros/create`
   },
-  outroEdit(id) {
-    return `/outros/${id}/edit`
+  outroEdit(id, accountSlug = getSlug()) {
+    return `/${accountSlug}/outros/${id}/edit`
   },
-  showcasesList() {
-    return '/showcases'
+  showcasesList(accountSlug = getSlug()) {
+    return `/${accountSlug}/showcases`
   },
-  showcaseCreate() {
-    return '/showcases/create'
+  showcaseCreate(accountSlug = getSlug()) {
+    return `/${accountSlug}/showcases/create`
   },
-  showcaseEdit(id) {
-    return `/showcases/${id}/edit`
+  showcaseEdit(id, accountSlug = getSlug()) {
+    return `/${accountSlug}/showcases/${id}/edit`
   },
-  simpleChatsList() {
-    return '/simple-chats'
+  simpleChatsList(accountSlug = getSlug()) {
+    return `/${accountSlug}/simple-chats`
   },
-  simpleChatCreate() {
-    return '/simple-chats/create'
+  simpleChatCreate(accountSlug = getSlug()) {
+    return `/${accountSlug}/simple-chats/create`
   },
-  simpleChatEdit(id) {
-    return `/simple-chats/${id}/edit`
+  simpleChatEdit(id, accountSlug = getSlug()) {
+    return `/${accountSlug}/simple-chats/${id}/edit`
   },
-  triggerCreate() {
-    return '/triggers/create'
+  triggerCreate(accountSlug = getSlug()) {
+    return `/${accountSlug}/triggers/create`
   },
-  triggersList() {
-    return '/triggers'
+  triggersList(accountSlug = getSlug()) {
+    return `/${accountSlug}/triggers`
   },
-  triggerEdit(id) {
-    return `/triggers/${id}/edit`
+  triggerEdit(id, accountSlug = getSlug()) {
+    return `/${accountSlug}/triggers/${id}/edit`
   },
-  urlGenerator() {
-    return '/url-generator'
+  urlGenerator(accountSlug = getSlug()) {
+    return `/${accountSlug}/url-generator`
   },
-  userCreate() {
-    return '/account/users/create'
+  userCreate(accountSlug = getSlug()) {
+    return `/${accountSlug}/account/users/create`
   },
-  userEdit(id) {
-    return `/account/users/${id}/edit`
+  userEdit(id, accountSlug = getSlug()) {
+    return `/${accountSlug}/account/users/${id}/edit`
   },
   accounts() {
     return '/accounts'
   },
-  dataDashboard() {
-    return '/data-dashboard'
+  dataDashboard(accountSlug = getSlug()) {
+    return `/${accountSlug}/data-dashboard`
   },
   nullRoute() {
     return '/empty'

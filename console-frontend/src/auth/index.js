@@ -1,4 +1,5 @@
 import routes from 'app/routes'
+import { getSlug } from 'utils/shared'
 
 const auth = {
   addListener(fn) {
@@ -15,9 +16,7 @@ const auth = {
     const headers = {
       'X-CSRF-TOKEN': localStorage.getItem('CSRF-TOKEN'),
     }
-    return window.location.pathname === routes.accounts()
-      ? headers
-      : { ...headers, 'X-SESSION-ACCOUNT': this.getSessionAccount().id }
+    return window.location.pathname === routes.accounts() ? headers : { ...headers, 'X-SESSION-ACCOUNT': getSlug() }
   },
   setCsrfToken(json) {
     localStorage.setItem('CSRF-TOKEN', json.token)

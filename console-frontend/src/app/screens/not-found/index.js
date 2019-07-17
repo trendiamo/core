@@ -1,5 +1,5 @@
-import Link from 'shared/link'
-import React from 'react'
+import auth from 'auth'
+import React, { useCallback, useEffect } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { Button, Typography } from '@material-ui/core'
@@ -40,25 +40,52 @@ const StyledButton = styled(Button)`
   padding: 12px 80px;
 `
 
-const NotFound = () => (
-  <Fullscreen>
-    <Container>
-      <BackgroundImage src="/img/background/not-found.png" />
-      <Typography gutterBottom variant="h4">
-        {'Oops! This page is not available'}
-      </Typography>
-      <Typography variant="body2">
-        {'Is something wrong? '}
-        <BoldLink href="mailto:support@trendiamo.com">{'Get in touch'}</BoldLink>
-      </Typography>
-      <Typography variant="body2">{'Or come back to home page:'}</Typography>
-      <Link to={routes.root()}>
-        <StyledButton size="large" variant="outlined">
+const NotFound = ({ setIsNotFoundPage }) => {
+  useEffect(
+    () => {
+      setIsNotFoundPage && setIsNotFoundPage(true)
+    },
+    [setIsNotFoundPage]
+  )
+
+  const navigateToRootPage = useCallback(
+    event => {
+      ;(async () => {
+        event.preventDefault()
+        setIsNotFoundPage && setIsNotFoundPage(false)
+        if (auth.isLoggedIn()) {
+          const user = auth.getUser()
+          const accountSlugs = !user.admin && Object.keys(user.roles)
+          if (auth.isSingleAccount()) {
+            return (window.location.href = routes.root(accountSlugs[0]))
+          }
+          window.location.href = routes.accounts()
+        } else {
+          window.location.href = routes.login()
+        }
+      })()
+    },
+    [setIsNotFoundPage]
+  )
+
+  return (
+    <Fullscreen>
+      <Container>
+        <BackgroundImage src="/img/background/not-found.png" />
+        <Typography gutterBottom variant="h4">
+          {'Oops! This page is not available'}
+        </Typography>
+        <Typography variant="body2">
+          {'Is something wrong? '}
+          <BoldLink href="mailto:support@trendiamo.com">{'Get in touch'}</BoldLink>
+        </Typography>
+        <Typography variant="body2">{'Or come back to home page:'}</Typography>
+        <StyledButton onClick={navigateToRootPage} size="large" variant="outlined">
           {'Go Back'}
         </StyledButton>
-      </Link>
-    </Container>
-  </Fullscreen>
-)
+      </Container>
+    </Fullscreen>
+  )
+}
 
 export default NotFound

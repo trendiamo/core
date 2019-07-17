@@ -1,3 +1,4 @@
+import auth from 'auth'
 import Button from 'shared/button'
 import React, { useCallback, useMemo, useState } from 'react'
 import routes from 'app/routes'
@@ -68,7 +69,12 @@ const ChangePassword1 = ({ history, ...props }) => {
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (!requestError && !errors) {
           enqueueSnackbar('Changed Password', { variant: 'Info' })
-          history.push(routes.root())
+          const user = auth.getUser()
+          const accountSlugs = !user.admin && Object.keys(user.roles)
+          if (auth.isSingleAccount()) {
+            return history.push(routes.root(accountSlugs[0]))
+          }
+          history.push(routes.accounts())
         }
       })()
     },
@@ -86,7 +92,14 @@ const ChangePassword1 = ({ history, ...props }) => {
   const appBarContent = useMemo(
     () => ({
       Actions: <Actions onFormSubmit={onFormSubmit} />,
-      backRoute: routes.account(),
+      backRoute: (() => {
+        const user = auth.getUser()
+        const accountSlugs = !user.admin && Object.keys(user.roles)
+        if (auth.isSingleAccount()) {
+          return routes.root(accountSlugs[0])
+        }
+        return routes.accounts()
+      })(),
       title: 'Change Password',
     }),
     [onFormSubmit]

@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20190717110752) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "slug", default: "", null: false
+    t.index ["slug"], name: "index_accounts_on_slug", unique: true
   end
 
   create_table "generated_urls", force: :cascade do |t|

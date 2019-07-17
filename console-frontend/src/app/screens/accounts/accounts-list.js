@@ -54,11 +54,11 @@ const ListItem = ({ enterAccount, account, hostnames }) => {
   return (
     <ListItemContainer>
       <Tooltip placement="top" title="enter account">
-        <Link to={routes.root()}>
+        <Link to={routes.root(account.slug)}>
           <StyledListItem button onClick={enterAccount}>
             <ListItemText
               primary={account.name}
-              secondary={auth.isAdmin() ? hostnames : auth.getUser().roles[account.id]}
+              secondary={auth.isAdmin() ? hostnames : auth.getUser().roles[account.slug]}
             />
           </StyledListItem>
         </Link>
@@ -73,7 +73,7 @@ const Account = ({ account, fetchAccounts }) => {
   const enterAccount = useCallback(
     () => {
       auth.setSessionAccount(account)
-      auth.setSessionRole(auth.getUser().roles ? auth.getUser().roles[account.id] : '')
+      auth.setSessionRole(auth.getUser().roles ? auth.getUser().roles[account.slug] : '')
     },
     [account]
   )
@@ -90,14 +90,14 @@ const Account = ({ account, fetchAccounts }) => {
     () => {
       ;(async () => {
         setDialogOpen(false)
-        const { errors, requestError, json } = await apiRequest(apiAccountDestroy, [account.id])
+        const { errors, requestError, json } = await apiRequest(apiAccountDestroy, [account.slug])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (json) enqueueSnackbar(json.message, { variant: 'success' })
         fetchAccounts()
       })()
     },
-    [account.id, enqueueSnackbar, fetchAccounts]
+    [account.slug, enqueueSnackbar, fetchAccounts]
   )
 
   const handleDialogButtonClose = useCallback(() => {
@@ -132,7 +132,7 @@ const AccountsList = ({ page, setPage, totalAccountsCount, fetchAccounts, accoun
   return (
     <>
       {accounts &&
-        accounts.map(account => <Account account={account} fetchAccounts={fetchAccounts} key={account.id} />)}
+        accounts.map(account => <Account account={account} fetchAccounts={fetchAccounts} key={account.slug} />)}
       <Pagination page={page} setPage={setPage} totalRecordsCount={totalAccountsCount} />
     </>
   )

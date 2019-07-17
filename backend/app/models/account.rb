@@ -17,7 +17,7 @@ class Account < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
 
   def as_json(_options = {})
-    attributes.slice("id", "name", "slug", "last_name", "created_at", "updated_at")
+    attributes.slice("name", "slug", "last_name", "created_at", "updated_at")
               .merge(websites_attributes: websites)
   end
 
