@@ -17,3 +17,5 @@ export const extractErrors = json => {
   const message = errorMessages(json)
   return { message, status: 'error' }
 }
+
+export const getSlug = () => window.location.pathname.split('/')[1]

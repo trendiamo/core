@@ -26,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def mapped_roles
-    Hash[memberships.pluck(:account_id, :role)]
+    Hash[memberships.map { |membership| [membership.account.slug, membership.role] }]
   end
 
   def active_membership

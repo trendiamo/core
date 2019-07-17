@@ -72,8 +72,8 @@ const Login1 = () => {
 
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
 
-  const requestSessionAccount = useCallback(async accountId => {
-    const { json } = await apiRequest(apiAccountsShow, [accountId])
+  const requestSessionAccount = useCallback(async accountSlug => {
+    const { json } = await apiRequest(apiAccountsShow, [accountSlug])
     return json
   }, [])
 
@@ -89,13 +89,13 @@ const Login1 = () => {
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (!requestError && !errors) auth.setUser(json.user)
-        const accountIds = json.user && !json.user.admin && Object.keys(json.user.roles)
+        const accountSlugs = json.user && !json.user.admin && Object.keys(json.user.roles)
         if (auth.isLoggedIn()) {
           if (auth.isSingleAccount()) {
-            const account = await requestSessionAccount(accountIds[0])
+            const account = await requestSessionAccount(accountSlugs[0])
             auth.setSessionAccount(account)
-            auth.setSessionRole(json.user.roles[accountIds[0]])
-            return (window.location.href = routes.root())
+            auth.setSessionRole(json.user.roles[accountSlugs[0]])
+            return (window.location.href = routes.root(account.slug))
           }
           window.location.href = routes.accounts()
         }

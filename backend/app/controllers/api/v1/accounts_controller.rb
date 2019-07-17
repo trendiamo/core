@@ -19,13 +19,13 @@ module Api
       end
 
       def show
-        @account = policy_scope(Account).find(params[:id])
+        @account = find_account(request.headers["X-Session-Account"])
         authorize @account
         render json: @account
       end
 
       def destroy
-        @account = policy_scope(Account).find(params[:id])
+        @account = @account = find_account(request.headers["X-Session-Account"])
         authorize @account
         if @account.destroy
           render json: { message: "Successfully removed account" }
@@ -35,6 +35,18 @@ module Api
       end
 
       private
+
+      def integer?(header)
+        !header.to_i.zero?
+      end
+
+      def find_account(header)
+        if integer?(header)
+          policy_scope(Account).find_by(id: params[:id])
+        else
+          policy_scope(Account).find_by(slug: params[:slug])
+        end
+      end
 
       def account_params
         params.require(:account).permit(:name, websites_attributes: [:name, hostnames: []])

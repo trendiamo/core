@@ -163,8 +163,8 @@ export const apiPathAutocomplete = query => apiGetRequest(`${PATH_URL}/autocompl
 
 export const apiAccountList = query => apiGetRequest(`${ACCOUNTS_URL}/?${stringify(query)}`)
 export const apiAccountCreate = body => apiCreateRequest(ACCOUNTS_URL, body)
-export const apiAccountsShow = id => apiGetRequest(`${ACCOUNTS_URL}/${id}`)
-export const apiAccountDestroy = id => apiDestroyRequest(`${ACCOUNTS_URL}/${id}`)
+export const apiAccountsShow = slug => apiGetRequest(`${ACCOUNTS_URL}/${slug}`)
+export const apiAccountDestroy = slug => apiDestroyRequest(`${ACCOUNTS_URL}/${slug}`)
 
 export const apiUserList = query => apiListRequest(`${USERS_URL}/?${stringify(query)}`)
 export const apiUserCreate = body => apiCreateRequest(USERS_URL, body)

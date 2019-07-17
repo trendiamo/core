@@ -86,42 +86,64 @@ const RedirectRoot = () => (
   </>
 )
 
-const Routes = () => (
-  <Switch>
-    <PrivateRoute component={PersonasList} exact isOwnerScoped path={routes.personasList()} />
-    <PrivateRoute component={PersonaCreate} exact isOwnerScoped path={routes.personaCreate()} />
-    <PrivateRoute component={PersonaEdit} exact isOwnerScoped path={routes.personaEdit(':personaId')} />
-    <PrivateRoute component={PicturesList} exact path={routes.picturesList()} />
-    <PrivateRoute component={ShowcasesList} exact isOwnerScoped path={routes.showcasesList()} />
-    <PrivateRoute component={ShowcaseCreate} exact isOwnerScoped path={routes.showcaseCreate()} />
-    <PrivateRoute component={ShowcaseEdit} exact isOwnerScoped path={routes.showcaseEdit(':showcaseId')} />
-    <PrivateRoute component={SimpleChatsList} exact path={routes.simpleChatsList()} />
-    <PrivateRoute component={SimpleChatCreate} exact path={routes.simpleChatCreate()} />
-    <PrivateRoute component={SimpleChatEdit} exact path={routes.simpleChatEdit(':simpleChatId')} />
-    <PrivateRoute component={OutrosList} exact isOwnerScoped path={routes.outrosList()} />
-    <PrivateRoute component={OutroCreate} exact isOwnerScoped path={routes.outroCreate()} />
-    <PrivateRoute component={OutroEdit} exact isOwnerScoped path={routes.outroEdit(':outroId')} />
-    <PrivateRoute component={TriggersList} exact isOwnerScoped path={routes.triggersList()} />
-    <PrivateRoute component={TriggerCreate} exact isOwnerScoped path={routes.triggerCreate()} />
-    <PrivateRoute component={TriggerEdit} exact isOwnerScoped path={routes.triggerEdit(':triggerId')} />
-    <PrivateRoute component={Account} exact path={routes.account()} />
-    <PrivateRoute component={UserCreate} exact isAdminScoped isOwnerScoped path={routes.userCreate()} />
-    <PrivateRoute component={ChangePassword} exact isOwnerScoped path={routes.passwordChange()} />
-    <PrivateRoute component={UrlGenerator} exact isOwnerScoped path={routes.urlGenerator()} />
-    <PrivateRoute component={Accounts} exact isOwnerScoped path={routes.accounts()} />
-    <PrivateRoute component={DataDashboard} exact isAdminScoped path={routes.dataDashboard()} />
-    <ExternalRoute component={LoginPage} path={routes.login()} />
-    <ExternalRoute component={SignupPage} path={routes.signup()} />
-    <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
-    <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
-    <Route
-      component={auth.isLoggedIn() && auth.getUser().onboardingStage === 0 ? WelcomePage : RedirectRoot}
-      exact
-      path={routes.root()}
-    />
-    <Route component={NotFound} />
-  </Switch>
-)
+const Routes = ({ setIsNotFoundPage }) => {
+  const NotFoundPage = useCallback(
+    () => (auth.isLoggedIn() ? <NotFound setIsNotFoundPage={setIsNotFoundPage} /> : <RedirectRoot />),
+    [setIsNotFoundPage]
+  )
+
+  return (
+    <Switch>
+      <PrivateRoute component={PersonasList} exact isOwnerScoped path={routes.personasList(':accountSlug')} />
+      <PrivateRoute component={PersonaCreate} exact isOwnerScoped path={routes.personaCreate(':accountSlug')} />
+      <PrivateRoute
+        component={PersonaEdit}
+        exact
+        isOwnerScoped
+        path={routes.personaEdit(':personaId', ':accountSlug')}
+      />
+      <PrivateRoute component={PicturesList} exact path={routes.picturesList(':accountSlug')} />
+      <PrivateRoute component={ShowcasesList} exact isOwnerScoped path={routes.showcasesList(':accountSlug')} />
+      <PrivateRoute component={ShowcaseCreate} exact isOwnerScoped path={routes.showcaseCreate(':accountSlug')} />
+      <PrivateRoute
+        component={ShowcaseEdit}
+        exact
+        isOwnerScoped
+        path={routes.showcaseEdit(':showcaseId', ':accountSlug')}
+      />
+      <PrivateRoute component={SimpleChatsList} exact path={routes.simpleChatsList(':accountSlug')} />
+      <PrivateRoute component={SimpleChatCreate} exact path={routes.simpleChatCreate(':accountSlug')} />
+      <PrivateRoute component={SimpleChatEdit} exact path={routes.simpleChatEdit(':simpleChatId', ':accountSlug')} />
+      <PrivateRoute component={OutrosList} exact isOwnerScoped path={routes.outrosList(':accountSlug')} />
+      <PrivateRoute component={OutroCreate} exact isOwnerScoped path={routes.outroCreate(':accountSlug')} />
+      <PrivateRoute component={OutroEdit} exact isOwnerScoped path={routes.outroEdit(':outroId', ':accountSlug')} />
+      <PrivateRoute component={TriggersList} exact isOwnerScoped path={routes.triggersList(':accountSlug')} />
+      <PrivateRoute component={TriggerCreate} exact isOwnerScoped path={routes.triggerCreate(':accountSlug')} />
+      <PrivateRoute
+        component={TriggerEdit}
+        exact
+        isOwnerScoped
+        path={routes.triggerEdit(':triggerId', ':accountSlug')}
+      />
+      <PrivateRoute component={Account} exact path={routes.account(':accountSlug')} />
+      <PrivateRoute component={UserCreate} exact isAdminScoped isOwnerScoped path={routes.userCreate(':accountSlug')} />
+      <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
+      <PrivateRoute component={UrlGenerator} exact isOwnerScoped path={routes.urlGenerator(':accountSlug')} />
+      <PrivateRoute component={Accounts} exact path={routes.accounts()} />
+      <PrivateRoute component={DataDashboard} exact isAdminScoped path={routes.dataDashboard(':accountSlug')} />
+      <ExternalRoute component={LoginPage} path={routes.login()} />
+      <ExternalRoute component={SignupPage} path={routes.signup()} />
+      <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
+      <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
+      <Route
+        component={auth.isLoggedIn() && auth.getUser().onboardingStage === 0 ? WelcomePage : RedirectRoot}
+        exact
+        path={routes.root(':accountSlug')}
+      />
+      <Route render={NotFoundPage} />
+    </Switch>
+  )
+}
 
 const SortableStyle = createGlobalStyle`
   .sortable-element {
@@ -132,6 +154,8 @@ const SortableStyle = createGlobalStyle`
 const AppBase = () => {
   const { enqueueSnackbar } = useSnackbar()
   const [loading, setLoading] = useState(true)
+  const [isNotFoundPage, setIsNotFoundPage] = useState(false)
+
   useEffect(
     () => {
       apiRequest(apiGetCsrfToken, []).then(({ json, errors, requestError }) => {
@@ -148,8 +172,8 @@ const AppBase = () => {
     <>
       <CssBaseline />
       <SortableStyle />
-      <Layout>
-        <Routes />
+      <Layout isNotFoundPage={isNotFoundPage}>
+        <Routes setIsNotFoundPage={setIsNotFoundPage} />
       </Layout>
     </>
   )
