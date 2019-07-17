@@ -65,15 +65,15 @@ const What = styled(({ className }) => (
   }
 
   .social-headline {
-    color: #56aceb;
+    color: black;
   }
 
   .tool-headline {
-    color: #f7603d;
+    color: black;
   }
 
   .what-text {
-    padding: 4vw;
+    padding: 40px;
     flex: 1;
   }
 
@@ -132,6 +132,10 @@ const What = styled(({ className }) => (
     .tool-headline {
       font-size: 8vw;
       margin-top: 10px;
+    }
+
+    .what-text {
+      padding: 4vw;
     }
   }
 `

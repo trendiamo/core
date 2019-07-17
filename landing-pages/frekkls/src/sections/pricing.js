@@ -137,6 +137,7 @@ const Pricing = styled(({ className }) => (
     flex-direction: column;
     align-items: center;
     flex: 1;
+    max-height: 500px;
   }
   @media (min-width: 900px) {
     .pricing {
@@ -208,7 +209,6 @@ const Pricing = styled(({ className }) => (
 
     p {
       margin: 0;
-      font-size: 1.25vw;
       line-height: 1.3;
     }
 
@@ -224,7 +224,7 @@ const Pricing = styled(({ className }) => (
   }
   @media (min-width: 900px) {
     h3 {
-      font-size: 4vw;
+      font-size: 2vw;
       margin-top: 2vw;
       margin-bottom: 2vw;
     }
@@ -253,7 +253,7 @@ const Pricing = styled(({ className }) => (
     }
 
     .pricing-item-container p {
-      font-size: 4vw;
+      font-size: 5vw;
     }
 
     .details-container {
