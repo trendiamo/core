@@ -7,11 +7,7 @@ module Api
       private
 
       def current_tenant
-        session_account = if request.headers["X-Session-Account"].to_i.zero?
-                            Account.find_by(slug: request.headers["X-Session-Account"])
-                          else
-                            Account.find_by(id: request.headers["X-Session-Account"])
-                          end
+        session_account = Account.find_by(slug: request.headers["X-Session-Account"])
         set_current_tenant(session_account)
       end
 
