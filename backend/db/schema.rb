@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190712135753) do
+ActiveRecord::Schema.define(version: 20190717110752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(version: 20190712135753) do
     t.bigint "account_id", null: false
     t.string "graphcms_ref"
     t.string "instagram_url"
-    t.string "profile_pic_animation_url"
     t.bigint "profile_pic_id"
     t.integer "lock_version", default: 1
     t.json "pic_rect", default: {}
