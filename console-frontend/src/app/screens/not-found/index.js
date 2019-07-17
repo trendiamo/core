@@ -9,7 +9,7 @@ const Fullscreen = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  flex-grow: 1;
 `
 
 const Container = styled.div`
@@ -18,6 +18,7 @@ const Container = styled.div`
   max-width: 60%;
   flex: none;
   margin: auto;
+  padding: 50px 0;
 `
 
 const BackgroundImage = styled.img`
