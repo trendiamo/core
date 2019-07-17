@@ -84,9 +84,16 @@ const EditWebsite = () => {
     [mergeFormCallback]
   )
 
-  const toggleCheckbox = useCallback(
-    formFieldName => event => {
-      mergeForm({ [formFieldName]: event.target.checked })
+  const toggleECommerce = useCallback(
+    event => {
+      mergeForm({ isECommerce: event.target.checked })
+    },
+    [mergeForm]
+  )
+
+  const toggleLiveMode = useCallback(
+    event => {
+      mergeForm({ previewMode: !event.target.checked })
     },
     [mergeForm]
   )
@@ -108,13 +115,13 @@ const EditWebsite = () => {
           value={form.name}
         />
         <FormControlLabel
-          control={<Checkbox checked={form.previewMode} color="primary" onChange={toggleCheckbox('previewMode')} />}
+          control={<Checkbox checked={!form.previewMode} color="primary" onChange={toggleLiveMode} />}
           disabled={isFormLoading}
           label="Live"
         />
         <FormHelperText>{'Dangerous: this controls whether or not the plugin appears on your website.'}</FormHelperText>
         <FormControlLabel
-          control={<Checkbox checked={form.isECommerce} color="primary" onChange={toggleCheckbox('isECommerce')} />}
+          control={<Checkbox checked={form.isECommerce} color="primary" onChange={toggleECommerce} />}
           disabled={isFormLoading}
           label="E-Commerce"
         />
