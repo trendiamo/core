@@ -59,7 +59,7 @@ module Api
         %i[profile_pic profile_pic_animation].each do |pic|
           pic_url = params[:persona][pic][:url]
           params[:persona]["#{pic}_id"] = pic_url.present? ? Picture.find_or_create_by!(url: pic_url).id : nil
-          params[:persona].delete("#{pic}_url")
+          params[:persona].delete(pic)
         end
       end
 
