@@ -1,37 +1,19 @@
-import Account from 'app/screens/account'
-import Accounts from 'app/screens/accounts'
+import AppRouter from './app-router'
 import auth from 'auth'
-import ChangePassword from 'app/screens/change-password'
-import DataDashboard from 'app/screens/data-dashboard'
 import DateFnsUtils from '@date-io/date-fns'
-import ForgotPassword from 'auth/forgot-password'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
-import LoginPage from 'auth/login'
-import NotFound from 'app/screens/not-found'
-import React, { useCallback, useEffect, useState } from 'react'
-import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
-import routes from './routes'
-import SignupPage from 'auth/signup'
+import React, { useEffect, useState } from 'react'
 import theme from 'app/theme'
-import UrlGenerator from 'app/screens/url-generator'
-import WelcomePage from 'app/screens/welcome'
 import { apiGetCsrfToken, apiRequest } from 'utils'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset, MuiThemeProvider } from '@material-ui/core/styles'
 import { createGlobalStyle } from 'styled-components'
 import { CssBaseline } from '@material-ui/core'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers'
-import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
-import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
-import { PicturesList } from './resources/pictures'
-import { Redirect, Route, Router, Switch } from 'react-router-dom'
-import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from './resources/showcases'
-import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from './resources/simple-chats'
+import { Router } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
 import { StoreProvider } from 'ext/hooks/store'
-import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
-import { UserCreate } from 'app/screens/account/users'
 import { useSnackbar } from 'notistack'
 import 'assets/css/fonts.css'
 
@@ -40,113 +22,6 @@ const jss = create({
   ...jssPreset(),
   insertionPoint: document.getElementById('jss-insertion-point'),
 })
-
-// Auth protected route.
-const PrivateRoute = ({ component, isAdminScoped, isOwnerScoped, path, ...props }) => {
-  const render = useCallback(
-    ({ match }) =>
-      auth.isLoggedIn() ? (
-        (isOwnerScoped && auth.isRole('editor')) ||
-        (isAdminScoped && !auth.isAdmin()) ||
-        (path === routes.dataDashboard() && !auth.getSessionAccount().websitesAttributes[0].isECommerce) ? (
-          React.createElement(NotFound, { match })
-        ) : (
-          React.createElement(component, { match })
-        )
-      ) : (
-        <Redirect to={routes.login()} />
-      ),
-    [component, isAdminScoped, isOwnerScoped, path]
-  )
-
-  return <Route {...props} path={path} render={render} />
-}
-
-const ExternalRoute = ({ component, path, ...props }) => {
-  const render = useCallback(
-    () => (auth.isLoggedIn() ? <Redirect to={routes.root()} /> : React.createElement(component)),
-    [component]
-  )
-  return <Route {...props} path={path} render={render} />
-}
-
-const RedirectRoot = () => (
-  <>
-    {
-      <Redirect
-        to={
-          auth.isLoggedIn()
-            ? auth.isSingleAccount()
-              ? auth.isRole('editor')
-                ? routes.simpleChatsList(Object.keys(auth.getUser().roles)[0])
-                : routes.triggersList(Object.keys(auth.getUser().roles)[0])
-              : routes.accounts()
-            : routes.login()
-        }
-      />
-    }
-  </>
-)
-
-const Routes = ({ setIsNotFoundPage }) => {
-  const NotFoundPage = useCallback(
-    ({ match }) =>
-      auth.isLoggedIn() && !match.path === '/' ? <NotFound setIsNotFoundPage={setIsNotFoundPage} /> : <RedirectRoot />,
-    [setIsNotFoundPage]
-  )
-
-  return (
-    <Switch>
-      <PrivateRoute component={PersonasList} exact isOwnerScoped path={routes.personasList(':accountSlug')} />
-      <PrivateRoute component={PersonaCreate} exact isOwnerScoped path={routes.personaCreate(':accountSlug')} />
-      <PrivateRoute
-        component={PersonaEdit}
-        exact
-        isOwnerScoped
-        path={routes.personaEdit(':personaId', ':accountSlug')}
-      />
-      <PrivateRoute component={PicturesList} exact path={routes.picturesList(':accountSlug')} />
-      <PrivateRoute component={ShowcasesList} exact isOwnerScoped path={routes.showcasesList(':accountSlug')} />
-      <PrivateRoute component={ShowcaseCreate} exact isOwnerScoped path={routes.showcaseCreate(':accountSlug')} />
-      <PrivateRoute
-        component={ShowcaseEdit}
-        exact
-        isOwnerScoped
-        path={routes.showcaseEdit(':showcaseId', ':accountSlug')}
-      />
-      <PrivateRoute component={SimpleChatsList} exact path={routes.simpleChatsList(':accountSlug')} />
-      <PrivateRoute component={SimpleChatCreate} exact path={routes.simpleChatCreate(':accountSlug')} />
-      <PrivateRoute component={SimpleChatEdit} exact path={routes.simpleChatEdit(':simpleChatId', ':accountSlug')} />
-      <PrivateRoute component={OutrosList} exact isOwnerScoped path={routes.outrosList(':accountSlug')} />
-      <PrivateRoute component={OutroCreate} exact isOwnerScoped path={routes.outroCreate(':accountSlug')} />
-      <PrivateRoute component={OutroEdit} exact isOwnerScoped path={routes.outroEdit(':outroId', ':accountSlug')} />
-      <PrivateRoute component={TriggersList} exact isOwnerScoped path={routes.triggersList(':accountSlug')} />
-      <PrivateRoute component={TriggerCreate} exact isOwnerScoped path={routes.triggerCreate(':accountSlug')} />
-      <PrivateRoute
-        component={TriggerEdit}
-        exact
-        isOwnerScoped
-        path={routes.triggerEdit(':triggerId', ':accountSlug')}
-      />
-      <PrivateRoute component={Account} exact path={routes.account(':accountSlug')} />
-      <PrivateRoute component={UserCreate} exact isAdminScoped isOwnerScoped path={routes.userCreate(':accountSlug')} />
-      <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
-      <PrivateRoute component={UrlGenerator} exact isOwnerScoped path={routes.urlGenerator(':accountSlug')} />
-      <PrivateRoute component={Accounts} exact path={routes.accounts()} />
-      <PrivateRoute component={DataDashboard} exact isAdminScoped path={routes.dataDashboard(':accountSlug')} />
-      <ExternalRoute component={LoginPage} path={routes.login()} />
-      <ExternalRoute component={SignupPage} path={routes.signup()} />
-      <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
-      <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
-      <Route
-        component={auth.isLoggedIn() && auth.getUser().onboardingStage === 0 ? WelcomePage : RedirectRoot}
-        exact
-        path={routes.root(':accountSlug')}
-      />
-      <Route render={NotFoundPage} />
-    </Switch>
-  )
-}
 
 const SortableStyle = createGlobalStyle`
   .sortable-element {
@@ -157,7 +32,7 @@ const SortableStyle = createGlobalStyle`
 const AppBase = () => {
   const { enqueueSnackbar } = useSnackbar()
   const [loading, setLoading] = useState(true)
-  const [isNotFoundPage, setIsNotFoundPage] = useState(false)
+  const [fetchedAccount, setFetchedAccount] = useState(false)
 
   useEffect(
     () => {
@@ -169,14 +44,15 @@ const AppBase = () => {
     },
     [enqueueSnackbar, setLoading]
   )
+
   if (loading) return null
 
   return (
     <>
       <CssBaseline />
       <SortableStyle />
-      <Layout isNotFoundPage={isNotFoundPage}>
-        <Routes setIsNotFoundPage={setIsNotFoundPage} />
+      <Layout fetchedAccount={fetchedAccount}>
+        <AppRouter fetchedAccount={fetchedAccount} setFetchedAccount={setFetchedAccount} />
       </Layout>
     </>
   )

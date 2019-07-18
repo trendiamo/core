@@ -19,13 +19,13 @@ module Api
       end
 
       def show
-        @account = policy_scope(Account).find_by(slug: params[:slug])
+        @account = policy_scope(Account).find_by!(slug: params[:slug])
         authorize @account
         render json: @account
       end
 
       def destroy
-        @account = policy_scope(Account).find_by(slug: params[:slug])
+        @account = policy_scope(Account).find_by!(slug: params[:slug])
         authorize @account
         if @account.destroy
           render json: { message: "Successfully removed account" }

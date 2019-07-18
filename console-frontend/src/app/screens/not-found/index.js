@@ -1,5 +1,5 @@
 import auth from 'auth'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { Button, Typography } from '@material-ui/core'
@@ -41,33 +41,20 @@ const StyledButton = styled(Button)`
   padding: 12px 80px;
 `
 
-const NotFound = ({ setIsNotFoundPage }) => {
-  useEffect(
-    () => {
-      setIsNotFoundPage && setIsNotFoundPage(true)
-    },
-    [setIsNotFoundPage]
-  )
-
-  const navigateToRootPage = useCallback(
-    event => {
-      ;(async () => {
-        event.preventDefault()
-        setIsNotFoundPage && setIsNotFoundPage(false)
-        if (auth.isLoggedIn()) {
-          const user = auth.getUser()
-          const accountSlugs = !user.admin && Object.keys(user.roles)
-          if (auth.isSingleAccount()) {
-            return (window.location.href = routes.root(accountSlugs[0]))
-          }
-          window.location.href = routes.accounts()
-        } else {
-          window.location.href = routes.login()
-        }
-      })()
-    },
-    [setIsNotFoundPage]
-  )
+const NotFound = () => {
+  const navigateToRootPage = useCallback(event => {
+    event.preventDefault()
+    if (auth.isLoggedIn()) {
+      const user = auth.getUser()
+      const accountSlugs = !user.admin && Object.keys(user.roles)
+      if (auth.isSingleAccount()) {
+        return (window.location.href = routes.root(accountSlugs[0]))
+      }
+      window.location.href = routes.accounts()
+    } else {
+      window.location.href = routes.login()
+    }
+  }, [])
 
   return (
     <Fullscreen>

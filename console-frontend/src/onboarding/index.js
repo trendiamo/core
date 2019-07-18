@@ -22,18 +22,19 @@ const styles = {
   },
 }
 
-const stepsToArray = stage => stage.order.map(i => stage.steps[i])
+const stepsToArray = stage => stage.order().map(i => stage.steps()[i])
 
 const getOnboardingConfig = onboarding => {
   if (onboarding.help.run && onboarding.help.stageName && onboarding.help.stepName) {
     const stage = stages[onboarding.help.stageName]
+    const stageOrder = stage.order()
     return {
-      stepIndex: stage.order.indexOf(stage.order[stage.order.indexOf(onboarding.help.stepName)]),
+      stepIndex: stageOrder.indexOf(stageOrder[stageOrder.indexOf(onboarding.help.stepName)]),
       steps: stepsToArray(stage),
     }
   }
-  const stage = stagesArray[onboarding.stageIndex]
-  return { stepIndex: onboarding.stepIndex, steps: stepsToArray(stage) }
+  const steps = stepsToArray(stagesArray[onboarding.stageIndex])
+  return { stepIndex: onboarding.stepIndex, steps }
 }
 
 const DummyContainer = ({ content, ...props }) => <div>{content && React.cloneElement(content, props)}</div>

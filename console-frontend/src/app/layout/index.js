@@ -53,13 +53,13 @@ const ContentWithSidebar = styled.main`
   min-height: 100vh;
 `
 
-const FilledLayout = ({ children, location, isAccountsPage }) => {
+const FilledLayout = ({ children, location, showOnboarding }) => {
   const onboardingReady = useOnboarding(location)
 
   const [hasScrolled, setHasScrolled] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
-  const isWelcomePage = useMemo(() => location.pathname === routes.root(), [location.pathname])
+  const isWelcomePage = useMemo(() => location.pathname === routes.welcome(), [location.pathname])
 
   const onWindowScroll = useCallback(() => setHasScrolled(window.scrollY > 2), [setHasScrolled])
   const toggleOpen = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen])
@@ -77,7 +77,7 @@ const FilledLayout = ({ children, location, isAccountsPage }) => {
   return (
     <Root>
       <AppFrame>
-        {!isAccountsPage && <Onboarding />}
+        {showOnboarding && <Onboarding />}
         {!isWelcomePage && <AppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />}
         <ContentWithSidebar>
           <Sidebar sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
@@ -90,14 +90,13 @@ const FilledLayout = ({ children, location, isAccountsPage }) => {
   )
 }
 
-const Layout = ({ children, location, isNotFoundPage }) => {
-  const isLoggedIn = auth.isLoggedIn()
+const Layout = ({ children, location }) => {
   const isAccountsPage = useMemo(() => location.pathname === routes.accounts(), [location.pathname])
 
-  if (!isLoggedIn || isAccountsPage || isNotFoundPage) return <EmptyLayout>{children}</EmptyLayout>
+  if (!auth.getAccount()) return <EmptyLayout>{children}</EmptyLayout>
 
   return (
-    <FilledLayout isAccountsPage={isAccountsPage} location={location}>
+    <FilledLayout location={location} showOnboarding={!isAccountsPage}>
       {children}
     </FilledLayout>
   )

@@ -50,12 +50,12 @@ const StyledTypography = styled(Typography)`
 
 const DeleteConfirmation = () => <StyledTypography>{'Are you sure you want to delete this account?'}</StyledTypography>
 
-const ListItem = ({ enterAccount, account, hostnames }) => {
+const ListItem = ({ account, hostnames }) => {
   return (
     <ListItemContainer>
       <Tooltip placement="top" title="enter account">
-        <Link to={auth.isRole('editor') ? routes.simpleChatsList(account.slug) : routes.triggersList(account.slug)}>
-          <StyledListItem button onClick={enterAccount}>
+        <Link to={routes.accountRoot(account.slug)}>
+          <StyledListItem button>
             <ListItemText
               primary={account.name}
               secondary={auth.isAdmin() ? hostnames : auth.getUser().roles[account.slug]}
@@ -70,13 +70,6 @@ const ListItem = ({ enterAccount, account, hostnames }) => {
 const Account = ({ account, fetchAccounts }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
-  const enterAccount = useCallback(
-    () => {
-      auth.setSessionAccount(account)
-      auth.setSessionRole(auth.getUser().roles ? auth.getUser().roles[account.slug] : '')
-    },
-    [account]
-  )
 
   const hostnames = useMemo(() => account.websitesAttributes && account.websitesAttributes[0].hostnames.join(', '), [
     account,
@@ -107,7 +100,7 @@ const Account = ({ account, fetchAccounts }) => {
   return (
     <AccountContainer>
       <ListItemContainer>
-        <ListItem account={account} enterAccount={enterAccount} hostnames={hostnames} />
+        <ListItem account={account} hostnames={hostnames} />
       </ListItemContainer>
       <DeleteButtonContainer>
         {auth.isAdmin() && (

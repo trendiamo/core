@@ -1,9 +1,9 @@
 import React from 'react'
 import { ModalFirstPersona } from 'onboarding/elements'
 
-const order = ['personaCreated']
+const order = () => ['personaCreated']
 
-const steps = {
+const steps = () => ({
   personaCreated: {
     target: 'body',
     content: <ModalFirstPersona />,
@@ -11,6 +11,6 @@ const steps = {
     disableBeacon: true,
     showSpotlight: false,
   },
-}
+})
 
 export default { steps, order }

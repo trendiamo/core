@@ -79,7 +79,7 @@ const resourceGroups = () => {
       name: 'Main',
       showTitle: false,
       resources: auth.isAdmin()
-        ? auth.getSessionAccount().websitesAttributes[0].isECommerce
+        ? auth.getAccount().websitesAttributes[0].isECommerce
           ? [resources.dataDashboard, resources.triggers]
           : [resources.triggers]
         : [resources.triggers],
@@ -252,10 +252,9 @@ const BaseMenu = withRouter(
       return <DummyMenu />
     }
 
-    const userRoleResourceGroups = useMemo(
-      () => (auth.isRole('editor') ? editorResourceGroups() : resourceGroups()),
-      []
-    )
+    const userRoleResourceGroups = useMemo(() => {
+      return auth.isAdmin() || auth.getAccountRole() !== 'editor' ? resourceGroups() : editorResourceGroups()
+    }, [])
 
     return (
       <Container>

@@ -23,7 +23,7 @@ const Account = () => {
 
   return (
     <>
-      {!auth.isRole('editor') && (
+      {auth.getAccountRole() !== 'editor' && (
         <>
           <EditWebsite />
           <UsersList />

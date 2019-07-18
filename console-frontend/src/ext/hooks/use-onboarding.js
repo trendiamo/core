@@ -67,7 +67,7 @@ export const useOnboardingHelp = help => {
   const { setOnboardingHelp } = useOnboardingConsumer()
   useEffect(
     () => {
-      setOnboardingHelp(help)
+      setOnboardingHelp && setOnboardingHelp(help)
     },
     [help, setOnboardingHelp]
   )
