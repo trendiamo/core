@@ -88,16 +88,11 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
   const [isCropping, setIsCropping] = useState(false)
   const [isUploaderLoading, setIsUploaderLoading] = useState(false)
 
-  const {
-    form,
-    isFormLoading,
-    isFormPristine,
-    isFormSubmitting,
-    onFormSubmit,
-    setFieldValue,
-    mergeForm,
-    setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
+  const { form, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, setFieldValue, mergeForm } = useForm({
+    formObjectTransformer,
+    loadFormObject,
+    saveFormObject,
+  })
 
   const { onboarding, setOnboarding } = useOnboardingConsumer()
 
@@ -106,7 +101,6 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
       return (async () => {
         if (!formRef.current.reportValidity()) return
         const result = await onFormSubmit(event)
-        setIsFormSubmitting(false)
         if (!result || result.error || result.errors) return
         setTimeout(() => {
           if (onboardingCreate && (onboarding.stageIndex < 2 && !onboarding.run)) {
@@ -117,7 +111,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
         return result
       })()
     },
-    [history, location.pathname, onFormSubmit, onboarding, onboardingCreate, setIsFormSubmitting, setOnboarding]
+    [history, location.pathname, onFormSubmit, onboarding, onboardingCreate, setOnboarding]
   )
 
   const setPicture = useCallback(

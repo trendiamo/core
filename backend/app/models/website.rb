@@ -33,6 +33,6 @@ class Website < ApplicationRecord
   def ensure_website_settings
     return unless website_settings.length.zero?
 
-    self.website_settings_attributes = [{ account_id: account_id }]
+    self.website_settings_attributes = [{ account: account }]
   end
 end

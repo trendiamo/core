@@ -1,10 +1,10 @@
 class AccountPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if !user.admin?
-        user.accounts
-      else
+      if user&.admin
         scope.all
+      else
+        user.accounts
       end
     end
   end

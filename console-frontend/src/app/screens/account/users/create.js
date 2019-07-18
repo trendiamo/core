@@ -76,16 +76,7 @@ const UserCreate = ({ history }) => {
     [enqueueSnackbar, profilePic]
   )
 
-  const {
-    form,
-    isFormLoading,
-    isFormPristine,
-    isFormSubmitting,
-    mergeForm,
-    onFormSubmit,
-    setFieldValue,
-    setIsFormSubmitting,
-  } = useForm({
+  const { form, isFormLoading, isFormPristine, isFormSubmitting, mergeForm, onFormSubmit, setFieldValue } = useForm({
     formObjectTransformer,
     loadFormObject,
     saveFormObject,
@@ -96,13 +87,12 @@ const UserCreate = ({ history }) => {
       return (async () => {
         if (!formRef.current.reportValidity()) return
         const result = await onFormSubmit(event)
-        setIsFormSubmitting(false)
         if (!result || result.error || result.errors) return
         history.push(routes.account())
         return result
       })()
     },
-    [history, onFormSubmit, setIsFormSubmitting]
+    [history, onFormSubmit]
   )
 
   const setPicture = useCallback(

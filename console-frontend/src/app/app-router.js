@@ -1,9 +1,10 @@
 import Account from 'app/screens/account'
-import Accounts from 'app/screens/accounts'
+import Accounts from 'app/screens/accounts/accounts-list'
 import ChangePassword from 'app/screens/change-password'
 import DataDashboard from 'app/screens/data-dashboard'
 import ForgotPassword from 'auth/forgot-password'
 import LoginPage from 'auth/login'
+import NewAccount from 'app/screens/accounts/account-new'
 import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
@@ -165,13 +166,7 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         path={routes.userCreate(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
-      <PrivateRoute
-        component={ChangePassword}
-        exact
-        fetchedAccount={fetchedAccount}
-        path={routes.passwordChange()}
-        setFetchedAccount={setFetchedAccount}
-      />
+      <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
       <PrivateRoute
         component={UrlGenerator}
         exact
@@ -180,13 +175,8 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         path={routes.urlGenerator(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
-      <PrivateRoute
-        component={Accounts}
-        exact
-        fetchedAccount={fetchedAccount}
-        path={routes.accounts()}
-        setFetchedAccount={setFetchedAccount}
-      />
+      <PrivateRoute component={Accounts} exact path={routes.accounts()} />
+      <PrivateRoute component={NewAccount} exact isAdminScoped path={routes.newAccount()} />
       <PrivateRoute
         component={DataDashboard}
         exact
