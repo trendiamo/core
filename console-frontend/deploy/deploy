@@ -1,0 +1,17 @@
+#!/bin/sh
+
+SSH=${1:-ssh}
+([ -f .env ] && cp .env .env~ || true) && \
+cp public/index.html public/index.html~ && \
+cp deploy/public-index.html public/index.html && \
+cp deploy/.env.production .env && \
+cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend && \
+yarn build && \
+cp deploy/.htaccess build/.htaccess && \
+rsync -azh -e $SSH --delete-after --ignore-errors build/ root@139.59.128.112:/var/www/admin.frekkls.com/html && \
+rm -rf build/ && \
+rm .env && \
+([ -f .env~ ] && mv .env~ .env || true) && \
+mv public/index.html~ public/index.html && \
+cd ../plugin-base && yarn build-dev && cd ../console-frontend && \
+deploy/notify-rollbar
