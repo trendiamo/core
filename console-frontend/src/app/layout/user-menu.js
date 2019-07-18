@@ -57,7 +57,6 @@ const StyledTypography = styled(props => <Typography {...omit(props, ['sidebarOp
 
 const anchorOrigin = { horizontal: 'center', vertical: 'top' }
 const transformOrigin = { horizontal: 'center', vertical: 'top' }
-const clearSessionData = auth.clearSessionData.bind(auth)
 
 const UserMenu = ({ sidebarOpen }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -122,7 +121,7 @@ const UserMenu = ({ sidebarOpen }) => {
       >
         {!auth.isSingleAccount() && (
           <Link to={routes.accounts()}>
-            <MenuItemThemed icon={<PeopleOutline />} onClick={clearSessionData} text="Back to Accounts" />
+            <MenuItemThemed icon={<PeopleOutline />} text="Back to Accounts" />
           </Link>
         )}
         <Link to={routes.account()}>

@@ -29,7 +29,7 @@ const BlankState = () => (
 )
 
 const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles, picRect } }) => {
-  const role = useMemo(() => roles[auth.getSessionAccount().slug], [roles])
+  const role = useMemo(() => roles[auth.getSlug()], [roles])
 
   const initials = useMemo(() => (!firstName || !lastName ? null : `${firstName[0]}${lastName[0]}`), [
     firstName,

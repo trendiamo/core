@@ -179,9 +179,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
   useEffect(
     () => {
       ;(async () => {
-        const { json, requestError } = await apiRequest(apiWebsiteShow, [
-          auth.getSessionAccount().websitesAttributes[0].id,
-        ])
+        const { json, requestError } = await apiRequest(apiWebsiteShow, [auth.getAccount().websitesAttributes[0].id])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         setHostnames(json.hostnames)
       })()

@@ -24,7 +24,7 @@ const EditWebsite = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const websiteId = useMemo(() => {
-    return auth.getSessionAccount().websitesAttributes[0].id
+    return auth.getAccount().websitesAttributes[0].id
   }, [])
 
   const loadFormObject = useCallback(

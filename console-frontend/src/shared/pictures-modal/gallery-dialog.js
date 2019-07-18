@@ -123,7 +123,9 @@ const GalleryDialog = ({
   pictures,
   type,
 }) => {
-  const title = useMemo(() => `Select a${type === 'animationsModal' ? 'n animation' : ' picture'} from the gallery:`, [type])
+  const title = useMemo(() => `Select a${type === 'animationsModal' ? 'n animation' : ' picture'} from the gallery:`, [
+    type,
+  ])
 
   return (
     <Dialog

@@ -45,7 +45,7 @@ const UrlDiv = styled.div`
 
 const handleUrlFocus = event => event.target.select()
 
-const validHostnames = () => auth.getSessionAccount().websitesAttributes[0].hostnames
+const validHostnames = () => auth.getAccount().websitesAttributes[0].hostnames
 
 const PreviewUrlBox = ({ module }) => {
   const [url, setUrl] = useState('')
