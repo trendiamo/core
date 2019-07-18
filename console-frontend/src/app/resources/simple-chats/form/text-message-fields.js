@@ -225,7 +225,7 @@ const TextMessageFields = ({
   const [value, setValue] = useState(simpleChatMessage.html)
 
   const toolbarId = useMemo(
-    () => `toolbar-${simpleChatStep.__key || simpleChatStep.key}-${simpleChatMessage.id || simpleChatMessage.__key}`,
+    () => `toolbar-${simpleChatStep.id || simpleChatStep.__key}-${simpleChatMessage.id || simpleChatMessage.__key}`,
     [simpleChatMessage, simpleChatStep]
   )
 
