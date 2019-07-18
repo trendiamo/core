@@ -1,5 +1,3 @@
-import auth from 'auth'
-import routes from 'app/routes'
 import { StoreContext } from 'ext/hooks/store'
 import { useCallback, useContext, useEffect, useMemo, useReducer } from 'react'
 
@@ -10,7 +8,7 @@ const initialOnboardingState = {
   help: { run: false },
 }
 
-export const useOnboarding = location => {
+export const useOnboarding = () => {
   const { store, setStore } = useContext(StoreContext)
 
   const [onboarding, dispatch] = useReducer((state, action) => {
@@ -25,18 +23,6 @@ export const useOnboarding = location => {
 
   const setOnboarding = useCallback(value => dispatch({ type: 'merge', value }), [dispatch])
   const setOnboardingHelp = useCallback(value => dispatch({ type: 'mergeHelp', value }), [dispatch])
-
-  useEffect(
-    () => {
-      const stageIndex = auth.getUser().onboardingStage
-      const newOnboardingState = {
-        stageIndex,
-        run: !(location.pathname === routes.root()) && stageIndex === 0,
-      }
-      setOnboarding(newOnboardingState)
-    },
-    [location, setOnboarding]
-  )
 
   useEffect(
     () => {

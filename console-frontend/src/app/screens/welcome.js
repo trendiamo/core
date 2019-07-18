@@ -26,7 +26,7 @@ const WelcomePage = ({ history, width }) => {
     () => {
       changeStage(1)
       setOnboarding({ ...onboarding, run: false, stageIndex: 1 })
-      history.push(routes.root())
+      history.push(routes.accountRoot())
     },
     [history, onboarding, setOnboarding]
   )

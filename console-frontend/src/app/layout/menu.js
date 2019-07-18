@@ -248,7 +248,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
 
 const BaseMenu = withRouter(
   memo(({ location, menuLoaded, sidebarOpen, stageIndex, toggleOpen }) => {
-    if (!menuLoaded && stageIndex === 0 && location.pathname === routes.root()) {
+    if (!menuLoaded && stageIndex === 0 && location.pathname === routes.welcome()) {
       return <DummyMenu />
     }
 

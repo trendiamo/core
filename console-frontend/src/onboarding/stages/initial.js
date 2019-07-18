@@ -9,7 +9,7 @@ const nonEditorRoleOrder = ['triggers', 'showcases', 'simpleChats', 'outros', 'p
 
 const order = () => (auth.getAccountRole() === 'editor' ? editorRoleOrder : nonEditorRoleOrder)
 
-const editorRoleSteps = {
+const editorRoleSteps = () => ({
   simpleChats: {
     target: '.onboard-simple-chats',
     content: <Tooltip body="Create your Simple Chats here." nextRoute={routes.picturesList()} />,
@@ -24,9 +24,9 @@ const editorRoleSteps = {
     disableBeacon: true,
     title: 'Pictures Gallery',
   },
-}
+})
 
-const nonEditorRoleSteps = {
+const nonEditorRoleSteps = () => ({
   triggers: {
     target: '.onboard-triggers',
     content: <Tooltip body="Create your Triggers here." nextRoute={routes.showcasesList()} />,
@@ -69,8 +69,8 @@ const nonEditorRoleSteps = {
     disableBeacon: true,
     title: 'Personas',
   },
-}
+})
 
-const steps = () => (auth.getAccountRole() === 'editor' ? editorRoleSteps : nonEditorRoleSteps)
+const steps = () => (auth.getAccountRole() === 'editor' ? editorRoleSteps() : nonEditorRoleSteps())
 
 export default { steps, order }
