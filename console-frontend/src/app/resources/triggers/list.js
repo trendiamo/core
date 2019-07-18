@@ -1,4 +1,5 @@
 import AppBarButton from 'shared/app-bar-button'
+import auth from 'auth'
 import BlankStateTemplate from 'shared/blank-state'
 import CircularProgress from 'shared/circular-progress'
 import isEqual from 'lodash.isequal'
@@ -81,7 +82,6 @@ const TriggersList = ({ location }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [testerUrl, setTesterUrl] = useState({ value: '', matches: false })
   const [selectedIds, setSelectedIds] = useState([])
-  const [hostnames, setHostnames] = useState([])
   const [isSelectAll, setIsSelectAll] = useState(false)
 
   const deleteTriggers = useCallback(
@@ -122,16 +122,17 @@ const TriggersList = ({ location }) => {
   useEffect(
     () => {
       ;(async () => {
-        const { json, response, errors, requestError } = await apiRequest(apiTriggerList, [])
+        const { json, errors, requestError } = await apiRequest(apiTriggerList, [])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (requestError || errors) return
         setTriggers(json)
-        setHostnames(JSON.parse(response.headers.get('hostnames')))
         setIsLoading(false)
       })()
     },
     [enqueueSnackbar]
   )
+
+  const hostnames = useMemo(() => auth.getAccount().websitesAttributes[0].hostnames, [])
 
   useEffect(
     () => {
