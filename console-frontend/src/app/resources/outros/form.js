@@ -126,16 +126,11 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
 
   const [isPreviewModalOpened, setIsPreviewModalOpened] = useState(false)
 
-  const {
-    form,
-    isFormLoading,
-    isFormPristine,
-    isFormSubmitting,
-    mergeForm,
-    onFormSubmit,
-    setFieldValue,
-    setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
+  const { form, isFormLoading, isFormPristine, isFormSubmitting, mergeForm, onFormSubmit, setFieldValue } = useForm({
+    formObjectTransformer,
+    loadFormObject,
+    saveFormObject,
+  })
 
   const onPreviewClick = useCallback(
     () => {
@@ -149,13 +144,12 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
       ;(async () => {
         if (!formRef.current.reportValidity()) return
         const result = await onFormSubmit(event)
-        setIsFormSubmitting(false)
         if (!result || result.error || result.errors) return
         if (location.pathname !== routes.outroEdit(result.id)) history.push(routes.outroEdit(result.id))
         return result
       })()
     },
-    [formRef, history, location.pathname, onFormSubmit, setIsFormSubmitting]
+    [formRef, history, location.pathname, onFormSubmit]
   )
 
   const selectPersona = useCallback(

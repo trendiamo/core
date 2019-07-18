@@ -35,7 +35,10 @@ const useForm = ({ formObjectTransformer, loadFormObject, saveFormObject }) => {
       event.preventDefault()
       setIsFormSubmitting(true)
       const json = await saveFormObject(state.form)
-      if (!json || json.error || json.errors) return json
+      if (!json || json.error || json.errors) {
+        setIsFormSubmitting(false)
+        return json
+      }
       const formObject = formObjectTransformer(json)
       setInitialForm(formObject)
       setForm(formObject)
@@ -80,7 +83,6 @@ const useForm = ({ formObjectTransformer, loadFormObject, saveFormObject }) => {
     onFormSubmit,
     setFieldValue,
     setForm,
-    setIsFormSubmitting,
   }
 }
 

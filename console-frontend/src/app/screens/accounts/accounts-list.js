@@ -1,133 +1,90 @@
-import auth from 'auth'
-import Button from 'shared/button'
-import Dialog from 'shared/dialog'
-import Link from 'shared/link'
-import ListItemText from '@material-ui/core/ListItemText'
-import MUIListItem from '@material-ui/core/ListItem'
-import Pagination from 'shared/pagination'
-import React, { useCallback, useMemo, useState } from 'react'
-import routes from 'app/routes'
-import styled from 'styled-components'
-import Tooltip from '@material-ui/core/Tooltip'
-import Typography from '@material-ui/core/Typography'
-import { apiAccountDestroy, apiRequest } from 'utils'
+import AccountsListBase from './accounts-list-base'
+import CircularProgress from 'app/layout/loading'
+import debounce from 'debounce-promise'
+import Layout from './layout'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { apiAccountList, apiRequest } from 'utils'
+import { extractCountFromHeaders } from 'shared/pagination'
+import { FormControl, List, TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
-const ListItemContainer = styled.div`
-  width: 100%;
-  margin-right: 10px;
-`
-
-const AccountContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const StyledListItem = styled(MUIListItem)`
-  cursor: pointer;
-  ${ListItemText} span {
-    color: #222;
-    font-size: 16px;
-  }
-`
-
-const DeleteButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-
-const DialogActions = ({ handleDialogConfirmation }) => (
-  <Button color="primary" onClick={handleDialogConfirmation} variant="text">
-    {'Yes Absolutely'}
-  </Button>
-)
-
-const StyledTypography = styled(Typography)`
-  padding-top: 30px;
-`
-
-const DeleteConfirmation = () => <StyledTypography>{'Are you sure you want to delete this account?'}</StyledTypography>
-
-const ListItem = ({ account, hostnames }) => {
-  return (
-    <ListItemContainer>
-      <Tooltip placement="top" title="enter account">
-        <Link to={routes.accountRoot(account.slug)}>
-          <StyledListItem button>
-            <ListItemText
-              primary={account.name}
-              secondary={auth.isAdmin() ? hostnames : auth.getUser().roles[account.slug]}
-            />
-          </StyledListItem>
-        </Link>
-      </Tooltip>
-    </ListItemContainer>
-  )
-}
-
-const Account = ({ account, fetchAccounts }) => {
-  const [dialogOpen, setDialogOpen] = useState(false)
+const AccountsList = () => {
   const { enqueueSnackbar } = useSnackbar()
+  const [page, setPage] = useState(0)
+  const [totalAccountsCount, setTotalAccountsCount] = useState(0)
+  const [accounts, setAccounts] = useState({})
+  const [searchValue, setSearchValue] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [fetched, setFetched] = useState(false)
 
-  const hostnames = useMemo(() => account.websitesAttributes && account.websitesAttributes[0].hostnames.join(', '), [
-    account,
-  ])
+  const query = useMemo(
+    () => ({
+      range: JSON.stringify([page * 10, (page + 1) * 10 - 1]),
+    }),
+    [page]
+  )
 
-  const handleDeleteButtonClick = useCallback(() => {
-    setDialogOpen(true)
-  }, [])
+  const debouncedAutocomplete = useMemo(
+    () =>
+      debounce(searchValue => {
+        setSearchQuery(searchValue)
+      }, 250),
+    []
+  )
 
-  const handleDialogConfirmation = useCallback(
+  const fetchAccounts = useCallback(
     () => {
       ;(async () => {
-        setDialogOpen(false)
-        const { errors, requestError, json } = await apiRequest(apiAccountDestroy, [account.slug])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (json) enqueueSnackbar(json.message, { variant: 'success' })
-        fetchAccounts()
+        const { json, requestError, response } = await apiRequest(apiAccountList, [{ ...query, searchQuery }])
+        requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(json)
+        setTotalAccountsCount(extractCountFromHeaders(response.headers))
+        setFetched(true)
       })()
     },
-    [account.slug, enqueueSnackbar, fetchAccounts]
+    [enqueueSnackbar, query, searchQuery]
   )
 
-  const handleDialogButtonClose = useCallback(() => {
-    setDialogOpen(false)
-  }, [])
+  const onChangeSearchField = useCallback(
+    async event => {
+      setPage(0)
+      setSearchValue(event.target.value)
+      debouncedAutocomplete(event.target.value)
+    },
+    [debouncedAutocomplete, setSearchValue, setPage]
+  )
+
+  useEffect(fetchAccounts, [fetchAccounts])
+
+  if (!fetched) return <CircularProgress />
 
   return (
-    <AccountContainer>
-      <ListItemContainer>
-        <ListItem account={account} hostnames={hostnames} />
-      </ListItemContainer>
-      <DeleteButtonContainer>
-        {auth.isAdmin() && (
-          <Button color="actions" onClick={handleDeleteButtonClick} variant="contained">
-            {'delete'}
-          </Button>
+    <Layout>
+      <FormControl margin="normal" required>
+        <TextField
+          autoFocus
+          fullWidth
+          label="Search"
+          margin="normal"
+          name="search"
+          onChange={onChangeSearchField}
+          type="search"
+          value={searchValue}
+        />
+      </FormControl>
+      <List component="nav">
+        {accounts && accounts.length ? (
+          <AccountsListBase
+            accounts={accounts}
+            fetchAccounts={fetchAccounts}
+            page={page}
+            setPage={setPage}
+            totalAccountsCount={totalAccountsCount}
+          />
+        ) : (
+          <p>{'No accounts match your search...'}</p>
         )}
-      </DeleteButtonContainer>
-      <Dialog
-        content={<DeleteConfirmation />}
-        dialogActions={<DialogActions handleDialogConfirmation={handleDialogConfirmation} />}
-        handleClose={handleDialogButtonClose}
-        hideBackdrop
-        open={dialogOpen}
-        title=""
-      />
-    </AccountContainer>
-  )
-}
-
-const AccountsList = ({ page, setPage, totalAccountsCount, fetchAccounts, accounts }) => {
-  return (
-    <>
-      {accounts &&
-        accounts.map(account => <Account account={account} fetchAccounts={fetchAccounts} key={account.slug} />)}
-      <Pagination page={page} setPage={setPage} totalRecordsCount={totalAccountsCount} />
-    </>
+      </List>
+    </Layout>
   )
 }
 

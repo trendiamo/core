@@ -19,6 +19,9 @@ const routes = {
   login() {
     return '/login'
   },
+  newAccount() {
+    return '/accounts/new'
+  },
   outrosList(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/outros`
   },

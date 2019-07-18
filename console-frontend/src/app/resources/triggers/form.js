@@ -75,16 +75,9 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
   const formRef = useRef()
   const [hostnames, setHostnames] = useState([])
 
-  const {
-    form,
-    isFormLoading,
-    isFormPristine,
-    isFormSubmitting,
-    onFormSubmit,
-    mergeForm,
-    mergeFormCallback,
-    setIsFormSubmitting,
-  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
+  const { form, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, mergeForm, mergeFormCallback } = useForm(
+    { formObjectTransformer, loadFormObject, saveFormObject }
+  )
 
   const addUrlSelect = useCallback(
     () => {
@@ -119,7 +112,6 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
     async (event, action) => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      setIsFormSubmitting(false)
       if (!result || result.error || result.errors) return
       if (action === 'Save & New') {
         location.pathname === routes.triggerCreate()
@@ -130,7 +122,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
       }
       return result
     },
-    [history, location.pathname, onFormSubmit, setIsFormSubmitting]
+    [history, location.pathname, onFormSubmit]
   )
 
   const selectFlow = useCallback(

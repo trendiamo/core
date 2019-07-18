@@ -39,7 +39,6 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     setFieldValue,
     mergeForm,
     mergeFormCallback,
-    setIsFormSubmitting,
   } = useForm({ formObjectTransformer, saveFormObject, loadFormObject })
 
   useEffect(
@@ -60,13 +59,12 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      setIsFormSubmitting(false)
       if (!result || result.error || result.errors) return
       pluginHistory.replace(pluginRoutes.showcase(result.id))
       if (location.pathname !== routes.showcaseEdit(result.id)) history.push(routes.showcaseEdit(result.id))
       return result
     },
-    [history, location.pathname, onFormSubmit, setIsFormSubmitting]
+    [history, location.pathname, onFormSubmit]
   )
 
   const addSpotlight = useCallback(

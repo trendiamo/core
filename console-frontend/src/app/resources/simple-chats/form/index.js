@@ -34,7 +34,6 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     mergeFormCallback,
     onFormSubmit,
     setFieldValue,
-    setIsFormSubmitting,
   } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
 
   const onPreviewClick = useCallback(
@@ -48,12 +47,11 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     async event => {
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
-      setIsFormSubmitting(false)
       if (!result || result.error || result.errors) return
       if (location.pathname !== routes.simpleChatEdit(result.id)) history.push(routes.simpleChatEdit(result.id))
       return result
     },
-    [history, location.pathname, onFormSubmit, setIsFormSubmitting]
+    [history, location.pathname, onFormSubmit]
   )
 
   const addSimpleChatStep = useCallback(
