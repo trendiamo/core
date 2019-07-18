@@ -52,14 +52,13 @@ SH
 CONSOLE_FRONTEND_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/console-frontend && \
   yarn install --silent --no-progress && \
-  cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend && \
-  bin/deploy 'ssh -o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}'
+  deploy/deploy 'ssh -o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}'
 SH
 
 LANDING_PAGE_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/landing-pages/frekkls && \
-  cp #{ENV['LANDING_PAGE_ENV_FILE']} . && \
   yarn install --silent --no-progress && \
+  cp #{ENV['LANDING_PAGE_ENV_FILE']} . && \
   node_modules/.bin/gatsby build --no-color && \
   rsync -azq -e 'ssh -o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}' --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html
 SH
