@@ -36,6 +36,7 @@ const MessageField = ({
   setIsUploaderLoading,
   simpleChatMessage,
   simpleChatMessageIndex,
+  simpleChatStep,
 }) => {
   switch (simpleChatMessage.type) {
     case 'SimpleChatTextMessage':
@@ -47,6 +48,7 @@ const MessageField = ({
           onFocus={onFocus}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
+          simpleChatStep={simpleChatStep}
         />
       )
     case 'SimpleChatProductMessage':
@@ -98,6 +100,7 @@ const MessageField = ({
 }
 
 const SimpleChatMessage = ({
+  activeSimpleChatMessages,
   allowDelete,
   isCropping,
   isFormLoading,
@@ -107,8 +110,8 @@ const SimpleChatMessage = ({
   setIsCropping,
   setIsUploaderLoading,
   simpleChatMessage,
-  activeSimpleChatMessages,
   simpleChatMessageIndex,
+  simpleChatStep,
 }) => {
   const onSimpleChatMessageEdit = useCallback(
     simpleChatMessage => {
@@ -193,6 +196,7 @@ const SimpleChatMessage = ({
         setIsUploaderLoading={setIsUploaderLoading}
         simpleChatMessage={simpleChatMessage}
         simpleChatMessageIndex={simpleChatMessageIndex}
+        simpleChatStep={simpleChatStep}
       />
     </FormSection>
   )

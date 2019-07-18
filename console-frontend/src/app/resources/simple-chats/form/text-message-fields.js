@@ -212,12 +212,22 @@ const beautifyHTML = value => {
   })
 }
 
-const TextMessageFields = ({ disabled, onChange, onFocus, simpleChatMessage, simpleChatMessageIndex }) => {
+const TextMessageFields = ({
+  disabled,
+  onChange,
+  onFocus,
+  simpleChatMessage,
+  simpleChatMessageIndex,
+  simpleChatStep,
+}) => {
   const textEditorRef = useRef(null)
   const [isHTMLMode, setIsHTMLMode] = useState(false)
   const [value, setValue] = useState(simpleChatMessage.html)
 
-  const toolbarId = useMemo(() => `toolbar-${simpleChatMessage.id || simpleChatMessage.__key}`, [simpleChatMessage])
+  const toolbarId = useMemo(
+    () => `toolbar-${simpleChatStep.__key || simpleChatStep.key}-${simpleChatMessage.id || simpleChatMessage.__key}`,
+    [simpleChatMessage, simpleChatStep]
+  )
 
   const textEditorModules = useMemo(() => ({ toolbar: `#${toolbarId}`, ...textEditorConfig.modules }), [toolbarId])
 
