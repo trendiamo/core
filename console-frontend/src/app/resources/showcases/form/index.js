@@ -99,7 +99,12 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     (mergeSpotlightCallback, index) => {
       mergeFormCallback(form => {
         const newSpotlightsAttributes = [...form.spotlightsAttributes]
-        newSpotlightsAttributes[index] = mergeSpotlightCallback(newSpotlightsAttributes[index])
+        const spotlight = mergeSpotlightCallback(newSpotlightsAttributes[index])
+        if (spotlight.id || !spotlight._destroy) {
+          newSpotlightsAttributes[index] = spotlight
+        } else {
+          newSpotlightsAttributes.splice(index, 1)
+        }
         return { spotlightsAttributes: newSpotlightsAttributes }
       })
     },

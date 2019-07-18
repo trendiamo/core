@@ -79,7 +79,11 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     (simpleChatStep, simpleChatStepIndex) => {
       mergeFormCallback(form => {
         const newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
-        newsimpleChatStepsAttributes[simpleChatStepIndex] = simpleChatStep
+        if (simpleChatStep.id || !simpleChatStep._destroy) {
+          newsimpleChatStepsAttributes[simpleChatStepIndex] = simpleChatStep
+        } else {
+          newsimpleChatStepsAttributes.splice(simpleChatStepIndex, 1)
+        }
         return { ...form, simpleChatStepsAttributes: newsimpleChatStepsAttributes }
       })
     },

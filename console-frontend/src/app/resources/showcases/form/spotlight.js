@@ -70,7 +70,12 @@ const Spotlight = ({
     (productPickCb, productPickIndex) => {
       onChange(oldSpotlight => {
         const newProductPicksAttributes = [...oldSpotlight.productPicksAttributes]
-        newProductPicksAttributes[productPickIndex] = productPickCb(newProductPicksAttributes[productPickIndex])
+        const productPick = productPickCb(newProductPicksAttributes[productPickIndex])
+        if (productPick.id || !productPick._destroy) {
+          newProductPicksAttributes[productPickIndex] = productPick
+        } else {
+          newProductPicksAttributes.splice(productPickIndex, 1)
+        }
         return { productPicksAttributes: newProductPicksAttributes }
       })
     },
