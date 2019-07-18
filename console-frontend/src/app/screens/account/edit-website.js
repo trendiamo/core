@@ -2,14 +2,29 @@ import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import HostnamesForm from 'shared/hostnames-form'
+import OpenInNewIcon from '@material-ui/icons/OpenInNew'
 import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
+import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import { apiRequest, apiWebsiteShow, apiWebsiteUpdate, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Checkbox, FormControlLabel, TextField } from '@material-ui/core'
+import { Checkbox, FormControlLabel, Button as MuiButton, TextField } from '@material-ui/core'
 import { FormHelperText } from 'shared/form-elements'
 import { Prompt } from 'react-router'
 import { useSnackbar } from 'notistack'
+
+const PreviewButtonsContainer = styled.div`
+  margin-top: 14px;
+  margin-bottom: 12px;
+  & > a {
+    margin-right: 1rem;
+  }
+`
+
+const StyledOpenInNewIcon = styled(OpenInNewIcon)`
+  height: 16px;
+  margin-left: 4px;
+`
 
 const formObjectTransformer = json => {
   return {
@@ -120,6 +135,35 @@ const EditWebsite = () => {
           label="Live"
         />
         <FormHelperText>{'Dangerous: this controls whether or not the plugin appears on your website.'}</FormHelperText>
+        {form.previewMode && (
+          <>
+            <PreviewButtonsContainer>
+              <MuiButton
+                href={`http://${form.hostnames[0]}/#trnd:preview:1`}
+                size="small"
+                target="_blank"
+                variant="contained"
+              >
+                {'Enable preview mode'}
+                <StyledOpenInNewIcon />
+              </MuiButton>
+              <MuiButton
+                href={`http://${form.hostnames[0]}/#trnd:preview:0`}
+                size="small"
+                target="_blank"
+                variant="contained"
+              >
+                {'Disable preview mode'}
+                <StyledOpenInNewIcon />
+              </MuiButton>
+            </PreviewButtonsContainer>
+            <FormHelperText>
+              {
+                'You can toggle preview mode so only you can see the plugin in your website. Please note that a trigger also needs to be in place.'
+              }
+            </FormHelperText>
+          </>
+        )}
         <FormControlLabel
           control={<Checkbox checked={form.isECommerce} color="primary" onChange={toggleECommerce} />}
           disabled={isFormLoading}

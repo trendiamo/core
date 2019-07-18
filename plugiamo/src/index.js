@@ -8,6 +8,7 @@ import { detect } from 'detect-browser'
 import { h, render } from 'preact'
 import { loadRollbar } from 'ext/rollbar'
 import { location, mixpanelToken } from './config'
+import { optionsFromHash } from 'app/setup'
 import './styles.css'
 
 const addFrekklsLoadingFrame = frekklsContainer => {
@@ -48,6 +49,24 @@ const RootComponent = () => (
   </ErrorBoundaries>
 )
 
+const processPreviewOpt = () => {
+  const { preview, ...others } = optionsFromHash()
+  if (preview === null || preview === undefined) return
+
+  const anchor = Object.keys(others).reduce((acc, k) => {
+    const newOpt = `${k}:${others[k]}`
+    return acc ? `${acc},${newOpt}` : newOpt
+  }, '')
+  const newUrl = window.location.href.split('#')[0] + (anchor ? `#trnd:${anchor}` : '')
+
+  if (preview.match(/1|true/)) {
+    localStorage.setItem('trnd-plugin-enable-preview', 1)
+  } else {
+    localStorage.removeItem('trnd-plugin-enable-preview')
+  }
+  window.location.href = newUrl
+}
+
 const initApp = (frekklsReactRoot, googleAnalytics) => {
   mixpanel.init(mixpanelToken)
   mixpanel.track('Visited Page', { hostname: location.hostname })
@@ -75,6 +94,8 @@ const initApp = (frekklsReactRoot, googleAnalytics) => {
 
   const onInitResult = getFrekklsConfig().onInit()
   if (onInitResult === false) return
+
+  processPreviewOpt()
 
   render(<RootComponent />, frekklsReactRoot)
 }
