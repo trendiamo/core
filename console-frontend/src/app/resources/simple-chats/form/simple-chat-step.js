@@ -68,10 +68,10 @@ const SimpleChatMessages = ({
   onFocus,
   setIsCropping,
   setIsUploaderLoading,
-  simpleChatMessages,
+  simpleChatStep,
 }) => (
   <div>
-    {simpleChatMessages.map((simpleChatMessage, index) =>
+    {simpleChatStep.simpleChatMessagesAttributes.map((simpleChatMessage, index) =>
       simpleChatMessage._destroy ? null : (
         <SortableSimpleChatMessage
           activeSimpleChatMessages={activeSimpleChatMessages}
@@ -86,6 +86,7 @@ const SimpleChatMessages = ({
           setIsUploaderLoading={setIsUploaderLoading}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={index}
+          simpleChatStep={simpleChatStep}
         />
       )
     )}
@@ -243,7 +244,7 @@ const SimpleChatStep = ({
               onSortEnd={onSimpleChatMessagesSortEnd}
               setIsCropping={setIsCropping}
               setIsUploaderLoading={setIsUploaderLoading}
-              simpleChatMessages={simpleChatStep.simpleChatMessagesAttributes}
+              simpleChatStep={simpleChatStep}
               useDragHandle
             />
           )}
