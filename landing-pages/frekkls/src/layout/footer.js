@@ -100,6 +100,7 @@ const FooterContent = () => {
         <FooterColumn flex="1">
           <FooterHeader>{'Information'}</FooterHeader>
           <a href="mailto:hello@frekkls.com">{'Contact Us'}</a>
+          <a href="https://angel.co/company/trendiamo-1/jobs">{'Careers'}</a>
           <a href="#legal-notice" onClick={onLegalNoticeClick}>
             {'Legal Notice'}
           </a>
