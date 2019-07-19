@@ -9,9 +9,9 @@ cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend && \
 yarn build && \
 cp deploy/.htaccess build/.htaccess && \
 rsync -azh -e $SSH --delete-after --ignore-errors build/ root@139.59.128.112:/var/www/admin.frekkls.com/html && \
+deploy/notify-rollbar && \
 rm -rf build/ && \
 rm .env && \
 ([ -f .env~ ] && mv .env~ .env || true) && \
 mv public/index.html~ public/index.html && \
-cd ../plugin-base && yarn build-dev && cd ../console-frontend && \
-deploy/notify-rollbar
+cd ../plugin-base && yarn build-dev && cd ../console-frontend
