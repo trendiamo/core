@@ -38,5 +38,5 @@ bin/brakeman -q --no-pager
 ## Deploy
 
 ```sh
-bin/rails deploy
+bin/rails deploy -e=production|staging
 ```
