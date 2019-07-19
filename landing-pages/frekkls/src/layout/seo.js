@@ -60,7 +60,7 @@ const Seo = ({ description, meta, keywords, title }) => (
                 : []
             )
             .concat(meta || [])}
-          title={title}
+          title={title || `Frekkls - ${data.site.siteMetadata.title}`}
         />
       )
     }}
