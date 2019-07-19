@@ -1,14 +1,31 @@
 #!/bin/sh
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 environment [ssh_command]"
+  exit 127
+fi
+ENVIRONMENT=$1
+SSH=${2:-ssh}
+case $ENVIRONMENT in
+  production)
+    SERVER=root@139.59.128.112
+    ;;
+  staging)
+    SERVER=root@167.71.50.172
+    ;;
+  *)
+    echo "environment must be: staging or production"
+    exit 127
+    ;;
+esac
 
-SSH=${1:-ssh}
 ([ -f .env ] && cp .env .env~ || true) && \
 cp public/index.html public/index.html~ && \
 cp deploy/public-index.html public/index.html && \
-cp deploy/.env.production .env && \
+cp deploy/.env.$ENVIRONMENT .env && \
 cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend && \
 yarn build && \
 cp deploy/.htaccess build/.htaccess && \
-rsync -azh -e $SSH --delete-after --ignore-errors build/ root@139.59.128.112:/var/www/admin/html && \
+rsync -azh -e $SSH --delete-after --ignore-errors build/ $SERVER:/var/www/admin/html && \
 deploy/notify-rollbar && \
 rm -rf build/ && \
 rm .env && \

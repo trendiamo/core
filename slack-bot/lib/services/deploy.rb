@@ -52,7 +52,7 @@ SH
 CONSOLE_FRONTEND_CMD = <<~SH.freeze
   cd #{ENV['BUILD_FOLDER']}/core/console-frontend && \
   yarn install --silent --no-progress && \
-  deploy/deploy 'ssh -o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}'
+  deploy/deploy production 'ssh -o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}'
 SH
 
 LANDING_PAGE_CMD = <<~SH.freeze
