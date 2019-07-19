@@ -19,7 +19,7 @@ a2enmod rewrite
 a2enmod expires
 
 mkdir -p /var/www/frekkls.com/html
-mkdir -p /var/www/admin.frekkls.com/html
+mkdir -p /var/www/admin/html
 mkdir -p /var/www/showcase-demo.frekkls.com/html
 
 vi /etc/apache2/sites-available/000-default.conf
