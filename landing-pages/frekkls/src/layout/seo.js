@@ -76,6 +76,7 @@ const detailsQuery = graphql`
         title
         description
         author
+        lang
       }
     }
   }
