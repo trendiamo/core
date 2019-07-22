@@ -56,6 +56,7 @@ module.exports = {
     publicPath: 'http://0.0.0.0:8080/',
     chunkFilename: '[name].js',
     filename: 'plugin.js',
+    jsonpFunction: 'frkklsWebpackJsonp',
   },
   performance: {
     maxAssetSize: 300000,
