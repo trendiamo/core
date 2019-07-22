@@ -3,7 +3,6 @@ class SimpleChatProductMessage < SimpleChatMessage
 
   validates :title, presence: true
   validates :url, presence: true
-  validates :display_price, presence: true
 
   def as_json(_options = {})
     super.except(:pic_id).merge(attributes.slice("title", "url", "display_price", "group_with_adjacent", "pic_rect"))
