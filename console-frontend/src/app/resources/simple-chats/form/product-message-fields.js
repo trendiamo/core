@@ -50,7 +50,6 @@ const ProductMessagesForm = ({
       name="displayPrice"
       onChange={onFormChange}
       onFocus={onFocus}
-      required
       value={simpleChatMessage.displayPrice || ''}
     />
     <PictureUploader
