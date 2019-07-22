@@ -21,7 +21,7 @@ const What = styled(({ className }) => (
           <b className="social-headline">{'Social Salesforce'}</b>
           <p>
             {
-              'Let over 100.000 influencers become your personal salesforce matched perfectly with your products and values on page. Take advantage of their reach and expertise and humanize your online sales in seconds with real people.'
+              'Let over 100.000 influencers become your personal salesforce, perfectly matched with your products and values of your brand. Get the most out of their reach and expertise and humanize your online sales in seconds with real people.'
             }
           </p>
         </div>
@@ -36,7 +36,7 @@ const What = styled(({ className }) => (
           <b className="tool-headline">{'Sales Technology'}</b>
           <p>
             {
-              'Integrate those people and their content with our smart tool directly into your shop and bridge seamlessly their social power with your shop checkouts to increase your conversions and sales for any kind of products and businesses.'
+              'Integrate sellers and their content directly into your webshop with our smart and easy to use tool and seamlessly bridge their social traffic with your shop to boost your conversions and sales for any kind of products and businesses.'
             }
           </p>
         </div>
