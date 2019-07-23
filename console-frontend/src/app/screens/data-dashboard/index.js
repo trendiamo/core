@@ -4,9 +4,9 @@ import React, { useCallback, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
+import WhiteButton from 'shared/white-button'
 import { DatePicker } from 'material-ui-pickers'
 import { differenceInMonths, endOfMonth, format, startOfMonth, subMonths } from 'date-fns'
-import { FormControl } from '@material-ui/core'
 
 const appBarContent = { title: 'Data Dashboard' }
 
@@ -16,21 +16,32 @@ const ChartContainer = styled.div``
 const minDate = () =>
   differenceInMonths(Date.now(), new Date('2019-06-01')) >= 4 ? subMonths(Date.now(), 4) : new Date('2019-06-01')
 
+const DatePickerValue = styled.div`
+  color: #ff6641;
+  padding-left: 5px;
+`
+
+const DatePickerComponent = ({ onClick, label, value }) => {
+  return (
+    <WhiteButton onClick={onClick} variant="contained">
+      <div>{`${label}:`}</div>
+      <DatePickerValue>{value}</DatePickerValue>
+    </WhiteButton>
+  )
+}
+
 const DateSelector = ({ dates, handleDateChange }) => (
-  <FormControl style={{ flex: '1', textAlign: 'right' }}>
-    <div className="picker">
-      <DatePicker
-        disableFuture
-        format="MMMM"
-        label="Month"
-        maxDate={Date.now()}
-        minDate={minDate()}
-        onChange={handleDateChange}
-        value={dates.from_date}
-        views={['year', 'month']}
-      />
-    </div>
-  </FormControl>
+  <DatePicker
+    disableFuture
+    format="MMMM"
+    label="Month"
+    maxDate={Date.now()}
+    minDate={minDate()}
+    onChange={handleDateChange}
+    TextFieldComponent={DatePickerComponent}
+    value={dates.from_date}
+    views={['year', 'month']}
+  />
 )
 
 const DataDashboard = styled(({ className }) => {
