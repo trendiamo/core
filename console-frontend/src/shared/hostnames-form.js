@@ -3,12 +3,7 @@ import Button from 'shared/button'
 import MuiCancel from '@material-ui/icons/Cancel'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { IconButton, InputLabel, TextField, Typography } from '@material-ui/core'
-
-const LabelContainer = styled.div`
-  margin-top: 1rem;
-  margin-bottom: -10px;
-`
+import { FormControl, IconButton, TextField, Typography } from '@material-ui/core'
 
 const StyledAddCircleOutline = styled(AddCircleOutline)`
   color: #6c6c6c;
@@ -28,6 +23,7 @@ const AddHostnameButton = ({ disabled, addHostnameSelect }) => (
 const FlexDiv = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
 `
 
 const HostnameTextField = ({ index, onChange, value, ...props }) => {
@@ -58,6 +54,7 @@ const HostnameField = ({ allowDelete, editHostnameValue, index, isFormLoading, h
         disabled={isFormLoading}
         index={index}
         inputProps={inputProps}
+        label={index === 0 && 'Hostnames'}
         onChange={editHostnameValue}
         required
         value={hostname}
@@ -71,13 +68,17 @@ const HostnameField = ({ allowDelete, editHostnameValue, index, isFormLoading, h
   )
 }
 
-const HostnamesForm = ({ form, addHostnameSelect, editHostnameValue, deleteHostname, isFormLoading }) => (
-  <>
-    <LabelContainer>
-      <InputLabel required style={{ transform: 'scale(0.75)', display: 'inline-block' }}>
-        {'Hostnames'}
-      </InputLabel>
-    </LabelContainer>
+const HostnamesForm = ({
+  addHostnameSelect,
+  deleteHostname,
+  editHostnameValue,
+  form,
+  fullWidth,
+  isFormLoading,
+  margin,
+  required,
+}) => (
+  <FormControl fullWidth={fullWidth} margin={margin || 'normal'} required={required}>
     {form.hostnames.map((hostname, index) => (
       <HostnameField
         allowDelete={form.hostnames.length > 1}
@@ -90,8 +91,10 @@ const HostnamesForm = ({ form, addHostnameSelect, editHostnameValue, deleteHostn
         key={index}
       />
     ))}
-    <AddHostnameButton addHostnameSelect={addHostnameSelect} disabled={isFormLoading} />
-  </>
+    <FlexDiv>
+      <AddHostnameButton addHostnameSelect={addHostnameSelect} disabled={isFormLoading} />
+    </FlexDiv>
+  </FormControl>
 )
 
 export default HostnamesForm

@@ -5,7 +5,7 @@ import Link from 'shared/link'
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import { apiRequest, apiSignIn } from 'utils'
-import { AuthStyledForm } from 'auth/components'
+import { AuthFormFooter, AuthStyledForm } from 'auth/components'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -37,22 +37,20 @@ const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
           value={loginForm.password}
         />
       </FormControl>
-      <div style={{ marginTop: '2rem', width: '70%' }}>
+      <AuthFormFooter>
         <Button color="primaryGradient" fullWidth type="submit" variant="contained">
           {'Login'}
         </Button>
-      </div>
-      <div style={{ marginTop: '1rem' }}>
         <Link to={routes.requestPasswordReset()}>
           <Button color="primaryText" variant="text">
             {'Forgot Password?'}
           </Button>
         </Link>
-      </div>
-      <div style={{ marginTop: '1rem' }}>
-        {"Don't have an account? "}
-        <Link to={routes.signup()}>{'Signup'}</Link>
-      </div>
+        <p>
+          {"Don't have an account? "}
+          <Link to={routes.signup()}>{'Signup'}</Link>
+        </p>
+      </AuthFormFooter>
     </AuthStyledForm>
   </AuthLayout>
 )
