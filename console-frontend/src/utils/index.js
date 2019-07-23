@@ -169,3 +169,14 @@ export const refreshRoute = (history, route, query) => {
   history.push(routes.nullRoute())
   history.replace(route, query)
 }
+
+export const isLocalStorageAccurate = () => {
+  const accounts = localStorage.getItem('accounts')
+  const accountsObject = accounts && JSON.parse(accounts)
+  const accurate = accountsObject && !Object.keys(accountsObject).find(itemKey => !accountsObject[itemKey])
+
+  if (!auth.isLoggedIn() || accurate) {
+    return true
+  }
+  apiSignOut()
+}
