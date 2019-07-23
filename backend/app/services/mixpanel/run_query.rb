@@ -4,9 +4,9 @@ module Mixpanel
     JQL_HTTP_API_URL = "https://mixpanel.com/api/2.0/jql".freeze
 
     def initialize(params, script)
-      @params = params
+      @params = adjust_dates(params)
       @script = script
-      @key = { params: params, script: script, version: "3" }.to_json
+      @key = { params: @params, script: @script, version: "4" }.to_json
     end
 
     def perform
@@ -21,6 +21,19 @@ module Mixpanel
     end
 
     private
+
+    # adjust dates to stick to start of week, end of week, also never more recent than yesterday
+    def adjust_dates(params)
+      new_dates = params[:dates]
+      new_dates[:from_date] = Date.parse(new_dates[:from_date]).at_beginning_of_week.to_s
+      new_dates[:to_date] = end_of_month_week(Date.parse(new_dates[:to_date])).at_beginning_of_week.to_s
+      { dates: new_dates, hostname: params[:hostname] }
+    end
+
+    def end_of_month_week(date)
+      date = [Date.yesterday, date].min
+      (date.at_end_of_week.month > date.month || date.at_end_of_week > Date.yesterday ? (date - 7.days) : date)
+    end
 
     def perform_request
       RestClient::Request.execute(method: :get, url: JQL_HTTP_API_URL, headers: headers, payload: payload).to_s

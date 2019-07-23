@@ -1,3 +1,9 @@
+const getWeekOfYear = d => {
+  const firstDayOfYear = new Date(d.getFullYear(), 0, 1);
+  return Math.floor(
+    ((d - firstDayOfYear) / 86400000 + firstDayOfYear.getDay()) / 7
+  );
+};
 const formatDate = d => new Date(d).toISOString().replace(/T.*/, "");
 function main() {
   return Events(params.dates)
@@ -9,7 +15,7 @@ function main() {
     )
     .groupByUser((acc, events) => {
       acc = acc || {
-        date: null,
+        time: null,
         toggledPlugin: false,
         proceedToCheckout: false,
         counts: 0,
@@ -19,7 +25,7 @@ function main() {
         if (events[i].name === "Toggled Plugin") {
           acc.toggledPlugin = true;
           acc.counts = 1;
-          if (!acc.date) acc.date = formatDate(new Date(events[i].time));
+          if (!acc.time) acc.time = events[i].time;
         } else if (events[i].name === "Proceed To Checkout") {
           acc.proceedToCheckout = true;
         } else if (
@@ -64,16 +70,17 @@ function main() {
       }
       return acc;
     })
-    .filter(entry => entry.value.date)
+    .filter(entry => entry.value.time)
     .groupBy(
-      ["value.date"],
+      [entry => getWeekOfYear(new Date(entry.value.time))],
       [
+        mixpanel.reducer.min("value.time"),
         mixpanel.reducer.sum("value.conversions"),
         mixpanel.reducer.sum("value.counts")
       ]
     )
     .map(entry => ({
-      date: entry.key[0],
-      conversionRate: entry.value[0] / entry.value[1]
+      date: formatDate(new Date(entry.value[0])),
+      conversionRate: entry.value[1] / entry.value[2]
     }));
 }

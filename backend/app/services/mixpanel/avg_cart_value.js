@@ -1,3 +1,9 @@
+const getWeekOfYear = d => {
+  const firstDayOfYear = new Date(d.getFullYear(), 0, 1);
+  return Math.floor(
+    ((d - firstDayOfYear) / 86400000 + firstDayOfYear.getDay()) / 7
+  );
+};
 const formatDate = d => new Date(d).toISOString().replace(/T.*/, "");
 function main() {
   return Events(params.dates)
@@ -15,14 +21,14 @@ function main() {
         amountWithoutPlugin: 0,
         currency: "EUR",
         draftAmount: 0,
-        date: null,
+        time: null,
         toggledPlugin: false,
         proceedToCheckout: false
       };
       for (let i = 0; i < events.length; ++i) {
         if (events[i].name === "Toggled Plugin") {
           acc.toggledPlugin = true;
-          if (!acc.date) acc.date = formatDate(new Date(events[i].time));
+          if (!acc.time) acc.time = events[i].time;
         } else if (events[i].name === "Proceed To Checkout") {
           acc.proceedToCheckout = true;
           acc.currency = events[i].properties.currency;
@@ -73,15 +79,16 @@ function main() {
             acc.draftAmount = 0;
             acc.toggledPlugin = false;
             acc.proceedToCheckout = false;
-            if (!acc.date) acc.date = formatDate(new Date(events[i].time));
+            if (!acc.time) acc.time = events[i].time;
           }
         }
       }
       return acc;
     })
     .groupBy(
-      ["value.date", "value.currency"],
+      [entry => getWeekOfYear(new Date(entry.value.time)), "value.currency"],
       [
+        mixpanel.reducer.min("value.time"),
         mixpanel.reducer.sum("value.countWithPlugin"),
         mixpanel.reducer.sum("value.amountWithPlugin"),
         mixpanel.reducer.sum("value.countWithoutPlugin"),
@@ -89,10 +96,10 @@ function main() {
       ]
     )
     .map(entry => ({
-      date: entry.key[0],
+      date: formatDate(new Date(entry.value[0])),
       currency: entry.key[1],
-      withPluginTotal: entry.value[1] / entry.value[0],
-      withoutPluginTotal: entry.value[3] / entry.value[2]
+      withPluginTotal: entry.value[2] / entry.value[1],
+      withoutPluginTotal: entry.value[4] / entry.value[3]
     }))
     .filter(r => r.withPluginTotal > 0);
 }
