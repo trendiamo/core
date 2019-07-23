@@ -15,6 +15,7 @@ const TableRow = ({
   selectedIds,
   setSelectedIds,
   api,
+  canDuplicateResource,
   canEditResource,
   resourceEditPath,
   routes,
@@ -69,7 +70,7 @@ const TableRow = ({
           </Button>
         )}
         {api.duplicate && (
-          <Button disabled={canEditResource && !canEditResource(resource)} onClick={duplicateResource}>
+          <Button disabled={canDuplicateResource && !canDuplicateResource(resource)} onClick={duplicateResource}>
             <CopyIcon />
           </Button>
         )}

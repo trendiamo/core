@@ -4,10 +4,10 @@ class PicturePolicy < ApplicationPolicy
   end
 
   def create?
-    user&.admin || user&.active_membership&.owner?
+    admin_or_owner?
   end
 
   def destroy?
-    user&.admin || user&.active_membership&.owner?
+    admin_or_owner?
   end
 end

@@ -10,6 +10,14 @@ class ApplicationPolicy
     Pundit.policy_scope!(user, record.class)
   end
 
+  def admin_or_owner?
+    user&.admin || user&.active_membership&.owner?
+  end
+
+  def editor?
+    user&.active_membership&.editor?
+  end
+
   class Scope
     attr_reader :user, :scope
 
@@ -20,6 +28,14 @@ class ApplicationPolicy
 
     def resolve
       scope
+    end
+
+    def admin_or_owner?
+      user&.admin || user&.active_membership&.owner?
+    end
+
+    def editor?
+      user&.active_membership&.editor?
     end
   end
 end

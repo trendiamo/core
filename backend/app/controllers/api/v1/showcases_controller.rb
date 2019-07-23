@@ -55,6 +55,7 @@ module Api
         @showcase = policy_scope(Showcase).find(params[:id])
         authorize @showcase
         @cloned_showcase = @showcase.deep_clone(include: { spotlights: :product_picks })
+        @cloned_showcase.owner = current_user
         @cloned_showcase.name = "Copied from - " + @cloned_showcase.name
         if @cloned_showcase.save
           render json: @cloned_showcase, status: :created

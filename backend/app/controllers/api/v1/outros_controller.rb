@@ -51,6 +51,7 @@ module Api
         @outro = policy_scope(Outro).find(params[:id])
         authorize @outro
         @cloned_outro = @outro.deep_clone
+        @cloned_outro.owner = current_user
         @cloned_outro.name = "Copied from - " + @cloned_outro.name
         if @cloned_outro.save
           render json: @cloned_outro, status: :created

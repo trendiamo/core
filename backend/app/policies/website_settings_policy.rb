@@ -1,16 +1,6 @@
 class WebsiteSettingsPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      if user&.admin || user&.active_membership&.owner?
-        scope
-      else
-        scope.none
-      end
-    end
-  end
-
   def show?
-    user&.admin || user&.active_membership&.owner?
+    user
   end
 
   def create?
@@ -18,6 +8,6 @@ class WebsiteSettingsPolicy < ApplicationPolicy
   end
 
   def update?
-    user&.admin || user&.active_membership&.owner?
+    admin_or_owner?
   end
 end

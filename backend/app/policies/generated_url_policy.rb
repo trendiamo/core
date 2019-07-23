@@ -1,7 +1,7 @@
 class GeneratedUrlPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.admin || user&.active_membership&.owner?
+      if admin_or_owner?
         scope
       else
         scope.none
@@ -10,10 +10,10 @@ class GeneratedUrlPolicy < ApplicationPolicy
   end
 
   def index?
-    user&.admin || user&.active_membership&.owner?
+    admin_or_owner?
   end
 
   def create?
-    user&.admin || user&.active_membership&.owner?
+    admin_or_owner?
   end
 end

@@ -37,9 +37,10 @@ const SimpleChatsRow = ({ record, highlightInactive }) => (
 const api = { fetch: apiSimpleChatList, destroy: apiSimpleChatDestroy, duplicate: apiSimpleChatDuplicate }
 const simpleChatsRoutes = { create: routes.simpleChatCreate, edit: routes.simpleChatEdit }
 const highlightInactive = ['triggerIds']
-const canEditResource = resource => {
-  return auth.isAdmin() || auth.getAccountRole() !== 'editor' || resource.triggerIds.length < 1
-}
+const canEditResource = resource =>
+  auth.isAdmin() ||
+  auth.getAccountRole() === 'owner' ||
+  (resource.triggerIds.length < 1 && resource.ownerId === auth.getUser().id)
 
 const SimpleChatsList = () => (
   <EnhancedList
