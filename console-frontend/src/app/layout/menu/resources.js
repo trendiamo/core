@@ -7,11 +7,18 @@ import {
   Palette,
   PersonPinOutlined,
   PhotoLibrary,
+  SettingsOutlined,
   SmsOutlined,
   TuneOutlined,
 } from '@material-ui/icons'
 
 const resources = {
+  account: {
+    icon: SettingsOutlined,
+    label: 'Account',
+    class: 'account',
+    route: () => routes.settingsAccount(),
+  },
   dataDashboard: {
     icon: BarChart,
     label: 'Data Dashboard',

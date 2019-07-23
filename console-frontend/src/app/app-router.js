@@ -1,6 +1,5 @@
 import Account from 'app/screens/account'
 import Accounts from 'app/screens/accounts/accounts-list'
-import ChangePassword from 'app/screens/change-password'
 import DataDashboard from 'app/screens/data-dashboard'
 import ForgotPassword from 'auth/forgot-password'
 import LoginPage from 'auth/login'
@@ -154,7 +153,7 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         component={Account}
         exact
         fetchedAccount={fetchedAccount}
-        path={routes.account(':accountSlug')}
+        path={routes.settingsAccount(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute
@@ -166,7 +165,6 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         path={routes.userCreate(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
-      <PrivateRoute component={ChangePassword} exact path={routes.passwordChange()} />
       <PrivateRoute
         component={UrlGenerator}
         exact

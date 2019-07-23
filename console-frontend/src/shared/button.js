@@ -5,8 +5,12 @@ import theme from 'app/theme'
 import { CircularProgress } from '@material-ui/core'
 import { Button as MuiButton, Tooltip } from '@material-ui/core'
 
-const ButtonContainer = styled.div`
-  display: flex;
+const ButtonContainer = styled(props => <div {...omit(props, ['inline', 'centered'])} />)`
+${({ inline }) =>
+  inline
+    ? `display: inline-block;
+       & + * {margin-left: 10px;}`
+    : 'display: flex;'}
   justify-content: ${({ centered }) => (centered ? 'center' : 'normal')};
 `
 
@@ -53,6 +57,7 @@ const Button = ({
   width,
   centered,
   children,
+  inline,
   ...props
 }) => {
   const [styleObject, setStyleObject] = useState({})
@@ -91,7 +96,7 @@ const Button = ({
   )
 
   return (
-    <ButtonContainer centered={centered}>
+    <ButtonContainer centered={centered} inline={inline}>
       <Tooltip
         open={tooltipEnabled && tooltipOpen && isFormPristine}
         placement={tooltipPlacement}

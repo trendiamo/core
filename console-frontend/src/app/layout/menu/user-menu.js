@@ -3,6 +3,7 @@ import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'auth'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import Link from 'shared/link'
+import ModalUserSettings from './modal-user-settings'
 import omit from 'lodash.omit'
 import PeopleOutline from '@material-ui/icons/PeopleOutline'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -61,6 +62,7 @@ const transformOrigin = { horizontal: 'center', vertical: 'top' }
 const UserMenu = ({ sidebarOpen }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [user, setUser] = useState(auth.getUser())
+  const [isUserSettingsModalOpen, setIsUserSettingsModalOpen] = useState(false)
 
   const initials = useMemo(
     () => (!user.firstName || !user.lastName ? null : `${user.firstName[0]}${user.lastName[0]}`),
@@ -89,6 +91,10 @@ const UserMenu = ({ sidebarOpen }) => {
     })()
   }, [])
 
+  const openUserSettingsModal = useCallback(() => {
+    setIsUserSettingsModalOpen(true)
+  }, [])
+
   useEffect(() => {
     auth.addListener(setUser)
     return () => auth.removeListener(setUser)
@@ -113,6 +119,7 @@ const UserMenu = ({ sidebarOpen }) => {
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={anchorOrigin}
+        disableAutoFocusItem
         id="menu-appbar"
         onClick={handleClose}
         open={isMenuOpen}
@@ -124,11 +131,10 @@ const UserMenu = ({ sidebarOpen }) => {
             <MenuItemThemed icon={<PeopleOutline />} text="Back to Accounts" />
           </Link>
         )}
-        <Link to={routes.account()}>
-          <MenuItemThemed icon={<AccountCircleOutlined />} text="Account" />
-        </Link>
+        <MenuItemThemed icon={<AccountCircleOutlined />} onClick={openUserSettingsModal} text="User Settings" />
         <MenuItemThemed icon={<ExitIcon />} onClick={onLogoutButtonClick} text="Logout" />
       </Menu>
+      <ModalUserSettings open={isUserSettingsModalOpen} setOpen={setIsUserSettingsModalOpen} />
     </div>
   )
 }
