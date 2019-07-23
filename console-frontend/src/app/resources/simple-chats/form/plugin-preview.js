@@ -2,7 +2,7 @@ import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { apiRequest, apiWebsiteSettingsShow } from 'utils'
-import { Launcher as BaseLauncher, SimpleChat } from 'plugin-base'
+import { Launcher as BaseLauncher, personaPic, SimpleChat } from 'plugin-base'
 import { previewConverter } from './data-utils'
 import { useSnackbar } from 'notistack'
 
@@ -13,24 +13,24 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
     () => (
       <SimpleChat
         backButtonLabel="Back"
-        data={previewConverter.mainData(form.title, form.simpleChatStepsAttributes)}
+        data={previewConverter.mainData(form.title, form.usePersonaAnimation, form.simpleChatStepsAttributes)}
         persona={previewConverter.persona(form.__persona)}
         showBackButton={false}
       />
     ),
-    [form.__persona, form.simpleChatStepsAttributes, form.title]
+    [form.__persona, form.simpleChatStepsAttributes, form.title, form.usePersonaAnimation]
   )
 
   const Launcher = useMemo(
     () => (
       <BaseLauncher
         onClick={onLauncherClick}
-        personaPic={previewConverter.persona(form.__persona).profilePic}
+        personaPic={personaPic(form.__persona, form.usePersonaAnimation)}
         pulsating
         showingContent={showingContent}
       />
     ),
-    [form.__persona, onLauncherClick, showingContent]
+    [form.__persona, form.usePersonaAnimation, onLauncherClick, showingContent]
   )
 
   const { enqueueSnackbar } = useSnackbar()

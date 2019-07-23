@@ -3,7 +3,7 @@ import React, { useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import { BackButton, Cover as CoverBase, PersonaInstagram } from 'shared'
 import { CoverImg, PaddedCover, PersonaDescription } from 'shared/cover/components'
-import { imgixUrl, stringifyRect } from 'tools'
+import { personaPicUrl } from 'tools'
 import { ThemeContext, useTextTyping } from 'ext'
 
 const PersonaName = styled.div`
@@ -15,7 +15,7 @@ const FlexDiv = styled.div`
   display: flex;
 `
 
-const Cover = ({ persona, backButtonLabel, FlowBackButton, headerConfig, backButtonConfig, showBackButton }) => {
+const Cover = ({ backButtonConfig, backButtonLabel, FlowBackButton, headerConfig, persona, showBackButton, step }) => {
   const currentDescription = useTextTyping(persona.description, 300)
 
   const newHeaderConfig = useMemo(() => ({ ...defaultHeaderConfig, ...headerConfig }), [headerConfig])
@@ -31,18 +31,7 @@ const Cover = ({ persona, backButtonLabel, FlowBackButton, headerConfig, backBut
           <BackButton backButtonConfig={backButtonConfig} label={backButtonLabel} />
         ))}
       <FlexDiv>
-        <CoverImg
-          src={
-            persona.profilePic &&
-            persona.profilePic.url &&
-            imgixUrl(persona.profilePic.url, {
-              rect: stringifyRect(persona.profilePic.picRect || persona.picRect),
-              fit: 'crop',
-              w: 45,
-              h: 45,
-            })
-          }
-        />
+        <CoverImg src={personaPicUrl(persona, step.simpleChat.usePersonaAnimation, { w: 45, h: 45 })} />
         <PaddedCover>
           <PersonaName theme={theme}>{persona.name}</PersonaName>
           <PersonaInstagram url={persona.instagramUrl} />

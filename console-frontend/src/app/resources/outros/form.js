@@ -9,6 +9,7 @@ import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, Field, Form, FormHelperText, PreviewModal } from 'shared/form-elements'
 import { apiPersonasAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -17,6 +18,7 @@ const formObjectTransformer = json => {
   return {
     id: json.id,
     personaId: (json.persona && json.persona.id) || '',
+    usePersonaAnimation: json.usePersonaAnimation || false,
     name: json.name || '',
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleButtonYes: json.chatBubbleButtonYes || '',
@@ -32,16 +34,38 @@ const options = { suggestionItem: 'withAvatar' }
 const BaseOutroForm = ({
   formRef,
   form,
-  setFieldValue,
-  selectPersona,
   isFormLoading,
   isFormPristine,
+  mergeForm,
   onFormSubmit,
+  setFieldValue,
   title,
 }) => {
+  const [usePersonaAnimation, setUsePersonaAnimation] = useState(form.usePersonaAnimation)
+
   const initialSelectedItem = useMemo(() => form.__persona && { value: form.__persona, label: form.__persona.name }, [
     form.__persona,
   ])
+
+  const onTogglePersonaAnimation = useCallback(
+    event => {
+      setFieldValue(event)
+      setUsePersonaAnimation(event.target.checked)
+    },
+    [setFieldValue]
+  )
+
+  const selectPersona = useCallback(
+    selected => {
+      if (!selected) return
+      mergeForm({
+        personaId: selected.value.id,
+        __persona: selected.value,
+        usePersonaAnimation: selected.value.profilePicAnimation.url ? usePersonaAnimation : false,
+      })
+    },
+    [mergeForm, usePersonaAnimation]
+  )
 
   return (
     <Section title={title}>
@@ -71,6 +95,22 @@ const BaseOutroForm = ({
           required
         />
         <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
+        {form.__persona && (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={form.usePersonaAnimation}
+                color="primary"
+                disabled={!form.__persona.profilePicAnimation.url}
+                name="usePersonaAnimation"
+                onChange={onTogglePersonaAnimation}
+              />
+            }
+            disabled={!form.__persona.profilePicAnimation.url}
+            label="Use persona's animated picture"
+            title={form.__persona.profilePicAnimation.url ? null : "This persona doesn't have an animated picture"}
+          />
+        )}
         <Field
           disabled={isFormLoading}
           fullWidth
@@ -152,17 +192,6 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
     [formRef, history, location.pathname, onFormSubmit]
   )
 
-  const selectPersona = useCallback(
-    selected => {
-      selected &&
-        mergeForm({
-          personaId: selected.value.id,
-          __persona: selected.value,
-        })
-    },
-    [mergeForm]
-  )
-
   const appBarContent = useMemo(
     () => ({
       Actions: (
@@ -198,8 +227,8 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
             formRef={formRef}
             isFormLoading={isFormLoading}
             isFormPristine={isFormPristine}
+            mergeForm={mergeForm}
             onFormSubmit={newOnFormSubmit}
-            selectPersona={selectPersona}
             setFieldValue={setFieldValue}
             title={title}
           />

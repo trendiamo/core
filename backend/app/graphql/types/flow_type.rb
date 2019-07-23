@@ -32,4 +32,9 @@ Types::FlowType = GraphQL::ObjectType.define do
       obj.persona
     }
   end
+  field :usePersonaAnimation, !types.Boolean do
+    resolve ->(obj, _args, _ctx) {
+      obj.use_persona_animation
+    }
+  end
 end

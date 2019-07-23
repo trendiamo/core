@@ -73,10 +73,12 @@ const formObjectTransformer = json => {
     triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
     __persona: json.persona,
+    usePersonaAnimation: json.usePersonaAnimation || false,
     spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
       id: spotlight.id,
       personaId: (spotlight.persona && spotlight.persona.id) || '',
       __persona: spotlight.persona,
+      usePersonaAnimation: spotlight.usePersonaAnimation || false,
       productPicksAttributes: spotlight.productPicksAttributes
         ? spotlight.productPicksAttributes.map(productPick => ({
             id: productPick.id,

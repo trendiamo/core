@@ -1,7 +1,7 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import styled from 'styled-components'
-import { imgixUrl, stringifyRect } from 'tools'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
+import { personaPicUrl } from 'tools'
 import { transition } from 'ext'
 
 const PersonaName = styled.div`
@@ -43,17 +43,20 @@ const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, with
     [onClick, spotlight, withoutPicture]
   )
 
+  const animation = useMemo(
+    () =>
+      spotlight.persona.profilePicAnimation &&
+      !spotlight.usePersonaAnimation &&
+      spotlight.persona.profilePicAnimation.url,
+    [spotlight]
+  )
+
   return (
     <ListItem bordered={bordered} listSelected={listSelected} onClick={newOnClick} setListSelected={setListSelected}>
       {!withoutPicture && (
         <ListImg
-          animation={spotlight.persona.profilePicAnimation && spotlight.persona.profilePicAnimation.url}
-          picture={imgixUrl(spotlight.persona.profilePic.url, {
-            rect: stringifyRect(spotlight.persona.profilePic.picRect || spotlight.persona.picRect),
-            fit: 'crop',
-            w: 101,
-            h: 101,
-          })}
+          animation={animation}
+          picture={personaPicUrl(spotlight.persona, spotlight.usePersonaAnimation, { w: 101, h: 101 })}
           ref={imgRef}
         />
       )}

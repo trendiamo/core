@@ -37,6 +37,7 @@ const AppGraphql = () => {
           chatBubbleExtraText
           chatBubbleButtonYes
           chatBubbleButtonNo
+          usePersonaAnimation
           persona {
             id
             name
@@ -49,6 +50,9 @@ const AppGraphql = () => {
               y
               width
               height
+            }
+            profilePicAnimation {
+              url
             }
             instagramUrl
           }
@@ -65,6 +69,9 @@ const AppGraphql = () => {
             y
             width
             height
+          }
+          profilePicAnimation {
+            url
           }
         }
       }

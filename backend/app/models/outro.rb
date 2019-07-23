@@ -13,14 +13,14 @@ class Outro < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "name", "chat_bubble_text", "chat_bubble_button_no", "chat_bubble_button_yes", "created_at",
-             "updated_at", "lock_version")
+      .slice("id", "name", "chat_bubble_text", "chat_bubble_button_no", "chat_bubble_button_yes",
+             "use_persona_animation", "created_at", "updated_at", "lock_version")
       .merge(persona: persona_attributes(persona), type: "Outro", trigger_ids: triggers.ids)
   end
 
   def persona_attributes(persona)
-    { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name,
-      pic_rect: persona.pic_rect, instagram_url: persona.instagram_url, }
+    { id: persona.id, name: persona.name, profile_pic: { url: persona.profile_pic.url }, pic_rect: persona.pic_rect,
+      profile_pic_animation: { url: persona.profile_pic_animation&.url }, instagram_url: persona.instagram_url, }
   end
 
   def paths

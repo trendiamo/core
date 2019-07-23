@@ -63,7 +63,7 @@ module Api
 
       def outro_params
         params.require(:outro).permit(:persona_id, :name, :chat_bubble_text, :chat_bubble_button_no,
-                                      :chat_bubble_button_yes, :lock_version)
+                                      :chat_bubble_button_yes, :use_persona_animation, :lock_version)
       end
 
       def render_error

@@ -49,7 +49,10 @@ const AnimationUploaderHelp = styled(HelpOutline)`
 
 const AnimationUploader = ({ circle, disabled, label, setAnimation, setIsUploaderLoading, value }) => (
   <AnimationUploaderContainer>
-    <Tooltip placement="top" title="The animated GIF will appear when moving the mouse over a showcase items">
+    <Tooltip
+      placement="top"
+      title="In your modules, you can show an animated GIF instead of the default one or when moving the mouse over a showcase item"
+    >
       <AnimationUploaderHelp />
     </Tooltip>
     <PictureUploader

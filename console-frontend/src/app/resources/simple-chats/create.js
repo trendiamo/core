@@ -9,6 +9,7 @@ const loadFormObject = () => {
     name: '',
     title: '',
     personaId: '',
+    usePersonaAnimation: false,
     chatBubbleText: '',
     chatBubbleExtraText: '',
     simpleChatStepsAttributes: [

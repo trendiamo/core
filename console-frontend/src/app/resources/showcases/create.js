@@ -8,6 +8,7 @@ const loadFormObject = () => {
   return {
     name: '',
     personaId: '',
+    usePersonaAnimation: false,
     title: '',
     subtitle: '',
     chatBubbleText: '',
@@ -15,6 +16,7 @@ const loadFormObject = () => {
     spotlightsAttributes: [
       {
         personaId: '',
+        usePersonaAnimation: false,
         productPicksAttributes: [
           {
             url: '',

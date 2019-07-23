@@ -88,17 +88,6 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     [mergeFormCallback]
   )
 
-  const selectPersona = useCallback(
-    selected => {
-      selected &&
-        mergeForm({
-          personaId: selected.value.id,
-          __persona: selected.value,
-        })
-    },
-    [mergeForm]
-  )
-
   const onSortEnd = useCallback(
     ({ oldIndex, newIndex }) => {
       mergeFormCallback(form => {
@@ -166,10 +155,10 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
             isFormPristine={isFormPristine}
             isFormSubmitting={isFormSubmitting}
             isUploaderLoading={isUploaderLoading}
+            mergeForm={mergeForm}
             onFormSubmit={newOnFormSubmit}
             onSortEnd={onSortEnd}
             onToggleContent={onToggleContent}
-            selectPersona={selectPersona}
             setFieldValue={setFieldValue}
             setIsCropping={setIsCropping}
             setIsUploaderLoading={setIsUploaderLoading}

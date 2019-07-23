@@ -16,8 +16,8 @@ class Showcase < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "created_at",
-             "updated_at", "lock_version")
+      .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "use_persona_animation",
+             "created_at", "updated_at", "lock_version")
       .merge(persona: persona_attributes(persona),
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",
@@ -25,7 +25,8 @@ class Showcase < ApplicationRecord
   end
 
   def persona_attributes(persona)
-    { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name, pic_rect: persona.pic_rect }
+    { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name, pic_rect: persona.pic_rect,
+      profile_pic_animation: { url: persona.profile_pic_animation&.url }, }
   end
 
   def spotlights_attributes(spotlights)
@@ -33,6 +34,7 @@ class Showcase < ApplicationRecord
       {
         id: spotlight.id,
         persona: spotlight_persona_attributes(spotlight),
+        use_persona_animation: spotlight.use_persona_animation,
         product_picks_attributes: product_picks_attributes(spotlight.product_picks),
       }
     end

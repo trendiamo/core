@@ -1,10 +1,38 @@
 import Autocomplete from 'shared/autocomplete'
 import ProductPicks from './product-picks'
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
+import styled from 'styled-components'
+import Tooltip from 'shared/tooltip'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
 import { apiPersonasAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
+import { HelpOutline } from '@material-ui/icons'
+
+const StyledLabel = styled.span`
+  display: flex;
+  align-items: center;
+`
+
+const IconHelp = styled(HelpOutline)`
+  font-size: 16px;
+  margin-left: 3px;
+`
+
+const PersonaLabel = ({ disabled }) => (
+  <StyledLabel>
+    {'Always show animated picture'}
+    <Tooltip
+      disabled={disabled}
+      placement="top"
+      title="Decide whether to always show the persona's animated GIF or just when moving the mouse over an item"
+      trigger="click"
+    >
+      <IconHelp />
+    </Tooltip>
+  </StyledLabel>
+)
 
 const options = { suggestionItem: 'withAvatar' }
 
@@ -21,6 +49,8 @@ const Spotlight = ({
   setSpotlightForm,
   spotlight,
 }) => {
+  const [usePersonaAnimation, setUsePersonaAnimation] = useState(spotlight.usePersonaAnimation)
+
   const onChange = useCallback(
     newSpotlightCallback => {
       setSpotlightForm(oldSpotlight => ({ ...oldSpotlight, ...newSpotlightCallback(oldSpotlight) }), index)
@@ -30,13 +60,15 @@ const Spotlight = ({
 
   const selectPersona = useCallback(
     selected => {
-      selected &&
+      if (selected) {
         onChange(() => ({
           personaId: selected.value.id,
           __persona: selected.value,
+          usePersonaAnimation: selected.value.profilePicAnimation.url ? usePersonaAnimation : false,
         }))
+      }
     },
-    [onChange]
+    [onChange, usePersonaAnimation]
   )
 
   const addProductPick = useCallback(
@@ -104,6 +136,15 @@ const Spotlight = ({
     [index, onSpotlightClick, spotlight.id]
   )
 
+  const onTogglePersonaAnimation = useCallback(
+    () => {
+      onChange(() => ({ usePersonaAnimation: !usePersonaAnimation }))
+      setUsePersonaAnimation(!usePersonaAnimation)
+      onFocus()
+    },
+    [onChange, onFocus, usePersonaAnimation]
+  )
+
   return (
     <Section>
       <FormSection
@@ -135,7 +176,23 @@ const Spotlight = ({
           options={options}
           required
         />
-        <div style={{ marginTop: '24px' }}>
+        {spotlight.__persona && (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={spotlight.usePersonaAnimation}
+                color="primary"
+                disabled={!spotlight.__persona.profilePicAnimation.url}
+                name="usePersonaAnimation"
+                onChange={onTogglePersonaAnimation}
+              />
+            }
+            disabled={!spotlight.__persona.profilePicAnimation.url}
+            label={<PersonaLabel disabled={!spotlight.__persona.profilePicAnimation.url} />}
+            title={spotlight.__persona.profilePicAnimation.url ? null : "This persona doesn't have an animated picture"}
+          />
+        )}
+        <div style={{ marginTop: '8px' }}>
           <FormSection foldable title="Product Picks">
             {spotlight.productPicksAttributes && (
               <ProductPicks

@@ -7,6 +7,7 @@ import { useSnackbar } from 'notistack'
 const loadFormObject = () => {
   return {
     personaId: '',
+    usePersonaAnimation: false,
     name: '',
     chatBubbleText: '',
     chatBubbleButtonYes: '',

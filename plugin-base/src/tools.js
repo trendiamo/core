@@ -63,6 +63,26 @@ const imgixUrl = (url, imgixParams) => {
   return `https://trendiamo-assets.imgix.net${urlObj.pathname}?${stringify(search)}`
 }
 
+const personaPic = (persona, usePersonaAnimation) => {
+  if (!persona) return { url: '', picRect: {} }
+  return usePersonaAnimation
+    ? {
+        url: persona.profilePicAnimation && persona.profilePicAnimation.url,
+        picRect: {},
+      }
+    : {
+        url: persona.profilePic && persona.profilePic.url,
+        picRect: persona && persona.picRect,
+      }
+}
+
+const personaPicUrl = (persona, usePersonaAnimation, size) => {
+  const { url, picRect } = personaPic(persona, usePersonaAnimation)
+  if (usePersonaAnimation) return url
+  const imgixParams = size && { fit: 'crop', w: size.w, h: size.h }
+  return imgixUrl(url, { rect: stringifyRect(picRect), ...imgixParams })
+}
+
 const positioning = {
   content: null,
   launcherBubbles: null,
@@ -210,6 +230,8 @@ export {
   matchUrl,
   stringifyRect,
   imgixUrl,
+  personaPic,
+  personaPicUrl,
   positioning,
   extractYoutubeId,
   convertLogs,
