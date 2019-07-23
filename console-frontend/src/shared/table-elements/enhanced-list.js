@@ -35,6 +35,7 @@ const EnhancedList = ({
   buttonText,
   columns,
   defaultSorting,
+  canDuplicateResource,
   canEditResource,
   helpStep,
   highlightInactive,
@@ -238,6 +239,7 @@ const EnhancedList = ({
             state.records.map((record, index) => (
               <TableRow
                 api={api}
+                canDuplicateResource={canDuplicateResource}
                 canEditResource={canEditResource}
                 handleSelectAll={handleSelectAll}
                 highlightInactive={inactiveRows[index]}

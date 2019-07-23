@@ -55,6 +55,7 @@ module Api
         @simple_chat = policy_scope(SimpleChat).find(params[:id])
         authorize @simple_chat
         @cloned_simple_chat = @simple_chat.deep_clone(include: { simple_chat_steps: :simple_chat_messages })
+        @cloned_simple_chat.owner = current_user
         @cloned_simple_chat.name = "Copied from - " + @cloned_simple_chat.name
         if @cloned_simple_chat.save
           render json: @cloned_simple_chat, status: :created

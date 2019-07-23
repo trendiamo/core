@@ -1,7 +1,7 @@
 class AutocompletePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.admin || user&.active_membership&.owner?
+      if admin_or_owner?
         scope
       else
         scope.none
@@ -14,10 +14,10 @@ class AutocompletePolicy < ApplicationPolicy
   end
 
   def flows_autocomplete?
-    user&.admin || user&.active_membership&.owner?
+    admin_or_owner?
   end
 
   def path_autocomplete?
-    user&.admin || user&.active_membership&.owner?
+    admin_or_owner?
   end
 end
