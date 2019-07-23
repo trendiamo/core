@@ -180,14 +180,12 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
   )
 
   const newOnFormSubmit = useCallback(
-    event => {
-      ;(async () => {
-        if (!formRef.current.reportValidity()) return
-        const result = await onFormSubmit(event)
-        if (!result || result.error || result.errors) return
-        if (location.pathname !== routes.outroEdit(result.id)) history.push(routes.outroEdit(result.id))
-        return result
-      })()
+    async event => {
+      if (!formRef.current.reportValidity()) return
+      const result = await onFormSubmit(event)
+      if (!result || result.error || result.errors) return
+      if (location.pathname !== routes.outroEdit(result.id)) history.push(routes.outroEdit(result.id))
+      return result
     },
     [formRef, history, location.pathname, onFormSubmit]
   )

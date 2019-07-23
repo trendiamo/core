@@ -71,21 +71,19 @@ const Login1 = () => {
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
 
   const loginSubmit = useCallback(
-    event => {
-      ;(async () => {
-        event.preventDefault()
-        const { json, errors, requestError } = await apiRequest(
-          apiSignIn,
-          [{ user: { email: loginForm.email, password: loginForm.password } }],
-          { isLoginRequest: true }
-        )
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!requestError && !errors) auth.setUser(json.user)
-        if (auth.isLoggedIn()) {
-          window.location.href = routes.root()
-        }
-      })()
+    async event => {
+      event.preventDefault()
+      const { json, errors, requestError } = await apiRequest(
+        apiSignIn,
+        [{ user: { email: loginForm.email, password: loginForm.password } }],
+        { isLoginRequest: true }
+      )
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!requestError && !errors) auth.setUser(json.user)
+      if (auth.isLoggedIn()) {
+        window.location.href = routes.root()
+      }
     },
     [enqueueSnackbar, loginForm.email, loginForm.password]
   )

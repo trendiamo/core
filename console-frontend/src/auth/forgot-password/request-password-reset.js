@@ -65,14 +65,12 @@ const PasswordReset1 = () => {
   const [passwordForm, setPasswordForm] = useState({ email: '' })
 
   const passwordChangeSubmit = useCallback(
-    event => {
-      ;(async () => {
-        event.preventDefault()
-        const { json, requestError } = await apiRequest(apiPasswordEmailLink, [{ user: { email: passwordForm.email } }])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (!requestError) enqueueSnackbar('Email sent!', { variant: 'info' })
-        return json
-      })()
+    async event => {
+      event.preventDefault()
+      const { json, requestError } = await apiRequest(apiPasswordEmailLink, [{ user: { email: passwordForm.email } }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (!requestError) enqueueSnackbar('Email sent!', { variant: 'info' })
+      return json
     },
     [enqueueSnackbar, passwordForm.email]
   )

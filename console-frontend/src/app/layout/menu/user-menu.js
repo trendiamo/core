@@ -84,11 +84,9 @@ const UserMenu = ({ sidebarOpen }) => {
     setAnchorEl(event.currentTarget)
   }, [])
 
-  const onLogoutButtonClick = useCallback(event => {
-    ;(async () => {
-      event.preventDefault()
-      await apiSignOut()
-    })()
+  const onLogoutButtonClick = useCallback(async event => {
+    event.preventDefault()
+    await apiSignOut()
   }, [])
 
   const openUserSettingsModal = useCallback(() => {

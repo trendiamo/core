@@ -71,21 +71,19 @@ const ChangePassword1 = ({ handleClose, ...props }) => {
   )
 
   const onFormSubmit = useCallback(
-    event => {
-      ;(async () => {
-        event.preventDefault()
-        if (passwordForm.password !== passwordForm.passwordConfirmation) {
-          enqueueSnackbar("Passwords don't match", { variant: 'error' })
-          return
-        }
-        const { errors, requestError } = await apiRequest(apiPasswordChange, [{ user: passwordForm }])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!requestError && !errors) {
-          enqueueSnackbar('Changed Password', { variant: 'success' })
-          handleClose()
-        }
-      })()
+    async event => {
+      event.preventDefault()
+      if (passwordForm.password !== passwordForm.passwordConfirmation) {
+        enqueueSnackbar("Passwords don't match", { variant: 'error' })
+        return
+      }
+      const { errors, requestError } = await apiRequest(apiPasswordChange, [{ user: passwordForm }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!requestError && !errors) {
+        enqueueSnackbar('Changed Password', { variant: 'success' })
+        handleClose()
+      }
     },
     [enqueueSnackbar, handleClose, passwordForm]
   )

@@ -67,17 +67,15 @@ const Signup = () => {
   )
 
   const onSubmit = useCallback(
-    event => {
-      ;(async () => {
-        event.preventDefault()
+    async event => {
+      event.preventDefault()
 
-        const { errors, requestError } = await apiRequest(apiSignUp, [{ user: state.form }])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!requestError && !errors) {
-          setFormSubmitted(true)
-        }
-      })()
+      const { errors, requestError } = await apiRequest(apiSignUp, [{ user: state.form }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!requestError && !errors) {
+        setFormSubmitted(true)
+      }
     },
     [enqueueSnackbar, setFormSubmitted, state.form]
   )

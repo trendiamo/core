@@ -165,40 +165,36 @@ const EnhancedList = ({
   const cancelable = useCancelable()
 
   const fetchRecords = useCallback(
-    () => {
-      ;(async () => {
-        dispatch({ type: 'setLoading' })
-        try {
-          const { json, response, errors, requestError } = await cancelable(apiRequest(api.fetch, [query]))
-          dispatch({ type: 'completeFetch', json, response, errors, requestError })
-        } catch (e) {
-          if (e.message === 'isCanceled') {
-            // ignore: this means the component was unmounted before the request could complete
-          } else {
-            throw e
-          }
+    async () => {
+      dispatch({ type: 'setLoading' })
+      try {
+        const { json, response, errors, requestError } = await cancelable(apiRequest(api.fetch, [query]))
+        dispatch({ type: 'completeFetch', json, response, errors, requestError })
+      } catch (e) {
+        if (e.message === 'isCanceled') {
+          // ignore: this means the component was unmounted before the request could complete
+        } else {
+          throw e
         }
-      })()
+      }
     },
     [api.fetch, cancelable, query]
   )
 
   const deleteRecords = useCallback(
-    () => {
-      ;(async () => {
-        try {
-          const { errors, requestError } = await cancelable(apiRequest(api.destroy, [{ ids: state.selectedIds }]))
-          if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-          if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-          fetchRecords()
-        } catch (e) {
-          if (e.message === 'isCanceled') {
-            // ignore: this means the component was unmounted before the request could complete
-          } else {
-            throw e
-          }
+    async () => {
+      try {
+        const { errors, requestError } = await cancelable(apiRequest(api.destroy, [{ ids: state.selectedIds }]))
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        fetchRecords()
+      } catch (e) {
+        if (e.message === 'isCanceled') {
+          // ignore: this means the component was unmounted before the request could complete
+        } else {
+          throw e
         }
-      })()
+      }
     },
     [api.destroy, cancelable, enqueueSnackbar, fetchRecords, state.selectedIds]
   )

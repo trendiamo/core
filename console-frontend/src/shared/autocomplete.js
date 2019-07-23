@@ -102,15 +102,13 @@ const Autocomplete = ({
   const [prevSelected, setPrevSelected] = useState(null)
 
   const loadAllOptions = useCallback(
-    () => {
-      ;(async () => {
-        const { json } = await apiRequest(autocomplete, [''])
-        const suggestions = json.map(option => {
-          return { value: option, label: option.name }
-        })
-        setMenuIsOpen(!menuIsOpen)
-        setSuggestions(suggestions)
-      })()
+    async () => {
+      const { json } = await apiRequest(autocomplete, [''])
+      const suggestions = json.map(option => {
+        return { value: option, label: option.name }
+      })
+      setMenuIsOpen(!menuIsOpen)
+      setSuggestions(suggestions)
     },
     [autocomplete, menuIsOpen]
   )
@@ -119,24 +117,22 @@ const Autocomplete = ({
   const handleOuterClick = useCallback(() => setMenuIsOpen(false), [setMenuIsOpen])
 
   const onInputValueChange = useCallback(
-    (searchQuery, stateAndHelpers) => {
-      ;(async () => {
-        if (searchQuery.length <= 2) return setMenuIsOpen(false)
-        const { json } = await debouncedAutocomplete(searchQuery)
-        const options = json.map(option => {
-          return { value: option, label: option.name }
-        })
-        if (
-          initialValueFormatMismatch ||
-          !prevSelected ||
-          prevSelected.value.name.toLowerCase() !== searchQuery.toLowerCase()
-        ) {
-          setSuggestions(options)
-        }
-        if (stateAndHelpers.type === '__autocomplete_change_input__') {
-          setMenuIsOpen(true)
-        }
-      })()
+    async (searchQuery, stateAndHelpers) => {
+      if (searchQuery.length <= 2) return setMenuIsOpen(false)
+      const { json } = await debouncedAutocomplete(searchQuery)
+      const options = json.map(option => {
+        return { value: option, label: option.name }
+      })
+      if (
+        initialValueFormatMismatch ||
+        !prevSelected ||
+        prevSelected.value.name.toLowerCase() !== searchQuery.toLowerCase()
+      ) {
+        setSuggestions(options)
+      }
+      if (stateAndHelpers.type === '__autocomplete_change_input__') {
+        setMenuIsOpen(true)
+      }
     },
     [debouncedAutocomplete, initialValueFormatMismatch, prevSelected]
   )

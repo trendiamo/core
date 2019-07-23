@@ -53,11 +53,9 @@ const ResultBox = ({ url }) => {
   const [isCopied, setIsCopied] = useState(false)
 
   const copyUrl = useCallback(
-    () => {
-      ;(async () => {
-        await navigator.clipboard.writeText(url)
-        setIsCopied(true)
-      })()
+    async () => {
+      await navigator.clipboard.writeText(url)
+      setIsCopied(true)
     },
     [url]
   )

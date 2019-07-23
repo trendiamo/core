@@ -69,27 +69,25 @@ const PasswordReset1 = () => {
   })
 
   const passwordResetSubmit = useCallback(
-    event => {
-      ;(async () => {
-        event.preventDefault()
-        if (passwordForm.fieldOne !== passwordForm.fieldTwo) {
-          enqueueSnackbar("Passwords don't match", { variant: 'error' })
-          return
-        }
-        const parsedUrl = queryString.parse(window.location.search)
-        const { json, errors, requestError } = await apiRequest(apiPasswordReset, [
-          {
-            user: {
-              password: passwordForm.fieldTwo,
-              reset_password_token: parsedUrl.reset_password_token,
-            },
+    async event => {
+      event.preventDefault()
+      if (passwordForm.fieldOne !== passwordForm.fieldTwo) {
+        enqueueSnackbar("Passwords don't match", { variant: 'error' })
+        return
+      }
+      const parsedUrl = queryString.parse(window.location.search)
+      const { json, errors, requestError } = await apiRequest(apiPasswordReset, [
+        {
+          user: {
+            password: passwordForm.fieldTwo,
+            reset_password_token: parsedUrl.reset_password_token,
           },
-        ])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!requestError && !errors) auth.setUser(json.user)
-        if (auth.isLoggedIn()) window.location.href = routes.root()
-      })()
+        },
+      ])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!requestError && !errors) auth.setUser(json.user)
+      if (auth.isLoggedIn()) window.location.href = routes.root()
     },
     [enqueueSnackbar, passwordForm.fieldOne, passwordForm.fieldTwo]
   )
