@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { Button, Typography } from '@material-ui/core'
+import { isLocalStorageAccurate } from 'utils'
 
 const Fullscreen = styled.div`
   position: relative;
@@ -45,6 +46,8 @@ const NotFound = () => {
     event.preventDefault()
     window.location.href = routes.root()
   }, [])
+
+  if (!isLocalStorageAccurate()) return null
 
   return (
     <Fullscreen>

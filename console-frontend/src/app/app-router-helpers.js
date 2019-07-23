@@ -3,6 +3,7 @@ import NotFound from 'app/screens/not-found'
 import React, { useCallback, useEffect } from 'react'
 import routes from './routes'
 import { apiAccountsShow, apiRequest } from 'utils'
+import { isLocalStorageAccurate } from 'utils'
 import { Redirect, Route } from 'react-router-dom'
 
 const PrivateRouteRender = ({
@@ -22,6 +23,7 @@ const PrivateRouteRender = ({
           setFetchedAccount(false)
           const { json } = await apiRequest(apiAccountsShow, [auth.getSlug()])
           auth.setAccount(json)
+          if (!isLocalStorageAccurate()) return
           setFetchedAccount(true)
         }
       })()
