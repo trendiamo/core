@@ -61,4 +61,20 @@ const AuthStyledForm = styled.form`
   }
 `
 
-export { AuthButton, AuthLink, AuthStyledForm, AuthTitle, AuthText, AuthMessage }
+const AuthFormFooter = styled.div`
+  padding-top: 2rem;
+
+  button,
+  p {
+    margin: 0 0 1rem;
+  }
+
+  @media (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+`
+
+export { AuthButton, AuthLink, AuthStyledForm, AuthFormFooter, AuthTitle, AuthText, AuthMessage }

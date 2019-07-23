@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
-import { AuthStyledForm } from 'auth/components'
+import { AuthFormFooter, AuthStyledForm } from 'auth/components'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -136,6 +136,9 @@ const Signup = () => {
             deleteHostname={deleteHostname}
             editHostnameValue={editHostnameValue}
             form={state.form}
+            fullWidth
+            margin="normal"
+            required
           />
           <FormControl fullWidth margin="normal" required>
             <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
@@ -180,15 +183,15 @@ const Signup = () => {
               value={state.form.passwordConfirmation}
             />
           </FormControl>
-          <div style={{ marginTop: '2rem', width: '70%' }}>
+          <AuthFormFooter>
             <Button color="primaryGradient" fullWidth type="submit" variant="contained">
               {'Signup'}
             </Button>
-          </div>
-          <div style={{ marginTop: '1rem' }}>
-            {'Already have an account? '}
-            <Link to={routes.login()}>{'Login'}</Link>
-          </div>
+            <p>
+              {'Already have an account? '}
+              <Link to={routes.login()}>{'Login'}</Link>
+            </p>
+          </AuthFormFooter>
         </AuthStyledForm>
       )}
     </AuthLayout>
