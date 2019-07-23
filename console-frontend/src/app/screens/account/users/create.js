@@ -88,7 +88,7 @@ const UserCreate = ({ history }) => {
         if (!formRef.current.reportValidity()) return
         const result = await onFormSubmit(event)
         if (!result || result.error || result.errors) return
-        history.push(routes.account())
+        history.push(routes.settingsAccount())
         return result
       })()
     },
@@ -112,7 +112,7 @@ const UserCreate = ({ history }) => {
           saveDisabled={isFormSubmitting || isFormLoading || isCropping || isFormPristine || isUploaderLoading}
         />
       ),
-      backRoute: routes.account(),
+      backRoute: routes.settingsAccount(),
       title: 'Add User',
     }),
     [isCropping, isFormLoading, isFormPristine, isFormSubmitting, isUploaderLoading, newOnFormSubmit]
