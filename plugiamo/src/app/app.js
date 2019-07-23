@@ -31,6 +31,7 @@ const App = ({
   const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
   const autoOpen = useRef(null)
   const flowType = useRef(null)
+  const flowId = useRef(null)
   const persona = useRef(null)
   const [hasPersona, setHasPersona] = useState(false)
   const config = useMemo(() => setup(data, setupFlowHistory()), [data])
@@ -40,14 +41,16 @@ const App = ({
   useEffect(() => {
     if (!persona.current && config.persona) setHasPersona(true)
     flowType.current = config.flowType
+    flowId.current = data && data.flow && data.flow.id
     autoOpen.current = config.open
     persona.current = config.persona
-  }, [config.flowType, config.open, config.persona])
+  }, [config.flowType, config.open, config.persona, data])
 
   useEffect(() => {
     mixpanel.track('Loaded Plugin', {
       autoOpen: autoOpen.current,
       flowType: flowType.current,
+      flowId: flowId.current,
       hash: location.hash,
       hostname: location.hostname,
       personaName: persona.current.name,
@@ -68,7 +71,12 @@ const App = ({
   const onToggleContent = useCallback(() => {
     if (data.flow && flowType.current === 'outro') return
     if (isDeliusAssessment() && pluginState === 'closed') return
-    mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
+    mixpanel.track('Toggled Plugin', {
+      hostname: location.hostname,
+      action: showingContent ? 'close' : 'open',
+      flowType: flowType.current,
+      flowId: flowId.current,
+    })
     mixpanel.time_event('Toggled Plugin')
 
     setShowingBubbles(false)
