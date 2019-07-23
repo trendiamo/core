@@ -57,6 +57,7 @@ const SimpleChat = ({
           id
           title
           name
+          usePersonaAnimation
           simpleChatSteps {
             id
             key

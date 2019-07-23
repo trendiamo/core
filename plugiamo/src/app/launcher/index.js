@@ -1,8 +1,9 @@
 import { h } from 'preact'
-import { Launcher as LauncherBase } from 'plugin-base'
+import { Launcher as LauncherBase, personaPic } from 'plugin-base'
 import { useMemo } from 'preact/hooks'
 
 const Launcher = ({
+  data,
   disappear,
   frameStyleStr,
   launcherConfig,
@@ -23,21 +24,13 @@ const Launcher = ({
     [launcherConfig, showingContent]
   )
 
-  const personaPic = useMemo(
-    () => ({
-      url: persona.profilePic.url,
-      picRect: persona.picRect,
-    }),
-    [persona.picRect, persona.profilePic.url]
-  )
-
   return (
     <LauncherBase
       disappear={disappear}
       frameStyleStr={frameStyleStr}
       launcherConfig={compiledLauncherConfig}
       onClick={onToggleContent}
-      personaPic={personaPic}
+      personaPic={personaPic(persona, data.flow && data.flow.usePersonaAnimation)}
       position={position}
       pulsating={pulsating}
       showingContent={showingContent}

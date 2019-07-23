@@ -13,7 +13,8 @@ class SimpleChat < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "title", "name", "chat_bubble_text", "chat_bubble_extra_text", "lock_version")
+      .slice("id", "title", "name", "chat_bubble_text", "chat_bubble_extra_text", "lock_version",
+             "use_persona_animation")
       .merge(extra_attributes)
   end
 
@@ -35,10 +36,11 @@ class SimpleChat < ApplicationRecord
     result
   end
 
-  def persona_attributes
+  def persona_attributes # rubocop:disable Metrics/AbcSize
     {
       id: persona.id, name: persona.name, description: persona.description,
-      profile_pic: { url: persona.profile_pic.url }, instagram_url: persona.instagram_url, picRect: persona.pic_rect,
+      profile_pic: { url: persona.profile_pic.url }, picRect: persona.pic_rect,
+      profile_pic_animation: { url: persona.profile_pic_animation&.url }, instagram_url: persona.instagram_url,
     }
   end
 end

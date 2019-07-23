@@ -1,7 +1,9 @@
 import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
-import React, { useMemo } from 'react'
-import { Launcher as BaseLauncher } from 'plugin-base'
+import React, { useEffect, useMemo, useState } from 'react'
+import { apiRequest, apiWebsiteSettingsShow } from 'utils'
+import { Launcher as BaseLauncher, personaPic } from 'plugin-base'
+import { useSnackbar } from 'notistack'
 
 const PluginPreview = ({ form }) => {
   const bubbleButtons = useMemo(
@@ -12,17 +14,27 @@ const PluginPreview = ({ form }) => {
     [form.chatBubbleButtonNo, form.chatBubbleButtonYes]
   )
 
-  const Launcher = useMemo(
-    () => (
-      <BaseLauncher
-        personaPic={{
-          url: (form.persona && form.persona.profilePic.url) || (form.__persona && form.__persona.profilePic.url),
-          picRect: (form.persona && form.persona.picRect) || (form.__persona && form.__persona.picRect),
-        }}
-      />
-    ),
-    [form.__persona, form.persona]
+  const Launcher = useMemo(() => <BaseLauncher personaPic={personaPic(form.__persona, form.usePersonaAnimation)} />, [
+    form.__persona,
+    form.usePersonaAnimation,
+  ])
+
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [pluginTheme, setPluginTheme] = useState(null)
+
+  useEffect(
+    () => {
+      ;(async () => {
+        const { json, requestError } = await apiRequest(apiWebsiteSettingsShow, [])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        setPluginTheme(json)
+      })()
+    },
+    [enqueueSnackbar]
   )
+
+  if (!pluginTheme) return null
 
   return (
     <BasePluginPreview
@@ -30,6 +42,7 @@ const PluginPreview = ({ form }) => {
       bubbleText={form.chatBubbleText}
       Launcher={Launcher}
       launcherConfig={launcherConfig}
+      pluginTheme={pluginTheme}
     />
   )
 }

@@ -12,10 +12,11 @@ const previewConverter = {
       name: persona.name || defaults.persona.name,
       description: persona.description || defaults.persona.description,
       profilePic: { url: persona.profilePic && persona.profilePic.url, picRect: persona.picRect },
+      profilePicAnimation: { url: persona.profilePicAnimation && persona.profilePicAnimation.url, picRect: {} },
     }
   },
-  mainData(title, simpleChatSteps) {
-    const newData = { title, simpleChatSteps }
+  mainData(title, usePersonaAnimation, simpleChatSteps) {
+    const newData = { title, usePersonaAnimation, simpleChatSteps }
     newData.simpleChatSteps = newData.simpleChatSteps
       .map(simpleChatStep => {
         const messages = simpleChatStep.simpleChatMessagesAttributes
@@ -34,6 +35,7 @@ const formObjectTransformer = json => {
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleExtraText: json.chatBubbleExtraText || '',
     personaId: (json.persona && json.persona.id) || '',
+    usePersonaAnimation: json.usePersonaAnimation || false,
     triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
     __persona: json.persona,

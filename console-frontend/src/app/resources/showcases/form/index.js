@@ -74,6 +74,7 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
           ...form.spotlightsAttributes,
           {
             personaId: '',
+            usePersonaAnimation: false,
             productPicksAttributes: [
               {
                 url: '',
@@ -107,17 +108,6 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
       })
     },
     [mergeFormCallback]
-  )
-
-  const selectPersona = useCallback(
-    selected => {
-      if (!selected) return
-      mergeForm({
-        personaId: selected.value.id,
-        __persona: selected.value,
-      })
-    },
-    [mergeForm]
   )
 
   const onSortEnd = useCallback(
@@ -217,12 +207,12 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
             isFormLoading={isFormLoading}
             isFormPristine={isFormPristine}
             isUploaderLoading={isUploaderLoading}
+            mergeForm={mergeForm}
             onBackClick={onBackClick}
             onFormSubmit={newOnFormSubmit}
             onSortEnd={onSortEnd}
             onSpotlightClick={onSpotlightClick}
             onToggleContent={onToggleContent}
-            selectPersona={selectPersona}
             setFieldValue={setFieldValue}
             setIsCropping={setIsCropping}
             setIsUploaderLoading={setIsUploaderLoading}

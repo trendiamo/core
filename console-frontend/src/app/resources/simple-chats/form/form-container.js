@@ -15,10 +15,10 @@ const FormContainer = ({
   isFormPristine,
   isFormSubmitting,
   isUploaderLoading,
+  mergeForm,
   onFormSubmit,
   onSortEnd,
   onToggleContent,
-  selectPersona,
   setFieldValue,
   setIsCropping,
   setIsUploaderLoading,
@@ -53,8 +53,8 @@ const FormContainer = ({
         isCropping={isCropping}
         isFormLoading={isFormLoading}
         isUploaderLoading={isUploaderLoading}
+        mergeForm={mergeForm}
         onToggleContent={onToggleContent}
-        selectPersona={selectPersona}
         setFieldValue={setFieldValue}
         title={title}
       />

@@ -149,9 +149,11 @@ const ShowcaseGraphql = ({ id, ...props }) => {
           id
           title
           subtitle
+          usePersonaAnimation
           spotlights {
             id
             order
+            usePersonaAnimation
             persona {
               id
               name

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { BackButton } from 'shared'
 import { CoverImg, CoverInner, PaddedCover, PersonaDescription } from 'shared/cover/components'
-import { imgixUrl, stringifyRect } from 'tools'
+import { personaPicUrl } from 'tools'
 import { ThemeContext, transition, useTextTyping } from 'ext'
 
 const FlexDiv = styled.div`
@@ -39,12 +39,7 @@ const SpotlightCover = ({ backButtonLabel, isLeaving, routeToShowcase, spotlight
       <FlexDiv>
         <CoverImg
           ref={imgRef}
-          src={imgixUrl(spotlight.persona.profilePic.url, {
-            rect: stringifyRect(spotlight.persona.profilePic.picRect || spotlight.persona.picRect),
-            fit: 'crop',
-            w: 45,
-            h: 45,
-          })}
+          src={personaPicUrl(spotlight.persona, spotlight.usePersonaAnimation, { w: 45, h: 45 })}
         />
         <PaddedCover>
           <PersonaName ref={nameRef} theme={theme}>

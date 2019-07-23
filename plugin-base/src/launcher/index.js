@@ -33,7 +33,7 @@ const Launcher = ({
         position={position}
         pulsating={pulsating}
       >
-        {personaPic ? (
+        {personaPic.url ? (
           <PersonaPic active={!showingContent} launcherConfig={launcherConfig} personaPic={personaPic} />
         ) : (
           <EmptyPersonaPic active={!showingContent} />

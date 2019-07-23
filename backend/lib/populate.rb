@@ -9,11 +9,13 @@ class PopulateShowcases
 
   private
 
-  def create_showcases # rubocop:disable Metrics/MethodLength
+  def create_showcases # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     Array.new(3) do
+      persona = Persona.order("RANDOM()").first
       showcase_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Showcase",
-        persona: Persona.order("RANDOM()").first,
+        persona: persona,
+        use_persona_animation: persona.profile_pic_animation&.url ? rand < 0.5 : false,
         title: Faker::Lorem.sentence,
         subtitle: Faker::Lorem.sentence,
         chat_bubble_text: Faker::Movie.quote,
@@ -26,9 +28,11 @@ class PopulateShowcases
   end
 
   def spotlights_attributes(spotlight_index)
+    persona = Persona.order("RANDOM()").first
     {
       product_picks_attributes: Array.new(3) { |index| product_picks_attributes(index) },
-      persona: Persona.order("RANDOM()").first,
+      persona: persona,
+      use_persona_animation: persona.profile_pic_animation&.url ? rand < 0.5 : false,
       order: spotlight_index + 1,
     }
   end
@@ -58,9 +62,11 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
 
   def create_simple_chats # rubocop:disable Metrics/MethodLength
     Array.new(3) do
+      persona = Persona.order("RANDOM()").first
       simple_chat_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Chat",
-        persona: Persona.order("RANDOM()").first,
+        persona: persona,
+        use_persona_animation: persona.profile_pic_animation&.url ? rand < 0.5 : false,
         title: "Hello there",
         chat_bubble_text: Faker::Movie.quote,
         chat_bubble_extra_text: Faker::Movie.quote,
@@ -254,6 +260,8 @@ class Populate # rubocop:disable Metrics/ClassLength
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
         profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg"),
+        profile_pic_animation:
+          [Picture.find_or_create_by!(url: "https://random-d.uk/api/#{i % 99 + 1}.gif"), nil].sample,
       }
       Persona.create!(persona_attrs)
     end
