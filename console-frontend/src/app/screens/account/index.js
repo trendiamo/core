@@ -1,6 +1,5 @@
 import AppBarButton from 'shared/app-bar-button'
 import auth from 'auth'
-import EditMe from './edit-me'
 import EditWebsite from './edit-website'
 import React from 'react'
 import routes from 'app/routes'
@@ -29,7 +28,6 @@ const Account = () => {
           <UsersList />
         </>
       )}
-      {!auth.isAdmin() && <EditMe />}
     </>
   )
 }

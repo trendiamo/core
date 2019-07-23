@@ -1,9 +1,6 @@
 import auth from 'auth'
 
 const routes = {
-  account(accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/account`
-  },
   accountRoot(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}`
   },
@@ -99,6 +96,9 @@ const routes = {
   },
   settingsTheme(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/settings/theme`
+  },
+  settingsAccount(accountSlug = auth.getSlug()) {
+    return `/a/${accountSlug}/settings/account`
   },
   nullRoute() {
     return '/empty'

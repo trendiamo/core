@@ -30,7 +30,7 @@ const resourceGroups = () => {
     settings: {
       name: 'Settings',
       showTitle: true,
-      resources: [resources.theme],
+      resources: [resources.theme, resources.account],
     },
   }
 }
