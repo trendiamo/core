@@ -4,7 +4,7 @@ class AccountPolicy < ApplicationPolicy
       if user&.admin
         scope.all
       else
-        user.accounts
+        user&.accounts
       end
     end
   end

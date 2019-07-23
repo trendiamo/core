@@ -1,31 +1,31 @@
 class PersonaPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.active_membership&.editor?
-        scope.none
-      else
+      if user&.admin || user&.active_membership&.owner?
         scope
+      else
+        scope.none
       end
     end
   end
 
   def index?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 
   def show?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 
   def create?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 
   def update?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 
   def destroy?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 end

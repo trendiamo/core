@@ -1,23 +1,23 @@
 class AutocompletePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.active_membership&.editor?
-        scope.none
-      else
+      if user&.admin || user&.active_membership&.owner?
         scope
+      else
+        scope.none
       end
     end
   end
 
   def personas_autocomplete?
-    user.active_membership || user.admin
+    user&.active_membership || user&.admin
   end
 
   def flows_autocomplete?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 
   def path_autocomplete?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 end

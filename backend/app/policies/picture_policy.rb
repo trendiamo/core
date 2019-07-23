@@ -1,13 +1,13 @@
 class PicturePolicy < ApplicationPolicy
   def index?
-    user.active_membership || user.admin
+    user&.admin || user&.active_membership
   end
 
   def create?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 
   def destroy?
-    user.active_membership&.owner? || user.admin
+    user&.admin || user&.active_membership&.owner?
   end
 end
