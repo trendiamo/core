@@ -1,4 +1,3 @@
-import auth from 'auth'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
@@ -44,16 +43,7 @@ const StyledButton = styled(Button)`
 const NotFound = () => {
   const navigateToRootPage = useCallback(event => {
     event.preventDefault()
-    if (auth.isLoggedIn()) {
-      const user = auth.getUser()
-      const accountSlugs = !user.admin && Object.keys(user.roles)
-      if (auth.isSingleAccount()) {
-        return (window.location.href = routes.root(accountSlugs[0]))
-      }
-      window.location.href = routes.accounts()
-    } else {
-      window.location.href = routes.login()
-    }
+    window.location.href = routes.root()
   }, [])
 
   return (
