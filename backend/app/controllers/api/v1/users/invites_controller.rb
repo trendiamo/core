@@ -22,6 +22,9 @@ module Api
 
         def edit # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           @invite = Invite.where.not(token: [nil, ""]).find_by(token: params[:token])
+
+          return redirect_to "#{ENV['FRONTEND_BASE_URL']}/login#invalid-invite" if @invite.accepted_and_confirmed?
+
           if @invite&.invite_period_valid? && @invite&.update(accepted_at: Time.now.utc)
             if @invite.recipient&.confirmed?
               Membership.create!(user: @invite.recipient, account: @invite.account, role: @invite.role)
