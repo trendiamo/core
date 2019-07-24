@@ -203,7 +203,14 @@ const EnhancedList = ({
 
   const setSelectedIds = useCallback(selectedIds => dispatch({ type: 'setSelectedIds', selectedIds }), [])
 
-  useEffect(fetchRecords, [fetchRecords])
+  useEffect(
+    () => {
+      ;(async () => {
+        await fetchRecords()
+      })()
+    },
+    [fetchRecords]
+  )
 
   if (state.isLoading) return <CircularProgress />
 
