@@ -51,7 +51,14 @@ const AccountsList = () => {
     [debouncedAutocomplete, setSearchValue, setPage]
   )
 
-  useEffect(fetchAccounts, [fetchAccounts])
+  useEffect(
+    () => {
+      ;(async () => {
+        fetchAccounts()
+      })()
+    },
+    [fetchAccounts]
+  )
 
   if (!fetched) return <CircularProgress />
 
