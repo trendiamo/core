@@ -126,7 +126,7 @@ const EnhancedList = ({
 
   const appBarContent = useMemo(
     () => ({
-      Actions: <Actions buttonText={buttonText} createRoute={routes.create ? routes.create() : null} />,
+      Actions: <Actions buttonText={buttonText} createRoute={routes && routes.create ? routes.create() : null} />,
       title: state.page === 0 ? title : `${title} p.${state.page + 1}`,
     }),
     [buttonText, routes, state.page, title]
@@ -249,7 +249,7 @@ const EnhancedList = ({
                 index={index}
                 key={record.id}
                 resource={record}
-                resourceEditPath={routes.edit && routes.edit(record.id)}
+                resourceEditPath={routes && routes.edit && routes.edit(record.id)}
                 routes={routes}
                 selectedIds={state.selectedIds}
                 setSelectedIds={setSelectedIds}

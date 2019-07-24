@@ -171,7 +171,7 @@ export const apiAccountsShow = slug => apiGetRequest(`${ACCOUNTS_URL}/${slug}`)
 export const apiAccountDestroy = slug => apiDestroyRequest(`${ACCOUNTS_URL}/${slug}`)
 
 export const apiUserList = query => apiListRequest(`${USERS_URL}/?${stringify(query)}`)
-export const apiUserCreate = body => apiCreateRequest(USERS_URL, body)
 export const apiUserDestroy = body => apiDestroyMultipleRequest(USERS_URL, body)
+export const apiUserInvite = body => apiCreateRequest(`${USERS_URL}/invites`, body)
 
 export const apiEventList = query => apiGetRequest(`${EVENTS_URL}/?${stringify(query)}`)

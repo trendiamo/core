@@ -26,6 +26,18 @@ class DeviseSparkpostMailer < Devise::Mailer
     mail(to: record.email, sparkpost_data: sparkpost_data)
   end
 
+  def invite(record, token, _opts = {})
+    url = api_v1_users_invites_url(token: token)
+    sparkpost_data = {
+      sender_first_name: record.sender.first_name,
+      account_name: record.account.name,
+      invite_url: `#{ENV["MAILER_HOST"]}/api/v1/users/invites/accept?token=#{token}`,
+      dynamic_html: { accept_email_link: %(<a href="#{url}">Accept the invite</a>) },
+      template_id: "accept-invite",
+    }
+    mail(to: record.email, sparkpost_data: sparkpost_data)
+  end
+
   private
 
   def mail(*args)

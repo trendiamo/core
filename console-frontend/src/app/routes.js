@@ -55,6 +55,9 @@ const routes = {
   signup() {
     return '/signup'
   },
+  signupConfirm() {
+    return '/signup/confirm'
+  },
   simpleChatsList(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/simple-chats`
   },
@@ -88,11 +91,8 @@ const routes = {
   urlGenerator(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/url-generator`
   },
-  userCreate(accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/account/users/create`
-  },
-  userEdit(id, accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/account/users/${id}/edit`
+  userInvite(accountSlug = auth.getSlug()) {
+    return `/a/${accountSlug}/settings/account/invite`
   },
   settingsTheme(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/settings/theme`

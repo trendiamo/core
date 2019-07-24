@@ -45,7 +45,9 @@ const TableRow = ({
         enqueueSnackbar(requestError, { variant: 'error' })
         return
       }
-      history.push(routes.edit(json.id))
+      if (routes) {
+        history.push(routes.edit(json.id))
+      }
     },
     [api.duplicate, resource.id, history, routes, enqueueSnackbar]
   )

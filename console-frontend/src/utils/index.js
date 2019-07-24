@@ -50,18 +50,25 @@ import {
   apiTriggerShow,
   apiTriggerSort,
   apiTriggerUpdate,
-  apiUserCreate,
   apiUserDestroy,
+  apiUserInvite,
   apiUserList,
   apiWebsiteSettingsShow,
   apiWebsiteSettingsUpdate,
   apiWebsiteShow,
   apiWebsiteUpdate,
 } from './auth-requests'
-import { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn, apiSignUp } from './requests'
+import {
+  apiGetCsrfToken,
+  apiPasswordEmailLink,
+  apiPasswordReset,
+  apiSignIn,
+  apiSignUp,
+  apiSignUpWithInvite,
+} from './requests'
 import { extractErrors } from 'utils/shared'
 
-export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn, apiSignUp }
+export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn, apiSignUp, apiSignUpWithInvite }
 export {
   apiAccountList,
   apiAccountCreate,
@@ -112,8 +119,8 @@ export {
   apiTriggerSort,
   apiGeneratedUrlCreate,
   apiGeneratedUrlList,
-  apiUserCreate,
   apiUserDestroy,
+  apiUserInvite,
   apiUserList,
   apiWebsiteShow,
   apiWebsiteUpdate,

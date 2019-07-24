@@ -4,6 +4,7 @@ import { BASE_API_URL } from './shared'
 const CSRF_TOKEN_URL = `${BASE_API_URL}/csrf_token`
 const SIGNIN_URL = `${BASE_API_URL}/users/sign_in`
 const SIGNUP_URL = `${BASE_API_URL}/users/sign_up`
+const SIGNUP_WITH_INVITE_URL = `${BASE_API_URL}/users/sign_up_with_invite`
 const PASSWORD_FORM_URL = `${BASE_API_URL}/users/password`
 const PASSWORD_RESET_URL = `${BASE_API_URL}/users/password`
 
@@ -46,5 +47,7 @@ export const apiPasswordEmailLink = body => apiPostRequest(PASSWORD_FORM_URL, bo
 export const apiSignIn = body => apiPostRequest(SIGNIN_URL, body)
 
 export const apiSignUp = body => apiPostRequest(SIGNUP_URL, body)
+
+export const apiSignUpWithInvite = body => apiPostRequest(SIGNUP_WITH_INVITE_URL, body)
 
 export const apiGetCsrfToken = () => apiGetRequest(CSRF_TOKEN_URL)

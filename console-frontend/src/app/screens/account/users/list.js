@@ -1,6 +1,5 @@
 import auth from 'auth'
 import React, { useMemo } from 'react'
-import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import { apiUserDestroy, apiUserList } from 'utils'
@@ -55,7 +54,6 @@ const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles, 
 const api = { fetch: apiUserList, destroy: apiUserDestroy }
 const canEditResource = () => auth.isAdmin()
 const defaultSorting = { column: 'role', direction: 'asc' }
-const usersRoutes = { create: routes.userCreate }
 
 const UsersList = () => (
   <EnhancedList
@@ -65,7 +63,6 @@ const UsersList = () => (
     columns={columns}
     defaultSorting={defaultSorting}
     ResourceRow={UsersRow}
-    routes={usersRoutes}
     title="Users"
   />
 )

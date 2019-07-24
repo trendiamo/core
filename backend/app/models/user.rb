@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :accounts, through: :memberships
 
+  has_many :invites, dependent: :destroy, class_name: "Invite", foreign_key: "recipient_id", inverse_of: "recipient"
+  has_many :sent_invites, dependent: :destroy, class_name: "Invite", foreign_key: "sender_id", inverse_of: "sender"
+
   accepts_nested_attributes_for :memberships
 
   validate :memberships_empty_when_admin
