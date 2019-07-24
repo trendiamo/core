@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import WhiteButton from 'shared/white-button'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
+import { Field } from 'shared/form-elements'
 import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
@@ -103,7 +104,8 @@ const EditMe = ({ togglePasswordForm }) => {
         required
         value={form.email}
       />
-      <TextField
+      <Field
+        autoFocus
         disabled={isFormLoading || isCropping || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}

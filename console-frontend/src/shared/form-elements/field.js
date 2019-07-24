@@ -1,5 +1,5 @@
 import omit from 'lodash.omit'
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
@@ -16,10 +16,12 @@ const Container = styled.div`
   position: relative;
 `
 
-const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...props }) => {
-  const [textLength, setTextLength] = useState(0)
-  const [isOutsideLimits, setIsOutsideLimits] = useState(false)
+const Field = ({ autoFocus, disabled, label, max, onBlur, onChange, onFocus, required, value, ...props }) => {
+  const inputRef = useRef(null)
   const [focused, setFocused] = useState(false)
+  const [hasFocused, setHasFocused] = useState(false)
+  const [isOutsideLimits, setIsOutsideLimits] = useState(false)
+  const [textLength, setTextLength] = useState(0)
 
   const handleChange = useCallback(
     event => {
@@ -49,6 +51,15 @@ const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...prop
 
   useEffect(
     () => {
+      if (!autoFocus || hasFocused || disabled) return
+      setHasFocused(true)
+      inputRef.current.focus()
+    },
+    [autoFocus, disabled, hasFocused]
+  )
+
+  useEffect(
+    () => {
       if (value.length !== textLength) {
         setTextLength(value.length)
         setIsOutsideLimits(value.length > max)
@@ -64,12 +75,14 @@ const Field = ({ max, label, value, required, onBlur, onFocus, onChange, ...prop
           {label}
         </InputLabel>
         <Input
-          required={required}
-          {...omit(props, ['setTextLength', 'setIsOutsideLimits', 'setFocused', 'margin'])}
+          disabled={!hasFocused && disabled}
+          inputRef={inputRef}
           onBlur={handleBlur}
           onChange={handleChange}
           onFocus={handleFocus}
+          required={required}
           value={value}
+          {...omit(props, ['autoFocus', 'margin', 'setFocused', 'setIsOutsideLimits', 'setTextLength'])}
         />
       </FormControl>
       {focused && max && (

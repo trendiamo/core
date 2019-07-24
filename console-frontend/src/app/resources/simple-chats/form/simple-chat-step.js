@@ -224,6 +224,7 @@ const SimpleChatStep = ({
         <>
           {simpleChatStep.key !== 'default' && (
             <Field
+              autoFocus={simpleChatStepIndex > 0 && !simpleChatStep.id}
               disabled={isCropping || isFormLoading || isUploaderLoading}
               fullWidth
               inputProps={atLeastOneNonBlankCharInputProps}

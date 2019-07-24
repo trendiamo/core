@@ -38,10 +38,16 @@ const MessageField = ({
   simpleChatMessageIndex,
   simpleChatStep,
 }) => {
+  const autoFocus = useMemo(() => simpleChatMessageIndex > 0 && !simpleChatMessage.id, [
+    simpleChatMessage.id,
+    simpleChatMessageIndex,
+  ])
+
   switch (simpleChatMessage.type) {
     case 'SimpleChatTextMessage':
       return (
         <TextMessageFields
+          autoFocus={autoFocus}
           disabled={isFormLoading || isUploaderLoading}
           name="simpleChatMessage_text"
           onChange={onSimpleChatMessageEdit}
@@ -54,6 +60,7 @@ const MessageField = ({
     case 'SimpleChatProductMessage':
       return (
         <ProductMessageFields
+          autoFocus={autoFocus}
           isCropping={isCropping}
           isFormLoading={isFormLoading}
           isNextSameType={isNextSameType}
@@ -71,6 +78,7 @@ const MessageField = ({
     case 'SimpleChatVideoMessage':
       return (
         <VideoMessageField
+          autoFocus={autoFocus}
           disabled={isFormLoading || isUploaderLoading}
           name="simpleChatMessage_video"
           onChange={onSimpleChatMessageEdit}

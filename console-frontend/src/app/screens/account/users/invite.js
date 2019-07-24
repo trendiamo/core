@@ -85,6 +85,7 @@ const UserInvite = ({ history }) => {
     <Section title="Invite User">
       <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
         <Field
+          autoFocus
           disabled={isFormLoading}
           fullWidth
           label="Email"
