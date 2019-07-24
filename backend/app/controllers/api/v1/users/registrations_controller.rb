@@ -28,6 +28,34 @@ module Api
           end
         end
 
+        def create_with_invite # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+          # recipient_id: nil -> invites where recipient-users are not yet confirmed
+          @invite = Invite.where(recipient_id: nil)
+                          .where.not(token: [nil, ""])
+                          .find_by(email: params[:user][:email], token: params[:token])
+
+          return render json: { errors: [{ title: "Unable to signup" }] } if @invite.nil?
+
+          build_resource(sign_up_with_invite_params)
+          resource.save # rubocop:disable Rails/SaveBang
+          yield resource if block_given?
+          if resource.persisted?
+            if resource.active_for_authentication?
+              sign_up(resource_name, resource)
+              @invite.update!(recipient: resource)
+              sign_in(resource)
+              render json: { user: resource }
+            else
+              expire_data_after_sign_in!
+            end
+          else
+            clean_up_passwords(resource)
+            set_minimum_password_length
+            errors = resource.errors.full_messages.map { |string| { title: string } }
+            render json: { errors: errors }
+          end
+        end
+
         def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
           self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
           prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
@@ -59,6 +87,12 @@ module Api
 
         def sign_up_params
           super.merge!(sign_up_extra_params)
+        end
+
+        def sign_up_with_invite_params
+          params.require(:user).permit(:email, :first_name, :last_name, :password, :password_confirmation)
+                .merge!(confirmed_at: Time.now.utc,
+                        memberships_attributes: [{ role: @invite.role, account: @invite.account }])
         end
 
         def sign_up_extra_params

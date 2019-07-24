@@ -8,6 +8,7 @@ import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from './routes'
+import SignupConfirmPage from 'auth/signup/confirm'
 import SignupPage from 'auth/signup'
 import UrlGenerator from 'app/screens/url-generator'
 import WebsiteSettings from 'app/screens/website-settings'
@@ -20,7 +21,7 @@ import { Route, Switch } from 'react-router-dom'
 import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from './resources/showcases'
 import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from './resources/simple-chats'
 import { TriggerCreate, TriggerEdit, TriggersList } from './resources/triggers'
-import { UserCreate } from 'app/screens/account/users'
+import { UserInvite } from 'app/screens/account/users'
 
 const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
   return (
@@ -157,12 +158,11 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute
-        component={UserCreate}
+        component={UserInvite}
         exact
         fetchedAccount={fetchedAccount}
-        isAdminScoped
         isOwnerScoped
-        path={routes.userCreate(':accountSlug')}
+        path={routes.userInvite()}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute
@@ -207,7 +207,8 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
       />
 
       <ExternalRoute component={LoginPage} path={routes.login()} />
-      <ExternalRoute component={SignupPage} path={routes.signup()} />
+      <ExternalRoute component={SignupPage} exact path={routes.signup()} />
+      <ExternalRoute component={SignupConfirmPage} path={routes.signupConfirm()} />
       <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
       <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
 

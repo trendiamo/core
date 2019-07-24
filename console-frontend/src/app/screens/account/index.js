@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom'
 import { UsersList } from './users'
 
 const Actions = () => {
-  return auth.isAdmin() ? (
-    <AppBarButton color="primary" component={Link} to={routes.userCreate()} variant="contained">
-      {'Add User'}
+  return auth.isAdmin() || auth.getAccountRole() === 'owner' ? (
+    <AppBarButton color="primary" component={Link} to={routes.userInvite()} variant="contained">
+      {'Invite User'}
     </AppBarButton>
   ) : null
 }

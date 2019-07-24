@@ -1,4 +1,4 @@
-import UserCreate from './create'
+import UserInvite from './invite'
 import UsersList from './list'
 
-export { UserCreate, UsersList }
+export { UsersList, UserInvite }

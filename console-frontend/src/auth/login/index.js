@@ -64,6 +64,10 @@ const Login1 = () => {
         enqueueSnackbar('Your e-mail was successfully verified!', { variant: 'success' })
       if (window.location.hash === '#error')
         enqueueSnackbar('There was a problem with your email verification', { variant: 'error' })
+      if (window.location.hash === '#invite-accepted')
+        enqueueSnackbar('You accepted the invitation, please login to see your new account!', { variant: 'success' })
+      if (window.location.hash === '#invite-error')
+        enqueueSnackbar('There was a problem with your invite', { variant: 'error' })
     },
     [enqueueSnackbar]
   )

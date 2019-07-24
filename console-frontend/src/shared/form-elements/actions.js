@@ -42,16 +42,17 @@ const Action = ({ action, disabled, isFormPristine, onFormSubmit, isFormSubmitti
 const actions = [{ label: 'Save', color: 'primaryGradient' }, { label: 'Save & New', color: 'actions' }]
 
 const Actions = ({
-  tooltipEnabled,
   isFormSubmitting,
-  onFormSubmit,
-  saveDisabled,
   isFormPristine,
-  tooltipText,
-  saveAndCreateNewEnabled,
-  previewEnabled,
-  width,
+  message,
+  onFormSubmit,
   onPreviewClick,
+  previewEnabled,
+  saveAndCreateNewEnabled,
+  saveDisabled,
+  tooltipEnabled,
+  tooltipText,
+  width,
 }) => (
   <>
     {saveAndCreateNewEnabled ? (
@@ -91,6 +92,7 @@ const Actions = ({
             disabled={saveDisabled}
             isFormPristine={isFormPristine}
             isFormSubmitting={isFormSubmitting}
+            message={message}
             onClick={onFormSubmit}
             tooltipEnabled={tooltipEnabled}
             tooltipText={tooltipText}

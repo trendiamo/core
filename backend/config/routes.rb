@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         devise_scope :user do
           get "/users/confirmation", to: "users/confirmations#show"
           post "/users/sign_up", to: "users/registrations#create"
+          post "/users/sign_up_with_invite", to: "users/registrations#create_with_invite"
           put "/users/change_password", to: "users/registrations#update"
           get "/users/password/edit", to: "users/passwords#edit"
           post "/users/password", to: "users/passwords#create"
@@ -25,6 +26,8 @@ Rails.application.routes.draw do
           post "/users/sign_in", to: "users/sessions#create"
           delete "/users/sign_out", to: "users/sessions#destroy"
           put "/users/onboarding", to: "mes#update_onboarding"
+          get "/users/invites", to: "users/invites#edit"
+          post "/users/invites", to: "users/invites#create"
         end
 
         resources :accounts, only: %i[index show create destroy], param: :slug
@@ -54,7 +57,7 @@ Rails.application.routes.draw do
         resources :triggers, only: %i[index show update create]
         post "/triggers/sort", to: "triggers#sort"
         delete "/triggers", to: "triggers#destroy"
-        resources :users, only: %i[index create]
+        resources :users, only: %i[index]
         delete "/users", to: "users#destroy"
         resources :flows, only: %i[index]
 

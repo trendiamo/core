@@ -13,10 +13,6 @@ class UserPolicy < ApplicationPolicy
     admin_or_owner?
   end
 
-  def create?
-    user&.admin
-  end
-
   def destroy?
     user&.admin
   end
