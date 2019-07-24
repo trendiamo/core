@@ -4,6 +4,7 @@ import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Field, FormHelperText } from 'shared/form-elements'
 
 const ProductMessagesForm = ({
+  autoFocus,
   isCropping,
   isFormLoading,
   isNextSameType,
@@ -19,6 +20,7 @@ const ProductMessagesForm = ({
 }) => (
   <>
     <Field
+      autoFocus={autoFocus}
       disabled={isCropping || isFormLoading || isUploaderLoading}
       fullWidth
       label="Title"
@@ -80,6 +82,7 @@ const ProductMessagesForm = ({
 )
 
 const ProductMessageFields = ({
+  autoFocus,
   isCropping,
   isFormLoading,
   isNextSameType,
@@ -117,6 +120,7 @@ const ProductMessageFields = ({
 
   return (
     <ProductMessagesForm
+      autoFocus={autoFocus}
       isCropping={isCropping}
       isFormLoading={isFormLoading}
       isNextSameType={isNextSameType}

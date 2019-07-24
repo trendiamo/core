@@ -187,6 +187,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
         <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
           <Autocomplete
             autocomplete={apiFlowsAutocomplete}
+            autoFocus
             defaultPlaceholder="Choose a Module"
             disabled={isFormLoading}
             fullWidth

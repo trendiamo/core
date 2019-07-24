@@ -50,6 +50,7 @@ const MainForm = ({
   return (
     <Section title={title}>
       <Field
+        autoFocus
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}

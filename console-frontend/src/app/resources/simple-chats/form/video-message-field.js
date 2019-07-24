@@ -2,7 +2,15 @@ import React, { useCallback } from 'react'
 import { Field } from 'shared/form-elements'
 import { youtubeInputProps } from 'utils'
 
-const VideoMessageField = ({ disabled, name, onChange, onFocus, simpleChatMessage, simpleChatMessageIndex }) => {
+const VideoMessageField = ({
+  autoFocus,
+  disabled,
+  name,
+  onChange,
+  onFocus,
+  simpleChatMessage,
+  simpleChatMessageIndex,
+}) => {
   const onValueChange = useCallback(
     event => {
       onChange({ ...simpleChatMessage, videoUrl: event.target.value || '' }, simpleChatMessageIndex)
@@ -12,6 +20,7 @@ const VideoMessageField = ({ disabled, name, onChange, onFocus, simpleChatMessag
 
   return (
     <Field
+      autoFocus={autoFocus}
       disabled={disabled}
       fullWidth
       inputProps={youtubeInputProps}

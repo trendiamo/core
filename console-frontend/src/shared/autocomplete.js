@@ -19,8 +19,18 @@ const DropdownButton = ({ onClick }) => (
   </InputAdornment>
 )
 
-const AutocompleteInput = ({ formControlProps, loadAllOptions, inputProps, label, name }) => {
+const AutocompleteInput = ({ autoFocus, disabled, formControlProps, loadAllOptions, inputProps, label, name }) => {
   const inputRef = useRef(null)
+  const [hasFocused, setHasFocused] = useState(false)
+
+  useEffect(
+    () => {
+      if (!autoFocus || hasFocused || disabled) return
+      setHasFocused(true)
+      inputRef.current.focus()
+    },
+    [autoFocus, disabled, hasFocused]
+  )
 
   const onDropdownClick = useCallback(
     () => {
@@ -37,6 +47,7 @@ const AutocompleteInput = ({ formControlProps, loadAllOptions, inputProps, label
         {label}
       </InputLabel>
       <Input
+        disabled={disabled}
         endAdornment={<DropdownButton onClick={onDropdownClick} />}
         fullWidth
         inputProps={{ ref: inputRef }}
@@ -81,6 +92,7 @@ const itemToString = selected => (selected ? selected.label : '')
 
 const Autocomplete = ({
   autocomplete,
+  autoFocus,
   disabled,
   label,
   required,
@@ -166,6 +178,8 @@ const Autocomplete = ({
       }) => (
         <div style={{ width: '100%', position: 'relative' }}>
           <AutocompleteInput
+            autoFocus={autoFocus}
+            disabled={disabled}
             formControlProps={{ disabled, required, fullWidth }}
             inputProps={getInputProps({
               placeholder: prevSelected ? prevSelected.label : defaultPlaceholder,

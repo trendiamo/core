@@ -213,6 +213,7 @@ const beautifyHTML = value => {
 }
 
 const TextMessageFields = ({
+  autoFocus,
   disabled,
   onChange,
   onFocus,
@@ -237,6 +238,13 @@ const TextMessageFields = ({
     // Change default input placeholder on mount
     textEditorRef.current.editor.theme.tooltip.textbox.dataset.link = 'https://frekkls.com'
   }, [])
+
+  useEffect(
+    () => {
+      autoFocus && textEditorRef.current.focus()
+    },
+    [autoFocus]
+  )
 
   const onValueChange = useCallback(
     value => {

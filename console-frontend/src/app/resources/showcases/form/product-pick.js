@@ -69,6 +69,7 @@ const ProductPick = ({
       title={productPick.id ? productPick.name : 'New Product Pick'}
     >
       <Field
+        autoFocus={index > 0 && !productPick.id}
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}

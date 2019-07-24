@@ -166,6 +166,7 @@ const Spotlight = ({
       >
         <Autocomplete
           autocomplete={apiPersonasAutocomplete}
+          autoFocus={index > 0 && !spotlight.id}
           defaultPlaceholder="Choose a persona"
           disabled={isCropping || isFormLoading || isUploaderLoading}
           fullWidth
