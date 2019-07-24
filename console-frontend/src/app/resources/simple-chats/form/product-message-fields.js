@@ -32,7 +32,7 @@ const ProductMessagesForm = ({
     <Field
       disabled={isCropping || isFormLoading || isUploaderLoading}
       fullWidth
-      label="Url"
+      label="URL"
       margin="normal"
       name="url"
       onChange={onFormChange}
@@ -74,7 +74,7 @@ const ProductMessagesForm = ({
         />
       }
       disabled={isFormLoading}
-      label="Group with adjacent products"
+      label="Group with neighbouring products"
     />
   </>
 )

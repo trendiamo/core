@@ -72,7 +72,7 @@ const ProductPick = ({
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
-        label="Url"
+        label="URL"
         margin="normal"
         name="productPick_url"
         onChange={editProductPickValue}

@@ -63,7 +63,7 @@ const resources = {
   },
   urlGenerator: {
     icon: LinkIcon,
-    label: 'Url Generator',
+    label: 'URL Generator',
     class: 'urlGenerator',
     route: () => routes.urlGenerator(),
   },

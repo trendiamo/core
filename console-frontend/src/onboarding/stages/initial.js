@@ -22,7 +22,7 @@ const editorRoleSteps = () => ({
     content: <Tooltip body="Manage your pictures here." toStage1 />,
     placement: 'right',
     disableBeacon: true,
-    title: 'Pictures Gallery',
+    title: 'Image Gallery',
   },
 })
 
@@ -60,7 +60,7 @@ const nonEditorRoleSteps = () => ({
     content: <Tooltip body="Manage your pictures here." nextRoute={routes.personasList()} />,
     placement: 'right',
     disableBeacon: true,
-    title: 'Pictures Gallery',
+    title: 'Image Gallery',
   },
   personas: {
     target: '.onboard-personas',

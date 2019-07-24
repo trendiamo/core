@@ -54,7 +54,7 @@ const UrlList = ({ urlHistory }) => {
   return (
     <>
       <List component="nav">
-        <Header variant="h6">{'Url History'}</Header>
+        <Header variant="h6">{'URL History'}</Header>
         <ListItemIcon>
           <HistoryIcon />
         </ListItemIcon>

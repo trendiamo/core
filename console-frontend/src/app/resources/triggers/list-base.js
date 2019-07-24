@@ -45,7 +45,7 @@ const StyledReorderIcon = styled(ReorderIcon)`
 const columns = [
   { name: 'id', label: 'id' },
   { name: 'module', padding: 'none', label: 'module' },
-  { name: 'urlMatchers', padding: 'none', label: 'Url Matchers' },
+  { name: 'urlMatchers', padding: 'none', label: 'URL Matchers' },
 ]
 
 const StyledChip = styled(props => <Chip {...omit(props, ['highlight', 'enabled'])} />)`

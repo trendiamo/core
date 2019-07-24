@@ -77,7 +77,7 @@ const PicturesList = () => (
     highlightInactive={highlightInactive}
     ResourceRow={PicturesRow}
     routes={picturesRoutes}
-    title="Pictures Gallery"
+    title="Image Gallery"
   />
 )
 

@@ -8,7 +8,7 @@ import { apiGeneratedUrlList, apiRequest } from 'utils'
 import { Grid } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
-const appBarContent = { title: 'Url Generator' }
+const appBarContent = { title: 'URL Generator' }
 
 const UrlGenerator = () => {
   const { enqueueSnackbar } = useSnackbar()

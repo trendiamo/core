@@ -193,7 +193,7 @@ const Spotlight = ({
           />
         )}
         <div style={{ marginTop: '8px' }}>
-          <FormSection foldable title="Product Picks">
+          <FormSection foldable title="Product Selection">
             {spotlight.productPicksAttributes && (
               <ProductPicks
                 helperClass="sortable-element"
@@ -212,7 +212,7 @@ const Spotlight = ({
             )}
             <AddItemButton
               disabled={isCropping || isFormLoading || isUploaderLoading}
-              message="Add Product Pick"
+              message="Add Product"
               onClick={addProductPick}
             />{' '}
           </FormSection>

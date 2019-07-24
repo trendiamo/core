@@ -39,7 +39,7 @@ const PictureMessageForm = ({
         />
       }
       disabled={isFormLoading}
-      label="Group with adjacent pictures"
+      label="Group with neighbouring pictures"
     />
   </>
 )

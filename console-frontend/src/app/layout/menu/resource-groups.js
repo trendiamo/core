@@ -18,7 +18,7 @@ const resourceGroups = () => {
       resources: [resources.showcases, resources.simpleChats, resources.outros],
     },
     basic: {
-      name: 'Basic',
+      name: 'Basics',
       showTitle: true,
       resources: [resources.pictures, resources.personas],
     },
@@ -43,7 +43,7 @@ const editorResourceGroups = () => {
       resources: [resources.simpleChats],
     },
     basic: {
-      name: 'Basic',
+      name: 'Basics',
       showTitle: true,
       resources: [resources.pictures],
     },

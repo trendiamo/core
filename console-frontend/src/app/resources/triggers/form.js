@@ -199,7 +199,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
           />
           <FormHelperText>{'Choose between Showcases, Chats, etc.'}</FormHelperText>
           <FormControl fullWidth margin="normal">
-            <InputLabel shrink>{'Url Matchers'}</InputLabel>
+            <InputLabel shrink>{'URL Matchers'}</InputLabel>
             <div style={{ marginTop: '11px' }}>
               {form.urlMatchers.map((url, index) => (
                 // eslint-disable-next-line react/no-array-index-key
@@ -219,7 +219,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
                 </FlexDiv>
               ))}
             </div>
-            <AddItemButton disabled={isFormLoading} message="Add Another Url" onClick={addUrlSelect} />{' '}
+            <AddItemButton disabled={isFormLoading} message="Add Another URL" onClick={addUrlSelect} />{' '}
           </FormControl>
           <FormHelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</FormHelperText>
           <FormHelperText>

@@ -147,9 +147,7 @@ const GalleryDialog = ({
       onEntering={onEntering}
       onKeyUp={onKeyUp}
       open={open}
-      subtitle={
-        <DialogSubtitleLink to={routes.picturesList()}>{'Or go to your pictures gallery >'}</DialogSubtitleLink>
-      }
+      subtitle={<DialogSubtitleLink to={routes.picturesList()}>{'Or go to the image gallery >'}</DialogSubtitleLink>}
       title={title}
     />
   )

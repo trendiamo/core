@@ -211,7 +211,7 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
       </Option>
       <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
         <Button centered color="primaryGradient" disabled={isDisabled} type="submit" variant="contained" width="160px">
-          {'Create Url'}
+          {'Create URL'}
         </Button>
       </div>
     </Form>
