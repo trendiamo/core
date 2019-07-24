@@ -11,6 +11,7 @@ const StyledIconButton = styled(MuiIconButton)`
   position: absolute;
   right: 4px;
   top: 4px;
+  z-index: 1;
 `
 
 const DialogSubtitle = styled.span`
