@@ -30,8 +30,15 @@ module Api
 
       private
 
+      def file_format
+        result = params[:file_type].gsub("image/", "")
+        result == "jpg" ? "jpeg" : result
+      end
+
       def picture_params
-        params.require(:picture).permit(:url)
+        result = params.require(:picture).permit(:url, :file_type)
+        result[:file_format] = file_format
+        result
       end
 
       def destroy_all

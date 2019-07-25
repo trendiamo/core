@@ -1,5 +1,5 @@
 class SimpleChatProductMessage < SimpleChatMessage
-  belongs_to :pic, class_name: "Picture"
+  belongs_to :pic, class_name: "Picture", touch: true
 
   validates :title, presence: true
   validates :url, presence: true

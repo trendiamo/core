@@ -7,8 +7,8 @@ class Persona < ApplicationRecord
   has_many :spotlights, dependent: :destroy
   has_many :simple_chats, dependent: :destroy
   has_many :outros, dependent: :destroy
-  belongs_to :profile_pic, class_name: "Picture"
-  belongs_to :profile_pic_animation, class_name: "Picture", optional: true
+  belongs_to :profile_pic, class_name: "Picture", touch: true
+  belongs_to :profile_pic_animation, class_name: "Picture", optional: true, touch: true
 
   validates :name, presence: true
   validates :description, presence: true
