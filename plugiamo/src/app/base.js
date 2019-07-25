@@ -33,6 +33,7 @@ const AppBase = ({
   showingBubbles,
   showingContent,
   showingLauncher,
+  onUserInteracted,
 }) => {
   const launcherConfig = useMemo(() => {
     const frekklsLC = getFrekklsConfig().launcherConfig
@@ -75,6 +76,7 @@ const AppBase = ({
         key={key}
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
+        onUserInteracted={onUserInteracted}
         persona={persona}
         position={position}
         setShowAssessmentContent={setShowAssessmentContent}
