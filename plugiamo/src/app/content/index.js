@@ -49,6 +49,7 @@ const Content = ({
         onUserInteracted={onUserInteracted}
         persona={persona}
         setShowAssessmentContent={setShowAssessmentContent}
+        showingContent={showingContent}
       >
         {Component}
       </ContentWrapper>
