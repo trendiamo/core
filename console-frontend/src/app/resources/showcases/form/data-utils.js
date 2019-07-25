@@ -5,7 +5,7 @@ const defaults = {
   spotlightDescription: 'Persona Description',
   productName: 'Product Name',
   productDescription: 'Product Description',
-  productPrice: '$0.00',
+  productPrice: '',
   title: 'Title',
   subtitle: 'Subtitle',
 }

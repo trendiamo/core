@@ -122,7 +122,6 @@ const ProductPick = ({
         name="productPick_displayPrice"
         onChange={editProductPickValue}
         onFocus={onFocus}
-        required
         value={productPick.displayPrice}
       />
       <PictureUploader

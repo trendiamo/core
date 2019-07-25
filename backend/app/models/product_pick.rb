@@ -5,6 +5,10 @@ class ProductPick < ApplicationRecord
 
   before_create :assign_order, unless: :order_changed?
 
+  validates :name, presence: true
+  validates :url, presence: true
+  validates :description, presence: true
+
   def assign_order
     current_value = self.class.where(spotlight_id: spotlight_id).order(:order).pluck(:order).last || 0
     self.order = current_value + 1
