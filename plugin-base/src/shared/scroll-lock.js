@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import { isIos } from 'tools'
 
 const PADDING_TOP = 1
 const PADDING_BOTTOM = 1
@@ -29,23 +30,15 @@ const ScrollElement = styled.div`
   height: 100%;
 `
 
-const isIos = () => /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+const isEnabled = isIos()
 
 const ScrollLock = ({ children, onScroll }) => {
   const containerRef = useRef()
   const elementRef = useRef()
 
-  const isEnabled = useMemo(isIos, [])
-
-  const setInitialScroll = useCallback(
-    () => {
-      if (isEnabled) containerRef.current.scrollTop = PADDING_TOP
-      if (!isEnabled && window.innerWidth < 600) {
-        document.body.style.overflow = 'hidden'
-      }
-    },
-    [isEnabled]
-  )
+  const setInitialScroll = useCallback(() => {
+    if (isEnabled) containerRef.current.scrollTop = PADDING_TOP
+  }, [])
 
   const handleScroll = useCallback(
     event => {
@@ -60,7 +53,7 @@ const ScrollLock = ({ children, onScroll }) => {
       }
       return onScroll ? onScroll(event, { at: 'middle' }) : { at: 'middle' }
     },
-    [isEnabled, onScroll]
+    [onScroll]
   )
 
   useEffect(setInitialScroll, [])

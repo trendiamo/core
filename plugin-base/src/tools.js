@@ -211,6 +211,8 @@ const listeners = {
   },
 }
 
+const isIos = () => /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+
 const replaceExternalLinks = message => {
   const messageWrapper = document.createElement('div')
   messageWrapper.innerHTML = message
@@ -241,4 +243,5 @@ export {
   replaceExternalLinks,
   logSectionsToLogs,
   validateEmail,
+  isIos,
 }

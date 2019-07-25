@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from './routes'
 import styled from 'styled-components'
+import { isIos } from 'tools'
 import { timeout, transition } from 'ext'
 
 const Wrapper = styled.div`
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
   color: #333;
 `
 
-const ContentWrapper = ({ children, onUserInteracted, ...props }) => {
+const ContentWrapper = ({ children, onUserInteracted, showingContent, ...props }) => {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [interacted, setInteracted] = useState(false)
 
@@ -42,6 +43,15 @@ const ContentWrapper = ({ children, onUserInteracted, ...props }) => {
     }
     return exitDuration
   }, [])
+
+  useEffect(
+    () => {
+      if (!isIos() && window.innerWidth < 600) {
+        document.body.style.overflow = showingContent ? 'hidden' : ''
+      }
+    },
+    [showingContent]
+  )
 
   const handleFirstInteraction = useCallback(
     event => {
