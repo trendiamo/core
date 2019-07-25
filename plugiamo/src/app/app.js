@@ -117,6 +117,14 @@ const App = ({
     timeoutToDisappear,
   ])
 
+  const onUserInteracted = useCallback(() => {
+    mixpanel.track('Interacted', {
+      hostname: location.hostname,
+      flowType: flowType.current,
+      flowId: flowId.current,
+    })
+  }, [])
+
   useEffect(() => {
     if (showingContent) clearDisappearTimeout()
   }, [clearDisappearTimeout, showingContent])
@@ -131,6 +139,7 @@ const App = ({
       hideContentFrame={hideContentFrame}
       isUnmounting={isUnmounting}
       onToggleContent={onToggleContent}
+      onUserInteracted={onUserInteracted}
       persona={persona.current}
       pluginState={pluginState}
       position={getFrekklsConfig().position}

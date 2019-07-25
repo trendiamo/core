@@ -14,8 +14,9 @@ const Wrapper = styled.div`
   color: #333;
 `
 
-const ContentWrapper = ({ children, ...props }) => {
+const ContentWrapper = ({ children, onUserInteracted, ...props }) => {
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [interacted, setInteracted] = useState(false)
 
   useEffect(() => {
     return () => {
@@ -42,7 +43,20 @@ const ContentWrapper = ({ children, ...props }) => {
     return exitDuration
   }, [])
 
-  return <Wrapper>{React.cloneElement(children, { ...props, isTransitioning, onRouteChange })}</Wrapper>
+  const handleFirstInteraction = useCallback(
+    event => {
+      if (interacted || event.which === 3) return
+      onUserInteracted && onUserInteracted()
+      setInteracted(true)
+    },
+    [onUserInteracted, interacted]
+  )
+
+  return (
+    <Wrapper onMouseDown={handleFirstInteraction} onTouchStart={handleFirstInteraction}>
+      {React.cloneElement(children, { ...props, isTransitioning, onRouteChange })}
+    </Wrapper>
+  )
 }
 
 export default ContentWrapper

@@ -14,6 +14,7 @@ const Content = ({
   persona,
   setShowAssessmentContent,
   showingContent,
+  onUserInteracted,
 }) => {
   const [entry, setEntry] = useState(true)
 
@@ -45,6 +46,7 @@ const Content = ({
     >
       <ContentWrapper
         onToggleContent={onToggleContent}
+        onUserInteracted={onUserInteracted}
         persona={persona}
         setShowAssessmentContent={setShowAssessmentContent}
       >
