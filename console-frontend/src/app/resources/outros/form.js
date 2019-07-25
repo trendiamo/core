@@ -90,6 +90,7 @@ const BaseOutroForm = ({
           fullWidth
           initialSelectedItem={initialSelectedItem}
           label="Persona"
+          name="Persona"
           onChange={selectPersona}
           options={options}
           required

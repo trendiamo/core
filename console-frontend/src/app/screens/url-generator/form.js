@@ -177,6 +177,7 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
               autocomplete={apiPathAutocomplete}
               defaultPlaceholder="Choose a step"
               label="Step"
+              name="Step"
               noMargin
               onChange={selectStep}
               options={options}
@@ -194,6 +195,7 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
             autocomplete={apiPersonasAutocomplete}
             defaultPlaceholder="Choose a persona"
             label="Persona"
+            name="Persona"
             noMargin
             onChange={selectPersona}
             options={autocompleteOptions}

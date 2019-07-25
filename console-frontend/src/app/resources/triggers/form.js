@@ -194,6 +194,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
             initialSelectedItem={initialSelectedItem}
             initialValueFormatMismatch
             label="Module"
+            name="Module"
             onChange={selectFlow}
             options={options}
             required
