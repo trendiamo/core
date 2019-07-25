@@ -1,7 +1,7 @@
 class ProductPick < ApplicationRecord
   acts_as_tenant
   belongs_to :spotlight, touch: true
-  belongs_to :pic, class_name: "Picture"
+  belongs_to :pic, class_name: "Picture", touch: true
 
   before_create :assign_order, unless: :order_changed?
 

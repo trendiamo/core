@@ -13,8 +13,12 @@ class Picture < ApplicationRecord
   has_many :simple_chat_product_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
   has_many :simple_chat_picture_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
 
+  enum file_format: %i[jpeg png gif]
+
   validate :url_must_be_valid
   validates :url, presence: true, uniqueness: true
+
+  after_touch :set_active
 
   def personas
     personas_with_profile_pic + personas_with_profile_pic_animation
@@ -36,5 +40,14 @@ class Picture < ApplicationRecord
     return if url&.starts_with?("http")
 
     errors.add(:url, "is invalid")
+  end
+
+  def active?
+    personas_with_profile_pic.any? || personas_with_profile_pic_animation.any? ||
+      product_picks.any? || simple_chat_product_messages.any? || simple_chat_picture_messages.any?
+  end
+
+  def set_active
+    update!(active: active?)
   end
 end

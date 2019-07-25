@@ -192,7 +192,7 @@ const PictureUploader = ({
         setHasNewUpload,
         setProgress,
       })
-      const { errors, requestError } = await apiRequest(apiPictureCreate, [{ url: pictureUrl }])
+      const { errors, requestError } = await apiRequest(apiPictureCreate, [{ url: pictureUrl, file_type: file.type }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) {
