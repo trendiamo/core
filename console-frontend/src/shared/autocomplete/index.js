@@ -1,13 +1,20 @@
+import AddPersonaModal from './add-persona-modal'
 import debounce from 'debounce-promise'
 import Downshift from 'downshift'
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { apiRequest } from 'utils'
-import { ArrowDropDown } from '@material-ui/icons'
-import { FormControl, Input, InputAdornment, InputLabel, MenuItem, Paper } from '@material-ui/core'
-import { suggestionTypes } from 'shared/autocomplete-options'
+import { ArrowDropDown, PersonAdd } from '@material-ui/icons'
+import { FormControl, Input, InputAdornment, InputLabel, MenuItem, Paper, Tooltip } from '@material-ui/core'
+import { suggestionTypes } from './options'
 
 const StyledArrowDropDown = styled(ArrowDropDown)`
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const StyledPersonAdd = styled(PersonAdd)`
   &:hover {
     cursor: pointer;
   }
@@ -19,7 +26,24 @@ const DropdownButton = ({ onClick }) => (
   </InputAdornment>
 )
 
-const AutocompleteInput = ({ autoFocus, disabled, formControlProps, loadAllOptions, inputProps, label, name }) => {
+const AddPersonaButton = ({ onClick }) => (
+  <Tooltip placement="top" title="Add a new persona">
+    <InputAdornment position="end">
+      <StyledPersonAdd onClick={onClick} />
+    </InputAdornment>
+  </Tooltip>
+)
+
+const AutocompleteInput = ({
+  autoFocus,
+  disabled,
+  formControlProps,
+  loadAllOptions,
+  inputProps,
+  label,
+  name,
+  setIsModalOpen,
+}) => {
   const inputRef = useRef(null)
   const [hasFocused, setHasFocused] = useState(false)
 
@@ -41,6 +65,8 @@ const AutocompleteInput = ({ autoFocus, disabled, formControlProps, loadAllOptio
     [loadAllOptions]
   )
 
+  const onAddPersonaClick = useCallback(() => setIsModalOpen(true), [setIsModalOpen])
+
   return (
     <FormControl margin="normal" {...formControlProps}>
       <InputLabel htmlFor={inputProps.id} id={inputProps['aria-labelledby']}>
@@ -48,7 +74,12 @@ const AutocompleteInput = ({ autoFocus, disabled, formControlProps, loadAllOptio
       </InputLabel>
       <Input
         disabled={disabled}
-        endAdornment={<DropdownButton onClick={onDropdownClick} />}
+        endAdornment={
+          <>
+            <DropdownButton onClick={onDropdownClick} />
+            {name === 'Persona' && <AddPersonaButton onClick={onAddPersonaClick} />}
+          </>
+        }
         fullWidth
         inputProps={{ ref: inputRef }}
         name={name}
@@ -93,23 +124,24 @@ const itemToString = selected => (selected ? selected.label : '')
 const Autocomplete = ({
   autocomplete,
   autoFocus,
-  disabled,
-  label,
-  required,
-  fullWidth,
-  initialValueFormatMismatch,
-  name,
   defaultPlaceholder,
-  onChange,
-  options,
+  disabled,
+  fullWidth,
   initialSelectedItem,
+  initialValueFormatMismatch,
+  label,
+  name,
+  onChange,
   onFocus,
+  options,
+  required,
 }) => {
   const debouncedAutocomplete = debounce(searchQuery => {
     return apiRequest(autocomplete, [{ searchQuery }])
   }, 250)
 
-  const [menuIsOpen, setMenuIsOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [suggestions, setSuggestions] = useState([])
   const [prevSelected, setPrevSelected] = useState(null)
 
@@ -119,18 +151,18 @@ const Autocomplete = ({
       const suggestions = json.map(option => {
         return { value: option, label: option.name }
       })
-      setMenuIsOpen(!menuIsOpen)
+      setIsMenuOpen(!isMenuOpen)
       setSuggestions(suggestions)
     },
-    [autocomplete, menuIsOpen]
+    [autocomplete, isMenuOpen]
   )
 
-  const handleSelect = useCallback(() => setMenuIsOpen(false), [setMenuIsOpen])
-  const handleOuterClick = useCallback(() => setMenuIsOpen(false), [setMenuIsOpen])
+  const handleSelect = useCallback(() => setIsMenuOpen(false), [setIsMenuOpen])
+  const handleOuterClick = useCallback(() => setIsMenuOpen(false), [setIsMenuOpen])
 
   const onInputValueChange = useCallback(
     async (searchQuery, stateAndHelpers) => {
-      if (searchQuery.length <= 2) return setMenuIsOpen(false)
+      if (searchQuery.length <= 2) return setIsMenuOpen(false)
       const { json } = await debouncedAutocomplete(searchQuery)
       const options = json.map(option => {
         return { value: option, label: option.name }
@@ -143,7 +175,7 @@ const Autocomplete = ({
         setSuggestions(options)
       }
       if (stateAndHelpers.type === '__autocomplete_change_input__') {
-        setMenuIsOpen(true)
+        setIsMenuOpen(true)
       }
     },
     [debouncedAutocomplete, initialValueFormatMismatch, prevSelected]
@@ -159,7 +191,7 @@ const Autocomplete = ({
   return (
     <Downshift
       initialSelectedItem={initialSelectedItem}
-      isOpen={menuIsOpen}
+      isOpen={isMenuOpen}
       itemToString={itemToString}
       onChange={onChange}
       onInputValueChange={onInputValueChange}
@@ -195,6 +227,7 @@ const Autocomplete = ({
             label={label}
             loadAllOptions={loadAllOptions}
             name={name}
+            setIsModalOpen={setIsModalOpen}
           />
           <ResultsDiv {...getMenuProps()}>
             {isOpen ? (
@@ -214,6 +247,9 @@ const Autocomplete = ({
               </StyledPaper>
             ) : null}
           </ResultsDiv>
+          {isModalOpen && (
+            <AddPersonaModal onChange={onChange} open={isModalOpen} selectItem={selectItem} setOpen={setIsModalOpen} />
+          )}
         </div>
       )}
     </Downshift>

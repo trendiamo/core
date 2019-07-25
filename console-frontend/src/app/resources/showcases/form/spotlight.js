@@ -172,6 +172,7 @@ const Spotlight = ({
           fullWidth
           initialSelectedItem={initialSelectedItem}
           label="Persona"
+          name="Persona"
           onChange={selectPersona}
           onFocus={onFocus}
           options={options}
