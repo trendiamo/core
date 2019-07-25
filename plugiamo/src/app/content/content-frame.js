@@ -10,7 +10,7 @@ import { MAIN_BREAKPOINT, WIDTH } from 'config'
 import { useContext, useEffect } from 'preact/hooks'
 
 const IFrame = (props, ref) => (
-  <Frame {...omit(props, ['entry', 'launcherConfig', 'position', 'showingContent'])} ref={ref} />
+  <Frame {...omit(props, ['entry', 'launcherConfig', 'position', 'showingContent', 'theme'])} ref={ref} />
 )
 
 const StyledFrame = styled(forwardRef(IFrame)).attrs({
