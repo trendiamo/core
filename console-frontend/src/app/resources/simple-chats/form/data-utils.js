@@ -11,8 +11,8 @@ const previewConverter = {
     return {
       name: persona.name || defaults.persona.name,
       description: persona.description || defaults.persona.description,
-      profilePic: { url: persona.profilePic && persona.profilePic.url, picRect: persona.picRect },
-      profilePicAnimation: { url: persona.profilePicAnimation && persona.profilePicAnimation.url, picRect: {} },
+      profilePic: { url: persona.profilePic ? persona.profilePic.url : '', picRect: persona.picRect || {} },
+      profilePicAnimation: { url: persona.profilePicAnimation ? persona.profilePicAnimation.url : '', picRect: {} },
     }
   },
   mainData(title, usePersonaAnimation, simpleChatSteps) {
