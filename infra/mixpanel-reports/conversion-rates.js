@@ -50,7 +50,7 @@ function main() {
       }
       return acc;
     })
-    .filter(entry => entry.value.hostname)
+    .filter(entry => entry.value.loadedPlugin)
     .groupBy(
       ["value.hostname"],
       [

@@ -52,14 +52,20 @@ function main() {
               events[i].properties.subTotalInCents / 100
             );
             acc.productsCountWithPlugin +=
-              events[i].properties.products.length || 0;
+              Object.keys(events[i].properties.products).reduce(
+                (r, k) => r + +events[i].properties.products[k].quantity,
+                0
+              ) || 1;
             acc.countWithPlugin += 1;
           } else {
             acc.cartValueWithoutPlugin += Math.round(
               events[i].properties.subTotalInCents / 100
             );
             acc.productsCountWithoutPlugin +=
-              events[i].properties.products.length || 0;
+              Object.keys(events[i].properties.products).reduce(
+                (r, k) => r + +events[i].properties.products[k].quantity,
+                0
+              ) || 1;
             acc.countWithoutPlugin += 1;
           }
         } else if (events[i].name === "Purchase Success") {
@@ -104,11 +110,7 @@ function main() {
       currency: entry.key[1],
       avgCartValueWithoutPlugin: Math.round(entry.value[1] / entry.value[0]),
       avgCartValueWithPlugin: Math.round(entry.value[4] / entry.value[3]),
-      avgItemPriceWithoutPlugin: Math.round(
-        entry.value[1] / entry.value[0] / entry.value[2]
-      ),
-      avgItemPriceWithPlugin: Math.round(
-        entry.value[4] / entry.value[3] / entry.value[5]
-      )
+      avgItemPriceWithoutPlugin: Math.round(entry.value[1] / entry.value[2]),
+      avgItemPriceWithPlugin: Math.round(entry.value[4] / entry.value[5])
     }));
 }
