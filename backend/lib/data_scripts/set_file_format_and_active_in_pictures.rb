@@ -1,5 +1,5 @@
 def find_content_type(url)
-  uri_url = URI(url)
+  uri_url = URI(URI::DEFAULT_PARSER.escape(url))
   Net::HTTP.start(uri_url.host, uri_url.port, use_ssl: true) do |http|
     http.use_ssl = true if url.starts_with?("https")
     headers = http.head(uri_url.path).to_hash
