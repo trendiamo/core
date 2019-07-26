@@ -13,8 +13,6 @@ class Picture < ApplicationRecord
   has_many :simple_chat_product_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
   has_many :simple_chat_picture_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
 
-  enum file_format: %i[jpeg png gif]
-
   validate :url_must_be_valid
   validates :url, presence: true, uniqueness: true
 
@@ -30,7 +28,7 @@ class Picture < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "url", "created_at", "updated_at")
+      .slice("id", "url", "file_format", "created_at", "updated_at")
       .merge(personas: personas,
              product_picks: product_picks,
              simple_chat_messages: simple_chat_messages)
