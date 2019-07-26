@@ -1,5 +1,6 @@
 import AvgCartValue from './avg-cart-value'
 import ConversionRate from './conversion-rate'
+import MostInteractedModules from './most-interacted-modules'
 import React, { useCallback, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
@@ -12,6 +13,10 @@ const appBarContent = { title: 'Data Dashboard' }
 
 const FlexDiv = styled.div``
 const ChartContainer = styled.div``
+
+const TitleMargined = styled.h3`
+  margin-top: 45px;
+`
 
 const minDate = () =>
   differenceInMonths(Date.now(), new Date('2019-06-01')) >= 4 ? subMonths(Date.now(), 4) : new Date('2019-06-01')
@@ -72,6 +77,10 @@ const DataDashboard = styled(({ className }) => {
           <AvgCartValue dates={dates} />
         </ChartContainer>
       </FlexDiv>
+      <ChartContainer>
+        <TitleMargined>{'Module Interactions'}</TitleMargined>
+        <MostInteractedModules dates={dates} />
+      </ChartContainer>
     </Section>
   )
 })`
@@ -87,6 +96,7 @@ const DataDashboard = styled(({ className }) => {
     padding-right: 1rem;
 
     > h3 {
+      color: #333;
       text-align: center;
     }
   }
