@@ -6,6 +6,7 @@ import AssessmentForm from './form'
 import AssessmentSizeGuide from './size-guide'
 import googleAnalytics from 'ext/google-analytics'
 import Router from 'app/content/router'
+import useTimeout from 'ext/hooks/use-timeout'
 import { assessmentHostname } from 'config'
 import { getScrollbarWidth } from 'utils'
 import { h } from 'preact'
@@ -20,6 +21,7 @@ const assessmentModule = assessmentData[assessmentHostname] && assessmentData[as
 
 const AppHacks = ({ data }) => {
   const [hideContentFrame, setHideContentFrame] = useState(false)
+  const [setAssessmentTimeout, clearAssessmentTimeout] = useTimeout()
   const [showingBubbles, setShowingBubbles] = useState(isShowingDefault)
   const [showingContent, setShowingContent] = useState(defaultShowingContent)
   const [showingLauncher, setShowingLauncher] = useState(isShowingDefault)
@@ -40,7 +42,9 @@ const AppHacks = ({ data }) => {
     () =>
       showAssessmentContent || isDeliusAssessment() ? (
         <Assessment
+          isDelius={isDeliusAssessment()}
           module={assessmentModule}
+          setAssessmentTimeout={setAssessmentTimeout}
           setDisappear={setDisappear}
           setHideContentFrame={setHideContentFrame}
           setPluginState={setPluginState}
@@ -52,7 +56,7 @@ const AppHacks = ({ data }) => {
       ) : (
         <Router />
       ),
-    [showAssessmentContent, showingContent]
+    [setAssessmentTimeout, showAssessmentContent, showingContent]
   )
 
   if (isDeliusPDP()) {
@@ -92,11 +96,13 @@ const AppHacks = ({ data }) => {
 
   return (
     <App
+      clearAssessmentTimeout={clearAssessmentTimeout}
       Component={Component}
       data={showAssessmentContent || isDeliusAssessment() ? assessmentModule : data}
       disappear={disappear}
       hideContentFrame={hideContentFrame}
       pluginState={pluginState}
+      setAssessmentTimeout={setAssessmentTimeout}
       setDisappear={setDisappear}
       setPluginState={setPluginState}
       setShowAssessmentContent={setShowAssessmentContent}
