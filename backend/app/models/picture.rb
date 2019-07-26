@@ -13,6 +13,7 @@ class Picture < ApplicationRecord
   has_many :simple_chat_product_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
   has_many :simple_chat_picture_messages, foreign_key: :pic_id, dependent: :restrict_with_exception, inverse_of: :pic
 
+  validates :file_format, inclusion: { in: %w[gif jpeg png] }
   validate :url_must_be_valid
   validates :url, presence: true, uniqueness: true
 
