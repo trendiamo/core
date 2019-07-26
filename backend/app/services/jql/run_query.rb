@@ -38,7 +38,7 @@ module Jql
 
         item[:name] = record.name
         item[:flowTypeTitle] = item[:flowType].underscore.humanize.titleize
-        item[:active] = record.as_json[:trigger_ids].empty?
+        item[:active] = record.triggers.present?
       end
     end
 
