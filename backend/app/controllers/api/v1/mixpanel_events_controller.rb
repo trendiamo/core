@@ -3,7 +3,7 @@ module Api
     class MixpanelEventsController < RestAdminController
       def index
         authorize :mixpanel_event
-        result = ::Mixpanel::RunQuery.new(jql_params, params[:chart]).perform
+        result = ::Jql::RunQuery.new(jql_params, params[:chart]).perform
         if result.is_a?(RuntimeError)
           head :bad_request
         else

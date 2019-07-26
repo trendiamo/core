@@ -115,7 +115,7 @@ const MainTable = ({ data, handleRequestSort, sorting }) => {
 
   const widthReference = useMemo(
     () => {
-      const record = data.reduce((max, data) => (max.loadedCount > data.loadedCount ? max : data))
+      const record = data.reduce((max, data) => (max.loadedCount > data.loadedCount ? max : data), {})
       return record.loadedCount
     },
     [data]
@@ -193,8 +193,10 @@ const MostInteractedModules = ({ dates }) => {
         const { json, requestError } = await apiRequest(apiEventList, [
           { dates: JSON.stringify(dates), sort: sorting, chart: 'most_interacted_modules' },
         ])
-        if (requestError || json.length === 0) {
+        if (requestError) {
           enqueueSnackbar(requestError, { variant: 'error' })
+          setHasErrors(true)
+        } else if (json.length === 0) {
           setHasErrors(true)
         } else {
           setData(json)

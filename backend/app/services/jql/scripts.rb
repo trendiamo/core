@@ -1,4 +1,4 @@
-module Mixpanel
+module Jql
   class Scripts
     def self.conversion_rate
       File.read(File.join(File.dirname(__FILE__), "conversion_rate.js"))

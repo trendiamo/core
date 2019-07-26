@@ -1,4 +1,4 @@
-module Mixpanel
+module Jql
   class RunQuery
     attr_reader :params, :script, :key
     JQL_HTTP_API_URL = "https://mixpanel.com/api/2.0/jql".freeze
@@ -21,7 +21,7 @@ module Mixpanel
     private
 
     def compute_result
-      return Mixpanel::Scripts.send("#{script}_dummy", params) unless ENV["MIXPANEL_API_KEY"]
+      return Jql::Scripts.send("#{script}_dummy", params).to_json unless ENV["MIXPANEL_API_KEY"]
 
       result = Rails.cache.read(key)
       unless result
@@ -32,7 +32,7 @@ module Mixpanel
     end
 
     def most_interacted_modules_complete(result)
-      result.each do |item|
+      JSON.parse(result).map(&:with_indifferent_access).each do |item|
         record = most_interacted_modules_find_module(item)
         next unless record
 
@@ -70,7 +70,7 @@ module Mixpanel
     end
 
     def payload
-      { params: params.to_json, script: Mixpanel::Scripts.send(script) }
+      { params: params.to_json, script: Jql::Scripts.send(script) }
     end
   end
 end
