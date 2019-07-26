@@ -146,7 +146,7 @@ const EnhancedList = ({
   })
 
   const handleRequestSort = useCallback(
-    columnName => {
+    ({ columnName }) => {
       const newDirection = state.orderBy === columnName ? (state.orderDirection === 'desc' ? 'asc' : 'desc') : 'asc'
       dispatch({ type: 'setOrder', orderBy: columnName, orderDirection: newDirection })
     },

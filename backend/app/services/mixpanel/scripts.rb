@@ -28,6 +28,37 @@ module Mixpanel
       end
     end
 
+    def self.most_interacted_modules(_params)
+      File.read(File.join(File.dirname(__FILE__), "most_interacted_modules.js"))
+    end
+
+    def self.most_interacted_modules_dummy(params)
+      modules_array = most_interacted_modules_dummy_records.map do |record|
+        most_interacted_modules_dummy_params(record)
+      end
+      modules_array.sort do |x, y|
+        y[params[:sort].to_sym] <=> x[params[:sort].to_sym]
+      end
+    end
+
+    def self.most_interacted_modules_dummy_records
+      showcases = Showcase.first(3)
+      simple_chats = SimpleChat.first(3)
+      (simple_chats + showcases).shuffle
+    end
+
+    def self.most_interacted_modules_dummy_params(record)
+      loaded_count = rand(900..3000)
+      toggled_count = rand(100..800)
+      {
+        flowType: record.class.name.camelize(:lower),
+        flowId: record.id,
+        loadedCount: loaded_count,
+        toggledCount: toggled_count,
+        conversion: toggled_count.to_f / loaded_count.to_f,
+      }
+    end
+
     def self.date_range(params)
       (Date.parse(params[:dates][:from_date])..Date.parse(params[:dates][:to_date])).step(7)
     end

@@ -16,6 +16,7 @@ const ActiveSymbol = styled.div`
   font-size: 12px;
   cursor: default;
   user-select: none;
+  transition: background-color 0.6s;
 `
 
 const ActiveColumn = ({

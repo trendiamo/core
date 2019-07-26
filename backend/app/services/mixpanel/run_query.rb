@@ -10,6 +10,17 @@ module Mixpanel
     end
 
     def perform
+      result = compute_result
+      if script == "most_interacted_modules"
+        most_interacted_modules_complete(result).select { |item| item[:name] }
+      else
+        result
+      end
+    end
+
+    private
+
+    def compute_result
       return Mixpanel::Scripts.send("#{script}_dummy", params) unless ENV["MIXPANEL_API_KEY"]
 
       result = Rails.cache.read(key)
@@ -20,14 +31,27 @@ module Mixpanel
       result
     end
 
-    private
+    def most_interacted_modules_complete(result)
+      result.each do |item|
+        record = most_interacted_modules_find_module(item)
+        next unless record
+
+        item[:name] = record.name
+        item[:flowTypeTitle] = item[:flowType].underscore.humanize.titleize
+        item[:active] = record.as_json[:trigger_ids].empty?
+      end
+    end
+
+    def most_interacted_modules_find_module(item)
+      item[:flowType].classify.constantize.find_by(id: item[:flowId])
+    end
 
     # adjust dates to stick to start of week, end of week, also never more recent than yesterday
     def adjust_dates(params)
       new_dates = params[:dates]
       new_dates[:from_date] = Date.parse(new_dates[:from_date]).at_beginning_of_week.to_s
       new_dates[:to_date] = end_of_month_week(Date.parse(new_dates[:to_date])).at_beginning_of_week.to_s
-      { dates: new_dates, hostname: params[:hostname] }
+      { dates: new_dates, hostname: params[:hostname], sort: params[:sort] }
     end
 
     def end_of_month_week(date)
