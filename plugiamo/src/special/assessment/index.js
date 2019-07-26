@@ -1,12 +1,14 @@
 import AssessmentBase from './base'
+import useTimeout from 'ext/hooks/use-timeout'
+import { assessmentHostname } from 'config'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
+const isDelius = assessmentHostname === 'www.delius-contract.de'
+
 const Assessment = ({
-  isDelius,
   module,
-  setAssessmentTimeout,
   setDisappear,
   setHideContentFrame,
   setShowAssessmentContent,
@@ -20,6 +22,7 @@ const Assessment = ({
   const [endNodeTags, setEndNodeTags] = useState([])
   const [showingCtaButton, setShowingCtaButton] = useState(false)
   const [currentStepKey, setCurrentStepKey] = useState(assessmentState.key || 'root')
+  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
 
   const resetAssessment = useCallback(() => {
     setTags([])
@@ -34,11 +37,10 @@ const Assessment = ({
     setShowAssessmentContent(false)
     setPluginState('closed')
     setHideContentFrame(false)
-    setAssessmentTimeout(() => setDisappear(true), isDelius ? 500 : 10000)
+    setDisappearTimeout(() => setDisappear(true), isDelius ? 500 : 10000)
   }, [
-    isDelius,
-    setAssessmentTimeout,
     setDisappear,
+    setDisappearTimeout,
     setHideContentFrame,
     setPluginState,
     setShowAssessmentContent,
@@ -47,8 +49,12 @@ const Assessment = ({
   ])
 
   useEffect(() => {
+    if (showingContent) clearDisappearTimeout()
+  }, [clearDisappearTimeout, showingContent])
+
+  useEffect(() => {
     if (showingContent && isDelius) setShowAssessmentContent(true)
-  }, [isDelius, setShowAssessmentContent, showingContent])
+  }, [setShowAssessmentContent, showingContent])
 
   useEffect(() => {
     setHideContentFrame(!isSmall() && currentStepKey === 'store')

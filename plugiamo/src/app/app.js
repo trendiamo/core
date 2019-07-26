@@ -12,13 +12,11 @@ import { timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 
 const App = ({
-  clearAssessmentTimeout,
   Component,
   data,
   disappear,
   hideContentFrame,
   pluginState,
-  setAssessmentTimeout,
   setDisappear,
   setPluginState,
   setShowAssessmentContent,
@@ -30,15 +28,13 @@ const App = ({
   timeoutToDisappear,
 }) => {
   const [isUnmounting, setIsUnmounting] = useState(false)
+  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
   const autoOpen = useRef(null)
   const flowType = useRef(null)
   const flowId = useRef(null)
   const persona = useRef(null)
   const [hasPersona, setHasPersona] = useState(false)
   const config = useMemo(() => setup(data, setupFlowHistory()), [data])
-  let [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
-  if (setAssessmentTimeout && clearAssessmentTimeout)
-    [setDisappearTimeout, clearDisappearTimeout] = [setAssessmentTimeout, clearAssessmentTimeout]
 
   useEffect(() => () => timeout.clear('exitOnMobile'), [])
 
