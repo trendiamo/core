@@ -1,5 +1,4 @@
 import AssessmentBase from './base'
-import useTimeout from 'ext/hooks/use-timeout'
 import { assessmentHostname } from 'config'
 import { h } from 'preact'
 import { isSmall } from 'utils'
@@ -8,8 +7,10 @@ import { useCallback, useEffect, useState } from 'preact/hooks'
 const isDelius = assessmentHostname === 'www.delius-contract.de'
 
 const Assessment = ({
+  clearDisappearTimeout,
   module,
   setDisappear,
+  setDisappearTimeout,
   setHideContentFrame,
   setShowAssessmentContent,
   setShowingContent,
@@ -22,7 +23,6 @@ const Assessment = ({
   const [endNodeTags, setEndNodeTags] = useState([])
   const [showingCtaButton, setShowingCtaButton] = useState(false)
   const [currentStepKey, setCurrentStepKey] = useState(assessmentState.key || 'root')
-  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
 
   const resetAssessment = useCallback(() => {
     setTags([])

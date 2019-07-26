@@ -6,6 +6,7 @@ import AssessmentForm from './form'
 import AssessmentSizeGuide from './size-guide'
 import googleAnalytics from 'ext/google-analytics'
 import Router from 'app/content/router'
+import useTimeout from 'ext/hooks/use-timeout'
 import { assessmentHostname } from 'config'
 import { getScrollbarWidth } from 'utils'
 import { h } from 'preact'
@@ -19,13 +20,14 @@ const defaultShowingContent = isDeliusAssessment() ? assessmentHostname === 'www
 const assessmentModule = assessmentData[assessmentHostname] && assessmentData[assessmentHostname].assessment
 
 const AppHacks = ({ data }) => {
+  const [disappear, setDisappear] = useState(false)
   const [hideContentFrame, setHideContentFrame] = useState(false)
+  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
+  const [showAssessmentContent, setShowAssessmentContent] = useState(false)
   const [showingBubbles, setShowingBubbles] = useState(isShowingDefault)
   const [showingContent, setShowingContent] = useState(defaultShowingContent)
   const [showingLauncher, setShowingLauncher] = useState(isShowingDefault)
   const [pluginState, setPluginState] = useState('default')
-  const [disappear, setDisappear] = useState(false)
-  const [showAssessmentContent, setShowAssessmentContent] = useState(false)
 
   useEffect(() => {
     if (getScrollbarWidth() === 0) return
@@ -40,8 +42,10 @@ const AppHacks = ({ data }) => {
     () =>
       showAssessmentContent || isDeliusAssessment() ? (
         <Assessment
+          clearDisappearTimeout={clearDisappearTimeout}
           module={assessmentModule}
           setDisappear={setDisappear}
+          setDisappearTimeout={setDisappearTimeout}
           setHideContentFrame={setHideContentFrame}
           setPluginState={setPluginState}
           setShowAssessmentContent={setShowAssessmentContent}
@@ -52,7 +56,7 @@ const AppHacks = ({ data }) => {
       ) : (
         <Router />
       ),
-    [showAssessmentContent, showingContent]
+    [clearDisappearTimeout, setDisappearTimeout, showAssessmentContent, showingContent]
   )
 
   if (isDeliusPDP()) {
