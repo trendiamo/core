@@ -43,17 +43,11 @@ module Api
                               rescue JSON::ParserError, TypeError
                                 return chain
                               end)
-        return sorting_by_active_state(chain, direction) if column.underscore == "active"
-        return sorting_by_pictures_state(chain, direction) if column.underscore == "status"
-        return sorting_by_pictures_type(chain, direction) if column.underscore == "type"
-
-        sorting_by_column(chain, direction, column)
-      end
-
-      def sorting_by_column(chain, direction, column)
-        column = ActiveRecord::Base.connection.quote_column_name(column.underscore)
-        direction = direction == "asc" ? "asc" : "desc"
-        chain.order("#{column} #{direction}")
+        if column.underscore == "active" && params[:controller] != "api/v1/pictures"
+          sorting_by_active_state(chain, direction)
+        else
+          sorting_by_column(chain, direction, column)
+        end
       end
 
       def sorting_by_active_state(chain, direction)
@@ -63,24 +57,10 @@ module Api
         chain.left_joins(:triggers).group(:id).order("count(triggers.id) #{direction}")
       end
 
-      def sorting_by_pictures_state(chain, direction)
-        return chain if params[:controller] != "api/v1/pictures"
-
-        sorted_chain = chain.sort_by do |picture|
-          picture.personas.count + picture.product_picks.count + picture.simple_chat_messages.count
-        end
-        return sorted_chain.reverse if direction == "asc"
-
-        sorted_chain
-      end
-
-      def sorting_by_pictures_type(chain, direction)
-        return chain if params[:controller] != "api/v1/pictures"
-
-        sorted_chain = chain.sort_by { |picture| picture.url.split(".").pop }
-        return sorted_chain.reverse if direction == "desc"
-
-        sorted_chain
+      def sorting_by_column(chain, direction, column)
+        column = ActiveRecord::Base.connection.quote_column_name(column.underscore)
+        direction = direction == "asc" ? "asc" : "desc"
+        chain.order("#{column} #{direction}")
       end
     end
   end
