@@ -28,7 +28,7 @@ module Mixpanel
       end
     end
 
-    def self.most_interacted_modules(_params)
+    def self.most_interacted_modules
       File.read(File.join(File.dirname(__FILE__), "most_interacted_modules.js"))
     end
 
