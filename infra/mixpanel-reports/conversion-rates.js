@@ -54,6 +54,8 @@ function main() {
     .groupBy(
       ["value.hostname"],
       [
+        mixpanel.reducer.sum(e => (e.value.toggledPlugin ? 1 : 0)),
+        mixpanel.reducer.sum(e => (e.value.visitedPage ? 1 : 0)),
         mixpanel.reducer.sum("value.pluginCount"),
         mixpanel.reducer.sum("value.visitedPageCount")
       ]
@@ -61,7 +63,10 @@ function main() {
     .filter(entry => entry.value[0] > 0 || entry.value[1] > 0)
     .map(entry => ({
       hostname: entry.key[0],
-      pluginCount: entry.value[0],
-      secondPageCount: entry.value[1]
-    }));
+      pluginPurchases: entry.value[2],
+      pluginCR: parseFloat(entry.value[2] / entry.value[0]).toFixed(2),
+      secondPagePurchases: entry.value[3],
+      secondPageCR: parseFloat(entry.value[3] / entry.value[1]).toFixed(2)
+    }))
+    .filter(entry => entry.pluginCR > 0 || entry.secondPageCR > 0);
 }
