@@ -1,3 +1,4 @@
+import auth from 'auth'
 import AvgCartValue from './avg-cart-value'
 import ConversionRate from './conversion-rate'
 import MostInteractedModules from './most-interacted-modules'
@@ -7,7 +8,7 @@ import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import WhiteButton from 'shared/white-button'
 import { DatePicker } from 'material-ui-pickers'
-import { differenceInMonths, endOfMonth, format, startOfMonth, subMonths } from 'date-fns'
+import { differenceInMonths, endOfMonth, format, max, startOfMonth, subMonths } from 'date-fns'
 
 const appBarContent = { title: 'Data Dashboard' }
 
@@ -18,8 +19,9 @@ const TitleMargined = styled.h3`
   margin-top: 45px;
 `
 
-const minDate = () =>
-  differenceInMonths(Date.now(), new Date('2019-06-01')) >= 4 ? subMonths(Date.now(), 4) : new Date('2019-06-01')
+const dateMinLimit = () => max([new Date('2019-06-01'), new Date(auth.getAccount().createdAt)])
+
+const minDate = () => (differenceInMonths(Date.now(), dateMinLimit()) >= 4 ? subMonths(Date.now(), 4) : dateMinLimit())
 
 const DatePickerValue = styled.div`
   color: #ff6641;
@@ -37,7 +39,6 @@ const DatePickerComponent = ({ onClick, label, value }) => {
 
 const DateSelector = ({ dates, handleDateChange }) => (
   <DatePicker
-    disableFuture
     format="MMMM"
     label="Month"
     maxDate={Date.now()}
