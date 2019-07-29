@@ -6,18 +6,23 @@ import data from 'special/assessment/data/pierre-cardin'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
-import useTimeout from 'ext/hooks/use-timeout'
 import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
 import { isSmall } from 'utils'
 import { SimpleChat, timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
-const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {
+const Plugin = ({
+  clearDisappearTimeout,
+  setDisappearTimeout,
+  setShowingContent,
+  showingBubbles,
+  showingContent,
+  showingLauncher,
+}) => {
   const [disappear, setDisappear] = useState(false)
   const [isUnmounting, setIsUnmounting] = useState(false)
   const [pluginState, setPluginState] = useState('default')
-  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
 
   const [product, setProduct] = useState(null)
   const [productType, setProductType] = useState(null)

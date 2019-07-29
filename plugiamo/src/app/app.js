@@ -3,7 +3,6 @@ import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import setup from './setup'
 import setupFlowHistory from './setup/flow-history'
-import useTimeout from 'ext/hooks/use-timeout'
 import { h } from 'preact'
 import { isDeliusAssessment } from 'special/assessment/utils'
 import { isSmall } from 'utils'
@@ -12,12 +11,14 @@ import { timeout } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 
 const App = ({
+  clearDisappearTimeout,
   Component,
   data,
   disappear,
   hideContentFrame,
   pluginState,
   setDisappear,
+  setDisappearTimeout,
   setPluginState,
   setShowAssessmentContent,
   setShowingBubbles,
@@ -28,7 +29,6 @@ const App = ({
   timeoutToDisappear,
 }) => {
   const [isUnmounting, setIsUnmounting] = useState(false)
-  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
   const autoOpen = useRef(null)
   const flowType = useRef(null)
   const flowId = useRef(null)

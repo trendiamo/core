@@ -5,7 +5,6 @@ import data from 'special/assessment/data/delius'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
-import useTimeout from 'ext/hooks/use-timeout'
 import { client, gql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { isSmall } from 'utils'
@@ -52,14 +51,20 @@ const inquiryMutation = variables =>
     .then(data => data)
     .catch(error => error)
 
-const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {
+const Plugin = ({
+  clearDisappearTimeout,
+  setDisappearTimeout,
+  setShowingContent,
+  showingBubbles,
+  showingContent,
+  showingLauncher,
+}) => {
   const [isUnmounting, setIsUnmounting] = useState(false)
   const [assessmentForm, setAssessmentForm] = useState({})
   const [isMessageSent, setIsMessageSent] = useState(false)
   const [ctaButtonDisabled, setCtaButtonDisabled] = useState(true)
   const [pluginState, setPluginState] = useState('closed')
   const [disappear, setDisappear] = useState(false)
-  const [setDisappearTimeout, clearDisappearTimeout] = useTimeout()
 
   useEffect(() => () => timeout.clear('exitOnMobile'), [])
 
