@@ -32,7 +32,7 @@ class DeviseSparkpostMailer < Devise::Mailer
       substitution_data: {
         sender_first_name: record.sender.first_name,
         account_name: record.account.name,
-        invite_url: `#{ENV["MAILER_HOST"]}/api/v1/users/invites/accept?token=#{token}`,
+        invite_url: "#{ENV['MAILER_HOST']}/api/v1/users/invites/accept?token=#{token}",
         dynamic_html: { accept_email_link: %(<a href="#{url}">Accept the invite</a>) },
       },
       template_id: "accept-invite",
