@@ -43,7 +43,8 @@ class PopulateShowcases
       name: Faker::Commerce.product_name,
       description: Faker::Lorem.sentence,
       display_price: "€#{Faker::Commerce.price}",
-      pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
+      pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                      file_format: "jpeg"),
       order: product_pick_index + 1,
     }
   end
@@ -123,19 +124,21 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
       {
         type: "SimpleChatProductMessage",
         title: Faker::Commerce.product_name,
-        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
+        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                        file_format: "jpeg"),
         url: Faker::Internet.url,
         display_price: "€#{Faker::Commerce.price}",
       }
     end
   end
 
-  def simple_chat_product_messages_carousel_attributes
+  def simple_chat_product_messages_carousel_attributes # rubocop:disable Metrics/MethodLength
     Array.new(2) do
       {
         type: "SimpleChatProductMessage",
         title: Faker::Commerce.product_name,
-        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
+        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                        file_format: "jpeg"),
         url: Faker::Internet.url,
         display_price: "€#{Faker::Commerce.price}",
         group_with_adjacent: true,
@@ -156,7 +159,8 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
     Array.new(1) do
       {
         type: "SimpleChatPictureMessage",
-        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
+        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                        file_format: "jpeg"),
       }
     end
   end
@@ -165,7 +169,8 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
     Array.new(2) do
       {
         type: "SimpleChatPictureMessage",
-        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg"),
+        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                        file_format: "jpeg"),
         group_with_adjacent: true,
       }
     end
@@ -254,14 +259,15 @@ class Populate # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def create_personas
+  def create_personas # rubocop:disable Metrics/MethodLength
     Array.new(6) do |i|
       persona_attrs = {
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
-        profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg"),
-        profile_pic_animation:
-          [Picture.find_or_create_by!(url: "https://random-d.uk/api/#{i % 99 + 1}.gif"), nil].sample,
+        profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg",
+                                                file_format: "jpeg"),
+        profile_pic_animation: [Picture.find_or_create_by!(url: "https://random-d.uk/api/#{i % 99 + 1}.gif",
+                                                           file_format: "gif"), nil,].sample,
       }
       Persona.create!(persona_attrs)
     end
