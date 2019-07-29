@@ -5,8 +5,8 @@ module Api
         set_current_tenant_through_filter
         before_action :set_tenant
 
-        def create # rubocop:disable Metrics/MethodLength
-          @invite = Invite.new(invite_params)
+        def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+          @invite = Invite.new(invite_params.merge(role: params[:invite][:role]))
           @recipient = User.find_by(email: invite_params[:email])
           @invite.recipient = @recipient
           @invite.sender = current_user
@@ -30,7 +30,8 @@ module Api
               Membership.create!(user: @invite.recipient, account: @invite.account, role: @invite.role)
               redirect_to "#{ENV['FRONTEND_BASE_URL']}/login#invite-accepted"
             else
-              redirect_to "#{ENV['FRONTEND_BASE_URL']}/signup/confirm?email=#{@invite.email}&token=#{@invite.token}"
+              confirm_params = { email: @invite.email, token: @invite.token }
+              redirect_to "#{ENV['FRONTEND_BASE_URL']}/signup/confirm?#{confirm_params.to_query}"
             end
           else
             redirect_to "#{ENV['FRONTEND_BASE_URL']}/login#invite-error"
@@ -40,7 +41,7 @@ module Api
         private
 
         def invite_params
-          params.require(:invite).permit(:email, :role)
+          params.require(:invite).permit(:email)
         end
 
         def recipient_belongs_to_sender_account?
