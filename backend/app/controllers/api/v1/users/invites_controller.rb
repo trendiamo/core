@@ -30,7 +30,7 @@ module Api
               Membership.create!(user: @invite.recipient, account: @invite.account, role: @invite.role)
               redirect_to "#{ENV['FRONTEND_BASE_URL']}/login#invite-accepted"
             else
-              confirm_params = { email: @invite.email, token: @invite.token }
+              confirm_params = { email: CGI.escape(@invite.email), token: @invite.token }
               redirect_to "#{ENV['FRONTEND_BASE_URL']}/signup/confirm?#{confirm_params.to_query}"
             end
           else

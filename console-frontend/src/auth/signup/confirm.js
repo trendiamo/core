@@ -10,7 +10,9 @@ import { useSnackbar } from 'notistack'
 
 const parseSearchParams = () => {
   const searchParams = new URLSearchParams(window.location.search.replace('?', ''))
-  return { email: searchParams.get('email'), token: searchParams.get('token') }
+  const email = decodeURIComponent(searchParams.get('email'))
+  const token = searchParams.get('token')
+  return { email, token }
 }
 
 const SignupConfirm = () => {
