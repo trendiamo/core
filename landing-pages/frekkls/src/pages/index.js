@@ -10,8 +10,21 @@ import SocialProof from '../sections/social-proof'
 import Visuals from '../sections/visuals'
 import What from '../sections/what'
 
-const IndexPage = ({ className, data }) => (
-  <Layout className={className} layout={data.layout}>
+const headerLinks = [
+  { text: 'Magazine', target: '/magazine' },
+  { text: 'What you get', target: '#what-you-get' },
+  { text: 'Product', target: '#product' },
+  { text: 'Pricing', target: '#pricing' },
+]
+
+const IndexPage = ({ data }) => (
+  <Layout
+    blogCategories={data.blogCategories}
+    hasGetStarted
+    headerColorScheme="home"
+    headerLinks={headerLinks}
+    layout={data.layout}
+  >
     <Hero />
     <What />
     <How />
@@ -24,20 +37,14 @@ const IndexPage = ({ className, data }) => (
 
 export const query = graphql`
   query HomePage {
-    layout: contentfulLayout(name: { eq: "Layout-v2" }, node_locale: { eq: "en-US" }) {
-      legalNotice {
-        childContentfulRichText {
-          html
-        }
-      }
-      privacyPolicy {
-        childContentfulRichText {
-          html
-        }
-      }
-      requestDemo {
-        childContentfulRichText {
-          html
+    layout: contentfulLayout(name: { eq: "Layout-v2" }) {
+      ...Layout
+    }
+    blogCategories: allContentfulBlogCategory {
+      edges {
+        node {
+          name
+          slug
         }
       }
     }

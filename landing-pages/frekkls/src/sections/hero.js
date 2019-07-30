@@ -91,12 +91,6 @@ const Hero = styled(({ className }) => {
     p {
       font-size: 6vw;
     }
-
-    button {
-      width: 100%;
-      font-size: 5vw;
-      padding: 10px;
-    }
   }
 
 `

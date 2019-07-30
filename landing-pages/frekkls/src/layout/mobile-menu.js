@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
+import { Link } from 'gatsby'
 
 import Button from '../components/button'
 import CloseIcon from '../images/close-icon.svg'
@@ -17,9 +18,11 @@ const Container = styled.div`
   display: none;
   @media (max-width: 899px) {
     body.mobile-menu-open & {
-      display: block;
+      display: flex;
+      flex-direction: column;
     }
   }
+  align-items: center;
 
   .mobile-menu-link {
     text-decoration: none;
@@ -28,6 +31,10 @@ const Container = styled.div`
     display: block;
     text-align: center;
     padding: 10px;
+  }
+
+  > a {
+    align-self: flex-start;
   }
 
   a img {
@@ -66,6 +73,7 @@ const Content = styled.div`
   align-items: center;
   text-align: center;
   margin-top: 50px;
+  width: 80%;
 
   a {
     text-decoration: none;
@@ -80,40 +88,46 @@ const removeMobileMenu = () => {
   document.body.classList.remove('mobile-menu-open')
 }
 
-const MobileMenu = ({ siteTitle, toggleMobileMenu }) => {
-  const onClick = useCallback(event => {
-    event.preventDefault()
-    toggleMobileMenu()
-    const element = document.querySelector(event.target.getAttribute('href'))
-    if (!element) return
-    element.scrollIntoView({ behavior: 'smooth' })
-  })
+const MobileMenu = ({ hasGetStarted, headerLinks, siteTitle, toggleMobileMenu }) => {
+  const onClick = useCallback(
+    event => {
+      event.preventDefault()
+      toggleMobileMenu()
+      const element = document.querySelector(event.target.getAttribute('href'))
+      if (!element) return
+      element.scrollIntoView({ behavior: 'smooth' })
+    },
+    [toggleMobileMenu]
+  )
 
   const onCtaButtonClick = useCallback(() => {
     toggleMobileMenu()
     window.frekklsOpenDemoModal()
-  }, [])
+  }, [toggleMobileMenu])
 
   return (
     <Container className="mobile-menu">
-      <a href="/" onClick={removeMobileMenu}>
+      <Link onClick={removeMobileMenu} to="/">
         <img alt={siteTitle} src={LogoGrey} />
-      </a>
+      </Link>
       <StyledCloseIcon onClick={toggleMobileMenu} />
       <Content>
-        <a href="#what-you-get" onClick={onClick}>
-          {'What you get'}
-        </a>
-        <a href="#product" onClick={onClick}>
-          {'Product'}
-        </a>
-        <a href="#pricing" onClick={onClick}>
-          {'Pricing'}
-        </a>
-        <a href="mailto:hello@frekkls.com">{'Contact'}</a>
-        <Button color="#000" onClick={onCtaButtonClick}>
-          {'Get Started'}
-        </Button>
+        {(headerLinks || []).map(headerLink =>
+          headerLink.target.charAt(0) === '/' ? (
+            <Link key={headerLink.target} onClick={removeMobileMenu} to={headerLink.target}>
+              {headerLink.text}
+            </Link>
+          ) : (
+            <a href={headerLink.target} key={headerLink.target} onClick={onClick}>
+              {headerLink.text}
+            </a>
+          )
+        )}
+        {hasGetStarted && (
+          <Button color="#000" onClick={onCtaButtonClick}>
+            {'Get Started'}
+          </Button>
+        )}
       </Content>
     </Container>
   )

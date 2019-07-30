@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
+import { blogCategoryUrl } from '../utils'
+import { Link } from 'gatsby'
 
 const FooterFlex = styled.div`
   width: 100%;
@@ -74,7 +76,7 @@ const FooterHeader = styled.div`
   }
 `
 
-const FooterContent = () => {
+const FooterContent = ({ blogCategories }) => {
   const onLegalNoticeClick = useCallback(() => {
     window.frekklsOpenLegalNoticeModal()
     event.preventDefault()
@@ -107,6 +109,15 @@ const FooterContent = () => {
           <a href="#privacy-cookies" onClick={onPrivacyCookiesClick}>
             {'Privacy & Cookies'}
           </a>
+        </FooterColumn>
+        <FooterColumn flex="1">
+          <FooterHeader>{'Community'}</FooterHeader>
+          <Link to="/magazine">{'Magazine'}</Link>
+          {blogCategories.edges.map(e => (
+            <Link key={e.node.slug} to={blogCategoryUrl(e.node)}>
+              {e.node.name}
+            </Link>
+          ))}
         </FooterColumn>
         <FooterColumn flex="3">
           {/* <FooterHeader>{'Newsletter'}</FooterHeader>
@@ -189,9 +200,9 @@ const CopyrightContent = () => (
   </CopyrightDiv>
 )
 
-const Footer = styled(({ className, layout, locale }) => (
+const Footer = styled(({ className, blogCategories }) => (
   <div className={className}>
-    <FooterContent layout={layout} locale={locale} />
+    <FooterContent blogCategories={blogCategories} />
     <footer>
       <CopyrightContent />
     </footer>

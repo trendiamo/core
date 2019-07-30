@@ -13,7 +13,7 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: 'Turn Socials into Sellers',
+    title: 'Frekkls - Turn Socials into Sellers',
     description:
       'Integrate people and their content as sellers directly into your shop and boost your conversion rate!',
     author: '@trendiamo',
