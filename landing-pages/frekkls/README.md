@@ -19,5 +19,6 @@ gatsby serve
 ## Deploy
 
 ```sh
+yarn staging-deploy # for staging
 yarn deploy
 ```

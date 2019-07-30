@@ -1,15 +1,46 @@
 #!/bin/sh
 
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 environment"
+  exit 127
+fi
+ENVIRONMENT=$1
+case $ENVIRONMENT in
+  production)
+    ENV_SERVER=root@46.101.129.17
+    ;;
+  staging)
+    ENV_SERVER=root@167.71.50.172
+    ;;
+  *)
+    echo "environment must be: staging or production"
+    exit 127
+    ;;
+esac
+
+copy_files()
+{
+  case $ENVIRONMENT in
+    production)
+      gzip -9 -c build/plugin.js | aws s3 cp - s3://plugiamo/plugin.js --quiet --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
+      gzip -9 -c build/vendors~emoji.js | aws s3 cp - s3://plugiamo/vendors~emoji.js --quiet --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
+      aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/plugin.js s3://javascript/plugin.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
+      aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/vendors~emoji.js s3://javascript/vendors~emoji.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600'
+      ;;
+    staging)
+      aws --profile do --endpoint=https://fra1.digitaloceanspaces.com s3 cp build/plugin.js s3://staging-js/plugin.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
+      aws --profile do --endpoint=https://fra1.digitaloceanspaces.com s3 cp build/vendors~emoji.js s3://staging-js/vendors~emoji.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600'
+      ;;
+  esac
+}
+
 ([ -f .env ] && cp .env .env~ || true) && \
 ([ -f ../plugin-base/.env ] && cp ../plugin-base/.env ../plugin-base/.env~ || true) && \
-scp -q root@46.101.129.17:/var/dotenv/plugin/.env .env && \
-scp -q root@46.101.129.17:/var/dotenv/plugin-base/.env ../plugin-base/.env && \
+scp -q $ENV_SERVER:/var/dotenv/plugin/.env .env && \
+scp -q $ENV_SERVER:/var/dotenv/plugin-base/.env ../plugin-base/.env && \
 cd ../plugin-base && yarn && yarn install-p && yarn build && cd ../plugiamo && \
 yarn build && \
-gzip -9 -c build/plugin.js | aws s3 cp - s3://plugiamo/plugin.js --quiet --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
-gzip -9 -c build/vendors~emoji.js | aws s3 cp - s3://plugiamo/vendors~emoji.js --quiet --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
-aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/plugin.js s3://javascript/plugin.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
-aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/vendors~emoji.js s3://javascript/vendors~emoji.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
+copy_files && \
 deploy/notify-rollbar && \
 ([ -f .env~ ] && mv .env~ .env || true) && \
 ([ -f ../plugin-base/.env~ ] && mv ../plugin-base/.env~ ../plugin-base/.env || true) && \

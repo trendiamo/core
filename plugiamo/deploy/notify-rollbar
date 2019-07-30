@@ -4,11 +4,15 @@ ROLLBAR_DEPLOY_TOKEN=$(grep ROLLBAR_DEPLOY_TOKEN .env | xargs)
 IFS='=' read -ra ROLLBAR_DEPLOY_TOKEN <<< "$ROLLBAR_DEPLOY_TOKEN"
 ROLLBAR_DEPLOY_TOKEN=${ROLLBAR_DEPLOY_TOKEN[1]}
 
+ROLLBAR_ENV=$(grep ROLLBAR_ENV .env | xargs)
+IFS='=' read -ra ROLLBAR_ENV <<< "$ROLLBAR_ENV"
+ROLLBAR_ENV=${ROLLBAR_ENV[1]}
+
 LOCAL_USERNAME=`whoami`
 REVISION=`git rev-parse -q --verify HEAD`
 
 curl https://api.rollbar.com/api/1/deploy/ \
   -F access_token=$ROLLBAR_DEPLOY_TOKEN \
-  -F environment=production \
+  -F environment=$ROLLBAR_ENV \
   -F revision=$REVISION \
   -F local_username=$LOCAL_USERNAME

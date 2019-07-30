@@ -1,4 +1,5 @@
 #!/bin/sh
+
 if [ $# -lt 1 ]; then
   echo "Usage: $0 environment [ssh_command]"
   exit 127
