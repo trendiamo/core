@@ -6,39 +6,39 @@ import linkedinIcon from '../images/icon-linkedin.svg'
 import twitterIcon from '../images/icon-twitter.svg'
 import whatsappIcon from '../images/icon-whatsapp.svg'
 
-const FacebookLink = ({ size }) => (
-  <a href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} title="Share on Facebook">
+const FacebookLink = ({ location, size }) => (
+  <a href={`https://www.facebook.com/sharer/sharer.php?u=${location.href}`} title="Share on Facebook">
     <img alt="Share on Facebook" height={size} src={facebookIcon} width={size} />
   </a>
 )
 
-const LinkedinLink = ({ size }) => (
+const LinkedinLink = ({ location, size }) => (
   <a
-    href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}&title=&summary=&source=`}
+    href={`https://www.linkedin.com/shareArticle?mini=true&url=${location.href}&title=&summary=&source=`}
     title="Share on Linkedin"
   >
     <img alt="Share on Linkedin" src={linkedinIcon} width={size} />
   </a>
 )
 
-const TwitterLink = ({ size }) => (
-  <a href={`https://twitter.com/home?status=${window.location.href} `} title="Share on Twitter">
+const TwitterLink = ({ location, size }) => (
+  <a href={`https://twitter.com/home?status=${location.href} `} title="Share on Twitter">
     <img alt="Share on Twitter" src={twitterIcon} width={size} />
   </a>
 )
 
-const WhatsappLink = ({ size }) => (
-  <a href={`https://api.whatsapp.com/send?text=${window.location.href} `} title="Share on Whatsapp">
+const WhatsappLink = ({ location, size }) => (
+  <a href={`https://api.whatsapp.com/send?text=${location.href} `} title="Share on Whatsapp">
     <img alt="Share on Whatsapp" src={whatsappIcon} width={size} />
   </a>
 )
 
-const SocialMediaLinks = styled(({ className, size = 40 }) => (
+const SocialMediaLinks = styled(({ className, location, size = 40 }) => (
   <div className={className}>
-    <FacebookLink size={size} />
-    <LinkedinLink size={size} />
-    <TwitterLink size={size} />
-    <WhatsappLink size={size} />
+    <FacebookLink location={location} size={size} />
+    <LinkedinLink location={location} size={size} />
+    <TwitterLink location={location} size={size} />
+    <WhatsappLink location={location} size={size} />
   </div>
 ))`
   display: flex;

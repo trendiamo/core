@@ -134,14 +134,14 @@ const BottomSocialMediaLinks = styled(SocialMediaLinks)`
   margin-bottom: 4rem;
 `
 
-const ArticleDetails = ({ pageContext }) => (
+const ArticleDetails = ({ location, pageContext }) => (
   <DetailsContainer>
     <MetaImg src={pageContext.post.authorImage.fixed.src} />
     <Meta>
       <MetaAuthor>{pageContext.post.authorName}</MetaAuthor>
       <MetaDate>{pageContext.post.publishingDate}</MetaDate>
     </Meta>
-    <TopSocialMediaLinks />
+    <TopSocialMediaLinks location={location} />
   </DetailsContainer>
 )
 
@@ -159,7 +159,7 @@ const Hr = styled.hr`
   border: 1px solid black;
 `
 
-const BlogPost = ({ pageContext, data }) => (
+const BlogPost = ({ location, pageContext, data }) => (
   <Layout
     blogCategories={data.blogCategories}
     hasGetStarted
@@ -183,7 +183,7 @@ const BlogPost = ({ pageContext, data }) => (
         }}
       />
       <MainContent>
-        <ArticleDetails pageContext={pageContext} />
+        <ArticleDetails location={location} pageContext={pageContext} />
         <BlogText
           className="blog-text"
           dangerouslySetInnerHTML={{
@@ -192,7 +192,7 @@ const BlogPost = ({ pageContext, data }) => (
         />
       </MainContent>
     </article>
-    <BottomSocialMediaLinks />
+    <BottomSocialMediaLinks location={location} />
     <Hr />
     <EmailCta />
     <Hr />
