@@ -48,7 +48,7 @@ bin/rails deploy-staging
 # To install certificates
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d api.pimppls.com -d admin.pimppls.com
+certbot certonly --standalone --preferred-challenges http -d api.pimppls.com -d admin.pimppls.com -d pimppls.com -d www.pimppls.com
 service nginx start
 
 mkdir keycert
