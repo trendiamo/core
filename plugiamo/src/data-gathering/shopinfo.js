@@ -38,36 +38,33 @@ export default {
       )
     })
   },
-  getProductsFromCart(isCheckoutForm) {
-    const _this = this
-    const productPaths = window.$(isCheckoutForm ? 'td.product-name' : '.cartSkuName').map((index, element) => {
-      const productRef = new URL(
-        isCheckoutForm ? element.firstElementChild.href : element.childNodes[0].firstChild.href
-      )
-      return productRef.pathname ? productRef.pathname : null
-    })
-    const cartProducts = {}
-    let counter = 0
-    const accumulateProductData = resultsObj => {
-      cartProducts[counter] = resultsObj
-      counter += 1
-    }
-    const cartProductObj = {
-      productId: null,
-      productName: null,
-      productBrand: null,
-      currency: 'BRL',
-    }
+  getProductsFromCart({ isCheckoutForm }) {
+    const productList = window.$(isCheckoutForm ? '.table.cart-items tbody tr' : '.vtexsc-productList tbody tr')
 
-    productPaths.map((index, path) => {
-      _this.addToCartObject(accumulateProductData, path, {
-        ...cartProductObj,
-        subTotalInCents: convertToCents(
-          window.$(isCheckoutForm ? '.total-selling-price' : '.bestPrice')[index].innerText
-        ),
+    let result = []
+
+    if (productList.length > 0) {
+      productList.each((index, productElement) => {
+        let quantityElement = productElement.querySelector(isCheckoutForm ? '.quantity input' : '.cartSkuQuantity')
+        let quantityElementValue =
+          quantityElement && (isCheckoutForm ? quantityElement.value : quantityElement.innerText)
+        if (isCheckoutForm && !quantityElement) {
+          quantityElement = productElement.querySelector('.quantity span')
+          quantityElementValue = quantityElement && quantityElement.innerText
+        }
+        const quantity = Number(isCheckoutForm ? quantityElementValue : quantityElement.innerText)
+        const itemPrice = convertToCents(
+          productElement.querySelector(isCheckoutForm ? '.new-product-price' : '.bestPrice').innerText
+        )
+        const name = productElement.querySelector(isCheckoutForm ? '.product-name a' : '.cartSkuName').innerText
+        const subTotalInCents = isCheckoutForm
+          ? convertToCents(productElement.querySelector('.total-selling-price').innerText)
+          : Math.round(itemPrice * quantity)
+        const product = { name, itemPrice, quantity, subTotalInCents }
+        result.push(product)
       })
-    })
-    return cartProducts
+    }
+    this.products = result
   },
   checkoutObject(isCheckoutForm) {
     return {
@@ -75,7 +72,7 @@ export default {
       data: {
         hostname: location.hostname,
         withPlugin: !!window.$('.frekkls-container')[0],
-        products: this.getProductsFromCart(isCheckoutForm),
+        products: this.products,
         currency: 'BRL',
         subTotalInCents: convertToCents(
           isCheckoutForm ? window.$('.monetary')[0].innerText : window.$('.vtexsc-text')[0].innerText
@@ -83,37 +80,56 @@ export default {
       },
     }
   },
+  proceedToCheckout({ googleAnalytics, isCheckoutForm }) {
+    const json = this.checkoutObject(isCheckoutForm)
+    if (json.data.products.length === 0) return
+    mixpanel.track(json.name, json.data)
+    if (googleAnalytics.active) {
+      googleAnalytics.event({
+        hitType: 'event',
+        eventCategory: 'Page Event',
+        eventAction: 'Click',
+        eventLabel: 'proceedToCheckout',
+        page: location.hostname,
+      })
+    }
+  },
   setupDataGathering(googleAnalytics) {
-    const _this = this
     const saveData = resultsObj => {
       mixpanel.track(resultsObj.name, resultsObj.data)
     }
+    const isCheckoutForm = location.pathname.match(/^\/checkout\//)
+
+    this.getProductsFromCart({ isCheckoutForm })
+
+    window.$(document).ajaxComplete((event, xhr, settings) => {
+      if (xhr.status !== 200) return
+      if (settings.url.includes('/api/checkout/pub/orderForm/')) {
+        setTimeout(() => {
+          this.getProductsFromCart({ isCheckoutForm })
+        }, 100)
+      }
+    })
+
+    window.$(document).on('click', '.vtexsc-cart .cartCheckout', () => {
+      this.proceedToCheckout({ googleAnalytics, isCheckoutForm })
+    })
+    if (isCheckoutForm) {
+      window.$(document).on('click', '.btn-place-order, .cartCheckout', () => {
+        this.proceedToCheckout({ googleAnalytics, isCheckoutForm })
+      })
+      return
+    }
     if (location.pathname.match(/orderPlaced/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if (
-      location.pathname.match(/^\/checkout\//) ||
-      (window.$('.vtexsc-wrap')[0] && window.$('.vtexsc-wrap')[0].classList.contains('active'))
-    ) {
-      window
-        .$(document)
-        .on('click', location.pathname.match(/^\/checkout\//) ? '.btn-place-order' : '.cartCheckout', () => {
-          const json = _this.checkoutObject(location.pathname.match(/^\/checkout\//) ? true : false)
-          mixpanel.track(json.name, json.data)
-          googleAnalytics.active &&
-            googleAnalytics.event({
-              hitType: 'event',
-              eventCategory: 'Page Event',
-              eventAction: 'Click',
-              eventLabel: 'proceedToCheckout',
-              page: location.hostname,
-            })
-        })
-    } else if (location.pathname.match(/.*\/p$/)) {
+      return
+    }
+    if (location.pathname.match(/.*\/p$/)) {
       window.$(document).on('click', '.buy-together--add', () => {
-        _this.addToCartObject(saveData, location.pathname)
+        this.addToCartObject(saveData, location.pathname)
       })
       window.$(document).on('click', '.buy-button', () => {
-        _this.addToCartObject(saveData, location.pathname)
+        this.addToCartObject(saveData, location.pathname)
       })
     }
   },
