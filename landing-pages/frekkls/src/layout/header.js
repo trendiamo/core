@@ -97,6 +97,7 @@ const StyledHeader = styled(React.forwardRef(Header))`
   width: 100vw;
   z-index: 1;
   align-items: flex-start;
+  height: calc(2rem + 4px + 3.1vw);
 
   nav {
     align-items: center;
