@@ -4,13 +4,16 @@ if [ $# -lt 1 ]; then
   exit 127
 fi
 ENVIRONMENT=$1
-SSH=${2:-ssh}
+SSH_OPTIONS=$2
+SSH="ssh ${SSH_OPTIONS}"
 case $ENVIRONMENT in
   production)
     SERVER=root@139.59.128.112
+    ENV_SERVER=root@46.101.129.17
     ;;
   staging)
     SERVER=root@167.71.50.172
+    ENV_SERVER=root@167.71.50.172
     ;;
   *)
     echo "environment must be: staging or production"
@@ -18,10 +21,12 @@ case $ENVIRONMENT in
     ;;
 esac
 
-([ -f .env ] && cp .env .env~ || true) && \
 cp public/index.html public/index.html~ && \
 cp deploy/public-index.html public/index.html && \
-cp deploy/.env.$ENVIRONMENT .env && \
+([ -f .env ] && cp .env .env~ || true) && \
+([ -f ../plugin-base/.env ] && cp ../plugin-base/.env ../plugin-base/.env~ || true) && \
+scp $SSH_OPTIONS -q $ENV_SERVER:/var/dotenv/admin/.env .env && \
+scp $SSH_OPTIONS -q $ENV_SERVER:/var/dotenv/plugin-base/.env ../plugin-base/.env && \
 cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend && \
 yarn build && \
 cp deploy/.htaccess build/.htaccess && \
@@ -29,6 +34,8 @@ rsync -azh -e $SSH --delete-after --ignore-errors build/ $SERVER:/var/www/admin/
 deploy/notify-rollbar && \
 rm -rf build/ && \
 rm .env && \
+rm ../plugin-base/.env && \
 ([ -f .env~ ] && mv .env~ .env || true) && \
+([ -f ../plugin-base/.env~ ] && mv ../plugin-base/.env~ ../plugin-base/.env || true) && \
 mv public/index.html~ public/index.html && \
 cd ../plugin-base && yarn build-dev && cd ../console-frontend

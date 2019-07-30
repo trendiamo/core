@@ -2,6 +2,7 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require('path')
 const exec = require('child_process').exec
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: ['./src/index.js'],
@@ -53,6 +54,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv(),
     {
       apply: compiler => {
         compiler.hooks.afterEmit.tap('AfterEmitPlugin', compilation => {
