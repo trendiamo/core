@@ -86,11 +86,30 @@ const MainContent = styled.div`
 `
 
 const BlogText = styled.div`
+  h2,
+  h3 {
+    font-weight: 500;
+    line-height: 1.3;
+    text-transform: none;
+    margin: 0;
+    margin-bottom: 0.75rem;
+    color: #2a3039;
+  }
+  h2 {
+    font-size: 32px;
+  }
+  h3 {
+    font-size: 25px;
+  }
   p {
-    margin-top: 30px;
+    margin-bottom: 1.5rem;
     font-family: Roboto Slab, sans-serif;
-    color: #333;
+    color: #2d2f31;
     font-size: 18px;
+  }
+  li p {
+    margin-bottom: 0;
+    display: inline;
   }
   img {
     width: 100%;
@@ -102,6 +121,23 @@ const BlogText = styled.div`
   }
   @media (min-width: 700px) {
     font-size: 20px;
+  }
+  b {
+    font-weight: bold;
+  }
+  i {
+    font-style: italic;
+  }
+  ul,
+  ol {
+    margin-bottom: 1.5rem;
+    list-style-position: inside;
+  }
+  ul {
+    list-style-type: initial;
+  }
+  ol {
+    list-style-type: decimal;
   }
 `
 
