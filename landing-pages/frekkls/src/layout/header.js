@@ -37,7 +37,7 @@ const toggleMobileMenu = () => {
   document.body.classList.toggle('mobile-menu-open')
 }
 
-const Header = ({ className, hasGetStarted, headerLinks, layout, locale, headerColorScheme, siteTitle }, ref) => {
+const Header = ({ className, hasGetStarted, headerLinks = [], layout, locale, headerColorScheme, siteTitle }, ref) => {
   const onClick = useCallback(event => {
     event.preventDefault()
     const element = document.querySelector(event.target.getAttribute('href'))
@@ -55,7 +55,7 @@ const Header = ({ className, hasGetStarted, headerLinks, layout, locale, headerC
         <StyledLogo alt={siteTitle} headerColorScheme={headerColorScheme} src={LogoGrey} />
       </Link>
       <nav>
-        {(headerLinks || []).map(headerLink =>
+        {headerLinks.map(headerLink =>
           headerLink.target.charAt(0) === '/' ? (
             <Link className="header-link" key={headerLink.target} to={headerLink.target}>
               {headerLink.text}
@@ -75,7 +75,9 @@ const Header = ({ className, hasGetStarted, headerLinks, layout, locale, headerC
             {'Get Started'}
           </Button>
         )}
-        <StyledMenuIcon headerColorScheme={headerColorScheme} onClick={toggleMobileMenu} />
+        {(headerLinks.length > 0 || hasGetStarted) && (
+          <StyledMenuIcon headerColorScheme={headerColorScheme} onClick={toggleMobileMenu} />
+        )}
       </nav>
       <MobileMenu
         hasGetStarted={hasGetStarted}
