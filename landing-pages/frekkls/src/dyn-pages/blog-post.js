@@ -117,7 +117,6 @@ const BlogText = styled.div`
   img + p {
     font-size: 12px;
     text-transform: uppercase;
-    padding-top: 10px;
   }
   @media (min-width: 700px) {
     font-size: 20px;
