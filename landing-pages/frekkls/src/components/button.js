@@ -1,16 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Button = styled(({ className, children, onClick }) => (
-  <button className={className} onClick={onClick} type="button">
-    <span>{children}</span>
-  </button>
-))`
+const Button = styled(({ className, children, onClick, type }) =>
+  type === 'submit' ? (
+    <button className={className} onClick={onClick} type="submit">
+      <span>{children}</span>
+    </button>
+  ) : (
+    <button className={className} onClick={onClick} type="button">
+      <span>{children}</span>
+    </button>
+  )
+)`
+  width: 100%;
+  font-size: 5vw;
+  padding: 10px;
+
   appearance: none;
   cursor: pointer;
   font-family: Roboto, sans-serif;
   font-weight: 500;
-  margin: 0 auto;
   outline: none;
   overflow: hidden;
   text-transform: uppercase;
@@ -21,12 +30,15 @@ const Button = styled(({ className, children, onClick }) => (
     vertical-align: middle;
   }
 
-  font-size: 1.25vw;
-  padding: 0.8vw 1vw;
+  @media (min-width: 900px) {
+    width: auto;
+    font-size: 1.25vw;
+    padding: 0.8vw 1vw;
+  }
   ${({ big }) =>
     big &&
     `
-    @media (min-width: 800px) {
+    @media (min-width: 900px) {
       font-size: 2vw;
       padding: 1vw 1.2vw;
       margin-top: 0.5vw;

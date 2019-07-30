@@ -86,12 +86,6 @@ const Future = styled(({ className }) => (
     .h5 {
       font-size: 5vw;
     }
-
-    button {
-      width: 100%;
-      font-size: 5vw;
-      padding: 10px;
-    }
   }
 `
 

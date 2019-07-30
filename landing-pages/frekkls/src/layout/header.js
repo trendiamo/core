@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
+import { Link } from 'gatsby'
 
 import Button from '../components/button'
 import LogoGrey from '../images/logo-grey.svg'
@@ -7,14 +8,23 @@ import MenuIcon from '../images/menu-icon.svg'
 import MobileMenu from './mobile-menu'
 
 const StyledLogo = styled.img`
-  @media (max-width: 899px) {
-    filter: invert(1);
+  ${({ headerColorScheme }) =>
+    headerColorScheme === 'home'
+      ? `
+  filter: invert(1);
+  @media (min-width: 900px) {
+    filter: none;
   }
+`
+      : headerColorScheme === 'white-on-black' &&
+        `  filter: invert(1);
+`}
 `
 
 const StyledMenuIcon = styled.img.attrs({
   src: MenuIcon,
 })`
+  ${({ headerColorScheme }) => headerColorScheme === 'black-on-white' && 'filter: invert(1);'}
   padding-left: 30px;
   height: 20px;
   cursor: pointer;
@@ -27,13 +37,13 @@ const toggleMobileMenu = () => {
   document.body.classList.toggle('mobile-menu-open')
 }
 
-const Header = ({ className, layout, locale, siteTitle }, ref) => {
+const Header = ({ className, hasGetStarted, headerLinks, layout, locale, headerColorScheme, siteTitle }, ref) => {
   const onClick = useCallback(event => {
     event.preventDefault()
     const element = document.querySelector(event.target.getAttribute('href'))
     if (!element) return
     element.scrollIntoView({ behavior: 'smooth' })
-  })
+  }, [])
 
   const onCtaButtonClick = useCallback(() => {
     window.frekklsOpenDemoModal()
@@ -41,28 +51,40 @@ const Header = ({ className, layout, locale, siteTitle }, ref) => {
 
   return (
     <header className={className} ref={ref}>
-      <a className="logo-link" href="/">
-        <StyledLogo alt={siteTitle} src={LogoGrey} />
-      </a>
+      <Link className="logo-link" to="/">
+        <StyledLogo alt={siteTitle} headerColorScheme={headerColorScheme} src={LogoGrey} />
+      </Link>
       <nav>
-        <a className="header-link" href="#what-you-get" onClick={onClick}>
-          {'What you get'}
-        </a>
-        <a className="header-link" href="#product" onClick={onClick}>
-          {'Product'}
-        </a>
-        <a className="header-link" href="#pricing" onClick={onClick}>
-          {'Pricing'}
-        </a>
-        <a className="header-link" href="mailto:hello@frekkls.com">
-          {'Contact'}
-        </a>
-        <Button bg="rgba(255, 255, 255, 0.3)" color="#fff" onClick={onCtaButtonClick}>
-          {'Get Started'}
-        </Button>
-        <StyledMenuIcon onClick={toggleMobileMenu} />
+        {(headerLinks || []).map(headerLink =>
+          headerLink.target.charAt(0) === '/' ? (
+            <Link className="header-link" key={headerLink.target} to={headerLink.target}>
+              {headerLink.text}
+            </Link>
+          ) : (
+            <a className="header-link" href={headerLink.target} key={headerLink.target} onClick={onClick}>
+              {headerLink.text}
+            </a>
+          )
+        )}
+        {hasGetStarted && (
+          <Button
+            bg="rgba(255, 255, 255, 0.3)"
+            color={headerColorScheme === 'black-on-white' ? '#000' : '#fff'}
+            onClick={onCtaButtonClick}
+          >
+            {'Get Started'}
+          </Button>
+        )}
+        <StyledMenuIcon headerColorScheme={headerColorScheme} onClick={toggleMobileMenu} />
       </nav>
-      <MobileMenu layout={layout} locale={locale} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
+      <MobileMenu
+        hasGetStarted={hasGetStarted}
+        headerLinks={headerLinks}
+        layout={layout}
+        locale={locale}
+        siteTitle={siteTitle}
+        toggleMobileMenu={toggleMobileMenu}
+      />
     </header>
   )
 }
@@ -109,7 +131,7 @@ const StyledHeader = styled(React.forwardRef(Header))`
   .header-link {
     font-size: 1.25vw;
     font-weight: 500;
-    color: #fff;
+    color: ${({ headerColorScheme }) => (headerColorScheme === 'black-on-white' ? '#000' : '#fff')};
     text-decoration: none;
     text-transform: uppercase;
     margin-right: 2vw;
