@@ -94,8 +94,12 @@ class Frekky < SlackRubyBot::Bot
     desc "I can deploy apps."
 
     command "deploy" do
-      desc "I'll deploy an app for you."
+      desc "Deploys an app"
       long_desc "command format: *deploy <app>* where <app> is one of: #{PROJECTS_STR}."
+    end
+
+    command "version" do
+      desc "Shows the current version"
     end
   end
 
@@ -111,6 +115,12 @@ class Frekky < SlackRubyBot::Bot
         deploy_project(project, client, data)
       end
     end
+  end
+
+  command("version") do |client, data|
+    git_version = `git rev-parse -q --verify HEAD`.strip
+    hostname = `hostname`.strip
+    say_in_context("I'm running on `#{hostname}`, at rev: `#{git_version}`", client, data)
   end
 end
 
