@@ -45,6 +45,14 @@ dokku run console-backend rails db:schema:load # fails before first deploy, firs
 # from your local machine, do the first deploy:
 bin/rails deploy-staging
 
+# To setup .env files
+
+mkdir -p /var/dotenv/admin
+mkdir -p /var/dotenv/plugin # TODO: this one is not done yet
+mkdir -p /var/dotenv/plugin-base
+
+vi the .env files inside each folder
+
 # To install certificates
 
 service nginx stop
