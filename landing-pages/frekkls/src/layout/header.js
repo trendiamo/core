@@ -70,6 +70,7 @@ const Header = ({ className, hasGetStarted, headerLinks = [], layout, locale, he
           <Button
             bg="rgba(255, 255, 255, 0.3)"
             color={headerColorScheme === 'black-on-white' ? '#000' : '#fff'}
+            headerColorScheme={headerColorScheme}
             onClick={onCtaButtonClick}
           >
             {'Get Started'}

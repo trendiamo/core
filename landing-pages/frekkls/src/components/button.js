@@ -48,7 +48,8 @@ const Button = styled(({ className, children, onClick, type }) =>
   background-color: ${({ bg }) => bg || 'transparent'};
   border: 2px solid ${({ color }) => color};
   color: ${({ color }) => color};
-  text-shadow: ${({ bg }) => (bg ? '0 0 3px rgba(0,0,0,0.6)' : 'none')};
+  text-shadow: ${({ bg, headerColorScheme }) =>
+    bg && headerColorScheme !== 'black-on-white' ? '0 0 3px rgba(0,0,0,0.6)' : 'none'};
 
   &:hover,
   &:active {
