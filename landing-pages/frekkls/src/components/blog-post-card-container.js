@@ -9,7 +9,7 @@ const BlogPostCardContainer = styled.div`
     flex-wrap: wrap;
     justify-content: flex-start;
     > a {
-      width: 33vw;
+      width: 33%;
     }
   }
 `
