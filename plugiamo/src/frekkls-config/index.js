@@ -5,6 +5,7 @@ import deliusConfig from './delius'
 import eoticaConfig from './eotica'
 import frekklsDemoConfig from './frekkls-demo'
 import impressoraJatoConfig from './impressora-jato'
+import mymuesli from './mymuesli'
 import pampling from './pampling'
 import pierreCardinConfig from './pierre-cardin'
 import pionierConfig from './pionier'
@@ -49,6 +50,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'www.rihappy.com.br') return rihappyConfig
   if (location.hostname === 'villadonatello.com') return villaDonatelloConfig
   if (location.hostname === 'www.pampling.com') return pampling
+  if (location.hostname === 'www.mymuesli.com') return mymuesli
   return {}
 }
 
