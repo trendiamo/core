@@ -50,6 +50,12 @@ exports.createPages = ({ graphql, actions }) => {
               fixed(width: 1280) {
                 src
               }
+              fluid(quality: 100) {
+                aspectRatio
+                src
+                srcSet
+                sizes
+              }
             }
           }
         }

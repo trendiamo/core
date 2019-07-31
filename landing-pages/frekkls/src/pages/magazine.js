@@ -4,7 +4,6 @@ import { graphql } from 'gatsby'
 import BlogHero from '../sections/blog-hero'
 import BlogPostCard from '../components/blog-post-card'
 import BlogPostCardContainer from '../components/blog-post-card-container'
-import FeaturedBlogPost from '../components/featured-blog-post'
 import Layout from '../layout'
 import Section from '../components/section'
 import Seo from '../layout/seo'
@@ -22,10 +21,9 @@ const BlogPage = ({ data }) => (
     <Seo title="Frekkls Magazine" />
     <BlogHero blogHero={data.blogPage.featuredBig} />
     <Section>
-      <FeaturedBlogPost post={data.blogPage.featured} />
       <BlogPostCardContainer>
         {data.blogs.edges.map(blog =>
-          [data.blogPage.featuredBig.slug, data.blogPage.featured.slug].includes(blog.node.slug) ? null : (
+          [data.blogPage.featuredBig.slug].includes(blog.node.slug) ? null : (
             <BlogPostCard key={blog.node.id} post={blog.node} />
           )
         )}
@@ -56,25 +54,7 @@ export const query = graphql`
         slug
         title
         titleImage {
-          fluid {
-            aspectRatio
-            src
-            srcSet
-            sizes
-          }
-        }
-      }
-      featured {
-        categories {
-          name
-        }
-        description {
-          description
-        }
-        slug
-        title
-        titleImage {
-          fluid {
+          fluid(quality: 100) {
             aspectRatio
             src
             srcSet

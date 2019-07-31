@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
 import { graphql } from 'gatsby'
@@ -30,14 +31,26 @@ const MetaDate = styled.div`
   color: #959595;
 `
 
-const HeaderImg = styled.div`
+const ArticleHeader = styled.div`
   position: relative;
-  padding: 200px 0px;
-  background-color: #000;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), transparent calc(2rem + 4px + 3.1vw)), url(${({ src }) => src});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+`
+
+const ArticleHeaderImg = styled(Img)`
+  min-height: 600px;
+  max-height: calc(100vh - 10vw);
+`
+
+const ArticleHeaderContent = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), transparent calc(2rem + 4px + 3.1vw));
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   h1 {
     color: #fff;
@@ -209,9 +222,12 @@ const BlogPost = ({ location, pageContext, data }) => (
       title={pageContext.post.title}
     />
     <article>
-      <HeaderImg src={pageContext.post.titleImage.fixed.src}>
-        <h1>{pageContext.post.title}</h1>
-      </HeaderImg>
+      <ArticleHeader>
+        <ArticleHeaderImg fluid={pageContext.post.titleImage.fluid} />
+        <ArticleHeaderContent>
+          <h1>{pageContext.post.title}</h1>
+        </ArticleHeaderContent>
+      </ArticleHeader>
       <TitleImgMeta
         dangerouslySetInnerHTML={{
           __html: pageContext.post.titleImageCredit.childContentfulRichText.html,

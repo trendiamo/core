@@ -4,7 +4,6 @@ import { graphql } from 'gatsby'
 
 import BlogPostCard from '../components/blog-post-card'
 import BlogPostCardContainer from '../components/blog-post-card-container'
-import FeaturedBlogPost from '../components/featured-blog-post'
 import Layout from '../layout'
 import Section from '../components/section'
 import Seo from '../layout/seo'
@@ -22,7 +21,6 @@ const BlogCategoryPage = styled(({ className, data, pageContext }) => (
   >
     <Seo title={`Frekkls Magazine - ${pageContext.category.name}`} />
     <Section>
-      <FeaturedBlogPost post={data.category.featured} />
       <BlogPostCardContainer>
         {data.blogs.edges.map(blog => (
           <BlogPostCard key={blog.node.id} post={blog.node} />
@@ -48,26 +46,6 @@ export const query = graphql`
         node {
           name
           slug
-        }
-      }
-    }
-    category: contentfulBlogCategory(slug: { eq: $slug }) {
-      featured {
-        categories {
-          name
-        }
-        description {
-          description
-        }
-        slug
-        title
-        titleImage {
-          fluid {
-            aspectRatio
-            src
-            srcSet
-            sizes
-          }
         }
       }
     }

@@ -1,3 +1,4 @@
+import Img from 'gatsby-image'
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
@@ -9,23 +10,27 @@ import { blogPostUrl } from '../utils'
 
 const HeroBlog = styled.div`
   width: 100vw;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), transparent calc(2rem + 4px + 3.1vw)),
-    url(${({ mainImage }) => mainImage});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  position: relative;
 `
 
 const HeroBlogContent = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), transparent calc(2rem + 4px + 3.1vw));
   padding: 90px 4vw;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+
+  a {
+    text-decoration: none;
+  }
 
   h3 {
     color: #fff;
@@ -54,12 +59,20 @@ const HeroBlogContent = styled.div`
   }
 `
 
-const BlogHero = ({ blogHero }) => (
-  <Section>
-    <HeroBlog mainImage={blogHero.titleImage.fluid.src}>
+const HeroBlogImage = styled(Img)`
+  min-height: 600px;
+  max-height: calc(100vh - 10vw);
+`
+
+const BlogHero = styled(({ blogHero, className }) => (
+  <Section className={className}>
+    <HeroBlog>
+      <HeroBlogImage fluid={blogHero.titleImage.fluid} />
       <HeroBlogContent>
         <h3>{blogHero.categories[0].name}</h3>
-        <h2>{blogHero.title}</h2>
+        <Link to={blogPostUrl(blogHero)}>
+          <h2>{blogHero.title}</h2>
+        </Link>
         <Link to={blogPostUrl(blogHero)}>
           <Button color="#fff">{'Read More'}</Button>
         </Link>
@@ -67,6 +80,8 @@ const BlogHero = ({ blogHero }) => (
     </HeroBlog>
     <EmailCta />
   </Section>
-)
+))`
+  min-height: unset;
+`
 
 export default BlogHero
