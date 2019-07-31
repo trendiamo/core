@@ -1,8 +1,28 @@
 require "open3"
 
+class MockIO
+  def initialize(string)
+    @string = string
+    @called = false
+  end
+
+  def gets
+    return nil if @called
+
+    @called = true
+    @string
+  end
+end
+
+class MockWaitThr
+  def value
+    true
+  end
+end
+
 module Services
   CLONE_CORE_CMD = <<~SH.freeze
-    GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['GITHUB_KEY_FILE']}' \
+    GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -i #{ENV['GITHUB_KEY_FILE']}' \
     git clone -q git@github.com:trendiamo/core.git #{ENV['BUILD_FOLDER']}/core && \
     cd #{ENV['BUILD_FOLDER']}/core && \
     git remote add dokku-backend dokku@46.101.129.17:console-backend && \
@@ -13,7 +33,7 @@ module Services
 
   FETCH_CORE_CMD = <<~SH.freeze
     cd #{ENV['BUILD_FOLDER']}/core && \
-    GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['GITHUB_KEY_FILE']}' \
+    GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -i #{ENV['GITHUB_KEY_FILE']}' \
     git fetch && \
     git reset --hard origin/master
   SH
@@ -31,8 +51,11 @@ module Services
     end
 
     def perform(&block)
+      yield(nil, MockIO.new("Cloning...\n"), MockWaitThr.new)
       clone_core(&block) unless core_exists?
+      yield(nil, MockIO.new("Fetching...\n"), MockWaitThr.new)
       fetch_core(&block)
+      yield(nil, MockIO.new("Deploying...\n"), MockWaitThr.new)
       deploy(&block)
     end
 
@@ -56,7 +79,7 @@ module Services
       branch = @environment == "production" ? "dokku-backend" : "dokku-staging-backend"
       <<~SH
         cd #{ENV['BUILD_FOLDER']}/core && \
-        GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['DOKKU_KEY_FILE']}' \
+        GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -i #{ENV['DOKKU_KEY_FILE']}' \
         git subtree push -q --prefix backend #{branch} master
       SH
     end
@@ -65,7 +88,7 @@ module Services
       branch = @environment == "production" ? "dokku-slack-bot" : "dokku-staging-slack-bot"
       <<~SH
         cd #{ENV['BUILD_FOLDER']}/core && \
-        GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['DOKKU_KEY_FILE']}' \
+        GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -i #{ENV['DOKKU_KEY_FILE']}' \
         git subtree push -q --prefix slack-bot #{branch} master
       SH
     end
@@ -74,21 +97,21 @@ module Services
       branch = @environment == "production" ? "dokku-shopify" : "dokku-staging-shopify"
       <<~SH
         cd #{ENV['BUILD_FOLDER']}/core && \
-        GIT_SSH_COMMAND='ssh -o "StrictHostKeyChecking=no" -i #{ENV['DOKKU_KEY_FILE']}' \
+        GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -i #{ENV['DOKKU_KEY_FILE']}' \
         git subtree push -q --prefix integrations/shopify #{branch} master
       SH
     end
 
     def deploy_admin
-      <<~SH.freeze
+      <<~SH
         cd #{ENV['BUILD_FOLDER']}/core/console-frontend && \
         yarn install --silent --no-progress && \
-        deploy/deploy #{@environment} '-o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}'
+        deploy/deploy #{@environment} '-o StrictHostKeyChecking=no -i #{ENV['STATIC_KEY_FILE']}'
       SH
     end
 
     def deploy_plugin
-      <<~SH.freeze
+      <<~SH
         cd #{ENV['BUILD_FOLDER']}/core/plugiamo && \
         yarn install --silent --no-progress && \
         mkdir -p ~/.aws && \
@@ -107,12 +130,12 @@ module Services
     end
 
     def deploy_landing_page
-      <<~SH.freeze
+      <<~SH
         cd #{ENV['BUILD_FOLDER']}/core/landing-pages/frekkls && \
         yarn install --silent --no-progress && \
         cp #{ENV['LANDING_PAGE_ENV_FILE']} . && \
         node_modules/.bin/gatsby build --no-color && \
-        rsync -azq -e 'ssh -o "StrictHostKeyChecking=no" -i #{ENV['STATIC_KEY_FILE']}' --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html
+        rsync -azq -e 'ssh -o StrictHostKeyChecking=no -i #{ENV['STATIC_KEY_FILE']}' --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html
       SH
     end
   end

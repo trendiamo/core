@@ -44,7 +44,7 @@ module Commands
 
     def in_channel?(channel_name)
       channel = @client.channels[@data.channel]
-      !channel || channel.name != channel_name
+      channel && channel.name == channel_name
     end
   end
 end
