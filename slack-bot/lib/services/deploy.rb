@@ -130,12 +130,21 @@ module Services
     end
 
     def deploy_landing_page
+      destination = begin
+        if @environment == "production"
+          "root@139.59.128.112:/var/www/frekkls.com/html"
+        else
+          "root@167.71.50.172:/var/www/@/html"
+        end
+      end
+      # We should remove the `rm -rf .cache` line when this is fixed: https://github.com/gatsbyjs/gatsby/pull/16220
       <<~SH
         cd #{ENV['BUILD_FOLDER']}/core/landing-pages/frekkls && \
         yarn install --silent --no-progress && \
         cp #{ENV['LANDING_PAGE_ENV_FILE']} . && \
+        rm -rf .cache && \
         node_modules/.bin/gatsby build --no-color && \
-        rsync -azq -e 'ssh -o StrictHostKeyChecking=no -i #{ENV['STATIC_KEY_FILE']}' --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html
+        rsync -azq -e 'ssh -o StrictHostKeyChecking=no -i #{ENV['STATIC_KEY_FILE']}' --delete-after --ignore-errors public/ #{destination}
       SH
     end
   end

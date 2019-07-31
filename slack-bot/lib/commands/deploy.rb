@@ -64,7 +64,7 @@ module Commands
       if status.success?
         say_in_thread("Deployed #{project_label} to #{@environment} :+1:")
       else
-        say_in_channel("Couldn't deploy #{project_label} :confused:")
+        say_in_channel("Couldn't deploy #{project_label} to #{@environment} :confused:")
       end
     end
 
@@ -72,13 +72,18 @@ module Commands
       @project.to_s.humanize.downcase
     end
 
-    def deploy_project_cmd(text, msg_ts)
+    def deploy_project_cmd(text, msg_ts) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       output = ""
+      last_updated_at = Time.now.utc
       Services::Deploy.perform(@project, @environment) do |_stdin, stdout_and_stderr, wait_thr|
-        while line = stdout_and_stderr.gets # rubocop:disable Lint/AssignmentInCondition
-          line = line.gsub(/.*\r/, "") # workaround messy git output
-          output = "#{output}#{line}"
-          update(text, output, msg_ts)
+        loop do
+          line = stdout_and_stderr.gets
+          output = "#{output}#{line.gsub(/.*\r/, '')}" if line # workaround messy git output
+          if last_updated_at < 5.seconds.ago.utc || !line
+            update(text, output, msg_ts)
+            last_updated_at = Time.now.utc
+          end
+          break unless line
         end
 
         wait_thr.value
