@@ -33,17 +33,22 @@ function main() {
 
         currency: "EUR",
         hostname: null,
+
         toggledPlugin: false,
-        proceedToCheckout: false
+        proceedToCheckout: false,
+        purchaseSucces: false
       };
       for (let i = 0; i < events.length; ++i) {
         if (
           events[i].name === "Toggled Plugin" &&
           events[i].properties.action === "open"
         ) {
-          acc.hostname = events[i].properties.hostname;
           acc.toggledPlugin = true;
-        } else if (events[i].name === "Proceed To Checkout") {
+        } else if (
+          events[i].name === "Proceed To Checkout" &&
+          !acc.proceedToCheckout
+        ) {
+          acc.hostname = events[i].properties.hostname;
           acc.proceedToCheckout = true;
           acc.currency = events[i].properties.currency;
 
@@ -68,8 +73,12 @@ function main() {
               ) || 1;
             acc.countWithoutPlugin += 1;
           }
-        } else if (events[i].name === "Purchase Success") {
-          if (!acc.proceedToCheckout) continue;
+        } else if (
+          events[i].name === "Purchase Success" &&
+          acc.proceedToCheckout &&
+          !acc.purchaseSucces
+        ) {
+          acc.purchaseSucces = true;
 
           acc.cartValueWithPluginConfirmed += acc.cartValueWithPlugin;
           acc.productsCountWithPluginConfirmed += acc.productsCountWithPlugin;
@@ -78,11 +87,6 @@ function main() {
           acc.productsCountWithoutPluginConfirmed +=
             acc.productsCountWithoutPlugin;
           acc.countWithoutPluginConfirmed += acc.countWithoutPlugin;
-
-          // TODO: should we reset?
-
-          acc.toggledPlugin = false;
-          acc.proceedToCheckout = false;
         }
       }
       return acc;
@@ -90,27 +94,23 @@ function main() {
     .groupBy(
       ["value.hostname", "value.currency"],
       [
-        mixpanel.reducer.sum("value.countWithoutPlugin"),
-        mixpanel.reducer.sum("value.cartValueWithoutPlugin"),
-        mixpanel.reducer.sum("value.productsCountWithoutPlugin"),
-        mixpanel.reducer.sum("value.countWithPlugin"),
-        mixpanel.reducer.sum("value.cartValueWithPlugin"),
-        mixpanel.reducer.sum("value.productsCountWithPlugin")
-        // mixpanel.reducer.sum("value.countWithoutPluginConfirmed"),
-        // mixpanel.reducer.sum("value.cartValueWithoutPluginConfirmed"),
-        // mixpanel.reducer.sum("value.productsCountWithoutPluginConfirmed"),
-        // mixpanel.reducer.sum("value.countWithPluginConfirmed"),
-        // mixpanel.reducer.sum("value.cartValueWithPluginConfirmed"),
-        // mixpanel.reducer.sum("value.productsCountWithPluginConfirmed")
+        mixpanel.reducer.sum("value.countWithoutPluginConfirmed"),
+        mixpanel.reducer.sum("value.cartValueWithoutPluginConfirmed"),
+        mixpanel.reducer.sum("value.productsCountWithoutPluginConfirmed"),
+        mixpanel.reducer.sum("value.countWithPluginConfirmed"),
+        mixpanel.reducer.sum("value.cartValueWithPluginConfirmed"),
+        mixpanel.reducer.sum("value.productsCountWithPluginConfirmed")
       ]
     )
     .filter(entry => entry.key[0] && (entry.value[0] > 0 || entry.value[3] > 0))
     .map(entry => ({
-      hostname: entry.key[0],
-      currency: entry.key[1],
-      avgCartValueWithoutPlugin: Math.round(entry.value[1] / entry.value[0]),
-      avgCartValueWithPlugin: Math.round(entry.value[4] / entry.value[3]),
-      avgItemPriceWithoutPlugin: Math.round(entry.value[1] / entry.value[2]),
-      avgItemPriceWithPlugin: Math.round(entry.value[4] / entry.value[5])
+      _1_hostname: entry.key[0],
+      _2_currency: entry.key[1],
+      _3_purchaseWithoutPlugin: entry.value[0],
+      _4_avgCartValueWithoutPlugin: Math.round(entry.value[1] / entry.value[0]),
+      _5_avgItemPriceWithoutPlugin: Math.round(entry.value[1] / entry.value[2]),
+      _6_purchaseWithPlugin: entry.value[3],
+      _7_avgCartValueWithPlugin: Math.round(entry.value[4] / entry.value[3]),
+      _8_avgItemPriceWithPlugin: Math.round(entry.value[4] / entry.value[5])
     }));
 }
