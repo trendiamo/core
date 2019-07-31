@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ $# -lt 1 ]; then
-  echo "Usage: $0 environment [ssh_command]"
+  echo "Usage: $0 environment [ssh_options]"
   exit 127
 fi
 ENVIRONMENT=$1
@@ -31,7 +31,7 @@ scp $SSH_OPTIONS -q $ENV_SERVER:/var/dotenv/plugin-base/.env ../plugin-base/.env
 cd ../plugin-base && yarn install-p && yarn build && cd ../console-frontend && \
 yarn build && \
 cp deploy/.htaccess build/.htaccess && \
-rsync -azh -e $SSH --delete-after --ignore-errors build/ $SERVER:/var/www/admin/html && \
+rsync -azh -e "$SSH" --delete-after --ignore-errors build/ $SERVER:/var/www/admin/html && \
 deploy/notify-rollbar && \
 rm -rf build/ && \
 rm .env && \
