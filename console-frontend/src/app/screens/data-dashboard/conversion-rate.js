@@ -57,7 +57,7 @@ const ConversionRate = ({ dates }) => {
           setHasErrors(true)
         } else {
           const labels = json.map(record => format(new Date(record.date), 'MMM d'))
-          const data = json.map(record => Math.round(record.conversionRate * 100))
+          const data = json.map(record => parseFloat(record.conversionRate * 100).toFixed(2))
           setChartData({ labels, datasets: [{ data, ...config }] })
         }
         setIsLoading(false)
