@@ -94,7 +94,7 @@ const FooterContent = ({ blogCategories }) => {
       <FooterSection className="footer-links" flex="2">
         <FooterColumn flex="1">
           <FooterHeader>{'Follow Us'}</FooterHeader>
-          <a href="https://medium.com/@frekkls">{'Medium'}</a>
+          <a href="https://medium.com/frekkls-humanizing-ecommerce">{'Medium'}</a>
           <a href="https://www.linkedin.com/company/frekkls/">{'Linkedin'}</a>
           <a href="https://www.facebook.com/frekklsapp/">{'Facebook'}</a>
           <a href="https://www.instagram.com/frekkls.app/">{'Instagram'}</a>
