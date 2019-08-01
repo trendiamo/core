@@ -51,7 +51,12 @@ function main() {
             );
             acc.productsCountWithPlugin +=
               Object.keys(events[i].properties.products).reduce(
-                (r, k) => r + +events[i].properties.products[k].quantity,
+                (r, k) =>
+                  r +
+                  +(
+                    events[i].properties.products[k].quantity ||
+                    events[i].properties.products[k].productQuantity
+                  ),
                 0
               ) || 1;
             acc.countWithPlugin += 1;
@@ -61,7 +66,12 @@ function main() {
             );
             acc.productsCountWithoutPlugin +=
               Object.keys(events[i].properties.products).reduce(
-                (r, k) => r + +events[i].properties.products[k].quantity,
+                (r, k) =>
+                  r +
+                  +(
+                    events[i].properties.products[k].quantity ||
+                    events[i].properties.products[k].productQuantity
+                  ),
                 0
               ) || 1;
             acc.countWithoutPlugin += 1;
