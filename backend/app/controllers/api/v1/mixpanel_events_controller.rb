@@ -15,7 +15,7 @@ module Api
 
       def jql_params
         hostname = current_tenant.websites.first.hostnames.first
-        { dates: JSON.parse(params[:dates]).with_indifferent_access, hostname: hostname, sort: params[:sort] }
+        { dates: JSON.parse(params.require(:dates)).with_indifferent_access, hostname: hostname, sort: params[:sort] }
       end
     end
   end
