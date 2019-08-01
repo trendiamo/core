@@ -1,7 +1,7 @@
 const getWeekOfYear = d => {
   const firstDayOfYear = new Date(d.getFullYear(), 0, 1);
   return Math.floor(
-    ((d - firstDayOfYear) / 86400000 + firstDayOfYear.getDay()) / 7
+    ((d - firstDayOfYear) / 86400000 + firstDayOfYear.getDay() - 1) / 7
   );
 };
 const formatDate = d => new Date(d).toISOString().replace(/T.*/, "");

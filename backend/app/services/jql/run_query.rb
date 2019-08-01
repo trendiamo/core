@@ -48,15 +48,20 @@ module Jql
 
     # adjust dates to stick to start of week, end of week, also never more recent than yesterday
     def adjust_dates(params)
-      new_dates = params[:dates]
-      new_dates[:from_date] = Date.parse(new_dates[:from_date]).at_beginning_of_week.to_s
-      new_dates[:to_date] = end_of_month_week(Date.parse(new_dates[:to_date])).at_beginning_of_week.to_s
+      to_date = adjust_to_date(params[:dates][:to_date])
+      from_date = adjust_from_date(params[:dates][:from_date], to_date)
+      new_dates = { from_date: from_date.to_s, to_date: to_date.to_s }
       { dates: new_dates, hostname: params[:hostname], sort: params[:sort] }
     end
 
-    def end_of_month_week(date)
-      date = [Date.yesterday, date].min
-      (date.at_end_of_week.month > date.month || date.at_end_of_week > Date.yesterday ? (date - 7.days) : date)
+    def adjust_to_date(to_date)
+      to_date = [Date.yesterday, Date.parse(to_date)].min
+      to_date -= 7.days if to_date.at_end_of_week.month > to_date.month || to_date.at_end_of_week > Date.yesterday
+      to_date.at_end_of_week
+    end
+
+    def adjust_from_date(from_date, to_date)
+      [to_date - 1.day, Date.parse(from_date)].min.at_beginning_of_week
     end
 
     def perform_request
