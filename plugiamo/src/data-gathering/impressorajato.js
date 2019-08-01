@@ -45,22 +45,22 @@ export default {
       .noConflict()('#shopping-cart-table > tbody')
       .find('tr')
       .map((index, element) => {
-        const productName = jQuery
+        const name = jQuery
           .noConflict()(element)
           .find('h2 > a')
           .attr('title')
-        const productUrl = jQuery
+        const url = jQuery
           .noConflict()(element)
           .find('h2 > a')
           .attr('href')
-        const productQuantity = Number(
+        const quantity = Number(
           jQuery
             .noConflict()(element)
             .find("[selected='selected']")
             .attr('value')
         )
-        const productPrice = convertToCents(element.children[2].innerText)
-        return { productName, productUrl, productPrice, productQuantity }
+        const price = convertToCents(element.children[2].innerText)
+        return { name, url, price, quantity }
       })
       .toArray()
   },

@@ -53,14 +53,11 @@ export default {
           quantityElementValue = quantityElement && quantityElement.innerText
         }
         const quantity = Number(isCheckoutForm ? quantityElementValue : quantityElement.innerText)
-        const itemPrice = convertToCents(
+        const price = convertToCents(
           productElement.querySelector(isCheckoutForm ? '.new-product-price' : '.bestPrice').innerText
         )
         const name = productElement.querySelector(isCheckoutForm ? '.product-name a' : '.cartSkuName').innerText
-        const subTotalInCents = isCheckoutForm
-          ? convertToCents(productElement.querySelector('.total-selling-price').innerText)
-          : Math.round(itemPrice * quantity)
-        const product = { name, itemPrice, quantity, subTotalInCents }
+        const product = { name, price, quantity }
         result.push(product)
       })
     }

@@ -45,10 +45,7 @@ export default {
           $(item)
             .find('.cart__product-name')
             .attr('href')
-        const itemPrice = $(item)
-          .find('.cart__price')
-          .text()
-        const itemPriceInCents = Number(
+        const price = Number(
           $(item)
             .find('.cart__price')
             .text()
@@ -60,8 +57,7 @@ export default {
         return {
           name: itemName,
           url: itemUrl,
-          price: itemPrice,
-          priceInCents: itemPriceInCents,
+          price,
           quantity: itemQuantity,
           currency: 'EUR',
         }

@@ -56,11 +56,7 @@ export default {
           .find('.product-name > a')
           .first()
           .attr('href')
-        const itemPrice = $(item)
-          .find('.woocommerce-Price-amount.amount')
-          .last()
-          .text()
-        const itemPriceInCents = Number(
+        const price = Number(
           $(item)
             .find('.woocommerce-Price-amount.amount')
             .last()
@@ -76,8 +72,7 @@ export default {
         return {
           name: itemName,
           url: itemUrl,
-          price: itemPrice,
-          priceInCents: itemPriceInCents,
+          price,
           quantity: itemQuantity,
           currency: 'EUR',
           isSubscription,

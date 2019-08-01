@@ -64,12 +64,7 @@ export default {
           .find("[data-th='Artikel']")
           .children('a')
           .attr('href')
-        const itemPrice = jQuery
-          .noConflict()(item)
-          .find('span.price')
-          .last()
-          .text()
-        const itemPriceInCents = Number(
+        const price = Number(
           jQuery
             .noConflict()(item)
             .find('span.price')
@@ -86,8 +81,7 @@ export default {
           id,
           name: itemName,
           url: itemUrl,
-          price: itemPrice,
-          priceInCents: itemPriceInCents,
+          price,
           quantity: itemQuantity,
           currency: 'EUR',
         }

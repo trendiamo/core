@@ -16,7 +16,7 @@ export default {
         productName: window.$('.product-single__title').html(),
         subTotalInCents: convertToCents(window.$('span.money').html()),
         productSize: formFields.find(element => element.name === 'Size').value,
-        productQuantity: formFields.find(element => element.name === 'quantity').value,
+        quantity: formFields.find(element => element.name === 'quantity').value,
       },
     }
   },
@@ -29,13 +29,12 @@ export default {
       const name = element.querySelector('.cart__product-name').innerText
       const size = element.querySelector('.grid__item.medium-up--three-fifths .grid__item.three-quarters > p').innerText
       const quantity = Number(element.querySelector('input').value)
-      const itemPrice = convertToCents(element.querySelector('.money').innerText)
-      const subTotalInCents = Math.round(itemPrice * quantity)
+      const price = convertToCents(element.querySelector('.money').innerText)
       const id = element
         .querySelector('input')
         .getAttribute('data-id')
         .split(':')[0]
-      const product = { id, url, name, size, quantity, itemPrice, subTotalInCents }
+      const product = { id, url, name, size, quantity, price }
       products.push(product)
     })
     return products

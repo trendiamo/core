@@ -56,12 +56,7 @@ export default {
           $(item)
             .find('a')
             .attr('href')
-        const itemPrice = $(item)
-          .find('.item-info > li > .value')
-          .last()
-          .text()
-          .trim()
-        const itemPriceInCents = Number(
+        const price = Number(
           $(item)
             .find('.item-info > li > .value')
             .last()
@@ -75,8 +70,7 @@ export default {
         return {
           name: itemName,
           url: itemUrl,
-          price: itemPrice,
-          priceInCents: itemPriceInCents,
+          price,
           quantity: itemQuantity,
           currency: 'EUR',
         }

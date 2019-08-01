@@ -90,10 +90,7 @@ export default {
         const itemUrl = $(item)
           .find('.articulo > a')
           .attr('href')
-        const itemPrice = $(item)
-          .find('.total')
-          .text()
-        const itemPriceInCents = Number(
+        const price = Number(
           $(item)
             .find('.total')
             .text()
@@ -107,8 +104,7 @@ export default {
           name: itemName,
           size: itemSize,
           url: itemUrl,
-          price: itemPrice,
-          priceInCents: itemPriceInCents,
+          price,
           quantity: itemQuantity,
           currency: 'EUR',
         }
