@@ -3,13 +3,13 @@ Types::SpotlightType = GraphQL::ObjectType.define do
 
   field :id, !types.ID
   field :order, types.Int
-  field :persona, !Types::PersonaType do
+  field :seller, !Types::SellerType do
     resolve ->(obj, _args, _ctx) {
-      obj.persona
+      obj.seller
     }
   end
-  field :usePersonaAnimation, !types.Boolean do
-    resolve ->(obj, _args, _ctx) { obj.use_persona_animation }
+  field :useSellerAnimation, !types.Boolean do
+    resolve ->(obj, _args, _ctx) { obj.use_seller_animation }
   end
   field :productPicks, types[Types::ProductPickType] do
     resolve ->(obj, _args, _ctx) {

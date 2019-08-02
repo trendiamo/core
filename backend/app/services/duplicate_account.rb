@@ -44,10 +44,10 @@ class DuplicateAccount
   def duplicate
     @cloned_account = @account.deep_clone { |_void, copy| copy.name = @name }
     @cloned_account.save!
-    @persona_id_mapping = {} # hash of original persona ids to duplicate ids
+    @seller_id_mapping = {} # hash of original seller ids to duplicate ids
     @picture_id_mapping = {} # hash of original picture ids to duplicate ids
     duplicate_pictures
-    duplicate_personas
+    duplicate_sellers
     duplicate_websites
     duplicate_flows
     duplicate_triggers
@@ -65,15 +65,15 @@ class DuplicateAccount
     end
   end
 
-  def duplicate_personas
-    @account.personas.map do |persona|
-      cloned_persona = persona.deep_clone
-      cloned_persona.profile_pic_id = @picture_id_mapping[persona.profile_pic_id]
+  def duplicate_sellers
+    @account.sellers.map do |seller|
+      cloned_seller = seller.deep_clone
+      cloned_seller.profile_pic_id = @picture_id_mapping[seller.profile_pic_id]
       ActsAsTenant.with_tenant(@cloned_account) do
-        cloned_persona.save!
+        cloned_seller.save!
       end
-      @persona_id_mapping[persona.id] = cloned_persona.id
-      cloned_persona
+      @seller_id_mapping[seller.id] = cloned_seller.id
+      cloned_seller
     end
   end
 
@@ -89,7 +89,7 @@ class DuplicateAccount
   end
 
   def duplicate_flows
-    DuplicateFlows.new(@account, @cloned_account, @persona_id_mapping, @picture_id_mapping).perform
+    DuplicateFlows.new(@account, @cloned_account, @seller_id_mapping, @picture_id_mapping).perform
   end
 
   def duplicate_triggers
@@ -105,10 +105,10 @@ class DuplicateAccount
 end
 
 class DuplicateFlows
-  def initialize(account, cloned_account, persona_id_mapping, picture_id_mapping)
+  def initialize(account, cloned_account, seller_id_mapping, picture_id_mapping)
     @account = account
     @cloned_account = cloned_account
-    @persona_id_mapping = persona_id_mapping
+    @seller_id_mapping = seller_id_mapping
     @picture_id_mapping = picture_id_mapping
   end
 
@@ -118,7 +118,7 @@ class DuplicateFlows
       simple_chats: simple_chats,
       outros: Outro.where(account: @account).map(&:deep_clone),
     }.collect { |_void, value| value }.flatten
-    assign_personas(flows)
+    assign_sellers(flows)
     ActsAsTenant.with_tenant(@cloned_account) do
       flows.map(&:save!)
     end
@@ -141,7 +141,7 @@ class DuplicateFlows
   end
 
   def process_cloned_showcase(cloned_showcase)
-    assign_personas(cloned_showcase.spotlights)
+    assign_sellers(cloned_showcase.spotlights)
     cloned_showcase.spotlights.map do |spotlight|
       spotlight.product_picks.map do |product_pick|
         product_pick.pic_id = @picture_id_mapping[product_pick.pic.id]
@@ -149,9 +149,9 @@ class DuplicateFlows
     end
   end
 
-  def assign_personas(collection)
+  def assign_sellers(collection)
     collection.map do |object|
-      object.persona_id = @persona_id_mapping[object.persona.id]
+      object.seller_id = @seller_id_mapping[object.seller.id]
       object
     end
   end

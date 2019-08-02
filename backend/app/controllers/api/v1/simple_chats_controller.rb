@@ -4,7 +4,7 @@ module Api
       before_action :ensure_tenant
 
       def index
-        @simple_chats = policy_scope(SimpleChat).includes(:persona).all
+        @simple_chats = policy_scope(SimpleChat).includes(:seller).all
         authorize @simple_chats
         chain = sorting(pagination(@simple_chats))
         render json: chain
@@ -68,7 +68,7 @@ module Api
 
       def simple_chat_params
         result = params.require(:simple_chat).permit(:id, :name, :title, :chat_bubble_text, :chat_bubble_extra_text,
-                                                     :persona_id, :use_persona_animation, :_destroy, :lock_version,
+                                                     :seller_id, :use_seller_animation, :_destroy, :lock_version,
                                                      simple_chat_steps_attributes:
                                                      [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
                                                     [:id, :order, :type, :html, :title, :pic_id, :url, :display_price,

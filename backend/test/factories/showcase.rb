@@ -3,7 +3,7 @@ FactoryBot.define do
     sequence(:title) { Faker::Lorem.words(2) }
     sequence(:subtitle) { Faker::Lorem.words(4) }
     sequence(:name) { Faker::StarWars.planet }
-    persona
+    seller
     association :owner, factory: :user
 
     factory :showcase_with_spotlights do

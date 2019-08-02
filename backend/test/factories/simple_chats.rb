@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:title) { Faker::Lorem.words(2) }
     sequence(:chat_bubble_text) { Faker::Lorem.words(4) }
     sequence(:chat_bubble_extra_text) { Faker::Lorem.words(4) }
-    persona
+    seller
     association :owner, factory: :user
 
     factory :simple_chat_with_simple_chat_steps do

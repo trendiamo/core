@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :spotlight do
-    persona
+    seller
     showcase
 
     factory :spotlight_with_product_picks do

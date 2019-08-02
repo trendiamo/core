@@ -1,6 +1,6 @@
 class Outro < ApplicationRecord
   acts_as_tenant
-  belongs_to :persona
+  belongs_to :seller
   has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
 
   validates :owner_id, presence: true
@@ -14,13 +14,13 @@ class Outro < ApplicationRecord
   def as_json(_options = {})
     attributes
       .slice("id", "name", "chat_bubble_text", "chat_bubble_button_no", "chat_bubble_button_yes",
-             "use_persona_animation", "created_at", "updated_at", "lock_version")
-      .merge(persona: persona_attributes(persona), type: "Outro", trigger_ids: triggers.ids)
+             "use_seller_animation", "created_at", "updated_at", "lock_version")
+      .merge(seller: seller_attributes(seller), type: "Outro", trigger_ids: triggers.ids)
   end
 
-  def persona_attributes(persona)
-    { id: persona.id, name: persona.name, profile_pic: { url: persona.profile_pic.url }, pic_rect: persona.pic_rect,
-      profile_pic_animation: { url: persona.profile_pic_animation&.url }, instagram_url: persona.instagram_url, }
+  def seller_attributes(seller)
+    { id: seller.id, name: seller.name, profile_pic: { url: seller.profile_pic.url }, pic_rect: seller.pic_rect,
+      profile_pic_animation: { url: seller.profile_pic_animation&.url }, instagram_url: seller.instagram_url, }
   end
 
   def paths

@@ -9,7 +9,7 @@ class AutocompletePolicy < ApplicationPolicy
     end
   end
 
-  def personas_autocomplete?
+  def sellers_autocomplete?
     user&.active_membership || user&.admin
   end
 

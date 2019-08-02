@@ -1,4 +1,4 @@
-class Persona < ApplicationRecord
+class Seller < ApplicationRecord
   acts_as_tenant
 
   paginates_per 10
@@ -26,7 +26,7 @@ class Persona < ApplicationRecord
   end
 
   def animation_in_use_cannot_be_removed
-    return unless profile_pic_animation&.url.blank? && modules.any?(&:use_persona_animation)
+    return unless profile_pic_animation&.url.blank? && modules.any?(&:use_seller_animation)
 
     errors.add(:profile_pic_animation, "is used in your modules")
   end

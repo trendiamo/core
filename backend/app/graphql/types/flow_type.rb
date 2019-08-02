@@ -27,14 +27,14 @@ Types::FlowType = GraphQL::ObjectType.define do
       obj.class.name.camelize(:lower)
     }
   end
-  field :persona, Types::PersonaType do
+  field :seller, Types::SellerType do
     resolve ->(obj, _args, _ctx) {
-      obj.persona
+      obj.seller
     }
   end
-  field :usePersonaAnimation, !types.Boolean do
+  field :useSellerAnimation, !types.Boolean do
     resolve ->(obj, _args, _ctx) {
-      obj.use_persona_animation
+      obj.use_seller_animation
     }
   end
 end
