@@ -1,6 +1,6 @@
 module Api
   module V1
-    class SimpleChatsController < RestAdminController
+    class SimpleChatsController < RestAdminController # rubocop:disable Metrics/ClassLength
       before_action :ensure_tenant
 
       def index
@@ -66,16 +66,26 @@ module Api
 
       private
 
-      def simple_chat_params
-        result = params.require(:simple_chat).permit(:id, :name, :title, :chat_bubble_text, :chat_bubble_extra_text,
-                                                     :seller_id, :use_seller_animation, :_destroy, :lock_version,
-                                                     simple_chat_steps_attributes:
-                                                     [:id, :key, :_destroy, :order, simple_chat_messages_attributes:
-                                                    [:id, :order, :type, :html, :title, :pic_id, :url, :display_price,
-                                                     :video_url, :group_with_adjacent, :_destroy,
-                                                     pic_rect: %i[x y width height],],])
+      def simple_chat_params # rubocop:disable Metrics/MethodLength
+        result = params
+                 .require(:simple_chat)
+                 .permit(:id, :name, :title, :chat_bubble_text, :chat_bubble_extra_text, :seller_id,
+                         :use_seller_animation, :_destroy, :lock_version,
+                         simple_chat_steps_attributes: [
+                           :id, :key, :_destroy, :order, simple_chat_messages_attributes: [
+                             :id, :order, :type, :html, :title, :pic_id, :url, :display_price, :video_url,
+                             :group_with_adjacent, :_destroy, pic_rect: %i[x y width height],
+                           ],
+                         ])
+                 .reverse_merge(simple_chat_compat_params)
         add_order_fields(result[:simple_chat_steps_attributes])
-        result
+      end
+
+      def simple_chat_compat_params
+        {
+          seller_id: params.require(:simple_chat)[:persona_id],
+          use_seller_animation: params.require(:simple_chat)[:use_persona_animation],
+        }
       end
 
       # add order fields to chat_step_attributes' messages and options, based on received order
@@ -90,6 +100,7 @@ module Api
             chat_message_attributes[:order] = l + 1
           end
         end
+        simple_chat_steps_attributes
       end
 
       def convert_and_assign_pictures

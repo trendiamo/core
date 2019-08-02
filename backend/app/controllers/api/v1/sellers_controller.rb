@@ -51,15 +51,24 @@ module Api
       private
 
       def seller_params
-        params.require(:seller).permit(:name, :description, :instagram_url, :profile_pic_id, :lock_version,
-                                       :profile_pic_animation_id, pic_rect: %i[x y width height])
+        seller_compat_params.permit(:name, :description, :instagram_url, :profile_pic_id, :profile_pic_animation_id,
+                                    :lock_version, pic_rect: %i[x y width height])
       end
 
       def convert_and_assign_pictures
         %i[profile_pic profile_pic_animation].each do |pic|
-          pic_url = params[:seller][pic][:url]
-          params[:seller]["#{pic}_id"] = pic_url.present? ? Picture.find_or_create_by!(url: pic_url).id : nil
-          params[:seller].delete(pic)
+          seller_params = seller_compat_params
+          pic_url = seller_params[pic][:url]
+          seller_params["#{pic}_id"] = pic_url.present? ? Picture.find_or_create_by!(url: pic_url).id : nil
+          seller_params.delete(pic)
+        end
+      end
+
+      def seller_compat_params
+        if params[:persona]
+          params.require(:persona)
+        else
+          params.require(:seller)
         end
       end
 
