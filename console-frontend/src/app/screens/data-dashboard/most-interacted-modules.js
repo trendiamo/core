@@ -1,6 +1,7 @@
 import CircularProgress from 'shared/circular-progress'
 import EditButton from 'shared/edit-button'
 import ErrorMessage from './error-message'
+import moduleIcon from 'shared/module-icon'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
@@ -13,7 +14,7 @@ import { useSnackbar } from 'notistack'
 
 const columns = [
   { name: 'id', label: 'ID' },
-  { name: 'type', label: 'Type' },
+  { name: 'type', label: 'Type', align: 'center' },
   { name: 'name', label: 'Name' },
   {
     name: 'bar',
@@ -148,8 +149,10 @@ const MainTable = ({ data, handleRequestSort, sorting }) => {
           // eslint-disable-next-line react/no-array-index-key
           <TableRow key={index}>
             <TableCell>{record.flowId}</TableCell>
-            <TableCell width="15%">{record.flowTypeTitle}</TableCell>
-            <TableCell width="15%">{record.name}</TableCell>
+            <TableCell align="center" width="5%">
+              {moduleIcon(record.flowTypeTitle)}
+            </TableCell>
+            <TableCell width="25%">{record.name}</TableCell>
             <TableCell width="70%">
               <StatsBar
                 record={record}

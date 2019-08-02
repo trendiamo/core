@@ -37,7 +37,7 @@ module Jql
         next unless record
 
         item[:name] = record.name
-        item[:flowTypeTitle] = item[:flowType].underscore.humanize.titleize
+        item[:flowTypeTitle] = item[:flowType].upcase_first
         item[:active] = record.triggers.present?
       end
     end
