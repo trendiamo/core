@@ -43,8 +43,8 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
-    "deploy": "rm -rf public/* .cache/* && yarn build && rsync -azh -e ssh --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html",
     "staging-deploy": "rm -rf public/* .cache/* && yarn build && rsync -azh -e ssh --delete-after --ignore-errors public/ root@167.71.50.172:/var/www/@/html",
+    "deploy": "rm -rf public/* .cache/* && yarn build && rsync -azh -e ssh --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/frekkls.com/html",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },

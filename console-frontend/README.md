@@ -33,7 +33,8 @@ yarn eslint src
 ## Deploy
 
 ```
-yarn deploy {production|staging}
+yarn staging-deploy
+yarn deploy
 ```
 
 ## Storybook

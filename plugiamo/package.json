@@ -23,7 +23,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack -p --config webpack.prod.js --hide-modules",
-    "deploy": "deploy/deploy",
+    "staging-deploy": "deploy/deploy staging",
+    "deploy": "deploy/deploy production",
     "analyze": "yarn webpack-bundle-analyzer build/stats.json"
   },
   "devDependencies": {

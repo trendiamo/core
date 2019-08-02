@@ -1,14 +1,11 @@
-desc "Deploy the app to the specified environment"
+desc "Deploy the app to staging"
+task :"staging-deploy" do
+  `cd ..; git subtree push --prefix backend dokku-staging-backend master; cd -`
+end
+
+desc "Deploy the app to production"
 task :deploy do
-  unless %w[production staging].include?(ENV["e"])
-    puts("Usage: #{$PROGRAM_NAME} e=production|staging")
-    exit(127)
-  end
-  if ENV["e"] == "production"
-    `cd ..; git subtree push --prefix backend dokku-backend master; cd -`
-  elsif ENV["e"] == "staging"
-    `cd ..; git subtree push --prefix backend dokku-staging-backend master; cd -`
-  end
+  `cd ..; git subtree push --prefix backend dokku-backend master; cd -`
 end
 
 # deploy different branch: (shouldn't be needed)

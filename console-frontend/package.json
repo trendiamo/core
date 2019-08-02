@@ -65,7 +65,8 @@
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "deploy": "deploy/deploy",
+    "staging-deploy": "deploy/deploy staging",
+    "deploy": "deploy/deploy production",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },

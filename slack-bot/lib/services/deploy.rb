@@ -116,16 +116,7 @@ module Services
         yarn install --silent --no-progress && \
         mkdir -p ~/.aws && \
         ([ -f ~/.aws/credentials ] || cp #{ENV['AWS_CREDENTIALS_FILE']} ~/.aws/credentials) && \
-        cp #{ENV['PLUGIN_ENV_FILE']} . && \
-        cp #{ENV['PLUGIN_BASE_ENV_FILE']} ../plugin-base/ && \
-        cd ../plugin-base && yarn install-p && yarn build && cd ../plugiamo && \
-        yarn build && \
-        gzip -9 -c build/plugin.js | aws s3 --region eu-central-1 cp - s3://plugiamo/plugin.js --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
-        gzip -9 -c build/vendors~emoji.js | aws s3 cp - s3://plugiamo/vendors~emoji.js --quiet --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' && \
-        aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/plugin.js s3://javascript/plugin.js --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
-        aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/vendors~emoji.js s3://javascript/vendors~emoji.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600' && \
-        deploy/notify-rollbar && \
-        rm build/*.js
+        deploy/deploy #{@environment}
       SH
     end
 
