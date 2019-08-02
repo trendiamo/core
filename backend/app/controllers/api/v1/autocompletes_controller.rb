@@ -1,10 +1,10 @@
 module Api
   module V1
     class AutocompletesController < RestAdminController
-      def personas_autocomplete
+      def sellers_autocomplete
         authorize :autocomplete
-        @personas = Persona.where("name ILIKE ?", "#{params[:searchQuery]}%")
-        render json: @personas
+        @sellers = Seller.where("name ILIKE ?", "#{params[:searchQuery]}%")
+        render json: @sellers
       end
 
       def flows_autocomplete

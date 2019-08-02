@@ -1,5 +1,5 @@
-Types::PersonaType = GraphQL::ObjectType.define do
-  name "Persona"
+Types::SellerType = GraphQL::ObjectType.define do
+  name "Seller"
 
   field :id, !types.ID
   field :name, !types.String

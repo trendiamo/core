@@ -1,7 +1,7 @@
 class Spotlight < ApplicationRecord
   acts_as_tenant
   belongs_to :showcase, touch: true
-  belongs_to :persona
+  belongs_to :seller
   has_many :product_picks, dependent: :destroy
 
   validates :product_picks, presence: true

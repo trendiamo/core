@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190726105744) do
+ActiveRecord::Schema.define(version: 20190802144445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20190726105744) do
   end
 
   create_table "outros", force: :cascade do |t|
-    t.bigint "persona_id"
+    t.bigint "seller_id"
     t.bigint "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -66,27 +66,10 @@ ActiveRecord::Schema.define(version: 20190726105744) do
     t.string "chat_bubble_button_no"
     t.integer "lock_version", default: 1
     t.bigint "owner_id", null: false
-    t.boolean "use_persona_animation", default: false, null: false
+    t.boolean "use_seller_animation", default: false, null: false
     t.index ["account_id"], name: "index_outros_on_account_id"
     t.index ["owner_id"], name: "index_outros_on_owner_id"
-    t.index ["persona_id"], name: "index_outros_on_persona_id"
-  end
-
-  create_table "personas", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "account_id", null: false
-    t.string "graphcms_ref"
-    t.string "instagram_url"
-    t.bigint "profile_pic_id"
-    t.integer "lock_version", default: 1
-    t.json "pic_rect", default: {}
-    t.bigint "profile_pic_animation_id"
-    t.index ["account_id"], name: "index_personas_on_account_id"
-    t.index ["profile_pic_animation_id"], name: "index_personas_on_profile_pic_animation_id"
-    t.index ["profile_pic_id"], name: "index_personas_on_profile_pic_id"
+    t.index ["seller_id"], name: "index_outros_on_seller_id"
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -126,9 +109,26 @@ ActiveRecord::Schema.define(version: 20190726105744) do
     t.index ["account_id"], name: "index_products_on_account_id"
   end
 
+  create_table "sellers", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_id", null: false
+    t.string "graphcms_ref"
+    t.string "instagram_url"
+    t.bigint "profile_pic_id"
+    t.integer "lock_version", default: 1
+    t.json "pic_rect", default: {}
+    t.bigint "profile_pic_animation_id"
+    t.index ["account_id"], name: "index_sellers_on_account_id"
+    t.index ["profile_pic_animation_id"], name: "index_sellers_on_profile_pic_animation_id"
+    t.index ["profile_pic_id"], name: "index_sellers_on_profile_pic_id"
+  end
+
   create_table "showcases", force: :cascade do |t|
     t.bigint "account_id"
-    t.bigint "persona_id"
+    t.bigint "seller_id"
     t.string "title", null: false
     t.string "subtitle", null: false
     t.datetime "created_at", null: false
@@ -139,10 +139,10 @@ ActiveRecord::Schema.define(version: 20190726105744) do
     t.string "chat_bubble_extra_text"
     t.integer "lock_version", default: 1
     t.bigint "owner_id", null: false
-    t.boolean "use_persona_animation", default: false, null: false
+    t.boolean "use_seller_animation", default: false, null: false
     t.index ["account_id"], name: "index_showcases_on_account_id"
     t.index ["owner_id"], name: "index_showcases_on_owner_id"
-    t.index ["persona_id"], name: "index_showcases_on_persona_id"
+    t.index ["seller_id"], name: "index_showcases_on_seller_id"
   end
 
   create_table "simple_chat_messages", force: :cascade do |t|
@@ -180,29 +180,29 @@ ActiveRecord::Schema.define(version: 20190726105744) do
     t.string "name", null: false
     t.string "title", null: false
     t.string "chat_bubble_text"
-    t.bigint "persona_id"
+    t.bigint "seller_id"
     t.bigint "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "chat_bubble_extra_text"
     t.integer "lock_version", default: 1
     t.bigint "owner_id", null: false
-    t.boolean "use_persona_animation", default: false, null: false
+    t.boolean "use_seller_animation", default: false, null: false
     t.index ["account_id"], name: "index_simple_chats_on_account_id"
     t.index ["owner_id"], name: "index_simple_chats_on_owner_id"
-    t.index ["persona_id"], name: "index_simple_chats_on_persona_id"
+    t.index ["seller_id"], name: "index_simple_chats_on_seller_id"
   end
 
   create_table "spotlights", force: :cascade do |t|
     t.bigint "account_id"
-    t.bigint "persona_id"
+    t.bigint "seller_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "showcase_id"
     t.integer "order"
-    t.boolean "use_persona_animation", default: false, null: false
+    t.boolean "use_seller_animation", default: false, null: false
     t.index ["account_id"], name: "index_spotlights_on_account_id"
-    t.index ["persona_id"], name: "index_spotlights_on_persona_id"
+    t.index ["seller_id"], name: "index_spotlights_on_seller_id"
     t.index ["showcase_id"], name: "index_spotlights_on_showcase_id"
   end
 
@@ -287,18 +287,18 @@ ActiveRecord::Schema.define(version: 20190726105744) do
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "users"
   add_foreign_key "outros", "accounts"
-  add_foreign_key "outros", "personas"
+  add_foreign_key "outros", "sellers"
   add_foreign_key "outros", "users", column: "owner_id"
-  add_foreign_key "personas", "accounts"
-  add_foreign_key "personas", "pictures", column: "profile_pic_animation_id"
-  add_foreign_key "personas", "pictures", column: "profile_pic_id"
   add_foreign_key "pictures", "accounts"
   add_foreign_key "product_picks", "accounts"
   add_foreign_key "product_picks", "pictures", column: "pic_id"
   add_foreign_key "product_picks", "spotlights"
   add_foreign_key "products", "accounts"
+  add_foreign_key "sellers", "accounts"
+  add_foreign_key "sellers", "pictures", column: "profile_pic_animation_id"
+  add_foreign_key "sellers", "pictures", column: "profile_pic_id"
   add_foreign_key "showcases", "accounts"
-  add_foreign_key "showcases", "personas"
+  add_foreign_key "showcases", "sellers"
   add_foreign_key "showcases", "users", column: "owner_id"
   add_foreign_key "simple_chat_messages", "accounts"
   add_foreign_key "simple_chat_messages", "pictures", column: "pic_id"
@@ -306,10 +306,10 @@ ActiveRecord::Schema.define(version: 20190726105744) do
   add_foreign_key "simple_chat_steps", "accounts"
   add_foreign_key "simple_chat_steps", "simple_chats"
   add_foreign_key "simple_chats", "accounts"
-  add_foreign_key "simple_chats", "personas"
+  add_foreign_key "simple_chats", "sellers"
   add_foreign_key "simple_chats", "users", column: "owner_id"
   add_foreign_key "spotlights", "accounts"
-  add_foreign_key "spotlights", "personas"
+  add_foreign_key "spotlights", "sellers"
   add_foreign_key "spotlights", "showcases"
   add_foreign_key "triggers", "accounts"
   add_foreign_key "website_settings", "accounts"

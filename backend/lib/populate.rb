@@ -11,11 +11,11 @@ class PopulateShowcases
 
   def create_showcases # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     Array.new(3) do
-      persona = Persona.order("RANDOM()").first
+      seller = Seller.order("RANDOM()").first
       showcase_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Showcase",
-        persona: persona,
-        use_persona_animation: persona.profile_pic_animation&.url ? rand < 0.5 : false,
+        seller: seller,
+        use_seller_animation: seller.profile_pic_animation&.url ? rand < 0.5 : false,
         title: Faker::Lorem.sentence,
         subtitle: Faker::Lorem.sentence,
         chat_bubble_text: Faker::Movie.quote,
@@ -28,11 +28,11 @@ class PopulateShowcases
   end
 
   def spotlights_attributes(spotlight_index)
-    persona = Persona.order("RANDOM()").first
+    seller = Seller.order("RANDOM()").first
     {
       product_picks_attributes: Array.new(3) { |index| product_picks_attributes(index) },
-      persona: persona,
-      use_persona_animation: persona.profile_pic_animation&.url ? rand < 0.5 : false,
+      seller: seller,
+      use_seller_animation: seller.profile_pic_animation&.url ? rand < 0.5 : false,
       order: spotlight_index + 1,
     }
   end
@@ -63,11 +63,11 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
 
   def create_simple_chats # rubocop:disable Metrics/MethodLength
     Array.new(3) do
-      persona = Persona.order("RANDOM()").first
+      seller = Seller.order("RANDOM()").first
       simple_chat_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Chat",
-        persona: persona,
-        use_persona_animation: persona.profile_pic_animation&.url ? rand < 0.5 : false,
+        seller: seller,
+        use_seller_animation: seller.profile_pic_animation&.url ? rand < 0.5 : false,
         title: "Hello there",
         chat_bubble_text: Faker::Movie.quote,
         chat_bubble_extra_text: Faker::Movie.quote,
@@ -188,7 +188,7 @@ class Populate # rubocop:disable Metrics/ClassLength
     create_memberships
     create_websites
     ActsAsTenant.default_tenant = Account.find_by(name: "Test Account")
-    create_personas
+    create_sellers
     create_outros
     create_simple_chats
     create_showcases
@@ -259,9 +259,9 @@ class Populate # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def create_personas # rubocop:disable Metrics/MethodLength
+  def create_sellers # rubocop:disable Metrics/MethodLength
     Array.new(6) do |i|
-      persona_attrs = {
+      seller_attrs = {
         name: Faker::RickAndMorty.character,
         description: Faker::RickAndMorty.quote,
         profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg",
@@ -269,7 +269,7 @@ class Populate # rubocop:disable Metrics/ClassLength
         profile_pic_animation: [Picture.find_or_create_by!(url: "https://random-d.uk/api/#{i % 99 + 1}.gif",
                                                            file_format: "gif"), nil,].sample,
       }
-      Persona.create!(persona_attrs)
+      Seller.create!(seller_attrs)
     end
   end
 
@@ -277,7 +277,7 @@ class Populate # rubocop:disable Metrics/ClassLength
     Array.new(3) do
       outro_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Outro",
-        persona: Persona.order("RANDOM()").first,
+        seller: Seller.order("RANDOM()").first,
         chat_bubble_text: "Awesome! 🤩 Was I helpful?",
         chat_bubble_button_yes: "Yes, thanks!",
         chat_bubble_button_no: "Not really.",

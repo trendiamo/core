@@ -3,7 +3,7 @@ Main::QueryType = GraphQL::ObjectType.define do
 
   field :website, Fields::WebsiteField
   field :flow, Fields::FlowField
-  field :persona, Fields::PersonaField
+  field :seller, Fields::SellerField
   field :showcase, Fields::ShowcaseField
   field :simpleChat, Fields::SimpleChatField
   field :outro, Fields::OutroField

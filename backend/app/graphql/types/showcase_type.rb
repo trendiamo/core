@@ -4,8 +4,8 @@ Types::ShowcaseType = GraphQL::ObjectType.define do
   field :id, !types.ID
   field :title, !types.String
   field :subtitle, !types.String
-  field :usePersonaAnimation, !types.Boolean do
-    resolve ->(obj, _args, _ctx) { obj.use_persona_animation }
+  field :useSellerAnimation, !types.Boolean do
+    resolve ->(obj, _args, _ctx) { obj.use_seller_animation }
   end
   field :spotlights, types[Types::SpotlightType] do
     resolve ->(obj, _args, _ctx) {

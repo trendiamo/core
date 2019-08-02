@@ -1,4 +1,4 @@
-class PersonaPolicy < ApplicationPolicy
+class SellerPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if admin_or_owner?

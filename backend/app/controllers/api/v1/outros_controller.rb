@@ -4,7 +4,7 @@ module Api
       before_action :ensure_tenant
 
       def index
-        @outros = policy_scope(Outro).includes(:persona).all
+        @outros = policy_scope(Outro).includes(:seller).all
         authorize @outros
         chain = sorting(pagination(@outros))
         render json: chain
@@ -63,8 +63,8 @@ module Api
       private
 
       def outro_params
-        params.require(:outro).permit(:persona_id, :name, :chat_bubble_text, :chat_bubble_button_no,
-                                      :chat_bubble_button_yes, :use_persona_animation, :lock_version)
+        params.require(:outro).permit(:seller_id, :name, :chat_bubble_text, :chat_bubble_button_no,
+                                      :chat_bubble_button_yes, :use_seller_animation, :lock_version)
       end
 
       def render_error

@@ -1,6 +1,6 @@
 class Showcase < ApplicationRecord
   acts_as_tenant
-  belongs_to :persona
+  belongs_to :seller
   has_many :spotlights, dependent: :destroy
   has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
 
@@ -16,39 +16,39 @@ class Showcase < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "use_persona_animation",
+      .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "use_seller_animation",
              "created_at", "updated_at", "lock_version")
-      .merge(persona: persona_attributes(persona),
+      .merge(seller: seller_attributes(seller),
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",
              trigger_ids: triggers.ids)
   end
 
-  def persona_attributes(persona)
-    { id: persona.id, profile_pic: { url: persona.profile_pic.url }, name: persona.name, pic_rect: persona.pic_rect,
-      profile_pic_animation: { url: persona.profile_pic_animation&.url }, }
+  def seller_attributes(seller)
+    { id: seller.id, profile_pic: { url: seller.profile_pic.url }, name: seller.name, pic_rect: seller.pic_rect,
+      profile_pic_animation: { url: seller.profile_pic_animation&.url }, }
   end
 
   def spotlights_attributes(spotlights)
     spotlights.order(:order).map do |spotlight|
       {
         id: spotlight.id,
-        persona: spotlight_persona_attributes(spotlight),
-        use_persona_animation: spotlight.use_persona_animation,
+        seller: spotlight_seller_attributes(spotlight),
+        use_seller_animation: spotlight.use_seller_animation,
         product_picks_attributes: product_picks_attributes(spotlight.product_picks),
       }
     end
   end
 
-  def spotlight_persona_attributes(spotlight) # rubocop:disable Metrics/AbcSize
+  def spotlight_seller_attributes(spotlight) # rubocop:disable Metrics/AbcSize
     {
-      id: spotlight.persona.id,
-      name: spotlight.persona.name,
-      description: spotlight.persona.description,
-      instagram_url: spotlight.persona.instagram_url,
-      profile_pic: { url: spotlight.persona.profile_pic.url },
-      profile_pic_animation: { url: spotlight.persona.profile_pic_animation&.url },
-      pic_rect: spotlight.persona.pic_rect,
+      id: spotlight.seller.id,
+      name: spotlight.seller.name,
+      description: spotlight.seller.description,
+      instagram_url: spotlight.seller.instagram_url,
+      profile_pic: { url: spotlight.seller.profile_pic.url },
+      profile_pic_animation: { url: spotlight.seller.profile_pic_animation&.url },
+      pic_rect: spotlight.seller.pic_rect,
     }
   end
 

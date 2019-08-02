@@ -35,15 +35,15 @@ Rails.application.routes.draw do
         resources :website_settings, only: %i[update]
         get "/website_settings", to: "website_settings#show"
 
-        get "/personas/autocomplete", to: "autocompletes#personas_autocomplete"
+        get "/sellers/autocomplete", to: "autocompletes#sellers_autocomplete"
         get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
         get "/path/autocomplete", to: "autocompletes#path_autocomplete"
 
         resources :pictures, only: %i[index create]
         delete "/pictures", to: "pictures#destroy"
 
-        resources :personas, only: %i[index show update create]
-        delete "/personas", to: "personas#destroy"
+        resources :sellers, only: %i[index show update create]
+        delete "/sellers", to: "sellers#destroy"
 
         resources :showcases, only: %i[index show update create]
         delete "/showcases", to: "showcases#destroy"
