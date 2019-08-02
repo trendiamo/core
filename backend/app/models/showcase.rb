@@ -18,7 +18,8 @@ class Showcase < ApplicationRecord
     attributes
       .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "use_seller_animation",
              "created_at", "updated_at", "lock_version")
-      .merge(seller: seller_attributes(seller),
+      .merge(persona: seller_attributes(seller),
+             seller: seller_attributes(seller),
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",
              trigger_ids: triggers.ids)
@@ -33,6 +34,7 @@ class Showcase < ApplicationRecord
     spotlights.order(:order).map do |spotlight|
       {
         id: spotlight.id,
+        persona: spotlight_seller_attributes(spotlight),
         seller: spotlight_seller_attributes(spotlight),
         use_seller_animation: spotlight.use_seller_animation,
         product_picks_attributes: product_picks_attributes(spotlight.product_picks),

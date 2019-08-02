@@ -31,6 +31,7 @@ class Picture < ApplicationRecord
     attributes
       .slice("id", "url", "file_format", "created_at", "updated_at")
       .merge(sellers: sellers,
+             personas: sellers,
              product_picks: product_picks,
              simple_chat_messages: simple_chat_messages)
   end
