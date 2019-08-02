@@ -1,8 +1,8 @@
 import Avatar from 'shared/table-elements/avatar'
+import moduleIcon from 'shared/module-icon'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import { AssignmentTurnedInOutlined, PersonPinOutlined, SmsOutlined } from '@material-ui/icons'
 import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const StyledSelectLabel = styled.div`
@@ -23,22 +23,9 @@ const SelectLabelText = styled(Typography)`
   font-size: 16px;
 `
 
-const optionIcon = moduleTtype => {
-  switch (moduleTtype) {
-    case 'Showcase':
-      return <PersonPinOutlined />
-    case 'Outro':
-      return <AssignmentTurnedInOutlined />
-    case 'SimpleChat':
-      return <SmsOutlined />
-    default:
-      return null
-  }
-}
-
 const SuggestionWithModuleIcon = ({ suggestion }) => (
   <StyledSelectLabel>
-    {optionIcon(suggestion.value.type)}
+    {moduleIcon(suggestion.value.type)}
     <SelectLabelText>{suggestion.value.name}</SelectLabelText>
   </StyledSelectLabel>
 )
