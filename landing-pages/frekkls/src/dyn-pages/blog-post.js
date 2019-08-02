@@ -10,7 +10,7 @@ import Layout from '../layout'
 import Seo from '../layout/seo'
 import SocialMediaLinks from '../components/social-media-links'
 import SocialProof from '../sections/social-proof'
-import { blogHeaderLinks } from '../utils'
+import { blogHeaderLinks, blogPostUrl } from '../utils'
 
 const MetaImg = styled.img`
   object-fit: cover;
@@ -160,36 +160,31 @@ const DetailsContainer = styled.div`
   align-items: center;
 `
 
-// const MetaDetailsContainer = styled.div`
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   flex-direction: row;
-// `
-
 const Meta = styled.div`
   flex: 1;
-`
-
-const TopSocialMediaLinks = styled(SocialMediaLinks)`
-  display: none;
-  @media (min-width: 900px) {
-    display: flex;
-  }
 `
 
 const BottomSocialMediaLinks = styled(SocialMediaLinks)`
   margin-bottom: 4rem;
 `
 
-const ArticleDetails = ({ location, pageContext }) => (
+const TopSocialMediaLinksContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const ArticleDetails = ({ pageContext }) => (
   <DetailsContainer>
     <MetaImg src={pageContext.post.authorImage.fixed.src} />
     <Meta>
       <MetaAuthor>{pageContext.post.authorName}</MetaAuthor>
       <MetaDate>{pageContext.post.publishingDate}</MetaDate>
     </Meta>
-    <TopSocialMediaLinks location={location} />
+    <TopSocialMediaLinksContainer>
+      <div>{'Share:'}</div>
+      <SocialMediaLinks path={blogPostUrl(pageContext.post)} />
+    </TopSocialMediaLinksContainer>
   </DetailsContainer>
 )
 
@@ -207,7 +202,7 @@ const Hr = styled.hr`
   border: 1px solid black;
 `
 
-const BlogPost = ({ location, pageContext, data }) => (
+const BlogPost = ({ data, pageContext }) => (
   <Layout
     blogCategories={data.blogCategories}
     hasGetStarted
@@ -234,7 +229,7 @@ const BlogPost = ({ location, pageContext, data }) => (
         }}
       />
       <MainContent>
-        <ArticleDetails location={location} pageContext={pageContext} />
+        <ArticleDetails pageContext={pageContext} />
         <BlogText
           className="blog-text"
           dangerouslySetInnerHTML={{
@@ -243,7 +238,7 @@ const BlogPost = ({ location, pageContext, data }) => (
         />
       </MainContent>
     </article>
-    <BottomSocialMediaLinks location={location} />
+    <BottomSocialMediaLinks path={blogPostUrl(pageContext.post)} />
     <Hr />
     <EmailCta />
     <Hr />
