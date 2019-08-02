@@ -1,5 +1,5 @@
 #!/bin/sh
 
 yarn build
-gzip -9 -c build/improv.js | aws s3 cp - s3://improv/improv.js --profile do --endpoint-url https://improv.ams3.digitaloceanspaces.com/ --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600'
+gzip -9 -c build/improv.js | aws s3 cp - s3://improv/improv.js --profile do --endpoint-url https://improv.ams3.digitaloceanspaces.com/ --content-type text/javascript --content-encoding gzip --acl public-read --cache-control 'public,max-age=600' --region eu-central-1
 rm build/improv.js
