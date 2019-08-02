@@ -203,6 +203,7 @@ const MostInteractedModules = ({ dates }) => {
           setHasErrors(true)
         } else {
           setData(json)
+          setHasErrors(false)
         }
         setIsLoading(false)
       })()
