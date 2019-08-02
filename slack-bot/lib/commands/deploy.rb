@@ -51,9 +51,9 @@ module Commands
 
     def match_environment(environment_str)
       if %w[prod production frekkls].include?(environment_str)
-        :production
+        "production"
       elsif %w[staging pimppls].include?(environment_str)
-        :staging
+        "staging"
       end
     end
 
