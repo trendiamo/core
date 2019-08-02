@@ -4,6 +4,7 @@ const moduleMatchers = [
   { personaId: '222', homepagePath: '/simple-chat/297', productsPath: '/simple-chat/291' },
   { personaId: '224', homepagePath: '/simple-chat/298', productsPath: '/simple-chat/300' },
   { personaId: '245', homepagePath: '/simple-chat/310', productsPath: '/simple-chat/309' },
+  { personaId: '263', homepagePath: '/simple-chat/343', productsPath: '/simple-chat/344' },
 ]
 
 const isProductPage = () => {
