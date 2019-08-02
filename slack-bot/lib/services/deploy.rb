@@ -116,7 +116,7 @@ module Services
         yarn install --silent --no-progress && \
         mkdir -p ~/.aws && \
         ([ -f ~/.aws/credentials ] || cp #{ENV['AWS_CREDENTIALS_FILE']} ~/.aws/credentials) && \
-        deploy/deploy #{@environment}
+        deploy/deploy #{@environment} '-o StrictHostKeyChecking=no -i #{ENV['STATIC_KEY_FILE']}'
       SH
     end
 

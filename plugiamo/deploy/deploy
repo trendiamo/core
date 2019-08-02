@@ -1,10 +1,11 @@
 #!/bin/sh
 
 if [ $# -lt 1 ]; then
-  echo "Usage: $0 environment"
+  echo "Usage: $0 environment [ssh_options]"
   exit 127
 fi
 ENVIRONMENT=$1
+SSH_OPTIONS=$2
 case $ENVIRONMENT in
   production)
     ENV_SERVER=root@46.101.129.17
@@ -36,8 +37,8 @@ copy_files()
 
 ([ -f .env ] && cp .env .env~ || true) && \
 ([ -f ../plugin-base/.env ] && cp ../plugin-base/.env ../plugin-base/.env~ || true) && \
-scp -q $ENV_SERVER:/var/dotenv/plugin/.env .env && \
-scp -q $ENV_SERVER:/var/dotenv/plugin-base/.env ../plugin-base/.env && \
+scp $SSH_OPTIONS -q $ENV_SERVER:/var/dotenv/plugin/.env .env && \
+scp $SSH_OPTIONS -q $ENV_SERVER:/var/dotenv/plugin-base/.env ../plugin-base/.env && \
 cd ../plugin-base && yarn && yarn install-p && yarn build && cd ../plugiamo && \
 yarn build && \
 copy_files && \
