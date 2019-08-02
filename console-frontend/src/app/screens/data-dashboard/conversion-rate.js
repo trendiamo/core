@@ -55,10 +55,13 @@ const ConversionRate = ({ dates }) => {
         if (requestError) {
           enqueueSnackbar(requestError, { variant: 'error' })
           setHasErrors(true)
+        } else if (json.length === 0) {
+          setHasErrors(true)
         } else {
           const labels = json.map(record => format(new Date(record.date), 'MMM d'))
           const data = json.map(record => parseFloat(record.conversionRate * 100).toFixed(2))
           setChartData({ labels, datasets: [{ data, ...config }] })
+          setHasErrors(false)
         }
         setIsLoading(false)
       })()
