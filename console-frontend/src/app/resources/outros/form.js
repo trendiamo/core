@@ -129,7 +129,7 @@ const BaseOutroForm = ({
           disabled={isFormLoading}
           fullWidth
           inputProps={atLeastOneNonBlankCharInputProps}
-          label="Chat Bubble 'YES' Button"
+          label="YES Button"
           margin="normal"
           max={characterLimits.main.chatBubbleButton}
           name="chatBubbleButtonYes"
@@ -142,7 +142,7 @@ const BaseOutroForm = ({
           disabled={isFormLoading}
           fullWidth
           inputProps={atLeastOneNonBlankCharInputProps}
-          label="Chat Bubble 'NO' Button"
+          label="NO Button"
           margin="normal"
           max={characterLimits.main.chatBubbleButton}
           name="chatBubbleButtonNo"
