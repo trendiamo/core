@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+# ^ requires bash because of the redirection commands below: <<<
 
 ROLLBAR_DEPLOY_TOKEN=$(grep ROLLBAR_DEPLOY_TOKEN .env | xargs)
 IFS='=' read -ra ROLLBAR_DEPLOY_TOKEN <<< "$ROLLBAR_DEPLOY_TOKEN"
