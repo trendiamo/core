@@ -25,8 +25,8 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
     () => (
       <BaseLauncher
         onClick={onLauncherClick}
-        sellerPic={sellerPic(form.__seller, form.useSellerAnimation)}
         pulsating
+        sellerPic={sellerPic(form.__seller, form.useSellerAnimation)}
         showingContent={showingContent}
       />
     ),

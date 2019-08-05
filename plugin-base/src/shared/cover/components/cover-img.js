@@ -1,5 +1,5 @@
-import SellerPlaceholderIcon from 'icons/icon-placeholder-seller.svg'
 import React, { forwardRef } from 'react'
+import SellerPlaceholderIcon from 'icons/icon-placeholder-seller.svg'
 import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 

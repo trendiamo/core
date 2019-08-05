@@ -30,9 +30,9 @@ const Launcher = ({
       frameStyleStr={frameStyleStr}
       launcherConfig={compiledLauncherConfig}
       onClick={onToggleContent}
-      sellerPic={sellerPic(seller, data.flow && data.flow.useSellerAnimation)}
       position={position}
       pulsating={pulsating}
+      sellerPic={sellerPic(seller, data.flow && data.flow.useSellerAnimation)}
       showingContent={showingContent}
     />
   )

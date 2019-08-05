@@ -45,9 +45,7 @@ const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, with
 
   const animation = useMemo(
     () =>
-      spotlight.seller.profilePicAnimation &&
-      !spotlight.useSellerAnimation &&
-      spotlight.seller.profilePicAnimation.url,
+      spotlight.seller.profilePicAnimation && !spotlight.useSellerAnimation && spotlight.seller.profilePicAnimation.url,
     [spotlight]
   )
 

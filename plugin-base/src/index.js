@@ -19,9 +19,9 @@ import {
   matchUrl,
   MESSAGE_INTERVAL,
   MESSAGE_RANDOMIZER,
+  positioning,
   sellerPic,
   sellerPicUrl,
-  positioning,
   stringifyRect,
   validateEmail,
 } from 'tools'

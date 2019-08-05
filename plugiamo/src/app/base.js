@@ -77,8 +77,8 @@ const AppBase = ({
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         onUserInteracted={onUserInteracted}
-        seller={seller}
         position={position}
+        seller={seller}
         setShowAssessmentContent={setShowAssessmentContent}
         showingContent={showingContent}
       />
@@ -101,9 +101,9 @@ const AppBase = ({
           frameStyleStr={emojifyStyles}
           launcherConfig={launcherConfig}
           onToggleContent={onToggleContent}
-          seller={seller}
           position={position}
           pulsating={pluginState !== 'closed'}
+          seller={seller}
           showingContent={showingContent}
         />
       )}

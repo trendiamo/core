@@ -1,7 +1,7 @@
-import SellerForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
-import { apiSellerShow, apiSellerUpdate, apiRequest } from 'utils'
+import SellerForm from './form'
+import { apiRequest, apiSellerShow, apiSellerUpdate } from 'utils'
 import { useSnackbar } from 'notistack'
 
 const EditSellerForm = ({ match }) => {

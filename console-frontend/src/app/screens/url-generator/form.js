@@ -3,7 +3,7 @@ import Button from 'shared/button'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
-import { apiGeneratedUrlCreate, apiPathAutocomplete, apiSellersAutocomplete, apiRequest } from 'utils'
+import { apiGeneratedUrlCreate, apiPathAutocomplete, apiRequest, apiSellersAutocomplete } from 'utils'
 import { Form, FormHelperText } from 'shared/form-elements'
 import {
   FormControl,

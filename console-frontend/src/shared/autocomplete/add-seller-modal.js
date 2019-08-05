@@ -5,7 +5,7 @@ import Dialog from 'shared/dialog'
 import React, { useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
-import { apiSellerCreate, apiRequest } from 'utils'
+import { apiRequest, apiSellerCreate } from 'utils'
 import { useSnackbar } from 'notistack'
 
 const StyledButton = styled(Button)`

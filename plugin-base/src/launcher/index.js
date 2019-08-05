@@ -2,9 +2,9 @@ import Circle from './circle'
 import CloseIcon from './close-icon'
 import EmptySellerPic from './empty-seller-pic'
 import LauncherFrame from './launcher-frame'
-import SellerPic from './seller-pic'
 import PulsateEffect from './pulsate-effect'
 import React from 'react'
+import SellerPic from './seller-pic'
 
 const Launcher = ({
   disappear,
