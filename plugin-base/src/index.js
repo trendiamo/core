@@ -9,8 +9,8 @@ import routes from './routes'
 import Showcase from 'showcase'
 import SimpleChat from 'simple-chat'
 import SimpleChatCover from 'simple-chat/components/cover'
-import { BackButton, Cover, Frame, PersonaInstagram, TopSlideAnimation, useAnimateOnMount } from 'shared'
-import { BelowCover, CoverImg, PaddedCover, PersonaDescription } from 'shared/cover/components'
+import { BackButton, Cover, Frame, SellerInstagram, TopSlideAnimation, useAnimateOnMount } from 'shared'
+import { BelowCover, CoverImg, PaddedCover, SellerDescription } from 'shared/cover/components'
 import {
   convertLogs,
   extractYoutubeId,
@@ -19,8 +19,8 @@ import {
   matchUrl,
   MESSAGE_INTERVAL,
   MESSAGE_RANDOMIZER,
-  personaPic,
-  personaPicUrl,
+  sellerPic,
+  sellerPicUrl,
   positioning,
   stringifyRect,
   validateEmail,
@@ -37,12 +37,12 @@ export {
   CoverImg,
   stringifyRect,
   imgixUrl,
-  personaPic,
-  personaPicUrl,
+  sellerPic,
+  sellerPicUrl,
   matchUrl,
   BackButton,
   PaddedCover,
-  PersonaDescription,
+  SellerDescription,
   TopSlideAnimation,
   Showcase,
   history,
@@ -56,7 +56,7 @@ export {
   IconClose,
   IconPlayButton,
   timeout,
-  PersonaInstagram,
+  SellerInstagram,
   Launcher,
   LauncherBubbles,
   positioning,

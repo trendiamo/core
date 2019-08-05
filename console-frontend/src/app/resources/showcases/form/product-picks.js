@@ -9,7 +9,7 @@ const ProductPicks = ({
   isFormLoading,
   isUploaderLoading,
   onFocus,
-  personaId,
+  sellerId,
   productPicksAttributes,
   setIsCropping,
   setIsUploaderLoading,
@@ -32,7 +32,7 @@ const ProductPicks = ({
             isUploaderLoading={isUploaderLoading}
             key={productPick.id || productPick.__key}
             onFocus={onFocus}
-            personaId={personaId}
+            sellerId={sellerId}
             productPick={productPick}
             setIsCropping={setIsCropping}
             setIsUploaderLoading={setIsUploaderLoading}

@@ -39,7 +39,7 @@ const SimpleChat = ({
   Modals,
   onCtaButtonClick,
   onToggleContent,
-  persona,
+  seller,
   products,
   progress,
   setCtaButtonClicked,
@@ -57,7 +57,7 @@ const SimpleChat = ({
           id
           title
           name
-          usePersonaAnimation
+          useSellerAnimation
           simpleChatSteps {
             id
             key
@@ -119,7 +119,7 @@ const SimpleChat = ({
         Modals={Modals}
         onCtaButtonClick={onCtaButtonClick}
         onToggleContent={onToggleContent}
-        persona={persona}
+        seller={seller}
         products={products}
         progress={progress}
         setCtaButtonClicked={setCtaButtonClicked}

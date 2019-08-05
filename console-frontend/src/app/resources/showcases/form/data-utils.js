@@ -1,8 +1,8 @@
 const defaults = {
   avatarPic: '/img/icons/placeholder_avatar.png',
   productPic: '/img/icons/placeholder_product.png',
-  spotlightName: 'Persona Name',
-  spotlightDescription: 'Persona Description',
+  spotlightName: 'Seller Name',
+  spotlightDescription: 'Seller Description',
   productName: 'Product Name',
   productDescription: 'Product Description',
   productPrice: '',
@@ -21,24 +21,24 @@ const previewConverter = {
     return spotlights
       .map((spotlight, i) => {
         const productPicks = this.productPicks(spotlight)
-        const profilePic = spotlight.__persona && (spotlight.__persona.profilePic || spotlight.__persona.profilePicUrl)
-        const picRect = spotlight.__persona && spotlight.__persona.picRect
-        const personaName = spotlight.__persona && spotlight.__persona.name
-        const personaDescription = spotlight.__persona && spotlight.__persona.description
+        const profilePic = spotlight.__seller && (spotlight.__seller.profilePic || spotlight.__seller.profilePicUrl)
+        const picRect = spotlight.__seller && spotlight.__seller.picRect
+        const sellerName = spotlight.__seller && spotlight.__seller.name
+        const sellerDescription = spotlight.__seller && spotlight.__seller.description
         if (spotlight._destroy) return null
         return {
           ...spotlight,
           id: spotlight.id || `new-${i}`,
           productPicks,
-          persona: {
-            ...spotlight.__persona,
-            name: personaName || defaults.spotlightName,
-            description: personaDescription || defaults.spotlightDescription,
+          seller: {
+            ...spotlight.__seller,
+            name: sellerName || defaults.spotlightName,
+            description: sellerDescription || defaults.spotlightDescription,
             profilePic: { url: (profilePic && profilePic.url) || defaults.avatarPic, picRect },
             profilePicUrl: profilePic || defaults.avatarPic,
           },
           translation: {
-            selectedBy: `Products selected by ${personaName && personaName.split(' ')[0]}`,
+            selectedBy: `Products selected by ${sellerName && sellerName.split(' ')[0]}`,
           },
         }
       })
@@ -65,20 +65,20 @@ const formObjectTransformer = json => {
   return {
     id: json.id,
     name: json.name || '',
-    personaId: (json.persona && json.persona.id) || '',
+    sellerId: (json.seller && json.seller.id) || '',
     title: json.title || '',
     subtitle: json.subtitle || '',
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleExtraText: json.chatBubbleExtraText || '',
     triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
-    __persona: json.persona,
-    usePersonaAnimation: json.usePersonaAnimation || false,
+    __seller: json.seller,
+    useSellerAnimation: json.useSellerAnimation || false,
     spotlightsAttributes: json.spotlightsAttributes.map(spotlight => ({
       id: spotlight.id,
-      personaId: (spotlight.persona && spotlight.persona.id) || '',
-      __persona: spotlight.persona,
-      usePersonaAnimation: spotlight.usePersonaAnimation || false,
+      sellerId: (spotlight.seller && spotlight.seller.id) || '',
+      __seller: spotlight.seller,
+      useSellerAnimation: spotlight.useSellerAnimation || false,
       productPicksAttributes: spotlight.productPicksAttributes
         ? spotlight.productPicksAttributes.map(productPick => ({
             id: productPick.id,

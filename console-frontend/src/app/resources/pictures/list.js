@@ -13,9 +13,9 @@ const columns = [
 
 const BlankState = () => <BlankStateTemplate imageSource="/img/background/img-welcome.png" title="No pictures yet" />
 
-const tooltipTextActive = ({ personas, productPicks, simpleChatMessages }) => {
+const tooltipTextActive = ({ sellers, productPicks, simpleChatMessages }) => {
   const itemsInUse = []
-  if (personas.length > 0) itemsInUse.push(`${personas.length} persona${personas.length > 1 ? 's' : ''}`)
+  if (sellers.length > 0) itemsInUse.push(`${sellers.length} seller${sellers.length > 1 ? 's' : ''}`)
   if (productPicks.length > 0)
     itemsInUse.push(`${productPicks.length} product pick${productPicks.length > 1 ? 's' : ''}`)
   if (simpleChatMessages.length > 0)
@@ -50,10 +50,10 @@ const PicturesRow = ({ record, highlightInactive }) => (
 
 const api = { fetch: apiPictureList, destroy: apiPictureDestroy }
 const picturesRoutes = {}
-const canEditResource = ({ personas, productPicks, simpleChatMessages }) =>
-  (personas + productPicks + simpleChatMessages).length < 1
+const canEditResource = ({ sellers, productPicks, simpleChatMessages }) =>
+  (sellers + productPicks + simpleChatMessages).length < 1
 const defaultSorting = { column: 'active', direction: 'asc' }
-const highlightInactive = ['personas', 'productPicks', 'simpleChatMessages']
+const highlightInactive = ['sellers', 'productPicks', 'simpleChatMessages']
 
 const PicturesList = () => (
   <EnhancedList

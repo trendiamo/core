@@ -2,7 +2,7 @@ import Avatar from 'shared/table-elements/avatar'
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
-import { apiPersonaDestroy, apiPersonaList } from 'utils'
+import { apiSellerDestroy, apiSellerList } from 'utils'
 import { EnhancedList, TableCell } from 'shared/table-elements'
 import { imgixUrl, stringifyRect } from 'plugin-base'
 
@@ -16,14 +16,14 @@ const columns = [
 const BlankState = () => (
   <BlankStateTemplate
     buttonText="Create new"
-    description={"You don't have any personas yet. Let's create the first one?"}
+    description={"You don't have any sellers yet. Let's create the first one?"}
     imageSource="/img/background/img-empty-02.png"
-    route={routes.personaCreate()}
-    title="Create a new persona"
+    route={routes.sellerCreate()}
+    title="Create a new seller"
   />
 )
 
-const PersonasRow = ({ record }) => (
+const SellersRow = ({ record }) => (
   <>
     <TableCell>
       <Avatar
@@ -37,20 +37,20 @@ const PersonasRow = ({ record }) => (
   </>
 )
 
-const api = { fetch: apiPersonaList, destroy: apiPersonaDestroy }
-const personasRoutes = { create: routes.personaCreate, edit: routes.personaEdit }
+const api = { fetch: apiSellerList, destroy: apiSellerDestroy }
+const sellersRoutes = { create: routes.sellerCreate, edit: routes.sellerEdit }
 
-const PersonasList = () => (
+const SellersList = () => (
   <EnhancedList
     api={api}
     BlankState={BlankState}
     buttonText="Create new"
     columns={columns}
-    helpStep="personas"
-    ResourceRow={PersonasRow}
-    routes={personasRoutes}
-    title="Personas"
+    helpStep="sellers"
+    ResourceRow={SellersRow}
+    routes={sellersRoutes}
+    title="Sellers"
   />
 )
 
-export default PersonasList
+export default SellersList

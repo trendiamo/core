@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import { Launcher as LauncherBase, personaPic } from 'plugin-base'
+import { Launcher as LauncherBase, sellerPic } from 'plugin-base'
 import { useMemo } from 'preact/hooks'
 
 const Launcher = ({
@@ -8,7 +8,7 @@ const Launcher = ({
   frameStyleStr,
   launcherConfig,
   onToggleContent,
-  persona,
+  seller,
   position,
   pulsating,
   showingContent,
@@ -30,7 +30,7 @@ const Launcher = ({
       frameStyleStr={frameStyleStr}
       launcherConfig={compiledLauncherConfig}
       onClick={onToggleContent}
-      personaPic={personaPic(persona, data.flow && data.flow.usePersonaAnimation)}
+      sellerPic={sellerPic(seller, data.flow && data.flow.useSellerAnimation)}
       position={position}
       pulsating={pulsating}
       showingContent={showingContent}

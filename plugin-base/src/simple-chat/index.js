@@ -9,7 +9,7 @@ const finalCoverHeight = 90
 
 const InnerSimpleChat = ({
   data,
-  persona,
+  seller,
   backButtonLabel,
   onToggleContent,
   contentRef,
@@ -37,7 +37,7 @@ const InnerSimpleChat = ({
       header={data.header}
       headerConfig={headerConfig}
       minimized={coverMinimized}
-      persona={persona}
+      seller={seller}
       showBackButton={showBackButton}
       step={data}
     />
@@ -50,7 +50,7 @@ const InnerSimpleChat = ({
       lazyLoadingCount={lazyLoadingCount}
       onScroll={handleScroll}
       onToggleContent={onToggleContent}
-      persona={persona}
+      seller={seller}
       products={products}
       ref={contentRef}
       setLazyLoadActive={setLazyLoadActive}

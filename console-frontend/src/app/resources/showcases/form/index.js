@@ -73,8 +73,8 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
         spotlightsAttributes: [
           ...form.spotlightsAttributes,
           {
-            personaId: '',
-            usePersonaAnimation: false,
+            sellerId: '',
+            useSellerAnimation: false,
             productPicksAttributes: [
               {
                 url: '',

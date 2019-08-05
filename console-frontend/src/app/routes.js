@@ -34,14 +34,14 @@ const routes = {
   passwordReset() {
     return '/password-reset'
   },
-  personasList(accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/personas`
+  sellersList(accountSlug = auth.getSlug()) {
+    return `/a/${accountSlug}/sellers`
   },
-  personaCreate(accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/personas/create`
+  sellerCreate(accountSlug = auth.getSlug()) {
+    return `/a/${accountSlug}/sellers/create`
   },
-  personaEdit(id, accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/personas/${id}/edit`
+  sellerEdit(id, accountSlug = auth.getSlug()) {
+    return `/a/${accountSlug}/sellers/${id}/edit`
   },
   picturesList(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/pictures`

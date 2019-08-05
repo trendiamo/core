@@ -1,22 +1,22 @@
 const defaults = {
-  persona: {
-    name: 'Persona Name',
-    description: 'Persona Description',
+  seller: {
+    name: 'Seller Name',
+    description: 'Seller Description',
   },
   title: 'Title',
 }
 
 const previewConverter = {
-  persona(persona = {}) {
+  seller(seller = {}) {
     return {
-      name: persona.name || defaults.persona.name,
-      description: persona.description || defaults.persona.description,
-      profilePic: { url: persona.profilePic ? persona.profilePic.url : '', picRect: persona.picRect || {} },
-      profilePicAnimation: { url: persona.profilePicAnimation ? persona.profilePicAnimation.url : '', picRect: {} },
+      name: seller.name || defaults.seller.name,
+      description: seller.description || defaults.seller.description,
+      profilePic: { url: seller.profilePic ? seller.profilePic.url : '', picRect: seller.picRect || {} },
+      profilePicAnimation: { url: seller.profilePicAnimation ? seller.profilePicAnimation.url : '', picRect: {} },
     }
   },
-  mainData(title, usePersonaAnimation, simpleChatSteps) {
-    const newData = { title, usePersonaAnimation, simpleChatSteps }
+  mainData(title, useSellerAnimation, simpleChatSteps) {
+    const newData = { title, useSellerAnimation, simpleChatSteps }
     newData.simpleChatSteps = newData.simpleChatSteps
       .map(simpleChatStep => {
         const messages = simpleChatStep.simpleChatMessagesAttributes
@@ -34,11 +34,11 @@ const formObjectTransformer = json => {
     title: json.title || '',
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleExtraText: json.chatBubbleExtraText || '',
-    personaId: (json.persona && json.persona.id) || '',
-    usePersonaAnimation: json.usePersonaAnimation || false,
+    sellerId: (json.seller && json.seller.id) || '',
+    useSellerAnimation: json.useSellerAnimation || false,
     triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
-    __persona: json.persona,
+    __seller: json.seller,
     simpleChatStepsAttributes: json.simpleChatStepsAttributes
       ? json.simpleChatStepsAttributes.map(simpleChatStep => ({
           ...simpleChatStep,

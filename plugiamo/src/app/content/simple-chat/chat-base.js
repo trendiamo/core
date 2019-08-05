@@ -48,7 +48,7 @@ const ChatBase = ({
   lazyLoadActive,
   onToggleContent,
   onCtaButtonClick,
-  persona,
+  seller,
   products,
   progress,
   setChatDataChanged,
@@ -146,7 +146,7 @@ const ChatBase = ({
         header={data.header}
         headerConfig={headerConfig}
         minimized={coverMinimized}
-        persona={persona}
+        seller={seller}
         showBackButton={showBackButton}
         step={data}
       />
@@ -168,7 +168,7 @@ const ChatBase = ({
         messageFactory={messageFactory}
         onScroll={handleScroll}
         onToggleContent={onToggleContent}
-        persona={persona}
+        seller={seller}
         products={products}
         ref={contentRef}
         setLazyLoadActive={setLazyLoadActive}

@@ -139,12 +139,12 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
   }, [flowType])
 
   const clickChatOption = useCallback(
-    ({ item, persona }) => {
+    ({ item, seller }) => {
       mixpanel.track('Clicked Chat Option', {
         flowType,
         hostname: location.hostname,
-        personaName: persona.name,
-        personaRef: persona.id,
+        sellerName: seller.name,
+        sellerRef: seller.id,
         chatOptionText: item.text,
       })
     },

@@ -2,7 +2,7 @@ import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
 import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
-import { apiPersonasAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
+import { apiSellersAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Field, FormHelperText } from 'shared/form-elements'
 
@@ -19,33 +19,33 @@ const MainForm = ({
   setFieldValue,
   title,
 }) => {
-  const [usePersonaAnimation, setUsePersonaAnimation] = useState(form.usePersonaAnimation)
+  const [useSellerAnimation, setUseSellerAnimation] = useState(form.useSellerAnimation)
 
   const onFocus = useCallback(() => onToggleContent(false), [onToggleContent])
 
-  const initialSelectedItem = useMemo(() => form.__persona && { value: form.__persona, label: form.__persona.name }, [
-    form.__persona,
+  const initialSelectedItem = useMemo(() => form.__seller && { value: form.__seller, label: form.__seller.name }, [
+    form.__seller,
   ])
 
-  const onTogglePersonaAnimation = useCallback(
+  const onToggleSellerAnimation = useCallback(
     event => {
       setFieldValue(event)
-      setUsePersonaAnimation(event.target.checked)
+      setUseSellerAnimation(event.target.checked)
       onToggleContent(false)
     },
     [onToggleContent, setFieldValue]
   )
 
-  const selectPersona = useCallback(
+  const selectSeller = useCallback(
     selected => {
       if (!selected) return
       mergeForm({
-        personaId: selected.value.id,
-        __persona: selected.value,
-        usePersonaAnimation: selected.value.profilePicAnimation.url ? usePersonaAnimation : false,
+        sellerId: selected.value.id,
+        __seller: selected.value,
+        useSellerAnimation: selected.value.profilePicAnimation.url ? useSellerAnimation : false,
       })
     },
-    [mergeForm, usePersonaAnimation]
+    [mergeForm, useSellerAnimation]
   )
 
   return (
@@ -65,33 +65,33 @@ const MainForm = ({
       />
       <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
       <Autocomplete
-        autocomplete={apiPersonasAutocomplete}
-        defaultPlaceholder="Choose a persona"
+        autocomplete={apiSellersAutocomplete}
+        defaultPlaceholder="Choose a seller"
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         initialSelectedItem={initialSelectedItem}
-        label="Persona"
-        name="Persona"
-        onChange={selectPersona}
+        label="Seller"
+        name="Seller"
+        onChange={selectSeller}
         onFocus={onFocus}
         options={options}
         required
       />
-      <FormHelperText>{'The persona will appear in the launcher, and in the cover.'}</FormHelperText>
-      {form.__persona && (
+      <FormHelperText>{'The seller will appear in the launcher, and in the cover.'}</FormHelperText>
+      {form.__seller && (
         <FormControlLabel
           control={
             <Checkbox
-              checked={form.usePersonaAnimation}
+              checked={form.useSellerAnimation}
               color="primary"
-              disabled={!form.__persona.profilePicAnimation.url}
-              name="usePersonaAnimation"
-              onChange={onTogglePersonaAnimation}
+              disabled={!form.__seller.profilePicAnimation.url}
+              name="useSellerAnimation"
+              onChange={onToggleSellerAnimation}
             />
           }
-          disabled={!form.__persona.profilePicAnimation.url}
-          label="Use persona's animated picture"
-          title={form.__persona.profilePicAnimation.url ? null : "This persona doesn't have an animated picture"}
+          disabled={!form.__seller.profilePicAnimation.url}
+          label="Use seller's animated picture"
+          title={form.__seller.profilePicAnimation.url ? null : "This seller doesn't have an animated picture"}
         />
       )}
       <Field

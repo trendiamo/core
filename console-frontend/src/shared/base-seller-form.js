@@ -61,7 +61,7 @@ const AnimationUploader = ({ circle, disabled, label, setAnimation, setIsUploade
   </AnimationUploaderContainer>
 )
 
-const BasePersonaForm = ({
+const BaseSellerForm = ({
   form,
   formRef,
   isCropping,
@@ -128,7 +128,7 @@ const BasePersonaForm = ({
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Name"
         margin="normal"
-        max={characterLimits.persona.name}
+        max={characterLimits.seller.name}
         name="name"
         onChange={setFieldValue}
         required
@@ -140,13 +140,13 @@ const BasePersonaForm = ({
         inputProps={atLeastOneNonBlankCharInputProps}
         label="Description"
         margin="normal"
-        max={characterLimits.persona.description}
+        max={characterLimits.seller.description}
         name="description"
         onChange={setFieldValue}
         required
         value={form.description}
       />
-      <FormHelperText>{"A short text that is shown near the persona's name."}</FormHelperText>
+      <FormHelperText>{"A short text that is shown near the seller's name."}</FormHelperText>
       <Field
         disabled={isFormLoading || isCropping || isUploaderLoading}
         fullWidth
@@ -156,9 +156,9 @@ const BasePersonaForm = ({
         onChange={setFieldValue}
         value={form.instagramUrl}
       />
-      <FormHelperText>{"Instagram link icon will appear near the persona's name."}</FormHelperText>
+      <FormHelperText>{"Instagram link icon will appear near the seller's name."}</FormHelperText>
     </Form>
   )
 }
 
-export default BasePersonaForm
+export default BaseSellerForm

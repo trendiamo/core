@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
-import { personaPicUrl } from 'tools'
+import { sellerPicUrl } from 'tools'
 import { transition } from 'ext'
 
-const PersonaName = styled.div`
+const SellerName = styled.div`
   font-size: 18px;
   font-weight: 500;
   line-height: 1;
@@ -19,7 +19,7 @@ const PersonaName = styled.div`
   }
 `
 
-const PersonaDescription = styled.div`
+const SellerDescription = styled.div`
   font-size: 14px;
   .Win32 & {
     letter-spacing: -0.1px;
@@ -45,9 +45,9 @@ const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, with
 
   const animation = useMemo(
     () =>
-      spotlight.persona.profilePicAnimation &&
-      !spotlight.usePersonaAnimation &&
-      spotlight.persona.profilePicAnimation.url,
+      spotlight.seller.profilePicAnimation &&
+      !spotlight.useSellerAnimation &&
+      spotlight.seller.profilePicAnimation.url,
     [spotlight]
   )
 
@@ -56,13 +56,13 @@ const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, with
       {!withoutPicture && (
         <ListImg
           animation={animation}
-          picture={personaPicUrl(spotlight.persona, spotlight.usePersonaAnimation, { w: 101, h: 101 })}
+          picture={sellerPicUrl(spotlight.seller, spotlight.useSellerAnimation, { w: 101, h: 101 })}
           ref={imgRef}
         />
       )}
       <ListContent withoutPicture={withoutPicture}>
-        <PersonaName ref={nameRef}>{spotlight.persona.name}</PersonaName>
-        <PersonaDescription dangerouslySetInnerHTML={{ __html: spotlight.persona.description }} />
+        <SellerName ref={nameRef}>{spotlight.seller.name}</SellerName>
+        <SellerDescription dangerouslySetInnerHTML={{ __html: spotlight.seller.description }} />
       </ListContent>
       <ListChevron />
     </ListItem>

@@ -17,9 +17,9 @@ const DialogContent = () => (
   <ContentContainer>
     <img alt="" src="/img/icons/ic_emoji_clap.png" />
     <Typography variant="h4">{"Congrats, it's done!"}</Typography>
-    <Typography variant="h6">{"Your first persona is created. Let's keep going?"}</Typography>
+    <Typography variant="h6">{"Your first seller is created. Let's keep going?"}</Typography>
     <ContentBody>
-      <Typography variant="body1">{'You can now use this persona in your modules.'}</Typography>
+      <Typography variant="body1">{'You can now use this seller in your modules.'}</Typography>
     </ContentBody>
   </ContentContainer>
 )
@@ -30,7 +30,7 @@ const DialogActions = ({ handleClose }) => (
   </Button>
 )
 
-const ModalFirstPersona = () => {
+const ModalFirstSeller = () => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
   const [open, setOpen] = useState(true)
 
@@ -58,4 +58,4 @@ const ModalFirstPersona = () => {
   )
 }
 
-export default ModalFirstPersona
+export default ModalFirstSeller

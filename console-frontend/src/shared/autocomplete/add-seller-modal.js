@@ -1,11 +1,11 @@
-import BasePersonaForm from 'shared/base-persona-form'
+import BaseSellerForm from 'shared/base-seller-form'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import Dialog from 'shared/dialog'
 import React, { useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
-import { apiPersonaCreate, apiRequest } from 'utils'
+import { apiSellerCreate, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
 const StyledButton = styled(Button)`
@@ -36,7 +36,7 @@ const loadFormObject = () => {
   }
 }
 
-const AddPersonaForm = ({ closeModal, selectPersona }) => {
+const AddSellerForm = ({ closeModal, selectSeller }) => {
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
   const [isUploaderLoading, setIsUploaderLoading] = useState(false)
@@ -46,11 +46,11 @@ const AddPersonaForm = ({ closeModal, selectPersona }) => {
   const saveFormObject = useCallback(
     form => {
       return (async () => {
-        const { json, errors, requestError } = await apiRequest(apiPersonaCreate, [{ persona: form }])
+        const { json, errors, requestError } = await apiRequest(apiSellerCreate, [{ seller: form }])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (!errors && !requestError)
-          enqueueSnackbar('Successfully created and selected persona', { variant: 'success' })
+          enqueueSnackbar('Successfully created and selected seller', { variant: 'success' })
         return json
       })()
     },
@@ -67,21 +67,21 @@ const AddPersonaForm = ({ closeModal, selectPersona }) => {
     event => {
       return (async () => {
         if (!formRef.current.reportValidity()) return
-        const persona = await onFormSubmit(event)
-        if (!persona || persona.error || persona.errors) return
-        selectPersona({ label: persona.name, value: persona })
+        const seller = await onFormSubmit(event)
+        if (!seller || seller.error || seller.errors) return
+        selectSeller({ label: seller.name, value: seller })
         closeModal()
-        return persona
+        return seller
       })()
     },
-    [closeModal, onFormSubmit, selectPersona]
+    [closeModal, onFormSubmit, selectSeller]
   )
 
   if (isFormLoading) return <CircularProgress />
 
   return (
     <>
-      <BasePersonaForm
+      <BaseSellerForm
         form={form}
         formRef={formRef}
         isCropping={isCropping}
@@ -103,16 +103,16 @@ const AddPersonaForm = ({ closeModal, selectPersona }) => {
         type="submit"
         variant="contained"
       >
-        {'Add persona'}
+        {'Add seller'}
       </StyledButton>
     </>
   )
 }
 
-const AddPersonaModal = ({ onChange, open, selectItem, setOpen }) => {
+const AddSellerModal = ({ onChange, open, selectItem, setOpen }) => {
   const handleClose = useCallback(() => setOpen(false), [setOpen])
 
-  const selectPersona = useCallback(
+  const selectSeller = useCallback(
     selected => {
       onChange(selected)
       selectItem(selected)
@@ -122,14 +122,14 @@ const AddPersonaModal = ({ onChange, open, selectItem, setOpen }) => {
 
   return (
     <Dialog
-      content={<AddPersonaForm closeModal={handleClose} selectPersona={selectPersona} />}
+      content={<AddSellerForm closeModal={handleClose} selectSeller={selectSeller} />}
       fullWidth
       handleClose={handleClose}
       maxWidth="sm"
       open={open}
-      title="Add a new persona"
+      title="Add a new seller"
     />
   )
 }
 
-export default AddPersonaModal
+export default AddSellerModal

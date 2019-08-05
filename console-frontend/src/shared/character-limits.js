@@ -5,7 +5,7 @@ export default {
     chatBubble: 25,
     chatBubbleButton: 16,
   },
-  persona: {
+  seller: {
     name: 25,
     description: 70,
   },

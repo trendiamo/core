@@ -5,7 +5,7 @@ import { Tooltip } from 'onboarding/elements'
 
 const editorRoleOrder = ['simpleChats', 'pictures']
 
-const nonEditorRoleOrder = ['triggers', 'showcases', 'simpleChats', 'outros', 'pictures', 'personas']
+const nonEditorRoleOrder = ['triggers', 'showcases', 'simpleChats', 'outros', 'pictures', 'sellers']
 
 const order = () => (auth.getAccountRole() === 'editor' ? editorRoleOrder : nonEditorRoleOrder)
 
@@ -57,17 +57,17 @@ const nonEditorRoleSteps = () => ({
   },
   pictures: {
     target: '.onboard-pictures',
-    content: <Tooltip body="Manage your pictures here." nextRoute={routes.personasList()} />,
+    content: <Tooltip body="Manage your pictures here." nextRoute={routes.sellersList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Image Gallery',
   },
-  personas: {
-    target: '.onboard-personas',
-    content: <Tooltip body="Create your Personas here." create nextRoute={routes.personaCreate()} toStage1 />,
+  sellers: {
+    target: '.onboard-sellers',
+    content: <Tooltip body="Create your Sellers here." create nextRoute={routes.sellerCreate()} toStage1 />,
     placement: 'right',
     disableBeacon: true,
-    title: 'Personas',
+    title: 'Sellers',
   },
 })
 

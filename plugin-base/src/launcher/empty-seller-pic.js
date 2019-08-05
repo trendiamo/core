@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { IconPlaceholderPersona } from 'icons'
+import { IconPlaceholderSeller } from 'icons'
 
-const EmptyPersonaPic = styled(({ className }) => <IconPlaceholderPersona className={className} />)`
+const EmptySellerPic = styled(({ className }) => <IconPlaceholderSeller className={className} />)`
   fill: #f2f4f7;
   margin-top: -2px;
   transform: ${({ active }) => (active ? 'none' : 'rotate(30deg) scale(0)')};
@@ -10,4 +10,4 @@ const EmptyPersonaPic = styled(({ className }) => <IconPlaceholderPersona classN
   transition: opacity 0.25s ease, transform 0.25s ease;
 `
 
-export default EmptyPersonaPic
+export default EmptySellerPic

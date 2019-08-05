@@ -1,8 +1,8 @@
 import Circle from './circle'
 import CloseIcon from './close-icon'
-import EmptyPersonaPic from './empty-persona-pic'
+import EmptySellerPic from './empty-seller-pic'
 import LauncherFrame from './launcher-frame'
-import PersonaPic from './persona-pic'
+import SellerPic from './seller-pic'
 import PulsateEffect from './pulsate-effect'
 import React from 'react'
 
@@ -11,7 +11,7 @@ const Launcher = ({
   frameStyleStr,
   launcherConfig,
   onClick,
-  personaPic,
+  sellerPic,
   position,
   pulsating,
   showingContent,
@@ -33,10 +33,10 @@ const Launcher = ({
         position={position}
         pulsating={pulsating}
       >
-        {personaPic.url ? (
-          <PersonaPic active={!showingContent} launcherConfig={launcherConfig} personaPic={personaPic} />
+        {sellerPic.url ? (
+          <SellerPic active={!showingContent} launcherConfig={launcherConfig} sellerPic={sellerPic} />
         ) : (
-          <EmptyPersonaPic active={!showingContent} />
+          <EmptySellerPic active={!showingContent} />
         )}
         <CloseIcon active={showingContent} launcherConfig={launcherConfig} />
       </Circle>

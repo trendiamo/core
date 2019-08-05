@@ -41,7 +41,7 @@ const Container = styled.div`
   }
 `
 
-const PersonaInstagram = ({ url, color, size }) => {
+const SellerInstagram = ({ url, color, size }) => {
   if (!url) return null
 
   return (
@@ -53,4 +53,4 @@ const PersonaInstagram = ({ url, color, size }) => {
   )
 }
 
-export default PersonaInstagram
+export default SellerInstagram

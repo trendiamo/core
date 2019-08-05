@@ -11,7 +11,7 @@ const Content = ({
   launcherConfig,
   onToggleContent,
   position,
-  persona,
+  seller,
   setShowAssessmentContent,
   showingContent,
   onUserInteracted,
@@ -47,7 +47,7 @@ const Content = ({
       <ContentWrapper
         onToggleContent={onToggleContent}
         onUserInteracted={onUserInteracted}
-        persona={persona}
+        seller={seller}
         setShowAssessmentContent={setShowAssessmentContent}
         showingContent={showingContent}
       >

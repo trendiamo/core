@@ -1,4 +1,4 @@
-import BasePersonaForm from 'shared/base-persona-form'
+import BaseSellerForm from 'shared/base-seller-form'
 import CircularProgress from 'shared/circular-progress'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
@@ -22,9 +22,9 @@ const formObjectTransformer = json => {
   }
 }
 
-const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingCreate, saveFormObject, title }) => {
+const SellerForm = ({ backRoute, history, loadFormObject, location, onboardingCreate, saveFormObject, title }) => {
   const onboardingHelp = useMemo(
-    () => ({ single: true, stepName: 'personas', stageName: 'initial', pathname: location.pathname }),
+    () => ({ single: true, stepName: 'sellers', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
   )
   useOnboardingHelp(onboardingHelp)
@@ -52,7 +52,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
             setOnboarding({ ...onboarding, stageIndex: 1, run: true })
           }
         }, 0)
-        if (location.pathname !== routes.personaEdit(result.id)) history.push(routes.personaEdit(result.id))
+        if (location.pathname !== routes.sellerEdit(result.id)) history.push(routes.sellerEdit(result.id))
         return result
       })()
     },
@@ -82,7 +82,7 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
 
   return (
     <Section title={title}>
-      <BasePersonaForm
+      <BaseSellerForm
         form={form}
         formRef={formRef}
         isCropping={isCropping}
@@ -99,4 +99,4 @@ const PersonaForm = ({ backRoute, history, loadFormObject, location, onboardingC
   )
 }
 
-export default withRouter(PersonaForm)
+export default withRouter(SellerForm)

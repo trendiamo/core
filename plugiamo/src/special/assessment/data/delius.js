@@ -18,7 +18,7 @@ const data = {
     launcher: {
       chatBubbleText: 'Hallo! 👋 Willkommen bei DELIUS.',
       chatBubbleExtraText: 'Wie kann ich Ihnen helfen?',
-      persona: {
+      seller: {
         name: 'Elisa',
         profilePic: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
@@ -1609,7 +1609,7 @@ const data = {
     launcher: {
       chatBubbleText: 'Sprechen Sie mit einem Experten.',
       chatBubbleExtraText: '',
-      persona: {
+      seller: {
         name: 'Elisa',
         profilePic: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
@@ -1620,7 +1620,7 @@ const data = {
     closedLauncher: {
       chatBubbleText: 'Vielen Dank!',
       chatBubbleExtraText: 'Wir melden uns schnellstmöglich.',
-      persona: {
+      seller: {
         name: 'Elisa',
         profilePic: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',

@@ -3,7 +3,7 @@ import Button from 'shared/button'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
-import { apiGeneratedUrlCreate, apiPathAutocomplete, apiPersonasAutocomplete, apiRequest } from 'utils'
+import { apiGeneratedUrlCreate, apiPathAutocomplete, apiSellersAutocomplete, apiRequest } from 'utils'
 import { Form, FormHelperText } from 'shared/form-elements'
 import {
   FormControl,
@@ -22,7 +22,7 @@ const generateUrl = form => {
   const fragments = []
   if (form.autoOpen) fragments.push('open:1')
   if (form.step) fragments.push(`path:${form.step}`)
-  if (form.personaId) fragments.push(`persona:${form.personaId}`)
+  if (form.sellerId) fragments.push(`seller:${form.sellerId}`)
   return `${form.url}#trnd:${fragments.join(',')}`
 }
 
@@ -92,18 +92,18 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
 
   const formRef = useRef()
   const [form, setForm] = useState({
-    personaId: '',
+    sellerId: '',
     url: '',
     autoOpen: false,
     step: '',
   })
   const [showStep, setShowStep] = useState(false)
-  const [showPersona, setShowPersona] = useState(false)
-  const isDisabled = useMemo(() => !(form.url && (form.autoOpen || form.step || form.personaId)), [form])
+  const [showSeller, setShowSeller] = useState(false)
+  const isDisabled = useMemo(() => !(form.url && (form.autoOpen || form.step || form.sellerId)), [form])
 
   const showOption = useCallback(option => {
     if (option === 'step') setShowStep(true)
-    if (option === 'persona') setShowPersona(true)
+    if (option === 'seller') setShowSeller(true)
   }, [])
 
   const resetUrl = useCallback(
@@ -116,12 +116,12 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
     [form]
   )
 
-  const selectPersona = useCallback(
+  const selectSeller = useCallback(
     selected => {
       selected &&
         setForm({
           ...form,
-          personaId: selected.value.id,
+          sellerId: selected.value.id,
         })
     },
     [form]
@@ -190,18 +190,18 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
       </Option>
 
       <Option>
-        {showPersona ? (
+        {showSeller ? (
           <StyledAutocomplete
-            autocomplete={apiPersonasAutocomplete}
-            defaultPlaceholder="Choose a persona"
-            label="Persona"
-            name="Persona"
+            autocomplete={apiSellersAutocomplete}
+            defaultPlaceholder="Choose a seller"
+            label="Seller"
+            name="Seller"
             noMargin
-            onChange={selectPersona}
+            onChange={selectSeller}
             options={autocompleteOptions}
           />
         ) : (
-          <AddOptionButton option="persona" optionLabel="Set Persona" showOption={showOption} />
+          <AddOptionButton option="seller" optionLabel="Set Seller" showOption={showOption} />
         )}
       </Option>
       <Option style={{ paddingLeft: '6px' }}>
