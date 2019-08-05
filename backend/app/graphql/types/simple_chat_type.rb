@@ -13,9 +13,6 @@ Types::SimpleChatType = GraphQL::ObjectType.define do
   field :useSellerAnimation, !types.Boolean do
     resolve ->(obj, _args, _ctx) { obj.use_seller_animation }
   end
-  field :usePersonaAnimation, !types.Boolean do
-    resolve ->(obj, _args, _ctx) { obj.use_seller_animation }
-  end
   field :simpleChatSteps, types[Types::SimpleChatStepType] do
     resolve ->(obj, _args, _ctx) {
       obj.simple_chat_steps.order(:order)

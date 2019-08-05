@@ -28,7 +28,6 @@ class SimpleChat < ApplicationRecord
 
   def extra_attributes
     result = {
-      persona: seller_attributes,
       seller: seller_attributes,
       type: "SimpleChat",
       trigger_ids: triggers.ids,

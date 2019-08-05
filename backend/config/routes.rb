@@ -62,11 +62,6 @@ Rails.application.routes.draw do
         resources :flows, only: %i[index]
 
         get "/events", to: "mixpanel_events#index"
-
-        # personas compat layer
-        get "/personas/autocomplete", to: "autocompletes#sellers_autocomplete"
-        resources :personas, only: %i[index show update create], controller: "sellers"
-        delete "/personas", to: "sellers#destroy"
       end
     end
 

@@ -1,6 +1,6 @@
 module Api
   module V1
-    class SimpleChatsController < RestAdminController # rubocop:disable Metrics/ClassLength
+    class SimpleChatsController < RestAdminController
       before_action :ensure_tenant
 
       def index
@@ -77,15 +77,7 @@ module Api
                              :group_with_adjacent, :_destroy, pic_rect: %i[x y width height],
                            ],
                          ])
-                 .reverse_merge(simple_chat_compat_params)
         add_order_fields(result[:simple_chat_steps_attributes])
-      end
-
-      def simple_chat_compat_params
-        {
-          seller_id: params.require(:simple_chat)[:persona_id],
-          use_seller_animation: params.require(:simple_chat)[:use_persona_animation],
-        }
       end
 
       # add order fields to chat_step_attributes' messages and options, based on received order
