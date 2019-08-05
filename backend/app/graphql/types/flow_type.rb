@@ -32,17 +32,7 @@ Types::FlowType = GraphQL::ObjectType.define do
       obj.seller
     }
   end
-  field :persona, Types::SellerType do
-    resolve ->(obj, _args, _ctx) {
-      obj.seller
-    }
-  end
   field :useSellerAnimation, !types.Boolean do
-    resolve ->(obj, _args, _ctx) {
-      obj.use_seller_animation
-    }
-  end
-  field :usePersonaAnimation, !types.Boolean do
     resolve ->(obj, _args, _ctx) {
       obj.use_seller_animation
     }
