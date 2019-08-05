@@ -9,6 +9,6 @@ task :deploy do
 end
 
 # deploy different branch: (shouldn't be needed)
-# git push dokku-backend `git subtree split --prefix backend <your-branch-name>`:master
+# git push <remote> `git subtree split --prefix backend <your-branch-name>`:master
 # forced deploy: (shouldn't be needed)
-# git push dokku-backend `git subtree split --prefix backend master`:master --force
+# git push <remote> `git subtree split --prefix backend master`:master --force
