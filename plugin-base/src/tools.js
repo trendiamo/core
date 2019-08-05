@@ -62,22 +62,22 @@ const imgixUrl = (url, imgixParams) => {
   return `${process.env.IMGIX_ENDPOINT}${urlObj.pathname}?${stringify(search)}`
 }
 
-const personaPic = (persona, usePersonaAnimation) => {
-  if (!persona) return { url: '', picRect: {} }
-  return usePersonaAnimation
+const sellerPic = (seller, useSellerAnimation) => {
+  if (!seller) return { url: '', picRect: {} }
+  return useSellerAnimation
     ? {
-        url: persona.profilePicAnimation && persona.profilePicAnimation.url,
+        url: seller.profilePicAnimation && seller.profilePicAnimation.url,
         picRect: {},
       }
     : {
-        url: persona.profilePic && persona.profilePic.url,
-        picRect: persona && persona.picRect,
+        url: seller.profilePic && seller.profilePic.url,
+        picRect: seller && seller.picRect,
       }
 }
 
-const personaPicUrl = (persona, usePersonaAnimation, size) => {
-  const { url, picRect } = personaPic(persona, usePersonaAnimation)
-  if (usePersonaAnimation) return url
+const sellerPicUrl = (seller, useSellerAnimation, size) => {
+  const { url, picRect } = sellerPic(seller, useSellerAnimation)
+  if (useSellerAnimation) return url
   const imgixParams = size && { fit: 'crop', w: size.w, h: size.h }
   return imgixUrl(url, { rect: stringifyRect(picRect), ...imgixParams })
 }
@@ -231,8 +231,8 @@ export {
   matchUrl,
   stringifyRect,
   imgixUrl,
-  personaPic,
-  personaPicUrl,
+  sellerPic,
+  sellerPicUrl,
   positioning,
   extractYoutubeId,
   convertLogs,

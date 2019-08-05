@@ -1,4 +1,4 @@
-import AddPersonaModal from './add-persona-modal'
+import AddSellerModal from './add-seller-modal'
 import debounce from 'debounce-promise'
 import Downshift from 'downshift'
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
@@ -26,8 +26,8 @@ const DropdownButton = ({ onClick }) => (
   </InputAdornment>
 )
 
-const AddPersonaButton = ({ onClick }) => (
-  <Tooltip placement="top" title="Add a new persona">
+const AddSellerButton = ({ onClick }) => (
+  <Tooltip placement="top" title="Add a new seller">
     <InputAdornment position="end">
       <StyledPersonAdd onClick={onClick} />
     </InputAdornment>
@@ -65,7 +65,7 @@ const AutocompleteInput = ({
     [loadAllOptions]
   )
 
-  const onAddPersonaClick = useCallback(() => setIsModalOpen(true), [setIsModalOpen])
+  const onAddSellerClick = useCallback(() => setIsModalOpen(true), [setIsModalOpen])
 
   return (
     <FormControl margin="normal" {...formControlProps}>
@@ -77,7 +77,7 @@ const AutocompleteInput = ({
         endAdornment={
           <>
             <DropdownButton onClick={onDropdownClick} />
-            {name === 'Persona' && <AddPersonaButton onClick={onAddPersonaClick} />}
+            {name === 'Seller' && <AddSellerButton onClick={onAddSellerClick} />}
           </>
         }
         fullWidth
@@ -248,7 +248,7 @@ const Autocomplete = ({
             ) : null}
           </ResultsDiv>
           {isModalOpen && (
-            <AddPersonaModal onChange={onChange} open={isModalOpen} selectItem={selectItem} setOpen={setIsModalOpen} />
+            <AddSellerModal onChange={onChange} open={isModalOpen} selectItem={selectItem} setOpen={setIsModalOpen} />
           )}
         </div>
       )}

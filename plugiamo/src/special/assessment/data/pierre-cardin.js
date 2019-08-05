@@ -39,7 +39,7 @@ export const suggestions = {
 const data = {
   assessment: {
     flowType: 'ht-assessment',
-    persona: {
+    seller: {
       description: 'Designer der Hosen. Ich würde Dir gern meine Key Looks für die neue Saison vorstellen!',
       name: 'Nico de Roy',
       profilePic: {
@@ -571,7 +571,7 @@ const data = {
     header,
     launcher: {
       chatBubbleText: 'Lust auf weitere Ergänzungen?',
-      persona: {
+      seller: {
         name: 'Nico de Roy',
         profilePic: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
@@ -600,7 +600,7 @@ const data = {
     launcher: {
       chatBubbleText: 'Brauchst du Hilfe bei der Größenwahl?',
       chatBubbleExtraText: '',
-      persona: {
+      seller: {
         name: 'Nico de Roy',
         profilePic: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
@@ -610,7 +610,7 @@ const data = {
     closedLauncher: {
       chatBubbleText: 'Wir sehen uns an der Kasse! 🙂',
       chatBubbleExtraText: '',
-      persona: {
+      seller: {
         name: 'Nico de Roy',
         profilePic: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',

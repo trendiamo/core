@@ -2,7 +2,7 @@ import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
 import React, { useEffect, useMemo, useState } from 'react'
 import { apiRequest, apiWebsiteSettingsShow } from 'utils'
-import { Launcher as BaseLauncher, personaPic } from 'plugin-base'
+import { Launcher as BaseLauncher, sellerPic } from 'plugin-base'
 import { useSnackbar } from 'notistack'
 
 const PluginPreview = ({ form }) => {
@@ -14,9 +14,9 @@ const PluginPreview = ({ form }) => {
     [form.chatBubbleButtonNo, form.chatBubbleButtonYes]
   )
 
-  const Launcher = useMemo(() => <BaseLauncher personaPic={personaPic(form.__persona, form.usePersonaAnimation)} />, [
-    form.__persona,
-    form.usePersonaAnimation,
+  const Launcher = useMemo(() => <BaseLauncher sellerPic={sellerPic(form.__seller, form.useSellerAnimation)} />, [
+    form.__seller,
+    form.useSellerAnimation,
   ])
 
   const { enqueueSnackbar } = useSnackbar()

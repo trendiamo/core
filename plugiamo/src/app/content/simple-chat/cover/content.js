@@ -90,15 +90,15 @@ const Header = ({ minimized, header, config }) => (
 
 const Subheader = ({ header, minimized }) => (
   <SubheaderContainer header={header} minimized={minimized}>
-    {header.personaInstagramHandle && 'presented by '}
-    <b>{header.personaInstagramHandle || header.subtitle}</b>
+    {header.sellerInstagramHandle && 'presented by '}
+    <b>{header.sellerInstagramHandle || header.subtitle}</b>
   </SubheaderContainer>
 )
 
 const Content = ({ minimized, header, config, clickActions }) => (
   <TextContainer header={header} minimized={minimized} style={config && config.contentContainerStyle}>
     <Header config={config} header={header} minimized={minimized} />
-    {(header.personaInstagramHandle || header.subtitle) && <Subheader header={header} minimized={minimized} />}
+    {(header.sellerInstagramHandle || header.subtitle) && <Subheader header={header} minimized={minimized} />}
     {header.video && <VideoButton clickActions={clickActions} video={header.video} />}
   </TextContainer>
 )

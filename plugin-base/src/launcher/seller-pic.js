@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { imgixUrl, stringifyRect } from 'tools'
 
-const PersonaPic = styled.div`
+const SellerPic = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -11,16 +11,16 @@ const PersonaPic = styled.div`
   border-radius: 50%;
   background-position: center;
   background-size: cover;
-  background-image: ${({ personaPic, launcherConfig }) =>
-    personaPic && personaPic.url
+  background-image: ${({ sellerPic, launcherConfig }) =>
+    sellerPic && sellerPic.url
       ? launcherConfig
-        ? `url('${imgixUrl(personaPic.url, {
-            rect: stringifyRect(personaPic.picRect),
+        ? `url('${imgixUrl(sellerPic.url, {
+            rect: stringifyRect(sellerPic.picRect),
             fit: 'crop',
             w: launcherConfig.size,
             h: launcherConfig.size,
           })}')`
-        : `url('${imgixUrl(personaPic.url, { rect: stringifyRect(personaPic.picRect) })}')`
+        : `url('${imgixUrl(sellerPic.url, { rect: stringifyRect(sellerPic.picRect) })}')`
       : 'none'};
   transform: ${({ active }) => (active ? 'none' : 'rotate(30deg) scale(0)')};
   opacity: ${({ active }) => (active ? 1 : 0)};
@@ -28,4 +28,4 @@ const PersonaPic = styled.div`
   -webkit-perspective: 1000;
   backface-visibility: hidden;
 `
-export default PersonaPic
+export default SellerPic

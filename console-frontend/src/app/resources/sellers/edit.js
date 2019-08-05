@@ -1,48 +1,48 @@
-import PersonaForm from './form'
+import SellerForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
-import { apiPersonaShow, apiPersonaUpdate, apiRequest } from 'utils'
+import { apiSellerShow, apiSellerUpdate, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
-const EditPersonaForm = ({ match }) => {
+const EditSellerForm = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const loadFormObject = useCallback(
     () => {
       return (async () => {
-        const id = match.params.personaId
-        const { json, requestError } = await apiRequest(apiPersonaShow, [id])
+        const id = match.params.sellerId
+        const { json, requestError } = await apiRequest(apiSellerShow, [id])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         return json
       })()
     },
-    [enqueueSnackbar, match.params.personaId]
+    [enqueueSnackbar, match.params.sellerId]
   )
 
   const saveFormObject = useCallback(
     form => {
       return (async () => {
-        const id = match.params.personaId
-        const { json, errors, requestError } = await apiRequest(apiPersonaUpdate, [id, { persona: form }])
+        const id = match.params.sellerId
+        const { json, errors, requestError } = await apiRequest(apiSellerUpdate, [id, { seller: form }])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!errors && !requestError) enqueueSnackbar('Successfully updated persona', { variant: 'success' })
+        if (!errors && !requestError) enqueueSnackbar('Successfully updated seller', { variant: 'success' })
         return json
       })()
     },
-    [enqueueSnackbar, match.params.personaId]
+    [enqueueSnackbar, match.params.sellerId]
   )
 
   return (
-    <PersonaForm
-      backRoute={routes.personasList()}
+    <SellerForm
+      backRoute={routes.sellersList()}
       enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
       match={match}
       saveFormObject={saveFormObject}
-      title="Edit Persona"
+      title="Edit Seller"
     />
   )
 }
 
-export default EditPersonaForm
+export default EditSellerForm

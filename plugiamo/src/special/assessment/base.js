@@ -6,7 +6,7 @@ import mixpanel from 'ext/mixpanel'
 import StoreModal from './store-modal'
 import useChatActions from 'ext/hooks/use-chat-actions'
 import { assessmentHostname } from 'config'
-import { assessProducts, rememberPersona } from './utils'
+import { assessProducts, rememberSeller } from './utils'
 import { fetchProducts } from 'special/assessment/utils'
 import { h } from 'preact'
 import { isSmall } from 'utils'
@@ -47,7 +47,7 @@ const Base = ({
   const [client, setClient] = useState(null)
 
   useEffect(() => {
-    rememberPersona(module.persona)
+    rememberSeller(module.seller)
   }, [])
 
   const processResults = useCallback(

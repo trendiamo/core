@@ -49,11 +49,11 @@ const resources = {
     class: 'outros',
     route: () => routes.outrosList(),
   },
-  personas: {
+  sellers: {
     icon: AccountCircleOutlined,
-    label: 'Personas',
-    class: 'personas',
-    route: () => routes.personasList(),
+    label: 'Sellers',
+    class: 'sellers',
+    route: () => routes.sellersList(),
   },
   pictures: {
     icon: PhotoLibrary,

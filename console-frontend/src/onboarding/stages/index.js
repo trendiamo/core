@@ -1,6 +1,6 @@
 import initial from './initial'
-import personaCreated from './persona-created'
+import sellerCreated from './seller-created'
 
-export const stages = { initial, personaCreated }
+export const stages = { initial, sellerCreated }
 
-export const stagesArray = [initial, personaCreated]
+export const stagesArray = [initial, sellerCreated]

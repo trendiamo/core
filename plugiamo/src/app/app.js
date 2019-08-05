@@ -32,19 +32,19 @@ const App = ({
   const autoOpen = useRef(null)
   const flowType = useRef(null)
   const flowId = useRef(null)
-  const persona = useRef(null)
-  const [hasPersona, setHasPersona] = useState(false)
+  const seller = useRef(null)
+  const [hasSeller, setHasSeller] = useState(false)
   const config = useMemo(() => setup(data, setupFlowHistory()), [data])
 
   useEffect(() => () => timeout.clear('exitOnMobile'), [])
 
   useEffect(() => {
-    if (!persona.current && config.persona) setHasPersona(true)
+    if (!seller.current && config.seller) setHasSeller(true)
     flowType.current = config.flowType
     flowId.current = data && data.flow && data.flow.id
     autoOpen.current = config.open
-    persona.current = config.persona
-  }, [config.flowType, config.open, config.persona, data])
+    seller.current = config.seller
+  }, [config.flowType, config.open, config.seller, data])
 
   useEffect(() => {
     mixpanel.track('Loaded Plugin', {
@@ -53,8 +53,8 @@ const App = ({
       flowId: flowId.current,
       hash: location.hash,
       hostname: location.hostname,
-      personaName: persona.current.name,
-      personaRef: persona.current.id,
+      sellerName: seller.current.name,
+      sellerRef: seller.current.id,
     })
 
     getFrekklsConfig().onShow(autoOpen.current)
@@ -129,7 +129,7 @@ const App = ({
     if (showingContent) clearDisappearTimeout()
   }, [clearDisappearTimeout, showingContent])
 
-  if (!hasPersona) return null
+  if (!hasSeller) return null
 
   return (
     <AppBase
@@ -140,7 +140,7 @@ const App = ({
       isUnmounting={isUnmounting}
       onToggleContent={onToggleContent}
       onUserInteracted={onUserInteracted}
-      persona={persona.current}
+      seller={seller.current}
       pluginState={pluginState}
       position={getFrekklsConfig().position}
       setDisappear={setDisappear}

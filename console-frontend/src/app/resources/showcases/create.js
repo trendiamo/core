@@ -7,16 +7,16 @@ import { useSnackbar } from 'notistack'
 const loadFormObject = () => {
   return {
     name: '',
-    personaId: '',
-    usePersonaAnimation: false,
+    sellerId: '',
+    useSellerAnimation: false,
     title: '',
     subtitle: '',
     chatBubbleText: '',
     chatBubbleExtraText: '',
     spotlightsAttributes: [
       {
-        personaId: '',
-        usePersonaAnimation: false,
+        sellerId: '',
+        useSellerAnimation: false,
         productPicksAttributes: [
           {
             url: '',

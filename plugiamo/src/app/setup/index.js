@@ -1,5 +1,5 @@
 import getFrekklsConfig from 'frekkls-config'
-import { isPCAssessment, recallPersona } from 'special/assessment/utils'
+import { isPCAssessment, recallSeller } from 'special/assessment/utils'
 import { isSmall } from 'utils'
 import { location } from 'config'
 import { pushPath } from './flow-history'
@@ -12,7 +12,8 @@ export const resolveHash = () => {
   if (!match) return result
   match[1].split(',').forEach(pairStr => {
     const matches = /(.+):(.+)/.exec(pairStr)
-    result[matches[1]] = matches[2]
+    const key = matches[1] === 'persona' ? 'seller' : matches[1] // support old urls using 'persona'
+    result[key] = matches[2]
   })
   return result
 }
@@ -23,15 +24,15 @@ export const optionsFromHash = () => {
   return window.__trendiamoOptionsFromHash
 }
 
-const getMatchedPersona = ({ flow, data }) => {
-  if (data.persona) return data.persona
-  if (data.launcher && data.launcher.persona) return data.launcher.persona
-  if (isPCAssessment() && flow.flowType === 'outro' && recallPersona()) return recallPersona()
-  if (flow) return flow.persona
+const getMatchedSeller = ({ flow, data }) => {
+  if (data.seller) return data.seller
+  if (data.launcher && data.launcher.seller) return data.launcher.seller
+  if (isPCAssessment() && flow.flowType === 'outro' && recallSeller()) return recallSeller()
+  if (flow) return flow.seller
 }
 
 const setup = (data, pathFromNav) => {
-  const { /* persona,*/ open: openOpt, path: pathOpt, picture } = optionsFromHash()
+  const { /* seller,*/ open: openOpt, path: pathOpt, picture } = optionsFromHash()
   const { flow, type: flowType } = { flow: data.flow, type: data.flowType || data.flow.flowType }
   const open = pathFromNav ? true : isSmall() ? false : openOpt && openOpt.match(/1|true/)
 
@@ -49,7 +50,7 @@ const setup = (data, pathFromNav) => {
   return {
     flowType,
     open,
-    persona: getMatchedPersona({ flow, data }),
+    seller: getMatchedSeller({ flow, data }),
   }
 }
 

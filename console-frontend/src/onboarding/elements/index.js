@@ -1,4 +1,4 @@
-import ModalFirstPersona from './modal-first-persona'
+import ModalFirstSeller from './modal-first-seller'
 import Tooltip from './tooltip'
 
-export { Tooltip, ModalFirstPersona }
+export { Tooltip, ModalFirstSeller }

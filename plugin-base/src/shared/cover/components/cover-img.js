@@ -1,9 +1,9 @@
-import PersonaPlaceholderIcon from 'icons/icon-placeholder-persona.svg'
+import SellerPlaceholderIcon from 'icons/icon-placeholder-seller.svg'
 import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 
-const EmptyPersonaPic = styled(PersonaPlaceholderIcon)`
+const EmptySellerPic = styled(SellerPlaceholderIcon)`
   fill: #f2f4f7;
   margin-top: -2px;
 `
@@ -19,7 +19,7 @@ const CoverImgContainer = styled.div`
 `
 
 const CoverImg = forwardRef(({ src }, ref) => (
-  <CoverImgContainer ref={ref}>{src ? <SingleImage src={src} /> : <EmptyPersonaPic />}</CoverImgContainer>
+  <CoverImgContainer ref={ref}>{src ? <SingleImage src={src} /> : <EmptySellerPic />}</CoverImgContainer>
 ))
 
 export default CoverImg

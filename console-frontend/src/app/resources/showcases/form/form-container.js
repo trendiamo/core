@@ -18,8 +18,8 @@ const FormContainer = ({
   onSortEnd,
   onSpotlightClick,
   onToggleContent,
-  personas,
-  selectPersona,
+  sellers,
+  selectSeller,
   setFieldValue,
   setIsCropping,
   setIsUploaderLoading,
@@ -35,7 +35,7 @@ const FormContainer = ({
       mergeForm={mergeForm}
       onBackClick={onBackClick}
       onToggleContent={onToggleContent}
-      selectPersona={selectPersona}
+      selectSeller={selectSeller}
       setFieldValue={setFieldValue}
       title={title}
     />
@@ -46,7 +46,7 @@ const FormContainer = ({
       isUploaderLoading={isUploaderLoading}
       onSortEnd={onSortEnd}
       onSpotlightClick={onSpotlightClick}
-      personas={personas}
+      sellers={sellers}
       setIsCropping={setIsCropping}
       setIsUploaderLoading={setIsUploaderLoading}
       setSpotlightForm={setSpotlightForm}

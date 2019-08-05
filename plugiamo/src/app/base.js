@@ -25,7 +25,7 @@ const AppBase = ({
   hideContentFrame,
   isUnmounting,
   onToggleContent,
-  persona,
+  seller,
   pluginState,
   position,
   setDisappear,
@@ -77,7 +77,7 @@ const AppBase = ({
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         onUserInteracted={onUserInteracted}
-        persona={persona}
+        seller={seller}
         position={position}
         setShowAssessmentContent={setShowAssessmentContent}
         showingContent={showingContent}
@@ -101,7 +101,7 @@ const AppBase = ({
           frameStyleStr={emojifyStyles}
           launcherConfig={launcherConfig}
           onToggleContent={onToggleContent}
-          persona={persona}
+          seller={seller}
           position={position}
           pulsating={pluginState !== 'closed'}
           showingContent={showingContent}

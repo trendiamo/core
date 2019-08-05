@@ -20,7 +20,7 @@ const resourceGroups = () => {
     basic: {
       name: 'Basics',
       showTitle: true,
-      resources: [resources.pictures, resources.personas],
+      resources: [resources.pictures, resources.sellers],
     },
     tools: {
       name: 'Tools',

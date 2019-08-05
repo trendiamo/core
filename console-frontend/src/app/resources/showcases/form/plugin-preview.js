@@ -2,7 +2,7 @@ import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { apiRequest, apiWebsiteSettingsShow } from 'utils'
-import { Launcher as BaseLauncher, personaPic } from 'plugin-base'
+import { Launcher as BaseLauncher, sellerPic } from 'plugin-base'
 import { history as pluginHistory, Showcase as ShowcaseBase } from 'plugin-base'
 import { previewConverter } from './data-utils'
 import { useSnackbar } from 'notistack'
@@ -37,12 +37,12 @@ const PluginPreview = ({
     () => (
       <BaseLauncher
         onClick={onLauncherClick}
-        personaPic={personaPic(form.__persona, form.usePersonaAnimation)}
+        sellerPic={sellerPic(form.__seller, form.useSellerAnimation)}
         pulsating
         showingContent={showingContent}
       />
     ),
-    [form.__persona, form.usePersonaAnimation, onLauncherClick, showingContent]
+    [form.__seller, form.useSellerAnimation, onLauncherClick, showingContent]
   )
 
   const { enqueueSnackbar } = useSnackbar()

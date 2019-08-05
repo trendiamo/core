@@ -8,8 +8,8 @@ const loadFormObject = () => {
   return {
     name: '',
     title: '',
-    personaId: '',
-    usePersonaAnimation: false,
+    sellerId: '',
+    useSellerAnimation: false,
     chatBubbleText: '',
     chatBubbleExtraText: '',
     simpleChatStepsAttributes: [

@@ -8,7 +8,7 @@ import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, Field, Form, FormHelperText, PreviewModal } from 'shared/form-elements'
-import { apiPersonasAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
+import { apiSellersAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
@@ -17,15 +17,15 @@ import { withRouter } from 'react-router'
 const formObjectTransformer = json => {
   return {
     id: json.id,
-    personaId: (json.persona && json.persona.id) || '',
-    usePersonaAnimation: json.usePersonaAnimation || false,
+    sellerId: (json.seller && json.seller.id) || '',
+    useSellerAnimation: json.useSellerAnimation || false,
     name: json.name || '',
     chatBubbleText: json.chatBubbleText || '',
     chatBubbleButtonYes: json.chatBubbleButtonYes || '',
     chatBubbleButtonNo: json.chatBubbleButtonNo || '',
     triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
-    __persona: json.persona,
+    __seller: json.seller,
   }
 }
 
@@ -41,30 +41,30 @@ const BaseOutroForm = ({
   setFieldValue,
   title,
 }) => {
-  const [usePersonaAnimation, setUsePersonaAnimation] = useState(form.usePersonaAnimation)
+  const [useSellerAnimation, setUseSellerAnimation] = useState(form.useSellerAnimation)
 
-  const initialSelectedItem = useMemo(() => form.__persona && { value: form.__persona, label: form.__persona.name }, [
-    form.__persona,
+  const initialSelectedItem = useMemo(() => form.__seller && { value: form.__seller, label: form.__seller.name }, [
+    form.__seller,
   ])
 
-  const onTogglePersonaAnimation = useCallback(
+  const onToggleSellerAnimation = useCallback(
     event => {
       setFieldValue(event)
-      setUsePersonaAnimation(event.target.checked)
+      setUseSellerAnimation(event.target.checked)
     },
     [setFieldValue]
   )
 
-  const selectPersona = useCallback(
+  const selectSeller = useCallback(
     selected => {
       if (!selected) return
       mergeForm({
-        personaId: selected.value.id,
-        __persona: selected.value,
-        usePersonaAnimation: selected.value.profilePicAnimation.url ? usePersonaAnimation : false,
+        sellerId: selected.value.id,
+        __seller: selected.value,
+        useSellerAnimation: selected.value.profilePicAnimation.url ? useSellerAnimation : false,
       })
     },
-    [mergeForm, usePersonaAnimation]
+    [mergeForm, useSellerAnimation]
   )
 
   return (
@@ -84,32 +84,32 @@ const BaseOutroForm = ({
         />
         <FormHelperText>{'The name is useful for you to reference this module in a trigger.'}</FormHelperText>
         <Autocomplete
-          autocomplete={apiPersonasAutocomplete}
-          defaultPlaceholder="Choose a persona"
+          autocomplete={apiSellersAutocomplete}
+          defaultPlaceholder="Choose a seller"
           disabled={isFormLoading}
           fullWidth
           initialSelectedItem={initialSelectedItem}
-          label="Persona"
-          name="Persona"
-          onChange={selectPersona}
+          label="Seller"
+          name="Seller"
+          onChange={selectSeller}
           options={options}
           required
         />
-        <FormHelperText>{'The persona will appear in the launcher, and in the content.'}</FormHelperText>
-        {form.__persona && (
+        <FormHelperText>{'The seller will appear in the launcher, and in the content.'}</FormHelperText>
+        {form.__seller && (
           <FormControlLabel
             control={
               <Checkbox
-                checked={form.usePersonaAnimation}
+                checked={form.useSellerAnimation}
                 color="primary"
-                disabled={!form.__persona.profilePicAnimation.url}
-                name="usePersonaAnimation"
-                onChange={onTogglePersonaAnimation}
+                disabled={!form.__seller.profilePicAnimation.url}
+                name="useSellerAnimation"
+                onChange={onToggleSellerAnimation}
               />
             }
-            disabled={!form.__persona.profilePicAnimation.url}
-            label="Use persona's animated picture"
-            title={form.__persona.profilePicAnimation.url ? null : "This persona doesn't have an animated picture"}
+            disabled={!form.__seller.profilePicAnimation.url}
+            label="Use seller's animated picture"
+            title={form.__seller.profilePicAnimation.url ? null : "This seller doesn't have an animated picture"}
           />
         )}
         <Field

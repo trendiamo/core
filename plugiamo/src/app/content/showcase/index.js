@@ -5,13 +5,13 @@ import useEmojify from 'ext/hooks/use-emojify'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
 import { h } from 'preact'
 import { history, Showcase as ShowcaseBase } from 'plugin-base'
-import { isPCAssessment, rememberPersona } from 'special/assessment/utils'
+import { isPCAssessment, rememberSeller } from 'special/assessment/utils'
 import { markGoFwd, replaceLastPath } from 'app/setup/flow-history'
 import { routes, SpotlightItem } from 'plugin-base'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 const assessmentSpotlight = {
-  persona: {
+  seller: {
     name: 'Style Assistent',
     description: 'In wenigen Schritten finden was zu dir passt!',
   },
@@ -20,16 +20,16 @@ const assessmentSpotlight = {
 const convertSpotlights = (emojify, spotlights, onSpotlightClick) => {
   const results = spotlights.map(spotlight => ({
     ...spotlight,
-    persona: {
-      ...spotlight.persona,
-      description: emojify(spotlight.persona.description),
+    seller: {
+      ...spotlight.seller,
+      description: emojify(spotlight.seller.description),
     },
     productPicks: spotlight.productPicks.map(productPick => ({
       ...productPick,
       description: emojify(productPick.description),
     })),
     translation: {
-      selectedBy: emojify(getFrekklsConfig().i18n.productsSelectedBy(spotlight.persona.name.split(' ')[0])),
+      selectedBy: emojify(getFrekklsConfig().i18n.productsSelectedBy(spotlight.seller.name.split(' ')[0])),
     },
   }))
 
@@ -75,14 +75,14 @@ const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
         })
         return
       }
-      mixpanel.track('Clicked Persona', {
+      mixpanel.track('Clicked Seller', {
         flowType: 'showcase',
         hostname: location.hostname,
-        personaName: spotlight.persona.name,
-        personaRef: spotlight.persona.id,
-        personaOrder: spotlight.order,
+        sellerName: spotlight.seller.name,
+        sellerRef: spotlight.seller.id,
+        sellerOrder: spotlight.order,
       })
-      if (isPCAssessment()) rememberPersona(spotlight.persona)
+      if (isPCAssessment()) rememberSeller(spotlight.seller)
       routeToSpotlight(spotlight.id)
     },
     [routeToSpotlight, setShowAssessmentContent]
@@ -93,8 +93,8 @@ const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
       'Clicked Product',
       {
         flowType: 'showcase',
-        personaName: spotlight.persona.name,
-        personaRef: spotlight.persona.id,
+        sellerName: spotlight.seller.name,
+        sellerRef: spotlight.seller.id,
         hostname: location.hostname,
         productName: product.name,
       },
@@ -149,12 +149,12 @@ const ShowcaseGraphql = ({ id, ...props }) => {
           id
           title
           subtitle
-          usePersonaAnimation
+          useSellerAnimation
           spotlights {
             id
             order
-            usePersonaAnimation
-            persona {
+            useSellerAnimation
+            seller {
               id
               name
               description

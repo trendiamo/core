@@ -9,10 +9,10 @@ import { useMemo } from 'preact/hooks'
 const AppGraphql = () => {
   const variables = useMemo(
     () => ({
-      hasPersona: !!optionsFromHash().persona,
+      hasSeller: !!optionsFromHash().seller,
       pathname:
         location.hostname === 'www.pionier-workwear.com' ? `${location.pathname}${location.search}` : location.pathname,
-      personaId: optionsFromHash().persona,
+      sellerId: optionsFromHash().seller,
       pluginPath: optionsFromHash().path,
     }),
     []
@@ -20,7 +20,7 @@ const AppGraphql = () => {
 
   const data = useGraphql(
     gql`
-      query($pathname: String!, $hasPersona: Boolean!, $personaId: ID, $pluginPath: String) {
+      query($pathname: String!, $hasSeller: Boolean!, $sellerId: ID, $pluginPath: String) {
         website {
           name
           previewMode
@@ -37,8 +37,8 @@ const AppGraphql = () => {
           chatBubbleExtraText
           chatBubbleButtonYes
           chatBubbleButtonNo
-          usePersonaAnimation
-          persona {
+          useSellerAnimation
+          seller {
             id
             name
             description
@@ -57,7 +57,7 @@ const AppGraphql = () => {
             instagramUrl
           }
         }
-        persona(id: $personaId) @include(if: $hasPersona) {
+        seller(id: $sellerId) @include(if: $hasSeller) {
           id
           name
           description

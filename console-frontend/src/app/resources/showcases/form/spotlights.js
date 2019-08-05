@@ -9,7 +9,7 @@ const Spotlights = ({
   isFormLoading,
   isUploaderLoading,
   onSpotlightClick,
-  personas,
+  sellers,
   setIsCropping,
   setIsUploaderLoading,
   setSpotlightForm,
@@ -32,7 +32,7 @@ const Spotlights = ({
             isUploaderLoading={isUploaderLoading}
             key={spotlight.id || spotlight.__key}
             onSpotlightClick={onSpotlightClick}
-            personas={personas}
+            sellers={sellers}
             setIsCropping={setIsCropping}
             setIsUploaderLoading={setIsUploaderLoading}
             setSpotlightForm={setSpotlightForm}

@@ -4,7 +4,7 @@ import { BASE_API_URL } from './shared'
 import { stringify } from 'query-string'
 
 const S3_URL = `${BASE_API_URL}/s3/sign`
-const PERSONAS_URL = `${BASE_API_URL}/personas`
+const SELLERS_URL = `${BASE_API_URL}/sellers`
 const PICTURES_URL = `${BASE_API_URL}/pictures`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/showcases`
@@ -116,12 +116,12 @@ export const apiMe = () => apiGetRequest(ME_URL)
 export const apiMeUpdate = body => apiUpdateRequest(ME_URL, body)
 export const apiOnboardingSet = body => apiUpdateRequest(ONBOARDING_URL, body)
 
-export const apiPersonaList = query => apiListRequest(`${PERSONAS_URL}/?${stringify(query)}`)
-export const apiPersonaShow = id => apiGetRequest(`${PERSONAS_URL}/${id}`)
-export const apiPersonaCreate = body => apiCreateRequest(PERSONAS_URL, body)
-export const apiPersonaUpdate = (id, body) => apiUpdateRequest(`${PERSONAS_URL}/${id}`, body)
-export const apiPersonaDestroy = body => apiDestroyMultipleRequest(PERSONAS_URL, body)
-export const apiPersonasAutocomplete = query => apiGetRequest(`${PERSONAS_URL}/autocomplete/?${stringify(query)}`)
+export const apiSellerList = query => apiListRequest(`${SELLERS_URL}/?${stringify(query)}`)
+export const apiSellerShow = id => apiGetRequest(`${SELLERS_URL}/${id}`)
+export const apiSellerCreate = body => apiCreateRequest(SELLERS_URL, body)
+export const apiSellerUpdate = (id, body) => apiUpdateRequest(`${SELLERS_URL}/${id}`, body)
+export const apiSellerDestroy = body => apiDestroyMultipleRequest(SELLERS_URL, body)
+export const apiSellersAutocomplete = query => apiGetRequest(`${SELLERS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiPictureList = query => apiListRequest(`${PICTURES_URL}/?${stringify(query)}`)
 export const apiPictureCreate = body => apiCreateRequest(PICTURES_URL, body)

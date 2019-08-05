@@ -21,7 +21,7 @@ const ChatContent = ({
   lazyLoadActive,
   messageFactory,
   onStopChat,
-  persona,
+  seller,
   resetMinHeight,
   setLazyLoadActive,
   storeLog,
@@ -71,7 +71,7 @@ const ChatContent = ({
       const handled = handleClick && handleClick({ type, item, ...rest })
       if (handled) return
 
-      clickActions && clickActions[type]({ item, persona, flowType: data && data.flowType, ...rest })
+      clickActions && clickActions[type]({ item, seller, flowType: data && data.flowType, ...rest })
       if (type !== 'clickChatOption') return
 
       configMinHeight()
@@ -82,7 +82,7 @@ const ChatContent = ({
         chatLog.selectOption(item)
       }
     },
-    [clickActions, configMinHeight, data, handleClick, onStopChat, persona]
+    [clickActions, configMinHeight, data, handleClick, onStopChat, seller]
   )
 
   useEffect(

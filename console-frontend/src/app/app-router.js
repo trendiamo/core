@@ -15,7 +15,7 @@ import WebsiteSettings from 'app/screens/website-settings'
 import WelcomePage from 'app/screens/welcome'
 import { AccountRedirect, ExternalRoute, PrivateRoute, RootRedirect } from './app-router-helpers'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
-import { PersonaCreate, PersonaEdit, PersonasList } from './resources/personas'
+import { SellerCreate, SellerEdit, SellersList } from './resources/sellers'
 import { PicturesList } from './resources/pictures'
 import { Route, Switch } from 'react-router-dom'
 import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from './resources/showcases'
@@ -27,27 +27,27 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
   return (
     <Switch>
       <PrivateRoute
-        component={PersonasList}
+        component={SellersList}
         exact
         fetchedAccount={fetchedAccount}
         isOwnerScoped
-        path={routes.personasList(':accountSlug')}
+        path={routes.sellersList(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute
-        component={PersonaCreate}
+        component={SellerCreate}
         exact
         fetchedAccount={fetchedAccount}
         isOwnerScoped
-        path={routes.personaCreate(':accountSlug')}
+        path={routes.sellerCreate(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute
-        component={PersonaEdit}
+        component={SellerEdit}
         exact
         fetchedAccount={fetchedAccount}
         isOwnerScoped
-        path={routes.personaEdit(':personaId', ':accountSlug')}
+        path={routes.sellerEdit(':sellerId', ':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute

@@ -1,7 +1,7 @@
-import PersonaForm from './form'
+import SellerForm from './form'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
-import { apiPersonaCreate, apiRequest } from 'utils'
+import { apiSellerCreate, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
 const loadFormObject = () => {
@@ -15,16 +15,16 @@ const loadFormObject = () => {
   }
 }
 
-const CreatePersonaForm = () => {
+const CreateSellerForm = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const saveFormObject = useCallback(
     form => {
       return (async () => {
-        const { json, errors, requestError } = await apiRequest(apiPersonaCreate, [{ persona: form }])
+        const { json, errors, requestError } = await apiRequest(apiSellerCreate, [{ seller: form }])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!errors && !requestError) enqueueSnackbar('Successfully created persona', { variant: 'success' })
+        if (!errors && !requestError) enqueueSnackbar('Successfully created seller', { variant: 'success' })
         return json
       })()
     },
@@ -32,14 +32,14 @@ const CreatePersonaForm = () => {
   )
 
   return (
-    <PersonaForm
-      backRoute={routes.personasList()}
+    <SellerForm
+      backRoute={routes.sellersList()}
       loadFormObject={loadFormObject}
       onboardingCreate
       saveFormObject={saveFormObject}
-      title="Create Persona"
+      title="Create Seller"
     />
   )
 }
 
-export default CreatePersonaForm
+export default CreateSellerForm

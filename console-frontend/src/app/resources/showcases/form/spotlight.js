@@ -5,7 +5,7 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import Tooltip from 'shared/tooltip'
 import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
-import { apiPersonasAutocomplete } from 'utils'
+import { apiSellersAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { HelpOutline } from '@material-ui/icons'
@@ -20,13 +20,13 @@ const IconHelp = styled(HelpOutline)`
   margin-left: 3px;
 `
 
-const PersonaLabel = ({ disabled }) => (
+const SellerLabel = ({ disabled }) => (
   <StyledLabel>
     {'Always show animated picture'}
     <Tooltip
       disabled={disabled}
       placement="top"
-      title="Decide whether to always show the persona's animated GIF or just when moving the mouse over an item"
+      title="Decide whether to always show the seller's animated GIF or just when moving the mouse over an item"
       trigger="click"
     >
       <IconHelp />
@@ -49,7 +49,7 @@ const Spotlight = ({
   setSpotlightForm,
   spotlight,
 }) => {
-  const [usePersonaAnimation, setUsePersonaAnimation] = useState(spotlight.usePersonaAnimation)
+  const [useSellerAnimation, setUseSellerAnimation] = useState(spotlight.useSellerAnimation)
 
   const onChange = useCallback(
     newSpotlightCallback => {
@@ -58,17 +58,17 @@ const Spotlight = ({
     [index, setSpotlightForm]
   )
 
-  const selectPersona = useCallback(
+  const selectSeller = useCallback(
     selected => {
       if (selected) {
         onChange(() => ({
-          personaId: selected.value.id,
-          __persona: selected.value,
-          usePersonaAnimation: selected.value.profilePicAnimation.url ? usePersonaAnimation : false,
+          sellerId: selected.value.id,
+          __seller: selected.value,
+          useSellerAnimation: selected.value.profilePicAnimation.url ? useSellerAnimation : false,
         }))
       }
     },
-    [onChange, usePersonaAnimation]
+    [onChange, useSellerAnimation]
   )
 
   const addProductPick = useCallback(
@@ -125,8 +125,8 @@ const Spotlight = ({
   )
 
   const initialSelectedItem = useMemo(
-    () => spotlight.__persona && { value: spotlight.__persona, label: spotlight.__persona.name },
-    [spotlight.__persona]
+    () => spotlight.__seller && { value: spotlight.__seller, label: spotlight.__seller.name },
+    [spotlight.__seller]
   )
 
   const onFocus = useCallback(
@@ -136,13 +136,13 @@ const Spotlight = ({
     [index, onSpotlightClick, spotlight.id]
   )
 
-  const onTogglePersonaAnimation = useCallback(
+  const onToggleSellerAnimation = useCallback(
     () => {
-      onChange(() => ({ usePersonaAnimation: !usePersonaAnimation }))
-      setUsePersonaAnimation(!usePersonaAnimation)
+      onChange(() => ({ useSellerAnimation: !useSellerAnimation }))
+      setUseSellerAnimation(!useSellerAnimation)
       onFocus()
     },
-    [onChange, onFocus, usePersonaAnimation]
+    [onChange, onFocus, useSellerAnimation]
   )
 
   return (
@@ -162,36 +162,36 @@ const Spotlight = ({
         foldable
         folded={folded}
         hideTop
-        title={spotlight.id ? `${spotlight.__persona && spotlight.__persona.name}'s Spotlight` : 'New Spotlight'}
+        title={spotlight.id ? `${spotlight.__seller && spotlight.__seller.name}'s Spotlight` : 'New Spotlight'}
       >
         <Autocomplete
-          autocomplete={apiPersonasAutocomplete}
+          autocomplete={apiSellersAutocomplete}
           autoFocus={index > 0 && !spotlight.id}
-          defaultPlaceholder="Choose a persona"
+          defaultPlaceholder="Choose a seller"
           disabled={isCropping || isFormLoading || isUploaderLoading}
           fullWidth
           initialSelectedItem={initialSelectedItem}
-          label="Persona"
-          name="Persona"
-          onChange={selectPersona}
+          label="Seller"
+          name="Seller"
+          onChange={selectSeller}
           onFocus={onFocus}
           options={options}
           required
         />
-        {spotlight.__persona && (
+        {spotlight.__seller && (
           <FormControlLabel
             control={
               <Checkbox
-                checked={spotlight.usePersonaAnimation}
+                checked={spotlight.useSellerAnimation}
                 color="primary"
-                disabled={!spotlight.__persona.profilePicAnimation.url}
-                name="usePersonaAnimation"
-                onChange={onTogglePersonaAnimation}
+                disabled={!spotlight.__seller.profilePicAnimation.url}
+                name="useSellerAnimation"
+                onChange={onToggleSellerAnimation}
               />
             }
-            disabled={!spotlight.__persona.profilePicAnimation.url}
-            label={<PersonaLabel disabled={!spotlight.__persona.profilePicAnimation.url} />}
-            title={spotlight.__persona.profilePicAnimation.url ? null : "This persona doesn't have an animated picture"}
+            disabled={!spotlight.__seller.profilePicAnimation.url}
+            label={<SellerLabel disabled={!spotlight.__seller.profilePicAnimation.url} />}
+            title={spotlight.__seller.profilePicAnimation.url ? null : "This seller doesn't have an animated picture"}
           />
         )}
         <div style={{ marginTop: '8px' }}>
@@ -204,7 +204,7 @@ const Spotlight = ({
                 isUploaderLoading={isUploaderLoading}
                 onFocus={onFocus}
                 onSortEnd={onSortEnd}
-                personaId={spotlight.personaId}
+                sellerId={spotlight.sellerId}
                 productPicksAttributes={spotlight.productPicksAttributes}
                 setIsCropping={setIsCropping}
                 setIsUploaderLoading={setIsUploaderLoading}

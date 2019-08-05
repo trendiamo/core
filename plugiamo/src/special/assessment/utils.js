@@ -14,11 +14,11 @@ const isDeliusAssessment = () =>
 const isDeliusPDP = () =>
   assessmentHostname === 'www.delius-contract.de' && location.pathname.match(/\/de\/produkte\/.+\/.+/)
 
-const rememberPersona = persona => sessionStorage.setItem('trnd-remembered-persona', JSON.stringify(persona))
+const rememberSeller = seller => sessionStorage.setItem('trnd-remembered-seller', JSON.stringify(seller))
 
 const cartIsNotEmpty = () => getShopcartProductIds().length > 0
 
-const recallPersona = () => JSON.parse(sessionStorage.getItem('trnd-remembered-persona'))
+const recallSeller = () => JSON.parse(sessionStorage.getItem('trnd-remembered-seller'))
 const isPCAssessmentCart = () => isPCAssessment() && location.pathname.match(/^\/checkout\/cart/) && cartIsNotEmpty()
 
 const fetchProducts = () =>
@@ -132,8 +132,8 @@ const clickAssessmentProduct = item => {
 export {
   clickAssessmentProduct,
   isPCAssessment,
-  rememberPersona,
-  recallPersona,
+  rememberSeller,
+  recallSeller,
   recommendedProducts,
   isPCAssessmentCart,
   fetchProducts,
