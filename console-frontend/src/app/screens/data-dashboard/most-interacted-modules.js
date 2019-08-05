@@ -164,7 +164,7 @@ const MainTable = ({ data, handleRequestSort, sorting }) => {
               />
             </TableCell>
             <ActiveColumn
-              highlightInactive={record.active}
+              highlightInactive={!record.active}
               symbolTextActive="Active"
               symbolTextInactive="Draft"
               tooltipTextActive="Already used in Triggers"
