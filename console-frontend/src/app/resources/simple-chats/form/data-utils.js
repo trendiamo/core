@@ -1,7 +1,7 @@
 const defaults = {
   seller: {
     name: 'Seller Name',
-    description: 'Seller Description',
+    bio: 'Seller Bio',
   },
   heading: 'Heading',
 }
@@ -10,7 +10,7 @@ const previewConverter = {
   seller(seller = {}) {
     return {
       name: seller.name || defaults.seller.name,
-      description: seller.description || defaults.seller.description,
+      bio: seller.bio || defaults.seller.bio,
       profilePic: { url: seller.profilePic ? seller.profilePic.url : '', picRect: seller.picRect || {} },
       profilePicAnimation: { url: seller.profilePicAnimation ? seller.profilePicAnimation.url : '', picRect: {} },
     }

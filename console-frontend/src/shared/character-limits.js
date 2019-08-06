@@ -7,7 +7,7 @@ export default {
   },
   seller: {
     name: 25,
-    description: 70,
+    bio: 70,
   },
   showcase: {
     productName: 25,

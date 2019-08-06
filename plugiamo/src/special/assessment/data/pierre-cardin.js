@@ -40,7 +40,7 @@ const data = {
   assessment: {
     flowType: 'ht-assessment',
     seller: {
-      description: 'Designer der Hosen. Ich würde Dir gern meine Key Looks für die neue Saison vorstellen!',
+      bio: 'Designer der Hosen. Ich würde Dir gern meine Key Looks für die neue Saison vorstellen!',
       name: 'Nico de Roy',
       profilePic: {
         url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',

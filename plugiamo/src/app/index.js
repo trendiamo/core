@@ -41,7 +41,7 @@ const AppGraphql = () => {
           seller {
             id
             name
-            description
+            bio
             profilePic {
               url
             }
@@ -60,7 +60,7 @@ const AppGraphql = () => {
         seller(id: $sellerId) @include(if: $hasSeller) {
           id
           name
-          description
+          bio
           profilePic {
             url
           }

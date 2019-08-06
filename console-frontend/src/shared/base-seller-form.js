@@ -138,13 +138,13 @@ const BaseSellerForm = ({
         disabled={isFormLoading || isCropping || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
-        label="Description"
+        label="Bio"
         margin="normal"
-        max={characterLimits.seller.description}
-        name="description"
+        max={characterLimits.seller.bio}
+        name="bio"
         onChange={setFieldValue}
         required
-        value={form.description}
+        value={form.bio}
       />
       <FormHelperText>{"A short text that is shown near the seller's name."}</FormHelperText>
       <Field
