@@ -69,7 +69,7 @@ module Api
       def simple_chat_params # rubocop:disable Metrics/MethodLength
         result = params
                  .require(:simple_chat)
-                 .permit(:id, :name, :title, :chat_bubble_text, :chat_bubble_extra_text, :seller_id,
+                 .permit(:id, :name, :heading, :teaser_message, :extra_teaser_message, :seller_id,
                          :use_seller_animation, :_destroy, :lock_version,
                          simple_chat_sections_attributes: [
                            :id, :key, :_destroy, :order, simple_chat_messages_attributes: [

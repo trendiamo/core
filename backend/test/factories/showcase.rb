@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :showcase do
-    sequence(:title) { Faker::Lorem.words(2) }
-    sequence(:subtitle) { Faker::Lorem.words(4) }
+    sequence(:heading) { Faker::Lorem.words(2) }
+    sequence(:subheading) { Faker::Lorem.words(4) }
     sequence(:name) { Faker::StarWars.planet }
     seller
     association :owner, factory: :user

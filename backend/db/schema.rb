@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190806090204) do
+ActiveRecord::Schema.define(version: 20190806134855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20190806090204) do
     t.datetime "updated_at", null: false
     t.string "graphcms_ref"
     t.string "name", null: false
-    t.string "chat_bubble_text"
+    t.string "teaser_message"
     t.string "chat_bubble_button_yes"
     t.string "chat_bubble_button_no"
     t.integer "lock_version", default: 1
@@ -129,14 +129,14 @@ ActiveRecord::Schema.define(version: 20190806090204) do
   create_table "showcases", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "seller_id"
-    t.string "title", null: false
-    t.string "subtitle", null: false
+    t.string "heading", null: false
+    t.string "subheading", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "graphcms_ref"
     t.string "name", null: false
-    t.string "chat_bubble_text"
-    t.string "chat_bubble_extra_text"
+    t.string "teaser_message"
+    t.string "extra_teaser_message"
     t.integer "lock_version", default: 1
     t.bigint "owner_id", null: false
     t.boolean "use_seller_animation", default: false, null: false
@@ -176,15 +176,26 @@ ActiveRecord::Schema.define(version: 20190806090204) do
     t.index ["simple_chat_id"], name: "index_simple_chat_sections_on_simple_chat_id"
   end
 
+  create_table "simple_chat_steps", force: :cascade do |t|
+    t.string "key", default: "default", null: false
+    t.integer "order"
+    t.bigint "simple_chat_id"
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_simple_chat_steps_on_account_id"
+    t.index ["simple_chat_id"], name: "index_simple_chat_steps_on_simple_chat_id"
+  end
+
   create_table "simple_chats", force: :cascade do |t|
     t.string "name", null: false
-    t.string "title", null: false
-    t.string "chat_bubble_text"
+    t.string "heading", null: false
+    t.string "teaser_message"
     t.bigint "seller_id"
     t.bigint "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "chat_bubble_extra_text"
+    t.string "extra_teaser_message"
     t.integer "lock_version", default: 1
     t.bigint "owner_id", null: false
     t.boolean "use_seller_animation", default: false, null: false

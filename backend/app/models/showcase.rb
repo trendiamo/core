@@ -11,13 +11,13 @@ class Showcase < ApplicationRecord
   accepts_nested_attributes_for :spotlights, allow_destroy: true
 
   validates :name, presence: true
-  validates :title, presence: true
-  validates :subtitle, presence: true
+  validates :heading, presence: true
+  validates :subheading, presence: true
 
   def as_json(_options = {})
     attributes
-      .slice("id", "title", "subtitle", "name", "chat_bubble_text", "chat_bubble_extra_text", "use_seller_animation",
-             "created_at", "updated_at", "lock_version")
+      .slice("id", "heading", "subheading", "name", "teaser_message", "extra_teaser_message",
+             "use_seller_animation", "created_at", "updated_at", "lock_version")
       .merge(seller: seller_attributes(seller),
              spotlights_attributes: spotlights_attributes(spotlights),
              type: "Showcase",
