@@ -2,13 +2,13 @@ Types::SimpleChatType = GraphQL::ObjectType.define do
   name "SimpleChat"
 
   field :id, !types.ID
-  field :title, types.String
+  field :heading, types.String
   field :name, types.String
-  field :chatBubbleText, types.String do
-    resolve ->(obj, _args, _ctx) { obj.chat_bubble_text }
+  field :teaserMessage, types.String do
+    resolve ->(obj, _args, _ctx) { obj.teaser_message }
   end
-  field :chatBubbleExtraText, types.String do
-    resolve ->(obj, _args, _ctx) { obj.chat_bubble_extra_text }
+  field :extraTeaserMessage, types.String do
+    resolve ->(obj, _args, _ctx) { obj.extra_teaser_message }
   end
   field :useSellerAnimation, !types.Boolean do
     resolve ->(obj, _args, _ctx) { obj.use_seller_animation }

@@ -7,13 +7,13 @@ class Outro < ApplicationRecord
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", inverse_of: "outros"
 
   validates :name, presence: true
-  validates :chat_bubble_text, presence: true
+  validates :teaser_message, presence: true
   validates :chat_bubble_button_no, presence: true
   validates :chat_bubble_button_yes, presence: true
 
   def as_json(_options = {})
     attributes
-      .slice("id", "name", "chat_bubble_text", "chat_bubble_button_no", "chat_bubble_button_yes",
+      .slice("id", "name", "teaser_message", "chat_bubble_button_no", "chat_bubble_button_yes",
              "use_seller_animation", "created_at", "updated_at", "lock_version")
       .merge(seller: seller_attributes(seller), type: "Outro", trigger_ids: triggers.ids)
   end

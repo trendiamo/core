@@ -65,7 +65,7 @@ module Api
       def outro_params
         params
           .require(:outro)
-          .permit(:seller_id, :name, :chat_bubble_text, :chat_bubble_button_no, :chat_bubble_button_yes, :lock_version,
+          .permit(:seller_id, :name, :teaser_message, :chat_bubble_button_no, :chat_bubble_button_yes, :lock_version,
                   :use_seller_animation)
       end
 

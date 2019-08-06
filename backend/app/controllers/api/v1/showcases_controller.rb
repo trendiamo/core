@@ -68,7 +68,7 @@ module Api
 
       def showcase_params
         result = params.require(:showcase).permit(
-          :name, :title, :subtitle, :chat_bubble_text, :chat_bubble_extra_text, :seller_id, :use_seller_animation,
+          :name, :heading, :subheading, :teaser_message, :extra_teaser_message, :seller_id, :use_seller_animation,
           :lock_version, spotlights_attributes: [
             :id, :seller_id, :use_seller_animation, :_destroy,
             product_picks_attributes: [
