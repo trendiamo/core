@@ -77,12 +77,25 @@ module Api
                              :group_with_adjacent, :_destroy, pic_rect: %i[x y width height],
                            ],
                          ])
+                 .reverse_merge(simple_chat_compat_params)
         add_order_fields(result)
+      end
+
+      def simple_chat_compat_params
+        extra = params
+                .require(:simple_chat)
+                .permit(simple_chat_steps_attributes: [
+                          :id, :key, :_destroy, :order, simple_chat_messages_attributes: [
+                            :id, :order, :type, :html, :title, :pic_id, :url, :display_price, :video_url,
+                            :group_with_adjacent, :_destroy, pic_rect: %i[x y width height],
+                          ],
+                        ])
+        { simple_chat_sections_attributes: extra[:simple_chat_steps_attributes] }
       end
 
       # add order fields to chat_section_attributes' messages and options, based on received order
       def add_order_fields(chat_attrs)
-        chat_sections_attrs = chat_attrs[:simple_chat_sections_attributes]
+        chat_sections_attrs = chat_attrs[:simple_chat_steps_attributes] || chat_attrs[:simple_chat_sections_attributes]
         return unless chat_sections_attrs
 
         chat_sections_attrs&.each_with_index do |chat_section_attrs, i|
@@ -96,8 +109,8 @@ module Api
         chat_attrs
       end
 
-      def convert_and_assign_pictures # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-        params[:simple_chat][:simple_chat_sections_attributes]&.each do |simple_chat_section_attributes|
+      def convert_and_assign_pictures # rubocop:disable Metrics/MethodLength
+        simple_chat_sections_compat_params&.each do |simple_chat_section_attributes|
           simple_chat_section_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
             pic_url = (simple_chat_message_attributes[:picture] && simple_chat_message_attributes[:picture][:url])
             unless pic_url.nil?
@@ -109,6 +122,11 @@ module Api
             end
           end
         end
+      end
+
+      def simple_chat_sections_compat_params
+        simple_chat_params = params.require(:simple_chat)
+        simple_chat_params[:simple_chat_steps_attributes] || simple_chat_params[:simple_chat_sections_attributes]
       end
 
       def render_picture_error
