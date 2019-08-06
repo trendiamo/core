@@ -1,10 +1,10 @@
 import React, { memo } from 'react'
-import SimpleChatStep from './simple-chat-step'
+import SimpleChatSection from './simple-chat-section'
 import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
-const SortableSimpleChatStep = SortableElement(SimpleChatStep)
+const SortableSimpleChatSection = SortableElement(SimpleChatSection)
 
-const SimpleChatSteps = ({
+const SimpleChatSections = ({
   allowDelete,
   isCropping,
   isUploaderLoading,
@@ -12,10 +12,10 @@ const SimpleChatSteps = ({
   onToggleContent,
   setIsCropping,
   setIsUploaderLoading,
-  simpleChatSteps,
+  simpleChatSections,
 }) => (
   <div>
-    <SimpleChatStep
+    <SimpleChatSection
       allowDelete={false}
       isCropping={isCropping}
       isUploaderLoading={isUploaderLoading}
@@ -23,29 +23,29 @@ const SimpleChatSteps = ({
       onToggleContent={onToggleContent}
       setIsCropping={setIsCropping}
       setIsUploaderLoading={setIsUploaderLoading}
-      simpleChatStep={simpleChatSteps[0]}
-      simpleChatStepIndex={0}
+      simpleChatSection={simpleChatSections[0]}
+      simpleChatSectionIndex={0}
     />
-    {simpleChatSteps
+    {simpleChatSections
       .slice(1)
-      .map((simpleChatStep, index) =>
-        simpleChatStep._destroy ? null : (
-          <SortableSimpleChatStep
+      .map((simpleChatSection, index) =>
+        simpleChatSection._destroy ? null : (
+          <SortableSimpleChatSection
             allowDelete={allowDelete}
             index={index + 1}
             isCropping={isCropping}
             isUploaderLoading={isUploaderLoading}
-            key={simpleChatStep.id || simpleChatStep.__key}
+            key={simpleChatSection.id || simpleChatSection.__key}
             onChange={onChange}
             onToggleContent={onToggleContent}
             setIsCropping={setIsCropping}
             setIsUploaderLoading={setIsUploaderLoading}
-            simpleChatStep={simpleChatStep}
-            simpleChatStepIndex={index + 1}
+            simpleChatSection={simpleChatSection}
+            simpleChatSectionIndex={index + 1}
           />
         )
       )}
   </div>
 )
 
-export default memo(SortableContainer(SimpleChatSteps))
+export default memo(SortableContainer(SimpleChatSections))

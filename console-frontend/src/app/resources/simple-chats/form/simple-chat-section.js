@@ -1,14 +1,13 @@
 import omit from 'lodash.omit'
 import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
-import SimpleChatMessage from './simple-chat-message'
+import SimpleChatMessagesContainer from './simple-chat-messages'
 import styled from 'styled-components'
 import { AddItemButton, Cancel, Field, FormSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
 import { MessageOutlined, OndemandVideo, PhotoLibrary, Redeem } from '@material-ui/icons'
-import { SortableContainer, SortableElement } from 'shared/sortable-elements'
 
 const StyledAddItemButton = styled(props => <AddItemButton {...omit(props, ['adjustMargin'])} />)`
   margin-bottom: -16px;
@@ -57,47 +56,9 @@ const StyledMenu = styled(Menu)`
   }
 `
 
-const SortableSimpleChatMessage = SortableElement(SimpleChatMessage)
-
-const SimpleChatMessages = ({
-  activeSimpleChatMessages,
+const SimpleChatSection = ({
   allowDelete,
-  isCropping,
-  isUploaderLoading,
-  onChange,
-  onFocus,
-  setIsCropping,
-  setIsUploaderLoading,
-  simpleChatStep,
-}) => (
-  <div>
-    {simpleChatStep.simpleChatMessagesAttributes.map((simpleChatMessage, index) =>
-      simpleChatMessage._destroy ? null : (
-        <SortableSimpleChatMessage
-          activeSimpleChatMessages={activeSimpleChatMessages}
-          allowDelete={allowDelete}
-          index={index}
-          isCropping={isCropping}
-          isUploaderLoading={isUploaderLoading}
-          key={simpleChatMessage.id || simpleChatMessage.__key}
-          onChange={onChange}
-          onFocus={onFocus}
-          setIsCropping={setIsCropping}
-          setIsUploaderLoading={setIsUploaderLoading}
-          simpleChatMessage={simpleChatMessage}
-          simpleChatMessageIndex={index}
-          simpleChatStep={simpleChatStep}
-        />
-      )
-    )}
-  </div>
-)
-
-const SimpleChatMessagesContainer = SortableContainer(SimpleChatMessages)
-
-const SimpleChatStep = ({
-  allowDelete,
-  collapseOtherSimpleChatSteps,
+  collapseOtherSimpleChatSections,
   folded,
   isCropping,
   isFormLoading,
@@ -106,8 +67,8 @@ const SimpleChatStep = ({
   onToggleContent,
   setIsCropping,
   setIsUploaderLoading,
-  simpleChatStep,
-  simpleChatStepIndex,
+  simpleChatSection,
+  simpleChatSectionIndex,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -115,24 +76,24 @@ const SimpleChatStep = ({
     setAnchorEl(null)
   }, [])
 
-  const deleteSimpleChatStep = useCallback(
-    () => onChange({ id: simpleChatStep.id, _destroy: true }, simpleChatStepIndex),
-    [onChange, simpleChatStep.id, simpleChatStepIndex]
+  const deleteSimpleChatSection = useCallback(
+    () => onChange({ id: simpleChatSection.id, _destroy: true }, simpleChatSectionIndex),
+    [onChange, simpleChatSection.id, simpleChatSectionIndex]
   )
 
-  const editSimpleChatStepValue = useCallback(
+  const editSimpleChatSectionValue = useCallback(
     event => {
-      const name = event.target.name.replace('simpleChatStep_', '')
-      onChange(Object.assign({ ...simpleChatStep }, { [name]: event.target.value }), simpleChatStepIndex)
+      const name = event.target.name.replace('simpleChatSection_', '')
+      onChange(Object.assign({ ...simpleChatSection }, { [name]: event.target.value }), simpleChatSectionIndex)
     },
-    [onChange, simpleChatStep, simpleChatStepIndex]
+    [onChange, simpleChatSection, simpleChatSectionIndex]
   )
 
   const activeSimpleChatMessages = useMemo(
     () =>
-      simpleChatStep.simpleChatMessagesAttributes &&
-      simpleChatStep.simpleChatMessagesAttributes.filter(simpleChatMessage => !simpleChatMessage._destroy),
-    [simpleChatStep.simpleChatMessagesAttributes]
+      simpleChatSection.simpleChatMessagesAttributes &&
+      simpleChatSection.simpleChatMessagesAttributes.filter(simpleChatMessage => !simpleChatMessage._destroy),
+    [simpleChatSection.simpleChatMessagesAttributes]
   )
 
   const onAddMessageClick = useCallback(event => {
@@ -141,15 +102,18 @@ const SimpleChatStep = ({
 
   const onSimpleChatMessagesSortEnd = useCallback(
     ({ oldIndex, newIndex }) => {
-      const orderedSimpleChatMessages = arrayMove(simpleChatStep.simpleChatMessagesAttributes, oldIndex, newIndex)
-      onChange({ ...simpleChatStep, simpleChatMessagesAttributes: orderedSimpleChatMessages }, simpleChatStepIndex)
+      const orderedSimpleChatMessages = arrayMove(simpleChatSection.simpleChatMessagesAttributes, oldIndex, newIndex)
+      onChange(
+        { ...simpleChatSection, simpleChatMessagesAttributes: orderedSimpleChatMessages },
+        simpleChatSectionIndex
+      )
     },
-    [onChange, simpleChatStep, simpleChatStepIndex]
+    [onChange, simpleChatSection, simpleChatSectionIndex]
   )
 
   const setSimpleChatMessagesForm = useCallback(
     (simpleChatMessage, simpleChatMessageIndex) => {
-      const newSimpleChatMessagesAttributes = [...simpleChatStep.simpleChatMessagesAttributes]
+      const newSimpleChatMessagesAttributes = [...simpleChatSection.simpleChatMessagesAttributes]
       if (simpleChatMessage.id || !simpleChatMessage._destroy) {
         newSimpleChatMessagesAttributes[simpleChatMessageIndex] = simpleChatMessage
       } else {
@@ -157,11 +121,11 @@ const SimpleChatStep = ({
       }
 
       onChange(
-        { ...simpleChatStep, simpleChatMessagesAttributes: newSimpleChatMessagesAttributes },
-        simpleChatStepIndex
+        { ...simpleChatSection, simpleChatMessagesAttributes: newSimpleChatMessagesAttributes },
+        simpleChatSectionIndex
       )
     },
-    [onChange, simpleChatStep, simpleChatStepIndex]
+    [onChange, simpleChatSection, simpleChatSectionIndex]
   )
 
   const addSimpleChatMessage = useCallback(
@@ -177,28 +141,28 @@ const SimpleChatStep = ({
           : { picture: { url: '' }, picRect: {}, groupWithAdjacent: false }
       onChange(
         {
-          ...simpleChatStep,
+          ...simpleChatSection,
           simpleChatMessagesAttributes: [
-            ...simpleChatStep.simpleChatMessagesAttributes,
+            ...simpleChatSection.simpleChatMessagesAttributes,
             {
               ...simpleChatMessageObject,
               type: messageType,
-              __key: `new-${simpleChatStep.simpleChatMessagesAttributes.length}`,
+              __key: `new-${simpleChatSection.simpleChatMessagesAttributes.length}`,
             },
           ],
         },
-        simpleChatStepIndex
+        simpleChatSectionIndex
       )
     },
-    [closeMenu, onChange, simpleChatStep, simpleChatStepIndex]
+    [closeMenu, onChange, simpleChatSection, simpleChatSectionIndex]
   )
 
-  const onFocus = useCallback(() => onToggleContent(true) && collapseOtherSimpleChatSteps, [
-    collapseOtherSimpleChatSteps,
+  const onFocus = useCallback(() => onToggleContent(true) && collapseOtherSimpleChatSections, [
+    collapseOtherSimpleChatSections,
     onToggleContent,
   ])
 
-  if (simpleChatStep._destroy) return null
+  if (simpleChatSection._destroy) return null
 
   return (
     <Section>
@@ -207,8 +171,8 @@ const SimpleChatStep = ({
           allowDelete && (
             <Cancel
               disabled={isCropping || isFormLoading || isUploaderLoading}
-              index={simpleChatStepIndex}
-              onClick={deleteSimpleChatStep}
+              index={simpleChatSectionIndex}
+              onClick={deleteSimpleChatSection}
             />
           )
         }
@@ -218,26 +182,30 @@ const SimpleChatStep = ({
         folded={folded}
         hideTop
         title={
-          simpleChatStepIndex === 0 ? 'Initial Step' : simpleChatStep.id ? `Step: ${simpleChatStep.key}` : 'New Option'
+          simpleChatSectionIndex === 0
+            ? 'Starting Section'
+            : simpleChatSection.id
+            ? `Section: ${simpleChatSection.key}`
+            : 'New Section'
         }
       >
         <>
-          {simpleChatStep.key !== 'default' && (
+          {simpleChatSection.key !== 'default' && (
             <Field
-              autoFocus={simpleChatStepIndex > 0 && !simpleChatStep.id}
+              autoFocus={simpleChatSectionIndex > 0 && !simpleChatSection.id}
               disabled={isCropping || isFormLoading || isUploaderLoading}
               fullWidth
               inputProps={atLeastOneNonBlankCharInputProps}
               label="Option"
               margin="normal"
-              name="simpleChatStep_key"
-              onChange={editSimpleChatStepValue}
+              name="simpleChatSection_key"
+              onChange={editSimpleChatSectionValue}
               onFocus={onFocus}
               required
-              value={simpleChatStep.key}
+              value={simpleChatSection.key}
             />
           )}
-          {simpleChatStep.simpleChatMessagesAttributes && (
+          {simpleChatSection.simpleChatMessagesAttributes && (
             <SimpleChatMessagesContainer
               activeSimpleChatMessages={activeSimpleChatMessages}
               allowDelete={activeSimpleChatMessages.length > 1}
@@ -250,14 +218,14 @@ const SimpleChatStep = ({
               onSortEnd={onSimpleChatMessagesSortEnd}
               setIsCropping={setIsCropping}
               setIsUploaderLoading={setIsUploaderLoading}
-              simpleChatStep={simpleChatStep}
+              simpleChatSection={simpleChatSection}
               useDragHandle
             />
           )}
           <StyledAddItemButton
             adjustMargin={
-              !simpleChatStep.simpleChatMessagesAttributes ||
-              simpleChatStep.simpleChatMessagesAttributes.every(message => message._destroy)
+              !simpleChatSection.simpleChatMessagesAttributes ||
+              simpleChatSection.simpleChatMessagesAttributes.every(message => message._destroy)
             }
             aria-haspopup="true"
             aria-owns={anchorEl ? 'new-message-menu' : undefined}
@@ -296,4 +264,4 @@ const SimpleChatStep = ({
   )
 }
 
-export default SimpleChatStep
+export default SimpleChatSection

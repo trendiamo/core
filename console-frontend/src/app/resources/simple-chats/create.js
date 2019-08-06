@@ -12,7 +12,7 @@ const loadFormObject = () => {
     useSellerAnimation: false,
     chatBubbleText: '',
     chatBubbleExtraText: '',
-    simpleChatStepsAttributes: [
+    simpleChatSectionsAttributes: [
       {
         key: 'default',
         simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', html: '', __key: 'new-0' }],

@@ -15,14 +15,14 @@ const previewConverter = {
       profilePicAnimation: { url: seller.profilePicAnimation ? seller.profilePicAnimation.url : '', picRect: {} },
     }
   },
-  mainData(title, useSellerAnimation, simpleChatSteps) {
-    const newData = { title, useSellerAnimation, simpleChatSteps }
-    newData.simpleChatSteps = newData.simpleChatSteps
-      .map(simpleChatStep => {
-        const messages = simpleChatStep.simpleChatMessagesAttributes
-        return { ...simpleChatStep, simpleChatMessages: messages && messages.filter(message => !message._destroy) }
+  mainData(title, useSellerAnimation, simpleChatSections) {
+    const newData = { title, useSellerAnimation, simpleChatSections }
+    newData.simpleChatSections = newData.simpleChatSections
+      .map(simpleChatSection => {
+        const messages = simpleChatSection.simpleChatMessagesAttributes
+        return { ...simpleChatSection, simpleChatMessages: messages && messages.filter(message => !message._destroy) }
       })
-      .filter(simpleChatStep => !simpleChatStep._destroy)
+      .filter(simpleChatSection => !simpleChatSection._destroy)
     return { simpleChat: newData }
   },
 }
@@ -39,10 +39,10 @@ const formObjectTransformer = json => {
     triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
     __seller: json.seller,
-    simpleChatStepsAttributes: json.simpleChatStepsAttributes
-      ? json.simpleChatStepsAttributes.map(simpleChatStep => ({
-          ...simpleChatStep,
-          __key: simpleChatStep.__key,
+    simpleChatSectionsAttributes: json.simpleChatSectionsAttributes
+      ? json.simpleChatSectionsAttributes.map(simpleChatSection => ({
+          ...simpleChatSection,
+          __key: simpleChatSection.__key,
         }))
       : [
           {

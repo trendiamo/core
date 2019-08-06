@@ -33,7 +33,7 @@ const Plugin = ({
     () => ({
       ...data.sizeGuide,
       launcher: pluginState === 'closed' ? data.sizeGuide.closedLauncher : data.sizeGuide.launcher,
-      simpleChat: { simpleChatSteps: data.sizeGuide.steps[productType] },
+      simpleChat: { simpleChatSections: data.sizeGuide.steps[productType] },
     }),
     [pluginState, productType]
   )

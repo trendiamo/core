@@ -86,11 +86,11 @@ const ChatBase = ({
         compiledData = {
           ...data,
           simpleChat: {
-            simpleChatSteps: [
+            simpleChatSections: [
               {
                 key: 'default',
                 simpleChatMessages: [
-                  ...data.simpleChat.simpleChatSteps[0].simpleChatMessages,
+                  ...data.simpleChat.simpleChatSections[0].simpleChatMessages,
                   { type: 'assessmentProducts', assessmentProducts },
                 ],
               },

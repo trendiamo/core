@@ -100,7 +100,7 @@ const Plugin = ({
 
     const finalForm = {}
     const formMessages = []
-    module.simpleChat.simpleChatSteps.forEach(step =>
+    module.simpleChat.simpleChatSections.forEach(step =>
       step.simpleChatMessages.forEach(
         message =>
           message.type === 'assessmentForm' && message.assessmentForm.forEach(field => formMessages.push(field))
@@ -108,7 +108,7 @@ const Plugin = ({
     )
     formMessages.map(item => (finalForm[item.name] = { value: '', required: item.required }))
     setAssessmentForm(finalForm)
-  }, [module.flowType, module.simpleChat.simpleChatSteps, setShowingContent])
+  }, [module.flowType, module.simpleChat.simpleChatSections, setShowingContent])
 
   const onToggleContent = useCallback(() => {
     if (isMessageSent) return
