@@ -1,13 +1,13 @@
 class SimpleChat < ApplicationRecord
   acts_as_tenant
   belongs_to :seller
-  has_many :simple_chat_steps, dependent: :destroy
+  has_many :simple_chat_sections, dependent: :destroy
   has_many :triggers, as: :flow, dependent: :destroy, inverse_of: :flow
 
   validates :owner_id, presence: true
   belongs_to :owner, class_name: "User", foreign_key: "owner_id", inverse_of: "simple_chats"
 
-  accepts_nested_attributes_for :simple_chat_steps, allow_destroy: true
+  accepts_nested_attributes_for :simple_chat_sections, allow_destroy: true
 
   validates :name, presence: true
 
@@ -32,7 +32,9 @@ class SimpleChat < ApplicationRecord
       type: "SimpleChat",
       trigger_ids: triggers.ids,
     }
-    result[:simple_chat_steps_attributes] = simple_chat_steps.order(:order).map(&:as_json) if simple_chat_steps.any?
+    if simple_chat_sections.any?
+      result[:simple_chat_sections_attributes] = simple_chat_sections.order(:order).map(&:as_json)
+    end
     result
   end
 

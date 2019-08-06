@@ -136,7 +136,7 @@ class DuplicateFlows
 
   def simple_chats
     SimpleChat.where(account: @account).map do |simple_chat|
-      simple_chat.deep_clone(include: { simple_chat_steps: :simple_chat_messages })
+      simple_chat.deep_clone(include: { simple_chat_sections: :simple_chat_messages })
     end
   end
 

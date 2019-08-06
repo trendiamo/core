@@ -1,5 +1,5 @@
-Types::SimpleChatStepType = GraphQL::ObjectType.define do
-  name "SimpleChatStep"
+Types::SimpleChatSectionType = GraphQL::ObjectType.define do
+  name "SimpleChatSection"
 
   field :id, !types.ID
   field :key, !types.String
