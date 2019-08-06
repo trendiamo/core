@@ -18,6 +18,7 @@ const setSimpleChatMessageTitle = simpleChatMessage => {
     case 'SimpleChatVideoMessage':
       return simpleChatMessage.id ? `Video: ${simpleChatMessage.videoUrl}` : 'New video'
     case 'SimpleChatPictureMessage':
+    case 'SimpleChatImageMessage':
       return simpleChatMessage.id ? `Picture: ${simpleChatMessage.picture.url.split('/').pop()}` : 'New picture'
     default:
       return 'New message'
@@ -88,6 +89,7 @@ const MessageField = ({
         />
       )
     case 'SimpleChatPictureMessage':
+    case 'SimpleChatImageMessage':
       return (
         <PictureMessageField
           isCropping={isCropping}

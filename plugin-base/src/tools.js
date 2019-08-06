@@ -132,7 +132,9 @@ const getGroupedLogs = logs => {
     const nextLog = logs[index + 1]
     if (
       log.type === 'message' &&
-      (log.message.type === 'SimpleChatProductMessage' || log.message.type === 'SimpleChatPictureMessage') &&
+      (log.message.type === 'SimpleChatProductMessage' ||
+        log.message.type === 'SimpleChatPictureMessage' ||
+        log.message.type === 'SimpleChatImageMessage') &&
       log.message.groupWithAdjacent &&
       nextLog &&
       nextLog.type === 'message' &&
@@ -146,7 +148,10 @@ const getGroupedLogs = logs => {
       const prevLog = logs[index - 1]
       if (prevLog.type === 'message' && prevLog.message.groupWithAdjacent && temporaryGroup.length > 0) {
         temporaryGroup.push(log.message)
-        const messageType = prevLog.message.type === 'SimpleChatPictureMessage' ? 'imageCarousel' : 'productCarousel'
+        const messageType =
+          prevLog.message.type === 'SimpleChatPictureMessage' || prevLog.message.type === 'SimpleChatImageMessage'
+            ? 'imageCarousel'
+            : 'productCarousel'
         const message = { type: messageType, [messageType]: temporaryGroup }
         finalArray.push({ ...log, message })
         temporaryGroup = []
