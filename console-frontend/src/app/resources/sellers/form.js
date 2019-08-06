@@ -13,7 +13,7 @@ const formObjectTransformer = json => {
   return {
     id: json.id,
     name: json.name || '',
-    description: json.description || '',
+    bio: json.bio || '',
     profilePic: { url: json.profilePic.url || '' },
     picRect: json.picRect || {},
     profilePicAnimation: { url: json.profilePicAnimation.url || '' },

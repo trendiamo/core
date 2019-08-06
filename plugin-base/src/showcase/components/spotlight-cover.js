@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import SellerInstagram from 'shared/seller-instagram'
 import styled from 'styled-components'
 import { BackButton } from 'shared'
-import { CoverImg, CoverInner, PaddedCover, SellerDescription } from 'shared/cover/components'
+import { CoverImg, CoverInner, PaddedCover, SellerBio } from 'shared/cover/components'
 import { sellerPicUrl } from 'tools'
 import { ThemeContext, transition, useTextTyping } from 'ext'
 
@@ -27,7 +27,7 @@ const SpotlightCover = ({ backButtonLabel, isLeaving, routeToShowcase, spotlight
 
   const spotlight = useMemo(() => spotlights.find(e => e.id == spotlightId), [spotlightId, spotlights])
 
-  const currentDescription = useTextTyping(spotlight ? spotlight.seller.description : '', 500)
+  const currentBio = useTextTyping(spotlight ? spotlight.seller.bio : '', 500)
 
   const theme = useContext(ThemeContext)
 
@@ -43,7 +43,7 @@ const SpotlightCover = ({ backButtonLabel, isLeaving, routeToShowcase, spotlight
             {spotlight.seller.name}
           </SellerName>
           <SellerInstagram url={spotlight.seller.instagramUrl} />
-          <SellerDescription text={spotlight.seller.description} theme={theme} typingText={currentDescription} />
+          <SellerBio text={spotlight.seller.bio} theme={theme} typingText={currentBio} />
         </PaddedCover>
       </FlexDiv>
     </CoverInner>

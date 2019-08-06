@@ -13,7 +13,7 @@ import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 const assessmentSpotlight = {
   seller: {
     name: 'Style Assistent',
-    description: 'In wenigen Schritten finden was zu dir passt!',
+    bio: 'In wenigen Schritten finden was zu dir passt!',
   },
 }
 
@@ -22,7 +22,7 @@ const convertSpotlights = (emojify, spotlights, onSpotlightClick) => {
     ...spotlight,
     seller: {
       ...spotlight.seller,
-      description: emojify(spotlight.seller.description),
+      bio: emojify(spotlight.seller.bio),
     },
     productPicks: spotlight.productPicks.map(productPick => ({
       ...productPick,
@@ -157,7 +157,7 @@ const ShowcaseGraphql = ({ id, ...props }) => {
             seller {
               id
               name
-              description
+              bio
               profilePic {
                 url
               }

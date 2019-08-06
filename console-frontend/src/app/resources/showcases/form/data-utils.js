@@ -2,7 +2,7 @@ const defaults = {
   avatarPic: '/img/icons/placeholder_avatar.png',
   productPic: '/img/icons/placeholder_product.png',
   spotlightName: 'Seller Name',
-  spotlightDescription: 'Seller Description',
+  spotlightBio: 'Seller Bio',
   productName: 'Product Name',
   productDescription: 'Product Description',
   productPrice: '',
@@ -24,7 +24,7 @@ const previewConverter = {
         const profilePic = spotlight.__seller && (spotlight.__seller.profilePic || spotlight.__seller.profilePicUrl)
         const picRect = spotlight.__seller && spotlight.__seller.picRect
         const sellerName = spotlight.__seller && spotlight.__seller.name
-        const sellerDescription = spotlight.__seller && spotlight.__seller.description
+        const sellerBio = spotlight.__seller && spotlight.__seller.bio
         if (spotlight._destroy) return null
         return {
           ...spotlight,
@@ -33,7 +33,7 @@ const previewConverter = {
           seller: {
             ...spotlight.__seller,
             name: sellerName || defaults.spotlightName,
-            description: sellerDescription || defaults.spotlightDescription,
+            bio: sellerBio || defaults.spotlightBio,
             profilePic: { url: (profilePic && profilePic.url) || defaults.avatarPic, picRect },
             profilePicUrl: profilePic || defaults.avatarPic,
           },

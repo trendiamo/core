@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack'
 const loadFormObject = () => {
   return {
     name: '',
-    description: '',
+    bio: '',
     profilePic: { url: '' },
     profilePicAnimation: { url: '' },
     instagramUrl: '',

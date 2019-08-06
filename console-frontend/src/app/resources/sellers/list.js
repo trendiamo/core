@@ -10,7 +10,7 @@ const columns = [
   { name: 'id', label: 'id', sortable: true },
   { name: 'avatar' },
   { name: 'name', label: 'name', sortable: true },
-  { name: 'description', label: 'description' },
+  { name: 'bio', label: 'bio' },
 ]
 
 const BlankState = () => (
@@ -33,7 +33,7 @@ const SellersRow = ({ record }) => (
       />
     </TableCell>
     <TableCell width="30%">{record.name}</TableCell>
-    <TableCell width="70%">{record.description}</TableCell>
+    <TableCell width="70%">{record.bio}</TableCell>
   </>
 )
 

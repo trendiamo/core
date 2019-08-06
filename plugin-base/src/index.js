@@ -10,7 +10,7 @@ import Showcase from 'showcase'
 import SimpleChat from 'simple-chat'
 import SimpleChatCover from 'simple-chat/components/cover'
 import { BackButton, Cover, Frame, SellerInstagram, TopSlideAnimation, useAnimateOnMount } from 'shared'
-import { BelowCover, CoverImg, PaddedCover, SellerDescription } from 'shared/cover/components'
+import { BelowCover, CoverImg, PaddedCover, SellerBio } from 'shared/cover/components'
 import {
   convertLogs,
   extractYoutubeId,
@@ -42,7 +42,7 @@ export {
   matchUrl,
   BackButton,
   PaddedCover,
-  SellerDescription,
+  SellerBio,
   TopSlideAnimation,
   Showcase,
   history,

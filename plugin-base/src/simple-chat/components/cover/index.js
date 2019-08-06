@@ -2,7 +2,7 @@ import defaultHeaderConfig from './header-config'
 import React, { useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import { BackButton, Cover as CoverBase, SellerInstagram } from 'shared'
-import { CoverImg, PaddedCover, SellerDescription } from 'shared/cover/components'
+import { CoverImg, PaddedCover, SellerBio } from 'shared/cover/components'
 import { sellerPicUrl } from 'tools'
 import { ThemeContext, useTextTyping } from 'ext'
 
@@ -16,7 +16,7 @@ const FlexDiv = styled.div`
 `
 
 const Cover = ({ backButtonConfig, backButtonLabel, FlowBackButton, headerConfig, seller, showBackButton, step }) => {
-  const currentDescription = useTextTyping(seller.description, 300)
+  const currentBio = useTextTyping(seller.bio, 300)
 
   const newHeaderConfig = useMemo(() => ({ ...defaultHeaderConfig, ...headerConfig }), [headerConfig])
 
@@ -35,7 +35,7 @@ const Cover = ({ backButtonConfig, backButtonLabel, FlowBackButton, headerConfig
         <PaddedCover>
           <SellerName theme={theme}>{seller.name}</SellerName>
           <SellerInstagram url={seller.instagramUrl} />
-          <SellerDescription text={seller.description} typingText={currentDescription} />
+          <SellerBio text={seller.bio} typingText={currentBio} />
         </PaddedCover>
       </FlexDiv>
     </CoverBase>

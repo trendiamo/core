@@ -19,7 +19,7 @@ const SellerName = styled.div`
   }
 `
 
-const SellerDescription = styled.div`
+const SellerBio = styled.div`
   font-size: 14px;
   .Win32 & {
     letter-spacing: -0.1px;
@@ -60,7 +60,7 @@ const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, with
       )}
       <ListContent withoutPicture={withoutPicture}>
         <SellerName ref={nameRef}>{spotlight.seller.name}</SellerName>
-        <SellerDescription dangerouslySetInnerHTML={{ __html: spotlight.seller.description }} />
+        <SellerBio dangerouslySetInnerHTML={{ __html: spotlight.seller.bio }} />
       </ListContent>
       <ListChevron />
     </ListItem>
