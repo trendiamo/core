@@ -24,9 +24,9 @@ const chatOptions = {
     this.list = this.callbacks.processChatOptions(this.list)
   },
   getFromData(data) {
-    return data.simpleChat.simpleChatSteps.map((chatStep, index) => ({
+    return data.simpleChat.simpleChatSections.map((chatSection, index) => ({
       index,
-      text: chatStep.key,
+      text: chatSection.key,
       type: 'option',
     }))
   },
@@ -54,8 +54,8 @@ const logs = {
     this.afterFetch(option)
   },
   detectOptionChanges({ data }) {
-    const dataSteps = data.simpleChat.simpleChatSteps
-    const sourceDataSteps = this.data.simpleChat.simpleChatSteps
+    const dataSteps = data.simpleChat.simpleChatSections
+    const sourceDataSteps = this.data.simpleChat.simpleChatSections
     const changes = []
     dataSteps.forEach((dataStep, index) => {
       if (sourceDataSteps[index] && sourceDataSteps[index].key !== dataStep.key) {
@@ -74,8 +74,8 @@ const logs = {
     })
   },
   checkForNewMessages({ data }) {
-    this.data.simpleChat.simpleChatSteps.forEach((item, index) => {
-      const sourceDataItem = data.simpleChat.simpleChatSteps[index]
+    this.data.simpleChat.simpleChatSections.forEach((item, index) => {
+      const sourceDataItem = data.simpleChat.simpleChatSections[index]
       if (item.simpleChatMessages === undefined && sourceDataItem.simpleChatMessages) {
         const foundOption = chatOptions.get().find(option => option.index === index)
         if (foundOption) return
@@ -88,7 +88,7 @@ const logs = {
     // We replace all messages in each message section in order to show all changes in real-time in admin preview
     return logSections.map(logSection => {
       if (logSection.type === 'message') {
-        const sourceData = data.simpleChat.simpleChatSteps.find((item, index) => {
+        const sourceData = data.simpleChat.simpleChatSections.find((item, index) => {
           return index === (logSection.relatedOption.index || 0)
         })
         if (!sourceData) return logSection
@@ -102,7 +102,7 @@ const logs = {
     })
   },
   update({ data, setChatDataChanged, callbacks }) {
-    if (data.simpleChat.simpleChatSteps.length !== this.data.simpleChat.simpleChatSteps.length) {
+    if (data.simpleChat.simpleChatSections.length !== this.data.simpleChat.simpleChatSections.length) {
       setChatDataChanged(true)
       this.init({ data, callbacks })
       return true
@@ -127,7 +127,7 @@ const logs = {
     return
   },
   findMessages(option) {
-    return this.data.simpleChat.simpleChatSteps.find(e => e.key === option.text).simpleChatMessages
+    return this.data.simpleChat.simpleChatSections.find(e => e.key === option.text).simpleChatMessages
   },
   add(data) {
     this.list = [...this.list, ...data, ...chatOptions.get()]

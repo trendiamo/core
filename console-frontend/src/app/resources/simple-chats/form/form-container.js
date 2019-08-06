@@ -1,12 +1,12 @@
 import MainForm from './main-form'
 import omit from 'lodash.omit'
 import React, { useMemo } from 'react'
-import SimpleChatSteps from './simple-chat-steps'
+import SimpleChatSections from './simple-chat-sections'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Actions, AddItemContainer, Form } from 'shared/form-elements'
 
 const FormContainer = ({
-  addSimpleChatStep,
+  addSimpleChatSection,
   backRoute,
   form,
   formRef,
@@ -22,7 +22,7 @@ const FormContainer = ({
   setFieldValue,
   setIsCropping,
   setIsUploaderLoading,
-  setSimpleChatStepsForm,
+  setSimpleChatSectionsForm,
   title,
 }) => {
   const appBarContent = useMemo(
@@ -44,7 +44,7 @@ const FormContainer = ({
   )
   useAppBarContent(appBarContent)
 
-  const mainForm = useMemo(() => omit(form, ['simpleChatStepsAttributes']), [form])
+  const mainForm = useMemo(() => omit(form, ['simpleChatSectionsAttributes']), [form])
 
   return (
     <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
@@ -58,21 +58,21 @@ const FormContainer = ({
         setFieldValue={setFieldValue}
         title={title}
       />
-      <SimpleChatSteps
-        allowDelete={form.simpleChatStepsAttributes.length > 1}
+      <SimpleChatSections
+        allowDelete={form.simpleChatSectionsAttributes.length > 1}
         helperClass="sortable-element"
         isCropping={isCropping}
         isFormLoading={isFormLoading}
         isUploaderLoading={isUploaderLoading}
-        onChange={setSimpleChatStepsForm}
+        onChange={setSimpleChatSectionsForm}
         onSortEnd={onSortEnd}
         onToggleContent={onToggleContent}
         setIsCropping={setIsCropping}
         setIsUploaderLoading={setIsUploaderLoading}
-        simpleChatSteps={form.simpleChatStepsAttributes}
+        simpleChatSections={form.simpleChatSectionsAttributes}
         useDragHandle
       />
-      <AddItemContainer disabled={isCropping || isFormLoading} message="Add Option" onClick={addSimpleChatStep} />
+      <AddItemContainer disabled={isCropping || isFormLoading} message="Add Section" onClick={addSimpleChatSection} />
     </Form>
   )
 }

@@ -12,10 +12,10 @@ import { useEffect, useMemo, useState } from 'preact/hooks'
 
 const emojifySimpleChat = (emojify, simpleChat) => ({
   ...simpleChat,
-  simpleChatSteps: simpleChat.simpleChatSteps.map(simpleChatStep => ({
-    ...simpleChatStep,
-    key: simpleChatStep.key === 'default' ? simpleChatStep.key : emojify(simpleChatStep.key),
-    simpleChatMessages: simpleChatStep.simpleChatMessages.map(simpleChatMessage => ({
+  simpleChatSections: simpleChat.simpleChatSections.map(simpleChatSection => ({
+    ...simpleChatSection,
+    key: simpleChatSection.key === 'default' ? simpleChatSection.key : emojify(simpleChatSection.key),
+    simpleChatMessages: simpleChatSection.simpleChatMessages.map(simpleChatMessage => ({
       ...simpleChatMessage,
       html:
         simpleChatMessage.type === 'SimpleChatTextMessage' ? emojify(simpleChatMessage.html) : simpleChatMessage.html,
@@ -58,7 +58,7 @@ const SimpleChat = ({
           title
           name
           useSellerAnimation
-          simpleChatSteps {
+          simpleChatSections {
             id
             key
             simpleChatMessages {

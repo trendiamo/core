@@ -219,15 +219,16 @@ const TextMessageFields = ({
   onFocus,
   simpleChatMessage,
   simpleChatMessageIndex,
-  simpleChatStep,
+  simpleChatSection,
 }) => {
   const textEditorRef = useRef(null)
   const [isHTMLMode, setIsHTMLMode] = useState(false)
   const [value, setValue] = useState(simpleChatMessage.html)
 
   const toolbarId = useMemo(
-    () => `toolbar-${simpleChatStep.id || simpleChatStep.__key}-${simpleChatMessage.id || simpleChatMessage.__key}`,
-    [simpleChatMessage, simpleChatStep]
+    () =>
+      `toolbar-${simpleChatSection.id || simpleChatSection.__key}-${simpleChatMessage.id || simpleChatMessage.__key}`,
+    [simpleChatMessage, simpleChatSection]
   )
 
   const textEditorModules = useMemo(() => ({ toolbar: `#${toolbarId}`, ...textEditorConfig.modules }), [toolbarId])

@@ -30,7 +30,7 @@ const data = {
       root: {
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -84,7 +84,7 @@ const data = {
       Architekt: {
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -127,7 +127,7 @@ const data = {
       Objekteur: {
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -170,7 +170,7 @@ const data = {
       Raumaustatter: {
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -205,7 +205,7 @@ const data = {
       Händler: {
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -248,7 +248,7 @@ const data = {
       Einkaufsgesellschaft: {
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -283,7 +283,7 @@ const data = {
       Betreiber: {
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -327,7 +327,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -379,7 +379,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -427,7 +427,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -475,7 +475,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -523,7 +523,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -567,7 +567,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -619,7 +619,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -667,7 +667,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -719,7 +719,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -767,7 +767,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -811,7 +811,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -863,7 +863,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -911,7 +911,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -955,7 +955,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1007,7 +1007,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1055,7 +1055,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1107,7 +1107,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1155,7 +1155,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1199,7 +1199,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1251,7 +1251,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1299,7 +1299,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1343,7 +1343,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1395,7 +1395,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1443,7 +1443,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1487,7 +1487,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1531,7 +1531,7 @@ const data = {
         multiple: true,
         header,
         simpleChat: {
-          simpleChatSteps: [
+          simpleChatSections: [
             {
               key: 'default',
               simpleChatMessages: [
@@ -1635,7 +1635,7 @@ const data = {
       colorDisabled: '#555',
     },
     simpleChat: {
-      simpleChatSteps: [
+      simpleChatSections: [
         {
           key: 'default',
           simpleChatMessages: [

@@ -36,7 +36,7 @@ const MessageField = ({
   setIsUploaderLoading,
   simpleChatMessage,
   simpleChatMessageIndex,
-  simpleChatStep,
+  simpleChatSection,
 }) => {
   const autoFocus = useMemo(() => simpleChatMessageIndex > 0 && !simpleChatMessage.id, [
     simpleChatMessage.id,
@@ -54,7 +54,7 @@ const MessageField = ({
           onFocus={onFocus}
           simpleChatMessage={simpleChatMessage}
           simpleChatMessageIndex={simpleChatMessageIndex}
-          simpleChatStep={simpleChatStep}
+          simpleChatSection={simpleChatSection}
         />
       )
     case 'SimpleChatProductMessage':
@@ -119,7 +119,7 @@ const SimpleChatMessage = ({
   setIsUploaderLoading,
   simpleChatMessage,
   simpleChatMessageIndex,
-  simpleChatStep,
+  simpleChatSection,
 }) => {
   const onSimpleChatMessageEdit = useCallback(
     simpleChatMessage => {
@@ -204,7 +204,7 @@ const SimpleChatMessage = ({
         setIsUploaderLoading={setIsUploaderLoading}
         simpleChatMessage={simpleChatMessage}
         simpleChatMessageIndex={simpleChatMessageIndex}
-        simpleChatStep={simpleChatStep}
+        simpleChatSection={simpleChatSection}
       />
     </FormSection>
   )

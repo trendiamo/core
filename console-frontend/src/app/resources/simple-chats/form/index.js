@@ -54,16 +54,16 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     [history, location.pathname, onFormSubmit]
   )
 
-  const addSimpleChatStep = useCallback(
+  const addSimpleChatSection = useCallback(
     () => {
       mergeFormCallback(form => {
         return {
           ...form,
-          simpleChatStepsAttributes: [
-            ...form.simpleChatStepsAttributes,
+          simpleChatSectionsAttributes: [
+            ...form.simpleChatSectionsAttributes,
             {
               key: '',
-              __key: `new-${form.simpleChatStepsAttributes.length}`,
+              __key: `new-${form.simpleChatSectionsAttributes.length}`,
               simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', html: '', __key: 'new-0' }],
             },
           ],
@@ -73,16 +73,16 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     [mergeFormCallback]
   )
 
-  const setSimpleChatStepsForm = useCallback(
-    (simpleChatStep, simpleChatStepIndex) => {
+  const setSimpleChatSectionsForm = useCallback(
+    (simpleChatSection, simpleChatSectionIndex) => {
       mergeFormCallback(form => {
-        const newsimpleChatStepsAttributes = [...form.simpleChatStepsAttributes]
-        if (simpleChatStep.id || !simpleChatStep._destroy) {
-          newsimpleChatStepsAttributes[simpleChatStepIndex] = simpleChatStep
+        const newsimpleChatSectionsAttributes = [...form.simpleChatSectionsAttributes]
+        if (simpleChatSection.id || !simpleChatSection._destroy) {
+          newsimpleChatSectionsAttributes[simpleChatSectionIndex] = simpleChatSection
         } else {
-          newsimpleChatStepsAttributes.splice(simpleChatStepIndex, 1)
+          newsimpleChatSectionsAttributes.splice(simpleChatSectionIndex, 1)
         }
-        return { ...form, simpleChatStepsAttributes: newsimpleChatStepsAttributes }
+        return { ...form, simpleChatSectionsAttributes: newsimpleChatSectionsAttributes }
       })
     },
     [mergeFormCallback]
@@ -91,8 +91,8 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
   const onSortEnd = useCallback(
     ({ oldIndex, newIndex }) => {
       mergeFormCallback(form => {
-        const orderedSimpleChatSteps = arrayMove(form.simpleChatStepsAttributes, oldIndex, newIndex)
-        return { ...form, simpleChatStepsAttributes: orderedSimpleChatSteps }
+        const orderedSimpleChatSections = arrayMove(form.simpleChatSectionsAttributes, oldIndex, newIndex)
+        return { ...form, simpleChatSectionsAttributes: orderedSimpleChatSections }
       })
     },
     [mergeFormCallback]
@@ -146,7 +146,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
       <Grid container spacing={24}>
         <Grid item md={6} xs={12}>
           <FormContainer
-            addSimpleChatStep={addSimpleChatStep}
+            addSimpleChatSection={addSimpleChatSection}
             backRoute={backRoute}
             form={form}
             formRef={formRef}
@@ -162,7 +162,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
             setFieldValue={setFieldValue}
             setIsCropping={setIsCropping}
             setIsUploaderLoading={setIsUploaderLoading}
-            setSimpleChatStepsForm={setSimpleChatStepsForm}
+            setSimpleChatSectionsForm={setSimpleChatSectionsForm}
             title={title}
           />
         </Grid>
