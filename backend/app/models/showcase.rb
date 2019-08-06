@@ -44,7 +44,7 @@ class Showcase < ApplicationRecord
     {
       id: spotlight.seller.id,
       name: spotlight.seller.name,
-      description: spotlight.seller.description,
+      bio: spotlight.seller.bio,
       instagram_url: spotlight.seller.instagram_url,
       profile_pic: { url: spotlight.seller.profile_pic.url },
       profile_pic_animation: { url: spotlight.seller.profile_pic_animation&.url },
