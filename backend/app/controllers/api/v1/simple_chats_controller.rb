@@ -96,7 +96,7 @@ module Api
         chat_attrs
       end
 
-      def convert_and_assign_pictures # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      def convert_and_assign_pictures
         params[:simple_chat][:simple_chat_sections_attributes]&.each do |simple_chat_section_attributes|
           simple_chat_section_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
             pic_url = (simple_chat_message_attributes[:picture] && simple_chat_message_attributes[:picture][:url])
@@ -104,7 +104,6 @@ module Api
               return if pic_url.empty?
 
               simple_chat_message_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
-              simple_chat_message_attributes.delete(:picture)
               simple_chat_message_attributes.delete(:pic_url)
             end
           end
