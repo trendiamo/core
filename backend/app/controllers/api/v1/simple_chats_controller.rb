@@ -1,6 +1,6 @@
 module Api
   module V1
-    class SimpleChatsController < RestAdminController
+    class SimpleChatsController < RestAdminController # rubocop:disable Metrics/ClassLength
       before_action :ensure_tenant
 
       def index
