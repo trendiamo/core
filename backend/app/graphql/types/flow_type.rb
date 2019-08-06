@@ -2,9 +2,19 @@ Types::FlowType = GraphQL::ObjectType.define do
   name "Flow"
 
   field :id, !types.ID
+  field :chatBubbleText, types.String do
+    resolve ->(obj, _args, _ctx) {
+      obj.teaser_message
+    }
+  end
   field :teaserMessage, types.String do
     resolve ->(obj, _args, _ctx) {
       obj.teaser_message
+    }
+  end
+  field :chatBubbleExtraText, types.String do
+    resolve ->(obj, _args, _ctx) {
+      obj.extra_teaser_message if obj.class.name.camelize(:lower) != "outro"
     }
   end
   field :extraTeaserMessage, types.String do

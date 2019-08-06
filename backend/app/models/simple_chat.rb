@@ -31,6 +31,7 @@ class SimpleChat < ApplicationRecord
       seller: seller_attributes,
       type: "SimpleChat",
       trigger_ids: triggers.ids,
+      title: heading, chat_bubble_text: teaser_message, chat_bubble_extra_text: extra_teaser_message,
     }
     if simple_chat_sections.any?
       result[:simple_chat_sections_attributes] = simple_chat_sections.order(:order).map(&:as_json)
