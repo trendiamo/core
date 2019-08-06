@@ -263,7 +263,7 @@ class Populate # rubocop:disable Metrics/ClassLength
     Array.new(6) do |i|
       seller_attrs = {
         name: Faker::RickAndMorty.character,
-        description: Faker::RickAndMorty.quote,
+        bio: Faker::RickAndMorty.quote,
         profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg",
                                                 file_format: "jpeg"),
         profile_pic_animation: [Picture.find_or_create_by!(url: "https://random-d.uk/api/#{i % 99 + 1}.gif",

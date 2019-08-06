@@ -11,7 +11,7 @@ class Seller < ApplicationRecord
   belongs_to :profile_pic_animation, class_name: "Picture", optional: true, touch: true
 
   validates :name, presence: true
-  validates :description, presence: true
+  validates :bio, presence: true
   validate :animation_in_use_cannot_be_removed
 
   def modules
@@ -20,8 +20,8 @@ class Seller < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "name", "description", "account_id", "graphcms_ref", "instagram_url", "pic_rect",
-             "created_at", "updated_at", "lock_version")
+      .slice("id", "name", "bio", "account_id", "graphcms_ref", "instagram_url", "pic_rect", "created_at", "updated_at",
+             "lock_version")
       .merge(profile_pic: { url: profile_pic.url }, profile_pic_animation: { url: profile_pic_animation&.url })
   end
 
