@@ -22,15 +22,15 @@ const PluginPreview = ({
       <ShowcaseBase
         backButtonLabel="Back"
         callbacks={previewCallbacks}
+        heading={previewConverter.heading(form.heading)}
         history={pluginHistory}
         routeToShowcase={routeToShowcase}
         routeToSpotlight={routeToSpotlight}
         spotlights={previewConverter.spotlights(form.spotlightsAttributes)}
-        subtitle={previewConverter.subtitle(form.subtitle)}
-        title={previewConverter.title(form.title)}
+        subheading={previewConverter.subheading(form.subheading)}
       />
     ),
-    [form.spotlightsAttributes, form.subtitle, form.title, previewCallbacks, routeToShowcase, routeToSpotlight]
+    [form.spotlightsAttributes, form.subheading, form.heading, previewCallbacks, routeToShowcase, routeToSpotlight]
   )
 
   const Launcher = useMemo(
@@ -65,13 +65,13 @@ const PluginPreview = ({
   return (
     <BasePluginPreview
       Base={Base}
-      bubbleExtraText={form.chatBubbleExtraText}
-      bubbleText={form.chatBubbleText}
+      extraTeaserMessage={form.extraTeaserMessage}
       Launcher={Launcher}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
       pluginTheme={pluginTheme}
       showingContent={showingContent}
+      teaserMessage={form.teaserMessage}
     />
   )
 }

@@ -55,7 +55,7 @@ const SimpleChat = ({
       query($id: ID!) {
         simpleChat(id: $id) {
           id
-          title
+          heading
           name
           useSellerAnimation
           simpleChatSections {

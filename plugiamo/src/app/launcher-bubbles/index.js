@@ -10,8 +10,8 @@ const convertData = (emojify, data, step) => {
   const newData = JSON.parse(JSON.stringify(data))
   const oldFlow = newData.flow || newData.launcher
   const flow = {
-    chatBubbleText: step >= 1 ? emojify(oldFlow.chatBubbleText) : null,
-    chatBubbleExtraText: step >= 2 ? emojify(oldFlow.chatBubbleExtraText) : null,
+    teaserMessage: step >= 1 ? emojify(oldFlow.teaserMessage) : null,
+    extraTeaserMessage: step >= 2 ? emojify(oldFlow.extraTeaserMessage) : null,
     chatBubbleButtonNo: step >= 2 ? emojify(oldFlow.chatBubbleButtonNo) : null,
     chatBubbleButtonYes: step >= 2 ? emojify(oldFlow.chatBubbleButtonYes) : null,
     timeEnd: oldFlow.chatBubbleButtonNo || oldFlow.chatBubbleButtonYes ? null : TIME_END,

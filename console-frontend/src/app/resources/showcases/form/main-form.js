@@ -98,52 +98,52 @@ const MainForm = ({
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
-        label="Title"
+        label="Heading"
         margin="normal"
-        max={characterLimits.main.title}
-        name="title"
+        max={characterLimits.main.heding}
+        name="heading"
         onChange={setFieldValue}
         onFocus={onBackClick}
         required
-        value={form.title}
+        value={form.heading}
       />
-      <FormHelperText>{'The title is shown in the cover.'}</FormHelperText>
+      <FormHelperText>{'The heading is shown in the cover.'}</FormHelperText>
       <Field
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
-        label="Subtitle"
+        label="Subheading"
         margin="normal"
-        max={characterLimits.main.subtitle}
-        name="subtitle"
+        max={characterLimits.main.subheading}
+        name="subheading"
         onChange={setFieldValue}
         onFocus={onBackClick}
         required
-        value={form.subtitle}
+        value={form.subheading}
       />
-      <FormHelperText>{'The subtitle is shown in the cover, below the title.'}</FormHelperText>
+      <FormHelperText>{'The subheading is shown in the cover, below the heading.'}</FormHelperText>
       <Field
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
-        label="Chat Bubble Text"
+        label="Teaser Message"
         margin="normal"
         max={characterLimits.main.chatBubble}
-        name="chatBubbleText"
+        name="teaserMessage"
         onChange={setFieldValue}
         onFocus={onFocus}
-        value={form.chatBubbleText}
+        value={form.teaserMessage}
       />
       <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       <Field
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
-        label="Extra Chat Bubble Text"
+        label="Extra Teaser Message"
         margin="normal"
         max={characterLimits.main.chatBubble}
-        name="chatBubbleExtraText"
+        name="extraTeaserMessage"
         onChange={setFieldValue}
         onFocus={onFocus}
-        value={form.chatBubbleExtraText}
+        value={form.extraTeaserMessage}
       />
       <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
     </Section>

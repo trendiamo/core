@@ -8,8 +8,8 @@ const getBubbles = data => {
   const source = data.flow || data.launcher
 
   return {
-    bubble: source.chatBubbleText,
-    bubbleExtra: source.chatBubbleExtraText,
+    bubble: source.teaserMessage,
+    bubbleExtra: source.extraTeaserMessage,
     bubbleButtons:
       source.chatBubbleButtonYes && source.chatBubbleButtonNo
         ? { buttonYes: source.chatBubbleButtonYes, buttonNo: source.chatBubbleButtonNo }

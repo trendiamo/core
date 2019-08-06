@@ -1,8 +1,8 @@
 import ProductItem from './product-item'
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
+import { Heading } from 'shared'
 import { List } from 'shared/list'
-import { Title } from 'shared'
 import { TopSlideAnimation } from 'shared'
 
 const Container = styled.div`
@@ -18,7 +18,7 @@ const SpotlightContent = ({ isLeaving, spotlightId, spotlights, callbacks }) => 
 
   return (
     <Container>
-      <Title
+      <Heading
         dangerouslySetInnerHTML={{
           __html: spotlight.translation.selectedBy,
         }}

@@ -77,13 +77,13 @@ const HeaderContainer = styled.div`
 const Header = ({ minimized, header, config }) => (
   <HeaderContainer>
     <NameMinimized header={header} minimized={minimized}>
-      {header.title || header.productTitle}
+      {header.heading || header.productTitle}
     </NameMinimized>
-    <Name header={header} minimized={minimized} style={config && config.titleStyle}>
-      {header.title || header.productTitle}
+    <Name header={header} minimized={minimized} style={config && config.headingStyle}>
+      {header.heading || header.productTitle}
     </Name>
-    <NameHelper header={header} minimized={minimized} style={config && config.titleStyle}>
-      {header.title || header.productTitle}
+    <NameHelper header={header} minimized={minimized} style={config && config.headingStyle}>
+      {header.heading || header.productTitle}
     </NameHelper>
   </HeaderContainer>
 )
@@ -91,14 +91,14 @@ const Header = ({ minimized, header, config }) => (
 const Subheader = ({ header, minimized }) => (
   <SubheaderContainer header={header} minimized={minimized}>
     {header.sellerInstagramHandle && 'presented by '}
-    <b>{header.sellerInstagramHandle || header.subtitle}</b>
+    <b>{header.sellerInstagramHandle || header.heading}</b>
   </SubheaderContainer>
 )
 
 const Content = ({ minimized, header, config, clickActions }) => (
   <TextContainer header={header} minimized={minimized} style={config && config.contentContainerStyle}>
     <Header config={config} header={header} minimized={minimized} />
-    {(header.sellerInstagramHandle || header.subtitle) && <Subheader header={header} minimized={minimized} />}
+    {(header.sellerInstagramHandle || header.heading) && <Subheader header={header} minimized={minimized} />}
     {header.video && <VideoButton clickActions={clickActions} video={header.video} />}
   </TextContainer>
 )

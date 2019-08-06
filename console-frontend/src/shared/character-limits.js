@@ -1,7 +1,7 @@
 export default {
   main: {
-    title: 20,
-    subtitle: 80,
+    heading: 20,
+    subheading: 80,
     chatBubble: 25,
     chatBubbleButton: 16,
   },

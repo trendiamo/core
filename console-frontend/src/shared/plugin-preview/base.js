@@ -29,8 +29,8 @@ const BasePluginPreview = ({
   Launcher,
   launcherConfig,
   onToggleContent,
-  bubbleText,
-  bubbleExtraText,
+  teaserMessage,
+  extraTeaserMessage,
   bubbleButtons,
   position = 'right',
   pluginTheme,
@@ -56,11 +56,11 @@ const BasePluginPreview = ({
           {!showingContent && (
             <LauncherBubbles
               bubbleButtons={bubbleButtons}
-              bubbleExtraText={bubbleExtraText}
-              bubbleText={bubbleText}
+              extraTeaserMessage={extraTeaserMessage}
               launcherConfig={compiledLauncherConfig}
               onToggleContent={onToggleContent}
               position={position}
+              teaserMessage={teaserMessage}
             />
           )}
           {React.cloneElement(Launcher, { launcherConfig: compiledLauncherConfig })}

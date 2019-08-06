@@ -10,8 +10,8 @@ const loadFormObject = () => {
     title: '',
     sellerId: '',
     useSellerAnimation: false,
-    chatBubbleText: '',
-    chatBubbleExtraText: '',
+    teaserMessage: '',
+    extraTeaserMessage: '',
     simpleChatSectionsAttributes: [
       {
         key: 'default',

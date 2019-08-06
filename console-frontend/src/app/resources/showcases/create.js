@@ -9,10 +9,10 @@ const loadFormObject = () => {
     name: '',
     sellerId: '',
     useSellerAnimation: false,
-    title: '',
-    subtitle: '',
-    chatBubbleText: '',
-    chatBubbleExtraText: '',
+    heading: '',
+    subheading: '',
+    teaserMessage: '',
+    extraTeaserMessage: '',
     spotlightsAttributes: [
       {
         sellerId: '',

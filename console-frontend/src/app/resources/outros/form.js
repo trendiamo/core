@@ -20,7 +20,7 @@ const formObjectTransformer = json => {
     sellerId: (json.seller && json.seller.id) || '',
     useSellerAnimation: json.useSellerAnimation || false,
     name: json.name || '',
-    chatBubbleText: json.chatBubbleText || '',
+    teaserMessage: json.teaserMessage || '',
     chatBubbleButtonYes: json.chatBubbleButtonYes || '',
     chatBubbleButtonNo: json.chatBubbleButtonNo || '',
     triggerIds: json.triggerIds || [],
@@ -116,13 +116,13 @@ const BaseOutroForm = ({
           disabled={isFormLoading}
           fullWidth
           inputProps={atLeastOneNonBlankCharInputProps}
-          label="Chat Bubble Text"
+          label="Teaser Message"
           margin="normal"
           max={characterLimits.main.chatBubble}
-          name="chatBubbleText"
+          name="teaserMessage"
           onChange={setFieldValue}
           required
-          value={form.chatBubbleText}
+          value={form.teaserMessage}
         />
         <FormHelperText>{'Question on whether users are satisfied with the help they got.'}</FormHelperText>
         <Field

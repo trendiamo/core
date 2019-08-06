@@ -32,13 +32,13 @@ const PluginPreview = ({ form }) => {
       <ShowcaseBase
         backButtonLabel="Back"
         callbacks={previewCallbacks}
+        heading="Heading here"
         history={pluginHistory}
         routeToShowcase={routeToShowcase}
         routeToSpotlight={routeToSpotlight}
         spotlights={spotlights}
-        subtitle="Subtitle here"
+        subheading="Subheading here"
         theme={form}
-        title="Title here"
       />
     ),
     [form]

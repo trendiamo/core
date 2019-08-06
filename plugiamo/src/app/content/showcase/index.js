@@ -47,8 +47,8 @@ const convertSpotlights = (emojify, spotlights, onSpotlightClick) => {
 
 const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
   const [spotlights, setSpotlights] = useState([])
-  const [subtitle, setSubtitle] = useState('')
-  const [title, setTitle] = useState('')
+  const [subheading, setSubheading] = useState('')
+  const [heading, setHeading] = useState('')
 
   const routeToShowcase = useCallback(() => {
     const newRoute = routes.showcase(showcase.id)
@@ -109,9 +109,9 @@ const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
   useEffect(() => {
     if (!emojify) return
     setSpotlights(convertSpotlights(emojify, showcase.spotlights, onSpotlightClick))
-    setSubtitle(emojify(showcase.subtitle))
-    setTitle(emojify(showcase.title))
-  }, [emojify, onSpotlightClick, showcase.spotlights, showcase.subtitle, showcase.title])
+    setSubheading(emojify(showcase.subheading))
+    setHeading(emojify(showcase.heading))
+  }, [emojify, onSpotlightClick, showcase.spotlights, showcase.subheading, showcase.heading])
 
   const callbacks = useMemo(
     () => ({
@@ -129,12 +129,12 @@ const Showcase = ({ setShowAssessmentContent, showcase, ...props }) => {
       backButtonLabel={getFrekklsConfig().i18n.backButton}
       callbacks={callbacks}
       FlowBackButton={FlowBackButton}
+      heading={heading}
       history={history}
       routeToShowcase={routeToShowcase}
       showcase={showcase}
       spotlights={spotlights}
-      subtitle={subtitle}
-      title={title}
+      subheading={subheading}
     />
   )
 }
@@ -147,8 +147,8 @@ const ShowcaseGraphql = ({ id, ...props }) => {
       query($id: ID!) {
         showcase(id: $id) {
           id
-          title
-          subtitle
+          heading
+          subheading
           useSellerAnimation
           spotlights {
             id

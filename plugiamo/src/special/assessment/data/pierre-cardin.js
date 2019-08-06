@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 const header = {
-  title: 'Nico de Roy',
-  subtitle: 'Designer @ Pierre Cardin',
+  heading: 'Nico de Roy',
+  subheading: 'Designer @ Pierre Cardin',
   imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy_small.jpg',
   animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
   backgroundColor: '#fff',
@@ -570,7 +570,7 @@ const data = {
     flowType: 'asmt-cart',
     header,
     launcher: {
-      chatBubbleText: 'Lust auf weitere Ergänzungen?',
+      teaserMessage: 'Lust auf weitere Ergänzungen?',
       seller: {
         name: 'Nico de Roy',
         profilePic: {
@@ -598,8 +598,8 @@ const data = {
     flowType: 'asmt-size-guide',
     header,
     launcher: {
-      chatBubbleText: 'Brauchst du Hilfe bei der Größenwahl?',
-      chatBubbleExtraText: '',
+      teaserMessage: 'Brauchst du Hilfe bei der Größenwahl?',
+      extraTeaserMessage: '',
       seller: {
         name: 'Nico de Roy',
         profilePic: {
@@ -608,8 +608,8 @@ const data = {
       },
     },
     closedLauncher: {
-      chatBubbleText: 'Wir sehen uns an der Kasse! 🙂',
-      chatBubbleExtraText: '',
+      teaserMessage: 'Wir sehen uns an der Kasse! 🙂',
+      extraTeaserMessage: '',
       seller: {
         name: 'Nico de Roy',
         profilePic: {

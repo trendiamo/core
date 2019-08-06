@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 const header = {
-  title: 'Ihr DELIUS Assistent',
-  subtitle: 'In 3 Schritten zum richtigen Produkt',
+  heading: 'Ihr DELIUS Assistent',
+  subheading: 'In 3 Schritten zum richtigen Produkt',
   imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
   animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
   backgroundColor: '#fff',
@@ -16,8 +16,8 @@ const data = {
   assessment: {
     flowType: 'ht-assessment-v2',
     launcher: {
-      chatBubbleText: 'Hallo! 👋 Willkommen bei DELIUS.',
-      chatBubbleExtraText: 'Wie kann ich Ihnen helfen?',
+      teaserMessage: 'Hallo! 👋 Willkommen bei DELIUS.',
+      extraTeaserMessage: 'Wie kann ich Ihnen helfen?',
       seller: {
         name: 'Elisa',
         profilePic: {
@@ -1594,8 +1594,8 @@ const data = {
   assessmentForm: {
     flowType: 'ht-assessment-form',
     header: {
-      title: 'Sprechen Sie mit uns',
-      subtitle: '',
+      heading: 'Sprechen Sie mit uns',
+      subheading: '',
       minimized: true,
       imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
       animationUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
@@ -1607,8 +1607,8 @@ const data = {
       },
     },
     launcher: {
-      chatBubbleText: 'Sprechen Sie mit einem Experten.',
-      chatBubbleExtraText: '',
+      teaserMessage: 'Sprechen Sie mit einem Experten.',
+      extraTeaserMessage: '',
       seller: {
         name: 'Elisa',
         profilePic: {
@@ -1618,8 +1618,8 @@ const data = {
       },
     },
     closedLauncher: {
-      chatBubbleText: 'Vielen Dank!',
-      chatBubbleExtraText: 'Wir melden uns schnellstmöglich.',
+      teaserMessage: 'Vielen Dank!',
+      extraTeaserMessage: 'Wir melden uns schnellstmöglich.',
       seller: {
         name: 'Elisa',
         profilePic: {
