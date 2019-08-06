@@ -1,6 +1,6 @@
 module Api
   module V1
-    class ShowcasesController < RestAdminController # rubocop:disable Metrics/ClassLength
+    class ShowcasesController < RestAdminController
       before_action :ensure_tenant
 
       def index
@@ -75,17 +75,8 @@ module Api
               :id, :url, :name, :description, :display_price, :pic_id, :_destroy, pic_rect: %i[x y width height],
             ],
           ]
-        ).reverse_merge(showcase_compat_params)
+        )
         add_order_fields(result)
-      end
-
-      def showcase_compat_params
-        {
-          heading: params.require(:showcase)[:title],
-          subheading: params.require(:showcase)[:subtitle],
-          teaser_message: params.require(:showcase)[:chat_bubble_text],
-          extra_teaser_message: params.require(:showcase)[:chat_bubble_extra_text],
-        }
       end
 
       def convert_and_assign_pictures
