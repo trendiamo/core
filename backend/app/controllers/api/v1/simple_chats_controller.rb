@@ -77,25 +77,26 @@ module Api
                              :group_with_adjacent, :_destroy, pic_rect: %i[x y width height],
                            ],
                          ])
-        add_order_fields(result[:simple_chat_steps_attributes])
+        add_order_fields(result)
       end
 
       # add order fields to chat_step_attributes' messages and options, based on received order
-      def add_order_fields(simple_chat_steps_attributes)
-        return unless simple_chat_steps_attributes
+      def add_order_fields(chat_attrs)
+        chat_steps_attrs = chat_attrs[:simple_chat_steps_attributes]
+        return unless chat_steps_attrs
 
-        simple_chat_steps_attributes&.each_with_index do |chat_step_attributes, i|
-          chat_step_attributes[:order] = i + 1
-          next unless chat_step_attributes[:simple_chat_messages_attributes]
+        chat_steps_attrs&.each_with_index do |chat_step_attrs, i|
+          chat_step_attrs[:order] = i + 1
+          next unless chat_step_attrs[:simple_chat_messages_attributes]
 
-          chat_step_attributes[:simple_chat_messages_attributes]&.each_with_index do |chat_message_attributes, l|
-            chat_message_attributes[:order] = l + 1
+          chat_step_attrs[:simple_chat_messages_attributes]&.each_with_index do |chat_message_attrs, l|
+            chat_message_attrs[:order] = l + 1
           end
         end
-        simple_chat_steps_attributes
+        chat_attrs
       end
 
-      def convert_and_assign_pictures
+      def convert_and_assign_pictures # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         params[:simple_chat][:simple_chat_steps_attributes]&.each do |simple_chat_step_attributes|
           simple_chat_step_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
             pic_url = (simple_chat_message_attributes[:picture] && simple_chat_message_attributes[:picture][:url])
@@ -103,6 +104,7 @@ module Api
               return if pic_url.empty?
 
               simple_chat_message_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
+              simple_chat_message_attributes.delete(:picture)
               simple_chat_message_attributes.delete(:pic_url)
             end
           end

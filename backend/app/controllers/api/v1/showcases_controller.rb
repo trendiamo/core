@@ -92,16 +92,16 @@ module Api
       end
 
       # add order fields to showcase_attributes' spotlights and product_picks, based on received order
-      def add_order_fields(showcase_attributes)
-        return unless showcase_attributes
+      def add_order_fields(showcase_attrs)
+        return unless showcase_attrs
 
-        showcase_attributes[:spotlights_attributes]&.each_with_index do |spotlight_attributes, i|
-          spotlight_attributes[:order] = i + 1
-          spotlight_attributes[:product_picks_attributes]&.each_with_index do |product_pick_attributes, j|
-            product_pick_attributes[:order] = j + 1
+        showcase_attrs[:spotlights_attributes]&.each_with_index do |spotlight_attrs, i|
+          spotlight_attrs[:order] = i + 1
+          spotlight_attrs[:product_picks_attributes]&.each_with_index do |product_pick_attrs, j|
+            product_pick_attrs[:order] = j + 1
           end
         end
-        showcase_attributes
+        showcase_attrs
       end
 
       def render_picture_error
