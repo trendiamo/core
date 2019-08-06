@@ -196,7 +196,7 @@ const SimpleChatSection = ({
               disabled={isCropping || isFormLoading || isUploaderLoading}
               fullWidth
               inputProps={atLeastOneNonBlankCharInputProps}
-              label="Option"
+              label="Button Text"
               margin="normal"
               name="simpleChatSection_key"
               onChange={editSimpleChatSectionValue}
@@ -230,7 +230,7 @@ const SimpleChatSection = ({
             aria-haspopup="true"
             aria-owns={anchorEl ? 'new-message-menu' : undefined}
             disabled={isFormLoading || isUploaderLoading}
-            message="Add Message"
+            message="Add Item"
             onClick={onAddMessageClick}
           />
           <StyledMenu
@@ -243,7 +243,7 @@ const SimpleChatSection = ({
           >
             <MenuItem onClick={addSimpleChatMessage} value="SimpleChatTextMessage">
               <MessageIcon />
-              {'Text'}
+              {'Message'}
             </MenuItem>
             <MenuItem onClick={addSimpleChatMessage} value="SimpleChatProductMessage">
               <ProductIcon />
