@@ -70,7 +70,7 @@ const ChatMessage = ({
           }
         : type === 'SimpleChatVideoMessage'
         ? { id: extractYoutubeId(log.message.videoUrl) }
-        : type === 'SimpleChatPictureMessage'
+        : type === 'SimpleChatPictureMessage' || type === 'SimpleChatImageMessage'
         ? {
             picture: log.message.picture,
             picRect: log.message.picRect,
@@ -135,7 +135,7 @@ const ChatMessage = ({
         <VideoMessage onClick={onClick} videoMessage={data} />
       ) : type === 'SimpleChatProductMessage' ? (
         <ProductMessage onClick={onClick} productMessage={data} />
-      ) : type === 'SimpleChatPictureMessage' ? (
+      ) : type === 'SimpleChatPictureMessage' || type === 'SimpleChatImageMessage' ? (
         <PictureMessage onClick={onClick} pictureMessage={data} />
       ) : type === 'productCarousel' ? (
         <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
