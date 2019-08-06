@@ -71,24 +71,24 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
         title: "Hello there",
         chat_bubble_text: Faker::Movie.quote,
         chat_bubble_extra_text: Faker::Movie.quote,
-        simple_chat_steps_attributes: chat_steps_attributes,
+        simple_chat_sections_attributes: chat_sections_attributes,
         owner: User.where(admin: false).sample,
       }
       SimpleChat.create!(simple_chat_attrs)
     end
   end
 
-  def chat_steps_attributes
+  def chat_sections_attributes
     result = [
       {
         simple_chat_messages_attributes: update_order(simple_chat_messages_attributes),
       },
     ]
-    3.times { result.push(simple_chat_step) }
+    3.times { result.push(simple_chat_section) }
     result
   end
 
-  def simple_chat_step
+  def simple_chat_section
     {
       key: Faker::Lorem.sentence,
       simple_chat_messages_attributes: update_order(simple_chat_messages_attributes),

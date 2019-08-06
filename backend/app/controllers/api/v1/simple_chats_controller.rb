@@ -54,7 +54,7 @@ module Api
       def duplicate
         @simple_chat = policy_scope(SimpleChat).find(params[:id])
         authorize @simple_chat
-        @cloned_simple_chat = @simple_chat.deep_clone(include: { simple_chat_steps: :simple_chat_messages })
+        @cloned_simple_chat = @simple_chat.deep_clone(include: { simple_chat_sections: :simple_chat_messages })
         @cloned_simple_chat.owner = current_user
         @cloned_simple_chat.name = "Copied from - " + @cloned_simple_chat.name
         if @cloned_simple_chat.save
@@ -71,7 +71,7 @@ module Api
                  .require(:simple_chat)
                  .permit(:id, :name, :title, :chat_bubble_text, :chat_bubble_extra_text, :seller_id,
                          :use_seller_animation, :_destroy, :lock_version,
-                         simple_chat_steps_attributes: [
+                         simple_chat_sections_attributes: [
                            :id, :key, :_destroy, :order, simple_chat_messages_attributes: [
                              :id, :order, :type, :html, :title, :pic_id, :url, :display_price, :video_url,
                              :group_with_adjacent, :_destroy, pic_rect: %i[x y width height],
@@ -80,16 +80,16 @@ module Api
         add_order_fields(result)
       end
 
-      # add order fields to chat_step_attributes' messages and options, based on received order
+      # add order fields to chat_section_attributes' messages and options, based on received order
       def add_order_fields(chat_attrs)
-        chat_steps_attrs = chat_attrs[:simple_chat_steps_attributes]
-        return unless chat_steps_attrs
+        chat_sections_attrs = chat_attrs[:simple_chat_sections_attributes]
+        return unless chat_sections_attrs
 
-        chat_steps_attrs&.each_with_index do |chat_step_attrs, i|
-          chat_step_attrs[:order] = i + 1
-          next unless chat_step_attrs[:simple_chat_messages_attributes]
+        chat_sections_attrs&.each_with_index do |chat_section_attrs, i|
+          chat_section_attrs[:order] = i + 1
+          next unless chat_section_attrs[:simple_chat_messages_attributes]
 
-          chat_step_attrs[:simple_chat_messages_attributes]&.each_with_index do |chat_message_attrs, l|
+          chat_section_attrs[:simple_chat_messages_attributes]&.each_with_index do |chat_message_attrs, l|
             chat_message_attrs[:order] = l + 1
           end
         end
@@ -97,8 +97,8 @@ module Api
       end
 
       def convert_and_assign_pictures # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-        params[:simple_chat][:simple_chat_steps_attributes]&.each do |simple_chat_step_attributes|
-          simple_chat_step_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
+        params[:simple_chat][:simple_chat_sections_attributes]&.each do |simple_chat_section_attributes|
+          simple_chat_section_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
             pic_url = (simple_chat_message_attributes[:picture] && simple_chat_message_attributes[:picture][:url])
             unless pic_url.nil?
               return if pic_url.empty?
