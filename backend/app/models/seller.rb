@@ -23,7 +23,6 @@ class Seller < ApplicationRecord
       .slice("id", "name", "bio", "account_id", "graphcms_ref", "instagram_url", "pic_rect", "created_at", "updated_at",
              "lock_version")
       .merge(profile_pic: { url: profile_pic.url }, profile_pic_animation: { url: profile_pic_animation&.url })
-      .merge(description: bio)
   end
 
   def animation_in_use_cannot_be_removed
