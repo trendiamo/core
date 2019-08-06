@@ -77,7 +77,16 @@ module Api
                              :group_with_adjacent, :_destroy, pic_rect: %i[x y width height],
                            ],
                          ])
+                 .reverse_merge(simple_chat_compat_params)
         add_order_fields(result)
+      end
+
+      def simple_chat_compat_params
+        {
+          heading: params.require(:simple_chat)[:title],
+          teaser_message: params.require(:simple_chat)[:chat_bubble_text],
+          extra_teaser_message: params.require(:simple_chat)[:chat_bubble_extra_text],
+        }
       end
 
       # add order fields to chat_section_attributes' messages and options, based on received order

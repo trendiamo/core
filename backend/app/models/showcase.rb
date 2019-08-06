@@ -20,6 +20,8 @@ class Showcase < ApplicationRecord
              "use_seller_animation", "created_at", "updated_at", "lock_version")
       .merge(seller: seller_attributes(seller),
              spotlights_attributes: spotlights_attributes(spotlights),
+             title: heading, subtitle: subheading,
+             chat_bubble_text: teaser_message, chat_bubble_extra_text: extra_teaser_message,
              type: "Showcase",
              trigger_ids: triggers.ids)
   end
