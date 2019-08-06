@@ -95,37 +95,37 @@ const MainForm = ({
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
-        label="Title"
+        label="Heading"
         margin="normal"
-        max={characterLimits.main.title}
-        name="title"
+        max={characterLimits.main.heading}
+        name="heading"
         onChange={setFieldValue}
         onFocus={onTitleFocus}
-        value={form.title}
+        value={form.heading}
       />
-      <FormHelperText>{'The title will appear at the top of the chat.'}</FormHelperText>
+      <FormHelperText>{'The heading will appear at the top of the chat.'}</FormHelperText>
       <Field
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
-        label="Chat Bubble"
+        label="Teaser Message"
         margin="normal"
-        max={characterLimits.main.chatBubbleText}
-        name="chatBubbleText"
+        max={characterLimits.main.teaserMessage}
+        name="teaserMessage"
         onChange={setFieldValue}
         onFocus={onFocus}
-        value={form.chatBubbleText}
+        value={form.teaserMessage}
       />
       <FormHelperText>{'Shows as a text bubble next to the plugin launcher.'}</FormHelperText>
       <Field
         disabled={isCropping || isFormLoading || isUploaderLoading}
         fullWidth
-        label="Extra Chat Bubble Text"
+        label="Extra Teaser Message"
         margin="normal"
         max={characterLimits.main.chatBubble}
-        name="chatBubbleExtraText"
+        name="extraTeaserMessage"
         onChange={setFieldValue}
         onFocus={onFocus}
-        value={form.chatBubbleExtraText}
+        value={form.extraTeaserMessage}
       />
       <FormHelperText>{'Additional text bubble. Pops up after the first one.'}</FormHelperText>
     </Section>

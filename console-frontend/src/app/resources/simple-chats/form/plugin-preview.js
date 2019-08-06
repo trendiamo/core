@@ -13,12 +13,12 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
     () => (
       <SimpleChat
         backButtonLabel="Back"
-        data={previewConverter.mainData(form.title, form.useSellerAnimation, form.simpleChatSectionsAttributes)}
+        data={previewConverter.mainData(form.heading, form.useSellerAnimation, form.simpleChatSectionsAttributes)}
         seller={previewConverter.seller(form.__seller)}
         showBackButton={false}
       />
     ),
-    [form.__seller, form.simpleChatSectionsAttributes, form.title, form.useSellerAnimation]
+    [form.__seller, form.simpleChatSectionsAttributes, form.heading, form.useSellerAnimation]
   )
 
   const Launcher = useMemo(
@@ -53,13 +53,13 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
   return (
     <BasePluginPreview
       Base={Base}
-      bubbleExtraText={form.chatBubbleExtraText}
-      bubbleText={form.chatBubbleText}
+      extraTeaserMessage={form.extraTeaserMessage}
       Launcher={Launcher}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
       pluginTheme={pluginTheme}
       showingContent={showingContent}
+      teaserMessage={form.teaserMessage}
     />
   )
 }

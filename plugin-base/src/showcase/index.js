@@ -28,14 +28,14 @@ export const Showcase = ({
   routeToShowcase,
   isTransitioning,
   spotlights,
-  subtitle,
-  title,
+  subheading,
+  heading,
   callbacks,
 }) => (
   <ColFlexDiv>
     <Cover>
       <Router history={history} onChange={onRouteChange}>
-        <ShowcaseCover FlowBackButton={FlowBackButton} path="/showcase/:id" subtitle={subtitle} title={title} />
+        <ShowcaseCover FlowBackButton={FlowBackButton} heading={heading} path="/showcase/:id" subheading={subheading} />
         <SpotlightCover
           backButtonLabel={backButtonLabel}
           path="/showcase/:showcaseId/spotlight/:spotlightId"

@@ -33,8 +33,8 @@ const AppGraphql = () => {
         flow(pathname: $pathname, pluginPath: $pluginPath) {
           id
           flowType
-          chatBubbleText
-          chatBubbleExtraText
+          teaserMessage
+          extraTeaserMessage
           chatBubbleButtonYes
           chatBubbleButtonNo
           useSellerAnimation

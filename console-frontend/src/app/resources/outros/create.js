@@ -9,7 +9,7 @@ const loadFormObject = () => {
     sellerId: '',
     useSellerAnimation: false,
     name: '',
-    chatBubbleText: '',
+    teaserMessage: '',
     chatBubbleButtonYes: '',
     chatBubbleButtonNo: '',
   }

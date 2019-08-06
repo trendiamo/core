@@ -39,10 +39,10 @@ const PluginPreview = ({ form }) => {
   return (
     <BasePluginPreview
       bubbleButtons={bubbleButtons}
-      bubbleText={form.chatBubbleText}
       Launcher={Launcher}
       launcherConfig={launcherConfig}
       pluginTheme={pluginTheme}
+      teaserMessage={form.teaserMessage}
     />
   )
 }

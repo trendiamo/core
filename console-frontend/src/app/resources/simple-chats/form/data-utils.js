@@ -3,7 +3,7 @@ const defaults = {
     name: 'Seller Name',
     description: 'Seller Description',
   },
-  title: 'Title',
+  heading: 'Heading',
 }
 
 const previewConverter = {
@@ -15,8 +15,8 @@ const previewConverter = {
       profilePicAnimation: { url: seller.profilePicAnimation ? seller.profilePicAnimation.url : '', picRect: {} },
     }
   },
-  mainData(title, useSellerAnimation, simpleChatSections) {
-    const newData = { title, useSellerAnimation, simpleChatSections }
+  mainData(heading, useSellerAnimation, simpleChatSections) {
+    const newData = { heading, useSellerAnimation, simpleChatSections }
     newData.simpleChatSections = newData.simpleChatSections
       .map(simpleChatSection => {
         const messages = simpleChatSection.simpleChatMessagesAttributes
@@ -31,9 +31,9 @@ const formObjectTransformer = json => {
   return {
     id: json.id,
     name: json.name || '',
-    title: json.title || '',
-    chatBubbleText: json.chatBubbleText || '',
-    chatBubbleExtraText: json.chatBubbleExtraText || '',
+    heading: json.heading || '',
+    teaserMessage: json.teaserMessage || '',
+    extraTeaserMessage: json.extraTeaserMessage || '',
     sellerId: (json.seller && json.seller.id) || '',
     useSellerAnimation: json.useSellerAnimation || false,
     triggerIds: json.triggerIds || [],

@@ -4,7 +4,7 @@ import { h } from 'preact'
 
 const headerConfig = {
   heights: { min: 200, max: 200 },
-  titleStyle: {
+  headingStyle: {
     fontSize: '32px',
     maxWidth: '320px',
     maxHeight: '100px',

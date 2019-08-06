@@ -6,16 +6,16 @@ const defaults = {
   productName: 'Product Name',
   productDescription: 'Product Description',
   productPrice: '',
-  title: 'Title',
-  subtitle: 'Subtitle',
+  heading: 'Heading',
+  subheading: 'Subheading',
 }
 
 const previewConverter = {
-  title(title) {
-    return title || defaults.title
+  heading(heading) {
+    return heading || defaults.heading
   },
-  subtitle(subtitle) {
-    return subtitle || defaults.subtitle
+  subheading(subheading) {
+    return subheading || defaults.subheading
   },
   spotlights(spotlights) {
     return spotlights
@@ -66,10 +66,10 @@ const formObjectTransformer = json => {
     id: json.id,
     name: json.name || '',
     sellerId: (json.seller && json.seller.id) || '',
-    title: json.title || '',
-    subtitle: json.subtitle || '',
-    chatBubbleText: json.chatBubbleText || '',
-    chatBubbleExtraText: json.chatBubbleExtraText || '',
+    heading: json.heading || '',
+    subheading: json.subheading || '',
+    teaserMessage: json.teaserMessage || '',
+    extraTeaserMessage: json.extraTeaserMessage || '',
     triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
     __seller: json.seller,

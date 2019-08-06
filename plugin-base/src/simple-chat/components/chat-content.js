@@ -3,7 +3,7 @@ import ChatLogSection from './chat-log-section'
 import isEqual from 'lodash.isequal'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { convertLogs } from 'tools'
-import { Title } from 'shared'
+import { Heading } from 'shared'
 
 const ChatContent = ({
   chatLogCallbacks,
@@ -32,7 +32,7 @@ const ChatContent = ({
   const [chatDataChanged, setChatDataChanged] = useState(false)
 
   const clickActionsExist = useMemo(() => !!clickActions, [clickActions])
-  const title = useMemo(() => data.simpleChat && data.simpleChat.title, [data.simpleChat])
+  const heading = useMemo(() => data.simpleChat && data.simpleChat.heading, [data.simpleChat])
 
   const updateLogs = useCallback(({ data }) => setLogs(convertLogs(data)), [])
 
@@ -144,7 +144,7 @@ const ChatContent = ({
 
   return (
     <div>
-      {title && <Title>{title}</Title>}
+      {heading && <Heading>{heading}</Heading>}
       {logs.map((logSection, index) => (
         /* eslint-disable react/no-array-index-key */
         <ChatLogSection
