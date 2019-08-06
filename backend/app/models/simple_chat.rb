@@ -34,7 +34,6 @@ class SimpleChat < ApplicationRecord
     }
     if simple_chat_sections.any?
       result[:simple_chat_sections_attributes] = simple_chat_sections.order(:order).map(&:as_json)
-      result[:simple_chat_steps_attributes] = simple_chat_sections.order(:order).map(&:as_json)
     end
     result
   end
