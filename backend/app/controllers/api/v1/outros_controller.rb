@@ -67,11 +67,6 @@ module Api
           .require(:outro)
           .permit(:seller_id, :name, :teaser_message, :chat_bubble_button_no, :chat_bubble_button_yes, :lock_version,
                   :use_seller_animation)
-          .reverse_merge(outro_compat_params)
-      end
-
-      def outro_compat_params
-        { teaser_message: params.require(:outro)[:chat_bubble_text] }
       end
 
       def render_error

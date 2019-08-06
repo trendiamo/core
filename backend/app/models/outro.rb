@@ -16,7 +16,6 @@ class Outro < ApplicationRecord
       .slice("id", "name", "teaser_message", "chat_bubble_button_no", "chat_bubble_button_yes",
              "use_seller_animation", "created_at", "updated_at", "lock_version")
       .merge(seller: seller_attributes(seller), type: "Outro", trigger_ids: triggers.ids)
-      .merge(chat_bubble_text: teaser_message)
   end
 
   def seller_attributes(seller)
