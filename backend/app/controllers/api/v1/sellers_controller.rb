@@ -51,8 +51,15 @@ module Api
       private
 
       def seller_params
-        params.require(:seller).permit(:name, :bio, :instagram_url, :profile_pic_id, :profile_pic_animation_id,
-                                       :lock_version, pic_rect: %i[x y width height])
+        params
+          .require(:seller)
+          .permit(:name, :bio, :instagram_url, :profile_pic_id, :profile_pic_animation_id, :lock_version,
+                  pic_rect: %i[x y width height])
+          .reverse_merge(seller_compat_params)
+      end
+
+      def seller_compat_params
+        { bio: params.require(:seller)[:description] }
       end
 
       def convert_and_assign_pictures

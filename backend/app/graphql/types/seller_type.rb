@@ -3,6 +3,9 @@ Types::SellerType = GraphQL::ObjectType.define do
 
   field :id, !types.ID
   field :name, !types.String
+  field :description, !types.String do
+    resolve ->(obj, _args, _ctx) { obj.bio }
+  end
   field :bio, !types.String
   field :instagramUrl, types.String do
     resolve ->(obj, _args, _ctx) { obj.instagram_url }
