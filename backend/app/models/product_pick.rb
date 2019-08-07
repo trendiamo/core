@@ -19,5 +19,6 @@ class ProductPick < ApplicationRecord
       .slice("id", "spotlight_id", "name", "account_id", "url", "description", "display_price", "img_rect",
              "created_at", "updated_at")
       .merge(img: { url: img.url })
+      .merge(picture: { url: img.url }, pic_rect: img_rect)
   end
 end

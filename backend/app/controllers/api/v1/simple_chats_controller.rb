@@ -1,6 +1,6 @@
 module Api
   module V1
-    class SimpleChatsController < RestAdminController
+    class SimpleChatsController < RestAdminController # rubocop:disable Metrics/ClassLength
       before_action :ensure_tenant
 
       def index
@@ -67,17 +67,26 @@ module Api
       private
 
       def simple_chat_params # rubocop:disable Metrics/MethodLength
-        result = params
-                 .require(:simple_chat)
-                 .permit(:id, :name, :heading, :teaser_message, :extra_teaser_message, :seller_id,
-                         :use_seller_animation, :_destroy, :lock_version,
-                         simple_chat_sections_attributes: [
-                           :id, :key, :_destroy, :order, simple_chat_messages_attributes: [
-                             :id, :order, :type, :html, :title, :img_id, :url, :display_price, :video_url,
-                             :group_with_adjacent, :_destroy, img_rect: %i[x y width height],
-                           ],
-                         ])
+        convert_simple_chat_params
+        result = params.require(:simple_chat).permit(
+          :id, :name, :heading, :teaser_message, :extra_teaser_message, :seller_id, :use_seller_animation, :_destroy,
+          :lock_version, simple_chat_sections_attributes: [
+            :id, :key, :_destroy, :order, simple_chat_messages_attributes: [
+              :id, :order, :type, :html, :title, :img_id, :url, :display_price, :video_url, :group_with_adjacent,
+              :_destroy, img_rect: %i[x y width height],
+            ],
+          ]
+        )
         add_order_fields(result)
+      end
+
+      def convert_simple_chat_params
+        params[:simple_chat][:simple_chat_sections_attributes]&.each do |scs_a|
+          scs_a[:simple_chat_messages_attributes]&.each do |scm_a|
+            scm_a[:img_id] = scm_a[:pic_id] if scm_a[:pic_id]
+            scm_a[:img_rect] = scm_a[:pic_rect] if scm_a[:pic_rect]
+          end
+        end
       end
 
       # add order fields to chat_section_attributes' messages and options, based on received order
@@ -96,15 +105,17 @@ module Api
         chat_attrs
       end
 
-      def convert_and_assign_images
-        params[:simple_chat][:simple_chat_sections_attributes]&.each do |simple_chat_section_attributes|
-          simple_chat_section_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
-            img_url = (simple_chat_message_attributes[:img] && simple_chat_message_attributes[:img][:url])
+      def convert_and_assign_images # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+        params[:simple_chat][:simple_chat_sections_attributes]&.each do |scs_a|
+          scs_a[:simple_chat_messages_attributes]&.each do |scm_a|
+            scm_a[:img] = scm_a[:picture] if scm_a[:picture]
+            img_url = (scm_a[:img] && scm_a[:img][:url])
             unless img_url.nil?
               return if img_url.empty?
 
-              simple_chat_message_attributes[:img_id] = Image.find_or_create_by!(url: img_url).id
-              simple_chat_message_attributes.delete(:img_url)
+              scm_a[:img_id] = Image.find_or_create_by!(url: img_url).id
+              scm_a.delete(:img_url)
+              scm_a.delete(:pic_url)
             end
           end
         end

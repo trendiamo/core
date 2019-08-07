@@ -9,8 +9,16 @@ Types::SimpleChatMessageType = GraphQL::ObjectType.define do
     }
   end
   field :title, types.String
+  field :picRect, Types::ImgRectType do
+    resolve ->(obj, _args, _ctx) { obj.img_rect }
+  end
   field :imgRect, Types::ImgRectType do
     resolve ->(obj, _args, _ctx) { obj.img_rect }
+  end
+  field :picture, Types::ImgType do
+    resolve ->(obj, _args, _ctx) {
+      { url: obj.img.url } if %w[SimpleChatImageMessage SimpleChatProductMessage].include?(obj.class.name)
+    }
   end
   field :img, Types::ImgType do
     resolve ->(obj, _args, _ctx) {
