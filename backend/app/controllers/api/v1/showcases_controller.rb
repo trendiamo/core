@@ -1,6 +1,6 @@
 module Api
   module V1
-    class ShowcasesController < RestAdminController
+    class ShowcasesController < RestAdminController # rubocop:disable Metrics/ClassLength
       before_action :ensure_tenant
 
       def index
@@ -66,7 +66,8 @@ module Api
 
       private
 
-      def showcase_params
+      def showcase_params # rubocop:disable Metrics/MethodLength
+        convert_showcase_params
         result = params.require(:showcase).permit(
           :name, :heading, :subheading, :teaser_message, :extra_teaser_message, :seller_id, :use_seller_animation,
           :lock_version, spotlights_attributes: [
@@ -79,14 +80,25 @@ module Api
         add_order_fields(result)
       end
 
-      def convert_and_assign_images
+      def convert_showcase_params
+        params[:showcase][:spotlights_attributes]&.each do |s_a|
+          s_a[:product_picks_attributes]&.each do |pp_a|
+            pp_a[:img_id] = pp_a[:pic_id] if pp_a[:pic_id]
+            pp_a[:img_rect] = pp_a[:pic_rect] if pp_a[:pic_rect]
+          end
+        end
+      end
+
+      def convert_and_assign_images # rubocop:disable Metrics/AbcSize
         params[:showcase][:spotlights_attributes]&.each do |spotlight_attributes|
           spotlight_attributes[:product_picks_attributes]&.each do |product_pick_attributes|
+            product_pick_attributes[:img] = product_pick_attributes[:picture] if product_pick_attributes[:picture]
             img_url = (product_pick_attributes[:img] && product_pick_attributes[:img][:url])
             return if img_url.empty?
 
             product_pick_attributes[:img_id] = Image.find_or_create_by!(url: img_url).id
             product_pick_attributes.delete(:img_url)
+            product_pick_attributes.delete(:pic_url)
           end
         end
       end

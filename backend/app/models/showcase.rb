@@ -25,8 +25,12 @@ class Showcase < ApplicationRecord
   end
 
   def seller_attributes(seller)
-    { id: seller.id, img: { url: seller.img.url }, name: seller.name, img_rect: seller.img_rect,
-      animated_img: { url: seller.animated_img&.url }, }
+    {
+      id: seller.id, name: seller.name,
+      img: { url: seller.img.url }, img_rect: seller.img_rect, animated_img: { url: seller.animated_img&.url },
+      profile_pic: { url: seller.img.url }, pic_rect: seller.img_rect,
+      profile_pic_animation: { url: seller.animated_img&.url },
+    }
   end
 
   def spotlights_attributes(spotlights)
@@ -46,9 +50,10 @@ class Showcase < ApplicationRecord
       name: spotlight.seller.name,
       bio: spotlight.seller.bio,
       instagram_url: spotlight.seller.instagram_url,
-      img: { url: spotlight.seller.img.url },
+      img: { url: spotlight.seller.img.url }, img_rect: spotlight.seller.img_rect,
       animated_img: { url: spotlight.seller.animated_img&.url },
-      img_rect: spotlight.seller.img_rect,
+      profile_pic: { url: spotlight.seller.img.url }, pic_rect: spotlight.seller.img_rect,
+      profile_pic_animation: { url: spotlight.seller.animated_img&.url },
     }
   end
 
@@ -63,8 +68,8 @@ class Showcase < ApplicationRecord
       name: product_pick.name,
       description: product_pick.description,
       display_price: product_pick.display_price,
-      img: { url: product_pick.img.url },
-      img_rect: product_pick.img_rect,
+      img: { url: product_pick.img.url }, img_rect: product_pick.img_rect,
+      picture: { url: product_pick.img.url }, pic_rect: product_pick.img_rect,
     }
   end
 
