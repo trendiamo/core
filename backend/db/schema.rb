@@ -176,17 +176,6 @@ ActiveRecord::Schema.define(version: 20190806155618) do
     t.index ["simple_chat_id"], name: "index_simple_chat_sections_on_simple_chat_id"
   end
 
-  create_table "simple_chat_steps", force: :cascade do |t|
-    t.string "key", default: "default", null: false
-    t.integer "order"
-    t.bigint "simple_chat_id"
-    t.bigint "account_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_simple_chat_steps_on_account_id"
-    t.index ["simple_chat_id"], name: "index_simple_chat_steps_on_simple_chat_id"
-  end
-
   create_table "simple_chats", force: :cascade do |t|
     t.string "name", null: false
     t.string "heading", null: false

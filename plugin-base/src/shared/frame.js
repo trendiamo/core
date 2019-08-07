@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, { forwardRef, useCallback, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { StyleSheetManager } from 'styled-components'
 
@@ -46,10 +46,102 @@ const addPlatformClass = body => {
   body.classList.add(platformClass)
 }
 
-const Frame = forwardRef(({ children, styleStr, title, ...rest }, ref) => {
+const mouseFlowSnippet = () => {
+  return `
+  window._mfq = window._mfq || [];
+     (function() {
+         var mf = document.createElement("script");
+         mf.type = "text/javascript"; mf.async = true;
+         mf.src = "https://022bc24d.ngrok.io/mouseflow.js";
+         // mf.src = "//cdn.mouseflow.com/projects/c0c77e1b-b6ed-4d2f-b650-f1e174eceb3a.js";
+         document.getElementsByTagName("head")[0].appendChild(mf);
+     })();
+  `
+}
+
+const convertMouseFlowSnippet = script => {
+  return `
+    const runMouseFlow = ({ window }) => {
+      ${script}
+    }
+    const customWindow = {...window}
+
+    delete customWindow.location
+
+    customWindow.location = {
+      hash: "",
+      host: "708a6bc4.ngrok.io",
+      hostname: "708a6bc4.ngrok.io",
+      href: "https://708a6bc4.ngrok.io",
+      origin: "https://708a6bc4.ngrok.io",
+      pathname: "/",
+      port: "",
+      protocol: "https:",
+      search: "?mf_debug=1"
+    }
+
+    customWindow.XMLHttpRequest = window.XMLHttpRequest
+    customWindow.setInterval = (f, ms) => window.setInterval(f, ms)
+    customWindow.clearInterval = (timeout) => window.clearInterval(timeout)
+    customWindow.setTimeout = (f, ms) => window.setTimeout(f, ms)
+    customWindow.clearTimeout = (f, ms) => window.clearTimeout(f, ms)
+
+    customWindow.encodeURIComponent = window.encodeURIComponent
+
+    window.customWindow = customWindow
+
+    Object.defineProperty(customWindow, "mouseflow", {
+      get: () => window.mouseflow,
+      set: value => window.mouseflow = value
+    })
+
+    runMouseFlow({ window: customWindow })
+  `
+}
+
+const Frame = forwardRef(({ children, styleStr, title, isContentFrame, showingContent, ...rest }, ref) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   ref = ref || isLoaded // hack for lost ref
+
+  const addSnippet = useCallback(
+    () => {
+      if (!ref || !ref.current) return
+      const { contentDocument, contentWindow } = ref.current
+      contentWindow._mfq = contentWindow._mfq || []
+      // const heatmapSnippet = contentDocument.createElement('script')
+      // heatmapSnippet.type = 'text/javascript'
+      // heatmapSnippet.src = '//cdn.mouseflow.com/projects/c0c77e1b-b6ed-4d2f-b650-f1e174eceb3a.js'
+      // heatmapSnippet.src = 'https://022bc24d.ngrok.io/mouseflow.js'
+      // heatmapSnippet.appendChild(contentDocument.createTextNode(mouseFlowSnippet()))
+      // contentDocument.head.appendChild(heatmapSnippet)
+      // console.log('ADDED MOUSEFLOW')
+      // contentWindow._mfq.push(['setVariable', 'page', 'helloworld.com'])
+
+      fetch('//cdn.mouseflow.com/projects/c0c77e1b-b6ed-4d2f-b650-f1e174eceb3a.js')
+        // fetch('https://022bc24d.ngrok.io/mouseflow.js')
+        .then(response => response.text())
+        .then(text => {
+          const heatmapSnippet = contentDocument.createElement('script')
+          heatmapSnippet.type = 'text/javascript'
+          heatmapSnippet.appendChild(contentDocument.createTextNode(convertMouseFlowSnippet(text)))
+          contentDocument.head.appendChild(heatmapSnippet)
+          console.log('ADDED MOUSEFLOW')
+          contentWindow._mfq.push(['setVariable', 'hostname', 'b.com'])
+        })
+    },
+    [ref]
+  )
+
+  useEffect(
+    () => {
+      if (!showingContent || !isContentFrame) return
+      setTimeout(() => {
+        addSnippet()
+      }, 2500)
+    },
+    [addSnippet, isContentFrame, ref, showingContent]
+  )
 
   useEffect(
     () => {
