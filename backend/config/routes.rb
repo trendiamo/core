@@ -39,8 +39,8 @@ Rails.application.routes.draw do
         get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"
         get "/path/autocomplete", to: "autocompletes#path_autocomplete"
 
-        resources :pictures, only: %i[index create]
-        delete "/pictures", to: "pictures#destroy"
+        resources :images, only: %i[index create]
+        delete "/images", to: "images#destroy"
 
         resources :sellers, only: %i[index show update create]
         delete "/sellers", to: "sellers#destroy"

@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:description) { Faker::Lorem.words(4) }
     sequence(:name) { Faker::Commerce.product_name }
     spotlight
-    pic
+    img
 
     after(:build) { |record| record.account = ActsAsTenant.default_tenant }
   end

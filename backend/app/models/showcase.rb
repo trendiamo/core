@@ -25,8 +25,8 @@ class Showcase < ApplicationRecord
   end
 
   def seller_attributes(seller)
-    { id: seller.id, profile_pic: { url: seller.profile_pic.url }, name: seller.name, pic_rect: seller.pic_rect,
-      profile_pic_animation: { url: seller.profile_pic_animation&.url }, }
+    { id: seller.id, img: { url: seller.img.url }, name: seller.name, img_rect: seller.img_rect,
+      animated_img: { url: seller.animated_img&.url }, }
   end
 
   def spotlights_attributes(spotlights)
@@ -46,9 +46,9 @@ class Showcase < ApplicationRecord
       name: spotlight.seller.name,
       bio: spotlight.seller.bio,
       instagram_url: spotlight.seller.instagram_url,
-      profile_pic: { url: spotlight.seller.profile_pic.url },
-      profile_pic_animation: { url: spotlight.seller.profile_pic_animation&.url },
-      pic_rect: spotlight.seller.pic_rect,
+      img: { url: spotlight.seller.img.url },
+      animated_img: { url: spotlight.seller.animated_img&.url },
+      img_rect: spotlight.seller.img_rect,
     }
   end
 
@@ -63,8 +63,8 @@ class Showcase < ApplicationRecord
       name: product_pick.name,
       description: product_pick.description,
       display_price: product_pick.display_price,
-      picture: { url: product_pick.pic.url },
-      pic_rect: product_pick.pic_rect,
+      img: { url: product_pick.img.url },
+      img_rect: product_pick.img_rect,
     }
   end
 

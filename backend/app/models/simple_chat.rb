@@ -41,8 +41,8 @@ class SimpleChat < ApplicationRecord
   def seller_attributes # rubocop:disable Metrics/AbcSize
     {
       id: seller.id, name: seller.name, bio: seller.bio,
-      profile_pic: { url: seller.profile_pic.url }, picRect: seller.pic_rect,
-      profile_pic_animation: { url: seller.profile_pic_animation&.url }, instagram_url: seller.instagram_url,
+      img: { url: seller.img.url }, imgRect: seller.img_rect,
+      animated_img: { url: seller.animated_img&.url }, instagram_url: seller.instagram_url,
     }
   end
 end

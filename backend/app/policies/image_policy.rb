@@ -1,4 +1,4 @@
-class PicturePolicy < ApplicationPolicy
+class ImagePolicy < ApplicationPolicy
   def index?
     user&.admin || user&.active_membership
   end

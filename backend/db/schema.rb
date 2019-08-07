@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190806155618) do
+ActiveRecord::Schema.define(version: 20190806172453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,16 @@ ActiveRecord::Schema.define(version: 20190806155618) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_generated_urls_on_user_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "url", null: false
+    t.bigint "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "active", default: false
+    t.string "file_format", null: false
+    t.index ["account_id"], name: "index_images_on_account_id"
   end
 
   create_table "invites", force: :cascade do |t|
@@ -72,16 +82,6 @@ ActiveRecord::Schema.define(version: 20190806155618) do
     t.index ["seller_id"], name: "index_outros_on_seller_id"
   end
 
-  create_table "pictures", force: :cascade do |t|
-    t.string "url", null: false
-    t.bigint "account_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "active", default: false
-    t.string "file_format", null: false
-    t.index ["account_id"], name: "index_pictures_on_account_id"
-  end
-
   create_table "product_picks", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "spotlight_id"
@@ -92,10 +92,10 @@ ActiveRecord::Schema.define(version: 20190806155618) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order"
-    t.bigint "pic_id"
-    t.json "pic_rect", default: {}
+    t.bigint "img_id"
+    t.json "img_rect", default: {}
     t.index ["account_id"], name: "index_product_picks_on_account_id"
-    t.index ["pic_id"], name: "index_product_picks_on_pic_id"
+    t.index ["img_id"], name: "index_product_picks_on_img_id"
     t.index ["spotlight_id"], name: "index_product_picks_on_spotlight_id"
   end
 
@@ -117,13 +117,13 @@ ActiveRecord::Schema.define(version: 20190806155618) do
     t.bigint "account_id", null: false
     t.string "graphcms_ref"
     t.string "instagram_url"
-    t.bigint "profile_pic_id"
+    t.bigint "img_id"
     t.integer "lock_version", default: 1
-    t.json "pic_rect", default: {}
-    t.bigint "profile_pic_animation_id"
+    t.json "img_rect", default: {}
+    t.bigint "animated_img_id"
     t.index ["account_id"], name: "index_sellers_on_account_id"
-    t.index ["profile_pic_animation_id"], name: "index_sellers_on_profile_pic_animation_id"
-    t.index ["profile_pic_id"], name: "index_sellers_on_profile_pic_id"
+    t.index ["animated_img_id"], name: "index_sellers_on_animated_img_id"
+    t.index ["img_id"], name: "index_sellers_on_img_id"
   end
 
   create_table "showcases", force: :cascade do |t|
@@ -156,12 +156,12 @@ ActiveRecord::Schema.define(version: 20190806155618) do
     t.string "url"
     t.string "display_price"
     t.string "video_url"
-    t.bigint "pic_id"
+    t.bigint "img_id"
     t.boolean "group_with_adjacent", default: false
-    t.json "pic_rect", default: {}
+    t.json "img_rect", default: {}
     t.string "html"
     t.index ["account_id"], name: "index_simple_chat_messages_on_account_id"
-    t.index ["pic_id"], name: "index_simple_chat_messages_on_pic_id"
+    t.index ["img_id"], name: "index_simple_chat_messages_on_img_id"
     t.index ["simple_chat_section_id"], name: "index_simple_chat_messages_on_simple_chat_section_id"
   end
 
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 20190806155618) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "profile_pic_url"
+    t.string "img_url"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -263,7 +263,7 @@ ActiveRecord::Schema.define(version: 20190806155618) do
     t.boolean "subscribed_to_newsletter", default: false, null: false
     t.integer "onboarding_stage", default: 0
     t.boolean "admin", default: false, null: false
-    t.json "pic_rect", default: {}
+    t.json "img_rect", default: {}
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -294,25 +294,25 @@ ActiveRecord::Schema.define(version: 20190806155618) do
   end
 
   add_foreign_key "generated_urls", "users"
+  add_foreign_key "images", "accounts"
   add_foreign_key "invites", "accounts"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "users"
   add_foreign_key "outros", "accounts"
   add_foreign_key "outros", "sellers"
   add_foreign_key "outros", "users", column: "owner_id"
-  add_foreign_key "pictures", "accounts"
   add_foreign_key "product_picks", "accounts"
-  add_foreign_key "product_picks", "pictures", column: "pic_id"
+  add_foreign_key "product_picks", "images", column: "img_id"
   add_foreign_key "product_picks", "spotlights"
   add_foreign_key "products", "accounts"
   add_foreign_key "sellers", "accounts"
-  add_foreign_key "sellers", "pictures", column: "profile_pic_animation_id"
-  add_foreign_key "sellers", "pictures", column: "profile_pic_id"
+  add_foreign_key "sellers", "images", column: "animated_img_id"
+  add_foreign_key "sellers", "images", column: "img_id"
   add_foreign_key "showcases", "accounts"
   add_foreign_key "showcases", "sellers"
   add_foreign_key "showcases", "users", column: "owner_id"
   add_foreign_key "simple_chat_messages", "accounts"
-  add_foreign_key "simple_chat_messages", "pictures", column: "pic_id"
+  add_foreign_key "simple_chat_messages", "images", column: "img_id"
   add_foreign_key "simple_chat_messages", "simple_chat_sections"
   add_foreign_key "simple_chat_sections", "accounts"
   add_foreign_key "simple_chat_sections", "simple_chats"

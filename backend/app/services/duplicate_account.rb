@@ -16,8 +16,8 @@ def generate_new_path(source_path)
   "uploads/account-#{@cloned_account.id}/#{SecureRandom.hex(4)}-#{filename}"
 end
 
-def duplicate_pic_url(picture_url)
-  source_path = extract_path(picture_url)
+def duplicate_img_url(img_url)
+  source_path = extract_path(img_url)
   new_path = generate_new_path(source_path)
   destination_path = new_path
   bucket = Aws::S3::Bucket.new(ENV["DO_BUCKET"])
@@ -45,30 +45,30 @@ class DuplicateAccount
     @cloned_account = @account.deep_clone { |_void, copy| copy.name = @name }
     @cloned_account.save!
     @seller_id_mapping = {} # hash of original seller ids to duplicate ids
-    @picture_id_mapping = {} # hash of original picture ids to duplicate ids
-    duplicate_pictures
+    @image_id_mapping = {} # hash of original image ids to duplicate ids
+    duplicate_images
     duplicate_sellers
     duplicate_websites
     duplicate_flows
     duplicate_triggers
   end
 
-  def duplicate_pictures
-    @account.pictures.map do |picture|
-      cloned_picture = picture.deep_clone
-      cloned_picture.url = duplicate_pic_url(picture.url)
+  def duplicate_images
+    @account.images.map do |image|
+      cloned_image = image.deep_clone
+      cloned_image.url = duplicate_img_url(image.url)
       ActsAsTenant.with_tenant(@cloned_account) do
-        cloned_picture.save!
+        cloned_image.save!
       end
-      @picture_id_mapping[picture.id] = cloned_picture.id
-      cloned_picture
+      @image_id_mapping[image.id] = cloned_image.id
+      cloned_image
     end
   end
 
   def duplicate_sellers
     @account.sellers.map do |seller|
       cloned_seller = seller.deep_clone
-      cloned_seller.profile_pic_id = @picture_id_mapping[seller.profile_pic_id]
+      cloned_seller.img_id = @image_id_mapping[seller.img_id]
       ActsAsTenant.with_tenant(@cloned_account) do
         cloned_seller.save!
       end
@@ -89,7 +89,7 @@ class DuplicateAccount
   end
 
   def duplicate_flows
-    DuplicateFlows.new(@account, @cloned_account, @seller_id_mapping, @picture_id_mapping).perform
+    DuplicateFlows.new(@account, @cloned_account, @seller_id_mapping, @image_id_mapping).perform
   end
 
   def duplicate_triggers
@@ -105,11 +105,11 @@ class DuplicateAccount
 end
 
 class DuplicateFlows
-  def initialize(account, cloned_account, seller_id_mapping, picture_id_mapping)
+  def initialize(account, cloned_account, seller_id_mapping, image_id_mapping)
     @account = account
     @cloned_account = cloned_account
     @seller_id_mapping = seller_id_mapping
-    @picture_id_mapping = picture_id_mapping
+    @image_id_mapping = image_id_mapping
   end
 
   def perform
@@ -144,7 +144,7 @@ class DuplicateFlows
     assign_sellers(cloned_showcase.spotlights)
     cloned_showcase.spotlights.map do |spotlight|
       spotlight.product_picks.map do |product_pick|
-        product_pick.pic_id = @picture_id_mapping[product_pick.pic.id]
+        product_pick.img_id = @image_id_mapping[product_pick.img.id]
       end
     end
   end

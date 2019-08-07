@@ -43,7 +43,7 @@ module Api
                               rescue JSON::ParserError, TypeError
                                 return chain
                               end)
-        if column.underscore == "active" && params[:controller] != "api/v1/pictures"
+        if column.underscore == "active" && params[:controller] != "api/v1/images"
           sorting_by_active_state(chain, direction)
         else
           sorting_by_column(chain, direction, column)
@@ -51,7 +51,7 @@ module Api
       end
 
       def sorting_by_active_state(chain, direction)
-        return chain if params[:controller] == "api/v1/pictures"
+        return chain if params[:controller] == "api/v1/images"
 
         direction = direction == "desc" ? "asc" : "desc"
         chain.left_joins(:triggers).group(:id).order("count(triggers.id) #{direction}")

@@ -19,8 +19,8 @@ class Outro < ApplicationRecord
   end
 
   def seller_attributes(seller)
-    { id: seller.id, name: seller.name, profile_pic: { url: seller.profile_pic.url }, pic_rect: seller.pic_rect,
-      profile_pic_animation: { url: seller.profile_pic_animation&.url }, instagram_url: seller.instagram_url, }
+    { id: seller.id, name: seller.name, img: { url: seller.img.url }, img_rect: seller.img_rect,
+      animated_img: { url: seller.animated_img&.url }, instagram_url: seller.instagram_url, }
   end
 
   def paths

@@ -7,15 +7,15 @@ Types::SellerType = GraphQL::ObjectType.define do
   field :instagramUrl, types.String do
     resolve ->(obj, _args, _ctx) { obj.instagram_url }
   end
-  field :profilePic, Types::PicType do
-    resolve ->(obj, _args, _ctx) { { url: obj.profile_pic.url } }
+  field :img, Types::ImgType do
+    resolve ->(obj, _args, _ctx) { { url: obj.img.url } }
   end
-  field :picRect, Types::PicRectType do
-    resolve ->(obj, _args, _ctx) { obj.pic_rect }
+  field :imgRect, Types::ImgRectType do
+    resolve ->(obj, _args, _ctx) { obj.img_rect }
   end
-  field :profilePicAnimation, Types::PicType do
+  field :animatedImg, Types::ImgType do
     resolve ->(obj, _args, _ctx) {
-      { url: obj.profile_pic_animation.url } if obj.profile_pic_animation
+      { url: obj.animated_img.url } if obj.animated_img
     }
   end
 end
