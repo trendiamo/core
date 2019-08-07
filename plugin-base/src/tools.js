@@ -52,7 +52,7 @@ const validateEmail = email => {
   return re.test(String(email).toLowerCase())
 }
 
-const stringifyRect = picRect => picRect && `${picRect.x},${picRect.y},${picRect.width},${picRect.height}`
+const stringifyRect = imgRect => imgRect && `${imgRect.x},${imgRect.y},${imgRect.width},${imgRect.height}`
 
 const imgixUrl = (url, imgixParams) => {
   if (url.lastIndexOf(process.env.IMG_BUCKET_ENDPOINT, 0) !== 0 || url.match(/\.gif$/i)) return url
@@ -62,24 +62,24 @@ const imgixUrl = (url, imgixParams) => {
   return `${process.env.IMGIX_ENDPOINT}${urlObj.pathname}?${stringify(search)}`
 }
 
-const sellerPic = (seller, useSellerAnimation) => {
-  if (!seller) return { url: '', picRect: {} }
+const sellerImg = (seller, useSellerAnimation) => {
+  if (!seller) return { url: '', imgRect: {} }
   return useSellerAnimation
     ? {
-        url: seller.profilePicAnimation && seller.profilePicAnimation.url,
-        picRect: {},
+        url: seller.animatedImg && seller.animatedImg.url,
+        imgRect: {},
       }
     : {
-        url: seller.profilePic && seller.profilePic.url,
-        picRect: seller && seller.picRect,
+        url: seller.img && seller.img.url,
+        imgRect: seller && seller.imgRect,
       }
 }
 
-const sellerPicUrl = (seller, useSellerAnimation, size) => {
-  const { url, picRect } = sellerPic(seller, useSellerAnimation)
+const sellerImgUrl = (seller, useSellerAnimation, size) => {
+  const { url, imgRect } = sellerImg(seller, useSellerAnimation)
   if (useSellerAnimation) return url
   const imgixParams = size && { fit: 'crop', w: size.w, h: size.h }
-  return imgixUrl(url, { rect: stringifyRect(picRect), ...imgixParams })
+  return imgixUrl(url, { rect: stringifyRect(imgRect), ...imgixParams })
 }
 
 const positioning = {
@@ -132,9 +132,7 @@ const getGroupedLogs = logs => {
     const nextLog = logs[index + 1]
     if (
       log.type === 'message' &&
-      (log.message.type === 'SimpleChatProductMessage' ||
-        log.message.type === 'SimpleChatPictureMessage' ||
-        log.message.type === 'SimpleChatImageMessage') &&
+      (log.message.type === 'SimpleChatProductMessage' || log.message.type === 'SimpleChatImageMessage') &&
       log.message.groupWithAdjacent &&
       nextLog &&
       nextLog.type === 'message' &&
@@ -148,10 +146,7 @@ const getGroupedLogs = logs => {
       const prevLog = logs[index - 1]
       if (prevLog.type === 'message' && prevLog.message.groupWithAdjacent && temporaryGroup.length > 0) {
         temporaryGroup.push(log.message)
-        const messageType =
-          prevLog.message.type === 'SimpleChatPictureMessage' || prevLog.message.type === 'SimpleChatImageMessage'
-            ? 'imageCarousel'
-            : 'productCarousel'
+        const messageType = prevLog.message.type === 'SimpleChatImageMessage' ? 'imageCarousel' : 'productCarousel'
         const message = { type: messageType, [messageType]: temporaryGroup }
         finalArray.push({ ...log, message })
         temporaryGroup = []
@@ -236,8 +231,8 @@ export {
   matchUrl,
   stringifyRect,
   imgixUrl,
-  sellerPic,
-  sellerPicUrl,
+  sellerImg,
+  sellerImgUrl,
   positioning,
   extractYoutubeId,
   convertLogs,

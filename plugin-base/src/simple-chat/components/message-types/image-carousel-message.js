@@ -9,7 +9,7 @@ const StyledCarouselElement = styled(CarouselElement)`
   }
 `
 
-const PictureCarouselElement = ({ carouselType, picture, index, onClick, urlsArray }) => {
+const ImageCarouselElement = ({ carouselType, image, index, onClick, urlsArray }) => {
   const newOnClick = useCallback(
     () => {
       onClick({ type: 'clickImageCarouselItem', item: { index, urlsArray } })
@@ -28,8 +28,8 @@ const PictureCarouselElement = ({ carouselType, picture, index, onClick, urlsArr
     <StyledCarouselElement carouselType={carouselType} onClick={newOnClick} onTouchEnd={onTouchEnd}>
       <img
         alt=""
-        src={imgixUrl(picture.url, {
-          rect: stringifyRect(picture.picRect),
+        src={imgixUrl(image.url, {
+          rect: stringifyRect(image.imgRect),
           fit: 'crop',
           w: 260,
           h: 260,
@@ -39,11 +39,11 @@ const PictureCarouselElement = ({ carouselType, picture, index, onClick, urlsArr
   )
 }
 
-const PictureCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
-  const pictures = useMemo(
+const ImageCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
+  const images = useMemo(
     () =>
-      imageCarousel.map(pictureData => {
-        return { url: pictureData.picUrl || pictureData.picture.url, picRect: pictureData.picRect, id: pictureData.id }
+      imageCarousel.map(imageData => {
+        return { url: imageData.imgUrl || imageData.img.url, imgRect: imageData.imgRect, id: imageData.id }
       }),
     [imageCarousel]
   )
@@ -51,14 +51,14 @@ const PictureCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
   return (
     <div>
       <Carousel carouselType={carouselType}>
-        {pictures.map((picture, index) => (
-          <PictureCarouselElement
+        {images.map((image, index) => (
+          <ImageCarouselElement
             carouselType={carouselType}
+            image={image}
             index={index}
-            key={picture.id || `new-${index}`}
+            key={image.id || `new-${index}`}
             onClick={onClick}
-            picture={picture}
-            urlsArray={pictures.map(picture => picture.url)}
+            urlsArray={images.map(image => image.url)}
           />
         ))}
       </Carousel>
@@ -66,4 +66,4 @@ const PictureCarouselMessage = ({ carouselType, imageCarousel, onClick }) => {
   )
 }
 
-export default PictureCarouselMessage
+export default ImageCarouselMessage

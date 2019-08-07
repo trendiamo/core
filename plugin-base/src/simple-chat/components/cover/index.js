@@ -3,7 +3,7 @@ import React, { useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import { BackButton, Cover as CoverBase, SellerInstagram } from 'shared'
 import { CoverImg, PaddedCover, SellerBio } from 'shared/cover/components'
-import { sellerPicUrl } from 'tools'
+import { sellerImgUrl } from 'tools'
 import { ThemeContext, useTextTyping } from 'ext'
 
 const SellerName = styled.div`
@@ -31,7 +31,7 @@ const Cover = ({ backButtonConfig, backButtonLabel, FlowBackButton, headerConfig
           <BackButton backButtonConfig={backButtonConfig} label={backButtonLabel} />
         ))}
       <FlexDiv>
-        <CoverImg src={sellerPicUrl(seller, step.simpleChat.useSellerAnimation, { w: 45, h: 45 })} />
+        <CoverImg src={sellerImgUrl(seller, step.simpleChat.useSellerAnimation, { w: 45, h: 45 })} />
         <PaddedCover>
           <SellerName theme={theme}>{seller.name}</SellerName>
           <SellerInstagram url={seller.instagramUrl} />

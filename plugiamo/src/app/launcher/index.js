@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import { Launcher as LauncherBase, sellerPic } from 'plugin-base'
+import { Launcher as LauncherBase, sellerImg } from 'plugin-base'
 import { useMemo } from 'preact/hooks'
 
 const Launcher = ({
@@ -32,7 +32,7 @@ const Launcher = ({
       onClick={onToggleContent}
       position={position}
       pulsating={pulsating}
-      sellerPic={sellerPic(seller, data.flow && data.flow.useSellerAnimation)}
+      sellerImg={sellerImg(seller, data.flow && data.flow.useSellerAnimation)}
       showingContent={showingContent}
     />
   )

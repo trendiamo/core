@@ -28,7 +28,7 @@ const SellersRow = ({ record }) => (
     <TableCell>
       <Avatar
         alt={record.name}
-        src={imgixUrl(record.profilePic.url, { rect: stringifyRect(record.picRect) })}
+        src={imgixUrl(record.img.url, { rect: stringifyRect(record.imgRect) })}
         style={{ marginRight: '0.5rem' }}
       />
     </TableCell>

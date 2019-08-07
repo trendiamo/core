@@ -24,7 +24,7 @@ const SelectLabelText = styled(Typography)`
 
 const OptionWithAvatar = option => (
   <StyledSelectLabel ref={option.innerRef} {...option.innerProps}>
-    <Avatar alt={option.value.name} src={option.value.profilePicUrl} style={{ marginRight: '0.5rem' }} />
+    <Avatar alt={option.value.name} src={option.value.imgUrl} style={{ marginRight: '0.5rem' }} />
     <SelectLabelText>{option.value.name}</SelectLabelText>
   </StyledSelectLabel>
 )

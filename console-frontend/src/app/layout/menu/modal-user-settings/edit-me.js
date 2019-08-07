@@ -1,7 +1,7 @@
 import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
-import PictureUploader from 'shared/picture-uploader'
+import ImageUploader from 'shared/image-uploader'
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
@@ -21,8 +21,8 @@ const formObjectTransformer = json => {
     email: json.email || '',
     firstName: json.firstName || '',
     lastName: json.lastName || '',
-    profilePicUrl: json.profilePicUrl || '',
-    picRect: json.picRect || {},
+    imgUrl: json.imgUrl || '',
+    imgRect: json.imgRect || {},
   }
 }
 
@@ -67,32 +67,29 @@ const EditMe = ({ togglePasswordForm }) => {
     saveFormObject,
   })
 
-  const setPicture = useCallback(
-    picture => {
-      mergeForm({ profilePicUrl: picture.url, picRect: picture.picRect })
+  const setImage = useCallback(
+    image => {
+      mergeForm({ imgUrl: image.url, imgRect: image.imgRect })
     },
     [mergeForm]
   )
 
-  const pictureUploaderValue = useMemo(() => ({ url: form.profilePicUrl, picRect: form.picRect }), [
-    form.picRect,
-    form.profilePicUrl,
-  ])
+  const imageUploaderValue = useMemo(() => ({ url: form.imgUrl, imgRect: form.imgRect }), [form.imgRect, form.imgUrl])
 
   if (isFormLoading) return <CircularProgress />
 
   return (
     <form onSubmit={onFormSubmit}>
       <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-      <PictureUploader
+      <ImageUploader
         aspectRatio={1}
         circle
         disabled={isFormLoading || isCropping || isUploaderLoading}
         label="Picture"
-        onChange={setPicture}
+        onChange={setImage}
         setDisabled={setIsCropping}
         setIsUploaderLoading={setIsUploaderLoading}
-        value={pictureUploaderValue}
+        value={imageUploaderValue}
       />
       <TextField
         disabled

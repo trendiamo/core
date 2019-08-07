@@ -5,13 +5,13 @@ import GalleryDialog from './gallery-dialog'
 import isEmpty from 'lodash.isempty'
 import React, { useCallback, useEffect, useState } from 'react'
 import UrlUploadDialog from './url-upload-dialog'
-import { apiGetRemotePicture, apiPictureList, apiRequest } from 'utils'
+import { apiGetRemoteImage, apiImageList, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 import 'react-aspect-ratio/aspect-ratio.css'
 
 const ENTER_KEYCODE = 13
 
-const PicturesModal = ({
+const ImagesModal = ({
   crop,
   croppingState,
   hasNewUpload,
@@ -23,27 +23,27 @@ const PicturesModal = ({
   onCropDoneClick,
   onFileUpload,
   onModalClose,
-  onPictureLoaded,
+  onImageLoaded,
   open,
-  picture,
-  picturePreviewRef,
-  previewPicture,
+  image,
+  imagePreviewRef,
+  previewImage,
   setHasNewUpload,
   setIsLoading,
   setOpen,
   type,
 }) => {
-  const [activePicture, setActivePicture] = useState(null)
+  const [activeImage, setActiveImage] = useState(null)
   const [emptyState, setEmptyState] = useState(false)
-  const [isPictureLoading, setIsPictureLoading] = useState(false)
-  const [pictures, setPictures] = useState([])
-  const [pictureUrl, setPictureUrl] = useState('')
+  const [isImageLoading, setIsImageLoading] = useState(false)
+  const [images, setImages] = useState([])
+  const [imageUrl, setImageUrl] = useState('')
   const [urlUploadState, setUrlUploadState] = useState(false)
 
   useEffect(
     () => {
       if (hasNewUpload) {
-        setPictures([])
+        setImages([])
         setEmptyState(false)
         setHasNewUpload(false)
         setUrlUploadState(false)
@@ -54,11 +54,11 @@ const PicturesModal = ({
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const fetchRemotePicture = useCallback(
+  const fetchRemoteImage = useCallback(
     async () => {
       let splitUrl
       try {
-        const url = new URL(pictureUrl)
+        const url = new URL(imageUrl)
         if (!['http:', 'https:'].includes(url.protocol)) {
           throw TypeError('Invalid protocol')
         }
@@ -67,9 +67,7 @@ const PicturesModal = ({
         return enqueueSnackbar('Please enter a valid URL', { variant: 'error' })
       }
       const filename = splitUrl[splitUrl.length - 1]
-      const { json: blob, requestError, errors, response, ...rest } = await apiRequest(apiGetRemotePicture, [
-        pictureUrl,
-      ])
+      const { json: blob, requestError, errors, response, ...rest } = await apiRequest(apiGetRemoteImage, [imageUrl])
       if (errors || requestError) {
         enqueueSnackbar(errors.message || requestError, { variant: 'error' })
       } else {
@@ -77,7 +75,7 @@ const PicturesModal = ({
       }
       return { blob, response, errors, requestError, ...rest }
     },
-    [enqueueSnackbar, onFileUpload, pictureUrl]
+    [enqueueSnackbar, onFileUpload, imageUrl]
   )
 
   const handleClose = useCallback(
@@ -89,36 +87,36 @@ const PicturesModal = ({
     [onCropDoneClick, setOpen]
   )
 
-  const fetchPictures = useCallback(
+  const fetchImages = useCallback(
     async () => {
-      const { json, response, errors, requestError, ...rest } = await apiRequest(apiPictureList, '')
+      const { json, response, errors, requestError, ...rest } = await apiRequest(apiImageList, '')
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (requestError || errors) {
-        setPictures([])
+        setImages([])
         handleClose()
       } else {
-        const animations = json.filter(picture => picture.url.split('.').pop() === 'gif')
-        const pictures = json.filter(picture => !animations.includes(picture))
+        const animations = json.filter(image => image.url.split('.').pop() === 'gif')
+        const images = json.filter(image => !animations.includes(image))
         if (type === 'animationsModal') {
           if (isEmpty(animations)) return setEmptyState(true)
-          setPictures(animations)
+          setImages(animations)
         } else {
-          if (isEmpty(pictures)) return setEmptyState(true)
-          setPictures(pictures)
+          if (isEmpty(images)) return setEmptyState(true)
+          setImages(images)
         }
-        const activePicture = json.find(picture => picture.url === previewPicture)
-        if (activePicture) setActivePicture(activePicture)
+        const activeImage = json.find(image => image.url === previewImage)
+        if (activeImage) setActiveImage(activeImage)
       }
       return { json, response, errors, requestError, ...rest }
     },
-    [enqueueSnackbar, handleClose, previewPicture, setActivePicture, setEmptyState, setPictures, type]
+    [enqueueSnackbar, handleClose, previewImage, setActiveImage, setEmptyState, setImages, type]
   )
 
   const onCancelCropping = useCallback(
     () => {
       onCancelClick()
       setUrlUploadState(false)
-      setActivePicture(null)
+      setActiveImage(null)
     },
     [onCancelClick]
   )
@@ -132,9 +130,9 @@ const PicturesModal = ({
 
   const onDialogClose = useCallback(
     () => {
-      onModalClose(activePicture ? activePicture.url : null)
+      onModalClose(activeImage ? activeImage.url : null)
     },
-    [activePicture, onModalClose]
+    [activeImage, onModalClose]
   )
 
   const onDoneCropping = useCallback(
@@ -152,16 +150,16 @@ const PicturesModal = ({
     [onFileUpload]
   )
 
-  const onPictureClick = useCallback(
-    picture => {
-      setActivePicture(picture)
+  const onImageClick = useCallback(
+    image => {
+      setActiveImage(image)
     },
-    [setActivePicture]
+    [setActiveImage]
   )
 
   const onUrlUploadClick = useCallback(
     () => {
-      setPictureUrl('')
+      setImageUrl('')
       setUrlUploadState(true)
     },
     [setUrlUploadState]
@@ -176,29 +174,29 @@ const PicturesModal = ({
 
   const onDoneUrlUpload = useCallback(
     async () => {
-      await fetchRemotePicture()
+      await fetchRemoteImage()
     },
-    [fetchRemotePicture]
+    [fetchRemoteImage]
   )
 
   const onGalleryKeyup = useCallback(
     ({ keyCode }) => {
-      if (keyCode === ENTER_KEYCODE && activePicture) onGalleryDoneClick(activePicture)
+      if (keyCode === ENTER_KEYCODE && activeImage) onGalleryDoneClick(activeImage)
     },
-    [activePicture, onGalleryDoneClick]
+    [activeImage, onGalleryDoneClick]
   )
 
   const onDialogEntering = useCallback(
     async () => {
-      if (!emptyState && isEmpty(pictures)) {
+      if (!emptyState && isEmpty(images)) {
         setIsLoading(true)
-        await fetchPictures()
+        await fetchImages()
         setIsLoading(false)
       } else {
-        setActivePicture(pictures.find(picture => picture.url === previewPicture))
+        setActiveImage(images.find(image => image.url === previewImage))
       }
     },
-    [emptyState, fetchPictures, pictures, previewPicture, setIsLoading]
+    [emptyState, fetchImages, images, previewImage, setIsLoading]
   )
 
   const onUrlUploadKeyup = useCallback(
@@ -212,20 +210,20 @@ const PicturesModal = ({
 
   if (isLoading) return <CircularProgress transparent />
 
-  if (croppingState && picture) {
+  if (croppingState && image) {
     return (
       <CroppingDialog
         crop={crop}
         handleClose={onCancelCropping}
+        image={image}
+        imagePreviewRef={imagePreviewRef}
         onCancelCropping={onCancelCropping}
         onCropChange={onCropChange}
         onCropComplete={onCropComplete}
         onDoneCropping={onDoneCropping}
+        onImageLoaded={onImageLoaded}
         onKeyUp={onCropKeyup}
-        onPictureLoaded={onPictureLoaded}
         open={open}
-        picture={picture}
-        picturePreviewRef={picturePreviewRef}
       />
     )
   }
@@ -234,13 +232,13 @@ const PicturesModal = ({
     return (
       <UrlUploadDialog
         handleClose={handleClose}
-        isPictureLoading={isPictureLoading}
+        isImageLoading={isImageLoading}
         onCancelUrlUpload={onCancelUrlUpload}
         onDoneUrlUpload={onDoneUrlUpload}
         onFileUpload={newOnFileUpload}
         onKeyUp={onUrlUploadKeyup}
         open={open}
-        setPictureUrl={setPictureUrl}
+        setImageUrl={setImageUrl}
         type={type}
       />
     )
@@ -260,21 +258,20 @@ const PicturesModal = ({
 
   return (
     <GalleryDialog
-      activePicture={activePicture}
+      activeImage={activeImage}
       handleClose={handleClose}
+      images={images}
       onDialogClose={onDialogClose}
       onEntering={onDialogEntering}
       onFileUpload={newOnFileUpload}
       onGalleryDoneClick={onGalleryDoneClick}
+      onImageClick={onImageClick}
       onKeyUp={onGalleryKeyup}
-      onPictureClick={onPictureClick}
       onUrlUploadClick={onUrlUploadClick}
       open={open}
-      pictures={pictures}
-      setIsPictureLoading={setIsPictureLoading}
-      type={type}
+      setIsImageLoading={setIsImageLoading}
     />
   )
 }
 
-export default PicturesModal
+export default ImagesModal

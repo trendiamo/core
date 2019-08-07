@@ -24,7 +24,7 @@ const ProductIcon = styled(Redeem)`
   margin-right: 6px;
 `
 
-const PictureIcon = styled(PhotoLibrary)`
+const ImageIcon = styled(PhotoLibrary)`
   font-size: 18px;
   margin-right: 6px;
 `
@@ -135,10 +135,10 @@ const SimpleChatSection = ({
         messageType === 'SimpleChatTextMessage'
           ? { html: '' }
           : messageType === 'SimpleChatProductMessage'
-          ? { title: '', picture: { url: '' }, picRect: {}, url: '', displayPrice: '', groupWithAdjacent: false }
+          ? { title: '', img: { url: '' }, imgRect: {}, url: '', displayPrice: '', groupWithAdjacent: false }
           : messageType === 'SimpleChatVideoMessage'
           ? { videoUrl: '' }
-          : { picture: { url: '' }, picRect: {}, groupWithAdjacent: false }
+          : { img: { url: '' }, imgRect: {}, groupWithAdjacent: false }
       onChange(
         {
           ...simpleChatSection,
@@ -249,9 +249,9 @@ const SimpleChatSection = ({
               <ProductIcon />
               {'Product'}
             </MenuItem>
-            <MenuItem onClick={addSimpleChatMessage} value="SimpleChatPictureMessage">
-              <PictureIcon />
-              {'Picture'}
+            <MenuItem onClick={addSimpleChatMessage} value="SimpleChatImageMessage">
+              <ImageIcon />
+              {'Image'}
             </MenuItem>
             <MenuItem onClick={addSimpleChatMessage} value="SimpleChatVideoMessage">
               <VideoIcon />

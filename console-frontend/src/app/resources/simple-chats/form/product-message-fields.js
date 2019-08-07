@@ -1,4 +1,4 @@
-import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
+import ImageUploader, { ProgressBar } from 'shared/image-uploader'
 import React, { useCallback } from 'react'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Field, FormHelperText } from 'shared/form-elements'
@@ -15,7 +15,7 @@ const ProductMessagesForm = ({
   progress,
   setIsCropping,
   setIsUploaderLoading,
-  setPicture,
+  setImage,
   simpleChatMessage,
 }) => (
   <>
@@ -54,15 +54,15 @@ const ProductMessagesForm = ({
       onFocus={onFocus}
       value={simpleChatMessage.displayPrice || ''}
     />
-    <PictureUploader
+    <ImageUploader
       disabled={isCropping || isFormLoading || isUploaderLoading}
-      label="Picture"
-      name="picUrl"
-      onChange={setPicture}
+      label="Image"
+      name="imgUrl"
+      onChange={setImage}
       required
       setDisabled={setIsCropping}
       setIsUploaderLoading={setIsUploaderLoading}
-      value={{ url: simpleChatMessage.picture.url, picRect: simpleChatMessage.picRect }}
+      value={{ url: simpleChatMessage.img.url, imgRect: simpleChatMessage.imgRect }}
     />
     {progress && <ProgressBar progress={progress} />}
     <FormControlLabel
@@ -107,13 +107,10 @@ const ProductMessageFields = ({
     [onChange, simpleChatMessageIndex, simpleChatMessage]
   )
 
-  const setPicture = useCallback(
-    picture => {
+  const setImg = useCallback(
+    img => {
       onFocus()
-      onChange(
-        { ...simpleChatMessage, picture: { url: picture.url }, picRect: picture.picRect },
-        simpleChatMessageIndex
-      )
+      onChange({ ...simpleChatMessage, img: { url: img.url }, imgRect: img.imgRect }, simpleChatMessageIndex)
     },
     [onChange, onFocus, simpleChatMessage, simpleChatMessageIndex]
   )
@@ -128,9 +125,9 @@ const ProductMessageFields = ({
       isUploaderLoading={isUploaderLoading}
       onFocus={onFocus}
       onFormChange={onFormChange}
+      setImage={setImg}
       setIsCropping={setIsCropping}
       setIsUploaderLoading={setIsUploaderLoading}
-      setPicture={setPicture}
       simpleChatMessage={simpleChatMessage}
     />
   )

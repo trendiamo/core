@@ -11,8 +11,8 @@ const previewConverter = {
     return {
       name: seller.name || defaults.seller.name,
       bio: seller.bio || defaults.seller.bio,
-      profilePic: { url: seller.profilePic ? seller.profilePic.url : '', picRect: seller.picRect || {} },
-      profilePicAnimation: { url: seller.profilePicAnimation ? seller.profilePicAnimation.url : '', picRect: {} },
+      img: { url: seller.img ? seller.img.url : '', imgRect: seller.imgRect || {} },
+      animatedImg: { url: seller.animatedImg ? seller.animatedImg.url : '', imgRect: {} },
     }
   },
   mainData(heading, useSellerAnimation, simpleChatSections) {

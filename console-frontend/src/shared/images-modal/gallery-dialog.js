@@ -2,14 +2,14 @@ import AspectRatio from 'react-aspect-ratio'
 import Button from 'shared/button'
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { DialogActionsContainer, StyledButton } from './shared'
 import { Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
-const Picture = styled.img`
+const Image = styled.img`
   object-fit: cover;
   width: 100%;
   border-radius: 6px;
@@ -46,37 +46,32 @@ const DialogSubtitleLink = styled(Link)`
   }
 `
 
-const DialogContentGallery = ({ activePicture, onPictureClick, pictures }) => (
+const DialogContentGallery = ({ activeImage, onImageClick, images }) => (
   <Grid container spacing={24}>
-    {pictures &&
-      pictures
+    {images &&
+      images
         .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-        .map(picture => (
-          <GalleryPicture
-            isActive={picture === activePicture}
-            key={picture.id}
-            onPictureClick={onPictureClick}
-            picture={picture}
-          />
+        .map(image => (
+          <GalleryImage image={image} isActive={image === activeImage} key={image.id} onImageClick={onImageClick} />
         ))}
   </Grid>
 )
 
-const DialogActionsGallery = ({ activePicture, onGalleryDoneClick, onFileUpload, onUrlUploadClick }) => {
-  const [isDoneButtonDisabled, setIsDoneButtonDisabled] = useState(() => !!activePicture)
+const DialogActionsGallery = ({ activeImage, onGalleryDoneClick, onFileUpload, onUrlUploadClick }) => {
+  const [isDoneButtonDisabled, setIsDoneButtonDisabled] = useState(() => !!activeImage)
 
   const newOnDoneButtonClick = useCallback(
     () => {
-      onGalleryDoneClick(activePicture)
+      onGalleryDoneClick(activeImage)
     },
-    [onGalleryDoneClick, activePicture]
+    [onGalleryDoneClick, activeImage]
   )
 
   useEffect(
     () => {
-      setIsDoneButtonDisabled(!activePicture)
+      setIsDoneButtonDisabled(!activeImage)
     },
-    [activePicture]
+    [activeImage]
   )
 
   return (
@@ -96,13 +91,13 @@ const DialogActionsGallery = ({ activePicture, onGalleryDoneClick, onFileUpload,
   )
 }
 
-const GalleryPicture = ({ isActive, onPictureClick, picture }) => {
-  const newOnPictureClick = useCallback(() => onPictureClick(picture), [onPictureClick, picture])
+const GalleryImage = ({ isActive, onImageClick, image }) => {
+  const newOnImageClick = useCallback(() => onImageClick(image), [onImageClick, image])
 
   return (
     <Grid item md={2} sm={3} xs={4}>
       <AspectRatio style={{ width: '100%' }}>
-        <Picture id={`picture-${picture.id}`} isActive={isActive} onClick={newOnPictureClick} src={picture.url} />
+        <Image id={`image-${image.id}`} isActive={isActive} onClick={newOnImageClick} src={image.url} />
         {isActive && <CheckBoxIcon src="/img/icons/select.svg" />}
       </AspectRatio>
     </Grid>
@@ -110,47 +105,38 @@ const GalleryPicture = ({ isActive, onPictureClick, picture }) => {
 }
 
 const GalleryDialog = ({
-  activePicture,
+  activeImage,
   handleClose,
   onDialogClose,
   onEntering,
   onFileUpload,
   onGalleryDoneClick,
   onKeyUp,
-  onPictureClick,
+  onImageClick,
   onUrlUploadClick,
   open,
-  pictures,
-  type,
-}) => {
-  const title = useMemo(() => `Select a${type === 'animationsModal' ? 'n animation' : ' picture'} from the gallery:`, [
-    type,
-  ])
-
-  return (
-    <Dialog
-      content={
-        <DialogContentGallery activePicture={activePicture} onPictureClick={onPictureClick} pictures={pictures} />
-      }
-      dialogActions={
-        <DialogActionsGallery
-          activePicture={activePicture}
-          onDialogClose={onDialogClose}
-          onFileUpload={onFileUpload}
-          onGalleryDoneClick={onGalleryDoneClick}
-          onUrlUploadClick={onUrlUploadClick}
-        />
-      }
-      fullWidth
-      handleClose={handleClose}
-      maxWidth="lg"
-      onEntering={onEntering}
-      onKeyUp={onKeyUp}
-      open={open}
-      subtitle={<DialogSubtitleLink to={routes.picturesList()}>{'Or go to the image gallery >'}</DialogSubtitleLink>}
-      title={title}
-    />
-  )
-}
+  images,
+}) => (
+  <Dialog
+    content={<DialogContentGallery activeImage={activeImage} images={images} onImageClick={onImageClick} />}
+    dialogActions={
+      <DialogActionsGallery
+        activeImage={activeImage}
+        onDialogClose={onDialogClose}
+        onFileUpload={onFileUpload}
+        onGalleryDoneClick={onGalleryDoneClick}
+        onUrlUploadClick={onUrlUploadClick}
+      />
+    }
+    fullWidth
+    handleClose={handleClose}
+    maxWidth="lg"
+    onEntering={onEntering}
+    onKeyUp={onKeyUp}
+    open={open}
+    subtitle={<DialogSubtitleLink to={routes.imagesList()}>{'Or go to the image gallery >'}</DialogSubtitleLink>}
+    title="Select an image from the gallery:"
+  />
+)
 
 export default GalleryDialog

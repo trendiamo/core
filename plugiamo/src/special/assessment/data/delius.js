@@ -20,9 +20,9 @@ const data = {
       extraTeaserMessage: 'Wie kann ich Ihnen helfen?',
       seller: {
         name: 'Elisa',
-        profilePic: {
+        image: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
-          picRect: {},
+          imgRect: {},
         },
       },
     },
@@ -50,28 +50,28 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Architekt.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Architekt.jpg',
                       title: 'Architekt',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Objekteur.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Objekteur.jpg',
                       title: 'Objekteur',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Raumausstatter.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Raumausstatter.jpg',
                       title: 'Raumaustatter',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Haendler.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Haendler.jpg',
                       title: 'Händler',
                     },
                     {
-                      picUrl:
+                      imgUrl:
                         'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Einkaufsgesellschaft.jpg',
                       title: 'Einkaufsgesellschaft',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Betreiber.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Betreiber.jpg',
                       title: 'Betreiber',
                     },
                   ],
@@ -98,23 +98,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
                       title: 'Hotel',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
                       title: 'Health & Care',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Schiffahrt.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Schiffahrt.jpg',
                       title: 'Schifffahrt',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kino_Theather.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kino_Theather.jpg',
                       title: 'Kino / Theater',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Buero.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Buero.jpg',
                       title: 'Büro',
                     },
                   ],
@@ -141,23 +141,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
                       title: 'Hotel',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
                       title: 'Health & Care',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Schiffahrt.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Schiffahrt.jpg',
                       title: 'Schifffahrt',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kino_Theather.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kino_Theather.jpg',
                       title: 'Kino / Theater',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Buero.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Buero.jpg',
                       title: 'Büro',
                     },
                   ],
@@ -184,15 +184,15 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
                       title: 'Hotel',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
                       title: 'Health & Care',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Privatkunden.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Privatkunden.jpg',
                       title: 'Privatkunden',
                     },
                   ],
@@ -219,23 +219,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
                       title: 'Hotel',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Health&Care.jpg',
                       title: 'Health & Care',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Schiffahrt.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Schiffahrt.jpg',
                       title: 'Schifffahrt',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kino_Theather.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kino_Theather.jpg',
                       title: 'Kino / Theater',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Privatkunden.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Privatkunden.jpg',
                       title: 'Privatkunden',
                     },
                   ],
@@ -262,15 +262,15 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
                       title: 'Hotel',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Pflegeheim.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Pflegeheim.jpg',
                       title: 'Pflegeheim',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Krankenhaus.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Krankenhaus.jpg',
                       title: 'Krankenhaus',
                     },
                   ],
@@ -297,23 +297,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Hotel.jpg',
                       title: 'Hotel',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Pflegeheim.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Pflegeheim.jpg',
                       title: 'Pflegeheim',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Krankenhaus.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Krankenhaus.jpg',
                       title: 'Krankenhaus',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wohnheim.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wohnheim.jpg',
                       title: 'Wohnheim',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kino_Theather.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Kino_Theather.jpg',
                       title: 'Kino / Theater',
                     },
                   ],
@@ -341,31 +341,31 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -393,27 +393,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -441,27 +441,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -489,27 +489,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Veloure.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Veloure.jpg',
                       title: 'Veloure',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                   ],
@@ -537,23 +537,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -581,31 +581,31 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -633,27 +633,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -681,31 +681,31 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -733,27 +733,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Veloure.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Veloure.jpg',
                       title: 'Veloure',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                   ],
@@ -781,23 +781,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -825,31 +825,31 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -877,27 +877,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -925,23 +925,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -969,31 +969,31 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -1021,27 +1021,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -1069,31 +1069,31 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -1121,27 +1121,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Veloure.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Veloure.jpg',
                       title: 'Veloure',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                   ],
@@ -1169,23 +1169,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -1213,31 +1213,31 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe	',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -1265,27 +1265,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -1313,23 +1313,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -1357,31 +1357,31 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Outdoor.jpg',
                       title: 'Outdoor',
                     },
                   ],
@@ -1409,27 +1409,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -1457,23 +1457,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_2.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_2.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_2.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -1501,23 +1501,23 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Wandbelaege.jpg',
                       title: 'Wandbeläge',
                     },
                   ],
@@ -1545,27 +1545,27 @@ const data = {
                   type: 'assessmentStepOptions',
                   assessmentStepOptions: [
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Veloure.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Veloure.jpg',
                       title: 'Veloure',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Vorhaenge_1.jpg',
                       title: 'Vorhänge',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
                       title: 'Dimout/Blackout',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Gardine_1.jpg',
                       title: 'Gardine',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Moebelstoffe_1.jpg',
                       title: 'Möbelstoffe',
                     },
                     {
-                      picUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
+                      imgUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Akustikstoffe.jpg',
                       title: 'Akustikstoffe',
                     },
                   ],
@@ -1611,9 +1611,9 @@ const data = {
       extraTeaserMessage: '',
       seller: {
         name: 'Elisa',
-        profilePic: {
+        image: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
-          picRect: {},
+          imgRect: {},
         },
       },
     },
@@ -1622,7 +1622,7 @@ const data = {
       extraTeaserMessage: 'Wir melden uns schnellstmöglich.',
       seller: {
         name: 'Elisa',
-        profilePic: {
+        image: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
         },
       },

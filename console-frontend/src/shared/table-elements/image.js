@@ -12,6 +12,6 @@ const Img = styled.img`
   object-fit: cover;
 `
 
-const Picture = ({ src, disabled }) => <Img alt="" disabled={disabled} src={src} />
+const Image = ({ src, disabled }) => <Img alt="" disabled={disabled} src={src} />
 
-export default Picture
+export default Image

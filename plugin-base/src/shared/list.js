@@ -48,13 +48,13 @@ const ListContent = styled.div`
   position: absolute;
   top: 8px;
   bottom: 8px;
-  left: ${({ withoutPicture }) => (withoutPicture ? '16px' : '110px')};
+  left: ${({ withoutImage }) => (withoutImage ? '16px' : '110px')};
   right: 30px;
   .Win32 & {
     letter-spacing: -0.2px;
   }
-  ${({ withoutPicture }) =>
-    withoutPicture &&
+  ${({ withoutImage }) =>
+    withoutImage &&
     `
     display: flex;
     flex-direction: column;
@@ -218,12 +218,12 @@ const AnimatedImage = styled.img`
   }
 `
 
-const ListImg = forwardRef(({ picture, animation }, ref) => {
+const ListImg = forwardRef(({ img, animation }, ref) => {
   const theme = useContext(ThemeContext)
 
   return (
     <ImageContainer ref={ref} theme={theme}>
-      <SingleImage src={picture} />
+      <SingleImage src={img} />
       {animation && <AnimatedImage src={animation} />}
     </ImageContainer>
   )

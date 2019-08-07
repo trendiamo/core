@@ -3,7 +3,7 @@ import React from 'react'
 import routes from 'app/routes'
 import { ActiveColumn, Avatar, columns, EnhancedList, TableCell, Text } from 'shared/table-elements'
 import { apiShowcaseDestroy, apiShowcaseDuplicate, apiShowcaseList, defaultSorting } from 'utils'
-import { sellerPicUrl } from 'plugin-base'
+import { sellerImgUrl } from 'plugin-base'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -18,7 +18,7 @@ const BlankState = () => (
 const ShowcasesRow = ({ record, highlightInactive }) => (
   <>
     <TableCell width="20%">
-      <Avatar alt="" disabled={highlightInactive} src={sellerPicUrl(record.seller, record.useSellerAnimation)} />
+      <Avatar alt="" disabled={highlightInactive} src={sellerImgUrl(record.seller, record.useSellerAnimation)} />
     </TableCell>
     <TableCell width="80%">
       <Text disabled={highlightInactive}>{record.name}</Text>

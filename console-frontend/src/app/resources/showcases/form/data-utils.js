@@ -21,8 +21,8 @@ const previewConverter = {
     return spotlights
       .map((spotlight, i) => {
         const productPicks = this.productPicks(spotlight)
-        const profilePic = spotlight.__seller && (spotlight.__seller.profilePic || spotlight.__seller.profilePicUrl)
-        const picRect = spotlight.__seller && spotlight.__seller.picRect
+        const img = spotlight.__seller && (spotlight.__seller.img || spotlight.__seller.imgUrl)
+        const imgRect = spotlight.__seller && spotlight.__seller.imgRect
         const sellerName = spotlight.__seller && spotlight.__seller.name
         const sellerBio = spotlight.__seller && spotlight.__seller.bio
         if (spotlight._destroy) return null
@@ -34,8 +34,8 @@ const previewConverter = {
             ...spotlight.__seller,
             name: sellerName || defaults.spotlightName,
             bio: sellerBio || defaults.spotlightBio,
-            profilePic: { url: (profilePic && profilePic.url) || defaults.avatarPic, picRect },
-            profilePicUrl: profilePic || defaults.avatarPic,
+            img: { url: (img && img.url) || defaults.avatarPic, imgRect },
+            imgUrl: img || defaults.avatarPic,
           },
           translation: {
             selectedBy: `Products selected by ${sellerName && sellerName.split(' ')[0]}`,
@@ -54,7 +54,7 @@ const previewConverter = {
           name: productPick.name || defaults.productName,
           description: productPick.description || defaults.productDescription,
           displayPrice: productPick.displayPrice || defaults.productPrice,
-          picture: { url: productPick.picture.url || defaults.productPic, picRect: productPick.picRect },
+          img: { url: productPick.img.url || defaults.productPic, imgRect: productPick.imgRect },
         }
       })
       .filter(e => e)
@@ -86,8 +86,8 @@ const formObjectTransformer = json => {
             name: productPick.name || '',
             description: productPick.description || '',
             displayPrice: productPick.displayPrice || '',
-            picture: productPick.picture || { url: '' },
-            picRect: productPick.picRect || {},
+            img: productPick.img || { url: '' },
+            imgRect: productPick.imgRect || {},
             __key: productPick.__key,
           }))
         : [
@@ -96,8 +96,8 @@ const formObjectTransformer = json => {
               name: '',
               description: '',
               displayPrice: '',
-              picture: { url: '' },
-              picRect: {},
+              img: { url: '' },
+              imgRect: {},
               __key: 'new-0',
             },
           ],

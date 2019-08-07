@@ -1,5 +1,5 @@
 import characterLimits from 'shared/character-limits'
-import PictureUploader from 'shared/picture-uploader'
+import ImageUploader from 'shared/image-uploader'
 import React, { memo, useCallback } from 'react'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Cancel, Field, FormHelperText, FormSection } from 'shared/form-elements'
@@ -40,10 +40,10 @@ const ProductPick = ({
     [onChange]
   )
 
-  const setPicture = useCallback(
-    picture => {
+  const setImg = useCallback(
+    img => {
       onFocus()
-      onChange(productPick => ({ ...productPick, picture: { url: picture.url }, picRect: picture.picRect }))
+      onChange(productPick => ({ ...productPick, img: { url: img.url }, imgRect: img.imgRect }))
     },
     [onChange, onFocus]
   )
@@ -124,15 +124,15 @@ const ProductPick = ({
         onFocus={onFocus}
         value={productPick.displayPrice}
       />
-      <PictureUploader
+      <ImageUploader
         aspectRatio={1}
         disabled={isCropping || isFormLoading || isUploaderLoading}
-        label="Picture"
-        onChange={setPicture}
+        label="Image"
+        onChange={setImg}
         required
         setDisabled={setIsCropping}
         setIsUploaderLoading={setIsUploaderLoading}
-        value={{ url: productPick.picture.url, picRect: productPick.picRect }}
+        value={{ url: productPick.img.url, imgRect: productPick.imgRect }}
       />
     </FormSection>
   )

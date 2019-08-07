@@ -61,7 +61,7 @@ const BaseOutroForm = ({
       mergeForm({
         sellerId: selected.value.id,
         __seller: selected.value,
-        useSellerAnimation: selected.value.profilePicAnimation.url ? useSellerAnimation : false,
+        useSellerAnimation: selected.value.animatedImg.url ? useSellerAnimation : false,
       })
     },
     [mergeForm, useSellerAnimation]
@@ -102,14 +102,14 @@ const BaseOutroForm = ({
               <Checkbox
                 checked={form.useSellerAnimation}
                 color="primary"
-                disabled={!form.__seller.profilePicAnimation.url}
+                disabled={!form.__seller.animatedImg.url}
                 name="useSellerAnimation"
                 onChange={onToggleSellerAnimation}
               />
             }
-            disabled={!form.__seller.profilePicAnimation.url}
-            label="Use seller's animated picture"
-            title={form.__seller.profilePicAnimation.url ? null : "This seller doesn't have an animated picture"}
+            disabled={!form.__seller.animatedImg.url}
+            label="Use seller's animated image"
+            title={form.__seller.animatedImg.url ? null : "This seller doesn't have an animated image"}
           />
         )}
         <Field

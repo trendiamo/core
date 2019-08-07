@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { ListChevron, ListContent, ListImg, ListItem } from 'shared/list'
-import { sellerPicUrl } from 'tools'
+import { sellerImgUrl } from 'tools'
 import { transition } from 'ext'
 
 const SellerName = styled.div`
@@ -28,37 +28,36 @@ const SellerBio = styled.div`
   }
 `
 
-const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, withoutPicture, bordered }) => {
+const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, withoutImage, bordered }) => {
   const imgRef = useRef()
   const nameRef = useRef()
 
   const newOnClick = useCallback(
     () => {
-      if (!withoutPicture) {
+      if (!withoutImage) {
         transition.addElement('img', imgRef.current)
         transition.addElement('name', nameRef.current)
       }
       onClick(spotlight)
     },
-    [onClick, spotlight, withoutPicture]
+    [onClick, spotlight, withoutImage]
   )
 
   const animation = useMemo(
-    () =>
-      spotlight.seller.profilePicAnimation && !spotlight.useSellerAnimation && spotlight.seller.profilePicAnimation.url,
+    () => spotlight.seller.animatedImg && !spotlight.useSellerAnimation && spotlight.seller.animatedImg.url,
     [spotlight]
   )
 
   return (
     <ListItem bordered={bordered} listSelected={listSelected} onClick={newOnClick} setListSelected={setListSelected}>
-      {!withoutPicture && (
+      {!withoutImage && (
         <ListImg
           animation={animation}
-          picture={sellerPicUrl(spotlight.seller, spotlight.useSellerAnimation, { w: 101, h: 101 })}
+          img={sellerImgUrl(spotlight.seller, spotlight.useSellerAnimation, { w: 101, h: 101 })}
           ref={imgRef}
         />
       )}
-      <ListContent withoutPicture={withoutPicture}>
+      <ListContent withoutImage={withoutImage}>
         <SellerName ref={nameRef}>{spotlight.seller.name}</SellerName>
         <SellerBio dangerouslySetInnerHTML={{ __html: spotlight.seller.bio }} />
       </ListContent>

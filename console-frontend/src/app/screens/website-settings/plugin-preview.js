@@ -15,7 +15,7 @@ const spotlights = [
   {
     id: 'spotlight-1',
     seller: {
-      profilePic: { url: sellerUrl },
+      img: { url: sellerUrl },
       name: 'Mr. Steven',
       description: 'Check the plugin style. Corners around this, and colors of header and launcher.',
     },
@@ -44,7 +44,7 @@ const PluginPreview = ({ form }) => {
     [form]
   )
 
-  const Launcher = useMemo(() => <BaseLauncher sellerPic={{ url: sellerUrl }} showingContent theme={form} />, [form])
+  const Launcher = useMemo(() => <BaseLauncher sellerImg={{ url: sellerUrl }} showingContent theme={form} />, [form])
 
   useEffect(() => {
     pluginHistory.replace(pluginRoutes.showcase('some-id'))

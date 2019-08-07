@@ -22,7 +22,7 @@ const IconHelp = styled(HelpOutline)`
 
 const SellerLabel = ({ disabled }) => (
   <StyledLabel>
-    {'Always show animated picture'}
+    {'Always show animated image'}
     <Tooltip
       disabled={disabled}
       placement="top"
@@ -64,7 +64,7 @@ const Spotlight = ({
         onChange(() => ({
           sellerId: selected.value.id,
           __seller: selected.value,
-          useSellerAnimation: selected.value.profilePicAnimation.url ? useSellerAnimation : false,
+          useSellerAnimation: selected.value.animatedImg.url ? useSellerAnimation : false,
         }))
       }
     },
@@ -81,8 +81,8 @@ const Spotlight = ({
             name: '',
             description: '',
             displayPrice: '',
-            picture: { url: '' },
-            picRect: {},
+            img: { url: '' },
+            imgRect: {},
             __key: `new-${spotlight.productPicksAttributes.length}`,
           },
         ],
@@ -184,14 +184,14 @@ const Spotlight = ({
               <Checkbox
                 checked={spotlight.useSellerAnimation}
                 color="primary"
-                disabled={!spotlight.__seller.profilePicAnimation.url}
+                disabled={!spotlight.__seller.animatedImg.url}
                 name="useSellerAnimation"
                 onChange={onToggleSellerAnimation}
               />
             }
-            disabled={!spotlight.__seller.profilePicAnimation.url}
-            label={<SellerLabel disabled={!spotlight.__seller.profilePicAnimation.url} />}
-            title={spotlight.__seller.profilePicAnimation.url ? null : "This seller doesn't have an animated picture"}
+            disabled={!spotlight.__seller.animatedImg.url}
+            label={<SellerLabel disabled={!spotlight.__seller.animatedImg.url} />}
+            title={spotlight.__seller.animatedImg.url ? null : "This seller doesn't have an animated image"}
           />
         )}
         <div style={{ marginTop: '8px' }}>

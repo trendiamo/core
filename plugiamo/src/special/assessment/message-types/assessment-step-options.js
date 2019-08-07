@@ -19,7 +19,7 @@ const Element = ({ hideAll, nothingSelected, onClick, option }) => {
     <AssessmentStepOption
       hideAll={hideAll}
       highlight
-      imageUrl={imgixUrl(option.picUrl, { fit: 'crop', w: 165, h: 120 })}
+      imageUrl={imgixUrl(option.imgUrl, { fit: 'crop', w: 165, h: 120 })}
       nothingSelected={nothingSelected}
       onClick={newOnClick}
       option={option}

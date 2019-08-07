@@ -1,7 +1,7 @@
 import CloudUpload from '@material-ui/icons/CloudUpload'
 import Delete from '@material-ui/icons/Delete'
+import ImagesModal from 'shared/images-modal'
 import omit from 'lodash.omit'
-import PicturesModal from 'shared/pictures-modal'
 import React, { useCallback, useEffect, useState } from 'react'
 import ReactDropzone from 'react-dropzone'
 import styled from 'styled-components'
@@ -34,7 +34,7 @@ const StyledDelete = styled(Delete)`
   margin-bottom: 2px;
 `
 
-const FilteredReactDropzone = props => <ReactDropzone {...omit(props, ['isDragging', 'previewPicture'])} />
+const FilteredReactDropzone = props => <ReactDropzone {...omit(props, ['isDragging', 'previewImage'])} />
 
 const StyledDropzone = styled(FilteredReactDropzone)`
   border-width: 0;
@@ -43,18 +43,18 @@ const StyledDropzone = styled(FilteredReactDropzone)`
   width: 150px;
   margin-top: 25px;
   margin-bottom: 0.4rem;
-  color: ${({ isDragging, previewPicture }) => (previewPicture ? '#fff' : isDragging ? '#ff6641' : '#7f8086')};
+  color: ${({ isDragging, previewImage }) => (previewImage ? '#fff' : isDragging ? '#ff6641' : '#7f8086')};
   cursor: ${({ disabled }) => (disabled ? 'wait' : 'pointer')};
 
   ${InnerLabel} {
-    visibility: ${({ isDragging, previewPicture }) => (isDragging || !previewPicture ? 'visible' : 'hidden')};
-    background-color: ${({ isDragging, previewPicture }) =>
-      isDragging && previewPicture ? 'rgba(0, 0, 0, 0.6)' : 'transparent'};
+    visibility: ${({ isDragging, previewImage }) => (isDragging || !previewImage ? 'visible' : 'hidden')};
+    background-color: ${({ isDragging, previewImage }) =>
+      isDragging && previewImage ? 'rgba(0, 0, 0, 0.6)' : 'transparent'};
   }
 
   &:hover ${InnerLabel} {
-    visibility: ${({ disabled, previewPicture }) => (disabled && previewPicture ? 'hidden' : 'visible')};
-    background-color: ${({ previewPicture }) => (previewPicture ? 'rgba(0, 0, 0, 0.6)' : 'transparent')};
+    visibility: ${({ disabled, previewImage }) => (disabled && previewImage ? 'hidden' : 'visible')};
+    background-color: ${({ previewImage }) => (previewImage ? 'rgba(0, 0, 0, 0.6)' : 'transparent')};
   }
 `
 
@@ -84,10 +84,10 @@ const CircularProgressContainer = styled.div`
 const Dropzone = ({
   circle,
   disabled,
-  isPictureLoading,
+  isImageLoading,
   onFileUpload,
-  previewPicture,
-  setIsPictureLoading,
+  previewImage,
+  setIsImageLoading,
   setIsUploaderLoading,
   type,
   ...props
@@ -110,9 +110,9 @@ const Dropzone = ({
     [onFileUpload]
   )
 
-  useEffect(() => setIsUploaderLoading(isPictureLoading), [isPictureLoading, setIsUploaderLoading])
+  useEffect(() => setIsUploaderLoading(isImageLoading), [isImageLoading, setIsUploaderLoading])
 
-  const onPictureLoad = useCallback(() => setIsPictureLoading(false), [setIsPictureLoading])
+  const onImageLoad = useCallback(() => setIsImageLoading(false), [setIsImageLoading])
 
   return (
     <StyledDropzone
@@ -122,15 +122,15 @@ const Dropzone = ({
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      previewPicture={previewPicture}
+      previewImage={previewImage}
       {...props}
     >
-      <Img alt="" circle={circle} onLoad={onPictureLoad} src={previewPicture} type={type} />
+      <Img alt="" circle={circle} onLoad={onImageLoad} src={previewImage} type={type} />
       <InnerLabel circle={circle}>
         <CloudUpload />
         <div>{'Drop a file or click to select one'}</div>
       </InnerLabel>
-      {isPictureLoading && (
+      {isImageLoading && (
         <CircularProgressContainer circle={circle}>
           <CircularProgress size={50} />
         </CircularProgressContainer>
@@ -152,14 +152,14 @@ const RemoveButtonContainer = styled.div`
   }
 `
 
-const BasePictureUploader = ({
+const BaseImageUploader = ({
   circle,
   crop,
   disabled,
   doneCropping,
   hasNewUpload,
   isLoading,
-  isPictureLoading,
+  isImageLoading,
   label,
   modalOpen,
   onCancelClick,
@@ -170,26 +170,28 @@ const BasePictureUploader = ({
   onFileUpload,
   onGalleryDoneClick,
   onModalClose,
-  onPictureLoaded,
-  onRemovePicture,
-  picture,
-  picturePreviewRef,
-  previewPicture,
+  onImageLoaded,
+  onRemoveImage,
+  image,
+  imagePreviewRef,
+  previewImage,
   progress,
   required = false,
   setHasNewUpload,
   setIsLoading,
-  setIsPictureLoading,
+  setIsImageLoading,
   setIsUploaderLoading,
   setModalOpen,
   value,
   type,
 }) => (
   <>
-    <PicturesModal
+    <ImagesModal
       crop={crop}
       croppingState={!doneCropping}
       hasNewUpload={hasNewUpload}
+      image={image}
+      imagePreviewRef={imagePreviewRef}
       isLoading={isLoading}
       onCancelClick={onCancelClick}
       onCropChange={onCropChange}
@@ -197,17 +199,15 @@ const BasePictureUploader = ({
       onCropDoneClick={onCropDoneClick}
       onFileUpload={onFileUpload}
       onGalleryDoneClick={onGalleryDoneClick}
+      onImageLoaded={onImageLoaded}
       onModalClose={onModalClose}
-      onPictureLoaded={onPictureLoaded}
       open={modalOpen}
-      picture={picture}
-      picturePreviewRef={picturePreviewRef}
-      previewPicture={previewPicture}
+      previewImage={previewImage}
       progress={progress}
       setHasNewUpload={setHasNewUpload}
       setIsLoading={setIsLoading}
       setOpen={setModalOpen}
-      type={type === 'animationUploader' ? 'animationsModal' : 'picturesModal'}
+      type={type === 'animationUploader' ? 'animationsModal' : 'imagesModal'}
     />
     <Container>
       <FormControl disabled={disabled} fullWidth margin="normal">
@@ -216,22 +216,22 @@ const BasePictureUploader = ({
           accept="image/*"
           circle={circle}
           disabled={disabled}
-          isPictureLoading={isPictureLoading}
+          isImageLoading={isImageLoading}
           multiple={false}
           onClick={onDropzoneClick}
           onFileUpload={onFileUpload}
-          previewPicture={value.url && imgixUrl(value.url, { rect: stringifyRect(value.picRect) })}
-          setIsPictureLoading={setIsPictureLoading}
+          previewImage={value.url && imgixUrl(value.url, { rect: stringifyRect(value.imgRect) })}
+          setIsImageLoading={setIsImageLoading}
           setIsUploaderLoading={setIsUploaderLoading}
           type={type}
         />
       </FormControl>
-      {(picture || previewPicture) && (picture ? doneCropping : true) && (
+      {(image || previewImage) && (image ? doneCropping : true) && (
         <RemoveButtonContainer>
           <Button
             disabled={disabled}
             mini
-            onClick={onRemovePicture}
+            onClick={onRemoveImage}
             style={{ color: theme.palette.error.main }}
             type="button"
           >
@@ -244,4 +244,4 @@ const BasePictureUploader = ({
   </>
 )
 
-export default BasePictureUploader
+export default BaseImageUploader

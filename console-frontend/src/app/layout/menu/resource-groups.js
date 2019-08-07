@@ -20,7 +20,7 @@ const resourceGroups = () => {
     basic: {
       name: 'Basics',
       showTitle: true,
-      resources: [resources.pictures, resources.sellers],
+      resources: [resources.images, resources.sellers],
     },
     tools: {
       name: 'Tools',
@@ -45,7 +45,7 @@ const editorResourceGroups = () => {
     basic: {
       name: 'Basics',
       showTitle: true,
-      resources: [resources.pictures],
+      resources: [resources.images],
     },
   }
 }

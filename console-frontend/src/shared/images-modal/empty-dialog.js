@@ -23,7 +23,7 @@ const DialogEmptyIcon = styled.img`
 `
 
 const DialogContentEmpty = ({ type }) => {
-  const resource = useMemo(() => (type === 'animationsModal' ? 'animation' : 'picture'), [type])
+  const resource = useMemo(() => (type === 'animationsModal' ? 'animation' : 'image'), [type])
 
   return (
     <DialogEmptyContainer>

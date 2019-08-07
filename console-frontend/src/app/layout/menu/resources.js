@@ -55,11 +55,11 @@ const resources = {
     class: 'sellers',
     route: () => routes.sellersList(),
   },
-  pictures: {
+  images: {
     icon: PhotoLibrary,
-    label: 'Pictures',
-    class: 'pictures',
-    route: () => routes.picturesList(),
+    label: 'Images',
+    class: 'images',
+    route: () => routes.imagesList(),
   },
   urlGenerator: {
     icon: LinkIcon,

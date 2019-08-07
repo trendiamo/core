@@ -61,16 +61,16 @@ const Link = styled.a`
 const defaultStyleConfig = { card: { minWidth: 260 } }
 
 const ProductMessage = ({ productMessage, styleConfig = defaultStyleConfig, onClick }) => {
-  const productPicUrl = useMemo(
+  const productImgUrl = useMemo(
     () =>
-      productMessage.picture.url &&
-      imgixUrl(productMessage.picture.url, {
-        rect: stringifyRect(productMessage.picRect),
+      productMessage.img.url &&
+      imgixUrl(productMessage.img.url, {
+        rect: stringifyRect(productMessage.imgRect),
         fit: 'crop',
         w: 260,
         h: styleConfig.image ? styleConfig.image.height : 180,
       }),
-    [productMessage.picRect, productMessage.picture.url, styleConfig.image]
+    [productMessage.imgRect, productMessage.img.url, styleConfig.image]
   )
 
   const newOnClick = useCallback(
@@ -86,7 +86,7 @@ const ProductMessage = ({ productMessage, styleConfig = defaultStyleConfig, onCl
   return (
     <Link href={productMessage.url} onClick={newOnClick} rel="noopener noreferrer" target="_blank">
       <ProductCard style={styleConfig.card}>
-        <ProductImage src={productPicUrl} style={styleConfig.image} />
+        <ProductImage src={productImgUrl} style={styleConfig.image} />
         <CardContent style={styleConfig.details}>
           <TitleAndPrice>
             <Title style={styleConfig.detailsText}>{productMessage.title}</Title>
