@@ -19,7 +19,7 @@ module Api
       def update
         @seller = policy_scope(Seller).find(params[:id])
         authorize @seller
-        convert_and_assign_pictures
+        convert_and_assign_images
         if @seller.update(seller_params)
           render json: @seller
         else
@@ -28,7 +28,7 @@ module Api
       end
 
       def create
-        convert_and_assign_pictures
+        convert_and_assign_images
         @seller = Seller.new(seller_params)
         authorize @seller
         if @seller.save
@@ -51,16 +51,16 @@ module Api
       private
 
       def seller_params
-        params.require(:seller).permit(:name, :bio, :instagram_url, :profile_pic_id, :profile_pic_animation_id,
-                                       :lock_version, pic_rect: %i[x y width height])
+        params.require(:seller).permit(:name, :bio, :instagram_url, :img_id, :animated_img_id, :lock_version,
+                                       img_rect: %i[x y width height])
       end
 
-      def convert_and_assign_pictures
-        %i[profile_pic profile_pic_animation].each do |pic|
+      def convert_and_assign_images
+        %i[img animated_img].each do |img|
           seller_params = params.require(:seller)
-          pic_url = seller_params[pic][:url]
-          seller_params["#{pic}_id"] = pic_url.present? ? Picture.find_or_create_by!(url: pic_url).id : nil
-          seller_params.delete(pic)
+          img_url = seller_params[img][:url]
+          seller_params["#{img}_id"] = img_url.present? ? Image.find_or_create_by!(url: img_url).id : nil
+          seller_params.delete(img)
         end
       end
 

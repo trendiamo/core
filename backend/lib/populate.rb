@@ -15,7 +15,7 @@ class PopulateShowcases
       showcase_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Showcase",
         seller: seller,
-        use_seller_animation: seller.profile_pic_animation&.url ? rand < 0.5 : false,
+        use_seller_animation: seller.animated_img&.url ? rand < 0.5 : false,
         heading: Faker::Lorem.sentence,
         subheading: Faker::Lorem.sentence,
         teaser_message: Faker::Movie.quote,
@@ -32,7 +32,7 @@ class PopulateShowcases
     {
       product_picks_attributes: Array.new(3) { |index| product_picks_attributes(index) },
       seller: seller,
-      use_seller_animation: seller.profile_pic_animation&.url ? rand < 0.5 : false,
+      use_seller_animation: seller.animated_img&.url ? rand < 0.5 : false,
       order: spotlight_index + 1,
     }
   end
@@ -43,8 +43,8 @@ class PopulateShowcases
       name: Faker::Commerce.product_name,
       description: Faker::Lorem.sentence,
       display_price: "€#{Faker::Commerce.price}",
-      pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
-                                      file_format: "jpeg"),
+      img: Image.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                    file_format: "jpeg"),
       order: product_pick_index + 1,
     }
   end
@@ -67,7 +67,7 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
       simple_chat_attrs = {
         name: "#{Faker::Lorem.word.capitalize} Chat",
         seller: seller,
-        use_seller_animation: seller.profile_pic_animation&.url ? rand < 0.5 : false,
+        use_seller_animation: seller.animated_img&.url ? rand < 0.5 : false,
         heading: "Hello there",
         teaser_message: Faker::Movie.quote,
         extra_teaser_message: Faker::Movie.quote,
@@ -100,8 +100,8 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
       .concat(simple_chat_product_messages_attributes)
       .concat(simple_chat_product_messages_carousel_attributes)
       .concat(simple_chat_video_messages_attributes)
-      .concat(simple_chat_picture_messages_attributes)
-      .concat(simple_chat_picture_messages_carousel_attributes)
+      .concat(simple_chat_image_messages_attributes)
+      .concat(simple_chat_image_messages_carousel_attributes)
   end
 
   def update_order(flows)
@@ -124,8 +124,8 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
       {
         type: "SimpleChatProductMessage",
         title: Faker::Commerce.product_name,
-        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
-                                        file_format: "jpeg"),
+        img: Image.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                      file_format: "jpeg"),
         url: Faker::Internet.url,
         display_price: "€#{Faker::Commerce.price}",
       }
@@ -137,8 +137,8 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
       {
         type: "SimpleChatProductMessage",
         title: Faker::Commerce.product_name,
-        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
-                                        file_format: "jpeg"),
+        img: Image.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                      file_format: "jpeg"),
         url: Faker::Internet.url,
         display_price: "€#{Faker::Commerce.price}",
         group_with_adjacent: true,
@@ -155,22 +155,22 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def simple_chat_picture_messages_attributes
+  def simple_chat_image_messages_attributes
     Array.new(1) do
       {
-        type: "SimpleChatPictureMessage",
-        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
-                                        file_format: "jpeg"),
+        type: "SimpleChatImageMessage",
+        img: Image.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                      file_format: "jpeg"),
       }
     end
   end
 
-  def simple_chat_picture_messages_carousel_attributes
+  def simple_chat_image_messages_carousel_attributes
     Array.new(2) do
       {
-        type: "SimpleChatPictureMessage",
-        pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
-                                        file_format: "jpeg"),
+        type: "SimpleChatImageMessage",
+        img: Image.find_or_create_by!(url: "https://randomuser.me/api/portraits/lego/#{rand(1..9)}.jpg",
+                                      file_format: "jpeg"),
         group_with_adjacent: true,
       }
     end
@@ -264,10 +264,10 @@ class Populate # rubocop:disable Metrics/ClassLength
       seller_attrs = {
         name: Faker::RickAndMorty.character,
         bio: Faker::RickAndMorty.quote,
-        profile_pic: Picture.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg",
-                                                file_format: "jpeg"),
-        profile_pic_animation: [Picture.find_or_create_by!(url: "https://random-d.uk/api/#{i % 99 + 1}.gif",
-                                                           file_format: "gif"), nil,].sample,
+        img: Image.find_or_create_by!(url: "https://randomuser.me/api/portraits/women/#{i % 99 + 1}.jpg",
+                                      file_format: "jpeg"),
+        animated_img: [Image.find_or_create_by!(url: "https://random-d.uk/api/#{i % 99 + 1}.gif",
+                                                file_format: "gif"), nil,].sample,
       }
       Seller.create!(seller_attrs)
     end

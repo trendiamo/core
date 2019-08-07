@@ -7,8 +7,8 @@ class Seller < ApplicationRecord
   has_many :spotlights, dependent: :destroy
   has_many :simple_chats, dependent: :destroy
   has_many :outros, dependent: :destroy
-  belongs_to :profile_pic, class_name: "Picture", touch: true
-  belongs_to :profile_pic_animation, class_name: "Picture", optional: true, touch: true
+  belongs_to :img, class_name: "Image", touch: true
+  belongs_to :animated_img, class_name: "Image", optional: true, touch: true
 
   validates :name, presence: true
   validates :bio, presence: true
@@ -20,14 +20,14 @@ class Seller < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "name", "bio", "account_id", "graphcms_ref", "instagram_url", "pic_rect", "created_at", "updated_at",
+      .slice("id", "name", "bio", "account_id", "graphcms_ref", "instagram_url", "img_rect", "created_at", "updated_at",
              "lock_version")
-      .merge(profile_pic: { url: profile_pic.url }, profile_pic_animation: { url: profile_pic_animation&.url })
+      .merge(img: { url: img.url }, animated_img: { url: animated_img&.url })
   end
 
   def animation_in_use_cannot_be_removed
-    return unless profile_pic_animation&.url.blank? && modules.any?(&:use_seller_animation)
+    return unless animated_img&.url.blank? && modules.any?(&:use_seller_animation)
 
-    errors.add(:profile_pic_animation, "is used in your modules")
+    errors.add(:animated_img, "is used in your modules")
   end
 end

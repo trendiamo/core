@@ -29,7 +29,7 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:first_name, :last_name, :profile_pic_url, pic_rect: %i[x y width height])
+        params.require(:user).permit(:first_name, :last_name, :img_url, img_rect: %i[x y width height])
       end
     end
   end

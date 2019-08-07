@@ -21,7 +21,7 @@ module Api
       end
 
       def create
-        return render_picture_error unless convert_and_assign_pictures
+        return render_image_error unless convert_and_assign_images
 
         @simple_chat = SimpleChat.new(simple_chat_params)
         authorize @simple_chat
@@ -40,7 +40,7 @@ module Api
       end
 
       def update
-        return render_picture_error unless convert_and_assign_pictures
+        return render_image_error unless convert_and_assign_images
 
         @simple_chat = policy_scope(SimpleChat).find(params[:id])
         authorize @simple_chat
@@ -73,8 +73,8 @@ module Api
                          :use_seller_animation, :_destroy, :lock_version,
                          simple_chat_sections_attributes: [
                            :id, :key, :_destroy, :order, simple_chat_messages_attributes: [
-                             :id, :order, :type, :html, :title, :pic_id, :url, :display_price, :video_url,
-                             :group_with_adjacent, :_destroy, pic_rect: %i[x y width height],
+                             :id, :order, :type, :html, :title, :img_id, :url, :display_price, :video_url,
+                             :group_with_adjacent, :_destroy, img_rect: %i[x y width height],
                            ],
                          ])
         add_order_fields(result)
@@ -96,22 +96,22 @@ module Api
         chat_attrs
       end
 
-      def convert_and_assign_pictures
+      def convert_and_assign_images
         params[:simple_chat][:simple_chat_sections_attributes]&.each do |simple_chat_section_attributes|
           simple_chat_section_attributes[:simple_chat_messages_attributes]&.each do |simple_chat_message_attributes|
-            pic_url = (simple_chat_message_attributes[:picture] && simple_chat_message_attributes[:picture][:url])
-            unless pic_url.nil?
-              return if pic_url.empty?
+            img_url = (simple_chat_message_attributes[:img] && simple_chat_message_attributes[:img][:url])
+            unless img_url.nil?
+              return if img_url.empty?
 
-              simple_chat_message_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
-              simple_chat_message_attributes.delete(:pic_url)
+              simple_chat_message_attributes[:img_id] = Image.find_or_create_by!(url: img_url).id
+              simple_chat_message_attributes.delete(:img_url)
             end
           end
         end
       end
 
-      def render_picture_error
-        errors = [{ "title": "Picture can't be blank" }]
+      def render_image_error
+        errors = [{ "title": "Image can't be blank" }]
         render json: { errors: errors }, status: :unprocessable_entity
       end
 

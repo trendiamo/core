@@ -1,8 +1,8 @@
 FactoryBot.define do
-  factory :picture, aliases: %i[pic] do
+  factory :image, aliases: %i[img] do
     sequence(:url) { |i| "#{Faker::LoremPixel.image}?i=#{i}" }
 
-    factory :profile_pic do
+    factory :picture do
       sequence(:url) { |i| "https://randomuser.me/api/portraits/men/#{i % 99}.jpg" }
     end
 

@@ -1,5 +1,5 @@
-Types::PicRectType = GraphQL::ObjectType.define do
-  name "PicRect"
+Types::ImgRectType = GraphQL::ObjectType.define do
+  name "ImgRect"
 
   field :x, types.Int do
     resolve ->(obj, _args, _ctx) { obj["x"] }

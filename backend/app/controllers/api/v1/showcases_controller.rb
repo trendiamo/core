@@ -11,7 +11,7 @@ module Api
       end
 
       def create
-        return render_picture_error unless convert_and_assign_pictures
+        return render_image_error unless convert_and_assign_images
 
         @showcase = policy_scope(Showcase).new(showcase_params)
         authorize @showcase
@@ -32,7 +32,7 @@ module Api
       def update
         @showcase = policy_scope(Showcase).find(params[:id])
         authorize @showcase
-        return render_picture_error unless convert_and_assign_pictures
+        return render_image_error unless convert_and_assign_images
 
         if @showcase.update(showcase_params)
           render json: @showcase
@@ -72,21 +72,21 @@ module Api
           :lock_version, spotlights_attributes: [
             :id, :seller_id, :use_seller_animation, :_destroy,
             product_picks_attributes: [
-              :id, :url, :name, :description, :display_price, :pic_id, :_destroy, pic_rect: %i[x y width height],
+              :id, :url, :name, :description, :display_price, :img_id, :_destroy, img_rect: %i[x y width height],
             ],
           ]
         )
         add_order_fields(result)
       end
 
-      def convert_and_assign_pictures
+      def convert_and_assign_images
         params[:showcase][:spotlights_attributes]&.each do |spotlight_attributes|
           spotlight_attributes[:product_picks_attributes]&.each do |product_pick_attributes|
-            pic_url = (product_pick_attributes[:picture] && product_pick_attributes[:picture][:url])
-            return if pic_url.empty?
+            img_url = (product_pick_attributes[:img] && product_pick_attributes[:img][:url])
+            return if img_url.empty?
 
-            product_pick_attributes[:pic_id] = Picture.find_or_create_by!(url: pic_url).id
-            product_pick_attributes.delete(:pic_url)
+            product_pick_attributes[:img_id] = Image.find_or_create_by!(url: img_url).id
+            product_pick_attributes.delete(:img_url)
           end
         end
       end
@@ -104,8 +104,8 @@ module Api
         showcase_attrs
       end
 
-      def render_picture_error
-        errors = [{ "title": "Picture can't be blank" }]
+      def render_image_error
+        errors = [{ "title": "Image can't be blank" }]
         render json: { errors: errors }, status: :unprocessable_entity
       end
 

@@ -1,7 +1,7 @@
 class ProductPick < ApplicationRecord
   acts_as_tenant
   belongs_to :spotlight, touch: true
-  belongs_to :pic, class_name: "Picture", touch: true
+  belongs_to :img, class_name: "Image", touch: true
 
   before_create :assign_order, unless: :order_changed?
 
@@ -16,8 +16,8 @@ class ProductPick < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "spotlight_id", "name", "account_id", "url", "description", "display_price", "pic_rect",
+      .slice("id", "spotlight_id", "name", "account_id", "url", "description", "display_price", "img_rect",
              "created_at", "updated_at")
-      .merge(picture: { url: pic.url })
+      .merge(img: { url: img.url })
   end
 end
