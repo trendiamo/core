@@ -1,4 +1,4 @@
-import PictureMessageField from './picture-message-field'
+import ImageMessageField from './image-message-field'
 import ProductMessageFields from './product-message-fields'
 import React, { useCallback, useMemo } from 'react'
 import TextMessageFields from './text-message-fields'
@@ -17,9 +17,8 @@ const setSimpleChatMessageTitle = simpleChatMessage => {
       return simpleChatMessage.id ? `Product: ${simpleChatMessage.title}` : 'New product'
     case 'SimpleChatVideoMessage':
       return simpleChatMessage.id ? `Video: ${simpleChatMessage.videoUrl}` : 'New video'
-    case 'SimpleChatPictureMessage':
     case 'SimpleChatImageMessage':
-      return simpleChatMessage.id ? `Picture: ${simpleChatMessage.picture.url.split('/').pop()}` : 'New picture'
+      return simpleChatMessage.id ? `Image: ${simpleChatMessage.img.url.split('/').pop()}` : 'New image'
     default:
       return 'New message'
   }
@@ -88,15 +87,14 @@ const MessageField = ({
           simpleChatMessageIndex={simpleChatMessageIndex}
         />
       )
-    case 'SimpleChatPictureMessage':
     case 'SimpleChatImageMessage':
       return (
-        <PictureMessageField
+        <ImageMessageField
           isCropping={isCropping}
           isNextSameType={isNextSameType}
           isPreviousSameType={isPreviousSameType}
           isUploaderLoading={isUploaderLoading}
-          name="simpleChatMessage_picture"
+          name="simpleChatMessage_image"
           onChange={onSimpleChatMessageEdit}
           setIsCropping={setIsCropping}
           setIsUploaderLoading={setIsUploaderLoading}

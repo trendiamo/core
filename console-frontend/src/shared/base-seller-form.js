@@ -1,7 +1,7 @@
 import AddItemButton from 'shared/form-elements/add-item-button'
 import characterLimits from 'shared/character-limits'
 import CircularProgress from 'shared/circular-progress'
-import PictureUploader from 'shared/picture-uploader'
+import ImageUploader from 'shared/image-uploader'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
@@ -49,7 +49,7 @@ const AnimationUploader = ({ circle, disabled, label, setAnimation, setIsUploade
     >
       <AnimationUploaderHelp />
     </Tooltip>
-    <PictureUploader
+    <ImageUploader
       circle={circle}
       disabled={disabled}
       label={label}
@@ -74,9 +74,9 @@ const BaseSellerForm = ({
   setIsCropping,
   setIsUploaderLoading,
 }) => {
-  const setPicture = useCallback(
-    picture => {
-      mergeForm({ profilePic: { url: picture.url }, picRect: picture.picRect })
+  const setImg = useCallback(
+    img => {
+      mergeForm({ img: { url: img.url }, imgRect: img.imgRect })
     },
     [mergeForm]
   )
@@ -87,7 +87,7 @@ const BaseSellerForm = ({
 
   const setAnimation = useCallback(
     animation => {
-      mergeForm({ profilePicAnimation: { url: animation.url } })
+      mergeForm({ animatedImg: { url: animation.url } })
     },
     [mergeForm]
   )
@@ -97,25 +97,25 @@ const BaseSellerForm = ({
   return (
     <Form formRef={formRef} isFormPristine={isFormPristine} onSubmit={onFormSubmit}>
       <UploadersContainer>
-        <PictureUploader
+        <ImageUploader
           aspectRatio={1}
           circle
           disabled={isFormLoading || isCropping || isUploaderLoading}
           label="Picture"
-          onChange={setPicture}
+          onChange={setImg}
           required
           setDisabled={setIsCropping}
           setIsUploaderLoading={setIsUploaderLoading}
-          value={{ url: form.profilePic.url, picRect: form.picRect }}
+          value={{ url: form.img.url, imgRect: form.imgRect }}
         />
-        {withAnimationUploader || form.profilePicAnimation.url ? (
+        {withAnimationUploader || form.animatedImg.url ? (
           <AnimationUploader
             circle
             disabled={isFormLoading || isCropping || isUploaderLoading}
             label="Animated Picture"
             setAnimation={setAnimation}
             setIsUploaderLoading={setIsUploaderLoading}
-            value={{ url: form.profilePicAnimation.url }}
+            value={{ url: form.animatedImg.url }}
           />
         ) : (
           <AddAnimationUploaderButton message="Add animation" onClick={addAnimationUploader} />

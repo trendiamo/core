@@ -10,8 +10,8 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
   const [imagesModalIndex, setImagesModalIndex] = useState(null)
   const [imagesModalUrls, setImagesModalUrls] = useState([])
   const [imagesModalTouch, setImagesModalTouch] = useState(false)
-  const [pictureModalOpen, setPictureModalOpen] = useState(false)
-  const [pictureItem, setPictureItem] = useState(null)
+  const [imageModalOpen, setImageModalOpen] = useState(false)
+  const [imageItem, setImageItem] = useState(null)
 
   const closeVideoModal = useCallback(() => {
     mixpanel.track('Closed Video', {
@@ -24,16 +24,16 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
     frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
   }, [flowType, videoItem])
 
-  const closePictureModal = useCallback(() => {
+  const closeImageModal = useCallback(() => {
     mixpanel.track('Closed Picture', {
       flowType,
       hostname: location.hostname,
-      url: pictureItem.url,
+      url: imageItem.url,
     })
-    setPictureModalOpen(false)
+    setImageModalOpen(false)
     const frekklsContent = document.querySelector('iframe[title="Frekkls Content"]')
     frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
-  }, [flowType, pictureItem])
+  }, [flowType, imageItem])
 
   const modalsProps = useMemo(
     () => ({
@@ -48,9 +48,9 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       setImagesModalUrls,
       imagesModalTouch,
       setImagesModalTouch,
-      pictureModalOpen,
-      closePictureModal,
-      pictureItem,
+      imageModalOpen,
+      closeImageModal,
+      imageItem,
     }),
     [
       videoModalOpen,
@@ -58,15 +58,11 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       videoItem,
       imagesModalOpen,
       imagesModalIndex,
-      setImagesModalIndex,
-      setImagesModalOpen,
       imagesModalUrls,
-      setImagesModalUrls,
       imagesModalTouch,
-      setImagesModalTouch,
-      pictureModalOpen,
-      closePictureModal,
-      pictureItem,
+      imageModalOpen,
+      closeImageModal,
+      imageItem,
     ]
   )
 
@@ -125,7 +121,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       setImagesModalIndex(item.index)
       setImagesModalUrls(item.urlsArray)
       setImagesModalOpen(true)
-      setPictureItem(item.picture)
+      setImageItem(item.img)
     },
     [flowType]
   )
@@ -157,15 +153,15 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
     window.location.href = item.url
   }, [])
 
-  const clickPictureMessage = useCallback(
+  const clickImageMessage = useCallback(
     ({ item }) => {
       mixpanel.track('Clicked Picture', {
         flowType,
         hostname: location.hostname,
         url: item.url,
       })
-      setPictureItem(item)
-      setPictureModalOpen(true)
+      setImageItem(item)
+      setImageModalOpen(true)
     },
     [flowType]
   )
@@ -180,7 +176,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       touchImageCarousel,
       clickChatOption,
       clickLink,
-      clickPictureMessage,
+      clickImageMessage,
       mergeAssessmentForm,
     }),
     [
@@ -192,7 +188,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       touchImageCarousel,
       clickChatOption,
       clickLink,
-      clickPictureMessage,
+      clickImageMessage,
       mergeAssessmentForm,
     ]
   )

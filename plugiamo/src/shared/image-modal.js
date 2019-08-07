@@ -14,17 +14,17 @@ const styles = {
     bottom: 50,
     left: 0,
   },
-  picture: {
+  image: {
     width: '100%',
     height: '100%',
     objectFit: 'contain',
   },
 }
 
-const PictureModal = ({ closeModal, isOpen, pictureItem }) => {
-  const [isPictureLoaded, setIsPictureLoaded] = useState(false)
+const ImageModal = ({ closeModal, isOpen, imageItem }) => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
 
-  const closePictureModal = useCallback(
+  const closeImageModal = useCallback(
     event => {
       event.stopPropagation()
       closeModal()
@@ -32,28 +32,28 @@ const PictureModal = ({ closeModal, isOpen, pictureItem }) => {
     [closeModal]
   )
 
-  const onPictureLoad = useCallback(() => {
-    setIsPictureLoaded(true)
+  const onImageLoad = useCallback(() => {
+    setIsImageLoaded(true)
   }, [])
 
   return (
-    <Modal allowBackgroundClose closeModal={closePictureModal} isOpen={isOpen} isResourceLoaded={isPictureLoaded}>
+    <Modal allowBackgroundClose closeModal={closeImageModal} isOpen={isOpen} isResourceLoaded={isImageLoaded}>
       <div style={styles.container} tabIndex="-1">
         <img
           alt=""
-          onLoad={onPictureLoad}
+          onLoad={onImageLoad}
           src={
-            pictureItem &&
-            pictureItem.url &&
-            imgixUrl(pictureItem.url, {
-              rect: stringifyRect(pictureItem.picRect),
+            imageItem &&
+            imageItem.url &&
+            imgixUrl(imageItem.url, {
+              rect: stringifyRect(imageItem.imgRect),
             })
           }
-          style={styles.picture}
+          style={styles.image}
         />
       </div>
     </Modal>
   )
 }
 
-export default PictureModal
+export default ImageModal

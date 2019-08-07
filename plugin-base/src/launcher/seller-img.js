@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { imgixUrl, stringifyRect } from 'tools'
 
-const SellerPic = styled.div`
+const SellerImg = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -11,16 +11,16 @@ const SellerPic = styled.div`
   border-radius: 50%;
   background-position: center;
   background-size: cover;
-  background-image: ${({ sellerPic, launcherConfig }) =>
-    sellerPic && sellerPic.url
+  background-image: ${({ sellerImg, launcherConfig }) =>
+    sellerImg && sellerImg.url
       ? launcherConfig
-        ? `url('${imgixUrl(sellerPic.url, {
-            rect: stringifyRect(sellerPic.picRect),
+        ? `url('${imgixUrl(sellerImg.url, {
+            rect: stringifyRect(sellerImg.imgRect),
             fit: 'crop',
             w: launcherConfig.size,
             h: launcherConfig.size,
           })}')`
-        : `url('${imgixUrl(sellerPic.url, { rect: stringifyRect(sellerPic.picRect) })}')`
+        : `url('${imgixUrl(sellerImg.url, { rect: stringifyRect(sellerImg.imgRect) })}')`
       : 'none'};
   transform: ${({ active }) => (active ? 'none' : 'rotate(30deg) scale(0)')};
   opacity: ${({ active }) => (active ? 1 : 0)};
@@ -28,4 +28,4 @@ const SellerPic = styled.div`
   -webkit-perspective: 1000;
   backface-visibility: hidden;
 `
-export default SellerPic
+export default SellerImg

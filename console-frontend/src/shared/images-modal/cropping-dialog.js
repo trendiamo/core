@@ -37,21 +37,21 @@ const CircularProgressContainer = styled.div`
   align-items: center;
 `
 
-const DialogContentCropping = ({ crop, onCropChange, onCropComplete, onPictureLoaded, picture, picturePreviewRef }) => {
-  const [isPictureLoading, setIsPictureLoading] = useState(true)
+const DialogContentCropping = ({ crop, onCropChange, onCropComplete, onImageLoaded, image, imagePreviewRef }) => {
+  const [isImageLoading, setIsImageLoading] = useState(true)
 
-  const newOnPictureLoaded = useCallback(
-    picture => {
-      onPictureLoaded(picture)
-      setIsPictureLoading(false)
+  const newOnImageLoaded = useCallback(
+    image => {
+      onImageLoaded(image)
+      setIsImageLoading(false)
     },
-    [onPictureLoaded]
+    [onImageLoaded]
   )
 
   return (
     <>
       <DialogCroppingContainer crop={crop}>
-        <HiddenImg alt="" ref={picturePreviewRef} src={picture} />
+        <HiddenImg alt="" ref={imagePreviewRef} src={image} />
         <StyledReactCrop
           crop={crop}
           keepSelection
@@ -59,11 +59,11 @@ const DialogContentCropping = ({ crop, onCropChange, onCropComplete, onPictureLo
           minWidth={20}
           onChange={onCropChange}
           onComplete={onCropComplete}
-          onImageLoaded={newOnPictureLoaded}
-          src={picture}
+          onImageLoaded={newOnImageLoaded}
+          src={image}
         />
       </DialogCroppingContainer>
-      {isPictureLoading && (
+      {isImageLoading && (
         <CircularProgressContainer>
           <CircularProgress size={80} />
         </CircularProgressContainer>
@@ -87,9 +87,9 @@ const CroppingDialog = ({
   crop,
   onCropChange,
   onCropComplete,
-  onPictureLoaded,
-  picture,
-  picturePreviewRef,
+  onImageLoaded,
+  image,
+  imagePreviewRef,
   onCancelCropping,
   onDoneCropping,
   handleClose,
@@ -100,11 +100,11 @@ const CroppingDialog = ({
     content={
       <DialogContentCropping
         crop={crop}
+        image={image}
+        imagePreviewRef={imagePreviewRef}
         onCropChange={onCropChange}
         onCropComplete={onCropComplete}
-        onPictureLoaded={onPictureLoaded}
-        picture={picture}
-        picturePreviewRef={picturePreviewRef}
+        onImageLoaded={onImageLoaded}
       />
     }
     dialogActions={<DialogActionsCropping onCancelCropping={onCancelCropping} onDoneCropping={onDoneCropping} />}
@@ -113,7 +113,7 @@ const CroppingDialog = ({
     maxWidth="md"
     onKeyUp={onKeyUp}
     open={open}
-    title="Crop the picture, or leave it as default:"
+    title="Crop the image, or leave it as default:"
   />
 )
 

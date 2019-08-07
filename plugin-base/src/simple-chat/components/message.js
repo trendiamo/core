@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import timeout from 'ext/timeout'
 import { extractYoutubeId, MESSAGE_INTERVAL, MESSAGE_RANDOMIZER, replaceExternalLinks } from 'tools'
 import {
-  PictureCarouselMessage,
-  PictureMessage,
+  ImageCarouselMessage,
+  ImageMessage,
   ProductCarouselMessage,
   ProductMessage,
   TextMessage,
@@ -62,18 +62,18 @@ const ChatMessage = ({
         : type === 'SimpleChatProductMessage'
         ? {
             title: log.message.title,
-            picture: log.message.picture,
-            picRect: log.message.picRect,
+            img: log.message.img,
+            imgRect: log.message.imgRect,
             url: log.message.url,
             displayPrice: log.message.displayPrice,
             newTab: log.message.newTab,
           }
         : type === 'SimpleChatVideoMessage'
         ? { id: extractYoutubeId(log.message.videoUrl) }
-        : type === 'SimpleChatPictureMessage' || type === 'SimpleChatImageMessage'
+        : type === 'SimpleChatImageMessage'
         ? {
-            picture: log.message.picture,
-            picRect: log.message.picRect,
+            img: log.message.img,
+            imgRect: log.message.imgRect,
           }
         : log.message[type]
     },
@@ -135,12 +135,12 @@ const ChatMessage = ({
         <VideoMessage onClick={onClick} videoMessage={data} />
       ) : type === 'SimpleChatProductMessage' ? (
         <ProductMessage onClick={onClick} productMessage={data} />
-      ) : type === 'SimpleChatPictureMessage' || type === 'SimpleChatImageMessage' ? (
-        <PictureMessage onClick={onClick} pictureMessage={data} />
+      ) : type === 'SimpleChatImageMessage' ? (
+        <ImageMessage imageMessage={data} onClick={onClick} />
       ) : type === 'productCarousel' ? (
         <ProductCarouselMessage carouselType={type} onClick={onClick} productCarousel={data} />
       ) : type === 'imageCarousel' ? (
-        <PictureCarouselMessage carouselType={type} imageCarousel={data} onClick={onClick} />
+        <ImageCarouselMessage carouselType={type} imageCarousel={data} onClick={onClick} />
       ) : null}
     </MessageContainer>
   )

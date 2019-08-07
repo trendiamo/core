@@ -42,16 +42,16 @@ const AppGraphql = () => {
             id
             name
             bio
-            profilePic {
+            img {
               url
             }
-            picRect {
+            imgRect {
               x
               y
               width
               height
             }
-            profilePicAnimation {
+            animatedImg {
               url
             }
             instagramUrl
@@ -61,16 +61,16 @@ const AppGraphql = () => {
           id
           name
           bio
-          profilePic {
+          img {
             url
           }
-          picRect {
+          imgRect {
             x
             y
             width
             height
           }
-          profilePicAnimation {
+          animatedImg {
             url
           }
         }

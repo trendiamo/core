@@ -2,7 +2,7 @@ import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { apiRequest, apiWebsiteSettingsShow } from 'utils'
-import { Launcher as BaseLauncher, sellerPic } from 'plugin-base'
+import { Launcher as BaseLauncher, sellerImg } from 'plugin-base'
 import { history as pluginHistory, Showcase as ShowcaseBase } from 'plugin-base'
 import { previewConverter } from './data-utils'
 import { useSnackbar } from 'notistack'
@@ -38,7 +38,7 @@ const PluginPreview = ({
       <BaseLauncher
         onClick={onLauncherClick}
         pulsating
-        sellerPic={sellerPic(form.__seller, form.useSellerAnimation)}
+        sellerImg={sellerImg(form.__seller, form.useSellerAnimation)}
         showingContent={showingContent}
       />
     ),

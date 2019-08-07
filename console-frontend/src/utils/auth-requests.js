@@ -5,7 +5,7 @@ import { stringify } from 'query-string'
 
 const S3_URL = `${BASE_API_URL}/s3/sign`
 const SELLERS_URL = `${BASE_API_URL}/sellers`
-const PICTURES_URL = `${BASE_API_URL}/pictures`
+const IMAGES_URL = `${BASE_API_URL}/images`
 const OUTROS_URL = `${BASE_API_URL}/outros`
 const CURATIONS_URL = `${BASE_API_URL}/showcases`
 const SIMPLE_CHATS_URL = `${BASE_API_URL}/simple_chats`
@@ -123,11 +123,11 @@ export const apiSellerUpdate = (id, body) => apiUpdateRequest(`${SELLERS_URL}/${
 export const apiSellerDestroy = body => apiDestroyMultipleRequest(SELLERS_URL, body)
 export const apiSellersAutocomplete = query => apiGetRequest(`${SELLERS_URL}/autocomplete/?${stringify(query)}`)
 
-export const apiPictureList = query => apiListRequest(`${PICTURES_URL}/?${stringify(query)}`)
-export const apiPictureCreate = body => apiCreateRequest(PICTURES_URL, body)
-export const apiPictureDestroy = body => apiDestroyMultipleRequest(PICTURES_URL, body)
+export const apiImageList = query => apiListRequest(`${IMAGES_URL}/?${stringify(query)}`)
+export const apiImageCreate = body => apiCreateRequest(IMAGES_URL, body)
+export const apiImageDestroy = body => apiDestroyMultipleRequest(IMAGES_URL, body)
 
-export const apiGetRemotePicture = url => apiGetRequest(`${CORS_PROXY_URL}/${encodeURIComponent(url)}`)
+export const apiGetRemoteImage = url => apiGetRequest(`${CORS_PROXY_URL}/${encodeURIComponent(url)}`)
 
 export const apiOutroList = query => apiListRequest(`${OUTROS_URL}/?${stringify(query)}`)
 export const apiOutroDestroy = body => apiDestroyMultipleRequest(OUTROS_URL, body)

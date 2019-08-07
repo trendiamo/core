@@ -1,8 +1,8 @@
-import PictureUploader, { ProgressBar } from 'shared/picture-uploader'
+import ImageUploader, { ProgressBar } from 'shared/image-uploader'
 import React, { useCallback } from 'react'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 
-const PictureMessageForm = ({
+const ImageMessageForm = ({
   isCropping,
   isFormLoading,
   isNextSameType,
@@ -11,21 +11,21 @@ const PictureMessageForm = ({
   progress,
   setIsCropping,
   setIsUploaderLoading,
-  setPicture,
+  setImage,
   simpleChatMessage,
   onFormChange,
 }) => (
   <>
-    <PictureUploader
+    <ImageUploader
       aspectRatio={1}
       disabled={isCropping || isFormLoading || isUploaderLoading}
-      label="Picture"
-      name="picUrl"
-      onChange={setPicture}
+      label="Image"
+      name="imgUrl"
+      onChange={setImage}
       required
       setDisabled={setIsCropping}
       setIsUploaderLoading={setIsUploaderLoading}
-      value={{ url: simpleChatMessage.picture.url, picRect: simpleChatMessage.picRect }}
+      value={{ url: simpleChatMessage.img.url, imgRect: simpleChatMessage.imgRect }}
     />
     {progress && <ProgressBar progress={progress} />}
     <FormControlLabel
@@ -39,12 +39,12 @@ const PictureMessageForm = ({
         />
       }
       disabled={isFormLoading}
-      label="Group with neighbouring pictures"
+      label="Group with neighbouring images"
     />
   </>
 )
 
-const PictureMessageField = ({
+const ImageMessageField = ({
   isCropping,
   isNextSameType,
   isPreviousSameType,
@@ -67,28 +67,24 @@ const PictureMessageField = ({
     [onChange, simpleChatMessageIndex, simpleChatMessage]
   )
 
-  const setPicture = useCallback(
-    picture =>
-      onChange(
-        { ...simpleChatMessage, picture: { url: picture.url }, picRect: picture.picRect },
-        simpleChatMessageIndex
-      ),
+  const setImg = useCallback(
+    img => onChange({ ...simpleChatMessage, img: { url: img.url }, imgRect: img.imgRect }, simpleChatMessageIndex),
     [onChange, simpleChatMessage, simpleChatMessageIndex]
   )
 
   return (
-    <PictureMessageForm
+    <ImageMessageForm
       isCropping={isCropping}
       isNextSameType={isNextSameType}
       isPreviousSameType={isPreviousSameType}
       isUploaderLoading={isUploaderLoading}
       onFormChange={onFormChange}
+      setImage={setImg}
       setIsCropping={setIsCropping}
       setIsUploaderLoading={setIsUploaderLoading}
-      setPicture={setPicture}
       simpleChatMessage={simpleChatMessage}
     />
   )
 }
 
-export default PictureMessageField
+export default ImageMessageField

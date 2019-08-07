@@ -36,7 +36,7 @@ const convertSpotlights = (emojify, spotlights, onSpotlightClick) => {
   if (isPCAssessment()) {
     return [
       {
-        Component: <SpotlightItem bordered onClick={onSpotlightClick} spotlight={assessmentSpotlight} withoutPicture />,
+        Component: <SpotlightItem bordered onClick={onSpotlightClick} spotlight={assessmentSpotlight} withoutImage />,
       },
       ...results,
     ]
@@ -158,16 +158,16 @@ const ShowcaseGraphql = ({ id, ...props }) => {
               id
               name
               bio
-              profilePic {
+              img {
                 url
               }
-              picRect {
+              imgRect {
                 x
                 y
                 width
                 height
               }
-              profilePicAnimation {
+              animatedImg {
                 url
               }
               instagramUrl
@@ -178,10 +178,10 @@ const ShowcaseGraphql = ({ id, ...props }) => {
               name
               description
               displayPrice
-              picture {
+              img {
                 url
               }
-              picRect {
+              imgRect {
                 x
                 y
                 width

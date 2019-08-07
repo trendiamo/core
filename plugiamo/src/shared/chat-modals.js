@@ -1,5 +1,5 @@
+import ImageModal from './image-modal'
 import ImagesModal from './images-modal'
-import PictureModal from './picture-modal'
 import VideoModal from './video-modal'
 import { h } from 'preact'
 
@@ -13,22 +13,22 @@ const ChatModals = ({
   imagesModalUrls,
   imagesModalTouch,
   flowType,
-  pictureModalOpen,
-  pictureItem,
-  closePictureModal,
+  imageModalOpen,
+  imageItem,
+  closeImageModal,
 }) => (
   <div>
     <VideoModal closeModal={closeVideoModal} isOpen={videoModalOpen} url={videoItem && videoItem.youtubeEmbedUrl} />
     <ImagesModal
       flowType={flowType}
+      imageItem={imageItem}
       index={imagesModalIndex}
       isOpen={imagesModalOpen}
       isTouch={imagesModalTouch}
-      pictureItem={pictureItem}
       setIsOpen={setImagesModalOpen}
       urlsArray={imagesModalUrls}
     />
-    <PictureModal closeModal={closePictureModal} isOpen={pictureModalOpen} pictureItem={pictureItem} />
+    <ImageModal closeModal={closeImageModal} imageItem={imageItem} isOpen={imageModalOpen} />
   </div>
 )
 

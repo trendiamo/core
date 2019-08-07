@@ -27,7 +27,7 @@ const BlankState = () => (
   </Section>
 )
 
-const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles, picRect } }) => {
+const UsersRow = ({ record: { email, firstName, lastName, imgUrl, roles, imgRect } }) => {
   const role = useMemo(() => roles[auth.getSlug()], [roles])
 
   const initials = useMemo(() => (!firstName || !lastName ? null : `${firstName[0]}${lastName[0]}`), [
@@ -38,8 +38,8 @@ const UsersRow = ({ record: { email, firstName, lastName, profilePicUrl, roles, 
   return (
     <>
       <TableCell width="20%">
-        <StyledAvatar src={profilePicUrl && imgixUrl(profilePicUrl, { rect: stringifyRect(picRect) })}>
-          {profilePicUrl ? null : initials ? initials : ''}
+        <StyledAvatar src={imgUrl && imgixUrl(imgUrl, { rect: stringifyRect(imgRect) })}>
+          {imgUrl ? null : initials ? initials : ''}
         </StyledAvatar>
       </TableCell>
       <TableCell width="35%">

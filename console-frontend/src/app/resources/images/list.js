@@ -1,17 +1,17 @@
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
-import { ActiveColumn, EnhancedList, Picture, TableCell, Text } from 'shared/table-elements'
-import { apiPictureDestroy, apiPictureList } from 'utils'
+import { ActiveColumn, EnhancedList, Image, TableCell, Text } from 'shared/table-elements'
+import { apiImageDestroy, apiImageList } from 'utils'
 
 const columns = [
   { name: 'id', label: 'id', sortable: true },
-  { name: 'picture' },
+  { name: 'image' },
   { name: 'file_format', label: 'type', sortable: true },
   { name: 'url', label: 'url', sortable: true },
   { name: 'active', label: 'status', sortable: true },
 ]
 
-const BlankState = () => <BlankStateTemplate imageSource="/img/background/img-welcome.png" title="No pictures yet" />
+const BlankState = () => <BlankStateTemplate imageSource="/img/background/img-welcome.png" title="No images yet" />
 
 const tooltipTextActive = ({ sellers, productPicks, simpleChatMessages }) => {
   const itemsInUse = []
@@ -25,10 +25,10 @@ const tooltipTextActive = ({ sellers, productPicks, simpleChatMessages }) => {
   )}`
 }
 
-const PicturesRow = ({ record, highlightInactive }) => (
+const ImagesRow = ({ record, highlightInactive }) => (
   <>
     <TableCell width="5%">
-      <Picture disabled={highlightInactive} src={record.url} />
+      <Image disabled={highlightInactive} src={record.url} />
     </TableCell>
     <TableCell width="10%">
       <Text disabled={highlightInactive}>{record.fileFormat.toUpperCase()}</Text>
@@ -48,26 +48,26 @@ const PicturesRow = ({ record, highlightInactive }) => (
   </>
 )
 
-const api = { fetch: apiPictureList, destroy: apiPictureDestroy }
-const picturesRoutes = {}
+const api = { fetch: apiImageList, destroy: apiImageDestroy }
+const imagesRoutes = {}
 const canEditResource = ({ sellers, productPicks, simpleChatMessages }) =>
   (sellers + productPicks + simpleChatMessages).length < 1
 const defaultSorting = { column: 'active', direction: 'asc' }
 const highlightInactive = ['sellers', 'productPicks', 'simpleChatMessages']
 
-const PicturesList = () => (
+const ImagesList = () => (
   <EnhancedList
     api={api}
     BlankState={BlankState}
     canEditResource={canEditResource}
     columns={columns}
     defaultSorting={defaultSorting}
-    helpStep="pictures"
+    helpStep="images"
     highlightInactive={highlightInactive}
-    ResourceRow={PicturesRow}
-    routes={picturesRoutes}
+    ResourceRow={ImagesRow}
+    routes={imagesRoutes}
     title="Image Gallery"
   />
 )
 
-export default PicturesList
+export default ImagesList

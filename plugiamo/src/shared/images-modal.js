@@ -22,10 +22,10 @@ const handleGesture = (touchstartX, touchstartY, touchendX, touchendY) => {
   }
 }
 
-const ImagesModal = ({ flowType, index, isOpen, isTouch, pictureItem, setIsOpen, urlsArray }) => {
+const ImagesModal = ({ flowType, index, isOpen, isTouch, imageItem, setIsOpen, urlsArray }) => {
   const [isTwoFingerScroll, setIsTwoFingerScroll] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-  const [isPictureLoaded, setIsPictureLoaded] = useState(false)
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
 
   useEffect(() => {
     setSelectedImageIndex(index)
@@ -36,9 +36,9 @@ const ImagesModal = ({ flowType, index, isOpen, isTouch, pictureItem, setIsOpen,
   const selectedImage = useMemo(
     () => ({
       url: urlsArray[selectedImageIndex],
-      picRect: pictureItem && pictureItem.picRect,
+      imgRect: imageItem && imageItem.imgRect,
     }),
-    [pictureItem, selectedImageIndex, urlsArray]
+    [imageItem, selectedImageIndex, urlsArray]
   )
 
   const closeModal = useCallback(() => {
@@ -52,13 +52,13 @@ const ImagesModal = ({ flowType, index, isOpen, isTouch, pictureItem, setIsOpen,
     frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
   }, [flowType, selectedImage, setIsOpen])
 
-  const onPictureLoad = useCallback(() => {
-    setIsPictureLoaded(true)
+  const onImageLoad = useCallback(() => {
+    setIsImageLoaded(true)
   }, [])
 
   const onLeftArrowClick = useCallback(() => {
     if (selectedImageIndex === 0) return
-    if (selectedImage.url !== urlsArray[selectedImageIndex - 1]) setIsPictureLoaded(false)
+    if (selectedImage.url !== urlsArray[selectedImageIndex - 1]) setIsImageLoaded(false)
     setSelectedImageIndex(selectedImageIndex - 1)
     mixpanel.track('Carousel Image Switch', {
       flowType: flowType || 'simpleChat',
@@ -70,7 +70,7 @@ const ImagesModal = ({ flowType, index, isOpen, isTouch, pictureItem, setIsOpen,
 
   const onRightArrowClick = useCallback(() => {
     if (selectedImageIndex >= urlsArray.length - 1) return
-    if (selectedImage.url !== urlsArray[selectedImageIndex + 1]) setIsPictureLoaded(false)
+    if (selectedImage.url !== urlsArray[selectedImageIndex + 1]) setIsImageLoaded(false)
     setSelectedImageIndex(selectedImageIndex + 1)
     mixpanel.track('Carousel Image Switch', {
       flowType: flowType || 'simpleChat',
@@ -117,14 +117,14 @@ const ImagesModal = ({ flowType, index, isOpen, isTouch, pictureItem, setIsOpen,
           }
         }
       }
-      setIsPictureLoaded(false)
+      setIsImageLoaded(false)
     },
     [flowType, isTwoFingerScroll, selectedImage, originalWindowWidth, selectedImageIndex, urlsArray]
   )
 
   return (
     <div>
-      <Modal allowBackgroundClose={false} closeModal={closeModal} isOpen={isOpen} isResourceLoaded={isPictureLoaded}>
+      <Modal allowBackgroundClose={false} closeModal={closeModal} isOpen={isOpen} isResourceLoaded={isImageLoaded}>
         {!isTouch && (
           <CarouselModalArrows
             onLeftArrowClick={onLeftArrowClick}
@@ -149,16 +149,16 @@ const ImagesModal = ({ flowType, index, isOpen, isTouch, pictureItem, setIsOpen,
         >
           <img
             alt=""
-            onLoad={onPictureLoad}
+            onLoad={onImageLoad}
             src={
               selectedImage &&
               selectedImage.url &&
               imgixUrl(selectedImage.url, {
-                rect: stringifyRect(selectedImage.picRect),
+                rect: stringifyRect(selectedImage.imgRect),
               })
             }
             style={{
-              opacity: isPictureLoaded ? 1 : 0,
+              opacity: isImageLoaded ? 1 : 0,
               width: '100%',
               height: '100%',
               objectFit: 'contain',

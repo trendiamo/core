@@ -8,10 +8,10 @@ const loadFormObject = () => {
   return {
     name: '',
     bio: '',
-    profilePic: { url: '' },
-    profilePicAnimation: { url: '' },
+    img: { url: '' },
+    animatedImg: { url: '' },
     instagramUrl: '',
-    picRect: {},
+    imgRect: {},
   }
 }
 

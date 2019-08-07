@@ -106,8 +106,8 @@ const UserMenu = ({ sidebarOpen }) => {
         onClick={handleMenu}
         sidebarOpen={sidebarOpen}
       >
-        <StyledAvatar src={user.profilePicUrl && imgixUrl(user.profilePicUrl, { rect: stringifyRect(user.picRect) })}>
-          {user.profilePicUrl ? null : initials ? initials : ''}
+        <StyledAvatar src={user.imgUrl && imgixUrl(user.imgUrl, { rect: stringifyRect(user.imgRect) })}>
+          {user.imgUrl ? null : initials ? initials : ''}
         </StyledAvatar>
         <StyledTypography sidebarOpen={sidebarOpen} variant="body1">
           {userIdentifier}

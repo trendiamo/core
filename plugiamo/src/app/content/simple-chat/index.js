@@ -66,10 +66,10 @@ const SimpleChat = ({
               type
               html
               title
-              picture {
+              img {
                 url
               }
-              picRect {
+              imgRect {
                 x
                 y
                 width

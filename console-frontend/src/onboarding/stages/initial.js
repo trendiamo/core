@@ -3,23 +3,23 @@ import React from 'react'
 import routes from 'app/routes'
 import { Tooltip } from 'onboarding/elements'
 
-const editorRoleOrder = ['simpleChats', 'pictures']
+const editorRoleOrder = ['simpleChats', 'images']
 
-const nonEditorRoleOrder = ['triggers', 'showcases', 'simpleChats', 'outros', 'pictures', 'sellers']
+const nonEditorRoleOrder = ['triggers', 'showcases', 'simpleChats', 'outros', 'images', 'sellers']
 
 const order = () => (auth.getAccountRole() === 'editor' ? editorRoleOrder : nonEditorRoleOrder)
 
 const editorRoleSteps = () => ({
   simpleChats: {
     target: '.onboard-simple-chats',
-    content: <Tooltip body="Create your Simple Chats here." nextRoute={routes.picturesList()} />,
+    content: <Tooltip body="Create your Simple Chats here." nextRoute={routes.imagesList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Simple Chats',
   },
-  pictures: {
-    target: '.onboard-pictures',
-    content: <Tooltip body="Manage your pictures here." toStage1 />,
+  images: {
+    target: '.onboard-images',
+    content: <Tooltip body="Manage your images here." toStage1 />,
     placement: 'right',
     disableBeacon: true,
     title: 'Image Gallery',
@@ -50,14 +50,14 @@ const nonEditorRoleSteps = () => ({
   },
   outros: {
     target: '.onboard-outros',
-    content: <Tooltip body="Create your Outros here." nextRoute={routes.picturesList()} />,
+    content: <Tooltip body="Create your Outros here." nextRoute={routes.imagesList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Outros',
   },
-  pictures: {
-    target: '.onboard-pictures',
-    content: <Tooltip body="Manage your pictures here." nextRoute={routes.sellersList()} />,
+  images: {
+    target: '.onboard-images',
+    content: <Tooltip body="Manage your images here." nextRoute={routes.sellersList()} />,
     placement: 'right',
     disableBeacon: true,
     title: 'Image Gallery',

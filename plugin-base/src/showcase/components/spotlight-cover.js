@@ -3,7 +3,7 @@ import SellerInstagram from 'shared/seller-instagram'
 import styled from 'styled-components'
 import { BackButton } from 'shared'
 import { CoverImg, CoverInner, PaddedCover, SellerBio } from 'shared/cover/components'
-import { sellerPicUrl } from 'tools'
+import { sellerImgUrl } from 'tools'
 import { ThemeContext, transition, useTextTyping } from 'ext'
 
 const FlexDiv = styled.div`
@@ -37,7 +37,7 @@ const SpotlightCover = ({ backButtonLabel, isLeaving, routeToShowcase, spotlight
     <CoverInner>
       <BackButton isLeaving={isLeaving} label={backButtonLabel} onClick={routeToShowcase} />
       <FlexDiv>
-        <CoverImg ref={imgRef} src={sellerPicUrl(spotlight.seller, spotlight.useSellerAnimation, { w: 45, h: 45 })} />
+        <CoverImg ref={imgRef} src={sellerImgUrl(spotlight.seller, spotlight.useSellerAnimation, { w: 45, h: 45 })} />
         <PaddedCover>
           <SellerName ref={nameRef} theme={theme}>
             {spotlight.seller.name}

@@ -38,14 +38,14 @@ const UrlIcon = styled(LinkIcon)`
   height: 24px;
 `
 
-const DialogContentUrlUpload = ({ isPictureLoading, resource, setPictureUrl }) => {
+const DialogContentUrlUpload = ({ isImageLoading, resource, setImageUrl }) => {
   const [isFocused, setIsFocused] = useState(null)
 
   const onChange = useCallback(
     event => {
-      setPictureUrl(event.target.value)
+      setImageUrl(event.target.value)
     },
-    [setPictureUrl]
+    [setImageUrl]
   )
 
   const onFocus = useCallback(() => {
@@ -72,7 +72,7 @@ const DialogContentUrlUpload = ({ isPictureLoading, resource, setPictureUrl }) =
           <UrlIcon />
         </UrlIconContainer>
       </UrlInputContainer>
-      {isPictureLoading && <CircularProgress />}
+      {isImageLoading && <CircularProgress />}
     </>
   )
 }
@@ -95,22 +95,20 @@ const DialogActionsUrlUpload = ({ handleClose, onCancelUrlUpload, onDoneUrlUploa
 
 const UrlUploadDialog = ({
   handleClose,
-  isPictureLoading,
+  isImageLoading,
   onCancelUrlUpload,
   onDoneUrlUpload,
   onFileUpload,
   onKeyUp,
   open,
-  setPictureUrl,
+  setImageUrl,
   type,
 }) => {
-  const resource = useMemo(() => (type === 'animationsModal' ? 'animation' : 'picture'), [type])
+  const resource = useMemo(() => (type === 'animationsModal' ? 'animation' : 'image'), [type])
 
   return (
     <Dialog
-      content={
-        <DialogContentUrlUpload isPictureLoading={isPictureLoading} resource={resource} setPictureUrl={setPictureUrl} />
-      }
+      content={<DialogContentUrlUpload isImageLoading={isImageLoading} resource={resource} setImageUrl={setImageUrl} />}
       dialogActions={
         <DialogActionsUrlUpload
           onCancelUrlUpload={onCancelUrlUpload}

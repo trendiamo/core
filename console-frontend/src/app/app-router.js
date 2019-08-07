@@ -14,8 +14,8 @@ import UrlGenerator from 'app/screens/url-generator'
 import WebsiteSettings from 'app/screens/website-settings'
 import WelcomePage from 'app/screens/welcome'
 import { AccountRedirect, ExternalRoute, PrivateRoute, RootRedirect } from './app-router-helpers'
+import { ImagesList } from './resources/images'
 import { OutroCreate, OutroEdit, OutrosList } from './resources/outros'
-import { PicturesList } from './resources/pictures'
 import { Route, Switch } from 'react-router-dom'
 import { SellerCreate, SellerEdit, SellersList } from './resources/sellers'
 import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from './resources/showcases'
@@ -51,10 +51,10 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute
-        component={PicturesList}
+        component={ImagesList}
         exact
         fetchedAccount={fetchedAccount}
-        path={routes.picturesList(':accountSlug')}
+        path={routes.imagesList(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute

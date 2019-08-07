@@ -17,9 +17,9 @@ const formObjectTransformer = json => {
     id: json.id,
     name: json.name || '',
     bio: json.bio || '',
-    profilePic: { url: json.profilePic.url || '' },
-    picRect: json.picRect || {},
-    profilePicAnimation: { url: json.profilePicAnimation.url || '' },
+    img: { url: json.img.url || '' },
+    imgRect: json.imgRect || {},
+    animatedImg: { url: json.animatedImg.url || '' },
     instagramUrl: json.instagramUrl || '',
     lockVersion: json.lockVersion,
   }
@@ -29,10 +29,10 @@ const loadFormObject = () => {
   return {
     name: '',
     bio: '',
-    profilePic: { url: '' },
-    profilePicAnimation: { url: '' },
+    img: { url: '' },
+    animatedImg: { url: '' },
     instagramUrl: '',
-    picRect: {},
+    imgRect: {},
   }
 }
 

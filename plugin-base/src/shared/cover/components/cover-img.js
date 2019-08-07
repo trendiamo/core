@@ -3,7 +3,7 @@ import SellerPlaceholderIcon from 'icons/icon-placeholder-seller.svg'
 import styled from 'styled-components'
 import { SingleImage } from 'shared/list'
 
-const EmptySellerPic = styled(SellerPlaceholderIcon)`
+const EmptySellerImg = styled(SellerPlaceholderIcon)`
   fill: #f2f4f7;
   margin-top: -2px;
 `
@@ -19,7 +19,7 @@ const CoverImgContainer = styled.div`
 `
 
 const CoverImg = forwardRef(({ src }, ref) => (
-  <CoverImgContainer ref={ref}>{src ? <SingleImage src={src} /> : <EmptySellerPic />}</CoverImgContainer>
+  <CoverImgContainer ref={ref}>{src ? <SingleImage src={src} /> : <EmptySellerImg />}</CoverImgContainer>
 ))
 
 export default CoverImg

@@ -43,8 +43,8 @@ const routes = {
   sellerEdit(id, accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/sellers/${id}/edit`
   },
-  picturesList(accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/pictures`
+  imagesList(accountSlug = auth.getSlug()) {
+    return `/a/${accountSlug}/images`
   },
   requestPasswordReset() {
     return '/request-password-reset'
