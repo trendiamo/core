@@ -15,7 +15,7 @@ const AssessmentProducts = ({ data, big, styleConfig, onClick }) => (
     {data.map(product => (
       <AssessmentProduct
         big={big}
-        data={omit({ ...product, img: { url: product.imgUrl } }, ['imgUrl'])}
+        data={omit({ ...product, img: { url: product.picUrl } }, ['picUrl'])}
         key={product.id}
         onClick={onClick}
         styleConfig={styleConfig}
