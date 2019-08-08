@@ -7,6 +7,5 @@ class SimpleChatProductMessage < SimpleChatMessage
   def as_json(_options = {})
     super.except(:img_id).merge(attributes.slice("title", "url", "display_price", "group_with_adjacent", "img_rect"))
          .merge(img: { url: img.url })
-         .merge(picture: { url: img.url }, pic_rect: img_rect)
   end
 end

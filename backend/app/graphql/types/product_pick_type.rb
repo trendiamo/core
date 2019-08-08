@@ -10,18 +10,10 @@ Types::ProductPickType = GraphQL::ObjectType.define do
       obj.display_price
     }
   end
-  field :picture, !Types::ImgType do
-    resolve ->(obj, _args, _ctx) {
-      { url: obj.img.url }
-    }
-  end
   field :img, !Types::ImgType do
     resolve ->(obj, _args, _ctx) {
       { url: obj.img.url }
     }
-  end
-  field :picRect, Types::ImgRectType do
-    resolve ->(obj, _args, _ctx) { obj.img_rect }
   end
   field :imgRect, Types::ImgRectType do
     resolve ->(obj, _args, _ctx) { obj.img_rect }
