@@ -6,7 +6,7 @@ import { useCallback, useMemo, useState } from 'preact/hooks'
 const useChatActions = ({ flowType, mergeAssessmentForm }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false)
   const [videoItem, setVideoItem] = useState(null)
-  const [imageModalOpen, setImageModalOpen] = useState(false)
+  const [imagesModalOpen, setImagesModalOpen] = useState(false)
   const [imagesModalIndex, setImagesModalIndex] = useState(null)
   const [imagesModalUrls, setImagesModalUrls] = useState([])
   const [imagesModalTouch, setImagesModalTouch] = useState(false)
@@ -40,10 +40,10 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       videoModalOpen,
       closeVideoModal,
       videoItem,
-      imageModalOpen,
+      imagesModalOpen,
       imagesModalIndex,
       setImagesModalIndex,
-      setImageModalOpen,
+      setImagesModalOpen,
       imagesModalUrls,
       setImagesModalUrls,
       imagesModalTouch,
@@ -56,10 +56,10 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       videoModalOpen,
       closeVideoModal,
       videoItem,
-      imageModalOpen,
+      imagesModalOpen,
       imagesModalIndex,
       setImagesModalIndex,
-      setImageModalOpen,
+      setImagesModalOpen,
       imagesModalUrls,
       setImagesModalUrls,
       imagesModalTouch,
@@ -124,7 +124,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       })
       setImagesModalIndex(item.index)
       setImagesModalUrls(item.urlsArray)
-      setImageModalOpen(true)
+      setImagesModalOpen(true)
       setPictureItem(item.picture)
     },
     [flowType]

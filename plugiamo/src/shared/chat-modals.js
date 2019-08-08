@@ -7,9 +7,9 @@ const ChatModals = ({
   videoModalOpen,
   videoItem,
   closeVideoModal,
-  imageModalOpen,
+  imagesModalOpen,
   imagesModalIndex,
-  setImageModalOpen,
+  setImagesModalOpen,
   imagesModalUrls,
   imagesModalTouch,
   flowType,
@@ -22,10 +22,10 @@ const ChatModals = ({
     <ImagesModal
       flowType={flowType}
       index={imagesModalIndex}
-      isOpen={imageModalOpen}
+      isOpen={imagesModalOpen}
       isTouch={imagesModalTouch}
       pictureItem={pictureItem}
-      setIsOpen={setImageModalOpen}
+      setIsOpen={setImagesModalOpen}
       urlsArray={imagesModalUrls}
     />
     <PictureModal closeModal={closePictureModal} isOpen={pictureModalOpen} pictureItem={pictureItem} />
