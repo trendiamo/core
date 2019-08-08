@@ -76,7 +76,7 @@ const Modal = ({ allowBackgroundClose, closeModal, isOpen, container, children, 
     container = document.querySelector('.trendiamo-modal')
     if (!container) {
       const trendiamoModal = document.createElement('div')
-      trendiamoModal.classList.add('trendiamo-modal')
+      trendiamoModal.classList.add('trendiamo-modal', 'notranslate')
       document.body.appendChild(trendiamoModal)
       container = trendiamoModal
     }

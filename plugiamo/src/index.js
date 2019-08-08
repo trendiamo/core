@@ -35,7 +35,7 @@ const addFrekklsReactRoot = frekklsContainer => {
 
 const addFrekklsElements = () => {
   const frekklsContainer = document.createElement('div')
-  frekklsContainer.classList.add('frekkls-container')
+  frekklsContainer.classList.add('frekkls-container', 'notranslate')
   document.body.appendChild(frekklsContainer)
   const frekklsLoadingFrame = addFrekklsLoadingFrame(frekklsContainer)
   const frekklsReactRoot = addFrekklsReactRoot(frekklsContainer)
