@@ -162,7 +162,8 @@ const Autocomplete = ({
 
   const onInputValueChange = useCallback(
     async (searchQuery, stateAndHelpers) => {
-      if (searchQuery.length <= 2) return setIsMenuOpen(false)
+      if (searchQuery.length <= 2 || stateAndHelpers.type !== '__autocomplete_change_input__')
+        return setIsMenuOpen(false)
       const { json } = await debouncedAutocomplete(searchQuery)
       const options = json.map(option => {
         return { value: option, label: option.name }
