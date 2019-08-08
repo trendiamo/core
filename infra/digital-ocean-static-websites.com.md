@@ -14,9 +14,10 @@ apt install apache2-bin
 apt-get update
 apt install apache2
 
-# There was some manual configuration of apache rewrites and expires:
+# There was some manual configuration of apache using these modules:
 a2enmod rewrite
 a2enmod expires
+a2enmod headers
 
 mkdir -p /var/www/frekkls.com/html
 mkdir -p /var/www/admin/html
