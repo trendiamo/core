@@ -42,7 +42,7 @@ const data = {
     seller: {
       bio: 'Designer der Hosen. Ich würde Dir gern meine Key Looks für die neue Saison vorstellen!',
       name: 'Nico de Roy',
-      image: {
+      img: {
         url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
       },
     },
@@ -573,7 +573,7 @@ const data = {
       teaserMessage: 'Lust auf weitere Ergänzungen?',
       seller: {
         name: 'Nico de Roy',
-        image: {
+        img: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
         },
       },
@@ -602,7 +602,7 @@ const data = {
       extraTeaserMessage: '',
       seller: {
         name: 'Nico de Roy',
-        image: {
+        img: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
         },
       },
@@ -612,7 +612,7 @@ const data = {
       extraTeaserMessage: '',
       seller: {
         name: 'Nico de Roy',
-        image: {
+        img: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/Nico-de-Roy.jpg',
         },
       },
