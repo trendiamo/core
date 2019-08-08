@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :simple_chat do
     sequence(:name) { Faker::StarWars.planet }
-    sequence(:heading) { Faker::Lorem.words(2) }
     sequence(:teaser_message) { Faker::Lorem.words(4) }
     sequence(:extra_teaser_message) { Faker::Lorem.words(4) }
     seller

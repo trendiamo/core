@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190806172453) do
+ActiveRecord::Schema.define(version: 20190808141359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 20190806172453) do
 
   create_table "simple_chats", force: :cascade do |t|
     t.string "name", null: false
-    t.string "heading", null: false
+    t.string "heading"
     t.string "teaser_message"
     t.bigint "seller_id"
     t.bigint "account_id"
