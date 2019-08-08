@@ -90,13 +90,7 @@ function main() {
       _2_loadedPluginCount: entry.value[0],
       _3_toggledPluginCount: entry.value[1],
       _4_toggledPluginPurchases: entry.value[3],
-      // _5_pluginCR:
-      //   entry.value[1] > 0 &&
-      //   parseFloat(entry.value[3] / entry.value[1]).toFixed(2),
       _5_secondPageCount: entry.value[2],
       _6_secondPagePurchases: entry.value[4]
-      // _7_secondPageCR:
-      //   entry.value[2] > 0 &&
-      //   parseFloat(entry.value[4] / entry.value[2]).toFixed(2)
     }));
 }
