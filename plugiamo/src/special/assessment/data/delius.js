@@ -20,7 +20,7 @@ const data = {
       extraTeaserMessage: 'Wie kann ich Ihnen helfen?',
       seller: {
         name: 'Elisa',
-        image: {
+        img: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
           imgRect: {},
         },
@@ -1611,7 +1611,7 @@ const data = {
       extraTeaserMessage: '',
       seller: {
         name: 'Elisa',
-        image: {
+        img: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
           imgRect: {},
         },
@@ -1622,7 +1622,7 @@ const data = {
       extraTeaserMessage: 'Wir melden uns schnellstmöglich.',
       seller: {
         name: 'Elisa',
-        image: {
+        img: {
           url: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Bildschirmfoto.png',
         },
       },
