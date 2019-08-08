@@ -29,17 +29,7 @@ module Api
       private
 
       def user_params
-        params
-          .require(:user)
-          .permit(:first_name, :last_name, :img_url, img_rect: %i[x y width height])
-          .reverse_merge(user_compat_params)
-      end
-
-      def user_compat_params
-        {
-          img_url: params.require(:user)[:profile_pic_url],
-          img_rect: params.require(:user).permit(pic_rect: %i[x y width height])[:pic_rect],
-        }
+        params.require(:user).permit(:first_name, :last_name, :img_url, img_rect: %i[x y width height])
       end
     end
   end

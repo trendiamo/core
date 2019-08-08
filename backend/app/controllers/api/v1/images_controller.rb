@@ -36,17 +36,9 @@ module Api
       end
 
       def image_params
-        result = image_compat_params.permit(:url, :file_type)
+        result = params.require(:image).permit(:url, :file_type)
         result[:file_format] = file_format
         result
-      end
-
-      def image_compat_params
-        if params[:picture]
-          params.require(:picture)
-        else
-          params.require(:image)
-        end
       end
 
       def destroy_all

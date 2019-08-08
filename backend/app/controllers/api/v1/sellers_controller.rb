@@ -51,25 +51,13 @@ module Api
       private
 
       def seller_params
-        params
-          .require(:seller)
-          .permit(:name, :bio, :instagram_url, :img_id, :animated_img_id, :lock_version, img_rect: %i[x y width height])
-          .reverse_merge(seller_compat_params)
-      end
-
-      def seller_compat_params
-        {
-          img_id: params.require(:seller)[:profile_pic_id],
-          animated_img_id: params.require(:seller)[:profile_pic_animation_id],
-          img_rect: params.require(:seller).permit(pic_rect: %i[x y width height])[:pic_rect],
-        }
+        params.require(:seller).permit(:name, :bio, :instagram_url, :img_id, :animated_img_id, :lock_version,
+                                       img_rect: %i[x y width height])
       end
 
       def convert_and_assign_images
-        seller_params = params.require(:seller)
-        seller_params[:img] = seller_params[:profile_pic] if seller_params[:profile_pic]
-        seller_params[:animated_img] = seller_params[:profile_pic_animation] if seller_params[:profile_pic_animation]
         %i[img animated_img].each do |img|
+          seller_params = params.require(:seller)
           img_url = seller_params[img][:url]
           seller_params["#{img}_id"] = img_url.present? ? Image.find_or_create_by!(url: img_url).id : nil
           seller_params.delete(img)

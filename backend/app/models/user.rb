@@ -21,7 +21,6 @@ class User < ApplicationRecord
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "img_url", "onboarding_stage", "admin",
                                "img_rect", "created_at", "updated_at")
-                        .merge(profile_pic_url: img_url, pic_rect: img_rect)
     admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
   end
 

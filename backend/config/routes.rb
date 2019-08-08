@@ -41,8 +41,6 @@ Rails.application.routes.draw do
 
         resources :images, only: %i[index create]
         delete "/images", to: "images#destroy"
-        resources :pictures, only: %i[index create], controller: "images"
-        delete "/pictures", to: "images#destroy"
 
         resources :sellers, only: %i[index show update create]
         delete "/sellers", to: "sellers#destroy"
