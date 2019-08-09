@@ -1,35 +1,34 @@
-export const popPath = () => {
+const getPaths = () => {
   try {
-    const paths = JSON.parse(sessionStorage.getItem('trnd-history'))
-    paths.pop()
-    sessionStorage.setItem('trnd-history', JSON.stringify(paths))
-    return paths.length === 0 ? null : paths[paths.length - 1]
+    return JSON.parse(sessionStorage.getItem('trnd-history'))
   } catch (e) {
-    return null
+    return []
   }
 }
 
-export const pushPath = path => {
-  let paths
-  try {
-    paths = JSON.parse(sessionStorage.getItem('trnd-history'))
-  } catch (e) {
-    paths = []
-  }
-  const result = paths.push(path)
+const setPaths = paths => {
   sessionStorage.setItem('trnd-history', JSON.stringify(paths))
+}
+
+export const popPath = () => {
+  const paths = getPaths()
+  paths.pop()
+  setPaths(paths)
+  return paths.length === 0 ? null : paths[paths.length - 1]
+}
+
+export const pushPath = path => {
+  const paths = getPaths()
+  const result = paths.push(path)
+  setPaths(paths)
   return result
 }
 
 export const replaceLastPath = path => {
-  try {
-    const paths = JSON.parse(sessionStorage.getItem('trnd-history'))
-    paths.pop()
-    paths.push(path)
-    sessionStorage.setItem('trnd-history', JSON.stringify(paths))
-  } catch (e) {
-    // do nothing
-  }
+  const paths = getPaths()
+  paths.pop()
+  paths.push(path)
+  setPaths(paths)
 }
 
 export const markGoBack = () => {
@@ -41,12 +40,8 @@ export const markGoFwd = () => {
 }
 
 export const shouldRenderBack = () => {
-  try {
-    const paths = JSON.parse(sessionStorage.getItem('trnd-history'))
-    return paths.length > 1
-  } catch (e) {
-    return false
-  }
+  const paths = getPaths()
+  return paths.length > 1
 }
 
 const setup = () => {
@@ -56,7 +51,7 @@ const setup = () => {
     const poppedPath = popPath()
     result = poppedPath
   } else if (!go || go === '') {
-    sessionStorage.setItem('trnd-history', JSON.stringify([]))
+    setPaths([])
   }
   sessionStorage.removeItem('trnd-go')
 
