@@ -4,7 +4,7 @@ import mixpanel from 'ext/mixpanel'
 import setup from './setup'
 import setupFlowHistory from './setup/flow-history'
 import { h } from 'preact'
-import { isDeliusAssessment } from 'special/assessment/utils'
+import { isDelius, isDeliusAssessment } from 'special/assessment/utils'
 import { isSmall } from 'utils'
 import { location } from 'config'
 import { timeout } from 'plugin-base'
@@ -71,6 +71,9 @@ const App = ({
   const onToggleContent = useCallback(() => {
     if (data.flow && flowType.current === 'outro') return
     if (isDeliusAssessment() && pluginState === 'closed') return
+
+    if (isDelius && showingContent) sessionStorage.setItem('trnd-disappear-forever', true)
+
     mixpanel.track('Toggled Plugin', {
       hostname: location.hostname,
       action: showingContent ? 'close' : 'open',

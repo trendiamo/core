@@ -115,6 +115,8 @@ const Plugin = ({
     mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
     mixpanel.time_event('Toggled Plugin')
 
+    if (showingContent) sessionStorage.setItem('trnd-disappear-forever', true)
+
     if (showingContent && isSmall()) {
       setIsUnmounting(true)
       return timeout.set(
