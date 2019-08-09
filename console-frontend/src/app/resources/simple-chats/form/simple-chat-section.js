@@ -221,6 +221,7 @@ const SimpleChatSection = ({
               setIsUploaderLoading={setIsUploaderLoading}
               simpleChatSection={simpleChatSection}
               useDragHandle
+              useWindowAsScrollContainer
             />
           )}
           <StyledAddItemButton

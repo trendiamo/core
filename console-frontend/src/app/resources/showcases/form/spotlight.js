@@ -210,6 +210,7 @@ const Spotlight = ({
                 setIsUploaderLoading={setIsUploaderLoading}
                 setProductPickForm={setProductPickForm}
                 useDragHandle
+                useWindowAsScrollContainer
               />
             )}
             <AddItemButton

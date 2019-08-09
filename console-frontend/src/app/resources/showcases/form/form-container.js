@@ -52,6 +52,7 @@ const FormContainer = ({
       setSpotlightForm={setSpotlightForm}
       spotlightsAttributes={form.spotlightsAttributes}
       useDragHandle
+      useWindowAsScrollContainer
     />
     <AddItemContainer
       disabled={isCropping || isFormLoading || isUploaderLoading}

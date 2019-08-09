@@ -71,6 +71,7 @@ const FormContainer = ({
         setIsUploaderLoading={setIsUploaderLoading}
         simpleChatSections={form.simpleChatSectionsAttributes}
         useDragHandle
+        useWindowAsScrollContainer
       />
       <AddItemContainer disabled={isCropping || isFormLoading} message="Add Section" onClick={addSimpleChatSection} />
     </Form>
