@@ -12,6 +12,7 @@ const Launcher = ({
   position,
   pulsating,
   showingContent,
+  pluginZIndex,
 }) => {
   const compiledLauncherConfig = useMemo(
     () => ({
@@ -30,6 +31,7 @@ const Launcher = ({
       frameStyleStr={frameStyleStr}
       launcherConfig={compiledLauncherConfig}
       onClick={onToggleContent}
+      pluginZIndex={pluginZIndex}
       position={position}
       pulsating={pulsating}
       sellerImg={sellerImg(seller, data.flow && data.flow.useSellerAnimation)}

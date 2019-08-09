@@ -29,6 +29,7 @@ const LauncherBubbles = ({
   outroButtonsClick,
   position,
   setDisappear,
+  pluginZIndex,
 }) => {
   const [computedData, setComputedData] = useState(null)
 
@@ -56,6 +57,7 @@ const LauncherBubbles = ({
       launcherConfig={launcherConfig}
       onClick={newOnToggleContent}
       outroButtonsClick={outroButtonsClick}
+      pluginZIndex={pluginZIndex}
       position={position}
       setDisappear={setDisappear}
     />

@@ -226,6 +226,7 @@ const replaceExternalLinks = message => {
 
 const MESSAGE_INTERVAL = 400
 const MESSAGE_RANDOMIZER = 320
+const DEFAULT_ZINDEX = 2147483000
 
 export {
   matchUrl,
@@ -239,6 +240,7 @@ export {
   listeners,
   MESSAGE_INTERVAL,
   MESSAGE_RANDOMIZER,
+  DEFAULT_ZINDEX,
   replaceExternalLinks,
   logSectionsToLogs,
   validateEmail,

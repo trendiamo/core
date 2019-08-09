@@ -28,6 +28,7 @@ const LauncherBubbles = ({
   outroButtonsClick,
   position,
   setDisappear,
+  pluginZIndex,
 }) => {
   const { bubble, bubbleExtra, bubbleButtons, timeEnd } = useMemo(() => getBubbles(data), [data])
 
@@ -45,6 +46,7 @@ const LauncherBubbles = ({
           message={bubble}
           offset={offset}
           onClick={onClick}
+          pluginZIndex={pluginZIndex}
           position={position}
           timeEnd={timeEnd}
         />
@@ -58,6 +60,7 @@ const LauncherBubbles = ({
           message={bubbleExtra}
           offset={offset}
           onClick={onClick}
+          pluginZIndex={pluginZIndex}
           position={position}
           timeEnd={timeEnd}
         />
@@ -70,6 +73,7 @@ const LauncherBubbles = ({
           launcherConfig={launcherConfig}
           offset={offset}
           onClick={outroButtonsClick}
+          pluginZIndex={pluginZIndex}
           position={position}
           setDisappear={setDisappear}
         />

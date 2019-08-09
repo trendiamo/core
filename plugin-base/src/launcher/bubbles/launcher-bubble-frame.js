@@ -2,8 +2,8 @@ import Frame from 'shared/frame'
 import omit from 'lodash.omit'
 import React, { useRef } from 'react'
 import styled from 'styled-components'
+import { DEFAULT_ZINDEX, positioning } from 'tools'
 import { keyframes, rollDuration } from './utils'
-import { positioning } from 'tools'
 
 const LauncherBubbleFrame = styled(props => {
   const ref = useRef(null)
@@ -12,13 +12,13 @@ const LauncherBubbleFrame = styled(props => {
     <Frame
       {...omit(props, [
         'bubbleTimeoutId',
-        'extraBubble',
         'position',
         'textWidth',
         'animation',
         'elevation',
         'disappear',
         'launcherConfig',
+        'pluginZIndex',
       ])}
       ref={ref}
     />
@@ -27,7 +27,7 @@ const LauncherBubbleFrame = styled(props => {
   title: 'Frekkls Launcher Bubble',
 })`
   border: 0;
-  z-index: ${({ extraBubble }) => (extraBubble ? 2147483001 : 2147483000)};
+  z-index: ${({ pluginZIndex }) => (pluginZIndex || DEFAULT_ZINDEX) + 1};
   position: fixed;
   transition: bottom 0.4s cubic-bezier(0.43, 0.21, 0.35, 1.7);
   border-radius: ${({ position }) => (position === 'left' ? '10px 20px 20px 1px' : '20px 10px 1px 20px')};

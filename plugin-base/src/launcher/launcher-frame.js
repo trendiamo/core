@@ -1,17 +1,23 @@
 import omit from 'lodash.omit'
 import React, { useRef } from 'react'
 import styled from 'styled-components'
+import { DEFAULT_ZINDEX } from 'tools'
 import { Frame, useAnimateOnMount } from 'shared'
 
 const StyledFrame = styled(props => {
   const ref = useRef(null)
 
-  return <Frame {...omit(props, ['position', 'entry', 'showingContent', 'disappear', 'launcherConfig'])} ref={ref} />
+  return (
+    <Frame
+      {...omit(props, ['position', 'entry', 'showingContent', 'disappear', 'launcherConfig', 'pluginZIndex'])}
+      ref={ref}
+    />
+  )
 }).attrs({
   title: 'Frekkls Launcher',
 })`
   border: 0;
-  z-index: 2147482999;
+  z-index: ${({ pluginZIndex }) => (pluginZIndex || DEFAULT_ZINDEX) - 1};
   position: fixed;
   bottom: ${({ launcherConfig }) => launcherConfig.extraElevation - launcherConfig.offsetY}px;
   overflow: hidden;

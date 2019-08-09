@@ -3,8 +3,8 @@ import ErrorBoundaries from 'ext/error-boundaries'
 import omit from 'lodash.omit'
 import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
+import { DEFAULT_ZINDEX, Frame, positioning, ThemeContext } from 'plugin-base'
 import { forwardRef } from 'preact/compat'
-import { Frame, positioning, ThemeContext } from 'plugin-base'
 import { h } from 'preact'
 import { MAIN_BREAKPOINT, WIDTH } from 'config'
 import { useContext, useEffect } from 'preact/hooks'
@@ -16,7 +16,7 @@ const IFrame = (props, ref) => (
 const StyledFrame = styled(forwardRef(IFrame)).attrs({
   title: 'Frekkls Content',
 })`
-  z-index: 2147483000;
+  z-index: ${({ pluginZIndex }) => pluginZIndex || DEFAULT_ZINDEX};
   position: fixed;
   overflow-x: hidden;
   background-color: #fff;
@@ -45,7 +45,18 @@ const StyledFrame = styled(forwardRef(IFrame)).attrs({
 `
 
 const ContentFrame = (
-  { entry, children, frameStyleStr, isUnmounting, hidden, onToggleContent, position, launcherConfig, showingContent },
+  {
+    entry,
+    children,
+    frameStyleStr,
+    isUnmounting,
+    hidden,
+    onToggleContent,
+    position,
+    launcherConfig,
+    showingContent,
+    pluginZIndex,
+  },
   ref
 ) => {
   useEffect(() => ref.current.focus(), [ref])
@@ -58,6 +69,7 @@ const ContentFrame = (
       isUnmounting={isUnmounting}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
+      pluginZIndex={pluginZIndex}
       position={position}
       ref={ref}
       showingContent={showingContent}

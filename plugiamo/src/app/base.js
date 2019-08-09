@@ -49,6 +49,8 @@ const AppBase = ({
     }
   }, [])
 
+  const pluginZIndex = useMemo(() => getFrekklsConfig().pluginZIndex, [])
+
   const outroButtonsClick = useCallback(value => {
     mixpanel.track('Clicked Outro Button', { hostname: location.hostname, value })
   }, [])
@@ -77,6 +79,7 @@ const AppBase = ({
         launcherConfig={launcherConfig}
         onToggleContent={onToggleContent}
         onUserInteracted={onUserInteracted}
+        pluginZIndex={pluginZIndex}
         position={position}
         seller={seller}
         setShowAssessmentContent={setShowAssessmentContent}
@@ -90,6 +93,7 @@ const AppBase = ({
           launcherConfig={launcherConfig}
           onToggleContent={onToggleContent}
           outroButtonsClick={outroButtonsClick}
+          pluginZIndex={pluginZIndex}
           position={position}
           setDisappear={setDisappear}
         />
@@ -101,6 +105,7 @@ const AppBase = ({
           frameStyleStr={emojifyStyles}
           launcherConfig={launcherConfig}
           onToggleContent={onToggleContent}
+          pluginZIndex={pluginZIndex}
           position={position}
           pulsating={pluginState !== 'closed'}
           seller={seller}
