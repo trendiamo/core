@@ -554,7 +554,7 @@ const data = {
       store: {
         type: 'store',
         header: {
-          title: 'Empfohlene Produkte für deinen Style',
+          heading: 'Empfohlene Produkte für deinen Style',
           imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/pierre-cardin/list_modal_header.jpg',
           backgroundColor: '#111',
           textColor: '#fff',

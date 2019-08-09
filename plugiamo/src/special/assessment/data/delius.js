@@ -1579,7 +1579,7 @@ const data = {
         id: 77,
         type: 'store',
         header: {
-          title: 'Wir empfehlen Ihnen folgende Produkte',
+          heading: 'Wir empfehlen Ihnen folgende Produkte',
           imageUrl: 'https://console-assets.ams3.digitaloceanspaces.com/manual/delius/Dimout_Blackout.jpg',
           backgroundColor: '#111',
           textColor: '#fff',
