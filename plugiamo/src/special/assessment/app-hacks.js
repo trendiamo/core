@@ -19,6 +19,8 @@ const defaultShowingContent = isDeliusAssessment() ? assessmentHostname === 'www
 
 const assessmentModule = assessmentData[assessmentHostname] && assessmentData[assessmentHostname].assessment
 
+const disappearForever = sessionStorage.getItem('trnd-disappear-forever')
+
 const AppHacks = ({ data }) => {
   const [disappear, setDisappear] = useState(false)
   const [hideContentFrame, setHideContentFrame] = useState(false)
@@ -58,6 +60,8 @@ const AppHacks = ({ data }) => {
       ),
     [setDisappearTimeout, showAssessmentContent, showingContent]
   )
+
+  if (disappearForever) return null
 
   if (isDeliusPDP()) {
     return (

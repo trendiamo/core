@@ -6,13 +6,12 @@ import { suggestions } from './data/pierre-cardin'
 
 const isPCAssessment = () => assessmentHostname === 'www.pierre-cardin.de'
 
+const isDelius = assessmentHostname === 'www.delius-contract.de'
 const deliusPathnames = ['/', '/de/']
 
-const isDeliusAssessment = () =>
-  assessmentHostname === 'www.delius-contract.de' && deliusPathnames.includes(location.pathname)
+const isDeliusAssessment = () => isDelius && deliusPathnames.includes(location.pathname)
 
-const isDeliusPDP = () =>
-  assessmentHostname === 'www.delius-contract.de' && location.pathname.match(/\/de\/produkte\/.+\/.+/)
+const isDeliusPDP = () => isDelius && location.pathname.match(/\/de\/produkte\/.+\/.+/)
 
 const rememberSeller = seller => sessionStorage.setItem('trnd-remembered-seller', JSON.stringify(seller))
 
@@ -139,5 +138,6 @@ export {
   fetchProducts,
   isDeliusAssessment,
   isDeliusPDP,
+  isDelius,
   assessProducts,
 }
