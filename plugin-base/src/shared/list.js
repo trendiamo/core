@@ -23,15 +23,12 @@ const List = ({ children, objectForResetCheck }) => {
   const [listSelected, setListSelected] = useState(false)
   const [currentObject, setCurrentObject] = useState(null)
 
-  useEffect(
-    () => {
-      if (objectForResetCheck !== undefined && !isEqual(currentObject, objectForResetCheck)) {
-        setListSelected(false)
-        setCurrentObject(objectForResetCheck)
-      }
-    },
-    [currentObject, objectForResetCheck]
-  )
+  useEffect(() => {
+    if (objectForResetCheck !== undefined && !isEqual(currentObject, objectForResetCheck)) {
+      setListSelected(false)
+      setCurrentObject(objectForResetCheck)
+    }
+  }, [currentObject, objectForResetCheck])
 
   return (
     <Ul>
@@ -135,23 +132,17 @@ const ListItem = ({ bordered, children, highlight, listSelected, onClick, setLis
     []
   )
 
-  useEffect(
-    () => {
-      if (isClicked && !listSelected) setIsClicked(false)
-    },
-    [isClicked, listSelected]
-  )
+  useEffect(() => {
+    if (isClicked && !listSelected) setIsClicked(false)
+  }, [isClicked, listSelected])
 
-  const newOnClick = useCallback(
-    () => {
-      if (!listSelected) {
-        setIsClicked(true)
-        setListSelected(true)
-        timeout.set('pluginClickItem', onClick, highlight ? 300 : 10)
-      }
-    },
-    [highlight, listSelected, onClick, setListSelected]
-  )
+  const newOnClick = useCallback(() => {
+    if (!listSelected) {
+      setIsClicked(true)
+      setListSelected(true)
+      timeout.set('pluginClickItem', onClick, highlight ? 300 : 10)
+    }
+  }, [highlight, listSelected, onClick, setListSelected])
 
   const theme = useContext(ThemeContext)
 

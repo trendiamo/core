@@ -23,16 +23,13 @@ const LauncherBubble = ({
 
   const bubbleTimeoutId = useMemo(() => `chatBubble${isFirst || 'Extra'}`, [isFirst])
 
-  const reset = useCallback(
-    () => {
-      timeout.clear(bubbleTimeoutId)
-      setTimeEnded(false)
-      setTextWidth(0)
-      setElevation(false)
-      setAnimation('roll')
-    },
-    [bubbleTimeoutId]
-  )
+  const reset = useCallback(() => {
+    timeout.clear(bubbleTimeoutId)
+    setTimeEnded(false)
+    setTextWidth(0)
+    setElevation(false)
+    setAnimation('roll')
+  }, [bubbleTimeoutId])
 
   const timeoutSet = useCallback(
     (fn, time) => {
@@ -41,27 +38,21 @@ const LauncherBubble = ({
     [bubbleTimeoutId]
   )
 
-  useEffect(
-    () => {
-      reset()
+  useEffect(() => {
+    reset()
 
-      if (!timeEnd) return
-      timeoutSet(() => {
-        setAnimation('unroll')
-      }, (timeEnd - (isFirst ? 0 : 1.3)) * 1000)
-      timeoutSet(() => {
-        setTimeEnded(true)
-      }, (timeEnd + rollDuration - (isFirst ? 0 : 1.3)) * 1000)
-    },
-    [isFirst, reset, timeoutSet, timeEnd]
-  )
+    if (!timeEnd) return
+    timeoutSet(() => {
+      setAnimation('unroll')
+    }, (timeEnd - (isFirst ? 0 : 1.3)) * 1000)
+    timeoutSet(() => {
+      setTimeEnded(true)
+    }, (timeEnd + rollDuration - (isFirst ? 0 : 1.3)) * 1000)
+  }, [isFirst, reset, timeoutSet, timeEnd])
 
-  useEffect(
-    () => {
-      if (isFirst) setElevation(hasMoreThanOneBubble)
-    },
-    [isFirst, hasMoreThanOneBubble]
-  )
+  useEffect(() => {
+    if (isFirst) setElevation(hasMoreThanOneBubble)
+  }, [isFirst, hasMoreThanOneBubble])
 
   if (timeEnded) return null
 

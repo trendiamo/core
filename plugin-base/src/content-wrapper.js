@@ -44,14 +44,11 @@ const ContentWrapper = ({ children, onUserInteracted, showingContent, ...props }
     return exitDuration
   }, [])
 
-  useEffect(
-    () => {
-      if (!isIos() && window.innerWidth < 600) {
-        document.body.style.overflow = showingContent ? 'hidden' : ''
-      }
-    },
-    [showingContent]
-  )
+  useEffect(() => {
+    if (!isIos() && window.innerWidth < 600) {
+      document.body.style.overflow = showingContent ? 'hidden' : ''
+    }
+  }, [showingContent])
 
   const handleFirstInteraction = useCallback(
     event => {

@@ -38,12 +38,9 @@ const DisplayPrice = styled.div`
 `
 
 const ProductItem = ({ setListSelected, product, onProductClick, spotlight }) => {
-  const onClick = useCallback(
-    () => {
-      onProductClick(product, spotlight)
-    },
-    [onProductClick, product, spotlight]
-  )
+  const onClick = useCallback(() => {
+    onProductClick(product, spotlight)
+  }, [onProductClick, product, spotlight])
 
   return (
     <ListItem onClick={onClick} setListSelected={setListSelected}>

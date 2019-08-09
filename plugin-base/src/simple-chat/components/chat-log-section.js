@@ -52,33 +52,24 @@ const ChatLogSection = ({
     []
   )
 
-  useEffect(
-    () => {
-      if (logSection.type !== 'message' || index === 0) return
-      autoScroll.activate({
-        element: contentRef.current,
-        destination: () => containerRef.current.offsetTop - 15,
-        delay: 600,
-      })
-    },
-    [contentRef, index, logSection.type]
-  )
+  useEffect(() => {
+    if (logSection.type !== 'message' || index === 0) return
+    autoScroll.activate({
+      element: contentRef.current,
+      destination: () => containerRef.current.offsetTop - 15,
+      delay: 600,
+    })
+  }, [contentRef, index, logSection.type])
 
-  useEffect(
-    () => {
-      if (!previousLogs) return
-      const timer = MESSAGE_INTERVAL * previousLogs.logs.length + MESSAGE_RANDOMIZER
-      timeout.set('chatLogSectionAnimate', () => setAnimate(true), timer)
-    },
-    [previousLogs]
-  )
+  useEffect(() => {
+    if (!previousLogs) return
+    const timer = MESSAGE_INTERVAL * previousLogs.logs.length + MESSAGE_RANDOMIZER
+    timeout.set('chatLogSectionAnimate', () => setAnimate(true), timer)
+  }, [previousLogs])
 
-  useEffect(
-    () => {
-      setHide(false)
-    },
-    [chatDataChanged]
-  )
+  useEffect(() => {
+    setHide(false)
+  }, [chatDataChanged])
 
   return (
     <Container ref={containerRef}>

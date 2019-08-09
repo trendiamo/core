@@ -53,23 +53,20 @@ const Buttons = ({ animation, data, disappear, position, launcherConfig, onClick
     dispatch({ type: 'merge', value: { action: 'appear' } })
   }, [])
 
-  useEffect(
-    () => {
-      if (disappear) {
-        dispatch({
-          type: 'mergeCb',
-          callback: state => {
-            if (state.action === 'appear') {
-              return { ...state, action: 'fadeOut' }
-            } else {
-              return state
-            }
-          },
-        })
-      }
-    },
-    [disappear]
-  )
+  useEffect(() => {
+    if (disappear) {
+      dispatch({
+        type: 'mergeCb',
+        callback: state => {
+          if (state.action === 'appear') {
+            return { ...state, action: 'fadeOut' }
+          } else {
+            return state
+          }
+        },
+      })
+    }
+  }, [disappear])
 
   if (!state.action) return null
 

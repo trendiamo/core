@@ -78,31 +78,22 @@ const Router = ({ children, history, onChange }) => {
     dispatch({ type: 'attemptRouteTo', route })
   }, [])
 
-  const checkForNewComponentProps = useCallback(
-    () => {
-      dispatch({ type: 'checkForNewComponentProps', children })
-    },
-    [children]
-  )
+  const checkForNewComponentProps = useCallback(() => {
+    dispatch({ type: 'checkForNewComponentProps', children })
+  }, [children])
 
-  useEffect(
-    () => {
-      attemptRouteTo(history.location)
-      history.addListener(attemptRouteTo)
-      return () => {
-        history.removeListener(attemptRouteTo)
-        timeout.clear('routeChange')
-      }
-    },
-    [attemptRouteTo, history]
-  )
+  useEffect(() => {
+    attemptRouteTo(history.location)
+    history.addListener(attemptRouteTo)
+    return () => {
+      history.removeListener(attemptRouteTo)
+      timeout.clear('routeChange')
+    }
+  }, [attemptRouteTo, history])
 
-  useEffect(
-    () => {
-      checkForNewComponentProps()
-    },
-    [checkForNewComponentProps]
-  )
+  useEffect(() => {
+    checkForNewComponentProps()
+  }, [checkForNewComponentProps])
 
   return state ? state.Component : null
 }

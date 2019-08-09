@@ -110,18 +110,15 @@ const ArrowIconStyled = styled(props => <IconChevronLeft {...omit(props, ['direc
 `
 
 const Arrow = ({ direction, carouselRef, scrollLeft, show }) => {
-  const onClick = useCallback(
-    () => {
-      const elementSize = BASE_SIZE + 10
-      const distanceFromSibling =
-        direction === 'left'
-          ? scrollLeft - elementSize * Math.floor(scrollLeft / elementSize)
-          : elementSize * (Math.floor(scrollLeft / elementSize) + 1) - scrollLeft
-      const distance = distanceFromSibling === 0 ? elementSize : distanceFromSibling
-      carouselRef.current.scrollLeft += direction === 'left' ? -distance : distance
-    },
-    [carouselRef, direction, scrollLeft]
-  )
+  const onClick = useCallback(() => {
+    const elementSize = BASE_SIZE + 10
+    const distanceFromSibling =
+      direction === 'left'
+        ? scrollLeft - elementSize * Math.floor(scrollLeft / elementSize)
+        : elementSize * (Math.floor(scrollLeft / elementSize) + 1) - scrollLeft
+    const distance = distanceFromSibling === 0 ? elementSize : distanceFromSibling
+    carouselRef.current.scrollLeft += direction === 'left' ? -distance : distance
+  }, [carouselRef, direction, scrollLeft])
 
   return (
     <ArrowContainer direction={direction} onClick={onClick} show={show}>

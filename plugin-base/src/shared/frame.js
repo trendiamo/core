@@ -51,25 +51,22 @@ const Frame = forwardRef(({ children, styleStr, title, ...rest }, ref) => {
 
   ref = ref || isLoaded // hack for lost ref
 
-  useEffect(
-    () => {
-      if (isLoaded) return
-      const { contentDocument } = ref.current
-      const load = () => {
-        loadCss(contentDocument.head, robotoFontUrl)
-        addCss(contentDocument.head, `${baseStyle}${styleStr}`)
-        addBase(contentDocument.head)
-        addPlatformClass(contentDocument.body)
-        setIsLoaded(ref) // hack for lost ref
-      }
-      if (contentDocument.readyState === 'complete') {
-        load()
-      } else {
-        ref.current.onload = load
-      }
-    },
-    [isLoaded, ref, styleStr]
-  )
+  useEffect(() => {
+    if (isLoaded) return
+    const { contentDocument } = ref.current
+    const load = () => {
+      loadCss(contentDocument.head, robotoFontUrl)
+      addCss(contentDocument.head, `${baseStyle}${styleStr}`)
+      addBase(contentDocument.head)
+      addPlatformClass(contentDocument.body)
+      setIsLoaded(ref) // hack for lost ref
+    }
+    if (contentDocument.readyState === 'complete') {
+      load()
+    } else {
+      ref.current.onload = load
+    }
+  }, [isLoaded, ref, styleStr])
 
   return (
     <iframe {...rest} ref={ref} tabIndex="-1" title={title}>

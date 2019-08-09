@@ -32,16 +32,13 @@ const SpotlightItem = ({ spotlight, onClick, setListSelected, listSelected, with
   const imgRef = useRef()
   const nameRef = useRef()
 
-  const newOnClick = useCallback(
-    () => {
-      if (!withoutImage) {
-        transition.addElement('img', imgRef.current)
-        transition.addElement('name', nameRef.current)
-      }
-      onClick(spotlight)
-    },
-    [onClick, spotlight, withoutImage]
-  )
+  const newOnClick = useCallback(() => {
+    if (!withoutImage) {
+      transition.addElement('img', imgRef.current)
+      transition.addElement('name', nameRef.current)
+    }
+    onClick(spotlight)
+  }, [onClick, spotlight, withoutImage])
 
   const animation = useMemo(
     () => spotlight.seller.animatedImg && !spotlight.useSellerAnimation && spotlight.seller.animatedImg.url,

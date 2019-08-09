@@ -25,12 +25,9 @@ const ImageMessage = ({ onClick, imageMessage }) => {
       }),
     [imageMessage.imgRect, imageMessage.img.url]
   )
-  const onImageClick = useCallback(
-    () => {
-      onClick({ type: 'clickImageMessage', item: { url: imageMessage.img.url } })
-    },
-    [onClick, imageMessage.img.url]
-  )
+  const onImageClick = useCallback(() => {
+    onClick({ type: 'clickImageMessage', item: { url: imageMessage.img.url } })
+  }, [onClick, imageMessage.img.url])
 
   return (
     <ImageCard onClick={onImageClick}>

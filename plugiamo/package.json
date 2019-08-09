@@ -14,7 +14,7 @@
     "lodash.omit": "^4.5.0",
     "mixpanel-browser": "^2.22.4",
     "plugin-base": "../plugin-base",
-    "preact": "^10.0.0-beta.3",
+    "preact": "^10.0.0-rc.1",
     "preact-router": "^2.6.1",
     "react-focus-lock": "^1.17.7",
     "snarkdown": "^1.2.2",

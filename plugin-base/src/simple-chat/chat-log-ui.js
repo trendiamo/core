@@ -7,30 +7,21 @@ const ChatLogUi = forwardRef(({ chatLogCallbacks, contentRef, onScroll, onToggle
   const backgroundRef = useRef()
   const [minHeight, setMinHeight] = useState(0)
 
-  const configMinHeight = useCallback(
-    () => {
-      if (backgroundRef.current.clientHeight !== minHeight) {
-        setMinHeight(backgroundRef.current.clientHeight)
-      }
-    },
-    [minHeight]
-  )
+  const configMinHeight = useCallback(() => {
+    if (backgroundRef.current.clientHeight !== minHeight) {
+      setMinHeight(backgroundRef.current.clientHeight)
+    }
+  }, [minHeight])
 
-  const resetMinHeight = useCallback(
-    () => {
-      if (minHeight === 0) return
-      setMinHeight(0)
-    },
-    [minHeight]
-  )
+  const resetMinHeight = useCallback(() => {
+    if (minHeight === 0) return
+    setMinHeight(0)
+  }, [minHeight])
 
-  const onStopChat = useCallback(
-    () => {
-      onToggleContent()
-      chatLogCallbacks && chatLogCallbacks.onChatStop && chatLogCallbacks.onChatStop()
-    },
-    [chatLogCallbacks, onToggleContent]
-  )
+  const onStopChat = useCallback(() => {
+    onToggleContent()
+    chatLogCallbacks && chatLogCallbacks.onChatStop && chatLogCallbacks.onChatStop()
+  }, [chatLogCallbacks, onToggleContent])
 
   return (
     <Chat onScroll={onScroll} ref={ref} touch={touch}>

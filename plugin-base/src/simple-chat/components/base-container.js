@@ -58,16 +58,13 @@ const Container = ({ children, contentRef, animateOpacity }) => {
     [contentRef]
   )
 
-  useEffect(
-    () => {
-      const element = ref.current
-      element.addEventListener('wheel', handleWheel)
-      return () => {
-        element.removeEventListener('wheel', handleWheel)
-      }
-    },
-    [handleWheel]
-  )
+  useEffect(() => {
+    const element = ref.current
+    element.addEventListener('wheel', handleWheel)
+    return () => {
+      element.removeEventListener('wheel', handleWheel)
+    }
+  }, [handleWheel])
 
   return (
     <ContainerDiv animateOpacity={animateOpacity} onTouchMove={autoScroll.stop} ref={ref}>

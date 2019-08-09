@@ -38,16 +38,13 @@ const useTextTyping = (finalText, delay = 0) => {
     []
   )
 
-  useEffect(
-    () => {
-      timeout.clear('textTyping')
-      timeout.clear('textTypingInterval', true)
-      dispatch({ type: 'reset' })
-      const appendText = text => dispatch({ type: 'append', text })
-      timeout.set('textTyping', () => typeText({ appendText, speed: 0.01, finalText }), delay)
-    },
-    [delay, dispatch, finalText]
-  )
+  useEffect(() => {
+    timeout.clear('textTyping')
+    timeout.clear('textTypingInterval', true)
+    dispatch({ type: 'reset' })
+    const appendText = text => dispatch({ type: 'append', text })
+    timeout.set('textTyping', () => typeText({ appendText, speed: 0.01, finalText }), delay)
+  }, [delay, dispatch, finalText])
 
   return currentText
 }

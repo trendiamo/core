@@ -85,62 +85,44 @@ const ChatContent = ({
     [clickActions, configMinHeight, data, handleClick, onStopChat, seller]
   )
 
-  useEffect(
-    () => {
-      if (isEqual(previousData, data)) return
-      if (previousData && handleDataUpdate) {
-        handleDataUpdate({ chatLog, setLogs, updateLogs })
-      } else {
-        newInitChatLog({ update: !!previousData })
-      }
-    },
-    [chatLogCallbacks, data, handleDataUpdate, initChatLog, newInitChatLog, previousData, updateLogs]
-  )
+  useEffect(() => {
+    if (isEqual(previousData, data)) return
+    if (previousData && handleDataUpdate) {
+      handleDataUpdate({ chatLog, setLogs, updateLogs })
+    } else {
+      newInitChatLog({ update: !!previousData })
+    }
+  }, [chatLogCallbacks, data, handleDataUpdate, initChatLog, newInitChatLog, previousData, updateLogs])
 
-  useEffect(
-    () => {
-      if (
-        (!previousStoreLog || !previousStoreLog.logs || previousStoreLog.logs.length === 0) &&
-        storeLog &&
-        storeLog.logs.length > 0
-      ) {
-        handleLogsUpdate && handleLogsUpdate({ chatLog, setLogs, updateLogs })
-      }
-    },
-    [handleLogsUpdate, previousStoreLog, storeLog, updateLogs]
-  )
+  useEffect(() => {
+    if (
+      (!previousStoreLog || !previousStoreLog.logs || previousStoreLog.logs.length === 0) &&
+      storeLog &&
+      storeLog.logs.length > 0
+    ) {
+      handleLogsUpdate && handleLogsUpdate({ chatLog, setLogs, updateLogs })
+    }
+  }, [handleLogsUpdate, previousStoreLog, storeLog, updateLogs])
 
-  useEffect(
-    () => {
-      setPreviousData(data)
-    },
-    [data]
-  )
+  useEffect(() => {
+    setPreviousData(data)
+  }, [data])
 
-  useEffect(
-    () => {
-      setPreviousStoreLog(storeLog)
-    },
-    [storeLog]
-  )
+  useEffect(() => {
+    setPreviousStoreLog(storeLog)
+  }, [storeLog])
 
-  useEffect(
-    () => {
-      if (!lazyLoadActive) return
-      newInitChatLog({ update: false })
-      setLazyLoadActive(false)
-    },
-    [lazyLoadActive, newInitChatLog, setLazyLoadActive]
-  )
+  useEffect(() => {
+    if (!lazyLoadActive) return
+    newInitChatLog({ update: false })
+    setLazyLoadActive(false)
+  }, [lazyLoadActive, newInitChatLog, setLazyLoadActive])
 
-  useEffect(
-    () => {
-      if (!chatDataChanged) return
-      resetMinHeight()
-      setChatDataChanged(false)
-    },
-    [chatDataChanged, resetMinHeight]
-  )
+  useEffect(() => {
+    if (!chatDataChanged) return
+    resetMinHeight()
+    setChatDataChanged(false)
+  }, [chatDataChanged, resetMinHeight])
 
   return (
     <div>

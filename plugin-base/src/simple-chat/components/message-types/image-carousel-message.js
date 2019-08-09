@@ -10,19 +10,13 @@ const StyledCarouselElement = styled(CarouselElement)`
 `
 
 const ImageCarouselElement = ({ carouselType, image, index, onClick, urlsArray }) => {
-  const newOnClick = useCallback(
-    () => {
-      onClick({ type: 'clickImageCarouselItem', item: { index, urlsArray } })
-    },
-    [index, onClick, urlsArray]
-  )
+  const newOnClick = useCallback(() => {
+    onClick({ type: 'clickImageCarouselItem', item: { index, urlsArray } })
+  }, [index, onClick, urlsArray])
 
-  const onTouchEnd = useCallback(
-    () => {
-      onClick({ type: 'touchImageCarousel', item: { index, urlsArray } })
-    },
-    [index, onClick, urlsArray]
-  )
+  const onTouchEnd = useCallback(() => {
+    onClick({ type: 'touchImageCarousel', item: { index, urlsArray } })
+  }, [index, onClick, urlsArray])
 
   return (
     <StyledCarouselElement carouselType={carouselType} onClick={newOnClick} onTouchEnd={onTouchEnd}>

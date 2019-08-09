@@ -40,22 +40,16 @@ const Container = styled.div`
 const ChatOption = ({ chatOption, onClick, animate, hide }) => {
   const [clicked, setClicked] = useState(false)
 
-  const newOnClick = useCallback(
-    () => {
-      if (!clicked && !hide && animate) {
-        setClicked(true)
-        onClick({ type: 'clickChatOption', item: chatOption })
-      }
-    },
-    [animate, chatOption, clicked, hide, onClick]
-  )
+  const newOnClick = useCallback(() => {
+    if (!clicked && !hide && animate) {
+      setClicked(true)
+      onClick({ type: 'clickChatOption', item: chatOption })
+    }
+  }, [animate, chatOption, clicked, hide, onClick])
 
-  useEffect(
-    () => {
-      if (!hide) setClicked(false)
-    },
-    [hide]
-  )
+  useEffect(() => {
+    if (!hide) setClicked(false)
+  }, [hide])
 
   return (
     <Container animate={animate} clicked={clicked} hide={hide}>
