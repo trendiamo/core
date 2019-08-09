@@ -26,9 +26,19 @@ const FoldButton = ({ isFoldedByLogic, folded, toggleFolded }) => (
   </IconButton>
 )
 
-const HeaderBar = ({ dragHandle, ellipsize, isFoldedByLogic, toggleFolded, folded, foldable, title, actions }) => (
+const HeaderBar = ({
+  dragHandle,
+  isDragHandleVisible,
+  ellipsize,
+  isFoldedByLogic,
+  toggleFolded,
+  folded,
+  foldable,
+  title,
+  actions,
+}) => (
   <FlexBar>
-    {dragHandle && <DragHandle />}
+    {dragHandle && <DragHandle visible={isDragHandleVisible !== false} />}
     <Header ellipsize={ellipsize} variant="subtitle1">
       {title}
     </Header>
@@ -40,6 +50,7 @@ const HeaderBar = ({ dragHandle, ellipsize, isFoldedByLogic, toggleFolded, folde
 const FormSection = ({
   backgroundColor,
   dragHandle,
+  isDragHandleVisible,
   title,
   children,
   folded: defaultFolded,
@@ -70,6 +81,7 @@ const FormSection = ({
         ellipsize={ellipsize}
         foldable={foldable}
         folded={folded}
+        isDragHandleVisible={isDragHandleVisible}
         isFoldedByLogic={isFoldedByLogic}
         title={title}
         toggleFolded={toggleFolded}

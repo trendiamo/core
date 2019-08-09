@@ -181,6 +181,7 @@ const SimpleChatSection = ({
         foldable
         folded={folded}
         hideTop
+        isDragHandleVisible={simpleChatSectionIndex > 0}
         title={
           simpleChatSectionIndex === 0
             ? 'Starting Section'

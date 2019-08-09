@@ -8,10 +8,11 @@ import {
   SortableHandle,
 } from 'react-sortable-hoc'
 
-const ReorderIcon = styled(Reorder)`
+const ReorderIcon = styled(props => <Reorder {...omit(props, ['visible'])} />)`
   cursor: ns-resize;
   color: rgba(0, 0, 0, 0.54);
   margin-right: 1rem;
+  ${({ visible }) => (!visible ? 'visibility: hidden' : '')}
 `
 
 export const DragHandle = SortableHandle(ReorderIcon)
