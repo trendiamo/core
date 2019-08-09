@@ -15,6 +15,7 @@ const Content = ({
   setShowAssessmentContent,
   showingContent,
   onUserInteracted,
+  pluginZIndex,
 }) => {
   const [entry, setEntry] = useState(true)
 
@@ -41,6 +42,7 @@ const Content = ({
       isUnmounting={isUnmounting}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
+      pluginZIndex={pluginZIndex}
       position={position}
       showingContent={showingContent}
     >

@@ -13,6 +13,7 @@ import { BackButton, Cover, Frame, SellerInstagram, TopSlideAnimation, useAnimat
 import { BelowCover, CoverImg, PaddedCover, SellerBio } from 'shared/cover/components'
 import {
   convertLogs,
+  DEFAULT_ZINDEX,
   extractYoutubeId,
   imgixUrl,
   listeners,
@@ -76,4 +77,5 @@ export {
   headerConfig,
   ProductMessage,
   validateEmail,
+  DEFAULT_ZINDEX,
 }

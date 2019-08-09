@@ -3,7 +3,7 @@ import { h } from 'preact'
 import { useAnimateOnMount } from 'plugin-base'
 
 const StyledDiv = styled.div`
-  z-index: 2147482998;
+  z-index: ${({ pluginZIndex }) => pluginZIndex - 2};
   position: fixed;
   width: 500px;
   height: 500px;

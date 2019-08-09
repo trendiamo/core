@@ -23,7 +23,17 @@ const Button = ({ message, action, animation, clicked, frameStyleStr, handleClic
   )
 }
 
-const Buttons = ({ animation, data, disappear, position, launcherConfig, onClick, offset, setDisappear }) => {
+const Buttons = ({
+  animation,
+  data,
+  disappear,
+  position,
+  launcherConfig,
+  onClick,
+  offset,
+  setDisappear,
+  pluginZIndex,
+}) => {
   const [state, dispatch] = useReducer(
     (state, action) => {
       if (action.type === 'merge') {
@@ -71,7 +81,7 @@ const Buttons = ({ animation, data, disappear, position, launcherConfig, onClick
   if (!state.action) return null
 
   return (
-    <div style={containerStyle({ position, action: state.action, launcherConfig, offset })}>
+    <div style={containerStyle({ position, action: state.action, launcherConfig, offset, pluginZIndex })}>
       <Button
         action={state.action}
         animation={animation}

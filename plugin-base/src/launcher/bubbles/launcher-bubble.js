@@ -15,6 +15,7 @@ const LauncherBubble = ({
   onClick,
   position,
   timeEnd,
+  pluginZIndex,
 }) => {
   const [timeEnded, setTimeEnded] = useState(false)
   const [animation, setAnimation] = useState(null)
@@ -63,6 +64,7 @@ const LauncherBubble = ({
       elevation={elevation}
       launcherConfig={launcherConfig}
       offset={offset}
+      pluginZIndex={pluginZIndex}
       position={position}
       styleStr={frameStyleStr}
       textWidth={textWidth}

@@ -15,10 +15,12 @@ const Launcher = ({
   position,
   pulsating,
   showingContent,
+  pluginZIndex,
 }) => (
   <LauncherFrame
     disappear={disappear}
     launcherConfig={launcherConfig}
+    pluginZIndex={pluginZIndex}
     position={position}
     scrolling="no"
     showingContent={showingContent}

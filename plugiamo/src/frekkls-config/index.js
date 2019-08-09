@@ -29,6 +29,7 @@ const defaultConfig = {
     extraElevation: 0,
     size: 'big',
   },
+  pluginZIndex: null,
 }
 
 // Our clients can define a window.frekklsConfig object. Here we have some defined for them
