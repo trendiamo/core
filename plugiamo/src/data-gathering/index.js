@@ -1,6 +1,7 @@
 import baldessariniDataGathering from './baldessarini'
 import buttwrapDataGathering from './buttwrap'
 import impressorajatoDataGathering from './impressorajato'
+import mymuesliDataGathering from './mymuesli'
 import pamplingDataGathering from './pampling'
 import pierrecardinDataGathering from './pierre-cardin'
 import pionierWorkwearDataGathering from './pionier-workwear'
@@ -19,6 +20,7 @@ const dataGatheringFactory = {
   'www.pionier-workwear.com': pionierWorkwearDataGathering,
   'timeblock-europe.com': timeBlockDataGathering,
   'tontonetfils.fr': tontonetfilsDataGathering,
+  'www.mymuesli.com': mymuesliDataGathering,
 }
 
 const dataGathering = dataGatheringFactory[window.location.hostname]
