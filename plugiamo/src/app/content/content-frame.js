@@ -49,17 +49,18 @@ const ContentFrame = (
     entry,
     children,
     frameStyleStr,
+    isModalOpen,
     isUnmounting,
     hidden,
     onToggleContent,
     position,
+    pluginZIndex,
     launcherConfig,
     showingContent,
-    pluginZIndex,
   },
   ref
 ) => {
-  useEffect(() => ref.current.focus(), [ref])
+  useEffect(() => !isModalOpen && ref.current.focus(), [ref, isModalOpen])
   const theme = useContext(ThemeContext)
 
   return (

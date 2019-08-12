@@ -1,93 +1,78 @@
-import FocusLock from 'react-focus-lock'
 import Loader from 'icons/loader.svg'
+import styled from 'styled-components'
 import withHotkeys, { escapeKey } from 'ext/hooks/with-hotkeys'
-import { createPortal, forwardRef } from 'preact/compat'
+import { forwardRef } from 'preact/compat'
 import { h } from 'preact'
 import { IconClose } from 'plugin-base'
+import { useEffect } from 'preact/hooks'
 
-const styles = {
-  modal: {
-    position: 'fixed',
-    top: 0,
-    bottom: -50,
-    paddingBottom: 50,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: '12340000000',
-  },
-  iconClose: {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    fill: '#fff',
-    width: '32px',
-    height: '32px',
-    cursor: 'pointer',
-    zIndex: '12340000005',
-  },
-  dialog: {
-    width: '100%',
-    maxWidth: '60em',
-  },
-  loaderContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loader: {
-    height: '150px',
-    width: '150px',
-  },
-}
+const ModalContainer = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: -50px;
+  padding-bottom: 50px;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 12340000000;
+`
 
-const ModalTemplate = ({ allowBackgroundClose, closeModal, children, isResourceLoaded }, ref) => {
+const StyledIconClose = styled(IconClose)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  fill: #fff;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 12340000005;
+`
+
+const Dialog = styled.div`
+  width: 100%;
+  max-width: 60em;
+  background-color: #fff;
+  max-height: 90%;
+  overflow: auto;
+`
+
+const LoaderContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const StyledLoader = styled(Loader)`
+  height: 150px;
+  width: 150px;
+`
+
+const Modal = ({ allowBackgroundClose, closeModal, children, isResourceLoaded }, ref) => {
+  useEffect(() => ref.current.focus(), [ref])
+
   return (
-    <div onClick={allowBackgroundClose && closeModal} ref={ref} role="presentation" style={styles.modal} tabIndex="-1">
-      <IconClose onClick={!allowBackgroundClose && closeModal} style={styles.iconClose} />
-      <div role="dialog" style={styles.dialog}>
+    <ModalContainer onClick={allowBackgroundClose && closeModal} ref={ref} role="presentation" tabIndex="-1">
+      <StyledIconClose onClick={!allowBackgroundClose && closeModal} />
+      <Dialog role="dialog">
         {isResourceLoaded === false && (
-          <div style={styles.loaderContainer}>
-            <Loader style={styles.loader} />
-          </div>
+          <LoaderContainer>
+            <StyledLoader />
+          </LoaderContainer>
         )}
-        <FocusLock>{children}</FocusLock>
-      </div>
-    </div>
+        {children}
+      </Dialog>
+    </ModalContainer>
   )
 }
 
-const ModalComp = withHotkeys({
+export default withHotkeys({
   [escapeKey]: ({ closeModal }) => closeModal,
-})(forwardRef(ModalTemplate))
-
-const Modal = ({ allowBackgroundClose, closeModal, isOpen, container, children, isResourceLoaded }) => {
-  if (!isOpen) return null
-
-  if (!container) {
-    container = document.querySelector('.trendiamo-modal')
-    if (!container) {
-      const trendiamoModal = document.createElement('div')
-      trendiamoModal.classList.add('trendiamo-modal', 'notranslate')
-      document.body.appendChild(trendiamoModal)
-      container = trendiamoModal
-    }
-  }
-
-  return createPortal(
-    <ModalComp allowBackgroundClose={allowBackgroundClose} closeModal={closeModal} isResourceLoaded={isResourceLoaded}>
-      {children}
-    </ModalComp>,
-    container
-  )
-}
-
-export default Modal
+})(forwardRef(Modal))

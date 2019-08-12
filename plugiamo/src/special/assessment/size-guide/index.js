@@ -13,7 +13,9 @@ import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
 const Plugin = ({
   clearDisappearTimeout,
+  modalProps,
   setDisappearTimeout,
+  setModalProps,
   setShowingContent,
   showingBubbles,
   showingContent,
@@ -38,7 +40,7 @@ const Plugin = ({
     [pluginState, productType, sizeGuide]
   )
 
-  const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType })
+  const { clickActions } = useChatActions({ flowType: module.flowType, setModalProps })
 
   useEffect(() => {
     fetchProducts().then(results => {
@@ -95,7 +97,7 @@ const Plugin = ({
 
   return (
     <div>
-      <ChatModals flowType="asmt-size-guide" {...modalsProps} />
+      <ChatModals {...modalProps} />
       <AppBase
         Component={
           <SimpleChat

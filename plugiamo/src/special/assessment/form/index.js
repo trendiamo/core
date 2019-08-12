@@ -53,7 +53,9 @@ const inquiryMutation = variables =>
 const Plugin = ({
   clearDisappearTimeout,
   form,
+  modalProps,
   setDisappearTimeout,
+  setModalProps,
   setShowingContent,
   showingBubbles,
   showingContent,
@@ -86,7 +88,7 @@ const Plugin = ({
     [assessmentForm]
   )
 
-  const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType, mergeAssessmentForm })
+  const { clickActions } = useChatActions({ flowType: module.flowType, mergeAssessmentForm, setModalProps })
 
   useEffect(() => {
     const assessmentTags = sessionStorage.getItem('frekkls-asmt-tags')
@@ -154,7 +156,7 @@ const Plugin = ({
 
   return (
     <div>
-      <ChatModals flowType={module.flowType} {...modalsProps} />
+      <ChatModals {...modalProps} />
       <AppBase
         Component={
           <SimpleChat

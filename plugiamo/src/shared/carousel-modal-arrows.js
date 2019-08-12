@@ -1,70 +1,65 @@
 import LeftArrowIcon from 'icons/left-arrow.svg'
 import RightArrowIcon from 'icons/right-arrow.svg'
-import { h } from 'preact'
+import styled from 'styled-components'
+import { Fragment, h } from 'preact'
+import { useMemo } from 'preact/hooks'
 
-const CarouselModalArrows = ({ selectedImageIndex, onLeftArrowClick, onRightArrowClick, urlsArray }) => (
-  <div>
-    <button
-      onClick={onLeftArrowClick}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        height: '100vh',
-        width: '50%',
-        zIndex: '1234000000',
-        border: 'none',
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-        outline: 0,
-        cursor: 0 < selectedImageIndex ? 'pointer' : 'default',
-      }}
-      type="button"
-    >
-      <LeftArrowIcon
-        style={{
-          display: 0 < selectedImageIndex ? 'block' : 'none',
-          fill: '#fff',
-          width: '42px',
-          height: '42px',
-          position: 'absolute',
-          left: '40px',
-          top: '50vh',
-          zIndex: '12340000004',
-          cursor: 'pointer',
-        }}
-      />
-    </button>
-    <button
-      onClick={onRightArrowClick}
-      style={{
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        height: '100vh',
-        width: '50%',
-        border: 'none',
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-        outline: 0,
-        zIndex: '1234000000',
-        cursor: 0 < selectedImageIndex < urlsArray.length - 1 ? 'pointer' : 'default',
-      }}
-      type="button"
-    >
-      <RightArrowIcon
-        style={{
-          display: selectedImageIndex < urlsArray.length - 1 ? 'block' : 'none',
-          fill: '#fff',
-          width: '42px',
-          height: '42px',
-          position: 'absolute',
-          right: '40px',
-          top: '50vh',
-          zIndex: '12340000004',
-          cursor: 'pointer',
-        }}
-      />
-    </button>
-  </div>
-)
+const Button = styled.button`
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 50%;
+  z-index: 1234000000;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  outline: 0;
+  cursor: ${({ isVisible }) => (isVisible ? 'pointer' : 'default')};
+`
+
+const LeftButton = styled(Button)`
+  left: 0;
+`
+
+const RightButton = styled(Button)`
+  right: 0;
+`
+
+const styledArrowIconFactory = Arrow => styled(Arrow)`
+  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+  fill: #fff;
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  top: 50vh;
+  z-index: 12340000004;
+  cursor: pointer;
+`
+
+const StyledLeftArrowIcon = styled(styledArrowIconFactory(LeftArrowIcon))`
+  left: 40px;
+`
+
+const StyledRightArrowIcon = styled(styledArrowIconFactory(RightArrowIcon))`
+  right: 40px;
+`
+
+const CarouselModalArrows = ({ selectedImageIndex, onLeftArrowClick, onRightArrowClick, urlsArray }) => {
+  const hasLeftButton = useMemo(() => 0 < selectedImageIndex, [selectedImageIndex])
+  const hasRightButton = useMemo(() => 0 < selectedImageIndex < urlsArray.length - 1, [
+    selectedImageIndex,
+    urlsArray.length,
+  ])
+
+  return (
+    <Fragment>
+      <LeftButton isVisible={hasLeftButton} onClick={onLeftArrowClick} type="button">
+        <StyledLeftArrowIcon isVisible={hasLeftButton} />
+      </LeftButton>
+      <RightButton isVisible={hasRightButton} onClick={onRightArrowClick} type="button">
+        <StyledRightArrowIcon isVisible={hasRightButton} />
+      </RightButton>
+    </Fragment>
+  )
+}
 
 export default CarouselModalArrows

@@ -15,7 +15,6 @@
     "plugin-base": "../plugin-base",
     "preact": "^10.0.0-rc.1",
     "preact-router": "^2.6.1",
-    "react-focus-lock": "^1.17.7",
     "snarkdown": "^1.2.2",
     "styled-components": "^4.2.0"
   },

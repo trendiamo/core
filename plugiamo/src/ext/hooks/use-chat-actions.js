@@ -1,70 +1,31 @@
+import ImageModal from 'shared/image-modal'
+import ImagesModal from 'shared/images-modal'
 import mixpanel from 'ext/mixpanel'
+import VideoModal from 'shared/video-modal'
+import { h } from 'preact'
 import { markGoFwd } from 'app/setup/flow-history'
 import { clickAssessmentProduct as originalClickAssessmentProduct } from 'special/assessment/utils'
-import { useCallback, useMemo, useState } from 'preact/hooks'
+import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
 
-const useChatActions = ({ flowType, mergeAssessmentForm }) => {
-  const [videoModalOpen, setVideoModalOpen] = useState(false)
-  const [videoItem, setVideoItem] = useState(null)
-  const [imagesModalOpen, setImagesModalOpen] = useState(false)
-  const [imagesModalIndex, setImagesModalIndex] = useState(null)
-  const [imagesModalUrls, setImagesModalUrls] = useState([])
-  const [imagesModalTouch, setImagesModalTouch] = useState(false)
-  const [imageModalOpen, setImageModalOpen] = useState(false)
-  const [imageItem, setImageItem] = useState(null)
+const useChatActions = ({ flowType, mergeAssessmentForm, setModalProps }) => {
+  const [ModalComponent, setModalComponent] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isTouch, setIsTouch] = useState(false)
 
-  const closeVideoModal = useCallback(() => {
-    mixpanel.track('Closed Video', {
-      flowType,
-      hostname: location.hostname,
-      url: videoItem.youtubeUrl,
-    })
-    setVideoModalOpen(false)
-    const frekklsContent = document.querySelector('iframe[title="Frekkls Content"]')
-    frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
-  }, [flowType, videoItem])
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false)
+  }, [])
 
-  const closeImageModal = useCallback(() => {
-    mixpanel.track('Closed Picture', {
-      flowType,
-      hostname: location.hostname,
-      url: imageItem.url,
-    })
-    setImageModalOpen(false)
-    const frekklsContent = document.querySelector('iframe[title="Frekkls Content"]')
-    frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
-  }, [flowType, imageItem])
-
-  const modalsProps = useMemo(
-    () => ({
-      videoModalOpen,
-      closeVideoModal,
-      videoItem,
-      imagesModalOpen,
-      imagesModalIndex,
-      setImagesModalIndex,
-      setImagesModalOpen,
-      imagesModalUrls,
-      setImagesModalUrls,
-      imagesModalTouch,
-      setImagesModalTouch,
-      imageModalOpen,
-      closeImageModal,
-      imageItem,
-    }),
-    [
-      videoModalOpen,
-      closeVideoModal,
-      videoItem,
-      imagesModalOpen,
-      imagesModalIndex,
-      imagesModalUrls,
-      imagesModalTouch,
-      imageModalOpen,
-      closeImageModal,
-      imageItem,
-    ]
-  )
+  useEffect(() => {
+    setModalProps &&
+      setModalProps({
+        closeModal,
+        isModalOpen,
+        ModalComponent,
+        setIsModalOpen,
+        setModalComponent,
+      })
+  }, [closeModal, isModalOpen, setModalProps, ModalComponent])
 
   const clickAssessmentProduct = useCallback(({ item }) => {
     originalClickAssessmentProduct(item)
@@ -92,10 +53,10 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
         hostname: location.hostname,
         url: item.youtubeUrl,
       })
-      setVideoItem(item)
-      setVideoModalOpen(true)
+      setModalComponent(<VideoModal closeModal={closeModal} flowType={flowType} url={item && item.youtubeEmbedUrl} />)
+      setIsModalOpen(true)
     },
-    [flowType]
+    [closeModal, flowType]
   )
 
   const clickHeaderVideo = useCallback(
@@ -105,10 +66,10 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
         hostname: location.hostname,
         url: item.youtubeUrl,
       })
-      setVideoItem(item)
-      setVideoModalOpen(true)
+      setModalComponent(<VideoModal closeModal={closeModal} flowType={flowType} url={item && item.youtubeUrl} />)
+      setIsModalOpen(true)
     },
-    [flowType]
+    [closeModal, flowType]
   )
 
   const clickImageCarouselItem = useCallback(
@@ -118,12 +79,10 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
         hostname: location.hostname,
         imageUrl: item.urlsArray[item.index],
       })
-      setImagesModalIndex(item.index)
-      setImagesModalUrls(item.urlsArray)
-      setImagesModalOpen(true)
-      setImageItem(item.img)
+      setModalComponent(<ImagesModal closeModal={closeModal} flowType={flowType} imageItem={item} isTouch={isTouch} />)
+      setIsModalOpen(true)
     },
-    [flowType]
+    [closeModal, flowType, isTouch]
   )
 
   const touchImageCarousel = useCallback(() => {
@@ -131,7 +90,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       flowType,
       hostname: location.hostname,
     })
-    setImagesModalTouch(true)
+    setIsTouch(true)
   }, [flowType])
 
   const clickChatOption = useCallback(
@@ -160,10 +119,10 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
         hostname: location.hostname,
         url: item.url,
       })
-      setImageItem(item)
-      setImageModalOpen(true)
+      setModalComponent(<ImageModal closeModal={closeModal} flowType={flowType} imageItem={item} />)
+      setIsModalOpen(true)
     },
-    [flowType]
+    [closeModal, flowType]
   )
 
   const clickActions = useMemo(
@@ -193,7 +152,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
     ]
   )
 
-  return { clickActions, modalsProps }
+  return { clickActions }
 }
 
 export default useChatActions

@@ -6,9 +6,11 @@ import { useCallback, useEffect, useState } from 'preact/hooks'
 const Assessment = ({
   isDelius,
   data,
+  modalProps,
   setDisappearTimeout,
   setDisappear,
   setHideContentFrame,
+  setModalProps,
   setShowAssessmentContent,
   setShowingContent,
   setShowingLauncher,
@@ -21,29 +23,30 @@ const Assessment = ({
   const [showingCtaButton, setShowingCtaButton] = useState(false)
   const [currentStepKey, setCurrentStepKey] = useState(assessmentState.key || 'root')
 
-  const resetAssessment = useCallback(() => {
-    setTags([])
-    setEndNodeTags([])
-    setCurrentStepKey('root')
-    setShowingCtaButton(false)
-  }, [])
-
-  const onCloseModal = useCallback(() => {
-    setShowingLauncher(true)
-    setShowingContent(false)
-    setShowAssessmentContent(false)
-    setPluginState('closed')
-    setHideContentFrame(false)
-    setDisappearTimeout(() => setDisappear(true), isDelius ? 500 : 10000)
+  const closeModal = useCallback(() => {
+    modalProps && modalProps.closeModal()
+    setTimeout(() => {
+      setShowingLauncher(true)
+      setShowingContent(false)
+      setShowAssessmentContent(false)
+      setPluginState('closed')
+      setHideContentFrame(false)
+      setDisappearTimeout(() => setDisappear(true), isDelius ? 500 : 10000)
+      setTags([])
+      setEndNodeTags([])
+      setCurrentStepKey('root')
+      setShowingCtaButton(false)
+    }, 100)
   }, [
-    isDelius,
-    setDisappearTimeout,
-    setDisappear,
-    setHideContentFrame,
-    setPluginState,
-    setShowAssessmentContent,
-    setShowingContent,
     setShowingLauncher,
+    setShowingContent,
+    setShowAssessmentContent,
+    setPluginState,
+    setHideContentFrame,
+    setDisappearTimeout,
+    isDelius,
+    modalProps,
+    setDisappear,
   ])
 
   useEffect(() => {
@@ -58,14 +61,15 @@ const Assessment = ({
     <AssessmentBase
       assessmentIsMainFlow={isDelius}
       assessmentState={assessmentState}
+      closeModal={closeModal}
       currentStepKey={currentStepKey}
       data={data}
       endNodeTags={endNodeTags}
-      onCloseModal={onCloseModal}
-      resetAssessment={resetAssessment}
+      modalProps={modalProps}
       setAssessmentState={setAssessmentState}
       setCurrentStepKey={setCurrentStepKey}
       setEndNodeTags={setEndNodeTags}
+      setModalProps={setModalProps}
       setShowAssessmentContent={setShowAssessmentContent}
       setShowingContent={setShowingContent}
       setShowingCtaButton={setShowingCtaButton}

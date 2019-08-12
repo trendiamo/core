@@ -3,7 +3,14 @@ import SimpleChat from './simple-chat'
 import { Router as BaseRouter, history } from 'plugin-base'
 import { h } from 'preact'
 
-const Router = ({ seller, isTransitioning, onRouteChange, onToggleContent, setShowAssessmentContent }) => (
+const Router = ({
+  seller,
+  isTransitioning,
+  onRouteChange,
+  onToggleContent,
+  setModalProps,
+  setShowAssessmentContent,
+}) => (
   <BaseRouter history={history} onChange={onRouteChange}>
     <Showcase
       isTransitioning={isTransitioning}
@@ -11,7 +18,12 @@ const Router = ({ seller, isTransitioning, onRouteChange, onToggleContent, setSh
       path="/showcase/:id*"
       setShowAssessmentContent={setShowAssessmentContent}
     />
-    <SimpleChat onToggleContent={onToggleContent} path="/simple-chat/:id" seller={seller} />
+    <SimpleChat
+      onToggleContent={onToggleContent}
+      path="/simple-chat/:id"
+      seller={seller}
+      setModalProps={setModalProps}
+    />
   </BaseRouter>
 )
 

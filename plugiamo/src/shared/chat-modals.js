@@ -1,35 +1,26 @@
-import ImageModal from './image-modal'
-import ImagesModal from './images-modal'
-import VideoModal from './video-modal'
+import { Frame } from 'plugin-base'
 import { h } from 'preact'
+import { useRef } from 'preact/hooks'
 
-const ChatModals = ({
-  videoModalOpen,
-  videoItem,
-  closeVideoModal,
-  imagesModalOpen,
-  imagesModalIndex,
-  setImagesModalOpen,
-  imagesModalUrls,
-  imagesModalTouch,
-  flowType,
-  imageModalOpen,
-  imageItem,
-  closeImageModal,
-}) => (
-  <div>
-    <VideoModal closeModal={closeVideoModal} isOpen={videoModalOpen} url={videoItem && videoItem.youtubeEmbedUrl} />
-    <ImagesModal
-      flowType={flowType}
-      imageItem={imageItem}
-      index={imagesModalIndex}
-      isOpen={imagesModalOpen}
-      isTouch={imagesModalTouch}
-      setIsOpen={setImagesModalOpen}
-      urlsArray={imagesModalUrls}
-    />
-    <ImageModal closeModal={closeImageModal} imageItem={imageItem} isOpen={imageModalOpen} />
-  </div>
-)
+const iframeStyle = ({ isModalOpen }) => ({
+  border: 0,
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100vw',
+  height: '100vh',
+  zIndex: 2147483006,
+  ...(isModalOpen ? {} : { display: 'none' }),
+})
+
+const ChatModals = ({ isModalOpen, ModalComponent }) => {
+  const ref = useRef(null)
+
+  return (
+    <Frame ref={ref} style={iframeStyle({ isModalOpen })} title="Frekkls Modal">
+      {isModalOpen ? ModalComponent : <div />}
+    </Frame>
+  )
+}
 
 export default ChatModals
