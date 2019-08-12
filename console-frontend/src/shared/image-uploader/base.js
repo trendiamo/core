@@ -93,6 +93,7 @@ const Dropzone = ({
   ...props
 }) => {
   const [isDragging, setIsDragging] = useState(false)
+  const [imgSrc, setImgSrc] = useState(null)
 
   const onDragEnter = useCallback(() => {
     setIsDragging(true)
@@ -114,6 +115,16 @@ const Dropzone = ({
 
   const onImageLoad = useCallback(() => setIsImageLoading(false), [setIsImageLoading])
 
+  useEffect(
+    () => {
+      // Prevents safari bug when <img /> onload fails to fire
+      setTimeout(() => {
+        setImgSrc(previewImage)
+      }, 0)
+    },
+    [previewImage]
+  )
+
   return (
     <StyledDropzone
       disableClick
@@ -125,7 +136,7 @@ const Dropzone = ({
       previewImage={previewImage}
       {...props}
     >
-      <Img alt="" circle={circle} onLoad={onImageLoad} src={previewImage} type={type} />
+      <Img alt="" circle={circle} onLoad={onImageLoad} src={imgSrc} type={type} />
       <InnerLabel circle={circle}>
         <CloudUpload />
         <div>{'Drop a file or click to select one'}</div>
