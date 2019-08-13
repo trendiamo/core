@@ -47,6 +47,7 @@ const OurBeliefs = styled(({ className }) => (
     }
     ${StyledPeopleImg} {
       height: 100%;
+      transform: translateZ(-600px) scale(1.9);
     }
     ${AbsContainer} {
       position: absolute;

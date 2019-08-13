@@ -53,6 +53,7 @@ const WhatWeDo = styled(({ className }) => (
   }
   ${StyledBeachImg} {
     height: 100%;
+    transform: translateZ(-300px) scale(1.9);
   }
   ${AbsContainer} {
     position: absolute;
@@ -78,6 +79,9 @@ const WhatWeDo = styled(({ className }) => (
   }
   @media (min-width: 1000px) {
     height: 500px;
+    ${StyledBeachImg} {
+      transform: translateZ(-600px) scale(1.9);
+    }
     ${Container} {
       padding-top: 100px;
       padding-bottom: 100px;
