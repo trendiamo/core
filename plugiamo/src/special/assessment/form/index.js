@@ -1,7 +1,6 @@
 import AppBase from 'app/base'
 import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
-import data from 'special/assessment/data/delius'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
@@ -53,6 +52,7 @@ const inquiryMutation = variables =>
 
 const Plugin = ({
   clearDisappearTimeout,
+  form,
   setDisappearTimeout,
   setShowingContent,
   showingBubbles,
@@ -70,10 +70,10 @@ const Plugin = ({
 
   const module = useMemo(
     () => ({
-      ...data.assessmentForm,
-      launcher: isMessageSent ? data.assessmentForm.closedLauncher : data.assessmentForm.launcher,
+      ...form,
+      launcher: isMessageSent ? form.closedLauncher : form.launcher,
     }),
-    [isMessageSent]
+    [form, isMessageSent]
   )
 
   const mergeAssessmentForm = useCallback(

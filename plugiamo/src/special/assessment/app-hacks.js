@@ -1,7 +1,6 @@
 import App from 'app/app'
 import Assessment from '.'
 import AssessmentCart from './cart'
-import assessmentData from './data'
 import AssessmentForm from './form'
 import AssessmentSizeGuide from './size-guide'
 import googleAnalytics from 'ext/google-analytics'
@@ -17,11 +16,12 @@ const isShowingDefault = googleAnalytics.active ? googleAnalytics.getVariation()
 
 const defaultShowingContent = isDeliusAssessment() ? assessmentHostname === 'www.pierre-cardin.de' : false
 
-const assessmentModule = assessmentData[assessmentHostname] && assessmentData[assessmentHostname].assessment
-
 const disappearForever = sessionStorage.getItem('trnd-disappear-forever')
 
+const isAssessment = ['www.pierre-cardin.de', 'www.delius-contract.de'].includes(assessmentHostname)
+
 const AppHacks = ({ data }) => {
+  const [assessmentData, setAssessmentData] = useState(null)
   const [disappear, setDisappear] = useState(false)
   const [hideContentFrame, setHideContentFrame] = useState(false)
   const [pluginState, setPluginState] = useState('default')
@@ -40,26 +40,45 @@ const AppHacks = ({ data }) => {
     }
   }, [showingContent])
 
+  useEffect(() => {
+    ;(async () => {
+      if (!isAssessment) return null
+
+      const response = await fetch(
+        `https://plugin-assets.ams3.digitaloceanspaces.com/assessment-data-${assessmentHostname}.json`,
+        {
+          mode: 'cors',
+        }
+      )
+      const result = await response.json()
+      setAssessmentData(result)
+    })()
+  }, [])
+
   const Component = useMemo(
     () =>
       showAssessmentContent || isDeliusAssessment() ? (
-        <Assessment
-          isDelius={isDeliusAssessment()}
-          module={assessmentModule}
-          setDisappear={setDisappear}
-          setDisappearTimeout={setDisappearTimeout}
-          setHideContentFrame={setHideContentFrame}
-          setPluginState={setPluginState}
-          setShowAssessmentContent={setShowAssessmentContent}
-          setShowingContent={setShowingContent}
-          setShowingLauncher={setShowingLauncher}
-          showingContent={showingContent}
-        />
+        assessmentData ? (
+          <Assessment
+            data={assessmentData.assessment}
+            isDelius={isDeliusAssessment()}
+            setDisappear={setDisappear}
+            setDisappearTimeout={setDisappearTimeout}
+            setHideContentFrame={setHideContentFrame}
+            setPluginState={setPluginState}
+            setShowAssessmentContent={setShowAssessmentContent}
+            setShowingContent={setShowingContent}
+            setShowingLauncher={setShowingLauncher}
+            showingContent={showingContent}
+          />
+        ) : null
       ) : (
         <Router />
       ),
-    [setDisappearTimeout, showAssessmentContent, showingContent]
+    [assessmentData, setDisappearTimeout, showAssessmentContent, showingContent]
   )
+
+  if (isAssessment && !assessmentData) return null
 
   if (disappearForever) return null
 
@@ -67,6 +86,7 @@ const AppHacks = ({ data }) => {
     return (
       <AssessmentForm
         clearDisappearTimeout={clearDisappearTimeout}
+        form={assessmentData.assessmentForm}
         setDisappearTimeout={setDisappearTimeout}
         setShowingContent={setShowingContent}
         showingBubbles={showingBubbles}
@@ -79,10 +99,12 @@ const AppHacks = ({ data }) => {
   if (isPCAssessmentCart()) {
     return (
       <AssessmentCart
+        cart={assessmentData.cart}
         setShowingContent={setShowingContent}
         showingBubbles={showingBubbles}
         showingContent={showingContent}
         showingLauncher={showingLauncher}
+        suggestions={assessmentData.suggestions}
       />
     )
   }
@@ -96,6 +118,7 @@ const AppHacks = ({ data }) => {
         showingBubbles={showingBubbles}
         showingContent={showingContent}
         showingLauncher={showingLauncher}
+        sizeGuide={assessmentData.sizeGuide}
       />
     )
   }
@@ -106,7 +129,7 @@ const AppHacks = ({ data }) => {
     <App
       clearDisappearTimeout={clearDisappearTimeout}
       Component={Component}
-      data={showAssessmentContent || isDeliusAssessment() ? assessmentModule : data}
+      data={showAssessmentContent || isDeliusAssessment() ? assessmentData.assessment : data}
       disappear={disappear}
       hideContentFrame={hideContentFrame}
       pluginState={pluginState}

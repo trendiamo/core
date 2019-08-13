@@ -2,7 +2,6 @@ import dataGathering from 'data-gathering/pierre-cardin'
 import flatten from 'lodash.flatten'
 import mixpanel from 'ext/mixpanel'
 import { assessmentHostname } from 'config'
-import { suggestions } from './data/pierre-cardin'
 
 const isPCAssessment = () => assessmentHostname === 'www.pierre-cardin.de'
 
@@ -82,7 +81,7 @@ const getShopcartProductIds = () =>
         .map((key, value) => value.id)
         .toArray()
 
-const recommendedProducts = results => {
+const recommendedProducts = ({ results, suggestions }) => {
   const client = results.find(item => item.hostname === assessmentHostname)
   if (!client || !client.payload || !client.payload.products) return
   const productReferences = client.payload.products

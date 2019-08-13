@@ -1,7 +1,6 @@
 import AppBase from 'app/base'
 import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
-import data from 'special/assessment/data/pierre-cardin'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
@@ -11,27 +10,25 @@ import { isSmall } from 'utils'
 import { SimpleChat, timeout } from 'plugin-base'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
-const module = data.cart
-
-const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLauncher }) => {
+const Plugin = ({ cart, setShowingContent, showingBubbles, showingContent, showingLauncher, suggestions }) => {
   const [products, setProducts] = useState([])
   const [isUnmounting, setIsUnmounting] = useState(false)
 
-  const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType })
+  const { clickActions, modalsProps } = useChatActions({ flowType: cart.flowType })
 
   useEffect(() => {
     fetchProducts().then(results => {
-      const products = recommendedProducts(results)
+      const products = recommendedProducts({ results, suggestions })
       if (products.assessmentProducts.length === 0) return
       setProducts(products)
       mixpanel.track('Loaded Plugin', {
         autoOpen: false,
-        flowType: module.flowType,
+        flowType: cart.flowType,
         hash: location.hash,
         hostname: location.hostname,
       })
     })
-  }, [])
+  }, [cart.flowType, suggestions])
 
   const onToggleContent = useCallback(() => {
     mixpanel.track('Toggled Plugin', { hostname: location.hostname, action: showingContent ? 'close' : 'open' })
@@ -55,7 +52,7 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
 
   return (
     <div>
-      <ChatModals flowType={module.flowType} {...modalsProps} />
+      <ChatModals flowType={cart.flowType} {...modalsProps} />
       <AppBase
         Component={
           <SimpleChat
@@ -63,15 +60,15 @@ const Plugin = ({ setShowingContent, showingBubbles, showingContent, showingLaun
             ChatBase={ChatBase}
             chatBaseProps={{ assessment: true }}
             clickActions={clickActions}
-            data={module}
+            data={cart}
             lazyLoadingCount={6}
             products={products}
           />
         }
-        data={module}
+        data={cart}
         isUnmounting={isUnmounting}
         onToggleContent={onToggleContent}
-        seller={module.launcher.seller}
+        seller={cart.launcher.seller}
         showingBubbles={showingBubbles}
         showingContent={showingContent}
         showingLauncher={showingLauncher}
