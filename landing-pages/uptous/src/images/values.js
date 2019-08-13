@@ -8,7 +8,7 @@ const ValuesImg = ({ alt, className }) => (
       query {
         file: file(relativePath: { eq: "values.png" }) {
           childImageSharp {
-            fluid(quality: 100) {
+            fluid(maxWidth: 852, quality: 100) {
               ...GatsbyImageSharpFluid_noBase64
             }
           }

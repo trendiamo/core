@@ -18,7 +18,8 @@ const Main = styled.main`
   overflow-x: hidden;
   overflow-y: auto;
 
-  /* make it take all page */
+  /* make it so footer is always at bottom */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 `

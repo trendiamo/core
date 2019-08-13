@@ -6,6 +6,8 @@ import Header from '../components/header'
 import Section from '../components/section'
 import ValuesImg from '../images/values'
 
+const StyledValuesImg = styled(ValuesImg)``
+
 const OurGoals = styled(({ className }) => (
   <Section className={className}>
     <Container>
@@ -21,13 +23,17 @@ const OurGoals = styled(({ className }) => (
       <p>
         <b>{'This is what we are working for:'}</b>
       </p>
-      <ValuesImg />
+      <StyledValuesImg />
     </Container>
   </Section>
 ))`
   ${Container} {
     display: flex;
     flex-direction: column;
+  }
+
+  ${StyledValuesImg} {
+    max-width: 852px;
   }
 `
 
