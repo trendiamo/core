@@ -38,7 +38,6 @@ const OurBeliefs = styled(({ className }) => (
     position: relative;
     overflow: hidden;
     height: 520px;
-    min-height: 520px;
     display: flex;
     flex-direction: column;
     justify-content: center;

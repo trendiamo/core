@@ -84,6 +84,9 @@ const Hero = styled(({ className, data }) => (
   }
   ${StyledWave} {
     position: absolute;
+    width: calc(100vw + 4px);
+    left: -2px;
+    right: -2px;
     bottom: -1px;
   }
   ${AbsContainer} {
@@ -175,9 +178,9 @@ const Hero = styled(({ className, data }) => (
     }
     ${ButtonsContainer} {
       padding: 0;
-      width: 100%;
       flex-direction: row;
-      justify-content: space-evenly;
+      width: 660px;
+      justify-content: space-between;
     }
     ${Button} {
       color: #12e5c4;
