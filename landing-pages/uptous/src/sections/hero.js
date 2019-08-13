@@ -59,6 +59,8 @@ const Hero = styled(({ className, data }) => (
   }
   ${StyledHeroImg} {
     height: 100%;
+    transform: translateZ(-600px) scale(2.2);
+    transform-origin: bottom;
   }
   ${StyledWave} {
     position: absolute;
@@ -107,7 +109,17 @@ const Hero = styled(({ className, data }) => (
     }
   }
 
+  @media (min-width: 500px) {
+    ${StyledHeroImg} {
+      transform: translateZ(-600px) scale(2);
+    }
+  }
+
   @media (min-width: 1000px) {
+    ${StyledHeroImg} {
+      transform: translateZ(-600px) scale(2.1);
+      transform-origin: center 70%;
+    }
     ${HeroImgContainer} {
       min-height: 650px;
       height: 90vh;

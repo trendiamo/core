@@ -11,9 +11,11 @@ import ModalContents from './modal-contents'
 import Seo from './seo'
 
 const Main = styled.main`
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+  /* enable perspective for parallax scrolling */
+  perspective: 700px;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
 `
 
 const Layout = ({ children, data }) => (
