@@ -1,0 +1,48 @@
+.tingle-modal__close {
+  font-family: Montserrat, sans-serif;
+  background-color: black !important;
+}
+
+.tingle-modal__closeIcon,
+.tingle-modal__closeLabel {
+  vertical-align: top;
+}
+
+.tingle-modal__closeLabel {
+  display: none !important;
+}
+
+.tingle-modal__closeIcon {
+  font-size: 2.4rem !important;
+  position: absolute;
+  right: 10px;
+  top: 4px;
+}
+
+.tingle-modal__closeLabel {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.tingle-modal-box {
+  text-align: left;
+}
+
+.tingle-modal-box__content {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+@media (min-width: 540px) {
+  .tingle-modal-box__content {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+  }
+  .tingle-modal__close {
+    background-color: transparent !important;
+  }
+}
+
+.tingle-modal-box__content b {
+  font-weight: bold;
+}
