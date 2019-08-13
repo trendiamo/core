@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const Assessment = ({
   isDelius,
-  module,
+  data,
   setDisappearTimeout,
   setDisappear,
   setHideContentFrame,
@@ -54,15 +54,13 @@ const Assessment = ({
     setHideContentFrame(!isSmall() && currentStepKey === 'store')
   }, [currentStepKey, setHideContentFrame])
 
-  if (!module) return
-
   return (
     <AssessmentBase
       assessmentIsMainFlow={isDelius}
       assessmentState={assessmentState}
       currentStepKey={currentStepKey}
+      data={data}
       endNodeTags={endNodeTags}
-      module={module}
       onCloseModal={onCloseModal}
       resetAssessment={resetAssessment}
       setAssessmentState={setAssessmentState}

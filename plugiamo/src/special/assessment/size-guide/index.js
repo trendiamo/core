@@ -2,7 +2,6 @@ import AppBase from 'app/base'
 import blacklistTags from './blacklist-tags'
 import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
-import data from 'special/assessment/data/pierre-cardin'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useChatActions from 'ext/hooks/use-chat-actions'
@@ -19,6 +18,7 @@ const Plugin = ({
   showingBubbles,
   showingContent,
   showingLauncher,
+  sizeGuide,
 }) => {
   const [disappear, setDisappear] = useState(false)
   const [isUnmounting, setIsUnmounting] = useState(false)
@@ -31,11 +31,11 @@ const Plugin = ({
 
   const module = useMemo(
     () => ({
-      ...data.sizeGuide,
-      launcher: pluginState === 'closed' ? data.sizeGuide.closedLauncher : data.sizeGuide.launcher,
-      simpleChat: { simpleChatSections: data.sizeGuide.steps[productType] },
+      ...sizeGuide,
+      launcher: pluginState === 'closed' ? sizeGuide.closedLauncher : sizeGuide.launcher,
+      simpleChat: { simpleChatSections: sizeGuide.steps[productType] },
     }),
-    [pluginState, productType]
+    [pluginState, productType, sizeGuide]
   )
 
   const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType })
@@ -50,9 +50,9 @@ const Plugin = ({
       const product = products.find(item => item.id === id && !blacklistTags.includes(item.tag))
       setProduct(product)
       if (!product) return
-      const foundKey = Object.keys(data.sizeGuide.tagSizeGuides).find(item => product.tag.includes(item))
+      const foundKey = Object.keys(sizeGuide.tagSizeGuides).find(item => product.tag.includes(item))
       if (!foundKey) return
-      setProductType(data.sizeGuide.tagSizeGuides[foundKey])
+      setProductType(sizeGuide.tagSizeGuides[foundKey])
       mixpanel.track('Loaded Plugin', {
         autoOpen: false,
         flowType: 'asmt-size-guide',
@@ -60,7 +60,7 @@ const Plugin = ({
         hostname: location.hostname,
       })
     })
-  }, [])
+  }, [sizeGuide.tagSizeGuides])
 
   const onToggleContent = useCallback(() => {
     if (pluginState === 'closed') return
@@ -91,7 +91,7 @@ const Plugin = ({
     if (showingContent) clearDisappearTimeout()
   }, [clearDisappearTimeout, showingContent])
 
-  if (!product || !productType || !data.sizeGuide.steps[productType]) return null
+  if (!product || !productType || !sizeGuide.steps[productType]) return null
 
   return (
     <div>

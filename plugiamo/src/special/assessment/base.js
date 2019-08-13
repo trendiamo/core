@@ -1,6 +1,5 @@
 import ChatBase from 'app/content/simple-chat/chat-base'
 import ChatModals from 'shared/chat-modals'
-import data from './data'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import StoreModal from './store-modal'
@@ -19,13 +18,11 @@ const prepareProductsToChat = results => {
   return [{ message: { assessmentProducts: [...results], type: 'assessmentProducts' }, type: 'message' }]
 }
 
-const module = data[assessmentHostname] && data[assessmentHostname].assessment
-const steps = module && module.steps
-
 const Base = ({
   assessmentIsMainFlow,
   assessmentState,
   currentStepKey,
+  data,
   onCloseModal,
   resetAssessment,
   setAssessmentState,
@@ -38,7 +35,8 @@ const Base = ({
   showingCtaButton,
   tags,
 }) => {
-  const step = useMemo(() => steps && steps[currentStepKey], [currentStepKey])
+  const steps = useMemo(() => data && data.steps, [data])
+  const step = useMemo(() => steps && steps[currentStepKey], [currentStepKey, steps])
 
   const [currentStep, setCurrentStep] = useState(step)
   const [progress, setProgress] = useState(assessmentState.progress || 0)
@@ -47,8 +45,8 @@ const Base = ({
   const [client, setClient] = useState(null)
 
   useEffect(() => {
-    rememberSeller(module.seller)
-  }, [])
+    rememberSeller(data.seller)
+  }, [data.seller])
 
   const processResults = useCallback(
     startTime => {
@@ -108,7 +106,7 @@ const Base = ({
     nextStep => {
       if (nextStep.url) {
         mixpanel.track('Clicked Assessment Step', {
-          flowType: module.flowType,
+          flowType: data.flowType,
           hostname: location.hostname,
           step: currentStepKey,
           url: nextStep.url,
@@ -118,7 +116,7 @@ const Base = ({
       const nextStepKey = [...tags, nextStep.title].join('>')
       if (nextStep === 'showResults') {
         mixpanel.track('Clicked Assessment Step', {
-          flowType: module.flowType,
+          flowType: data.flowType,
           hostname: location.hostname,
           step: currentStepKey,
           tags: endNodeTags,
@@ -131,7 +129,7 @@ const Base = ({
       if (!step.multiple && !steps[nextStepKey]) {
         const newTags = [...endNodeTags, nextStepKey]
         mixpanel.track('Clicked Assessment Step', {
-          flowType: module.flowType,
+          flowType: data.flowType,
           hostname: location.hostname,
           step: currentStepKey,
           tags: newTags,
@@ -142,7 +140,7 @@ const Base = ({
       setProgress(progress + 33)
       setTags([...tags, nextStep.title])
       mixpanel.track('Clicked Assessment Step', {
-        flowType: module.flowType,
+        flowType: data.flowType,
         hostname: location.hostname,
         step: currentStepKey,
         tags: [nextStepKey],
@@ -154,10 +152,12 @@ const Base = ({
       endNodeTags,
       goToStore,
       handleEndNodeTags,
+      data.flowType,
       progress,
       setCurrentStepKey,
       setTags,
       step.multiple,
+      steps,
       tags,
     ]
   )
@@ -230,18 +230,20 @@ const Base = ({
     [results]
   )
 
-  const { clickActions, modalsProps } = useChatActions({ flowType: module.flowType })
+  const { clickActions, modalsProps } = useChatActions({ flowType: data.flowType })
 
   const chatBaseProps = useMemo(() => ({ assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }), [
     goToNextStep,
     step,
   ])
 
+  if (!data) return
+
   if (!isSmall() && isFinalStep) {
     return (
       <StoreModal
         goToPrevStep={goToPrevStep}
-        module={module}
+        module={data}
         onCloseModal={onCloseModal}
         resetAssessment={resetAssessment}
         results={results}
@@ -254,7 +256,7 @@ const Base = ({
 
   return (
     <div>
-      <ChatModals flowType={module.flowType} {...modalsProps} />
+      <ChatModals flowType={data.flowType} {...modalsProps} />
       <SimpleChat
         animateOpacity={animateOpacity}
         backButtonLabel={getFrekklsConfig().i18n.backButton}
