@@ -1,4 +1,4 @@
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig from 'utils/frekkls-config'
 import { BackButton } from 'plugin-base'
 import { h } from 'preact'
 import { markGoBack, shouldRenderBack } from 'app/setup/flow-history'

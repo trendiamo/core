@@ -1,5 +1,5 @@
 import Content from './content'
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig from 'utils/frekkls-config'
 import Gradient from './gradient'
 import Launcher from './launcher'
 import LauncherBubbles from './launcher-bubbles'

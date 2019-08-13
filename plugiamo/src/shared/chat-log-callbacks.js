@@ -1,8 +1,8 @@
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig from 'utils/frekkls-config'
 
-const chatLogCallbacks = {
+const chatLogCallbacks = () => ({
   processChatOptions: getFrekklsConfig().processChatOptions,
   onChatStop: getFrekklsConfig().onChatStop,
-}
+})
 
 export default chatLogCallbacks

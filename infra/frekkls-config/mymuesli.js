@@ -12,7 +12,7 @@ const memorizeModule = ({ homepageModule }) => {
   localStorage.setItem('trnd-mymuesli-homepage-module-path', homepageModule)
 }
 
-export default {
+window.frekklsConfig = {
   onInit: () => {
     if (location.pathname === '/') {
       return

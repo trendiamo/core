@@ -1,10 +1,8 @@
-import mixpanel from 'ext/mixpanel'
-
 const convertToCents = selector => {
   return Number(selector.replace(/\D/g, ''))
 }
 
-export default {
+window.frekklsDataGathering = {
   addToCartObject(callback, path, returnObj) {
     window.$.ajax({
       url: '/api/catalog_system/pub/products/search/' + path,
@@ -77,7 +75,7 @@ export default {
       },
     }
   },
-  proceedToCheckout({ googleAnalytics, isCheckoutForm }) {
+  proceedToCheckout({ googleAnalytics, mixpanel, isCheckoutForm }) {
     const json = this.checkoutObject(isCheckoutForm)
     if (json.data.products.length === 0) return
     mixpanel.track(json.name, json.data)
@@ -91,7 +89,7 @@ export default {
       })
     }
   },
-  setupDataGathering(googleAnalytics) {
+  setupDataGathering({ googleAnalytics, mixpanel }) {
     const saveData = resultsObj => {
       mixpanel.track(resultsObj.name, resultsObj.data)
     }
@@ -109,11 +107,11 @@ export default {
     })
 
     window.$(document).on('click', '.vtexsc-cart .cartCheckout', () => {
-      this.proceedToCheckout({ googleAnalytics, isCheckoutForm })
+      this.proceedToCheckout({ googleAnalytics, mixpanel, isCheckoutForm })
     })
     if (isCheckoutForm) {
       window.$(document).on('click', '.btn-place-order, .cartCheckout', () => {
-        this.proceedToCheckout({ googleAnalytics, isCheckoutForm })
+        this.proceedToCheckout({ googleAnalytics, mixpanel, isCheckoutForm })
       })
       return
     }

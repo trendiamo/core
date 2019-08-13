@@ -1,11 +1,8 @@
-import mixpanel from 'ext/mixpanel'
-/* eslint-disable no-undef */
-
 const convertToCents = selector => {
   return Number(selector.replace(/\D/g, ''))
 }
 
-export default {
+window.frekklsDataGathering = {
   addToCartObject() {
     const formFields = jQuery
       .noConflict()('#product_addtocart_form')
@@ -80,7 +77,7 @@ export default {
       },
     }
   },
-  setupDataGathering() {
+  setupDataGathering({ mixpanel }) {
     const _this = this
     if (location.pathname.match(/onepage\/success/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })

@@ -2,7 +2,7 @@ import ChatBase from './chat-base'
 import chatLogCallbacks from 'shared/chat-log-callbacks'
 import ChatModals from 'shared/chat-modals'
 import FlowBackButton from 'shared/flow-back-button'
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig from 'utils/frekkls-config'
 import useChatActions from 'ext/hooks/use-chat-actions'
 import useEmojify from 'ext/hooks/use-emojify'
 import { Fragment, h } from 'preact'
@@ -105,7 +105,7 @@ const SimpleChat = ({
         backButtonLabel={getFrekklsConfig().i18n.backButton}
         ChatBase={ChatBase}
         chatBaseProps={{ assessment, assessmentOptions, ctaButton }}
-        chatLogCallbacks={chatLogCallbacks}
+        chatLogCallbacks={chatLogCallbacks()}
         clickActions={clickActions}
         coverIsMinimized={coverIsMinimized}
         ctaButtonClicked={ctaButtonClicked}

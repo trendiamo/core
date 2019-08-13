@@ -1,7 +1,4 @@
-import mixpanel from 'ext/mixpanel'
-/* eslint-disable no-undef */
-
-export default {
+window.frekklsDataGathering = {
   addToCartObject() {
     const formFields = $('#AddToCartForm--product-template').serializeArray()
     return {
@@ -135,7 +132,7 @@ export default {
       }
     }
   },
-  setupDataGathering() {
+  setupDataGathering({ mixpanel }) {
     const _this = this
     $(document).on('submit', 'form.cart.ajaxcart', () => {
       const json = _this.checkoutObject()

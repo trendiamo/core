@@ -1,5 +1,5 @@
 import FlowBackButton from 'shared/flow-back-button'
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig from 'utils/frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import useEmojify from 'ext/hooks/use-emojify'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'

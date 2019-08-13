@@ -1,7 +1,4 @@
-import mixpanel from 'ext/mixpanel'
-/* eslint-disable no-undef */
-
-export default {
+window.frekklsDataGathering = {
   addToCartObject(isProductFromModal = false, target) {
     if (isProductFromModal) {
       $('.capa-categoria.active')
@@ -127,7 +124,7 @@ export default {
       },
     }
   },
-  setupDataGathering() {
+  setupDataGathering({ mixpanel }) {
     const _this = this
     if (location.pathname.match(/pedido-finalizado/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })

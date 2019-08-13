@@ -1,4 +1,3 @@
-import dataGathering from 'data-gathering/pierre-cardin'
 import flatten from 'lodash.flatten'
 import mixpanel from 'ext/mixpanel'
 import { assessmentHostname } from 'config'
@@ -77,7 +76,7 @@ const assessProducts = (products, tags) => {
 const getShopcartProductIds = () =>
   process.env.ASSESSMENT_PRODUCT_ID
     ? [process.env.ASSESSMENT_PRODUCT_ID]
-    : dataGathering
+    : window.frekklsDataGathering
         .getProductsFromCart()
         .map((key, value) => value.id)
         .toArray()

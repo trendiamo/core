@@ -1,0 +1,3 @@
+window.frekklsConfig = {
+  position: 'left',
+}

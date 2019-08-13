@@ -3,6 +3,16 @@ import { MAIN_BREAKPOINT } from 'config'
 const isSmall = () => window.innerWidth < MAIN_BREAKPOINT
 const isLarge = () => !isSmall()
 
+const loadJs = src =>
+  new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.src = src
+    script.async = true
+    script.onload = resolve
+    script.onerror = reject
+    document.body.appendChild(script)
+  })
+
 const getScrollbarWidth = () => {
   const outer = document.createElement('div')
   outer.style.visibility = 'hidden'
@@ -19,4 +29,4 @@ const getScrollbarWidth = () => {
   return widthNoScroll - widthWithScroll
 }
 
-export { isSmall, isLarge, getScrollbarWidth }
+export { isSmall, isLarge, loadJs, getScrollbarWidth }

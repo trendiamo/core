@@ -1,5 +1,5 @@
 import AppBase from './base'
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig from 'utils/frekkls-config'
 import mixpanel from 'ext/mixpanel'
 import setup from './setup'
 import setupFlowHistory from './setup/flow-history'

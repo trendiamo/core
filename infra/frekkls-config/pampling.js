@@ -11,7 +11,7 @@ const isProductPage = () => {
   return location.pathname.match(/\/product?.*/)
 }
 
-export default {
+window.frekklsConfig = {
   processOptions: options => {
     const { seller, path } = options
     if (seller && path) {

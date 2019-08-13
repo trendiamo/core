@@ -1,7 +1,4 @@
-import mixpanel from 'ext/mixpanel'
-/* eslint-disable no-undef */
-
-export default {
+window.frekklsDataGathering = {
   addToCartObject(form) {
     const formFields = $(form).serializeArray()
     let productId, productName, subTotalInCents
@@ -114,7 +111,7 @@ export default {
       },
     }
   },
-  setupDataGathering() {
+  setupDataGathering({ mixpanel }) {
     if (location.pathname.match(/^\/shop\/complete/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     } else if (location.pathname.match(/^\/shop\/cart/)) {

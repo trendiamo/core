@@ -1,4 +1,4 @@
-export default {
+window.frekklsConfig = {
   onInit: () => {
     // trustbadge z-index fix
     const tmc = document.querySelector('div[data-tb-element="trustbadge_minimised_container"]')

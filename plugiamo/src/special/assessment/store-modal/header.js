@@ -1,4 +1,4 @@
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig from 'utils/frekkls-config'
 import SimpleChatCover from 'app/content/simple-chat/cover'
 import { h } from 'preact'
 

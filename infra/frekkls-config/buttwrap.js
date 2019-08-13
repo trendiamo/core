@@ -1,4 +1,4 @@
-export default {
+window.frekklsConfig = {
   addPicture: picture => {
     const sectionId = window.ShopifyAnalytics.meta.product.id
     const productThumbs = window.$(`#ProductThumbs-${sectionId}`)

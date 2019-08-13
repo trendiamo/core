@@ -1,4 +1,4 @@
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig from 'utils/frekkls-config'
 import { isPCAssessment, recallSeller } from 'special/assessment/utils'
 import { isSmall } from 'utils'
 import { location } from 'config'

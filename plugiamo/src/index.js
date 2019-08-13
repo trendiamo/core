@@ -1,9 +1,9 @@
 import App from 'app'
 import ErrorBoundaries from 'ext/error-boundaries'
-import getFrekklsConfig from 'frekkls-config'
+import getFrekklsConfig, { setupFrekklsConfig } from 'utils/frekkls-config'
 import googleAnalytics, { loadGoogle } from 'ext/google-analytics'
 import mixpanel from 'ext/mixpanel'
-import setupDataGathering from 'data-gathering'
+import setupDataGathering from 'utils/data-gathering'
 import { detect } from 'detect-browser'
 import { h, render } from 'preact'
 import { loadRollbar } from 'ext/rollbar'
@@ -67,11 +67,16 @@ const processPreviewOpt = () => {
   window.location.href = newUrl
 }
 
-const initApp = (frekklsReactRoot, googleAnalytics) => {
-  mixpanel.init(mixpanelToken)
-  mixpanel.track('Visited Page', { hostname: location.hostname })
-  setupDataGathering(googleAnalytics)
+const renderApp = frekklsReactRoot => {
+  const onInitResult = getFrekklsConfig().onInit()
+  if (onInitResult === false) return
 
+  processPreviewOpt()
+
+  render(<RootComponent />, frekklsReactRoot)
+}
+
+const checkBrowser = frekklsReactRoot => {
   const browser = detect()
 
   const supportedBrowsers = [
@@ -92,12 +97,13 @@ const initApp = (frekklsReactRoot, googleAnalytics) => {
 
   if (!browser || !supportedBrowsers.includes(browser.name) || !isBrowserVersionSupported()) return
 
-  const onInitResult = getFrekklsConfig().onInit()
-  if (onInitResult === false) return
+  setupFrekklsConfig().then(() => renderApp(frekklsReactRoot))
+}
 
-  processPreviewOpt()
-
-  render(<RootComponent />, frekklsReactRoot)
+const initApp = (frekklsReactRoot, googleAnalytics) => {
+  mixpanel.init(mixpanelToken)
+  mixpanel.track('Visited Page', { hostname: location.hostname })
+  setupDataGathering({ googleAnalytics, mixpanel }).then(() => checkBrowser(frekklsReactRoot))
 }
 
 const main = () => {

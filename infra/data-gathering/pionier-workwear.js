@@ -1,7 +1,4 @@
-import mixpanel from 'ext/mixpanel'
-/* eslint-disable no-undef */
-
-export default {
+window.frekklsDataGathering = {
   addToCartObject() {
     return {
       name: 'Add To Cart',
@@ -93,7 +90,7 @@ export default {
       },
     }
   },
-  setupDataGathering() {
+  setupDataGathering({ mixpanel }) {
     const _this = this
 
     if (location.pathname.match(/formonline\.shop\.shoppingcart\.checkout\.overview/i)) {

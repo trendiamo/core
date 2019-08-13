@@ -1,4 +1,4 @@
-export default {
+window.frekklsConfig = {
   position: 'right',
   launcherConfig: {
     extraElevation: 25,

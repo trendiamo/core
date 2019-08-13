@@ -1,10 +1,8 @@
-import mixpanel from 'ext/mixpanel'
-
 const convertToCents = selector => {
   return Number(selector.replace(/\D/g, ''))
 }
 
-export default {
+window.frekklsDataGathering = {
   addToCartObject() {
     const formFields = window.$('form.product-single__form').serializeArray()
     return {
@@ -52,7 +50,7 @@ export default {
       },
     }
   },
-  setupDataGathering() {
+  setupDataGathering({ mixpanel }) {
     if (location.pathname.match(/\/thank_you$/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     } else if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {

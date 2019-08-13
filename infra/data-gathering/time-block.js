@@ -1,7 +1,4 @@
-import mixpanel from 'ext/mixpanel'
-/* eslint-disable no-undef */
-
-export default {
+window.frekklsDataGathering = {
   addToCartObject(isfromPLP = false, target) {
     if (isfromPLP) {
       const productDiv = $(target).closest('.tmb')
@@ -161,7 +158,7 @@ export default {
       }
     }
   },
-  setupDataGathering() {
+  setupDataGathering({ mixpanel }) {
     const _this = this
     $('.checkout.wc-forward.btn.btn-link').on('click', () => {
       // ajax cart
