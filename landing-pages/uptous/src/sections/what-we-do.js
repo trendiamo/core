@@ -6,10 +6,22 @@ import Button from '../components/button'
 import Container from '../components/container'
 import Header from '../components/header'
 import Section from '../components/section'
+import { openModal } from '../utils'
 
 const AbsContainer = styled.div``
 const BeachImgContainer = styled.div``
 const StyledBeachImg = styled(BeachImg)``
+
+const onGetInTouchClick = () => {
+  if (!window.hbspt) return
+  openModal('.get-in-touch-modal-content')
+  window.hbspt.forms.create({
+    css: '',
+    portalId: '5559593',
+    formId: 'd2106863-b4fd-4591-a806-7411e7798762',
+    target: '.get-in-touch-modal-form',
+  })
+}
 
 const WhatWeDo = styled(({ className }) => (
   <Section className={className}>
@@ -33,9 +45,7 @@ const WhatWeDo = styled(({ className }) => (
             'We work on a performance-based to guarantee a return on investment for the brands and fair compensation for the influencers, that can monetize their positive impact.'
           }
         </p>
-        <a href="mailto:hello@uptous.co">
-          <Button>{'Get in touch'}</Button>
-        </a>
+        <Button onClick={onGetInTouchClick}>{'Get in touch'}</Button>
       </Container>
     </AbsContainer>
   </Section>
@@ -43,7 +53,7 @@ const WhatWeDo = styled(({ className }) => (
   padding: 0;
   position: relative;
   overflow: hidden;
-  height: 480px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,19 +76,26 @@ const WhatWeDo = styled(({ className }) => (
   }
   ${Container} {
     padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  ${Button} {
+    margin-top: 40px;
+    max-width: 280px;
+    align-self: center;
   }
   a {
     display: block;
     margin-top: 50px;
   }
   @media (min-width: 375px) {
-    height: 430px;
+    height: 450px;
   }
   @media (min-width: 600px) {
-    height: 360px;
+    height: 380px;
   }
   @media (min-width: 1000px) {
-    height: 500px;
+    height: 530px;
     ${StyledBeachImg} {
       transform: translateZ(-600px) scale(1.9);
     }

@@ -35,7 +35,7 @@ const Video = styled(({ className }) => (
   }
   ${VideoOuterContainer} {
     border: 5px solid #12e5c4;
-    border-radius: 10px;
+    border-radius: 14px;
     box-shadow: 0 0 30px rgba(18, 230, 196, 0.5);
     width: 100%;
     max-width: 990px;

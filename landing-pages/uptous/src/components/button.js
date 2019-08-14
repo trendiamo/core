@@ -11,7 +11,7 @@ const Button = styled(({ className, children, onClick }) => (
   border-radius: 50px;
   font-size: 1.2rem;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: bold;
   outline: none;
   overflow: hidden;
   text-transform: uppercase;
@@ -23,10 +23,7 @@ const Button = styled(({ className, children, onClick }) => (
 
   color: #fff;
   background: linear-gradient(to right, #12e5c4, #18e0aa);
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding: 10px 40px;
   width: 100%;
   margin-bottom: 10px;
 

@@ -10,7 +10,15 @@ import WhatWeDo from '../sections/what-we-do'
 import WhatYouGet from '../sections/what-you-get'
 
 const IndexPage = ({ data }) => (
-  <Layout data={{ legalNotice: data.legalNotice.text, privacyPolicy: data.privacyPolicy.text }}>
+  <Layout
+    data={{
+      legalNotice: data.legalNotice.text,
+      privacyPolicy: data.privacyPolicy.text,
+      brandFormIntro: data.brandFormIntro.text,
+      influencerFormIntro: data.influencerFormIntro.text,
+      getInTouchFormIntro: data.getInTouchFormIntro.text,
+    }}
+  >
     <Hero data={data.hero} />
     <WhatYouGet />
     <OurBeliefs />
@@ -34,6 +42,27 @@ export const query = graphql`
       }
     }
     privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
+      text {
+        childContentfulRichText {
+          html
+        }
+      }
+    }
+    brandFormIntro: contentfulModalText(name: { eq: "Brand Form Intro" }) {
+      text {
+        childContentfulRichText {
+          html
+        }
+      }
+    }
+    influencerFormIntro: contentfulModalText(name: { eq: "Influencer Form Intro" }) {
+      text {
+        childContentfulRichText {
+          html
+        }
+      }
+    }
+    getInTouchFormIntro: contentfulModalText(name: { eq: "Get In Touch Form Intro" }) {
       text {
         childContentfulRichText {
           html

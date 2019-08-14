@@ -11,7 +11,15 @@ import Seo from '../layout/seo'
 const Content = styled.div``
 
 const NotFoundPage = styled(({ className, data }) => (
-  <Layout data={{ legalNotice: data.legalNotice.text, privacyPolicy: data.privacyPolicy.text }}>
+  <Layout
+    data={{
+      legalNotice: data.legalNotice.text,
+      privacyPolicy: data.privacyPolicy.text,
+      brandFormIntro: data.brandFormIntro.text,
+      influencerFormIntro: data.influencerFormIntro.text,
+      getInTouchFormIntro: data.getInTouchFormIntro.text,
+    }}
+  >
     <Seo title="Uptous - 404 Not Found" />
     <Section className={className}>
       <Container>
@@ -65,6 +73,27 @@ export const query = graphql`
       }
     }
     privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
+      text {
+        childContentfulRichText {
+          html
+        }
+      }
+    }
+    brandFormIntro: contentfulModalText(name: { eq: "Brand Form Intro" }) {
+      text {
+        childContentfulRichText {
+          html
+        }
+      }
+    }
+    influencerFormIntro: contentfulModalText(name: { eq: "Influencer Form Intro" }) {
+      text {
+        childContentfulRichText {
+          html
+        }
+      }
+    }
+    getInTouchFormIntro: contentfulModalText(name: { eq: "Get In Touch Form Intro" }) {
       text {
         childContentfulRichText {
           html

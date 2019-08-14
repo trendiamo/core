@@ -23,6 +23,7 @@ const Layout = ({ children, data }) => (
     <Seo />
     <Helmet>
       <link href={favicon} rel="shortcut icon" type="image/png" />
+      <meta name="hbspt-locale" value="en" />
     </Helmet>
     {children}
     <Footer />
