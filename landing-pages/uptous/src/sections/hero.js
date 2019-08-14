@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Button from '../components/button'
 import Container from '../components/container'
 import HeroImg from '../images/hero'
-import LogoFull from '../images/logo-full.svg'
+import LogoFullImg from '../images/logo-full'
 import Section from '../components/section'
 import Wave from '../images/wave.svg'
 
@@ -13,7 +13,7 @@ const Heading = styled.h1``
 const Subheading = styled.h2``
 const ButtonsContainer = styled.div``
 const AbsContainer = styled.div``
-const StyledLogoFull = styled(LogoFull)``
+const LogoFullContainer = styled.div``
 const StyledHeroImg = styled(HeroImg)``
 const StyledWave = styled(Wave)``
 
@@ -25,7 +25,9 @@ const Hero = styled(({ className, data }) => (
     </HeroImgContainer>
     <AbsContainer>
       <Container>
-        <StyledLogoFull />
+        <LogoFullContainer>
+          <LogoFullImg />
+        </LogoFullContainer>
         <div>
           <Heading>{data.heroHeading}</Heading>
           <Subheading>{data.heroSubheading}</Subheading>
@@ -74,14 +76,13 @@ const Hero = styled(({ className, data }) => (
     padding: 10px 20px 30px 20px;
     max-width: 800px;
   }
-  ${StyledLogoFull} {
+  ${LogoFullContainer} {
     position: absolute;
-    top: 25vh;
+    top: calc(25vh - 40px);
     left: 50%;
+    transform: translate(-50%, -50%);
     width: 80%;
     max-width: 320px;
-    transform: translate(-50%, -50%);
-    filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.7));
   }
   ${Heading} {
     color: #12e5c4;
@@ -139,14 +140,14 @@ const Hero = styled(({ className, data }) => (
       padding-top: 10vh;
       padding-bottom: 30vh;
     }
-    ${StyledLogoFull} {
+    ${LogoFullContainer} {
       position: static;
       transform: none;
     }
     ${Heading},
     ${Subheading} {
       text-align: center;
-      color: #a55652;
+      color: #1a3b50;
     }
     ${Subheading} {
       max-width: 31rem;
