@@ -1,21 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import tingle from 'tingle.js'
 
 import Container from '../components/container'
 import Section from '../components/section'
+import { openModal } from '../utils'
 
-const Modal = tingle.modal
 const Header = styled.div``
 const Links = styled.div``
 const LegalText = styled.div``
-
-const openModal = modalElementSelector => {
-  const legalNoticeContent = document.querySelector(modalElementSelector).innerHTML
-  const modal = new Modal()
-  modal.setContent(legalNoticeContent)
-  modal.open()
-}
 
 const onLegalNoticeClick = event => {
   event.preventDefault()

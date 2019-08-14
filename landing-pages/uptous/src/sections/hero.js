@@ -7,6 +7,7 @@ import HeroImg from '../images/hero'
 import LogoFullImg from '../images/logo-full'
 import Section from '../components/section'
 import Wave from '../images/wave.svg'
+import { openModal } from '../utils'
 
 const HeroImgContainer = styled.div``
 const Heading = styled.h1``
@@ -16,6 +17,27 @@ const AbsContainer = styled.div``
 const LogoFullContainer = styled.div``
 const StyledHeroImg = styled(HeroImg)``
 const StyledWave = styled(Wave)``
+
+const onBrandClick = () => {
+  if (!window.hbspt) return
+  openModal('.brand-modal-content')
+  window.hbspt.forms.create({
+    css: '',
+    portalId: '5559593',
+    formId: 'eab5b809-6c1f-49fc-bed2-62fbd90f0937',
+    target: '.brand-modal-form',
+  })
+}
+const onInfluencerClick = () => {
+  if (!window.hbspt) return
+  openModal('.influencer-modal-content')
+  window.hbspt.forms.create({
+    css: '',
+    portalId: '5559593',
+    formId: 'e58322b5-96ba-4f25-a50e-54b1ca355dd2',
+    target: '.influencer-modal-form',
+  })
+}
 
 const Hero = styled(({ className, data }) => (
   <Section className={className}>
@@ -33,12 +55,8 @@ const Hero = styled(({ className, data }) => (
           <Subheading>{data.heroSubheading}</Subheading>
         </div>
         <ButtonsContainer>
-          <a href="https://brands.uptous.co">
-            <Button>{"I'm a brand"}</Button>
-          </a>
-          <a href="https://influencers.uptous.co">
-            <Button>{"I'm an influencer"}</Button>
-          </a>
+          <Button onClick={onBrandClick}>{"I'm a brand"}</Button>
+          <Button onClick={onInfluencerClick}>{"I'm an influencer"}</Button>
         </ButtonsContainer>
       </Container>
     </AbsContainer>
