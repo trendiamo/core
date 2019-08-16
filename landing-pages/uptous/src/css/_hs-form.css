@@ -4,13 +4,11 @@
   align-items: center;
 }
 
-.hs-form .hs-form-field,
-.hs-form .hs-dependent-field {
+.hs-form div {
   width: 100%;
 }
 
 .hs-form .hs-submit {
-  width: 100%;
   max-width: 250px;
 }
 
