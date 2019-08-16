@@ -12,12 +12,6 @@ import ModalContents from './modal-contents'
 import Seo from './seo'
 
 const Main = styled.main`
-  /* enable perspective for parallax scrolling */
-  perspective: 700px;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-
   /* make it so footer is always at bottom */
   min-height: 100vh;
   display: flex;
