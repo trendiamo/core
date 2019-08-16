@@ -37,12 +37,12 @@ const WhatWeDo = styled(({ className }) => (
         </Header>
         <p>
           {
-            'We empower brands to reach their target audience through influencers and passionate consumers that want to spread a message for a better world.'
+            'We empower brands to reach their target audience through social media individuals and passionate consumers that want to spread the message for a better world.'
           }
         </p>
         <p>
           {
-            'We work on a performance-based to guarantee a return on investment for the brands and fair compensation for the influencers, that can monetize their positive impact.'
+            'We work on a performance-basis to guarantee a return on investment for the brands and fair compensation for the influencers, that can monetize their positive impact.'
           }
         </p>
         <Button onClick={onGetInTouchClick}>{'Get in touch'}</Button>

@@ -22,13 +22,17 @@ const OurBeliefs = styled(({ className }) => (
           <b>{'believe'}</b>
           {' in'}
         </Header>
-        <p>{'We believe in a world where people drive a positive change.'}</p>
+        <p>{'We believe in a world in which people drive positive change.'}</p>
         <p>
           {
-            'Where an impact-driven business is the best possible business to run. Where we can team-up together and overcome the shortcomings of a politics that is ignoring social injustices and the environmental crisis.'
+            "Where an impact-driven business is the best possible business to run. Where we team-up together and overcome the shortcomings of a political and 'old world economy' that is ignoring social injustices and the environmental crisis."
           }
         </p>
-        <p>{'We are working for a world where the United Nation’s sustainable development goals are achieved.'}</p>
+        <p>
+          {
+            "We are working for a world where the United Nation's sustainable development goals are achieved so we can look forward to the future."
+          }
+        </p>
       </Container>
     </AbsContainer>
   </Section>

@@ -25,14 +25,14 @@ const WhatYouGet = styled(({ className }) => (
           <Target />
           <div>
             <CardHeader>{'Matchmaking'}</CardHeader>
-            <p>{'We match brands and influencers with matching values and target audience'}</p>
+            <p>{'We match brands and influencers who share the same values and target audience'}</p>
           </div>
         </Card>
         <Card>
           <PassionHeart />
           <div>
             <CardHeader>{'Content Creation'}</CardHeader>
-            <p>{'Amazing content is created by the influencers to involve their audience'}</p>
+            <p>{'Inspiring content is created by the influencers to involve their audience'}</p>
           </div>
         </Card>
         <Card>
@@ -46,7 +46,7 @@ const WhatYouGet = styled(({ className }) => (
           <Growth />
           <div>
             <CardHeader>{'Increased Revenue'}</CardHeader>
-            <p>{'Sales are generated and the brand pays an according commission to the influencers'}</p>
+            <p>{'Sales are generated and the brand pays an according success commission to the influencers'}</p>
           </div>
         </Card>
       </CardsContainer>
