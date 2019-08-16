@@ -11,7 +11,7 @@ import { openModal } from '../utils'
 
 const HeroImgContainer = styled.div``
 const Heading = styled.h1``
-const Subheading = styled.h2``
+const Subheading = styled.div``
 const ButtonsContainer = styled.div``
 const AbsContainer = styled.div``
 const LogoFullContainer = styled.div``
@@ -166,6 +166,9 @@ const Hero = styled(({ className, data }) => (
     ${Subheading} {
       text-align: center;
       color: #1a3b50;
+    }
+    ${Heading} {
+      margin-top: 3rem;
     }
     ${Subheading} {
       max-width: 31rem;

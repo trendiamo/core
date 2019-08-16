@@ -54,6 +54,7 @@ const WhatWeDo = styled(({ className }) => (
   position: relative;
   overflow: hidden;
   height: 500px;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -90,12 +91,15 @@ const WhatWeDo = styled(({ className }) => (
   }
   @media (min-width: 375px) {
     height: 450px;
+    min-height: 450px;
   }
   @media (min-width: 600px) {
     height: 380px;
+    min-height: 380px;
   }
   @media (min-width: 1000px) {
     height: 530px;
+    min-height: 530px;
     ${StyledBeachImg} {
       transform: translateZ(-600px) scale(1.9);
     }

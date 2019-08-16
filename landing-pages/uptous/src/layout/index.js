@@ -1,5 +1,6 @@
 import '../css/index.css'
 import 'typeface-montserrat'
+import 'typeface-roboto'
 
 import Helmet from 'react-helmet'
 import React from 'react'
@@ -16,6 +17,10 @@ const Main = styled.main`
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+
+  /* make it take all page */
+  display: flex;
+  flex-direction: column;
 `
 
 const Layout = ({ children, data }) => (

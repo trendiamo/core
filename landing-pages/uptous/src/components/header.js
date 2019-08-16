@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Header = styled.div`
+const Header = styled.h2`
   text-transform: uppercase;
   font-size: 1.7rem;
   line-height: 1.2;
