@@ -12,7 +12,7 @@ export default {
       name: 'Add To Cart',
       data: {
         hostname: location.hostname,
-        withPlugin: !!$('.frekkls-container')[0],
+        withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
         currency: 'EUR',
         ...form,
       },
@@ -66,7 +66,7 @@ export default {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
-        withPlugin: !!$('.frekkls-container')[0],
+        withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
         products: this.getProductsFromCart(),
         subTotalInCents: convertToCents($('.js-cartamount').text()),
         currency: 'EUR',

@@ -11,7 +11,7 @@ export default {
         name: 'Add To Cart',
         data: {
           hostname: location.hostname,
-          withPlugin: !!$('.frekkls-container')[0],
+          withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
           productName: $(target)
             .parent()
             .attr('data-autor'),
@@ -44,7 +44,7 @@ export default {
         name: 'Add To Cart',
         data: {
           hostname: location.hostname,
-          withPlugin: !!$('.frekkls-container')[0],
+          withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
           productName: $('#datos_autor')
             .text()
             .trim()
@@ -116,7 +116,7 @@ export default {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
-        withPlugin: !!$('.frekkls-container')[0],
+        withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
         products: this.getProductsFromCart(),
         subTotalInCents: Number(
           $('#cantidad_total_productos')

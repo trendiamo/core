@@ -9,7 +9,7 @@ export default {
         name: 'Add To Cart',
         data: {
           hostname: location.hostname,
-          withPlugin: !!$('.frekkls-container')[0],
+          withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
           productId: $(target).attr('data-product_id'),
           productName: productDiv.find('.t-entry-title').text(),
           currency: 'EUR',
@@ -29,7 +29,7 @@ export default {
         name: 'Add To Cart',
         data: {
           hostname: location.hostname,
-          withPlugin: !!$('.frekkls-container')[0],
+          withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
           productId: $('button.add_to_cart_button')[0].value,
           productName: $('.product_title').text(),
           currency: 'EUR',
@@ -131,7 +131,7 @@ export default {
         name: 'Proceed To Checkout',
         data: {
           hostname: location.hostname,
-          withPlugin: !!$('.frekkls-container')[0],
+          withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
           products: this.getProductsFromAjaxCart(),
           subTotalInCents: Number(
             $('.product_list_widget')
@@ -148,7 +148,7 @@ export default {
         name: 'Proceed To Checkout',
         data: {
           hostname: location.hostname,
-          withPlugin: !!$('.frekkls-container')[0],
+          withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
           products: this.getProductsFromCart(),
           subTotalInCents: Number(
             $('.order-total')

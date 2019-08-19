@@ -11,7 +11,7 @@ export default {
       name: 'Add To Cart',
       data: {
         hostname: location.hostname,
-        withPlugin: !!window.$('.frekkls-container')[0],
+        withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
         productId: formFields.find(element => element.name === 'id').value,
         productName: window.$('.product-single__title').html(),
         subTotalInCents: convertToCents(window.$('span.money').html()),
@@ -45,7 +45,7 @@ export default {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
-        withPlugin: !!window.$('.frekkls-container')[0],
+        withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
         products: this.getProductsFromCart(),
         currency: moneySpans.attr('data-currency') || 'EUR',
         subTotalInCents: convertToCents(moneySpans.text()),
