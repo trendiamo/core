@@ -115,7 +115,7 @@ module InstagramScraper
 
     def parse_options(parser, args)
       parser.parse!(args)
-      validate_output(@options.output) unless args.empty?
+      validate_output(@options.output)
       raise OptionParser::MissingArgument, "brands" unless @options.brands
     rescue OptionParser::ParseError => e
       @options.logger.log_error_message(e)
