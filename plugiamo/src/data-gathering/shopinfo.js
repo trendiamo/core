@@ -23,7 +23,7 @@ export default {
           name: 'Add To Cart',
           data: {
             hostname: location.hostname,
-            withPlugin: !!window.$('.frekkls-container')[0],
+            withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
             productId: data.productId,
             productName: data.productName,
             productBrand: data.brand,
@@ -68,7 +68,7 @@ export default {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
-        withPlugin: !!window.$('.frekkls-container')[0],
+        withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
         products: this.products,
         currency: 'BRL',
         subTotalInCents: convertToCents(
