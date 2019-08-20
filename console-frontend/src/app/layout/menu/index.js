@@ -10,6 +10,7 @@ import UserMenu from './user-menu'
 import { ViewList as DefaultIcon } from '@material-ui/icons'
 import { Divider, IconButton, MenuItem, SvgIcon, Typography } from '@material-ui/core'
 import { editorResourceGroups, resourceGroups } from './resource-groups'
+import { isUpToUs } from 'utils'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -123,7 +124,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
     >
       {sidebarOpen ? (
         <>
-          <img alt="" src="/img/frekkls-logo.svg" />
+          <img alt="" src={isUpToUs ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} />
           <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
             <MenuIcon />
           </IconButton>
@@ -132,7 +133,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
         <IconButton onClick={toggleOpen}>
           <img
             alt=""
-            src="/img/frekkls-logo-small.svg"
+            src={isUpToUs ? '/img/uptous-logo-small.png' : '/img/frekkls-logo-small.svg'}
             style={{ width: '30px', height: '30px', objectFit: 'contain' }}
           />
         </IconButton>
