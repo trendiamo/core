@@ -9,6 +9,7 @@ const ProductPicks = ({
   isFormLoading,
   isUploaderLoading,
   onFocus,
+  onSortEnd,
   sellerId,
   productPicksAttributes,
   setIsCropping,
@@ -20,7 +21,7 @@ const ProductPicks = ({
   ])
 
   return (
-    <div>
+    <SortableContainer onSortEnd={onSortEnd}>
       {productPicksAttributes.map((productPick, index) =>
         productPick._destroy ? null : (
           <SortableProductPick
@@ -41,8 +42,8 @@ const ProductPicks = ({
           />
         )
       )}
-    </div>
+    </SortableContainer>
   )
 }
 
-export default SortableContainer(ProductPicks)
+export default ProductPicks

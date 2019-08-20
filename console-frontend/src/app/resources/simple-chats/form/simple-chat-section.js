@@ -100,7 +100,7 @@ const SimpleChatSection = ({
     setAnchorEl(event.currentTarget)
   }, [])
 
-  const onSimpleChatMessagesSortEnd = useCallback(
+  const onSortEnd = useCallback(
     ({ oldIndex, newIndex }) => {
       const orderedSimpleChatMessages = arrayMove(simpleChatSection.simpleChatMessagesAttributes, oldIndex, newIndex)
       onChange(
@@ -180,8 +180,8 @@ const SimpleChatSection = ({
         ellipsize
         foldable
         folded={folded}
+        hideDragHandle={simpleChatSectionIndex === 0}
         hideTop
-        isDragHandleVisible={simpleChatSectionIndex > 0}
         title={
           simpleChatSectionIndex === 0
             ? 'Starting Section'
@@ -210,18 +210,15 @@ const SimpleChatSection = ({
             <SimpleChatMessagesContainer
               activeSimpleChatMessages={activeSimpleChatMessages}
               allowDelete={activeSimpleChatMessages.length > 1}
-              helperClass="sortable-element"
               isCropping={isCropping}
               isFormLoading={isFormLoading}
               isUploaderLoading={isUploaderLoading}
               onChange={setSimpleChatMessagesForm}
               onFocus={onFocus}
-              onSortEnd={onSimpleChatMessagesSortEnd}
+              onSortEnd={onSortEnd}
               setIsCropping={setIsCropping}
               setIsUploaderLoading={setIsUploaderLoading}
               simpleChatSection={simpleChatSection}
-              useDragHandle
-              useWindowAsScrollContainer
             />
           )}
           <StyledAddItemButton

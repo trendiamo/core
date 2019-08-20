@@ -14,15 +14,14 @@ import {
   InputAdornment,
   InputLabel,
   Table,
-  TableBody,
   TableRow,
   Typography,
 } from '@material-ui/core'
 import { camelize } from 'inflected'
-import { CheckBox as CheckBoxIcon, Close, EditOutlined as EditIcon, Reorder as ReorderIcon } from '@material-ui/icons'
+import { CheckBox as CheckBoxIcon, Close, EditOutlined as EditIcon } from '@material-ui/icons'
 import { createGlobalStyle } from 'styled-components'
+import { DragHandle, SortableContainer, SortableElement } from 'shared/sortable-elements'
 import { Link } from 'react-router-dom'
-import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
 
 const InlineTypography = styled(props => <Typography {...omit(props, ['highlight'])} />)`
@@ -38,10 +37,6 @@ const TriggerRowStyle = createGlobalStyle`
   }
 `
 
-const StyledReorderIcon = styled(ReorderIcon)`
-  cursor: ns-resize;
-`
-
 const columns = [
   { name: 'id', label: 'id' },
   { name: 'module', padding: 'none', label: 'module' },
@@ -55,10 +50,6 @@ const StyledChip = styled(props => <Chip {...omit(props, ['highlight', 'enabled'
   color: ${({ highlight }) => (highlight ? '#257c46' : '')};
   transition: all 0.2s;
 `
-
-const DragHandle = SortableHandle(styled(props => <StyledReorderIcon {...omit(props, ['highlight'])} />)`
-  color: ${({ highlight }) => (highlight ? '#fff' : '')};
-`)
 
 const TableRowStyled = styled(props => <TableRow {...omit(props, ['highlight'])} />)`
   background: ${({ highlight }) => (highlight ? '#257c46 !important' : '#fff')};
@@ -140,25 +131,37 @@ const TriggerRow = ({ trigger, selectedIds, setSelectedIds, highlightEnabled, hi
 }
 
 const SortableTriggerRow = SortableElement(TriggerRow)
-const SortableTriggerRows = SortableContainer(
-  ({ triggers, handleSelectAll, selectedIds, setSelectedIds, testerUrl, hostnames }) => (
-    <TableBody>
-      {triggers &&
-        triggers.map((trigger, index) => (
-          <SortableTriggerRow
-            handleSelectAll={handleSelectAll}
-            highlightEnabled={testerUrl.matches && testerUrl.matches.index === index}
-            highlightUrl={testerUrl.matches && testerUrl.matches.index === index && testerUrl.matches.urlIndex}
-            hostnames={hostnames}
-            index={index}
-            key={trigger.id}
-            selectedIds={selectedIds}
-            setSelectedIds={setSelectedIds}
-            trigger={trigger}
-          />
-        ))}
-    </TableBody>
-  )
+const SortableTriggerRows = ({
+  handleSelectAll,
+  hostnames,
+  onSortEnd,
+  selectedIds,
+  setSelectedIds,
+  testerUrl,
+  triggers,
+}) => (
+  <SortableContainer
+    distance={1}
+    helperClass="sortable-element sortable-trigger-row"
+    lockToContainerEdges
+    onSortEnd={onSortEnd}
+    wrapper="tbody"
+  >
+    {triggers &&
+      triggers.map((trigger, index) => (
+        <SortableTriggerRow
+          handleSelectAll={handleSelectAll}
+          highlightEnabled={testerUrl.matches && testerUrl.matches.index === index}
+          highlightUrl={testerUrl.matches && testerUrl.matches.index === index && testerUrl.matches.urlIndex}
+          hostnames={hostnames}
+          index={index}
+          key={trigger.id}
+          selectedIds={selectedIds}
+          setSelectedIds={setSelectedIds}
+          trigger={trigger}
+        />
+      ))}
+  </SortableContainer>
 )
 
 const UrlTester = ({ testerUrl, setTesterUrl }) => {
@@ -242,18 +245,13 @@ const TriggersListBase = ({
         triggers={triggers}
       />
       <SortableTriggerRows
-        distance={1}
         handleSelectAll={handleSelectAll}
-        helperClass="sortable-element sortable-trigger-row"
         hostnames={hostnames}
-        lockAxis="y"
         onSortEnd={onSortEnd}
         selectedIds={selectedIds}
         setSelectedIds={setSelectedIds}
         testerUrl={testerUrl}
         triggers={triggers}
-        useDragHandle
-        useWindowAsScrollContainer
       />
     </Table>
   </Section>

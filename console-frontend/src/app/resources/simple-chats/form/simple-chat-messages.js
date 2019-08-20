@@ -11,11 +11,12 @@ const SimpleChatMessages = ({
   isUploaderLoading,
   onChange,
   onFocus,
+  onSortEnd,
   setIsCropping,
   setIsUploaderLoading,
   simpleChatSection,
 }) => (
-  <div>
+  <SortableContainer onSortEnd={onSortEnd}>
     {simpleChatSection.simpleChatMessagesAttributes.map((simpleChatMessage, index) =>
       simpleChatMessage._destroy ? null : (
         <SortableSimpleChatMessage
@@ -35,7 +36,7 @@ const SimpleChatMessages = ({
         />
       )
     )}
-  </div>
+  </SortableContainer>
 )
 
-export default SortableContainer(SimpleChatMessages)
+export default SimpleChatMessages

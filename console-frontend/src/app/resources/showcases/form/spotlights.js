@@ -8,6 +8,7 @@ const Spotlights = ({
   isCropping,
   isFormLoading,
   isUploaderLoading,
+  onSortEnd,
   onSpotlightClick,
   sellers,
   setIsCropping,
@@ -20,7 +21,7 @@ const Spotlights = ({
   ])
 
   return (
-    <div>
+    <SortableContainer onSortEnd={onSortEnd}>
       {spotlightsAttributes.map((spotlight, index) =>
         spotlight._destroy ? null : (
           <SortableSpotlight
@@ -41,8 +42,8 @@ const Spotlights = ({
           />
         )
       )}
-    </div>
+    </SortableContainer>
   )
 }
 
-export default SortableContainer(memo(Spotlights))
+export default memo(Spotlights)

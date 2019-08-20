@@ -1,6 +1,6 @@
 import omit from 'lodash.omit'
-import React from 'react'
-import styled from 'styled-components'
+import React, { createElement, useCallback, useState } from 'react'
+import styled, { createGlobalStyle } from 'styled-components'
 import { Reorder } from '@material-ui/icons'
 import {
   SortableContainer as SortableContainerHoc,
@@ -8,11 +8,23 @@ import {
   SortableHandle,
 } from 'react-sortable-hoc'
 
-const ReorderIcon = styled(props => <Reorder {...omit(props, ['visible'])} />)`
+const ReorderIcon = styled(props => <Reorder {...omit(props, ['hidden', 'highlight'])} />)`
   cursor: ns-resize;
-  color: rgba(0, 0, 0, 0.54);
   margin-right: 1rem;
-  ${({ visible }) => (!visible ? 'visibility: hidden' : '')}
+  color: ${({ highlight }) => (highlight ? '#fff' : 'rgba(0, 0, 0, 0.54)')};
+  ${({ hidden }) => hidden && 'visibility: hidden;'}
+`
+
+// avoid text highlighting bug in Safari (see https://github.com/clauderic/react-sortable-hoc/issues/253)
+const NoSelectStyle = createGlobalStyle`
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 `
 
 export const DragHandle = SortableHandle(ReorderIcon)
@@ -21,5 +33,44 @@ export const DragHandle = SortableHandle(ReorderIcon)
 export const SortableElement = Component =>
   SortableElementHoc(({ sortIndex, ...props }) => <Component index={sortIndex} {...omit(props, ['sortIndex'])} />)
 
-export const SortableContainer = Component =>
-  SortableContainerHoc(props => <Component {...props} lockAxis="y" lockOffset="0%" lockToContainerEdges />)
+const BaseSortableContainer = SortableContainerHoc(({ children, wrapper = 'div' }) =>
+  createElement(wrapper, null, children)
+)
+
+export const SortableContainer = ({ children, ...props }) => {
+  const [isSorting, setIsSorting] = useState(false)
+  const { helperClass, onSortEnd, onSortStart } = props
+
+  const newOnSortEnd = useCallback(
+    (options, event) => {
+      setIsSorting(false)
+      if (onSortEnd) onSortEnd(options, event)
+    },
+    [onSortEnd]
+  )
+
+  const newOnSortStart = useCallback(
+    (options, event) => {
+      setIsSorting(true)
+      event.preventDefault()
+      if (onSortStart) onSortStart(options, event)
+    },
+    [onSortStart]
+  )
+
+  return (
+    <BaseSortableContainer
+      helperClass={helperClass || 'sortable-element'}
+      lockAxis="y"
+      lockOffset="0%"
+      onSortEnd={newOnSortEnd}
+      onSortStart={newOnSortStart}
+      useDragHandle
+      useWindowAsScrollContainer
+      {...omit(props, ['onSortEnd', 'onSortStart'])}
+    >
+      {children}
+      {isSorting && <NoSelectStyle />}
+    </BaseSortableContainer>
+  )
+}

@@ -40,7 +40,6 @@ const FormContainer = ({
       title={title}
     />
     <Spotlights
-      helperClass="sortable-element"
       isCropping={isCropping}
       isFormLoading={isFormLoading}
       isUploaderLoading={isUploaderLoading}
@@ -51,8 +50,6 @@ const FormContainer = ({
       setIsUploaderLoading={setIsUploaderLoading}
       setSpotlightForm={setSpotlightForm}
       spotlightsAttributes={form.spotlightsAttributes}
-      useDragHandle
-      useWindowAsScrollContainer
     />
     <AddItemContainer
       disabled={isCropping || isFormLoading || isUploaderLoading}
