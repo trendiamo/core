@@ -60,7 +60,6 @@ const FormContainer = ({
       />
       <SimpleChatSections
         allowDelete={form.simpleChatSectionsAttributes.length > 1}
-        helperClass="sortable-element"
         isCropping={isCropping}
         isFormLoading={isFormLoading}
         isUploaderLoading={isUploaderLoading}
@@ -70,8 +69,6 @@ const FormContainer = ({
         setIsCropping={setIsCropping}
         setIsUploaderLoading={setIsUploaderLoading}
         simpleChatSections={form.simpleChatSectionsAttributes}
-        useDragHandle
-        useWindowAsScrollContainer
       />
       <AddItemContainer disabled={isCropping || isFormLoading} message="Add Section" onClick={addSimpleChatSection} />
     </Form>

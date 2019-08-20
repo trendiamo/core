@@ -9,12 +9,13 @@ const SimpleChatSections = ({
   isCropping,
   isUploaderLoading,
   onChange,
+  onSortEnd,
   onToggleContent,
   setIsCropping,
   setIsUploaderLoading,
   simpleChatSections,
 }) => (
-  <div>
+  <SortableContainer onSortEnd={onSortEnd}>
     <SimpleChatSection
       allowDelete={false}
       isCropping={isCropping}
@@ -45,7 +46,7 @@ const SimpleChatSections = ({
           />
         )
       )}
-  </div>
+  </SortableContainer>
 )
 
-export default memo(SortableContainer(SimpleChatSections))
+export default memo(SimpleChatSections)

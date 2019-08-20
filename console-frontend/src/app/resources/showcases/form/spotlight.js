@@ -198,7 +198,6 @@ const Spotlight = ({
           <FormSection foldable title="Product Selection">
             {spotlight.productPicksAttributes && (
               <ProductPicks
-                helperClass="sortable-element"
                 isCropping={isCropping}
                 isFormLoading={isFormLoading}
                 isUploaderLoading={isUploaderLoading}
@@ -209,8 +208,6 @@ const Spotlight = ({
                 setIsCropping={setIsCropping}
                 setIsUploaderLoading={setIsUploaderLoading}
                 setProductPickForm={setProductPickForm}
-                useDragHandle
-                useWindowAsScrollContainer
               />
             )}
             <AddItemButton
