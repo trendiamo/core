@@ -14,7 +14,7 @@ if (!spaceId || !accessToken) {
 module.exports = {
   siteMetadata: {
     title: 'Uptous - We help you spread your impact',
-    description: 'The agency that connects brands and influencers to create a positive impact on a performance-base.',
+    description: 'The network that connects brands and influencers to create a positive impact on a performance-base.',
     author: '@trendiamo',
     lang: 'en',
   },
