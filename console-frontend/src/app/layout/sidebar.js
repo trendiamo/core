@@ -3,57 +3,50 @@ import React, { memo, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Drawer, Hidden, withWidth } from '@material-ui/core'
 import { drawerWidth, drawerWidthClosed } from './layout-styles'
+import { isUpToUs } from 'utils'
 
 const ModalProps = {
   keepMounted: true, // Better open performance on mobile.
 }
 
+const background = isUpToUs ? '#12e4bf' : 'linear-gradient(180deg, #ff843e, #ff6c40 52%, #ff5642)'
+
 const StyledDrawer = styled(Drawer)`
-  ${({ variant, open }) =>
-    variant === 'temporary' || open
-      ? `
-> div {
-  background: #fff;
-  border: none;
-  padding-left: 10px;
-  box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.24), 0 0 16px 0 rgba(0, 0, 0, 0.18);
-  flex: 1;
-  margin-top: 0;
-  min-height: 100vh;
-  position: fixed;
-  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
-  white-space: nowrap;
-  width: ${drawerWidth}px;
-  z-index: 5000;
-
-  &:before {
-    content: '';
-    background-image: linear-gradient(to bottom, #ff843e, #ff6c40 52%, #ff5642);
+  > div {
+    border: none;
+    flex: 1;
+    margin-top: 0;
+    min-height: 100vh;
     position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 10px;
+    transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    overflow-x: hidden;
+    ${({ variant, open }) =>
+      variant === 'temporary' || open
+        ? `
+      background: #fff;
+      padding-left: 10px;
+      box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.24), 0 0 16px 0 rgba(0, 0, 0, 0.18);
+      white-space: nowrap;
+      width: ${drawerWidth}px;
+      z-index: 5000;
+      &:before {
+        content: '';
+        background: ${background};
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 10px;
+      }
+      `
+        : `
+      background: ${background};
+      width: 56px;
+      @media (min-width: 600px) {
+        width: ${drawerWidthClosed}px;
+      }
+  `}
   }
-}
-`
-      : `
-> div {
-  background-image: linear-gradient(178deg, #ff843e, #ff6c40 52%, #ff5642);
-  border: none;
-  flex: 1;
-  margin-top: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: fixed;
-  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
-  width: 56px;
-
-  @media (min-width: 600px) {
-    width: ${drawerWidthClosed}px;
-  }
-}
-`}
 `
 
 const DrawerGhost = styled.div`
