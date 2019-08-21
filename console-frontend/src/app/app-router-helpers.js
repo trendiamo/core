@@ -35,7 +35,7 @@ const PrivateRouteRender = ({
 
   const notFound =
     (match.path.startsWith('/a/') && fetchedAccount && !auth.getAccount()) ||
-    (isOwnerScoped && !auth.isAdmin() && auth.getAccountRole() === 'editor') ||
+    (isOwnerScoped && !auth.isAdmin() && ['editor', 'promoter'].includes(auth.getAccountRole())) ||
     (isAdminScoped && !auth.isAdmin()) ||
     (path === routes.dataDashboard() && !auth.getAccount().websitesAttributes[0].isECommerce)
 
