@@ -7,8 +7,8 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import { apiAccountCreate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
+import { Checkbox, FormControl, FormControlLabel, FormHelperText, TextField } from '@material-ui/core'
 import { Form } from 'shared/form-elements'
-import { FormControl, TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
 
@@ -19,6 +19,7 @@ const SaveButton = styled(Button)`
 const loadFormObject = () => {
   return {
     name: '',
+    isAffiliate: false,
     websitesAttributes: [{ hostnames: [''] }],
   }
 }
@@ -39,6 +40,7 @@ const NewAccount = ({ history }) => {
         {
           account: {
             name: form.name,
+            isAffiliate: form.isAffiliate,
             websitesAttributes: [
               {
                 name: form.name,
@@ -65,6 +67,7 @@ const NewAccount = ({ history }) => {
     isFormSubmitting,
     onFormSubmit,
     setFieldValue,
+    mergeForm,
     mergeFormCallback,
   } = useForm({
     formObjectTransformer,
@@ -111,6 +114,13 @@ const NewAccount = ({ history }) => {
     [mergeFormCallback]
   )
 
+  const toggleIsAffiliate = useCallback(
+    event => {
+      mergeForm({ isAffiliate: event.target.checked })
+    },
+    [mergeForm]
+  )
+
   if (isFormLoading) return <CircularProgress />
 
   return (
@@ -129,6 +139,12 @@ const NewAccount = ({ history }) => {
             required
             value={form.name}
           />
+          <FormControlLabel
+            control={<Checkbox checked={form.isAffiliate} color="primary" onChange={toggleIsAffiliate} />}
+            disabled={isFormLoading}
+            label="Affiliate"
+          />
+          <FormHelperText>{'If checked, the brand will be listed in app.uptous.co'}</FormHelperText>
         </FormControl>
         <HostnamesForm
           addHostnameSelect={addHostnameSelect}
