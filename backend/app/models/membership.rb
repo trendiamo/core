@@ -2,7 +2,7 @@ class Membership < ApplicationRecord
   belongs_to :account
   belongs_to :user
 
-  enum role: %i[owner editor]
+  enum role: %i[owner editor promoter]
 
   accepts_nested_attributes_for :account
 

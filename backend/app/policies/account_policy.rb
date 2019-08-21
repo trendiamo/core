@@ -14,7 +14,7 @@ class AccountPolicy < ApplicationPolicy
   end
 
   def show?
-    user
+    admin_or_owner? || editor?
   end
 
   def create?

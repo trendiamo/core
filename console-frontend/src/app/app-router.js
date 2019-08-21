@@ -154,6 +154,7 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         component={Account}
         exact
         fetchedAccount={fetchedAccount}
+        isOwnerScoped
         path={routes.settingsAccount(':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
