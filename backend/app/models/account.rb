@@ -11,6 +11,9 @@ class Account < ApplicationRecord
 
   has_many :invites, dependent: :destroy
 
+  has_one :brand, dependent: :destroy
+
+  accepts_nested_attributes_for :brand, allow_destroy: true
   accepts_nested_attributes_for :websites, allow_destroy: true
 
   before_validation :set_slug, on: :create
@@ -20,7 +23,6 @@ class Account < ApplicationRecord
 
   def as_json(_options = {})
     attributes.slice("name", "slug", "is_affiliate", "created_at", "updated_at").merge(websites_attributes: websites)
-
   end
 
   def duplicate(name, hostnames)
