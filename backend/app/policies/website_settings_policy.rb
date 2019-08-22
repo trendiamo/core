@@ -1,6 +1,6 @@
 class WebsiteSettingsPolicy < ApplicationPolicy
   def show?
-    admin_or_owner?
+    admin_or_owner? || editor?
   end
 
   def create?
