@@ -113,7 +113,7 @@ const accountRedirect = () => {
   }
 }
 
-export const RootRedirect = () => <Redirect to={isUpToUs ? rootRedirectUptous() : rootRedirect()} />
+export const RootRedirect = () => <Redirect to={isUpToUs() ? rootRedirectUptous() : rootRedirect()} />
 
 export const AccountRedirect = () => {
   const destination = accountRedirect()

@@ -87,7 +87,7 @@ const LogotypeContainer = styled.div`
 
 const Logotype = props => (
   <LogotypeContainer>
-    <img alt="" src={isUpToUs ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} {...props} />
+    <img alt="" src={isUpToUs() ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} {...props} />
   </LogotypeContainer>
 )
 

@@ -9,7 +9,7 @@ const ModalProps = {
   keepMounted: true, // Better open performance on mobile.
 }
 
-const background = isUpToUs ? '#12e4bf' : 'linear-gradient(180deg, #ff843e, #ff6c40 52%, #ff5642)'
+const background = isUpToUs() ? '#12e4bf' : 'linear-gradient(180deg, #ff843e, #ff6c40 52%, #ff5642)'
 
 const StyledDrawer = styled(Drawer)`
   > div {

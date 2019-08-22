@@ -128,7 +128,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
     >
       {sidebarOpen ? (
         <>
-          <img alt="" src={isUpToUs ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} />
+          <img alt="" src={isUpToUs() ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} />
           <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
             <MenuIcon />
           </IconButton>
@@ -137,7 +137,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
         <IconButton onClick={toggleOpen}>
           <img
             alt=""
-            src={isUpToUs ? '/img/uptous-logo-small.png' : '/img/frekkls-logo-small.svg'}
+            src={isUpToUs() ? '/img/uptous-logo-small.png' : '/img/frekkls-logo-small.svg'}
             style={{ width: '30px', height: '30px', objectFit: 'contain' }}
           />
         </IconButton>
@@ -154,7 +154,7 @@ const BaseMenu = withRouter(
     }
 
     const userRoleResourceGroups = useMemo(() => {
-      if (isUpToUs) return upToUsResourceGroups()
+      if (isUpToUs()) return upToUsResourceGroups()
       return auth.isAdmin() || auth.getAccountRole() !== 'editor' ? resourceGroups() : editorResourceGroups()
     }, [])
 

@@ -92,7 +92,7 @@ const FilledLayout = ({ children, location, showOnboarding }) => {
 const Layout = ({ children, location }) => {
   const isAccountsPage = useMemo(() => location.pathname === routes.accounts(), [location.pathname])
 
-  if (!(auth.isLoggedIn() && isUpToUs) && !auth.getAccount()) return <EmptyLayout>{children}</EmptyLayout>
+  if (!(auth.isLoggedIn() && isUpToUs()) && !auth.getAccount()) return <EmptyLayout>{children}</EmptyLayout>
 
   return (
     <FilledLayout location={location} showOnboarding={!isAccountsPage}>
