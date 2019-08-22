@@ -2,6 +2,7 @@ import auth from 'auth'
 import Button from 'shared/button'
 import Dialog from 'shared/dialog'
 import Link from 'shared/link'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import MUIListItem from '@material-ui/core/ListItem'
 import Pagination from 'shared/pagination'
@@ -60,6 +61,13 @@ const ListItem = ({ account, hostnames }) => {
               primary={account.name}
               secondary={auth.isAdmin() ? hostnames : auth.getUser().roles[account.slug]}
             />
+            {account.isAffiliate && (
+              <Tooltip placement="top" title="This account is an affiliate partner on Uptous">
+                <ListItemIcon>
+                  <img alt="" src="/img/icons/grocery.svg" />
+                </ListItemIcon>
+              </Tooltip>
+            )}
           </StyledListItem>
         </Link>
       </Tooltip>

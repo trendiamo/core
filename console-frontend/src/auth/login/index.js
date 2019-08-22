@@ -4,7 +4,7 @@ import Button from 'shared/button'
 import Link from 'shared/link'
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
-import { apiRequest, apiSignIn } from 'utils'
+import { apiRequest, apiSignIn, isUpToUs } from 'utils'
 import { AuthFormFooter, AuthStyledForm } from 'auth/components'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
@@ -81,7 +81,7 @@ const Login1 = () => {
       event.preventDefault()
       const { json, errors, requestError } = await apiRequest(
         apiSignIn,
-        [{ user: { email: loginForm.email, password: loginForm.password } }],
+        [{ user: { email: loginForm.email, password: loginForm.password }, isUpToUs }],
         { isLoginRequest: true }
       )
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })

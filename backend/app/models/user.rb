@@ -35,4 +35,12 @@ class User < ApplicationRecord
   def active_membership
     memberships.find_by(account: ActsAsTenant.current_tenant)
   end
+
+  def frekkls_user?
+    admin || (!mapped_roles.empty? && !mapped_roles.values.all?("promoter"))
+  end
+
+  def promoter?
+    !admin && (mapped_roles.empty? || mapped_roles.values.include?("promoter"))
+  end
 end

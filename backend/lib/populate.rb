@@ -227,7 +227,7 @@ class Populate # rubocop:disable Metrics/ClassLength
   def create_account
     Account.create!(name: "Test Account")
     Account.create!(name: "Test Account 2")
-    Account.create!(name: "Test Account 3")
+    Account.create!(name: "Test Account 3", is_affiliate: true)
   end
 
   def create_websites

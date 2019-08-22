@@ -1,4 +1,5 @@
 import AccountsListBase from './accounts-list-base'
+import auth from 'auth'
 import CircularProgress from 'app/layout/loading'
 import debounce from 'debounce-promise'
 import Layout from './layout'
@@ -35,7 +36,13 @@ const AccountsList = () => {
   const fetchAccounts = useCallback(
     async () => {
       const { json, requestError, response } = await apiRequest(apiAccountList, [{ ...query, searchQuery }])
-      requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(json)
+      const filteredAccounts = json.filter(account => {
+        if (auth.isAdmin()) return account
+
+        const userRole = auth.getUser().roles[account.slug]
+        return !account.isAffiliate || userRole !== 'promoter'
+      })
+      requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(filteredAccounts)
       setTotalAccountsCount(extractCountFromHeaders(response.headers))
       setFetched(true)
     },
