@@ -100,6 +100,9 @@ const routes = {
   settingsAccount(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/settings/account`
   },
+  affiliatePartners() {
+    return '/affiliate-partners'
+  },
   nullRoute() {
     return '/empty'
   },

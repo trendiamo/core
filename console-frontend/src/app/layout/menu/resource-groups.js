@@ -50,4 +50,14 @@ const editorResourceGroups = () => {
   }
 }
 
-export { resourceGroups, editorResourceGroups }
+const upToUsResourceGroups = () => {
+  return {
+    modules: {
+      name: 'Main',
+      showTitle: false,
+      resources: [resources.affiliatePartners],
+    },
+  }
+}
+
+export { resourceGroups, editorResourceGroups, upToUsResourceGroups }

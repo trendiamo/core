@@ -73,6 +73,12 @@ const resources = {
     class: 'theme',
     route: () => routes.settingsTheme(),
   },
+  affiliatePartners: {
+    icon: '/img/icons/grocery.svg',
+    label: 'Affiliate Partners',
+    class: 'affiliatePartners',
+    route: () => routes.affiliatePartners(),
+  },
 }
 
 export default resources

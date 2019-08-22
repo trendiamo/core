@@ -5,6 +5,7 @@ import {
   apiAccountDestroy,
   apiAccountList,
   apiAccountsShow,
+  apiBrandsList,
   apiEventList,
   apiFlowsAutocomplete,
   apiFlowsList,
@@ -126,6 +127,7 @@ export {
   apiWebsiteUpdate,
   apiWebsiteSettingsShow,
   apiWebsiteSettingsUpdate,
+  apiBrandsList,
 }
 
 const handleRequestError = async (response, isLoginRequest) => {

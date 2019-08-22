@@ -1,9 +1,10 @@
 import auth from 'auth'
 import NotFound from 'app/screens/not-found'
 import React, { useCallback, useEffect } from 'react'
-import routes from './routes'
+import routes from 'app/routes'
 import { apiAccountsShow, apiRequest } from 'utils'
 import { isLocalStorageAccurate } from 'utils'
+import { isUpToUs } from 'utils'
 import { Redirect, Route } from 'react-router-dom'
 
 const PrivateRouteRender = ({
@@ -99,6 +100,10 @@ const rootRedirect = () => {
   return routes.accounts()
 }
 
+const rootRedirectUptous = () => {
+  return routes.affiliatePartners()
+}
+
 const accountRedirect = () => {
   if (auth.getUser().onboardingStage === 0) return routes.welcome(auth.getSlug())
   if (auth.isAdmin() || auth.getAccountRole() === 'owner') {
@@ -108,7 +113,7 @@ const accountRedirect = () => {
   }
 }
 
-export const RootRedirect = () => <Redirect to={rootRedirect()} />
+export const RootRedirect = () => <Redirect to={isUpToUs ? rootRedirectUptous() : rootRedirect()} />
 
 export const AccountRedirect = () => {
   const destination = accountRedirect()

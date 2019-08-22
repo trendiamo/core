@@ -9,7 +9,7 @@ import styled, { keyframes } from 'styled-components'
 import UserMenu from './user-menu'
 import { ViewList as DefaultIcon } from '@material-ui/icons'
 import { Divider, IconButton, MenuItem, SvgIcon, Typography } from '@material-ui/core'
-import { editorResourceGroups, resourceGroups } from './resource-groups'
+import { editorResourceGroups, resourceGroups, upToUsResourceGroups } from './resource-groups'
 import { isUpToUs } from 'utils'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -83,12 +83,12 @@ const StyledMenuItem = styled(props => <MenuItem {...omit(props, ['isActive', 's
 
 const MenuText = styled(props => <Typography {...omit(props, ['isActive'])} />)`
   color: #222;
+  padding-left: 20px;
   ${({ isActive }) => isActive && 'font-weight: bold;'}
 `
 
 const StyledSvgIcon = styled(props => <SvgIcon {...omit(props, ['isActive', 'sidebarOpen'])} />)`
   color: ${({ isActive, sidebarOpen }) => (sidebarOpen ? '#222' : isActive ? '#fff' : 'rgba(255,255,255,0.6)')};
-  padding-right: 20px;
 `
 
 const Item = withRouter(({ location, resource, sidebarOpen }) => {
@@ -98,9 +98,13 @@ const Item = withRouter(({ location, resource, sidebarOpen }) => {
     <div className={`onboard-${resource.class}`}>
       <Link key={resource.route()} to={resource.route()}>
         <StyledMenuItem isActive={isActive} sidebarOpen={sidebarOpen}>
-          <StyledSvgIcon isActive={isActive} sidebarOpen={sidebarOpen}>
-            {resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}
-          </StyledSvgIcon>
+          {typeof resource.icon === 'string' ? (
+            <img alt="" height={30} src={resource.icon} width={30} />
+          ) : (
+            <StyledSvgIcon isActive={isActive} sidebarOpen={sidebarOpen}>
+              {resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}
+            </StyledSvgIcon>
+          )}
           <MenuText isActive={isActive} variant="body1">
             {sidebarOpen ? resource.label : ''}
           </MenuText>
@@ -150,6 +154,7 @@ const BaseMenu = withRouter(
     }
 
     const userRoleResourceGroups = useMemo(() => {
+      if (isUpToUs) return upToUsResourceGroups()
       return auth.isAdmin() || auth.getAccountRole() !== 'editor' ? resourceGroups() : editorResourceGroups()
     }, [])
 
