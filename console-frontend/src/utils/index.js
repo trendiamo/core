@@ -188,7 +188,11 @@ export const isLocalStorageAccurate = () => {
   apiSignOut()
 }
 
-const production = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === 'production'
 
-export const isUpToUs =
-  (production ? window.location.hostname : process.env.REACT_APP_ADMIN_HOSTNAME) === 'app.uptous.co'
+export const isUpToUs = () => {
+  if (isProduction) {
+    return ['app.uptous.co', 'app-staging.uptous.co'].includes(window.location.hostname)
+  }
+  return process.env.REACT_APP_ADMIN_HOSTNAME === 'app.uptous.co'
+}
