@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190821091559) do
+ActiveRecord::Schema.define(version: 20190821111647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20190821091559) do
     t.string "slug", default: "", null: false
     t.boolean "is_affiliate", default: false
     t.index ["slug"], name: "index_accounts_on_slug", unique: true
+  end
+
+  create_table "brands", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "logo_url"
+    t.text "description"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_brands_on_account_id"
   end
 
   create_table "generated_urls", force: :cascade do |t|
@@ -294,6 +302,7 @@ ActiveRecord::Schema.define(version: 20190821091559) do
     t.index ["hostnames"], name: "index_websites_on_hostnames", using: :gin
   end
 
+  add_foreign_key "brands", "accounts"
   add_foreign_key "generated_urls", "users"
   add_foreign_key "images", "accounts"
   add_foreign_key "invites", "accounts"

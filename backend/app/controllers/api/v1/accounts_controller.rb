@@ -37,7 +37,8 @@ module Api
       private
 
       def account_params
-        params.require(:account).permit(:name, :is_affiliate, websites_attributes: [:name, hostnames: []])
+        params.require(:account).permit(:name, :is_affiliate, websites_attributes: [:name, hostnames: []],
+                                                              brand_attributes: %i[name description logo_url])
       end
 
       def render_error

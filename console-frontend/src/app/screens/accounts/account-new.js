@@ -20,6 +20,9 @@ const loadFormObject = () => {
   return {
     name: '',
     isAffiliate: false,
+    brandName: '',
+    brandDescription: '',
+    brandLogoUrl: '',
     websitesAttributes: [{ hostnames: [''] }],
   }
 }
@@ -27,6 +30,10 @@ const loadFormObject = () => {
 const formObjectTransformer = json => {
   return {
     name: json.name || '',
+    isAffiliate: json.isAffiliate || false,
+    brandName: json.brandName || '',
+    brandDescription: json.brandDescription || '',
+    brandLogoUrl: json.brandLogoUrl || '',
     hostnames: json.websitesAttributes[0].hostnames || [''],
   }
 }
@@ -41,6 +48,11 @@ const NewAccount = ({ history }) => {
           account: {
             name: form.name,
             isAffiliate: form.isAffiliate,
+            brandAttributes: form.isAffiliate && {
+              name: form.brandName,
+              description: form.brandDescription,
+              logoUrl: form.brandLogoUrl,
+            },
             websitesAttributes: [
               {
                 name: form.name,
@@ -139,12 +151,6 @@ const NewAccount = ({ history }) => {
             required
             value={form.name}
           />
-          <FormControlLabel
-            control={<Checkbox checked={form.isAffiliate} color="primary" onChange={toggleIsAffiliate} />}
-            disabled={isFormLoading}
-            label="Affiliate"
-          />
-          <FormHelperText>{'If checked, the brand will be listed in app.uptous.co'}</FormHelperText>
         </FormControl>
         <HostnamesForm
           addHostnameSelect={addHostnameSelect}
@@ -153,6 +159,47 @@ const NewAccount = ({ history }) => {
           form={form}
           isFormLoading={isFormLoading}
         />
+        <FormControl fullWidth margin="normal" required>
+          <FormControlLabel
+            control={<Checkbox checked={form.isAffiliate} color="primary" onChange={toggleIsAffiliate} />}
+            disabled={isFormLoading}
+            label="Affiliate"
+          />
+          <FormHelperText>{'If checked, the brand will be listed in app.uptous.co'}</FormHelperText>
+          {form.isAffiliate && (
+            <>
+              <TextField
+                autoFocus
+                fullWidth
+                inputProps={atLeastOneNonBlankCharInputProps}
+                label="Brand Name"
+                margin="normal"
+                name="brandName"
+                onChange={setFieldValue}
+                required
+                value={form.brandName}
+              />
+              <TextField
+                fullWidth
+                inputProps={atLeastOneNonBlankCharInputProps}
+                label="Brand Description"
+                margin="normal"
+                name="brandDescription"
+                onChange={setFieldValue}
+                value={form.brandDescription}
+              />
+              <TextField
+                fullWidth
+                inputProps={atLeastOneNonBlankCharInputProps}
+                label="Brand Logo Url"
+                margin="normal"
+                name="brandLogoUrl"
+                onChange={setFieldValue}
+                value={form.brandLogoUrl}
+              />
+            </>
+          )}
+        </FormControl>
         <SaveButton
           color="primaryGradient"
           disabled={isFormSubmitting || isFormLoading || isFormPristine}
