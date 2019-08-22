@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { CssBaseline, Typography } from '@material-ui/core'
+import { isUpToUs } from 'utils'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
 const AuthMain = styled.main`
@@ -86,7 +87,7 @@ const LogotypeContainer = styled.div`
 
 const Logotype = props => (
   <LogotypeContainer>
-    <img alt="" src="/img/frekkls-logo.svg" {...props} />
+    <img alt="" src={isUpToUs ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} {...props} />
   </LogotypeContainer>
 )
 
