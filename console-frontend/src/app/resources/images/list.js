@@ -1,3 +1,4 @@
+import auth from 'auth'
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import { ActiveColumn, EnhancedList, Image, TableCell, Text } from 'shared/table-elements'
@@ -51,7 +52,7 @@ const ImagesRow = ({ record, highlightInactive }) => (
 const api = { fetch: apiImageList, destroy: apiImageDestroy }
 const imagesRoutes = {}
 const canEditResource = ({ sellers, productPicks, simpleChatMessages }) =>
-  (sellers + productPicks + simpleChatMessages).length < 1
+  auth.getAccountRole() !== 'editor' && (sellers + productPicks + simpleChatMessages).length < 1
 const defaultSorting = { column: 'active', direction: 'asc' }
 const highlightInactive = ['sellers', 'productPicks', 'simpleChatMessages']
 
