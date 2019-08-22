@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import Sidebar from './sidebar'
 import styled from 'styled-components'
+import { isUpToUs } from 'utils'
 import { useOnboarding } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -91,7 +92,7 @@ const FilledLayout = ({ children, location, showOnboarding }) => {
 const Layout = ({ children, location }) => {
   const isAccountsPage = useMemo(() => location.pathname === routes.accounts(), [location.pathname])
 
-  if (!auth.getAccount()) return <EmptyLayout>{children}</EmptyLayout>
+  if (!(auth.isLoggedIn() && isUpToUs) && !auth.getAccount()) return <EmptyLayout>{children}</EmptyLayout>
 
   return (
     <FilledLayout location={location} showOnboarding={!isAccountsPage}>

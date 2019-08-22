@@ -5,8 +5,9 @@ import MenuIcon from '@material-ui/icons/Menu'
 import omit from 'lodash.omit'
 import React, { memo, useCallback, useContext } from 'react'
 import styled from 'styled-components'
+import Title from 'shared/main-title'
 import { drawerWidth, drawerWidthClosed } from './layout-styles'
-import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core'
+import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
 import { StoreContext } from 'ext/hooks/store'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -46,23 +47,6 @@ const OnboardingButton = withRouter(({ location }) => {
   )
 })
 
-const Title = styled(({ className, text }) => (
-  <Typography className={className} variant="h6">
-    {text}
-  </Typography>
-))`
-  color: #333;
-  display: inline-block;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  font-size: 24px;
-  margin-right: 2px;
-
-  @media (max-width: 959.95px) {
-    font-size: 16px;
-  }
-`
-
 const AppBarContent = memo(() => {
   const { store } = useContext(StoreContext)
   if (!store.appBarContent) return null
@@ -76,7 +60,7 @@ const AppBarContent = memo(() => {
           <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
         </Link>
       )}
-      <Title text={title} />
+      <Title>{title}</Title>
       {Actions && (
         <ButtonsContainer>
           <OnboardingButton />

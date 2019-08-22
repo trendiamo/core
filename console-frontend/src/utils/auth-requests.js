@@ -23,6 +23,7 @@ const ACCOUNTS_URL = `${BASE_API_URL}/accounts`
 const USERS_URL = `${BASE_API_URL}/users`
 const CORS_PROXY_URL = `${BASE_API_URL}/cors_proxy`
 const EVENTS_URL = `${BASE_API_URL}/events`
+const BRANDS_URL = `${BASE_API_URL}/brands`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
@@ -162,6 +163,8 @@ export const apiGeneratedUrlCreate = body => apiCreateRequest(GENERATED_URLS_URL
 
 export const apiFlowsList = () => apiGetRequest(FLOWS_URL)
 export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocomplete/?${stringify(query)}`)
+
+export const apiBrandsList = query => apiGetRequest(`${BRANDS_URL}/?${stringify(query)}`)
 
 export const apiPathAutocomplete = query => apiGetRequest(`${PATH_URL}/autocomplete/?${stringify(query)}`)
 
