@@ -1,4 +1,5 @@
 import AddSellerModal from './add-seller-modal'
+import auth from 'auth'
 import debounce from 'debounce-promise'
 import Downshift from 'downshift'
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
@@ -77,7 +78,7 @@ const AutocompleteInput = ({
         endAdornment={
           <>
             <DropdownButton onClick={onDropdownClick} />
-            {name === 'Seller' && <AddSellerButton onClick={onAddSellerClick} />}
+            {auth.getAccountRole() !== 'editor' && name === 'Seller' && <AddSellerButton onClick={onAddSellerClick} />}
           </>
         }
         fullWidth
