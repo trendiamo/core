@@ -65,7 +65,7 @@ const WhatYouGet = styled(({ className }) => (
   ${Card} {
     display: flex;
     align-items: center;
-    border: 5px solid #12e5c4;
+    border: 4px solid #12e5c4;
     border-radius: 10px;
     box-shadow: 0 0 30px rgba(18, 230, 196, 0.5);
     background-color: #fff;
