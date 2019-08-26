@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 
 import BeachImg from '../images/beach'
@@ -7,6 +7,7 @@ import Container from '../components/container'
 import Header from '../components/header'
 import Section from '../components/section'
 import { openModal } from '../utils'
+import { useParallax } from '../hooks'
 
 const AbsContainer = styled.div``
 const BeachImgContainer = styled.div``
@@ -23,33 +24,38 @@ const onGetInTouchClick = () => {
   })
 }
 
-const WhatWeDo = styled(({ className }) => (
-  <Section className={className}>
-    <BeachImgContainer>
-      <StyledBeachImg alt="" />
-    </BeachImgContainer>
-    <AbsContainer>
-      <Container>
-        <Header>
-          {'What '}
-          <b>{'we'}</b>
-          {' do'}
-        </Header>
-        <p>
-          {
-            'We empower brands to reach their target audience through social media individuals and passionate consumers that want to spread the message for a better world.'
-          }
-        </p>
-        <p>
-          {
-            'We work on a performance-basis to guarantee a return on investment for the brands and fair compensation for the influencers, that can monetize their positive impact.'
-          }
-        </p>
-        <Button onClick={onGetInTouchClick}>{'Get in touch'}</Button>
-      </Container>
-    </AbsContainer>
-  </Section>
-))`
+const WhatWeDo = styled(({ className }) => {
+  const ref = useRef(null)
+  useParallax({ ref })
+
+  return (
+    <Section className={className}>
+      <BeachImgContainer>
+        <StyledBeachImg alt="" ref={ref} />
+      </BeachImgContainer>
+      <AbsContainer>
+        <Container>
+          <Header>
+            {'What '}
+            <b>{'we'}</b>
+            {' do'}
+          </Header>
+          <p>
+            {
+              'We empower brands to reach their target audience through social media individuals and passionate consumers that want to spread the message for a better world.'
+            }
+          </p>
+          <p>
+            {
+              'We work on a performance-basis to guarantee a return on investment for the brands and fair compensation for the influencers, that can monetize their positive impact.'
+            }
+          </p>
+          <Button onClick={onGetInTouchClick}>{'Get in touch'}</Button>
+        </Container>
+      </AbsContainer>
+    </Section>
+  )
+})`
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -63,6 +69,10 @@ const WhatWeDo = styled(({ className }) => (
   }
   ${StyledBeachImg} {
     height: 100%;
+    img {
+      transition: transform 0.3s ease !important;
+      transform: scale(1.3);
+    }
   }
   ${AbsContainer} {
     position: absolute;
@@ -103,6 +113,11 @@ const WhatWeDo = styled(({ className }) => (
       margin-left: auto;
       margin-right: auto;
       width: 300px;
+    }
+    ${StyledBeachImg} {
+      img {
+        transform: scale(1);
+      }
     }
   }
 `

@@ -1,8 +1,8 @@
 import Img from 'gatsby-image'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { graphql, StaticQuery } from 'gatsby'
 
-const HeroImg = ({ alt, className }) => (
+const HeroImg = ({ alt, className }, ref) => (
   <StaticQuery
     query={graphql`
       query {
@@ -21,9 +21,10 @@ const HeroImg = ({ alt, className }) => (
         className={className}
         fluid={data.file.childImageSharp.fluid}
         imgStyle={{ objectPosition: '13% 50%' }}
+        ref={ref}
       />
     )}
   />
 )
 
-export default HeroImg
+export default forwardRef(HeroImg)

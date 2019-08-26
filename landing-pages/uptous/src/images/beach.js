@@ -1,8 +1,8 @@
 import Img from 'gatsby-image'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { graphql, StaticQuery } from 'gatsby'
 
-const BeachImg = ({ alt, className }) => (
+const BeachImg = ({ alt, className }, ref) => (
   <StaticQuery
     query={graphql`
       query {
@@ -15,8 +15,8 @@ const BeachImg = ({ alt, className }) => (
         }
       }
     `}
-    render={data => <Img alt={alt} className={className} fluid={data.file.childImageSharp.fluid} />}
+    render={data => <Img alt={alt} className={className} fluid={data.file.childImageSharp.fluid} ref={ref} />}
   />
 )
 
-export default BeachImg
+export default forwardRef(BeachImg)
