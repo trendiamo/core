@@ -9,8 +9,8 @@ import { Button, IconButton } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const sectionTitles = {
-  firstSection: 'Brands you work with',
-  secondSection: 'Brands you can work with',
+  promotingBrands: 'Brands you work with',
+  availableBrands: 'Brands you can work with',
 }
 
 const appBarContent = ({ section }) => ({ title: sectionTitles[section] })
@@ -238,7 +238,7 @@ const BrandSuggestions = ({ secondTitleRef }) => {
   return (
     <div>
       <div ref={secondTitleRef}>
-        <StyledTitle animate={animate}>{sectionTitles.secondSection}</StyledTitle>
+        <StyledTitle animate={animate}>{sectionTitles.availableBrands}</StyledTitle>
       </div>
       {availableBrands.map(availableBrand => (
         <BrandSection animate={animate} availableBrand={availableBrand} key={availableBrand.id} />
@@ -248,26 +248,36 @@ const BrandSuggestions = ({ secondTitleRef }) => {
 }
 
 const AffiliatePartners = () => {
-  const [newSection, setNewSection] = useState(false)
+  const [isAvailableBrandsSection, setIsAvailableBrandsSection] = useState(false)
+  const [sectionAppBarContent, setSectionAppBarContent] = useState(appBarContent({ section: 'promotingBrands' }))
 
   const secondTitleRef = useRef(null)
 
-  // Here we use useRef + in lines below we use `if (newScrollValue === isScrollOnBrands.current) return`
+  // Here we use useRef + in lines below we use `if (isBottomSection === sectionValueRef.current) return`
   // in order to optimize the performance of scroll event listener. If we don't do it the components will re-render
   // multiple times during scrolling of the page because of consistent state updates.
-  const isScrollOnBrands = useRef(false)
+  const sectionValueRef = useRef(false)
 
-  useAppBarContent(appBarContent({ section: `${newSection ? 'second' : 'first'}Section` }))
+  useAppBarContent(sectionAppBarContent)
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
       if (!secondTitleRef.current) return
-      const newScrollValue = document.scrollingElement.scrollTop >= secondTitleRef.current.offsetTop + 30
-      if (newScrollValue === isScrollOnBrands.current) return
-      isScrollOnBrands.current = newScrollValue
-      setNewSection(newScrollValue)
+      const isBottomSection = document.scrollingElement.scrollTop >= secondTitleRef.current.offsetTop + 30
+      if (isBottomSection === sectionValueRef.current) return
+      sectionValueRef.current = isBottomSection
+      setIsAvailableBrandsSection(isBottomSection)
     })
   }, [])
+
+  useEffect(
+    () => {
+      setSectionAppBarContent(
+        appBarContent({ section: isAvailableBrandsSection ? 'availableBrands' : 'promotingBrands' })
+      )
+    },
+    [isAvailableBrandsSection]
+  )
 
   return (
     <div>
