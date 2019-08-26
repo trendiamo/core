@@ -56,7 +56,7 @@ vi the .env files inside each folder
 # To install certificates
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d api.pimppls.com -d admin.pimppls.com -d pimppls.com -d www.pimppls.com
+certbot certonly --standalone --preferred-challenges http -d api.pimppls.com -d admin.pimppls.com -d pimppls.com -d www.pimppls.com -d app-staging.uptous.co
 service nginx start
 
 mkdir keycert
