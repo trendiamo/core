@@ -6,7 +6,7 @@ class Invite < ApplicationRecord
   belongs_to :recipient, class_name: "User", optional: true
 
   validates :sender_id, presence: true
-  validates :role, inclusion: { in: %w[owner editor promoter] }
+  validates :role, inclusion: { in: %w[owner editor] }
   validates :email, presence: true
 
   def as_json(_options = {})
