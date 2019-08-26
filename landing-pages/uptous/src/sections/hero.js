@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 
 import Button from '../components/button'
@@ -8,6 +8,7 @@ import LogoFullImg from '../images/logo-full'
 import Section from '../components/section'
 import Wave from '../images/wave.svg'
 import { openModal } from '../utils'
+import { useParallax } from '../hooks'
 
 const HeroImgContainer = styled.div``
 const Heading = styled.h1``
@@ -39,29 +40,34 @@ const onInfluencerClick = () => {
   })
 }
 
-const Hero = styled(({ className, data }) => (
-  <Section className={className}>
-    <HeroImgContainer>
-      <StyledHeroImg alt="" />
-      <StyledWave />
-    </HeroImgContainer>
-    <AbsContainer>
-      <Container>
-        <LogoFullContainer>
-          <LogoFullImg />
-        </LogoFullContainer>
-        <div>
-          <Heading>{data.heroHeading}</Heading>
-          <Subheading>{data.heroSubheading}</Subheading>
-        </div>
-        <ButtonsContainer>
-          <Button onClick={onBrandClick}>{"I'm a brand"}</Button>
-          <Button onClick={onInfluencerClick}>{"I'm an influencer"}</Button>
-        </ButtonsContainer>
-      </Container>
-    </AbsContainer>
-  </Section>
-))`
+const Hero = styled(({ className, data }) => {
+  const ref = useRef(null)
+  useParallax({ ref })
+
+  return (
+    <Section className={className}>
+      <HeroImgContainer>
+        <StyledHeroImg alt="" ref={ref} />
+        <StyledWave />
+      </HeroImgContainer>
+      <AbsContainer>
+        <Container>
+          <LogoFullContainer>
+            <LogoFullImg />
+          </LogoFullContainer>
+          <div>
+            <Heading>{data.heroHeading}</Heading>
+            <Subheading>{data.heroSubheading}</Subheading>
+          </div>
+          <ButtonsContainer>
+            <Button onClick={onBrandClick}>{"I'm a brand"}</Button>
+            <Button onClick={onInfluencerClick}>{"I'm an influencer"}</Button>
+          </ButtonsContainer>
+        </Container>
+      </AbsContainer>
+    </Section>
+  )
+})`
   padding: 0;
   position: relative;
   overflow: hidden;
