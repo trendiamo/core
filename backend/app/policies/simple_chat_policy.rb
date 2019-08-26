@@ -1,14 +1,14 @@
 class SimpleChatPolicy < ApplicationPolicy
   def index?
-    admin_or_owner? || editor?
+    user&.admin || user&.active_membership
   end
 
   def create?
-    admin_or_owner? || editor?
+    user&.admin || user&.active_membership
   end
 
   def duplicate?
-    admin_or_owner? || editor?
+    user&.admin || user&.active_membership
   end
 
   def show?

@@ -202,7 +202,6 @@ class Populate # rubocop:disable Metrics/ClassLength
       { email: "admin", name: "Admin User", admin: true },
       { email: "owner", name: "Owner User" },
       { email: "editor", name: "Editor User", role: "editor" },
-      { email: "promoter", name: "Promoter User", role: "promoter" },
       { email: "mm", name: "Multiple Memberships User", multiple_memberships: true },
       { email: "db", name: "David Bennett" },
       { email: "dh", name: "Dylan Henderson" },
@@ -226,18 +225,15 @@ class Populate # rubocop:disable Metrics/ClassLength
 
   def create_account
     Account.create!(name: "Test Account")
-    Account.create!(name: "Test Account 2")
-    Account.create!(name: "Test Account 3")
+    Account.create!(name: "Other Account")
   end
 
   def create_websites
     # 0.0.0.0:8080 is there to redirect the user to a trigger's page in console-frontend
     Website.create!(name: "Test Account", hostnames: %w[0.0.0.0:8080 0.0.0.0 localhost],
                     account: Account.find_by(name: "Test Account"))
-    Website.create!(name: "Test Account 2", hostnames: %w[www.test-account2.com],
-                    account: Account.find_by(name: "Test Account 2"))
-    Website.create!(name: "Test Account 3", hostnames: %w[www.test-account3.com],
-                    account: Account.find_by(name: "Test Account 3"))
+    Website.create!(name: "Other Account", hostnames: %w[www.other-account.com],
+                    account: Account.find_by(name: "Other Account"))
   end
 
   def create_users
@@ -249,19 +245,17 @@ class Populate # rubocop:disable Metrics/ClassLength
     User.create!(users_attrs)
   end
 
-  def create_memberships # rubocop:disable Metrics/MethodLength
+  def create_memberships
     team_members.each do |team_member|
       user = User.find_by(email: "#{team_member[:email]}@trendiamo.com")
       next if user.admin
 
       Membership.create!(account: Account.find_by(name: "Test Account"),
                          user: user, role: team_member[:role] || "owner")
-      next unless team_member[:multiple_memberships]
-
-      Membership.create!(account: Account.find_by(name: "Test Account 2"),
-                         user: user, role: "editor")
-      Membership.create!(account: Account.find_by(name: "Test Account 3"),
-                         user: user, role: "promoter")
+      if team_member[:multiple_memberships]
+        Membership.create!(account: Account.find_by(name: "Other Account"),
+                           user: user, role: "editor")
+      end
     end
   end
 

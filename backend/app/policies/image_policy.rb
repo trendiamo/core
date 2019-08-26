@@ -1,6 +1,6 @@
 class ImagePolicy < ApplicationPolicy
   def index?
-    admin_or_owner? || editor?
+    user&.admin || user&.active_membership
   end
 
   def create?
