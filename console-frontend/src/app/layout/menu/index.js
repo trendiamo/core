@@ -181,7 +181,7 @@ const BaseMenu = withRouter(
               ))}
             </div>
           ))}
-          {showUpToUsBranding() && <ReferralBox sidebarOpen={sidebarOpen} />}
+          {auth.isAffiliate() && <ReferralBox sidebarOpen={sidebarOpen} />}
         </div>
         <UserMenu sidebarOpen={sidebarOpen} />
       </Container>
