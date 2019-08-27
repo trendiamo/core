@@ -26,7 +26,7 @@ ngrok http 8080
 !(function(d) {
   var s1 = d.createElement('script'),
     s2 = d.getElementsByTagName('script')[0]
-  s1.src = '//YOUR_NGROK_URL/plugin.js?' + Date.now()
+  s1.src = '//YOUR_NGROK_URL/tracker.js?' + Date.now()
   s2.parentNode.insertBefore(s1, s2)
 })(document)
 ```
@@ -52,7 +52,7 @@ yarn deploy
     function load() {
       var s1 = r.createElement('script'),
         s2 = r.getElementsByTagName('script')[0]
-      s1.src = 'https://js.frekkls.com/plugin.js'
+      s1.src = 'https://js.frekkls.com/tracker.js'
       s1.charset = 'utf-8'
       s2.parentNode.insertBefore(s1, s2)
     }
@@ -60,27 +60,3 @@ yarn deploy
   })(window, document)
 </script>
 ```
-
-## Links to open plugin
-
-If you want to have a link that auto-opens the plugin, you need to add to the hash part of the url.
-
-For example, if you have the following link:
-
-`https://www.engelhorn.de/f/produkte/39713117.html`
-
-And you want to open the plugin on it, then you want this:
-
-`https://www.engelhorn.de/f/produkte/39713117.html#trnd:open:1`
-
-If the url already has some hash based params, like this:
-
-`https://www.engelhorn.de/f/produkte/39713117.html#cart-open1,13`
-
-Then you want to do this:
-
-`https://www.engelhorn.de/f/produkte/39713117.html#cart-open1,13&trnd:open:1`
-
-If you want to open something other than the root page, simply add the path option, for example to:
-
-`trnd:open:1,path:/spotlight/cjmrwnrejltva0932ru7mwa4k`
