@@ -1,0 +1,40 @@
+#!/bin/sh
+
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 environment [ssh_options]"
+  exit 127
+fi
+ENVIRONMENT=$1
+SSH_OPTIONS=$2
+case $ENVIRONMENT in
+  production)
+    ENV_SERVER=root@46.101.129.17
+    ;;
+  staging)
+    ENV_SERVER=root@167.71.50.172
+    ;;
+  *)
+    echo "environment must be: staging or production"
+    exit 127
+    ;;
+esac
+
+copy_files()
+{
+  case $ENVIRONMENT in
+    production)
+      aws --profile do --endpoint=https://ams3.digitaloceanspaces.com s3 cp build/tracker.js s3://javascript/tracker.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600'
+      ;;
+    staging)
+      aws --profile do --endpoint=https://fra1.digitaloceanspaces.com s3 cp build/tracker.js s3://staging-js/tracker.js --quiet --content-type text/javascript --acl public-read --cache-control 'public,max-age=600'
+      ;;
+  esac
+}
+
+([ -f .env ] && cp .env .env~ || true) && \
+scp $SSH_OPTIONS -q $ENV_SERVER:/var/dotenv/tracker/.env .env && \
+yarn build && \
+copy_files && \
+deploy/notify-rollbar && \
+([ -f .env~ ] && mv .env~ .env || true) && \
+rm build/*.js
