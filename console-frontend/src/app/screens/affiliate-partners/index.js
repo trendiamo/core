@@ -23,6 +23,7 @@ const EmptyBrandsContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 300px;
+  user-select: none;
 `
 
 const RocketIcon = styled.img`
