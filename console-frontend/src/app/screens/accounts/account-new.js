@@ -165,7 +165,7 @@ const NewAccount = ({ history }) => {
             disabled={isFormLoading}
             label="Affiliate"
           />
-          <FormHelperText>{'If checked, the brand will be listed in app.uptous.co'}</FormHelperText>
+          <FormHelperText>{'If checked, the brand will be eligible for our affiliate program'}</FormHelperText>
           {form.isAffiliate && (
             <>
               <TextField

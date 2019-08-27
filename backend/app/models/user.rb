@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :validatable
 
+  enum affiliate_role: %i[not_affiliate promoter seller]
+
   has_many :generated_urls, dependent: :destroy
 
   has_many :outros, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
@@ -20,7 +22,7 @@ class User < ApplicationRecord
   def as_json(_options = {})
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "img_url", "onboarding_stage", "admin",
-                               "img_rect", "created_at", "updated_at")
+                               "img_rect", "affiliate_role", "created_at", "updated_at")
     admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
   end
 

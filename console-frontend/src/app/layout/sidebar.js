@@ -3,13 +3,13 @@ import React, { memo, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Drawer, Hidden, withWidth } from '@material-ui/core'
 import { drawerWidth, drawerWidthClosed } from './layout-styles'
-import { isUpToUs } from 'utils'
+import { showUpToUsBranding } from 'utils'
 
 const ModalProps = {
   keepMounted: true, // Better open performance on mobile.
 }
 
-const background = isUpToUs() ? '#12e4bf' : 'linear-gradient(180deg, #ff843e, #ff6c40 52%, #ff5642)'
+const background = showUpToUsBranding() ? '#12e4bf' : 'linear-gradient(180deg, #ff843e, #ff6c40 52%, #ff5642)'
 
 const StyledDrawer = styled(Drawer)`
   > div {

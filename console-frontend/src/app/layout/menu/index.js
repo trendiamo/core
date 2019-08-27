@@ -7,10 +7,10 @@ import React, { memo, useMemo } from 'react'
 import routes from 'app/routes'
 import styled, { keyframes } from 'styled-components'
 import UserMenu from './user-menu'
+import { affiliateResourceGroups, editorResourceGroups, resourceGroups } from './resource-groups'
 import { ViewList as DefaultIcon } from '@material-ui/icons'
 import { Divider, IconButton, MenuItem, SvgIcon, Typography } from '@material-ui/core'
-import { editorResourceGroups, resourceGroups, upToUsResourceGroups } from './resource-groups'
-import { isUpToUs } from 'utils'
+import { showUpToUsBranding } from 'utils'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -128,7 +128,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
     >
       {sidebarOpen ? (
         <>
-          <img alt="" src={isUpToUs() ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} />
+          <img alt="" src={showUpToUsBranding() ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} />
           <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
             <MenuIcon />
           </IconButton>
@@ -137,7 +137,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
         <IconButton onClick={toggleOpen}>
           <img
             alt=""
-            src={isUpToUs() ? '/img/uptous-logo-small.png' : '/img/frekkls-logo-small.svg'}
+            src={showUpToUsBranding() ? '/img/uptous-logo-small.png' : '/img/frekkls-logo-small.svg'}
             style={{ width: '30px', height: '30px', objectFit: 'contain' }}
           />
         </IconButton>
@@ -154,7 +154,7 @@ const BaseMenu = withRouter(
     }
 
     const userRoleResourceGroups = useMemo(() => {
-      if (isUpToUs()) return upToUsResourceGroups()
+      if (auth.isAffiliate()) return affiliateResourceGroups()
       return auth.isAdmin() || auth.getAccountRole() !== 'editor' ? resourceGroups() : editorResourceGroups()
     }, [])
 
