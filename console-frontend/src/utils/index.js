@@ -192,9 +192,9 @@ export const isLocalStorageAccurate = () => {
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-export const isUpToUs = () => {
+export const showUpToUsBranding = () => {
   if (isProduction) {
     return ['app.uptous.co', 'app-staging.uptous.co'].includes(window.location.hostname)
   }
-  return process.env.REACT_APP_ADMIN_HOSTNAME === 'app.uptous.co'
+  return process.env.REACT_APP_BRANDING === 'uptous'
 }

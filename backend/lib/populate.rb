@@ -203,13 +203,13 @@ class Populate # rubocop:disable Metrics/ClassLength
       { email: "owner", name: "Owner User" },
       { email: "editor", name: "Editor User", role: "editor" },
       { email: "mm", name: "Multiple Memberships User", multiple_memberships: true },
-      { email: "db", name: "David Bennett" },
       { email: "dh", name: "Dylan Henderson" },
       { email: "frb", name: "Fabian Brooks" },
       { email: "mc", name: "Michael Campbell" },
       { email: "gc", name: "Gregg Cooper" },
       { email: "dw", name: "Douglas Wellington", admin: true },
       { email: "tds", name: "Thomas Simpson", admin: true },
+      { email: "promoter", name: "Paul Simon", affiliate_role: "promoter" },
     ]
   end
 
@@ -220,6 +220,7 @@ class Populate # rubocop:disable Metrics/ClassLength
       last_name: team_member[:name].split(" ")[1],
       password: "password", password_confirmation: "password",
       confirmed_at: Time.now.utc,
+      affiliate_role: team_member[:affiliate_role] || "not_affiliate",
     }
   end
 

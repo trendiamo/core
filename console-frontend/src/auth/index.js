@@ -43,11 +43,14 @@ const auth = {
     if (!this.user) this.user = JSON.parse(localStorage.getItem('authUser') || '{}')
     return this.user
   },
-  isLoggedIn() {
-    return localStorage.getItem('loggedIn') === 'true'
+  isAffiliate() {
+    return this.getUser().affiliateRole !== 'not_affiliate'
   },
   isAdmin() {
     return this.getUser().admin
+  },
+  isLoggedIn() {
+    return localStorage.getItem('loggedIn') === 'true'
   },
   isSingleAccount() {
     return !this.isAdmin() && Object.keys(this.getUser().roles).length === 1

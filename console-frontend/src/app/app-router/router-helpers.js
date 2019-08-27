@@ -4,7 +4,6 @@ import React, { useCallback, useEffect } from 'react'
 import routes from 'app/routes'
 import { apiAccountsShow, apiRequest } from 'utils'
 import { isLocalStorageAccurate } from 'utils'
-import { isUpToUs } from 'utils'
 import { Redirect, Route } from 'react-router-dom'
 
 const PrivateRouteRender = ({
@@ -87,6 +86,7 @@ export const ExternalRoute = ({ component, path, ...props }) => {
 
 const rootRedirect = () => {
   if (!auth.isLoggedIn()) return routes.login()
+  if (auth.isAffiliate()) return routes.affiliatePartners()
   if (auth.isSingleAccount()) {
     const role = Object.values(auth.getUser().roles)[0]
     const accountSlug = Object.keys(auth.getUser().roles)[0]
@@ -100,10 +100,6 @@ const rootRedirect = () => {
   return routes.accounts()
 }
 
-const rootRedirectUptous = () => {
-  return routes.affiliatePartners()
-}
-
 const accountRedirect = () => {
   if (auth.getUser().onboardingStage === 0) return routes.welcome(auth.getSlug())
   if (auth.isAdmin() || auth.getAccountRole() === 'owner') {
@@ -113,7 +109,7 @@ const accountRedirect = () => {
   }
 }
 
-export const RootRedirect = () => <Redirect to={isUpToUs() ? rootRedirectUptous() : rootRedirect()} />
+export const RootRedirect = () => <Redirect to={rootRedirect()} />
 
 export const AccountRedirect = () => {
   const destination = accountRedirect()

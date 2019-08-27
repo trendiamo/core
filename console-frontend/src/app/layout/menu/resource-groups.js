@@ -50,7 +50,7 @@ const editorResourceGroups = () => {
   }
 }
 
-const upToUsResourceGroups = () => {
+const affiliateResourceGroups = () => {
   return {
     modules: {
       name: 'Main',
@@ -60,4 +60,4 @@ const upToUsResourceGroups = () => {
   }
 }
 
-export { resourceGroups, editorResourceGroups, upToUsResourceGroups }
+export { resourceGroups, editorResourceGroups, affiliateResourceGroups }
