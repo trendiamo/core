@@ -85,9 +85,13 @@ const LogotypeContainer = styled.div`
   }
 `
 
+const LogoImage = styled.img`
+  max-width: 140px;
+`
+
 const Logotype = props => (
   <LogotypeContainer>
-    <img alt="" src={showUpToUsBranding() ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} {...props} />
+    <LogoImage alt="" src={showUpToUsBranding() ? '/img/uptous-logo.svg' : '/img/frekkls-logo.svg'} {...props} />
   </LogotypeContainer>
 )
 
