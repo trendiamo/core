@@ -18,6 +18,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :memberships
 
   validate :memberships_empty_when_admin
+  validates :social_media_url, presence: true, unless: :not_affiliate?
 
   def as_json(_options = {})
     sliced_attributes = attributes

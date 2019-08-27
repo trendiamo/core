@@ -209,7 +209,7 @@ class Populate # rubocop:disable Metrics/ClassLength
       { email: "gc", name: "Gregg Cooper" },
       { email: "dw", name: "Douglas Wellington", admin: true },
       { email: "tds", name: "Thomas Simpson", admin: true },
-      { email: "promoter", name: "Paul Simon", affiliate_role: "promoter" },
+      { email: "promoter", name: "Paul Simon", affiliate_role: "promoter", social_media_url: "http://ig.com/frekkls" },
     ]
   end
 
@@ -221,6 +221,7 @@ class Populate # rubocop:disable Metrics/ClassLength
       password: "password", password_confirmation: "password",
       confirmed_at: Time.now.utc,
       affiliate_role: team_member[:affiliate_role] || "not_affiliate",
+      social_media_url: team_member[:social_media_url],
     }
   end
 

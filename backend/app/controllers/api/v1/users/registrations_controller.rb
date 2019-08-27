@@ -95,7 +95,11 @@ module Api
                         memberships_attributes: [{ role: @invite.role, account: @invite.account }])
         end
 
-        def sign_up_extra_params
+        def sign_up_extra_params # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+          if params[:user][:affiliate_role]
+            return { affiliate_role: "promoter", social_media_url: params[:user][:social_media_url] }
+          end
+
           {
             memberships_attributes: [{
               role: :owner,
