@@ -51,7 +51,7 @@ const palette = {
   },
 }
 
-const customButtons = {
+export const frekklsButtons = {
   error: {
     backgroundColor: '#dc4343',
     color: '#fff',
@@ -89,6 +89,44 @@ const customButtons = {
   },
 }
 
+export const uptousButtons = {
+  error: {
+    backgroundColor: '#dc4343',
+    color: '#fff',
+  },
+  disabled: {
+    backgroundImage: 'none',
+    backgroundColor: 'rgba(51, 51, 51, 0.25)',
+    color: '#fff',
+  },
+  primaryGradient: {
+    backgroundImage: 'linear-gradient(to right, #12e5c4, #18e0aa)',
+    backgroundColor: '#16e3b8',
+    color: '#fff',
+    hover: {
+      backgroundImage: 'none',
+      backgroundColor: '#16e3b8',
+      color: '#fff',
+    },
+  },
+  primaryText: {
+    hover: {
+      color: '#16e3b8',
+    },
+  },
+  secondaryText: {
+    color: 'rgba(0, 0, 0, 0.6)',
+    boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.1)',
+  },
+  actions: {
+    backgroundColor: '#fff',
+    color: '#16e3b8',
+    hover: {
+      color: '#12e5c4',
+    },
+  },
+}
+
 const customPalette = {
   appBar: {
     main: '#fff',
@@ -106,7 +144,8 @@ const customPalette = {
 
 const theme = createMuiTheme({
   // These colors are not in Mui definitions, but we use it for our own purposes
-  customButtons,
+  frekklsButtons,
+  uptousButtons,
   customPalette,
   palette,
   shape: {

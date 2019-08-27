@@ -1,9 +1,10 @@
 import omit from 'lodash.omit'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { CircularProgress } from '@material-ui/core'
 import { Button as MuiButton, Tooltip } from '@material-ui/core'
+import { showUpToUsBranding } from 'utils'
 
 const ButtonContainer = styled(props => <div {...omit(props, ['inline', 'centered'])} />)`
 ${({ inline }) =>
@@ -63,27 +64,29 @@ const Button = ({
   const [styleObject, setStyleObject] = useState({})
   const [tooltipOpen, setTooltipOpen] = useState(false)
 
+  const buttonStyles = useMemo(() => (showUpToUsBranding() ? theme.uptousButtons : theme.frekklsButtons), [])
+
   const onButtonHoverStart = useCallback(
     () => {
       setTooltipOpen(true)
-      setStyleObject(theme.customButtons[color] && theme.customButtons[color].hover)
+      setStyleObject(buttonStyles[color] && buttonStyles[color].hover)
     },
-    [color]
+    [buttonStyles, color]
   )
 
   const onButtonHoverEnd = useCallback(
     () => {
       setTooltipOpen(false)
-      setStyleObject(omit(theme.customButtons[color], ['hover']))
+      setStyleObject(omit(buttonStyles[color], ['hover']))
     },
-    [color]
+    [buttonStyles, color]
   )
 
   useEffect(
     () => {
-      setStyleObject(omit(theme.customButtons[color], ['hover']))
+      setStyleObject(omit(buttonStyles[color], ['hover']))
     },
-    [color]
+    [buttonStyles, color]
   )
 
   const wrap = useCallback(
@@ -118,7 +121,7 @@ const Button = ({
             onClick={onClick}
             onMouseEnter={onButtonHoverStart}
             onMouseLeave={onButtonHoverEnd}
-            style={disabled ? theme.customButtons['disabled'] : styleObject}
+            style={disabled ? buttonStyles['disabled'] : styleObject}
             width={width}
           >
             <ButtonContents>
