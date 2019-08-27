@@ -4,6 +4,7 @@ import Link from 'shared/link'
 import MenuIcon from '@material-ui/icons/Menu'
 import omit from 'lodash.omit'
 import React, { memo, useMemo } from 'react'
+import ReferralBox from './referral-box'
 import routes from 'app/routes'
 import styled, { keyframes } from 'styled-components'
 import UserMenu from './user-menu'
@@ -91,6 +92,16 @@ const StyledSvgIcon = styled(props => <SvgIcon {...omit(props, ['isActive', 'sid
   color: ${({ isActive, sidebarOpen }) => (sidebarOpen ? '#222' : isActive ? '#fff' : 'rgba(255,255,255,0.6)')};
 `
 
+const LogoFull = styled.img`
+  width: 140px;
+`
+
+const LogoSmall = styled.img`
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+`
+
 const Item = withRouter(({ location, resource, sidebarOpen }) => {
   const isActive = useMemo(() => location.pathname.startsWith(resource.route()), [location.pathname, resource])
 
@@ -128,18 +139,14 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
     >
       {sidebarOpen ? (
         <>
-          <img alt="" src={showUpToUsBranding() ? '/img/uptous-logo.png' : '/img/frekkls-logo.svg'} />
+          <LogoFull alt="" src={showUpToUsBranding() ? '/img/uptous-logo.svg' : '/img/frekkls-logo.svg'} />
           <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
             <MenuIcon />
           </IconButton>
         </>
       ) : (
         <IconButton onClick={toggleOpen}>
-          <img
-            alt=""
-            src={showUpToUsBranding() ? '/img/uptous-logo-small.png' : '/img/frekkls-logo-small.svg'}
-            style={{ width: '30px', height: '30px', objectFit: 'contain' }}
-          />
+          <LogoSmall alt="" src={showUpToUsBranding() ? '/img/uptous-logo-small.svg' : '/img/frekkls-logo-small.svg'} />
         </IconButton>
       )}
     </div>
@@ -174,6 +181,7 @@ const BaseMenu = withRouter(
               ))}
             </div>
           ))}
+          {showUpToUsBranding() && <ReferralBox sidebarOpen={sidebarOpen} />}
         </div>
         <UserMenu sidebarOpen={sidebarOpen} />
       </Container>

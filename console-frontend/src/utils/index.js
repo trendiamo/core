@@ -190,6 +190,19 @@ export const isLocalStorageAccurate = () => {
   apiSignOut()
 }
 
+export const changeFavicon = src => {
+  const documentHead = document.head || (document.head = document.getElementsByTagName('head')[0])
+  let link = document.createElement('link')
+  link.rel = 'icon'
+  link.type = 'image/png'
+  link.href = src + '?=' + Date.now()
+  const oldLink = document.querySelector("link[rel*='icon']")
+  if (oldLink) {
+    documentHead.removeChild(oldLink)
+  }
+  documentHead.appendChild(link)
+}
+
 const isProduction = process.env.NODE_ENV === 'production'
 
 export const showUpToUsBranding = () => {
