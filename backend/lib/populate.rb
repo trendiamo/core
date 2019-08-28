@@ -182,7 +182,7 @@ class Populate # rubocop:disable Metrics/ClassLength
     new.process
   end
 
-  def process
+  def process # rubocop:disable Metrics/MethodLength
     create_account
     create_users
     create_memberships
@@ -193,6 +193,7 @@ class Populate # rubocop:disable Metrics/ClassLength
     create_simple_chats
     create_showcases
     create_triggers
+    create_brands
   end
 
   private
@@ -226,7 +227,7 @@ class Populate # rubocop:disable Metrics/ClassLength
   end
 
   def create_account
-    Account.create!(name: "Test Account")
+    Account.create!(name: "Test Account", is_affiliate: true)
     Account.create!(name: "Other Account")
   end
 
@@ -314,5 +315,27 @@ class Populate # rubocop:disable Metrics/ClassLength
       }
       Trigger.create!(trigger_attrs)
     end
+  end
+
+  def create_brands
+    Array.new(3) do
+      company_name = Faker::Company.name
+      Brand.create!(brands_attributes(company_name))
+    end
+  end
+
+  def brands_attributes(company_name) # rubocop:disable Metrics/MethodLength
+    { name: company_name, description: Faker::Lorem.sentence(25),
+      full_description: "<h2>#{company_name}: #{Faker::Company.bs}!</h2>
+                        <p>#{Faker::Lorem.sentence(500)}</p>",
+      terms_and_conditions: "<p>#{Faker::Lorem.sentence(500)}</p>",
+      header_image_url: Faker::LoremPixel.image("960x300", false, "abstract", Faker::Number.between(1, 10)),
+      logo_url: Faker::Company.logo,
+      commission_value: "#{Faker::Number.between(1, 20)}%",
+      commission_description: "Commission on Cart",
+      account: Account.find_by(name: "Test Account"),
+      instagram_url: Faker::Internet.url,
+      facebook_url: Faker::Internet.url,
+      twitter_url: Faker::Internet.url, }
   end
 end

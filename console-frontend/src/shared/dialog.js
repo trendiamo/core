@@ -1,5 +1,6 @@
 import CloseIcon from '@material-ui/icons/Close'
 import MuiIconButton from '@material-ui/core/IconButton'
+import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
 import { DialogActions, DialogContent, DialogContentText, DialogTitle, Dialog as MuiDialog } from '@material-ui/core'
@@ -21,17 +22,46 @@ const DialogSubtitle = styled.span`
   margin-top: -20px;
 `
 
-const Dialog = ({ open, handleClose, onKeyUp, dialogActions, title, subtitle, content, ...props }) => (
-  <MuiDialog aria-labelledby="form-dialog-title" onClose={handleClose} onKeyUp={onKeyUp} open={open} {...props}>
+const StyledDialogTitle = styled(props => <DialogTitle {...omit(props, ['hasManualPadding'])} />)`
+  ${({ hasManualPadding }) => hasManualPadding && 'padding: 0;'}
+`
+
+const StyledDialogContent = styled(props => <DialogContent {...omit(props, ['hasManualPadding'])} />)`
+  padding-bottom: 0;
+  ${({ hasManualPadding }) => hasManualPadding && 'padding: 0;'}
+`
+
+const Dialog = ({
+  open,
+  handleClose,
+  onKeyUp,
+  dialogActions,
+  title,
+  subtitle,
+  content,
+  hasManualPadding,
+  PaperProps,
+  ...props
+}) => (
+  <MuiDialog
+    aria-labelledby="form-dialog-title"
+    onClose={handleClose}
+    onKeyUp={onKeyUp}
+    open={open}
+    PaperProps={PaperProps}
+    {...props}
+  >
     <StyledIconButton onClick={handleClose}>
       <CloseIcon />
     </StyledIconButton>
-    <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+    <StyledDialogTitle hasManualPadding={hasManualPadding} id="form-dialog-title">
+      {title}
+    </StyledDialogTitle>
     {subtitle && <DialogSubtitle>{subtitle}</DialogSubtitle>}
-    <DialogContent style={{ paddingBottom: '0' }}>
+    <StyledDialogContent hasManualPadding={hasManualPadding}>
       {typeof content == 'string' ? <DialogContentText>{content}</DialogContentText> : content}
-    </DialogContent>
-    <DialogActions style={{ margin: '12px' }}>{dialogActions}</DialogActions>
+    </StyledDialogContent>
+    {dialogActions && <DialogActions style={{ margin: '12px' }}>{dialogActions}</DialogActions>}
   </MuiDialog>
 )
 
