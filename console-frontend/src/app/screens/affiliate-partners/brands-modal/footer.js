@@ -1,7 +1,7 @@
 import Button from 'shared/button'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Checkbox } from '@material-ui/core'
+import { Checkbox, FormControlLabel, FormLabel } from '@material-ui/core'
 
 const Container = styled.div`
   background: #f4f8f8;
@@ -44,27 +44,14 @@ const Details = styled.div`
   max-width: 70%;
 `
 
-const Label = styled.div`
-  color: #1b3b50;
-  font-size: 18px;
-  display: inline-block;
-  margin-left: 8px;
-`
-
 const TermsAcceptanceContainer = styled.div`
   margin-top: 20px;
   display: flex;
   align-items: flex-start;
 `
 
-const Link = styled.span`
-  margin: 0 5px;
-  cursor: pointer;
+const LabelLink = styled.a`
   text-decoration: underline;
-`
-
-const StyledCheckbox = styled(Checkbox)`
-  padding: 0;
 `
 
 const TermsAcceptanceBox = ({
@@ -73,20 +60,39 @@ const TermsAcceptanceBox = ({
   acceptedTermsAndConditions,
 }) => {
   const toggleAcceptance = useCallback(
+    () => {
+      setAcceptedTermsAndConditions(!acceptedTermsAndConditions)
+    },
+    [acceptedTermsAndConditions, setAcceptedTermsAndConditions]
+  )
+
+  const onCheckboxChange = useCallback(
     event => {
       setAcceptedTermsAndConditions(event.target.checked)
     },
     [setAcceptedTermsAndConditions]
   )
 
+  const clickLabelLink = useCallback(
+    event => {
+      event.stopPropagation()
+      scrollToTermsAndConditions()
+    },
+    [scrollToTermsAndConditions]
+  )
+
   return (
     <TermsAcceptanceContainer>
-      <StyledCheckbox checked={acceptedTermsAndConditions} onChange={toggleAcceptance} />
-      <Label>
-        {'I have read and accepted the'}
-        <Link onClick={scrollToTermsAndConditions}>{'Terms & Conditions'}</Link>
-        {'for promoting this brand.'}
-      </Label>
+      <FormControlLabel
+        control={<Checkbox checked={acceptedTermsAndConditions} color="primary" onChange={onCheckboxChange} />}
+        label={
+          <FormLabel onClick={toggleAcceptance}>
+            {'I have read and accepted the '}
+            <LabelLink onClick={clickLabelLink}>{'Terms & Conditions'}</LabelLink>
+            {' for promoting this brand.'}
+          </FormLabel>
+        }
+      />
     </TermsAcceptanceContainer>
   )
 }
