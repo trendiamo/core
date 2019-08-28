@@ -39,6 +39,7 @@ const AffiliateSignup = () => {
         firstName: '',
         lastName: '',
         socialMediaUrl: '',
+        referredByCode: '',
         email: '',
         password: '',
         passwordConfirmation: '',
@@ -105,6 +106,15 @@ const AffiliateSignup = () => {
               required
               type="url"
               value={state.form.socialMediaUrl}
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel htmlFor="referredByCode">{'Referral Code'}</InputLabel>
+            <Input
+              id="referredByCode"
+              name="referredByCode"
+              onChange={setFieldValue}
+              value={state.form.referredByCode}
             />
           </FormControl>
           <FormControl fullWidth margin="normal" required>

@@ -1,5 +1,7 @@
 import Canvas from './canvas'
+import Link from 'shared/link'
 import React from 'react'
+import routes from 'app/routes'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -58,7 +60,9 @@ const Content = () => {
     <ContentContainer>
       <Description>{'Refer a friend to become a promoter and earn'}</Description>
       <Price>{`${priceForReferral}€`}</Price>
-      <Button>{'Get Started'}</Button>
+      <Link to={routes.yourReferrals()}>
+        <Button>{'Get Started'}</Button>
+      </Link>
     </ContentContainer>
   )
 }

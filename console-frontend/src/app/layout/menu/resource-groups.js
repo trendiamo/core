@@ -57,6 +57,11 @@ const affiliateResourceGroups = () => {
       showTitle: false,
       resources: [resources.affiliatePartners],
     },
+    upgrades: {
+      name: 'Upgrades',
+      showTitle: true,
+      resources: [resources.yourReferrals],
+    },
   }
 }
 

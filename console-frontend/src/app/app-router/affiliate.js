@@ -7,6 +7,7 @@ import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from 'app/routes'
 import SignupConfirmPage from 'auth/signup/confirm'
 import SignupPage from 'auth/signup'
+import YourReferrals from 'app/screens/your-referrals'
 import { ExternalRoute, PrivateRoute, RootRedirect } from './router-helpers'
 import { Route, Switch } from 'react-router-dom'
 
@@ -18,6 +19,13 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         exact
         fetchedAccount={fetchedAccount}
         path={routes.affiliatePartners()}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={YourReferrals}
+        exact
+        fetchedAccount={fetchedAccount}
+        path={routes.yourReferrals()}
         setFetchedAccount={setFetchedAccount}
       />
 
