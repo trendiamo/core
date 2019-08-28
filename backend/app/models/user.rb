@@ -22,7 +22,7 @@ class User < ApplicationRecord
   validate :memberships_empty_when_admin
   validate :referred_by_code_exists
   validates :social_media_url, presence: true, unless: :not_affiliate?
-  validates :referral_code, presence: true
+  validates :referral_code, presence: true, uniqueness: true
 
   def as_json(_options = {})
     sliced_attributes = attributes
