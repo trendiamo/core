@@ -97,7 +97,11 @@ module Api
 
         def sign_up_extra_params # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           if params[:user][:affiliate_role]
-            return { affiliate_role: "promoter", social_media_url: params[:user][:social_media_url] }
+            return {
+              affiliate_role: "promoter",
+              referred_by_code: params[:user][:referred_by_code],
+              social_media_url: params[:user][:social_media_url],
+            }
           end
 
           {

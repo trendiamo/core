@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="crown" width="31.56" height="24.039" viewBox="0 0 31.56 24.039">
+    <defs>
+        <style>
+            .cls-1{fill:#ffb400}.cls-2{fill:#e69907}.cls-3{fill:#19b79e}.cls-4{fill:#ffc843}.cls-5{fill:#12e5c4}
+        </style>
+    </defs>
+    <path id="Pfad_73" d="M91 300v5.548h20.341V300zm0 0" class="cls-1" data-name="Pfad 73" transform="translate(-85.391 -281.508)"/>
+    <path id="Pfad_74" d="M256 300h10.171v5.548H256zm0 0" class="cls-2" data-name="Pfad 74" transform="translate(-240.22 -281.508)"/>
+    <path id="Pfad_75" d="M110.026 94.882l-1.5 2.922H91l-1.5-2.922a13.229 13.229 0 0 1 20.526 0zm0 0" class="cls-3" data-name="Pfad 75" transform="translate(-83.983 -84.452)"/>
+    <path id="Pfad_76" d="M266.263 94.882l-1.5 2.922H256V90a12.531 12.531 0 0 1 10.263 4.882zm0 0" class="cls-3" data-name="Pfad 76" transform="translate(-240.22 -84.452)"/>
+    <path id="Pfad_77" d="M62.156 75.578L58.7 87.339H38.357L34.9 75.578l2.33-.888a6.517 6.517 0 0 0 4.715 3.4h.962c2.127-.333 3.717-3.587 4.364-6.694h2.515c.647 3.107 2.238 6.361 4.364 6.694h.962a6.517 6.517 0 0 0 4.715-3.4zm0 0" class="cls-4" data-name="Pfad 77" transform="translate(-32.747 -66.997)"/>
+    <path id="Pfad_78" d="M269.629 75.578l-3.458 11.761H256V71.4h1.257c.647 3.107 2.238 6.361 4.364 6.694h.962a6.517 6.517 0 0 0 4.715-3.4zm0 0" class="cls-1" data-name="Pfad 78" transform="translate(-240.22 -66.997)"/>
+    <path id="Pfad_79" d="M2.835 65.548a2.774 2.774 0 1 1 0-5.548 2.774 2.774 0 0 1 0 5.548zm0 0" class="cls-1" data-name="Pfad 79" transform="translate(0 -56.302)"/>
+    <path id="Pfad_80" d="M423.774 65.548a2.774 2.774 0 1 1 0-5.548 2.774 2.774 0 1 1 0 5.548zm0 0" class="cls-4" data-name="Pfad 80" transform="translate(-395.05 -56.302)"/>
+    <path id="Pfad_81" d="M213.774 0a2.774 2.774 0 1 0 2.774 2.774A2.77 2.77 0 0 0 213.774 0zm0 0" class="cls-1" data-name="Pfad 81" transform="translate(-197.994)"/>
+    <path id="Pfad_82" d="M207.861 173.7l-3.162 3.162 3.162 3.162 3.162-3.162zm0 0" class="cls-5" data-name="Pfad 82" transform="translate(-192.082 -162.992)"/>
+    <path id="Pfad_83" d="M326.1 233.785l1.307 1.307-1.307 1.308-1.307-1.307zm0 0" class="cls-3" data-name="Pfad 83" transform="translate(-304.769 -219.375)"/>
+    <path id="Pfad_84" d="M146.1 233.785l1.307 1.307-1.307 1.308-1.307-1.307zm0 0" class="cls-5" data-name="Pfad 84" transform="translate(-135.864 -219.375)"/>
+    <path id="Pfad_85" d="M256 5.548V0a2.774 2.774 0 0 1 0 5.548zm0 0" class="cls-4" data-name="Pfad 85" transform="translate(-240.22)"/>
+    <path id="Pfad_86" d="M259.162 176.861L256 180.024V173.7zm0 0" class="cls-3" data-name="Pfad 86" transform="translate(-240.22 -162.992)"/>
+</svg>

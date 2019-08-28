@@ -103,6 +103,9 @@ const routes = {
   affiliatePartners() {
     return '/affiliate-partners'
   },
+  yourReferrals() {
+    return '/your-referrals'
+  },
   nullRoute() {
     return '/empty'
   },

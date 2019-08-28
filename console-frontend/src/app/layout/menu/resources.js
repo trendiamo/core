@@ -79,6 +79,12 @@ const resources = {
     class: 'affiliatePartners',
     route: () => routes.affiliatePartners(),
   },
+  yourReferrals: {
+    icon: '/img/icons/crown.svg',
+    label: 'Your Referrals',
+    class: 'yourReferrals',
+    route: () => routes.yourReferrals(),
+  },
 }
 
 export default resources
