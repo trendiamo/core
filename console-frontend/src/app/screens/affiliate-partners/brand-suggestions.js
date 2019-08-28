@@ -80,9 +80,9 @@ const PromoteNowButton = styled(Button)`
   }
 `
 
-const BrandLink = ({ websiteUrl }) => {
+const BrandLink = ({ websiteHostname }) => {
   return (
-    <a href={websiteUrl} rel="noopener noreferrer" target="_blank">
+    <a href={`https://${websiteHostname}`} rel="noopener noreferrer" target="_blank">
       <IconButton>
         <img alt="" src="/img/icons/new_tab.svg" style={{ width: '30px', height: '30px', objectFit: 'contain' }} />
       </IconButton>
@@ -127,7 +127,7 @@ const BrandItem = ({ brand, setSelectedBrand, setIsBrandsModalOpen }) => {
         <BrandDescription>{brand.description}</BrandDescription>
       </BrandImageAndDescription>
       <BrandActions>
-        <BrandLink websiteUrl={brand.websiteUrl} />
+        <BrandLink websiteHostname={brand.websiteHostname} />
         <PromoteNowButton onClick={onClick}>{'Promote Now'}</PromoteNowButton>
       </BrandActions>
     </BrandContainer>
