@@ -44,7 +44,11 @@ const auth = {
     return this.user
   },
   isAffiliate() {
-    return this.getUser().affiliateRole !== 'not_affiliate'
+    const affiliateRole = this.getUser().affiliateRole
+    // we test for !affiliateRole to cover for cached user object between deploys
+    if (!affiliateRole) return false
+
+    return affiliateRole !== 'not_affiliate'
   },
   isAdmin() {
     return this.getUser().admin
