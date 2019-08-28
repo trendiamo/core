@@ -14,6 +14,10 @@ class ApplicationPolicy
     user&.admin || user&.active_membership&.owner?
   end
 
+  def admin_or_account_member?
+    user&.admin || user&.active_membership
+  end
+
   def editor?
     user&.active_membership&.editor?
   end
@@ -32,6 +36,10 @@ class ApplicationPolicy
 
     def admin_or_owner?
       user&.admin || user&.active_membership&.owner?
+    end
+
+    def admin_or_account_member?
+      user&.admin || user&.active_membership
     end
 
     def editor?
