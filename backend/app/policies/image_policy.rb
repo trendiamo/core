@@ -1,10 +1,10 @@
 class ImagePolicy < ApplicationPolicy
   def index?
-    user&.admin || user&.active_membership
+    admin_or_account_member?
   end
 
   def create?
-    admin_or_owner?
+    admin_or_account_member?
   end
 
   def destroy?
