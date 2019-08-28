@@ -96,7 +96,7 @@ export default {
   setupDataGathering() {
     if (!window.$) return
     if (location.pathname.match(/\/thank_you$/)) {
-      mixpanel.track('Purchase Success', { hostname: location.hostname })
+      mixpanel.track('Purchase Success', { hostname: location.hostname, affiliateToken: getAffiliateToken() })
     } else if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
       window.$(document).on('click', '.cart-button-checkout.button', () => {
         try {
