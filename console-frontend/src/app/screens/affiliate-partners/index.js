@@ -1,87 +1,55 @@
-import BrandSuggestions from './brand-suggestions'
-import React, { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import ActiveBrands from './active-brands'
+import auth from 'auth'
+import AvailableBrands from './available-brands'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
+import { apiAffiliationCreate, apiBrandsList, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
 const sectionTitles = {
-  promotingBrands: 'Brands you work with',
+  activeBrands: 'Brands you work with',
   availableBrands: 'Brands you can work with',
 }
 
 const appBarContent = ({ section }) => ({ title: sectionTitles[section] })
 
-const chosenBrands = []
-
-const EmptyBrandsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 300px;
-  user-select: none;
-`
-
-const RocketIcon = styled.img`
-  margin-bottom: 20px;
-  transition: all 1.6s;
-  ${({ animate }) =>
-    !animate &&
-    `
-    opacity: 0;
-    transform: translateY(30px);
-  `}
-`
-
-const EmptyBrandsDescription = styled.div`
-  color: #8799a4;
-  text-align: center;
-  transition: all 1.6s 0.2s;
-  ${({ animate }) =>
-    !animate &&
-    `
-    opacity: 0;
-    transform: translateY(30px);
-  `}
-`
-
-const EmptyBrands = ({ animate }) => {
-  return (
-    <EmptyBrandsContainer>
-      <RocketIcon animate={animate} src="/img/icons/rocket.svg" />
-      <EmptyBrandsDescription animate={animate}>
-        <div>{'You are not working with any brands yet.'}</div>
-        <div>{'Pick partners from the list to start promoting and earning today!'}</div>
-      </EmptyBrandsDescription>
-    </EmptyBrandsContainer>
-  )
-}
-
-const ChosenBrands = () => {
+const AffiliatePartners = () => {
   const [animate, setAnimate] = useState(false)
+  const [activeBrands, setActiveBrands] = useState([])
+  const [availableBrands, setAvailableBrands] = useState([])
+  const [isAvailableBrandsSection, setIsAvailableBrandsSection] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [sectionAppBarContent, setSectionAppBarContent] = useState(appBarContent({ section: 'activeBrands' }))
 
   const { enqueueSnackbar } = useSnackbar()
 
-  useEffect(
-    () => {
-      let didCancel = false
-      setTimeout(() => {
-        didCancel || setAnimate(true)
-      }, 100)
-
-      return () => (didCancel = true)
+  const fetchBrands = useCallback(
+    async () => {
+      const { json, errors, requestError } = await apiRequest(apiBrandsList, [])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (requestError || errors) return
+      const activeBrands = json.filter(brand => brand.affiliations.length > 0)
+      const availableBrands = json.filter(brand => !activeBrands.includes(brand))
+      setActiveBrands(activeBrands)
+      setAvailableBrands(availableBrands)
+      setIsLoading(false)
     },
     [enqueueSnackbar]
   )
 
-  if (chosenBrands.length === 0) return <EmptyBrands animate={animate} />
-
-  return <div>{'Chosen Brands'}</div>
-}
-
-const AffiliatePartners = () => {
-  const [isAvailableBrandsSection, setIsAvailableBrandsSection] = useState(false)
-  const [sectionAppBarContent, setSectionAppBarContent] = useState(appBarContent({ section: 'promotingBrands' }))
+  useEffect(
+    () => {
+      let didCancel = false
+      ;(async () => {
+        await fetchBrands()
+        setTimeout(() => {
+          didCancel || setAnimate(true)
+        }, 100)
+      })()
+      return () => (didCancel = true)
+    },
+    [fetchBrands]
+  )
 
   const secondTitleRef = useRef(null)
 
@@ -104,18 +72,41 @@ const AffiliatePartners = () => {
 
   useEffect(
     () => {
-      setSectionAppBarContent(
-        appBarContent({ section: isAvailableBrandsSection ? 'availableBrands' : 'promotingBrands' })
-      )
+      setSectionAppBarContent(appBarContent({ section: isAvailableBrandsSection ? 'availableBrands' : 'activeBrands' }))
     },
     [isAvailableBrandsSection]
   )
 
+  const createAffiliation = useCallback(
+    brand => {
+      return (async () => {
+        const { json, errors, requestError } = await apiRequest(apiAffiliationCreate, [
+          { accountId: brand.accountId, userId: auth.getUser().id },
+        ])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        if (!errors && !requestError) {
+          enqueueSnackbar(`Successfully created affiliation with ${brand.name}`, { variant: 'success' })
+        }
+        fetchBrands()
+        return json
+      })()
+    },
+    [enqueueSnackbar, fetchBrands]
+  )
+
   return (
-    <div>
-      <ChosenBrands />
-      <BrandSuggestions secondTitleRef={secondTitleRef} sectionTitles={sectionTitles} />
-    </div>
+    <>
+      <ActiveBrands animate={animate} brands={activeBrands} isLoading={isLoading} />
+      <AvailableBrands
+        animate={animate}
+        brands={availableBrands}
+        createAffiliation={createAffiliation}
+        isLoading={isLoading}
+        title={sectionTitles.availableBrands}
+        titleRef={secondTitleRef}
+      />
+    </>
   )
 }
 

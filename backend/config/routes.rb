@@ -62,6 +62,8 @@ Rails.application.routes.draw do
         delete "/users", to: "users#destroy"
         resources :flows, only: %i[index]
 
+        resources :affiliations, only: %i[create]
+
         get "/events", to: "mixpanel_events#index"
       end
     end

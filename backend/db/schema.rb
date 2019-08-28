@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20190828103808) do
     t.index ["slug"], name: "index_accounts_on_slug", unique: true
   end
 
+  create_table "affiliations", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "user_id"
+    t.string "token"
+    t.index ["account_id"], name: "index_affiliations_on_account_id"
+    t.index ["user_id"], name: "index_affiliations_on_user_id"
+  end
+
   create_table "brands", force: :cascade do |t|
     t.string "name", null: false
     t.string "logo_url"
@@ -314,6 +322,8 @@ ActiveRecord::Schema.define(version: 20190828103808) do
     t.index ["hostnames"], name: "index_websites_on_hostnames", using: :gin
   end
 
+  add_foreign_key "affiliations", "accounts"
+  add_foreign_key "affiliations", "users"
   add_foreign_key "brands", "accounts"
   add_foreign_key "generated_urls", "users"
   add_foreign_key "images", "accounts"

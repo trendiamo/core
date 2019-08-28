@@ -183,7 +183,8 @@ class Populate # rubocop:disable Metrics/ClassLength
   end
 
   def process # rubocop:disable Metrics/MethodLength
-    create_account
+    create_accounts
+    create_brands
     create_users
     create_memberships
     create_websites
@@ -193,7 +194,6 @@ class Populate # rubocop:disable Metrics/ClassLength
     create_simple_chats
     create_showcases
     create_triggers
-    create_brands
   end
 
   private
@@ -226,17 +226,24 @@ class Populate # rubocop:disable Metrics/ClassLength
     }
   end
 
-  def create_account
+  def create_accounts
     Account.create!(name: "Test Account", is_affiliate: true)
     Account.create!(name: "Other Account")
+    3.times { Account.create!(name: Faker::Company.name, is_affiliate: true) }
   end
 
   def create_websites
     # 0.0.0.0:8080 is there to redirect the user to a trigger's page in console-frontend
     Website.create!(name: "Test Account", hostnames: %w[0.0.0.0:8080 0.0.0.0 localhost],
                     account: Account.find_by(name: "Test Account"))
-    Website.create!(name: "Other Account", hostnames: %w[www.other-account.com],
-                    account: Account.find_by(name: "Other Account"))
+    Account.where.not(name: "Test Account").each do |account|
+      website_attrs = {
+        name: account.name,
+        hostnames: ["#{account.slug}.com"],
+        account: account,
+      }
+      Website.create!(website_attrs)
+    end
   end
 
   def create_users
@@ -317,25 +324,24 @@ class Populate # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def create_brands
-    Array.new(3) do
-      company_name = Faker::Company.name
-      Brand.create!(brands_attributes(company_name))
+  def create_brands # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    Account.where(is_affiliate: true).each do |account|
+      brand_attrs = {
+        name: account.name,
+        account: account,
+        description: Faker::Lorem.sentence(25),
+        full_description: "<h2>#{account.name}: #{Faker::Company.bs}!</h2>
+                           <p>#{Faker::Lorem.sentence(500)}</p>",
+        terms_and_conditions: "<p>#{Faker::Lorem.sentence(500)}</p>",
+        header_image_url: Faker::LoremPixel.image("960x300", false, "abstract", Faker::Number.between(1, 10)),
+        logo_url: Faker::Company.logo,
+        commission_value: "#{Faker::Number.between(1, 20)}%",
+        commission_description: "Commission on Cart",
+        instagram_url: "https://instagram.com/#{account.slug}",
+        facebook_url: "https://facebook.com/#{account.slug}",
+        twitter_url: "https://twitter.com/#{account.slug}",
+      }
+      Brand.create!(brand_attrs)
     end
-  end
-
-  def brands_attributes(company_name) # rubocop:disable Metrics/MethodLength
-    { name: company_name, description: Faker::Lorem.sentence(25),
-      full_description: "<h2>#{company_name}: #{Faker::Company.bs}!</h2>
-                        <p>#{Faker::Lorem.sentence(500)}</p>",
-      terms_and_conditions: "<p>#{Faker::Lorem.sentence(500)}</p>",
-      header_image_url: Faker::LoremPixel.image("960x300", false, "abstract", Faker::Number.between(1, 10)),
-      logo_url: Faker::Company.logo,
-      commission_value: "#{Faker::Number.between(1, 20)}%",
-      commission_description: "Commission on Cart",
-      account: Account.find_by(name: "Test Account"),
-      instagram_url: Faker::Internet.url,
-      facebook_url: Faker::Internet.url,
-      twitter_url: Faker::Internet.url, }
   end
 end

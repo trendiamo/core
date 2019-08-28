@@ -103,7 +103,7 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
 `
 
-const Actions = ({ brand, scrollToTermsAndConditions }) => {
+const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
   const [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false)
 
   return (
@@ -120,7 +120,7 @@ const Actions = ({ brand, scrollToTermsAndConditions }) => {
         />
       </Details>
       <ButtonContainer>
-        <Button color="primaryGradient" disabled={!acceptedTermsAndConditions}>
+        <Button color="primaryGradient" disabled={!acceptedTermsAndConditions} onClick={onCreateLinkClick}>
           {'Create Link'}
         </Button>
       </ButtonContainer>
@@ -128,11 +128,23 @@ const Actions = ({ brand, scrollToTermsAndConditions }) => {
   )
 }
 
-const Footer = ({ brand, scrollToTermsAndConditions }) => {
+const Footer = ({ brand, createAffiliation, handleClose, scrollToTermsAndConditions }) => {
+  const onCreateLinkClick = useCallback(
+    () => {
+      createAffiliation(brand)
+      handleClose()
+    },
+    [brand, createAffiliation, handleClose]
+  )
+
   return (
     <Container>
       <Title>{'Affiliate terms'}</Title>
-      <Actions brand={brand} scrollToTermsAndConditions={scrollToTermsAndConditions} />
+      <Actions
+        brand={brand}
+        onCreateLinkClick={onCreateLinkClick}
+        scrollToTermsAndConditions={scrollToTermsAndConditions}
+      />
     </Container>
   )
 }

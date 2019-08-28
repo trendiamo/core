@@ -3,12 +3,12 @@ import Dialog from 'shared/dialog'
 import Header from './header'
 import React, { useCallback } from 'react'
 
-const BrandsModal = ({ open, setOpen, brand }) => {
+const BrandsModal = ({ brand, createAffiliation, open, setOpen }) => {
   const handleClose = useCallback(() => setOpen(false), [setOpen])
 
   return (
     <Dialog
-      content={<Content brand={brand} handleClose={handleClose} />}
+      content={<Content brand={brand} createAffiliation={createAffiliation} handleClose={handleClose} />}
       fullWidth
       handleClose={handleClose}
       hasManualPadding
