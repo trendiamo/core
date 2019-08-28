@@ -23,7 +23,7 @@ const TermsAndConditions = ({ brand, termsRef }) => (
   </div>
 )
 
-const Content = ({ brand }) => {
+const Content = ({ brand, createAffiliation, handleClose }) => {
   const contentRef = useRef(null)
   const termsRef = useRef(null)
 
@@ -38,7 +38,12 @@ const Content = ({ brand }) => {
         <BrandDescription dangerouslySetInnerHTML={{ __html: brand.fullDescription }} />
         <TermsAndConditions brand={brand} termsRef={termsRef} />
       </ContentContainer>
-      <Footer brand={brand} scrollToTermsAndConditions={scrollToTermsAndConditions} />
+      <Footer
+        brand={brand}
+        createAffiliation={createAffiliation}
+        handleClose={handleClose}
+        scrollToTermsAndConditions={scrollToTermsAndConditions}
+      />
     </div>
   )
 }

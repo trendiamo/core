@@ -109,14 +109,18 @@ export const uptousButtons = {
       color: '#fff',
     },
   },
+  secondaryBg: {
+    backgroundColor: '#8799a4',
+    color: '#fff',
+  },
   primaryText: {
     hover: {
       color: '#16e3b8',
     },
   },
   secondaryText: {
-    color: 'rgba(0, 0, 0, 0.6)',
     boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.1)',
+    color: 'rgba(0, 0, 0, 0.6)',
   },
   actions: {
     backgroundColor: '#fff',

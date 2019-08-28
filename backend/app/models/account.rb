@@ -9,9 +9,10 @@ class Account < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
 
-  has_many :invites, dependent: :destroy
-
   has_one :brand, dependent: :destroy
+  has_many :affiliations, dependent: :destroy
+
+  has_many :invites, dependent: :destroy
 
   accepts_nested_attributes_for :brand, allow_destroy: true
   accepts_nested_attributes_for :websites, allow_destroy: true
