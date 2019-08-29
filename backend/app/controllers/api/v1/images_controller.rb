@@ -10,6 +10,7 @@ module Api
 
       def create
         @image = Image.new(image_params)
+        @image.user = current_user
         authorize @image
         if @image.save
           render json: @image, status: :created

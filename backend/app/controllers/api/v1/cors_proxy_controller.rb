@@ -4,7 +4,6 @@ module Api
   module V1
     class CorsProxyController < RestAdminController
       before_action :authenticate_user!
-      before_action :ensure_tenant
 
       def download
         file = Down.download(CGI.unescape(params[:url].strip), max_size: 20_000_000)

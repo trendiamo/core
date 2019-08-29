@@ -1,3 +1,4 @@
+import auth from 'auth'
 import CircularProgress from 'app/layout/loading'
 import CroppingDialog from './cropping-dialog'
 import EmptyDialog from './empty-dialog'
@@ -32,6 +33,7 @@ const ImagesModal = ({
   setIsLoading,
   setOpen,
   type,
+  isUserProfileImage,
 }) => {
   const [activeImage, setActiveImage] = useState(null)
   const [emptyState, setEmptyState] = useState(false)
@@ -89,6 +91,18 @@ const ImagesModal = ({
 
   const fetchImages = useCallback(
     async () => {
+      if (isUserProfileImage) {
+        const userImgUrl = auth.getUser().imgUrl
+        if (userImgUrl && userImgUrl !== '') {
+          setImages([{ id: 'user-img', url: activeImage || auth.getUser().imgUrl }])
+          setActiveImage({ id: 'user-img', url: activeImage || auth.getUser().imgUrl })
+        } else {
+          setEmptyState(true)
+          setImages([])
+          setActiveImage(null)
+        }
+        return
+      }
       const { json, response, errors, requestError, ...rest } = await apiRequest(apiImageList, '')
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (requestError || errors) {
@@ -109,7 +123,7 @@ const ImagesModal = ({
       }
       return { json, response, errors, requestError, ...rest }
     },
-    [enqueueSnackbar, handleClose, previewImage, setActiveImage, setEmptyState, setImages, type]
+    [activeImage, enqueueSnackbar, handleClose, isUserProfileImage, previewImage, type]
   )
 
   const onCancelCropping = useCallback(
@@ -139,8 +153,9 @@ const ImagesModal = ({
     () => {
       onCropDoneClick()
       setUrlUploadState(false)
+      setActiveImage(image)
     },
-    [onCropDoneClick, setUrlUploadState]
+    [image, onCropDoneClick]
   )
 
   const newOnFileUpload = useCallback(
@@ -193,10 +208,12 @@ const ImagesModal = ({
         await fetchImages()
         setIsLoading(false)
       } else {
-        setActiveImage(images.find(image => image.url === previewImage))
+        isUserProfileImage
+          ? setActiveImage(images[0])
+          : setActiveImage(images.find(image => image.url === previewImage))
       }
     },
-    [emptyState, fetchImages, images, previewImage, setIsLoading]
+    [emptyState, fetchImages, images, isUserProfileImage, previewImage, setIsLoading]
   )
 
   const onUrlUploadKeyup = useCallback(
@@ -261,6 +278,7 @@ const ImagesModal = ({
       activeImage={activeImage}
       handleClose={handleClose}
       images={images}
+      isUserProfileImage={isUserProfileImage}
       onDialogClose={onDialogClose}
       onEntering={onDialogEntering}
       onFileUpload={newOnFileUpload}

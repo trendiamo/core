@@ -28,12 +28,12 @@ const AFFILIATIONS_URL = `${BASE_API_URL}/affiliations`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
-const authFetch = async (url, options) =>
+const authFetch = async (url, options, isUntenanted = false) =>
   await fetch(url, {
     credentials: 'include',
     headers: new Headers({
       'Content-Type': 'application/json',
-      ...auth.getHeaders(),
+      ...auth.getHeaders(isUntenanted),
     }),
     ...options,
   })
@@ -49,11 +49,15 @@ const apiDestroyMultipleRequest = async (url, body) =>
     method: 'delete',
   })
 
-const apiCreateRequest = async (url, body) =>
-  await authFetch(url, {
-    body: JSON.stringify(filterBody(body)),
-    method: 'post',
-  })
+const apiCreateRequest = async (url, body, isUntenanted = false) =>
+  await authFetch(
+    url,
+    {
+      body: JSON.stringify(filterBody(body)),
+      method: 'post',
+    },
+    isUntenanted
+  )
 
 const apiUpdateRequest = async (url, body) =>
   await authFetch(url, {
@@ -83,7 +87,7 @@ export const apiSignOut = async () => {
   console.error('Error on Logout!')
 }
 
-export const apiGetSignedUrlFactory = () => (file, callback) =>
+export const apiGetSignedUrlFactory = (isUntenanted = false) => (file, callback) =>
   authFetch(
     `${S3_URL}?${stringify({
       content_type: file.type,
@@ -91,7 +95,8 @@ export const apiGetSignedUrlFactory = () => (file, callback) =>
     })}`,
     {
       redirect: 'error',
-    }
+    },
+    isUntenanted
   )
     .then(response => response.json())
     .then(json => {
@@ -127,7 +132,7 @@ export const apiSellerDestroy = body => apiDestroyMultipleRequest(SELLERS_URL, b
 export const apiSellersAutocomplete = query => apiGetRequest(`${SELLERS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiImageList = query => apiListRequest(`${IMAGES_URL}/?${stringify(query)}`)
-export const apiImageCreate = body => apiCreateRequest(IMAGES_URL, body)
+export const apiImageCreate = (body, isUntenanted = true) => apiCreateRequest(IMAGES_URL, body, isUntenanted)
 export const apiImageDestroy = body => apiDestroyMultipleRequest(IMAGES_URL, body)
 
 export const apiGetRemoteImage = url => apiGetRequest(`${CORS_PROXY_URL}/${encodeURIComponent(url)}`)

@@ -63,7 +63,9 @@ ActiveRecord::Schema.define(version: 20190828103808) do
     t.datetime "updated_at", null: false
     t.boolean "active", default: false
     t.string "file_format", null: false
+    t.bigint "user_id"
     t.index ["account_id"], name: "index_images_on_account_id"
+    t.index ["user_id"], name: "index_images_on_user_id"
   end
 
   create_table "invites", force: :cascade do |t|
@@ -327,6 +329,7 @@ ActiveRecord::Schema.define(version: 20190828103808) do
   add_foreign_key "brands", "accounts"
   add_foreign_key "generated_urls", "users"
   add_foreign_key "images", "accounts"
+  add_foreign_key "images", "users"
   add_foreign_key "invites", "accounts"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "users"

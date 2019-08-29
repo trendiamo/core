@@ -116,6 +116,7 @@ const GalleryDialog = ({
   onUrlUploadClick,
   open,
   images,
+  isUserProfileImage,
 }) => (
   <Dialog
     content={<DialogContentGallery activeImage={activeImage} images={images} onImageClick={onImageClick} />}
@@ -134,7 +135,11 @@ const GalleryDialog = ({
     onEntering={onEntering}
     onKeyUp={onKeyUp}
     open={open}
-    subtitle={<DialogSubtitleLink to={routes.imagesList()}>{'Or go to the image gallery >'}</DialogSubtitleLink>}
+    subtitle={
+      !isUserProfileImage && (
+        <DialogSubtitleLink to={routes.imagesList()}>{'Or go to the image gallery >'}</DialogSubtitleLink>
+      )
+    }
     title="Select an image from the gallery:"
   />
 )

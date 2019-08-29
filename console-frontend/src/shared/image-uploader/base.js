@@ -195,6 +195,7 @@ const BaseImageUploader = ({
   setModalOpen,
   value,
   type,
+  isUserProfileImage,
 }) => (
   <>
     <ImagesModal
@@ -204,6 +205,7 @@ const BaseImageUploader = ({
       image={image}
       imagePreviewRef={imagePreviewRef}
       isLoading={isLoading}
+      isUserProfileImage={isUserProfileImage}
       onCancelClick={onCancelClick}
       onCropChange={onCropChange}
       onCropComplete={onCropComplete}

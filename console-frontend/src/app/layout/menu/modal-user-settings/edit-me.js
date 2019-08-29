@@ -85,6 +85,7 @@ const EditMe = ({ togglePasswordForm }) => {
         aspectRatio={1}
         circle
         disabled={isFormLoading || isCropping || isUploaderLoading}
+        isUserProfileImage
         label="Picture"
         onChange={setImage}
         setDisabled={setIsCropping}
