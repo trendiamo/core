@@ -1,6 +1,5 @@
 import Content from './content'
 import Dialog from 'shared/dialog'
-import Header from './header'
 import React, { useCallback } from 'react'
 
 const BrandsModal = ({ brand, createAffiliation, open, setOpen }) => {
@@ -15,7 +14,7 @@ const BrandsModal = ({ brand, createAffiliation, open, setOpen }) => {
       maxWidth="md"
       open={open}
       PaperProps={{ style: { borderRadius: '10px' } }}
-      title={<Header brand={brand} />}
+      title=""
     />
   )
 }
