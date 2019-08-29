@@ -116,6 +116,7 @@ export const apiWebsiteSettingsUpdate = (id, body) => apiUpdateRequest(`${WEBSIT
 
 export const apiMe = () => apiGetRequest(ME_URL)
 export const apiMeUpdate = body => apiUpdateRequest(ME_URL, body)
+export const apiMeReferrals = () => apiGetRequest(`${ME_URL}/referrals`)
 export const apiOnboardingSet = body => apiUpdateRequest(ONBOARDING_URL, body)
 
 export const apiSellerList = query => apiListRequest(`${SELLERS_URL}/?${stringify(query)}`)

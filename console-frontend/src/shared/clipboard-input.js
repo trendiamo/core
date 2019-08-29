@@ -77,23 +77,23 @@ const CopyButton = styled(props => <Button {...omit(props, ['isCopied'])} />)`
   `}
 `
 
-const ClipboardInput = ({ url, ...props }) => {
+const ClipboardInput = ({ text, ...props }) => {
   const [isCopied, setIsCopied] = useState(false)
 
   const copyUrl = useCallback(
     async () => {
-      await navigator.clipboard.writeText(url)
+      await navigator.clipboard.writeText(text)
       setIsCopied(true)
       showUpToUsBranding() && setTimeout(() => setIsCopied(false), 3000)
     },
-    [url]
+    [text]
   )
 
   const onInputFocus = useCallback(event => event.target.select(), [])
 
   return (
     <Container isCopied={isCopied} {...props}>
-      <UrlInput defaultValue={url} disableUnderline fullWidth isCopied={isCopied} onFocus={onInputFocus} readOnly />
+      <UrlInput defaultValue={text} disableUnderline fullWidth isCopied={isCopied} onFocus={onInputFocus} readOnly />
       <Tooltip title={isCopied ? 'Copied!' : 'Copy to Clipboard'}>
         <CopyButtonContainer>
           <CopyButton
