@@ -7,6 +7,17 @@ class SparkpostMailer < ApplicationMailer
     mail(to: ENV["DELIUS_ASMT_EMAIL"], bcc: ENV["DELIUS_ASMT_EMAIL_BCC"], sparkpost_data: sparkpost_data)
   end
 
+  def request_promoter_upgrade(user)
+    sparkpost_data = {
+      substitution_data: {
+        promoter_name: "#{user.first_name} #{user.last_name}",
+        promoter_email: user.email,
+      },
+      template_id: "promoter-upgrade-request",
+    }
+    mail(to: ENV["PROMOTER_UPGRADE_EMAIL"], sparkpost_data: sparkpost_data)
+  end
+
   private
 
   # url needs to be passed separately, see
