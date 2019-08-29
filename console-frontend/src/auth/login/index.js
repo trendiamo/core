@@ -4,13 +4,13 @@ import Button from 'shared/button'
 import Link from 'shared/link'
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
-import { apiRequest, apiSignIn } from 'utils'
+import { apiRequest, apiSignIn, showUpToUsBranding } from 'utils'
 import { AuthFormFooter, AuthStyledForm } from 'auth/components'
 import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
-  <AuthLayout title="Let's log you in!">
+  <AuthLayout title={showUpToUsBranding() ? 'Collectively shape a better tomorrow!' : "Let's log you in!"}>
     <AuthStyledForm onSubmit={loginSubmit}>
       <FormControl fullWidth margin="normal" required>
         <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
