@@ -1,4 +1,5 @@
 import Footer from './footer'
+import Header from './header'
 import React, { useCallback, useRef } from 'react'
 import styled from 'styled-components'
 
@@ -10,8 +11,17 @@ const ContentContainer = styled.div`
   overflow-x: hidden;
   padding: 10px 60px 20px;
   margin-top: 70px;
-  max-height: 300px;
   position: relative;
+`
+
+const ContentScrollContainer = styled.div`
+  max-height: calc(100vh - 315px);
+  overflow-y: auto;
+`
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `
 
 const TermsAndConditionsContent = styled.div``
@@ -29,22 +39,25 @@ const Content = ({ brand, createAffiliation, handleClose }) => {
 
   const scrollToTermsAndConditions = useCallback(() => {
     if (!contentRef.current || !termsRef.current) return
-    contentRef.current.scrollTo(0, termsRef.current.offsetTop)
+    contentRef.current.scrollTo(0, termsRef.current.offsetTop + 350)
   }, [])
 
   return (
-    <div>
-      <ContentContainer ref={contentRef}>
-        <BrandDescription dangerouslySetInnerHTML={{ __html: brand.fullDescription }} />
-        <TermsAndConditions brand={brand} termsRef={termsRef} />
-      </ContentContainer>
+    <MainContainer>
+      <ContentScrollContainer ref={contentRef}>
+        <Header brand={brand} />
+        <ContentContainer>
+          <BrandDescription dangerouslySetInnerHTML={{ __html: brand.fullDescription }} />
+          <TermsAndConditions brand={brand} termsRef={termsRef} />
+        </ContentContainer>
+      </ContentScrollContainer>
       <Footer
         brand={brand}
         createAffiliation={createAffiliation}
         handleClose={handleClose}
         scrollToTermsAndConditions={scrollToTermsAndConditions}
       />
-    </div>
+    </MainContainer>
   )
 }
 
