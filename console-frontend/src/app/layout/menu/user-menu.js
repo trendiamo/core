@@ -9,14 +9,14 @@ import PeopleOutline from '@material-ui/icons/PeopleOutline'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
+import UserAvatar from 'shared/user-avatar'
 import { apiSignOut } from 'utils'
-import { Avatar, Menu, MenuItem, Typography } from '@material-ui/core'
 import { drawerWidth } from 'app/layout/layout-styles'
-import { imgixUrl, stringifyRect } from 'plugin-base'
+import { Menu, MenuItem, Typography } from '@material-ui/core'
 
 const avatarSize = 46
 
-const StyledAvatar = styled(Avatar)`
+const StyledUserAvatar = styled(UserAvatar)`
   margin-right: 10px;
   transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, height 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
     margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
@@ -64,10 +64,6 @@ const UserMenu = ({ sidebarOpen }) => {
   const [user, setUser] = useState(auth.getUser())
   const [isUserSettingsModalOpen, setIsUserSettingsModalOpen] = useState(false)
 
-  const initials = useMemo(
-    () => (!user.firstName || !user.lastName ? null : `${user.firstName[0]}${user.lastName[0]}`),
-    [user.firstName, user.lastName]
-  )
   const isMenuOpen = useMemo(() => Boolean(anchorEl), [anchorEl])
   const userIdentifier = useMemo(
     () => (!user.firstName || !user.lastName ? null : `${user.firstName} ${user.lastName}`) || user.email,
@@ -106,9 +102,7 @@ const UserMenu = ({ sidebarOpen }) => {
         onClick={handleMenu}
         sidebarOpen={sidebarOpen}
       >
-        <StyledAvatar src={user.imgUrl && imgixUrl(user.imgUrl, { rect: stringifyRect(user.imgRect) })}>
-          {user.imgUrl ? null : initials ? initials : ''}
-        </StyledAvatar>
+        <StyledUserAvatar user={user} />
         <StyledTypography sidebarOpen={sidebarOpen} variant="body1">
           {userIdentifier}
         </StyledTypography>

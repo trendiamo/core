@@ -7,6 +7,10 @@ module Api
         render json: current_user
       end
 
+      def referrals
+        render json: User.where(referred_by_code: current_user.referral_code)
+      end
+
       def update
         if current_user.update(user_params)
           render json: current_user

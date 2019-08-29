@@ -34,7 +34,7 @@ const DialogContent = ({ url }) => (
     <StyledTypography fontSize="1.1rem" fontWeight="500">
       {"Your link is done. Let's share it?"}
     </StyledTypography>
-    <StyledClipboardInput url={url} />
+    <StyledClipboardInput text={url} />
     <ContentBody>
       <Typography variant="body2">{'You can now share this url.'}</Typography>
     </ContentBody>

@@ -131,7 +131,7 @@ const BrandCard = ({ animate, brand, createAffiliation }) => {
           </ImageAndDescriptionContainer>
           <Actions>
             <WebsiteButton websiteHostname={brand.websiteHostname} />
-            {affiliation && <StyledClipboardInput url={affiliationUrl} />}
+            {affiliation && <StyledClipboardInput text={affiliationUrl} />}
             <MainButton
               onClick={affiliation ? onCustomLinkClick : onPromoteNowClick}
               style={affiliation ? uptousButtons.secondaryBg : uptousButtons.primaryGradient}
