@@ -65,7 +65,7 @@ chown -R dokku:dokku /opt/dokku
 dokku docker-options:add slack-bot deploy,run "-v /opt/dokku/slack-bot:/app/files"
 # then add the required files to /opt/dokku/slack-bot (git keys and such)
 dokku apps:create slack-bot
-dokku config:set slack-bot SLACK_API_TOKEN=... BUILD_FOLDER=/tmp GITHUB_KEY_FILE=/app/files/deploy_id_rsa DOKKU_KEY_FILE=/app/files/dokku_id_rsa STATIC_KEY_FILE=/app/files/static_id_rsa LANDING_PAGE_ENV_FILE=/app/files/landing-page/.env AWS_CREDENTIALS_FILE=/app/files/credentials RUBYOPT="-E utf-8:utf-8"
+dokku config:set slack-bot SLACK_API_TOKEN=... BUILD_FOLDER=/tmp GITHUB_KEY_FILE=/app/files/deploy_id_rsa DOKKU_KEY_FILE=/app/files/dokku_id_rsa STATIC_KEY_FILE=/app/files/static_id_rsa FREKKLS_ENV_FILE=/app/files/frekkls/.env UPTOUS_ENV_FILE=/app/files/uptous/.env AWS_CREDENTIALS_FILE=/app/files/credentials RUBYOPT="-E utf-8:utf-8"
 dokku ps:scale slack-bot bot=1
 # from your local machine:
 bin/deploy
