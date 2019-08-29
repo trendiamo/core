@@ -125,7 +125,7 @@ const Item = withRouter(({ location, resource, sidebarOpen }) => {
   )
 })
 
-const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
+const MenuLogo = ({ sidebarOpen, toggleOpen, isFoldable }) => (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '85px' }}>
     <div
       style={{
@@ -140,9 +140,11 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
       {sidebarOpen ? (
         <>
           <LogoFull alt="" src={showUpToUsBranding() ? '/img/uptous-logo.svg' : '/img/frekkls-logo.svg'} />
-          <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
-            <MenuIcon />
-          </IconButton>
+          {isFoldable && (
+            <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
+              <MenuIcon />
+            </IconButton>
+          )}
         </>
       ) : (
         <IconButton onClick={toggleOpen}>
@@ -155,7 +157,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen }) => (
 )
 
 const BaseMenu = withRouter(
-  memo(({ location, menuLoaded, sidebarOpen, stageIndex, toggleOpen }) => {
+  memo(({ location, menuLoaded, sidebarOpen, stageIndex, toggleOpen, isFoldable }) => {
     if (!menuLoaded && stageIndex === 0 && location.pathname === routes.welcome()) {
       return <DummyMenu />
     }
@@ -168,7 +170,7 @@ const BaseMenu = withRouter(
     return (
       <Container>
         <div style={{ flex: 1 }}>
-          <MenuLogo sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
+          <MenuLogo isFoldable={isFoldable} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
           {Object.keys(userRoleResourceGroups).map(groupName => (
             <div key={groupName}>
               <MenuItemGroup showTitle={userRoleResourceGroups[groupName].showTitle} sidebarOpen={sidebarOpen}>
@@ -189,11 +191,12 @@ const BaseMenu = withRouter(
   })
 )
 
-const Menu = ({ menuLoaded, sidebarOpen, toggleOpen }) => {
+const Menu = ({ menuLoaded, sidebarOpen, toggleOpen, isFoldable }) => {
   const { onboarding } = useOnboardingConsumer()
 
   return (
     <BaseMenu
+      isFoldable={isFoldable}
       menuLoaded={menuLoaded}
       sidebarOpen={sidebarOpen}
       stageIndex={onboarding.stageIndex}
