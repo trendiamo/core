@@ -14,7 +14,6 @@ class Account < ApplicationRecord
 
   has_many :invites, dependent: :destroy
 
-  accepts_nested_attributes_for :brand, allow_destroy: true
   accepts_nested_attributes_for :websites, allow_destroy: true
 
   before_validation :set_slug, on: :create
