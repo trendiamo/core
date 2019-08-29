@@ -106,6 +106,9 @@ const routes = {
   yourReferrals() {
     return '/your-referrals'
   },
+  contentCreation() {
+    return '/content-creation'
+  },
   nullRoute() {
     return '/empty'
   },

@@ -85,6 +85,12 @@ const resources = {
     class: 'yourReferrals',
     route: () => routes.yourReferrals(),
   },
+  contentCreation: {
+    icon: '/img/icons/play_button.svg',
+    label: 'Content Creation',
+    class: 'contentCreation',
+    route: () => routes.contentCreation(),
+  },
 }
 
 export default resources

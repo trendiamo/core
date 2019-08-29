@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         get "/csrf_token", to: "csrf#csrf_token"
         resource :me, only: %i[show update]
         get "/me/referrals", to: "mes#referrals"
+        post "/me/request_upgrade", to: "mes#request_upgrade"
         resources :generated_urls, only: %i[index create]
         get "s3/sign", to: "s3#sign"
         get "/cors_proxy(/*url)", to: "cors_proxy#download", format: false

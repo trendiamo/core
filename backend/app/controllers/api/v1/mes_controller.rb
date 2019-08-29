@@ -30,6 +30,14 @@ module Api
         end
       end
 
+      def request_upgrade
+        unless current_user.requested_upgrade_to_seller_at
+          SparkpostMailer.request_promoter_upgrade(current_user).deliver_now
+          current_user.update(requested_upgrade_to_seller_at: Time.now.utc)
+        end
+        render json: current_user
+      end
+
       private
 
       def user_params

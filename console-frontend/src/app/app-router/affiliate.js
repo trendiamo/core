@@ -1,4 +1,5 @@
 import AffiliatePartners from 'app/screens/affiliate-partners'
+import ContentCreation from 'app/screens/content-creation'
 import ForgotPassword from 'auth/forgot-password'
 import LoginPage from 'auth/login'
 import NotFound from 'app/screens/not-found'
@@ -26,6 +27,13 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         exact
         fetchedAccount={fetchedAccount}
         path={routes.yourReferrals()}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={ContentCreation}
+        exact
+        fetchedAccount={fetchedAccount}
+        path={routes.contentCreation()}
         setFetchedAccount={setFetchedAccount}
       />
 
