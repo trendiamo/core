@@ -1,8 +1,9 @@
 import Menu from './menu'
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Drawer, Hidden, withWidth } from '@material-ui/core'
 import { drawerWidth, drawerWidthClosed } from './layout-styles'
+import { isWidthUp } from '@material-ui/core/withWidth'
 import { showUpToUsBranding } from 'utils'
 
 const ModalProps = {
@@ -61,7 +62,7 @@ const DrawerGhost = styled.div`
   }
 `
 
-const Sidebar = ({ sidebarOpen, toggleOpen }) => {
+const Sidebar = ({ sidebarOpen, toggleOpen, width }) => {
   const [menuLoaded, setMenuLoaded] = useState(false)
 
   useEffect(() => {
@@ -72,18 +73,20 @@ const Sidebar = ({ sidebarOpen, toggleOpen }) => {
     return () => (didCancel = true)
   }, [])
 
+  const isFoldable = useMemo(() => !(showUpToUsBranding() && isWidthUp('md', width)), [width])
+
   return (
     <>
       <Hidden implementation="js" mdUp>
         <DrawerGhost />
         <StyledDrawer ModalProps={ModalProps} onClose={toggleOpen} open={sidebarOpen} variant="temporary">
-          <Menu menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
+          <Menu isFoldable={isFoldable} menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
         </StyledDrawer>
       </Hidden>
       <Hidden implementation="js" smDown>
         <DrawerGhost isClosed={!sidebarOpen} />
         <StyledDrawer open={sidebarOpen} variant="permanent">
-          <Menu menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
+          <Menu isFoldable={isFoldable} menuLoaded={menuLoaded} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
         </StyledDrawer>
       </Hidden>
     </>
