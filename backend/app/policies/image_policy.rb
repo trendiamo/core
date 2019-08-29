@@ -4,7 +4,7 @@ class ImagePolicy < ApplicationPolicy
   end
 
   def create?
-    admin_or_account_member?
+    record.account ? admin_or_account_member? : user
   end
 
   def destroy?

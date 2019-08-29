@@ -1,9 +1,11 @@
 class Image < ApplicationRecord
   include CleanupAssets
 
-  acts_as_tenant
+  acts_as_tenant :account, optional: true
 
   paginates_per 10
+
+  belongs_to :user, optional: true
 
   has_many :sellers_with_img, class_name: "Seller", foreign_key: :img_id, dependent: :restrict_with_exception,
                               inverse_of: :img

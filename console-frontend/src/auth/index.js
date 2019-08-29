@@ -28,12 +28,12 @@ const auth = {
     const roles = this.getUser().roles
     return roles && roles[this.getSlug()]
   },
-  getHeaders() {
+  getHeaders(isUntenanted = false) {
     const headers = {
       'X-CSRF-TOKEN': localStorage.getItem('CSRF-TOKEN'),
     }
     const accountSlug = this.getSlug()
-    return accountSlug ? { ...headers, 'X-SESSION-ACCOUNT': accountSlug } : headers
+    return accountSlug && !isUntenanted ? { ...headers, 'X-SESSION-ACCOUNT': accountSlug } : headers
   },
   setCsrfToken(json) {
     localStorage.setItem('CSRF-TOKEN', json.token)

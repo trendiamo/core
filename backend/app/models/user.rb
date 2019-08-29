@@ -17,6 +17,8 @@ class User < ApplicationRecord
   has_many :invites, dependent: :destroy, class_name: "Invite", foreign_key: "recipient_id", inverse_of: "recipient"
   has_many :sent_invites, dependent: :destroy, class_name: "Invite", foreign_key: "sender_id", inverse_of: "sender"
 
+  has_one :image, dependent: :destroy
+
   accepts_nested_attributes_for :memberships
 
   before_validation :set_referral_code, on: :create

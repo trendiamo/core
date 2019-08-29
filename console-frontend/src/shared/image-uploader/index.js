@@ -2,8 +2,7 @@ import BaseImageUploader from './base'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import S3Upload from 'ext/react-s3-uploader'
 import styled from 'styled-components'
-import { apiGetSignedUrlFactory } from 'utils'
-import { apiImageCreate, apiRequest } from 'utils'
+import { apiGetSignedUrlFactory, apiImageCreate, apiRequest } from 'utils'
 import { getPixelCrop } from 'react-image-crop'
 import { LinearProgress } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
@@ -52,12 +51,12 @@ const processFilename = (blob, filename) => {
   return `image.${extension}`
 }
 
-const uploadImage = async ({ blob, setHasNewUpload, setProgress }) => {
+const uploadImage = async ({ isUserProfileImage, blob, setHasNewUpload, setProgress }) => {
   try {
     const { fileUrl } = await S3Upload({
       contentDisposition: 'auto',
       files: [blob],
-      getSignedUrl: apiGetSignedUrlFactory(),
+      getSignedUrl: apiGetSignedUrlFactory(isUserProfileImage),
       onProgress: (progress, message) => setProgress({ message, progress }),
       preprocess: (file, next) => next(file),
       uploadRequestHeaders: { 'x-amz-acl': 'public-read' },
@@ -83,6 +82,7 @@ const ImageUploader = ({
   setIsUploaderLoading,
   type,
   value,
+  isUserProfileImage,
 }) => {
   const imagePreviewRef = useRef()
   const [crop, setCrop] = useState({})
@@ -191,8 +191,13 @@ const ImageUploader = ({
         blob: file,
         setHasNewUpload,
         setProgress,
+        isUserProfileImage,
       })
-      const { errors, requestError } = await apiRequest(apiImageCreate, [{ url: imageUrl, file_type: file.type }])
+      const { errors, requestError } = await apiRequest(apiImageCreate, [
+        { url: imageUrl, file_type: file.type },
+        isUserProfileImage,
+      ])
+
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) {
@@ -204,7 +209,7 @@ const ImageUploader = ({
         setIsImageLoading(false)
       }
     },
-    [enqueueSnackbar, onChange, type, value]
+    [enqueueSnackbar, isUserProfileImage, onChange, type, value]
   )
 
   const onModalClose = useCallback(() => {
@@ -248,6 +253,7 @@ const ImageUploader = ({
       imagePreviewRef={imagePreviewRef}
       isImageLoading={isImageLoading}
       isLoading={isLoading}
+      isUserProfileImage={isUserProfileImage}
       label={label}
       modalOpen={modalOpen}
       onCancelClick={onCancelClick}
