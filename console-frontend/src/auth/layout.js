@@ -45,7 +45,7 @@ const AuthStyledDiv = styled.div`
   }
 `
 
-const BackgroundImage = styled.div`
+const Background = styled.div`
   background-image: none;
   position: fixed;
   width: 100%;
@@ -56,7 +56,7 @@ const BackgroundImage = styled.div`
     height: 130vh;
     bottom: 0;
     top: auto;
-    background-image: url('${props => props.url}');
+    background-image: url('/img/background/frekkls-login.png');
     background-color: #fff;
     background-repeat: no-repeat;
     background-position-y: 80px;
@@ -65,6 +65,44 @@ const BackgroundImage = styled.div`
     min-height: 65vw;
   }
 `
+
+const UpToUsBackgroundContainer = styled(Background)`
+  display: flex;
+  user-select: none;
+
+  @media (min-width: 900px) {
+    background-image: url('/img/background/uptous-login.png');
+    background-position-x: 66%;
+    background-size: cover;
+  }
+`
+
+const WaveContainer = styled.div`
+  background: white;
+  border-right: 1px solid white;
+  position: relative;
+  visibility: hidden;
+  width: 40%;
+
+  @media (min-width: 900px) {
+    visibility: visible;
+  }
+`
+
+const WaveImage = styled.img`
+  height: 101%;
+  left: 100%;
+  position: absolute;
+  -webkit-user-drag: none;
+`
+
+const UpToUsBackground = () => (
+  <UpToUsBackgroundContainer>
+    <WaveContainer>
+      <WaveImage alt="" src="/img/background/wave-login.svg" />
+    </WaveContainer>
+  </UpToUsBackgroundContainer>
+)
 
 const LogotypeContainer = styled.div`
   position: relative;
@@ -104,7 +142,7 @@ const Layout = ({ children, title }) => (
   <>
     <CssBaseline />
     <MuiThemeProvider theme={theme}>
-      <BackgroundImage url="/img/background/login.png" />
+      {showUpToUsBranding() ? <UpToUsBackground /> : <Background />}
       <Logotype />
       <AuthMain>
         <AuthStyledDiv elevation={3}>
