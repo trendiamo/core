@@ -73,7 +73,6 @@ const WebsiteButton = ({ websiteHostname }) => (
 )
 
 const StyledClipboardInput = styled(ClipboardInput)`
-  height: 44px;
   margin: 0 10px;
   min-width: 320px;
 `
