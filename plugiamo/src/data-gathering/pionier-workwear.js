@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
@@ -99,15 +100,19 @@ export default {
     if (location.pathname.match(/formonline\.shop\.shoppingcart\.checkout\.overview/i)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     } else if ($('.product-form')[0]) {
-      $('.alvineJSPluginOrderformSubmit').on('click', () => {
-        const json = _this.addToCartObject()
-        mixpanel.track(json.name, json.data)
-      })
+      $('.alvineJSPluginOrderformSubmit').on('click', () =>
+        RollbarWrapper(() => {
+          const json = _this.addToCartObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
     } else if ($('#shCartForm')[0]) {
-      $('.paypalexpress_checkoutbutton > a, .checkoutbutton > a').on('click', () => {
-        const json = _this.checkoutObject()
-        mixpanel.track(json.name, json.data)
-      })
+      $('.paypalexpress_checkoutbutton > a, .checkoutbutton > a').on('click', () =>
+        RollbarWrapper(() => {
+          const json = _this.checkoutObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
     }
   },
 }

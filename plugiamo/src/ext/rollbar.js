@@ -13,6 +13,14 @@ export const Rollbar = {
   },
 }
 
+export const RollbarWrapper = cb => {
+  try {
+    cb()
+  } catch (error) {
+    Rollbar.error(error)
+  }
+}
+
 export const loadRollbar = iframe => {
   /* eslint-disable sort-vars,no-empty,no-unused-vars */
   var _rollbarConfig = {

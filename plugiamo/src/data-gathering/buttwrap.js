@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 
 const convertToCents = selector => {
   return Number(selector.replace(/\D/g, ''))
@@ -56,20 +57,24 @@ export default {
     if (location.pathname.match(/\/thank_you$/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     } else if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
-      window.$(document).on('click', '.cart__checkout--page', () => {
-        if (window.$('#CartPageAgree').is(':checked')) {
-          const json = this.checkoutObject()
-          mixpanel.track(json.name, json.data)
-        }
-      })
+      window.$(document).on('click', '.cart__checkout--page', () =>
+        RollbarWrapper(() => {
+          if (window.$('#CartPageAgree').is(':checked')) {
+            const json = this.checkoutObject()
+            mixpanel.track(json.name, json.data)
+          }
+        })
+      )
     } else if (
       location.pathname.match(/\/products?.*/) ||
       location.pathname.match(/\/collections\/:collectionName\/products\/?.*/)
     ) {
-      window.$(document).on('submit', '.product-single__form', () => {
-        const json = this.addToCartObject()
-        mixpanel.track(json.name, json.data)
-      })
+      window.$(document).on('submit', '.product-single__form', () =>
+        RollbarWrapper(() => {
+          const json = this.addToCartObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
     }
   },
 }

@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
@@ -133,22 +134,28 @@ export default {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     } else if (location.pathname.match(/tienda\/cesta/)) {
       if (!$('.pedido')[0]) return
-      $('#btn_comprar').on('click', () => {
-        const json = _this.checkoutObject()
-        mixpanel.track(json.name, json.data)
-      })
+      $('#btn_comprar').on('click', () =>
+        RollbarWrapper(() => {
+          const json = _this.checkoutObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
     } else if (location.pathname.match(/productos\//)) {
-      $('input#btn_anadir_articulo').on('click', () => {
-        if ($('form#form_anadir_cesta').serializeArray().length === 0) return
-        const json = _this.addToCartObject()
-        mixpanel.track(json.name, json.data)
-      })
+      $('input#btn_anadir_articulo').on('click', () =>
+        RollbarWrapper(() => {
+          if ($('form#form_anadir_cesta').serializeArray().length === 0) return
+          const json = _this.addToCartObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
     } else if (location.pathname.match(/^\/|\/index$/)) {
-      $('.modal .capa-tallas').on('click', '.talla', event => {
-        const isProductFromModal = true
-        const json = _this.addToCartObject(isProductFromModal, event.target)
-        mixpanel.track(json.name, json.data)
-      })
+      $('.modal .capa-tallas').on('click', '.talla', event =>
+        RollbarWrapper(() => {
+          const isProductFromModal = true
+          const json = _this.addToCartObject(isProductFromModal, event.target)
+          mixpanel.track(json.name, json.data)
+        })
+      )
     }
   },
 }

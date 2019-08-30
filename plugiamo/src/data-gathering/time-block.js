@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
@@ -163,34 +164,42 @@ export default {
   },
   setupDataGathering() {
     const _this = this
-    $('.checkout.wc-forward.btn.btn-link').on('click', () => {
-      // ajax cart
-      const isfromAjaxCart = true
-      const json = _this.checkoutObject(isfromAjaxCart)
-      mixpanel.track(json.name, json.data)
-    })
+    $('.checkout.wc-forward.btn.btn-link').on('click', () => () =>
+      RollbarWrapper(() => {
+        // ajax cart
+        const isfromAjaxCart = true
+        const json = _this.checkoutObject(isfromAjaxCart)
+        mixpanel.track(json.name, json.data)
+      })
+    )
     if (location.pathname.match(/order-received/)) {
       // after purchase page
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     } else if (location.pathname.match(/^\/de\/produkt\//)) {
       // pdp
-      $('.add_to_cart_button.ajax_add_to_cart').on('click', () => {
-        const json = _this.addToCartObject()
-        mixpanel.track(json.name, json.data)
-      })
+      $('.add_to_cart_button.ajax_add_to_cart').on('click', () =>
+        RollbarWrapper(() => {
+          const json = _this.addToCartObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
     } else if (location.pathname.match(/^\/de\/produkte\/$/)) {
       // plp
-      $('.add_to_cart_button.ajax_add_to_cart').click(event => {
-        const isfromPLP = true
-        const json = _this.addToCartObject(isfromPLP, event.target)
-        mixpanel.track(json.name, json.data)
-      })
+      $('.add_to_cart_button.ajax_add_to_cart').click(event =>
+        RollbarWrapper(() => {
+          const isfromPLP = true
+          const json = _this.addToCartObject(isfromPLP, event.target)
+          mixpanel.track(json.name, json.data)
+        })
+      )
     } else if (location.pathname.match(/^\/de\/warenkorb/)) {
       // regular cart
-      $('.checkout-button.btn.btn-default.alt.wc-forward ').on('click', () => {
-        const json = _this.checkoutObject()
-        mixpanel.track(json.name, json.data)
-      })
+      $('.checkout-button.btn.btn-default.alt.wc-forward ').on('click', () =>
+        RollbarWrapper(() => {
+          const json = _this.checkoutObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
     }
   },
 }

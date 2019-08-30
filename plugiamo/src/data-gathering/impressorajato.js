@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 const convertToCents = selector => {
@@ -89,18 +90,22 @@ export default {
       jQuery
         .noConflict()('.product-shop')
         .find('.button')
-        .on('click', () => {
-          const json = _this.addToCartObject()
-          mixpanel.track(json.name, json.data)
-        })
+        .on('click', () =>
+          RollbarWrapper(() => {
+            const json = _this.addToCartObject()
+            mixpanel.track(json.name, json.data)
+          })
+        )
     } else if (location.pathname.match(/^\/checkout\/cart\/?$/)) {
       // cart
       jQuery
         .noConflict()('.btn-concluir-compra')
-        .on('click', () => {
-          const json = _this.checkoutObject()
-          mixpanel.track(json.name, json.data)
-        })
+        .on('click', () =>
+          RollbarWrapper(() => {
+            const json = _this.checkoutObject()
+            mixpanel.track(json.name, json.data)
+          })
+        )
     }
   },
 }
