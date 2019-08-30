@@ -70,7 +70,7 @@ const YourReferrals = () => {
         </CardContent>
         <Callout>
           <b>{'Your referral code'}</b>
-          <ClipboardInput text={referralCode} />
+          <ClipboardInput backgroundColor="#f4f8f8" text={referralCode} />
         </Callout>
       </MainCard>
       {referrals.length > 0 && (
