@@ -109,7 +109,7 @@ const LogotypeContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin: 30px 0;
 
   @media (min-width: 900px) {
     display: block;
