@@ -133,7 +133,7 @@ export const apiSellerDestroy = body => apiDestroyMultipleRequest(SELLERS_URL, b
 export const apiSellersAutocomplete = query => apiGetRequest(`${SELLERS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiImageList = query => apiListRequest(`${IMAGES_URL}/?${stringify(query)}`)
-export const apiImageCreate = (body, isUntenanted = true) => apiCreateRequest(IMAGES_URL, body, isUntenanted)
+export const apiImageCreate = (body, isUntenanted = false) => apiCreateRequest(IMAGES_URL, body, isUntenanted)
 export const apiImageDestroy = body => apiDestroyMultipleRequest(IMAGES_URL, body)
 
 export const apiGetRemoteImage = url => apiGetRequest(`${CORS_PROXY_URL}/${encodeURIComponent(url)}`)
