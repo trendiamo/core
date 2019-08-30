@@ -7,15 +7,17 @@ import { Button, Input, Tooltip } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 
 const Container = styled.div`
+  ${({ isCopied }) => !isCopied && 'background-clip: padding-box;'}
   background-color: ${showUpToUsBranding() ? '#f4f8f8' : 'white'};
   border-color: ${({ isCopied }) =>
-    isCopied ? theme.customPalette.success.main : showUpToUsBranding() ? 'white' : 'rgba(239, 239, 242)'};
+    isCopied ? theme.customPalette.success.main : showUpToUsBranding() ? 'transparent' : 'rgba(239, 239, 242)'};
   border-radius: ${showUpToUsBranding() ? '30px' : '3px'};
   border-style: solid;
   border-width: 1px;
   display: flex;
   height: 100%;
-  overflow: hidden;
+  min-height: ${showUpToUsBranding() ? '44px' : '40px'};
+  overflow: hidden; 
 `
 
 const UrlInput = styled(props => <Input {...omit(props, ['isCopied'])} />)`

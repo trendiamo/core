@@ -22,7 +22,6 @@ const StyledTypography = styled(FilteredTypography)`
 `
 
 const StyledClipboardInput = styled(ClipboardInput)`
-  height: 40px;
   margin: 1.5rem;
 `
 
