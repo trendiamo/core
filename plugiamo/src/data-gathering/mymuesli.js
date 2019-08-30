@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 const convertToCents = selector => {
@@ -161,29 +162,23 @@ export default {
     if (location.pathname.match(/^\/shop\/complete/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     } else if (location.pathname.match(/^\/shop\/cart/)) {
-      $(document).on('click', 'a[href="https://www.mymuesli.com/shop/kasse"]', () => {
-        try {
+      $(document).on('click', 'a[href="https://www.mymuesli.com/shop/kasse"]', () =>
+        RollbarWrapper(() => {
           const json = this.checkoutObject()
           mixpanel.track(json.name, json.data)
-        } catch (error) {
-          // No action
-        }
-      })
+        })
+      )
     }
-    $(document).on('click', '.offer-popup-container', event => {
-      try {
+    $(document).on('click', '.offer-popup-container', event =>
+      RollbarWrapper(() => {
         const dataElement = $(event.target).closest('.offer-item.offerbutton-new-container')
         this.trackAddToCart({ dataElement, isForm: false })
-      } catch (error) {
-        // No action
-      }
-    })
-    $(document).on('submit', 'form[action="https://www.mymuesli.com/shop/cart/put"]', event => {
-      try {
+      })
+    )
+    $(document).on('submit', 'form[action="https://www.mymuesli.com/shop/cart/put"]', event =>
+      RollbarWrapper(() => {
         this.trackAddToCart({ dataElement: event.target, isForm: true })
-      } catch (error) {
-        // No action
-      }
-    })
+      })
+    )
   },
 }

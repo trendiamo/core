@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 
 const convertToCents = selector => {
   return Number(selector.replace(/\D/g, ''))
@@ -102,19 +103,27 @@ export default {
     window.$(document).ajaxComplete((event, xhr, settings) => {
       if (xhr.status !== 200) return
       if (settings.url.includes('/api/checkout/pub/orderForm/')) {
-        setTimeout(() => {
-          this.getProductsFromCart({ isCheckoutForm })
-        }, 100)
+        setTimeout(
+          () =>
+            RollbarWrapper(() => {
+              this.getProductsFromCart({ isCheckoutForm })
+            }),
+          100
+        )
       }
     })
 
-    window.$(document).on('click', '.vtexsc-cart .cartCheckout', () => {
-      this.proceedToCheckout({ googleAnalytics, isCheckoutForm })
-    })
-    if (isCheckoutForm) {
-      window.$(document).on('click', '.btn-place-order, .cartCheckout', () => {
+    window.$(document).on('click', '.vtexsc-cart .cartCheckout', () =>
+      RollbarWrapper(() => {
         this.proceedToCheckout({ googleAnalytics, isCheckoutForm })
       })
+    )
+    if (isCheckoutForm) {
+      window.$(document).on('click', '.btn-place-order, .cartCheckout', () =>
+        RollbarWrapper(() => {
+          this.proceedToCheckout({ googleAnalytics, isCheckoutForm })
+        })
+      )
       return
     }
     if (location.pathname.match(/orderPlaced/)) {
@@ -122,12 +131,16 @@ export default {
       return
     }
     if (location.pathname.match(/.*\/p$/)) {
-      window.$(document).on('click', '.buy-together--add', () => {
-        this.addToCartObject(saveData, location.pathname)
-      })
-      window.$(document).on('click', '.buy-button', () => {
-        this.addToCartObject(saveData, location.pathname)
-      })
+      window.$(document).on('click', '.buy-together--add', () =>
+        RollbarWrapper(() => {
+          this.addToCartObject(saveData, location.pathname)
+        })
+      )
+      window.$(document).on('click', '.buy-button', () =>
+        RollbarWrapper(() => {
+          this.addToCartObject(saveData, location.pathname)
+        })
+      )
     }
   },
 }

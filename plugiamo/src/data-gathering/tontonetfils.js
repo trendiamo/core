@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
@@ -137,24 +138,30 @@ export default {
   },
   setupDataGathering() {
     const _this = this
-    $(document).on('submit', 'form.cart.ajaxcart', () => {
-      const json = _this.checkoutObject()
-      mixpanel.track(json.name, json.data)
-    })
-    if (location.pathname.match(/9662595172/)) {
-      mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if ($('#AddToCart--product-template')[0]) {
-      $(document).ajaxComplete((event, xhr, settings) => {
-        if (settings.url === '/cart/add.js' && xhr.status === 200) {
-          const json = _this.addToCartObject()
-          mixpanel.track(json.name, json.data)
-        }
-      })
-    } else if (location.pathname.match(/^\/cart/)) {
-      $('form.cart').on('click', 'button.cart__checkout', () => {
+    $(document).on('submit', 'form.cart.ajaxcart', () =>
+      RollbarWrapper(() => {
         const json = _this.checkoutObject()
         mixpanel.track(json.name, json.data)
       })
+    )
+    if (location.pathname.match(/9662595172/)) {
+      mixpanel.track('Purchase Success', { hostname: location.hostname })
+    } else if ($('#AddToCart--product-template')[0]) {
+      $(document).ajaxComplete((event, xhr, settings) =>
+        RollbarWrapper(() => {
+          if (settings.url === '/cart/add.js' && xhr.status === 200) {
+            const json = _this.addToCartObject()
+            mixpanel.track(json.name, json.data)
+          }
+        })
+      )
+    } else if (location.pathname.match(/^\/cart/)) {
+      $('form.cart').on('click', 'button.cart__checkout', () =>
+        RollbarWrapper(() => {
+          const json = _this.checkoutObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
     }
   },
 }

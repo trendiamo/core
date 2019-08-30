@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
@@ -114,17 +115,21 @@ export default {
     } else if (location.pathname.match(/^\/de\/checkout\/cart/)) {
       jQuery
         .noConflict()(document)
-        .on('click', 'button.action.primary.checkout', () => {
-          const json = _this.checkoutObject()
-          mixpanel.track(json.name, json.data)
-        })
+        .on('click', 'button.action.primary.checkout', () =>
+          RollbarWrapper(() => {
+            const json = _this.checkoutObject()
+            mixpanel.track(json.name, json.data)
+          })
+        )
     } else if (jQuery.noConflict()('#product-addtocart-button')[0]) {
       jQuery
         .noConflict()('form#product_addtocart_form')
-        .on('submit', () => {
-          const json = _this.addToCartObject()
-          mixpanel.track(json.name, json.data)
-        })
+        .on('submit', () =>
+          RollbarWrapper(() => {
+            const json = _this.addToCartObject()
+            mixpanel.track(json.name, json.data)
+          })
+        )
     }
   },
 }

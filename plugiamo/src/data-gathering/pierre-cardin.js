@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
@@ -112,25 +113,29 @@ export default {
     } else if (location.pathname.match(/^\/checkout\/cart/)) {
       jQuery
         .noConflict()(document)
-        .on('click', 'button.action.primary.checkout', () => {
-          const json = _this.checkoutObject()
-          mixpanel.track(json.name, json.data)
-          googleAnalytics.active &&
-            googleAnalytics.event({
-              hitType: 'event',
-              eventCategory: 'Page Event',
-              eventAction: 'Click',
-              eventLabel: 'proceedToCheckout',
-              page: location.hostname,
-            })
-        })
+        .on('click', 'button.action.primary.checkout', () =>
+          RollbarWrapper(() => {
+            const json = _this.checkoutObject()
+            mixpanel.track(json.name, json.data)
+            googleAnalytics.active &&
+              googleAnalytics.event({
+                hitType: 'event',
+                eventCategory: 'Page Event',
+                eventAction: 'Click',
+                eventLabel: 'proceedToCheckout',
+                page: location.hostname,
+              })
+          })
+        )
     } else if (jQuery.noConflict()('#product-addtocart-button')[0]) {
       jQuery
         .noConflict()('form#product_addtocart_form')
-        .on('submit', () => {
-          const json = _this.addToCartObject()
-          mixpanel.track(json.name, json.data)
-        })
+        .on('submit', () =>
+          RollbarWrapper(() => {
+            const json = _this.addToCartObject()
+            mixpanel.track(json.name, json.data)
+          })
+        )
     }
   },
 }
