@@ -1,10 +1,10 @@
 import BrandsModal from './brands-modal'
+import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
 import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import { Button, IconButton } from '@material-ui/core'
-import { uptousButtons } from 'app/theme'
+import { IconButton } from '@material-ui/core'
 
 const StyledSection = styled(Section)`
   margin-top: 10px;
@@ -78,34 +78,6 @@ const StyledClipboardInput = styled(ClipboardInput)`
   min-width: 320px;
 `
 
-const MainButton = styled(Button)`
-  border-radius: 30px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 18px;
-  margin-left: 10px;
-  opacity: 1;
-  overflow: hidden;
-  padding: 6px 18px;
-  &:after {
-    background: #000;
-    bottom: 0;
-    content: '';
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: opacity 0.3s;
-  }
-  &:hover:after {
-    opacity: 0.2;
-  }
-  span {
-    z-index: 1;
-  }
-`
-
 const BrandCard = ({ animate, brand, createAffiliation }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -132,12 +104,9 @@ const BrandCard = ({ animate, brand, createAffiliation }) => {
           <Actions>
             <WebsiteButton websiteHostname={brand.websiteHostname} />
             {affiliation && <StyledClipboardInput text={affiliationUrl} />}
-            <MainButton
-              onClick={affiliation ? onCustomLinkClick : onPromoteNowClick}
-              style={affiliation ? uptousButtons.secondaryBg : uptousButtons.primaryGradient}
-            >
+            <Button color="primaryGradient" onClick={affiliation ? onCustomLinkClick : onPromoteNowClick}>
               {affiliation ? 'Custom link' : 'Promote now'}
-            </MainButton>
+            </Button>
           </Actions>
         </MainContainer>
       </StyledSection>
