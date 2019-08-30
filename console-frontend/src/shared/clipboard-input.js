@@ -6,9 +6,9 @@ import theme, { frekklsButtons, uptousButtons } from 'app/theme'
 import { Button, Input, Tooltip } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 
-const Container = styled.div`
+const Container = styled(props => <div {...omit(props, ['isCopied', 'backgroundColor'])} />)`
   ${({ isCopied }) => !isCopied && 'background-clip: padding-box;'}
-  background-color: ${showUpToUsBranding() ? '#f4f8f8' : 'white'};
+  background-color: ${({ backgroundColor }) => backgroundColor || '#fff'};
   border-color: ${({ isCopied }) =>
     isCopied ? theme.customPalette.success.main : showUpToUsBranding() ? 'transparent' : 'rgba(239, 239, 242)'};
   border-radius: ${showUpToUsBranding() ? '30px' : '3px'};
@@ -17,7 +17,7 @@ const Container = styled.div`
   display: flex;
   height: 100%;
   min-height: ${showUpToUsBranding() ? '44px' : '40px'};
-  overflow: hidden; 
+  overflow: hidden;
 `
 
 const UrlInput = styled(props => <Input {...omit(props, ['isCopied'])} />)`

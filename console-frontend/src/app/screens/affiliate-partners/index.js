@@ -1,6 +1,7 @@
 import ActiveBrands from './active-brands'
 import auth from 'auth'
 import AvailableBrands from './available-brands'
+import CustomLinkModal from './custom-link-modal'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiAffiliationCreate, apiBrandsList, apiRequest } from 'utils'
@@ -20,6 +21,8 @@ const AffiliatePartners = () => {
   const [isAvailableBrandsSection, setIsAvailableBrandsSection] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [sectionAppBarContent, setSectionAppBarContent] = useState(appBarContent({ section: 'activeBrands' }))
+  const [isCustomLinkModalOpen, setIsCustomLinkModalOpen] = useState(false)
+  const [selectedBrand, setSelectedBrand] = useState(null)
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -97,7 +100,13 @@ const AffiliatePartners = () => {
 
   return (
     <>
-      <ActiveBrands animate={animate} brands={activeBrands} isLoading={isLoading} />
+      <ActiveBrands
+        animate={animate}
+        brands={activeBrands}
+        isLoading={isLoading}
+        setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
+        setSelectedBrand={setSelectedBrand}
+      />
       <AvailableBrands
         animate={animate}
         brands={availableBrands}
@@ -106,6 +115,7 @@ const AffiliatePartners = () => {
         title={sectionTitles.availableBrands}
         titleRef={secondTitleRef}
       />
+      <CustomLinkModal brand={selectedBrand} open={isCustomLinkModalOpen} setOpen={setIsCustomLinkModalOpen} />
     </>
   )
 }

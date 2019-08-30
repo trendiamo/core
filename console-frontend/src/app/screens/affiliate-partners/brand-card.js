@@ -77,7 +77,7 @@ const StyledClipboardInput = styled(ClipboardInput)`
   min-width: 320px;
 `
 
-const BrandCard = ({ animate, brand, createAffiliation }) => {
+const BrandCard = ({ animate, brand, createAffiliation, setIsCustomLinkModalOpen, setSelectedBrand }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const affiliation = useMemo(() => brand.affiliations[0], [brand.affiliations])
@@ -86,7 +86,13 @@ const BrandCard = ({ animate, brand, createAffiliation }) => {
     brand.websiteHostname,
   ])
 
-  const onCustomLinkClick = useCallback(() => {}, [])
+  const onCustomLinkClick = useCallback(
+    () => {
+      setIsCustomLinkModalOpen(true)
+      setSelectedBrand(brand)
+    },
+    [brand, setIsCustomLinkModalOpen, setSelectedBrand]
+  )
 
   const onPromoteNowClick = useCallback(() => setIsModalOpen(true), [])
 
@@ -102,7 +108,7 @@ const BrandCard = ({ animate, brand, createAffiliation }) => {
           </ImageAndDescriptionContainer>
           <Actions>
             <WebsiteButton websiteHostname={brand.websiteHostname} />
-            {affiliation && <StyledClipboardInput text={affiliationUrl} />}
+            {affiliation && <StyledClipboardInput backgroundColor="#f4f8f8" text={affiliationUrl} />}
             <Button color="primaryGradient" onClick={affiliation ? onCustomLinkClick : onPromoteNowClick}>
               {affiliation ? 'Custom link' : 'Promote now'}
             </Button>
