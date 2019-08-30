@@ -1,5 +1,6 @@
 import mixpanel from 'ext/mixpanel'
 import { getAffiliateToken } from 'utils'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 const convertToCents = selector => {
@@ -112,16 +113,14 @@ export default {
     if (!jQuery || !jQuery.noConflict()) return
     jQuery
       .noConflict()('.go-to-checkout')
-      .on('click', () => {
-        try {
+      .on('click', () =>
+        RollbarWrapper(() => {
           // proceed to checkout through menu cart
           const isMenuCart = true
           const json = this.checkoutObject(isMenuCart)
           mixpanel.track(json.name, json.data)
-        } catch (error) {
-          // No action
-        }
-      })
+        })
+      )
     if (location.pathname.match(/order-received/)) {
       // after purchase page
       mixpanel.track('Purchase Success', { hostname: location.hostname, affiliateToken: getAffiliateToken() })
@@ -129,25 +128,21 @@ export default {
       // proceed to checkout through cart page
       jQuery
         .noConflict()(document)
-        .on('click', '.checkout-button', () => {
-          try {
+        .on('click', '.checkout-button', () =>
+          RollbarWrapper(() => {
             const json = this.checkoutObject()
             mixpanel.track(json.name, json.data)
-          } catch (error) {
-            // No action
-          }
-        })
+          })
+        )
     } else if (location.pathname.match(/product\//)) {
       jQuery
         .noConflict()(document)
-        .on('submit', 'form.cart', () => {
-          try {
+        .on('submit', 'form.cart', () =>
+          RollbarWrapper(() => {
             const json = this.addToCartObject()
             mixpanel.track(json.name, json.data)
-          } catch (error) {
-            // No action
-          }
-        })
+          })
+        )
     }
   },
 }

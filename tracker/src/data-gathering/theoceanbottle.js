@@ -1,5 +1,6 @@
 import mixpanel from 'ext/mixpanel'
 import { getAffiliateToken } from 'utils'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 const convertToCents = selector => {
@@ -98,26 +99,22 @@ export default {
     if (location.pathname.match(/\/thank_you$/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname, affiliateToken: getAffiliateToken() })
     } else if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
-      window.$(document).on('click', '.cart-button-checkout.button', () => {
-        try {
+      window.$(document).on('click', '.cart-button-checkout.button', () =>
+        RollbarWrapper(() => {
           const json = this.checkoutObject()
           mixpanel.track(json.name, json.data)
-        } catch (error) {
-          // No action
-        }
-      })
+        })
+      )
     } else if (
       location.pathname.match(/\/products?.*/) ||
       location.pathname.match(/\/collections\/:collectionName\/products\/?.*/)
     ) {
-      window.$(document).on('submit', '.shopify-product-form', () => {
-        try {
+      window.$(document).on('submit', '.shopify-product-form', () =>
+        RollbarWrapper(() => {
           const json = this.addToCartObject()
           mixpanel.track(json.name, json.data)
-        } catch (error) {
-          // No action
-        }
-      })
+        })
+      )
     }
   },
 }
