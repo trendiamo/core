@@ -24,7 +24,7 @@ module Api
       end
 
       def file_key
-        uploads_subdir = current_tenant ? `account-#{current_tenant.id}` : `user-#{current_user.id}`
+        uploads_subdir = current_tenant ? "account-#{current_tenant.id}" : "user-#{current_user.id}"
         @file_key ||= "uploads/#{uploads_subdir}/#{SecureRandom.hex(4)}-#{params[:object_name]}"
       end
 
