@@ -93,6 +93,13 @@ export default {
     }
   },
   setupDataGathering(googleAnalytics) {
+    if (location.pathname.match(/orderPlaced/)) {
+      mixpanel.track('Purchase Success', { hostname: location.hostname })
+      return
+    }
+
+    if (!window.$) return
+
     const saveData = resultsObj => {
       mixpanel.track(resultsObj.name, resultsObj.data)
     }
@@ -124,10 +131,6 @@ export default {
           this.proceedToCheckout({ googleAnalytics, isCheckoutForm })
         })
       )
-      return
-    }
-    if (location.pathname.match(/orderPlaced/)) {
-      mixpanel.track('Purchase Success', { hostname: location.hostname })
       return
     }
     if (location.pathname.match(/.*\/p$/)) {

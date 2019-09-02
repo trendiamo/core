@@ -138,15 +138,19 @@ export default {
   },
   setupDataGathering() {
     const _this = this
+    if (location.pathname.match(/9662595172/)) {
+      mixpanel.track('Purchase Success', { hostname: location.hostname })
+    }
+
+    if (!window.$) return
+
     $(document).on('submit', 'form.cart.ajaxcart', () =>
       RollbarWrapper(() => {
         const json = _this.checkoutObject()
         mixpanel.track(json.name, json.data)
       })
     )
-    if (location.pathname.match(/9662595172/)) {
-      mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if ($('#AddToCart--product-template')[0]) {
+    if ($('#AddToCart--product-template')[0]) {
       $(document).ajaxComplete((event, xhr, settings) =>
         RollbarWrapper(() => {
           if (settings.url === '/cart/add.js' && xhr.status === 200) {

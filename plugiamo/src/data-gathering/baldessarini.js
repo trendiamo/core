@@ -112,7 +112,11 @@ export default {
     const _this = this
     if (location.pathname.match(/onepage\/success/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if (location.pathname.match(/^\/de\/checkout\/cart/)) {
+    }
+
+    if (!window.jQuery || !window.jQuery.noConflict) return
+
+    if (location.pathname.match(/^\/de\/checkout\/cart/)) {
       jQuery
         .noConflict()(document)
         .on('click', 'button.action.primary.checkout', () =>

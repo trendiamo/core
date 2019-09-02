@@ -85,7 +85,11 @@ export default {
     const _this = this
     if (location.pathname.match(/onepage\/success/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if (jQuery.noConflict()('.product-view').length === 1) {
+    }
+
+    if (!window.jQuery || !window.jQuery.noConflict) return
+
+    if (jQuery.noConflict()('.product-view').length === 1) {
       // pdp
       jQuery
         .noConflict()('.product-shop')

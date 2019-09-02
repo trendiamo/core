@@ -96,10 +96,13 @@ export default {
   },
   setupDataGathering() {
     const _this = this
-
-    if (location.pathname.match(/formonline\.shop\.shoppingcart\.checkout\.overview/i)) {
+    if (location.hash.match(/formonline\.shop\.shoppingcart\.checkout\.overview/i)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if ($('.product-form')[0]) {
+    }
+
+    if (!window.$) return
+
+    if ($('.product-form')[0]) {
       $('.alvineJSPluginOrderformSubmit').on('click', () =>
         RollbarWrapper(() => {
           const json = _this.addToCartObject()
