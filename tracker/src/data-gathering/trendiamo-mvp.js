@@ -8,6 +8,8 @@ const convertToCents = selector => {
   return Number(selector.replace(/\D/g, ''))
 }
 
+const jQueryIncluded = () => !!window.$
+
 export default {
   addToCartObject() {
     const formFields = window.$('form.product-single__form').serializeArray()
@@ -103,35 +105,37 @@ export default {
     }
   },
   setupDataGathering() {
-    if (!window.$) return
-    window.$(document).on('click', '.secondary-nav__link.js-cart-trigger', () => {
-      window.$(document).on('submit', 'form.cart.ajaxcart__form', () =>
-        RollbarWrapper(() => {
-          const isAjaxCart = true
-          const json = this.checkoutObject(isAjaxCart)
-          mixpanel.track(json.name, json.data)
-        })
-      )
-    })
+    jQueryIncluded() &&
+      window.$(document).on('click', '.secondary-nav__link.js-cart-trigger', () => {
+        window.$(document).on('submit', 'form.cart.ajaxcart__form', () =>
+          RollbarWrapper(() => {
+            const isAjaxCart = true
+            const json = this.checkoutObject(isAjaxCart)
+            mixpanel.track(json.name, json.data)
+          })
+        )
+      })
     if (location.pathname.match(/\/thank_you$/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname, affiliateToken: getAffiliateToken() })
     } else if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
-      window.$(document).on('click', '.cart__checkout', () =>
-        RollbarWrapper(() => {
-          const json = this.checkoutObject()
-          mixpanel.track(json.name, json.data)
-        })
-      )
+      jQueryIncluded() &&
+        window.$(document).on('click', '.cart__checkout', () =>
+          RollbarWrapper(() => {
+            const json = this.checkoutObject()
+            mixpanel.track(json.name, json.data)
+          })
+        )
     } else if (
       location.pathname.match(/\/products?.*/) ||
       location.pathname.match(/\/collections\/:collectionName\/products\/?.*/)
     ) {
-      window.$(document).on('submit', '.product-single__form', () =>
-        RollbarWrapper(() => {
-          const json = this.addToCartObject()
-          mixpanel.track(json.name, json.data)
-        })
-      )
+      jQueryIncluded() &&
+        window.$(document).on('submit', '.product-single__form', () =>
+          RollbarWrapper(() => {
+            const json = this.addToCartObject()
+            mixpanel.track(json.name, json.data)
+          })
+        )
     }
   },
 }
