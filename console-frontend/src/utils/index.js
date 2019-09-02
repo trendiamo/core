@@ -186,6 +186,7 @@ export const refreshRoute = (history, route, query) => {
 }
 
 export const isLocalStorageAccurate = () => {
+  if (auth.isAffiliate()) return true
   const accounts = localStorage.getItem('accounts')
   const accountsObject = accounts && JSON.parse(accounts)
   const accurate = accountsObject && !Object.keys(accountsObject).find(itemKey => !accountsObject[itemKey])
