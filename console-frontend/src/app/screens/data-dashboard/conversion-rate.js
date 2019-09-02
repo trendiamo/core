@@ -48,6 +48,7 @@ const ConversionRate = ({ dates }) => {
 
   useEffect(
     () => {
+      setIsLoading(true)
       ;(async () => {
         const { json, requestError } = await apiRequest(apiEventList, [
           { dates: JSON.stringify(dates), chart: 'conversion_rate' },

@@ -192,6 +192,7 @@ const MostInteractedModules = ({ dates }) => {
 
   useEffect(
     () => {
+      setIsLoading(true)
       ;(async () => {
         const { json, requestError } = await apiRequest(apiEventList, [
           { dates: JSON.stringify(dates), sort: sorting, chart: 'most_interacted_modules' },
