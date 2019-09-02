@@ -1,5 +1,6 @@
 import mixpanel from 'ext/mixpanel'
 import { getAffiliateToken } from 'utils'
+import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 const convertToCents = selector => {
