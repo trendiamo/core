@@ -164,6 +164,13 @@ export default {
   },
   setupDataGathering() {
     const _this = this
+    if (location.pathname.match(/order-received/)) {
+      // after purchase page
+      mixpanel.track('Purchase Success', { hostname: location.hostname })
+    }
+
+    if (!window.$) return
+
     $('.checkout.wc-forward.btn.btn-link').on('click', () => () =>
       RollbarWrapper(() => {
         // ajax cart
@@ -172,10 +179,7 @@ export default {
         mixpanel.track(json.name, json.data)
       })
     )
-    if (location.pathname.match(/order-received/)) {
-      // after purchase page
-      mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if (location.pathname.match(/^\/de\/produkt\//)) {
+    if (location.pathname.match(/^\/de\/produkt\//)) {
       // pdp
       $('.add_to_cart_button.ajax_add_to_cart').on('click', () =>
         RollbarWrapper(() => {

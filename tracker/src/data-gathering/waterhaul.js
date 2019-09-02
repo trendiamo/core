@@ -110,7 +110,13 @@ export default {
     }
   },
   setupDataGathering() {
-    if (!jQuery || !jQuery.noConflict()) return
+    if (location.pathname.match(/order-received/)) {
+      // after purchase page
+      mixpanel.track('Purchase Success', { hostname: location.hostname, affiliateToken: getAffiliateToken() })
+    }
+
+    if (!window.jQuery || !window.jQuery.noConflict) return
+
     jQuery
       .noConflict()('.go-to-checkout')
       .on('click', () =>
@@ -121,10 +127,7 @@ export default {
           mixpanel.track(json.name, json.data)
         })
       )
-    if (location.pathname.match(/order-received/)) {
-      // after purchase page
-      mixpanel.track('Purchase Success', { hostname: location.hostname, affiliateToken: getAffiliateToken() })
-    } else if (location.pathname.match(/^\/cart/)) {
+    if (location.pathname.match(/^\/cart/)) {
       // proceed to checkout through cart page
       jQuery
         .noConflict()(document)

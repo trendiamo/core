@@ -158,10 +158,13 @@ export default {
     }
   },
   setupDataGathering() {
-    if (!window.$) return
     if (location.pathname.match(/^\/shop\/complete/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if (location.pathname.match(/^\/shop\/cart/)) {
+    }
+
+    if (!window.$) return
+
+    if (location.pathname.match(/^\/shop\/cart/)) {
       $(document).on('click', 'a[href="https://www.mymuesli.com/shop/kasse"]', () =>
         RollbarWrapper(() => {
           const json = this.checkoutObject()

@@ -132,7 +132,11 @@ export default {
     const _this = this
     if (location.pathname.match(/pedido-finalizado/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if (location.pathname.match(/tienda\/cesta/)) {
+    }
+
+    if (!window.$) return
+
+    if (location.pathname.match(/tienda\/cesta/)) {
       if (!$('.pedido')[0]) return
       $('#btn_comprar').on('click', () =>
         RollbarWrapper(() => {

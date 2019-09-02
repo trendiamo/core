@@ -56,7 +56,11 @@ export default {
   setupDataGathering() {
     if (location.pathname.match(/\/thank_you$/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
-    } else if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
+    }
+
+    if (!window.$) return
+
+    if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
       window.$(document).on('click', '.cart__checkout--page', () =>
         RollbarWrapper(() => {
           if (window.$('#CartPageAgree').is(':checked')) {
