@@ -55,7 +55,7 @@ module Jql
         flowId: record.id,
         loadedCount: loaded_count,
         toggledCount: toggled_count,
-        conversion: toggled_count.to_f / loaded_count.to_f,
+        conversion: (toggled_count / loaded_count).to_f,
       }
     end
 
@@ -63,11 +63,13 @@ module Jql
       (Date.parse(params[:dates][:from_date])..Date.parse(params[:dates][:to_date])).step(7)
     end
 
-    def self.revenues_dummy(params)
-      date_range(params).map do |date|
+    def self.revenues_dummy(_params)
+      brands = Brand.first(3)
+      brands.map do |brand|
+        total = rand(5..5000) * 100
         {
-          date: date.to_s,
-          revenues: rand(0..1000),
+          brand: brand,
+          values: [{ total: total, payout: (total / rand(2..100)).to_f, currency: "EUR" }],
         }
       end
     end
