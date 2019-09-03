@@ -62,5 +62,14 @@ module Jql
     def self.date_range(params)
       (Date.parse(params[:dates][:from_date])..Date.parse(params[:dates][:to_date])).step(7)
     end
+
+    def self.revenues_dummy(params)
+      date_range(params).map do |date|
+        {
+          date: date.to_s,
+          revenues: rand(0..1000),
+        }
+      end
+    end
   end
 end
