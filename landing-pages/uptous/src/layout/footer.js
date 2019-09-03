@@ -58,45 +58,57 @@ const Footer = styled(({ className }) => {
     </footer>
   )
 })`
-  background-color: #1a3b50;
-  color: #fff;
+  background-color: #e7ecef;
+  color: #272a32;
   ${Section} {
-    padding-top: 40px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 20px;
   }
   ${Container} {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 400px;
+    max-width: 620px;
   }
   ${Links} {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    padding-bottom: 2rem;
+    > div {
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-bottom: 1.9rem;
+      flex: 1;
+    }
   }
   ${Links} > div:nth-child(2) {
     text-align: right;
   }
   ${Header} {
+    font-family: 'Nunito Sans', sans-serif;
     text-transform: uppercase;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+    margin-bottom: 0.7rem;
+    white-space: nowrap;
   }
   a {
     display: block;
+    font-size: 0.75rem;
     line-height: 1.8;
-    color: #fff;
+    color: #272a32;
     text-decoration: none;
   }
   ${LegalText} {
-    font-size: 0.7rem;
+    font-size: 0.58rem;
   }
 
   @media (min-width: 1000px) {
     ${Section} {
-      padding-top: 100px;
+      padding-top: 55px;
     }
   }
 `

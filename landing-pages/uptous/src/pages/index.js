@@ -12,10 +12,10 @@ import WhatYouGet from '../sections/what-you-get'
 const IndexPage = ({ data }) => (
   <Layout data={{ legalNotice: data.legalNotice.text, privacyPolicy: data.privacyPolicy.text }}>
     <Hero data={data.hero} />
-    <WhatYouGet />
-    <OurBeliefs />
-    <Video />
     <WhatWeDo />
+    <WhatYouGet />
+    <Video />
+    <OurBeliefs />
     <OurGoals />
   </Layout>
 )

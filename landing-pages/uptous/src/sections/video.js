@@ -12,8 +12,9 @@ const Video = styled(({ className }) => (
   <Section className={className}>
     <Container>
       <Header>
-        {'Let us '}
-        <b>{'introduce ourselves'}</b>
+        <span>{'Let us '}</span>
+        <span>{'introduce '}</span>
+        <span>{'ourselves'}</span>
       </Header>
       <VideoOuterContainer>
         <VideoInnerContainer>
@@ -21,7 +22,7 @@ const Video = styled(({ className }) => (
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             frameBorder="0"
-            src="https://www.youtube.com/embed/Aop3XjQ890A"
+            src="https://www.youtube.com/embed/xP2vsPGkm8Q"
             title="Intro Video"
           ></iframe>
         </VideoInnerContainer>
@@ -29,25 +30,39 @@ const Video = styled(({ className }) => (
     </Container>
   </Section>
 ))`
-  background-color: #00334a;
-  ${Header} {
-    color: #fff;
+  background-color: #e7ecef;
+  min-height: 100vh;
+  ${Container} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
+
   ${VideoOuterContainer} {
-    border: 4px solid #12e5c4;
-    border-radius: 14px;
-    box-shadow: 0 0 30px rgba(18, 230, 196, 0.5);
     width: 100%;
     max-width: 990px;
+    box-shadow: 20px 20px 0 #272a32;
   }
   ${VideoInnerContainer} {
-    background-color: #12e5c4;
     position: relative;
     padding-bottom: 56.25%; /* 16:9 */
     height: 0;
+    &:before {
+      content: '';
+      position: absolute;
+      top: -19px;
+      left: 0;
+      z-index: 1;
+
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 19px 0 19px 32.9px;
+      border-color: transparent transparent transparent #f05d5d;
+    }
   }
   ${VideoInnerContainer} iframe {
-    border-radius: 10px;
     position: absolute;
     top: 0;
     left: 0;
@@ -56,9 +71,22 @@ const Video = styled(({ className }) => (
   }
 
   @media (min-width: 1000px) {
-    background-color: #fff;
-    ${Header} {
-      color: #00334b;
+    ${Container} {
+      max-width: 1400px;
+      align-items: center;
+    }
+    ${VideoInnerContainer} {
+      &:before {
+        top: calc(50% - 58px);
+        left: calc(120px - 18vw);
+
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 58px 0 58px 97px;
+        border-color: transparent transparent transparent #f05d5d;
+      }
     }
   }
 `

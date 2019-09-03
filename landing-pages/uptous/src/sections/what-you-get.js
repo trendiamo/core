@@ -17,8 +17,9 @@ const WhatYouGet = styled(({ className }) => (
   <Section className={className}>
     <Container>
       <Header>
-        <b>{'What'}</b>
-        {' you get'}
+        <span>{'What '}</span>
+        <span>{'you '}</span>
+        <span>{'get'}</span>
       </Header>
       <CardsContainer>
         <Card>
@@ -53,7 +54,15 @@ const WhatYouGet = styled(({ className }) => (
     </Container>
   </Section>
 ))`
-  background-color: #00334a;
+  background-color: #272a32;
+  color: #fff;
+  min-height: 100vh;
+
+  ${Container} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   ${Header} {
     color: #fff;
@@ -65,34 +74,32 @@ const WhatYouGet = styled(({ className }) => (
   ${Card} {
     display: flex;
     align-items: center;
-    border: 4px solid #12e5c4;
-    border-radius: 10px;
-    box-shadow: 0 0 30px rgba(18, 230, 196, 0.5);
-    background-color: #fff;
     margin-bottom: 1.5rem;
-    padding: 1rem;
   }
   ${CardHeader} {
-    font-weight: bold;
-    font-size: 1.15rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    text-transform: uppercase;
     margin-bottom: 0.6rem;
-    color: #001b3e;
   }
   ${Card} p {
     margin-bottom: 0;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
   }
   ${Card} svg {
-    width: 80px;
-    height: 80px;
-    margin-right: 1rem;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    fill: white;
+    flex: 1;
+  }
+  ${Card} svg + div {
+    flex: 6;
   }
 
   @media (min-width: 1000px) {
-    padding-top: 10px;
-    background-color: #fff;
-    ${Header} {
-      color: #00334b;
+    ${Container} {
+      max-width: 1400px;
     }
     ${CardsContainer} {
       flex-direction: row;
@@ -101,9 +108,18 @@ const WhatYouGet = styled(({ className }) => (
     }
     ${Card} {
       width: calc(50% - 0.75rem);
+      margin-bottom: 3rem;
+    }
+    ${Card} svg {
+      min-width: 100px;
+      min-height: 100px;
+      margin-right: 40px;
+    }
+    ${CardHeader} {
+      font-size: calc(10px + 1.7vw);
     }
     ${Card} p {
-      font-size: 0.8rem;
+      font-size: calc(3px + 1.7vw);
     }
   }
 `

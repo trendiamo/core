@@ -1,10 +1,9 @@
 .tingle-modal {
-  background-color: rgba(26, 59, 80, 0.7);
+  background-color: rgba(39, 42, 50, 0.7);
 }
 
 .tingle-modal__close {
-  font-family: Montserrat, sans-serif;
-  background-color: rgb(26, 59, 80);
+  background-color: rgb(39, 42, 50);
 }
 
 .tingle-modal__closeIcon,
@@ -29,7 +28,7 @@
 }
 
 .tingle-modal-box {
-  background: #142c3d;
+  background: #272a32;
   text-align: left;
   color: #fff;
 }
@@ -43,7 +42,21 @@
   padding-right: 1rem;
 }
 
-@media (min-width: 540px) {
+@media (max-width: 540px) {
+  .tingle-modal {
+    background-color: rgb(39, 42, 50);
+    padding-top: 86px;
+  }
+  .tingle-modal__close {
+    height: 86px;
+  }
+  .tingle-modal-box__content {
+    padding-top: 0;
+    max-height: calc(100vh - 86px);
+  }
+}
+
+@media (min-width: 541px) {
   .tingle-modal__closeIcon {
     width: 100%;
   }
@@ -52,6 +65,7 @@
     padding-right: 3rem;
   }
   .tingle-modal__close {
+    height: 86px;
     background-color: transparent !important;
   }
 }

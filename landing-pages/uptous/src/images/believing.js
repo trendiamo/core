@@ -2,13 +2,13 @@ import Img from 'gatsby-image'
 import React, { forwardRef } from 'react'
 import { graphql, StaticQuery } from 'gatsby'
 
-const PeopleImg = ({ alt, className }, ref) => (
+const BelievingImg = ({ alt, className }, ref) => (
   <StaticQuery
     query={graphql`
       query {
-        file: file(relativePath: { eq: "people.jpg" }) {
+        file: file(relativePath: { eq: "believing.jpg" }) {
           childImageSharp {
-            fluid(quality: 85) {
+            fluid(maxWidth: 1920, quality: 90) {
               ...GatsbyImageSharpFluid_noBase64
             }
           }
@@ -19,4 +19,4 @@ const PeopleImg = ({ alt, className }, ref) => (
   />
 )
 
-export default forwardRef(PeopleImg)
+export default forwardRef(BelievingImg)
