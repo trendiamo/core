@@ -6,6 +6,11 @@ const homepageModules = {
   '/mm2go-blessmysoul': '/simple-chat/332',
   '/mm2go-coffeeandblush': '/simple-chat/329',
   '/mm2go-powerfulplant': '/simple-chat/328',
+  '/mm2go-cfterri': '/simple-chat/363',
+  '/vegan-powerfulplant': '/simple-chat/328',
+  '/mm2go-susanne.schoene': '/simple-chat/376',
+  '/mm2go-elias': '/simple-chat/362',
+  '/mm2go-marnifaktur': '/simple-chat/350',
 }
 
 const memorizeModule = ({ homepageModule }) => {
