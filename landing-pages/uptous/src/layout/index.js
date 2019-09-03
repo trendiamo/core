@@ -1,6 +1,6 @@
 import '../css/index.css'
-import 'typeface-montserrat'
-import 'typeface-roboto'
+import 'typeface-lato'
+import 'typeface-nunito-sans'
 
 import Helmet from 'react-helmet'
 import React from 'react'
@@ -8,6 +8,7 @@ import styled from 'styled-components'
 
 import favicon from '../images/favicon.png'
 import Footer from './footer'
+import Header from './header'
 import ModalContents from './modal-contents'
 import Seo from './seo'
 
@@ -25,6 +26,7 @@ const Layout = ({ children, data }) => (
       <link href={favicon} rel="shortcut icon" type="image/png" />
       <meta name="hbspt-locale" value="en" />
     </Helmet>
+    <Header />
     {children}
     <Footer />
     <ModalContents data={data} />

@@ -8,22 +8,14 @@ const HeroImg = ({ alt, className }, ref) => (
       query {
         file: file(relativePath: { eq: "hero.jpg" }) {
           childImageSharp {
-            fluid(maxWidth: 1920, quality: 100) {
+            fluid(maxWidth: 1920, quality: 90) {
               ...GatsbyImageSharpFluid_noBase64
             }
           }
         }
       }
     `}
-    render={data => (
-      <Img
-        alt={alt}
-        className={className}
-        fluid={data.file.childImageSharp.fluid}
-        imgStyle={{ objectPosition: '13% 50%' }}
-        ref={ref}
-      />
-    )}
+    render={data => <Img alt={alt} className={className} fluid={data.file.childImageSharp.fluid} ref={ref} />}
   />
 )
 

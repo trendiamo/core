@@ -4,41 +4,24 @@ import styled from 'styled-components'
 import Button from '../components/button'
 import Container from '../components/container'
 import HeroImg from '../images/hero'
-import LogoFullImg from '../images/logo-full'
 import Section from '../components/section'
-import Wave from '../images/wave.svg'
 import { openModal } from '../utils'
 import { useParallax } from '../hooks'
 
-const HeroImgContainer = styled.div``
+const onGetStartedClick = () => {
+  if (!window.hbspt) return
+  openModal('.get-started-modal-content')
+  window.hbspt.forms.create({
+    css: '',
+    portalId: '5559593',
+    formId: 'd2106863-b4fd-4591-a806-7411e7798762',
+    target: '.get-started-modal-form',
+  })
+}
+
 const Heading = styled.h1``
 const Subheading = styled.div``
-const ButtonsContainer = styled.div``
-const AbsContainer = styled.div``
-const LogoFullContainer = styled.div``
 const StyledHeroImg = styled(HeroImg)``
-const StyledWave = styled(Wave)``
-
-const onBrandClick = () => {
-  if (!window.hbspt) return
-  openModal('.brand-modal-content')
-  window.hbspt.forms.create({
-    css: '',
-    portalId: '5559593',
-    formId: 'eab5b809-6c1f-49fc-bed2-62fbd90f0937',
-    target: '.brand-modal-form',
-  })
-}
-const onInfluencerClick = () => {
-  if (!window.hbspt) return
-  openModal('.influencer-modal-content')
-  window.hbspt.forms.create({
-    css: '',
-    portalId: '5559593',
-    formId: 'e58322b5-96ba-4f25-a50e-54b1ca355dd2',
-    target: '.influencer-modal-form',
-  })
-}
 
 const Hero = styled(({ className, data }) => {
   const ref = useRef(null)
@@ -46,141 +29,114 @@ const Hero = styled(({ className, data }) => {
 
   return (
     <Section className={className}>
-      <HeroImgContainer>
-        <StyledHeroImg alt="" ref={ref} />
-        <StyledWave />
-      </HeroImgContainer>
-      <AbsContainer>
-        <Container>
-          <LogoFullContainer>
-            <LogoFullImg />
-          </LogoFullContainer>
-          <div>
-            <Heading>{data.heroHeading}</Heading>
-            <Subheading>{data.heroSubheading}</Subheading>
-          </div>
-          <ButtonsContainer>
-            <Button onClick={onBrandClick}>{"I'm a brand"}</Button>
-            <Button onClick={onInfluencerClick}>{"I'm an influencer"}</Button>
-          </ButtonsContainer>
-        </Container>
-      </AbsContainer>
+      <StyledHeroImg alt="" ref={ref} />
+      <Container>
+        <div>
+          <Heading>{data.heroHeading}</Heading>
+          <Subheading>{data.heroSubheading}</Subheading>
+        </div>
+        <Button onClick={onGetStartedClick}>{'Get Started'}</Button>
+      </Container>
     </Section>
   )
 })`
   padding: 0;
   position: relative;
   overflow: hidden;
-  min-height: 700px;
-  height: 90vh;
+  min-height: 666px;
+  background-color: #107173;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 
-  ${HeroImgContainer} {
-    position: relative;
-    height: 50vh;
-    min-height: 300px;
-    overflow: hidden;
-  }
   ${StyledHeroImg} {
-    height: 100%;
+    flex: 2;
     transform-origin: bottom;
-  }
-  ${StyledWave} {
-    position: absolute;
-    width: calc(100vw + 4px);
-    left: -2px;
-    right: -2px;
-    bottom: -1px;
-  }
-  ${AbsContainer} {
-    display: flex;
-    justify-content: center;
+    max-height: 70vh;
   }
   ${Container} {
-    padding: 10px 20px 30px 20px;
+    flex: 1;
+    padding: 90px 20px 30px 20px;
     max-width: 800px;
-  }
-  ${LogoFullContainer} {
-    position: absolute;
-    top: calc(25vh - 40px);
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 320px;
+    position: relative;
   }
   ${Heading} {
-    color: #12e5c4;
-    font-weight: bold;
-    font-size: 1.6rem;
-    line-height: 1.2;
+    color: #fff;
+    font-weight: 900;
+    font-size: 13.34vw;
+    line-height: 0.9;
     text-transform: uppercase;
-    margin-bottom: 1rem;
+    position: absolute;
+    top: -1.4em;
+    text-shadow: 0 0 20px #000;
+    max-width: 420px;
   }
   ${Subheading} {
-    font-size: 1.2rem;
-    line-height: 1.25;
-    margin-bottom: 2rem;
+    line-height: 1.225;
+    margin-bottom: 1.8rem;
+    color: #fff;
   }
-  ${ButtonsContainer} {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  ${Button} {
+    span {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    &:before {
+      content: '';
+
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 19px 0 19px 32.9px;
+      border-color: transparent transparent transparent #f05d5d;
+    }
   }
 
   @media (min-width: 375px) {
-    ${ButtonsContainer} {
-      padding-right: 20px;
-      padding-left: 20px;
+    ${Heading} {
+      font-size: 50px;
     }
   }
 
   @media (min-width: 1000px) {
-    ${HeroImgContainer} {
-      min-height: 650px;
-      height: 90vh;
-    }
-    ${AbsContainer} {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
+    min-height: 100vh;
+    flex-direction: row;
+    ${StyledHeroImg} {
+      flex: 15;
+      max-height: unset;
     }
     ${Container} {
+      flex: 7;
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: flex-start;
       align-items: center;
-      padding-top: 10vh;
-      padding-bottom: 30vh;
-    }
-    ${LogoFullContainer} {
-      position: static;
-      transform: none;
-    }
-    ${Heading},
-    ${Subheading} {
-      text-align: center;
-      color: #1a3b50;
+      padding: 90px;
+      padding-top: 160px;
     }
     ${Heading} {
-      margin-top: 3rem;
+      text-shadow: none;
+      top: unset;
+      left: -1.88em;
+      font-size: calc(20px + 4vw);
+      max-width: 600px;
     }
     ${Subheading} {
-      max-width: 31rem;
-    }
-    ${ButtonsContainer} {
-      padding: 0;
-      flex-direction: row;
-      width: 660px;
-      justify-content: space-between;
+      margin-top: calc(1em + 16vw);
+      font-size: calc(0.8rem + 1.2vw);
     }
     ${Button} {
-      color: #12e5c4;
-      background: #fff;
-      width: 310px;
+      margin-left: -17vw;
+      margin-bottom: 6vw;
+      min-height: 100px;
+      font-size: calc(8px + 2.5vw);
+      span {
+        line-height: 100px;
+      }
+      &:before {
+        border-width: 50px 0 50px 77px;
+      }
     }
   }
 `
