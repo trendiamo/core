@@ -66,10 +66,10 @@ module Jql
     def self.revenues_dummy(_params)
       brands = Brand.first(3)
       brands.map do |brand|
-        total = rand(5..5000) * 100
+        total = rand(500..500_000).to_f / 100
         {
           brand: brand,
-          values: [{ total: total, payout: (total / rand(2..100)).to_f, currency: "EUR" }],
+          values: [{ total: format("%.2f", total), payout: format("%.2f", total / rand(2..100)), currency: "EUR" }],
         }
       end
     end
