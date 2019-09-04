@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import Container from '../components/container'
 import Section from '../components/section'
-import { openModal } from '../utils'
+import { openModal } from '../modals'
 
 const Header = styled.div``
 const Links = styled.div``

@@ -1,11 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Button = styled(({ children, className, onClick }) => (
-  <button className={className} onClick={onClick} type="button">
-    <span>{children}</span>
-  </button>
-))`
+const Button = styled(({ children, className, onClick, type }) =>
+  type === 'submit' ? (
+    <button className={className} onClick={onClick} type="submit">
+      <span>{children}</span>
+    </button>
+  ) : (
+    <button className={className} onClick={onClick} type="button">
+      <span>{children}</span>
+    </button>
+  )
+)`
   appearance: none;
   border: 0;
   padding: 0;

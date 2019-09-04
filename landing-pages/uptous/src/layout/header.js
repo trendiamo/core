@@ -6,7 +6,11 @@ import Button from '../components/button'
 import LogoBlack from '../images/logo-black.svg'
 import MenuIcon from '../images/menu-icon.svg'
 import MobileMenu from './mobile-menu'
-import { openModal } from '../utils'
+import { openModal } from '../modals'
+
+const StyledLogo = styled(LogoBlack)`
+  ${({ whiteLogo }) => whiteLogo && 'filter: invert(1);'}
+`
 
 const StyledMenuIcon = styled(MenuIcon)``
 const MenuIconContainer = styled.div``
@@ -27,7 +31,7 @@ const onSignupClick = () => {
   })
 }
 
-const Header = ({ className, headerLinks = [], siteTitle }, ref) => {
+const Header = ({ className, headerLinks = [], siteTitle, whiteLogo }, ref) => {
   const onClick = useCallback(event => {
     event.preventDefault()
     const element = document.querySelector(event.target.getAttribute('href'))
@@ -43,7 +47,7 @@ const Header = ({ className, headerLinks = [], siteTitle }, ref) => {
     <header className={className} ref={ref}>
       <Link className="logo-link" to="/">
         <LogoFullContainer>
-          <LogoBlack alt={siteTitle} />
+          <StyledLogo alt={siteTitle} whiteLogo={whiteLogo} />
         </LogoFullContainer>
       </Link>
       <nav>
@@ -122,7 +126,7 @@ const StyledHeader = styled(React.forwardRef(Header))`
   .header-link {
     font-size: calc(1rem + 0.25vw);
     font-weight: 900;
-    color: ${({ headerColorScheme }) => (headerColorScheme === 'black-on-white' ? '#000' : '#fff')};
+    color: #fff;
     text-decoration: none;
     text-transform: uppercase;
     margin-right: 2vw;

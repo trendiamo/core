@@ -5,7 +5,7 @@ import Button from '../components/button'
 import Container from '../components/container'
 import HeroImg from '../images/hero'
 import Section from '../components/section'
-import { openModal } from '../utils'
+import { openModal } from '../modals'
 import { useParallax } from '../hooks'
 
 const onGetStartedClick = () => {
