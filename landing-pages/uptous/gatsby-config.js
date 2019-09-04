@@ -61,12 +61,6 @@ module.exports = {
         includeInDevelopment: false,
       },
     },
-    {
-      resolve: 'gatsby-plugin-facebook-pixel',
-      options: {
-        pixelId: '481077966058956',
-      },
-    },
   ],
 }
 /* eslint-enable no-undef */
