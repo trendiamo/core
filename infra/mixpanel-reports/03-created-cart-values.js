@@ -11,7 +11,7 @@ const formatDate = d => new Date(d).toISOString().replace(/T.*/, "");
 function main() {
   return Events(params.dates)
     .filter(event =>
-      ["Toggled Plugin", "Proceed To Checkout", "Purchase Success"].includes(
+      ["Toggled Plugin", "Proceed To Checkout"].includes(
         event.name
       )
     )
