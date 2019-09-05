@@ -1,12 +1,5 @@
-import tingle from 'tingle.js'
+const blogPostUrl = blogPost => `/magazine/article/${blogPost.slug}`
 
-const Modal = tingle.modal
-
-const openModal = modalElementSelector => {
-  const content = document.querySelector(modalElementSelector).innerHTML
-  const modal = new Modal()
-  modal.setContent(content)
-  modal.open()
-}
-
-export { openModal }
+/* eslint-disable no-undef */
+module.exports = { blogPostUrl }
+/* eslint-enable no-undef */

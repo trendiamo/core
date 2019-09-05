@@ -5,7 +5,7 @@ import { Link } from 'gatsby'
 import Button from '../components/button'
 import CloseIcon from '../images/close-icon.svg'
 import LogoFullImg from '../images/logo-full'
-import { openModal } from '../utils'
+import { openModal } from '../modals'
 
 const LogoFullContainer = styled.div``
 const CloseIconContainer = styled.div`
