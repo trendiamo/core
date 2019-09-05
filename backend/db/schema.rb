@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190829144826) do
+ActiveRecord::Schema.define(version: 20190904135934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,18 @@ ActiveRecord::Schema.define(version: 20190829144826) do
     t.json "payload"
     t.bigint "source_id", null: false
     t.index ["account_id"], name: "index_products_on_account_id"
+  end
+
+  create_table "revenues", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "user_id"
+    t.datetime "captured_at", null: false
+    t.string "commission_value", null: false
+    t.json "values"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_revenues_on_account_id"
+    t.index ["user_id"], name: "index_revenues_on_user_id"
   end
 
   create_table "sellers", force: :cascade do |t|
@@ -341,6 +353,8 @@ ActiveRecord::Schema.define(version: 20190829144826) do
   add_foreign_key "product_picks", "images", column: "img_id"
   add_foreign_key "product_picks", "spotlights"
   add_foreign_key "products", "accounts"
+  add_foreign_key "revenues", "accounts"
+  add_foreign_key "revenues", "users"
   add_foreign_key "sellers", "accounts"
   add_foreign_key "sellers", "images", column: "animated_img_id"
   add_foreign_key "sellers", "images", column: "img_id"

@@ -11,6 +11,7 @@ class Account < ApplicationRecord
 
   has_one :brand, dependent: :destroy
   has_many :affiliations, dependent: :destroy
+  has_many :revenues, dependent: :destroy
 
   has_many :invites, dependent: :destroy
 
