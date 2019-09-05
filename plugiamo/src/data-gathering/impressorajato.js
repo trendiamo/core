@@ -7,40 +7,6 @@ const convertToCents = selector => {
 }
 
 export default {
-  addToCartObject() {
-    const formFields = jQuery
-      .noConflict()('#product_addtocart_form')
-      .serializeArray()
-
-    return {
-      name: 'Add To Cart',
-      data: {
-        hostname: location.hostname,
-        withPlugin: !!jQuery.noConflict()('iframe[title="Frekkls Launcher"]')[0],
-        productId: formFields.find(element => element.name === 'product').value,
-        productName: jQuery
-          .noConflict()(".product-name > [itemprop='name']")
-          .text(),
-        productBrand: jQuery
-          .noConflict()('.fabricante-legenda > h2')
-          .text(),
-        currency: 'BRL',
-        subTotalInCents: {
-          noBoleto: convertToCents(jQuery.noConflict()('.price-boleto')[0].innerText),
-          inTenInstalments: convertToCents(
-            jQuery
-              .noConflict()("[data-id='price_parcelado']")
-              .text()
-          ),
-          aVistaNoCartao: convertToCents(
-            jQuery
-              .noConflict()("[data-id='product-price'] > .price")
-              .text()
-          ),
-        },
-      },
-    }
-  },
   getProductsFromCart() {
     return jQuery
       .noConflict()('#shopping-cart-table > tbody')
@@ -89,18 +55,7 @@ export default {
 
     if (!window.jQuery || !window.jQuery.noConflict) return
 
-    if (jQuery.noConflict()('.product-view').length === 1) {
-      // pdp
-      jQuery
-        .noConflict()('.product-shop')
-        .find('.button')
-        .on('click', () =>
-          RollbarWrapper(() => {
-            const json = _this.addToCartObject()
-            mixpanel.track(json.name, json.data)
-          })
-        )
-    } else if (location.pathname.match(/^\/checkout\/cart\/?$/)) {
+    if (location.pathname.match(/^\/checkout\/cart\/?$/)) {
       // cart
       jQuery
         .noConflict()('.btn-concluir-compra')

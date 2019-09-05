@@ -3,36 +3,6 @@ import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
-  addToCartObject() {
-    const formFields = $('#AddToCartForm--product-template').serializeArray()
-    return {
-      name: 'Add To Cart',
-      data: {
-        hostname: location.hostname,
-        withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
-        productId: formFields.find(element => element.name === 'id').value,
-        productName: $('.product-single__title').text(),
-        currency: 'EUR',
-        subTotalInCents: Number(
-          $('#ProductPrice')
-            .text()
-            .replace(/\D/g, '')
-        ),
-        productOptions: $('.single-option-radio')
-          .map((i, element) => {
-            const optionSelected = $(element).find('[checked]')
-            const optionSelectedValue = optionSelected.attr('value')
-            if (!optionSelectedValue) return
-            return {
-              attributeLabel: optionSelected.attr('name'),
-              attributeValue: optionSelectedValue,
-              attributeId: optionSelected.attr('id'),
-            }
-          })
-          .toArray(),
-      },
-    }
-  },
   getProductsFromCart() {
     return $('.cart__row')
       .map((i, item) => {
@@ -150,16 +120,7 @@ export default {
         mixpanel.track(json.name, json.data)
       })
     )
-    if ($('#AddToCart--product-template')[0]) {
-      $(document).ajaxComplete((event, xhr, settings) =>
-        RollbarWrapper(() => {
-          if (settings.url === '/cart/add.js' && xhr.status === 200) {
-            const json = _this.addToCartObject()
-            mixpanel.track(json.name, json.data)
-          }
-        })
-      )
-    } else if (location.pathname.match(/^\/cart/)) {
+    if (location.pathname.match(/^\/cart/)) {
       $('form.cart').on('click', 'button.cart__checkout', () =>
         RollbarWrapper(() => {
           const json = _this.checkoutObject()

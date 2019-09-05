@@ -3,48 +3,6 @@ import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
-  addToCartObject(isfromPLP = false, target) {
-    if (isfromPLP) {
-      const productDiv = $(target).closest('.tmb')
-      return {
-        name: 'Add To Cart',
-        data: {
-          hostname: location.hostname,
-          withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
-          productId: $(target).attr('data-product_id'),
-          productName: productDiv.find('.t-entry-title').text(),
-          currency: 'EUR',
-          subTotalInCents: Number(
-            productDiv
-              .find('.woocommerce-Price-amount.amount')
-              .last()
-              .text()
-              .trim()
-              .replace(/\D/g, '')
-          ),
-          isSubscription: !!productDiv.find('.subscription-details').text(),
-        },
-      }
-    } else {
-      return {
-        name: 'Add To Cart',
-        data: {
-          hostname: location.hostname,
-          withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
-          productId: $('button.add_to_cart_button')[0].value,
-          productName: $('.product_title').text(),
-          currency: 'EUR',
-          subTotalInCents: Number(
-            $('.price-container')
-              .text()
-              .trim()
-              .replace(/\D/g, '')
-          ),
-          isSubscription: !!$('.price-container .subscription-details').text(),
-        },
-      }
-    }
-  },
   getProductsFromCart() {
     return $('.woocommerce-cart-form__cart-item.cart_item')
       .map((i, item) => {
@@ -179,24 +137,7 @@ export default {
         mixpanel.track(json.name, json.data)
       })
     )
-    if (location.pathname.match(/^\/de\/produkt\//)) {
-      // pdp
-      $('.add_to_cart_button.ajax_add_to_cart').on('click', () =>
-        RollbarWrapper(() => {
-          const json = _this.addToCartObject()
-          mixpanel.track(json.name, json.data)
-        })
-      )
-    } else if (location.pathname.match(/^\/de\/produkte\/$/)) {
-      // plp
-      $('.add_to_cart_button.ajax_add_to_cart').click(event =>
-        RollbarWrapper(() => {
-          const isfromPLP = true
-          const json = _this.addToCartObject(isfromPLP, event.target)
-          mixpanel.track(json.name, json.data)
-        })
-      )
-    } else if (location.pathname.match(/^\/de\/warenkorb/)) {
+    if (location.pathname.match(/^\/de\/warenkorb/)) {
       // regular cart
       $('.checkout-button.btn.btn-default.alt.wc-forward ').on('click', () =>
         RollbarWrapper(() => {

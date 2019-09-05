@@ -6,21 +6,6 @@ const convertToCents = selector => {
 }
 
 export default {
-  addToCartObject() {
-    const formFields = window.$('form.product-single__form').serializeArray()
-    return {
-      name: 'Add To Cart',
-      data: {
-        hostname: location.hostname,
-        withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
-        productId: formFields.find(element => element.name === 'id').value,
-        productName: window.$('.product-single__title').html(),
-        subTotalInCents: convertToCents(window.$('span.money').html()),
-        productSize: formFields.find(element => element.name === 'Size').value,
-        quantity: formFields.find(element => element.name === 'quantity').value,
-      },
-    }
-  },
   getProductsFromCart() {
     const table = window.$('form.cart > div')
     let products = []
@@ -67,16 +52,6 @@ export default {
             const json = this.checkoutObject()
             mixpanel.track(json.name, json.data)
           }
-        })
-      )
-    } else if (
-      location.pathname.match(/\/products?.*/) ||
-      location.pathname.match(/\/collections\/:collectionName\/products\/?.*/)
-    ) {
-      window.$(document).on('submit', '.product-single__form', () =>
-        RollbarWrapper(() => {
-          const json = this.addToCartObject()
-          mixpanel.track(json.name, json.data)
         })
       )
     }

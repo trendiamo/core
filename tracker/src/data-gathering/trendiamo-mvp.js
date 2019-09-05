@@ -9,25 +9,6 @@ const convertToCents = selector => {
 }
 
 export default {
-  addToCartObject() {
-    const formFields = window.$('form.product-single__form').serializeArray()
-    return {
-      name: 'Add To Cart',
-      data: {
-        hostname: location.hostname,
-        productId:
-          formFields.find(element => element.name === 'id') && formFields.find(element => element.name === 'id').value,
-        productName: window.$('.product-single__title-text').text(),
-        subTotalInCents: convertToCents(window.$('.product-single__price-number').text()),
-        currency: 'EUR',
-        quantity: Number(
-          formFields.find(element => element.name === 'quantity') &&
-            formFields.find(element => element.name === 'quantity').value
-        ),
-        affiliateToken: getAffiliateToken(),
-      },
-    }
-  },
   getProduct(isAjaxCart, item) {
     if (isAjaxCart) {
       const itemName = window
@@ -120,16 +101,6 @@ export default {
       window.$(document).on('click', '.cart__checkout', () =>
         RollbarWrapper(() => {
           const json = this.checkoutObject()
-          mixpanel.track(json.name, json.data)
-        })
-      )
-    } else if (
-      location.pathname.match(/\/products?.*/) ||
-      location.pathname.match(/\/collections\/:collectionName\/products\/?.*/)
-    ) {
-      window.$(document).on('submit', '.product-single__form', () =>
-        RollbarWrapper(() => {
-          const json = this.addToCartObject()
           mixpanel.track(json.name, json.data)
         })
       )

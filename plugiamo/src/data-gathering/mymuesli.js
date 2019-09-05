@@ -8,17 +8,6 @@ const convertToCents = selector => {
 }
 
 export default {
-  addToCartObject({ form }) {
-    return {
-      name: 'Add To Cart',
-      data: {
-        hostname: location.hostname,
-        withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
-        currency: 'EUR',
-        ...form,
-      },
-    }
-  },
   getProductsFromCart() {
     const finalObject = []
     $('.row[data-offer-id]:not(.toggleOffer)').map((i, item) => {
@@ -74,89 +63,6 @@ export default {
       },
     }
   },
-  trackAddToCart({ dataElement, isForm }) {
-    const form = this.getAddToCartObject({ dataElement, isForm })
-    if (!form) return
-    const json = this.addToCartObject({ form })
-    mixpanel.track(json.name, json.data)
-  },
-  getAddToCartObject({ dataElement, isForm }) {
-    const element = $(dataElement)
-    if (isForm) {
-      const formFields = element.serializeArray()
-      let productId, productName, subTotalInCents
-      if (location.pathname.indexOf('/muesli/') !== -1 && !element.find('button').attr('data-tm-offer-id')) {
-        productId = element.find('button').attr('value')
-        productName = $('.container.basic-section.custommix')
-          .find('.basic-text h1')
-          .first()
-          .text()
-        const priceBase = element
-          .closest('.offerbutton-new-container')
-          .find('.offer-price')
-          .text()
-          .trim()
-          .split('für ')
-        subTotalInCents = convertToCents(priceBase.length > 1 && priceBase[1])
-      } else if (location.pathname.indexOf('/mixer/') !== -1) {
-        productId = formFields && formFields[3] && formFields[3].value
-        productName = formFields && formFields[0] && formFields[0].value
-        subTotalInCents = convertToCents($('.js-total-price').text())
-      } else if (element.parent().attr('class') === 'updateCart') {
-        const isMinus = element.find('button i.fa').hasClass('fa-minus')
-        if (isMinus) return
-        const container = element.closest('.row')
-        productId =
-          container
-            .parent()
-            .closest('.row')
-            .attr('data-offer-id') ||
-          element
-            .find('input[name="offer_identifier"]')
-            .first()
-            .attr('value')
-        productName = container
-          .find('.article-description a')
-          .first()
-          .text()
-          .trim()
-          .replace(/\n|\r/g, '')
-          .replace(/\s\s+/g, ' ')
-        subTotalInCents = convertToCents(container.find('.js-price').text())
-      } else {
-        const elementParent = element.parent().parent()
-        const hasSelector = elementParent.find('select').length !== 0
-        const priceBase = hasSelector
-          ? elementParent
-              .find('.b2b-priceTag.active')
-              .text()
-              .trim()
-              .split('für ')
-          : element.find('button').attr('data-tm-offer-price')
-        productId = hasSelector
-          ? element
-              .find('input[name="offer_identifier"]')
-              .first()
-              .attr('value')
-          : element.find('button').attr('data-tm-offer-id')
-        productName = formFields && formFields[1] && formFields[1].value
-        subTotalInCents = convertToCents(hasSelector ? priceBase.length > 0 && priceBase[0] : priceBase)
-      }
-      return {
-        productId,
-        productName,
-        subTotalInCents,
-      }
-    }
-    const productName = element.find('abbr').text()
-    const productId = element.find('.offerbutton-new-button button').attr('data-offer-id')
-    const subTotalInCents = convertToCents(element.find('.nobr span').text())
-    return {
-      productId,
-      productName,
-      subTotalInCents,
-    }
-  },
   setupDataGathering() {
     if (location.pathname.match(/^\/shop\/complete/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
@@ -172,16 +78,5 @@ export default {
         })
       )
     }
-    $(document).on('click', '.offer-popup-container', event =>
-      RollbarWrapper(() => {
-        const dataElement = $(event.target).closest('.offer-item.offerbutton-new-container')
-        this.trackAddToCart({ dataElement, isForm: false })
-      })
-    )
-    $(document).on('submit', 'form[action="https://www.mymuesli.com/shop/cart/put"]', event =>
-      RollbarWrapper(() => {
-        this.trackAddToCart({ dataElement: event.target, isForm: true })
-      })
-    )
   },
 }
