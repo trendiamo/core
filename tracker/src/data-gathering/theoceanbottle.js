@@ -9,33 +9,6 @@ const convertToCents = selector => {
 }
 
 export default {
-  addToCartObject() {
-    const formFields = window.$('form.shopify-product-form').serializeArray()
-    return {
-      name: 'Add To Cart',
-      data: {
-        hostname: location.hostname,
-        productId:
-          formFields.find(element => element.name === 'id') && formFields.find(element => element.name === 'id').value,
-        productName: window
-          .$('.product-title')
-          .first()
-          .text(),
-        subTotalInCents: convertToCents(
-          window
-            .$('span.money')
-            .first()
-            .text()
-        ),
-        currency: 'GBP',
-        quantity: Number(
-          formFields.find(element => element.name === 'quantity') &&
-            formFields.find(element => element.name === 'quantity').value
-        ),
-        affiliateToken: getAffiliateToken(),
-      },
-    }
-  },
   getProductsFromCart() {
     return window
       .$('.cart-item')
@@ -105,16 +78,6 @@ export default {
       window.$(document).on('click', '.cart-button-checkout.button', () =>
         RollbarWrapper(() => {
           const json = this.checkoutObject()
-          mixpanel.track(json.name, json.data)
-        })
-      )
-    } else if (
-      location.pathname.match(/\/products?.*/) ||
-      location.pathname.match(/\/collections\/:collectionName\/products\/?.*/)
-    ) {
-      window.$(document).on('submit', '.shopify-product-form', () =>
-        RollbarWrapper(() => {
-          const json = this.addToCartObject()
           mixpanel.track(json.name, json.data)
         })
       )

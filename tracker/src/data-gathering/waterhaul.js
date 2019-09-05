@@ -9,33 +9,6 @@ const convertToCents = selector => {
 }
 
 export default {
-  addToCartObject() {
-    return {
-      name: 'Add To Cart',
-      data: {
-        hostname: location.hostname,
-        productId: jQuery
-          .noConflict()('button.single_add_to_cart_button')
-          .attr('value'),
-        productName: jQuery
-          .noConflict()('.product_title')
-          .text(),
-        subTotalInCents: convertToCents(
-          jQuery
-            .noConflict()('.price_value')
-            .last()
-            .text()
-        ),
-        currency: 'EUR',
-        quantity: Number(
-          jQuery
-            .noConflict()('.quantity > input')
-            .attr('value')
-        ),
-        affiliateToken: getAffiliateToken(),
-      },
-    }
-  },
   getProduct(isMenuCart, item) {
     if (isMenuCart) {
       const itemName = jQuery
@@ -134,15 +107,6 @@ export default {
         .on('click', '.checkout-button', () =>
           RollbarWrapper(() => {
             const json = this.checkoutObject()
-            mixpanel.track(json.name, json.data)
-          })
-        )
-    } else if (location.pathname.match(/product\//)) {
-      jQuery
-        .noConflict()(document)
-        .on('submit', 'form.cart', () =>
-          RollbarWrapper(() => {
-            const json = this.addToCartObject()
             mixpanel.track(json.name, json.data)
           })
         )

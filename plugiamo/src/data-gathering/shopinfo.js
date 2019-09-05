@@ -6,39 +6,6 @@ const convertToCents = selector => {
 }
 
 export default {
-  addToCartObject(callback, path, returnObj) {
-    window.$.ajax({
-      url: '/api/catalog_system/pub/products/search/' + path,
-      type: 'GET',
-      dataType: 'json',
-    }).then(results => {
-      if (!results || results.length === 0) return
-      const data = results[0]
-      if (returnObj) {
-        returnObj.productId = data.productId
-        returnObj.productName = data.productName
-        returnObj.productBrand = data.brand
-      }
-      callback(
-        returnObj || {
-          name: 'Add To Cart',
-          data: {
-            hostname: location.hostname,
-            withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
-            productId: data.productId,
-            productName: data.productName,
-            productBrand: data.brand,
-            currency: 'BRL',
-            subTotalInCents: {
-              noBoleto: convertToCents(window.$('.skuBestPrice')[0].innerText),
-              inTenInstalments: convertToCents(window.$('.skuBestInstallmentValue')[0].innerText),
-              aVistaNoCartao: convertToCents(window.$('.valor-por-real')[0].lastChild.innerText),
-            },
-          },
-        }
-      )
-    })
-  },
   getProductsFromCart({ isCheckoutForm }) {
     const productList = window.$(isCheckoutForm ? '.table.cart-items tbody tr' : '.vtexsc-productList tbody tr')
 
@@ -132,18 +99,6 @@ export default {
         })
       )
       return
-    }
-    if (location.pathname.match(/.*\/p$/)) {
-      window.$(document).on('click', '.buy-together--add', () =>
-        RollbarWrapper(() => {
-          this.addToCartObject(saveData, location.pathname)
-        })
-      )
-      window.$(document).on('click', '.buy-button', () =>
-        RollbarWrapper(() => {
-          this.addToCartObject(saveData, location.pathname)
-        })
-      )
     }
   },
 }
