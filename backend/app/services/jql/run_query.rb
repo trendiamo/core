@@ -4,7 +4,7 @@ module Jql
     JQL_HTTP_API_URL = "https://mixpanel.com/api/2.0/jql".freeze
 
     def initialize(params, script)
-      @params = adjust_dates(params)
+      @params = script == "revenues" ? params : adjust_dates(params)
       @script = script
       @key = { params: @params, script: @script, version: "4" }.to_json
     end
@@ -21,7 +21,9 @@ module Jql
     private
 
     def compute_result
-      return Jql::Scripts.send("#{script}_dummy", params).to_json unless ENV["MIXPANEL_API_KEY"]
+      unless ENV["MIXPANEL_API_KEY"] || ENV["MIXPANEL_API_KEY_TRACKER"]
+        return Jql::Scripts.send("#{script}_dummy", params).to_json
+      end
 
       result = Rails.cache.read(key)
       unless result
@@ -71,7 +73,8 @@ module Jql
     end
 
     def headers
-      { Authorization: "Basic " + Base64.encode64("#{ENV['MIXPANEL_API_KEY']}:") }
+      mixpanel_api_key = script == "revenues" ? "#{ENV['MIXPANEL_API_KEY_TRACKER']}:" : "#{ENV['MIXPANEL_API_KEY']}:"
+      { Authorization: "Basic " + Base64.encode64(mixpanel_api_key) }
     end
 
     def payload

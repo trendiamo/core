@@ -63,15 +63,20 @@ module Jql
       (Date.parse(params[:dates][:from_date])..Date.parse(params[:dates][:to_date])).step(7)
     end
 
+    def self.revenues
+      File.read(File.join(File.dirname(__FILE__), "revenues.js"))
+    end
+
     def self.revenues_dummy(_params)
-      brands = Brand.first(3)
-      brands.map do |brand|
-        total = rand(5..5000) * 100
-        {
-          brand: brand,
-          values: [{ total: total, payout: (total / rand(2..100)).to_f, currency: "EUR" }],
-        }
+      tokens = Affiliation.pluck(:token)
+      revenues = {}
+      tokens.each do |token|
+        revenues[token] = {}
+        currencies = %w[EUR USD GBP].sample(2)
+        currencies.each { |currency| revenues[token][currency] = rand(100..800) }
+        revenues[token]["PTT"] = 1000
       end
+      [revenues]
     end
   end
 end
