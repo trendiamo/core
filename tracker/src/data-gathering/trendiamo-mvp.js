@@ -109,15 +109,13 @@ export default {
 
     if (!window.$) return
 
-    window.$(document).on('click', '.secondary-nav__link.js-cart-trigger', () => {
-      window.$(document).on('submit', 'form.cart.ajaxcart__form', () =>
-        RollbarWrapper(() => {
-          const isAjaxCart = true
-          const json = this.checkoutObject(isAjaxCart)
-          mixpanel.track(json.name, json.data)
-        })
-      )
-    })
+    window.$(document).on('submit', 'form.cart.ajaxcart__form', () =>
+      RollbarWrapper(() => {
+        const isAjaxCart = true
+        const json = this.checkoutObject(isAjaxCart)
+        mixpanel.track(json.name, json.data)
+      })
+    )
     if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
       window.$(document).on('click', '.cart__checkout', () =>
         RollbarWrapper(() => {
