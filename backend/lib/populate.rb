@@ -194,6 +194,8 @@ class Populate # rubocop:disable Metrics/ClassLength
     create_simple_chats
     create_showcases
     create_triggers
+    create_affiliations
+    create_revenues
   end
 
   private
@@ -343,5 +345,35 @@ class Populate # rubocop:disable Metrics/ClassLength
       }
       Brand.create!(brand_attrs)
     end
+  end
+
+  def create_affiliations
+    promoters = User.where(affiliate_role: "promoter")
+    affiliate_accounts = Account.where(is_affiliate: true)
+    promoters.each do |promoter|
+      affiliation_attrs = {
+        user: promoter,
+        account: affiliate_accounts.sample,
+      }
+      Affiliation.create!(affiliation_attrs)
+    end
+  end
+
+  def create_revenues # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    revenues = Affiliation.all.map do |affiliation|
+      values = {}
+      currencies = %w[EUR USD GBP].sample(2)
+      currencies.each { |currency| values[currency] = rand(100..800) }
+      # "PTT" currency identifies a revenue generated with dummy data
+      values["PTT"] = 1000
+      {
+        account_id: affiliation.account.id,
+        user_id: affiliation.account.id,
+        captured_at: Time.now.utc.yesterday,
+        values: values,
+        commission_rate: affiliation.account.brand.commission_rate,
+      }
+    end
+    Revenue.create!(revenues)
   end
 end
