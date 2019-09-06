@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190904135934) do
+ActiveRecord::Schema.define(version: 20190905170028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20190904135934) do
     t.text "full_description"
     t.text "terms_and_conditions"
     t.string "commission_description"
-    t.string "commission_value"
+    t.decimal "commission_rate"
     t.string "header_image_url"
     t.string "instagram_url"
     t.string "facebook_url"
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20190904135934) do
     t.bigint "account_id"
     t.bigint "user_id"
     t.datetime "captured_at", null: false
-    t.string "commission_value", null: false
+    t.decimal "commission_rate", null: false
     t.json "values"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

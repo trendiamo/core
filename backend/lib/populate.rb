@@ -335,7 +335,7 @@ class Populate # rubocop:disable Metrics/ClassLength
         terms_and_conditions: "<p>#{Faker::Lorem.sentence(500)}</p>",
         header_image_url: Faker::LoremPixel.image("960x300", false, "abstract", Faker::Number.between(1, 10)),
         logo_url: Faker::Company.logo,
-        commission_value: "#{Faker::Number.between(1, 20)}%",
+        commission_rate: Faker::Number.between(1, 20).to_f / 100,
         commission_description: "Commission on Cart",
         instagram_url: "https://instagram.com/#{account.slug}",
         facebook_url: "https://facebook.com/#{account.slug}",
