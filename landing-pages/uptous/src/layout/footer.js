@@ -4,10 +4,14 @@ import styled from 'styled-components'
 import Container from '../components/container'
 import Section from '../components/section'
 import { openModal } from '../utils'
+import IconYouTube from '../images/youtube.svg'
+import IconInstagram from '../images/instagram.svg'
 
 const Header = styled.div``
 const Links = styled.div``
 const LegalText = styled.div``
+const StyledIconYouTube = styled(IconYouTube)``
+const StyledIconInstagram = styled(IconInstagram)``
 
 const onLegalNoticeClick = event => {
   event.preventDefault()
@@ -42,10 +46,10 @@ const Footer = styled(({ className }) => {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                {'YouTube'}
+                <StyledIconYouTube />
               </a>
               <a href="https://www.instagram.com/_uptous/" rel="noopener noreferrer" target="_blank">
-                {'Instagram'}
+                <StyledIconInstagram />
               </a>
             </div>
           </Links>
@@ -104,6 +108,19 @@ const Footer = styled(({ className }) => {
   }
   ${LegalText} {
     font-size: 0.58rem;
+  }
+
+  ${StyledIconYouTube} {
+    float: right;
+    width: 60px;
+    height: 60px;
+    margin-left: 20px;
+  }
+
+  ${StyledIconInstagram} {
+    float: right;
+    width: 60px;
+    height: 60px;
   }
 
   @media (min-width: 1000px) {
