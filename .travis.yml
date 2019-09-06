@@ -1,6 +1,0 @@
-language: ruby
-before_install:
-  - cd backend
-script:
-  - bin/rubocop
-  - bin/brakeman -q --no-pager
