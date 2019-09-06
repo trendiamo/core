@@ -3,11 +3,11 @@ class Revenue < ApplicationRecord
   belongs_to :user
 
   validates :captured_at, presence: true
-  validates :commission_value, presence: true
+  validates :commission_rate, presence: true
 
   def as_json(_options = {})
     attributes
-      .slice("id", "captured_at", "commission_value")
+      .slice("id", "captured_at", "commission_rate")
       .merge(extra_attributes)
   end
 

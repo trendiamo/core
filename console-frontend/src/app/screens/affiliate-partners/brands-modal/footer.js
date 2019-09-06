@@ -16,7 +16,7 @@ const Title = styled.div`
   text-transform: uppercase;
 `
 
-const CommissionValue = styled.div`
+const CommissionRate = styled.div`
   color: #1b3b50;
   font-size: 32px;
   font-weight: 700;
@@ -110,7 +110,7 @@ const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
     <ActionsContainer>
       <Details>
         <Conditions>
-          <CommissionValue>{brand.commissionValue}</CommissionValue>
+          <CommissionRate>{brand.commissionRate}</CommissionRate>
           <CommissionDescription>{brand.commissionDescription}</CommissionDescription>
         </Conditions>
         <TermsAcceptanceBox
