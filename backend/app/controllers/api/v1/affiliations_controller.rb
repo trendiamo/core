@@ -3,6 +3,7 @@ module Api
     class AffiliationsController < RestAdminController
       def create
         @affiliation = Affiliation.new(affiliation_params)
+        @affiliation.account_id = Brand.find(params[:brand_id]).account_id
         authorize @affiliation
         if @affiliation.save
           render json: @affiliation, status: :created
@@ -14,7 +15,7 @@ module Api
       private
 
       def affiliation_params
-        params.require(:affiliation).permit(:account_id, :user_id)
+        params.require(:affiliation).permit(:user_id)
       end
 
       def render_error

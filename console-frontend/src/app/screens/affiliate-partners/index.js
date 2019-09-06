@@ -84,7 +84,7 @@ const AffiliatePartners = () => {
     brand => {
       return (async () => {
         const { json, errors, requestError } = await apiRequest(apiAffiliationCreate, [
-          { accountId: brand.accountId, userId: auth.getUser().id },
+          { brandId: brand.id, userId: auth.getUser().id },
         ])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
