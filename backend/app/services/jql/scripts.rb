@@ -74,6 +74,7 @@ module Jql
         revenues[token] = {}
         currencies = %w[EUR USD GBP].sample(2)
         currencies.each { |currency| revenues[token][currency] = rand(100..800) }
+        # "PTT" currency identifies a revenue generated with dummy data
         revenues[token]["PTT"] = 1000
       end
       [revenues]
