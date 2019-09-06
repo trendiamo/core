@@ -12,6 +12,7 @@ AllCops:
     - db/**/*
     - script/**/*
     - public/**/*
+    - vendor/**/*
   TargetRubyVersion: 2.6
 
 Metrics/LineLength:
