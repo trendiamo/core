@@ -1,11 +1,7 @@
 import mixpanel from 'ext/mixpanel'
+import { convertToDigits } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
-
-const convertToCents = selector => {
-  if (!selector) return 0
-  return Number(selector.replace(/\D/g, ''))
-}
 
 export default {
   getProductsFromCart() {
@@ -24,12 +20,12 @@ export default {
       if (itemUrl && !itemUrl.indexOf('www.mymuesli.com') !== -1) {
         itemUrl = `https://www.mymuesli.com${itemUrl}`
       }
-      const price = convertToCents(
+      const price = convertToDigits(
         $(item)
-          .find('.js-total')
+          .find('.js-price')
           .text()
       )
-      const itemQuantity = Number(
+      const itemQuantity = convertToDigits(
         $(item)
           .find('.amount')
           .text()
@@ -58,7 +54,7 @@ export default {
         hostname: location.hostname,
         withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
         products: this.getProductsFromCart(),
-        subTotalInCents: convertToCents($('.js-cartamount').text()),
+        subTotalInCents: convertToDigits($('.js-cartamount').text()),
         currency: 'EUR',
       },
     }

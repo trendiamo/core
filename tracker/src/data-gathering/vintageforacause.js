@@ -1,9 +1,8 @@
 import mixpanel from 'ext/mixpanel'
-import { getAffiliateToken } from 'utils'
+import { convertToDigits, getAffiliateToken } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
 
 const $$ = (selector, callback) => Array.prototype.map.call(document.querySelectorAll(selector), callback)
-const convertToCents = text => (text ? Number(text.replace(/\D/g, '')) : 0)
 
 export default {
   triggerPurchaseSuccess() {
@@ -14,7 +13,7 @@ export default {
       const id = (element.dataset || { variantId: '' }).variantId
       const name = (element.querySelector('.cart-product-desc a') || { textContent: '' }).textContent.trim()
       const url = (element.querySelector('.cart-product-desc a') || { href: '' }).href
-      const price = convertToCents((element.querySelector('.product-price') || { textContent: '' }).textContent)
+      const price = convertToDigits((element.querySelector('.product-price') || { textContent: '' }).textContent)
       const quantity = (element.querySelector('.inputCounter') || { value: 0 }).value
       return { id, name, url, price, quantity, currency: 'EUR' }
     })
@@ -22,7 +21,9 @@ export default {
       hostname: location.hostname,
       products,
       currency: 'EUR',
-      subTotalInCents: convertToCents((document.querySelector('.cart-total-price') || { textContent: '' }).textContent),
+      subTotalInCents: convertToDigits(
+        (document.querySelector('.cart-total-price') || { textContent: '' }).textContent
+      ),
       affiliateToken: getAffiliateToken(),
     })
   },
@@ -30,7 +31,7 @@ export default {
     const id = (((window.ShopifyAnalytics || {}).meta || {}).product || {}).id
     const name = (document.querySelector('[itemprop="name"]') || { textContent: '' }).textContent.trim()
     const url = (document.querySelector('meta[itemprop="url"]') || { content: '' }).content
-    const price = convertToCents((document.querySelector('[itemprop="price"]') || { textContent: '' }).textContent)
+    const price = convertToDigits((document.querySelector('[itemprop="price"]') || { textContent: '' }).textContent)
     const quantity = (document.querySelector('#quantity') || { value: 0 }).value
     const products = [
       {
@@ -46,7 +47,7 @@ export default {
       hostname: location.hostname,
       products,
       currency: 'EUR',
-      subTotalInCents: convertToCents(
+      subTotalInCents: convertToDigits(
         (document.querySelector('.product-normal-price') || { textContent: '' }).textContent
       ),
       affiliateToken: getAffiliateToken(),

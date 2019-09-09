@@ -19,4 +19,9 @@ const getScrollbarWidth = () => {
   return widthNoScroll - widthWithScroll
 }
 
-export { isSmall, isLarge, getScrollbarWidth }
+const convertToDigits = selector => {
+  if (!selector) return 0
+  return Number(selector.replace(/\D/g, ''))
+}
+
+export { isSmall, isLarge, getScrollbarWidth, convertToDigits }

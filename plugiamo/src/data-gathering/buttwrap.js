@@ -1,40 +1,32 @@
 import mixpanel from 'ext/mixpanel'
 import { RollbarWrapper } from 'ext/rollbar'
 
-const convertToCents = selector => {
-  return Number(selector.replace(/\D/g, ''))
-}
-
 export default {
   getProductsFromCart() {
-    const table = window.$('form.cart > div')
-    let products = []
-    table.each((index, element) => {
-      if (index === 0 || index === table.length - 1) return
-      const url = element.querySelector('a').href
-      const name = element.querySelector('.cart__product-name').innerText
-      const size = element.querySelector('.grid__item.medium-up--three-fifths .grid__item.three-quarters > p').innerText
-      const quantity = Number(element.querySelector('input').value)
-      const price = convertToCents(element.querySelector('.money').innerText)
-      const id = element
-        .querySelector('input')
-        .getAttribute('data-id')
-        .split(':')[0]
-      const product = { id, url, name, size, quantity, price }
-      products.push(product)
+    if (!window.lion.cart.items) return []
+    return window.lion.cart.items.map(item => {
+      const url = item.url || window.$(`form.cart a[href*=${item.id}]`).attr('href')
+      return {
+        id: item.id,
+        name: item.product_title,
+        url: url && `${location.hostname}${url}`,
+        price: item.price,
+        quantity: item.quantity,
+        currency: 'EUR',
+        size: item.variant_title,
+      }
     })
-    return products
   },
   checkoutObject() {
-    const moneySpans = window.$('span.money').last()
+    if (!window.lion || !window.lion.cart) return
     return {
       name: 'Proceed To Checkout',
       data: {
         hostname: location.hostname,
         withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
         products: this.getProductsFromCart(),
-        currency: moneySpans.attr('data-currency') || 'EUR',
-        subTotalInCents: convertToCents(moneySpans.text()),
+        currency: window.lion.cart.currency,
+        subTotalInCents: window.lion.cart.items_subtotal_price,
       },
     }
   },

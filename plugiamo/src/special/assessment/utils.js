@@ -76,10 +76,7 @@ const assessProducts = (products, tags) => {
 const getShopcartProductIds = () =>
   process.env.ASSESSMENT_PRODUCT_ID
     ? [process.env.ASSESSMENT_PRODUCT_ID]
-    : dataGathering
-        .getProductsFromCart()
-        .map((key, value) => value.id)
-        .toArray()
+    : dataGathering.getProductsFromCart().map((key, value) => value.id)
 
 const recommendedProducts = ({ results, suggestions }) => {
   const client = results.find(item => item.hostname === assessmentHostname)

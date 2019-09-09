@@ -1,37 +1,37 @@
 import mixpanel from 'ext/mixpanel'
+import { convertToDigits } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
 export default {
   getProductsFromCart() {
-    return $('.item-holder')
+    return $('.shoppingcart_list > form')
       .map((i, item) => {
         const itemName = $(item)
-          .find('.item-name')
+          .find('.single-item-title h2')
           .text()
           .trim()
         if (!itemName) return
-        const itemUrl =
-          location.hostname +
+        const itemUrl = `${location.hostname}/${$(item)
+          .find('.single-item-holder a')
+          .attr('href')}`
+        const price = convertToDigits(
           $(item)
-            .find('a')
-            .attr('href')
-        const price = Number(
-          $(item)
-            .find('.item-info > li > .value')
-            .last()
+            .find('.add-info-price')
+            .first()
             .text()
-            .replace(/\D/g, '')
         )
-        const itemQuantity = $(item)
-          .find('.item-info > li > .value')
-          .first()
-          .text()
+        const quantity = convertToDigits(
+          $(item)
+            .find('.info-holder input')
+            .first()
+            .val()
+        )
         return {
           name: itemName,
           url: itemUrl,
           price,
-          quantity: itemQuantity,
+          quantity,
           currency: 'EUR',
         }
       })
@@ -44,11 +44,7 @@ export default {
         hostname: location.hostname,
         withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
         products: this.getProductsFromCart(),
-        subTotalInCents: Number(
-          $('#total_summary_list_info')
-            .text()
-            .replace(/\D/g, '')
-        ),
+        subTotalInCents: convertToDigits($('#total_summary_list_info').text()),
         currency: 'EUR',
       },
     }
