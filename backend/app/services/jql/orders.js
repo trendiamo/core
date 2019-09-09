@@ -9,45 +9,42 @@ function main() {
     .groupByUser([getAffiliateToken],(acc, events) => {
       acc = acc || {
         latestProceedToCheckoutIndex: null,
-        currencies: [],
+        orders: [],
       };
       for (let i = 0; i < events.length; ++i) {
         if (events[i].name === "Proceed To Checkout") {
             acc.latestProceedToCheckoutIndex = i
         } else if (events[i].name === "Purchase Success") {
           if (acc.latestProceedToCheckoutIndex !== null) {
-            if (!acc[events[acc.latestProceedToCheckoutIndex].properties.currency]) {
-              acc.currencies.push(events[acc.latestProceedToCheckoutIndex].properties.currency)
-              acc[events[acc.latestProceedToCheckoutIndex].properties.currency] = {amount: events[acc.latestProceedToCheckoutIndex].properties.subTotalInCents / 100}
-            } else {
-              acc[events[acc.latestProceedToCheckoutIndex].properties.currency].amount += events[acc.latestProceedToCheckoutIndex].properties.subTotalInCents / 100
+            let newOrder = {
+              currency: events[acc.latestProceedToCheckoutIndex].properties.currency,
+              amountInCents: events[acc.latestProceedToCheckoutIndex].properties.subTotalInCents,
+              products: events[acc.latestProceedToCheckoutIndex].properties.products,
             }
+            acc.orders.push(newOrder)
             acc.latestProceedToCheckoutIndex = null
           }
         }
       }
       return acc;
     })
-    .filter(entry => entry.value.currencies.length > 0)
     .reduce((accumulators, items) => {
       let result = {};
       for (let i = 0; i < accumulators.length; i++) {
         Object.keys(accumulators[i]).forEach((token) => {
-            if (!result[token]) result[token] = {}
-            Object.keys(accumulators[i][token]).forEach((currency) => {
-              if (!result[token][currency]) result[token][currency] = 0
-              result[token][currency] += accumulators[i][token][currency]
-            })
+            if (!result[token]) {
+              result[token] = {orders: accumulators[i][token].orders}
+            } else {
+              result[token].orders = result[token].orders.concat(accumulators[i][token].orders)
+            }
         });
       }
       for (let j = 0; j < items.length; j++) {
         let item = items[j]
         let token = item.key[1]
-        for (let m = 0; m < item.value.currencies.length; m++) {
-          let currency = item.value.currencies[m]
-          if (!result[token]) result[token] = {}
-          if (!result[token][currency]) result[token][currency] = 0
-          result[token][currency] += item.value[currency].amount
+        for (let m = 0; m < item.value.orders.length; m++) {
+          if (!result[token]) result[token] = {orders: []}
+          result[token].orders.push(item.value.orders[m])
         }
       }
       return result;

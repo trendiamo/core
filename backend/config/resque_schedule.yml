@@ -1,7 +1,7 @@
-fetch_revenues:
+fetch_orders:
   cron: '0 1 * * *'
-  class: FetchRevenuesJob
+  class: FetchOrdersJob
   rails_env: production
   queue: high
   args:
-  description: Fetch revenues from mixpanel every day at 01:00
+  description: Fetch orders from mixpanel every day at 01:00
