@@ -14,7 +14,7 @@ module Api
       private
 
       def jql_params
-        current_tenant ? data_dashboard_params : revenues_params
+        current_tenant ? data_dashboard_params : orders_params
       end
 
       def data_dashboard_params
@@ -22,7 +22,7 @@ module Api
         { dates: JSON.parse(params.require(:dates)).with_indifferent_access, hostname: hostname, sort: params[:sort] }
       end
 
-      def revenues_params
+      def orders_params
         token = current_user.affiliations.find_by(token: params.require(:affiliateToken))
         {
           dates: JSON.parse(params.require(:dates)).with_indifferent_access,

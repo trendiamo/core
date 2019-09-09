@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190905170028) do
+ActiveRecord::Schema.define(version: 20190909134323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,20 @@ ActiveRecord::Schema.define(version: 20190905170028) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "seller_id"
+    t.datetime "captured_at", null: false
+    t.string "commission_rate", null: false
+    t.integer "amount_in_cents", null: false
+    t.string "currency", null: false
+    t.json "products"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_orders_on_account_id"
+    t.index ["seller_id"], name: "index_orders_on_seller_id"
+  end
+
   create_table "outros", force: :cascade do |t|
     t.bigint "seller_id"
     t.bigint "account_id"
@@ -134,18 +148,6 @@ ActiveRecord::Schema.define(version: 20190905170028) do
     t.json "payload"
     t.bigint "source_id", null: false
     t.index ["account_id"], name: "index_products_on_account_id"
-  end
-
-  create_table "revenues", force: :cascade do |t|
-    t.bigint "account_id"
-    t.bigint "user_id"
-    t.datetime "captured_at", null: false
-    t.decimal "commission_rate", null: false
-    t.json "values"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_revenues_on_account_id"
-    t.index ["user_id"], name: "index_revenues_on_user_id"
   end
 
   create_table "sellers", force: :cascade do |t|
@@ -346,6 +348,8 @@ ActiveRecord::Schema.define(version: 20190905170028) do
   add_foreign_key "invites", "accounts"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "users"
+  add_foreign_key "orders", "accounts"
+  add_foreign_key "orders", "users", column: "seller_id"
   add_foreign_key "outros", "accounts"
   add_foreign_key "outros", "sellers"
   add_foreign_key "outros", "users", column: "owner_id"
@@ -353,8 +357,6 @@ ActiveRecord::Schema.define(version: 20190905170028) do
   add_foreign_key "product_picks", "images", column: "img_id"
   add_foreign_key "product_picks", "spotlights"
   add_foreign_key "products", "accounts"
-  add_foreign_key "revenues", "accounts"
-  add_foreign_key "revenues", "users"
   add_foreign_key "sellers", "accounts"
   add_foreign_key "sellers", "images", column: "animated_img_id"
   add_foreign_key "sellers", "images", column: "img_id"

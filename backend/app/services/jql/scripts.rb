@@ -63,21 +63,33 @@ module Jql
       (Date.parse(params[:dates][:from_date])..Date.parse(params[:dates][:to_date])).step(7)
     end
 
-    def self.revenues
-      File.read(File.join(File.dirname(__FILE__), "revenues.js"))
+    def self.orders
+      File.read(File.join(File.dirname(__FILE__), "orders.js"))
     end
 
-    def self.revenues_dummy(_params)
+    def self.product_dummy
+      {
+        "currency": "PTT",
+        "name": "White Sweatshirt",
+        "price": 1000,
+        "quantity": 1,
+        "url": "https://trendiamo-mvp.myshopify.com/collections/all/products/white-sweatshirt",
+      }
+    end
+
+    def self.order_dummy
+      {
+        currency: "PTT",
+        amountInCents: 1000,
+        products: [product_dummy],
+      }
+    end
+
+    def self.orders_dummy(_params)
       tokens = Affiliation.pluck(:token)
-      revenues = {}
-      tokens.each do |token|
-        revenues[token] = {}
-        currencies = %w[EUR USD GBP].sample(2)
-        currencies.each { |currency| revenues[token][currency] = rand(100..800) }
-        # "PTT" currency identifies a revenue generated with dummy data
-        revenues[token]["PTT"] = 1000
-      end
-      [revenues]
+      result = {}
+      tokens.each { |token| result[token] = { orders: [order_dummy] } }
+      [result]
     end
   end
 end

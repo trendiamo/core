@@ -1,4 +1,4 @@
-class Mixpanel::FetchRevenues
+class Mixpanel::FetchOrders
   def self.perform
     new.perform
   end
@@ -12,36 +12,39 @@ class Mixpanel::FetchRevenues
   end
 
   def perform
-    json = mixpanel_revenues
+    json = mixpanel_orders
     return unless json
 
-    revenues = json.keys.map do |token|
+    orders = []
+    json.keys.each do |token|
       affiliation = Affiliation.find_by(token: token)
-      revenue_params(affiliation, json, token) if affiliation
+      json[token]["orders"].each { |order| orders << order_params(affiliation, order) } if affiliation
     end
-    Revenue.create!(revenues)
+    Order.create!(orders)
   end
 
   private
 
-  def mixpanel_revenues
-    result = ::Jql::RunQuery.new(mixpanel_revenues_params, "revenues").perform
+  def mixpanel_orders
+    result = ::Jql::RunQuery.new(mixpanel_orders_params, "orders").perform
     JSON.parse(result)[0]
   end
 
-  def mixpanel_revenues_params
+  def mixpanel_orders_params
     {
       dates: @dates,
       affiliateTokens: @affiliate_tokens,
     }
   end
 
-  def revenue_params(affiliation, json, token)
+  def order_params(affiliation, order)
     {
-      user: affiliation.user,
+      seller: affiliation.user,
       account: affiliation.account,
       captured_at: Time.now.utc,
-      values: json[token],
+      products: order["products"],
+      amount_in_cents: order["amountInCents"],
+      currency: order["currency"],
       commission_rate: affiliation.account.brand.commission_rate,
     }
   end

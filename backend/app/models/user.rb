@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :accounts, through: :memberships
 
   has_many :affiliations, dependent: :destroy
-  has_many :revenues, dependent: :destroy
+  has_many :orders, dependent: :destroy, foreign_key: "seller_id", inverse_of: "seller"
 
   has_many :invites, dependent: :destroy, class_name: "Invite", foreign_key: "recipient_id", inverse_of: "recipient"
   has_many :sent_invites, dependent: :destroy, class_name: "Invite", foreign_key: "sender_id", inverse_of: "sender"

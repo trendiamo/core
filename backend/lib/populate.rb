@@ -195,7 +195,7 @@ class Populate # rubocop:disable Metrics/ClassLength
     create_showcases
     create_triggers
     create_affiliations
-    create_revenues
+    create_orders
   end
 
   private
@@ -359,21 +359,26 @@ class Populate # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def create_revenues # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    revenues = Affiliation.all.map do |affiliation|
-      values = {}
-      currencies = %w[EUR USD GBP].sample(2)
-      currencies.each { |currency| values[currency] = rand(100..800) }
-      # "PTT" currency identifies a revenue generated with dummy data
-      values["PTT"] = 1000
-      {
-        account_id: affiliation.account.id,
-        user_id: affiliation.account.id,
-        captured_at: Time.now.utc.yesterday,
-        values: values,
-        commission_rate: affiliation.account.brand.commission_rate,
-      }
-    end
-    Revenue.create!(revenues)
+  def order_params(affiliation) # rubocop:disable Metrics/MethodLength
+    {
+      seller: affiliation.user,
+      account: affiliation.account,
+      captured_at: Time.now.utc,
+      commission_rate: affiliation.account.brand.commission_rate,
+      currency: "PTT",
+      amount_in_cents: 1000,
+      products: [{
+        "currency": "PTT",
+        "name": "White Sweatshirt",
+        "price": 1000,
+        "quantity": 1,
+        "url": "https://trendiamo-mvp.myshopify.com/collections/all/products/white-sweatshirt",
+      }],
+    }
+  end
+
+  def create_orders
+    orders = Affiliation.all.map { |affiliation| order_params(affiliation) }
+    Order.create!(orders)
   end
 end
