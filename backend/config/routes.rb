@@ -65,8 +65,10 @@ Rails.application.routes.draw do
         resources :flows, only: %i[index]
 
         resources :affiliations, only: %i[create]
-        
-        resources :revenues, only: %i[index]
+
+        resources :orders, only: %i[index]
+
+        get "/revenues", to: "orders#revenues"
 
         get "/events", to: "mixpanel_events#index"
       end
