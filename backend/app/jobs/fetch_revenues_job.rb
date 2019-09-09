@@ -1,7 +1,5 @@
-class FetchRevenuesJob < ApplicationJob
-  queue_as :default
-
-  def perform
+class FetchRevenuesJob
+  def self.perform
     Mixpanel::FetchRevenues.perform
   end
 end

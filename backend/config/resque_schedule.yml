@@ -1,5 +1,7 @@
 fetch_revenues:
   cron: '0 1 * * *'
+  class: FetchRevenuesJob
   rails_env: production
-  class: FetchRevenues
+  queue: high
+  args:
   description: Fetch revenues from mixpanel every day at 01:00
