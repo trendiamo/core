@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { convertToDigits } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
@@ -15,15 +16,16 @@ export default {
         const itemUrl = $(item)
           .find('.articulo > a')
           .attr('href')
-        const price = Number(
+        const price = convertToDigits(
           $(item)
-            .find('.total')
+            .find('.precio')
             .text()
-            .replace(/\D/g, '')
         )
-        const itemQuantity = $(item)
-          .find('.cantidad')
-          .text()
+        const itemQuantity = convertToDigits(
+          $(item)
+            .find('.cantidad')
+            .text()
+        )
 
         return {
           name: itemName,
@@ -43,11 +45,7 @@ export default {
         hostname: location.hostname,
         withPlugin: !!$('iframe[title="Frekkls Launcher"]')[0],
         products: this.getProductsFromCart(),
-        subTotalInCents: Number(
-          $('#cantidad_total_productos')
-            .text()
-            .replace(/\D/g, '')
-        ),
+        subTotalInCents: convertToDigits($('#cantidad_total_productos').text()),
         currency: 'EUR',
       },
     }
@@ -61,8 +59,7 @@ export default {
     if (!window.$) return
 
     if (location.pathname.match(/tienda\/cesta/)) {
-      if (!$('.pedido')[0]) return
-      $('#btn_comprar').on('click', () =>
+      $(document).on('click', '#btn_comprar', () =>
         RollbarWrapper(() => {
           const json = _this.checkoutObject()
           mixpanel.track(json.name, json.data)

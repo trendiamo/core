@@ -12,4 +12,9 @@ const setAffiliateToken = () => {
 
 const getAffiliateToken = () => localStorage.getItem('aftk')
 
-export { setAffiliateToken, getAffiliateToken }
+const convertToDigits = selector => {
+  if (!selector) return 0
+  return Number(selector.replace(/\D/g, ''))
+}
+
+export { setAffiliateToken, getAffiliateToken, convertToDigits }

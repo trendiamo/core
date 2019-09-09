@@ -1,9 +1,8 @@
 import mixpanel from 'ext/mixpanel'
-import { getAffiliateToken } from 'utils'
+import { convertToDigits, getAffiliateToken } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
 
 const $$ = (selector, callback) => Array.prototype.map.call(document.querySelectorAll(selector), callback)
-const convertToCents = text => (text ? Number(text.replace(/\D/g, '')) : 0)
 
 // from https://stackoverflow.com/a/52809105
 const setupLocationChangeEvent = () => {
@@ -35,7 +34,7 @@ export default {
   triggerProceedToCheckout() {
     const products = $$('.order-products .product-cart', element => {
       const name = (element.querySelector('.product-name') || { textContent: '' }).textContent.trim()
-      const price = convertToCents((element.querySelector('.main-price') || { textContent: '' }).textContent)
+      const price = convertToDigits((element.querySelector('.main-price') || { textContent: '' }).textContent)
       const quantity = (element.querySelector('.quantity') || { value: 0 }).value
       return { name, price, quantity, currency: 'EUR' }
     })
@@ -43,7 +42,7 @@ export default {
       hostname: location.hostname,
       products,
       currency: 'EUR',
-      subTotalInCents: convertToCents((document.querySelector('div.main-total') || { textContent: '' }).textContent),
+      subTotalInCents: convertToDigits((document.querySelector('div.main-total') || { textContent: '' }).textContent),
       affiliateToken: getAffiliateToken(),
     })
   },

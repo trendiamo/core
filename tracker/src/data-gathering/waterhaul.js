@@ -1,12 +1,8 @@
 import mixpanel from 'ext/mixpanel'
+import { convertToDigits } from 'utils'
 import { getAffiliateToken } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
-
-const convertToCents = selector => {
-  if (!selector) return 0
-  return Number(selector.replace(/\D/g, ''))
-}
 
 export default {
   getProduct(isMenuCart, item) {
@@ -22,16 +18,25 @@ export default {
         .find('h3')
         .children('a')
         .attr('href')
-      const price = convertToCents(
+      const price = convertToDigits(
         jQuery
           .noConflict()(item)
-          .find('.product-subtotal')
+          .find('.woocommerce-Price-amount.amount')
+          .first()
           .text()
+      )
+      const quantity = convertToDigits(
+        jQuery
+          .noConflict()(item)
+          .find('.mc-quantity')
+          .text()
+          .split('×')[0]
       )
       return {
         name: itemName,
         url: itemUrl,
         price,
+        quantity,
         currency: 'EUR',
       }
     } else {
@@ -46,15 +51,22 @@ export default {
         .find('.product-name')
         .children('a')
         .attr('href')
-      const price = convertToCents(
+      const price = convertToDigits(
         jQuery
           .noConflict()(item)
-          .find('.product-subtotal')
+          .find('.product-price')
           .text()
+      )
+      const quantity = convertToDigits(
+        jQuery
+          .noConflict()(item)
+          .find('input')
+          .val()
       )
       return {
         name: itemName,
         url: itemUrl,
+        quantity,
         price,
         currency: 'EUR',
       }
@@ -71,7 +83,7 @@ export default {
         hostname: location.hostname,
         products: this.getProductsFromCart(isMenuCart),
         currency: 'EUR',
-        subTotalInCents: convertToCents(
+        subTotalInCents: convertToDigits(
           jQuery
             .noConflict()('.cart-subtotal')
             .find('.woocommerce-Price-amount.amount')

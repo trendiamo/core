@@ -1,11 +1,6 @@
 import mixpanel from 'ext/mixpanel'
-import { getAffiliateToken } from 'utils'
+import { convertToDigits, getAffiliateToken } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
-
-const convertToCents = selector => {
-  if (!selector) return 0
-  return Number(selector.replace(/\D/g, ''))
-}
 
 export default {
   triggerCartProceedToCheckout() {
@@ -22,7 +17,7 @@ export default {
             .$(item)
             .find('a')
             .attr('href')
-        const price = convertToCents(
+        const price = convertToDigits(
           window
             .$(item)
             .find('.ajaxcart__price')
@@ -42,7 +37,7 @@ export default {
       hostname: location.hostname,
       products,
       currency: 'EUR',
-      subTotalInCents: convertToCents(
+      subTotalInCents: convertToDigits(
         window
           .$('.ajaxcart__subtotal')
           .last()
@@ -56,7 +51,7 @@ export default {
       {
         name: window.$('.product-single__title').text(),
         url: location.origin + location.pathname,
-        price: convertToCents(window.$('.product-single__price').text()),
+        price: convertToDigits(window.$('.product-single__price').text()),
         quantity: 1,
         currency: 'EUR',
       },
@@ -65,7 +60,7 @@ export default {
       hostname: location.hostname,
       products,
       currency: 'EUR',
-      subTotalInCents: convertToCents(
+      subTotalInCents: convertToDigits(
         window
           .$('.product-single__price')
           .last()

@@ -1,35 +1,52 @@
 import mixpanel from 'ext/mixpanel'
+import { convertToDigits } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
-
-const convertToCents = selector => {
-  return Number(selector.replace(/\D/g, ''))
-}
 
 export default {
   getProductsFromCart({ isCheckoutForm }) {
-    const productList = window.$(isCheckoutForm ? '.table.cart-items tbody tr' : '.vtexsc-productList tbody tr')
-
-    let result = []
-
-    if (productList.length > 0) {
-      productList.each((index, productElement) => {
-        let quantityElement = productElement.querySelector(isCheckoutForm ? '.quantity input' : '.cartSkuQuantity')
-        let quantityElementValue =
-          quantityElement && (isCheckoutForm ? quantityElement.value : quantityElement.innerText)
-        if (isCheckoutForm && !quantityElement) {
-          quantityElement = productElement.querySelector('.quantity span')
-          quantityElementValue = quantityElement && quantityElement.innerText
-        }
-        const quantity = Number(isCheckoutForm ? quantityElementValue : quantityElement.innerText)
-        const price = convertToCents(
-          productElement.querySelector(isCheckoutForm ? '.new-product-price' : '.bestPrice').innerText
-        )
-        const name = productElement.querySelector(isCheckoutForm ? '.product-name a' : '.cartSkuName').innerText
-        const product = { name, price, quantity }
-        result.push(product)
-      })
+    if (isCheckoutForm) {
+      const productList = window.$('.table.cart-items tbody tr')
+      return productList
+        .map((index, item) => {
+          const element = window.$(item)
+          const name = element
+            .find('.product-name a')
+            .first()
+            .text()
+          const price = convertToDigits(
+            element
+              .find('.new-product-price')
+              .first()
+              .text()
+          )
+          const quantityElement = element.find('.quantity input').first()
+          const quantity = convertToDigits(
+            quantityElement.length === 0 ? element.find('.quantity span').text() : quantityElement.val()
+          )
+          return { name, price, quantity }
+        })
+        .toArray()
     }
-    this.products = result
+
+    const productList = window.$('.vtexsc-productList tbody tr')
+
+    return productList
+      .map((index, item) => {
+        const element = window.$(item)
+        const name = element
+          .find('.cartSkuName')
+          .first()
+          .text()
+        const price = convertToDigits(
+          element
+            .find('.bestPrice')
+            .first()
+            .text()
+        )
+        const quantity = convertToDigits(element.find('.cartSkuQuantity').text())
+        return { name, price, quantity }
+      })
+      .toArray()
   },
   checkoutObject(isCheckoutForm) {
     return {
@@ -39,8 +56,11 @@ export default {
         withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
         products: this.products,
         currency: 'BRL',
-        subTotalInCents: convertToCents(
-          isCheckoutForm ? window.$('.monetary')[0].innerText : window.$('.vtexsc-text')[0].innerText
+        subTotalInCents: convertToDigits(
+          window
+            .$(isCheckoutForm ? '.monetary' : '.vtexsc-text')
+            .first()
+            .text()
         ),
       },
     }
@@ -67,12 +87,9 @@ export default {
 
     if (!window.$) return
 
-    const saveData = resultsObj => {
-      mixpanel.track(resultsObj.name, resultsObj.data)
-    }
     const isCheckoutForm = location.pathname.match(/^\/checkout\//)
 
-    this.getProductsFromCart({ isCheckoutForm })
+    this.products = this.getProductsFromCart({ isCheckoutForm })
 
     window.$(document).ajaxComplete((event, xhr, settings) => {
       if (xhr.status !== 200) return
@@ -80,7 +97,7 @@ export default {
         setTimeout(
           () =>
             RollbarWrapper(() => {
-              this.getProductsFromCart({ isCheckoutForm })
+              this.products = this.getProductsFromCart({ isCheckoutForm })
             }),
           100
         )

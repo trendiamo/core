@@ -1,4 +1,5 @@
 import mixpanel from 'ext/mixpanel'
+import { convertToDigits } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
 
@@ -17,13 +18,12 @@ export default {
           .find("[data-th='Artikel']")
           .children('a')
           .attr('href')
-        const price = Number(
+        const price = convertToDigits(
           jQuery
             .noConflict()(item)
             .find('span.price')
-            .last()
+            .first()
             .text()
-            .replace(/\D/g, '')
         )
         const itemQuantity = jQuery
           .noConflict()(item)
@@ -39,6 +39,7 @@ export default {
           currency: 'EUR',
         }
       })
+      .toArray()
   },
   checkoutObject() {
     return {
@@ -47,12 +48,11 @@ export default {
         hostname: location.hostname,
         withPlugin: !!jQuery.noConflict()('iframe[title="Frekkls Launcher"]')[0],
         products: this.getProductsFromCart(),
-        subTotalInCents: Number(
+        subTotalInCents: convertToDigits(
           jQuery
             .noConflict()('span.price')
             .last()
             .text()
-            .replace(/\D/g, '')
         ),
         currency: 'EUR',
       },

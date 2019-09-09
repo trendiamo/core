@@ -1,12 +1,8 @@
 import mixpanel from 'ext/mixpanel'
+import { convertToDigits } from 'utils'
 import { getAffiliateToken } from 'utils'
 import { RollbarWrapper } from 'ext/rollbar'
 /* eslint-disable no-undef */
-
-const convertToCents = selector => {
-  if (!selector) return 0
-  return Number(selector.replace(/\D/g, ''))
-}
 
 export default {
   getProductsFromCart() {
@@ -25,14 +21,13 @@ export default {
             .find('.cart-title')
             .children('a')
             .attr('href')
-        const price = convertToCents(
+        const price = convertToDigits(
           window
             .$(item)
-            .find('.cart-item-total')
-            .last()
+            .find('.cart-item-price')
             .text()
         )
-        const itemQuantity = Number(
+        const itemQuantity = convertToDigits(
           window
             .$(item)
             .find('.cart-item-quantity-display')
@@ -57,7 +52,7 @@ export default {
         hostname: location.hostname,
         products: this.getProductsFromCart(),
         currency: 'GBP',
-        subTotalInCents: convertToCents(
+        subTotalInCents: convertToDigits(
           window
             .$('span.money')
             .last()
@@ -76,6 +71,12 @@ export default {
 
     if (location.pathname.match(/^\/cart((\/\w+)+|\/?)/)) {
       window.$(document).on('click', '.cart-button-checkout.button', () =>
+        RollbarWrapper(() => {
+          const json = this.checkoutObject()
+          mixpanel.track(json.name, json.data)
+        })
+      )
+      window.$(document).on('click', '.dynamic-checkout__content div[role="button"]', () =>
         RollbarWrapper(() => {
           const json = this.checkoutObject()
           mixpanel.track(json.name, json.data)
