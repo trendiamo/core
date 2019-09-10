@@ -342,6 +342,7 @@ class Populate # rubocop:disable Metrics/ClassLength
         instagram_url: "https://instagram.com/#{account.slug}",
         facebook_url: "https://facebook.com/#{account.slug}",
         twitter_url: "https://twitter.com/#{account.slug}",
+        tags: %w[europe usa uk de nl].sample(rand(1..3)).join(", "),
       }
       Brand.create!(brand_attrs)
     end
