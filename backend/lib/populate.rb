@@ -177,25 +177,14 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
   end
 end
 
-class Populate # rubocop:disable Metrics/ClassLength
+class PopulateUsers
   def self.process
     new.process
   end
 
-  def process # rubocop:disable Metrics/MethodLength
-    create_accounts
-    create_brands
+  def process
     create_users
     create_memberships
-    create_websites
-    ActsAsTenant.default_tenant = Account.find_by(name: "Test Account")
-    create_sellers
-    create_outros
-    create_simple_chats
-    create_showcases
-    create_triggers
-    create_affiliations
-    create_orders
   end
 
   private
@@ -212,7 +201,7 @@ class Populate # rubocop:disable Metrics/ClassLength
       { email: "gc", name: "Gregg Cooper" },
       { email: "dw", name: "Douglas Wellington", admin: true },
       { email: "tds", name: "Thomas Simpson", admin: true },
-      { email: "promoter", name: "Paul Simon", affiliate_role: "promoter", social_media_url: "http://ig.com/frekkls" },
+      { email: "promoter", name: "Paul Simon", affiliate_role: "promoter" },
     ]
   end
 
@@ -224,9 +213,61 @@ class Populate # rubocop:disable Metrics/ClassLength
       password: "password", password_confirmation: "password",
       confirmed_at: Time.now.utc,
       affiliate_role: team_member[:affiliate_role] || "not_affiliate",
-      social_media_url: team_member[:social_media_url],
+      social_media_url: team_member[:affiliate_role] ? "http://ig.com/frekkls" : nil,
     }
   end
+
+  def create_users # rubocop:disable Metrics/MethodLength
+    users_attrs = team_members.map do |team_member|
+      user = user_format(team_member)
+      user[:admin] = team_member[:admin] == true
+      user
+    end
+    User.create!(users_attrs)
+    code = User.find_by(email: "promoter@trendiamo.com").referral_code
+    extra_users_attrs = [
+      user_format(email: "i", name: "Invited Lazy", affiliate_role: "promoter").merge(referred_by_code: code),
+      user_format(email: "iu", name: "Invited Useful", affiliate_role: "promoter").merge(referred_by_code: code),
+    ]
+    User.create!(extra_users_attrs)
+  end
+
+  def create_memberships
+    team_members.each do |team_member|
+      user = User.find_by(email: "#{team_member[:email]}@trendiamo.com")
+      next if user.admin
+
+      Membership.create!(account: Account.find_by(name: "Test Account"),
+                         user: user, role: team_member[:role] || "owner")
+      if team_member[:multiple_memberships]
+        Membership.create!(account: Account.find_by(name: "Other Account"),
+                           user: user, role: "editor")
+      end
+    end
+  end
+end
+
+class Populate # rubocop:disable Metrics/ClassLength
+  def self.process
+    new.process
+  end
+
+  def process # rubocop:disable Metrics/MethodLength
+    create_accounts
+    create_brands
+    PopulateUsers.process
+    create_websites
+    ActsAsTenant.default_tenant = Account.find_by(name: "Test Account")
+    create_sellers
+    create_outros
+    create_simple_chats
+    create_showcases
+    create_triggers
+    create_affiliations
+    create_orders
+  end
+
+  private
 
   def create_accounts
     Account.create!(name: "Test Account", is_affiliate: true)
@@ -245,29 +286,6 @@ class Populate # rubocop:disable Metrics/ClassLength
         account: account,
       }
       Website.create!(website_attrs)
-    end
-  end
-
-  def create_users
-    users_attrs = team_members.map do |team_member|
-      user = user_format(team_member)
-      user[:admin] = team_member[:admin] == true
-      user
-    end
-    User.create!(users_attrs)
-  end
-
-  def create_memberships
-    team_members.each do |team_member|
-      user = User.find_by(email: "#{team_member[:email]}@trendiamo.com")
-      next if user.admin
-
-      Membership.create!(account: Account.find_by(name: "Test Account"),
-                         user: user, role: team_member[:role] || "owner")
-      if team_member[:multiple_memberships]
-        Membership.create!(account: Account.find_by(name: "Other Account"),
-                           user: user, role: "editor")
-      end
     end
   end
 
@@ -349,7 +367,7 @@ class Populate # rubocop:disable Metrics/ClassLength
   end
 
   def create_affiliations
-    promoters = User.where(affiliate_role: "promoter")
+    promoters = User.where(affiliate_role: "promoter").where.not(last_name: "Lazy")
     affiliate_accounts = Account.where(is_affiliate: true)
     promoters.each do |promoter|
       affiliation_attrs = {
