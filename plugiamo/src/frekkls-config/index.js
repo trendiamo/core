@@ -16,6 +16,7 @@ import villaDonatelloConfig from './villadonatello'
 
 const defaultConfig = {
   position: 'right',
+  initDelay: 0, // delay showing plugin, in milliseconds
   onInit: () => null, // return false to "cancel" the plugin.
   onShow: () => null, // autoOpen => null,
   addPicture: () => null, // picure => null

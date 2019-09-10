@@ -28,6 +28,7 @@ const App = ({
   showingLauncher,
   timeoutToDisappear,
 }) => {
+  const [isHiddenInTimeout, setIsHiddenInTimeout] = useState(false)
   const [isUnmounting, setIsUnmounting] = useState(false)
   const autoOpen = useRef(null)
   const flowType = useRef(null)
@@ -46,7 +47,8 @@ const App = ({
     seller.current = config.seller
   }, [config.flowType, config.open, config.seller, data])
 
-  useEffect(() => {
+  const initialLoad = useCallback(() => {
+    setIsHiddenInTimeout(false)
     mixpanel.track('Loaded Plugin', {
       autoOpen: autoOpen.current,
       flowType: flowType.current,
@@ -67,6 +69,16 @@ const App = ({
       mixpanel.time_event('Toggled Plugin')
     }
   }, [setPluginState, setShowingContent])
+
+  useEffect(() => {
+    const frekklsConfig = getFrekklsConfig()
+    if (frekklsConfig.initDelay > 0) {
+      setIsHiddenInTimeout(true)
+      window.setTimeout(initialLoad, frekklsConfig.initDelay)
+    } else {
+      initialLoad()
+    }
+  }, [initialLoad])
 
   const onToggleContent = useCallback(() => {
     if (data.flow && flowType.current === 'outro') return
@@ -132,7 +144,7 @@ const App = ({
     if (showingContent) clearDisappearTimeout()
   }, [clearDisappearTimeout, showingContent])
 
-  if (!hasSeller) return null
+  if (!hasSeller || isHiddenInTimeout) return null
 
   return (
     <AppBase
