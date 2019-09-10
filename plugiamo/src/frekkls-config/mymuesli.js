@@ -11,6 +11,9 @@ const homepageModules = {
   '/mm2go-susanne.schoene': '/simple-chat/376',
   '/mm2go-elias': '/simple-chat/362',
   '/mm2go-marnifaktur': '/simple-chat/350',
+  '/mm2go-jennimelzer': '/simple-chat/381',
+  '/mm2go-jjtigerminka': '/simple-chat/369',
+  '/mm2go-alicia9': '/simple-chat/365',
 }
 
 const memorizeModule = ({ homepageModule }) => {
