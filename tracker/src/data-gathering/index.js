@@ -1,4 +1,5 @@
 import almagreendesign from './almagreendesign'
+import canussa from './canussa'
 import elementum from './elementum'
 import protsaah from './protsaah'
 import theoceanbottleDataGathering from './theoceanbottle'
@@ -7,6 +8,7 @@ import vintageforacause from './vintageforacause'
 import waterhaulDataGathering from './waterhaul'
 
 const dataGatheringFactory = {
+  'canussa.com': canussa, // woocommerce
   'theoceanbottle.com': theoceanbottleDataGathering, // shopify
   'waterhaul.co': waterhaulDataGathering, // woocommerce
   'trendiamo-mvp.myshopify.com': trendiamoMVP, // shopify
