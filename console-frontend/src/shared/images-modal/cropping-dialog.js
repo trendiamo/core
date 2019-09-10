@@ -54,6 +54,7 @@ const DialogContentCropping = ({ crop, onCropChange, onCropComplete, onImageLoad
         <HiddenImg alt="" ref={imagePreviewRef} src={image} />
         <StyledReactCrop
           crop={crop}
+          imageStyle={{ maxHeight: 'none' }}
           keepSelection
           minHeight={20}
           minWidth={20}
