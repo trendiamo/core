@@ -4,7 +4,7 @@ import ClipboardInput from 'shared/clipboard-input'
 import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import { IconButton } from '@material-ui/core'
+import { Chip, IconButton } from '@material-ui/core'
 
 const StyledSection = styled(Section)`
   margin-top: 10px;
@@ -77,6 +77,22 @@ const StyledClipboardInput = styled(ClipboardInput)`
   min-width: 320px;
 `
 
+const StyledChip = styled(Chip)`
+  background-color: #8799a4;
+  border-radius: 0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  height: 21px;
+  margin-right: 5px;
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  span {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+`
+
 const BrandCard = ({ animate, brand, createAffiliation, setIsCustomLinkModalOpen, setSelectedBrand }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -104,7 +120,12 @@ const BrandCard = ({ animate, brand, createAffiliation, setIsCustomLinkModalOpen
             <ImageContainer>
               <Image src={brand.logoUrl} />
             </ImageContainer>
-            {!affiliation && <Description>{brand.description}</Description>}
+            <div>
+              {!affiliation && <Description>{brand.description}</Description>}
+              {brand.tags.split(',').map(tag => (
+                <StyledChip key={tag} label={tag} size="small" />
+              ))}
+            </div>
           </ImageAndDescriptionContainer>
           <Actions>
             <WebsiteButton websiteHostname={brand.websiteHostname} />
