@@ -1,18 +1,20 @@
 import almagreendesign from './almagreendesign'
 import elementum from './elementum'
+import protsaah from './protsaah'
 import theoceanbottleDataGathering from './theoceanbottle'
 import trendiamoMVP from './trendiamo-mvp'
 import vintageforacause from './vintageforacause'
 import waterhaulDataGathering from './waterhaul'
 
 const dataGatheringFactory = {
-  'theoceanbottle.com': theoceanbottleDataGathering,
-  'waterhaul.co': waterhaulDataGathering,
-  'trendiamo-mvp.myshopify.com': trendiamoMVP,
-  'almagreendesign.com': almagreendesign,
-  'elementum.store': elementum,
-  'www.almagreendesign.com': almagreendesign,
-  'vintageforacause.pt': vintageforacause,
+  'theoceanbottle.com': theoceanbottleDataGathering, // shopify
+  'waterhaul.co': waterhaulDataGathering, // woocommerce
+  'trendiamo-mvp.myshopify.com': trendiamoMVP, // shopify
+  'almagreendesign.com': almagreendesign, // vue-storefront +magento2?
+  'elementum.store': elementum, // shopify
+  'www.almagreendesign.com': almagreendesign, // vue-storefront +magento2?
+  'vintageforacause.pt': vintageforacause, // shopify
+  'www.protsaah.com': protsaah, // magento2
 }
 
 const dataGathering = dataGatheringFactory[window.location.hostname]

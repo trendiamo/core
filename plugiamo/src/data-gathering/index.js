@@ -10,17 +10,17 @@ import timeBlockDataGathering from './time-block'
 import tontonetfilsDataGathering from './tontonetfils'
 
 const dataGatheringFactory = {
-  'www.buttwrap.com': buttwrapDataGathering,
-  'www.pierre-cardin.de': pierrecardinDataGathering,
-  'www.shopinfo.com.br': shopinfoDataGathering,
-  'www.impressorajato.com.br': impressorajatoDataGathering,
-  'www.baldessarini.com': baldessariniDataGathering,
-  'pampling.com': pamplingDataGathering,
-  'www.pampling.com': pamplingDataGathering,
-  'www.pionier-workwear.com': pionierWorkwearDataGathering,
-  'timeblock-europe.com': timeBlockDataGathering,
-  'tontonetfils.fr': tontonetfilsDataGathering,
-  'www.mymuesli.com': mymuesliDataGathering,
+  'www.buttwrap.com': buttwrapDataGathering, // shopify
+  'www.pierre-cardin.de': pierrecardinDataGathering, // magento 2
+  'www.shopinfo.com.br': shopinfoDataGathering, // vtex
+  'www.impressorajato.com.br': impressorajatoDataGathering, // magento
+  'www.baldessarini.com': baldessariniDataGathering, // magento 2
+  'pampling.com': pamplingDataGathering, // php custom?
+  'www.pampling.com': pamplingDataGathering, // php custom?
+  'www.pionier-workwear.com': pionierWorkwearDataGathering, // php custom?
+  'timeblock-europe.com': timeBlockDataGathering, // woocommerce
+  'tontonetfils.fr': tontonetfilsDataGathering, // shopify
+  'www.mymuesli.com': mymuesliDataGathering, // custom?
 }
 
 const dataGathering = dataGatheringFactory[window.location.hostname]
