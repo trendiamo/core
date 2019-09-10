@@ -8,7 +8,10 @@ module Api
       end
 
       def referrals
-        render json: User.where(referred_by_code: current_user.referral_code)
+        referrals_info = User.where(referred_by_code: current_user.referral_code).map do |user|
+          { user: user, state: user.orders.any? ? "approved" : "pending" }
+        end
+        render json: referrals_info
       end
 
       def update

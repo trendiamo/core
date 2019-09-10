@@ -21,6 +21,7 @@ const Referral = styled(Paper)`
   justify-content: space-between;
   align-items: center;
   padding: 10px 12px;
+  margin-bottom: 10px;
   color: #8799a4;
 `
 const ReferralName = styled.div`
@@ -28,8 +29,8 @@ const ReferralName = styled.div`
   margin-left: 0.75rem;
   margin-right: 0.75rem;
 `
-const ReferralStatus = styled.div`
-  color: #ffb400;
+const ReferralStatus = styled(({ className, state }) => <div className={className}>{state}</div>)`
+  color: ${({ state }) => (state === 'approved' ? '#18e0aa' : '#ffb400')};
   text-transform: uppercase;
   font-size: 14px;
 `
@@ -77,10 +78,10 @@ const YourReferrals = () => {
         <ReferralsList>
           <h2>{'Your Referrals'}</h2>
           {referrals.map(referral => (
-            <Referral key={referral.id}>
-              <UserAvatar user={referral} />
-              <ReferralName>{`${referral.firstName} ${referral.lastName}`}</ReferralName>
-              <ReferralStatus>{'pending'}</ReferralStatus>
+            <Referral key={referral.user.id}>
+              <UserAvatar user={referral.user} />
+              <ReferralName>{`${referral.user.firstName} ${referral.user.lastName}`}</ReferralName>
+              <ReferralStatus state={referral.state} />
             </Referral>
           ))}
         </ReferralsList>
