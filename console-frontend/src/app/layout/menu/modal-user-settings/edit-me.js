@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import WhiteButton from 'shared/white-button'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Field } from 'shared/form-elements'
+import { Field, Select } from 'shared/form-elements'
 import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
@@ -21,10 +21,13 @@ const formObjectTransformer = json => {
     email: json.email || '',
     firstName: json.firstName || '',
     lastName: json.lastName || '',
+    currency: json.currency || 'EUR',
     imgUrl: json.imgUrl || '',
     imgRect: json.imgRect || {},
   }
 }
+
+const currencyOptions = ['EUR', 'GBP', 'CHF', 'USD']
 
 const inputProps = { pattern: '.*S+.*' }
 
@@ -125,6 +128,19 @@ const EditMe = ({ togglePasswordForm }) => {
         required
         value={form.lastName}
       />
+      {auth.isAffiliate && (
+        <Select
+          disabled={isFormLoading || isCropping || isUploaderLoading}
+          fullWidth
+          label="Currency"
+          margin="normal"
+          name="currency"
+          onChange={setFieldValue}
+          options={currencyOptions}
+          required
+          value={form.currency}
+        />
+      )}
       <ActionContainer>
         <Button
           color="primaryGradient"
