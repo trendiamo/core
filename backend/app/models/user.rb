@@ -28,12 +28,13 @@ class User < ApplicationRecord
   validate :referred_by_code_exists
   validates :social_media_url, presence: true, unless: :not_affiliate?
   validates :referral_code, presence: true, uniqueness: true
+  validates :currency, presence: true, inclusion: { in: %w[eur gbp chf usd] }
 
   def as_json(_options = {})
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "img_url", "onboarding_stage", "admin",
                                "img_rect", "affiliate_role", "referral_code", "requested_upgrade_to_seller_at",
-                               "created_at", "updated_at")
+                               "currency", "created_at", "updated_at")
     admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
   end
 
