@@ -79,6 +79,7 @@ module Jql
 
     def self.order_dummy
       {
+        source: "dummy",
         currency: "PTT",
         amountInCents: 1000,
         products: [product_dummy],
