@@ -1,6 +1,6 @@
 class Shop < ApplicationRecord
   include ShopifyApp::SessionStorage
-  after_create :perform_export_products
+  # after_create :perform_export_products
 
   def perform_export_products
     export_products

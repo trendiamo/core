@@ -39,6 +39,7 @@ class Mixpanel::FetchOrders
 
   def order_params(affiliation, order)
     {
+      source: order["source"] || "mixpanel",
       seller: affiliation.user,
       account: affiliation.account,
       captured_at: Time.now.utc,

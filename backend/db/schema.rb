@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190911112547) do
+ActiveRecord::Schema.define(version: 20190911150735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,9 @@ ActiveRecord::Schema.define(version: 20190911112547) do
     t.json "products"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source"
+    t.bigint "source_id"
+    t.json "payload"
     t.index ["account_id"], name: "index_orders_on_account_id"
     t.index ["seller_id"], name: "index_orders_on_seller_id"
   end

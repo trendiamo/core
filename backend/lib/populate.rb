@@ -380,6 +380,7 @@ class Populate # rubocop:disable Metrics/ClassLength
 
   def order_params(affiliation) # rubocop:disable Metrics/MethodLength
     {
+      source: "dummy",
       seller: affiliation.user,
       account: affiliation.account,
       captured_at: Time.now.utc,
