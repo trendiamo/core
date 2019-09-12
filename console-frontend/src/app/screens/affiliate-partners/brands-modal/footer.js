@@ -110,7 +110,9 @@ const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
     <ActionsContainer>
       <Details>
         <Conditions>
-          <CommissionRate>{brand.commissionRate}</CommissionRate>
+          <CommissionRate>
+            {Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })}
+          </CommissionRate>
           <CommissionDescription>{brand.commissionDescription}</CommissionDescription>
         </Conditions>
         <TermsAcceptanceBox
