@@ -41,11 +41,15 @@ vi /etc/apache2/sites-available/005-showcase-demo.frekkls.com-le-ssl.conf
 vi /etc/apache2/sites-available/006-uptous.co.conf
 vi /etc/apache2/sites-available/006-uptous.co-le-ssl.conf
 
+vi /etc/apache2/sites-available/007-app.uptous.co.conf
+vi /etc/apache2/sites-available/007-app.uptous.co-le-ssl.conf
+
 a2ensite 002-frekkls.com.conf
 a2ensite 003-frekkls.com.br.conf
 a2ensite 004-admin.frekkls.com.conf
 a2ensite 005-showcase-demo.frekkls.com.conf
 a2ensite 006-uptous.co.conf
+a2ensite 007-app.uptous.co.conf
 
 # these are enabled by certbot
 # a2ensite 002-frekkls.com-le-ssl.conf
@@ -65,5 +69,5 @@ ufw enable
 add-apt-repository ppa:certbot/certbot
 apt-get update
 apt-get install python-certbot-apache
-certbot --apache -d trendiamo.com -d www.trendiamo.com -d frekkls.com -d www.frekkls.com -d frekkls.com.br -d www.frekkls.com.br -d admin.frekkls.com -d showcase-demo.frekkls.com -d uptous.co
+certbot --apache -d trendiamo.com -d www.trendiamo.com -d frekkls.com -d www.frekkls.com -d frekkls.com.br -d www.frekkls.com.br -d admin.frekkls.com -d showcase-demo.frekkls.com -d uptous.co -d app.uptous.co
 ```
