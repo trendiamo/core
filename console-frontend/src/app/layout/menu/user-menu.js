@@ -118,7 +118,7 @@ const UserMenu = ({ sidebarOpen }) => {
         style={{ left: '-10px' }}
         transformOrigin={transformOrigin}
       >
-        {!auth.isSingleAccount() && (
+        {!auth.isSingleAccount() && !auth.isAffiliate() && (
           <Link to={routes.accounts()}>
             <MenuItemThemed icon={<PeopleOutline />} text="Back to Accounts" />
           </Link>
