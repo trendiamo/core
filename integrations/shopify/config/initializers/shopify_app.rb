@@ -1,5 +1,5 @@
 ShopifyApp.configure do |config|
-  config.application_name = "Frekkls Shopify App"
+  config.application_name = "Uptous Shopify App"
 
   config.api_key = ENV["SHOPIFY_API_KEY"]
   config.secret = ENV["SHOPIFY_SHARED_SECRET"]

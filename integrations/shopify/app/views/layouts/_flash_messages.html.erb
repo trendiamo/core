@@ -11,7 +11,7 @@
       <% if flash[:error] %>
         ShopifyApp.flashError(<%== flash[:error].to_json %>);
       <% end %>
-                             
+
       document.removeEventListener(eventName, flash)
     });
   }
