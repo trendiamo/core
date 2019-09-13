@@ -76,10 +76,14 @@ const AutocompleteInput = ({
       <Input
         disabled={disabled}
         endAdornment={
-          <>
-            <DropdownButton onClick={onDropdownClick} />
-            {auth.getAccountRole() !== 'editor' && name === 'Seller' && <AddSellerButton onClick={onAddSellerClick} />}
-          </>
+          !disabled && (
+            <>
+              <DropdownButton onClick={onDropdownClick} />
+              {auth.getAccountRole() !== 'editor' && name === 'Seller' && (
+                <AddSellerButton onClick={onAddSellerClick} />
+              )}
+            </>
+          )
         }
         fullWidth
         inputProps={{ ref: inputRef }}

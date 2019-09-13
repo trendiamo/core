@@ -2,7 +2,7 @@ module Api
   module V1
     class ImagesController < RestAdminController
       def index
-        @images = Image.all
+        @images = policy_scope(Image).all
         authorize @images
         chain = sorting(pagination(@images))
         render json: chain
@@ -20,7 +20,7 @@ module Api
       end
 
       def destroy
-        @images = Image.where(id: params[:ids])
+        @images = policy_scope(Image).where(id: params[:ids])
         authorize @images
         if destroy_all
           render json: { data: @images }

@@ -244,7 +244,9 @@ ActiveRecord::Schema.define(version: 20190911150735) do
     t.integer "lock_version", default: 1
     t.bigint "owner_id", null: false
     t.boolean "use_seller_animation", default: false, null: false
+    t.bigint "brand_id"
     t.index ["account_id"], name: "index_simple_chats_on_account_id"
+    t.index ["brand_id"], name: "index_simple_chats_on_brand_id"
     t.index ["owner_id"], name: "index_simple_chats_on_owner_id"
     t.index ["seller_id"], name: "index_simple_chats_on_seller_id"
   end
@@ -315,6 +317,7 @@ ActiveRecord::Schema.define(version: 20190911150735) do
     t.string "referred_by_code"
     t.datetime "requested_upgrade_to_seller_at"
     t.string "currency", default: "eur", null: false
+    t.text "bio"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -374,6 +377,7 @@ ActiveRecord::Schema.define(version: 20190911150735) do
   add_foreign_key "simple_chat_sections", "accounts"
   add_foreign_key "simple_chat_sections", "simple_chats"
   add_foreign_key "simple_chats", "accounts"
+  add_foreign_key "simple_chats", "brands"
   add_foreign_key "simple_chats", "sellers"
   add_foreign_key "simple_chats", "users", column: "owner_id"
   add_foreign_key "spotlights", "accounts"

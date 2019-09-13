@@ -4,7 +4,8 @@ import TableCell from './table-cell'
 import { Tooltip } from '@material-ui/core'
 
 const ActiveSymbol = styled.div`
-  background-color: ${({ highlightInactive }) => (highlightInactive ? '#9D9C9D' : '#257c46')};
+  background-color: ${({ highlightInactive, highlightSubmitted }) =>
+    highlightInactive ? (highlightSubmitted ? '#ffba02' : '#9d9c9d') : '#257c46'};
   height: 25px;
   font-size: 10px;
   border-radius: 4px;
@@ -21,15 +22,21 @@ const ActiveSymbol = styled.div`
 
 const ActiveColumn = ({
   highlightInactive,
+  highlightSubmitted,
   tooltipTextActive,
   tooltipTextInactive,
+  tooltipTextSubmitted,
   symbolTextActive,
   symbolTextInactive,
+  symbolTextSubmitted,
 }) => (
   <TableCell>
-    <Tooltip placement="left-end" title={highlightInactive ? tooltipTextInactive : tooltipTextActive}>
-      <ActiveSymbol highlightInactive={highlightInactive}>
-        {highlightInactive ? symbolTextInactive : symbolTextActive}
+    <Tooltip
+      placement="left-end"
+      title={highlightInactive ? (highlightSubmitted ? tooltipTextSubmitted : tooltipTextInactive) : tooltipTextActive}
+    >
+      <ActiveSymbol highlightInactive={highlightInactive} highlightSubmitted={highlightSubmitted}>
+        {highlightInactive ? (highlightSubmitted ? symbolTextSubmitted : symbolTextInactive) : symbolTextActive}
       </ActiveSymbol>
     </Tooltip>
   </TableCell>

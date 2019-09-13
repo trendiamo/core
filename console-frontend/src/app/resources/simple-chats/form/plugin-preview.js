@@ -1,3 +1,4 @@
+import auth from 'auth'
 import BasePluginPreview from 'shared/plugin-preview/base'
 import launcherConfig from 'shared/plugin-preview/launcher-config'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -9,16 +10,18 @@ import { useSnackbar } from 'notistack'
 const PluginPreview = ({ form, onToggleContent, showingContent }) => {
   const onLauncherClick = useCallback(() => onToggleContent(), [onToggleContent])
 
+  const seller = useMemo(() => form.__seller || auth.getUser(), [form.__seller])
+
   const Base = useMemo(
     () => (
       <SimpleChat
         backButtonLabel="Back"
         data={previewConverter.mainData(form.heading, form.useSellerAnimation, form.simpleChatSectionsAttributes)}
-        seller={previewConverter.seller(form.__seller)}
+        seller={previewConverter.seller(seller)}
         showBackButton={false}
       />
     ),
-    [form.__seller, form.simpleChatSectionsAttributes, form.heading, form.useSellerAnimation]
+    [form.heading, form.useSellerAnimation, form.simpleChatSectionsAttributes, seller]
   )
 
   const Launcher = useMemo(
@@ -26,11 +29,11 @@ const PluginPreview = ({ form, onToggleContent, showingContent }) => {
       <BaseLauncher
         onClick={onLauncherClick}
         pulsating
-        sellerImg={sellerImg(form.__seller, form.useSellerAnimation)}
+        sellerImg={sellerImg(seller, form.useSellerAnimation)}
         showingContent={showingContent}
       />
     ),
-    [form.__seller, form.useSellerAnimation, onLauncherClick, showingContent]
+    [form.useSellerAnimation, onLauncherClick, seller, showingContent]
   )
 
   const { enqueueSnackbar } = useSnackbar()

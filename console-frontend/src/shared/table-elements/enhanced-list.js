@@ -37,8 +37,10 @@ const EnhancedList = ({
   defaultSorting,
   canDuplicateResource,
   canEditResource,
+  canRejectResource,
   helpStep,
   highlightInactive,
+  isSubmittedResource,
   location,
   ResourceRow,
   routes,
@@ -244,12 +246,16 @@ const EnhancedList = ({
                 api={api}
                 canDuplicateResource={canDuplicateResource}
                 canEditResource={canEditResource}
+                canRejectResource={canRejectResource}
+                fetchRecords={fetchRecords}
                 handleSelectAll={handleSelectAll}
                 highlightInactive={inactiveRows[index]}
                 index={index}
+                isSubmittedResource={isSubmittedResource}
                 key={record.id}
                 resource={record}
                 resourceEditPath={routes && routes.edit && routes.edit(record.id)}
+                resourceShowPath={routes && routes.show && routes.show(record.id)}
                 routes={routes}
                 selectedIds={state.selectedIds}
                 setSelectedIds={setSelectedIds}

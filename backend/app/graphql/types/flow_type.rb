@@ -37,4 +37,9 @@ Types::FlowType = GraphQL::ObjectType.define do
       obj.use_seller_animation
     }
   end
+  field :owner, Types::UserType do
+    resolve ->(obj, _args, _ctx) {
+      obj.owner
+    }
+  end
 end

@@ -10,7 +10,7 @@ class AutocompletePolicy < ApplicationPolicy
   end
 
   def sellers_autocomplete?
-    user&.active_membership || user&.admin
+    admin_or_account_member?
   end
 
   def flows_autocomplete?
@@ -19,5 +19,9 @@ class AutocompletePolicy < ApplicationPolicy
 
   def path_autocomplete?
     admin_or_owner?
+  end
+
+  def brands_autocomplete?
+    seller?
   end
 end

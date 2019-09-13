@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import WhiteButton from 'shared/white-button'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Field, Select } from 'shared/form-elements'
+import { Field, FormHelperText, Select } from 'shared/form-elements'
 import { Prompt } from 'react-router'
 import { TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
@@ -22,8 +22,10 @@ const formObjectTransformer = json => {
     firstName: json.firstName || '',
     lastName: json.lastName || '',
     currency: json.currency || 'EUR',
-    imgUrl: json.imgUrl || '',
+    imgUrl: json.img.url || '',
     imgRect: json.imgRect || {},
+    socialMediaUrl: json.socialMediaUrl || '',
+    bio: json.bio || '',
   }
 }
 
@@ -128,18 +130,47 @@ const EditMe = ({ togglePasswordForm }) => {
         required
         value={form.lastName}
       />
-      {auth.isAffiliate && (
-        <Select
-          disabled={isFormLoading || isCropping || isUploaderLoading}
-          fullWidth
-          label="Currency"
-          margin="normal"
-          name="currency"
-          onChange={setFieldValue}
-          options={currencyOptions}
-          required
-          value={form.currency}
-        />
+      {auth.isAffiliate() && (
+        <>
+          <Select
+            disabled={isFormLoading || isCropping || isUploaderLoading}
+            fullWidth
+            label="Currency"
+            margin="normal"
+            name="currency"
+            onChange={setFieldValue}
+            options={currencyOptions}
+            required
+            value={form.currency}
+          />
+          <TextField
+            disabled={isFormLoading || isCropping || isUploaderLoading}
+            fullWidth
+            label="Social Media URL"
+            margin="normal"
+            name="socialMediaUrl"
+            onChange={setFieldValue}
+            required
+            type="URL"
+            value={form.socialMediaUrl}
+          />
+        </>
+      )}
+      {auth.isSeller() && (
+        <>
+          <TextField
+            disabled={isFormLoading || isCropping || isUploaderLoading}
+            fullWidth
+            inputProps={atLeastOneNonBlankCharInputProps}
+            label="Bio"
+            margin="normal"
+            name="bio"
+            onChange={setFieldValue}
+            required
+            value={form.bio}
+          />
+          <FormHelperText>{'A short text that will be shown near your name.'}</FormHelperText>
+        </>
       )}
       <ActionContainer>
         <Button

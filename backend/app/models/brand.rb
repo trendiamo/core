@@ -2,6 +2,7 @@ class Brand < ApplicationRecord
   acts_as_tenant
   belongs_to :account
   has_many :affiliations, through: :account
+  has_many :simple_chats, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 

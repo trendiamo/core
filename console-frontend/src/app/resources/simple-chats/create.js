@@ -10,6 +10,7 @@ const loadFormObject = () => {
     title: '',
     sellerId: '',
     useSellerAnimation: false,
+    brandId: '',
     teaserMessage: '',
     extraTeaserMessage: '',
     simpleChatSectionsAttributes: [

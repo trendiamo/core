@@ -1,9 +1,9 @@
 import ActionsMenu from './simple-menu'
-import PreviewButton from './preview-button'
+import Button from 'shared/button'
 import React, { useCallback } from 'react'
 import SaveButton from './save-button'
 import styled from 'styled-components'
-import withWidth from '@material-ui/core/withWidth'
+import { Tooltip, withWidth } from '@material-ui/core'
 
 const Container = styled.div`
   display: flex;
@@ -47,10 +47,15 @@ const Actions = ({
   message,
   onFormSubmit,
   onPreviewClick,
+  onRejectClick,
+  onSubmitClick,
   previewEnabled,
+  rejectEnabled,
   saveAndCreateNewEnabled,
   saveDisabled,
+  submitEnabled,
   tooltipEnabled,
+  tooltipTextSubmit,
   tooltipText,
   width,
 }) => (
@@ -84,20 +89,40 @@ const Actions = ({
       <Container>
         {previewEnabled && (
           <FlexDiv>
-            <PreviewButton color="actions" onClick={onPreviewClick} />
+            <Button color="actions" onClick={onPreviewClick}>
+              {'Preview'}
+            </Button>
           </FlexDiv>
         )}
-        <FlexDiv>
-          <SaveButton
-            disabled={saveDisabled}
-            isFormPristine={isFormPristine}
-            isFormSubmitting={isFormSubmitting}
-            message={message}
-            onClick={onFormSubmit}
-            tooltipEnabled={tooltipEnabled}
-            tooltipText={tooltipText}
-          />
-        </FlexDiv>
+        {!rejectEnabled && (
+          <FlexDiv>
+            <SaveButton
+              disabled={saveDisabled}
+              isFormPristine={isFormPristine}
+              isFormSubmitting={isFormSubmitting}
+              message={message}
+              onClick={onFormSubmit}
+              tooltipEnabled={tooltipEnabled}
+              tooltipText={tooltipText}
+            />
+          </FlexDiv>
+        )}
+        {submitEnabled && (
+          <Tooltip placement="bottom-start" title={tooltipTextSubmit}>
+            <FlexDiv>
+              <Button color="primaryGradient" disabled={!isFormPristine} onClick={onSubmitClick}>
+                {'Submit'}
+              </Button>
+            </FlexDiv>
+          </Tooltip>
+        )}
+        {rejectEnabled && (
+          <FlexDiv>
+            <Button color="error" message="Reject" onClick={onRejectClick}>
+              {'Reject'}
+            </Button>
+          </FlexDiv>
+        )}
       </Container>
     )}
   </>

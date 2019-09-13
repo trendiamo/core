@@ -11,6 +11,7 @@ import SignupPage from 'auth/signup'
 import YourReferrals from 'app/screens/your-referrals'
 import { ExternalRoute, PrivateRoute, RootRedirect } from './router-helpers'
 import { Route, Switch } from 'react-router-dom'
+import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from 'app/resources/simple-chats'
 
 const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
   return (
@@ -34,6 +35,30 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         exact
         fetchedAccount={fetchedAccount}
         path={routes.contentCreation()}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={SimpleChatsList}
+        exact
+        fetchedAccount={fetchedAccount}
+        isSellerScoped
+        path={routes.simpleChatsList()}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={SimpleChatCreate}
+        exact
+        fetchedAccount={fetchedAccount}
+        isSellerScoped
+        path={routes.simpleChatCreate()}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={SimpleChatEdit}
+        exact
+        fetchedAccount={fetchedAccount}
+        isSellerScoped
+        path={routes.simpleChatEdit(':simpleChatId')}
         setFetchedAccount={setFetchedAccount}
       />
 

@@ -2,8 +2,7 @@ import auth from 'auth'
 import NotFound from 'app/screens/not-found'
 import React, { useCallback, useEffect } from 'react'
 import routes from 'app/routes'
-import { apiAccountsShow, apiRequest } from 'utils'
-import { isLocalStorageAccurate } from 'utils'
+import { apiAccountsShow, apiRequest, isLocalStorageAccurate } from 'utils'
 import { Redirect, Route } from 'react-router-dom'
 
 const PrivateRouteRender = ({
@@ -11,6 +10,7 @@ const PrivateRouteRender = ({
   fetchedAccount,
   isAdminScoped,
   isOwnerScoped,
+  isSellerScoped,
   match,
   path,
   setFetchedAccount,
@@ -37,11 +37,14 @@ const PrivateRouteRender = ({
     (match.path.startsWith('/a/') && fetchedAccount && !auth.getAccount()) ||
     (isOwnerScoped && !auth.isAdmin() && auth.getAccountRole() === 'editor') ||
     (isAdminScoped && !auth.isAdmin()) ||
+    (isSellerScoped && !auth.isSeller()) ||
     (path === routes.dataDashboard() && !auth.getAccount().websitesAttributes[0].isECommerce)
 
   if (notFound) return React.createElement(NotFound, { match })
 
   if (match.path.startsWith('/a/') && !auth.getAccount()) return null
+
+  if (path === routes.contentCreation() && auth.isSeller()) return <Redirect to={routes.simpleChatsList()} />
 
   return React.createElement(component, { match })
 }
@@ -52,6 +55,7 @@ export const PrivateRoute = ({
   fetchedAccount,
   isAdminScoped,
   isOwnerScoped,
+  isSellerScoped,
   path,
   setFetchedAccount,
   ...props
@@ -64,13 +68,14 @@ export const PrivateRoute = ({
           fetchedAccount={fetchedAccount}
           isAdminScoped={isAdminScoped}
           isOwnerScoped={isOwnerScoped}
+          isSellerScoped={isSellerScoped}
           match={match}
           path={path}
           setFetchedAccount={setFetchedAccount}
         />
       )
     },
-    [component, fetchedAccount, isAdminScoped, isOwnerScoped, path, setFetchedAccount]
+    [component, fetchedAccount, isAdminScoped, isOwnerScoped, isSellerScoped, path, setFetchedAccount]
   )
 
   return <Route {...props} path={path} render={render} />

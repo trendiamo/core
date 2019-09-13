@@ -80,6 +80,11 @@ const apiPostRequest = async url =>
     method: 'post',
   })
 
+const apiPutRequest = async url =>
+  await authFetch(url, {
+    method: 'put',
+  })
+
 export const apiSignOut = async () => {
   const result = await apiDestroyRequest(SIGNOUT_URL)
   const json = await result.json()
@@ -158,6 +163,8 @@ export const apiSimpleChatCreate = body => apiCreateRequest(SIMPLE_CHATS_URL, bo
 export const apiSimpleChatShow = id => apiGetRequest(`${SIMPLE_CHATS_URL}/${id}`)
 export const apiSimpleChatUpdate = (id, body) => apiUpdateRequest(`${SIMPLE_CHATS_URL}/${id}`, body)
 export const apiSimpleChatDuplicate = id => apiPostRequest(`${SIMPLE_CHATS_URL}/${id}/duplicate`)
+export const apiSimpleChatSubmit = (id, body) => apiUpdateRequest(`${SIMPLE_CHATS_URL}/${id}/submit`, body)
+export const apiSimpleChatReject = id => apiPutRequest(`${SIMPLE_CHATS_URL}/${id}/reject`)
 
 export const apiTriggerList = () => apiGetRequest(TRIGGERS_URL)
 export const apiTriggerDestroy = body => apiDestroyMultipleRequest(TRIGGERS_URL, body)
@@ -173,6 +180,7 @@ export const apiFlowsList = () => apiGetRequest(FLOWS_URL)
 export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiBrandsList = query => apiGetRequest(`${BRANDS_URL}/?${stringify(query)}`)
+export const apiBrandsAutocomplete = query => apiGetRequest(`${BRANDS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiPathAutocomplete = query => apiGetRequest(`${PATH_URL}/autocomplete/?${stringify(query)}`)
 

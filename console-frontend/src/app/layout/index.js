@@ -53,13 +53,16 @@ const ContentWithSidebar = styled.main`
   min-height: 100vh;
 `
 
-const FilledLayout = ({ children, location, showOnboarding }) => {
+const FilledLayout = ({ children, location }) => {
   const onboardingReady = useOnboarding(location)
 
   const [hasScrolled, setHasScrolled] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   const isWelcomePage = useMemo(() => location.pathname === routes.welcome(), [location.pathname])
+  const showOnboarding = useMemo(() => !auth.isAffiliate() && location.pathname !== routes.accounts(), [
+    location.pathname,
+  ])
 
   const onWindowScroll = useCallback(() => setHasScrolled(window.scrollY > 2), [setHasScrolled])
   const toggleOpen = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen])
@@ -78,7 +81,14 @@ const FilledLayout = ({ children, location, showOnboarding }) => {
     <Root>
       <AppFrame>
         {showOnboarding && <Onboarding />}
-        {!isWelcomePage && <AppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />}
+        {!isWelcomePage && (
+          <AppBar
+            hasScrolled={hasScrolled}
+            showOnboarding={showOnboarding}
+            sidebarOpen={sidebarOpen}
+            toggleOpen={toggleOpen}
+          />
+        )}
         <ContentWithSidebar>
           <Sidebar sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
           <Content>{children}</Content>
@@ -89,15 +99,9 @@ const FilledLayout = ({ children, location, showOnboarding }) => {
 }
 
 const Layout = ({ children, location }) => {
-  const isAccountsPage = useMemo(() => location.pathname === routes.accounts(), [location.pathname])
-
   if (!(auth.isLoggedIn() && auth.isAffiliate()) && !auth.getAccount()) return <EmptyLayout>{children}</EmptyLayout>
 
-  return (
-    <FilledLayout location={location} showOnboarding={!isAccountsPage}>
-      {children}
-    </FilledLayout>
-  )
+  return <FilledLayout location={location}>{children}</FilledLayout>
 }
 
 export default withRouter(Layout)

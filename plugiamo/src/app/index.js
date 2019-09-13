@@ -56,6 +56,20 @@ const AppGraphql = () => {
             }
             instagramUrl
           }
+          owner {
+            id
+            name
+            bio
+            img {
+              url
+            }
+            imgRect {
+              x
+              y
+              width
+              height
+            }
+          }
         }
         seller(id: $sellerId) @include(if: $hasSeller) {
           id

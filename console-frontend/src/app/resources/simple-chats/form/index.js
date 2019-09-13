@@ -1,3 +1,4 @@
+import auth from 'auth'
 import CircularProgress from 'shared/circular-progress'
 import FormContainer from './form-container'
 import PluginPreview from './plugin-preview'
@@ -6,10 +7,12 @@ import routes from 'app/routes'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, PreviewModal } from 'shared/form-elements'
+import { apiRequest, apiSimpleChatSubmit } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
+import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
 
 const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveFormObject, title }) => {
@@ -18,6 +21,8 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     [location.pathname]
   )
   useOnboardingHelp(onboardingHelp)
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
@@ -52,6 +57,20 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
       return result
     },
     [history, location.pathname, onFormSubmit]
+  )
+
+  const onSubmitClick = useCallback(
+    async () => {
+      const { json, errors, requestError } = await apiRequest(apiSimpleChatSubmit, [form.id, { simpleChat: form }])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!errors && !requestError) {
+        history.push(routes.simpleChatsList())
+        enqueueSnackbar(`Simple chat successfully submitted to ${form.__brand.name}`, { variant: 'success' })
+      }
+      return json
+    },
+    [enqueueSnackbar, form, history]
   )
 
   const addSimpleChatSection = useCallback(
@@ -105,6 +124,12 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     [showingContent]
   )
 
+  const tooltipTextSubmit = useMemo(
+    () =>
+      form.__brand && isFormPristine ? `Submit this chat to ${form.__brand.name}` : 'Save the chat before submitting',
+    [form.__brand, isFormPristine]
+  )
+
   const appBarContent = useMemo(
     () => ({
       Actions: (
@@ -113,10 +138,13 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
           isFormSubmitting={isFormSubmitting}
           onFormSubmit={newOnFormSubmit}
           onPreviewClick={onPreviewClick}
-          previewEnabled={!!form.id}
+          onSubmitClick={onSubmitClick}
+          previewEnabled={!auth.isSeller() && !!form.id}
           saveDisabled={isFormSubmitting || isFormLoading || isFormPristine || isUploaderLoading}
+          submitEnabled={auth.isSeller() && !!form.id}
           tooltipEnabled
           tooltipText="No changes to save"
+          tooltipTextSubmit={tooltipTextSubmit}
         />
       ),
       backRoute,
@@ -131,7 +159,9 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
       isUploaderLoading,
       newOnFormSubmit,
       onPreviewClick,
+      onSubmitClick,
       title,
+      tooltipTextSubmit,
     ]
   )
   useAppBarContent(appBarContent)

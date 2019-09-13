@@ -59,13 +59,16 @@ const routes = {
     return '/signup/confirm'
   },
   simpleChatsList(accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/simple-chats`
+    return auth.isSeller() ? '/content-creation/simple-chats' : `/a/${accountSlug}/simple-chats`
   },
   simpleChatCreate(accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/simple-chats/create`
+    return auth.isSeller() ? '/content-creation/simple-chats/create' : `/a/${accountSlug}/simple-chats/create`
   },
   simpleChatEdit(id, accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/simple-chats/${id}/edit`
+    return auth.isSeller() ? `/content-creation/simple-chats/${id}/edit` : `/a/${accountSlug}/simple-chats/${id}/edit`
+  },
+  simpleChatShow(id, accountSlug = auth.getSlug()) {
+    return `/a/${accountSlug}/simple-chats/${id}`
   },
   showcasesList(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/showcases`

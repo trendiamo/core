@@ -1,5 +1,5 @@
 class SimpleChatSection < ApplicationRecord
-  acts_as_tenant
+  acts_as_tenant :account, optional: true
   belongs_to :simple_chat, touch: true
   has_many :simple_chat_messages, dependent: :destroy
 

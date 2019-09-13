@@ -28,7 +28,7 @@ const getMatchedSeller = ({ flow, data }) => {
   if (data.seller) return data.seller
   if (data.launcher && data.launcher.seller) return data.launcher.seller
   if (isPCAssessment() && flow.flowType === 'outro' && recallSeller()) return recallSeller()
-  if (flow) return flow.seller
+  if (flow) return flow.seller || flow.owner
 }
 
 const setup = (data, pathFromNav) => {

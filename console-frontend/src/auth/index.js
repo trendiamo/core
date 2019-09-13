@@ -50,6 +50,9 @@ const auth = {
 
     return affiliateRole !== 'not_affiliate'
   },
+  isSeller() {
+    return this.getUser().affiliateRole === 'seller'
+  },
   isAdmin() {
     return this.getUser().admin
   },

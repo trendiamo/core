@@ -1,8 +1,12 @@
+import auth from 'auth'
 import Button from 'shared/edit-button'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CopyIcon from '@material-ui/icons/FileCopyOutlined'
 import EditIcon from '@material-ui/icons/EditOutlined'
 import React, { useCallback } from 'react'
+import RejectIcon from '@material-ui/icons/HighlightOffOutlined'
+import ShowIcon from '@material-ui/icons/RemoveRedEyeOutlined'
+import startCase from 'lodash.startcase'
 import TableCell from './table-cell'
 import { apiRequest } from 'utils'
 import { Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
@@ -11,17 +15,21 @@ import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
 
 const TableRow = ({
-  resource,
-  selectedIds,
-  setSelectedIds,
   api,
   canDuplicateResource,
   canEditResource,
-  resourceEditPath,
-  routes,
+  canRejectResource,
   children,
-  history,
+  fetchRecords,
   highlightInactive,
+  history,
+  isSubmittedResource,
+  resource,
+  resourceEditPath,
+  resourceShowPath,
+  routes,
+  selectedIds,
+  setSelectedIds,
 }) => {
   const { enqueueSnackbar } = useSnackbar()
 
@@ -52,6 +60,20 @@ const TableRow = ({
     [api.duplicate, resource.id, history, routes, enqueueSnackbar]
   )
 
+  const rejectResource = useCallback(
+    async () => {
+      const { json, errors, requestError } = await apiRequest(api.reject, [resource.id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!errors && !requestError) {
+        enqueueSnackbar(`${startCase(resource.type)} successfully rejected`, { variant: 'success' })
+        fetchRecords()
+      }
+      return json
+    },
+    [api.reject, enqueueSnackbar, fetchRecords, resource]
+  )
+
   return (
     <MuiTableRow hover role="checkbox" style={{ background: highlightInactive ? '#f7f7f7' : '' }} tabIndex={-1}>
       <TableCell>
@@ -59,22 +81,41 @@ const TableRow = ({
           checked={selectedIds.includes(resource.id)}
           checkedIcon={<CheckBoxIcon />}
           color="primary"
-          disabled={canEditResource && !canEditResource(resource)}
+          disabled={
+            (isSubmittedResource && isSubmittedResource(resource)) || (canEditResource && !canEditResource(resource))
+          }
           onChange={handleSelect}
         />
       </TableCell>
       <TableCell>{resource.id}</TableCell>
-      {React.cloneElement(children, { highlightInactive })}
+      {React.cloneElement(children, { highlightInactive, isSubmittedResource })}
       <TableCell style={{ whiteSpace: 'nowrap' }}>
-        {resourceEditPath && (
-          <Button component={Link} disabled={canEditResource && !canEditResource(resource)} to={resourceEditPath}>
-            <EditIcon />
-          </Button>
-        )}
-        {api.duplicate && (
-          <Button disabled={canDuplicateResource && !canDuplicateResource(resource)} onClick={duplicateResource}>
-            <CopyIcon />
-          </Button>
+        {auth.isSeller() || !isSubmittedResource || !isSubmittedResource(resource) ? (
+          <>
+            {resourceEditPath && (
+              <Button component={Link} disabled={canEditResource && !canEditResource(resource)} to={resourceEditPath}>
+                <EditIcon />
+              </Button>
+            )}
+            {api.duplicate && (
+              <Button disabled={canDuplicateResource && !canDuplicateResource(resource)} onClick={duplicateResource}>
+                <CopyIcon />
+              </Button>
+            )}
+          </>
+        ) : (
+          <>
+            {resourceShowPath && (
+              <Button component={Link} to={resourceShowPath}>
+                <ShowIcon />
+              </Button>
+            )}
+            {api.reject && (
+              <Button disabled={canRejectResource && !canRejectResource(resource)} onClick={rejectResource}>
+                <RejectIcon />
+              </Button>
+            )}
+          </>
         )}
       </TableCell>
     </MuiTableRow>
