@@ -12,7 +12,7 @@ module Api
       end
 
       def current_user_is_seller?
-        current_user.affiliate_role == "seller"
+        current_user&.affiliate_role == "seller"
       end
 
       def add_pagination_headers(chain, range)
