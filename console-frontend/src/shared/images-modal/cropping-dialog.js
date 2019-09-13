@@ -6,10 +6,8 @@ import styled from 'styled-components'
 import { CircularProgress } from '@material-ui/core'
 import { DialogActionsContainer, StyledButton } from './shared'
 
-// max-height: 253px = dialog's margin (96px) + dialog title height (76px) + dialog action height (81px)
 const DialogCroppingContainer = styled.div`
   min-height: 200px;
-  max-height: calc(100vh - 253px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,7 +52,8 @@ const DialogContentCropping = ({ crop, onCropChange, onCropComplete, onImageLoad
         <HiddenImg alt="" ref={imagePreviewRef} src={image} />
         <StyledReactCrop
           crop={crop}
-          imageStyle={{ maxHeight: 'none' }}
+          // max-height: 253px = dialog's margin (96px) + dialog title height (76px) + dialog action height (81px)
+          imageStyle={{ maxHeight: 'calc(100vh - 253px)' }}
           keepSelection
           minHeight={20}
           minWidth={20}
