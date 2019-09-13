@@ -1,4 +1,5 @@
 import AspectRatio from 'react-aspect-ratio'
+import auth from 'auth'
 import Button from 'shared/button'
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
@@ -136,6 +137,7 @@ const GalleryDialog = ({
     onKeyUp={onKeyUp}
     open={open}
     subtitle={
+      !auth.isSeller() &&
       !isUserProfileImage && (
         <DialogSubtitleLink to={routes.imagesList()}>{'Or go to the image gallery >'}</DialogSubtitleLink>
       )

@@ -92,10 +92,10 @@ const ImagesModal = ({
   const fetchImages = useCallback(
     async () => {
       if (isUserProfileImage) {
-        const userImgUrl = auth.getUser().imgUrl
+        const userImgUrl = auth.getUser().img.url
         if (userImgUrl && userImgUrl !== '') {
-          setImages([{ id: 'user-img', url: activeImage || auth.getUser().imgUrl }])
-          setActiveImage({ id: 'user-img', url: activeImage || auth.getUser().imgUrl })
+          setImages([{ id: 'user-img', url: activeImage || auth.getUser().img.url }])
+          setActiveImage({ id: 'user-img', url: activeImage || auth.getUser().img.url })
         } else {
           setEmptyState(true)
           setImages([])

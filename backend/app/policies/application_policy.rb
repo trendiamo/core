@@ -22,6 +22,10 @@ class ApplicationPolicy
     user&.active_membership&.editor?
   end
 
+  def seller?
+    user&.affiliate_role == "seller"
+  end
+
   class Scope
     attr_reader :user, :scope
 
@@ -44,6 +48,10 @@ class ApplicationPolicy
 
     def editor?
       user&.active_membership&.editor?
+    end
+
+    def seller?
+      user&.affiliate_role == "seller"
     end
   end
 end

@@ -1,8 +1,8 @@
-import Avatar from 'shared/table-elements/avatar'
 import moduleIcon from 'shared/module-icon'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
+import { Avatar, Logo } from 'shared/table-elements'
 import { imgixUrl, stringifyRect } from 'plugin-base'
 
 const StyledSelectLabel = styled.div`
@@ -41,12 +41,21 @@ const SuggestionWithAvatar = ({ suggestion }) => (
   </StyledSelectLabel>
 )
 
+const SuggestionWithLogo = ({ suggestion }) => (
+  <StyledSelectLabel>
+    <Logo alt={suggestion.value.name} src={suggestion.value.logoUrl} style={{ marginRight: '0.5rem' }} />
+    <SelectLabelText>{suggestion.label}</SelectLabelText>
+  </StyledSelectLabel>
+)
+
 const suggestionTypes = (suggestionItem, { suggestion }) => {
   switch (suggestionItem) {
     case 'withAvatar':
       return <SuggestionWithAvatar suggestion={suggestion} />
     case 'withModuleIcon':
       return <SuggestionWithModuleIcon suggestion={suggestion} />
+    case 'withLogo':
+      return <SuggestionWithLogo suggestion={suggestion} />
     default:
       return suggestion.label
   }

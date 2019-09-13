@@ -21,7 +21,7 @@ class PopulateShowcases
         teaser_message: Faker::Movie.quote,
         extra_teaser_message: Faker::Movie.quote,
         spotlights_attributes: Array.new(3) { |index| spotlights_attributes(index) },
-        owner: User.where(admin: false).sample,
+        owner: User.where(admin: false, affiliate_role: "not_affiliate").sample,
       }
       Showcase.create!(showcase_attrs)
     end
@@ -72,7 +72,7 @@ class PopulateSimpleChats # rubocop:disable Metrics/ClassLength
         teaser_message: Faker::Movie.quote,
         extra_teaser_message: Faker::Movie.quote,
         simple_chat_sections_attributes: chat_sections_attributes,
-        owner: User.where(admin: false).sample,
+        owner: User.where(admin: false, affiliate_role: "not_affiliate").sample,
       }
       SimpleChat.create!(simple_chat_attrs)
     end
@@ -202,10 +202,12 @@ class PopulateUsers
       { email: "dw", name: "Douglas Wellington", admin: true },
       { email: "tds", name: "Thomas Simpson", admin: true },
       { email: "promoter", name: "Paul Simon", affiliate_role: "promoter" },
+      { email: "seller", name: "Selena Gomez", affiliate_role: "seller", bio: Faker::RickAndMorty.quote,
+        img_url: "https://randomuser.me/api/portraits/women/99.jpg", },
     ]
   end
 
-  def user_format(team_member)
+  def user_format(team_member) # rubocop:disable Metrics/MethodLength
     {
       email: "#{team_member[:email]}@trendiamo.com",
       first_name: team_member[:name].split(" ")[0],
@@ -214,13 +216,16 @@ class PopulateUsers
       confirmed_at: Time.now.utc,
       affiliate_role: team_member[:affiliate_role] || "not_affiliate",
       social_media_url: team_member[:affiliate_role] ? "http://ig.com/frekkls" : nil,
+      bio: team_member[:bio],
+      img_url: team_member[:img_url],
     }
   end
 
-  def create_users # rubocop:disable Metrics/MethodLength
+  def create_users # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     users_attrs = team_members.map do |team_member|
       user = user_format(team_member)
       user[:admin] = team_member[:admin] == true
+      user[:image] = Image.find_or_create_by!(url: team_member[:img_url], file_format: "jpeg") if team_member[:img_url]
       user
     end
     User.create!(users_attrs)
@@ -235,7 +240,7 @@ class PopulateUsers
   def create_memberships
     team_members.each do |team_member|
       user = User.find_by(email: "#{team_member[:email]}@trendiamo.com")
-      next if user.admin
+      next if user.admin || user.affiliate_role != "not_affiliate"
 
       Membership.create!(account: Account.find_by(name: "Test Account"),
                          user: user, role: team_member[:role] || "owner")
@@ -311,7 +316,7 @@ class Populate # rubocop:disable Metrics/ClassLength
         teaser_message: "Awesome! 🤩 Was I helpful?",
         chat_bubble_button_yes: "Yes, thanks!",
         chat_bubble_button_no: "Not really.",
-        owner: User.where(admin: false).sample,
+        owner: User.where(admin: false, affiliate_role: "not_affiliate").sample,
       }
       Outro.create!(outro_attrs)
     end

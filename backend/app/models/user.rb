@@ -27,14 +27,16 @@ class User < ApplicationRecord
   validate :memberships_empty_when_admin
   validate :referred_by_code_exists
   validates :social_media_url, presence: true, unless: :not_affiliate?
+  validates :bio, :img_url, presence: true, if: :seller?
   validates :referral_code, presence: true, uniqueness: true
   validates :currency, presence: true, inclusion: { in: %w[eur gbp chf usd] }
 
   def as_json(_options = {})
     sliced_attributes = attributes
-                        .slice("id", "email", "first_name", "last_name", "img_url", "onboarding_stage", "admin",
-                               "img_rect", "affiliate_role", "referral_code", "requested_upgrade_to_seller_at",
-                               "currency", "created_at", "updated_at")
+                        .slice("id", "email", "first_name", "last_name", "onboarding_stage", "admin", "img_rect",
+                               "affiliate_role", "referral_code", "requested_upgrade_to_seller_at", "currency",
+                               "social_media_url", "bio", "created_at", "updated_at")
+                        .merge(name: name, img: { url: img_url })
     admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
   end
 
@@ -46,6 +48,10 @@ class User < ApplicationRecord
     return if referred_by_code.blank? || User.where(referral_code: referred_by_code).exists?
 
     errors.add(:referred_by_code, "is not valid")
+  end
+
+  def name
+    first_name && last_name && "#{first_name} #{last_name}" || first_name || last_name || email
   end
 
   def mapped_roles

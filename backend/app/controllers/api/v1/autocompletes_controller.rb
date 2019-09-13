@@ -12,7 +12,7 @@ module Api
         @flows = [SimpleChat, Outro, Showcase].map do |type|
           policy_scope(type).where("name ILIKE ?", "#{params[:searchQuery]}%")
         end.flatten
-        render json: @flows
+        render json: @flows, skip_sections_attributes: true
       end
 
       def path_autocomplete
@@ -21,6 +21,12 @@ module Api
           policy_scope(type).where("name ILIKE ?", "#{params[:searchQuery]}%")
         end.flatten
         render json: @steps.map(&:paths).flatten
+      end
+
+      def brands_autocomplete
+        authorize :autocomplete
+        @brands = Brand.where("name ILIKE ?", "#{params[:searchQuery]}%").order(:name)
+        render json: @brands
       end
     end
   end

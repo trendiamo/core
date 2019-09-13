@@ -1,6 +1,6 @@
 class WebsiteSettingsPolicy < ApplicationPolicy
   def show?
-    user
+    admin_or_account_member?
   end
 
   def create?

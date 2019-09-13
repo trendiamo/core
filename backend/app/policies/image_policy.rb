@@ -1,6 +1,16 @@
 class ImagePolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if admin_or_account_member?
+        scope
+      else
+        scope.where(account: nil, user: user).where.not(url: user.img_url)
+      end
+    end
+  end
+
   def index?
-    admin_or_account_member?
+    user
   end
 
   def create?
@@ -8,6 +18,6 @@ class ImagePolicy < ApplicationPolicy
   end
 
   def destroy?
-    admin_or_owner?
+    admin_or_owner? || seller?
   end
 end

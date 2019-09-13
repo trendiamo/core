@@ -9,8 +9,8 @@ const UserAvatar = ({ className, user }) => {
   )
 
   return (
-    <Avatar className={className} src={user.imgUrl && imgixUrl(user.imgUrl, { rect: stringifyRect(user.imgRect) })}>
-      {user.imgUrl ? null : initials ? initials : ''}
+    <Avatar className={className} src={user.img.url && imgixUrl(user.img.url, { rect: stringifyRect(user.imgRect) })}>
+      {user.img.url ? null : initials ? initials : ''}
     </Avatar>
   )
 }

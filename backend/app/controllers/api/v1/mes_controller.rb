@@ -44,7 +44,8 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:first_name, :last_name, :currency, :img_url, img_rect: %i[x y width height])
+        params.require(:user).permit(:first_name, :last_name, :currency, :social_media_url, :bio, :img_url,
+                                     img_rect: %i[x y width height])
       end
     end
   end

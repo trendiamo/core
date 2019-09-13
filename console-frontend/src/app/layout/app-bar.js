@@ -47,7 +47,7 @@ const OnboardingButton = withRouter(({ location }) => {
   )
 })
 
-const AppBarContent = memo(() => {
+const AppBarContent = memo(({ showOnboarding }) => {
   const { store } = useContext(StoreContext)
   if (!store.appBarContent) return null
 
@@ -63,7 +63,7 @@ const AppBarContent = memo(() => {
       <Title>{title}</Title>
       {Actions && (
         <ButtonsContainer>
-          <OnboardingButton />
+          {showOnboarding && <OnboardingButton />}
           {Actions}
         </ButtonsContainer>
       )}
@@ -116,13 +116,13 @@ const MenuButton = styled(IconButton)`
 }
 `
 
-const AppBar = ({ hasScrolled, sidebarOpen, toggleOpen }) => (
+const AppBar = ({ hasScrolled, showOnboarding, sidebarOpen, toggleOpen }) => (
   <StyledAppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen}>
     <TopToolbar>
       <MenuButton aria-label="Open drawer" color="inherit" id="foofoo" onClick={toggleOpen}>
         <MenuIcon />
       </MenuButton>
-      <AppBarContent />
+      <AppBarContent showOnboarding={showOnboarding} />
     </TopToolbar>
   </StyledAppBar>
 )

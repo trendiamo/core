@@ -19,7 +19,7 @@ import { OutroCreate, OutroEdit, OutrosList } from 'app/resources/outros'
 import { Route, Switch } from 'react-router-dom'
 import { SellerCreate, SellerEdit, SellersList } from 'app/resources/sellers'
 import { ShowcaseCreate, ShowcaseEdit, ShowcasesList } from 'app/resources/showcases'
-import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from 'app/resources/simple-chats'
+import { SimpleChatCreate, SimpleChatEdit, SimpleChatShow, SimpleChatsList } from 'app/resources/simple-chats'
 import { TriggerCreate, TriggerEdit, TriggersList } from 'app/resources/triggers'
 import { UserInvite } from 'app/screens/account/users'
 
@@ -100,6 +100,13 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         exact
         fetchedAccount={fetchedAccount}
         path={routes.simpleChatEdit(':simpleChatId', ':accountSlug')}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={SimpleChatShow}
+        exact
+        fetchedAccount={fetchedAccount}
+        path={routes.simpleChatShow(':simpleChatId', ':accountSlug')}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute

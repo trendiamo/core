@@ -1,12 +1,14 @@
+import auth from 'auth'
 import Autocomplete from 'shared/autocomplete'
 import characterLimits from 'shared/character-limits'
 import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
-import { apiSellersAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
+import { apiBrandsAutocomplete, apiSellersAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Field, FormHelperText } from 'shared/form-elements'
 
-const options = { suggestionItem: 'withAvatar' }
+const sellersAutocompleteOptions = { suggestionItem: 'withAvatar' }
+const brandsAutocompleteOptions = { suggestionItem: 'withLogo' }
 
 const MainForm = ({
   form,
@@ -23,17 +25,9 @@ const MainForm = ({
   const onFocus = useCallback(() => onToggleContent(false), [onToggleContent])
   const onTitleFocus = useCallback(() => onToggleContent(true), [onToggleContent])
 
-  const initialSelectedItem = useMemo(() => form.__seller && { value: form.__seller, label: form.__seller.name }, [
+  const initialSelectedSeller = useMemo(() => form.__seller && { value: form.__seller, label: form.__seller.name }, [
     form.__seller,
   ])
-
-  const onToggleSellerAnimation = useCallback(
-    event => {
-      setFieldValue(event)
-      setUseSellerAnimation(event.target.checked)
-    },
-    [setFieldValue]
-  )
 
   const selectSeller = useCallback(
     selected => {
@@ -46,6 +40,31 @@ const MainForm = ({
     },
     [mergeForm, useSellerAnimation]
   )
+
+  const onToggleSellerAnimation = useCallback(
+    event => {
+      setFieldValue(event)
+      setUseSellerAnimation(event.target.checked)
+    },
+    [setFieldValue]
+  )
+
+  const initialSelectedBrand = useMemo(() => form.__brand && { value: form.__brand, label: form.__brand.name }, [
+    form.__brand,
+  ])
+
+  const selectBrand = useCallback(
+    selected => {
+      if (!selected) return
+      mergeForm({
+        brandId: selected.value.id,
+        __brand: selected.value,
+      })
+    },
+    [mergeForm]
+  )
+
+  const sellerIsOwner = useMemo(() => form.__seller && !form.__seller.id, [form.__seller])
 
   return (
     <Section title={title}>
@@ -62,19 +81,39 @@ const MainForm = ({
         required
         value={form.name}
       />
-      <Autocomplete
-        autocomplete={apiSellersAutocomplete}
-        defaultPlaceholder="Choose a seller"
-        disabled={isCropping || isFormLoading || isUploaderLoading}
-        fullWidth
-        initialSelectedItem={initialSelectedItem}
-        label="Seller"
-        name="Seller"
-        onChange={selectSeller}
-        options={options}
-        required
-      />
-      <FormHelperText>{'The seller that will appear for this chat.'}</FormHelperText>
+      {auth.isSeller() ? (
+        <>
+          <Autocomplete
+            autocomplete={apiBrandsAutocomplete}
+            defaultPlaceholder="Choose a brand"
+            disabled={title.toLowerCase().startsWith('edit') || isCropping || isFormLoading || isUploaderLoading}
+            fullWidth
+            initialSelectedItem={initialSelectedBrand}
+            label="Brand"
+            name="Brand"
+            onChange={selectBrand}
+            options={brandsAutocompleteOptions}
+            required
+          />
+          <FormHelperText>{'The brand that will be able to use this simple chat.'}</FormHelperText>
+        </>
+      ) : (
+        <>
+          <Autocomplete
+            autocomplete={apiSellersAutocomplete}
+            defaultPlaceholder="Choose a seller"
+            disabled={sellerIsOwner || isCropping || isFormLoading || isUploaderLoading}
+            fullWidth
+            initialSelectedItem={initialSelectedSeller}
+            label="Seller"
+            name="Seller"
+            onChange={selectSeller}
+            options={sellersAutocompleteOptions}
+            required
+          />
+          <FormHelperText>{'The seller that will appear for this chat.'}</FormHelperText>
+        </>
+      )}
       {form.__seller && (
         <FormControlLabel
           control={

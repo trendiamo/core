@@ -1,5 +1,5 @@
 class SimpleChatMessage < ApplicationRecord
-  acts_as_tenant
+  acts_as_tenant :account, optional: true
   belongs_to :simple_chat_section
 
   before_create :assign_order, unless: :order_changed?

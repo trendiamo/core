@@ -30,15 +30,18 @@ const previewConverter = {
 const formObjectTransformer = json => {
   return {
     id: json.id,
+    accountId: json.accountId || '',
     name: json.name || '',
     heading: json.heading || '',
     teaserMessage: json.teaserMessage || '',
     extraTeaserMessage: json.extraTeaserMessage || '',
     sellerId: (json.seller && json.seller.id) || '',
     useSellerAnimation: json.useSellerAnimation || false,
+    brandId: (json.brand && json.brand.id) || '',
     triggerIds: json.triggerIds || [],
     lockVersion: json.lockVersion,
     __seller: json.seller,
+    __brand: json.brand,
     simpleChatSectionsAttributes: json.simpleChatSectionsAttributes
       ? json.simpleChatSectionsAttributes.map(simpleChatSection => ({
           ...simpleChatSection,
