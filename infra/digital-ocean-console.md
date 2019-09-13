@@ -38,7 +38,7 @@ dokku postgres:link console-backend-pg console-backend
 dokku redis:create console-backend-redis
 dokku redis:link console-backend-redis console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
-dokku config:set console-backend CORS_ORIGIN="admin.frekkls.com, app.uptous.co" FRONTEND_BASE_URL=https://admin.frekkls.com MAILER_HOST=api.frekkls.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=... SHOP_API_TOKEN=... DELIUS_ASMT_EMAIL=... DELIUS_ASMT_EMAIL_BCC=... TAGGED_PRODUCTS_API_TOKEN=... MIXPANEL_API_KEY=...  ROLLBAR_POST_SERVER_ITEM=... ROLLBAR_TOKEN=... PROMOTER_UPGRADE_EMAIL=...
+dokku config:set console-backend CORS_ORIGIN="admin.frekkls.com, app.uptous.co" FRONTEND_BASE_URL=https://admin.frekkls.com UPTOUS_FRONTEND_BASE_URL=https://app.uptous.co MAILER_HOST=api.frekkls.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=... SHOP_API_TOKEN=... DELIUS_ASMT_EMAIL=... DELIUS_ASMT_EMAIL_BCC=... TAGGED_PRODUCTS_API_TOKEN=... MIXPANEL_API_KEY=...  ROLLBAR_POST_SERVER_ITEM=... ROLLBAR_TOKEN=... PROMOTER_UPGRADE_EMAIL=...
 dokku run console-backend rails db:schema:load
 dokku domains:add console-backend api.trendiamo.com
 dokku domains:add console-backend api.frekkls.com
@@ -46,13 +46,13 @@ dokku ps:scale console-backend web=1 worker=1 scheduler=1
 # from your local machine, do the first deploy:
 bin/rails deploy
 
-# To setup the shopify.frekkls.com app:
+# To setup the shopify.uptous.co app:
 
 dokku apps:create shopify-app
 dokku postgres:create shopify-app-pg
 dokku postgres:link shopify-app-pg shopify-app
 dokku config:set shopify-app BASE_API_URL=https://shopify.uptous.co SHOPIFY_API_KEY=... SHOPIFY_SHARED_SECRET=... SHOP_API_URL=... SHOP_API_TOKEN=... ROLLBAR_POST_SERVER_ITEM=...
-dokku domains:add shopify-app shopify.frekkls.com
+dokku domains:add shopify-app shopify.uptous.co
 dokku ps:scale shopify-app web=1
 # from your local machine, try to do the first deploy:
 bin/rails deploy
@@ -81,7 +81,7 @@ vi the .env files inside each folder
 # To install certificates
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d api.frekkls.com -d shopify.frekkls.com
+certbot certonly --standalone --preferred-challenges http -d api.frekkls.com -d shopify.uptous.co
 service nginx start
 
 mkdir keycert
