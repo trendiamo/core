@@ -1,6 +1,8 @@
 module Api
   module V1
     class AutocompletesController < RestAdminController
+      before_action :authenticate_user!
+
       def sellers_autocomplete
         authorize :autocomplete
         @sellers = Seller.where("name ILIKE ?", "#{params[:searchQuery]}%")
@@ -25,7 +27,8 @@ module Api
 
       def brands_autocomplete
         authorize :autocomplete
-        @brands = Brand.where("name ILIKE ?", "#{params[:searchQuery]}%").order(:name)
+        @brands = Brand.where(account_id: current_user.affiliations&.pluck(:account_id))
+                       .where("name ILIKE ?", "#{params[:searchQuery]}%").order(:name)
         render json: @brands
       end
     end
