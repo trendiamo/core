@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190911150735) do
+ActiveRecord::Schema.define(version: 20190913144151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 20190911150735) do
     t.bigint "account_id"
     t.bigint "seller_id"
     t.datetime "captured_at", null: false
-    t.string "commission_rate", null: false
+    t.decimal "commission_rate", null: false
     t.integer "amount_in_cents", null: false
     t.string "currency", null: false
     t.json "products"
