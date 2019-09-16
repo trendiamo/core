@@ -93,10 +93,9 @@ const StyledChip = styled(Chip)`
   }
 `
 
-const BrandCard = ({ animate, brand, createAffiliation, setIsCustomLinkModalOpen, setSelectedBrand }) => {
+const BrandCard = ({ affiliation, animate, brand, createAffiliation, setIsCustomLinkModalOpen, setSelectedBrand }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const affiliation = useMemo(() => brand.affiliations[0], [brand.affiliations])
   const affiliationUrl = useMemo(() => affiliation && `https://${brand.websiteHostname}/?aftk=${affiliation.token}`, [
     affiliation,
     brand.websiteHostname,
@@ -136,7 +135,13 @@ const BrandCard = ({ animate, brand, createAffiliation, setIsCustomLinkModalOpen
           </Actions>
         </MainContainer>
       </StyledSection>
-      <BrandsModal brand={brand} createAffiliation={createAffiliation} open={isModalOpen} setOpen={setIsModalOpen} />
+      <BrandsModal
+        affiliation={affiliation}
+        brand={brand}
+        createAffiliation={createAffiliation}
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+      />
     </>
   )
 }

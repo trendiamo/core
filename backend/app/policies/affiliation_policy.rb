@@ -5,6 +5,10 @@ class AffiliationPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    true
+  end
+
   def create?
     user && user.affiliate_role != "not_affiliate"
   end

@@ -23,7 +23,7 @@ const IconContainer = styled.div`
   padding: 35px 0 10px;
 `
 
-const Content = ({ brand }) => {
+const Content = ({ affiliation }) => {
   return (
     <MainContainer>
       <ContentScrollContainer>
@@ -34,7 +34,7 @@ const Content = ({ brand }) => {
           <h2>{'Create custom affiliate links'}</h2>
           <p>
             {`You can create customized affiliate links to be able to link to any page of ${
-              brand.name
+              affiliation.brand.name
             }’s website. This can be helpful if you want to directly link to a specific product page or category.`}
           </p>
           <p>
@@ -44,7 +44,7 @@ const Content = ({ brand }) => {
           </p>
         </ContentContainer>
       </ContentScrollContainer>
-      <Footer brand={brand} />
+      <Footer affiliation={affiliation} />
     </MainContainer>
   )
 }
