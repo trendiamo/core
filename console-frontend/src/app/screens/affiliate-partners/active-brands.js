@@ -44,16 +44,17 @@ const BlankState = ({ animate }) => (
   </BlankStateContainer>
 )
 
-const ActiveBrands = ({ animate, brands, isLoading, setIsCustomLinkModalOpen, setSelectedBrand }) => {
+const ActiveBrands = ({ affiliations, animate, isLoading, setIsCustomLinkModalOpen, setSelectedBrand }) => {
   if (isLoading) return <div />
 
-  if (brands.length === 0) return <BlankState animate={animate} />
+  if (affiliations.length === 0) return <BlankState animate={animate} />
 
-  return brands.map(brand => (
+  return affiliations.map(affiliation => (
     <BrandCard
+      affiliation={affiliation}
       animate={animate}
-      brand={brand}
-      key={brand.id}
+      brand={affiliation.brand}
+      key={affiliation.id}
       setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
       setSelectedBrand={setSelectedBrand}
     />

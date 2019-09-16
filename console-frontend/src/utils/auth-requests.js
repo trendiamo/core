@@ -193,6 +193,7 @@ export const apiUserList = query => apiListRequest(`${USERS_URL}/?${stringify(qu
 export const apiUserDestroy = body => apiDestroyMultipleRequest(USERS_URL, body)
 export const apiUserInvite = body => apiCreateRequest(`${USERS_URL}/invites`, body)
 
+export const apiAffiliationsList = query => apiListRequest(`${AFFILIATIONS_URL}/${stringify(query)}`)
 export const apiAffiliationCreate = body => apiCreateRequest(AFFILIATIONS_URL, body)
 
 export const apiEventList = query => apiGetRequest(`${EVENTS_URL}/?${stringify(query)}`)

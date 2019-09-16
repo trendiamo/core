@@ -9,6 +9,11 @@ class Affiliation < ApplicationRecord
   validate :non_affiliate_users_cannot_have_affiliations
   validate :one_affiliation_per_account
 
+  def as_json(_options = {})
+    attributes.slice("id", "token")
+              .merge(brand: account.brand)
+  end
+
   private
 
   def generate_token

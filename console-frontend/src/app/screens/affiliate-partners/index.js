@@ -2,9 +2,9 @@ import ActiveBrands from './active-brands'
 import auth from 'auth'
 import AvailableBrands from './available-brands'
 import CustomLinkModal from './custom-link-modal'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
-import { apiAffiliationCreate, apiBrandsList, apiRequest } from 'utils'
+import { apiAffiliationCreate, apiAffiliationsList, apiBrandsList, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
 const sectionTitles = {
@@ -16,7 +16,7 @@ const appBarContent = ({ section }) => ({ title: sectionTitles[section] })
 
 const AffiliatePartners = () => {
   const [animate, setAnimate] = useState(false)
-  const [activeBrands, setActiveBrands] = useState([])
+  const [affiliations, setAffiliations] = useState([])
   const [availableBrands, setAvailableBrands] = useState([])
   const [isAvailableBrandsSection, setIsAvailableBrandsSection] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -26,33 +26,43 @@ const AffiliatePartners = () => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const fetchBrands = useCallback(
+  const fetchAffiliations = useCallback(
     async () => {
-      const { json, errors, requestError } = await apiRequest(apiBrandsList, [])
+      const { json, errors, requestError } = await apiRequest(apiAffiliationsList, [])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (requestError || errors) return
-      const activeBrands = json.filter(brand => brand.affiliations.length > 0)
-      const availableBrands = json.filter(brand => !activeBrands.includes(brand))
-      setActiveBrands(activeBrands)
-      setAvailableBrands(availableBrands)
-      setIsLoading(false)
+      setAffiliations(json)
     },
     [enqueueSnackbar]
   )
 
-  useEffect(
+  const fetchAvailableBrands = useCallback(
+    async () => {
+      const { json, errors, requestError } = await apiRequest(apiBrandsList, [])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (requestError || errors) return
+      setAvailableBrands(json)
+    },
+    [enqueueSnackbar]
+  )
+
+  const fetchAffiliationsAndBrands = useCallback(
     () => {
       let didCancel = false
       ;(async () => {
-        await fetchBrands()
+        setIsLoading(true)
+        await Promise.all([fetchAffiliations(), fetchAvailableBrands()])
+        setIsLoading(false)
         setTimeout(() => {
           didCancel || setAnimate(true)
         }, 100)
       })()
       return () => (didCancel = true)
     },
-    [fetchBrands]
+    [fetchAffiliations, fetchAvailableBrands]
   )
+
+  useEffect(() => fetchAffiliationsAndBrands(), [fetchAffiliationsAndBrands])
 
   const secondTitleRef = useRef(null)
 
@@ -91,18 +101,23 @@ const AffiliatePartners = () => {
         if (!errors && !requestError) {
           enqueueSnackbar(`Successfully created affiliation with ${brand.name}`, { variant: 'success' })
         }
-        fetchBrands()
+        fetchAffiliationsAndBrands()
         return json
       })()
     },
-    [enqueueSnackbar, fetchBrands]
+    [enqueueSnackbar, fetchAffiliationsAndBrands]
   )
+
+  const selectedAffiliation = useMemo(() => affiliations.find(affiliation => affiliation.brand === selectedBrand), [
+    affiliations,
+    selectedBrand,
+  ])
 
   return (
     <>
       <ActiveBrands
+        affiliations={affiliations}
         animate={animate}
-        brands={activeBrands}
         isLoading={isLoading}
         setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
         setSelectedBrand={setSelectedBrand}
@@ -115,7 +130,11 @@ const AffiliatePartners = () => {
         title={sectionTitles.availableBrands}
         titleRef={secondTitleRef}
       />
-      <CustomLinkModal brand={selectedBrand} open={isCustomLinkModalOpen} setOpen={setIsCustomLinkModalOpen} />
+      <CustomLinkModal
+        affiliation={selectedAffiliation}
+        open={isCustomLinkModalOpen}
+        setOpen={setIsCustomLinkModalOpen}
+      />
     </>
   )
 }

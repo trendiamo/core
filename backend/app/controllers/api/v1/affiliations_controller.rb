@@ -1,6 +1,12 @@
 module Api
   module V1
     class AffiliationsController < RestAdminController
+      def index
+        @affiliations = policy_scope(Affiliation).all
+        authorize @affiliations
+        render json: @affiliations
+      end
+
       def create
         @affiliation = Affiliation.new(affiliation_params)
         @affiliation.account_id = Brand.find(params[:brand_id]).account_id

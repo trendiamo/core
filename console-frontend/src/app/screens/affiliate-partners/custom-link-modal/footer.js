@@ -27,7 +27,7 @@ const InputContainer = styled.div`
   width: 70%;
 `
 
-const Footer = ({ brand }) => {
+const Footer = ({ affiliation }) => {
   const [inputUrl, setInputUrl] = useState('')
   const [outputUrl, setOutputUrl] = useState(null)
 
@@ -38,9 +38,9 @@ const Footer = ({ brand }) => {
   const getLink = useCallback(
     event => {
       event.preventDefault()
-      setOutputUrl(`${inputUrl}/?aftk=${brand.affiliations[0].token}`)
+      setOutputUrl(`${inputUrl}/?aftk=${affiliation.token}`)
     },
-    [brand.affiliations, inputUrl]
+    [affiliation.token, inputUrl]
   )
 
   return (
