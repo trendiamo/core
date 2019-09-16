@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+   wordpress:
+     build:
+       dockerfile: Dockerfile
+       context: ./
+     depends_on:
+       - db
+     ports:
+       - "8000:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+       WORDPRESS_DB_NAME: wordpress
+     volumes:
+      - ./plugin:/var/www/html/wp-content/plugins/up2us
+
+   db:
+     image: mysql:5.7
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: somewordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+     ports:
+      - "3306:3306"
