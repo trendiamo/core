@@ -33,7 +33,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 5000 } # can also be uptous, so no default
 
   if ENV["SPARKPOST_API_KEY"]
     config.action_mailer.delivery_method = :sparkpost
