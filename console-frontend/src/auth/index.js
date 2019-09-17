@@ -41,10 +41,7 @@ const auth = {
   },
   getUser() {
     if (!this.user) this.user = JSON.parse(localStorage.getItem('authUser') || '{}')
-    // TODO: remove these lines after 2019-10-16 (check https://github.com/trendiamo/core/pull/880)
-    if (this.user.imgUrl && !this.user.img) {
-      this.user.img = { url: this.user.imgUrl }
-    }
+    if (!this.user.img) this.user.img = { url: this.user.imgUrl } // TODO: remove after 2019-10-16 (check https://github.com/trendiamo/core/pull/880)
     return this.user
   },
   isAffiliate() {
