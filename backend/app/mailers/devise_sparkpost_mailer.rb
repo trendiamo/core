@@ -5,6 +5,7 @@ class DeviseSparkpostMailer < Devise::Mailer
     url = api_v1_users_confirmation_url(record, { confirmation_token: token }.merge(host_options(record)))
     sparkpost_data = {
       substitution_data: {
+        app: record.not_affiliate? ? "frekkls" : "uptous",
         user_identifier: record.first_name,
         # https://developers.sparkpost.com/api/template-language/#header-links
         dynamic_html: { confirm_email_link: %(<a href="#{url}">Confirm your email</a>) },
@@ -18,6 +19,7 @@ class DeviseSparkpostMailer < Devise::Mailer
     url = api_v1_users_password_edit_url(record, { reset_password_token: token }.merge(host_options(record)))
     sparkpost_data = {
       substitution_data: {
+        app: record.not_affiliate? ? "frekkls" : "uptous",
         user_identifier: record.first_name,
         dynamic_html: { change_password_link: %(<a href="#{url}">Change my password</a>) },
       },
