@@ -11,6 +11,7 @@ import pierreCardinConfig from './pierre-cardin'
 import pionierConfig from './pionier'
 import rihappyConfig from './rihappy'
 import shopinfoConfig from './shopinfo'
+import timeblock from './timeblock'
 import uniplacesConfig from './uniplaces'
 import villaDonatelloConfig from './villadonatello'
 
@@ -53,6 +54,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'villadonatello.com') return villaDonatelloConfig
   if (location.hostname === 'www.pampling.com') return pampling
   if (location.hostname === 'www.mymuesli.com') return mymuesli
+  if (location.hostname === 'timeblock-europe.com') return timeblock
   return {}
 }
 
