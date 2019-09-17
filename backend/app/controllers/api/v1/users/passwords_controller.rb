@@ -23,8 +23,8 @@ module Api
           set_minimum_password_length
           resource.reset_password_token = params[:reset_password_token]
           query = "?reset_password_token=#{params[:reset_password_token]}"
-          password_form_url = "#{ENV['FRONTEND_BASE_URL']}/password-reset#{query}"
-          redirect_to password_form_url
+          base = request.host.match?(/uptous\.co$/) ? ENV["UPTOUS_FRONTEND_BASE_URL"] : ENV["FRONTEND_BASE_URL"]
+          redirect_to "#{base}/password-reset#{query}"
         end
 
         # PUT /resource/password

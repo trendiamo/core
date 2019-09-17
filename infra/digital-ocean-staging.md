@@ -38,8 +38,9 @@ dokku postgres:link console-backend-pg console-backend
 dokku redis:create console-backend-redis
 dokku redis:link console-backend-redis console-backend
 # CORS_ORIGIN allows multiple values (comma-separated), so it cannot be used for the same purpose as FRONTEND_BASE_URL
-dokku config:set console-backend CORS_ORIGIN=admin.pimppls.com FRONTEND_BASE_URL=https://admin.pimppls.com UPTOUS_FRONTEND_BASE_URL=https://app-staging.uptous.co MAILER_HOST=api.pimppls.com SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=... SHOP_API_TOKEN=... DELIUS_ASMT_EMAIL=... DELIUS_ASMT_EMAIL_BCC=... TAGGED_PRODUCTS_API_TOKEN=... MIXPANEL_API_KEY=... ROLLBAR_POST_SERVER_ITEM=...  ROLLBAR_TOKEN=... PROMOTER_UPGRADE_EMAIL=...
+dokku config:set console-backend CORS_ORIGIN=admin.pimppls.com FRONTEND_BASE_URL=https://admin.pimppls.com UPTOUS_FRONTEND_BASE_URL=https://app-staging.uptous.co MAILER_HOST=api.pimppls.com UPTOUS_MAILER_HOST=api-staging.uptous.co SPARKPOST_API_KEY=... DO_SPACES_KEY_ID=... DO_SECRET_ACCESS_KEY=... DO_BUCKET=... DO_SPACE_ENDPOINT=... SHOP_API_TOKEN=... DELIUS_ASMT_EMAIL=... DELIUS_ASMT_EMAIL_BCC=... TAGGED_PRODUCTS_API_TOKEN=... MIXPANEL_API_KEY=... ROLLBAR_POST_SERVER_ITEM=...  ROLLBAR_TOKEN=... PROMOTER_UPGRADE_EMAIL=...
 dokku domains:add console-backend api.pimppls.com
+dokku domains:add console-backend api-staging.uptous.co
 dokku ps:scale console-backend web=1 worker=1 scheduler=1
 dokku run console-backend rails db:schema:load # fails before first deploy, first deploy then fails the migrate command, repeat this, then deploy again!
 # from your local machine, do the first deploy:
@@ -56,7 +57,7 @@ vi the .env files inside each folder
 # To install certificates
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d api.pimppls.com -d admin.pimppls.com -d pimppls.com -d www.pimppls.com -d app-staging.uptous.co
+certbot certonly --standalone --preferred-challenges http -d api.pimppls.com -d api-staging.uptous.co -d admin.pimppls.com -d pimppls.com -d www.pimppls.com -d app-staging.uptous.co
 service nginx start
 
 mkdir keycert
