@@ -1,6 +1,7 @@
 import Footer from './footer'
 import React from 'react'
 import styled from 'styled-components'
+import { Typography } from '@material-ui/core'
 
 const ContentContainer = styled.div`
   overflow-x: hidden;
@@ -31,7 +32,7 @@ const Content = ({ affiliation }) => {
           <img alt="" src="/img/icons/link.svg" />
         </IconContainer>
         <ContentContainer>
-          <h2>{'Create custom affiliate links'}</h2>
+          <Typography variant="h5">{'Create custom affiliate links'}</Typography>
           <p>
             {`You can create customized affiliate links to be able to link to any page of ${
               affiliation.brand.name

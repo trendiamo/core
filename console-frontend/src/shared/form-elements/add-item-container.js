@@ -1,19 +1,23 @@
+import Button from 'shared/button'
 import React, { memo } from 'react'
 import styled from 'styled-components'
-import { Button } from '@material-ui/core'
+import { showUpToUsBranding } from 'utils'
 
 const Container = styled.div`
   width: 100%;
-  border: 2px dashed #ff6f61;
+  border: 2px dashed ${showUpToUsBranding() ? '#0f7173' : '#ff6f61'};
   border-radius: 8px;
   padding: 65px 0;
   text-align: center;
   margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const AddItemContainer = ({ message, ...props }) => (
   <Container>
-    <Button color="primary" variant="contained" {...props}>
+    <Button color="primaryGradient" variant="contained" {...props}>
       {message}
     </Button>
   </Container>

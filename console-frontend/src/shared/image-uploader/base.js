@@ -6,9 +6,10 @@ import React, { useCallback, useEffect, useState } from 'react'
 import ReactDropzone from 'react-dropzone'
 import styled from 'styled-components'
 import theme from 'app/theme'
-import { Button, FormControl, InputLabel } from '@material-ui/core'
+import { Button, FormControl } from '@material-ui/core'
 import { CircularProgress } from '@material-ui/core'
 import { imgixUrl, stringifyRect } from 'plugin-base'
+import { Label } from 'shared/form-elements'
 
 const Container = styled.div`
   margin-bottom: 1rem;
@@ -224,7 +225,7 @@ const BaseImageUploader = ({
     />
     <Container>
       <FormControl disabled={disabled} fullWidth margin="normal">
-        <InputLabel shrink>{`${label}${required ? ' *' : ''}`}</InputLabel>
+        <Label shrink>{`${label}${required ? ' *' : ''}`}</Label>
         <Dropzone
           accept="image/*"
           circle={circle}

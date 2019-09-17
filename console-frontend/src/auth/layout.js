@@ -71,7 +71,7 @@ const UpToUsBackgroundContainer = styled(Background)`
   user-select: none;
 
   @media (min-width: 900px) {
-    background-image: url('/img/background/uptous-login.png');
+    background-image: url('/img/background/uptous-login.jpg');
     background-position-x: 66%;
     background-size: cover;
   }
@@ -82,7 +82,8 @@ const WaveContainer = styled.div`
   border-right: 1px solid white;
   position: relative;
   visibility: hidden;
-  width: 40%;
+  width: 41%;
+  margin-left: -14px;
 
   @media (min-width: 900px) {
     visibility: visible;
@@ -125,6 +126,7 @@ const LogotypeContainer = styled.div`
 
 const LogoImage = styled.img`
   max-width: 140px;
+  user-select: none;
 `
 
 const Logotype = props => (
@@ -134,8 +136,9 @@ const Logotype = props => (
 )
 
 const StyledTypography = styled(Typography)`
-  font-size: 33.4px;
-  font-weight: 300;
+  ${showUpToUsBranding()
+    ? 'font-size: 30px; font-weight: 900; text-transform: uppercase;'
+    : 'font-size: 33.4px; font-weight: 300;'}
 `
 
 const Layout = ({ children, title }) => (

@@ -1,111 +1,115 @@
+import Button from 'shared/button'
 import DoneIcon from '@material-ui/icons/Done'
 import omit from 'lodash.omit'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import theme, { frekklsButtons, uptousButtons } from 'app/theme'
-import { Button, Input, Tooltip } from '@material-ui/core'
+import theme from 'app/theme'
+import { Input, Tooltip } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 
-const Container = styled(props => <div {...omit(props, ['isCopied', 'backgroundColor'])} />)`
+const Container = styled(props => <form {...omit(props, ['isCopied', 'backgroundColor', 'pasteable'])} />)`
   ${({ isCopied }) => !isCopied && 'background-clip: padding-box;'}
-  background-color: ${({ backgroundColor }) => backgroundColor || '#fff'};
   border-color: ${({ isCopied }) =>
     isCopied ? theme.customPalette.success.main : showUpToUsBranding() ? 'transparent' : 'rgba(239, 239, 242)'};
-  border-radius: ${showUpToUsBranding() ? '30px' : '3px'};
+  border-radius: ${showUpToUsBranding() ? '0px' : '3px'};
   border-style: solid;
   border-width: 1px;
   display: flex;
   height: 100%;
-  min-height: ${showUpToUsBranding() ? '44px' : '40px'};
   overflow: hidden;
+  ${({ pasteable }) =>
+    pasteable && 'width: 100%; transition: border-color 0.3s ease-in-out 0.4s; justify-content: space-between;'}
+
 `
 
-const UrlInput = styled(props => <Input {...omit(props, ['isCopied'])} />)`
-  flex: 4;
-  margin-left: 0.8rem;
-  ${showUpToUsBranding() &&
-    `
-    color: #1b3b50;
-    line-height: 1.2;
-    margin-left: 1.1rem;
-  `}
+const UrlInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteable', 'backgroundColor'])} />)`
+  padding-left: 0.8rem;
+  background-color: ${({ backgroundColor }) => backgroundColor || '#fff'};
+  ${({ pasteable, wasCopied }) =>
+    pasteable && !wasCopied && 'margin-right: 14px;'}
+  transition: margin 0.4s ease-in-out;
 `
 
-const CopyButtonContainer = styled.div`
-  ${!showUpToUsBranding() && 'flex: 1;'}
-`
-
-const CopyButton = styled(props => <Button {...omit(props, ['isCopied'])} />)`
-  border-radius: 0;
-  box-shadow: none;
-  line-height: 1;
+const CopyButton = styled(props => <Button {...omit(props, ['pasteable'])} />)`
   height: 100%;
-  width: 100%;
-  &:after {
-    background: #000;
-    bottom: 0;
-    content: '';
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: opacity 0.3s;
-  }
-  &:hover:after {
-    opacity: 0.2;
-  }
-  span {
-    z-index: 1;
-  }
-  ${({ isCopied }) =>
-    isCopied &&
-    `
-    background-image: none !important;
-    background-color: ${theme.customPalette.success.main} !important;
-    &:hover {
-      background-image: none !important;
-      background-color: ${theme.customPalette.success.main} !important;
-    }
-  `}
-  ${showUpToUsBranding() &&
-    `
-    border-radius: 30px;
-    font-size: 18px;
-    width: 90px;
-    &:after {
-      border-radius: 30px;
-    }
-  `}
+  width: ${({ pasteable }) => (pasteable ? '135px' : '90px')};
+  box-shadow: none;
+  border-radius: 0;
 `
 
-const ClipboardInput = ({ text, ...props }) => {
+const CopyButtonContainer = styled.div``
+
+const ClipboardInput = ({
+  text,
+  type,
+  size,
+  pasteable,
+  backgroundColor,
+  urlInputProps,
+  mixFunction,
+  placeholder,
+  ...props
+}) => {
   const [isCopied, setIsCopied] = useState(false)
+  const [wasCopied, setWasCopied] = useState(false)
+  const [inputText, setInputText] = useState('')
+  const [outputText, setOutputText] = useState('')
+
+  const changeText = useCallback(
+    event => {
+      if (wasCopied) return
+      setInputText(event.target.value)
+    },
+    [wasCopied]
+  )
 
   const copyUrl = useCallback(
-    async () => {
-      await navigator.clipboard.writeText(text)
+    async event => {
+      event.preventDefault()
       setIsCopied(true)
+      setWasCopied(true)
       showUpToUsBranding() && setTimeout(() => setIsCopied(false), 3000)
+      if (outputText === inputText) {
+        await navigator.clipboard.writeText(pasteable ? inputText : text)
+        return
+      }
+      const final = mixFunction ? mixFunction(inputText) : inputText
+      setOutputText(final)
+      setInputText(final)
+      await navigator.clipboard.writeText(final)
     },
-    [text]
+    [inputText, mixFunction, outputText, pasteable, text]
   )
 
   const onInputFocus = useCallback(event => event.target.select(), [])
 
   return (
-    <Container isCopied={isCopied} {...props}>
-      <UrlInput defaultValue={text} disableUnderline fullWidth isCopied={isCopied} onFocus={onInputFocus} readOnly />
-      <Tooltip title={isCopied ? 'Copied!' : 'Copy to Clipboard'}>
+    <Container isCopied={isCopied} onSubmit={copyUrl} pasteable={pasteable} {...props}>
+      <UrlInput
+        backgroundColor={backgroundColor}
+        disableUnderline
+        fullWidth
+        inputProps={urlInputProps}
+        onChange={changeText}
+        onFocus={onInputFocus}
+        pasteable={pasteable}
+        placeholder={placeholder}
+        readOnly={!pasteable}
+        required
+        value={pasteable ? inputText : text}
+        wasCopied={wasCopied}
+      />
+      <Tooltip title={wasCopied ? 'Copied!' : pasteable ? 'Get Link' : 'Copy to Clipboard'}>
         <CopyButtonContainer>
           <CopyButton
+            color={isCopied ? 'success' : type || 'primaryGradient'}
             fullWidth
-            isCopied={isCopied}
-            onClick={copyUrl}
-            style={showUpToUsBranding() ? uptousButtons.primaryGradient : frekklsButtons.primaryGradient}
+            pasteable={pasteable}
+            size={size}
+            type="submit"
             variant="contained"
           >
-            {isCopied ? <DoneIcon /> : 'Copy'}
+            {isCopied ? <DoneIcon /> : pasteable && !wasCopied ? 'Get Link' : 'Copy'}
           </CopyButton>
         </CopyButtonContainer>
       </Tooltip>

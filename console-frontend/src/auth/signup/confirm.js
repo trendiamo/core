@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import routes from 'app/routes'
 import { apiRequest, apiSignUpWithInvite } from 'utils'
 import { AuthStyledForm } from 'auth/components'
-import { FormControl, Input, InputLabel } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const parseSearchParams = () => {
@@ -77,41 +77,34 @@ const SignupConfirm = () => {
   return (
     <AuthLayout title="Start selling with social!">
       <AuthStyledForm onSubmit={onSubmit}>
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
-          <Input autoComplete="email" disabled id="email" name="email" required type="email" value={state.form.email} />
-        </FormControl>
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="firstName">{'First Name'}</InputLabel>
-          <Input id="firstName" name="firstName" onChange={setFieldValue} required value={state.form.firstName} />
-        </FormControl>
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="lastName">{'Last Name'}</InputLabel>
-          <Input id="lastName" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
-        </FormControl>
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="password">{'Password'}</InputLabel>
-          <Input
-            id="password"
-            inputRef={passwordRef}
-            name="password"
-            onChange={setFieldValue}
-            required
-            type="password"
-            value={state.form.password}
-          />
-        </FormControl>
-        <FormControl fullWidth margin="normal" required>
-          <InputLabel htmlFor="passwordConfirmation">{'Confirm Password'}</InputLabel>
-          <Input
-            id="passwordConfirmation"
-            name="passwordConfirmation"
-            onChange={setFieldValue}
-            required
-            type="password"
-            value={state.form.passwordConfirmation}
-          />
-        </FormControl>
+        <Field
+          autoComplete="email"
+          label="E-mail"
+          name="email"
+          onChange={setFieldValue}
+          required
+          type="email"
+          value={state.form.email}
+        />
+        <Field label="First Name" name="firstName" onChange={setFieldValue} required value={state.form.firstName} />
+        <Field label="Last Name" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
+        <Field
+          inputRef={passwordRef}
+          label="Password"
+          name="password"
+          onChange={setFieldValue}
+          required
+          type="password"
+          value={state.form.password}
+        />
+        <Field
+          label="Confirm Password"
+          name="passwordConfirmation"
+          onChange={setFieldValue}
+          required
+          type="password"
+          value={state.form.passwordConfirmation}
+        />
         <div style={{ marginTop: '2rem', width: '70%' }}>
           <Button color="primaryGradient" fullWidth type="submit" variant="contained">
             {'Signup'}

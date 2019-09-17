@@ -6,7 +6,7 @@ const confettiPerSecond = 2
 const framesPerSecond = 20
 const confettiLifespan = 5000
 const confettiVerticalSpeed = 2 // pixels per frame (on Y axis)
-const canvasBackgroundColor = '#f4f8f8'
+const canvasBackgroundColor = '#fff'
 const confettiXFrequency = 100
 const confettiAmplitude = 2
 

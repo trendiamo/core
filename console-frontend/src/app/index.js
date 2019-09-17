@@ -5,7 +5,7 @@ import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import React, { useEffect, useState } from 'react'
 import theme from 'app/theme'
-import { apiGetCsrfToken, apiRequest, changeFavicon, showUpToUsBranding } from 'utils'
+import { apiGetCsrfToken, apiRequest, changeFavicon, loadFonts, showUpToUsBranding } from 'utils'
 import { create } from 'jss'
 import { createGenerateClassName, jssPreset, MuiThemeProvider } from '@material-ui/core/styles'
 import { createGlobalStyle } from 'styled-components'
@@ -15,11 +15,14 @@ import { Router } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack'
 import { StoreProvider } from 'ext/hooks/store'
 import { useSnackbar } from 'notistack'
-import 'assets/css/fonts.css'
 
 if (showUpToUsBranding()) {
   changeFavicon('/favicon-uptous.png')
 }
+
+loadFonts()
+
+document.title = showUpToUsBranding() ? 'UPTOUS' : 'Frekkls Admin'
 
 const generateClassName = createGenerateClassName()
 const jss = create({

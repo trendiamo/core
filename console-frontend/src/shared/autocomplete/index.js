@@ -6,7 +6,8 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { apiRequest } from 'utils'
 import { ArrowDropDown, PersonAdd } from '@material-ui/icons'
-import { FormControl, Input, InputAdornment, InputLabel, MenuItem, Paper, Tooltip } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
+import { InputAdornment, MenuItem, Paper, Tooltip } from '@material-ui/core'
 import { suggestionTypes } from './options'
 
 const StyledArrowDropDown = styled(ArrowDropDown)`
@@ -38,7 +39,7 @@ const AddSellerButton = ({ onClick }) => (
 const AutocompleteInput = ({
   autoFocus,
   disabled,
-  formControlProps,
+  required,
   loadAllOptions,
   inputProps,
   label,
@@ -69,29 +70,23 @@ const AutocompleteInput = ({
   const onAddSellerClick = useCallback(() => setIsModalOpen(true), [setIsModalOpen])
 
   return (
-    <FormControl margin="normal" {...formControlProps}>
-      <InputLabel htmlFor={inputProps.id} id={inputProps['aria-labelledby']}>
-        {label}
-      </InputLabel>
-      <Input
-        disabled={disabled}
-        endAdornment={
-          !disabled && (
-            <>
-              <DropdownButton onClick={onDropdownClick} />
-              {auth.getAccountRole() !== 'editor' && name === 'Seller' && (
-                <AddSellerButton onClick={onAddSellerClick} />
-              )}
-            </>
-          )
-        }
-        fullWidth
-        inputProps={{ ref: inputRef }}
-        name={name}
-        type="text"
-        {...inputProps}
-      />
-    </FormControl>
+    <Field
+      disabled={disabled}
+      endAdornment={
+        !disabled && (
+          <>
+            <DropdownButton onClick={onDropdownClick} />
+            {auth.getAccountRole() !== 'editor' && name === 'Seller' && <AddSellerButton onClick={onAddSellerClick} />}
+          </>
+        )
+      }
+      inputRef={inputRef}
+      label={label}
+      name={name}
+      required={required}
+      type="text"
+      {...inputProps}
+    />
   )
 }
 
@@ -131,7 +126,6 @@ const Autocomplete = ({
   autoFocus,
   defaultPlaceholder,
   disabled,
-  fullWidth,
   initialSelectedItem,
   initialValueFormatMismatch,
   label,
@@ -218,7 +212,6 @@ const Autocomplete = ({
           <AutocompleteInput
             autoFocus={autoFocus}
             disabled={disabled}
-            formControlProps={{ disabled, required, fullWidth }}
             inputProps={getInputProps({
               placeholder: prevSelected ? prevSelected.label : defaultPlaceholder,
               onFocus: () => {
@@ -233,6 +226,7 @@ const Autocomplete = ({
             label={label}
             loadAllOptions={loadAllOptions}
             name={name}
+            required={required}
             setIsModalOpen={setIsModalOpen}
           />
           <ResultsDiv {...getMenuProps()}>

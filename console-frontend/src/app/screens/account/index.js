@@ -1,17 +1,25 @@
-import AppBarButton from 'shared/app-bar-button'
 import auth from 'auth'
+import Button from 'shared/button'
 import EditWebsite from './edit-website'
 import React from 'react'
 import routes from 'app/routes'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Link } from 'react-router-dom'
+import { showUpToUsBranding } from 'utils'
 import { UsersList } from './users'
 
 const Actions = () => {
   return auth.isAdmin() || auth.getAccountRole() === 'owner' ? (
-    <AppBarButton color="primary" component={Link} to={routes.userInvite()} variant="contained">
+    <Button
+      color="primaryGradient"
+      component={Link}
+      inline
+      size={showUpToUsBranding() ? 'small' : 'medium'}
+      to={routes.userInvite()}
+      variant="contained"
+    >
       {'Invite User'}
-    </AppBarButton>
+    </Button>
   ) : null
 }
 

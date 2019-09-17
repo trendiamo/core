@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import { showUpToUsBranding } from 'utils'
 import { Typography } from '@material-ui/core'
 
 const StyledTypography = styled(Typography)`
-  color: #333;
+  color: ${showUpToUsBranding() ? '#272932' : '#333'};
   display: inline-block;
-  font-weight: 500;
+  font-weight: ${showUpToUsBranding() ? 900 : 500};
   letter-spacing: 0.3px;
-  font-size: 24px;
+  font-size: ${showUpToUsBranding() ? 20 : 24}px;
   margin-right: 2px;
 
   @media (max-width: 960px) {

@@ -1,4 +1,4 @@
-import AppBarButton from 'shared/app-bar-button'
+import Button from 'shared/button'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CircularProgress from 'app/layout/loading'
 import isEmpty from 'lodash.isempty'
@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useCancelable from 'ext/hooks/use-cancelable'
-import { apiRequest } from 'utils'
+import { apiRequest, showUpToUsBranding } from 'utils'
 import { Checkbox, Table, TableBody } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { parse } from 'query-string'
@@ -18,15 +18,16 @@ import { withRouter } from 'react-router'
 
 const Actions = ({ buttonText, createRoute }) =>
   createRoute && (
-    <AppBarButton
-      color="primary"
+    <Button
+      color="primaryGradient"
       component={Link}
-      style={{ display: 'inline-flex' }}
+      inline
+      size={showUpToUsBranding() ? 'small' : 'medium'}
       to={createRoute}
       variant="contained"
     >
       {buttonText}
-    </AppBarButton>
+    </Button>
   )
 
 const EnhancedList = ({

@@ -5,9 +5,9 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, Form, Select } from 'shared/form-elements'
+import { Actions, Field, Form, Select } from 'shared/form-elements'
 import { apiRequest, apiWebsiteSettingsShow, apiWebsiteSettingsUpdate, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Checkbox, FormControlLabel, Grid, TextField } from '@material-ui/core'
+import { Checkbox, FormControlLabel, Grid } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const formObjectTransformer = json => ({
@@ -96,7 +96,7 @@ const WebsiteSettings = () => {
               disabled={isFormLoading || isFormSubmitting}
               label="Use round edges"
             />
-            <TextField
+            <Field
               disabled={isFormLoading || isFormSubmitting}
               fullWidth
               inputProps={atLeastOneNonBlankCharInputProps}

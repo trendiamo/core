@@ -1,9 +1,11 @@
+import { showUpToUsBranding } from 'utils'
 import { StoreContext } from 'ext/hooks/store'
 import { useContext, useEffect } from 'react'
 
 const setPageTitle = title => {
   if (!title) return
-  document.title = `${title} - Frekkls Admin`
+  const defaultTitle = showUpToUsBranding ? 'UPTOUS' : 'Frekkls Admin'
+  document.title = `${title} - ${defaultTitle}`
 }
 
 const useAppBarContent = appBarContent => {

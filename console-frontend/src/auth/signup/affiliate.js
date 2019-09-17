@@ -7,7 +7,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
 import { AuthFormFooter, AuthStyledForm } from 'auth/components'
-import { FormControl, Input, InputLabel } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const socialMediaUrlInputProps = { pattern: 'https?://.+' }
@@ -80,7 +80,7 @@ const AffiliateSignup = () => {
   )
 
   return (
-    <AuthLayout title="Start monetizing with positive influence">
+    <AuthLayout title="Start monetizing positive influence">
       {state.isFormSubmitted ? (
         <>
           <StyledDoneIcon />
@@ -88,70 +88,56 @@ const AffiliateSignup = () => {
         </>
       ) : (
         <AuthStyledForm onSubmit={onSubmit}>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="firstName">{'First Name'}</InputLabel>
-            <Input id="firstName" name="firstName" onChange={setFieldValue} required value={state.form.firstName} />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="lastName">{'Last Name'}</InputLabel>
-            <Input id="lastName" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="socialMediaUrl">{'Primary Social Media URL'}</InputLabel>
-            <Input
-              id="socialMediaUrl"
-              inputProps={socialMediaUrlInputProps}
-              name="socialMediaUrl"
-              onChange={setFieldValue}
-              required
-              type="url"
-              value={state.form.socialMediaUrl}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <InputLabel htmlFor="referredByCode">{'Referral Code'}</InputLabel>
-            <Input
-              id="referredByCode"
-              name="referredByCode"
-              onChange={setFieldValue}
-              value={state.form.referredByCode}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
-            <Input
-              autoComplete="email"
-              id="email"
-              name="email"
-              onChange={setFieldValue}
-              required
-              type="email"
-              value={state.form.email}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="password">{'Password'}</InputLabel>
-            <Input
-              id="password"
-              inputRef={passwordRef}
-              name="password"
-              onChange={setFieldValue}
-              required
-              type="password"
-              value={state.form.password}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="passwordConfirmation">{'Confirm Password'}</InputLabel>
-            <Input
-              id="passwordConfirmation"
-              name="passwordConfirmation"
-              onChange={setFieldValue}
-              required
-              type="password"
-              value={state.form.passwordConfirmation}
-            />
-          </FormControl>
+          <Field
+            autoFocus
+            label="First Name"
+            name="firstName"
+            onChange={setFieldValue}
+            required
+            value={state.form.firstName}
+          />
+          <Field label="Last Name" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
+          <Field
+            inputProps={socialMediaUrlInputProps}
+            label="Primary Social Media URL"
+            name="socialMediaUrl"
+            onChange={setFieldValue}
+            required
+            type="url"
+            value={state.form.socialMediaUrl}
+          />
+          <Field
+            label="Referral Code"
+            name="referredByCode"
+            onChange={setFieldValue}
+            value={state.form.referredByCode}
+          />
+          <Field
+            autoComplete="email"
+            label="E-mail"
+            name="email"
+            onChange={setFieldValue}
+            required
+            type="email"
+            value={state.form.email}
+          />
+          <Field
+            inputRef={passwordRef}
+            label="Password"
+            name="password"
+            onChange={setFieldValue}
+            required
+            type="password"
+            value={state.form.password}
+          />
+          <Field
+            label="Confirm Password"
+            name="passwordConfirmation"
+            onChange={setFieldValue}
+            required
+            type="password"
+            value={state.form.passwordConfirmation}
+          />
           <AuthFormFooter>
             <Button color="primaryGradient" fullWidth type="submit" variant="contained">
               {'Signup'}

@@ -1,9 +1,8 @@
 import Button from 'shared/button'
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import WhiteButton from 'shared/white-button'
 import { apiPasswordChange, apiRequest } from 'utils'
-import { FormControl, Input, InputLabel } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const ActionContainer = styled.div`
@@ -12,31 +11,31 @@ const ActionContainer = styled.div`
 
 const ChangePassword = ({ passwordForm, onFormSubmit, setFieldValue, togglePasswordForm, isResetButtonDisabled }) => (
   <form onSubmit={onFormSubmit}>
-    <FormControl fullWidth margin="normal" required>
-      <InputLabel htmlFor="currentPassword">{'Current Password'}</InputLabel>
-      <Input
-        autoFocus
-        name="currentPassword"
-        onChange={setFieldValue}
-        required
-        type="password"
-        value={passwordForm.currentPassword}
-      />
-    </FormControl>
-    <FormControl fullWidth margin="normal" required>
-      <InputLabel htmlFor="password">{'New Password'}</InputLabel>
-      <Input name="password" onChange={setFieldValue} required type="password" value={passwordForm.password} />
-    </FormControl>
-    <FormControl fullWidth margin="normal" required>
-      <InputLabel htmlFor="passwordConfirmation">{'Repeat Password'}</InputLabel>
-      <Input
-        name="passwordConfirmation"
-        onChange={setFieldValue}
-        required
-        type="password"
-        value={passwordForm.passwordConfirmation}
-      />
-    </FormControl>
+    <Field
+      autoFocus
+      label="Current Password"
+      name="currentPassword"
+      onChange={setFieldValue}
+      required
+      type="password"
+      value={passwordForm.currentPassword}
+    />
+    <Field
+      label="New Password"
+      name="password"
+      onChange={setFieldValue}
+      required
+      type="password"
+      value={passwordForm.password}
+    />
+    <Field
+      label="Repeat Password"
+      name="passwordConfirmation"
+      onChange={setFieldValue}
+      required
+      type="password"
+      value={passwordForm.passwordConfirmation}
+    />
     <ActionContainer>
       <Button
         color="primaryGradient"
@@ -48,9 +47,9 @@ const ChangePassword = ({ passwordForm, onFormSubmit, setFieldValue, togglePassw
       >
         {'Reset'}
       </Button>
-      <WhiteButton inline onClick={togglePasswordForm} variant="contained">
+      <Button color="white" inline onClick={togglePasswordForm} variant="contained">
         {'Cancel'}
-      </WhiteButton>
+      </Button>
     </ActionContainer>
   </form>
 )

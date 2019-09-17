@@ -1,7 +1,8 @@
+import Label from './label'
 import React, { memo, useCallback, useState } from 'react'
 import snakeCase from 'lodash.snakecase'
 import styled from 'styled-components'
-import { FormControl, InputLabel, MenuItem, Select as MuiSelect } from '@material-ui/core'
+import { FormControl, MenuItem, Select as MuiSelect } from '@material-ui/core'
 
 const StyledSelect = styled(MuiSelect)`
   div[role='button']:focus {
@@ -30,9 +31,9 @@ const Select = ({ fullWidth, label, margin, onChange, onClose, onOpen, options, 
 
   return (
     <FormControl fullWidth={fullWidth} margin={margin} required={required}>
-      <InputLabel required={required} shrink={open || !!value}>
+      <Label required={required} shrink={open || !!value}>
         {label}
-      </InputLabel>
+      </Label>
       <StyledSelect onChange={onChange} onClose={handleClose} onOpen={handleOpen} open={open} value={value} {...props}>
         {options.map(option => {
           return (

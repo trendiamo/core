@@ -6,7 +6,7 @@ import Title from 'shared/main-title'
 
 const StyledTitle = styled(props => <Title {...omit(props, ['animate', 'ref'])} />)`
   margin: 20px 0;
-  transition: all 1s 0.6s;
+  transition: all 1s 0.1s;
   ${({ animate }) =>
     !animate &&
     `

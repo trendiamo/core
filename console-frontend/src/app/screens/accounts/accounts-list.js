@@ -5,7 +5,8 @@ import Layout from './layout'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { apiAccountList, apiRequest } from 'utils'
 import { extractCountFromHeaders } from 'shared/pagination'
-import { FormControl, List, TextField } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
+import { List } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const AccountsList = () => {
@@ -64,18 +65,15 @@ const AccountsList = () => {
 
   return (
     <Layout>
-      <FormControl margin="normal" required>
-        <TextField
-          autoFocus
-          fullWidth
-          label="Search"
-          margin="normal"
-          name="search"
-          onChange={onChangeSearchField}
-          type="search"
-          value={searchValue}
-        />
-      </FormControl>
+      <Field
+        autoFocus
+        label="Search"
+        name="search"
+        onChange={onChangeSearchField}
+        required
+        type="search"
+        value={searchValue}
+      />
       <List component="nav">
         {accounts && accounts.length ? (
           <AccountsListBase

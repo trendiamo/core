@@ -4,23 +4,12 @@ import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import {
-  Button,
-  Checkbox,
-  Chip,
-  FormControl,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-  Table,
-  TableRow,
-  Typography,
-} from '@material-ui/core'
+import { Button, Checkbox, Chip, InputAdornment, Table, TableRow, Typography } from '@material-ui/core'
 import { camelize } from 'inflected'
 import { CheckBox as CheckBoxIcon, Close, EditOutlined as EditIcon } from '@material-ui/icons'
 import { createGlobalStyle } from 'styled-components'
 import { DragHandle, SortableContainer, SortableElement } from 'shared/sortable-elements'
+import { Field, IconButton } from 'shared/form-elements'
 import { Link } from 'react-router-dom'
 import { TableCell, TableHead, TableToolbar } from 'shared/table-elements'
 
@@ -181,25 +170,22 @@ const UrlTester = ({ testerUrl, setTesterUrl }) => {
   )
 
   return (
-    <FormControl style={{ display: 'flex' }}>
-      <InputLabel htmlFor="urlTester">{'Test your URL here'}</InputLabel>
-      <Input
-        endAdornment={
-          <InputAdornment position="end">
-            {testerUrl.value && (
-              <IconButton aria-label="Clear url tester" onClick={resetUrl} style={{ padding: '4px' }}>
-                <Close fontSize="small" />
-              </IconButton>
-            )}
-          </InputAdornment>
-        }
-        id="urlTester"
-        label=""
-        onChange={changeValue}
-        style={{ minWidth: '250px' }}
-        value={testerUrl.value}
-      />
-    </FormControl>
+    <Field
+      endAdornment={
+        <InputAdornment position="end">
+          {testerUrl.value && (
+            <IconButton aria-label="Clear url tester" onClick={resetUrl} style={{ padding: '4px' }}>
+              <Close fontSize="small" />
+            </IconButton>
+          )}
+        </InputAdornment>
+      }
+      label="Test your URL here"
+      name="url"
+      onChange={changeValue}
+      style={{ minWidth: '250px' }}
+      value={testerUrl.value}
+    />
   )
 }
 

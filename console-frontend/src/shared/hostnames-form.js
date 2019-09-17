@@ -3,7 +3,8 @@ import Button from 'shared/button'
 import MuiCancel from '@material-ui/icons/Cancel'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { FormControl, IconButton, TextField, Typography } from '@material-ui/core'
+import { Field, IconButton } from 'shared/form-elements'
+import { FormControl, Typography } from '@material-ui/core'
 
 const StyledAddCircleOutline = styled(AddCircleOutline)`
   color: #6c6c6c;
@@ -29,7 +30,7 @@ const FlexDiv = styled.div`
 const HostnameTextField = ({ index, onChange, value, ...props }) => {
   const editHostnameValue = useCallback(event => onChange(index, event.target.value), [index, onChange])
 
-  return <TextField {...props} onChange={editHostnameValue} value={value} />
+  return <Field {...props} onChange={editHostnameValue} value={value} />
 }
 
 const StyledHostnameTextField = styled(HostnameTextField)`

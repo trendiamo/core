@@ -1,30 +1,23 @@
 import Button from 'shared/button'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Checkbox, FormControlLabel, FormLabel } from '@material-ui/core'
+import { Checkbox, FormControlLabel, FormLabel, Typography } from '@material-ui/core'
 
 const Container = styled.div`
-  background: #f4f8f8;
+  background: #e7ecef;
   min-height: 100px;
   padding: 25px 60px 40px;
 `
 
-const Title = styled.div`
-  color: #8799a4;
-  font-weight: 700;
-  font-size: 18px;
-  text-transform: uppercase;
-`
-
 const CommissionRate = styled.div`
-  color: #1b3b50;
+  color: #0f7173;
   font-size: 32px;
   font-weight: 700;
 `
 
 const CommissionDescription = styled.div`
   margin-left: 10px;
-  color: #8799a4;
+  color: #0f7173;
 `
 
 const Conditions = styled.div`
@@ -122,7 +115,7 @@ const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
         />
       </Details>
       <ButtonContainer>
-        <Button color="primaryGradient" disabled={!acceptedTermsAndConditions} onClick={onCreateLinkClick}>
+        <Button color="primaryGradient" disabled={!acceptedTermsAndConditions} onClick={onCreateLinkClick} size="large">
           {'Create Link'}
         </Button>
       </ButtonContainer>
@@ -141,7 +134,7 @@ const Footer = ({ brand, createAffiliation, handleClose, scrollToTermsAndConditi
 
   return (
     <Container>
-      <Title>{'Affiliate terms'}</Title>
+      <Typography variant="overline">{'Affiliate terms'}</Typography>
       <Actions
         brand={brand}
         onCreateLinkClick={onCreateLinkClick}

@@ -1,8 +1,10 @@
+import Label from './label'
 import omit from 'lodash.omit'
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
-import { FormControl, Input, InputLabel } from '@material-ui/core'
+import { FormControl, Input } from '@material-ui/core'
+import { showUpToUsBranding } from 'utils'
 
 const Counter = styled.div`
   position: absolute;
@@ -14,9 +16,32 @@ const Counter = styled.div`
 
 const Container = styled.div`
   position: relative;
+  flex: 1;
 `
 
-const Field = ({ autoFocus, disabled, label, max, onBlur, onChange, onFocus, required, value, ...props }) => {
+const StyledInput = styled(Input)`
+  ${showUpToUsBranding() &&
+    `
+    input {
+      color: #272932;
+      font-family: Lato, "Helvetica", "Arial", sans-serif;
+    }
+  `}
+`
+
+const Field = ({
+  autoFocus,
+  disabled,
+  label,
+  max,
+  onBlur,
+  onChange,
+  onFocus,
+  required,
+  value,
+  labelProps,
+  ...props
+}) => {
   const inputRef = useRef(null)
   const [focused, setFocused] = useState(false)
   const [hasFocused, setHasFocused] = useState(false)
@@ -42,9 +67,9 @@ const Field = ({ autoFocus, disabled, label, max, onBlur, onChange, onFocus, req
   )
 
   const handleBlur = useCallback(
-    () => {
+    event => {
       setFocused(false)
-      onBlur && onBlur()
+      onBlur && onBlur(event)
     },
     [onBlur]
   )
@@ -71,10 +96,12 @@ const Field = ({ autoFocus, disabled, label, max, onBlur, onChange, onFocus, req
   return (
     <Container>
       <FormControl fullWidth margin="normal">
-        <InputLabel required={required} shrink={focused || value.length !== 0}>
-          {label}
-        </InputLabel>
-        <Input
+        {label && (
+          <Label required={required} shrink={focused || value.length !== 0} {...labelProps}>
+            {label}
+          </Label>
+        )}
+        <StyledInput
           disabled={!hasFocused && disabled}
           inputRef={inputRef}
           onBlur={handleBlur}

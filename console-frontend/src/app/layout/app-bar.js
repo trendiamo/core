@@ -7,7 +7,9 @@ import React, { memo, useCallback, useContext } from 'react'
 import styled from 'styled-components'
 import Title from 'shared/main-title'
 import { drawerWidth, drawerWidthClosed } from './layout-styles'
-import { Hidden, IconButton, AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
+import { Hidden, AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
+import { IconButton } from 'shared/form-elements'
+import { showUpToUsBranding } from 'utils'
 import { StoreContext } from 'ext/hooks/store'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -72,11 +74,10 @@ const AppBarContent = memo(({ showOnboarding }) => {
 })
 
 const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 'sidebarOpen'])} />)`
-  background-color: #f5f5f5;
+  background-color: ${showUpToUsBranding() ? '#e7ecef' : '#f5f5f5'};
   box-shadow: none;
   color: #333;
-  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
-    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: all 200ms ease-in-out;
   width: calc(100% - ${drawerWidthClosed}px);
   margin-left: ${drawerWidthClosed}px;
   z-index: 1201;
@@ -97,7 +98,7 @@ const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 
   }
   `}
 
-  ${({ hasScrolled }) => hasScrolled && 'box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);'}
+  ${({ hasScrolled }) => hasScrolled && 'box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1); background: #fff;'}
 `
 
 const TopToolbar = styled(Toolbar)`

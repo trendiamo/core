@@ -13,7 +13,6 @@ const CustomLinkModal = ({ affiliation, open, setOpen }) => {
       hasManualPadding
       maxWidth="sm"
       open={open}
-      PaperProps={{ style: { borderRadius: '10px' } }}
       title=""
     />
   )

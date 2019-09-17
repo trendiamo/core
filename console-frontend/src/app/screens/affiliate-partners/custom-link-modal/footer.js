@@ -1,13 +1,11 @@
-import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { Input } from '@material-ui/core'
 
 const urlInputProps = { pattern: 'https?://.+' }
 
 const Container = styled.div`
-  background: #f4f8f8;
+  background: #e7ecef;
   min-height: 100px;
   padding: 25px 60px 40px;
 `
@@ -18,55 +16,25 @@ const ClipboardContainer = styled.div`
   width: 100%;
 `
 
-const Form = styled.form`
-  display: flex;
-  justify-content: space-between;
-`
-
-const InputContainer = styled.div`
-  width: 70%;
-`
-
 const Footer = ({ affiliation }) => {
-  const [inputUrl, setInputUrl] = useState('')
-  const [outputUrl, setOutputUrl] = useState(null)
-
-  const onLinkChange = useCallback(event => {
-    setInputUrl(event.target.value)
-  }, [])
-
-  const getLink = useCallback(
-    event => {
-      event.preventDefault()
-      setOutputUrl(`${inputUrl}/?aftk=${affiliation.token}`)
+  const mixFunction = useCallback(
+    text => {
+      return `${text}/?aftk=${affiliation.token}`
     },
-    [affiliation.token, inputUrl]
+    [affiliation.token]
   )
 
   return (
     <Container>
-      {outputUrl ? (
-        <ClipboardContainer>
-          <ClipboardInput text={outputUrl} />
-        </ClipboardContainer>
-      ) : (
-        <Form onSubmit={getLink}>
-          <InputContainer>
-            <Input
-              autoFocus
-              fullWidth
-              inputProps={urlInputProps}
-              onChange={onLinkChange}
-              placeholder="Paste URL link here"
-              required
-              value={inputUrl}
-            />
-          </InputContainer>
-          <Button color="primaryGradient" type="submit">
-            {'Get Link'}
-          </Button>
-        </Form>
-      )}
+      <ClipboardContainer>
+        <ClipboardInput
+          mixFunction={mixFunction}
+          pasteable
+          placeholder="Paste link here..."
+          size="large"
+          urlInputProps={urlInputProps}
+        />
+      </ClipboardContainer>
     </Container>
   )
 }

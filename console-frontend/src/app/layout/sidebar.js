@@ -9,9 +9,7 @@ const ModalProps = {
   keepMounted: true, // Better open performance on mobile.
 }
 
-const background = showUpToUsBranding()
-  ? 'linear-gradient(to bottom, #12e5c4, #18e0aa)'
-  : 'linear-gradient(180deg, #ff843e, #ff6c40 52%, #ff5642)'
+const background = showUpToUsBranding() ? '#0f7173' : 'linear-gradient(180deg, #ff843e, #ff6c40 52%, #ff5642)'
 
 const StyledDrawer = styled(Drawer)`
   > div {
@@ -20,7 +18,7 @@ const StyledDrawer = styled(Drawer)`
     margin-top: 0;
     min-height: 100vh;
     position: fixed;
-    transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    transition: width 0.2s ease-in-out;
     overflow-x: hidden;
     ${({ variant, open }) =>
       variant === 'temporary' || open
@@ -54,7 +52,7 @@ const StyledDrawer = styled(Drawer)`
 const DrawerGhost = styled.div`
   width: ${drawerWidth}px;
   flex-shrink: 0;
-  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  transition: width 0.2s ease-in-out;
   ${({ isClosed }) => isClosed && `width: ${drawerWidthClosed}px;`}
   @media (max-width: 959.95px) {
     width: 0;

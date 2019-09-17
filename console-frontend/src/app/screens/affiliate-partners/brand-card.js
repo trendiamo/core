@@ -4,11 +4,13 @@ import ClipboardInput from 'shared/clipboard-input'
 import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
-import { Chip, IconButton } from '@material-ui/core'
+import { Chip, Typography } from '@material-ui/core'
+import { IconButton } from 'shared/form-elements'
 
 const StyledSection = styled(Section)`
   margin-top: 10px;
-  transition: all 1s 0.8s;
+  transition: all 1s 0.2s;
+  min-width: 900px;
   ${({ animate }) =>
     !animate &&
     `
@@ -36,7 +38,8 @@ const ImageAndDescriptionContainer = styled.div`
 const ImageContainer = styled.div`
   margin-right: 20px;
   text-align: center;
-  width: 220px;
+  width: 150px;
+  flex-shrink: 0;
 `
 
 const Image = styled.img`
@@ -44,12 +47,7 @@ const Image = styled.img`
   max-width: 100%;
   max-height: 140px;
   object-fit: contain;
-`
-
-const Description = styled.div`
-  color: #1b3b50;
-  flex-grow: 1;
-  max-width: 600px;
+  user-select: none;
 `
 
 const Actions = styled.div`
@@ -73,24 +71,34 @@ const WebsiteButton = ({ websiteHostname }) => (
 )
 
 const StyledClipboardInput = styled(ClipboardInput)`
-  margin: 0 10px;
+  margin-left: 10px;
   min-width: 320px;
 `
 
-const StyledChip = styled(Chip)`
+const TagsContainer = styled.div`
+  min-width: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: -4px;
+  * + & {
+    margin-top: 8px;
+  }
+`
+
+const Tag = styled(Chip)`
   background-color: #8799a4;
   border-radius: 0;
   color: #fff;
   font-size: 12px;
   font-weight: 900;
   height: 21px;
-  margin-right: 5px;
-  margin-top: 0.5rem;
   text-transform: uppercase;
+  flex: 0;
   span {
     padding-left: 8px;
     padding-right: 8px;
   }
+  margin: 4px;
 `
 
 const BrandCard = ({ affiliation, animate, brand, createAffiliation, setIsCustomLinkModalOpen, setSelectedBrand }) => {
@@ -120,16 +128,24 @@ const BrandCard = ({ affiliation, animate, brand, createAffiliation, setIsCustom
               <Image src={brand.logoUrl} />
             </ImageContainer>
             <div>
-              {!affiliation && <Description>{brand.description}</Description>}
-              {brand.tags.split(',').map(tag => (
-                <StyledChip key={tag} label={tag} size="small" />
-              ))}
+              {!affiliation && <Typography variant="body2">{brand.description}</Typography>}
+              <TagsContainer>
+                {brand.tags.split(',').map(tag => (
+                  <Tag key={tag} label={tag} size="small" />
+                ))}
+              </TagsContainer>
             </div>
           </ImageAndDescriptionContainer>
           <Actions>
             <WebsiteButton websiteHostname={brand.websiteHostname} />
-            {affiliation && <StyledClipboardInput backgroundColor="#f4f8f8" text={affiliationUrl} />}
-            <Button color="primaryGradient" onClick={affiliation ? onCustomLinkClick : onPromoteNowClick}>
+            {affiliation && <StyledClipboardInput backgroundColor="#e7ecef" size="large" text={affiliationUrl} />}
+            <div />
+            <Button
+              color={affiliation ? 'white' : 'primaryGradient'}
+              inline
+              onClick={affiliation ? onCustomLinkClick : onPromoteNowClick}
+              size="large"
+            >
               {affiliation ? 'Custom link' : 'Promote now'}
             </Button>
           </Actions>

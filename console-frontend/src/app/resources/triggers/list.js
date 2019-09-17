@@ -1,13 +1,13 @@
-import AppBarButton from 'shared/app-bar-button'
 import auth from 'auth'
 import BlankStateTemplate from 'shared/blank-state'
+import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import isEqual from 'lodash.isequal'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import TriggersListBase from './list-base'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
-import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
+import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort, showUpToUsBranding } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { Link } from 'react-router-dom'
 import { matchUrl } from 'plugin-base'
@@ -26,9 +26,16 @@ const BlankState = () => (
 )
 
 const Actions = () => (
-  <AppBarButton color="primary" component={Link} to={routes.triggerCreate()} variant="contained">
+  <Button
+    color="primaryGradient"
+    component={Link}
+    inline
+    size={showUpToUsBranding() ? 'small' : 'medium'}
+    to={routes.triggerCreate()}
+    variant="contained"
+  >
     {'Create New'}
-  </AppBarButton>
+  </Button>
 )
 
 const iterateTriggers = (triggers, input, result) => {

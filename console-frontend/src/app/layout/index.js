@@ -9,7 +9,6 @@ import { useOnboarding } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
 const Root = styled.div`
-  background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
   min-height: 100vh;

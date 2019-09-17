@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { DialogActionsContainer, StyledButton } from './shared'
 import { Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { showUpToUsBranding } from 'utils'
 
 const Image = styled.img`
   object-fit: cover;
@@ -21,7 +22,7 @@ const Image = styled.img`
   ${({ isActive }) =>
     isActive &&
     `
-      border-color: #ff6641;
+      border-color: ${showUpToUsBranding() ? '#0f7173' : '#ff6641'};
       border-width: 2px;
       opacity: 0.9;
     `}
@@ -31,12 +32,15 @@ const Image = styled.img`
   }
 `
 
-const CheckBoxIcon = styled.img`
+const CheckBoxContainer = styled.div`
   position: absolute;
   top: 8px;
   right: 8px;
   width: 24px;
   height: 24px;
+  background: ${showUpToUsBranding() ? '#0f7173' : 'linear-gradient(90deg, #FF6F61, #FE5442)'};
+  border-radius: 50%;
+  padding: 1px;
 `
 
 const DialogSubtitleLink = styled(Link)`
@@ -99,7 +103,11 @@ const GalleryImage = ({ isActive, onImageClick, image }) => {
     <Grid item md={2} sm={3} xs={4}>
       <AspectRatio style={{ width: '100%' }}>
         <Image id={`image-${image.id}`} isActive={isActive} onClick={newOnImageClick} src={image.url} />
-        {isActive && <CheckBoxIcon src="/img/icons/select.svg" />}
+        {isActive && (
+          <CheckBoxContainer>
+            <img alt="" src="/img/icons/select.svg" />
+          </CheckBoxContainer>
+        )}
       </AspectRatio>
     </Grid>
   )

@@ -3,7 +3,8 @@ import MuiIconButton from '@material-ui/core/IconButton'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
-import { DialogActions, DialogContent, DialogContentText, DialogTitle, Dialog as MuiDialog } from '@material-ui/core'
+import { DialogActions, DialogContent, DialogContentText, Dialog as MuiDialog, Typography } from '@material-ui/core'
+import { showUpToUsBranding } from 'utils'
 
 const StyledIconButton = styled(MuiIconButton)`
   display: flex;
@@ -13,6 +14,19 @@ const StyledIconButton = styled(MuiIconButton)`
   right: 4px;
   top: 4px;
   z-index: 1;
+  ${showUpToUsBranding() &&
+    `
+    background: #8799a4;
+    border-radius: 0px;
+    padding: 6px;
+    &:hover {
+      background: #8799a4;
+    }
+  `}
+`
+
+const CloseIconStyled = styled(CloseIcon)`
+  ${showUpToUsBranding() && 'fill: #fff;'}
 `
 
 const DialogSubtitle = styled.span`
@@ -22,13 +36,13 @@ const DialogSubtitle = styled.span`
   margin-top: -20px;
 `
 
-const StyledDialogTitle = styled(props => <DialogTitle {...omit(props, ['hasManualPadding'])} />)`
-  ${({ hasManualPadding }) => hasManualPadding && 'padding: 0;'}
-`
-
 const StyledDialogContent = styled(props => <DialogContent {...omit(props, ['hasManualPadding'])} />)`
   padding-bottom: 0;
   ${({ hasManualPadding }) => hasManualPadding && 'padding: 0;'}
+`
+
+const TitleContainer = styled.div`
+  padding: ${({ hasManualPadding }) => (hasManualPadding ? '0' : '24px 24px 20px')};
 `
 
 const Dialog = ({
@@ -40,7 +54,6 @@ const Dialog = ({
   subtitle,
   content,
   hasManualPadding,
-  PaperProps,
   ...props
 }) => (
   <MuiDialog
@@ -48,15 +61,15 @@ const Dialog = ({
     onClose={handleClose}
     onKeyUp={onKeyUp}
     open={open}
-    PaperProps={PaperProps}
+    PaperProps={showUpToUsBranding() ? { style: { borderRadius: '0px' } } : {}}
     {...props}
   >
     <StyledIconButton onClick={handleClose}>
-      <CloseIcon />
+      <CloseIconStyled />
     </StyledIconButton>
-    <StyledDialogTitle hasManualPadding={hasManualPadding} id="form-dialog-title">
-      {title}
-    </StyledDialogTitle>
+    <TitleContainer hasManualPadding={hasManualPadding}>
+      {title && <Typography variant={showUpToUsBranding() ? 'h5' : 'h6'}>{title}</Typography>}
+    </TitleContainer>
     {subtitle && <DialogSubtitle>{subtitle}</DialogSubtitle>}
     <StyledDialogContent hasManualPadding={hasManualPadding}>
       {typeof content == 'string' ? <DialogContentText>{content}</DialogContentText> : content}

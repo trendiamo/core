@@ -3,9 +3,10 @@ import Button from 'shared/button'
 import Link from 'shared/link'
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
-import { apiPasswordEmailLink, apiRequest } from 'utils'
+import { apiPasswordEmailLink, apiRequest, showUpToUsBranding } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
-import { FormControl, Input, InputLabel, Typography } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
+import { Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const AuthMessage = () => (
@@ -31,18 +32,15 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
       <Typography style={{ marginTop: '10px' }} variant="body2">
         {'We can help you reset your password using your email address linked to your account.'}
       </Typography>
-      <FormControl fullWidth margin="normal" required>
-        <InputLabel htmlFor="password">{'Email'}</InputLabel>
-        <Input
-          autoFocus
-          id="email"
-          name="email"
-          onChange={setPasswordFormValue}
-          required
-          type="email"
-          value={passwordForm.email}
-        />
-      </FormControl>
+      <Field
+        autoFocus
+        label="E-mail"
+        name="email"
+        onChange={setPasswordFormValue}
+        required
+        type="email"
+        value={passwordForm.email}
+      />
       <div style={{ marginTop: '1rem' }}>
         <Button color="primaryGradient" type="submit" variant="contained">
           {'Send Reset Instructions'}
@@ -50,7 +48,10 @@ const PasswordReset = ({ passwordForm, passwordChangeSubmit, setPasswordFormValu
       </div>
       <div style={{ marginTop: '1rem' }}>
         <Link to={routes.login()}>
-          <Button color="primaryText" variant="text">
+          <Button
+            color={showUpToUsBranding() ? 'white' : 'primaryText'}
+            variant={showUpToUsBranding() ? 'contained' : 'text'}
+          >
             {'Back to Login'}
           </Button>
         </Link>

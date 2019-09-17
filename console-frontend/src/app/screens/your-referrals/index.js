@@ -5,17 +5,26 @@ import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import UserAvatar from 'shared/user-avatar'
 import { apiMeReferrals, apiRequest } from 'utils'
-import { Callout, CardContent, MainCard } from 'shared/uptous'
-import { Paper } from '@material-ui/core'
+import { Callout, CalloutTitle, CardContent, CardIcon, MainCard } from 'shared/uptous'
+import { Paper, Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
 `
+
 const ReferralsList = styled.div`
   min-width: 300px;
 `
+
+const StyledClipboardInput = styled(ClipboardInput)`
+  input {
+    letter-spacing: 4px;
+    font-weight: 700;
+  }
+`
+
 const Referral = styled(Paper)`
   display: flex;
   justify-content: space-between;
@@ -24,16 +33,32 @@ const Referral = styled(Paper)`
   margin-bottom: 10px;
   color: #8799a4;
 `
-const ReferralName = styled.div`
-  flex: 1;
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
-`
+
 const ReferralStatus = styled(({ className, state }) => <div className={className}>{state}</div>)`
   color: ${({ state }) => (state === 'approved' ? '#18e0aa' : '#ffb400')};
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 900;
 `
+
+const ReferralUser = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const StyledUserAvatar = styled(UserAvatar)`
+  margin-right: 10px;
+`
+
+const ReferralItem = ({ referral }) => (
+  <Referral key={referral.user.id}>
+    <ReferralUser>
+      <StyledUserAvatar user={referral.user} />
+      <Typography variant="body2">{`${referral.user.firstName} ${referral.user.lastName}`}</Typography>
+    </ReferralUser>
+    <ReferralStatus state={referral.state} />
+  </Referral>
+)
 
 const YourReferrals = () => {
   const appBarContent = useMemo(() => ({ title: 'Invite others to join you!' }), [])
@@ -61,28 +86,26 @@ const YourReferrals = () => {
     <FlexContainer>
       <MainCard>
         <CardContent>
-          <img alt="" src="/img/icons/marketing.svg" />
-          <h2>{'Refer a friend and earn twice!'}</h2>
-          <p>
+          <CardIcon alt="" src="/img/icons/start-up.svg" />
+          <Typography variant="h5">{'Refer a friend and earn twice!'}</Typography>
+          <Typography variant="body2">
             {
               'Changing the world for the better is hard to do alone. The more people spreading the word about impactful brands, the better! You can contribute by inviting your friends to also sign up to UPTOUS! Whenever someone that signed up with your referral code creates revenue for the first time, you will receive an additional 50€ in your next payout. Let’s make the world a better place together!'
             }
-          </p>
+          </Typography>
         </CardContent>
         <Callout>
-          <b>{'Your referral code'}</b>
-          <ClipboardInput backgroundColor="#f4f8f8" text={referralCode} />
+          <CalloutTitle align="center" variant="h5">
+            {'Your referral code'}
+          </CalloutTitle>
+          <StyledClipboardInput text={referralCode} type="golden" />
         </Callout>
       </MainCard>
       {referrals.length > 0 && (
         <ReferralsList>
-          <h2>{'Your Referrals'}</h2>
+          <Typography variant="h5">{'Your Referrals'}</Typography>
           {referrals.map(referral => (
-            <Referral key={referral.user.id}>
-              <UserAvatar user={referral.user} />
-              <ReferralName>{`${referral.user.firstName} ${referral.user.lastName}`}</ReferralName>
-              <ReferralStatus state={referral.state} />
-            </Referral>
+            <ReferralItem key={referral.user.id} referral={referral} />
           ))}
         </ReferralsList>
       )}

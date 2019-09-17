@@ -10,7 +10,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import UserAvatar from 'shared/user-avatar'
-import { apiSignOut } from 'utils'
+import { apiSignOut, showUpToUsBranding } from 'utils'
 import { drawerWidth } from 'app/layout/layout-styles'
 import { Menu, MenuItem, Typography } from '@material-ui/core'
 
@@ -18,16 +18,14 @@ const avatarSize = 46
 
 const StyledUserAvatar = styled(UserAvatar)`
   margin-right: 10px;
-  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, height 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
-    margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  transition: all 0.2s ease-in-out;
   height: ${avatarSize}px;
   width: ${avatarSize}px;
 `
 
 const StyledMenuItem = styled(props => <MenuItem {...omit(props, ['sidebarOpen'])} />)`
   flex-shrink: 0;
-  transition: padding 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, height 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
-    visibility 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  transition: all 0.2s ease-in-out;
   visibility: visible;
   height: auto;
   ${({ sidebarOpen }) => !sidebarOpen && 'padding-left: 12px; padding-right: 12px;'}
@@ -37,7 +35,7 @@ const StyledArrowDropDown = styled(props => <ArrowDropDown {...omit(props, ['sid
   color: #757575;
   position: absolute;
   right: 10px;
-  transition: opacity 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  transition: opacity 0.2s ease-in-out;
   opacity: ${({ sidebarOpen }) => (sidebarOpen ? 1 : 0)};
 `
 
@@ -52,7 +50,7 @@ const MenuItemThemed = styled(({ className, icon, text, ...props }) => (
 `
 
 const StyledTypography = styled(props => <Typography {...omit(props, ['sidebarOpen'])} />)`
-  color: #222;
+  ${!showUpToUsBranding() && 'color: #222;'}
   ${({ sidebarOpen }) => !sidebarOpen && 'display: none;'}
 `
 
@@ -103,7 +101,7 @@ const UserMenu = ({ sidebarOpen }) => {
         sidebarOpen={sidebarOpen}
       >
         <StyledUserAvatar user={user} />
-        <StyledTypography sidebarOpen={sidebarOpen} variant="body1">
+        <StyledTypography sidebarOpen={sidebarOpen} variant={showUpToUsBranding() ? 'subtitle2' : 'body1'}>
           {userIdentifier}
         </StyledTypography>
         <StyledArrowDropDown sidebarOpen={sidebarOpen} />
