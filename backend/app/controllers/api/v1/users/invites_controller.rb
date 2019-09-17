@@ -23,22 +23,26 @@ module Api
         def edit # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
           @invite = Invite.where.not(token: [nil, ""]).find_by(token: params[:token])
 
-          return redirect_to "#{ENV['FRONTEND_BASE_URL']}/login#invalid-invite" if @invite.accepted_and_confirmed?
+          return redirect_to "#{frontend_base_url}/login#invalid-invite" if @invite.accepted_and_confirmed?
 
           if @invite&.invite_period_valid? && @invite&.update(accepted_at: Time.now.utc)
             if @invite.recipient&.confirmed?
               Membership.create!(user: @invite.recipient, account: @invite.account, role: @invite.role)
-              redirect_to "#{ENV['FRONTEND_BASE_URL']}/login#invite-accepted"
+              redirect_to "#{frontend_base_url}/login#invite-accepted"
             else
               confirm_params = { email: CGI.escape(@invite.email), token: @invite.token }
-              redirect_to "#{ENV['FRONTEND_BASE_URL']}/signup/confirm?#{confirm_params.to_query}"
+              redirect_to "#{frontend_base_url}/signup/confirm?#{confirm_params.to_query}"
             end
           else
-            redirect_to "#{ENV['FRONTEND_BASE_URL']}/login#invite-error"
+            redirect_to "#{frontend_base_url}/login#invite-error"
           end
         end
 
         private
+
+        def frontend_base_url
+          request.host.match?(/uptous\.co$/) ? ENV["UPTOUS_FRONTEND_BASE_URL"] : ENV["FRONTEND_BASE_URL"]
+        end
 
         def invite_params
           params.require(:invite).permit(:email)

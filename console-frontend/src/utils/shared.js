@@ -1,4 +1,8 @@
-export const BASE_API_URL = `${process.env.REACT_APP_API_ENDPOINT || ''}/api/v1`
+const endpoint = window.location.hostname.match(/uptous\.co$/)
+  ? process.env.REACT_APP_U2U_API_ENDPOINT
+  : process.env.REACT_APP_API_ENDPOINT
+
+export const BASE_API_URL = `${endpoint || ''}/api/v1`
 
 const mapErrors = json => {
   return json.errors.map(error => error.title).join(', ')
