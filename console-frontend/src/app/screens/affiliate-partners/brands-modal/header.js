@@ -5,6 +5,7 @@ const Image = styled.img`
   width: 100%;
   object-fit: cover;
   height: 100%;
+  user-select: none;
 `
 
 const Container = styled.div`
@@ -23,6 +24,7 @@ const Logo = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
+  user-select: none;
 `
 
 const HeaderContent = styled.div`
@@ -66,9 +68,13 @@ const SocialLinksContainer = styled.div`
   display: flex;
 `
 
+const SocialLinkImg = styled.img`
+  user-select: none;
+`
+
 const SocialLink = ({ brand, type }) => (
   <SocialLinkContainer href={brand[`${type}Url`]} rel="noopener noreferrer" target="_blank">
-    <img alt="" src={`/img/icons/${type}.svg`} />
+    <SocialLinkImg alt="" src={`/img/icons/${type}.svg`} />
   </SocialLinkContainer>
 )
 

@@ -7,10 +7,9 @@ import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
-import WhiteButton from 'shared/white-button'
 import { apiRequest, apiWebsiteShow, apiWebsiteUpdate, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Checkbox, FormControlLabel, TextField } from '@material-ui/core'
-import { FormHelperText } from 'shared/form-elements'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
+import { Field, FormHelperText } from 'shared/form-elements'
 import { Prompt } from 'react-router'
 import { useSnackbar } from 'notistack'
 
@@ -120,7 +119,7 @@ const EditWebsite = () => {
     <Section title="Website">
       <form onSubmit={onFormSubmit}>
         <Prompt message="You have unsaved changes, are you sure you want to leave?" when={!isFormPristine} />
-        <TextField
+        <Field
           disabled
           fullWidth
           inputProps={atLeastOneNonBlankCharInputProps}
@@ -139,14 +138,26 @@ const EditWebsite = () => {
         {form.previewMode && (
           <>
             <PreviewButtonsContainer>
-              <WhiteButton href={`http://${form.hostnames[0]}/#trnd:preview:1`} target="_blank" variant="contained">
+              <Button
+                color="white"
+                href={`http://${form.hostnames[0]}/#trnd:preview:1`}
+                inline
+                target="_blank"
+                variant="contained"
+              >
                 {'Enable preview mode'}
                 <StyledOpenInNewIcon />
-              </WhiteButton>
-              <WhiteButton href={`http://${form.hostnames[0]}/#trnd:preview:0`} target="_blank" variant="contained">
+              </Button>
+              <Button
+                color="white"
+                href={`http://${form.hostnames[0]}/#trnd:preview:0`}
+                inline
+                target="_blank"
+                variant="contained"
+              >
                 {'Disable preview mode'}
                 <StyledOpenInNewIcon />
-              </WhiteButton>
+              </Button>
             </PreviewButtonsContainer>
             <FormHelperText>
               {

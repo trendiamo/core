@@ -9,7 +9,9 @@ import Form from './form'
 import FormHelperText from './form-helper-text'
 import FormSection from './form-section'
 import Header from './header'
+import IconButton from './icon-button'
 import InlineTypography from './inline-typography'
+import Label from './label'
 import PreviewModal from './preview-modal'
 import Prompt from './prompt'
 import SaveButton from './save-button'
@@ -32,4 +34,6 @@ export {
   Field,
   Select,
   PreviewModal,
+  Label,
+  IconButton,
 }

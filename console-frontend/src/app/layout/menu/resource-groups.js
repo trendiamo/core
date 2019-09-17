@@ -55,12 +55,7 @@ const affiliateResourceGroups = () => {
     modules: {
       name: 'Main',
       showTitle: false,
-      resources: [resources.affiliatePartners],
-    },
-    upgrades: {
-      name: 'Upgrades',
-      showTitle: true,
-      resources: [resources.yourReferrals, resources.contentCreation],
+      resources: [resources.affiliatePartners, resources.yourReferrals, resources.contentCreation],
     },
   }
 }

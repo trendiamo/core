@@ -1,5 +1,6 @@
 import auth from 'auth'
 import AvgCartValue from './avg-cart-value'
+import Button from 'shared/button'
 import ConversionRate from './conversion-rate'
 import ErrorMessage from './error-message'
 import MostInteractedModules from './most-interacted-modules'
@@ -7,7 +8,6 @@ import React, { useMemo, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
-import WhiteButton from 'shared/white-button'
 import { DatePicker } from 'material-ui-pickers'
 import * as dateFns from 'date-fns'
 
@@ -57,10 +57,10 @@ const DatePickerValue = styled.div`
 
 const DatePickerComponent = ({ onClick, label, value }) => {
   return (
-    <WhiteButton onClick={onClick} variant="contained">
+    <Button color="white" onClick={onClick} variant="contained">
       <div>{`${label}:`}</div>
       <DatePickerValue>{value}</DatePickerValue>
-    </WhiteButton>
+    </Button>
   )
 }
 

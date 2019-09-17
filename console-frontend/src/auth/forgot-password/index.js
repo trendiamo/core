@@ -5,7 +5,8 @@ import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import { apiPasswordReset, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
+import { Button } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const AuthMessage = () => (
@@ -28,29 +29,23 @@ const AuthMessage = () => (
 const PasswordReset = ({ passwordForm, passwordResetSubmit, setFieldValue }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <form onSubmit={passwordResetSubmit}>
-      <FormControl fullWidth margin="normal" required>
-        <InputLabel htmlFor="email">{'New Password'}</InputLabel>
-        <Input
-          autoFocus
-          id="email"
-          name="fieldOne"
-          onChange={setFieldValue}
-          required
-          type="password"
-          value={passwordForm.fieldOne}
-        />
-      </FormControl>
-      <FormControl fullWidth margin="normal" required>
-        <InputLabel htmlFor="password">{'Repeat Password'}</InputLabel>
-        <Input
-          id="password"
-          name="fieldTwo"
-          onChange={setFieldValue}
-          required
-          type="password"
-          value={passwordForm.fieldTwo}
-        />
-      </FormControl>
+      <Field
+        autoFocus
+        label="New Password"
+        name="fieldOne"
+        onChange={setFieldValue}
+        required
+        type="password"
+        value={passwordForm.fieldOne}
+      />
+      <Field
+        label="Repeat Password"
+        name="fieldTwo"
+        onChange={setFieldValue}
+        required
+        type="password"
+        value={passwordForm.fieldTwo}
+      />
       <div style={{ marginTop: '1rem' }}>
         <Button color="primary" type="submit" variant="contained">
           {'Reset'}

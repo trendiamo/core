@@ -5,11 +5,9 @@ import ImageUploader from 'shared/image-uploader'
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
-import WhiteButton from 'shared/white-button'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Field, FormHelperText, Select } from 'shared/form-elements'
 import { Prompt } from 'react-router'
-import { TextField } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const ActionContainer = styled.div`
@@ -97,7 +95,7 @@ const EditMe = ({ togglePasswordForm }) => {
         setIsUploaderLoading={setIsUploaderLoading}
         value={imageUploaderValue}
       />
-      <TextField
+      <Field
         disabled
         fullWidth
         id="email"
@@ -119,7 +117,7 @@ const EditMe = ({ togglePasswordForm }) => {
         required
         value={form.firstName}
       />
-      <TextField
+      <Field
         disabled={isFormLoading || isCropping || isUploaderLoading}
         fullWidth
         inputProps={atLeastOneNonBlankCharInputProps}
@@ -143,7 +141,17 @@ const EditMe = ({ togglePasswordForm }) => {
             required
             value={form.currency}
           />
-          <TextField
+          <FormHelperText>
+            {
+              <>
+                <b>{'Disclaimer: '}</b>
+                {`Note that revenues and prices displayed throughout the platform are unified from different currencies
+                the products may be sold in, thus they may slightly vary from day to day as they are calculated based on
+                the daily updated exchange rate of that currency.`}
+              </>
+            }
+          </FormHelperText>
+          <Field
             disabled={isFormLoading || isCropping || isUploaderLoading}
             fullWidth
             label="Social Media URL"
@@ -158,7 +166,7 @@ const EditMe = ({ togglePasswordForm }) => {
       )}
       {auth.isSeller() && (
         <>
-          <TextField
+          <Field
             disabled={isFormLoading || isCropping || isUploaderLoading}
             fullWidth
             inputProps={atLeastOneNonBlankCharInputProps}
@@ -187,9 +195,9 @@ const EditMe = ({ togglePasswordForm }) => {
         >
           {'Save'}
         </Button>
-        <WhiteButton inline onClick={togglePasswordForm} variant="contained">
+        <Button color="white" inline onClick={togglePasswordForm} variant="contained">
           {'Change Password'}
-        </WhiteButton>
+        </Button>
       </ActionContainer>
     </form>
   )

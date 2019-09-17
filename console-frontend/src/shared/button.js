@@ -10,7 +10,7 @@ const ButtonContainer = styled(props => <div {...omit(props, ['inline', 'centere
 ${({ inline }) =>
   inline
     ? `display: inline-block;
-       & + * {margin-left: 10px;}`
+       * + & {margin-left: 10px;}`
     : 'display: flex;'}
   justify-content: ${({ centered }) => (centered ? 'center' : 'normal')};
 `
@@ -28,8 +28,15 @@ const CircularProgressContainer = styled.div`
   z-index: 1;
 `
 
+const uptousButtonSizes = {
+  small: 'padding: 8px 15px; font-size: 14px;',
+  medium: 'padding: 7px 24px; font-size: 16px; svg { height: 28px; }',
+  large: 'padding: 10px 30px; font-size: 16px; svg { height: 28px; }',
+}
+
 const StyledMuiButton = styled(MuiButton)`
   width: ${({ width }) => (width ? width : 'auto')};
+  ${({ size }) => showUpToUsBranding() && uptousButtonSizes[size || 'medium']}
 `
 
 const StyledCircularProgress = () => (
@@ -64,7 +71,7 @@ const Button = ({
   const [styleObject, setStyleObject] = useState({})
   const [tooltipOpen, setTooltipOpen] = useState(false)
 
-  const buttonStyles = useMemo(() => (showUpToUsBranding() ? theme.uptousButtons : theme.frekklsButtons), [])
+  const buttonStyles = useMemo(() => theme.buttons, [])
 
   const onButtonHoverStart = useCallback(
     () => {

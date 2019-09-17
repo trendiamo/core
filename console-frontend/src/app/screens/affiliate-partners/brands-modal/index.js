@@ -13,7 +13,6 @@ const BrandsModal = ({ brand, createAffiliation, open, setOpen }) => {
       hasManualPadding
       maxWidth="md"
       open={open}
-      PaperProps={{ style: { borderRadius: '10px' } }}
       title=""
     />
   )

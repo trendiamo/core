@@ -4,18 +4,8 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { AddCircleOutline, Close } from '@material-ui/icons'
 import { apiGeneratedUrlCreate, apiPathAutocomplete, apiRequest, apiSellersAutocomplete } from 'utils'
-import { Form, FormHelperText } from 'shared/form-elements'
-import {
-  FormControl,
-  FormControlLabel,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-  Button as MUIButton,
-  Switch,
-  Typography,
-} from '@material-ui/core'
+import { Field, Form, FormHelperText, IconButton } from 'shared/form-elements'
+import { FormControlLabel, InputAdornment, Button as MUIButton, Switch, Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
 const generateUrl = form => {
@@ -62,26 +52,25 @@ const AddOptionButton = ({ option, optionLabel, disabled, showOption }) => {
 }
 
 const UrlTextField = ({ form, resetUrl, setFieldValue }) => (
-  <FormControl style={{ display: 'flex' }}>
-    <InputLabel shrink>{'Page URL'}</InputLabel>
-    <Input
-      autoFocus
-      endAdornment={
-        <InputAdornment position="end">
-          {form.url && (
-            <IconButton aria-label="Clear url" onClick={resetUrl} style={{ padding: '4px' }}>
-              <Close fontSize="small" />
-            </IconButton>
-          )}
-        </InputAdornment>
-      }
-      name="url"
-      onChange={setFieldValue}
-      placeholder="Paste Page URL"
-      type="URL"
-      value={form.url}
-    />
-  </FormControl>
+  <Field
+    autoFocus
+    endAdornment={
+      <InputAdornment position="end">
+        {form && form.url && (
+          <IconButton aria-label="Clear url" onClick={resetUrl} style={{ padding: '4px' }}>
+            <Close fontSize="small" />
+          </IconButton>
+        )}
+      </InputAdornment>
+    }
+    label="Page URL"
+    labelProps={{ shrink: true }}
+    name="url"
+    onChange={setFieldValue}
+    placeholder="Paste Page URL"
+    type="url"
+    value={form.url}
+  />
 )
 
 const options = {}

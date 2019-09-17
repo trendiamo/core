@@ -6,51 +6,56 @@ import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import { apiRequest, apiSignIn, showUpToUsBranding } from 'utils'
 import { AuthFormFooter, AuthStyledForm } from 'auth/components'
-import { FormControl, Input, InputLabel } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
+import { Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
-const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
-  <AuthLayout title={showUpToUsBranding() ? 'Collectively shape a better tomorrow!' : "Let's log you in!"}>
-    <AuthStyledForm onSubmit={loginSubmit}>
-      <FormControl fullWidth margin="normal" required>
-        <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
-        <Input
-          autoComplete="email"
-          autoFocus
-          id="email"
-          name="email"
-          onChange={setLoginValue}
-          required
-          type="email"
-          value={loginForm.email}
-        />
-      </FormControl>
-      <FormControl fullWidth margin="normal" required>
-        <InputLabel htmlFor="password">{'Password'}</InputLabel>
-        <Input
-          autoComplete="current-password"
-          id="password"
-          name="password"
-          onChange={setLoginValue}
-          required
-          type="password"
-          value={loginForm.password}
-        />
-      </FormControl>
-      <AuthFormFooter>
-        <Button color="primaryGradient" fullWidth type="submit" variant="contained">
-          {'Login'}
+const Footer = () => (
+  <AuthFormFooter>
+    <div>
+      <Button color="primaryGradient" fullWidth type="submit" variant="contained">
+        {'Login'}
+      </Button>
+      <Link to={routes.requestPasswordReset()}>
+        <Button
+          color={showUpToUsBranding() ? 'white' : 'primaryText'}
+          inline
+          variant={showUpToUsBranding() ? 'contained' : 'text'}
+        >
+          {'Forgot password?'}
         </Button>
-        <Link to={routes.requestPasswordReset()}>
-          <Button color="primaryText" variant="text">
-            {'Forgot Password?'}
-          </Button>
-        </Link>
-        <p>
-          {"Don't have an account? "}
-          <Link to={routes.signup()}>{'Signup'}</Link>
-        </p>
-      </AuthFormFooter>
+      </Link>
+    </div>
+    <Typography variant="body2">
+      {"Don't have an account? "}
+      <Link to={routes.signup()}>{'Signup'}</Link>
+    </Typography>
+  </AuthFormFooter>
+)
+
+const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
+  <AuthLayout title={showUpToUsBranding() ? 'Collectively shape a better tomorrow' : "Let's log you in!"}>
+    <AuthStyledForm onSubmit={loginSubmit}>
+      <Field
+        autoComplete="email"
+        autoFocus
+        label="E-mail"
+        name="email"
+        onChange={setLoginValue}
+        required
+        type="email"
+        value={loginForm.email}
+      />
+      <Field
+        autoComplete="current-password"
+        label="Password"
+        name="password"
+        onChange={setLoginValue}
+        required
+        type="password"
+        value={loginForm.password}
+      />
+      <Footer />
     </AuthStyledForm>
   </AuthLayout>
 )

@@ -226,3 +226,23 @@ export const showUpToUsBranding = () => {
   }
   return process.env.REACT_APP_BRANDING === 'uptous'
 }
+
+export const loadFonts = () => {
+  const documentHead = document.head || (document.head = document.getElementsByTagName('head')[0])
+  const fontsUrl = showUpToUsBranding()
+    ? 'https://fonts.googleapis.com/css?family=Lato:400,700|Nunito+Sans:300,400,900&display=swap'
+    : 'https://fonts.googleapis.com/css?family=Roboto:300,500,700'
+
+  const defaultFont = showUpToUsBranding() ? 'Nunito Sans' : 'Roboto'
+
+  const css = `@import url('${fontsUrl}');
+  body {
+    font-family: '${defaultFont}', 'Helvetica', 'Arial', sans-serif;
+  }
+  `
+
+  const linkElement = document.createElement('style')
+  linkElement.type = 'text/css'
+  linkElement.appendChild(document.createTextNode(css))
+  documentHead.appendChild(linkElement)
+}

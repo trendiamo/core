@@ -10,7 +10,8 @@ import styled, { keyframes } from 'styled-components'
 import UserMenu from './user-menu'
 import { affiliateResourceGroups, editorResourceGroups, resourceGroups } from './resource-groups'
 import { ViewList as DefaultIcon } from '@material-ui/icons'
-import { Divider, IconButton, MenuItem, SvgIcon, Typography } from '@material-ui/core'
+import { Divider, MenuItem, SvgIcon, Typography } from '@material-ui/core'
+import { IconButton } from 'shared/form-elements'
 import { showUpToUsBranding } from 'utils'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
@@ -73,19 +74,21 @@ const MenuItemGroup = styled.div`
 
 const StyledMenuItem = styled(props => <MenuItem {...omit(props, ['isActive', 'sidebarOpen'])} />)`
   flex-shrink: 0;
-  transition: padding 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, height 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
-    visibility 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  transition: all 0.2s ease-in-out;
   visibility: visible;
 
-  ${({ isActive }) => isActive && 'background-color: rgba(0, 0, 0, 0.03);'}
+  background: ${({ isActive }) => isActive && (showUpToUsBranding() ? '#e7ecef' : 'rgba(0, 0, 0, 0.03)')};
   ${({ sidebarOpen }) =>
     !sidebarOpen && 'background-color: transparent; padding-left: 22px; padding-right: 0;'}
+  &:hover, &:focus {
+    background: ${showUpToUsBranding() ? '#e7ecef' : 'rgba(0, 0, 0, 0.03)'};
+  }
 `
 
 const MenuText = styled(props => <Typography {...omit(props, ['isActive'])} />)`
-  color: #222;
+  ${showUpToUsBranding() ? 'font-size: 14px; color: #272932;' : 'color: #222;'}
   padding-left: 20px;
-  ${({ isActive }) => isActive && 'font-weight: bold;'}
+  ${({ isActive }) => (showUpToUsBranding() || isActive) && 'font-weight: bold;'}
 `
 
 const StyledSvgIcon = styled(props => <SvgIcon {...omit(props, ['isActive', 'sidebarOpen'])} />)`
@@ -94,12 +97,14 @@ const StyledSvgIcon = styled(props => <SvgIcon {...omit(props, ['isActive', 'sid
 
 const LogoFull = styled.img`
   width: 140px;
+  user-select: none;
 `
 
 const LogoSmall = styled.img`
   width: 30px;
   height: 30px;
   object-fit: contain;
+  user-select: none;
 `
 
 const Item = withRouter(({ location, resource, sidebarOpen }) => {

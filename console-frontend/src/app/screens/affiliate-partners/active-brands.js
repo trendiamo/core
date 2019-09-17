@@ -36,7 +36,7 @@ const BlankStateDescription = styled.div`
 
 const BlankState = ({ animate }) => (
   <BlankStateContainer>
-    <RocketIcon animate={animate} src="/img/icons/rocket.svg" />
+    <RocketIcon animate={animate} src="/img/icons/seeding.svg" />
     <BlankStateDescription animate={animate}>
       <div>{'You are not working with any brands yet.'}</div>
       <div>{'Pick partners from the list to start promoting and earning today!'}</div>

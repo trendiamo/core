@@ -74,13 +74,13 @@ const resources = {
     route: () => routes.settingsTheme(),
   },
   affiliatePartners: {
-    icon: '/img/icons/grocery.svg',
+    icon: '/img/icons/handshake.svg',
     label: 'Affiliate Partners',
     class: 'affiliatePartners',
     route: () => routes.affiliatePartners(),
   },
   yourReferrals: {
-    icon: '/img/icons/crown.svg',
+    icon: '/img/icons/star.svg',
     label: 'Your Referrals',
     class: 'yourReferrals',
     route: () => routes.yourReferrals(),

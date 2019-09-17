@@ -7,8 +7,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import { apiAccountCreate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Form } from 'shared/form-elements'
-import { FormControl, TextField } from '@material-ui/core'
+import { Field, Form } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
 
@@ -123,19 +122,15 @@ const NewAccount = ({ history }) => {
     <Layout>
       <Form isFormPristine={isFormPristine} onSubmit={newOnFormSubmit}>
         <h2>{'New Account'}</h2>
-        <FormControl fullWidth margin="normal" required>
-          <TextField
-            autoFocus
-            fullWidth
-            inputProps={atLeastOneNonBlankCharInputProps}
-            label="Name"
-            margin="normal"
-            name="name"
-            onChange={setFieldValue}
-            required
-            value={form.name}
-          />
-        </FormControl>
+        <Field
+          autoFocus
+          inputProps={atLeastOneNonBlankCharInputProps}
+          label="Name"
+          name="name"
+          onChange={setFieldValue}
+          required
+          value={form.name}
+        />
         <HostnamesForm
           addHostnameSelect={addHostnameSelect}
           deleteHostname={deleteHostname}

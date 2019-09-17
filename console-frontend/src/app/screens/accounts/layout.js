@@ -7,7 +7,8 @@ import routes from 'app/routes'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import { apiSignOut } from 'utils'
-import { IconButton, Tooltip } from '@material-ui/core'
+import { IconButton } from 'shared/form-elements'
+import { Tooltip } from '@material-ui/core'
 
 const signOutButtonClick = async () => {
   await apiSignOut()

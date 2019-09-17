@@ -1,6 +1,6 @@
+import IconButton from './icon-button'
 import MuiDelete from '@material-ui/icons/DeleteOutlined'
 import React, { useCallback } from 'react'
-import { IconButton } from '@material-ui/core'
 
 const Cancel = ({ index, disabled, onClick, ...props }) => {
   const onClickHandler = useCallback(() => disabled || onClick(index), [disabled, index, onClick])

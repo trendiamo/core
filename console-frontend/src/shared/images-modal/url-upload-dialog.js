@@ -7,16 +7,17 @@ import styled from 'styled-components'
 import { DialogActionsContainer, StyledButton } from './shared'
 import { Input } from '@material-ui/core'
 import { Link as LinkIcon } from '@material-ui/icons'
+import { showUpToUsBranding } from 'utils'
 
 const UrlInputContainer = styled.div`
   margin: 1.5rem 6rem;
   border-radius: 3px;
-  background-color: #f5f5f5;
+  background-color: ${showUpToUsBranding() ? '#e7ecef' : '#f5f5f5'};
   display: flex;
   overflow: hidden;
   height: 56px;
   transition: all 200ms;
-  border: 2px solid ${({ isFocused }) => (isFocused ? '#ff6641' : 'transparent')};
+  border: 2px solid ${({ isFocused }) => (isFocused ? (showUpToUsBranding() ? '#0f7173' : '#ff6641') : 'transparent')};
 `
 
 const UrlInput = styled(Input)`

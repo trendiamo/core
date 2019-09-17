@@ -8,7 +8,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
 import { AuthFormFooter, AuthStyledForm } from 'auth/components'
-import { FormControl, Input, InputLabel } from '@material-ui/core'
+import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const StyledDoneIcon = styled(DoneIcon)`
@@ -118,17 +118,14 @@ const AccountSignup = () => {
         </>
       ) : (
         <AuthStyledForm onSubmit={onSubmit}>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="accountName">{'Account name'}</InputLabel>
-            <Input
-              autoFocus
-              id="accountName"
-              name="accountName"
-              onChange={setFieldValue}
-              required
-              value={state.form.accountName}
-            />
-          </FormControl>
+          <Field
+            autoFocus
+            label="Account name"
+            name="accountName"
+            onChange={setFieldValue}
+            required
+            value={state.form.accountName}
+          />
           <HostnamesForm
             addHostnameSelect={addHostnameSelect}
             deleteHostname={deleteHostname}
@@ -138,49 +135,26 @@ const AccountSignup = () => {
             margin="normal"
             required
           />
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="firstName">{'First Name'}</InputLabel>
-            <Input id="firstName" name="firstName" onChange={setFieldValue} required value={state.form.firstName} />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="lastName">{'Last Name'}</InputLabel>
-            <Input id="lastName" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="email">{'E-mail'}</InputLabel>
-            <Input
-              autoComplete="email"
-              id="email"
-              name="email"
-              onChange={setFieldValue}
-              required
-              type="email"
-              value={state.form.email}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="password">{'Password'}</InputLabel>
-            <Input
-              id="password"
-              inputRef={passwordRef}
-              name="password"
-              onChange={setFieldValue}
-              required
-              type="password"
-              value={state.form.password}
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel htmlFor="passwordConfirmation">{'Confirm Password'}</InputLabel>
-            <Input
-              id="passwordConfirmation"
-              name="passwordConfirmation"
-              onChange={setFieldValue}
-              required
-              type="password"
-              value={state.form.passwordConfirmation}
-            />
-          </FormControl>
+          <Field label="First Name" name="firstName" onChange={setFieldValue} required value={state.form.firstName} />
+          <Field label="Last Name" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
+          <Field label="E-mail" name="email" onChange={setFieldValue} required type="email" value={state.form.email} />
+          <Field
+            inputRef={passwordRef}
+            label="Password"
+            name="password"
+            onChange={setFieldValue}
+            required
+            type="password"
+            value={state.form.password}
+          />
+          <Field
+            label="Confirm Password"
+            name="passwordConfirmation"
+            onChange={setFieldValue}
+            required
+            type="password"
+            value={state.form.passwordConfirmation}
+          />
           <AuthFormFooter>
             <Button color="primaryGradient" fullWidth type="submit" variant="contained">
               {'Signup'}

@@ -4,7 +4,7 @@ import React, { useCallback, useRef } from 'react'
 import styled from 'styled-components'
 
 const BrandDescription = styled.div`
-  color: #1b3b50;
+  color: #272932;
 `
 
 const ContentContainer = styled.div`

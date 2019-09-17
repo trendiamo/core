@@ -7,9 +7,9 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
-import { Actions, AddItemButton, Cancel, Form, FormHelperText } from 'shared/form-elements'
+import { Actions, AddItemButton, Cancel, Field, Form, FormHelperText } from 'shared/form-elements'
 import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow, refreshRoute } from 'utils'
-import { FormControl, Grid, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core'
+import { Grid, InputAdornment, Typography } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -21,6 +21,10 @@ const FlexDiv = styled.div`
   align-items: center;
 `
 
+const StyledAddItemButton = styled(AddItemButton)`
+  width: 100%;
+`
+
 const UrlTextField = ({ index, onChange, value, hostnames, ...props }) => {
   const editUrlValue = useCallback(
     event => {
@@ -30,18 +34,16 @@ const UrlTextField = ({ index, onChange, value, hostnames, ...props }) => {
   )
 
   return (
-    <TextField
+    <Field
       {...props}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment>
-            <Typography style={{ whiteSpace: 'nowrap' }}>
-              {hostnames.length > 1 ? 'https://yourwebsite.com' : hostnames[0]}
-            </Typography>
-          </InputAdornment>
-        ),
-      }}
       onChange={editUrlValue}
+      startAdornment={
+        <InputAdornment>
+          <Typography style={{ whiteSpace: 'nowrap' }}>
+            {hostnames.length > 1 ? 'https://yourwebsite.com' : hostnames[0]}
+          </Typography>
+        </InputAdornment>
+      }
       value={value}
     />
   )
@@ -200,29 +202,28 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
             required
           />
           <FormHelperText>{'Choose between Showcases, Chats, etc.'}</FormHelperText>
-          <FormControl fullWidth margin="normal">
-            <InputLabel shrink>{'URL Matchers'}</InputLabel>
-            <div style={{ marginTop: '11px' }}>
-              {form.urlMatchers.map((url, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <FlexDiv key={index}>
-                  <StyledUrlTextField
-                    disabled={isFormLoading}
-                    hostnames={hostnames}
-                    index={index}
-                    inputProps={inputProps}
-                    onChange={editUrlValue}
-                    required
-                    value={url}
-                  />
-                  {form.urlMatchers.length > 1 && (
-                    <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
-                  )}
-                </FlexDiv>
-              ))}
-            </div>
-            <AddItemButton disabled={isFormLoading} message="Add Another URL" onClick={addUrlSelect} />{' '}
-          </FormControl>
+          <div style={{ marginTop: '11px' }}>
+            {form.urlMatchers.map((url, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <FlexDiv key={index}>
+                <StyledUrlTextField
+                  disabled={isFormLoading}
+                  hostnames={hostnames}
+                  index={index}
+                  inputProps={inputProps}
+                  label={index === 0 && 'URL Matchers'}
+                  labelProps={{ shrink: true }}
+                  onChange={editUrlValue}
+                  required
+                  value={url}
+                />
+                {form.urlMatchers.length > 1 && (
+                  <Cancel disabled={isFormLoading} index={index} onClick={deleteUrlMatcher} />
+                )}
+              </FlexDiv>
+            ))}
+            <StyledAddItemButton disabled={isFormLoading} message="Add Another URL" onClick={addUrlSelect} />{' '}
+          </div>
           <FormHelperText>{'⚠️ Use only the part of the url after your domain name, eg: /my/page'}</FormHelperText>
           <FormHelperText>
             {'ℹ️ You can use a matching pattern such as /products/:id to match all urls in that form.'}
