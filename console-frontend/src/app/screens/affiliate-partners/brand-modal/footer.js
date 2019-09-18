@@ -1,5 +1,6 @@
 import Button from 'shared/button'
-import React, { useCallback, useState } from 'react'
+import ClipboardInput from 'shared/clipboard-input'
+import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Checkbox, FormControlLabel, FormLabel, Typography } from '@material-ui/core'
 
@@ -96,6 +97,27 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
 `
 
+const StyledClipboardInput = styled(ClipboardInput)`
+  max-width: 450px;
+  margin: 41px auto 40px;
+`
+
+const SuccessScreen = ({ selectedAffiliation, brand }) => {
+  const affiliationUrl = useMemo(
+    () => selectedAffiliation && `https://${brand.websiteHostname}/?aftk=${selectedAffiliation.token}`,
+    [selectedAffiliation, brand.websiteHostname]
+  )
+
+  return (
+    <Container>
+      <Typography align="center" variant="overline">
+        {'Your affiliate link'}
+      </Typography>
+      <StyledClipboardInput size="large" text={affiliationUrl} />
+    </Container>
+  )
+}
+
 const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
   const [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false)
 
@@ -123,14 +145,15 @@ const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
   )
 }
 
-const Footer = ({ brand, createAffiliation, handleClose, scrollToTermsAndConditions }) => {
+const Footer = ({ brand, createAffiliation, scrollToTermsAndConditions, selectedAffiliation }) => {
   const onCreateLinkClick = useCallback(
     () => {
       createAffiliation(brand)
-      handleClose()
     },
-    [brand, createAffiliation, handleClose]
+    [brand, createAffiliation]
   )
+
+  if (selectedAffiliation) return <SuccessScreen brand={brand} selectedAffiliation={selectedAffiliation} />
 
   return (
     <Container>

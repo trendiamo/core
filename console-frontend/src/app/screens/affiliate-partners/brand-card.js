@@ -1,7 +1,6 @@
-import BrandsModal from './brands-modal'
 import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import { Chip, Typography } from '@material-ui/core'
@@ -38,13 +37,16 @@ const ImageAndDescriptionContainer = styled.div`
 
 const ImageContainer = styled.div`
   margin-right: 20px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 150px;
+  height: 140px;
   flex-shrink: 0;
+  cursor: pointer;
 `
 
 const Image = styled.img`
-  margin-right: 20px;
   max-width: 100%;
   max-height: 140px;
   object-fit: contain;
@@ -102,9 +104,14 @@ const Tag = styled(Chip)`
   margin: 4px;
 `
 
-const BrandCard = ({ affiliation, animate, brand, createAffiliation, setIsCustomLinkModalOpen, setSelectedBrand }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
+const BrandCard = ({
+  affiliation,
+  animate,
+  brand,
+  setIsCustomLinkModalOpen,
+  setIsBrandModalOpen,
+  setSelectedBrand,
+}) => {
   const affiliationUrl = useMemo(() => affiliation && `https://${brand.websiteHostname}/?aftk=${affiliation.token}`, [
     affiliation,
     brand.websiteHostname,
@@ -118,14 +125,20 @@ const BrandCard = ({ affiliation, animate, brand, createAffiliation, setIsCustom
     [brand, setIsCustomLinkModalOpen, setSelectedBrand]
   )
 
-  const onPromoteNowClick = useCallback(() => setIsModalOpen(true), [])
+  const openBrandModal = useCallback(
+    () => {
+      setIsBrandModalOpen(true)
+      setSelectedBrand(brand)
+    },
+    [brand, setIsBrandModalOpen, setSelectedBrand]
+  )
 
   return (
     <>
       <StyledSection animate={animate}>
         <MainContainer key={brand.id}>
           <ImageAndDescriptionContainer>
-            <ImageContainer>
+            <ImageContainer onClick={openBrandModal}>
               <Image src={brand.logoUrl} />
             </ImageContainer>
             <div>
@@ -144,7 +157,7 @@ const BrandCard = ({ affiliation, animate, brand, createAffiliation, setIsCustom
             <Button
               color={affiliation ? 'white' : 'primaryGradient'}
               inline
-              onClick={affiliation ? onCustomLinkClick : onPromoteNowClick}
+              onClick={affiliation ? onCustomLinkClick : openBrandModal}
               size="large"
             >
               {affiliation ? 'Custom link' : 'Promote now'}
@@ -152,13 +165,6 @@ const BrandCard = ({ affiliation, animate, brand, createAffiliation, setIsCustom
           </Actions>
         </MainContainer>
       </StyledSection>
-      <BrandsModal
-        affiliation={affiliation}
-        brand={brand}
-        createAffiliation={createAffiliation}
-        open={isModalOpen}
-        setOpen={setIsModalOpen}
-      />
     </>
   )
 }

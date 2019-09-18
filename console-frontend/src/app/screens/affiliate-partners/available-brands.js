@@ -15,7 +15,7 @@ const StyledTitle = styled(props => <Title {...omit(props, ['animate', 'ref'])} 
   `}
 `
 
-const AvailableBrands = ({ animate, brands, createAffiliation, isLoading, title, titleRef }) => {
+const AvailableBrands = ({ animate, brands, isLoading, title, titleRef, setIsBrandModalOpen, setSelectedBrand }) => {
   if (isLoading) return <div />
 
   return (
@@ -26,7 +26,13 @@ const AvailableBrands = ({ animate, brands, createAffiliation, isLoading, title,
         </div>
       )}
       {brands.map(brand => (
-        <BrandCard animate={animate} brand={brand} createAffiliation={createAffiliation} key={brand.id} />
+        <BrandCard
+          animate={animate}
+          brand={brand}
+          key={brand.id}
+          setIsBrandModalOpen={setIsBrandModalOpen}
+          setSelectedBrand={setSelectedBrand}
+        />
       ))}
     </>
   )

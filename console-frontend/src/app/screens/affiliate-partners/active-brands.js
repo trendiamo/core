@@ -46,7 +46,14 @@ const BlankState = ({ animate }) => (
   </BlankStateContainer>
 )
 
-const ActiveBrands = ({ affiliations, animate, isLoading, setIsCustomLinkModalOpen, setSelectedBrand }) => {
+const ActiveBrands = ({
+  affiliations,
+  setIsBrandModalOpen,
+  animate,
+  isLoading,
+  setIsCustomLinkModalOpen,
+  setSelectedBrand,
+}) => {
   if (isLoading) return <div />
 
   if (affiliations.length === 0) return <BlankState animate={animate} />
@@ -57,6 +64,7 @@ const ActiveBrands = ({ affiliations, animate, isLoading, setIsCustomLinkModalOp
       animate={animate}
       brand={affiliation.brand}
       key={affiliation.id}
+      setIsBrandModalOpen={setIsBrandModalOpen}
       setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
       setSelectedBrand={setSelectedBrand}
     />

@@ -1,6 +1,7 @@
 import ActiveBrands from './active-brands'
 import auth from 'auth'
 import AvailableBrands from './available-brands'
+import BrandModal from './brand-modal'
 import CustomLinkModal from './custom-link-modal'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
@@ -22,6 +23,7 @@ const AffiliatePartners = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [sectionAppBarContent, setSectionAppBarContent] = useState(appBarContent({ section: 'activeBrands' }))
   const [isCustomLinkModalOpen, setIsCustomLinkModalOpen] = useState(false)
+  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false)
   const [selectedBrand, setSelectedBrand] = useState(null)
 
   const { enqueueSnackbar } = useSnackbar()
@@ -108,10 +110,11 @@ const AffiliatePartners = () => {
     [enqueueSnackbar, fetchAffiliationsAndBrands]
   )
 
-  const selectedAffiliation = useMemo(() => affiliations.find(affiliation => affiliation.brand === selectedBrand), [
-    affiliations,
-    selectedBrand,
-  ])
+  const selectedAffiliation = useMemo(
+    () =>
+      affiliations.find(affiliation => selectedBrand && affiliation.brand && affiliation.brand.id === selectedBrand.id),
+    [affiliations, selectedBrand]
+  )
 
   return (
     <>
@@ -119,14 +122,16 @@ const AffiliatePartners = () => {
         affiliations={affiliations}
         animate={animate}
         isLoading={isLoading}
+        setIsBrandModalOpen={setIsBrandModalOpen}
         setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
         setSelectedBrand={setSelectedBrand}
       />
       <AvailableBrands
         animate={animate}
         brands={availableBrands}
-        createAffiliation={createAffiliation}
         isLoading={isLoading}
+        setIsBrandModalOpen={setIsBrandModalOpen}
+        setSelectedBrand={setSelectedBrand}
         title={sectionTitles.availableBrands}
         titleRef={secondTitleRef}
       />
@@ -134,6 +139,14 @@ const AffiliatePartners = () => {
         affiliation={selectedAffiliation}
         open={isCustomLinkModalOpen}
         setOpen={setIsCustomLinkModalOpen}
+      />
+      <BrandModal
+        affiliation={selectedAffiliation}
+        brand={selectedBrand}
+        createAffiliation={createAffiliation}
+        open={isBrandModalOpen}
+        selectedAffiliation={selectedAffiliation}
+        setOpen={setIsBrandModalOpen}
       />
     </>
   )
