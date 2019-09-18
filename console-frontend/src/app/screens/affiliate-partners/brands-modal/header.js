@@ -1,5 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg'
+import { ReactComponent as InstagramIcon } from 'assets/icons/instagram.svg'
+import { ReactComponent as TwitterIcon } from 'assets/icons/twitter.svg'
 
 const Image = styled.img`
   width: 100%;
@@ -68,22 +71,18 @@ const SocialLinksContainer = styled.div`
   display: flex;
 `
 
-const SocialLinkImg = styled.img`
-  user-select: none;
-`
-
-const SocialLink = ({ brand, type }) => (
+const SocialLink = ({ brand, type, Icon }) => (
   <SocialLinkContainer href={brand[`${type}Url`]} rel="noopener noreferrer" target="_blank">
-    <SocialLinkImg alt="" src={`/img/icons/${type}.svg`} />
+    <Icon />
   </SocialLinkContainer>
 )
 
 const BrandSocialLinks = ({ brand }) => {
   return (
     <SocialLinksContainer>
-      {brand.instagramUrl && <SocialLink brand={brand} type="instagram" />}
-      {brand.facebookUrl && <SocialLink brand={brand} type="facebook" />}
-      {brand.twitterUrl && <SocialLink brand={brand} type="twitter" />}
+      {brand.instagramUrl && <SocialLink brand={brand} Icon={InstagramIcon} type="instagram" />}
+      {brand.facebookUrl && <SocialLink brand={brand} Icon={FacebookIcon} type="facebook" />}
+      {brand.twitterUrl && <SocialLink brand={brand} Icon={TwitterIcon} type="twitter" />}
     </SocialLinksContainer>
   )
 }

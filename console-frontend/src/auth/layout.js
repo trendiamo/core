@@ -2,8 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { CssBaseline, Typography } from '@material-ui/core'
+import { ReactComponent as FrekklsLogo } from 'assets/icons/frekkls-logo.svg'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { showUpToUsBranding } from 'utils'
+import { ReactComponent as UpToUsLogo } from 'assets/icons/uptous-logo.svg'
+import { ReactComponent as WaveLoginIcon } from 'assets/icons/wave-login.svg'
 
 const AuthMain = styled.main`
   display: block;
@@ -90,7 +93,7 @@ const WaveContainer = styled.div`
   }
 `
 
-const WaveImage = styled.img`
+const Wave = styled(WaveLoginIcon)`
   height: 101%;
   left: 100%;
   position: absolute;
@@ -100,7 +103,7 @@ const WaveImage = styled.img`
 const UpToUsBackground = () => (
   <UpToUsBackgroundContainer>
     <WaveContainer>
-      <WaveImage alt="" src="/img/background/wave-login.svg" />
+      <Wave />
     </WaveContainer>
   </UpToUsBackgroundContainer>
 )
@@ -124,15 +127,16 @@ const LogotypeContainer = styled.div`
   }
 `
 
-const LogoImage = styled.img`
-  max-width: 140px;
-  user-select: none;
+const StyledUpToUsLogo = styled(UpToUsLogo)`
+  width: 140px;
 `
 
-const Logotype = props => (
-  <LogotypeContainer>
-    <LogoImage alt="" src={showUpToUsBranding() ? '/img/uptous-logo.svg' : '/img/frekkls-logo.svg'} {...props} />
-  </LogotypeContainer>
+const StyledFrekklsLogo = styled(FrekklsLogo)`
+  width: 140px;
+`
+
+const Logotype = () => (
+  <LogotypeContainer>{showUpToUsBranding() ? <StyledUpToUsLogo /> : <StyledFrekklsLogo />}</LogotypeContainer>
 )
 
 const StyledTypography = styled(Typography)`

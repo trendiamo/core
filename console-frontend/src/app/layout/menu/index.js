@@ -11,8 +11,12 @@ import UserMenu from './user-menu'
 import { affiliateResourceGroups, editorResourceGroups, resourceGroups } from './resource-groups'
 import { ViewList as DefaultIcon } from '@material-ui/icons'
 import { Divider, MenuItem, SvgIcon, Typography } from '@material-ui/core'
+import { ReactComponent as FrekklsLogo } from 'assets/icons/frekkls-logo.svg'
+import { ReactComponent as FrekklsLogoSmall } from 'assets/icons/frekkls-logo-small.svg'
 import { IconButton } from 'shared/form-elements'
 import { showUpToUsBranding } from 'utils'
+import { ReactComponent as UpToUsLogo } from 'assets/icons/uptous-logo.svg'
+import { ReactComponent as UpToUsLogoSmall } from 'assets/icons/uptous-logo-small.svg'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -93,18 +97,27 @@ const MenuText = styled(props => <Typography {...omit(props, ['isActive'])} />)`
 
 const StyledSvgIcon = styled(props => <SvgIcon {...omit(props, ['isActive', 'sidebarOpen'])} />)`
   color: ${({ isActive, sidebarOpen }) => (sidebarOpen ? '#222' : isActive ? '#fff' : 'rgba(255,255,255,0.6)')};
-`
-
-const LogoFull = styled.img`
-  width: 140px;
-  user-select: none;
-`
-
-const LogoSmall = styled.img`
   width: 30px;
   height: 30px;
-  object-fit: contain;
-  user-select: none;
+`
+
+const StyledFrekklsLogo = styled(FrekklsLogo)`
+  width: 140px;
+`
+
+const StyledUpToUsLogo = styled(UpToUsLogo)`
+  width: 140px;
+`
+const StyledFrekklsLogoSmall = styled(FrekklsLogoSmall)`
+  width: 30px;
+  height: 30px;
+  font-size: 0;
+`
+
+const StyledUpToUsLogoSmall = styled(UpToUsLogoSmall)`
+  width: 30px;
+  height: 30px;
+  font-size: 0;
 `
 
 const Item = withRouter(({ location, resource, sidebarOpen }) => {
@@ -114,13 +127,9 @@ const Item = withRouter(({ location, resource, sidebarOpen }) => {
     <div className={`onboard-${resource.class}`}>
       <Link key={resource.route()} to={resource.route()}>
         <StyledMenuItem isActive={isActive} sidebarOpen={sidebarOpen}>
-          {typeof resource.icon === 'string' ? (
-            <img alt="" height={30} src={resource.icon} width={30} />
-          ) : (
-            <StyledSvgIcon isActive={isActive} sidebarOpen={sidebarOpen}>
-              {resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}
-            </StyledSvgIcon>
-          )}
+          <StyledSvgIcon isActive={isActive} sidebarOpen={sidebarOpen}>
+            {resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}
+          </StyledSvgIcon>
           <MenuText isActive={isActive} variant="body1">
             {sidebarOpen ? resource.label : ''}
           </MenuText>
@@ -144,7 +153,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen, isFoldable }) => (
     >
       {sidebarOpen ? (
         <>
-          <LogoFull alt="" src={showUpToUsBranding() ? '/img/uptous-logo.svg' : '/img/frekkls-logo.svg'} />
+          {showUpToUsBranding() ? <StyledUpToUsLogo /> : <StyledFrekklsLogo />}
           {isFoldable && (
             <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
               <MenuIcon />
@@ -153,7 +162,7 @@ const MenuLogo = ({ sidebarOpen, toggleOpen, isFoldable }) => (
         </>
       ) : (
         <IconButton onClick={toggleOpen}>
-          <LogoSmall alt="" src={showUpToUsBranding() ? '/img/uptous-logo-small.svg' : '/img/frekkls-logo-small.svg'} />
+          {showUpToUsBranding() ? <StyledUpToUsLogoSmall /> : <StyledFrekklsLogoSmall />}
         </IconButton>
       )}
     </div>

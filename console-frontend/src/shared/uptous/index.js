@@ -26,13 +26,6 @@ export const Callout = styled.div`
   align-items: center;
 `
 
-export const CardIcon = styled.img`
-  align-self: center;
-  width: 62px;
-  margin-bottom: 40px;
-  user-select: none;
-`
-
 export const CalloutTitle = styled(Typography)`
   margin-bottom: 20px;
 `

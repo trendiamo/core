@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { DialogActionsContainer, StyledButton } from './shared'
 import { Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { ReactComponent as SelectIcon } from 'assets/icons/select.svg'
 import { showUpToUsBranding } from 'utils'
 
 const Image = styled.img`
@@ -105,7 +106,7 @@ const GalleryImage = ({ isActive, onImageClick, image }) => {
         <Image id={`image-${image.id}`} isActive={isActive} onClick={newOnImageClick} src={image.url} />
         {isActive && (
           <CheckBoxContainer>
-            <img alt="" src="/img/icons/select.svg" />
+            <SelectIcon />
           </CheckBoxContainer>
         )}
       </AspectRatio>

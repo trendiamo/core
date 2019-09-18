@@ -6,6 +6,7 @@ import Section from 'shared/section'
 import styled from 'styled-components'
 import { Chip, Typography } from '@material-ui/core'
 import { IconButton } from 'shared/form-elements'
+import { ReactComponent as NewTabIcon } from 'assets/icons/new-tab.svg'
 
 const StyledSection = styled(Section)`
   margin-top: 10px;
@@ -57,15 +58,15 @@ const Actions = styled.div`
   justify-content: space-between;
 `
 
-const NewTabIcon = styled.img`
+const StyledNewTabIcon = styled(NewTabIcon)`
   height: 30px;
-  object-fit: contain;
+  width: 30px;
 `
 
 const WebsiteButton = ({ websiteHostname }) => (
   <a href={`https://${websiteHostname}`} rel="noopener noreferrer" target="_blank">
     <IconButton>
-      <NewTabIcon alt="" src="/img/icons/new_tab.svg" />
+      <StyledNewTabIcon />
     </IconButton>
   </a>
 )
