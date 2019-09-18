@@ -1,4 +1,5 @@
 import BlankStateTemplate from 'shared/blank-state'
+import copy from 'clipboard-copy'
 import Divider from '@material-ui/core/Divider'
 import HistoryIcon from '@material-ui/icons/History'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -45,9 +46,7 @@ const UrlListItems = ({ urlHistory, copyToClipboard }) => (
 )
 
 const UrlList = ({ urlHistory }) => {
-  const copyToClipboard = useCallback(event => {
-    navigator.clipboard.writeText(event.target.textContent)
-  }, [])
+  const copyToClipboard = useCallback(event => copy(event.target.textContent), [])
 
   if (urlHistory.length === 0) return <BlankState />
 

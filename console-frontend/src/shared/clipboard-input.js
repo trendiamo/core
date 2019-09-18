@@ -1,4 +1,5 @@
 import Button from 'shared/button'
+import copy from 'clipboard-copy'
 import DoneIcon from '@material-ui/icons/Done'
 import omit from 'lodash.omit'
 import React, { useCallback, useState } from 'react'
@@ -70,13 +71,13 @@ const ClipboardInput = ({
       setWasCopied(true)
       showUpToUsBranding() && setTimeout(() => setIsCopied(false), 3000)
       if (outputText === inputText) {
-        await navigator.clipboard.writeText(pasteable ? inputText : text)
+        copy(pasteable ? inputText : text)
         return
       }
       const final = mixFunction ? mixFunction(inputText) : inputText
       setOutputText(final)
       setInputText(final)
-      await navigator.clipboard.writeText(final)
+      copy(final)
     },
     [inputText, mixFunction, outputText, pasteable, text]
   )
