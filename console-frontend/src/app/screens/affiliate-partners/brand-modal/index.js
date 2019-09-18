@@ -2,12 +2,19 @@ import Content from './content'
 import Dialog from 'shared/dialog'
 import React, { useCallback } from 'react'
 
-const BrandsModal = ({ brand, createAffiliation, open, setOpen }) => {
+const BrandsModal = ({ brand, createAffiliation, open, setOpen, selectedAffiliation }) => {
   const handleClose = useCallback(() => setOpen(false), [setOpen])
 
   return (
     <Dialog
-      content={<Content brand={brand} createAffiliation={createAffiliation} handleClose={handleClose} />}
+      content={
+        <Content
+          brand={brand}
+          createAffiliation={createAffiliation}
+          handleClose={handleClose}
+          selectedAffiliation={selectedAffiliation}
+        />
+      }
       fullWidth
       handleClose={handleClose}
       hasManualPadding
