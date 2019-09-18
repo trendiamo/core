@@ -14,6 +14,9 @@ const homepageModules = {
   '/mm2go-jennimelzer': '/simple-chat/381',
   '/mm2go-jjtigerminka': '/simple-chat/369',
   '/mm2go-alicia9': '/simple-chat/365',
+  '/mm2go-mamawahnsinn': '/simple-chat/384',
+  '/mm2go-mothersfinest': '/simple-chat/390',
+  '/mm2go-kkkeiki': '/simple-chat/387',
 }
 
 const memorizeModule = ({ homepageModule }) => {
