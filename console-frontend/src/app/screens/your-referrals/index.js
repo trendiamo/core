@@ -5,8 +5,9 @@ import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import UserAvatar from 'shared/user-avatar'
 import { apiMeReferrals, apiRequest } from 'utils'
-import { Callout, CalloutTitle, CardContent, CardIcon, MainCard } from 'shared/uptous'
+import { Callout, CalloutTitle, CardContent, MainCard } from 'shared/uptous'
 import { Paper, Typography } from '@material-ui/core'
+import { ReactComponent as StartUpIcon } from 'assets/icons/start-up.svg'
 import { useSnackbar } from 'notistack'
 
 const FlexContainer = styled.div`
@@ -39,6 +40,12 @@ const ReferralStatus = styled(({ className, state }) => <div className={classNam
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 900;
+`
+
+const StyledStartUpIcon = styled(StartUpIcon)`
+  align-self: center;
+  width: 62px;
+  margin-bottom: 40px;
 `
 
 const ReferralUser = styled.div`
@@ -86,7 +93,7 @@ const YourReferrals = () => {
     <FlexContainer>
       <MainCard>
         <CardContent>
-          <CardIcon alt="" src="/img/icons/start-up.svg" />
+          <StyledStartUpIcon />
           <Typography variant="h5">{'Refer a friend and earn twice!'}</Typography>
           <Typography variant="body2">
             {

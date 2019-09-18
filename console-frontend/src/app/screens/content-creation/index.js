@@ -4,7 +4,8 @@ import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiMeRequestUpgrade, apiRequest } from 'utils'
-import { Callout, CalloutTitle, CardContent, CardIcon, MainCard } from 'shared/uptous'
+import { Callout, CalloutTitle, CardContent, MainCard } from 'shared/uptous'
+import { ReactComponent as PlayButtonIcon } from 'assets/icons/play-button.svg'
 import { Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
@@ -17,6 +18,12 @@ const RequestPending = styled(Typography)`
   color: #0f7173;
   margin-top: 14px;
   width: 100%;
+`
+
+const StyledPlayButtonIcon = styled(PlayButtonIcon)`
+  align-self: center;
+  width: 62px;
+  margin-bottom: 40px;
 `
 
 const ContentCreation = () => {
@@ -48,7 +55,7 @@ const ContentCreation = () => {
     <FlexContainer>
       <MainCard>
         <CardContent>
-          <CardIcon alt="" src="/img/icons/play_button.svg" />
+          <StyledPlayButtonIcon />
           <Typography variant="h5">{'Monetize with your content on brand websites!'}</Typography>
           <Typography variant="body2">
             {

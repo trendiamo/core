@@ -11,6 +11,9 @@ import {
   SmsOutlined,
   TuneOutlined,
 } from '@material-ui/icons'
+import { ReactComponent as HandshakeIcon } from 'assets/icons/handshake.svg'
+import { ReactComponent as PlayButtonIcon } from 'assets/icons/play-button.svg'
+import { ReactComponent as StarIcon } from 'assets/icons/star.svg'
 
 const resources = {
   account: {
@@ -74,19 +77,19 @@ const resources = {
     route: () => routes.settingsTheme(),
   },
   affiliatePartners: {
-    icon: '/img/icons/handshake.svg',
+    icon: HandshakeIcon,
     label: 'Affiliate Partners',
     class: 'affiliatePartners',
     route: () => routes.affiliatePartners(),
   },
   yourReferrals: {
-    icon: '/img/icons/star.svg',
+    icon: StarIcon,
     label: 'Your Referrals',
     class: 'yourReferrals',
     route: () => routes.yourReferrals(),
   },
   contentCreation: {
-    icon: '/img/icons/play_button.svg',
+    icon: PlayButtonIcon,
     label: 'Content Creation',
     class: 'contentCreation',
     route: () => routes.contentCreation(),

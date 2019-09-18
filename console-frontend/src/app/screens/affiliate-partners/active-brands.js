@@ -1,6 +1,8 @@
 import BrandCard from './brand-card'
+import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
+import { ReactComponent as SeedingIcon } from 'assets/icons/seeding.svg'
 
 const BlankStateContainer = styled.div`
   display: flex;
@@ -11,7 +13,7 @@ const BlankStateContainer = styled.div`
   user-select: none;
 `
 
-const RocketIcon = styled.img`
+const StyledSeedingIcon = styled(props => <SeedingIcon {...omit(props, ['animate'])} />)`
   margin-bottom: 20px;
   transition: all 1.6s;
   ${({ animate }) =>
@@ -36,7 +38,7 @@ const BlankStateDescription = styled.div`
 
 const BlankState = ({ animate }) => (
   <BlankStateContainer>
-    <RocketIcon animate={animate} src="/img/icons/seeding.svg" />
+    <StyledSeedingIcon animate={animate} />
     <BlankStateDescription animate={animate}>
       <div>{'You are not working with any brands yet.'}</div>
       <div>{'Pick partners from the list to start promoting and earning today!'}</div>

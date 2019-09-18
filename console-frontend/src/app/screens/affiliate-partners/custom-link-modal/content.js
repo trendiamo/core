@@ -1,6 +1,7 @@
 import Footer from './footer'
 import React from 'react'
 import styled from 'styled-components'
+import { ReactComponent as LinkIcon } from 'assets/icons/link.svg'
 import { Typography } from '@material-ui/core'
 
 const ContentContainer = styled.div`
@@ -29,7 +30,7 @@ const Content = ({ affiliation }) => {
     <MainContainer>
       <ContentScrollContainer>
         <IconContainer>
-          <img alt="" src="/img/icons/link.svg" />
+          <LinkIcon />
         </IconContainer>
         <ContentContainer>
           <Typography variant="h5">{'Create custom affiliate links'}</Typography>
