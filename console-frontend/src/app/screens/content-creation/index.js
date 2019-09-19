@@ -1,4 +1,5 @@
 import auth from 'auth'
+import BioAndPicModal from './bio-and-pic-modal'
 import Button from 'shared/button'
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
@@ -31,8 +32,13 @@ const ContentCreation = () => {
   useAppBarContent(appBarContent)
 
   const [isFormSubmitting, setIsFormSubmitting] = useState(false)
+  const [isBioAndPicModalOpen, setIsBioAndPicModalOpen] = useState(false)
   const [wasSubmitted, setWasSubmitted] = useState(!!auth.getUser().requestedUpgradeToSellerAt)
   const { enqueueSnackbar } = useSnackbar()
+
+  const openBioAndPicModal = useCallback(() => {
+    setIsBioAndPicModalOpen(true)
+  }, [])
 
   const sendUpgradeRequest = useCallback(
     async () => {
@@ -40,6 +46,7 @@ const ContentCreation = () => {
       const { json, requestError } = await apiRequest(apiMeRequestUpgrade, [])
       if (requestError) {
         enqueueSnackbar(requestError, { variant: 'error' })
+        setIsFormSubmitting(false)
         return
       }
       if (json && json.requestedUpgradeToSellerAt) {
@@ -81,13 +88,18 @@ const ContentCreation = () => {
               color="primaryGradient"
               disabled={isFormSubmitting}
               isFormSubmitting={isFormSubmitting}
-              onClick={sendUpgradeRequest}
+              onClick={openBioAndPicModal}
             >
               {!isFormSubmitting && 'I want in!'}
             </Button>
           )}
         </Callout>
       </MainCard>
+      <BioAndPicModal
+        open={isBioAndPicModalOpen}
+        sendUpgradeRequest={sendUpgradeRequest}
+        setOpen={setIsBioAndPicModalOpen}
+      />
     </FlexContainer>
   )
 }
