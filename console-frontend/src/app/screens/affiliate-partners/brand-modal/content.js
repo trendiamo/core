@@ -33,7 +33,7 @@ const TermsAndConditions = ({ brand, termsRef }) => (
   </div>
 )
 
-const Content = ({ brand, createAffiliation, handleClose, selectedAffiliation }) => {
+const Content = ({ brand, removeAffiliation, createAffiliation, handleClose, selectedAffiliation, isLoading }) => {
   const contentRef = useRef(null)
   const termsRef = useRef(null)
 
@@ -55,6 +55,8 @@ const Content = ({ brand, createAffiliation, handleClose, selectedAffiliation })
         brand={brand}
         createAffiliation={createAffiliation}
         handleClose={handleClose}
+        isLoading={isLoading}
+        removeAffiliation={removeAffiliation}
         scrollToTermsAndConditions={scrollToTermsAndConditions}
         selectedAffiliation={selectedAffiliation}
       />

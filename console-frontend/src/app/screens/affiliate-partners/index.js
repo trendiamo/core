@@ -5,7 +5,7 @@ import BrandModal from './brand-modal'
 import CustomLinkModal from './custom-link-modal'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
-import { apiAffiliationCreate, apiAffiliationsList, apiBrandsList, apiRequest } from 'utils'
+import { apiAffiliationCreate, apiAffiliationDestroy, apiAffiliationsList, apiBrandsList, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
 const sectionTitles = {
@@ -92,6 +92,12 @@ const AffiliatePartners = () => {
     [isAvailableBrandsSection]
   )
 
+  const selectedAffiliation = useMemo(
+    () =>
+      affiliations.find(affiliation => selectedBrand && affiliation.brand && affiliation.brand.id === selectedBrand.id),
+    [affiliations, selectedBrand]
+  )
+
   const createAffiliation = useCallback(
     brand => {
       return (async () => {
@@ -110,10 +116,23 @@ const AffiliatePartners = () => {
     [enqueueSnackbar, fetchAffiliationsAndBrands]
   )
 
-  const selectedAffiliation = useMemo(
-    () =>
-      affiliations.find(affiliation => selectedBrand && affiliation.brand && affiliation.brand.id === selectedBrand.id),
-    [affiliations, selectedBrand]
+  const removeAffiliation = useCallback(
+    () => {
+      return (async () => {
+        if (!selectedAffiliation || !selectedBrand) return
+        setIsLoading(true)
+        const { json, errors, requestError } = await apiRequest(apiAffiliationDestroy, [selectedAffiliation.id])
+        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+        if (!errors && !requestError) {
+          enqueueSnackbar(`Successfully removed affiliation with ${selectedBrand.name}`, { variant: 'success' })
+        }
+        setIsLoading(false)
+        fetchAffiliationsAndBrands()
+        return json
+      })()
+    },
+    [enqueueSnackbar, fetchAffiliationsAndBrands, selectedAffiliation, selectedBrand]
   )
 
   return (
@@ -144,7 +163,9 @@ const AffiliatePartners = () => {
         affiliation={selectedAffiliation}
         brand={selectedBrand}
         createAffiliation={createAffiliation}
+        isLoading={isLoading}
         open={isBrandModalOpen}
+        removeAffiliation={removeAffiliation}
         selectedAffiliation={selectedAffiliation}
         setOpen={setIsBrandModalOpen}
       />

@@ -11,7 +11,7 @@ class Affiliation < ApplicationRecord
 
   def as_json(_options = {})
     attributes.slice("id", "token")
-              .merge(brand: account.brand)
+              .merge(brand: account.brand, has_revenues: account.orders.length.positive?)
   end
 
   private

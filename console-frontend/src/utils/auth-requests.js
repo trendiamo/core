@@ -195,5 +195,6 @@ export const apiUserInvite = body => apiCreateRequest(`${USERS_URL}/invites`, bo
 
 export const apiAffiliationsList = query => apiListRequest(`${AFFILIATIONS_URL}/${stringify(query)}`)
 export const apiAffiliationCreate = body => apiCreateRequest(AFFILIATIONS_URL, body)
+export const apiAffiliationDestroy = id => apiDestroyRequest(`${AFFILIATIONS_URL}/${id}`)
 
 export const apiEventList = query => apiGetRequest(`${EVENTS_URL}/?${stringify(query)}`)
