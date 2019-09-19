@@ -40,7 +40,8 @@ module ShopApi
 
       def authenticate
         auth_header = request.headers["Authorization"]
-        return if auth_header == "Plain #{ENV['SHOP_API_TOKEN']}"
+        token = params[:order][:source] == "shopify" ? ENV["SHOP_API_TOKEN"] : current_tenant.private_api_key
+        return if auth_header == "Plain #{token}"
 
         user_not_authorized
       end
