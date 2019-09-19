@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useMemo, useReducer, useState } from 're
 import routes from 'app/routes'
 import TriggersListBase from './list-base'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
+import welcomeImage from 'assets/img/background/img-welcome.png'
 import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort, showUpToUsBranding } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { Link } from 'react-router-dom'
@@ -19,7 +20,7 @@ const BlankState = () => (
   <BlankStateTemplate
     buttonText="Create new"
     description={"You don't have any triggers yet. Let's create the first one?"}
-    imageSource="/img/background/img-welcome.png"
+    imageSource={welcomeImage}
     route={routes.triggerCreate()}
     title="Create a new trigger"
   />

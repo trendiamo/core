@@ -1,3 +1,5 @@
+import emojiDoneImage from 'assets/img/icons/ic_emoji_done.png'
+import emojiNextImage from 'assets/img/icons/ic_emoji_next.png'
 import omit from 'lodash.omit'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
@@ -49,7 +51,7 @@ const Button = ({ history, nextRoute, create, buttonConfig }) => {
       variant="contained"
     >
       {onboarding.help.run ? 'Ok' : create ? 'Create New' : 'Next'}
-      <Icon alt="" src={`/img/icons/${create || onboarding.help.run ? 'ic_emoji_done' : 'ic_emoji_next'}.png`} />
+      <Icon alt="" src={create || onboarding.help.run ? emojiDoneImage : emojiNextImage} />
     </StyledButton>
   )
 }

@@ -1,4 +1,5 @@
 import Dialog from 'shared/dialog'
+import emojiThinkingImage from 'assets/img/icons/ic_emoji_thinking.png'
 import FileUploader from 'shared/file-uploader'
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
@@ -27,7 +28,7 @@ const DialogContentEmpty = ({ type }) => {
 
   return (
     <DialogEmptyContainer>
-      <DialogEmptyIcon alt="" src="/img/icons/ic_emoji_thinking.png" />
+      <DialogEmptyIcon alt="" src={emojiThinkingImage} />
       <Typography variant="h5">{`No ${resource}s found`}</Typography>
       <Typography variant="subtitle1">{`You don't have any ${resource} in your gallery. Let's upload one?`}</Typography>
     </DialogEmptyContainer>

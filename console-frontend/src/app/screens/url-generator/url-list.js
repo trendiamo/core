@@ -2,6 +2,7 @@ import BlankStateTemplate from 'shared/blank-state'
 import copy from 'clipboard-copy'
 import Divider from '@material-ui/core/Divider'
 import HistoryIcon from '@material-ui/icons/History'
+import inactiveBoxImage from 'assets/img/background/img-box-inactive.png'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import MUIList from '@material-ui/core/List'
@@ -28,7 +29,7 @@ const BlankState = () => (
     <BlankStateTemplate
       buttonText="Create new"
       description="No URLs were generated yet."
-      imageSource="/img/background/img-box-inactive.png"
+      imageSource={inactiveBoxImage}
     />
   </>
 )

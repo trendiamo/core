@@ -1,4 +1,5 @@
 import Dialog from 'shared/dialog'
+import emojiClapImage from 'assets/img/icons/ic_emoji_clap.png'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Typography } from '@material-ui/core'
@@ -15,7 +16,7 @@ const ContentBody = styled.div`
 
 const DialogContent = () => (
   <ContentContainer>
-    <img alt="" src="/img/icons/ic_emoji_clap.png" />
+    <img alt="" src={emojiClapImage} />
     <Typography variant="h4">{"Congrats, it's done!"}</Typography>
     <Typography variant="h6">{"Your first seller is created. Let's keep going?"}</Typography>
     <ContentBody>

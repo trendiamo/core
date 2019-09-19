@@ -1,3 +1,4 @@
+import blankStateImage from 'assets/img/background/img-empty-03.png'
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
@@ -9,7 +10,7 @@ const BlankState = () => (
   <BlankStateTemplate
     buttonText="Create new"
     description="You have no outros yet. Let's create the first one?"
-    imageSource="/img/background/img-empty-03.png"
+    imageSource={blankStateImage}
     route={routes.outroCreate()}
     title="Create a new outro"
   />

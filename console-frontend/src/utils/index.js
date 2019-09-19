@@ -212,7 +212,7 @@ export const changeFavicon = src => {
   let link = document.createElement('link')
   link.rel = 'icon'
   link.type = 'image/png'
-  link.href = src + '?=' + Date.now()
+  link.href = src
   const oldLink = document.querySelector("link[rel*='icon']")
   if (oldLink) {
     documentHead.removeChild(oldLink)

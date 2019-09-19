@@ -1,6 +1,8 @@
+import frekklsLoginImage from 'assets/img/background/frekkls-login.png'
 import React from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
+import uptousLoginImage from 'assets/img/background/uptous-login.jpg'
 import { CssBaseline, Typography } from '@material-ui/core'
 import { ReactComponent as FrekklsLogo } from 'assets/icons/frekkls-logo.svg'
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -59,7 +61,7 @@ const Background = styled.div`
     height: 130vh;
     bottom: 0;
     top: auto;
-    background-image: url('/img/background/frekkls-login.png');
+    background-image: url(${frekklsLoginImage});
     background-color: #fff;
     background-repeat: no-repeat;
     background-position-y: 80px;
@@ -74,7 +76,7 @@ const UpToUsBackgroundContainer = styled(Background)`
   user-select: none;
 
   @media (min-width: 900px) {
-    background-image: url('/img/background/uptous-login.jpg');
+    background-image: url(${uptousLoginImage});
     background-position-x: 66%;
     background-size: cover;
   }
