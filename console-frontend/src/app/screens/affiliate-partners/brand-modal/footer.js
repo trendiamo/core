@@ -1,6 +1,6 @@
 import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Checkbox, FormControlLabel, FormLabel, Typography } from '@material-ui/core'
 
@@ -99,14 +99,42 @@ const ButtonContainer = styled.div`
 
 const StyledClipboardInput = styled(ClipboardInput)`
   max-width: 450px;
-  margin: 41px auto 40px;
+  margin: 20px auto 19px;
 `
 
-const SuccessScreen = ({ selectedAffiliation, brand }) => {
+const RemoveButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
+const WarningMessage = styled(Typography)`
+  max-width: 300px;
+`
+
+const SuccessScreen = ({ selectedAffiliation, brand, removeAffiliation, isLoading }) => {
+  const [showRemoveConfirmationAlert, setShowRemoveConfirmationAlert] = useState(false)
+  const removeWarningTimeoutRef = useRef(null)
+
   const affiliationUrl = useMemo(
     () => selectedAffiliation && `https://${brand.websiteHostname}/?aftk=${selectedAffiliation.token}`,
     [selectedAffiliation, brand.websiteHostname]
   )
+
+  const onRemoveButtonClick = useCallback(
+    () => {
+      if (showRemoveConfirmationAlert) {
+        removeAffiliation()
+        return
+      }
+      setShowRemoveConfirmationAlert(true)
+      removeWarningTimeoutRef.current = setTimeout(() => {
+        setShowRemoveConfirmationAlert(false)
+      }, 3000)
+    },
+    [removeAffiliation, showRemoveConfirmationAlert]
+  )
+
+  useEffect(() => () => clearTimeout(removeWarningTimeoutRef.current), [])
 
   return (
     <Container>
@@ -114,6 +142,24 @@ const SuccessScreen = ({ selectedAffiliation, brand }) => {
         {'Your affiliate link'}
       </Typography>
       <StyledClipboardInput size="large" text={affiliationUrl} />
+      <RemoveButtonContainer>
+        {showRemoveConfirmationAlert && (
+          <>
+            <WarningMessage variant="body2">
+              {'Your link will not be recoverable after the removal of the affiliation! Are you sure?'}
+            </WarningMessage>
+          </>
+        )}
+        <Button
+          color={showRemoveConfirmationAlert ? 'error' : 'primaryGradient'}
+          disabled={isLoading || selectedAffiliation.hasRevenues}
+          isFormSubmitting={isLoading}
+          onClick={onRemoveButtonClick}
+          size="small"
+        >
+          {showRemoveConfirmationAlert ? "I'm sure!" : 'Remove affiliation'}
+        </Button>
+      </RemoveButtonContainer>
     </Container>
   )
 }
@@ -145,7 +191,14 @@ const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
   )
 }
 
-const Footer = ({ brand, createAffiliation, scrollToTermsAndConditions, selectedAffiliation }) => {
+const Footer = ({
+  brand,
+  createAffiliation,
+  scrollToTermsAndConditions,
+  removeAffiliation,
+  selectedAffiliation,
+  isLoading,
+}) => {
   const onCreateLinkClick = useCallback(
     () => {
       createAffiliation(brand)
@@ -153,7 +206,15 @@ const Footer = ({ brand, createAffiliation, scrollToTermsAndConditions, selected
     [brand, createAffiliation]
   )
 
-  if (selectedAffiliation) return <SuccessScreen brand={brand} selectedAffiliation={selectedAffiliation} />
+  if (selectedAffiliation)
+    return (
+      <SuccessScreen
+        brand={brand}
+        isLoading={isLoading}
+        removeAffiliation={removeAffiliation}
+        selectedAffiliation={selectedAffiliation}
+      />
+    )
 
   return (
     <Container>
