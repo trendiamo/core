@@ -11,7 +11,7 @@ module Jql
 
     def perform
       result = compute_result
-      if script == "most_interacted_modules"
+      if script == "most_interacted_modules" && !result.is_a?(RestClient::Exception)
         most_interacted_modules_complete(result).select { |item| item[:name] }
       else
         result
