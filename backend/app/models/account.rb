@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  has_secure_token :private_api_key
+
   has_many :websites, dependent: :destroy
   has_many :sellers, dependent: :destroy
   has_many :images, dependent: :destroy

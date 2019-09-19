@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190913144151) do
+ActiveRecord::Schema.define(version: 20190917125001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20190913144151) do
     t.string "name"
     t.string "slug", default: "", null: false
     t.boolean "is_affiliate", default: false
+    t.string "private_api_key"
+    t.index ["private_api_key"], name: "index_accounts_on_private_api_key", unique: true
     t.index ["slug"], name: "index_accounts_on_slug", unique: true
   end
 
