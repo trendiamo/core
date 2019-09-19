@@ -1,6 +1,8 @@
 import AppRouter from './app-router'
 import auth from 'auth'
 import DateFnsUtils from '@date-io/date-fns'
+import faviconFrekkls from 'assets/img/favicon-frekkls.png'
+import faviconUptous from 'assets/img/favicon-uptous.png'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import React, { useEffect, useState } from 'react'
@@ -16,9 +18,7 @@ import { SnackbarProvider } from 'notistack'
 import { StoreProvider } from 'ext/hooks/store'
 import { useSnackbar } from 'notistack'
 
-if (showUpToUsBranding()) {
-  changeFavicon('/favicon-uptous.png')
-}
+changeFavicon(showUpToUsBranding() ? faviconUptous : faviconFrekkls)
 
 loadFonts()
 

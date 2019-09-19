@@ -1,6 +1,9 @@
+import placeholderAvatarImage from 'assets/img/icons/placeholder_avatar.png'
+import placeholderProductImage from 'assets/img/icons/placeholder_product.png'
+
 const defaults = {
-  avatarPic: '/img/icons/placeholder_avatar.png',
-  productPic: '/img/icons/placeholder_product.png',
+  avatarPic: placeholderAvatarImage,
+  productPic: placeholderProductImage,
   spotlightName: 'Seller Name',
   spotlightBio: 'Seller Bio',
   productName: 'Product Name',

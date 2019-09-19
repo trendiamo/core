@@ -1,3 +1,4 @@
+import blankStateImage from 'assets/img/background/img-empty-02.png'
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
@@ -9,7 +10,7 @@ const BlankState = () => (
   <BlankStateTemplate
     buttonText="Create new"
     description={"You don't have any showcases yet. Let's create the first one?"}
-    imageSource="/img/background/img-empty-02.png"
+    imageSource={blankStateImage}
     route={routes.showcaseCreate()}
     title="Create a new showcase"
   />

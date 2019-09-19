@@ -1,6 +1,7 @@
 import auth from 'auth'
 import React, { useCallback, useEffect } from 'react'
 import routes from 'app/routes'
+import welcomeImage from 'assets/img/background/img-welcome.png'
 import { changeStage } from 'onboarding/scenario-actions'
 import { Container, Description, Header, Image, OutlinedButton, StyledButton } from 'shared/blank-state/components'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
@@ -43,7 +44,7 @@ const WelcomePage = ({ history, width }) => {
   return (
     <Container>
       <div style={{ maxWidth: '500px', textAlign: 'center' }}>
-        <Image alt="" src="/img/background/img-welcome.png" />
+        <Image alt="" src={welcomeImage} />
         <Header variant="h4">{title}</Header>
         <Description variant="body1">{description}</Description>
         <StyledButton centered color="primary" onClick={getStarted} variant="contained">

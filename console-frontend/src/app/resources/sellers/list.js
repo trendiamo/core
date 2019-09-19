@@ -1,4 +1,5 @@
 import Avatar from 'shared/table-elements/avatar'
+import blankStateImage from 'assets/img/background/img-empty-02.png'
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
@@ -17,7 +18,7 @@ const BlankState = () => (
   <BlankStateTemplate
     buttonText="Create new"
     description={"You don't have any sellers yet. Let's create the first one?"}
-    imageSource="/img/background/img-empty-02.png"
+    imageSource={blankStateImage}
     route={routes.sellerCreate()}
     title="Create a new seller"
   />

@@ -1,4 +1,5 @@
 import auth from 'auth'
+import blankStateImage from 'assets/img/background/img-welcome.png'
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import { ActiveColumn, EnhancedList, Image, TableCell, Text } from 'shared/table-elements'
@@ -12,7 +13,7 @@ const columns = [
   { name: 'active', label: 'status', sortable: true },
 ]
 
-const BlankState = () => <BlankStateTemplate imageSource="/img/background/img-welcome.png" title="No images yet" />
+const BlankState = () => <BlankStateTemplate imageSource={blankStateImage} title="No images yet" />
 
 const tooltipTextActive = ({ sellers, productPicks, simpleChatMessages }) => {
   const itemsInUse = []

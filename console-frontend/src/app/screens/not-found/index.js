@@ -1,3 +1,4 @@
+import notFoundImage from 'assets/img/background/not-found.png'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
@@ -53,11 +54,7 @@ const NotFound = () => {
   return (
     <Fullscreen>
       <Container>
-        {showUpToUsBranding() ? (
-          <MagnifierIcon height="86" width="86" />
-        ) : (
-          <BackgroundImage src="/img/background/not-found.png" />
-        )}
+        {showUpToUsBranding() ? <MagnifierIcon height="86" width="86" /> : <BackgroundImage src={notFoundImage} />}
         <br />
         <br />
         <StyledTypography variant="body2">{"Oops, we couldn't find a page with that link!"}</StyledTypography>

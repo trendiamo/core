@@ -1,4 +1,5 @@
 import auth from 'auth'
+import blankStateImage from 'assets/img/background/img-empty-01.png'
 import BlankStateTemplate from 'shared/blank-state'
 import React from 'react'
 import routes from 'app/routes'
@@ -26,7 +27,7 @@ const BlankState = () => (
   <BlankStateTemplate
     buttonText="Create new"
     description={"You don't have any simple chats yet. Let's create the first one?"}
-    imageSource="/img/background/img-empty-01.png"
+    imageSource={blankStateImage}
     route={routes.simpleChatCreate()}
     title="Create a new simple chat"
   />
