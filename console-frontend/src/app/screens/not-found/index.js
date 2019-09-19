@@ -2,7 +2,8 @@ import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { Button, Typography } from '@material-ui/core'
-import { isLocalStorageAccurate } from 'utils'
+import { isLocalStorageAccurate, showUpToUsBranding } from 'utils'
+import { ReactComponent as MagnifierIcon } from 'assets/icons/magnifier.svg'
 
 const Fullscreen = styled.div`
   position: relative;
@@ -27,18 +28,18 @@ const BackgroundImage = styled.img`
   margin-bottom: 30px;
 `
 
-const BoldLink = styled.a`
-  text-decoration: none;
-  color: #777;
-  font-weight: 700;
-  cursor: pointer;
+const StyledTypography = styled(Typography)`
+  color: #8799a4;
+  font-size: 20px;
+  line-height: 1.2;
+
+  a {
+    color: ${showUpToUsBranding() ? '#0f7173' : '#ff6641'};
+  }
 `
 
 const StyledButton = styled(Button)`
-  color: #616161;
-  letter-spacing: 1.3px;
-  margin-top: 25px;
-  padding: 12px 80px;
+  ${showUpToUsBranding() && 'border-radius: 0;'}
 `
 
 const NotFound = () => {
@@ -52,17 +53,27 @@ const NotFound = () => {
   return (
     <Fullscreen>
       <Container>
-        <BackgroundImage src="/img/background/not-found.png" />
-        <Typography gutterBottom variant="h4">
-          {'Oops! This page is not available'}
-        </Typography>
-        <Typography variant="body2">
-          {'Is something wrong? '}
-          <BoldLink href="mailto:support@trendiamo.com">{'Get in touch'}</BoldLink>
-        </Typography>
-        <Typography variant="body2">{'Or come back to home page:'}</Typography>
-        <StyledButton onClick={navigateToRootPage} size="large" variant="outlined">
-          {'Go Back'}
+        {showUpToUsBranding() ? (
+          <MagnifierIcon height="86" width="86" />
+        ) : (
+          <BackgroundImage src="/img/background/not-found.png" />
+        )}
+        <br />
+        <br />
+        <StyledTypography variant="body2">{"Oops, we couldn't find a page with that link!"}</StyledTypography>
+        <StyledTypography gutterBottom variant="body2">
+          {'You can report a problem if you suspect a bug, '}
+          <a href="mailto:support@trendiamo.com">{'here'}</a>
+          {'.'}
+        </StyledTypography>
+        <br />
+        <StyledButton
+          color="primary"
+          onClick={navigateToRootPage}
+          size="large"
+          variant={showUpToUsBranding() ? 'contained' : 'outlined'}
+        >
+          {'Return Home'}
         </StyledButton>
       </Container>
     </Fullscreen>
