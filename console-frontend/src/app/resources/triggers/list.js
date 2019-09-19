@@ -3,7 +3,7 @@ import BlankStateTemplate from 'shared/blank-state'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import isEqual from 'lodash.isequal'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import routes from 'app/routes'
 import TriggersListBase from './list-base'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
@@ -88,30 +88,44 @@ const TriggersList = ({ location }) => {
   const [triggers, setTriggers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [testerUrl, setTesterUrl] = useState({ value: '', matches: false })
-  const [selectedIds, setSelectedIds] = useState([])
-  const [isSelectAll, setIsSelectAll] = useState(false)
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      if (action.type === 'setSelectedIds') {
+        return {
+          ...state,
+          isSelectAll: action.selectedIds.length === triggers.length,
+          selectedIds: action.selectedIds,
+        }
+      } else if (action.type === 'handleSelectAll') {
+        return {
+          ...state,
+          isSelectAll: !state.isSelectAll,
+          selectedIds: action.checked ? triggers.map(resource => resource.id) : [],
+        }
+      }
+    },
+    {
+      selectedIds: [],
+      isSelectAll: false,
+    }
+  )
+
+  const handleSelectAll = useCallback(event => dispatch({ type: 'handleSelectAll', checked: event.target.checked }), [])
+
+  const setSelectedIds = useCallback(selectedIds => dispatch({ type: 'setSelectedIds', selectedIds }), [])
 
   const deleteTriggers = useCallback(
     async () => {
-      const { requestError } = await apiRequest(apiTriggerDestroy, [{ ids: selectedIds }])
+      const { requestError } = await apiRequest(apiTriggerDestroy, [{ ids: state.selectedIds }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       const { json, errors, requestError: requestError2 } = await apiRequest(apiTriggerList, [])
       if (requestError2) enqueueSnackbar(requestError2, { variant: 'error' })
       setIsLoading(false)
       setSelectedIds([])
-      setIsSelectAll(false)
       if (errors) return
       setTriggers(json)
     },
-    [enqueueSnackbar, selectedIds]
-  )
-
-  const handleSelectAll = useCallback(
-    event => {
-      setSelectedIds(event.target.checked ? triggers.map(trigger => trigger.id) : [])
-      setIsSelectAll(event.target.checked)
-    },
-    [triggers]
+    [enqueueSnackbar, setSelectedIds, state.selectedIds]
   )
 
   const onSortEnd = useCallback(
@@ -161,9 +175,9 @@ const TriggersList = ({ location }) => {
       deleteTriggers={deleteTriggers}
       handleSelectAll={handleSelectAll}
       hostnames={hostnames}
-      isSelectAll={isSelectAll}
+      isSelectAll={state.isSelectAll}
       onSortEnd={onSortEnd}
-      selectedIds={selectedIds}
+      selectedIds={state.selectedIds}
       setSelectedIds={setSelectedIds}
       setTesterUrl={setTesterUrl}
       testerUrl={testerUrl}
