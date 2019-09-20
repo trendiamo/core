@@ -1,11 +1,11 @@
 import auth from 'auth'
 import AuthLayout from 'auth/layout'
+import Button from 'shared/button'
 import queryString from 'query-string'
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import { apiPasswordReset, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
-import { Button } from '@material-ui/core'
 import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
@@ -47,7 +47,7 @@ const PasswordReset = ({ passwordForm, passwordResetSubmit, setFieldValue }) => 
         value={passwordForm.fieldTwo}
       />
       <div style={{ marginTop: '1rem' }}>
-        <Button color="primary" type="submit" variant="contained">
+        <Button color="primaryGradient" type="submit" variant="contained">
           {'Reset'}
         </Button>
       </div>
