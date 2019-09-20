@@ -109,6 +109,9 @@ const routes = {
   yourReferrals() {
     return '/your-referrals'
   },
+  revenues() {
+    return '/revenues'
+  },
   contentCreation() {
     return '/content-creation'
   },

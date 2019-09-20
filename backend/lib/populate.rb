@@ -218,6 +218,7 @@ class PopulateUsers
       social_media_url: team_member[:affiliate_role] ? "http://ig.com/frekkls" : nil,
       bio: team_member[:bio],
       img_url: team_member[:img_url],
+      created_at: Date.new(2019, 1, 1),
     }
   end
 
@@ -275,9 +276,9 @@ class Populate # rubocop:disable Metrics/ClassLength
   private
 
   def create_accounts
-    Account.create!(name: "Test Account", is_affiliate: true)
+    Account.create!(name: "Test Account", is_affiliate: true, created_at: Date.new(2019, 1, 1))
     Account.create!(name: "Other Account")
-    3.times { Account.create!(name: Faker::Company.name, is_affiliate: true) }
+    5.times { Account.create!(name: Faker::Company.name, is_affiliate: true) }
   end
 
   def create_websites
@@ -372,38 +373,39 @@ class Populate # rubocop:disable Metrics/ClassLength
   end
 
   def create_affiliations
-    promoters = User.where(affiliate_role: "promoter").where.not(last_name: "Lazy")
+    promoters = User.where.not(affiliate_role: "not_affiliate", last_name: "Lazy")
     affiliate_accounts = Account.where(is_affiliate: true)
     promoters.each do |promoter|
-      affiliation_attrs = {
-        user: promoter,
-        account: affiliate_accounts.sample,
-      }
-      Affiliation.create!(affiliation_attrs)
+      affiliate_accounts.sample(affiliate_accounts.length / 2).each do |account|
+        affiliation_attrs = { user: promoter, account: account }
+        Affiliation.create!(affiliation_attrs)
+      end
     end
   end
 
   def order_params(affiliation) # rubocop:disable Metrics/MethodLength
+    amount_in_cents = rand(100_000)
     {
       source: "dummy",
       seller: affiliation.user,
       account: affiliation.account,
-      captured_at: Time.now.utc,
+      captured_at: (Date.new(2019, 7, 1)..Time.zone.today).to_a.sample,
       commission_rate: affiliation.account.brand.commission_rate,
       currency: "PTT",
-      amount_in_cents: 1000,
+      amount_in_cents: amount_in_cents,
       products: [{
         "currency": "PTT",
-        "name": "White Sweatshirt",
-        "price": 1000,
-        "quantity": 1,
+        "name": Faker::Cannabis.strain,
+        "price": amount_in_cents,
+        "quantity": rand(1..10),
         "url": "https://trendiamo-mvp.myshopify.com/collections/all/products/white-sweatshirt",
       }],
     }
   end
 
   def create_orders
-    orders = Affiliation.all.map { |affiliation| order_params(affiliation) }
-    Order.create!(orders)
+    Affiliation.all.map do |affiliation|
+      20.times { Order.create!(order_params(affiliation)) }
+    end
   end
 end

@@ -6,6 +6,8 @@ import { Paper } from '@material-ui/core'
 const StyledDiv = styled.div`
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledPaper = styled(Paper)`
@@ -18,15 +20,19 @@ const StyledPaper = styled(Paper)`
   }
 `
 
-const Section = ({ actions, className, children, title }) => (
-  <StyledPaper className={className}>
+const StyledFlexBar = styled(FlexBar)`
+  padding-bottom: 24px;
+`
+
+const Section = ({ actions, className, children, title, ...props }) => (
+  <StyledPaper className={className} {...props}>
     <StyledDiv>
       {title && (
         <>
-          <FlexBar>
+          <StyledFlexBar>
             <Header variant="subtitle1">{title}</Header>
             {actions}
-          </FlexBar>
+          </StyledFlexBar>
           <Divider style={{ marginBottom: '1rem' }} />
         </>
       )}
