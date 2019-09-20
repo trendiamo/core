@@ -17,12 +17,7 @@
 docker-compose up -d
 ```
 
-## Magento store:
+## Woocommerce store:
 
-<<<<<<< Updated upstream
-Woocommerce store at: http://localhost:8080
-Woocommerce store admin at: http://localhost:8080/wp-admin
-=======
 Woocommerce store at: http://0.0.0.0:8000
 Woocommerce store admin at: http://0.0.0.0:8000/wp-admin
->>>>>>> Stashed changes
