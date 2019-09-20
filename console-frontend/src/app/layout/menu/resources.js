@@ -14,6 +14,7 @@ import {
 import { ReactComponent as HandshakeIcon } from 'assets/icons/handshake.svg'
 import { ReactComponent as PlayButtonIcon } from 'assets/icons/play-button.svg'
 import { ReactComponent as StarIcon } from 'assets/icons/star.svg'
+import { ReactComponent as Ticket } from 'assets/icons/ticket.svg'
 
 const resources = {
   account: {
@@ -93,6 +94,12 @@ const resources = {
     label: 'Content Creation',
     class: 'contentCreation',
     route: () => routes.contentCreation(),
+  },
+  revenues: {
+    icon: Ticket,
+    label: 'Revenues',
+    class: 'revenues',
+    route: () => routes.revenues(),
   },
 }
 

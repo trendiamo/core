@@ -5,6 +5,7 @@ import LoginPage from 'auth/login'
 import NotFound from 'app/screens/not-found'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
+import Revenues from 'app/screens/revenues'
 import routes from 'app/routes'
 import SignupConfirmPage from 'auth/signup/confirm'
 import SignupPage from 'auth/signup'
@@ -16,6 +17,13 @@ import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from 'app/resources
 const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
   return (
     <Switch>
+      <PrivateRoute
+        component={Revenues}
+        exact
+        fetchedAccount={fetchedAccount}
+        path={routes.revenues()}
+        setFetchedAccount={setFetchedAccount}
+      />
       <PrivateRoute
         component={AffiliatePartners}
         exact

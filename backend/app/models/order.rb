@@ -10,6 +10,7 @@ class Order < ApplicationRecord
 
   def as_json(_options = {})
     attributes
-      .slice("id", "captured_at", "commission_rate", "products")
+      .slice("id", "captured_at", "products", "currency", "amount_in_cents", "commission_rate")
+      .merge(brand: account.brand.slice("name", "logo_url"))
   end
 end

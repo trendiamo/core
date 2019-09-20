@@ -25,6 +25,7 @@ const CORS_PROXY_URL = `${BASE_API_URL}/cors_proxy`
 const EVENTS_URL = `${BASE_API_URL}/events`
 const BRANDS_URL = `${BASE_API_URL}/brands`
 const AFFILIATIONS_URL = `${BASE_API_URL}/affiliations`
+const ORDERS_URL = `${BASE_API_URL}/orders`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
@@ -193,8 +194,10 @@ export const apiUserList = query => apiListRequest(`${USERS_URL}/?${stringify(qu
 export const apiUserDestroy = body => apiDestroyMultipleRequest(USERS_URL, body)
 export const apiUserInvite = body => apiCreateRequest(`${USERS_URL}/invites`, body)
 
-export const apiAffiliationsList = query => apiListRequest(`${AFFILIATIONS_URL}/${stringify(query)}`)
+export const apiAffiliationsList = query => apiListRequest(`${AFFILIATIONS_URL}/?${stringify(query)}`)
 export const apiAffiliationCreate = body => apiCreateRequest(AFFILIATIONS_URL, body)
 export const apiAffiliationDestroy = id => apiDestroyRequest(`${AFFILIATIONS_URL}/${id}`)
+
+export const apiOrdersList = query => apiListRequest(`${ORDERS_URL}/?${stringify(query)}`)
 
 export const apiEventList = query => apiGetRequest(`${EVENTS_URL}/?${stringify(query)}`)

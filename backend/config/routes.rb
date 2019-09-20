@@ -71,8 +71,6 @@ Rails.application.routes.draw do
 
         resources :orders, only: %i[index]
 
-        get "/revenues", to: "orders#revenues"
-
         get "/events", to: "mixpanel_events#index"
       end
     end

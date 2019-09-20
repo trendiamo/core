@@ -49,31 +49,24 @@ const OnboardingButton = withRouter(({ location }) => {
   )
 })
 
-const AppBarContent = memo(({ showOnboarding }) => {
-  const { store } = useContext(StoreContext)
-  if (!store.appBarContent) return null
+const AppBarContent = memo(({ Actions, backRoute, showOnboarding, title }) => (
+  <>
+    {backRoute && (
+      <Link to={backRoute}>
+        <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
+      </Link>
+    )}
+    <Title>{title}</Title>
+    {Actions && (
+      <ButtonsContainer>
+        {showOnboarding && <OnboardingButton />}
+        {Actions}
+      </ButtonsContainer>
+    )}
+  </>
+))
 
-  const { Actions, backRoute, title } = store.appBarContent
-
-  return (
-    <>
-      {backRoute && (
-        <Link to={backRoute}>
-          <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
-        </Link>
-      )}
-      <Title>{title}</Title>
-      {Actions && (
-        <ButtonsContainer>
-          {showOnboarding && <OnboardingButton />}
-          {Actions}
-        </ButtonsContainer>
-      )}
-    </>
-  )
-})
-
-const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 'sidebarOpen'])} />)`
+const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 'sidebarOpen', 'sticky'])} />)`
   background-color: ${showUpToUsBranding() ? '#e7ecef' : '#f5f5f5'};
   box-shadow: none;
   color: #333;
@@ -81,7 +74,7 @@ const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 
   width: calc(100% - ${drawerWidthClosed}px);
   margin-left: ${drawerWidthClosed}px;
   z-index: 1201;
-  position: sticky;
+  position: ${({ sticky = true }) => (sticky ? 'sticky' : 'static')};
   top: 0;
 
   @media (max-width: 959.95px) {
@@ -98,7 +91,13 @@ const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 
   }
   `}
 
-  ${({ hasScrolled }) => hasScrolled && 'box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1); background: #fff;'}
+  ${({ hasScrolled, sticky = true }) =>
+    hasScrolled &&
+    sticky &&
+    `
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+    background: #fff;
+  `}
 `
 
 const TopToolbar = styled(Toolbar)`
@@ -114,18 +113,24 @@ const MenuButton = styled(IconButton)`
   @media (max-width: 959.95px) {
     display: block;
   }
-}
 `
 
-const AppBar = ({ hasScrolled, showOnboarding, sidebarOpen, toggleOpen }) => (
-  <StyledAppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen}>
-    <TopToolbar>
-      <MenuButton aria-label="Open drawer" color="inherit" id="foofoo" onClick={toggleOpen}>
-        <MenuIcon />
-      </MenuButton>
-      <AppBarContent showOnboarding={showOnboarding} />
-    </TopToolbar>
-  </StyledAppBar>
-)
+const AppBar = ({ hasScrolled, showOnboarding, sidebarOpen, toggleOpen }) => {
+  const { store } = useContext(StoreContext)
+  if (!store.appBarContent) return null
+
+  const { Actions, backRoute, sticky, title } = store.appBarContent
+
+  return (
+    <StyledAppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen} sticky={sticky}>
+      <TopToolbar>
+        <MenuButton aria-label="Open drawer" color="inherit" id="foofoo" onClick={toggleOpen}>
+          <MenuIcon />
+        </MenuButton>
+        <AppBarContent Actions={Actions} backRoute={backRoute} showOnboarding={showOnboarding} title={title} />
+      </TopToolbar>
+    </StyledAppBar>
+  )
+}
 
 export default memo(AppBar)

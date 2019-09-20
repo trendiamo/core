@@ -135,6 +135,18 @@ const buttons = {
       borderRadius: 0,
     },
   },
+  whiteBg: {
+    background: '#fff',
+    color: '#0f7173',
+    borderRadius: 0,
+    boxShadow: 'none',
+    hover: {
+      color: '#0f7173',
+      background: '#fff',
+      boxShadow: 'none',
+      borderRadius: 0,
+    },
+  },
   golden: {
     color: '#fff',
     background: '#ffb400',

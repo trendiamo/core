@@ -1,5 +1,6 @@
 import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
+import omit from 'lodash.omit'
 import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
@@ -7,7 +8,7 @@ import { Chip, Typography } from '@material-ui/core'
 import { IconButton } from 'shared/form-elements'
 import { ReactComponent as NewTabIcon } from 'assets/icons/new-tab.svg'
 
-const StyledSection = styled(Section)`
+const StyledSection = styled(props => <Section {...omit(props, ['animate'])} />)`
   margin-top: 10px;
   transition: all 1s 0.2s;
   min-width: 900px;

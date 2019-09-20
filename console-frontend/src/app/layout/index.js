@@ -49,7 +49,7 @@ const EmptyLayout = ({ children }) => (
 const ContentWithSidebar = styled.main`
   display: flex;
   flex-grow: 1;
-  min-height: 100vh;
+  min-height: calc(100vh - 84px);
 `
 
 const FilledLayout = ({ children, location }) => {
