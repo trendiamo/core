@@ -70,6 +70,8 @@ const Content = ({ handleClose, sendUpgradeRequest }) => {
     [mergeForm]
   )
 
+  const imageIsBlank = useMemo(() => !form.imgUrl, [form.imgUrl])
+
   const imageUploaderValue = useMemo(() => ({ url: form.imgUrl, imgRect: form.imgRect }), [form.imgRect, form.imgUrl])
 
   if (isFormLoading) return <CircularProgress />
@@ -102,7 +104,9 @@ const Content = ({ handleClose, sendUpgradeRequest }) => {
       <ActionContainer>
         <Button
           color="primaryGradient"
-          disabled={isFormLoading || isCropping || isFormPristine || isFormSubmitting || isUploaderLoading}
+          disabled={
+            imageIsBlank || isFormLoading || isCropping || isFormPristine || isFormSubmitting || isUploaderLoading
+          }
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
           type="submit"
