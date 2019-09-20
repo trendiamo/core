@@ -47,13 +47,10 @@ function uptous_install_woocommerce_admin_notice() {
   <?php
 }
 
-if( !session_id() )
-{
-  session_start();
-}
-
-if(!isset($_SESSION['landing_url'])) {
-    $_SESSION['landing_url'] = $_SERVER['REQUEST_URI'];
+if ( !isset( $_COOKIE['uptous_aftk'] ) ) {
+  $urlArr=parse_url($_SERVER['REQUEST_URI']);
+  parse_str($urlArr['query'], $query);
+  setcookie("uptous_aftk", $query['aftk']);
 }
 
 add_action( 'uptous_init', 'uptous_init' );

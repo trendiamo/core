@@ -57,12 +57,9 @@ if ( ! class_exists ( 'Uptous_WooCommerce_Order_Tracking' ) ) {
        $currency = $order->get_currency();
        $order_total = $order_data['total'] * 100;
 
-       $urlArr=parse_url($_SESSION['refererurl']);
-       parse_str($urlArr['query'], $query);
-
        $token = get_option(uptous_private_api_key);
 
-       if( !$query['aftk'] || !$token ) return;
+       if( !isset( $_COOKIE['uptous_aftk'] ) || !$token ) return;
 
        $body = array(
          'order' => array(
@@ -71,7 +68,7 @@ if ( ! class_exists ( 'Uptous_WooCommerce_Order_Tracking' ) ) {
            'amount_in_cents' => $order_total,
            'currency' => $currency,
            'products' => $this->get_products($order, $currency),
-           'affiliate_token' => $query['aftk'],
+           'affiliate_token' => $_COOKIE['uptous_aftk'],
            'payload' => $order_data_filtered,
          )
        );
