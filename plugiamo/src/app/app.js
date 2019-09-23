@@ -16,9 +16,11 @@ const App = ({
   data,
   disappear,
   hideContentFrame,
+  modalProps,
   pluginState,
   setDisappear,
   setDisappearTimeout,
+  setModalProps,
   setPluginState,
   setShowAssessmentContent,
   setShowingBubbles,
@@ -153,12 +155,14 @@ const App = ({
       disappear={disappear}
       hideContentFrame={hideContentFrame}
       isUnmounting={isUnmounting}
+      modalProps={modalProps}
       onToggleContent={onToggleContent}
       onUserInteracted={onUserInteracted}
       pluginState={pluginState}
       position={getFrekklsConfig().position}
       seller={seller.current}
       setDisappear={setDisappear}
+      setModalProps={setModalProps}
       setShowAssessmentContent={setShowAssessmentContent}
       showingBubbles={showingBubbles}
       showingContent={showingContent}

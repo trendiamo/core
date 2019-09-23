@@ -7,11 +7,14 @@ const Content = ({
   Component,
   frameStyleStr,
   hideContentFrame,
+  isModalOpen,
   isUnmounting,
   launcherConfig,
+  modalProps,
   onToggleContent,
   position,
   seller,
+  setModalProps,
   setShowAssessmentContent,
   showingContent,
   onUserInteracted,
@@ -39,6 +42,7 @@ const Content = ({
       entry={entry}
       frameStyleStr={frameStyleStr}
       hidden={hideContentFrame}
+      isModalOpen={isModalOpen}
       isUnmounting={isUnmounting}
       launcherConfig={launcherConfig}
       onToggleContent={onToggleContent}
@@ -47,9 +51,11 @@ const Content = ({
       showingContent={showingContent}
     >
       <ContentWrapper
+        modalProps={modalProps}
         onToggleContent={onToggleContent}
         onUserInteracted={onUserInteracted}
         seller={seller}
+        setModalProps={setModalProps}
         setShowAssessmentContent={setShowAssessmentContent}
         showingContent={showingContent}
       >

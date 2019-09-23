@@ -1,12 +1,11 @@
 import ChatBase from './chat-base'
 import chatLogCallbacks from 'shared/chat-log-callbacks'
-import ChatModals from 'shared/chat-modals'
 import FlowBackButton from 'shared/flow-back-button'
 import getFrekklsConfig from 'frekkls-config'
 import useChatActions from 'ext/hooks/use-chat-actions'
 import useEmojify from 'ext/hooks/use-emojify'
-import { Fragment, h } from 'preact'
 import { gql, useGraphql } from 'ext/hooks/use-graphql'
+import { h } from 'preact'
 import { SimpleChat as SimpleChatBase } from 'plugin-base'
 import { useEffect, useMemo, useState } from 'preact/hooks'
 
@@ -43,6 +42,8 @@ const SimpleChat = ({
   products,
   progress,
   setCtaButtonClicked,
+  modalProps,
+  setModalProps,
   showBackButton,
   storeLog,
 }) => {
@@ -87,7 +88,7 @@ const SimpleChat = ({
     variables
   )
 
-  const { clickActions, modalsProps } = useChatActions({ flowType: 'simpleChat' })
+  const { clickActions } = useChatActions({ flowType: 'simpleChat', modalProps, setModalProps })
 
   const emojify = useEmojify()
   useEffect(() => {
@@ -98,35 +99,32 @@ const SimpleChat = ({
   if (!data || data.loading || data.error || !simpleChat) return null
 
   return (
-    <Fragment>
-      <ChatModals {...modalsProps} />
-      <SimpleChatBase
-        animateOpacity={animateOpacity}
-        backButtonLabel={getFrekklsConfig().i18n.backButton}
-        ChatBase={ChatBase}
-        chatBaseProps={{ assessment, assessmentOptions, ctaButton }}
-        chatLogCallbacks={chatLogCallbacks}
-        clickActions={clickActions}
-        coverIsMinimized={coverIsMinimized}
-        ctaButtonClicked={ctaButtonClicked}
-        data={{ ...data, simpleChat }}
-        FlowBackButton={FlowBackButton}
-        goToPrevStep={goToPrevStep}
-        headerConfig={headerConfig}
-        hideCtaButton={hideCtaButton}
-        hideProgressBar={hideProgressBar}
-        lazyLoadingCount={lazyLoadingCount}
-        Modals={Modals}
-        onCtaButtonClick={onCtaButtonClick}
-        onToggleContent={onToggleContent}
-        products={products}
-        progress={progress}
-        seller={seller}
-        setCtaButtonClicked={setCtaButtonClicked}
-        showBackButton={showBackButton}
-        storeLog={storeLog}
-      />
-    </Fragment>
+    <SimpleChatBase
+      animateOpacity={animateOpacity}
+      backButtonLabel={getFrekklsConfig().i18n.backButton}
+      ChatBase={ChatBase}
+      chatBaseProps={{ assessment, assessmentOptions, ctaButton }}
+      chatLogCallbacks={chatLogCallbacks}
+      clickActions={clickActions}
+      coverIsMinimized={coverIsMinimized}
+      ctaButtonClicked={ctaButtonClicked}
+      data={{ ...data, simpleChat }}
+      FlowBackButton={FlowBackButton}
+      goToPrevStep={goToPrevStep}
+      headerConfig={headerConfig}
+      hideCtaButton={hideCtaButton}
+      hideProgressBar={hideProgressBar}
+      lazyLoadingCount={lazyLoadingCount}
+      Modals={Modals}
+      onCtaButtonClick={onCtaButtonClick}
+      onToggleContent={onToggleContent}
+      products={products}
+      progress={progress}
+      seller={seller}
+      setCtaButtonClicked={setCtaButtonClicked}
+      showBackButton={showBackButton}
+      storeLog={storeLog}
+    />
   )
 }
 

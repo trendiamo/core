@@ -1,74 +1,16 @@
 import mixpanel from 'ext/mixpanel'
 import { markGoFwd } from 'app/setup/flow-history'
 import { clickAssessmentProduct as originalClickAssessmentProduct } from 'special/assessment/utils'
-import { useCallback, useMemo, useState } from 'preact/hooks'
+import { useCallback, useMemo } from 'preact/hooks'
 
-const useChatActions = ({ flowType, mergeAssessmentForm }) => {
-  const [videoModalOpen, setVideoModalOpen] = useState(false)
-  const [videoItem, setVideoItem] = useState(null)
-  const [imagesModalOpen, setImagesModalOpen] = useState(false)
-  const [imagesModalIndex, setImagesModalIndex] = useState(null)
-  const [imagesModalUrls, setImagesModalUrls] = useState([])
-  const [imagesModalTouch, setImagesModalTouch] = useState(false)
-  const [imageModalOpen, setImageModalOpen] = useState(false)
-  const [imageItem, setImageItem] = useState(null)
-
-  const closeVideoModal = useCallback(() => {
-    mixpanel.track('Closed Video', {
-      flowType,
-      hostname: location.hostname,
-      url: videoItem.youtubeUrl,
-    })
-    setVideoModalOpen(false)
-    const frekklsContent = document.querySelector('iframe[title="Frekkls Content"]')
-    frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
-  }, [flowType, videoItem])
-
-  const closeImageModal = useCallback(() => {
-    mixpanel.track('Closed Picture', {
-      flowType,
-      hostname: location.hostname,
-      url: imageItem.url,
-    })
-    setImageModalOpen(false)
-    const frekklsContent = document.querySelector('iframe[title="Frekkls Content"]')
-    frekklsContent && setTimeout(() => frekklsContent.focus(), 0)
-  }, [flowType, imageItem])
-
-  const modalsProps = useMemo(
-    () => ({
-      videoModalOpen,
-      closeVideoModal,
-      videoItem,
-      imagesModalOpen,
-      imagesModalIndex,
-      setImagesModalIndex,
-      setImagesModalOpen,
-      imagesModalUrls,
-      setImagesModalUrls,
-      imagesModalTouch,
-      setImagesModalTouch,
-      imageModalOpen,
-      closeImageModal,
-      imageItem,
-    }),
-    [
-      videoModalOpen,
-      closeVideoModal,
-      videoItem,
-      imagesModalOpen,
-      imagesModalIndex,
-      imagesModalUrls,
-      imagesModalTouch,
-      imageModalOpen,
-      closeImageModal,
-      imageItem,
-    ]
-  )
-
+const useChatActions = ({ flowType, mergeAssessmentForm, modalProps, setModalProps }) => {
   const clickAssessmentProduct = useCallback(({ item }) => {
     originalClickAssessmentProduct(item)
   }, [])
+
+  const onCloseModal = useCallback(() => {
+    setModalProps({})
+  }, [setModalProps])
 
   const clickProduct = useCallback(
     ({ item }) => {
@@ -87,28 +29,30 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
 
   const clickVideoMessage = useCallback(
     ({ item }) => {
+      const videoUrl = item.youtubeUrl
+      const videoEmbedUrl = item.youtubeEmbedUrl
       mixpanel.track('Open Video', {
         flowType,
         hostname: location.hostname,
-        url: item.youtubeUrl,
+        url: videoUrl,
       })
-      setVideoItem(item)
-      setVideoModalOpen(true)
+      setModalProps({ type: 'video', videoUrl, videoEmbedUrl, onCloseModal, flowType })
     },
-    [flowType]
+    [flowType, onCloseModal, setModalProps]
   )
 
   const clickHeaderVideo = useCallback(
     ({ item }) => {
+      const videoUrl = item.youtubeUrl
+      const videoEmbedUrl = item.youtubeEmbedUrl
       mixpanel.track('Open Header Video', {
         flowType,
         hostname: location.hostname,
-        url: item.youtubeUrl,
+        url: videoUrl,
       })
-      setVideoItem(item)
-      setVideoModalOpen(true)
+      setModalProps({ type: 'video', videoUrl, videoEmbedUrl, onCloseModal, flowType })
     },
-    [flowType]
+    [flowType, onCloseModal, setModalProps]
   )
 
   const clickImageCarouselItem = useCallback(
@@ -118,12 +62,9 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
         hostname: location.hostname,
         imageUrl: item.urlsArray[item.index],
       })
-      setImagesModalIndex(item.index)
-      setImagesModalUrls(item.urlsArray)
-      setImagesModalOpen(true)
-      setImageItem(item.img)
+      setModalProps({ type: 'images', imageItem: item, onCloseModal, flowType })
     },
-    [flowType]
+    [flowType, onCloseModal, setModalProps]
   )
 
   const touchImageCarousel = useCallback(() => {
@@ -131,8 +72,8 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
       flowType,
       hostname: location.hostname,
     })
-    setImagesModalTouch(true)
-  }, [flowType])
+    setModalProps({ ...modalProps, isTouch: true })
+  }, [flowType, modalProps, setModalProps])
 
   const clickChatOption = useCallback(
     ({ item, seller }) => {
@@ -160,10 +101,9 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
         hostname: location.hostname,
         url: item.url,
       })
-      setImageItem(item)
-      setImageModalOpen(true)
+      setModalProps({ type: 'image', imageItem: item, onCloseModal, flowType })
     },
-    [flowType]
+    [flowType, onCloseModal, setModalProps]
   )
 
   const clickActions = useMemo(
@@ -193,7 +133,7 @@ const useChatActions = ({ flowType, mergeAssessmentForm }) => {
     ]
   )
 
-  return { clickActions, modalsProps }
+  return { clickActions }
 }
 
 export default useChatActions

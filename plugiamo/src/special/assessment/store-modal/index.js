@@ -1,72 +1,37 @@
 import Content from './content'
-import ErrorBoundaries from 'ext/error-boundaries'
-import Frame from './frame'
 import Header from './header'
 import Modal from 'shared/modal'
+import styled from 'styled-components'
 import { h } from 'preact'
-import { useCallback, useEffect, useState } from 'preact/hooks'
 
-const iframeStyle = {
-  width: '100%',
-  border: 0,
-  background: '#fff',
-  borderRadius: '6px',
-  maxHeight: '80vh',
-  height: '1000px',
-  minHeight: '400px',
-}
+const ModalContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  border: 0px;
+  background: rgb(255, 255, 255);
+  border-radius: 6px;
+  overflow: hidden;
+  width: 840px;
+  max-height: 80vh;
+  height: 1000px;
+  min-height: 400px;
+`
 
-const FrameChild = ({ step, results, goToPrevStep, flowType }) => {
+const ContentContainer = styled.div`
+  overflow: auto;
+  height: 100%;
+`
+
+const StoreModal = ({ closeModal, results, goToPrevStep, step, module }) => {
+  // TODO: this was: Modal / Frame / ErrorBoundaries / FrameChild
   return (
-    <div>
-      <Header goToPrevStep={goToPrevStep} step={step} />
-      <Content flowType={flowType} results={results} />
-    </div>
-  )
-}
-
-const StoreModal = ({
-  onCloseModal,
-  resetAssessment,
-  results,
-  goToPrevStep,
-  step,
-  module,
-  setShowingLauncher,
-  setShowingContent,
-}) => {
-  const [isOpen, setIsOpen] = useState(true)
-
-  const newGoToPrevStep = useCallback(() => {
-    setIsOpen(false)
-    setShowingLauncher(true)
-    setShowingContent(true)
-    goToPrevStep()
-  }, [goToPrevStep, setShowingContent, setShowingLauncher])
-
-  const newOnCloseModal = useCallback(() => {
-    setIsOpen(false)
-    resetAssessment()
-    onCloseModal()
-  }, [onCloseModal, resetAssessment])
-
-  useEffect(() => {
-    setShowingContent(false)
-    setShowingLauncher(false)
-  }, [setShowingContent, setShowingLauncher])
-
-  return (
-    <Modal allowBackgroundClose closeModal={newOnCloseModal} isOpen={isOpen}>
-      <Frame style={iframeStyle}>
-        <ErrorBoundaries>
-          <FrameChild
-            flowType={module && module.flowType}
-            goToPrevStep={newGoToPrevStep}
-            results={results}
-            step={step}
-          />
-        </ErrorBoundaries>
-      </Frame>
+    <Modal allowBackgroundClose closeModal={closeModal}>
+      <ModalContainer>
+        <ContentContainer>
+          <Header goToPrevStep={goToPrevStep} step={step} />
+          <Content flowType={module && module.flowType} results={results} />
+        </ContentContainer>
+      </ModalContainer>
     </Modal>
   )
 }

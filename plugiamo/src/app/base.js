@@ -1,3 +1,4 @@
+import ChatModals from 'shared/chat-modals'
 import Content from './content'
 import getFrekklsConfig from 'frekkls-config'
 import Gradient from './gradient'
@@ -24,11 +25,13 @@ const AppBase = ({
   disappear,
   hideContentFrame,
   isUnmounting,
+  modalProps,
   onToggleContent,
   seller,
   pluginState,
   position,
   setDisappear,
+  setModalProps,
   setShowAssessmentContent,
   showingBubbles,
   showingContent,
@@ -69,19 +72,23 @@ const AppBase = ({
 
   return (
     <AppBaseDiv>
+      <ChatModals {...modalProps} />
       {showingContent && <Gradient position={position} />}
       <Content
         Component={Component}
         frameStyleStr={emojifyStyles}
         hideContentFrame={hideContentFrame}
+        isModalOpen={modalProps && !!modalProps.type}
         isUnmounting={isUnmounting}
         key={key}
         launcherConfig={launcherConfig}
+        modalProps={modalProps}
         onToggleContent={onToggleContent}
         onUserInteracted={onUserInteracted}
         pluginZIndex={pluginZIndex}
         position={position}
         seller={seller}
+        setModalProps={setModalProps}
         setShowAssessmentContent={setShowAssessmentContent}
         showingContent={showingContent}
       />

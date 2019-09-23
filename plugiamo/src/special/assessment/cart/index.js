@@ -10,11 +10,20 @@ import { isSmall } from 'utils'
 import { SimpleChat, timeout } from 'plugin-base'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
-const Plugin = ({ cart, setShowingContent, showingBubbles, showingContent, showingLauncher, suggestions }) => {
+const Plugin = ({
+  cart,
+  modalProps,
+  setModalProps,
+  setShowingContent,
+  showingBubbles,
+  showingContent,
+  showingLauncher,
+  suggestions,
+}) => {
   const [products, setProducts] = useState([])
   const [isUnmounting, setIsUnmounting] = useState(false)
 
-  const { clickActions, modalsProps } = useChatActions({ flowType: cart.flowType })
+  const { clickActions } = useChatActions({ flowType: cart.flowType, modalProps, setModalProps })
 
   useEffect(() => {
     fetchProducts().then(results => {
@@ -52,7 +61,7 @@ const Plugin = ({ cart, setShowingContent, showingBubbles, showingContent, showi
 
   return (
     <div>
-      <ChatModals flowType={cart.flowType} {...modalsProps} />
+      <ChatModals {...modalProps} />
       <AppBase
         Component={
           <SimpleChat

@@ -7,6 +7,7 @@ import { useCallback } from 'preact/hooks'
 
 const Container = styled.div`
   padding: 20px;
+  background: #fff;
 `
 
 const styleConfig = {

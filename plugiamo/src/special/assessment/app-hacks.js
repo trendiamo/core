@@ -30,6 +30,7 @@ const AppHacks = ({ data }) => {
   const [showingBubbles, setShowingBubbles] = useState(isShowingDefault)
   const [showingContent, setShowingContent] = useState(defaultShowingContent)
   const [showingLauncher, setShowingLauncher] = useState(isShowingDefault)
+  const [modalProps, setModalProps] = useState({})
 
   useEffect(() => {
     if (getScrollbarWidth() === 0) return
@@ -87,7 +88,9 @@ const AppHacks = ({ data }) => {
       <AssessmentForm
         clearDisappearTimeout={clearDisappearTimeout}
         form={assessmentData.assessmentForm}
+        modalProps={modalProps}
         setDisappearTimeout={setDisappearTimeout}
+        setModalProps={setModalProps}
         setShowingContent={setShowingContent}
         showingBubbles={showingBubbles}
         showingContent={showingContent}
@@ -100,6 +103,8 @@ const AppHacks = ({ data }) => {
     return (
       <AssessmentCart
         cart={assessmentData.cart}
+        modalProps={modalProps}
+        setModalProps={setModalProps}
         setShowingContent={setShowingContent}
         showingBubbles={showingBubbles}
         showingContent={showingContent}
@@ -113,7 +118,9 @@ const AppHacks = ({ data }) => {
     return (
       <AssessmentSizeGuide
         clearDisappearTimeout={clearDisappearTimeout}
+        modalProps={modalProps}
         setDisappearTimeout={setDisappearTimeout}
+        setModalProps={setModalProps}
         setShowingContent={setShowingContent}
         showingBubbles={showingBubbles}
         showingContent={showingContent}
@@ -132,9 +139,11 @@ const AppHacks = ({ data }) => {
       data={showAssessmentContent || isDeliusAssessment() ? assessmentData.assessment : data}
       disappear={disappear}
       hideContentFrame={hideContentFrame}
+      modalProps={modalProps}
       pluginState={pluginState}
       setDisappear={setDisappear}
       setDisappearTimeout={setDisappearTimeout}
+      setModalProps={setModalProps}
       setPluginState={setPluginState}
       setShowAssessmentContent={setShowAssessmentContent}
       setShowingBubbles={setShowingBubbles}
