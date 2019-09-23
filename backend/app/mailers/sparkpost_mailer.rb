@@ -2,7 +2,7 @@ class SparkpostMailer < ApplicationMailer
   def delius_asmt_inquiry(hash)
     sparkpost_data = {
       substitution_data: substitution_data(hash),
-      template_id: "asmt-inquiry",
+      template_id: "frekkls-asmt-inquiry",
     }
     mail(to: ENV["DELIUS_ASMT_EMAIL"], bcc: ENV["DELIUS_ASMT_EMAIL_BCC"], sparkpost_data: sparkpost_data)
   end
@@ -13,7 +13,7 @@ class SparkpostMailer < ApplicationMailer
         promoter_name: "#{user.first_name} #{user.last_name}",
         promoter_email: user.email,
       },
-      template_id: "promoter-upgrade-request",
+      template_id: "uptous-promoter-upgrade-request",
     }
     mail(to: ENV["PROMOTER_UPGRADE_EMAIL"], sparkpost_data: sparkpost_data)
   end
