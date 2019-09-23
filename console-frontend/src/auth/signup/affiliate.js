@@ -107,7 +107,7 @@ const AffiliateSignup = () => {
             value={state.form.socialMediaUrl}
           />
           <Field
-            label="Referral Code"
+            label="Referral Code (optional)"
             name="referredByCode"
             onChange={setFieldValue}
             value={state.form.referredByCode}

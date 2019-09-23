@@ -184,7 +184,7 @@ const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
       </Details>
       <ButtonContainer>
         <Button color="primaryGradient" disabled={!acceptedTermsAndConditions} onClick={onCreateLinkClick} size="large">
-          {'Create Link'}
+          {'Create Affiliate Link'}
         </Button>
       </ButtonContainer>
     </ActionsContainer>
