@@ -66,13 +66,17 @@ const StyledNewTabIcon = styled(NewTabIcon)`
   width: 30px;
 `
 
-const WebsiteButton = ({ websiteHostname }) => (
-  <a href={`https://${websiteHostname}`} rel="noopener noreferrer" target="_blank">
-    <IconButton>
-      <StyledNewTabIcon />
-    </IconButton>
-  </a>
-)
+const WebsiteButton = ({ affiliation, websiteHostname }) => {
+  const url = affiliation ? `https://${websiteHostname}/?aftk=${affiliation.token}` : `https://${websiteHostname}`
+
+  return (
+    <a href={url} rel="noopener noreferrer" target="_blank">
+      <IconButton>
+        <StyledNewTabIcon />
+      </IconButton>
+    </a>
+  )
+}
 
 const StyledClipboardInput = styled(ClipboardInput)`
   margin-left: 10px;
@@ -152,7 +156,7 @@ const BrandCard = ({
             </div>
           </ImageAndDescriptionContainer>
           <Actions>
-            <WebsiteButton websiteHostname={brand.websiteHostname} />
+            <WebsiteButton affiliation={affiliation} websiteHostname={brand.websiteHostname} />
             {affiliation && <StyledClipboardInput backgroundColor="#e7ecef" size="large" text={affiliationUrl} />}
             <div />
             <Button
