@@ -72,13 +72,13 @@ const AppBase = ({
 
   return (
     <AppBaseDiv>
-      {modalProps && <ChatModals {...modalProps} />}
+      <ChatModals {...modalProps} />
       {showingContent && <Gradient position={position} />}
       <Content
         Component={Component}
         frameStyleStr={emojifyStyles}
         hideContentFrame={hideContentFrame}
-        isModalOpen={modalProps && modalProps.isModalOpen}
+        isModalOpen={modalProps && !!modalProps.type}
         isUnmounting={isUnmounting}
         key={key}
         launcherConfig={launcherConfig}

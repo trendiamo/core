@@ -42,6 +42,7 @@ const SimpleChat = ({
   products,
   progress,
   setCtaButtonClicked,
+  modalProps,
   setModalProps,
   showBackButton,
   storeLog,
@@ -87,7 +88,7 @@ const SimpleChat = ({
     variables
   )
 
-  const { clickActions } = useChatActions({ flowType: 'simpleChat', setModalProps })
+  const { clickActions } = useChatActions({ flowType: 'simpleChat', modalProps, setModalProps })
 
   const emojify = useEmojify()
   useEffect(() => {

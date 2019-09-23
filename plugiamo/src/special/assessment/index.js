@@ -24,29 +24,27 @@ const Assessment = ({
   const [currentStepKey, setCurrentStepKey] = useState(assessmentState.key || 'root')
 
   const closeModal = useCallback(() => {
-    modalProps && modalProps.closeModal()
-    setTimeout(() => {
-      setShowingLauncher(true)
-      setShowingContent(false)
-      setShowAssessmentContent(false)
-      setPluginState('closed')
-      setHideContentFrame(false)
-      setDisappearTimeout(() => setDisappear(true), isDelius ? 500 : 10000)
-      setTags([])
-      setEndNodeTags([])
-      setCurrentStepKey('root')
-      setShowingCtaButton(false)
-    }, 100)
+    setModalProps({})
+    setShowingLauncher(true)
+    setShowingContent(false)
+    setShowAssessmentContent(false)
+    setPluginState('closed')
+    setHideContentFrame(false)
+    setDisappearTimeout(() => setDisappear(true), isDelius ? 500 : 10000)
+    setTags([])
+    setEndNodeTags([])
+    setCurrentStepKey('root')
+    setShowingCtaButton(false)
   }, [
-    setShowingLauncher,
-    setShowingContent,
-    setShowAssessmentContent,
-    setPluginState,
-    setHideContentFrame,
-    setDisappearTimeout,
     isDelius,
-    modalProps,
     setDisappear,
+    setDisappearTimeout,
+    setHideContentFrame,
+    setModalProps,
+    setPluginState,
+    setShowAssessmentContent,
+    setShowingContent,
+    setShowingLauncher,
   ])
 
   useEffect(() => {

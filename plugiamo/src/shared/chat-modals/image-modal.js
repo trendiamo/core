@@ -1,5 +1,5 @@
 import mixpanel from 'ext/mixpanel'
-import Modal from './modal'
+import Modal from 'shared/modal'
 import styled from 'styled-components'
 import { h } from 'preact'
 import { imgixUrl, stringifyRect } from 'plugin-base'

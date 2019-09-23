@@ -1,7 +1,6 @@
 import ChatBase from 'app/content/simple-chat/chat-base'
 import getFrekklsConfig from 'frekkls-config'
 import mixpanel from 'ext/mixpanel'
-import StoreModal from './store-modal'
 import useChatActions from 'ext/hooks/use-chat-actions'
 import { assessmentHostname } from 'config'
 import { assessProducts, rememberSeller } from './utils'
@@ -23,7 +22,7 @@ const Base = ({
   currentStepKey,
   data,
   modalProps,
-  closeModal,
+  resetAssessment,
   setAssessmentState,
   setCurrentStepKey,
   setModalProps,
@@ -34,6 +33,7 @@ const Base = ({
   setTags,
   showingCtaButton,
   tags,
+  closeModal,
 }) => {
   const steps = useMemo(() => data && data.steps, [data])
   const step = useMemo(() => steps && steps[currentStepKey], [currentStepKey, steps])
@@ -55,6 +55,7 @@ const Base = ({
   }, [progress, setProgress])
 
   const goToPrevStep = useCallback(() => {
+    setModalProps({})
     if (tags.length === 0) {
       setAnimateOpacity(true)
       return setTimeout(() => setShowAssessmentContent(false), 300)
@@ -71,6 +72,7 @@ const Base = ({
     if (isFinalStep) {
       setAssessmentState({ key: newStepKey, progress })
       setHideProgressBar(false)
+      setShowingLauncher(true)
       timeout.set('asmt-storeRemove', () => setResults([]), 800)
       resetProgressFromFinalStep()
     }
@@ -87,8 +89,10 @@ const Base = ({
     resetProgressFromFinalStep,
     setAssessmentState,
     setCurrentStepKey,
+    setModalProps,
     setShowAssessmentContent,
     setShowingCtaButton,
+    setShowingLauncher,
     setTags,
     tags,
   ])
@@ -96,41 +100,50 @@ const Base = ({
   const processResults = useCallback(
     startTime => {
       if (!client || !client.payload || !client.payload.products) return
-      return timeout.set(
+      timeout.set(
         'settingResults',
         () => {
           const results = assessProducts(client.payload.products, endNodeTags)
           setResults(results)
-          if (results.length === 0) return
-          modalProps.setModalComponent(
-            <StoreModal
-              closeModal={closeModal}
-              goToPrevStep={goToPrevStep}
-              module={module}
-              results={results}
-              setShowingContent={setShowingContent}
-              setShowingLauncher={setShowingLauncher}
-              step={step}
-            />
-          )
-          if (!isSmall()) modalProps.setIsModalOpen(true)
         },
         Math.max(800 - (performance.now() - startTime), 10)
       )
     },
-    [client, closeModal, endNodeTags, goToPrevStep, modalProps, setShowingContent, setShowingLauncher, step]
+    [client, endNodeTags]
   )
 
+  const onStoreModalOpen = useCallback(() => {
+    setShowingContent(false)
+    setShowingLauncher(false)
+  }, [setShowingContent, setShowingLauncher])
+
+  const attachStoreModal = useCallback(() => {
+    setModalProps({
+      type: 'storeModal',
+      step,
+      results,
+      resetAssessment,
+      goToPrevStep,
+      module: data,
+      onOpenModal: onStoreModalOpen,
+      onCloseModal: closeModal,
+    })
+  }, [closeModal, data, goToPrevStep, onStoreModalOpen, resetAssessment, results, setModalProps, step])
+
   useEffect(() => {
-    if (currentStepKey !== 'store') return
+    if (!isFinalStep || isSmall()) return
+    const resultsAreSame = (modalProps.results && modalProps.results.length) === (results && results.length)
+    if (resultsAreSame) return
+    attachStoreModal()
+  }, [attachStoreModal, isFinalStep, modalProps, results])
+
+  useEffect(() => {
+    if (!isFinalStep) return
     const fetchStartTime = performance.now()
     client
       ? processResults(fetchStartTime)
-      : fetchProducts().then(results => {
-          setClient(results.find(client => client.hostname === assessmentHostname))
-          processResults(fetchStartTime)
-        })
-  }, [client, currentStepKey, endNodeTags, processResults, progress, step])
+      : fetchProducts().then(results => setClient(results.find(client => client.hostname === assessmentHostname)))
+  }, [client, isFinalStep, processResults])
 
   const [animateOpacity, setAnimateOpacity] = useState(false)
   const [nothingSelected, setNothingSelected] = useState(false)
@@ -148,14 +161,14 @@ const Base = ({
     [endNodeTags, setEndNodeTags, setShowingCtaButton]
   )
 
-  const { clickActions } = useChatActions({ flowType: module.flowType, setModalProps })
+  const { clickActions } = useChatActions({ flowType: module.flowType, modalProps, setModalProps })
 
   const goToStore = useCallback(() => {
     setProgress(100)
     setTimeout(() => {
       setCurrentStepKey('store')
     }, 600)
-    setTimeout(() => setHideProgressBar(true), 800)
+    isSmall() && setTimeout(() => setHideProgressBar(true), 800)
   }, [setCurrentStepKey])
 
   const goToNextStep = useCallback(
@@ -247,10 +260,10 @@ const Base = ({
     [results]
   )
 
-  const chatBaseProps = useMemo(() => ({ assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }), [
-    goToNextStep,
-    step,
-  ])
+  const chatBaseProps = useMemo(
+    () => ({ isFinalStep, assessment: true, assessmentOptions: { step, goToNextStep }, ctaButton }),
+    [isFinalStep, goToNextStep, step]
+  )
 
   return (
     <SimpleChat
@@ -265,10 +278,12 @@ const Base = ({
       goToPrevStep={goToPrevStep}
       hideCtaButton={isFinalStep || !showingCtaButton}
       hideProgressBar={hideProgressBar}
+      modalProps={modalProps}
       nothingSelected={nothingSelected}
       onCtaButtonClick={onCtaButtonClick}
       progress={progress}
       setCtaButtonClicked={setCtaButtonClicked}
+      setModalProps={setModalProps}
       showBackButton={!assessmentIsMainFlow || currentStepKey !== 'root'}
       storeLog={storeLog}
     />

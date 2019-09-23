@@ -88,7 +88,7 @@ const Plugin = ({
     [assessmentForm]
   )
 
-  const { clickActions } = useChatActions({ flowType: module.flowType, mergeAssessmentForm, setModalProps })
+  const { clickActions } = useChatActions({ flowType: module.flowType, mergeAssessmentForm, modalProps, setModalProps })
 
   useEffect(() => {
     const assessmentTags = sessionStorage.getItem('frekkls-asmt-tags')

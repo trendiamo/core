@@ -13,7 +13,6 @@ const ModalContainer = styled.div`
   padding-bottom: 50px;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,15 +27,19 @@ const StyledIconClose = styled(IconClose)`
   width: 32px;
   height: 32px;
   cursor: pointer;
-  z-index: 12340000005;
+  z-index: 5;
 `
 
 const Dialog = styled.div`
   width: 100%;
   max-width: 60em;
-  background-color: #fff;
   max-height: 90%;
   overflow: auto;
+  z-index: 4;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const LoaderContainer = styled.div`
@@ -55,12 +58,23 @@ const StyledLoader = styled(Loader)`
   width: 150px;
 `
 
+const Background = styled.div`
+  background: #000;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`
+
 const Modal = ({ allowBackgroundClose, closeModal, children, isResourceLoaded }, ref) => {
   useEffect(() => ref.current.focus(), [ref])
 
   return (
-    <ModalContainer onClick={allowBackgroundClose && closeModal} ref={ref} role="presentation" tabIndex="-1">
-      <StyledIconClose onClick={!allowBackgroundClose && closeModal} />
+    <ModalContainer ref={ref} role="presentation" tabIndex="-1">
+      <Background onClick={allowBackgroundClose && closeModal} />
+      <StyledIconClose onClick={closeModal} />
       <Dialog role="dialog">
         {isResourceLoaded === false && (
           <LoaderContainer>

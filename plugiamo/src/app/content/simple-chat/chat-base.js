@@ -4,6 +4,7 @@ import ProgressBar from 'special/assessment/progress-bar'
 import { AssessmentForm, AssessmentProducts, AssessmentStepOptions } from 'special/assessment/message-types'
 import { ChatLogUi, timeout } from 'plugin-base'
 import { Fragment, h } from 'preact'
+import { isSmall } from 'utils'
 import { useCallback, useEffect, useState } from 'preact/hooks'
 
 const messageFactory = ({ data, hideAll, nothingSelected, onClick, type }) => {
@@ -57,6 +58,7 @@ const ChatBase = ({
   showBackButton,
   storeLog,
   touch,
+  isFinalStep,
 }) => {
   const [hideAll, setHideAll] = useState(false)
   const [countOfRows, setCountOfRows] = useState(6)
@@ -123,14 +125,14 @@ const ChatBase = ({
   const handleDataUpdate = useCallback(
     ({ chatLog, setLogs, updateLogs }) => {
       if (assessment) setHideAll(true)
-      if (data.type === 'store') return
+      const delay = assessment && !(storeLog.logs && !isSmall()) && data.type !== 'store' ? 800 : isSmall() ? 0 : 100
       timeout.set(
         'updateChatLog',
         () => initChatLog({ chatLog, isAssessmentUpdate: assessment, update: true, setLogs, updateLogs }),
-        assessment ? 800 : 0
+        delay
       )
     },
-    [assessment, data.type, initChatLog]
+    [assessment, data.type, initChatLog, storeLog]
   )
 
   useEffect(() => () => timeout.clear('updateChatLog'), [])
@@ -145,6 +147,7 @@ const ChatBase = ({
         goToPrevStep={goToPrevStep}
         header={data.header}
         headerConfig={headerConfig}
+        isFinalStep={isFinalStep}
         minimized={coverMinimized}
         seller={seller}
         showBackButton={showBackButton}

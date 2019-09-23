@@ -10,6 +10,7 @@ const Router = ({
   onToggleContent,
   setModalProps,
   setShowAssessmentContent,
+  modalProps,
 }) => (
   <BaseRouter history={history} onChange={onRouteChange}>
     <Showcase
@@ -19,6 +20,7 @@ const Router = ({
       setShowAssessmentContent={setShowAssessmentContent}
     />
     <SimpleChat
+      modalProps={modalProps}
       onToggleContent={onToggleContent}
       path="/simple-chat/:id"
       seller={seller}

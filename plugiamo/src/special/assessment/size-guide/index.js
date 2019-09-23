@@ -40,7 +40,7 @@ const Plugin = ({
     [pluginState, productType, sizeGuide]
   )
 
-  const { clickActions } = useChatActions({ flowType: module.flowType, setModalProps })
+  const { clickActions } = useChatActions({ flowType: module.flowType, modalProps, setModalProps })
 
   useEffect(() => {
     fetchProducts().then(results => {

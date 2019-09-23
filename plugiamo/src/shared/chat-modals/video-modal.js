@@ -1,5 +1,5 @@
 import mixpanel from 'ext/mixpanel'
-import Modal from './modal'
+import Modal from 'shared/modal'
 import styled from 'styled-components'
 import { h } from 'preact'
 import { useCallback, useState } from 'preact/hooks'
@@ -18,7 +18,7 @@ const VideoInnerContainer = styled.div`
   right: 0;
 `
 
-const VideoModal = ({ url, closeModal, flowType }) => {
+const VideoModal = ({ videoEmbedUrl, videoUrl, closeModal, flowType }) => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false)
 
   const newCloseModal = useCallback(
@@ -27,11 +27,11 @@ const VideoModal = ({ url, closeModal, flowType }) => {
       mixpanel.track('Closed Video', {
         flowType,
         hostname: location.hostname,
-        url,
+        url: videoUrl,
       })
       closeModal()
     },
-    [closeModal, flowType, url]
+    [closeModal, flowType, videoUrl]
   )
 
   const onVideoLoad = useCallback(() => {
@@ -48,7 +48,7 @@ const VideoModal = ({ url, closeModal, flowType }) => {
             frameBorder="0"
             height="100%"
             onLoad={onVideoLoad}
-            src={url}
+            src={videoEmbedUrl}
             title="Video player"
             width="100%"
           />

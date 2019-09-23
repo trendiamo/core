@@ -1,35 +1,16 @@
-import ImageModal from 'shared/image-modal'
-import ImagesModal from 'shared/images-modal'
 import mixpanel from 'ext/mixpanel'
-import VideoModal from 'shared/video-modal'
-import { h } from 'preact'
 import { markGoFwd } from 'app/setup/flow-history'
 import { clickAssessmentProduct as originalClickAssessmentProduct } from 'special/assessment/utils'
-import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
+import { useCallback, useMemo } from 'preact/hooks'
 
-const useChatActions = ({ flowType, mergeAssessmentForm, setModalProps }) => {
-  const [ModalComponent, setModalComponent] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isTouch, setIsTouch] = useState(false)
-
-  const closeModal = useCallback(() => {
-    setIsModalOpen(false)
-  }, [])
-
-  useEffect(() => {
-    setModalProps &&
-      setModalProps({
-        closeModal,
-        isModalOpen,
-        ModalComponent,
-        setIsModalOpen,
-        setModalComponent,
-      })
-  }, [closeModal, isModalOpen, setModalProps, ModalComponent])
-
+const useChatActions = ({ flowType, mergeAssessmentForm, modalProps, setModalProps }) => {
   const clickAssessmentProduct = useCallback(({ item }) => {
     originalClickAssessmentProduct(item)
   }, [])
+
+  const onCloseModal = useCallback(() => {
+    setModalProps({})
+  }, [setModalProps])
 
   const clickProduct = useCallback(
     ({ item }) => {
@@ -48,28 +29,30 @@ const useChatActions = ({ flowType, mergeAssessmentForm, setModalProps }) => {
 
   const clickVideoMessage = useCallback(
     ({ item }) => {
+      const videoUrl = item.youtubeUrl
+      const videoEmbedUrl = item.youtubeEmbedUrl
       mixpanel.track('Open Video', {
         flowType,
         hostname: location.hostname,
-        url: item.youtubeUrl,
+        url: videoUrl,
       })
-      setModalComponent(<VideoModal closeModal={closeModal} flowType={flowType} url={item && item.youtubeEmbedUrl} />)
-      setIsModalOpen(true)
+      setModalProps({ type: 'video', videoUrl, videoEmbedUrl, onCloseModal, flowType })
     },
-    [closeModal, flowType]
+    [flowType, onCloseModal, setModalProps]
   )
 
   const clickHeaderVideo = useCallback(
     ({ item }) => {
+      const videoUrl = item.youtubeUrl
+      const videoEmbedUrl = item.youtubeEmbedUrl
       mixpanel.track('Open Header Video', {
         flowType,
         hostname: location.hostname,
-        url: item.youtubeUrl,
+        url: videoUrl,
       })
-      setModalComponent(<VideoModal closeModal={closeModal} flowType={flowType} url={item && item.youtubeUrl} />)
-      setIsModalOpen(true)
+      setModalProps({ type: 'video', videoUrl, videoEmbedUrl, onCloseModal, flowType })
     },
-    [closeModal, flowType]
+    [flowType, onCloseModal, setModalProps]
   )
 
   const clickImageCarouselItem = useCallback(
@@ -79,10 +62,9 @@ const useChatActions = ({ flowType, mergeAssessmentForm, setModalProps }) => {
         hostname: location.hostname,
         imageUrl: item.urlsArray[item.index],
       })
-      setModalComponent(<ImagesModal closeModal={closeModal} flowType={flowType} imageItem={item} isTouch={isTouch} />)
-      setIsModalOpen(true)
+      setModalProps({ type: 'images', imageItem: item, onCloseModal, flowType })
     },
-    [closeModal, flowType, isTouch]
+    [flowType, onCloseModal, setModalProps]
   )
 
   const touchImageCarousel = useCallback(() => {
@@ -90,8 +72,8 @@ const useChatActions = ({ flowType, mergeAssessmentForm, setModalProps }) => {
       flowType,
       hostname: location.hostname,
     })
-    setIsTouch(true)
-  }, [flowType])
+    setModalProps({ ...modalProps, isTouch: true })
+  }, [flowType, modalProps, setModalProps])
 
   const clickChatOption = useCallback(
     ({ item, seller }) => {
@@ -119,10 +101,9 @@ const useChatActions = ({ flowType, mergeAssessmentForm, setModalProps }) => {
         hostname: location.hostname,
         url: item.url,
       })
-      setModalComponent(<ImageModal closeModal={closeModal} flowType={flowType} imageItem={item} />)
-      setIsModalOpen(true)
+      setModalProps({ type: 'image', imageItem: item, onCloseModal, flowType })
     },
-    [closeModal, flowType]
+    [flowType, onCloseModal, setModalProps]
   )
 
   const clickActions = useMemo(

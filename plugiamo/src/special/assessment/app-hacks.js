@@ -30,7 +30,7 @@ const AppHacks = ({ data }) => {
   const [showingBubbles, setShowingBubbles] = useState(isShowingDefault)
   const [showingContent, setShowingContent] = useState(defaultShowingContent)
   const [showingLauncher, setShowingLauncher] = useState(isShowingDefault)
-  const [modalProps, setModalProps] = useState(null)
+  const [modalProps, setModalProps] = useState({})
 
   useEffect(() => {
     if (getScrollbarWidth() === 0) return
