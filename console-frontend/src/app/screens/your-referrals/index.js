@@ -97,7 +97,7 @@ const YourReferrals = () => {
           <Typography variant="h5">{'Refer a friend and earn twice!'}</Typography>
           <Typography variant="body2">
             {
-              'Changing the world for the better is hard to do alone. The more people spreading the word about impactful brands, the better! You can contribute by inviting your friends to also sign up to UPTOUS! Whenever someone that signed up with your referral code creates revenue for the first time, you will receive an additional 50€ in your next payout. Let’s make the world a better place together!'
+              'Changing the world for the better is hard to do alone. The more people spreading the word about impactful brands, the better! You can contribute by inviting your friends to also sign up to UPTOUS! Whenever someone that signed up with your referral code creates revenue for the first time, you will receive an additional 10€ in your next payout. Let’s make the world a better place together!'
             }
           </Typography>
         </CardContent>

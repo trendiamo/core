@@ -43,7 +43,7 @@ const Price = styled.div`
   font-family: Lato, 'Helvetica', 'Arial', sans-serif;
 `
 
-const priceForReferral = 50
+const priceForReferral = 10
 
 const Content = () => {
   return (
