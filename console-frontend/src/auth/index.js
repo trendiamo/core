@@ -37,7 +37,6 @@ const auth = {
   },
   setCsrfToken(json) {
     localStorage.setItem('CSRF-TOKEN', json.token)
-    localStorage.setItem('loggedIn', json.loggedIn)
   },
   getUser() {
     if (!this.user) this.user = JSON.parse(localStorage.getItem('authUser') || '{}')
