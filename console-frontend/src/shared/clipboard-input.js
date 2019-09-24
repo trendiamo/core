@@ -23,7 +23,7 @@ const Container = styled(props => <form {...omit(props, ['isCopied', 'background
 
 `
 
-const UrlInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteable', 'backgroundColor'])} />)`
+const TextInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteable', 'backgroundColor'])} />)`
   padding-left: 0.8rem;
   background-color: ${({ backgroundColor }) => backgroundColor || '#fff'};
   ${({ pasteable, wasCopied }) =>
@@ -41,14 +41,15 @@ const CopyButton = styled(props => <Button {...omit(props, ['pasteable'])} />)`
 const CopyButtonContainer = styled.div``
 
 const ClipboardInput = ({
+  backgroundColor,
+  inputProps,
+  mixFunction,
+  onCopy,
+  pasteable,
+  placeholder,
+  size,
   text,
   type,
-  size,
-  pasteable,
-  backgroundColor,
-  urlInputProps,
-  mixFunction,
-  placeholder,
   ...props
 }) => {
   const [isCopied, setIsCopied] = useState(false)
@@ -64,33 +65,35 @@ const ClipboardInput = ({
     [wasCopied]
   )
 
-  const copyUrl = useCallback(
+  const copyText = useCallback(
     async event => {
       event.preventDefault()
       setIsCopied(true)
       setWasCopied(true)
       showUpToUsBranding() && setTimeout(() => setIsCopied(false), 3000)
       if (outputText === inputText) {
+        onCopy && onCopy(pasteable ? inputText : text)
         copy(pasteable ? inputText : text)
         return
       }
       const final = mixFunction ? mixFunction(inputText) : inputText
       setOutputText(final)
       setInputText(final)
+      onCopy && onCopy(final)
       copy(final)
     },
-    [inputText, mixFunction, outputText, pasteable, text]
+    [inputText, mixFunction, onCopy, outputText, pasteable, text]
   )
 
   const onInputFocus = useCallback(event => event.target.select(), [])
 
   return (
-    <Container isCopied={isCopied} onSubmit={copyUrl} pasteable={pasteable} {...props}>
-      <UrlInput
+    <Container isCopied={isCopied} onSubmit={copyText} pasteable={pasteable} {...props}>
+      <TextInput
         backgroundColor={backgroundColor}
         disableUnderline
         fullWidth
-        inputProps={urlInputProps}
+        inputProps={inputProps}
         onChange={changeText}
         onFocus={onInputFocus}
         pasteable={pasteable}

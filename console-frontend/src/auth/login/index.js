@@ -2,6 +2,7 @@ import auth from 'auth'
 import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
 import Link from 'shared/link'
+import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import { apiRequest, apiSignIn, showUpToUsBranding } from 'utils'
@@ -93,6 +94,9 @@ const Login1 = () => {
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!requestError && !errors) auth.setUser(json.user)
       if (auth.isLoggedIn()) {
+        mixpanel.identify(json.user.id)
+        mixpanel.people.set(json.user)
+        mixpanel.track('Logged In', { hostname: window.location.hostname })
         window.location.href = routes.root()
       }
     },

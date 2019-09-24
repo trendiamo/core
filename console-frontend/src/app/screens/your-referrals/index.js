@@ -1,6 +1,7 @@
 import auth from 'auth'
 import ClipboardInput from 'shared/clipboard-input'
-import React, { useEffect, useMemo, useState } from 'react'
+import mixpanel from 'ext/mixpanel'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import UserAvatar from 'shared/user-avatar'
@@ -89,6 +90,10 @@ const YourReferrals = () => {
     [enqueueSnackbar]
   )
 
+  const onCopyReferralCode = useCallback(text => {
+    mixpanel.track('Copied Referral Code', { hostname: window.location.hostname, text })
+  }, [])
+
   return (
     <FlexContainer>
       <MainCard>
@@ -105,7 +110,7 @@ const YourReferrals = () => {
           <CalloutTitle align="center" variant="h5">
             {'Your referral code'}
           </CalloutTitle>
-          <StyledClipboardInput text={referralCode} type="golden" />
+          <StyledClipboardInput onCopy={onCopyReferralCode} text={referralCode} type="golden" />
         </Callout>
       </MainCard>
       {referrals.length > 0 && (

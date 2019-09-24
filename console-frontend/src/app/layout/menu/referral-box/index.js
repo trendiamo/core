@@ -1,10 +1,11 @@
 import Button from 'shared/button'
 import Canvas from './canvas'
-import Link from 'shared/link'
-import React from 'react'
+import mixpanel from 'ext/mixpanel'
+import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
+import { withRouter } from 'react-router'
 
 const Container = styled.div`
   position: relative;
@@ -45,19 +46,25 @@ const Price = styled.div`
 
 const priceForReferral = 10
 
-const Content = () => {
+const Content = withRouter(({ history }) => {
+  const onClick = useCallback(
+    () => {
+      mixpanel.track('Clicked Referrals Promo', { hostname: window.location.hostname })
+      history.push(routes.yourReferrals())
+    },
+    [history]
+  )
+
   return (
     <ContentContainer>
       <Description variant="subtitle1">{'Refer a friend to become a promoter and earn'}</Description>
       <Price>{`${priceForReferral}€`}</Price>
-      <Link to={routes.yourReferrals()}>
-        <Button color="golden" size="small">
-          {'Get Started'}
-        </Button>
-      </Link>
+      <Button color="golden" onClick={onClick} size="small">
+        {'Get Started'}
+      </Button>
     </ContentContainer>
   )
-}
+})
 
 const ReferralBox = ({ sidebarOpen }) => {
   if (!sidebarOpen) return null

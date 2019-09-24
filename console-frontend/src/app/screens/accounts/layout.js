@@ -2,6 +2,7 @@ import auth from 'auth'
 import Button from 'shared/button'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import Link from 'shared/link'
+import mixpanel from 'ext/mixpanel'
 import React from 'react'
 import routes from 'app/routes'
 import Section from 'shared/section'
@@ -13,6 +14,7 @@ import { Tooltip } from '@material-ui/core'
 const signOutButtonClick = async () => {
   await apiSignOut()
   auth.clear()
+  mixpanel.reset()
 }
 
 const LogoutButton = ({ signOutButtonClick }) => (
