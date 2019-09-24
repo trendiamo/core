@@ -59,6 +59,7 @@ This Agreement contains the complete terms and conditions that apply to you beco
 3.1. We have the right to monitor your social media or website at any time to determine if you are following the terms and conditions of this agreement. We may notify you of any changes to your content or website that we feel should be made, or to make sure that your affiliate links are appropriate and to notify further you of any changes that we feel should be made. If you do not make the changes to on your side that we feel are necessary, we reserve the right to terminate your participation in the UPTOUS Affiliate Program.
 
 3.2. UPTOUS reserves the right to terminate this Agreement and your participation in the UPTOUS Affiliate Program immediately and without notice to you should you commit fraud in your use of the UPTOUS Affiliate Program or should you abuse this program in any way. If such fraud or abuse is detected, UPTOUS shall not be liable to you for any commissions for such fraudulent sales.
+
 3.3. This Agreement will begin upon our acceptance of your Affiliate application, and will continue unless terminated hereunder.
 
 ## 4. Termination
