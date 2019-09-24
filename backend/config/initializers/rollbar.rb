@@ -35,6 +35,7 @@ Rollbar.configure do |config|
   # config.exception_level_filters.merge!('MyCriticalException' => lambda { |e| 'critical' })
 
   config.exception_level_filters.merge!('ActionController::RoutingError' => 'ignore')
+  config.exception_level_filters.merge!('ActionController::UnknownHttpMethod' => 'ignore')
   config.exception_level_filters.merge!('ActiveRecord::RecordNotFound' => 'ignore')
 
   # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday
