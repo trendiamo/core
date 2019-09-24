@@ -2,7 +2,7 @@
 
 ## Foreword
 
-This agreement is different from the one you have already agreed with upon signing up to UPTOUS. You can read it again here, anytime. This agreement provides further terms and conditions for engaging with BRAND as an affiliate, specifically. Those terms may vary from brand to brand as each brand partner may have different terms and conditions of their own, so please read them carefully whenever you create the first link for a new brand you wish to work with.
+This agreement is different from the one you have already agreed with upon signing up to UPTOUS. You can [read it again](https://app.uptous.co/terms-and-conditions) here, anytime. This agreement provides further terms and conditions for engaging with BRANDNAME as an affiliate, specifically. Those terms may vary from brand to brand as each brand partner may have different terms and conditions of their own, so please read them carefully whenever you create the first link for a new brand you wish to work with.
 
 If you have any questions, please don't hesitate to let us know. We are strong believers in straight-forward and honest communication. For quickest results please email us at support@uptous.co.
 
@@ -38,7 +38,7 @@ This Agreement contains the complete terms and conditions that apply to you beco
 
 2.1.5. Incorporates any materials which infringe or assist others to infringe on any copyright, trademark or other intellectual property rights or to violate the law
 
-2.1.6. Your website Includes "uptous" or “BRAND” or variations or misspellings thereof in its domain name
+2.1.6. Your website Includes "uptous" or the BRAND’s name or variations or misspellings thereof in its domain name
 
 2.1.7. Is otherwise in any way unlawful, harmful, threatening, defamatory, obscene, harassing, or racially, ethnically or otherwise objectionable to us in our sole discretion.
 
@@ -72,7 +72,7 @@ We may modify any of the terms and conditions in this Agreement at any time at o
 
 ## 6. Payments
 
-The payments resulting from this affiliation agreement are handled as mentioned and agreed by you in clause FILL CLAUSE of our General Terms & Conditions. You can read them here.
+The payments resulting from this affiliation agreement are handled as mentioned and agreed by you in clause "Affiliate Payments" of our General Terms & Conditions. You can [read them here](https://app.uptous.co/terms-and-conditions).
 
 ## 7. Promotion Restrictions
 
