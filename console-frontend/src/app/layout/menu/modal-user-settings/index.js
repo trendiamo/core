@@ -1,84 +1,81 @@
 import auth from 'auth'
-import ChangePasswordForm from './change-password-form'
 import Dialog from 'shared/dialog'
-import EditMe from './edit-me'
-import React, { useCallback, useEffect, useState } from 'react'
+import PaymentsForm from './payments-form'
+import ProfileForm from './profile-form'
+import React, { useCallback, useState } from 'react'
+import SecurityForm from './security-form'
+import ShippingForm from './shipping-form'
 import styled from 'styled-components'
-import { HelpOutline } from '@material-ui/icons'
-import { Tooltip } from '@material-ui/core'
+import { Tab as MuiTab, Tabs as MuiTabs } from '@material-ui/core'
 
-const HelpIcon = styled(HelpOutline)`
-  width: 16px;
-  fill: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  display: inline-block;
-  margin-left: 5px;
+const tabs = auth.isAffiliate() ? ['Profile', 'Shipping', 'Payments', 'Security'] : ['Profile', 'Security']
+
+const Tabs = styled(MuiTabs)`
+  div[role='tablist'] > span {
+    background: #0f7173;
+  }
 `
 
-const StyledHeader = styled.div`
-  width: auto;
-  display: inline-block;
+const Tab = styled(MuiTab)`
+  min-width: 100px;
 `
 
-const HeaderContainer = styled.div`
-  position: relative;
+const ContentContainer = styled.div`
+  min-height: 700px;
 `
 
-const DialogContent = ({ showPasswordForm, togglePasswordForm, handleClose }) => {
-  return showPasswordForm ? (
-    <ChangePasswordForm handleClose={handleClose} togglePasswordForm={togglePasswordForm} />
-  ) : (
-    <EditMe togglePasswordForm={togglePasswordForm} />
+const TabsContainer = ({ tabs, selectedTab, setSelectedTab }) => {
+  const onChange = useCallback(
+    (event, newValue) => {
+      setSelectedTab(newValue)
+    },
+    [setSelectedTab]
+  )
+
+  return (
+    <Tabs aria-label="User settings" onChange={onChange} value={selectedTab}>
+      {tabs.map(tab => (
+        <Tab key={tab} label={tab} />
+      ))}
+    </Tabs>
   )
 }
 
-const DialogHeader = ({ showPasswordForm }) => {
-  if (showPasswordForm) return <StyledHeader>{'Change Password'}</StyledHeader>
+const DialogContent = ({ handleClose, selectedTab, setSelectedTab }) => {
   return (
-    <HeaderContainer>
-      <StyledHeader>{'Your Personal Info'}</StyledHeader>
-      {!auth.isSingleAccount() && (
-        <Tooltip placement="top" title="This changes your settings for all accounts">
-          <HelpIcon />
-        </Tooltip>
-      )}
-    </HeaderContainer>
+    <ContentContainer>
+      <TabsContainer selectedTab={selectedTab} setSelectedTab={setSelectedTab} tabs={tabs} />
+      {auth.isAffiliate() ? (
+        selectedTab === 0 ? (
+          <ProfileForm />
+        ) : selectedTab === 1 ? (
+          <ShippingForm handleClose={handleClose} />
+        ) : selectedTab === 2 ? (
+          <PaymentsForm handleClose={handleClose} />
+        ) : selectedTab === 3 ? (
+          <SecurityForm handleClose={handleClose} />
+        ) : null
+      ) : selectedTab === 0 ? (
+        <ProfileForm />
+      ) : selectedTab === 1 ? (
+        <SecurityForm handleClose={handleClose} />
+      ) : null}
+    </ContentContainer>
   )
 }
 
 const UserSettings = ({ open, setOpen }) => {
   const handleClose = useCallback(() => setOpen(false), [setOpen])
 
-  const [showPasswordForm, setShowPasswordForm] = useState(false)
-
-  const togglePasswordForm = useCallback(
-    () => {
-      setShowPasswordForm(!showPasswordForm)
-    },
-    [showPasswordForm]
-  )
-
-  useEffect(
-    () => {
-      open && setShowPasswordForm(false)
-    },
-    [open]
-  )
+  const [selectedTab, setSelectedTab] = useState(0)
 
   return (
     <Dialog
-      content={
-        <DialogContent
-          handleClose={handleClose}
-          showPasswordForm={showPasswordForm}
-          togglePasswordForm={togglePasswordForm}
-        />
-      }
+      content={<DialogContent handleClose={handleClose} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />}
       fullWidth
       handleClose={handleClose}
       maxWidth="sm"
       open={open}
-      title={<DialogHeader showPasswordForm={showPasswordForm} />}
     />
   )
 }

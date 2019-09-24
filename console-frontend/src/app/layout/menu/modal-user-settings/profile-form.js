@@ -6,7 +6,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Field, FormHelperText, Select } from 'shared/form-elements'
+import { Field, FormHelperText } from 'shared/form-elements'
 import { Prompt } from 'react-router'
 import { useSnackbar } from 'notistack'
 
@@ -27,11 +27,9 @@ const formObjectTransformer = json => {
   }
 }
 
-const currencyOptions = ['EUR', 'GBP', 'CHF', 'USD']
-
 const inputProps = { pattern: '.*S+.*' }
 
-const EditMe = ({ togglePasswordForm }) => {
+const ProfileForm = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const [isCropping, setIsCropping] = useState(false)
@@ -129,40 +127,17 @@ const EditMe = ({ togglePasswordForm }) => {
         value={form.lastName}
       />
       {auth.isAffiliate() && (
-        <>
-          <Select
-            disabled={isFormLoading || isCropping || isUploaderLoading}
-            fullWidth
-            label="Currency"
-            margin="normal"
-            name="currency"
-            onChange={setFieldValue}
-            options={currencyOptions}
-            required
-            value={form.currency}
-          />
-          <FormHelperText>
-            {
-              <>
-                <b>{'Disclaimer: '}</b>
-                {`Note that revenues and prices displayed throughout the platform are unified from different currencies
-                the products may be sold in, thus they may slightly vary from day to day as they are calculated based on
-                the daily updated exchange rate of that currency.`}
-              </>
-            }
-          </FormHelperText>
-          <Field
-            disabled={isFormLoading || isCropping || isUploaderLoading}
-            fullWidth
-            label="Social Media URL"
-            margin="normal"
-            name="socialMediaUrl"
-            onChange={setFieldValue}
-            required
-            type="URL"
-            value={form.socialMediaUrl}
-          />
-        </>
+        <Field
+          disabled={isFormLoading || isCropping || isUploaderLoading}
+          fullWidth
+          label="Social Media URL"
+          margin="normal"
+          name="socialMediaUrl"
+          onChange={setFieldValue}
+          required
+          type="URL"
+          value={form.socialMediaUrl}
+        />
       )}
       {auth.isSeller() && (
         <>
@@ -195,12 +170,9 @@ const EditMe = ({ togglePasswordForm }) => {
         >
           {'Save'}
         </Button>
-        <Button color="white" inline onClick={togglePasswordForm} variant="contained">
-          {'Change Password'}
-        </Button>
       </ActionContainer>
     </form>
   )
 }
 
-export default EditMe
+export default ProfileForm

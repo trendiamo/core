@@ -31,13 +31,14 @@ class User < ApplicationRecord
   validates :referral_code, presence: true, uniqueness: true
   validates :currency, presence: true, inclusion: { in: %w[eur gbp chf usd] }
 
-  def as_json(_options = {})
+  def as_json(options = {})
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "onboarding_stage", "admin", "img_rect",
                                "affiliate_role", "referral_code", "requested_upgrade_to_seller_at", "currency",
                                "social_media_url", "bio", "created_at", "updated_at")
                         .merge(name: name, img: { url: img_url })
-    admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
+    attributes_with_roles = admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
+    options[:details] ? attributes_with_roles.merge(details_attributes) : attributes_with_roles
   end
 
   def memberships_empty_when_admin
@@ -60,6 +61,15 @@ class User < ApplicationRecord
 
   def active_membership
     memberships.find_by(account: ActsAsTenant.current_tenant)
+  end
+
+  def details_attributes
+    attributes.slice(
+      "date_of_birth", "shipping_first_name", "shipping_last_name",
+      "address_line1", "address_line2", "zip_code", "city",
+      "country", "payment_first_name", "payment_last_name", "photo_id_front_url", "photo_id_back_url",
+      "payment_address", "phone_number", "iban"
+    )
   end
 
   def set_referral_code
