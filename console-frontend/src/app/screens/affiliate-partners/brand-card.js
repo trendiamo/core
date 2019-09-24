@@ -147,7 +147,7 @@ const BrandCard = ({
               <Image src={brand.logoUrl} />
             </ImageContainer>
             <div>
-              {!affiliation && <Typography variant="body2">{brand.description}</Typography>}
+              <Typography variant="body2">{brand.description}</Typography>
               <TagsContainer>
                 {brand.tags.split(',').map(tag => (
                   <Tag key={tag} label={tag} size="small" />
