@@ -144,7 +144,7 @@ const AffiliateSignup = () => {
             </Button>
             <p>
               {'Already have an account? '}
-              <Link to={routes.login()}>{'Login'}</Link>
+              <Link to={routes.login()}>{'Login here'}</Link>
             </p>
           </AuthFormFooter>
         </AuthStyledForm>

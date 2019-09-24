@@ -28,7 +28,7 @@ const Footer = () => (
     </div>
     <Typography variant="body2">
       {"Don't have an account? "}
-      <Link to={routes.signup()}>{'Signup'}</Link>
+      <Link to={routes.signup()}>{'Signup here'}</Link>
     </Typography>
   </AuthFormFooter>
 )
