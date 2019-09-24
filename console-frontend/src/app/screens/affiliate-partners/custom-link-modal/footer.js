@@ -1,4 +1,5 @@
 import ClipboardInput from 'shared/clipboard-input'
+import mixpanel from 'ext/mixpanel'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
@@ -24,15 +25,20 @@ const Footer = ({ affiliation }) => {
     [affiliation.token]
   )
 
+  const onCopyCustomLink = useCallback(text => {
+    mixpanel.track('Copied Custom Link', { hostname: window.location.hostname, text })
+  }, [])
+
   return (
     <Container>
       <ClipboardContainer>
         <ClipboardInput
+          inputProps={urlInputProps}
           mixFunction={mixFunction}
+          onCopy={onCopyCustomLink}
           pasteable
           placeholder="Paste link here..."
           size="large"
-          urlInputProps={urlInputProps}
         />
       </ClipboardContainer>
     </Container>

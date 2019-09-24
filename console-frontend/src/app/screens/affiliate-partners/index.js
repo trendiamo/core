@@ -3,6 +3,7 @@ import auth from 'auth'
 import AvailableBrands from './available-brands'
 import BrandModal from './brand-modal'
 import CustomLinkModal from './custom-link-modal'
+import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiAffiliationCreate, apiAffiliationDestroy, apiAffiliationsList, apiBrandsList, apiRequest } from 'utils'
@@ -125,6 +126,10 @@ const AffiliatePartners = () => {
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (!errors && !requestError) {
+          mixpanel.track('Removed Affiliation', {
+            hostname: window.location.hostname,
+            brand: selectedAffiliation.brand.name,
+          })
           enqueueSnackbar(`Successfully removed affiliation with ${selectedBrand.name}`, { variant: 'success' })
         }
         setIsLoading(false)

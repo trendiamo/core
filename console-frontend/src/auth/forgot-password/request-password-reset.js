@@ -1,6 +1,7 @@
 import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
 import Link from 'shared/link'
+import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import { apiPasswordEmailLink, apiRequest, showUpToUsBranding } from 'utils'
@@ -70,7 +71,10 @@ const PasswordReset1 = () => {
       event.preventDefault()
       const { json, requestError } = await apiRequest(apiPasswordEmailLink, [{ user: { email: passwordForm.email } }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (!requestError) enqueueSnackbar('Email sent!', { variant: 'info' })
+      if (!requestError) {
+        mixpanel.track('Requested Password Change', { hostname: window.location.hostname })
+        enqueueSnackbar('Email sent!', { variant: 'info' })
+      }
       return json
     },
     [enqueueSnackbar, passwordForm.email]

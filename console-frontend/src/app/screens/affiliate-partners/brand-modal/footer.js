@@ -1,5 +1,6 @@
 import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
+import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Checkbox, FormControlLabel, FormLabel, Typography } from '@material-ui/core'
@@ -134,6 +135,10 @@ const SuccessScreen = ({ selectedAffiliation, brand, removeAffiliation, isLoadin
     [removeAffiliation, showRemoveConfirmationAlert]
   )
 
+  const onCopyAffiliateLink = useCallback(text => {
+    mixpanel.track('Copied Affiliate Link', { hostname: window.location.hostname, text })
+  }, [])
+
   useEffect(() => () => clearTimeout(removeWarningTimeoutRef.current), [])
 
   return (
@@ -141,7 +146,7 @@ const SuccessScreen = ({ selectedAffiliation, brand, removeAffiliation, isLoadin
       <Typography align="center" variant="overline">
         {'Your affiliate link'}
       </Typography>
-      <StyledClipboardInput size="large" text={affiliationUrl} />
+      <StyledClipboardInput onCopy={onCopyAffiliateLink} size="large" text={affiliationUrl} />
       <RemoveButtonContainer>
         {showRemoveConfirmationAlert && (
           <>
@@ -201,6 +206,7 @@ const Footer = ({
 }) => {
   const onCreateLinkClick = useCallback(
     () => {
+      mixpanel.track('Created Affiliate Link', { hostname: window.location.hostname, brand: brand.name })
       createAffiliation(brand)
     },
     [brand, createAffiliation]

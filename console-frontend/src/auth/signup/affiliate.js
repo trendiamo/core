@@ -2,6 +2,7 @@ import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
 import DoneIcon from '@material-ui/icons/Done'
 import Link from 'shared/link'
+import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
@@ -73,6 +74,7 @@ const AffiliateSignup = () => {
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!requestError && !errors) {
+        mixpanel.track('Signed Up', { hostname: window.location.hostname })
         setFormSubmitted(true)
       }
     },

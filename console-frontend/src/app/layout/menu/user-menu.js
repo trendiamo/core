@@ -3,6 +3,7 @@ import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import auth from 'auth'
 import ExitIcon from '@material-ui/icons/PowerSettingsNew'
 import Link from 'shared/link'
+import mixpanel from 'ext/mixpanel'
 import ModalUserSettings from './modal-user-settings'
 import omit from 'lodash.omit'
 import PeopleOutline from '@material-ui/icons/PeopleOutline'
@@ -81,6 +82,7 @@ const UserMenu = ({ sidebarOpen }) => {
   const onLogoutButtonClick = useCallback(async event => {
     event.preventDefault()
     await apiSignOut()
+    mixpanel.reset()
   }, [])
 
   const openUserSettingsModal = useCallback(() => {

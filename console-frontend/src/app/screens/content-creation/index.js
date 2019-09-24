@@ -1,6 +1,7 @@
 import auth from 'auth'
 import BioAndPicModal from './bio-and-pic-modal'
 import Button from 'shared/button'
+import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
@@ -50,6 +51,7 @@ const ContentCreation = () => {
         return
       }
       if (json && json.requestedUpgradeToSellerAt) {
+        mixpanel.track('Requested Upgrade to Seller', { hostname: window.location.hostname })
         setWasSubmitted(true)
         auth.setUser(json)
         setIsFormSubmitting(false)
