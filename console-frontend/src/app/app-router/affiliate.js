@@ -78,10 +78,10 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
       <ExternalRoute component={SignupConfirmPage} path={routes.signupConfirm()} />
       <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
       <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
-      <ExternalRoute component={TermsAndConditions} exact path={routes.termsAndConditions()} />
-      <ExternalRoute component={PrivacyPolicy} exact path={routes.privacyPolicy()} />
-      <ExternalRoute component={CookiePolicy} exact path={routes.cookiePolicy()} />
 
+      <Route component={TermsAndConditions} exact path={routes.termsAndConditions()} />
+      <Route component={PrivacyPolicy} exact path={routes.privacyPolicy()} />
+      <Route component={CookiePolicy} exact path={routes.cookiePolicy()} />
       <Route component={RootRedirect} exact path={routes.root()} />
       <Route component={NotFound} />
     </Switch>
