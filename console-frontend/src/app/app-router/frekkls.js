@@ -1,15 +1,18 @@
 import Account from 'app/screens/account'
 import Accounts from 'app/screens/accounts/accounts-list'
+import CookiePolicy from 'app/screens/cookie-policy'
 import DataDashboard from 'app/screens/data-dashboard'
 import ForgotPassword from 'auth/forgot-password'
 import LoginPage from 'auth/login'
 import NewAccount from 'app/screens/accounts/account-new'
 import NotFound from 'app/screens/not-found'
+import PrivacyPolicy from 'app/screens/privacy-policy'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import routes from 'app/routes'
 import SignupConfirmPage from 'auth/signup/confirm'
 import SignupPage from 'auth/signup'
+import TermsAndConditions from 'app/screens/terms-and-conditions'
 import UrlGenerator from 'app/screens/url-generator'
 import WebsiteSettings from 'app/screens/website-settings'
 import WelcomePage from 'app/screens/welcome'
@@ -219,6 +222,9 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
       <ExternalRoute component={SignupConfirmPage} path={routes.signupConfirm()} />
       <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
       <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
+      <ExternalRoute component={TermsAndConditions} exact path={routes.termsAndConditions()} />
+      <ExternalRoute component={PrivacyPolicy} exact path={routes.privacyPolicy()} />
+      <ExternalRoute component={CookiePolicy} exact path={routes.cookiePolicy()} />
 
       <Route component={RootRedirect} exact path={routes.root()} />
       <Route component={NotFound} />

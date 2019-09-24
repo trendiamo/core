@@ -7,6 +7,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
 import { AuthFormFooter, AuthStyledForm } from 'auth/components'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
@@ -43,6 +44,7 @@ const AffiliateSignup = () => {
         email: '',
         password: '',
         passwordConfirmation: '',
+        acceptsTermsAndConditions: false,
       },
       isFormSubmitted: false,
     }
@@ -52,6 +54,10 @@ const AffiliateSignup = () => {
   const setFormSubmitted = useCallback(value => dispatch({ type: 'setFormSubmitted', value }), [dispatch])
 
   const setFieldValue = useCallback(event => mergeForm({ [event.target.name]: event.target.value }), [mergeForm])
+  const StyledLink = styled.a`
+    color: #128976;
+    text-decoration: none;
+  `
 
   useEffect(
     () => {
@@ -63,6 +69,13 @@ const AffiliateSignup = () => {
       }
     },
     [setFieldValue, state.form.password, state.form.passwordConfirmation]
+  )
+
+  const toggleAcceptsTermsAndConditions = useCallback(
+    event => {
+      mergeForm({ acceptsTermsAndConditions: event.target.checked })
+    },
+    [mergeForm]
   )
 
   const onSubmit = useCallback(
@@ -137,6 +150,33 @@ const AffiliateSignup = () => {
             required
             type="password"
             value={state.form.passwordConfirmation}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={state.form.acceptsTermsAndConditions}
+                color="primary"
+                onChange={toggleAcceptsTermsAndConditions}
+                required
+              />
+            }
+            label={
+              <p>
+                {'I accept the '}
+                <StyledLink href={routes.termsAndConditions()} rel="noopener noreferrer" target="_blank">
+                  {'Terms and Conditions'}
+                </StyledLink>
+                {', '}
+                <StyledLink href={routes.privacyPolicy()} rel="noopener noreferrer" target="_blank">
+                  {'Privacy Policy'}
+                </StyledLink>
+                {' and the '}
+                <StyledLink href={routes.cookiePolicy()} rel="noopener noreferrer" target="_blank">
+                  {'Cookie Policy'}
+                </StyledLink>
+                {'.'}
+              </p>
+            }
           />
           <AuthFormFooter>
             <Button color="primaryGradient" fullWidth type="submit" variant="contained">

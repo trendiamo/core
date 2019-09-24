@@ -118,6 +118,15 @@ const routes = {
   nullRoute() {
     return '/empty'
   },
+  termsAndConditions() {
+    return '/terms-and-conditions'
+  },
+  privacyPolicy() {
+    return '/privacy-policy'
+  },
+  cookiePolicy() {
+    return '/cookie-policy'
+  },
 }
 
 export default routes
