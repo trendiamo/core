@@ -1,14 +1,17 @@
 import AffiliatePartners from 'app/screens/affiliate-partners'
 import ContentCreation from 'app/screens/content-creation'
+import CookiePolicy from 'app/screens/cookie-policy'
 import ForgotPassword from 'auth/forgot-password'
 import LoginPage from 'auth/login'
 import NotFound from 'app/screens/not-found'
+import PrivacyPolicy from 'app/screens/privacy-policy'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
 import Revenues from 'app/screens/revenues'
 import routes from 'app/routes'
 import SignupConfirmPage from 'auth/signup/confirm'
 import SignupPage from 'auth/signup'
+import TermsAndConditions from 'app/screens/terms-and-conditions'
 import YourReferrals from 'app/screens/your-referrals'
 import { ExternalRoute, PrivateRoute, RootRedirect } from './router-helpers'
 import { Route, Switch } from 'react-router-dom'
@@ -75,6 +78,9 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
       <ExternalRoute component={SignupConfirmPage} path={routes.signupConfirm()} />
       <ExternalRoute component={RequestPasswordReset} path={routes.requestPasswordReset()} />
       <ExternalRoute component={ForgotPassword} path={routes.passwordReset()} />
+      <ExternalRoute component={TermsAndConditions} exact path={routes.termsAndConditions()} />
+      <ExternalRoute component={PrivacyPolicy} exact path={routes.privacyPolicy()} />
+      <ExternalRoute component={CookiePolicy} exact path={routes.cookiePolicy()} />
 
       <Route component={RootRedirect} exact path={routes.root()} />
       <Route component={NotFound} />
