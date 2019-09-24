@@ -9,7 +9,7 @@ const ActionContainer = styled.div`
   margin: 16px 0 10px;
 `
 
-const ChangePassword = ({ passwordForm, onFormSubmit, setFieldValue, togglePasswordForm, isResetButtonDisabled }) => (
+const SecurityForm = ({ passwordForm, onFormSubmit, setFieldValue, isResetButtonDisabled }) => (
   <form onSubmit={onFormSubmit}>
     <Field
       autoFocus
@@ -47,14 +47,11 @@ const ChangePassword = ({ passwordForm, onFormSubmit, setFieldValue, togglePassw
       >
         {'Reset'}
       </Button>
-      <Button color="white" inline onClick={togglePasswordForm} variant="contained">
-        {'Cancel'}
-      </Button>
     </ActionContainer>
   </form>
 )
 
-const ChangePassword1 = ({ handleClose, ...props }) => {
+const SecurityForm1 = ({ handleClose, ...props }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const [passwordForm, setPasswordForm] = useState({
@@ -96,7 +93,7 @@ const ChangePassword1 = ({ handleClose, ...props }) => {
   )
 
   return (
-    <ChangePassword
+    <SecurityForm
       {...props}
       isResetButtonDisabled={isResetButtonDisabled}
       onFormSubmit={onFormSubmit}
@@ -106,4 +103,4 @@ const ChangePassword1 = ({ handleClose, ...props }) => {
   )
 }
 
-export default ChangePassword1
+export default SecurityForm1

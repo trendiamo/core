@@ -7,6 +7,10 @@ module Api
         render json: current_user
       end
 
+      def show_details
+        render json: current_user, details: true
+      end
+
       def referrals
         referrals_info = User.where(referred_by_code: current_user.referral_code).map do |user|
           { user: user, state: user.orders.any? ? "approved" : "pending" }
@@ -17,6 +21,15 @@ module Api
       def update
         if current_user.update(user_params)
           render json: current_user
+        else
+          errors = current_user.errors.full_messages.map { |string| { title: string } }
+          render json: { errors: errors }, status: :unprocessable_entity
+        end
+      end
+
+      def update_details
+        if current_user.update(user_params)
+          render json: current_user, details: true
         else
           errors = current_user.errors.full_messages.map { |string| { title: string } }
           render json: { errors: errors }, status: :unprocessable_entity
@@ -45,7 +58,10 @@ module Api
 
       def user_params
         params.require(:user).permit(:first_name, :last_name, :currency, :social_media_url, :bio, :img_url,
-                                     img_rect: %i[x y width height])
+                                     :shipping_first_name, :shipping_last_name, :address_line1, :address_line2,
+                                     :zip_code, :city, :country, :payment_first_name, :payment_last_name,
+                                     :date_of_birth, :payment_address, :phone_number, :iban, :photo_id_front_url,
+                                     :photo_id_back_url, img_rect: %i[x y width height])
       end
     end
   end

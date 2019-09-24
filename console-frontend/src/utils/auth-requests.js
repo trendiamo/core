@@ -127,6 +127,8 @@ export const apiWebsiteSettingsUpdate = (id, body) => apiUpdateRequest(`${WEBSIT
 
 export const apiMe = () => apiGetRequest(ME_URL)
 export const apiMeUpdate = body => apiUpdateRequest(ME_URL, body)
+export const apiMeDetails = () => apiGetRequest(`${ME_URL}/details`)
+export const apiMeUpdateDetails = body => apiUpdateRequest(`${ME_URL}/details`, body)
 export const apiMeReferrals = () => apiGetRequest(`${ME_URL}/referrals`)
 export const apiMeRequestUpgrade = () => apiPostRequest(`${ME_URL}/request_upgrade`)
 export const apiOnboardingSet = body => apiUpdateRequest(ONBOARDING_URL, body)
