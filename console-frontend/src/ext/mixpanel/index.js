@@ -15,24 +15,26 @@ const mockUniqueId = () => {
   return mockUniqueId
 }
 
+let mpInitialized = false
+
 const trndMixpanel = {
   get_distinct_id() {
-    return this.initialized ? mixpanel.get_distinct_id() : mockUniqueId()
+    return mpInitialized ? mixpanel.get_distinct_id() : mockUniqueId()
   },
   init(mpToken, mpConfig, name) {
     if (mpToken && process.env.NODE_ENV === 'production') {
       mixpanel.init(mpToken, mpConfig, name)
-      this.initialized = true
+      mpInitialized = true
     }
   },
   initialized: false,
   time_event(eventName) {
-    if (this.initialized) {
+    if (mpInitialized) {
       mixpanel.time_event(eventName)
     }
   },
   track(eventName, properties, callback) {
-    if (this.initialized) {
+    if (mpInitialized) {
       mixpanel.track(eventName, properties, callback)
     } else {
       if (process.env.NODE_ENV !== 'production') {
@@ -42,7 +44,7 @@ const trndMixpanel = {
     }
   },
   reset() {
-    if (this.initialized) {
+    if (mpInitialized) {
       mixpanel.reset()
     } else {
       if (process.env.NODE_ENV !== 'production') {
@@ -51,7 +53,7 @@ const trndMixpanel = {
     }
   },
   identify(uniqueId) {
-    if (this.initialized) {
+    if (mpInitialized) {
       mixpanel.identify(uniqueId)
     } else {
       if (process.env.NODE_ENV !== 'production') {
@@ -61,7 +63,7 @@ const trndMixpanel = {
   },
   people: {
     set(prop, to, callback) {
-      if (this.initialized) {
+      if (mpInitialized) {
         mixpanel.track(prop, to, callback)
       } else {
         if (process.env.NODE_ENV !== 'production') {

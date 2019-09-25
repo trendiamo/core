@@ -95,7 +95,12 @@ const Login1 = () => {
       if (!requestError && !errors) auth.setUser(json.user)
       if (auth.isLoggedIn()) {
         mixpanel.identify(json.user.id)
-        mixpanel.people.set(json.user)
+        mixpanel.people.set({
+          $email: json.user.email,
+          $first_name: json.user.firstName,
+          $last_name: json.user.lastName,
+          $created: json.user.createdAt,
+        })
         mixpanel.track('Logged In', { hostname: window.location.hostname })
         window.location.href = routes.root()
       }
