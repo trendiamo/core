@@ -6,9 +6,14 @@ module Api
           self.resource = resource_class.confirm_by_token(params[:confirmation_token])
           yield resource if block_given?
 
-          base_url = resource.not_affiliate? ? ENV["FRONTEND_BASE_URL"] : ENV["UPTOUS_FRONTEND_BASE_URL"]
-          login = "#{base_url}/login##{resource.errors.empty? ? 'confirmed' : 'error'}"
-          redirect_to login
+          sign_in_and_redirect(resource)
+        end
+
+        private
+
+        def after_sign_in_path_for(user)
+          base_url = user.not_affiliate? ? ENV["FRONTEND_BASE_URL"] : ENV["UPTOUS_FRONTEND_BASE_URL"]
+          user.errors.empty? ? "#{base_url}/#confirmed" : "#{base_url}/login#error"
         end
       end
     end

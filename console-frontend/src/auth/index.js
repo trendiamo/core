@@ -4,12 +4,12 @@ const auth = {
   addListener(fn) {
     this.listeners.push(fn)
   },
-  clear() {
+  clear({ isError } = {}) {
     localStorage.removeItem('CSRF-TOKEN')
     localStorage.removeItem('authUser')
     localStorage.removeItem('loggedIn')
     localStorage.removeItem('accounts')
-    window.location.href = routes.login()
+    window.location.href = `${routes.login()}${isError ? '#error' : ''}`
   },
   getSlug() {
     return window.location.pathname.startsWith('/a/') && window.location.pathname.split('/')[2]

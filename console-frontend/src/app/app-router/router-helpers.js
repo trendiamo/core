@@ -2,7 +2,7 @@ import auth from 'auth'
 import NotFound from 'app/screens/not-found'
 import React, { useCallback, useEffect } from 'react'
 import routes from 'app/routes'
-import { apiAccountsShow, apiRequest, isLocalStorageAccurate } from 'utils'
+import { apiAccountsShow, apiMe, apiRequest, isLocalStorageAccurate } from 'utils'
 import { Redirect, Route } from 'react-router-dom'
 
 const PrivateRouteRender = ({
@@ -114,7 +114,24 @@ const accountRedirect = () => {
   }
 }
 
-export const RootRedirect = () => <Redirect to={rootRedirect()} />
+export const RootRedirect = () => {
+  useEffect(() => {
+    ;(async () => {
+      if (window.location.hash === '#confirmed') {
+        const { json, requestError } = await apiRequest(apiMe, [])
+        if (requestError) {
+          auth.clear({ isError: true })
+          return // auth.clear does the redirect already
+        } else {
+          auth.setUser(json)
+        }
+      }
+      window.location = rootRedirect()
+    })()
+  }, [])
+
+  return null
+}
 
 export const AccountRedirect = () => {
   const destination = accountRedirect()
