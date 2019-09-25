@@ -64,7 +64,7 @@ const trndMixpanel = {
   people: {
     set(prop, to, callback) {
       if (mpInitialized) {
-        mixpanel.track(prop, to, callback)
+        mixpanel.people.set(prop, to, callback)
       } else {
         if (process.env.NODE_ENV !== 'production') {
           console.info('%c mixpanel.people.set()', 'color: #a271cf', prop, to)
