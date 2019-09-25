@@ -79,6 +79,7 @@ import {
   apiSignUpWithInvite,
 } from './requests'
 import { extractErrors } from 'utils/shared'
+import { parse } from 'query-string'
 
 export { apiGetCsrfToken, apiPasswordEmailLink, apiPasswordReset, apiSignIn, apiSignUp, apiSignUpWithInvite }
 export {
@@ -231,6 +232,9 @@ const isProduction = process.env.NODE_ENV === 'production'
 export const showUpToUsBranding = () => {
   if (isProduction) {
     return ['app.uptous.co', 'app-staging.uptous.co'].includes(window.location.hostname)
+  }
+  if (parse(window.location.search).branding) {
+    return parse(window.location.search).branding === 'uptous'
   }
   return process.env.REACT_APP_BRANDING === 'uptous'
 }

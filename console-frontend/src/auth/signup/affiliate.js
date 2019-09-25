@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
-import { AuthFormFooter, AuthStyledForm } from 'auth/components'
+import { AuthFormFooter } from 'auth/components'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
@@ -95,14 +95,14 @@ const AffiliateSignup = () => {
   )
 
   return (
-    <AuthLayout title="Start monetizing positive influence">
+    <AuthLayout>
       {state.isFormSubmitted ? (
         <>
           <StyledDoneIcon />
           <div>{'Confirmation e-mail sent. Please confirm your account by following the link there.'}</div>
         </>
       ) : (
-        <AuthStyledForm onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
           <Field
             autoFocus
             label="First Name"
@@ -189,7 +189,7 @@ const AffiliateSignup = () => {
               <Link to={routes.login()}>{'Login here'}</Link>
             </p>
           </AuthFormFooter>
-        </AuthStyledForm>
+        </form>
       )}
     </AuthLayout>
   )

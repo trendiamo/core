@@ -52,15 +52,6 @@ const AuthMessage = styled.div`
   }
 `
 
-const AuthStyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (min-width: 900px) {
-    display: block;
-  }
-`
-
 const AuthFormFooter = styled.div`
   padding-top: 2rem;
 
@@ -68,13 +59,6 @@ const AuthFormFooter = styled.div`
   p {
     margin: 0 0 1rem;
   }
-
-  @media (max-width: 900px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
 `
 
-export { AuthButton, AuthLink, AuthStyledForm, AuthFormFooter, AuthTitle, AuthText, AuthMessage }
+export { AuthButton, AuthLink, AuthFormFooter, AuthTitle, AuthText, AuthMessage }

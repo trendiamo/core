@@ -28,8 +28,6 @@ const Content = styled.div`
   flex-direction: column;
   flex-grow: 1;
   position: relative;
-  padding: 14px;
-  padding-top: 4px;
 `
 
 const InnerContent = styled.div`
