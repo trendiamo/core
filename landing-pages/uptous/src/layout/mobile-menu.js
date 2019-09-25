@@ -1,11 +1,10 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 
 import Button from '../components/button'
 import CloseIcon from '../images/close-icon.svg'
 import LogoFullImg from '../images/logo-full'
-import { openModal } from '../utils'
 
 const LogoFullContainer = styled.div``
 const CloseIconContainer = styled.div`
@@ -86,16 +85,7 @@ const removeMobileMenu = () => {
   document.body.classList.remove('mobile-menu-open')
 }
 
-const onSignupClick = () => {
-  if (!window.hbspt) return
-  openModal('.get-started-modal-content')
-  window.hbspt.forms.create({
-    css: '',
-    portalId: '5559593',
-    formId: 'd2106863-b4fd-4591-a806-7411e7798762',
-    target: '.get-started-modal-form',
-  })
-}
+const onSignupClick = () => navigate('/signup')
 
 const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
   const onClick = useCallback(
