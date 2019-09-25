@@ -4,7 +4,6 @@ import Button from 'shared/button'
 import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import routes from 'app/routes'
 import { apiRequest, apiSignUpWithInvite } from 'utils'
-import { AuthStyledForm } from 'auth/components'
 import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
@@ -76,7 +75,7 @@ const SignupConfirm = () => {
 
   return (
     <AuthLayout title="Start selling with social!">
-      <AuthStyledForm onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
         <Field
           autoComplete="email"
           label="E-mail"
@@ -110,7 +109,7 @@ const SignupConfirm = () => {
             {'Signup'}
           </Button>
         </div>
-      </AuthStyledForm>
+      </form>
     </AuthLayout>
   )
 }

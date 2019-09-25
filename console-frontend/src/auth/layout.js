@@ -2,38 +2,28 @@ import frekklsLoginImage from 'assets/img/background/frekkls-login.png'
 import React from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
-import uptousLoginImage from 'assets/img/background/uptous-login.jpg'
 import { CssBaseline, Typography } from '@material-ui/core'
 import { ReactComponent as FrekklsLogo } from 'assets/icons/frekkls-logo.svg'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { showUpToUsBranding } from 'utils'
 import { ReactComponent as UpToUsLogo } from 'assets/icons/uptous-logo.svg'
-import { ReactComponent as WaveLoginIcon } from 'assets/icons/wave-login.svg'
 
 const AuthMain = styled.main`
   display: block;
-  padding: 0 20px;
-  margin: 0 auto 120px;
   width: 100%;
 
   @media (min-width: 900px) {
-    padding: 0px 40px;
+    width: ${showUpToUsBranding() ? '100%' : '50%'};
     display: flex;
     justify-content: space-between;
     text-align: center;
-    max-width: 1200px;
-  }
-
-  @media (min-width: 1050px) {
-    padding: 0 85px;
   }
 `
 
 const AuthStyledDiv = styled.div`
-  text-align: center;
   position: relative;
   z-index: 100;
-  padding: 0px 30px;
+  padding: 60px 30px;
 
   margin: auto;
   width: auto;
@@ -42,7 +32,7 @@ const AuthStyledDiv = styled.div`
   flex-shrink: 0;
 
   @media (min-width: 900px) {
-    padding: 0 24px 32px 0px;
+    padding: 60px 24px 60px 0px;
     text-align: left;
     display: block;
     width: 380px;
@@ -71,62 +61,8 @@ const Background = styled.div`
   }
 `
 
-const UpToUsBackgroundContainer = styled(Background)`
-  display: flex;
-  user-select: none;
-
-  @media (min-width: 900px) {
-    background-image: url(${uptousLoginImage});
-    background-position-x: 66%;
-    background-size: cover;
-  }
-`
-
-const WaveContainer = styled.div`
-  background: white;
-  border-right: 1px solid white;
-  position: relative;
-  visibility: hidden;
-  width: 41%;
-  margin-left: -14px;
-
-  @media (min-width: 900px) {
-    visibility: visible;
-  }
-`
-
-const Wave = styled(WaveLoginIcon)`
-  height: 101%;
-  left: 100%;
-  position: absolute;
-  -webkit-user-drag: none;
-`
-
-const UpToUsBackground = () => (
-  <UpToUsBackgroundContainer>
-    <WaveContainer>
-      <Wave />
-    </WaveContainer>
-  </UpToUsBackgroundContainer>
-)
-
 const LogotypeContainer = styled.div`
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 30px 0;
-
-  @media (min-width: 900px) {
-    display: block;
-    margin: 60px auto 60px;
-    padding: 0 40px;
-    max-width: 1200px;
-  }
-
-  @media (min-width: 1050px) {
-    padding: 0 85px;
-  }
+  margin-bottom: 30px;
 `
 
 const StyledUpToUsLogo = styled(UpToUsLogo)`
@@ -137,27 +73,70 @@ const StyledFrekklsLogo = styled(FrekklsLogo)`
   width: 140px;
 `
 
-const Logotype = () => (
-  <LogotypeContainer>{showUpToUsBranding() ? <StyledUpToUsLogo /> : <StyledFrekklsLogo />}</LogotypeContainer>
-)
-
 const StyledTypography = styled(Typography)`
   ${showUpToUsBranding()
     ? 'font-size: 30px; font-weight: 900; text-transform: uppercase;'
     : 'font-size: 33.4px; font-weight: 300;'}
 `
 
+const AuthFormContainer = styled.div`
+  background-color: #fff;
+  flex: 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const UpToUsSideContent = styled.div`
+  background-color: #0f7173;
+  color: #fff;
+  min-height: 100vh;
+  flex: 5;
+  text-align: left;
+  padding: 60px;
+
+  h2 {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 13.34vw;
+    font-weight: 900;
+    line-height: 0.9;
+    @media (min-width: 375px) {
+      font-size: 50px;
+    }
+    @media (min-width: 1000px) {
+      font-size: calc(20px + 4vw);
+    }
+  }
+
+  p {
+    font-size: 24px;
+    line-height: 1.225;
+    @media (min-width: 1000px) {
+      font-size: calc(0.8rem + 1.2vw);
+    }
+  }
+`
+
 const Layout = ({ children, title }) => (
   <>
     <CssBaseline />
     <MuiThemeProvider theme={theme}>
-      {showUpToUsBranding() ? <UpToUsBackground /> : <Background />}
-      <Logotype />
+      {!showUpToUsBranding() && <Background />}
       <AuthMain>
-        <AuthStyledDiv elevation={3}>
-          <StyledTypography variant="h2">{title}</StyledTypography>
-          {children}
-        </AuthStyledDiv>
+        <AuthFormContainer>
+          <AuthStyledDiv elevation={3}>
+            <LogotypeContainer>{showUpToUsBranding() ? <StyledUpToUsLogo /> : <StyledFrekklsLogo />}</LogotypeContainer>
+            {title && <StyledTypography variant="h2">{title}</StyledTypography>}
+            {children}
+          </AuthStyledDiv>
+        </AuthFormContainer>
+        {showUpToUsBranding() && (
+          <UpToUsSideContent>
+            <h2>{'Start Monetizing Positive Influence'}</h2>
+            <p>{'Become an #impacter and earn while promoting the brands that create positive impact.'}</p>
+          </UpToUsSideContent>
+        )}
       </AuthMain>
     </MuiThemeProvider>
   </>

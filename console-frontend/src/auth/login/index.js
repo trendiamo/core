@@ -6,7 +6,7 @@ import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import { apiRequest, apiSignIn, showUpToUsBranding } from 'utils'
-import { AuthFormFooter, AuthStyledForm } from 'auth/components'
+import { AuthFormFooter } from 'auth/components'
 import { Field } from 'shared/form-elements'
 import { Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
@@ -35,8 +35,8 @@ const Footer = () => (
 )
 
 const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
-  <AuthLayout title={showUpToUsBranding() ? 'Collectively shape a better tomorrow' : "Let's log you in!"}>
-    <AuthStyledForm onSubmit={loginSubmit}>
+  <AuthLayout title={!showUpToUsBranding() && "Let's log you in!"}>
+    <form onSubmit={loginSubmit}>
       <Field
         autoComplete="email"
         autoFocus
@@ -57,7 +57,7 @@ const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
         value={loginForm.password}
       />
       <Footer />
-    </AuthStyledForm>
+    </form>
   </AuthLayout>
 )
 
