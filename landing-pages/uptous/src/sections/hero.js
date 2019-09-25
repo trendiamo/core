@@ -1,23 +1,14 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
+import { navigate } from 'gatsby'
 
 import Button from '../components/button'
 import Container from '../components/container'
 import HeroImg from '../images/hero'
 import Section from '../components/section'
-import { openModal } from '../utils'
 import { useParallax } from '../hooks'
 
-const onGetStartedClick = () => {
-  if (!window.hbspt) return
-  openModal('.get-started-modal-content')
-  window.hbspt.forms.create({
-    css: '',
-    portalId: '5559593',
-    formId: 'd2106863-b4fd-4591-a806-7411e7798762',
-    target: '.get-started-modal-form',
-  })
-}
+const onGetStartedClick = () => navigate('/signup')
 
 const Heading = styled.h1``
 const Subheading = styled.div``

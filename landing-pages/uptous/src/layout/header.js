@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 
 import Button from '../components/button'
 import LogoBlack from '../images/logo-black.svg'
 import MenuIcon from '../images/menu-icon.svg'
 import MobileMenu from './mobile-menu'
-import { openModal } from '../utils'
 
 const StyledMenuIcon = styled(MenuIcon)``
 const MenuIconContainer = styled.div``
@@ -16,16 +15,7 @@ const toggleMobileMenu = () => {
   document.body.classList.toggle('mobile-menu-open')
 }
 
-const onSignupClick = () => {
-  if (!window.hbspt) return
-  openModal('.get-started-modal-content')
-  window.hbspt.forms.create({
-    css: '',
-    portalId: '5559593',
-    formId: 'd2106863-b4fd-4591-a806-7411e7798762',
-    target: '.get-started-modal-form',
-  })
-}
+const onSignupClick = () => navigate('/signup')
 
 const Header = ({ className, headerLinks = [], siteTitle }, ref) => {
   const onClick = useCallback(event => {

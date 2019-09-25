@@ -19,17 +19,17 @@ const Main = styled.main`
   flex-direction: column;
 `
 
-const Layout = ({ children, data }) => (
+const Layout = ({ children, data, light }) => (
   <Main>
     <Seo />
     <Helmet>
       <link href={favicon} rel="shortcut icon" type="image/png" />
       <meta name="hbspt-locale" value="en" />
     </Helmet>
-    <Header />
+    {!light && <Header />}
     {children}
-    <Footer />
-    <ModalContents data={data} />
+    {!light && <Footer />}
+    {data && <ModalContents data={data} />}
   </Main>
 )
 
