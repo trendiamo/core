@@ -100,6 +100,7 @@ const Login1 = () => {
           $first_name: json.user.firstName,
           $last_name: json.user.lastName,
           $created: json.user.createdAt,
+          'Social Media URL': json.user.socialMediaUrl,
         })
         mixpanel.track('Logged In', { hostname: window.location.hostname })
         window.location.href = routes.root()
