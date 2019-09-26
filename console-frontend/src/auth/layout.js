@@ -9,12 +9,13 @@ import { showUpToUsBranding } from 'utils'
 import { ReactComponent as UpToUsLogo } from 'assets/icons/uptous-logo.svg'
 
 const AuthMain = styled.main`
-  display: block;
+  display: flex;
+  flex-direction: column-reverse;
   width: 100%;
 
   @media (min-width: 900px) {
     width: ${showUpToUsBranding() ? '100%' : '50%'};
-    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     text-align: center;
   }
@@ -23,10 +24,10 @@ const AuthMain = styled.main`
 const AuthStyledDiv = styled.div`
   position: relative;
   z-index: 100;
-  padding: 60px 30px;
+  padding: 60px 0;
 
   margin: auto;
-  width: auto;
+  width: 86%;
   max-width: 380px;
   min-width: 200px;
   flex-shrink: 0;
@@ -90,10 +91,14 @@ const AuthFormContainer = styled.div`
 const UpToUsSideContent = styled.div`
   background-color: #0f7173;
   color: #fff;
-  min-height: 100vh;
   flex: 5;
   text-align: left;
-  padding: 60px;
+  padding: 20px;
+
+  @media (min-width: 900px) {
+    min-height: 100vh;
+    padding: 60px;
+  }
 
   h2 {
     margin: 0;
