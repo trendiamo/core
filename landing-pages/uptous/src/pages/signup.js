@@ -111,7 +111,11 @@ const SignupPage = styled(({ className }) => (
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     font-size: 0.8rem;
-    width: 10rem;
+    width: 11rem;
+    height: 60px;
+    span {
+      line-height: 60px;
+    }
   }
 
   @media (min-width: 1000px) {
