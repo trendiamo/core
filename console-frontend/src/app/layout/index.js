@@ -30,6 +30,12 @@ const Content = styled.div`
   position: relative;
 `
 
+const ContentNextToSidebar = styled(Content)`
+  padding-top: 4px;
+  padding-left: 14px;
+  padding-right: 14px;
+`
+
 const InnerContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -88,7 +94,7 @@ const FilledLayout = ({ children, location }) => {
         )}
         <ContentWithSidebar>
           <Sidebar sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-          <Content>{children}</Content>
+          <ContentNextToSidebar>{children}</ContentNextToSidebar>
         </ContentWithSidebar>
       </AppFrame>
     </Root>
