@@ -31,9 +31,7 @@ const Content = styled.div`
 `
 
 const ContentNextToSidebar = styled(Content)`
-  padding-top: 4px;
-  padding-left: 14px;
-  padding-right: 14px;
+  padding: 4px 14px 14px 14px;
 `
 
 const InnerContent = styled.div`
