@@ -29,7 +29,7 @@ const AccountSignup = () => {
       } else if (action.type === 'mergeFormCallback') {
         return { ...state, form: { ...state.form, ...action.callback(state.form) } }
       } else if (action.type === 'setFormSubmitting') {
-        return { ...state, isFormSubmitting: true }
+        return { ...state, isFormSubmitting: action.value }
       } else if (action.type === 'setFormSubmitted') {
         return { ...state, isFormSubmitted: action.value, isFormSubmitting: false }
       } else {
@@ -53,7 +53,7 @@ const AccountSignup = () => {
 
   const mergeForm = useCallback(value => dispatch({ type: 'mergeForm', value }), [dispatch])
   const mergeFormCallback = useCallback(callback => dispatch({ type: 'mergeFormCallback', callback }), [dispatch])
-  const setFormSubmitting = useCallback(() => dispatch({ type: 'setFormSubmitting' }), [dispatch])
+  const setFormSubmitting = useCallback(value => dispatch({ type: 'setFormSubmitting', value }), [dispatch])
   const setFormSubmitted = useCallback(value => dispatch({ type: 'setFormSubmitted', value }), [dispatch])
 
   const setFieldValue = useCallback(event => mergeForm({ [event.target.name]: event.target.value }), [mergeForm])
@@ -73,12 +73,14 @@ const AccountSignup = () => {
   const onSubmit = useCallback(
     async event => {
       event.preventDefault()
-      setFormSubmitting()
+      setFormSubmitting(true)
       const { errors, requestError } = await apiRequest(apiSignUp, [{ user: state.form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!requestError && !errors) {
         setFormSubmitted(true)
+      } else {
+        setFormSubmitting(false)
       }
     },
     [enqueueSnackbar, setFormSubmitted, setFormSubmitting, state.form]
