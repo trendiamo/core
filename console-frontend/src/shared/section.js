@@ -1,44 +1,85 @@
-import React, { memo } from 'react'
+import Divider from './form-elements/divider'
+import omit from 'lodash.omit'
+import React, { memo, useCallback, useMemo, useState } from 'react'
+import SectionTitle from './form-elements/section-title'
 import styled from 'styled-components'
-import { Divider, FlexBar, Header } from 'shared/form-elements'
-import { Paper } from '@material-ui/core'
+import { Collapse, Paper } from '@material-ui/core'
+import { showUpToUsBranding } from 'utils'
 
-const StyledDiv = styled.div`
+const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
 `
 
-const StyledPaper = styled(Paper)`
+const StyledPaper = styled(props => <Paper {...omit(props, ['foldable'])} />)`
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 16px 24px 24px;
   & + * {
-    margin-top: 10px;
+    margin-top: ${showUpToUsBranding() ? '18px' : '10px'};
   }
+  ${({ foldable }) => foldable && 'padding-top: 16px;'}
+  ${showUpToUsBranding() &&
+    'border-radius: 0; box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.07);'}
 `
 
-const StyledFlexBar = styled(FlexBar)`
-  padding-bottom: 24px;
+const SectionContent = styled(props => <div {...omit(props, ['foldable'])} />)`
+  padding: ${({ foldable }) => (!foldable ? (showUpToUsBranding() ? '16px' : '16px 24px') : '0')};
+  height: 100%;
 `
 
-const Section = ({ actions, className, children, title, ...props }) => (
-  <StyledPaper className={className} {...props}>
-    <StyledDiv>
-      {title && (
-        <>
-          <StyledFlexBar>
-            <Header variant="subtitle1">{title}</Header>
-            {actions}
-          </StyledFlexBar>
-          <Divider style={{ marginBottom: '1rem' }} />
-        </>
-      )}
-      {children}
-    </StyledDiv>
-  </StyledPaper>
-)
+const Section = ({
+  actions,
+  className,
+  children,
+  title,
+  ellipsizeTitle,
+  foldable,
+  dragHandle,
+  hideDragHandle,
+  ...props
+}) => {
+  const [folded, setFolded] = useState(false)
+
+  const toggleFolded = useCallback(
+    () => {
+      setFolded(!folded)
+    },
+    [folded]
+  )
+
+  const showDivider = useMemo(() => !showUpToUsBranding() || foldable, [foldable])
+
+  return (
+    <StyledPaper className={className} elevation={4} foldable={foldable} {...props}>
+      <Container>
+        {title && (
+          <>
+            <SectionTitle
+              actions={actions}
+              dragHandle={dragHandle}
+              ellipsize={ellipsizeTitle}
+              foldable={foldable}
+              folded={folded}
+              hideDragHandle={hideDragHandle}
+              title={title}
+              toggleFolded={toggleFolded}
+            />
+            {showDivider && <Divider folded={folded} />}
+          </>
+        )}
+        {foldable ? (
+          <Collapse in={!folded} timeout="auto">
+            <SectionContent foldable={foldable}>{children}</SectionContent>
+          </Collapse>
+        ) : (
+          <SectionContent>{children}</SectionContent>
+        )}
+      </Container>
+    </StyledPaper>
+  )
+}
 
 export default memo(Section)

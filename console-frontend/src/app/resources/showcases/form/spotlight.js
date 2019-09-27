@@ -4,7 +4,7 @@ import React, { memo, useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import Tooltip from 'shared/tooltip'
-import { AddItemButton, Cancel, FormSection } from 'shared/form-elements'
+import { AddItemButton, Cancel, FormSection, SubSection } from 'shared/form-elements'
 import { apiSellersAutocomplete } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
@@ -146,24 +146,19 @@ const Spotlight = ({
   )
 
   return (
-    <Section>
-      <FormSection
-        actions={
-          allowDelete && (
-            <Cancel
-              disabled={isCropping || isFormLoading || isUploaderLoading}
-              index={index}
-              onClick={deleteSpotlight}
-            />
-          )
-        }
-        dragHandle
-        ellipsize
-        foldable
-        folded={folded}
-        hideTop
-        title={spotlight.id ? `${spotlight.__seller && spotlight.__seller.name}'s Spotlight` : 'New Spotlight'}
-      >
+    <Section
+      actions={
+        allowDelete && (
+          <Cancel disabled={isCropping || isFormLoading || isUploaderLoading} index={index} onClick={deleteSpotlight} />
+        )
+      }
+      dragHandle
+      ellipsizeTitle
+      foldable
+      folded={folded}
+      title={spotlight.id ? `${spotlight.__seller && spotlight.__seller.name}'s Spotlight` : 'New Spotlight'}
+    >
+      <SubSection>
         <Autocomplete
           autocomplete={apiSellersAutocomplete}
           autoFocus={index > 0 && !spotlight.id}
@@ -194,29 +189,29 @@ const Spotlight = ({
             title={spotlight.__seller.animatedImg.url ? null : "This seller doesn't have an animated image"}
           />
         )}
-        <div style={{ marginTop: '8px' }}>
-          <FormSection foldable title="Product Selection">
-            {spotlight.productPicksAttributes && (
-              <ProductPicks
-                isCropping={isCropping}
-                isFormLoading={isFormLoading}
-                isUploaderLoading={isUploaderLoading}
-                onFocus={onFocus}
-                onSortEnd={onSortEnd}
-                productPicksAttributes={spotlight.productPicksAttributes}
-                sellerId={spotlight.sellerId}
-                setIsCropping={setIsCropping}
-                setIsUploaderLoading={setIsUploaderLoading}
-                setProductPickForm={setProductPickForm}
-              />
-            )}
-            <AddItemButton
-              disabled={isCropping || isFormLoading || isUploaderLoading}
-              message="Add Product"
-              onClick={addProductPick}
-            />{' '}
-          </FormSection>
-        </div>
+      </SubSection>
+      <FormSection foldable manualPadding title="Product Selection">
+        {spotlight.productPicksAttributes && (
+          <ProductPicks
+            isCropping={isCropping}
+            isFormLoading={isFormLoading}
+            isUploaderLoading={isUploaderLoading}
+            onFocus={onFocus}
+            onSortEnd={onSortEnd}
+            productPicksAttributes={spotlight.productPicksAttributes}
+            sellerId={spotlight.sellerId}
+            setIsCropping={setIsCropping}
+            setIsUploaderLoading={setIsUploaderLoading}
+            setProductPickForm={setProductPickForm}
+          />
+        )}
+        <SubSection>
+          <AddItemButton
+            disabled={isCropping || isFormLoading || isUploaderLoading}
+            message="Add Product"
+            onClick={addProductPick}
+          />{' '}
+        </SubSection>
       </FormSection>
     </Section>
   )

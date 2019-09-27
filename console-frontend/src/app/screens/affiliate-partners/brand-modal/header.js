@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const BrandLogoContainer = styled.div`
   border-radius: 8px;
-  border: 2px solid #333;
+  border: 2px solid #e7ecef;
   width: 120px;
   height: 120px;
   background: #fff;

@@ -6,15 +6,9 @@ import React, { useCallback, useState } from 'react'
 import SecurityForm from './security-form'
 import ShippingForm from './shipping-form'
 import styled from 'styled-components'
-import { Tab as MuiTab, Tabs as MuiTabs } from '@material-ui/core'
+import { Tab as MuiTab, Tabs } from '@material-ui/core'
 
 const tabs = auth.isAffiliate() ? ['Profile', 'Shipping', 'Payments', 'Security'] : ['Profile', 'Security']
-
-const Tabs = styled(MuiTabs)`
-  div[role='tablist'] > span {
-    background: #0f7173;
-  }
-`
 
 const Tab = styled(MuiTab)`
   min-width: 100px;
@@ -22,6 +16,7 @@ const Tab = styled(MuiTab)`
 
 const ContentContainer = styled.div`
   min-height: 700px;
+  padding: 24px;
 `
 
 const TabsContainer = ({ tabs, selectedTab, setSelectedTab }) => {
@@ -33,7 +28,7 @@ const TabsContainer = ({ tabs, selectedTab, setSelectedTab }) => {
   )
 
   return (
-    <Tabs aria-label="User settings" onChange={onChange} value={selectedTab}>
+    <Tabs aria-label="User settings" indicatorColor="primary" onChange={onChange} value={selectedTab}>
       {tabs.map(tab => (
         <Tab key={tab} label={tab} />
       ))}
@@ -41,10 +36,9 @@ const TabsContainer = ({ tabs, selectedTab, setSelectedTab }) => {
   )
 }
 
-const DialogContent = ({ handleClose, selectedTab, setSelectedTab }) => {
+const DialogContent = ({ handleClose, selectedTab }) => {
   return (
     <ContentContainer>
-      <TabsContainer selectedTab={selectedTab} setSelectedTab={setSelectedTab} tabs={tabs} />
       {auth.isAffiliate() ? (
         selectedTab === 0 ? (
           <ProfileForm />
@@ -71,11 +65,13 @@ const UserSettings = ({ open, setOpen }) => {
 
   return (
     <Dialog
-      content={<DialogContent handleClose={handleClose} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />}
+      content={<DialogContent handleClose={handleClose} selectedTab={selectedTab} />}
       fullWidth
       handleClose={handleClose}
+      hasManualPadding
       maxWidth="sm"
       open={open}
+      title={<TabsContainer selectedTab={selectedTab} setSelectedTab={setSelectedTab} tabs={tabs} />}
     />
   )
 }

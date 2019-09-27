@@ -25,7 +25,12 @@ const StyledDrawer = styled(Drawer)`
         ? `
       background: #fff;
       padding-left: 10px;
-      box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.24), 0 0 16px 0 rgba(0, 0, 0, 0.18);
+      box-shadow: ${
+        showUpToUsBranding()
+          ? '8px 0 8px 0 rgba(0, 0, 0, 0.065)'
+          : '0 16px 16px 0 rgba(0, 0, 0, 0.24), 0 0 16px 0 rgba(0, 0, 0, 0.18)'
+      };
+
       white-space: nowrap;
       width: ${drawerWidth}px;
       z-index: 5000;

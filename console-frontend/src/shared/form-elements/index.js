@@ -2,6 +2,7 @@ import Actions from './actions'
 import AddItemButton from './add-item-button'
 import AddItemContainer from './add-item-container'
 import Cancel from './cancel'
+import Checkbox from './checkbox'
 import Divider from './divider'
 import Field from './field'
 import FlexBar from './flex-bar'
@@ -16,6 +17,7 @@ import PreviewModal from './preview-modal'
 import Prompt from './prompt'
 import SaveButton from './save-button'
 import Select from './select'
+import SubSection from './sub-section'
 
 export {
   Actions,
@@ -36,4 +38,6 @@ export {
   PreviewModal,
   Label,
   IconButton,
+  Checkbox,
+  SubSection,
 }

@@ -1,14 +1,13 @@
 import auth from 'auth'
 import AvgCartValue from './avg-cart-value'
-import Button from 'shared/button'
 import ConversionRate from './conversion-rate'
+import DatePicker from 'shared/form-elements/date-picker'
 import ErrorMessage from './error-message'
 import MostInteractedModules from './most-interacted-modules'
 import React, { useMemo, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
-import { DatePicker } from 'material-ui-pickers'
 import * as dateFns from 'date-fns'
 
 const appBarContent = { title: 'Data Dashboard' }
@@ -50,37 +49,10 @@ const computeCurrentDate = (minDate, maxDate) => {
   }
 }
 
-const DatePickerValue = styled.div`
-  color: #ff6641;
-  padding-left: 5px;
-`
-
-const DatePickerComponent = ({ onClick, label, value }) => {
-  return (
-    <Button color="white" onClick={onClick} variant="contained">
-      <div>{`${label}:`}</div>
-      <DatePickerValue>{value}</DatePickerValue>
-    </Button>
-  )
-}
-
-const DateSelector = ({ maxDate, minDate, value, setDate }) => (
-  <DatePicker
-    format="MMMM"
-    label="Month"
-    maxDate={maxDate}
-    minDate={minDate}
-    onChange={setDate}
-    TextFieldComponent={DatePickerComponent}
-    value={value}
-    views={['year', 'month']}
-  />
-)
-
 const DateDashboardContent = styled(({ className, date, dates, maxDate, minDate, setDate }) => {
   return (
     <Section
-      actions={<DateSelector maxDate={maxDate} minDate={minDate} setDate={setDate} value={date} />}
+      actions={<DatePicker maxDate={maxDate} minDate={minDate} setDate={setDate} value={date} />}
       className={className}
       title="Data Dashboard"
     >

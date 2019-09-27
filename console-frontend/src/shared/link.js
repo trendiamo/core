@@ -4,14 +4,16 @@ import styled from 'styled-components'
 import { Link as RouteLink } from 'react-router-dom'
 import { showUpToUsBranding } from 'utils'
 
-const StyledRouteLink = styled(props => <RouteLink {...omit(props, ['isText'])} />)`
-  ${({ isText }) => (showUpToUsBranding() && isText ? 'color: #128976;' : 'text-decoration: none;')}
+const Container = styled(props => <span {...omit(props, ['isText'])} />)`
+  a {
+    ${({ isText }) => (showUpToUsBranding() && isText ? 'color: #128976;' : 'text-decoration: none;')}
+  }
 `
 
-const Link = ({ to = '/', children }) => (
-  <StyledRouteLink isText={typeof children === 'string'} to={to}>
-    {children}
-  </StyledRouteLink>
+const Link = ({ children, to, ...props }) => (
+  <Container isText={typeof children === 'string'}>
+    {to ? <RouteLink to={to}>{children}</RouteLink> : <a {...props}>{children}</a>}
+  </Container>
 )
 
 export default Link

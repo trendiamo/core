@@ -1,6 +1,7 @@
 import AspectRatio from 'react-aspect-ratio'
 import auth from 'auth'
 import Button from 'shared/button'
+import CheckCircle from 'shared/check-circle'
 import Dialog from 'shared/dialog'
 import FileUploader from 'shared/file-uploader'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -9,7 +10,6 @@ import styled from 'styled-components'
 import { DialogActionsContainer, StyledButton } from './shared'
 import { Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { ReactComponent as SelectIcon } from 'assets/icons/select.svg'
 import { showUpToUsBranding } from 'utils'
 
 const Image = styled.img`
@@ -31,17 +31,6 @@ const Image = styled.img`
     border-width: 3px;
     opacity: 0.9;
   }
-`
-
-const CheckBoxContainer = styled.div`
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 24px;
-  height: 24px;
-  background: ${showUpToUsBranding() ? '#0f7173' : 'linear-gradient(90deg, #FF6F61, #FE5442)'};
-  border-radius: 50%;
-  padding: 1px;
 `
 
 const DialogSubtitleLink = styled(Link)`
@@ -97,6 +86,12 @@ const DialogActionsGallery = ({ activeImage, onGalleryDoneClick, onFileUpload, o
   )
 }
 
+const CheckCircleContainer = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+`
+
 const GalleryImage = ({ isActive, onImageClick, image }) => {
   const newOnImageClick = useCallback(() => onImageClick(image), [onImageClick, image])
 
@@ -105,9 +100,9 @@ const GalleryImage = ({ isActive, onImageClick, image }) => {
       <AspectRatio style={{ width: '100%' }}>
         <Image id={`image-${image.id}`} isActive={isActive} onClick={newOnImageClick} src={image.url} />
         {isActive && (
-          <CheckBoxContainer>
-            <SelectIcon />
-          </CheckBoxContainer>
+          <CheckCircleContainer>
+            <CheckCircle />
+          </CheckCircleContainer>
         )}
       </AspectRatio>
     </Grid>

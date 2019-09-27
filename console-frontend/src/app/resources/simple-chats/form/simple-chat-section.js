@@ -3,14 +3,13 @@ import React, { useCallback, useMemo, useState } from 'react'
 import Section from 'shared/section'
 import SimpleChatMessagesContainer from './simple-chat-messages'
 import styled from 'styled-components'
-import { AddItemButton, Cancel, Field, FormSection } from 'shared/form-elements'
+import { AddItemButton, Cancel, Field, SubSection } from 'shared/form-elements'
 import { arrayMove } from 'react-sortable-hoc'
 import { atLeastOneNonBlankCharInputProps } from 'utils'
 import { Menu, MenuItem as MUIMenuItem } from '@material-ui/core'
 import { MessageOutlined, OndemandVideo, PhotoLibrary, Redeem } from '@material-ui/icons'
 
 const StyledAddItemButton = styled(props => <AddItemButton {...omit(props, ['adjustMargin'])} />)`
-  margin-bottom: -16px;
   ${({ adjustMargin }) => adjustMargin && 'margin-top: 16px;'}
 `
 
@@ -165,33 +164,32 @@ const SimpleChatSection = ({
   if (simpleChatSection._destroy) return null
 
   return (
-    <Section>
-      <FormSection
-        actions={
-          allowDelete && (
-            <Cancel
-              disabled={isCropping || isFormLoading || isUploaderLoading}
-              index={simpleChatSectionIndex}
-              onClick={deleteSimpleChatSection}
-            />
-          )
-        }
-        dragHandle
-        ellipsize
-        foldable
-        folded={folded}
-        hideDragHandle={simpleChatSectionIndex === 0}
-        hideTop
-        title={
-          simpleChatSectionIndex === 0
-            ? 'Starting Section'
-            : simpleChatSection.id
-            ? `Section: ${simpleChatSection.key}`
-            : 'New Section'
-        }
-      >
-        <>
-          {simpleChatSection.key !== 'default' && (
+    <Section
+      actions={
+        allowDelete && (
+          <Cancel
+            disabled={isCropping || isFormLoading || isUploaderLoading}
+            index={simpleChatSectionIndex}
+            onClick={deleteSimpleChatSection}
+          />
+        )
+      }
+      dragHandle
+      ellipsizeTitle
+      foldable
+      folded={folded}
+      hideDragHandle={simpleChatSectionIndex === 0}
+      title={
+        simpleChatSectionIndex === 0
+          ? 'Starting Section'
+          : simpleChatSection.id
+          ? `Section: ${simpleChatSection.key}`
+          : 'New Section'
+      }
+    >
+      <>
+        {simpleChatSection.key !== 'default' && (
+          <SubSection>
             <Field
               autoFocus={simpleChatSectionIndex > 0 && !simpleChatSection.id}
               disabled={isCropping || isFormLoading || isUploaderLoading}
@@ -205,22 +203,24 @@ const SimpleChatSection = ({
               required
               value={simpleChatSection.key}
             />
-          )}
-          {simpleChatSection.simpleChatMessagesAttributes && (
-            <SimpleChatMessagesContainer
-              activeSimpleChatMessages={activeSimpleChatMessages}
-              allowDelete={activeSimpleChatMessages.length > 1}
-              isCropping={isCropping}
-              isFormLoading={isFormLoading}
-              isUploaderLoading={isUploaderLoading}
-              onChange={setSimpleChatMessagesForm}
-              onFocus={onFocus}
-              onSortEnd={onSortEnd}
-              setIsCropping={setIsCropping}
-              setIsUploaderLoading={setIsUploaderLoading}
-              simpleChatSection={simpleChatSection}
-            />
-          )}
+          </SubSection>
+        )}
+        {simpleChatSection.simpleChatMessagesAttributes && (
+          <SimpleChatMessagesContainer
+            activeSimpleChatMessages={activeSimpleChatMessages}
+            allowDelete={activeSimpleChatMessages.length > 1}
+            isCropping={isCropping}
+            isFormLoading={isFormLoading}
+            isUploaderLoading={isUploaderLoading}
+            onChange={setSimpleChatMessagesForm}
+            onFocus={onFocus}
+            onSortEnd={onSortEnd}
+            setIsCropping={setIsCropping}
+            setIsUploaderLoading={setIsUploaderLoading}
+            simpleChatSection={simpleChatSection}
+          />
+        )}
+        <SubSection>
           <StyledAddItemButton
             adjustMargin={
               !simpleChatSection.simpleChatMessagesAttributes ||
@@ -257,8 +257,8 @@ const SimpleChatSection = ({
               {'Video'}
             </MenuItem>
           </StyledMenu>
-        </>
-      </FormSection>
+        </SubSection>
+      </>
     </Section>
   )
 }

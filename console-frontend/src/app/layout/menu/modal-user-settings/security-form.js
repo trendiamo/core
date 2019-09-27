@@ -1,13 +1,9 @@
+import ActionContainer from './action-container'
 import Button from 'shared/button'
 import React, { useCallback, useMemo, useState } from 'react'
-import styled from 'styled-components'
 import { apiPasswordChange, apiRequest } from 'utils'
 import { Field } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
-
-const ActionContainer = styled.div`
-  margin: 16px 0 10px;
-`
 
 const SecurityForm = ({ passwordForm, onFormSubmit, setFieldValue, isResetButtonDisabled }) => (
   <form onSubmit={onFormSubmit}>

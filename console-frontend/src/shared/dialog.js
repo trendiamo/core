@@ -19,6 +19,8 @@ const StyledIconButton = styled(MuiIconButton)`
     background: #8799a4;
     border-radius: 0px;
     padding: 6px;
+    top: 0px;
+    right: 0px;
     &:hover {
       background: #8799a4;
     }
@@ -26,7 +28,7 @@ const StyledIconButton = styled(MuiIconButton)`
 `
 
 const CloseIconStyled = styled(CloseIcon)`
-  ${showUpToUsBranding() && 'fill: #fff;'}
+  ${showUpToUsBranding() && 'fill: #fff; width: 30px; height: 30px;'}
 `
 
 const DialogSubtitle = styled.span`
@@ -44,6 +46,13 @@ const StyledDialogContent = styled(props => <DialogContent {...omit(props, ['has
 const TitleContainer = styled.div`
   padding: ${({ hasManualPadding }) => (hasManualPadding ? '0' : '24px 24px 20px')};
 `
+
+const Title = ({ title }) => {
+  if (typeof title === 'string') {
+    return <Typography variant={showUpToUsBranding() ? 'h5' : 'h6'}>{title}</Typography>
+  }
+  return title
+}
 
 const Dialog = ({
   open,
@@ -67,9 +76,7 @@ const Dialog = ({
     <StyledIconButton onClick={handleClose}>
       <CloseIconStyled />
     </StyledIconButton>
-    <TitleContainer hasManualPadding={hasManualPadding}>
-      {title && <Typography variant={showUpToUsBranding() ? 'h5' : 'h6'}>{title}</Typography>}
-    </TitleContainer>
+    <TitleContainer hasManualPadding={hasManualPadding}>{title && <Title title={title} />}</TitleContainer>
     {subtitle && <DialogSubtitle>{subtitle}</DialogSubtitle>}
     <StyledDialogContent hasManualPadding={hasManualPadding}>
       {typeof content == 'string' ? <DialogContentText>{content}</DialogContentText> : content}
