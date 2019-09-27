@@ -1,10 +1,11 @@
+import Button from 'shared/button'
 import React from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
-import { Button, Typography } from '@material-ui/core'
 import { ReactComponent as DashboardIcon } from 'assets/icons/dashboard.svg'
 import { Link } from 'react-router-dom'
 import { ReactComponent as MagnifierIcon } from 'assets/icons/magnifier.svg'
+import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
   display: flex;
@@ -18,47 +19,36 @@ const Container = styled.div`
 `
 
 const StyledIcon = styled(({ icon, ...props }) => React.createElement(icon, props))`
-  margin-bottom: 44px;
-`
-
-const StyledTypography = styled(Typography)`
-  color: #8799a4;
-  font-size: 20px;
-  line-height: 1.2;
-
-  a {
-    color: #0f7173;
-  }
+  width: 60px;
+  height: 60px;
+  margin-bottom: 30px;
 `
 
 const StyledButton = styled(Button)`
-  border-radius: 0;
-  margin-top: 22px;
+  margin-top: 30px;
 `
 
-const ErrorState = ({ hasErrors, hasAffiliations = true }) => (
+const BlankState = ({ hasErrors, hasAffiliations = true }) => (
   <Container>
     {hasErrors ? (
       <>
         <StyledIcon icon={MagnifierIcon} />
-        <StyledTypography variant="body2">{'Oops, there was an error loading your revenues'}</StyledTypography>
-        <StyledTypography gutterBottom variant="body2">
+        <Typography variant="caption">{'Oops, there was an error loading your revenues'}</Typography>
+        <Typography variant="caption">
           {'You can report the problem '}
-          <a href="mailto:support@trendiamo.com">{'here'}</a>
+          <Link href="mailto:support@trendiamo.com">{'here'}</Link>
           {'.'}
-        </StyledTypography>
+        </Typography>
       </>
     ) : (
       <>
         <StyledIcon icon={DashboardIcon} />
         {hasAffiliations ? (
           <>
-            <StyledTypography variant="body2">{"You don't have any revenue in this period."}</StyledTypography>
-            <StyledTypography gutterBottom variant="body2">
-              {'Select another month or start working with other brands!'}
-            </StyledTypography>
+            <Typography variant="caption">{"You don't have any revenue in this period."}</Typography>
+            <Typography variant="caption">{'Select another month or start working with other brands!'}</Typography>
             <StyledButton
-              color="primary"
+              color="primaryGradient"
               component={Link}
               size="large"
               to={routes.affiliatePartners()}
@@ -69,12 +59,12 @@ const ErrorState = ({ hasErrors, hasAffiliations = true }) => (
           </>
         ) : (
           <>
-            <StyledTypography variant="body2">{'You are not working with any brands yet.'}</StyledTypography>
-            <StyledTypography gutterBottom variant="body2">
+            <Typography variant="caption">{'You are not working with any brands yet.'}</Typography>
+            <Typography variant="caption">
               {'Pick an affiliate partner and come back here to monitor your earnings!'}
-            </StyledTypography>
+            </Typography>
             <StyledButton
-              color="primary"
+              color="primaryGradient"
               component={Link}
               size="large"
               to={routes.affiliatePartners()}
@@ -89,4 +79,4 @@ const ErrorState = ({ hasErrors, hasAffiliations = true }) => (
   </Container>
 )
 
-export default ErrorState
+export default BlankState

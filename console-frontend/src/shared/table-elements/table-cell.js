@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { TableCell as MuiTableCell } from '@material-ui/core'
+import { showUpToUsBranding } from 'utils'
 
 const StyledCell = styled(MuiTableCell)`
   width: ${({ width }) => width};
@@ -15,8 +16,8 @@ const StyledCell = styled(MuiTableCell)`
     right: 0;
     bottom: -1px;
     position: absolute;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
+    border-bottom: 1px solid ${showUpToUsBranding() ? '#e7ecef' : '#ddd'};
+    border-top: 1px solid ${showUpToUsBranding() ? '#e7ecef' : '#ddd'};
     pointer-events: none;
     user-select: none;
   }

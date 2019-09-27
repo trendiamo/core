@@ -3,12 +3,13 @@ import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Checkbox, FormControlLabel, FormLabel, Typography } from '@material-ui/core'
+import { Checkbox } from 'shared/form-elements'
+import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
   background: #e7ecef;
   min-height: 100px;
-  padding: 25px 60px 40px;
+  padding: 20px 60px 20px;
 `
 
 const CommissionRate = styled.div`
@@ -25,22 +26,20 @@ const CommissionDescription = styled.div`
 const Conditions = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
 `
 
 const ActionsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: 20px;
 `
 
 const Details = styled.div`
-  display: block;
-  max-width: 70%;
+  width: 100%;
 `
 
 const TermsAcceptanceContainer = styled.div`
-  margin-top: 20px;
   display: flex;
   align-items: flex-start;
 `
@@ -54,20 +53,6 @@ const TermsAcceptanceBox = ({
   scrollToTermsAndConditions,
   acceptedTermsAndConditions,
 }) => {
-  const toggleAcceptance = useCallback(
-    () => {
-      setAcceptedTermsAndConditions(!acceptedTermsAndConditions)
-    },
-    [acceptedTermsAndConditions, setAcceptedTermsAndConditions]
-  )
-
-  const onCheckboxChange = useCallback(
-    event => {
-      setAcceptedTermsAndConditions(event.target.checked)
-    },
-    [setAcceptedTermsAndConditions]
-  )
-
   const clickLabelLink = useCallback(
     event => {
       event.stopPropagation()
@@ -78,25 +63,20 @@ const TermsAcceptanceBox = ({
 
   return (
     <TermsAcceptanceContainer>
-      <FormControlLabel
-        control={<Checkbox checked={acceptedTermsAndConditions} color="primary" onChange={onCheckboxChange} />}
+      <Checkbox
         label={
-          <FormLabel onClick={toggleAcceptance}>
+          <>
             {'I have read and accepted the '}
             <LabelLink onClick={clickLabelLink}>{'Terms & Conditions'}</LabelLink>
             {' for promoting this brand.'}
-          </FormLabel>
+          </>
         }
+        setValue={setAcceptedTermsAndConditions}
+        value={acceptedTermsAndConditions}
       />
     </TermsAcceptanceContainer>
   )
 }
-
-const ButtonContainer = styled.div`
-  width: 30%;
-  display: flex;
-  justify-content: flex-end;
-`
 
 const StyledClipboardInput = styled(ClipboardInput)`
   max-width: 450px;
@@ -105,11 +85,22 @@ const StyledClipboardInput = styled(ClipboardInput)`
 
 const RemoveButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
 `
 
 const WarningMessage = styled(Typography)`
   max-width: 300px;
+`
+
+const CreateAffiliateLinkContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const AffiliateTerms = styled.div`
+  display: flex;
+  align-items: baseline;
 `
 
 const SuccessScreen = ({ selectedAffiliation, brand, removeAffiliation, isLoading }) => {
@@ -169,29 +160,30 @@ const SuccessScreen = ({ selectedAffiliation, brand, removeAffiliation, isLoadin
   )
 }
 
-const Actions = ({ brand, onCreateLinkClick, scrollToTermsAndConditions }) => {
+const Actions = ({ onCreateLinkClick, scrollToTermsAndConditions }) => {
   const [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false)
 
   return (
     <ActionsContainer>
       <Details>
         <Conditions>
-          <CommissionRate>
-            {Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })}
-          </CommissionRate>
-          <CommissionDescription>{brand.commissionDescription}</CommissionDescription>
+          <TermsAcceptanceBox
+            acceptedTermsAndConditions={acceptedTermsAndConditions}
+            scrollToTermsAndConditions={scrollToTermsAndConditions}
+            setAcceptedTermsAndConditions={setAcceptedTermsAndConditions}
+          />
         </Conditions>
-        <TermsAcceptanceBox
-          acceptedTermsAndConditions={acceptedTermsAndConditions}
-          scrollToTermsAndConditions={scrollToTermsAndConditions}
-          setAcceptedTermsAndConditions={setAcceptedTermsAndConditions}
-        />
+        <CreateAffiliateLinkContainer>
+          <Button
+            color="primaryGradient"
+            disabled={!acceptedTermsAndConditions}
+            onClick={onCreateLinkClick}
+            size="large"
+          >
+            {'Create Affiliate Link'}
+          </Button>
+        </CreateAffiliateLinkContainer>
       </Details>
-      <ButtonContainer>
-        <Button color="primaryGradient" disabled={!acceptedTermsAndConditions} onClick={onCreateLinkClick} size="large">
-          {'Create Affiliate Link'}
-        </Button>
-      </ButtonContainer>
     </ActionsContainer>
   )
 }
@@ -224,7 +216,11 @@ const Footer = ({
 
   return (
     <Container>
-      <Typography variant="overline">{'Affiliate terms'}</Typography>
+      <Typography variant="overline">{'Affiliate terms: '}</Typography>
+      <AffiliateTerms>
+        <CommissionRate>{Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })}</CommissionRate>
+        <CommissionDescription>{brand.commissionDescription}</CommissionDescription>
+      </AffiliateTerms>
       <Actions
         brand={brand}
         onCreateLinkClick={onCreateLinkClick}

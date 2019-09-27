@@ -1,7 +1,8 @@
-import CheckCircle from '@material-ui/icons/CheckCircle'
+import CheckCircle from 'shared/check-circle'
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
+import { FormHelperText } from 'shared/form-elements'
 import * as dateFns from 'date-fns'
 
 const Container = styled.div`
@@ -24,11 +25,7 @@ const Revenue = styled.h1`
   margin: 0;
 `
 
-const CheckIcon = styled(CheckCircle)`
-  margin-right: 4px;
-`
-
-const PreviousPaymentMessage = styled(props => <Typography variant="subtitle2" {...props} />)`
+const PreviousPaymentMessage = styled(Typography)`
   color: #0f7173;
   margin: 0;
   display: flex;
@@ -36,13 +33,17 @@ const PreviousPaymentMessage = styled(props => <Typography variant="subtitle2" {
   align-items: center;
 `
 
-const NextPaymentMessage = styled(props => <Typography variant="subtitle2" {...props} />)`
+const NextPaymentMessage = styled(Typography)`
   margin: 0;
 `
 
-const Message = styled(props => <Typography variant="body2" {...props} />)`
-  font-size: 13px;
-  margin: 0;
+const StyledFormHelperText = styled(FormHelperText)`
+  text-align: center;
+  align-self: flex-end;
+`
+
+const StyledCheckCircle = styled(CheckCircle)`
+  margin-right: 8px;
 `
 
 const MonthlyRevenue = ({ dates, orders }) => {
@@ -64,15 +65,20 @@ const MonthlyRevenue = ({ dates, orders }) => {
       <RevenueContainer>
         <Revenue>{revenue}</Revenue>
         {dateFns.isPast(paymentDate) ? (
-          <PreviousPaymentMessage>
-            <CheckIcon />
+          <PreviousPaymentMessage variant="h6">
+            <StyledCheckCircle />
             {`Was paid out on ${dateFns.format(paymentDate, 'MMM do')}`}
           </PreviousPaymentMessage>
         ) : (
-          <NextPaymentMessage>{`Will be paid out on ${dateFns.format(paymentDate, 'MMM do')}`}</NextPaymentMessage>
+          <NextPaymentMessage variant="h6">{`Will be paid out on ${dateFns.format(
+            paymentDate,
+            'MMM do'
+          )}`}</NextPaymentMessage>
         )}
       </RevenueContainer>
-      <Message>{'Revenues and prices displayed may slightly vary based on currency exchange rates'}</Message>
+      <StyledFormHelperText>
+        {'Revenues and prices displayed may slightly vary based on currency exchange rates'}
+      </StyledFormHelperText>
     </Container>
   )
 }

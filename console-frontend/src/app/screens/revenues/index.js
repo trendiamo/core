@@ -1,7 +1,7 @@
 import auth from 'auth'
-import Button from 'shared/button'
+import BlankState from './blank-state'
 import CircularProgress from 'shared/circular-progress'
-import ErrorState from './error-state'
+import DatePicker from 'shared/form-elements/date-picker'
 import Grid from '@material-ui/core/Grid'
 import omit from 'lodash.omit'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -10,7 +10,6 @@ import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Activity, BrandsSplit, MonthlyRevenue, Orders } from './sections'
 import { apiAffiliationsList, apiOrdersList, apiRequest } from 'utils'
-import { DatePicker } from 'material-ui-pickers'
 import * as dateFns from 'date-fns'
 
 const EXCHANGE_RATES_API_URL = 'https://api.exchangerate-api.com/v4/latest'
@@ -43,23 +42,6 @@ const computeDate = (minDate, maxDate) => {
     return today
   }
 }
-
-const DatePickerComponent = ({ onClick, label, value }) => (
-  <Button color="whiteBg" onClick={onClick}>{`${label}: ${value}`}</Button>
-)
-
-const DateSelector = ({ date, maxDate, minDate, setDate }) => (
-  <DatePicker
-    format="MMMM"
-    label="Month"
-    maxDate={maxDate}
-    minDate={minDate}
-    onChange={setDate}
-    TextFieldComponent={DatePickerComponent}
-    value={date}
-    views={['year', 'month']}
-  />
-)
 
 const GridContainer = styled(props => <Grid container {...props} />)`
   height: calc(100vh - 86px);
@@ -108,7 +90,7 @@ const Revenues = () => {
   const appBarContent = useMemo(
     () => ({
       Actions: affiliations.length > 0 && (
-        <DateSelector date={date} maxDate={maxDate} minDate={minDate} setDate={setDate} />
+        <DatePicker maxDate={maxDate} minDate={minDate} setDate={setDate} value={date} />
       ),
       sticky: false,
       title: 'Your Revenues',
@@ -187,7 +169,7 @@ const Revenues = () => {
   if (isLoading) return <CircularProgress />
 
   if (minDate > maxDate || hasErrors || affiliations.length < 1 || orders.length < 1) {
-    return <ErrorState hasAffiliations={affiliations.length > 0} hasErrors={minDate > maxDate || hasErrors} />
+    return <BlankState hasAffiliations={affiliations.length > 0} hasErrors={minDate > maxDate || hasErrors} />
   }
 
   return (

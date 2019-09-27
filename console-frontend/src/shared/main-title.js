@@ -9,13 +9,12 @@ const StyledTypography = styled(Typography)`
   font-weight: ${showUpToUsBranding() ? 900 : 500};
   letter-spacing: 0.3px;
   font-size: ${showUpToUsBranding() ? 20 : 24}px;
-  margin-right: 2px;
 
   @media (max-width: 960px) {
     font-size: 16px;
   }
 `
 
-const MainTitle = ({ titleRef, ...props }) => <StyledTypography ref={titleRef} variant="h6" {...props} />
+const MainTitle = ({ titleRef, ...props }) => <StyledTypography ref={titleRef} variant="h4" {...props} />
 
 export default MainTitle

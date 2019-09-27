@@ -8,7 +8,7 @@ const urlInputProps = { pattern: 'https?://.+' }
 const Container = styled.div`
   background: #e7ecef;
   min-height: 100px;
-  padding: 25px 60px 40px;
+  padding: 60px;
 `
 
 const ClipboardContainer = styled.div`

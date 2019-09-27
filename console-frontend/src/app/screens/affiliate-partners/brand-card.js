@@ -10,7 +10,6 @@ import { IconButton } from 'shared/form-elements'
 import { ReactComponent as NewTabIcon } from 'assets/icons/new-tab.svg'
 
 const StyledSection = styled(props => <Section {...omit(props, ['animate'])} />)`
-  margin-top: 10px;
   transition: all 1s 0.2s;
   min-width: 900px;
   ${({ animate }) =>
@@ -19,9 +18,6 @@ const StyledSection = styled(props => <Section {...omit(props, ['animate'])} />)
     opacity: 0;
     transform: translateY(10px);
   `}
-  &:first-child {
-    margin-top: 0;
-  }
 `
 
 const MainContainer = styled.div`
@@ -97,8 +93,12 @@ const TagsContainer = styled.div`
   flex-wrap: wrap;
   margin: -4px;
   * + & {
-    margin-top: 8px;
+    margin-top: 2px;
   }
+`
+
+const ShippingTo = styled(Typography)`
+  margin-top: 8px;
 `
 
 const Tag = styled(Chip)`
@@ -116,6 +116,18 @@ const Tag = styled(Chip)`
   }
   margin: 4px;
 `
+
+const TagsContent = ({ brand }) => (
+  <div>
+    <Typography variant="body2">{brand.description}</Typography>
+    <ShippingTo variant="subtitle1">{'Shipping to:'}</ShippingTo>
+    <TagsContainer>
+      {brand.tags.split(',').map(tag => (
+        <Tag key={tag} label={tag} size="small" />
+      ))}
+    </TagsContainer>
+  </div>
+)
 
 const BrandCard = ({
   affiliation,
@@ -179,14 +191,7 @@ const BrandCard = ({
             <ImageContainer onClick={onClickBrandLogo}>
               <Image src={brand.logoUrl} />
             </ImageContainer>
-            <div>
-              <Typography variant="body2">{brand.description}</Typography>
-              <TagsContainer>
-                {brand.tags.split(',').map(tag => (
-                  <Tag key={tag} label={tag} size="small" />
-                ))}
-              </TagsContainer>
-            </div>
+            <TagsContent brand={brand} />
           </ImageAndDescriptionContainer>
           <Actions>
             <WebsiteButton affiliation={affiliation} websiteHostname={brand.websiteHostname} />

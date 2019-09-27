@@ -2,7 +2,8 @@ import Logo from './logo'
 import omit from 'lodash.omit'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@material-ui/core'
+import { showUpToUsBranding } from 'utils'
+import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@material-ui/core'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -14,51 +15,38 @@ const StyledTable = styled(props => <Table {...omit(props, ['sticky'])} />)`
   width: 100%;
   display: flex;
   flex-direction: column;
-  font-family: 'Lato', 'Helvetica', 'Arial', sans-serif;
 `
 
 const StyledTableHead = styled(TableHead)`
   display: table;
-  font-family: 'Nunito Sans', 'Helvetica', 'Arial', sans-serif;
 `
 
 const StyledTableBody = styled(TableBody)`
-  overflow-y: scroll;
+  overflow-y: auto;
 `
 
 const StyledTableCell = styled(TableCell)`
-  font-size: 0.8125rem;
-  max-width: ${({ width }) => width || '100%'};
   padding: 4px 12px;
-  text-align: ${({ align }) => align || 'left'};
-
-  ${({ font }) =>
-    font === 'bold' &&
-    `
-    font-size: 0.85rem;
-    font-weight: bold;
-  `}
-
-  ${StyledTableHead} &&& {
-    background: white;
-    border-bottom: 2px solid #e0e0e0;
-    font-weight: bold;
-  }
+  border-color: ${showUpToUsBranding() ? '#e7ecef' : '#ddd'};
 `
 
 const StyledTableRow = styled(TableRow)`
-  display: table;
   width: 100%;
+  display: table;
+`
 
-  &:last-child ${StyledTableCell} {
-    border-bottom: none;
-  }
+const TableRowHead = styled(StyledTableRow)`
+  height: 28px;
+`
+
+const TableRowBody = styled(StyledTableRow)`
+  height: 40px;
 `
 
 const StyledTablePagination = styled(TablePagination)`
   background: white;
-  border-top: 2px solid #e0e0e0;
-  font-size: 12px;
+  border-top: 2px solid ${showUpToUsBranding() ? '#e7ecef' : '#ddd'};
+  font-size: 14px;
 `
 
 const iconButtonsProps = {
@@ -82,26 +70,26 @@ const SimpleList = ({ columns, records, sticky, ...props }) => {
       <Wrapper>
         <StyledTable sticky={sticky} {...props}>
           <StyledTableHead>
-            <StyledTableRow>
+            <TableRowHead>
               {columns.map(column => (
                 <StyledTableCell key={column.id} {...column}>
-                  {column.label.toUpperCase()}
+                  <Typography variant="subtitle1">{column.label.toUpperCase()}</Typography>
                 </StyledTableCell>
               ))}
-            </StyledTableRow>
+            </TableRowHead>
           </StyledTableHead>
           <StyledTableBody>
             {records.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((record, index) => (
-              <StyledTableRow hover key={record.id || index} role="checkbox" tabIndex="-1">
+              <TableRowBody hover key={record.id || index} role="checkbox" tabIndex="-1">
                 {columns.map(column => {
                   const value = record[column.id]
                   return value ? (
                     <StyledTableCell key={column.id} {...column}>
-                      {column.type === 'image' ? <Logo src={value} /> : value}
+                      {column.type === 'image' ? <Logo src={value} /> : <Typography variant="h6">{value}</Typography>}
                     </StyledTableCell>
                   ) : null
                 })}
-              </StyledTableRow>
+              </TableRowBody>
             ))}
           </StyledTableBody>
         </StyledTable>

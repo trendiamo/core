@@ -1,18 +1,14 @@
+import ActionContainer from './action-container'
 import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import ImageUploader from 'shared/image-uploader'
 import React, { useCallback, useMemo, useState } from 'react'
-import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Field, FormHelperText } from 'shared/form-elements'
 import { Prompt } from 'react-router'
 import { useSnackbar } from 'notistack'
-
-const ActionContainer = styled.div`
-  margin: 16px 0 10px;
-`
 
 const formObjectTransformer = json => {
   return {

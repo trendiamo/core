@@ -1,3 +1,4 @@
+import ActionContainer from './action-container'
 import auth from 'auth'
 import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
@@ -6,13 +7,16 @@ import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import { apiMeDetails, apiMeUpdateDetails, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Field, FormHelperText, Select } from 'shared/form-elements'
+import { Field, Select } from 'shared/form-elements'
 import { format } from 'date-fns'
 import { Prompt } from 'react-router'
 import { useSnackbar } from 'notistack'
 
-const ActionContainer = styled.div`
-  margin: 16px 0 10px;
+const ImageContainer = styled.div`
+  display: flex;
+  > div {
+    margin-right: 10px;
+  }
 `
 
 const formObjectTransformer = json => {
@@ -130,22 +134,24 @@ const ProfileForm = () => {
         type="date"
         value={form.dateOfBirth}
       />
-      <ImageUploader
-        disabled={disabled}
-        label="Photo ID Front"
-        onChange={setPhotoIdFrontUrl}
-        setDisabled={setIsCropping}
-        setIsUploaderLoading={setIsUploaderLoading}
-        value={photoIdFrontUrlValue}
-      />
-      <ImageUploader
-        disabled={disabled}
-        label="Photo ID Back"
-        onChange={setPhotoIdBackUrl}
-        setDisabled={setIsCropping}
-        setIsUploaderLoading={setIsUploaderLoading}
-        value={photoIdBackUrlValue}
-      />
+      <ImageContainer>
+        <ImageUploader
+          disabled={disabled}
+          label="Photo ID Front"
+          onChange={setPhotoIdFrontUrl}
+          setDisabled={setIsCropping}
+          setIsUploaderLoading={setIsUploaderLoading}
+          value={photoIdFrontUrlValue}
+        />
+        <ImageUploader
+          disabled={disabled}
+          label="Photo ID Back"
+          onChange={setPhotoIdBackUrl}
+          setDisabled={setIsCropping}
+          setIsUploaderLoading={setIsUploaderLoading}
+          value={photoIdBackUrlValue}
+        />
+      </ImageContainer>
       <Field
         disabled={disabled}
         inputProps={atLeastOneNonBlankCharInputProps}
@@ -165,28 +171,16 @@ const ProfileForm = () => {
         value={form.paymentAddress}
       />
       {auth.isAffiliate() && (
-        <>
-          <Select
-            disabled={disabled}
-            fullWidth
-            label="Currency"
-            name="currency"
-            onChange={setFieldValue}
-            options={currencyOptions}
-            required
-            value={form.currency}
-          />
-          <FormHelperText>
-            {
-              <>
-                <b>{'Disclaimer: '}</b>
-                {`Note that revenues and prices displayed throughout the platform are unified from different currencies
-                the products may be sold in, thus they may slightly vary from day to day as they are calculated based on
-                the daily updated exchange rate of that currency.`}
-              </>
-            }
-          </FormHelperText>
-        </>
+        <Select
+          disabled={disabled}
+          fullWidth
+          label="Currency"
+          name="currency"
+          onChange={setFieldValue}
+          options={currencyOptions}
+          required
+          value={form.currency}
+        />
       )}
       <Field
         disabled={disabled}

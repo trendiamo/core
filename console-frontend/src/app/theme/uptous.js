@@ -29,7 +29,10 @@ const typography = {
     textTransform: 'uppercase',
   },
   caption: {
-    letterSpacing: '0.4px',
+    color: '#8799a4',
+    fontSize: '16px',
+    fontFamily: 'Lato, "Helvetica", "Arial", sans-serif',
+    lineHeight: 1.2,
   },
   h4: {
     color: '#3a3a3a',
@@ -41,6 +44,14 @@ const typography = {
     fontWeight: 900,
     fontSize: '20px',
     margin: '4px 0px',
+  },
+  h6: {
+    color: '#272932',
+    fontWeight: 900,
+    fontSize: '16px',
+    fontFamily: 'Lato, "Helvetica", "Arial", sans-serif',
+    margin: '4px 0px',
+    lineHeight: 1.2,
   },
   overline: {
     fontSize: '16px',
@@ -87,7 +98,7 @@ const customPalette = {
     main: '#fff',
   },
   success: {
-    main: '#81C5FF',
+    main: '#0f7173',
   },
 }
 

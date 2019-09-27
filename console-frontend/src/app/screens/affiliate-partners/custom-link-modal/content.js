@@ -34,16 +34,17 @@ const Content = ({ affiliation }) => {
         </IconContainer>
         <ContentContainer>
           <Typography variant="h5">{'Create custom affiliate links'}</Typography>
-          <p>
+          <Typography variant="body2">
             {`You can create customized affiliate links to be able to link to any page of ${
               affiliation.brand.name
             }’s website. This can be helpful if you want to directly link to a specific product page or category.`}
-          </p>
-          <p>
+          </Typography>
+          <br />
+          <Typography variant="body2">
             {
               'To create your customized links simply paste a link from the website below and click the button. You can create as many custom links as you want and they will never stop working.'
             }
-          </p>
+          </Typography>
         </ContentContainer>
       </ContentScrollContainer>
       <Footer affiliation={affiliation} />

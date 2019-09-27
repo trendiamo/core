@@ -3,16 +3,22 @@ import Button from 'shared/edit-button'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CopyIcon from '@material-ui/icons/FileCopyOutlined'
 import EditIcon from '@material-ui/icons/EditOutlined'
+import omit from 'lodash.omit'
 import React, { useCallback } from 'react'
 import RejectIcon from '@material-ui/icons/HighlightOffOutlined'
 import ShowIcon from '@material-ui/icons/RemoveRedEyeOutlined'
 import startCase from 'lodash.startcase'
+import styled from 'styled-components'
 import TableCell from './table-cell'
 import { apiRequest } from 'utils'
 import { Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
+
+const StyledTableRow = styled(props => <MuiTableRow {...omit(props, ['highlightInactive'])} />)`
+  ${({ highlightInactive }) => highlightInactive && 'background: f7f7f7;'}
+`
 
 const TableRow = ({
   api,
@@ -75,7 +81,7 @@ const TableRow = ({
   )
 
   return (
-    <MuiTableRow hover role="checkbox" style={{ background: highlightInactive ? '#f7f7f7' : '' }} tabIndex={-1}>
+    <StyledTableRow highlightInactive={highlightInactive} hover role="checkbox" tabIndex={-1}>
       <TableCell>
         <Checkbox
           checked={selectedIds.includes(resource.id)}
@@ -118,7 +124,7 @@ const TableRow = ({
           </>
         )}
       </TableCell>
-    </MuiTableRow>
+    </StyledTableRow>
   )
 }
 

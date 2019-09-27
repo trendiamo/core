@@ -1,52 +1,19 @@
-import IconButton from './icon-button'
+import Divider from './divider'
 import omit from 'lodash.omit'
 import React, { useCallback, useState } from 'react'
+import SectionTitle from './section-title'
 import styled from 'styled-components'
 import { Collapse } from '@material-ui/core'
-import { Divider, FlexBar, Header } from './index'
-import { DragHandle } from 'shared/sortable-elements'
-import { ExpandMore } from '@material-ui/icons'
-
-const FoldIcon = styled(props => <ExpandMore {...omit(props, ['folded'])} />)`
-  transform: rotate(${({ folded }) => (folded ? '0deg' : '540deg')});
-  transition: transform 0.6s;
-`
+import { showUpToUsBranding } from 'utils'
 
 const SectionContainer = styled.div`
-  margin: 0;
+  position: relative;
   ${({ backgroundColor }) => (backgroundColor ? `background-color: ${backgroundColor};` : null)}
 `
 
-const Content = styled.div`
-  margin: 0px 0 16px;
+const Content = styled(props => <div {...omit(props, ['manualPadding'])} />)`
+  ${({ manualPadding }) => !manualPadding && `padding: 0px ${showUpToUsBranding() ? '16px' : '24px'} 16px;`}
 `
-
-const FoldButton = ({ isFoldedByLogic, folded, toggleFolded }) => (
-  <IconButton aria-expanded={!(isFoldedByLogic || folded)} aria-label="Show more" onClick={toggleFolded}>
-    <FoldIcon folded={isFoldedByLogic || folded} />
-  </IconButton>
-)
-
-const HeaderBar = ({
-  actions,
-  dragHandle,
-  ellipsize,
-  foldable,
-  folded,
-  isFoldedByLogic,
-  hideDragHandle,
-  title,
-  toggleFolded,
-}) => (
-  <FlexBar>
-    {dragHandle && <DragHandle hidden={hideDragHandle} />}
-    <Header ellipsize={ellipsize} variant="subtitle1">
-      {title}
-    </Header>
-    {actions}
-    {foldable && <FoldButton folded={folded} isFoldedByLogic={isFoldedByLogic} toggleFolded={toggleFolded} />}
-  </FlexBar>
-)
 
 const FormSection = ({
   actions,
@@ -59,37 +26,35 @@ const FormSection = ({
   hideBottom,
   hideDragHandle,
   hideTop,
-  isFoldedByLogic,
-  setIsFoldedByLogic,
   title,
+  manualPadding,
 }) => {
   const [folded, setFolded] = useState(defaultFolded)
 
   const toggleFolded = useCallback(
     () => {
-      setIsFoldedByLogic && setIsFoldedByLogic(!folded)
       setFolded(!folded)
     },
-    [folded, setIsFoldedByLogic]
+    [folded]
   )
 
   return (
     <SectionContainer backgroundColor={backgroundColor}>
       {!hideTop && <Divider />}
-      <HeaderBar
+      <SectionTitle
         actions={actions}
         dragHandle={dragHandle}
         ellipsize={ellipsize}
         foldable={foldable}
         folded={folded}
         hideDragHandle={hideDragHandle}
-        isFoldedByLogic={isFoldedByLogic}
+        isFormSectionTitle
         title={title}
         toggleFolded={toggleFolded}
       />
-      {!hideBottom && <Divider folded={isFoldedByLogic || folded} />}
-      <Collapse in={isFoldedByLogic !== undefined ? !isFoldedByLogic : !folded} timeout="auto">
-        <Content>{children}</Content>
+      {!hideBottom && <Divider folded={folded} />}
+      <Collapse in={!folded} timeout="auto">
+        <Content manualPadding={manualPadding}>{children}</Content>
       </Collapse>
     </SectionContainer>
   )
