@@ -6,7 +6,7 @@ import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import { apiPasswordReset, apiRequest } from 'utils'
 import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
-import { Field } from 'shared/form-elements'
+import { Field, Fieldset } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const AuthMessage = () => (
@@ -26,31 +26,39 @@ const AuthMessage = () => (
   </>
 )
 
-const PasswordReset = ({ passwordForm, passwordResetSubmit, setFieldValue }) => (
+const PasswordReset = ({ isSubmitting, passwordForm, passwordResetSubmit, setFieldValue }) => (
   <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
     <form onSubmit={passwordResetSubmit}>
-      <Field
-        autoFocus
-        label="New Password"
-        name="fieldOne"
-        onChange={setFieldValue}
-        required
-        type="password"
-        value={passwordForm.fieldOne}
-      />
-      <Field
-        label="Repeat Password"
-        name="fieldTwo"
-        onChange={setFieldValue}
-        required
-        type="password"
-        value={passwordForm.fieldTwo}
-      />
-      <div style={{ marginTop: '1rem' }}>
-        <Button color="primaryGradient" type="submit" variant="contained">
-          {'Reset'}
-        </Button>
-      </div>
+      <Fieldset disabled={isSubmitting}>
+        <Field
+          autoFocus
+          label="New Password"
+          name="fieldOne"
+          onChange={setFieldValue}
+          required
+          type="password"
+          value={passwordForm.fieldOne}
+        />
+        <Field
+          label="Repeat Password"
+          name="fieldTwo"
+          onChange={setFieldValue}
+          required
+          type="password"
+          value={passwordForm.fieldTwo}
+        />
+        <div style={{ marginTop: '1rem' }}>
+          <Button
+            color="primaryGradient"
+            disabled={isSubmitting}
+            isFormSubmitting={isSubmitting}
+            type="submit"
+            variant="contained"
+          >
+            {'Reset'}
+          </Button>
+        </div>
+      </Fieldset>
     </form>
   </AuthLayout>
 )
@@ -62,6 +70,7 @@ const PasswordReset1 = () => {
     fieldOne: '',
     fieldTwo: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const passwordResetSubmit = useCallback(
     async event => {
@@ -71,6 +80,7 @@ const PasswordReset1 = () => {
         return
       }
       const parsedUrl = queryString.parse(window.location.search)
+      setIsSubmitting(true)
       const { json, errors, requestError } = await apiRequest(apiPasswordReset, [
         {
           user: {
@@ -82,7 +92,11 @@ const PasswordReset1 = () => {
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!requestError && !errors) auth.setUser(json.user)
-      if (auth.isLoggedIn()) window.location.href = routes.root()
+      if (auth.isLoggedIn()) {
+        window.location.href = routes.root()
+      } else {
+        setIsSubmitting(false)
+      }
     },
     [enqueueSnackbar, passwordForm.fieldOne, passwordForm.fieldTwo]
   )
@@ -98,6 +112,7 @@ const PasswordReset1 = () => {
 
   return (
     <PasswordReset
+      isSubmitting={isSubmitting}
       passwordForm={passwordForm}
       passwordResetSubmit={passwordResetSubmit}
       setFieldValue={setFieldValue}
