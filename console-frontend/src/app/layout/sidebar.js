@@ -12,7 +12,7 @@ const ModalProps = {
 const background = showUpToUsBranding() ? '#0f7173' : 'linear-gradient(180deg, #ff843e, #ff6c40 52%, #ff5642)'
 
 const StyledDrawer = styled(Drawer)`
-  > div {
+  > div:last-child {
     border: none;
     flex: 1;
     margin-top: 0;

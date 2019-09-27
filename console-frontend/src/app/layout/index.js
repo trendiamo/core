@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import Sidebar from './sidebar'
 import styled from 'styled-components'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { useOnboarding } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -54,11 +55,11 @@ const ContentWithSidebar = styled.main`
   min-height: calc(100vh - 84px);
 `
 
-const FilledLayout = ({ children, location }) => {
+const FilledLayout = ({ children, location, width }) => {
   const onboardingReady = useOnboarding(location)
 
   const [hasScrolled, setHasScrolled] = useState(false)
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(isWidthUp('md', width))
 
   const isWelcomePage = useMemo(() => location.pathname === routes.welcome(), [location.pathname])
   const showOnboarding = useMemo(() => !auth.isAffiliate() && location.pathname !== routes.accounts(), [
@@ -67,6 +68,13 @@ const FilledLayout = ({ children, location }) => {
 
   const onWindowScroll = useCallback(() => setHasScrolled(window.scrollY > 2), [setHasScrolled])
   const toggleOpen = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen])
+
+  useEffect(
+    () => {
+      setSidebarOpen(isWidthUp('md', width))
+    },
+    [width]
+  )
 
   useEffect(
     () => {
@@ -99,10 +107,14 @@ const FilledLayout = ({ children, location }) => {
   )
 }
 
-const Layout = ({ children, location }) => {
+const Layout = ({ children, location, width }) => {
   if (!(auth.isLoggedIn() && auth.isAffiliate()) && !auth.getAccount()) return <EmptyLayout>{children}</EmptyLayout>
 
-  return <FilledLayout location={location}>{children}</FilledLayout>
+  return (
+    <FilledLayout location={location} width={width}>
+      {children}
+    </FilledLayout>
+  )
 }
 
-export default withRouter(Layout)
+export default withWidth({ noSSR: true })(withRouter(Layout))

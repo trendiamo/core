@@ -12,11 +12,9 @@ import { affiliateResourceGroups, editorResourceGroups, resourceGroups } from '.
 import { ViewList as DefaultIcon } from '@material-ui/icons'
 import { Divider, MenuItem, SvgIcon, Typography } from '@material-ui/core'
 import { ReactComponent as FrekklsLogo } from 'assets/icons/frekkls-logo.svg'
-import { ReactComponent as FrekklsLogoSmall } from 'assets/icons/frekkls-logo-small.svg'
 import { IconButton } from 'shared/form-elements'
 import { showUpToUsBranding } from 'utils'
 import { ReactComponent as UpToUsLogo } from 'assets/icons/uptous-logo-short.svg'
-import { ReactComponent as UpToUsLogoSmall } from 'assets/icons/uptous-logo-small.svg'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -37,15 +35,15 @@ const Container = styled.div`
   animation: ${fade} 1s;
 `
 
-const GroupText = styled(props => <Typography {...omit(props, ['sidebarOpen'])} />)`
-  color: ${({ sidebarOpen }) => (sidebarOpen ? '#222' : '#fff')}
+const GroupText = styled(Typography)`
+  color: #222;
   text-align: left;
   font-size: 12px;
   text-transform: uppercase;
   transition: 0.6s all;
   height: 1rem;
   line-height: 1rem;
-  opacity: ${({ sidebarOpen }) => (sidebarOpen ? 1 : 0)};
+  opacity: 1;
   overflow: hidden;
   user-select: none;
   position: absolute;
@@ -55,13 +53,12 @@ const MenuItemGroup = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  margin: ${({ sidebarOpen, showTitle }) => (sidebarOpen ? '15px 0 0' : showTitle && '15px 0')};
+  margin: 15px 0 0;
   padding: 8px 16px 14px;
   ${({ showTitle }) => !showTitle && 'padding-bottom: 0'};
-  height: ${({ sidebarOpen, showTitle }) => (showTitle ? !sidebarOpen && '2px' : '0px')};
-  transition: 0.2s all;
+  height: ${({ showTitle }) => (showTitle ? 'auto' : '0px')};
   overflow: hidden;
-  ${({ showTitle, sidebarOpen }) =>
+  ${({ showTitle }) =>
     showTitle &&
     `&:before {
       content: '';
@@ -69,22 +66,19 @@ const MenuItemGroup = styled.div`
       left: 34px;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: ${sidebarOpen ? '60px' : '12px'};
-      height: ${sidebarOpen ? '12px' : '2px'};
-      background: ${!sidebarOpen && 'rgba(255,255,255,0.6)'};
-      transition: ${sidebarOpen ? '.3s' : '.6s'} all;
+      width: 60px
+      height: 12px
     }`}
 `
 
-const StyledMenuItem = styled(props => <MenuItem {...omit(props, ['isActive', 'sidebarOpen'])} />)`
+const StyledMenuItem = styled(props => <MenuItem {...omit(props, ['isActive'])} />)`
   flex-shrink: 0;
   transition: all 0.2s ease-in-out;
   visibility: visible;
 
   background: ${({ isActive }) => isActive && (showUpToUsBranding() ? '#e7ecef' : 'rgba(0, 0, 0, 0.03)')};
-  ${({ sidebarOpen }) =>
-    !sidebarOpen && 'background-color: transparent; padding-left: 22px; padding-right: 0;'}
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background: ${showUpToUsBranding() ? '#e7ecef' : 'rgba(0, 0, 0, 0.03)'};
   }
 `
@@ -95,8 +89,8 @@ const MenuText = styled(props => <Typography {...omit(props, ['isActive'])} />)`
   ${({ isActive }) => (showUpToUsBranding() || isActive) && 'font-weight: bold;'}
 `
 
-const StyledSvgIcon = styled(props => <SvgIcon {...omit(props, ['isActive', 'sidebarOpen'])} />)`
-  color: ${({ isActive, sidebarOpen }) => (sidebarOpen ? '#222' : isActive ? '#fff' : 'rgba(255,255,255,0.6)')};
+const StyledSvgIcon = styled(SvgIcon)`
+  color: #222;
   width: 30px;
   height: 30px;
 `
@@ -108,17 +102,6 @@ const StyledFrekklsLogo = styled(FrekklsLogo)`
 const StyledUpToUsLogo = styled(UpToUsLogo)`
   width: 140px;
 `
-const StyledFrekklsLogoSmall = styled(FrekklsLogoSmall)`
-  width: 30px;
-  height: 30px;
-  font-size: 0;
-`
-
-const StyledUpToUsLogoSmall = styled(UpToUsLogoSmall)`
-  width: 30px;
-  height: 30px;
-  font-size: 0;
-`
 
 const Item = withRouter(({ location, resource, sidebarOpen }) => {
   const isActive = useMemo(() => location.pathname.startsWith(resource.route()), [location.pathname, resource])
@@ -126,10 +109,8 @@ const Item = withRouter(({ location, resource, sidebarOpen }) => {
   return (
     <div className={`onboard-${resource.class}`}>
       <Link key={resource.route()} to={resource.route()}>
-        <StyledMenuItem isActive={isActive} sidebarOpen={sidebarOpen}>
-          <StyledSvgIcon isActive={isActive} sidebarOpen={sidebarOpen}>
-            {resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}
-          </StyledSvgIcon>
+        <StyledMenuItem isActive={isActive}>
+          <StyledSvgIcon>{resource.icon ? React.createElement(resource.icon) : <DefaultIcon />}</StyledSvgIcon>
           <MenuText isActive={isActive} variant="body1">
             {sidebarOpen ? resource.label : ''}
           </MenuText>
@@ -139,34 +120,26 @@ const Item = withRouter(({ location, resource, sidebarOpen }) => {
   )
 })
 
-const MenuLogo = ({ sidebarOpen, toggleOpen, isFoldable }) => (
+const MenuLogo = ({ toggleOpen, isFoldable }) => (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '85px' }}>
     <div
       style={{
         flex: 1,
         display: 'flex',
-        paddingLeft: sidebarOpen ? '20px' : 0,
-        paddingRight: sidebarOpen ? '10px' : 0,
-        justifyContent: sidebarOpen ? 'space-between' : 'center',
+        paddingLeft: '20px',
+        paddingRight: '10px',
+        justifyContent: 'space-between',
         alignItems: 'center',
       }}
     >
-      {sidebarOpen ? (
-        <>
-          {showUpToUsBranding() ? <StyledUpToUsLogo /> : <StyledFrekklsLogo />}
-          {isFoldable && (
-            <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
-              <MenuIcon />
-            </IconButton>
-          )}
-        </>
-      ) : (
-        <IconButton onClick={toggleOpen}>
-          {showUpToUsBranding() ? <StyledUpToUsLogoSmall /> : <StyledFrekklsLogoSmall />}
+      {showUpToUsBranding() ? <StyledUpToUsLogo /> : <StyledFrekklsLogo />}
+      {isFoldable && (
+        <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
+          <MenuIcon />
         </IconButton>
       )}
     </div>
-    <Divider color={sidebarOpen ? '#e3e3e3' : 'rgba(255,255,255,0.6)'} />
+    <Divider color="#e3e3e3" />
   </div>
 )
 
@@ -187,8 +160,8 @@ const BaseMenu = withRouter(
           <MenuLogo isFoldable={isFoldable} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
           {Object.keys(userRoleResourceGroups).map(groupName => (
             <div key={groupName}>
-              <MenuItemGroup showTitle={userRoleResourceGroups[groupName].showTitle} sidebarOpen={sidebarOpen}>
-                <GroupText sidebarOpen={sidebarOpen}>
+              <MenuItemGroup showTitle={userRoleResourceGroups[groupName].showTitle}>
+                <GroupText>
                   {userRoleResourceGroups[groupName].showTitle && userRoleResourceGroups[groupName].name}
                 </GroupText>
               </MenuItemGroup>
