@@ -111,7 +111,7 @@ const AffiliatePartners = () => {
           enqueueSnackbar(`Successfully created affiliation with ${brand.name}`, { variant: 'success' })
         }
         fetchAffiliationsAndBrands()
-        return json
+        return { json, errors, requestError }
       })()
     },
     [enqueueSnackbar, fetchAffiliationsAndBrands]

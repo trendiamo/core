@@ -160,7 +160,7 @@ const SuccessScreen = ({ selectedAffiliation, brand, removeAffiliation, isLoadin
   )
 }
 
-const Actions = ({ onCreateLinkClick, scrollToTermsAndConditions }) => {
+const Actions = ({ isCreateLinkClicked, onCreateLinkClick, scrollToTermsAndConditions }) => {
   const [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false)
 
   return (
@@ -176,7 +176,8 @@ const Actions = ({ onCreateLinkClick, scrollToTermsAndConditions }) => {
         <CreateAffiliateLinkContainer>
           <Button
             color="primaryGradient"
-            disabled={!acceptedTermsAndConditions}
+            disabled={isCreateLinkClicked || !acceptedTermsAndConditions}
+            isFormSubmitting={isCreateLinkClicked}
             onClick={onCreateLinkClick}
             size="large"
           >
@@ -196,10 +197,17 @@ const Footer = ({
   selectedAffiliation,
   isLoading,
 }) => {
+  const [isCreateLinkClicked, setIsCreateLinkClicked] = useState(false)
+
   const onCreateLinkClick = useCallback(
-    () => {
-      mixpanel.track('Created Affiliate Link', { hostname: window.location.hostname, brand: brand.name })
-      createAffiliation(brand)
+    async () => {
+      setIsCreateLinkClicked(true)
+      const { errors, requestError } = await createAffiliation(brand)
+      if (!errors && !requestError) {
+        mixpanel.track('Created Affiliate Link', { hostname: window.location.hostname, brand: brand.name })
+      } else {
+        setIsCreateLinkClicked(false)
+      }
     },
     [brand, createAffiliation]
   )
@@ -223,6 +231,7 @@ const Footer = ({
       </AffiliateTerms>
       <Actions
         brand={brand}
+        isCreateLinkClicked={isCreateLinkClicked}
         onCreateLinkClick={onCreateLinkClick}
         scrollToTermsAndConditions={scrollToTermsAndConditions}
       />

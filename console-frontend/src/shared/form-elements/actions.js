@@ -44,6 +44,8 @@ const actions = [{ label: 'Save', color: 'primaryGradient' }, { label: 'Save & N
 const Actions = ({
   isFormSubmitting,
   isFormPristine,
+  isRejecting,
+  isSubmitting,
   message,
   onFormSubmit,
   onPreviewClick,
@@ -110,7 +112,12 @@ const Actions = ({
         {submitEnabled && (
           <Tooltip placement="bottom-start" title={tooltipTextSubmit}>
             <FlexDiv>
-              <Button color="primaryGradient" disabled={!isFormPristine} onClick={onSubmitClick}>
+              <Button
+                color="primaryGradient"
+                disabled={!isFormPristine || isSubmitting}
+                isFormSubmitting={isSubmitting}
+                onClick={onSubmitClick}
+              >
                 {'Submit'}
               </Button>
             </FlexDiv>
@@ -118,7 +125,13 @@ const Actions = ({
         )}
         {rejectEnabled && (
           <FlexDiv>
-            <Button color="error" message="Reject" onClick={onRejectClick}>
+            <Button
+              color="error"
+              disabled={isRejecting}
+              isFormSubmitting={isRejecting}
+              message="Reject"
+              onClick={onRejectClick}
+            >
               {'Reject'}
             </Button>
           </FlexDiv>

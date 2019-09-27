@@ -13,6 +13,7 @@ import { withRouter } from 'react-router'
 
 const ShowSimpleChatPreview = ({ history, match }) => {
   const [showingContent, setShowingContent] = useState(true)
+  const [isRejecting, setIsRejecting] = useState(false)
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -42,6 +43,7 @@ const ShowSimpleChatPreview = ({ history, match }) => {
 
   const onRejectClick = useCallback(
     async () => {
+      setIsRejecting(true)
       const id = match.params.simpleChatId
       const { json, errors, requestError } = await apiRequest(apiSimpleChatReject, [id])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
@@ -49,6 +51,8 @@ const ShowSimpleChatPreview = ({ history, match }) => {
       if (!errors && !requestError) {
         history.push(routes.simpleChatsList())
         enqueueSnackbar('Simple Chat successfully rejected', { variant: 'success' })
+      } else {
+        setIsRejecting(false)
       }
       return json
     },
@@ -58,12 +62,12 @@ const ShowSimpleChatPreview = ({ history, match }) => {
   const appBarContent = useMemo(
     () => ({
       Actions: canRejectResource(form) && (
-        <Actions disabled={isFormLoading} onRejectClick={onRejectClick} rejectEnabled />
+        <Actions disabled={isFormLoading} isRejecting={isRejecting} onRejectClick={onRejectClick} rejectEnabled />
       ),
       backRoute: routes.simpleChatsList(),
       title: 'Simple Chat Preview',
     }),
-    [form, isFormLoading, onRejectClick]
+    [form, isFormLoading, isRejecting, onRejectClick]
   )
   useAppBarContent(appBarContent)
 

@@ -4,7 +4,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CopyIcon from '@material-ui/icons/FileCopyOutlined'
 import EditIcon from '@material-ui/icons/EditOutlined'
 import omit from 'lodash.omit'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import RejectIcon from '@material-ui/icons/HighlightOffOutlined'
 import ShowIcon from '@material-ui/icons/RemoveRedEyeOutlined'
 import startCase from 'lodash.startcase'
@@ -52,11 +52,15 @@ const TableRow = ({
     [resource.id, selectedIds, setSelectedIds]
   )
 
+  const [isWorking, setIsWorking] = useState(false)
+
   const duplicateResource = useCallback(
     async () => {
+      setIsWorking(true)
       const { json, requestError } = await apiRequest(api.duplicate, [resource.id])
       if (requestError) {
         enqueueSnackbar(requestError, { variant: 'error' })
+        setIsWorking(false)
         return
       }
       if (routes) {
@@ -104,7 +108,10 @@ const TableRow = ({
               </Button>
             )}
             {api.duplicate && (
-              <Button disabled={canDuplicateResource && !canDuplicateResource(resource)} onClick={duplicateResource}>
+              <Button
+                disabled={isWorking || (canDuplicateResource && !canDuplicateResource(resource))}
+                onClick={duplicateResource}
+              >
                 <CopyIcon />
               </Button>
             )}

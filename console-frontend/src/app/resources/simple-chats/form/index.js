@@ -27,6 +27,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
   const formRef = useRef()
   const [isCropping, setIsCropping] = useState(false)
   const [isPreviewModalOpened, setIsPreviewModalOpened] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isUploaderLoading, setIsUploaderLoading] = useState(false)
   const [showingContent, setShowingContent] = useState(false)
 
@@ -61,12 +62,15 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
 
   const onSubmitClick = useCallback(
     async () => {
+      setIsSubmitting(true)
       const { json, errors, requestError } = await apiRequest(apiSimpleChatSubmit, [form.id, { simpleChat: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
       if (!errors && !requestError) {
         history.push(routes.simpleChatsList())
         enqueueSnackbar(`Simple chat successfully submitted to ${form.__brand.name}`, { variant: 'success' })
+      } else {
+        setIsSubmitting(false)
       }
       return json
     },
@@ -136,6 +140,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
         <Actions
           isFormPristine={isFormPristine}
           isFormSubmitting={isFormSubmitting}
+          isSubmitting={isSubmitting}
           onFormSubmit={newOnFormSubmit}
           onPreviewClick={onPreviewClick}
           onSubmitClick={onSubmitClick}
@@ -156,6 +161,7 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
       isFormLoading,
       isFormPristine,
       isFormSubmitting,
+      isSubmitting,
       isUploaderLoading,
       newOnFormSubmit,
       onPreviewClick,

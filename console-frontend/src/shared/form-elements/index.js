@@ -5,6 +5,7 @@ import Cancel from './cancel'
 import Checkbox from './checkbox'
 import Divider from './divider'
 import Field from './field'
+import Fieldset from './fieldset'
 import FlexBar from './flex-bar'
 import Form from './form'
 import FormHelperText from './form-helper-text'
@@ -34,6 +35,7 @@ export {
   Prompt,
   SaveButton,
   Field,
+  Fieldset,
   Select,
   PreviewModal,
   Label,

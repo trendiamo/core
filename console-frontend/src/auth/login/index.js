@@ -7,14 +7,21 @@ import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
 import { apiRequest, apiSignIn, showUpToUsBranding } from 'utils'
 import { AuthFormFooter } from 'auth/components'
-import { Field } from 'shared/form-elements'
+import { Field, Fieldset } from 'shared/form-elements'
 import { Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
-const Footer = () => (
+const Footer = ({ isSubmitting }) => (
   <AuthFormFooter>
     <div>
-      <Button color="primaryGradient" fullWidth type="submit" variant="contained">
+      <Button
+        color="primaryGradient"
+        disabled={isSubmitting}
+        fullWidth
+        isFormSubmitting={isSubmitting}
+        type="submit"
+        variant="contained"
+      >
         {'Login'}
       </Button>
       <Link to={routes.requestPasswordReset()}>
@@ -34,29 +41,31 @@ const Footer = () => (
   </AuthFormFooter>
 )
 
-const Login = ({ loginForm, loginSubmit, setLoginValue }) => (
+const Login = ({ isSubmitting, loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout title={!showUpToUsBranding() && "Let's log you in!"}>
     <form onSubmit={loginSubmit}>
-      <Field
-        autoComplete="email"
-        autoFocus
-        label="E-mail"
-        name="email"
-        onChange={setLoginValue}
-        required
-        type="email"
-        value={loginForm.email}
-      />
-      <Field
-        autoComplete="current-password"
-        label="Password"
-        name="password"
-        onChange={setLoginValue}
-        required
-        type="password"
-        value={loginForm.password}
-      />
-      <Footer />
+      <Fieldset disabled={isSubmitting}>
+        <Field
+          autoComplete="email"
+          autoFocus
+          label="E-mail"
+          name="email"
+          onChange={setLoginValue}
+          required
+          type="email"
+          value={loginForm.email}
+        />
+        <Field
+          autoComplete="current-password"
+          label="Password"
+          name="password"
+          onChange={setLoginValue}
+          required
+          type="password"
+          value={loginForm.password}
+        />
+        <Footer isSubmitting={isSubmitting} />
+      </Fieldset>
     </form>
   </AuthLayout>
 )
@@ -81,10 +90,12 @@ const Login1 = () => {
   )
 
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const loginSubmit = useCallback(
     async event => {
       event.preventDefault()
+      setIsSubmitting(true)
       const { json, errors, requestError } = await apiRequest(
         apiSignIn,
         [{ user: { email: loginForm.email, password: loginForm.password } }],
@@ -104,6 +115,8 @@ const Login1 = () => {
         })
         mixpanel.track('Logged In', { hostname: window.location.hostname })
         window.location.href = routes.root()
+      } else {
+        setIsSubmitting(false)
       }
     },
     [enqueueSnackbar, loginForm.email, loginForm.password]
@@ -113,7 +126,9 @@ const Login1 = () => {
     loginForm,
   ])
 
-  return <Login loginForm={loginForm} loginSubmit={loginSubmit} setLoginValue={setLoginValue} />
+  return (
+    <Login isSubmitting={isSubmitting} loginForm={loginForm} loginSubmit={loginSubmit} setLoginValue={setLoginValue} />
+  )
 }
 
 export default Login1

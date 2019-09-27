@@ -8,7 +8,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
 import { AuthFormFooter } from 'auth/components'
-import { Field } from 'shared/form-elements'
+import { Field, Fieldset } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const StyledDoneIcon = styled(DoneIcon)`
@@ -28,8 +28,10 @@ const AccountSignup = () => {
         return { ...state, form: { ...state.form, ...action.value } }
       } else if (action.type === 'mergeFormCallback') {
         return { ...state, form: { ...state.form, ...action.callback(state.form) } }
+      } else if (action.type === 'setFormSubmitting') {
+        return { ...state, isFormSubmitting: true }
       } else if (action.type === 'setFormSubmitted') {
-        return { ...state, isFormSubmitted: action.value }
+        return { ...state, isFormSubmitted: action.value, isFormSubmitting: false }
       } else {
         throw new Error()
       }
@@ -44,12 +46,14 @@ const AccountSignup = () => {
         password: '',
         passwordConfirmation: '',
       },
+      isFormSubmitting: false,
       isFormSubmitted: false,
     }
   )
 
   const mergeForm = useCallback(value => dispatch({ type: 'mergeForm', value }), [dispatch])
   const mergeFormCallback = useCallback(callback => dispatch({ type: 'mergeFormCallback', callback }), [dispatch])
+  const setFormSubmitting = useCallback(() => dispatch({ type: 'setFormSubmitting' }), [dispatch])
   const setFormSubmitted = useCallback(value => dispatch({ type: 'setFormSubmitted', value }), [dispatch])
 
   const setFieldValue = useCallback(event => mergeForm({ [event.target.name]: event.target.value }), [mergeForm])
@@ -69,7 +73,7 @@ const AccountSignup = () => {
   const onSubmit = useCallback(
     async event => {
       event.preventDefault()
-
+      setFormSubmitting()
       const { errors, requestError } = await apiRequest(apiSignUp, [{ user: state.form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
@@ -77,7 +81,7 @@ const AccountSignup = () => {
         setFormSubmitted(true)
       }
     },
-    [enqueueSnackbar, setFormSubmitted, state.form]
+    [enqueueSnackbar, setFormSubmitted, setFormSubmitting, state.form]
   )
 
   const addHostnameSelect = useCallback(
@@ -118,52 +122,68 @@ const AccountSignup = () => {
         </>
       ) : (
         <form onSubmit={onSubmit}>
-          <Field
-            autoFocus
-            label="Account name"
-            name="accountName"
-            onChange={setFieldValue}
-            required
-            value={state.form.accountName}
-          />
-          <HostnamesForm
-            addHostnameSelect={addHostnameSelect}
-            deleteHostname={deleteHostname}
-            editHostnameValue={editHostnameValue}
-            form={state.form}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <Field label="First Name" name="firstName" onChange={setFieldValue} required value={state.form.firstName} />
-          <Field label="Last Name" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
-          <Field label="E-mail" name="email" onChange={setFieldValue} required type="email" value={state.form.email} />
-          <Field
-            inputRef={passwordRef}
-            label="Password"
-            name="password"
-            onChange={setFieldValue}
-            required
-            type="password"
-            value={state.form.password}
-          />
-          <Field
-            label="Confirm Password"
-            name="passwordConfirmation"
-            onChange={setFieldValue}
-            required
-            type="password"
-            value={state.form.passwordConfirmation}
-          />
-          <AuthFormFooter>
-            <Button color="primaryGradient" fullWidth type="submit" variant="contained">
-              {'Signup'}
-            </Button>
-            <p>
-              {'Already have an account? '}
-              <Link to={routes.login()}>{'Login here'}</Link>
-            </p>
-          </AuthFormFooter>
+          <Fieldset disabled={state.isFormSubmitting}>
+            <Field
+              autoFocus
+              label="Account name"
+              name="accountName"
+              onChange={setFieldValue}
+              required
+              value={state.form.accountName}
+            />
+            <HostnamesForm
+              addHostnameSelect={addHostnameSelect}
+              deleteHostname={deleteHostname}
+              editHostnameValue={editHostnameValue}
+              form={state.form}
+              fullWidth
+              margin="normal"
+              required
+            />
+            <Field label="First Name" name="firstName" onChange={setFieldValue} required value={state.form.firstName} />
+            <Field label="Last Name" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
+            <Field
+              label="E-mail"
+              name="email"
+              onChange={setFieldValue}
+              required
+              type="email"
+              value={state.form.email}
+            />
+            <Field
+              inputRef={passwordRef}
+              label="Password"
+              name="password"
+              onChange={setFieldValue}
+              required
+              type="password"
+              value={state.form.password}
+            />
+            <Field
+              label="Confirm Password"
+              name="passwordConfirmation"
+              onChange={setFieldValue}
+              required
+              type="password"
+              value={state.form.passwordConfirmation}
+            />
+            <AuthFormFooter>
+              <Button
+                color="primaryGradient"
+                disabled={state.isFormSubmitting}
+                fullWidth
+                isFormSubmitting={state.isFormSubmitting}
+                type="submit"
+                variant="contained"
+              >
+                {'Signup'}
+              </Button>
+              <p>
+                {'Already have an account? '}
+                <Link to={routes.login()}>{'Login here'}</Link>
+              </p>
+            </AuthFormFooter>
+          </Fieldset>
         </form>
       )}
     </AuthLayout>
