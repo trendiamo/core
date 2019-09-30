@@ -1,5 +1,7 @@
 const fromDate = "2018-01-01";
-const toDate = "2019-08-26";
+const d = new Date();
+d.setDate(d.getDate() - 1);
+const toDate = d.toISOString().split("T")[0];
 const dates = { from_date: fromDate, to_date: toDate };
 const params = { dates };
 
@@ -79,5 +81,12 @@ function main() {
         mixpanel.reducer.sum("value.cartValueWithPluginConfirmed"),
         mixpanel.reducer.sum("value.productsCountWithPluginConfirmed")
       ]
-    );
+    )
+    .map(entry => ({
+      _0_hostname: entry.key[0],
+      _1_purchasesCount: entry.value[0],
+      _2_itemsCount: entry.value[2],
+      _3_cartValue: entry.value[1],
+      _4_currency: entry.key[1]
+    }));
 }
