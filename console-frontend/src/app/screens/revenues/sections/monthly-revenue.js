@@ -1,8 +1,11 @@
+import auth from 'auth'
 import CheckCircle from 'shared/check-circle'
+import Link from 'shared/link'
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { FormHelperText } from 'shared/form-elements'
+import { isTrendiamoUser } from 'utils'
 import * as dateFns from 'date-fns'
 
 const Container = styled.div`
@@ -79,6 +82,16 @@ const MonthlyRevenue = ({ dates, orders }) => {
       <StyledFormHelperText>
         {'Revenues and prices displayed may slightly vary based on currency exchange rates'}
       </StyledFormHelperText>
+      {isTrendiamoUser() && (
+        <Link
+          href={`https://dashboard.stripe.com/${auth.getUser().stripeUserId}`}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <br />
+          {'Check your Stripe account'}
+        </Link>
+      )}
     </Container>
   )
 }

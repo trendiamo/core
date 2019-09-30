@@ -10,6 +10,7 @@ import {
   apiAffiliationsList,
   apiBrandsAutocomplete,
   apiBrandsList,
+  apiConnectStripe,
   apiEventList,
   apiFlowsAutocomplete,
   apiFlowsList,
@@ -92,6 +93,7 @@ export {
   apiAffiliationDestroy,
   apiBrandsAutocomplete,
   apiBrandsList,
+  apiConnectStripe,
   apiEventList,
   apiShowcaseCreate,
   apiShowcaseDestroy,
@@ -258,3 +260,6 @@ export const loadFonts = () => {
   linkElement.appendChild(document.createTextNode(css))
   documentHead.appendChild(linkElement)
 }
+
+const trendiamoEmailDomains = /@(trendiamo\.com)|(uptous\.co)|(frekkls\.com)/g
+export const isTrendiamoUser = () => !!auth.getUser().email.match(trendiamoEmailDomains)

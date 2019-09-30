@@ -26,6 +26,7 @@ const EVENTS_URL = `${BASE_API_URL}/events`
 const BRANDS_URL = `${BASE_API_URL}/brands`
 const AFFILIATIONS_URL = `${BASE_API_URL}/affiliations`
 const ORDERS_URL = `${BASE_API_URL}/orders`
+const STRIPE_URL = `${BASE_API_URL}/stripe`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
 
@@ -203,3 +204,5 @@ export const apiAffiliationDestroy = id => apiDestroyRequest(`${AFFILIATIONS_URL
 export const apiOrdersList = query => apiListRequest(`${ORDERS_URL}/?${stringify(query)}`)
 
 export const apiEventList = query => apiGetRequest(`${EVENTS_URL}/?${stringify(query)}`)
+
+export const apiConnectStripe = query => apiPostRequest(`${STRIPE_URL}/connect?${stringify(query)}`)
