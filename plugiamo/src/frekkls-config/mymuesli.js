@@ -1,4 +1,4 @@
-const homepageModules = {
+export const homepageModules = {
   '/mm2go-nathaliedesiree': '/simple-chat/338',
   '/mm2go-jmblog': '/simple-chat/336',
   '/mm2go-bergherz': '/simple-chat/334',

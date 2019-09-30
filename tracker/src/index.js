@@ -2,6 +2,7 @@ import mixpanel from 'ext/mixpanel'
 import setupDataGathering from 'data-gathering'
 import { loadRollbar } from 'ext/rollbar'
 import { location, mixpanelToken } from './config'
+import { parse } from 'querystring'
 import { setAffiliateToken } from 'utils'
 
 const addTrackerLoadingFrame = () => {
@@ -22,7 +23,8 @@ const addTrackerLoadingFrame = () => {
 const initApp = () => {
   setAffiliateToken()
   mixpanel.init(mixpanelToken)
-  mixpanel.track('Visited Page', { hostname: location.hostname })
+  const query = parse(window.location.search.substr(1))
+  if (query.aftk) mixpanel.track('Visited Page', { hostname: location.hostname })
   setupDataGathering()
 }
 

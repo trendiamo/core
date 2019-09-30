@@ -52,7 +52,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'www.eotica.com.br') return eoticaConfig
   if (location.hostname === 'www.rihappy.com.br') return rihappyConfig
   if (location.hostname === 'villadonatello.com') return villaDonatelloConfig
-  if (location.hostname === 'www.pampling.com') return pampling
+  if (['pampling.com', 'www.pampling.com'].includes(location.hostname)) return pampling
   if (location.hostname === 'www.mymuesli.com') return mymuesli
   if (location.hostname === 'timeblock-europe.com') return timeblock
   return {}

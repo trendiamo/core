@@ -8,7 +8,9 @@ import { detect } from 'detect-browser'
 import { h, render } from 'preact'
 import { loadRollbar } from 'ext/rollbar'
 import { location, mixpanelToken } from './config'
+import { homepageModules as mymuesliUrls } from 'frekkls-config/mymuesli'
 import { optionsFromHash } from 'app/setup'
+import { moduleMatchers as pamplingUrls } from 'frekkls-config/pampling'
 import './styles.css'
 
 const addFrekklsLoadingFrame = frekklsContainer => {
@@ -67,9 +69,25 @@ const processPreviewOpt = () => {
   window.location.href = newUrl
 }
 
+const maybeTrackVisitedPage = () => {
+  if (location.hostname === 'www.mymuesli.com') {
+    if (Object.keys(mymuesliUrls).indexOf(location.pathname) === -1) {
+      return
+    }
+  } else if (location.hostname === 'www.pampling.com' || location.hostname === 'pampling.com') {
+    if (
+      pamplingUrls.map(e => e.homepagePath).indexOf(location.pathname) === -1 ||
+      pamplingUrls.map(e => e.productsPath).indexOf(location.pathname) === -1
+    ) {
+      return
+    }
+  }
+  mixpanel.track('Visited Page', { hostname: location.hostname })
+}
+
 const initApp = (frekklsReactRoot, googleAnalytics) => {
   mixpanel.init(mixpanelToken)
-  mixpanel.track('Visited Page', { hostname: location.hostname })
+  maybeTrackVisitedPage()
   setupDataGathering(googleAnalytics)
 
   const browser = detect()
