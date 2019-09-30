@@ -9,7 +9,10 @@ import SectionBase from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Activity, BrandsSplit, MonthlyRevenue, Orders } from './sections'
-import { apiAffiliationsList, apiOrdersList, apiRequest } from 'utils'
+import { apiAffiliationsList, apiConnectStripe, apiOrdersList, apiRequest, isTrendiamoUser } from 'utils'
+import { parse } from 'query-string'
+import { useSnackbar } from 'notistack'
+import { withRouter } from 'react-router'
 import * as dateFns from 'date-fns'
 
 const EXCHANGE_RATES_API_URL = 'https://api.exchangerate-api.com/v4/latest'
@@ -70,14 +73,17 @@ const SectionInner = styled.div`
 
 const calculateSellerAmount = (amount, rate) => ((amount * rate) / 100).toFixed(2)
 
-const Revenues = () => {
+const Revenues = ({ history }) => {
   const minDate = useMemo(() => computeMinDate(), [])
   const maxDate = useMemo(() => computeMaxDate(), [])
   const [date, setDate] = useState(computeDate(minDate, maxDate))
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(auth.getUser().stripeUserId || !isTrendiamoUser())
   const [affiliations, setAffiliations] = useState([])
   const [orders, setOrders] = useState([])
   const [hasErrors, setHasErrors] = useState(false)
+  const [hasStripeAccount, setHasStripeAccount] = useState(!!auth.getUser().stripeUserId || !isTrendiamoUser())
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const dates = useMemo(
     () => ({
@@ -89,13 +95,13 @@ const Revenues = () => {
 
   const appBarContent = useMemo(
     () => ({
-      Actions: affiliations.length > 0 && (
+      Actions: affiliations.length > 0 && hasStripeAccount && (
         <DatePicker maxDate={maxDate} minDate={minDate} setDate={setDate} value={date} />
       ),
       sticky: false,
       title: 'Your Revenues',
     }),
-    [affiliations.length, date, maxDate, minDate]
+    [affiliations.length, date, hasStripeAccount, maxDate, minDate]
   )
   useAppBarContent(appBarContent)
 
@@ -166,10 +172,39 @@ const Revenues = () => {
     [fetchAffiliations, fetchOrders]
   )
 
+  useEffect(
+    () => {
+      ;(async () => {
+        if (window.location.search.includes('code') && window.document.referrer === 'https://connect.stripe.com/') {
+          const stripeActivationCode = parse(window.location.search).code
+          history.push(window.location.pathname)
+          setIsLoading(true)
+          const { json, requestError } = await apiRequest(apiConnectStripe, [{ code: stripeActivationCode }])
+          setIsLoading(false)
+          if (requestError) {
+            enqueueSnackbar(requestError, { variant: 'error' })
+          } else {
+            setHasStripeAccount(!!json.stripeUserId)
+            auth.setUser(json)
+          }
+        }
+      })()
+    },
+    [enqueueSnackbar, history]
+  )
+
   if (isLoading) return <CircularProgress />
 
-  if (minDate > maxDate || hasErrors || affiliations.length < 1 || orders.length < 1) {
-    return <BlankState hasAffiliations={affiliations.length > 0} hasErrors={minDate > maxDate || hasErrors} />
+  if (minDate > maxDate || hasErrors || affiliations.length < 1 || orders.length < 1 || !hasStripeAccount) {
+    return (
+      <BlankState
+        hasAffiliations={affiliations.length > 0}
+        hasErrors={minDate > maxDate || hasErrors}
+        hasRevenues={orders.length > 0}
+        hasStripeAccount={hasStripeAccount}
+        isLoading={isLoading}
+      />
+    )
   }
 
   return (
@@ -198,4 +233,4 @@ const Revenues = () => {
   )
 }
 
-export default Revenues
+export default withRouter(Revenues)

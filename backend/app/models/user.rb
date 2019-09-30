@@ -35,7 +35,7 @@ class User < ApplicationRecord
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "onboarding_stage", "admin", "img_rect",
                                "affiliate_role", "referral_code", "requested_upgrade_to_seller_at", "currency",
-                               "social_media_url", "bio", "created_at", "updated_at")
+                               "social_media_url", "bio", "stripe_user_id", "created_at", "updated_at")
                         .merge(name: name, img: { url: img_url })
     attributes_with_roles = admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
     options[:details] ? attributes_with_roles.merge(details_attributes) : attributes_with_roles
