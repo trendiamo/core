@@ -1,4 +1,4 @@
-const moduleMatchers = [
+export const moduleMatchers = [
   { sellerId: '211', homepagePath: '/simple-chat/288', productsPath: '/simple-chat/287' },
   { sellerId: '223', homepagePath: '/simple-chat/295', productsPath: '/simple-chat/292' },
   { sellerId: '222', homepagePath: '/simple-chat/297', productsPath: '/simple-chat/291' },
