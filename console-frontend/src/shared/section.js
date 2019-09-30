@@ -1,9 +1,10 @@
 import Divider from './form-elements/divider'
 import omit from 'lodash.omit'
+import Paper from 'shared/paper'
 import React, { memo, useCallback, useMemo, useState } from 'react'
 import SectionTitle from './form-elements/section-title'
 import styled from 'styled-components'
-import { Collapse, Paper } from '@material-ui/core'
+import { Collapse } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 
 const Container = styled.div`
@@ -11,18 +12,6 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`
-
-const StyledPaper = styled(props => <Paper {...omit(props, ['foldable'])} />)`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  & + * {
-    margin-top: ${showUpToUsBranding() ? '18px' : '10px'};
-  }
-  ${({ foldable }) => foldable && 'padding-top: 16px;'}
-  ${showUpToUsBranding() &&
-    'border-radius: 0; box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.07);'}
 `
 
 const SectionContent = styled(props => <div {...omit(props, ['foldable'])} />)`
@@ -53,7 +42,7 @@ const Section = ({
   const showDivider = useMemo(() => !showUpToUsBranding() || foldable, [foldable])
 
   return (
-    <StyledPaper className={className} elevation={4} foldable={foldable} {...props}>
+    <Paper className={className} elevation={4} foldable={foldable} {...props}>
       <Container>
         {title && (
           <>
@@ -78,7 +67,7 @@ const Section = ({
           <SectionContent>{children}</SectionContent>
         )}
       </Container>
-    </StyledPaper>
+    </Paper>
   )
 }
 

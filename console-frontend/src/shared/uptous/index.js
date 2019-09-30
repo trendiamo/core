@@ -1,5 +1,6 @@
+import Paper from 'shared/paper'
 import styled from 'styled-components'
-import { Paper, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
 export const MainCard = styled(Paper)`
   margin-left: 1rem;
@@ -7,9 +8,8 @@ export const MainCard = styled(Paper)`
   align-self: center;
   max-width: 600px;
   min-width: 500px;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
+  align-items: stretch;
 `
 
 export const CardContent = styled.div`
