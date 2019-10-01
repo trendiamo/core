@@ -18,6 +18,7 @@ ${({ inline }) =>
 const ButtonContents = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center; /* centers the loading indicator */
 `
 
 const CircularProgressContainer = styled.div`
@@ -30,8 +31,8 @@ const CircularProgressContainer = styled.div`
 
 const uptousButtonSizes = {
   small: 'padding: 8px 15px; font-size: 14px;',
-  medium: 'padding: 7px 24px; font-size: 16px; svg { height: 28px; }',
-  large: 'padding: 10px 30px; font-size: 16px; svg { height: 28px; }',
+  medium: 'padding: 7px 24px; font-size: 16px;',
+  large: 'padding: 10px 30px; font-size: 16px;',
 }
 
 const StyledMuiButton = styled(MuiButton)`
