@@ -11,7 +11,8 @@ const StyledTypography = styled(Typography)`
   font-size: ${showUpToUsBranding() ? 20 : 24}px;
 
   @media (max-width: 960px) {
-    font-size: 16px;
+    font-size: ${showUpToUsBranding() ? 18 : 16}px;
+    margin-left: 8px;
   }
 `
 
