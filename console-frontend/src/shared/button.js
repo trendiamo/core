@@ -6,13 +6,19 @@ import { CircularProgress } from '@material-ui/core'
 import { Button as MuiButton, Tooltip } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 
-const ButtonContainer = styled(props => <div {...omit(props, ['inline', 'centered'])} />)`
+const ButtonContainer = styled(props => <div {...omit(props, ['inline', 'centered', 'width'])} />)`
 ${({ inline }) =>
   inline
     ? `display: inline-block;
-       * + & {margin-left: 10px;}`
-    : 'display: flex;'}
+      * + & {
+        margin-left: 10px;
+      }`
+    : `display: flex; @media (max-width: 959px) {
+      margin-top: 12px;
+    }`}
   justify-content: ${({ centered }) => (centered ? 'center' : 'normal')};
+  width: ${({ width }) => (width ? width : 'auto')};
+
 `
 
 const ButtonContents = styled.div`
@@ -30,14 +36,25 @@ const CircularProgressContainer = styled.div`
 `
 
 const uptousButtonSizes = {
-  small: 'padding: 8px 15px; font-size: 14px;',
-  medium: 'padding: 7px 24px; font-size: 16px;',
-  large: 'padding: 10px 30px; font-size: 16px;',
+  mobile: {
+    small: 'padding: 4px 12px; font-size: 14px;',
+    medium: 'padding: 6px 20px; font-size: 16px;',
+    large: 'padding: 8px 24px; font-size: 16px;',
+  },
+  desktop: {
+    small: 'padding: 6px 15px; font-size: 14px;',
+    medium: 'padding: 8px 24px; font-size: 16px;',
+    large: 'padding: 10px 30px; font-size: 16px;',
+  },
 }
 
-const StyledMuiButton = styled(MuiButton)`
+const StyledMuiButton = styled(props => <MuiButton {...omit(props, ['width'])} />)`
   width: ${({ width }) => (width ? width : 'auto')};
-  ${({ size }) => showUpToUsBranding() && uptousButtonSizes[size || 'medium']}
+  white-space: nowrap;
+  ${({ size }) => showUpToUsBranding() && uptousButtonSizes['mobile'][size || 'medium']}
+  @media (min-width: 960px) {
+    ${({ size }) => showUpToUsBranding() && uptousButtonSizes['desktop'][size || 'medium']}
+  }
 `
 
 const StyledCircularProgress = () => (
@@ -107,7 +124,7 @@ const Button = ({
   )
 
   return (
-    <ButtonContainer centered={centered} inline={inline}>
+    <ButtonContainer centered={centered} inline={inline} width={width}>
       <Tooltip
         open={tooltipEnabled && tooltipOpen && isFormPristine}
         placement={tooltipPlacement}

@@ -29,6 +29,10 @@ const TextInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteabl
   ${({ pasteable, wasCopied }) =>
     pasteable && !wasCopied && 'margin-right: 14px;'}
   transition: margin 0.4s ease-in-out;
+  ${showUpToUsBranding() && 'color: #272932;'}
+  input {
+    padding: 6px 0;
+  }
 `
 
 const CopyButton = styled(props => <Button {...omit(props, ['pasteable'])} />)`
@@ -116,6 +120,7 @@ const ClipboardInput = ({
             color={isCopied ? 'success' : type || 'primaryGradient'}
             disabled={isLoading}
             fullWidth
+            inline
             pasteable={pasteable}
             size={size}
             type="submit"

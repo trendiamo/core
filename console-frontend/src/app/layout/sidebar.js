@@ -16,7 +16,7 @@ const StyledDrawer = styled(Drawer)`
     border: none;
     flex: 1;
     margin-top: 0;
-    min-height: 100vh;
+    height: 100%;
     position: fixed;
     transition: width 0.2s ease-in-out;
     overflow-x: hidden;
