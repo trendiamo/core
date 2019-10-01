@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190926162628) do
+ActiveRecord::Schema.define(version: 20191001134021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 20190926162628) do
     t.bigint "account_id"
     t.bigint "user_id"
     t.string "token"
+    t.datetime "created_at", default: "2019-10-01 00:00:00", null: false
+    t.datetime "updated_at", default: "2019-10-01 00:00:00", null: false
     t.index ["account_id"], name: "index_affiliations_on_account_id"
     t.index ["user_id"], name: "index_affiliations_on_user_id"
   end
@@ -49,6 +51,8 @@ ActiveRecord::Schema.define(version: 20190926162628) do
     t.string "twitter_url"
     t.string "tags"
     t.integer "order", default: 1, null: false
+    t.datetime "created_at", default: "2019-10-01 00:00:00", null: false
+    t.datetime "updated_at", default: "2019-10-01 00:00:00", null: false
     t.index ["account_id"], name: "index_brands_on_account_id"
   end
 
@@ -91,6 +95,8 @@ ActiveRecord::Schema.define(version: 20190926162628) do
     t.integer "role", default: 0
     t.bigint "user_id"
     t.bigint "account_id"
+    t.datetime "created_at", default: "2019-10-01 00:00:00", null: false
+    t.datetime "updated_at", default: "2019-10-01 00:00:00", null: false
     t.index ["account_id"], name: "index_memberships_on_account_id"
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
@@ -154,6 +160,8 @@ ActiveRecord::Schema.define(version: 20190926162628) do
     t.string "source", null: false
     t.json "payload"
     t.bigint "source_id", null: false
+    t.datetime "created_at", default: "2019-10-01 00:00:00", null: false
+    t.datetime "updated_at", default: "2019-10-01 00:00:00", null: false
     t.index ["account_id"], name: "index_products_on_account_id"
   end
 
