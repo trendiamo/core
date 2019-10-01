@@ -1,7 +1,7 @@
 import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Checkbox } from 'shared/form-elements'
 import { Typography } from '@material-ui/core'
@@ -103,14 +103,9 @@ const AffiliateTerms = styled.div`
   align-items: baseline;
 `
 
-const SuccessScreen = ({ selectedAffiliation, brand, removeAffiliation, isLoading }) => {
+const SuccessScreen = ({ selectedAffiliation, removeAffiliation, isLoading }) => {
   const [showRemoveConfirmationAlert, setShowRemoveConfirmationAlert] = useState(false)
   const removeWarningTimeoutRef = useRef(null)
-
-  const affiliationUrl = useMemo(
-    () => selectedAffiliation && `https://${brand.websiteHostname}/?aftk=${selectedAffiliation.token}`,
-    [selectedAffiliation, brand.websiteHostname]
-  )
 
   const onRemoveButtonClick = useCallback(
     () => {
@@ -137,7 +132,7 @@ const SuccessScreen = ({ selectedAffiliation, brand, removeAffiliation, isLoadin
       <Typography align="center" variant="overline">
         {'Your affiliate link'}
       </Typography>
-      <StyledClipboardInput onCopy={onCopyAffiliateLink} size="large" text={affiliationUrl} />
+      <StyledClipboardInput onCopy={onCopyAffiliateLink} size="large" text={selectedAffiliation.defaultAffiliateLink} />
       <RemoveButtonContainer>
         {showRemoveConfirmationAlert && (
           <>

@@ -71,6 +71,7 @@ Rails.application.routes.draw do
         resources :flows, only: %i[index]
 
         resources :affiliations, only: %i[index create destroy]
+        resources :affiliate_links, only: %i[create]
 
         resources :orders, only: %i[index]
 

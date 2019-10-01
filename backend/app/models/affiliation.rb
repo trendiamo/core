@@ -3,15 +3,19 @@ class Affiliation < ApplicationRecord
 
   belongs_to :account
   belongs_to :user
+  has_many :affiliate_links, dependent: :destroy
 
   validates :token, uniqueness: { scope: :account }
   validate :account_must_be_affiliate
   validate :non_affiliate_users_cannot_have_affiliations
   validate :one_affiliation_per_account
 
+  before_create :build_default_affiliate_link
+
   def as_json(_options = {})
     attributes.slice("id", "token")
-              .merge(brand: account.brand, has_revenues: account.orders.length.positive?)
+              .merge(brand: account.brand, has_revenues: account.orders.length.positive?,
+                     default_affiliate_link: affiliate_links.find_by(default_link: true).url)
   end
 
   private
@@ -37,5 +41,9 @@ class Affiliation < ApplicationRecord
     return unless Affiliation.where(user: user, account: account).any?
 
     errors.add(:user, "can only have one affiliation per account")
+  end
+
+  def build_default_affiliate_link
+    affiliate_links.build(default_link: true, url: "https://#{account.websites.first.hostnames.first}/?aftk=#{token}")
   end
 end
