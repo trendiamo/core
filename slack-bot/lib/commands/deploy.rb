@@ -16,6 +16,7 @@ PROJECTS_HASH = {
   "uptous-lp": :uptous,
   "plugin": :plugin,
   "plugiamo": :plugin,
+  "tracker": :tracker,
   "shopify-app": :shopify_app,
   "shopify app": :shopify_app,
   "shopify integration": :shopify_app,

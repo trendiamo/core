@@ -38,7 +38,7 @@ module Services
     git reset --hard origin/master
   SH
 
-  class Deploy
+  class Deploy # rubocop:disable Metrics/ClassLength
     def self.perform(project, environment, &block)
       new(project, environment).send(:perform, &block)
     end
@@ -113,6 +113,16 @@ module Services
     def deploy_plugin
       <<~SH
         cd #{ENV['BUILD_FOLDER']}/core/plugiamo && \
+        yarn install --silent --no-progress && \
+        mkdir -p ~/.aws && \
+        ([ -f ~/.aws/credentials ] || cp #{ENV['AWS_CREDENTIALS_FILE']} ~/.aws/credentials) && \
+        deploy/deploy #{@environment} '-o StrictHostKeyChecking=no -i #{ENV['STATIC_KEY_FILE']}'
+      SH
+    end
+
+    def deploy_tracker
+      <<~SH
+        cd #{ENV['BUILD_FOLDER']}/core/tracker && \
         yarn install --silent --no-progress && \
         mkdir -p ~/.aws && \
         ([ -f ~/.aws/credentials ] || cp #{ENV['AWS_CREDENTIALS_FILE']} ~/.aws/credentials) && \
