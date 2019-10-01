@@ -13,7 +13,7 @@ REVOKE ALL ON DATABASE "console_backend_pg" FROM PUBLIC;
 CREATE ROLE readonly;
 GRANT CONNECT ON DATABASE "console_backend_pg" TO readonly;
 GRANT USAGE ON SCHEMA public TO readonly;
-GRANT SELECT ON TABLE "affiliations", "brands", "generated_urls", "images", "memberships",
+GRANT SELECT ON TABLE "affiliate_links", "affiliations", "brands", "generated_urls", "images", "memberships",
                       "orders", "outros", "product_picks", "products", "sellers", "showcases", "simple_chat_messages",
                       "simple_chat_sections", "simple_chats", "spotlights",
                       "tagged_products_clients", "triggers", "website_settings", "websites" TO readonly;

@@ -2,7 +2,7 @@ import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
 import omit from 'lodash.omit'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import { Chip, Typography } from '@material-ui/core'
@@ -137,11 +137,6 @@ const BrandCard = ({
   setIsBrandModalOpen,
   setSelectedBrand,
 }) => {
-  const affiliationUrl = useMemo(() => affiliation && `https://${brand.websiteHostname}/?aftk=${affiliation.token}`, [
-    affiliation,
-    brand.websiteHostname,
-  ])
-
   const onClickCustomLink = useCallback(
     () => {
       mixpanel.track('Clicked Custom Link', { hostname: window.location.hostname, brand: brand.name })
@@ -200,7 +195,7 @@ const BrandCard = ({
                 backgroundColor="#e7ecef"
                 onCopy={onCopyAffiliateLink}
                 size="large"
-                text={affiliationUrl}
+                text={affiliation.defaultAffiliateLink}
               />
             )}
             <div />

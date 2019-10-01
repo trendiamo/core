@@ -1,7 +1,9 @@
 import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
+import { apiAffiliateLinkCreate, apiRequest } from 'utils'
+import { useSnackbar } from 'notistack'
 
 const urlInputProps = { pattern: 'https?://.+' }
 
@@ -18,22 +20,48 @@ const ClipboardContainer = styled.div`
 `
 
 const Footer = ({ affiliation }) => {
-  const mixFunction = useCallback(
-    text => {
-      return `${text}/?aftk=${affiliation.token}`
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [isLoading, setIsLoading] = useState('')
+
+  const createAffiliateLink = useCallback(
+    async text => {
+      const { json, errors, requestError } = await apiRequest(apiAffiliateLinkCreate, [
+        { affiliationId: affiliation.id, url: `${text}/?aftk=${affiliation.token}` },
+      ])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+        return
+      }
+      if (errors) {
+        enqueueSnackbar(errors.message, { variant: 'error' })
+        return
+      }
+      return json.url
     },
-    [affiliation.token]
+    [affiliation.id, affiliation.token, enqueueSnackbar]
   )
 
   const onCopyCustomLink = useCallback(text => {
     mixpanel.track('Copied Custom Link', { hostname: window.location.hostname, text })
   }, [])
 
+  const mixFunction = useCallback(
+    async text => {
+      setIsLoading(true)
+      const result = await createAffiliateLink(text)
+      setIsLoading(false)
+      return result
+    },
+    [createAffiliateLink]
+  )
+
   return (
     <Container>
       <ClipboardContainer>
         <ClipboardInput
           inputProps={urlInputProps}
+          isLoading={isLoading}
           mixFunction={mixFunction}
           onCopy={onCopyCustomLink}
           pasteable

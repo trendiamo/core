@@ -50,6 +50,7 @@ const ClipboardInput = ({
   size,
   text,
   type,
+  isLoading,
   ...props
 }) => {
   const [isCopied, setIsCopied] = useState(false)
@@ -65,24 +66,30 @@ const ClipboardInput = ({
     [wasCopied]
   )
 
+  const updateCopyButton = useCallback(() => {
+    setIsCopied(true)
+    setWasCopied(true)
+    showUpToUsBranding() && setTimeout(() => setIsCopied(false), 3000)
+  }, [])
+
   const copyText = useCallback(
     async event => {
       event.preventDefault()
-      setIsCopied(true)
-      setWasCopied(true)
-      showUpToUsBranding() && setTimeout(() => setIsCopied(false), 3000)
       if (outputText === inputText) {
+        updateCopyButton()
         onCopy && onCopy(pasteable ? inputText : text)
         copy(pasteable ? inputText : text)
         return
       }
-      const final = mixFunction ? mixFunction(inputText) : inputText
+      const final = mixFunction ? await mixFunction(inputText) : inputText
+      if (!final) return
+      updateCopyButton()
       setOutputText(final)
       setInputText(final)
       onCopy && onCopy(final)
       copy(final)
     },
-    [inputText, mixFunction, onCopy, outputText, pasteable, text]
+    [inputText, mixFunction, onCopy, outputText, pasteable, text, updateCopyButton]
   )
 
   const onInputFocus = useCallback(event => event.target.select(), [])
@@ -107,6 +114,7 @@ const ClipboardInput = ({
         <CopyButtonContainer>
           <CopyButton
             color={isCopied ? 'success' : type || 'primaryGradient'}
+            disabled={isLoading}
             fullWidth
             pasteable={pasteable}
             size={size}
