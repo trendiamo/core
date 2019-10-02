@@ -37,8 +37,7 @@ class Affiliation < ApplicationRecord
   end
 
   def one_affiliation_per_account
-    return if user&.affiliate_role_changed? && !user_id_changed? && !account_id_changed?
-    return unless Affiliation.where(user: user, account: account).any?
+    return unless Affiliation.where(user: user, account: account).where.not(id: id).any?
 
     errors.add(:user, "can only have one affiliation per account")
   end
