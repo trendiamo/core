@@ -50,22 +50,27 @@ const AffiliatePartners = () => {
   )
 
   const fetchAffiliationsAndBrands = useCallback(
-    () => {
-      let didCancel = false
-      ;(async () => {
-        setIsLoading(true)
-        await Promise.all([fetchAffiliations(), fetchAvailableBrands()])
-        setIsLoading(false)
-        setTimeout(() => {
-          didCancel || setAnimate(true)
-        }, 100)
-      })()
-      return () => (didCancel = true)
+    async () => {
+      setIsLoading(true)
+      await Promise.all([fetchAffiliations(), fetchAvailableBrands()])
+      setIsLoading(false)
     },
     [fetchAffiliations, fetchAvailableBrands]
   )
 
-  useEffect(() => fetchAffiliationsAndBrands(), [fetchAffiliationsAndBrands])
+  useEffect(
+    () => {
+      let didCancel = false
+      ;(async () => {
+        await fetchAffiliationsAndBrands()
+        setTimeout(() => {
+          didCancel || setAnimate(true)
+        }, 0)
+      })()
+      return () => (didCancel = true)
+    },
+    [fetchAffiliationsAndBrands]
+  )
 
   const secondTitleRef = useRef(null)
 
@@ -110,7 +115,7 @@ const AffiliatePartners = () => {
         if (!errors && !requestError) {
           enqueueSnackbar(`Successfully created affiliation with ${brand.name}`, { variant: 'success' })
         }
-        fetchAffiliationsAndBrands()
+        await fetchAffiliationsAndBrands()
         return { json, errors, requestError }
       })()
     },

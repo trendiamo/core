@@ -200,9 +200,8 @@ const Footer = ({
       const { errors, requestError } = await createAffiliation(brand)
       if (!errors && !requestError) {
         mixpanel.track('Created Affiliate Link', { hostname: window.location.hostname, brand: brand.name })
-      } else {
-        setIsCreateLinkClicked(false)
       }
+      setIsCreateLinkClicked(false)
     },
     [brand, createAffiliation]
   )
