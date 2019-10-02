@@ -12,6 +12,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  flex: 1;
 `
 
 const SectionContent = styled(props => <div {...omit(props, ['foldable'])} />)`
@@ -20,6 +21,9 @@ const SectionContent = styled(props => <div {...omit(props, ['foldable'])} />)`
   @media (min-width: 960px) {
     ${({ foldable }) => !foldable && showUpToUsBranding() && 'padding: 16px;'}
   }
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `
 
 const Section = ({

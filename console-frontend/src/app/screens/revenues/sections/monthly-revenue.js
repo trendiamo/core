@@ -34,6 +34,7 @@ const PreviousPaymentMessage = styled(Typography)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 12px;
 `
 
 const NextPaymentMessage = styled(Typography)`
@@ -42,7 +43,7 @@ const NextPaymentMessage = styled(Typography)`
 
 const StyledFormHelperText = styled(FormHelperText)`
   text-align: center;
-  align-self: flex-end;
+  margin-bottom: 0.8rem;
 `
 
 const StyledCheckCircle = styled(CheckCircle)`
@@ -88,7 +89,6 @@ const MonthlyRevenue = ({ dates, orders }) => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <br />
           {'Check your Stripe account'}
         </Link>
       )}

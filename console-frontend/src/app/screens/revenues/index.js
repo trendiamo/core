@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Activity, BrandsSplit, MonthlyRevenue, Orders } from './sections'
 import { apiAffiliationsList, apiConnectStripe, apiOrdersList, apiRequest, isTrendiamoUser } from 'utils'
+import { Hidden } from '@material-ui/core'
 import { parse } from 'query-string'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
@@ -51,11 +52,7 @@ const GridContainer = styled(props => <Grid container {...props} />)`
 `
 
 const GridItem = styled(props => <Grid item {...props} />)`
-  height: ${({ md }) => (md === 6 ? '60%' : '40%')};
-
-  @media (min-width: 960px) and (min-height: 800px) {
-    height: ${({ md }) => (md === 6 ? '66.6%' : '33.3%')};
-  }
+  min-height: 260px;
 `
 
 const Section = styled(({ children, ...props }) => (
@@ -63,12 +60,13 @@ const Section = styled(({ children, ...props }) => (
     <SectionInner>{children}</SectionInner>
   </SectionBase>
 ))`
-  height: 100%;
+  min-height: 100%;
 `
 
 const SectionInner = styled.div`
   flex-grow: 1;
   height: inherit;
+  flex: 1;
 `
 
 const calculateSellerAmount = (amount, rate) => ((amount * rate) / 100).toFixed(2)
@@ -209,11 +207,13 @@ const Revenues = ({ history }) => {
 
   return (
     <GridContainer spacing={16}>
-      <GridItem md={8} xs={12}>
-        <Section title="Activity">
-          <Activity dates={dates} orders={orders} />
-        </Section>
-      </GridItem>
+      <Hidden xsDown>
+        <GridItem md={8} xs={12}>
+          <Section title="Activity">
+            <Activity dates={dates} orders={orders} />
+          </Section>
+        </GridItem>
+      </Hidden>
       <GridItem md={4} xs={12}>
         <Section title="Monthly Revenue">
           <MonthlyRevenue dates={dates} orders={orders} />

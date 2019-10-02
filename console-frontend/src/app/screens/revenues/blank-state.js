@@ -16,7 +16,9 @@ const Container = styled.div`
   flex-grow: 1;
   text-align: center;
   margin: auto;
-  padding: 50px;
+  @media (min-width: 960px) {
+    padding: 50px;
+  }
 `
 
 const StyledIcon = styled(({ icon, ...props }) => React.createElement(icon, props))`
@@ -79,7 +81,7 @@ const BlankState = ({ isLoading, hasStripeAccount, hasRevenues, hasErrors, hasAf
         </>
       )
     ) : (
-      <Container>
+      <>
         {hasRevenues && (
           <Typography variant="caption">
             {`Hey! We see that you have already generated some sales! Nice going :)
@@ -91,7 +93,7 @@ const BlankState = ({ isLoading, hasStripeAccount, hasRevenues, hasErrors, hasAf
         </Typography>
         <br />
         <StripeButton isLoading={isLoading} />
-      </Container>
+      </>
     )}
   </Container>
 )
