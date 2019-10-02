@@ -15,6 +15,7 @@ const StyledTable = styled(props => <Table {...omit(props, ['sticky'])} />)`
   width: 100%;
   display: flex;
   flex-direction: column;
+  flex: 1;
 `
 
 const StyledTableHead = styled(TableHead)`
@@ -26,7 +27,10 @@ const StyledTableBody = styled(TableBody)`
 `
 
 const StyledTableCell = styled(TableCell)`
-  padding: 4px 12px;
+  padding: 2px;
+  @media (min-width: 960px) {
+    padding: 4px 12px;
+  }
   border-color: ${showUpToUsBranding() ? '#e7ecef' : '#ddd'};
 `
 
@@ -47,6 +51,19 @@ const StyledTablePagination = styled(TablePagination)`
   background: white;
   border-top: 2px solid ${showUpToUsBranding() ? '#e7ecef' : '#ddd'};
   font-size: 14px;
+
+  /* this needs to be max-width, as it's overriding from mui */
+  @media (max-width: 600px) {
+    > div {
+      flex-direction: column;
+      height: auto;
+      padding-left: 2px;
+    }
+    > div > * {
+      padding: 3px 0;
+      margin: 0;
+    }
+  }
 `
 
 const iconButtonsProps = {
