@@ -28,7 +28,7 @@ class RestClient::RequestData
   end
 
   def get_affiliate_token(landing_site)
-    match = landing_site.match(/aftk=([^&]*)/)
+    match = landing_site&.match(/aftk=([^&]*)/)
     match ? match[1] : nil
   end
 
