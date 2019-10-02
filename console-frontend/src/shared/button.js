@@ -6,7 +6,21 @@ import { CircularProgress } from '@material-ui/core'
 import { Button as MuiButton, Tooltip } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 
-const ButtonContainer = styled(props => <div {...omit(props, ['inline', 'centered', 'width'])} />)`
+const ButtonContainer = styled(props => (
+  <div {...omit(props, ['inline', 'centered', 'width', 'fullWidthOnMobile', 'inlineOnDesktop'])} />
+))`
+
+  ${({ inlineOnDesktop }) =>
+    inlineOnDesktop &&
+    `
+    @media (min-width: 960px) {
+      display: inline-block;
+        * + & {
+          margin-left: 10px;
+        }
+    }
+  `}
+
 ${({ inline }) =>
   inline
     ? `display: inline-block;
@@ -17,7 +31,15 @@ ${({ inline }) =>
       margin-top: 12px;
     }`}
   justify-content: ${({ centered }) => (centered ? 'center' : 'normal')};
-  width: ${({ width }) => (width ? width : 'auto')};
+${({ fullWidthOnMobile, width }) =>
+  fullWidthOnMobile
+    ? `
+        width: 100%;
+        @media (min-width: 960px) {
+          width: ${width || 'auto'};
+        }
+      `
+    : `width: ${({ width }) => width || 'auto'};`}
 
 `
 
@@ -48,10 +70,11 @@ const uptousButtonSizes = {
   },
 }
 
-const StyledMuiButton = styled(props => <MuiButton {...omit(props, ['width'])} />)`
-  width: ${({ width }) => (width ? width : 'auto')};
+const StyledMuiButton = styled(props => <MuiButton {...omit(props, ['flex'])} />)`
   white-space: nowrap;
-  ${({ size }) => showUpToUsBranding() && uptousButtonSizes['mobile'][size || 'medium']}
+  ${({ flex }) => flex && 'width: 100%;'}
+  ${({ size }) =>
+    showUpToUsBranding() && uptousButtonSizes['mobile'][size || 'medium']}
   @media (min-width: 960px) {
     ${({ size }) => showUpToUsBranding() && uptousButtonSizes['desktop'][size || 'medium']}
   }
@@ -65,7 +88,7 @@ const StyledCircularProgress = () => (
 
 // Needed for when button is disabled as it won't fire the needed hover events for the tootip
 const EventFirer = styled.div`
-  max-width: fit-content;
+  width: 100%;
 `
 
 const ConditionalWrap = ({ disabled, wrap, children }) => (disabled ? wrap(children) : children)
@@ -84,6 +107,9 @@ const Button = ({
   centered,
   children,
   inline,
+  fullWidthOnMobile,
+  inlineOnDesktop,
+  flex,
   ...props
 }) => {
   const [styleObject, setStyleObject] = useState({})
@@ -124,7 +150,13 @@ const Button = ({
   )
 
   return (
-    <ButtonContainer centered={centered} inline={inline} width={width}>
+    <ButtonContainer
+      centered={centered}
+      fullWidthOnMobile={fullWidthOnMobile}
+      inline={inline}
+      inlineOnDesktop={inlineOnDesktop}
+      width={width}
+    >
       <Tooltip
         open={tooltipEnabled && tooltipOpen && isFormPristine}
         placement={tooltipPlacement}
@@ -139,15 +171,14 @@ const Button = ({
               'tooltipText',
               'tooltipPlacement',
               'isFormSubmitting',
-              'width',
               'centered',
             ])}
             disabled={disabled}
+            flex={flex}
             onClick={onClick}
             onMouseEnter={onButtonHoverStart}
             onMouseLeave={onButtonHoverEnd}
             style={disabled ? buttonStyles['disabled'] : styleObject}
-            width={width}
           >
             <ButtonContents>
               {isFormSubmitting && <StyledCircularProgress />}

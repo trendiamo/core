@@ -4,7 +4,6 @@ import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { IconButton } from 'shared/form-elements'
 import { ReactComponent as NewTabIcon } from 'assets/icons/new-tab.svg'
 
@@ -54,7 +53,7 @@ const WebsiteButton = ({ affiliation, websiteHostname }) => {
   )
 }
 
-const Actions = ({ affiliation, brand, onClickCustomLink, openBrandModal, width }) => {
+const Actions = ({ affiliation, brand, onClickCustomLink, openBrandModal }) => {
   const onCopyAffiliateLink = useCallback(text => {
     mixpanel.track('Copied Affiliate Link', { hostname: window.location.hostname, text })
   }, [])
@@ -79,25 +78,13 @@ const Actions = ({ affiliation, brand, onClickCustomLink, openBrandModal, width 
             text={affiliation.defaultAffiliateLink}
           />
         ) : (
-          <Button
-            color="primaryGradient"
-            inline
-            onClick={onClickPromoteNow}
-            size="large"
-            width={!isWidthUp('md', width) && '100%'}
-          >
+          <Button color="primaryGradient" flex fullWidthOnMobile inline onClick={onClickPromoteNow} size="large">
             {'Promote now'}
           </Button>
         )}
       </ButtonContainer>
       {affiliation && (
-        <Button
-          color="white"
-          inline={isWidthUp('md', width)}
-          onClick={onClickCustomLink}
-          size="large"
-          width={!isWidthUp('md', width) && '100%'}
-        >
+        <Button color="white" flex fullWidthOnMobile inlineOnDesktop onClick={onClickCustomLink} size="large">
           {'Custom link'}
         </Button>
       )}
@@ -105,4 +92,4 @@ const Actions = ({ affiliation, brand, onClickCustomLink, openBrandModal, width 
   )
 }
 
-export default withWidth()(Actions)
+export default Actions

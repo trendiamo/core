@@ -17,7 +17,6 @@ const Footer = ({ isSubmitting }) => (
       <Button
         color="primaryGradient"
         disabled={isSubmitting}
-        fullWidth
         isFormSubmitting={isSubmitting}
         type="submit"
         variant="contained"

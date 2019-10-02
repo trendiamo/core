@@ -6,13 +6,20 @@ import { Typography } from '@material-ui/core'
 
 const ContentContainer = styled.div`
   overflow-x: hidden;
-  padding: 10px 60px 20px;
+  padding: 10px 24px 20px;
   position: relative;
+  @media (min-width: 960px) {
+    padding: 10px 60px 20px;
+  }
 `
 
 const ContentScrollContainer = styled.div`
-  max-height: calc(100vh - 200px);
+  max-height: auto;
   overflow-y: auto;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `
 
 const MainContainer = styled.div`
@@ -22,7 +29,11 @@ const MainContainer = styled.div`
 
 const IconContainer = styled.div`
   text-align: center;
-  padding: 35px 0 10px;
+  padding: 0px 0 10px;
+  margin-top: 0;
+  @media (min-width: 960px) {
+    margin-top: 35px;
+  }
 `
 
 const Content = ({ affiliation }) => {

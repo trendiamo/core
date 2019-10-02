@@ -17,6 +17,7 @@ const BrandModal = ({ brand, createAffiliation, open, setOpen, removeAffiliation
           selectedAffiliation={selectedAffiliation}
         />
       }
+      flexContent
       fullWidth
       handleClose={handleClose}
       hasManualPadding
