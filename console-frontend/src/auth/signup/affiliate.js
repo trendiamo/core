@@ -181,7 +181,6 @@ const AffiliateSignup = () => {
               <Button
                 color="primaryGradient"
                 disabled={state.isFormSubmitting}
-                fullWidth
                 isFormSubmitting={state.isFormSubmitting}
                 type="submit"
                 variant="contained"

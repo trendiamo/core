@@ -8,6 +8,7 @@ const CustomLinkModal = ({ affiliation, open, setOpen }) => {
   return (
     <Dialog
       content={<Content affiliation={affiliation} />}
+      flexContent
       fullWidth
       handleClose={handleClose}
       hasManualPadding

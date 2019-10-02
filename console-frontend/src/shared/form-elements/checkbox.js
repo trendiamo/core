@@ -5,6 +5,7 @@ import { FormControlLabel, FormLabel, Checkbox as MuiCheckbox } from '@material-
 const StyledLabel = styled(FormLabel)`
   cursor: pointer;
   user-select: none;
+  line-height: inherit;
 `
 
 const Checkbox = ({ value, setValue, onChange, label, required, color, ...props }) => {

@@ -8,14 +8,21 @@ import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
   background: #e7ecef;
-  min-height: 100px;
-  padding: 20px 60px 20px;
+  padding: 12px 24px 12px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 0;
+  @media (min-height: 960px) {
+    padding: 20px 60px 20px;
+  }
 `
 
 const CommissionRate = styled.div`
   color: #0f7173;
   font-size: 32px;
   font-weight: 700;
+  line-height: 1;
 `
 
 const CommissionDescription = styled.div`
@@ -25,8 +32,6 @@ const CommissionDescription = styled.div`
 
 const Conditions = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 const ActionsContainer = styled.div`
@@ -101,6 +106,7 @@ const CreateAffiliateLinkContainer = styled.div`
 const AffiliateTerms = styled.div`
   display: flex;
   align-items: baseline;
+  margin-top: 6px;
 `
 
 const SuccessScreen = ({ selectedAffiliation, removeAffiliation, isLoading }) => {
@@ -144,6 +150,7 @@ const SuccessScreen = ({ selectedAffiliation, removeAffiliation, isLoading }) =>
         <Button
           color={showRemoveConfirmationAlert ? 'error' : 'primaryGradient'}
           disabled={isLoading || selectedAffiliation.hasRevenues}
+          flex
           isFormSubmitting={isLoading}
           onClick={onRemoveButtonClick}
           size="small"
@@ -172,6 +179,8 @@ const Actions = ({ isCreateLinkClicked, onCreateLinkClick, scrollToTermsAndCondi
           <Button
             color="primaryGradient"
             disabled={isCreateLinkClicked || !acceptedTermsAndConditions}
+            flex
+            fullWidthOnMobile
             isFormSubmitting={isCreateLinkClicked}
             onClick={onCreateLinkClick}
             size="large"

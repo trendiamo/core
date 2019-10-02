@@ -15,8 +15,11 @@ const Tab = styled(MuiTab)`
 `
 
 const ContentContainer = styled.div`
-  min-height: 700px;
-  padding: 24px;
+  padding: 22px;
+  @media (min-width: 960px) {
+    min-height: 700px;
+    padding: 24px;
+  }
 `
 
 const TabsContainer = ({ tabs, selectedTab, setSelectedTab }) => {

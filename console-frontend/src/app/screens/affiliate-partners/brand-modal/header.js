@@ -33,7 +33,10 @@ const Logo = styled.img`
 const HeaderContent = styled.div`
   position: absolute;
   bottom: -60px;
-  left: 60px;
+  left: 22px;
+  @media (min-height: 960px) {
+    left: 60px;
+  }
 `
 
 const BrandLogo = ({ brand }) => {
@@ -46,28 +49,38 @@ const BrandLogo = ({ brand }) => {
 
 const HeaderImageContainer = styled.div`
   position: relative;
-  height: 300px;
+  height: 120px;
   width: 100%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(45deg, #ccc, rgba(255, 255, 255, 0));
+  @media (min-width: 960px) {
+    height: 300px;
+  }
 `
 
 const SocialLinkContainer = styled.a`
-  width: 26px;
-  height: 26px;
-  & + & {
-    margin-left: 10px;
+  font-size: 0;
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+  padding: 10px;
+  @media (min-width: 960px) {
+    svg {
+      width: auto;
+      height: auto;
+    }
   }
 `
 
 const SocialLinksContainer = styled.div`
   position: absolute;
-  left: 120px;
+  left: 130px;
   top: 60px;
-  padding: 17px;
+  padding: 17px 0;
   display: flex;
 `
 
@@ -87,9 +100,9 @@ const BrandSocialLinks = ({ brand }) => {
   )
 }
 
-const Header = ({ brand }) => {
+const Header = ({ brand, headerRef }) => {
   return (
-    <Container>
+    <Container ref={headerRef}>
       <HeaderImageContainer>
         <Image src={brand.headerImageUrl} />
       </HeaderImageContainer>

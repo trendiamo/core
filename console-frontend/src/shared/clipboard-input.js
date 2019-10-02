@@ -37,7 +37,7 @@ const TextInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteabl
 
 const CopyButton = styled(props => <Button {...omit(props, ['pasteable'])} />)`
   height: 100%;
-  width: ${({ pasteable }) => (pasteable ? '135px' : '90px')};
+  width: ${({ pasteable }) => (pasteable ? '120px' : '90px')};
   box-shadow: none;
   border-radius: 0;
 `

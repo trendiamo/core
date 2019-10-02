@@ -3,6 +3,7 @@ import MuiIconButton from '@material-ui/core/IconButton'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { DialogActions, DialogContent, DialogContentText, Dialog as MuiDialog, Typography } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 
@@ -38,9 +39,11 @@ const DialogSubtitle = styled.span`
   margin-top: -20px;
 `
 
-const StyledDialogContent = styled(props => <DialogContent {...omit(props, ['hasManualPadding'])} />)`
+const StyledDialogContent = styled(props => <DialogContent {...omit(props, ['hasManualPadding', 'flexContent'])} />)`
   padding-bottom: 0;
   ${({ hasManualPadding }) => hasManualPadding && 'padding: 0;'}
+  ${({ flexContent }) =>
+    flexContent && 'display: flex;'}
 `
 
 const TitleContainer = styled.div`
@@ -63,10 +66,13 @@ const Dialog = ({
   subtitle,
   content,
   hasManualPadding,
+  width,
+  flexContent,
   ...props
 }) => (
   <MuiDialog
     aria-labelledby="form-dialog-title"
+    fullScreen={!isWidthUp('md', width)}
     onClose={handleClose}
     onKeyUp={onKeyUp}
     open={open}
@@ -78,11 +84,11 @@ const Dialog = ({
     </StyledIconButton>
     <TitleContainer hasManualPadding={hasManualPadding}>{title && <Title title={title} />}</TitleContainer>
     {subtitle && <DialogSubtitle>{subtitle}</DialogSubtitle>}
-    <StyledDialogContent hasManualPadding={hasManualPadding}>
+    <StyledDialogContent flexContent={flexContent} hasManualPadding={hasManualPadding}>
       {typeof content == 'string' ? <DialogContentText>{content}</DialogContentText> : content}
     </StyledDialogContent>
     {dialogActions && <DialogActions style={{ margin: '12px' }}>{dialogActions}</DialogActions>}
   </MuiDialog>
 )
 
-export default Dialog
+export default withWidth()(Dialog)

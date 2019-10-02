@@ -9,8 +9,14 @@ const urlInputProps = { pattern: 'https?://.+' }
 
 const Container = styled.div`
   background: #e7ecef;
-  min-height: 100px;
-  padding: 60px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: center;
+  @media (min-height: 960px) {
+    padding: 20px 60px 20px;
+  }
 `
 
 const ClipboardContainer = styled.div`
@@ -22,7 +28,7 @@ const ClipboardContainer = styled.div`
 const Footer = ({ affiliation }) => {
   const { enqueueSnackbar } = useSnackbar()
 
-  const [isLoading, setIsLoading] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const createAffiliateLink = useCallback(
     async text => {

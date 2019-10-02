@@ -2,20 +2,27 @@ import Footer from './footer'
 import Header from './header'
 import React, { useCallback, useRef } from 'react'
 import styled from 'styled-components'
+import { Typography } from '@material-ui/core'
 
 const BrandDescription = styled.div`
   color: #272932;
+  h2 {
+    font-size: 20px;
+  }
 `
 
 const ContentContainer = styled.div`
   overflow-x: hidden;
-  padding: 10px 60px 20px;
-  margin-top: 70px;
+  padding: 12px 24px;
   position: relative;
+  @media (min-width: 960px) {
+    padding: 10px 60px 20px;
+  }
+  margin-top: 70px;
+  font-family: Lato, 'Helvetica', 'Arial', sans-serif;
 `
 
 const ContentScrollContainer = styled.div`
-  max-height: calc(100vh - 315px);
   overflow-y: auto;
 `
 
@@ -28,7 +35,7 @@ const TermsAndConditionsContent = styled.div``
 
 const TermsAndConditions = ({ brand, termsRef }) => (
   <div ref={termsRef}>
-    <h2>{'Terms and Conditions'}</h2>
+    <Typography variant="h5">{'Terms and Conditions'}</Typography>
     <TermsAndConditionsContent dangerouslySetInnerHTML={{ __html: brand.termsAndConditions }} />
   </div>
 )
@@ -36,16 +43,17 @@ const TermsAndConditions = ({ brand, termsRef }) => (
 const Content = ({ brand, removeAffiliation, createAffiliation, handleClose, selectedAffiliation, isLoading }) => {
   const contentRef = useRef(null)
   const termsRef = useRef(null)
+  const headerRef = useRef(null)
 
   const scrollToTermsAndConditions = useCallback(() => {
-    if (!contentRef.current || !termsRef.current) return
-    contentRef.current.scrollTo(0, termsRef.current.offsetTop + 350)
+    if (!contentRef.current || !termsRef.current || !headerRef.current) return
+    contentRef.current.scrollTo(0, termsRef.current.offsetTop + headerRef.current.clientHeight + 55)
   }, [])
 
   return (
     <MainContainer>
       <ContentScrollContainer ref={contentRef}>
-        <Header brand={brand} />
+        <Header brand={brand} headerRef={headerRef} />
         <ContentContainer>
           <BrandDescription dangerouslySetInnerHTML={{ __html: brand.fullDescription }} />
           <TermsAndConditions brand={brand} termsRef={termsRef} />
