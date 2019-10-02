@@ -21,6 +21,14 @@
     </script>
   </head>
   <body>
+    <script>
+      !(function() {
+        if (typeof Set === "undefined") {
+          alert('Your browser is not supported')
+          document.write('<!--')
+        }
+      })()
+    </script>
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root" class="notranslate"></div>
   </body>
