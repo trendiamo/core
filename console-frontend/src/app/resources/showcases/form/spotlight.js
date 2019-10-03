@@ -50,6 +50,7 @@ const Spotlight = ({
   spotlight,
 }) => {
   const [useSellerAnimation, setUseSellerAnimation] = useState(spotlight.useSellerAnimation)
+  const [productPicksCounter, setProductPicksCounter] = useState(spotlight.productPicksAttributes.length)
 
   const onChange = useCallback(
     newSpotlightCallback => {
@@ -83,12 +84,13 @@ const Spotlight = ({
             displayPrice: '',
             img: { url: '' },
             imgRect: {},
-            __key: `new-${spotlight.productPicksAttributes.length}`,
+            __key: `new-${productPicksCounter + 1}`,
           },
         ],
       }))
+      setProductPicksCounter(productPicksCounter + 1)
     },
-    [onChange]
+    [onChange, productPicksCounter]
   )
 
   const deleteSpotlight = useCallback(

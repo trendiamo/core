@@ -2,7 +2,7 @@ import auth from 'auth'
 import CircularProgress from 'shared/circular-progress'
 import FormContainer from './form-container'
 import PluginPreview from './plugin-preview'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
@@ -41,6 +41,10 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     onFormSubmit,
     setFieldValue,
   } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
+
+  const [simpleChatSectionsCounter, setSimpleChatSectionsCounter] = useState(
+    form.simpleChatSectionsAttributes ? form.simpleChatSectionsAttributes.length : 0
+  )
 
   const onPreviewClick = useCallback(
     () => {
@@ -86,14 +90,15 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
             ...form.simpleChatSectionsAttributes,
             {
               key: '',
-              __key: `new-${form.simpleChatSectionsAttributes.length}`,
+              __key: `new-${simpleChatSectionsCounter + 1}`,
               simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', html: '', __key: 'new-0' }],
             },
           ],
         }
       })
+      setSimpleChatSectionsCounter(simpleChatSectionsCounter + 1)
     },
-    [mergeFormCallback]
+    [mergeFormCallback, simpleChatSectionsCounter]
   )
 
   const setSimpleChatSectionsForm = useCallback(
@@ -173,6 +178,15 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
   useAppBarContent(appBarContent)
 
   const module = useMemo(() => ({ id: form.id, type: 'simple-chat', triggerIds: form.triggerIds }), [form])
+
+  useEffect(
+    () => {
+      if (isFormLoading) return
+      if (form.simpleChatSectionsAttributes && simpleChatSectionsCounter === 0)
+        setSimpleChatSectionsCounter(form.simpleChatSectionsAttributes.length)
+    },
+    [form.simpleChatSectionsAttributes, isFormLoading, simpleChatSectionsCounter]
+  )
 
   if (isFormLoading) return <CircularProgress />
 

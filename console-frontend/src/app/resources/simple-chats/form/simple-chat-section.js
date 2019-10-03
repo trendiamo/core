@@ -70,6 +70,9 @@ const SimpleChatSection = ({
   simpleChatSectionIndex,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
+  const [simpleChatMessagesCounter, setSimpleChatMessagesCounter] = useState(
+    simpleChatSection.simpleChatMessagesAttributes.length
+  )
 
   const closeMenu = useCallback(() => {
     setAnchorEl(null)
@@ -138,6 +141,7 @@ const SimpleChatSection = ({
           : messageType === 'SimpleChatVideoMessage'
           ? { videoUrl: '' }
           : { img: { url: '' }, imgRect: {}, groupWithAdjacent: false }
+      setSimpleChatMessagesCounter(simpleChatMessagesCounter + 1)
       onChange(
         {
           ...simpleChatSection,
@@ -146,14 +150,14 @@ const SimpleChatSection = ({
             {
               ...simpleChatMessageObject,
               type: messageType,
-              __key: `new-${simpleChatSection.simpleChatMessagesAttributes.length}`,
+              __key: `new-${simpleChatMessagesCounter}`,
             },
           ],
         },
         simpleChatSectionIndex
       )
     },
-    [closeMenu, onChange, simpleChatSection, simpleChatSectionIndex]
+    [closeMenu, onChange, simpleChatMessagesCounter, simpleChatSection, simpleChatSectionIndex]
   )
 
   const onFocus = useCallback(() => onToggleContent(true) && collapseOtherSimpleChatSections, [
