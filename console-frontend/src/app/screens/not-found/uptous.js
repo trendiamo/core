@@ -13,7 +13,9 @@ const Container = styled.div`
   flex-grow: 1;
   text-align: center;
   margin: auto;
-  padding: 50px;
+  @media (min-width: 960px) {
+    padding: 50px;
+  }
 `
 
 const StyledIcon = styled(({ icon, ...props }) => React.createElement(icon, props))`
@@ -23,7 +25,10 @@ const StyledIcon = styled(({ icon, ...props }) => React.createElement(icon, prop
 `
 
 const StyledButton = styled(Button)`
-  margin-top: 30px;
+  margin-top: 14px;
+  @media (min-width: 960px) {
+    margin-top: 30px;
+  }
 `
 
 const NotFound = ({ navigateToRootPage }) => (

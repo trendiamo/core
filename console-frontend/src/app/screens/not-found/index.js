@@ -16,10 +16,13 @@ const Fullscreen = styled.div`
 const Container = styled.div`
   position:relative
   text-align: center;
-  max-width: 60%;
-  flex: none;
   margin: auto;
-  padding: 50px 0;
+  padding: 12px;
+  @media (min-width: 960px) {
+    max-width: 60%;
+    padding: 50px 0;
+    flex: none;
+  }
 `
 
 const NotFound = () => {
