@@ -41,6 +41,10 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     mergeFormCallback,
   } = useForm({ formObjectTransformer, saveFormObject, loadFormObject })
 
+  const [spotlightsCounter, setSpotlightsCounter] = useState(
+    form.spotlightsAttributes ? form.spotlightsAttributes.length : 0
+  )
+
   useEffect(
     () => {
       pluginHistory.replace(pluginRoutes.showcase(form.id))
@@ -86,12 +90,13 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
                 __key: 'new-0',
               },
             ],
-            __key: `new-${form.spotlightsAttributes.length}`,
+            __key: `new-${spotlightsCounter + 1}`,
           },
         ],
       }))
+      setSpotlightsCounter(spotlightsCounter + 1)
     },
-    [mergeFormCallback]
+    [mergeFormCallback, spotlightsCounter]
   )
 
   const setSpotlightForm = useCallback(
@@ -191,6 +196,14 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
   )
 
   const module = useMemo(() => ({ id: form.id, type: 'showcase', triggerIds: form.triggerIds }), [form])
+
+  useEffect(
+    () => {
+      if (isFormLoading) return
+      if (form.spotlightsAttributes && spotlightsCounter === 0) setSpotlightsCounter(form.spotlightsAttributes.length)
+    },
+    [form.spotlightsAttributes, isFormLoading, spotlightsCounter]
+  )
 
   if (isFormLoading) return <CircularProgress />
 
