@@ -16,6 +16,7 @@ export default {
   },
   onChatStop: () => {
     if (!window.zE) return
+    document.querySelector('.frekkls-container').remove()
     window.zE('webWidget', 'show')
     window.zE('webWidget', 'toggle')
   },
