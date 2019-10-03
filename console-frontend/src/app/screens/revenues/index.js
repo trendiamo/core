@@ -124,7 +124,6 @@ const Revenues = ({ history }) => {
       if (!exchangeRates) return
 
       return orders.map(order => {
-        if (order.currency === userCurrency) return order
         return {
           sellerAmount: calculateSellerAmount(
             order.amountInCents / exchangeRates[order.currency],
@@ -132,7 +131,6 @@ const Revenues = ({ history }) => {
           ),
           currency: CURRENCY_SYMBOLS[userCurrency],
           products: order.products.map(product => {
-            if (userCurrency === product) return product
             return {
               currency: CURRENCY_SYMBOLS[userCurrency],
               sellerAmount: calculateSellerAmount(
