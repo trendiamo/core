@@ -13,6 +13,7 @@ import rihappyConfig from './rihappy'
 import shopinfoConfig from './shopinfo'
 import timeblock from './timeblock'
 import uniplacesConfig from './uniplaces'
+import uptousapp from './uptousapp'
 import villaDonatelloConfig from './villadonatello'
 
 const defaultConfig = {
@@ -55,6 +56,7 @@ const getFrekklsConfig = () => {
   if (['pampling.com', 'www.pampling.com'].includes(location.hostname)) return pampling
   if (location.hostname === 'www.mymuesli.com') return mymuesli
   if (location.hostname === 'timeblock-europe.com') return timeblock
+  if (location.hostname === 'app.uptous.co') return uptousapp
   return {}
 }
 
