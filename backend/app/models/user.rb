@@ -5,6 +5,8 @@ class User < ApplicationRecord
 
   has_many :generated_urls, dependent: :destroy
 
+  has_many :login_events, dependent: :destroy
+
   has_many :outros, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
   has_many :showcases, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
   has_many :simple_chats, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
