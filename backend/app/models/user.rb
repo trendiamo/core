@@ -65,10 +65,8 @@ class User < ApplicationRecord
 
   def details_attributes
     attributes.slice(
-      "date_of_birth", "shipping_first_name", "shipping_last_name",
-      "address_line1", "address_line2", "zip_code", "city",
-      "country", "payment_first_name", "payment_last_name", "photo_id_front_url", "photo_id_back_url",
-      "payment_address", "phone_number", "iban"
+      "shipping_first_name", "shipping_last_name",
+      "address_line1", "address_line2", "zip_code", "city", "country"
     )
   end
 

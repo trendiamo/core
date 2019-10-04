@@ -1,6 +1,5 @@
 import auth from 'auth'
 import Dialog from 'shared/dialog'
-import PaymentsForm from './payments-form'
 import ProfileForm from './profile-form'
 import React, { useCallback, useState } from 'react'
 import SecurityForm from './security-form'
@@ -8,7 +7,7 @@ import ShippingForm from './shipping-form'
 import styled from 'styled-components'
 import { Tab as MuiTab, Tabs } from '@material-ui/core'
 
-const tabs = auth.isAffiliate() ? ['Profile', 'Shipping', 'Payments', 'Security'] : ['Profile', 'Security']
+const tabs = auth.isAffiliate() ? ['Profile', 'Shipping', 'Security'] : ['Profile', 'Security']
 
 const Tab = styled(MuiTab)`
   min-width: 100px;
@@ -48,8 +47,6 @@ const DialogContent = ({ handleClose, selectedTab }) => {
         ) : selectedTab === 1 ? (
           <ShippingForm handleClose={handleClose} />
         ) : selectedTab === 2 ? (
-          <PaymentsForm handleClose={handleClose} />
-        ) : selectedTab === 3 ? (
           <SecurityForm handleClose={handleClose} />
         ) : null
       ) : selectedTab === 0 ? (
