@@ -14,7 +14,7 @@ CREATE ROLE readonly;
 GRANT CONNECT ON DATABASE "console_backend_pg" TO readonly;
 GRANT USAGE ON SCHEMA public TO readonly;
 GRANT SELECT ON TABLE "affiliate_links", "affiliations", "brands", "generated_urls", "images", "memberships",
-                      "orders", "outros", "product_picks", "products", "sellers", "showcases", "simple_chat_messages",
+                      "orders", "outros", "product_picks", "products", "sellers", "showcases", "simple_chat_messages", "login_events",
                       "simple_chat_sections", "simple_chats", "spotlights",
                       "tagged_products_clients", "triggers", "website_settings", "websites" TO readonly;
 GRANT SELECT ("id", "username", "email", "first_name", "last_name", "customer_ref", "reset_password_sent_at",
