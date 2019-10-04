@@ -1,4 +1,8 @@
 export default {
+  onInit: () => {
+    if (window.innerWidth <= 768) return false
+  },
+  pluginZIndex: 1200,
   onShow: () => {
     if (!window.zE) return
     window.zE('webWidget', 'hide')
