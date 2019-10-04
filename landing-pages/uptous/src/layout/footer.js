@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Container from '../components/container'
+import IconInstagram from '../images/instagram.svg'
+import IconYouTube from '../images/youtube.svg'
 import Section from '../components/section'
 import { openModal } from '../utils'
-import IconYouTube from '../images/youtube.svg'
-import IconInstagram from '../images/instagram.svg'
 
 const Header = styled.div``
 const Links = styled.div``
@@ -23,36 +23,36 @@ const onPrivacyPolicyClick = event => {
   openModal('.privacy-policy-modal-content')
 }
 
+const FooterLinks = () => (
+  <Links>
+    <div>
+      <Header>{'Information'}</Header>
+      <a href="mailto:hello@uptous.com">{'Email us'}</a>
+      <a href="#lega-notice" onClick={onLegalNoticeClick}>
+        {'Legal Notice'}
+      </a>
+      <a href="#privacy-policy" onClick={onPrivacyPolicyClick}>
+        {'Privacy & Cookies'}
+      </a>
+    </div>
+    <div>
+      <Header>{'Follow us'}</Header>
+      <a href="https://www.youtube.com/channel/UCnEQGnoZb_jEjMtgNsvLMVQ" rel="noopener noreferrer" target="_blank">
+        <StyledIconYouTube />
+      </a>
+      <a href="https://www.instagram.com/_uptous/" rel="noopener noreferrer" target="_blank">
+        <StyledIconInstagram />
+      </a>
+    </div>
+  </Links>
+)
+
 const Footer = styled(({ className }) => {
   return (
     <footer className={className}>
       <Section>
         <Container>
-          <Links>
-            <div>
-              <Header>{'Information'}</Header>
-              <a href="mailto:hello@uptous.com">{'Email us'}</a>
-              <a href="#lega-notice" onClick={onLegalNoticeClick}>
-                {'Legal Notice'}
-              </a>
-              <a href="#privacy-policy" onClick={onPrivacyPolicyClick}>
-                {'Privacy & Cookies'}
-              </a>
-            </div>
-            <div>
-              <Header>{'Follow us'}</Header>
-              <a
-                href="https://www.youtube.com/channel/UCnEQGnoZb_jEjMtgNsvLMVQ"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <StyledIconYouTube />
-              </a>
-              <a href="https://www.instagram.com/_uptous/" rel="noopener noreferrer" target="_blank">
-                <StyledIconInstagram />
-              </a>
-            </div>
-          </Links>
+          <FooterLinks />
           <LegalText>
             <b>{'UPTOUS'}</b>
             {' © Copyright 2019 uptous.co All rights reserved.'}
