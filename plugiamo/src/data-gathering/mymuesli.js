@@ -60,6 +60,8 @@ export default {
     }
   },
   setupDataGathering() {
+    if (localStorage.getItem('trnd-ignore-data-gathering')) return
+
     if (location.pathname.match(/^\/shop\/complete/)) {
       mixpanel.track('Purchase Success', { hostname: location.hostname })
     }
