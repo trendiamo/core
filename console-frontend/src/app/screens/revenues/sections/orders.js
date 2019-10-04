@@ -1,16 +1,23 @@
 import omit from 'lodash.omit'
 import React, { useMemo } from 'react'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { SimpleList } from 'shared/table-elements'
 import * as dateFns from 'date-fns'
 
-const columns = [
-  { id: 'logoUrl', label: 'brand', type: 'image', width: '10%' },
-  { id: 'products', label: 'products', width: '40%' },
-  { id: 'time', label: 'date', width: '35%', align: 'center' },
-  { id: 'revenue', label: 'revenue', width: '15%', align: 'right', font: 'bold' },
-]
+const Orders = ({ orders, width }) => {
+  const columns = isWidthUp('sm', width)
+    ? [
+        { id: 'logoUrl', label: 'brand', type: 'image', width: '10%' },
+        { id: 'products', label: 'products', width: '40%' },
+        { id: 'time', label: 'date', width: '35%', align: 'center' },
+        { id: 'revenue', label: 'revenue', width: '15%', align: 'right', font: 'bold' },
+      ]
+    : [
+        { id: 'logoUrl', label: 'brand', type: 'image', width: '10%' },
+        { id: 'time', label: 'date', width: '55%', align: 'center' },
+        { id: 'revenue', label: 'revenue', width: '25%', align: 'right', font: 'bold' },
+      ]
 
-const Orders = ({ orders }) => {
   const filteredOrders = useMemo(
     () =>
       orders
@@ -34,4 +41,4 @@ const Orders = ({ orders }) => {
   return <SimpleList columns={columns} records={filteredOrders} sticky />
 }
 
-export default Orders
+export default withWidth()(Orders)
