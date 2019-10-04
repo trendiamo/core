@@ -6,7 +6,7 @@ import ImageUploader from 'shared/image-uploader'
 import React, { useCallback, useMemo, useState } from 'react'
 import useForm from 'ext/hooks/use-form'
 import { apiMe, apiMeUpdate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
-import { Field, FormHelperText } from 'shared/form-elements'
+import { Field, FormHelperText, Select } from 'shared/form-elements'
 import { Prompt } from 'react-router'
 import { useSnackbar } from 'notistack'
 
@@ -22,6 +22,8 @@ const formObjectTransformer = json => {
     bio: json.bio || '',
   }
 }
+
+const currencyOptions = ['EUR', 'GBP', 'CHF', 'USD']
 
 const inputProps = { pattern: '.*S+.*' }
 
@@ -123,17 +125,29 @@ const ProfileForm = () => {
         value={form.lastName}
       />
       {auth.isAffiliate() && (
-        <Field
-          disabled={isFormLoading || isCropping || isUploaderLoading}
-          fullWidth
-          label="Social Media URL"
-          margin="normal"
-          name="socialMediaUrl"
-          onChange={setFieldValue}
-          required
-          type="URL"
-          value={form.socialMediaUrl}
-        />
+        <>
+          <Field
+            disabled={isFormLoading || isCropping || isUploaderLoading}
+            fullWidth
+            label="Social Media URL"
+            margin="normal"
+            name="socialMediaUrl"
+            onChange={setFieldValue}
+            required
+            type="URL"
+            value={form.socialMediaUrl}
+          />
+          <Select
+            disabled={isFormLoading || isCropping || isUploaderLoading}
+            fullWidth
+            label="Currency"
+            name="currency"
+            onChange={setFieldValue}
+            options={currencyOptions}
+            required
+            value={form.currency}
+          />
+        </>
       )}
       {auth.isSeller() && (
         <>

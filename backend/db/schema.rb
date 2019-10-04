@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191002112446) do
+ActiveRecord::Schema.define(version: 20191004093224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -339,7 +339,6 @@ ActiveRecord::Schema.define(version: 20191002112446) do
     t.datetime "requested_upgrade_to_seller_at"
     t.string "currency", default: "eur", null: false
     t.text "bio"
-    t.datetime "date_of_birth"
     t.string "shipping_first_name"
     t.string "shipping_last_name"
     t.string "address_line1"
@@ -347,13 +346,6 @@ ActiveRecord::Schema.define(version: 20191002112446) do
     t.string "zip_code"
     t.string "city"
     t.string "country"
-    t.string "payment_first_name"
-    t.string "payment_last_name"
-    t.string "payment_address"
-    t.string "phone_number"
-    t.string "iban"
-    t.string "photo_id_front_url"
-    t.string "photo_id_back_url"
     t.datetime "accepted_terms_and_conditions_at"
     t.string "stripe_user_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

@@ -59,9 +59,7 @@ module Api
       def user_params
         params.require(:user).permit(:first_name, :last_name, :currency, :social_media_url, :bio, :img_url,
                                      :shipping_first_name, :shipping_last_name, :address_line1, :address_line2,
-                                     :zip_code, :city, :country, :payment_first_name, :payment_last_name,
-                                     :date_of_birth, :payment_address, :phone_number, :iban, :photo_id_front_url,
-                                     :photo_id_back_url, img_rect: %i[x y width height])
+                                     :zip_code, :city, :country, img_rect: %i[x y width height])
       end
     end
   end
