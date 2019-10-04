@@ -4,6 +4,7 @@ import corinthiansConfig from './corinthians'
 import deliusConfig from './delius'
 import eoticaConfig from './eotica'
 import frekklsDemoConfig from './frekkls-demo'
+import grafikWerkstatt from './grafik-werkstatt'
 import impressoraJatoConfig from './impressora-jato'
 import mymuesli from './mymuesli'
 import pampling from './pampling'
@@ -57,6 +58,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'www.mymuesli.com') return mymuesli
   if (location.hostname === 'timeblock-europe.com') return timeblock
   if (location.hostname === 'app.uptous.co') return uptousapp
+  if (location.hostname === 'grafik-werkstatt.de') return grafikWerkstatt
   return {}
 }
 
