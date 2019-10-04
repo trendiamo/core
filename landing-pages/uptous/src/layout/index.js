@@ -6,6 +6,7 @@ import Helmet from 'react-helmet'
 import React from 'react'
 import styled from 'styled-components'
 
+import CookieConsent from './cookie-consent'
 import favicon from '../images/favicon.png'
 import Footer from './footer'
 import Header from './header'
@@ -30,6 +31,7 @@ const Layout = ({ children, data, light }) => (
     {children}
     {!light && <Footer />}
     {data && <ModalContents data={data} />}
+    <CookieConsent />
   </Main>
 )
 
