@@ -70,16 +70,24 @@ const processPreviewOpt = () => {
 }
 
 const maybeTrackVisitedPage = () => {
-  if (location.hostname === 'www.mymuesli.com') {
+  if (location.hostname === 'villadonatello.com' || location.hostname === 'grafik-werkstatt.de') {
+    return
+  } else if (location.hostname === 'www.mymuesli.com') {
     if (Object.keys(mymuesliUrls).indexOf(location.pathname) === -1) {
+      localStorage.setItem('trnd-ignore-data-gathering', true)
       return
+    } else {
+      localStorage.removeItem('trnd-ignore-data-gathering')
     }
   } else if (location.hostname === 'www.pampling.com' || location.hostname === 'pampling.com') {
     if (
       pamplingUrls.map(e => e.homepagePath).indexOf(location.pathname) === -1 ||
       pamplingUrls.map(e => e.productsPath).indexOf(location.pathname) === -1
     ) {
+      localStorage.setItem('trnd-ignore-data-gathering', true)
       return
+    } else {
+      localStorage.removeItem('trnd-ignore-data-gathering')
     }
   }
   mixpanel.track('Visited Page', { hostname: location.hostname })
