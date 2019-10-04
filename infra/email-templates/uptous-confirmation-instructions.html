@@ -111,7 +111,7 @@
 
   <h1>Welcome, {{user_identifier}}!</h1>
   <p>Your account has been successfully created. Before you start making an impact in the world with uptous, please click the link below to confirm your e-mail address and access your account:</p>
-  <a href="{{ render_dynamic_content(dynamic_html.confirm_email_link) }}" style="display: inline-block; padding: 10px 20px 10px 20px; background-color: #f05d5e; color: white; text-decoration: none; font-weight: bold; font-size: 20px; margin-top: 20px; margin-bottom: 20px">Confirm e-mail address</a>
+  <p>{{ render_dynamic_content(dynamic_html.confirm_email_link) }}</p>
   <p>If this account wasn't created by you, please ignore this email.</p>
 
 

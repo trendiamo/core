@@ -1,6 +1,9 @@
 class DeviseSparkpostMailer < Devise::Mailer
   default from: "Trendiamo Team <no-reply@trendiamo.com>"
 
+  LINK_STYLE = "display: inline-block; padding: 10px 20px 10px 20px; background-color: #f05d5e; color: white; " \
+  "text-decoration: none; font-weight: bold; font-size: 20px; margin-top: 20px; margin-bottom: 20px".freeze
+
   def confirmation_instructions(record, token, _opts = {})
     url = api_v1_users_confirmation_url(record, { confirmation_token: token }.merge(host_options(record)))
     app = record.not_affiliate? ? "frekkls" : "uptous"
@@ -8,7 +11,7 @@ class DeviseSparkpostMailer < Devise::Mailer
       substitution_data: {
         user_identifier: record.first_name,
         # https://developers.sparkpost.com/api/template-language/#header-links
-        dynamic_html: { confirm_email_link: %(<a href="#{url}">Confirm your email</a>) },
+        dynamic_html: { confirm_email_link: %(<a href="#{url}" style="#{LINK_STYLE}">Confirm e-mail address</a>) },
       },
       template_id: "#{app}-confirmation-instructions",
     }
