@@ -54,13 +54,6 @@ module.exports = {
       resolve: 'gatsby-source-contentful',
       options: contentfulConfig,
     },
-    {
-      resolve: 'gatsby-plugin-google-tagmanager',
-      options: {
-        id: 'GTM-NP2FFN5',
-        includeInDevelopment: false,
-      },
-    },
   ],
 }
 /* eslint-enable no-undef */
