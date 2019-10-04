@@ -9,7 +9,7 @@ import SectionBase from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Activity, BrandsSplit, MonthlyRevenue, Orders } from './sections'
-import { apiAffiliationsList, apiConnectStripe, apiOrdersList, apiRequest, isTrendiamoUser } from 'utils'
+import { apiAffiliationsList, apiConnectStripe, apiOrdersList, apiRequest } from 'utils'
 import { Hidden } from '@material-ui/core'
 import { parse } from 'query-string'
 import { useSnackbar } from 'notistack'
@@ -75,11 +75,11 @@ const Revenues = ({ history }) => {
   const minDate = useMemo(() => computeMinDate(), [])
   const maxDate = useMemo(() => computeMaxDate(), [])
   const [date, setDate] = useState(computeDate(minDate, maxDate))
-  const [isLoading, setIsLoading] = useState(auth.getUser().stripeUserId || !isTrendiamoUser())
+  const [isLoading, setIsLoading] = useState(auth.getUser().stripeUserId)
   const [affiliations, setAffiliations] = useState([])
   const [orders, setOrders] = useState([])
   const [hasErrors, setHasErrors] = useState(false)
-  const [hasStripeAccount, setHasStripeAccount] = useState(!!auth.getUser().stripeUserId || !isTrendiamoUser())
+  const [hasStripeAccount, setHasStripeAccount] = useState(!!auth.getUser().stripeUserId)
 
   const { enqueueSnackbar } = useSnackbar()
 

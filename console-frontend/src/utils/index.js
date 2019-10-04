@@ -262,6 +262,3 @@ export const loadFonts = () => {
   linkElement.appendChild(document.createTextNode(css))
   documentHead.appendChild(linkElement)
 }
-
-const trendiamoEmailDomains = /@(trendiamo\.com)|(uptous\.co)|(frekkls\.com)/g
-export const isTrendiamoUser = () => !!auth.getUser().email.match(trendiamoEmailDomains)
