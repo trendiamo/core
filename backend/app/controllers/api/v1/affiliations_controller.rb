@@ -8,8 +8,8 @@ module Api
       end
 
       def create
-        @affiliation = Affiliation.new(affiliation_params)
-        @affiliation.account_id = Brand.find(params[:brand_id]).account_id
+        @affiliation = Affiliation.new(user_id: current_user.id,
+                                       account_id: Brand.find(params[:brand_id]).account_id)
         authorize @affiliation
         if @affiliation.save
           render json: @affiliation, status: :created
@@ -33,10 +33,6 @@ module Api
       end
 
       private
-
-      def affiliation_params
-        params.require(:affiliation).permit(:user_id)
-      end
 
       def render_error
         errors = @affiliation.errors.full_messages.map { |string| { title: string } }
