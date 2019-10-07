@@ -37,7 +37,11 @@ const BrandCard = ({
 }) => {
   const onClickCustomLink = useCallback(
     () => {
-      mixpanel.track('Clicked Custom Link', { hostname: window.location.hostname, brand: brand.name })
+      mixpanel.track('Clicked Custom Link', {
+        hostname: window.location.hostname,
+        brandId: brand.id,
+        brand: brand.name,
+      })
       setIsCustomLinkModalOpen(true)
       setSelectedBrand(brand)
     },
@@ -56,12 +60,13 @@ const BrandCard = ({
     () => {
       mixpanel.track('Clicked Brand Logo', {
         hostname: window.location.hostname,
+        brandId: brand.id,
         brand: brand.name,
         token: affiliation && affiliation.token,
       })
       openBrandModal()
     },
-    [affiliation, brand.name, openBrandModal]
+    [affiliation, brand.id, brand.name, openBrandModal]
   )
 
   return (

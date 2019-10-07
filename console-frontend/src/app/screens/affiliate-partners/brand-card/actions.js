@@ -34,14 +34,21 @@ const StyledClipboardInput = styled(ClipboardInput)`
   }
 `
 
-const WebsiteButton = ({ affiliation, websiteHostname }) => {
-  const url = affiliation ? `https://${websiteHostname}/?aftk=${affiliation.token}` : `https://${websiteHostname}`
+const WebsiteButton = ({ affiliation, brand }) => {
+  const url = affiliation
+    ? `https://${brand.websiteHostname}/?aftk=${affiliation.token}`
+    : `https://${brand.websiteHostname}`
 
   const onClick = useCallback(
     () => {
-      mixpanel.track('Visited Brand Website', { hostname: window.location.hostname, url })
+      mixpanel.track('Visited Brand Website', {
+        hostname: window.location.hostname,
+        url,
+        brandId: brand.id,
+        brand: brand.name,
+      })
     },
-    [url]
+    [brand.id, brand.name, url]
   )
 
   return (
@@ -54,22 +61,34 @@ const WebsiteButton = ({ affiliation, websiteHostname }) => {
 }
 
 const Actions = ({ affiliation, brand, onClickCustomLink, openBrandModal }) => {
-  const onCopyAffiliateLink = useCallback(text => {
-    mixpanel.track('Copied Affiliate Link', { hostname: window.location.hostname, text })
-  }, [])
+  const onCopyAffiliateLink = useCallback(
+    text => {
+      mixpanel.track('Copied Affiliate Link', {
+        hostname: window.location.hostname,
+        text,
+        brandId: brand.id,
+        brand: brand.name,
+      })
+    },
+    [brand.id, brand.name]
+  )
 
   const onClickPromoteNow = useCallback(
     () => {
-      mixpanel.track('Clicked Promote Now', { hostname: window.location.hostname, brand: brand.name })
+      mixpanel.track('Clicked Promote Now', {
+        hostname: window.location.hostname,
+        brandId: brand.id,
+        brand: brand.name,
+      })
       openBrandModal()
     },
-    [brand.name, openBrandModal]
+    [brand.id, brand.name, openBrandModal]
   )
 
   return (
     <Container>
       <ButtonContainer>
-        <WebsiteButton affiliation={affiliation} websiteHostname={brand.websiteHostname} />
+        <WebsiteButton affiliation={affiliation} brand={brand} />
         {affiliation ? (
           <StyledClipboardInput
             backgroundColor="#e7ecef"

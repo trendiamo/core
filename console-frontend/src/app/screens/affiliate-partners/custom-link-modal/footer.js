@@ -48,9 +48,17 @@ const Footer = ({ affiliation }) => {
     [affiliation.id, affiliation.token, enqueueSnackbar]
   )
 
-  const onCopyCustomLink = useCallback(text => {
-    mixpanel.track('Copied Custom Link', { hostname: window.location.hostname, text })
-  }, [])
+  const onCopyCustomLink = useCallback(
+    text => {
+      mixpanel.track('Copied Custom Link', {
+        hostname: window.location.hostname,
+        text,
+        brandId: affiliation.brand.id,
+        brand: affiliation.brand.name,
+      })
+    },
+    [affiliation.brand.id, affiliation.brand.name]
+  )
 
   const mixFunction = useCallback(
     async text => {
