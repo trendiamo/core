@@ -4,28 +4,10 @@ import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import { apiPasswordEmailLink, apiRequest, showUpToUsBranding } from 'utils'
-import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Field, Fieldset } from 'shared/form-elements'
 import { Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
-
-const AuthMessage = () => (
-  <>
-    <AuthTitle variant="h4">
-      {"Don't have an account?"}
-      <br />
-      {'Get to know what we can do for you.'}
-    </AuthTitle>
-    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body2">
-      {'Is something wrong? '}
-      <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
-    </AuthText>
-    <AuthLink href="https://frekkls.com">
-      <AuthButton>{'Learn about Frekkls'}</AuthButton>
-    </AuthLink>
-  </>
-)
 
 const PasswordReset = withRouter(
   ({ isSubmitting, history, passwordForm, passwordChangeSubmit, setPasswordFormValue }) => {
@@ -37,7 +19,7 @@ const PasswordReset = withRouter(
     )
 
     return (
-      <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
+      <AuthLayout title="Reset Password">
         <form onSubmit={passwordChangeSubmit}>
           <Fieldset disabled={isSubmitting}>
             <Typography style={{ marginTop: '10px' }} variant="body2">

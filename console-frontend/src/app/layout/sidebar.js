@@ -55,12 +55,12 @@ const StyledDrawer = styled(Drawer)`
 `
 
 const DrawerGhost = styled.div`
-  width: ${drawerWidth}px;
   flex-shrink: 0;
   transition: width 0.2s ease-in-out;
   ${({ isClosed }) => isClosed && `width: ${drawerWidthClosed}px;`}
-  @media (max-width: 959.95px) {
-    width: 0;
+  width: 0;
+  @media (min-width: 960px) {
+    width: ${drawerWidth}px;
   }
 `
 

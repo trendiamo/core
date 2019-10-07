@@ -5,29 +5,11 @@ import queryString from 'query-string'
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import { apiPasswordReset, apiRequest } from 'utils'
-import { AuthButton, AuthLink, AuthText, AuthTitle } from 'auth/components'
 import { Field, Fieldset } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
-const AuthMessage = () => (
-  <>
-    <AuthTitle variant="h4">
-      {"Don't have an account?"}
-      <br />
-      {'Get to know what we can do for you.'}
-    </AuthTitle>
-    <AuthText style={{ color: '#fff', marginBottom: '10px' }} variant="body2">
-      {'Is something wrong? '}
-      <AuthLink href="mailto:support@trendiamo.com">{'Get in touch!'}</AuthLink>
-    </AuthText>
-    <AuthLink href="https://frekkls.com">
-      <AuthButton>{'Learn about Frekkls'}</AuthButton>
-    </AuthLink>
-  </>
-)
-
 const PasswordReset = ({ isSubmitting, passwordForm, passwordResetSubmit, setFieldValue }) => (
-  <AuthLayout authMessage={<AuthMessage />} title="Reset Password">
+  <AuthLayout title="Reset Password">
     <form onSubmit={passwordResetSubmit}>
       <Fieldset disabled={isSubmitting}>
         <Field

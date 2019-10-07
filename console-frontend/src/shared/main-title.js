@@ -4,15 +4,24 @@ import { showUpToUsBranding } from 'utils'
 import { Typography } from '@material-ui/core'
 
 const StyledTypography = styled(Typography)`
-  color: ${showUpToUsBranding() ? '#272932' : '#333'};
   display: inline-block;
-  font-weight: ${showUpToUsBranding() ? 900 : 500};
   letter-spacing: 0.3px;
-  font-size: ${showUpToUsBranding() ? 20 : 24}px;
+  ${showUpToUsBranding()
+    ? `
+      color: #272932;
+      font-weight: 900;
+      font-size: 18px;
+    `
+    : `
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+    `}
+  margin-left: 8px;
 
-  @media (max-width: 960px) {
-    font-size: ${showUpToUsBranding() ? 18 : 16}px;
-    margin-left: 8px;
+  @media (min-width: 960px) {
+    font-size: ${showUpToUsBranding() ? 20 : 24}px;
+    margin-left: 0px;
   }
 `
 
