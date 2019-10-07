@@ -130,16 +130,16 @@ const YourReferrals = () => {
           </Callout>
         </MainCard>
       </Grid>
-      <Grid item lg={2} md={4} xl={2} xs={12}>
-        {referrals.length > 0 && (
+      {referrals.length > 0 && (
+        <Grid item lg={2} md={4} xl={2} xs={12}>
           <ReferralsList>
             <Typography variant="h5">{'Your Referrals'}</Typography>
             {referrals.map(referral => (
               <ReferralItem key={referral.user.id} referral={referral} />
             ))}
           </ReferralsList>
-        )}
-      </Grid>
+        </Grid>
+      )}
     </FlexGrid>
   )
 }
