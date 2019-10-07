@@ -15,9 +15,13 @@ const goToStripe = () => {
     'stripe_user[business_type]': 'individual',
   }
 
-  window.location = `https://connect.stripe.com/express/oauth/authorize?client_id=${
-    process.env.REACT_APP_STRIPE_CLIENT_ID
-  }&${queryString.stringify(stripeUser)}&redirect_uri=https://338cda40.ngrok.io/revenues`
+  window.location = process.env.REACT_APP_STRIPE_REDIRECT_URI
+    ? `https://connect.stripe.com/express/oauth/authorize?client_id=${
+        process.env.REACT_APP_STRIPE_CLIENT_ID
+      }&${queryString.stringify(stripeUser)}&redirect_uri=${process.env.REACT_APP_STRIPE_REDIRECT_URI}`
+    : `https://connect.stripe.com/express/oauth/authorize?client_id=${
+        process.env.REACT_APP_STRIPE_CLIENT_ID
+      }&${queryString.stringify(stripeUser)}`
 }
 
 const StripeButton = ({ isLoading }) => (
