@@ -27,9 +27,11 @@ ${({ inline }) =>
       * + & {
         margin-left: 10px;
       }`
-    : `display: flex; @media (max-width: 959px) {
+    : `display: flex;
       margin-top: 12px;
-    }`}
+      @media (min-width: 960px) {
+        margin-top: 0px;
+      }`}
   justify-content: ${({ centered }) => (centered ? 'center' : 'normal')};
 ${({ fullWidthOnMobile, width }) =>
   fullWidthOnMobile

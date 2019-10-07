@@ -71,25 +71,16 @@ const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 
   box-shadow: none;
   color: #333;
   transition: all 200ms ease-in-out;
-  width: calc(100% - ${drawerWidthClosed}px);
-  margin-left: ${drawerWidthClosed}px;
   z-index: 1201;
   position: ${({ sticky = true }) => (sticky ? 'sticky' : 'static')};
   top: 0;
+  width: 100%;
+  margin: 0;
 
-  @media (max-width: 959.95px) {
-    width: 100%;
-    margin: 0;
-  }
-
-  ${({ sidebarOpen }) =>
-    sidebarOpen &&
-    `
   @media (min-width: 960px) {
-    margin-left: ${drawerWidth}px;
-    width: calc(100% - ${drawerWidth}px);
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? drawerWidth : drawerWidthClosed)}px;
+    width: calc(100% - ${({ sidebarOpen }) => (sidebarOpen ? drawerWidth : drawerWidthClosed)}px);
   }
-  `}
 
   ${({ hasScrolled, sticky = true }) =>
     hasScrolled &&
@@ -108,10 +99,9 @@ const TopToolbar = styled(Toolbar)`
 `
 
 const MenuButton = styled(IconButton)`
-  display: none;
-
-  @media (max-width: 959.95px) {
-    display: block;
+  display: block;
+  @media (min-width: 960px) {
+    display: none;
   }
 `
 

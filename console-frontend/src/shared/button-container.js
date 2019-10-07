@@ -4,10 +4,14 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  @media (max-width: 959px) {
-    width: 100%;
+  width: 100%;
+  * + & {
+    margin-top: 12px;
+  }
+  @media (min-width: 960px) {
+    width: auto;
     * + & {
-      margin-top: 12px;
+      margin-top: 0px;
     }
   }
 `

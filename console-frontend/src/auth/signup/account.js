@@ -1,3 +1,4 @@
+import AuthFormFooter from 'auth/form-footer'
 import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
 import DoneIcon from '@material-ui/icons/Done'
@@ -7,7 +8,6 @@ import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
-import { AuthFormFooter } from 'auth/components'
 import { Field, Fieldset } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
