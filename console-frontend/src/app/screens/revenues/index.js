@@ -31,22 +31,6 @@ const computeMinDate = () => {
   return userCreationDate < startDate ? startDate : dateFns.startOfMonth(userCreationDate)
 }
 
-const computeMaxDate = () => {
-  const atStartOfWeek = dateFns.startOfWeek(new Date(), { weekStartsOn: 1 })
-  return dateFns.subDays(atStartOfWeek, 1)
-}
-
-const computeDate = (minDate, maxDate) => {
-  const today = new Date()
-  if (today < minDate) {
-    return minDate
-  } else if (today > maxDate) {
-    return maxDate
-  } else {
-    return today
-  }
-}
-
 const GridContainer = styled(props => <Grid container {...props} />)`
   height: calc(100vh - 86px);
 `
@@ -73,8 +57,8 @@ const calculateSellerAmount = (amount, rate) => ((amount * rate) / 100).toFixed(
 
 const Revenues = ({ history }) => {
   const minDate = useMemo(() => computeMinDate(), [])
-  const maxDate = useMemo(() => computeMaxDate(), [])
-  const [date, setDate] = useState(computeDate(minDate, maxDate))
+  const maxDate = useMemo(() => new Date(), [])
+  const [date, setDate] = useState(maxDate)
   const [isLoading, setIsLoading] = useState(auth.getUser().stripeUserId)
   const [affiliations, setAffiliations] = useState([])
   const [orders, setOrders] = useState([])
