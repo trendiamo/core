@@ -2,6 +2,7 @@ import auth from 'auth'
 import Button from 'shared/button'
 import queryString from 'query-string'
 import React from 'react'
+import styled from 'styled-components'
 
 const goToStripe = () => {
   const user = auth.getUser()
@@ -24,17 +25,21 @@ const goToStripe = () => {
       }&${queryString.stringify(stripeUser)}`
 }
 
-const StripeButton = ({ isLoading }) => (
-  <Button
-    color="primaryGradient"
-    disabled={isLoading}
-    inline
-    isFormSubmitting={isLoading}
-    onClick={goToStripe}
-    size="large"
-  >
-    {'Connect with stripe'}
-  </Button>
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  @media (min-width: 960px) {
+    width: auto;
+  }
+`
+
+const StripeButton = () => (
+  <Container>
+    <Button centered color="primaryGradient" flex fullWidthOnMobile onClick={goToStripe} size="large">
+      {'Connect with stripe'}
+    </Button>
+  </Container>
 )
 
 export default StripeButton
