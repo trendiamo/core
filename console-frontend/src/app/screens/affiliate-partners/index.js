@@ -107,9 +107,7 @@ const AffiliatePartners = () => {
   const createAffiliation = useCallback(
     brand => {
       return (async () => {
-        const { json, errors, requestError } = await apiRequest(apiAffiliationCreate, [
-          { brandId: brand.id, userId: auth.getUser().id },
-        ])
+        const { json, errors, requestError } = await apiRequest(apiAffiliationCreate, [{ brandId: brand.id }])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (!errors && !requestError) {
