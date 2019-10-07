@@ -50,7 +50,7 @@ class DeviseSparkpostMailer < Devise::Mailer
   def host_options(record)
     return { host: "localhost", port: 5000 } if ENV["MAILER_HOST"].blank? || ENV["UPTOUS_MAILER_HOST"].blank?
 
-    { host: record.not_affiliate? ? ENV["MAILER_HOST"] : ENV["UPTOUS_MAILER_HOST"] }
+    { host: record.is_a?(Invite) || record.not_affiliate? ? ENV["MAILER_HOST"] : ENV["UPTOUS_MAILER_HOST"] }
   end
 
   def mail(*args)
