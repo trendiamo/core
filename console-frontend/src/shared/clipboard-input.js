@@ -2,7 +2,7 @@ import Button from 'shared/button'
 import copy from 'clipboard-copy'
 import DoneIcon from '@material-ui/icons/Done'
 import omit from 'lodash.omit'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import theme from 'app/theme'
 import { Input, Tooltip } from '@material-ui/core'
@@ -26,8 +26,7 @@ const Container = styled(props => <form {...omit(props, ['isCopied', 'background
 const TextInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteable', 'backgroundColor'])} />)`
   padding-left: 0.8rem;
   background-color: ${({ backgroundColor }) => backgroundColor || '#fff'};
-  ${({ pasteable, wasCopied }) =>
-    pasteable && !wasCopied && 'margin-right: 14px;'}
+  ${({ pasteable, wasCopied }) => pasteable && !wasCopied && 'margin-right: 14px;'}
   transition: margin 0.4s ease-in-out;
   ${showUpToUsBranding() && 'color: #272932;'}
   input {
@@ -61,6 +60,7 @@ const ClipboardInput = ({
   const [wasCopied, setWasCopied] = useState(false)
   const [inputText, setInputText] = useState('')
   const [outputText, setOutputText] = useState('')
+  const timeoutRef = useRef(null)
 
   const changeText = useCallback(
     event => {
@@ -73,7 +73,11 @@ const ClipboardInput = ({
   const updateCopyButton = useCallback(() => {
     setIsCopied(true)
     setWasCopied(true)
-    showUpToUsBranding() && setTimeout(() => setIsCopied(false), 3000)
+    if (showUpToUsBranding()) {
+      timeoutRef.current = setTimeout(() => {
+        setIsCopied(false)
+      }, 3000)
+    }
   }, [])
 
   const copyText = useCallback(
@@ -97,6 +101,8 @@ const ClipboardInput = ({
   )
 
   const onInputFocus = useCallback(event => event.target.select(), [])
+
+  useEffect(() => () => clearTimeout(timeoutRef.current), [])
 
   return (
     <Container isCopied={isCopied} onSubmit={copyText} pasteable={pasteable} {...props}>
