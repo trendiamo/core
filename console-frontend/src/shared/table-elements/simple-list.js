@@ -20,6 +20,7 @@ const StyledTable = styled(props => <Table {...omit(props, ['sticky'])} />)`
 
 const StyledTableHead = styled(TableHead)`
   display: table;
+  width: 100%;
 `
 
 const StyledTableBody = styled(TableBody)`
@@ -100,11 +101,17 @@ const SimpleList = ({ columns, records, sticky, ...props }) => {
               <TableRowBody hover key={record.id || index} role="checkbox" tabIndex="-1">
                 {columns.map(column => {
                   const value = record[column.id]
-                  return value ? (
+                  return (
                     <StyledTableCell key={column.id} {...column}>
-                      {column.type === 'image' ? <Logo src={value} /> : <Typography variant="h6">{value}</Typography>}
+                      {value ? (
+                        column.type === 'image' ? (
+                          <Logo src={value} />
+                        ) : (
+                          <Typography variant="h6">{value}</Typography>
+                        )
+                      ) : null}
                     </StyledTableCell>
-                  ) : null
+                  )
                 })}
               </TableRowBody>
             ))}
