@@ -64,10 +64,7 @@ const UserMenu = ({ sidebarOpen }) => {
   const [isUserSettingsModalOpen, setIsUserSettingsModalOpen] = useState(false)
 
   const isMenuOpen = useMemo(() => Boolean(anchorEl), [anchorEl])
-  const userIdentifier = useMemo(
-    () => (!user.firstName || !user.lastName ? null : `${user.firstName} ${user.lastName}`) || user.email,
-    [user.email, user.firstName, user.lastName]
-  )
+  const userIdentifier = useMemo(() => user.firstName || user.email, [user.email, user.firstName])
 
   const handleClose = useCallback(event => {
     event.preventDefault()

@@ -26,7 +26,8 @@ const Container = styled(props => <form {...omit(props, ['isCopied', 'background
 const TextInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteable', 'backgroundColor'])} />)`
   padding-left: 0.8rem;
   background-color: ${({ backgroundColor }) => backgroundColor || '#fff'};
-  ${({ pasteable, wasCopied }) => pasteable && !wasCopied && 'margin-right: 14px;'}
+  ${({ pasteable, wasCopied }) =>
+    pasteable && !wasCopied && 'margin-right: 14px;'}
   transition: margin 0.4s ease-in-out;
   ${showUpToUsBranding() && 'color: #272932;'}
   input {
