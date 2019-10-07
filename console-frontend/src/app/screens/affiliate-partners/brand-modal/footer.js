@@ -109,7 +109,7 @@ const AffiliateTerms = styled.div`
   margin-top: 6px;
 `
 
-const SuccessScreen = ({ selectedAffiliation, removeAffiliation, isLoading }) => {
+const SuccessScreen = ({ brand, selectedAffiliation, removeAffiliation, isLoading }) => {
   const [showRemoveConfirmationAlert, setShowRemoveConfirmationAlert] = useState(false)
   const removeWarningTimeoutRef = useRef(null)
 
@@ -127,9 +127,17 @@ const SuccessScreen = ({ selectedAffiliation, removeAffiliation, isLoading }) =>
     [removeAffiliation, showRemoveConfirmationAlert]
   )
 
-  const onCopyAffiliateLink = useCallback(text => {
-    mixpanel.track('Copied Affiliate Link', { hostname: window.location.hostname, text })
-  }, [])
+  const onCopyAffiliateLink = useCallback(
+    text => {
+      mixpanel.track('Copied Affiliate Link', {
+        hostname: window.location.hostname,
+        text,
+        brandId: brand.id,
+        brand: brand.name,
+      })
+    },
+    [brand.id, brand.name]
+  )
 
   useEffect(() => () => clearTimeout(removeWarningTimeoutRef.current), [])
 
@@ -208,7 +216,11 @@ const Footer = ({
       setIsCreateLinkClicked(true)
       const { errors, requestError } = await createAffiliation(brand)
       if (!errors && !requestError) {
-        mixpanel.track('Created Affiliate Link', { hostname: window.location.hostname, brand: brand.name })
+        mixpanel.track('Created Affiliate Link', {
+          hostname: window.location.hostname,
+          brandId: brand.id,
+          brand: brand.name,
+        })
       }
       setIsCreateLinkClicked(false)
     },

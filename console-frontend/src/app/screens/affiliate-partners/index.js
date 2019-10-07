@@ -133,6 +133,7 @@ const AffiliatePartners = () => {
         if (!errors && !requestError) {
           mixpanel.track('Removed Affiliation', {
             hostname: window.location.hostname,
+            brandId: selectedAffiliation.brand.id,
             brand: selectedAffiliation.brand.name,
           })
           enqueueSnackbar(`Successfully removed affiliation with ${selectedBrand.name}`, { variant: 'success' })
