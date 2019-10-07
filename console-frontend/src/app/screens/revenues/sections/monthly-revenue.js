@@ -2,6 +2,7 @@ import auth from 'auth'
 import CheckCircle from 'shared/check-circle'
 import Link from 'shared/link'
 import React, { useMemo } from 'react'
+import StripeButton from './stripe-button'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { FormHelperText } from 'shared/form-elements'
@@ -40,6 +41,10 @@ const NextPaymentMessage = styled(Typography)`
   margin: 0;
 `
 
+const StripeNote = styled(Typography)`
+  margin-top: 0.8rem;
+`
+
 const StyledFormHelperText = styled(FormHelperText)`
   text-align: center;
   margin-bottom: 0.8rem;
@@ -49,7 +54,7 @@ const StyledCheckCircle = styled(CheckCircle)`
   margin-right: 8px;
 `
 
-const MonthlyRevenue = ({ dates, orders }) => {
+const MonthlyRevenue = ({ dates, orders, hasStripeAccount }) => {
   const revenue = useMemo(
     () => {
       const amount = orders.reduce((revenue, order) => (revenue += +order.sellerAmount), 0).toFixed(2)
@@ -67,28 +72,37 @@ const MonthlyRevenue = ({ dates, orders }) => {
     <Container>
       <RevenueContainer>
         <Revenue>{revenue}</Revenue>
-        {dateFns.isPast(paymentDate) ? (
-          <PreviousPaymentMessage variant="h6">
-            <StyledCheckCircle />
-            {`Was paid out on ${dateFns.format(paymentDate, 'MMM do')}`}
-          </PreviousPaymentMessage>
-        ) : (
-          <NextPaymentMessage variant="h6">{`Will be paid out on ${dateFns.format(
-            paymentDate,
-            'MMM do'
-          )}`}</NextPaymentMessage>
-        )}
+        {hasStripeAccount ? (
+          dateFns.isPast(paymentDate) ? (
+            <PreviousPaymentMessage variant="h6">
+              <StyledCheckCircle />
+              {`Was paid out on ${dateFns.format(paymentDate, 'MMM do')}`}
+            </PreviousPaymentMessage>
+          ) : (
+            <NextPaymentMessage variant="h6">{`Will be paid out on ${dateFns.format(
+              paymentDate,
+              'MMM do'
+            )}`}</NextPaymentMessage>
+          )
+        ) : null}
       </RevenueContainer>
       <StyledFormHelperText>
         {'Revenues and prices displayed may slightly vary based on currency exchange rates'}
       </StyledFormHelperText>
-      <Link
-        href={`https://dashboard.stripe.com/${auth.getUser().stripeUserId}`}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {'Check your Stripe account'}
-      </Link>
+      {hasStripeAccount ? (
+        <Link
+          href={`https://dashboard.stripe.com/${auth.getUser().stripeUserId}`}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {'Check your Stripe account'}
+        </Link>
+      ) : (
+        <>
+          <StripeButton />
+          <StripeNote variant="body2">{'To receive your payouts connect your Stripe account!'}</StripeNote>
+        </>
+      )}
     </Container>
   )
 }

@@ -93,13 +93,13 @@ const Revenues = ({ history }) => {
 
   const appBarContent = useMemo(
     () => ({
-      Actions: affiliations.length > 0 && hasStripeAccount && (
+      Actions: affiliations.length > 0 && (
         <DatePicker maxDate={maxDate} minDate={minDate} setDate={setDate} value={date} />
       ),
       sticky: false,
       title: 'Your Revenues',
     }),
-    [affiliations.length, date, hasStripeAccount, maxDate, minDate]
+    [affiliations.length, date, maxDate, minDate]
   )
   useAppBarContent(appBarContent)
 
@@ -191,16 +191,8 @@ const Revenues = ({ history }) => {
 
   if (isLoading) return <CircularProgress />
 
-  if (minDate > maxDate || hasErrors || affiliations.length < 1 || orders.length < 1 || !hasStripeAccount) {
-    return (
-      <BlankState
-        hasAffiliations={affiliations.length > 0}
-        hasErrors={minDate > maxDate || hasErrors}
-        hasRevenues={orders.length > 0}
-        hasStripeAccount={hasStripeAccount}
-        isLoading={isLoading}
-      />
-    )
+  if (minDate > maxDate || hasErrors || affiliations.length < 1 || orders.length < 1) {
+    return <BlankState hasAffiliations={affiliations.length > 0} hasErrors={minDate > maxDate || hasErrors} />
   }
 
   return (
@@ -214,7 +206,7 @@ const Revenues = ({ history }) => {
       </Hidden>
       <GridItem md={4} xs={12}>
         <Section title="Monthly Revenue">
-          <MonthlyRevenue dates={dates} orders={orders} />
+          <MonthlyRevenue dates={dates} hasStripeAccount={hasStripeAccount} orders={orders} />
         </Section>
       </GridItem>
       <GridItem md={6} xs={12}>
