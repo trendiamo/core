@@ -123,7 +123,7 @@ const UpToUsSideContent = styled.div`
   }
 `
 
-const Layout = ({ children, title }) => (
+const Layout = ({ children, SideContent, title }) => (
   <>
     <CssBaseline />
     <MuiThemeProvider theme={theme}>
@@ -138,8 +138,14 @@ const Layout = ({ children, title }) => (
         </AuthFormContainer>
         {showUpToUsBranding() && (
           <UpToUsSideContent>
-            <h2>{'Start Monetizing Positive Influence'}</h2>
-            <p>{'Become an #impacter and earn while promoting the brands that create positive impact.'}</p>
+            {SideContent ? (
+              <SideContent />
+            ) : (
+              <>
+                <h2>{'Start Monetizing Positive Influence'}</h2>
+                <p>{'Become an #impacter and earn while promoting the brands that create positive impact.'}</p>
+              </>
+            )}
           </UpToUsSideContent>
         )}
       </AuthMain>

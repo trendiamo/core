@@ -108,7 +108,11 @@ const FilledLayout = ({ children, location, width }) => {
 }
 
 const Layout = ({ children, location, width }) => {
-  if (!(auth.isLoggedIn() && auth.isAffiliate()) && !auth.getAccount()) return <EmptyLayout>{children}</EmptyLayout>
+  const isEmptyLayout =
+    (!(auth.isLoggedIn() && auth.isAffiliate()) && !auth.getAccount()) ||
+    (auth.isAffiliate() && !auth.getUser().socialMediaUrl)
+
+  if (isEmptyLayout) return <EmptyLayout>{children}</EmptyLayout>
 
   return (
     <FilledLayout location={location} width={width}>

@@ -34,12 +34,17 @@ const PrivateRouteRender = ({
 
   if (!auth.isLoggedIn()) return <Redirect to={routes.login()} />
 
+  if (auth.isAffiliate() && !auth.getUser().socialMediaUrl && path !== routes.welcome()) {
+    return <Redirect to={routes.welcome()} />
+  }
+
   const notFound =
     (match.path.startsWith('/a/') && fetchedAccount && !auth.getAccount()) ||
     (isOwnerScoped && !auth.isAdmin() && auth.getAccountRole() === 'editor') ||
     (isAdminScoped && !auth.isAdmin()) ||
     (isSellerScoped && !auth.isSeller()) ||
-    (path === routes.dataDashboard() && !auth.getAccount().websitesAttributes[0].isECommerce)
+    (path === routes.dataDashboard() && !auth.getAccount().websitesAttributes[0].isECommerce) ||
+    (path === routes.welcome() && auth.isAffiliate() && auth.getUser().socialMediaUrl)
 
   if (notFound) return React.createElement(NotFound, { match })
 

@@ -89,7 +89,7 @@ const routes = {
     return `/a/${accountSlug}/triggers/${id}/edit`
   },
   welcome(accountSlug = auth.getSlug()) {
-    return `/a/${accountSlug}/welcome`
+    return auth.isAffiliate() ? '/welcome' : `/a/${accountSlug}/welcome`
   },
   urlGenerator(accountSlug = auth.getSlug()) {
     return `/a/${accountSlug}/url-generator`
