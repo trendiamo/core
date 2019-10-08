@@ -33,12 +33,14 @@ const MainContainer = styled.div`
 
 const TermsAndConditionsContent = styled.div``
 
-const TermsAndConditions = ({ brand, termsRef }) => (
-  <div ref={termsRef}>
+const TermsAndConditions = styled(({ brand, className, termsRef }) => (
+  <div className={className} ref={termsRef}>
     <Typography variant="h5">{'Terms and Conditions'}</Typography>
     <TermsAndConditionsContent dangerouslySetInnerHTML={{ __html: brand.termsAndConditions }} />
   </div>
-)
+))`
+  margin-top: 4rem;
+`
 
 const Content = ({ brand, removeAffiliation, createAffiliation, handleClose, selectedAffiliation, isLoading }) => {
   const contentRef = useRef(null)
