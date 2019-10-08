@@ -19,7 +19,7 @@ const StyledArrowDropDown = styled(ArrowDropDown)`
 `
 
 const DatePickerComponent = ({ onClick, value }) => (
-  <Button color={showUpToUsBranding() ? 'whiteBg' : 'white'} onClick={onClick} variant="contained">
+  <Button color={showUpToUsBranding() ? 'whiteBg' : 'white'} inline onClick={onClick} variant="contained">
     <DatePickerValue>{value}</DatePickerValue>
     <StyledArrowDropDown />
   </Button>

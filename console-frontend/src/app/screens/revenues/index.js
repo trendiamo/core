@@ -1,14 +1,13 @@
 import auth from 'auth'
 import BlankState from './blank-state'
 import CircularProgress from 'shared/circular-progress'
-import DatePicker from 'shared/form-elements/date-picker'
 import Grid from '@material-ui/core/Grid'
 import omit from 'lodash.omit'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import SectionBase from 'shared/section'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
-import { Activity, BrandsSplit, MonthlyRevenue, Orders } from './sections'
+import { Actions, Activity, BrandsSplit, MonthlyRevenue, Orders } from './sections'
 import { apiAffiliationsList, apiConnectStripe, apiOrdersList, apiRequest } from 'utils'
 import { Hidden } from '@material-ui/core'
 import { parse } from 'query-string'
@@ -78,12 +77,12 @@ const Revenues = ({ history }) => {
   const appBarContent = useMemo(
     () => ({
       Actions: affiliations.length > 0 && (
-        <DatePicker maxDate={maxDate} minDate={minDate} setDate={setDate} value={date} />
+        <Actions maxDate={maxDate} minDate={minDate} setDate={setDate} value={date} />
       ),
       sticky: false,
       title: 'Your Revenues',
     }),
-    [affiliations.length, date, maxDate, minDate]
+    [affiliations, date, maxDate, minDate]
   )
   useAppBarContent(appBarContent)
 
