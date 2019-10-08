@@ -113,7 +113,7 @@ const Login1 = () => {
           'Social Media URL': json.user.socialMediaUrl,
         })
         mixpanel.track('Logged In', { hostname: window.location.hostname })
-        window.location.href = routes.root()
+        window.location.href = auth.isAffiliate() && !auth.getUser().socialMediaUrl ? routes.welcome() : routes.root()
       } else {
         setIsSubmitting(false)
       }

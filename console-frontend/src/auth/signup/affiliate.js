@@ -11,8 +11,6 @@ import { apiRequest, apiSignUp } from 'utils'
 import { Checkbox, Field, Fieldset } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
-const socialMediaUrlInputProps = { pattern: 'https?://.+' }
-
 const StyledDoneIcon = styled(DoneIcon)`
   color: #15c29d;
   width: 100%;
@@ -41,7 +39,6 @@ const AffiliateSignup = () => {
         affiliateRole: 'promoter',
         firstName: '',
         lastName: '',
-        socialMediaUrl: '',
         referredByCode: '',
         email: '',
         password: '',
@@ -114,15 +111,6 @@ const AffiliateSignup = () => {
               value={state.form.firstName}
             />
             <Field label="Last Name" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
-            <Field
-              inputProps={socialMediaUrlInputProps}
-              label="Primary Social Media URL"
-              name="socialMediaUrl"
-              onChange={setFieldValue}
-              required
-              type="url"
-              value={state.form.socialMediaUrl}
-            />
             <Field
               label="Referral Code (optional)"
               name="referredByCode"

@@ -28,7 +28,7 @@ class User < ApplicationRecord
 
   validate :memberships_empty_when_admin
   validate :referred_by_code_exists
-  validates :social_media_url, presence: true, unless: :not_affiliate?
+  validates :social_media_url, presence: true, on: :update, unless: :not_affiliate?
   validates :bio, :img_url, presence: true, if: :seller?
   validates :referral_code, presence: true, uniqueness: true
   validates :currency, presence: true, inclusion: { in: %w[eur gbp chf usd] }

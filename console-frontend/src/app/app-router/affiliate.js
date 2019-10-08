@@ -12,6 +12,7 @@ import routes from 'app/routes'
 import SignupConfirmPage from 'auth/signup/confirm'
 import SignupPage from 'auth/signup'
 import TermsAndConditions from 'app/screens/terms-and-conditions'
+import WelcomePage from 'app/screens/welcome/uptous'
 import YourReferrals from 'app/screens/your-referrals'
 import { ExternalRoute, PrivateRoute, RootRedirect } from './router-helpers'
 import { Route, Switch } from 'react-router-dom'
@@ -20,6 +21,13 @@ import { SimpleChatCreate, SimpleChatEdit, SimpleChatsList } from 'app/resources
 const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
   return (
     <Switch>
+      <PrivateRoute
+        component={WelcomePage}
+        exact
+        fetchedAccount={fetchedAccount}
+        path={routes.welcome()}
+        setFetchedAccount={setFetchedAccount}
+      />
       <PrivateRoute
         component={Revenues}
         exact
