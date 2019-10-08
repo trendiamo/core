@@ -75,6 +75,9 @@ const TagsContainer = styled.div`
 
 const Description = ({ brand }) => (
   <div>
+    <Typography variant="body2">
+      <b>{brand.name}</b>
+    </Typography>
     <Typography variant="body2">{brand.description}</Typography>
     <TagsContainer>
       <ShippingTo variant="subtitle1">{'Shipping to:'}</ShippingTo>
