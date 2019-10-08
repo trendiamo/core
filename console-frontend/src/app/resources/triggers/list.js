@@ -61,16 +61,19 @@ const matchTriggers = (triggers, referenceUrl, hostnames) => {
   return result
 }
 
-const appBarContent = {
-  Actions: <Actions buttonText="Create New" createRoute={routes.triggerCreate()} />,
-  title: 'Triggers',
-}
-
 const TriggersList = ({ location }) => {
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
   )
+
+  const appBarContent = useMemo(() => {
+    return {
+      Actions: <Actions buttonText="Create New" createRoute={routes.triggerCreate()} />,
+      title: 'Triggers',
+    }
+  }, [])
+
   useOnboardingHelp(onboardingHelp)
   useAppBarContent(appBarContent)
   const { enqueueSnackbar } = useSnackbar()
