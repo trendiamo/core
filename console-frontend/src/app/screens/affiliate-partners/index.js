@@ -1,5 +1,4 @@
 import ActiveBrands from './active-brands'
-import auth from 'auth'
 import AvailableBrands from './available-brands'
 import BrandModal from './brand-modal'
 import CustomLinkModal from './custom-link-modal'

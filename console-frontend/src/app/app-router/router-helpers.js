@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from 'react'
 import routes from 'app/routes'
 import { apiAccountsShow, apiMe, apiRequest, isLocalStorageAccurate } from 'utils'
 import { Redirect, Route } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 const PrivateRouteRender = ({
   component,
@@ -114,24 +115,27 @@ const accountRedirect = () => {
   }
 }
 
-export const RootRedirect = () => {
-  useEffect(() => {
-    ;(async () => {
-      if (window.location.hash === '#confirmed') {
-        const { json, requestError } = await apiRequest(apiMe, [])
-        if (requestError) {
-          auth.clear({ isError: true })
-          return // auth.clear does the redirect already
-        } else {
-          auth.setUser(json)
+export const RootRedirect = withRouter(({ history }) => {
+  useEffect(
+    () => {
+      ;(async () => {
+        if (window.location.hash === '#confirmed') {
+          const { json, requestError } = await apiRequest(apiMe, [])
+          if (requestError) {
+            auth.clear({ isError: true })
+            return // auth.clear does the redirect already
+          } else {
+            auth.setUser(json)
+          }
         }
-      }
-      window.location = rootRedirect()
-    })()
-  }, [])
+        history.replace(rootRedirect())
+      })()
+    },
+    [history]
+  )
 
   return null
-}
+})
 
 export const AccountRedirect = () => {
   const destination = accountRedirect()
