@@ -1,4 +1,3 @@
-import Button from 'shared/button'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CircularProgress from 'app/layout/loading'
 import isEmpty from 'lodash.isempty'
@@ -7,28 +6,13 @@ import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
 import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useCancelable from 'ext/hooks/use-cancelable'
-import { apiRequest, showUpToUsBranding } from 'utils'
+import { Actions, TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
+import { apiRequest } from 'utils'
 import { Checkbox, Table, TableBody } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import { parse } from 'query-string'
-import { TableCell, TableHead, TableRow, TableToolbar } from 'shared/table-elements'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
-
-const Actions = ({ buttonText, createRoute }) =>
-  createRoute && (
-    <Button
-      color="primaryGradient"
-      component={Link}
-      inline
-      size={showUpToUsBranding() ? 'small' : 'medium'}
-      to={createRoute}
-      variant="contained"
-    >
-      {buttonText}
-    </Button>
-  )
 
 const EnhancedList = ({
   api,

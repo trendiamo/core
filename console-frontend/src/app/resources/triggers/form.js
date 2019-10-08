@@ -115,7 +115,7 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
       if (!formRef.current.reportValidity()) return
       const result = await onFormSubmit(event)
       if (!result || result.error || result.errors) return
-      if (action === 'Save & New') {
+      if (action.label === 'Save & New') {
         location.pathname === routes.triggerCreate()
           ? refreshRoute(history, routes.triggerCreate())
           : history.push(routes.triggerCreate())

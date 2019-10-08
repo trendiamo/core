@@ -1,3 +1,4 @@
+import Actions from './actions'
 import ActiveColumn from './active-column'
 import Avatar from './avatar'
 import columns from './columns'
@@ -12,6 +13,7 @@ import TableToolbar from './table-toolbar'
 import Text from './text'
 
 export {
+  Actions,
   ActiveColumn,
   Avatar,
   columns,

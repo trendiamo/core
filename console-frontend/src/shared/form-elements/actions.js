@@ -1,9 +1,10 @@
 import ActionsMenu from './simple-menu'
 import Button from 'shared/button'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import SaveButton from './save-button'
 import styled from 'styled-components'
-import { Tooltip, withWidth } from '@material-ui/core'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+import { Tooltip } from '@material-ui/core'
 
 const Container = styled.div`
   display: flex;
@@ -39,8 +40,6 @@ const Action = ({ action, disabled, isFormPristine, onFormSubmit, isFormSubmitti
   )
 }
 
-const actions = [{ label: 'Save', color: 'primaryGradient' }, { label: 'Save & New', color: 'actions' }]
-
 const Actions = ({
   isFormSubmitting,
   isFormPristine,
@@ -60,20 +59,55 @@ const Actions = ({
   tooltipTextSubmit,
   tooltipText,
   width,
-}) => (
-  <>
-    {saveAndCreateNewEnabled ? (
-      width === 'sm' || width === 'xs' ? (
-        <ActionsMenu
-          actions={actions}
-          disabled={saveDisabled}
-          isFormPristine={isFormPristine}
-          isFormSubmitting={isFormSubmitting}
-          onFormSubmit={onFormSubmit}
-        />
-      ) : (
-        <Container>
-          {actions.map(action => (
+}) => {
+  const actions = useMemo(
+    () =>
+      [
+        saveAndCreateNewEnabled && {
+          label: 'Save & New',
+          color: 'actions',
+          disabled: saveDisabled,
+          onClick: onFormSubmit,
+        },
+        previewEnabled && { label: 'Preview', color: 'actions', onClick: onPreviewClick },
+        !rejectEnabled && {
+          label: message || 'Save',
+          color: 'primaryGradient',
+          disabled: saveDisabled,
+          onClick: onFormSubmit,
+        },
+        submitEnabled && {
+          label: 'Submit',
+          color: 'primaryGradient',
+          onClick: onSubmitClick,
+          disabled: !isFormPristine || isSubmitting,
+        },
+        rejectEnabled && { label: 'Reject', color: 'error', disabled: isRejecting, onClick: onRejectClick },
+      ].filter(item => item),
+    [
+      isFormPristine,
+      isRejecting,
+      isSubmitting,
+      message,
+      onFormSubmit,
+      onPreviewClick,
+      onRejectClick,
+      onSubmitClick,
+      previewEnabled,
+      rejectEnabled,
+      saveAndCreateNewEnabled,
+      saveDisabled,
+      submitEnabled,
+    ]
+  )
+
+  if (!isWidthUp('sm', width)) return <ActionsMenu actions={actions} disabled={isFormSubmitting} />
+
+  return (
+    <>
+      <Container>
+        {saveAndCreateNewEnabled &&
+          actions.map(action => (
             <Action
               action={action}
               disabled={saveDisabled}
@@ -85,10 +119,6 @@ const Actions = ({
               tooltipText={tooltipText}
             />
           ))}
-        </Container>
-      )
-    ) : (
-      <Container>
         {previewEnabled && (
           <FlexDiv>
             <Button color="actions" onClick={onPreviewClick}>
@@ -96,7 +126,7 @@ const Actions = ({
             </Button>
           </FlexDiv>
         )}
-        {!rejectEnabled && (
+        {!saveAndCreateNewEnabled && !rejectEnabled && (
           <FlexDiv>
             <SaveButton
               disabled={saveDisabled}
@@ -137,8 +167,8 @@ const Actions = ({
           </FlexDiv>
         )}
       </Container>
-    )}
-  </>
-)
+    </>
+  )
+}
 
 export default withWidth()(Actions)

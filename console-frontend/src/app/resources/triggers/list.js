@@ -1,6 +1,5 @@
 import auth from 'auth'
 import BlankStateTemplate from 'shared/blank-state'
-import Button from 'shared/button'
 import CircularProgress from 'shared/circular-progress'
 import isEqual from 'lodash.isequal'
 import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
@@ -8,9 +7,9 @@ import routes from 'app/routes'
 import TriggersListBase from './list-base'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import welcomeImage from 'assets/img/background/img-welcome.png'
-import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort, showUpToUsBranding } from 'utils'
+import { Actions } from 'shared/table-elements'
+import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
-import { Link } from 'react-router-dom'
 import { matchUrl } from 'plugin-base'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
@@ -24,19 +23,6 @@ const BlankState = () => (
     route={routes.triggerCreate()}
     title="Create a new trigger"
   />
-)
-
-const Actions = () => (
-  <Button
-    color="primaryGradient"
-    component={Link}
-    inline
-    size={showUpToUsBranding() ? 'small' : 'medium'}
-    to={routes.triggerCreate()}
-    variant="contained"
-  >
-    {'Create New'}
-  </Button>
 )
 
 const iterateTriggers = (triggers, input, result) => {
@@ -75,7 +61,10 @@ const matchTriggers = (triggers, referenceUrl, hostnames) => {
   return result
 }
 
-const appBarContent = { Actions: <Actions />, title: 'Triggers' }
+const appBarContent = {
+  Actions: <Actions buttonText="Create New" createRoute={routes.triggerCreate()} />,
+  title: 'Triggers',
+}
 
 const TriggersList = ({ location }) => {
   const onboardingHelp = useMemo(
