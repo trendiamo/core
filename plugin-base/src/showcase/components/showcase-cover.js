@@ -28,8 +28,8 @@ const ShowcaseCover = ({ FlowBackButton, isLeaving, subheading, heading }) => {
     <CoverInner>
       {FlowBackButton && <FlowBackButton />}
       <TopSlideAnimation delay={250 * 0} isLeaving={isLeaving}>
-        <Heading theme={theme}>{heading}</Heading>
-        <SubHeading theme={theme}>{subheading}</SubHeading>
+        <Heading dangerouslySetInnerHTML={{ __html: heading }} theme={theme} />
+        <SubHeading dangerouslySetInnerHTML={{ __html: subheading }} theme={theme} />
       </TopSlideAnimation>
     </CoverInner>
   )
