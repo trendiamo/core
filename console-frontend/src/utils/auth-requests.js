@@ -24,6 +24,7 @@ const USERS_URL = `${BASE_API_URL}/users`
 const CORS_PROXY_URL = `${BASE_API_URL}/cors_proxy`
 const EVENTS_URL = `${BASE_API_URL}/events`
 const BRANDS_URL = `${BASE_API_URL}/brands`
+const INTERESTS_URL = `${BASE_API_URL}/interests`
 const AFFILIATIONS_URL = `${BASE_API_URL}/affiliations`
 const ORDERS_URL = `${BASE_API_URL}/orders`
 const STRIPE_URL = `${BASE_API_URL}/stripe`
@@ -186,6 +187,10 @@ export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocom
 
 export const apiBrandsList = query => apiGetRequest(`${BRANDS_URL}/?${stringify(query)}`)
 export const apiBrandsAutocomplete = query => apiGetRequest(`${BRANDS_URL}/autocomplete/?${stringify(query)}`)
+
+export const apiInterestCreate = body => apiCreateRequest(INTERESTS_URL, body)
+export const apiInterestsList = query => apiListRequest(`${INTERESTS_URL}/${stringify(query)}`)
+export const apiInterestDestroy = id => apiDestroyRequest(`${INTERESTS_URL}/${id}`)
 
 export const apiPathAutocomplete = query => apiGetRequest(`${PATH_URL}/autocomplete/?${stringify(query)}`)
 

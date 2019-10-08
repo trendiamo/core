@@ -2,7 +2,18 @@ import Content from './content'
 import Dialog from 'shared/dialog'
 import React, { useCallback } from 'react'
 
-const BrandModal = ({ brand, createAffiliation, open, setOpen, removeAffiliation, selectedAffiliation, isLoading }) => {
+const BrandModal = ({
+  brand,
+  createAffiliation,
+  createInterest,
+  open,
+  setOpen,
+  removeAffiliation,
+  selectedAffiliation,
+  isLoading,
+  interests,
+  removeInterest,
+}) => {
   const handleClose = useCallback(() => setOpen(false), [setOpen])
 
   return (
@@ -11,9 +22,12 @@ const BrandModal = ({ brand, createAffiliation, open, setOpen, removeAffiliation
         <Content
           brand={brand}
           createAffiliation={createAffiliation}
+          createInterest={createInterest}
           handleClose={handleClose}
+          interests={interests}
           isLoading={isLoading}
           removeAffiliation={removeAffiliation}
+          removeInterest={removeInterest}
           selectedAffiliation={selectedAffiliation}
         />
       }

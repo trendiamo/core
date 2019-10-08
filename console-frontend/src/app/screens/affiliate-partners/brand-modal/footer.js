@@ -1,9 +1,9 @@
+import Actions from './actions'
 import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Checkbox } from 'shared/form-elements'
 import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
@@ -30,59 +30,6 @@ const CommissionDescription = styled.div`
   color: #0f7173;
 `
 
-const Conditions = styled.div`
-  display: flex;
-`
-
-const ActionsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-`
-
-const Details = styled.div`
-  width: 100%;
-`
-
-const TermsAcceptanceContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-`
-
-const LabelLink = styled.a`
-  text-decoration: underline;
-`
-
-const TermsAcceptanceBox = ({
-  setAcceptedTermsAndConditions,
-  scrollToTermsAndConditions,
-  acceptedTermsAndConditions,
-}) => {
-  const clickLabelLink = useCallback(
-    event => {
-      event.stopPropagation()
-      scrollToTermsAndConditions()
-    },
-    [scrollToTermsAndConditions]
-  )
-
-  return (
-    <TermsAcceptanceContainer>
-      <Checkbox
-        label={
-          <>
-            {'I have read and accepted the '}
-            <LabelLink onClick={clickLabelLink}>{'Terms & Conditions'}</LabelLink>
-            {' for promoting this brand.'}
-          </>
-        }
-        setValue={setAcceptedTermsAndConditions}
-        value={acceptedTermsAndConditions}
-      />
-    </TermsAcceptanceContainer>
-  )
-}
-
 const StyledClipboardInput = styled(ClipboardInput)`
   max-width: 450px;
   margin: 20px auto 19px;
@@ -96,11 +43,6 @@ const RemoveButtonContainer = styled.div`
 
 const WarningMessage = styled(Typography)`
   max-width: 300px;
-`
-
-const CreateAffiliateLinkContainer = styled.div`
-  display: flex;
-  justify-content: center;
 `
 
 const AffiliateTerms = styled.div`
@@ -170,46 +112,19 @@ const SuccessScreen = ({ brand, selectedAffiliation, removeAffiliation, isLoadin
   )
 }
 
-const Actions = ({ isCreateLinkClicked, onCreateLinkClick, scrollToTermsAndConditions }) => {
-  const [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false)
-
-  return (
-    <ActionsContainer>
-      <Details>
-        <Conditions>
-          <TermsAcceptanceBox
-            acceptedTermsAndConditions={acceptedTermsAndConditions}
-            scrollToTermsAndConditions={scrollToTermsAndConditions}
-            setAcceptedTermsAndConditions={setAcceptedTermsAndConditions}
-          />
-        </Conditions>
-        <CreateAffiliateLinkContainer>
-          <Button
-            color="primaryGradient"
-            disabled={isCreateLinkClicked || !acceptedTermsAndConditions}
-            flex
-            fullWidthOnMobile
-            isFormSubmitting={isCreateLinkClicked}
-            onClick={onCreateLinkClick}
-            size="large"
-          >
-            {'Create Affiliate Link'}
-          </Button>
-        </CreateAffiliateLinkContainer>
-      </Details>
-    </ActionsContainer>
-  )
-}
-
 const Footer = ({
   brand,
   createAffiliation,
+  createInterest,
   scrollToTermsAndConditions,
   removeAffiliation,
   selectedAffiliation,
   isLoading,
+  interest,
+  removeInterest,
 }) => {
   const [isCreateLinkClicked, setIsCreateLinkClicked] = useState(false)
+  const [isNotificationButtonClicked, setIsNotificationButtonClicked] = useState(false)
 
   const onCreateLinkClick = useCallback(
     async () => {
@@ -227,6 +142,35 @@ const Footer = ({
     [brand, createAffiliation]
   )
 
+  const onNotifyMeClick = useCallback(
+    async () => {
+      setIsNotificationButtonClicked(true)
+      const { errors, requestError } = await createInterest(brand)
+      if (!errors && !requestError) {
+        mixpanel.track('Clicked Notify Me', {
+          hostname: window.location.hostname,
+          brandId: brand.id,
+          brand: brand.name,
+        })
+      }
+      setIsNotificationButtonClicked(false)
+    },
+    [brand, createInterest]
+  )
+
+  const onRemoveNotificationClick = useCallback(
+    async () => {
+      setIsNotificationButtonClicked(true)
+      mixpanel.track('Clicked Remove Notification', {
+        hostname: window.location.hostname,
+        brand: brand.name,
+        brandId: brand.id,
+      })
+      removeInterest(interest).then(() => setIsNotificationButtonClicked(false))
+    },
+    [brand.id, brand.name, interest, removeInterest]
+  )
+
   if (selectedAffiliation)
     return (
       <SuccessScreen
@@ -239,15 +183,25 @@ const Footer = ({
 
   return (
     <Container>
-      <Typography variant="overline">{'Affiliate terms: '}</Typography>
-      <AffiliateTerms>
-        <CommissionRate>{Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })}</CommissionRate>
-        <CommissionDescription>{brand.commissionDescription}</CommissionDescription>
-      </AffiliateTerms>
+      {!brand.isPreview && (
+        <>
+          <Typography variant="overline">{'Affiliate terms: '}</Typography>
+          <AffiliateTerms>
+            <CommissionRate>
+              {Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })}
+            </CommissionRate>
+            <CommissionDescription>{brand.commissionDescription}</CommissionDescription>
+          </AffiliateTerms>
+        </>
+      )}
       <Actions
         brand={brand}
+        interest={interest}
         isCreateLinkClicked={isCreateLinkClicked}
+        isNotificationButtonClicked={isNotificationButtonClicked}
         onCreateLinkClick={onCreateLinkClick}
+        onNotifyMeClick={onNotifyMeClick}
+        onRemoveNotificationClick={onRemoveNotificationClick}
         scrollToTermsAndConditions={scrollToTermsAndConditions}
       />
     </Container>
