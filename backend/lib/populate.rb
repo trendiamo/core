@@ -278,7 +278,7 @@ class Populate # rubocop:disable Metrics/ClassLength
   def create_accounts
     Account.create!(name: "Test Account", is_affiliate: true, created_at: Date.new(2019, 1, 1))
     Account.create!(name: "Other Account")
-    5.times { Account.create!(name: Faker::Company.name, is_affiliate: true) }
+    8.times { Account.create!(name: Faker::Company.name, is_affiliate: true) }
   end
 
   def create_websites
@@ -367,14 +367,18 @@ class Populate # rubocop:disable Metrics/ClassLength
         facebook_url: "https://facebook.com/#{account.slug}",
         twitter_url: "https://twitter.com/#{account.slug}",
         tags: %w[europe usa uk de nl].sample(rand(1..3)).join(", "),
+        is_preview: false,
       }
       Brand.create!(brand_attrs)
+    end
+    Account.last(3).each do |account|
+      account.brand.update!(is_preview: true)
     end
   end
 
   def create_affiliations
     promoters = User.where.not(affiliate_role: "not_affiliate", last_name: "Lazy")
-    affiliate_accounts = Account.where(is_affiliate: true)
+    affiliate_accounts = Account.where(is_affiliate: true).first(5)
     promoters.each do |promoter|
       affiliate_accounts.sample(affiliate_accounts.length / 2).each do |account|
         affiliation_attrs = { user: promoter, account: account }

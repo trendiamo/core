@@ -13,6 +13,7 @@ class Account < ApplicationRecord
 
   has_one :brand, dependent: :destroy
   has_many :affiliations, dependent: :destroy
+  has_many :interests, dependent: :destroy
   has_many :orders, dependent: :destroy
 
   has_many :invites, dependent: :destroy

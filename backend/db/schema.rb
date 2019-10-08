@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191004114920) do
+ActiveRecord::Schema.define(version: 20191007135153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20191004114920) do
     t.integer "order", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_preview", default: false, null: false
     t.index ["account_id"], name: "index_brands_on_account_id"
   end
 
@@ -84,6 +85,15 @@ ActiveRecord::Schema.define(version: 20191004114920) do
     t.bigint "user_id"
     t.index ["account_id"], name: "index_images_on_account_id"
     t.index ["user_id"], name: "index_images_on_user_id"
+  end
+
+  create_table "interests", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_interests_on_account_id"
+    t.index ["user_id"], name: "index_interests_on_user_id"
   end
 
   create_table "invites", force: :cascade do |t|
@@ -393,6 +403,8 @@ ActiveRecord::Schema.define(version: 20191004114920) do
   add_foreign_key "generated_urls", "users"
   add_foreign_key "images", "accounts"
   add_foreign_key "images", "users"
+  add_foreign_key "interests", "accounts"
+  add_foreign_key "interests", "users"
   add_foreign_key "invites", "accounts"
   add_foreign_key "login_events", "users"
   add_foreign_key "memberships", "accounts"

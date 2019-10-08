@@ -15,23 +15,33 @@ const StyledTitle = styled(props => <Title {...omit(props, ['animate', 'ref'])} 
   `}
 `
 
-const AvailableBrands = ({ animate, brands, isLoading, title, titleRef, setIsBrandModalOpen, setSelectedBrand }) => {
-  const brandsToShow = useMemo(() => brands.filter(brand => !brand.isPreview), [brands])
+const BrandsComingSoon = ({
+  animate,
+  brands,
+  isLoading,
+  interests,
+  title,
+  titleRef,
+  setIsBrandModalOpen,
+  setSelectedBrand,
+  removeInterest,
+}) => {
+  const brandsToShow = useMemo(() => brands.filter(brand => brand.isPreview), [brands])
 
-  if (isLoading) return null
+  if (isLoading || brandsToShow.length === 0) return null
 
   return (
     <>
-      {brandsToShow.length > 0 && (
-        <div ref={titleRef}>
-          <StyledTitle animate={animate}>{title}</StyledTitle>
-        </div>
-      )}
+      <div ref={titleRef}>
+        <StyledTitle animate={animate}>{title}</StyledTitle>
+      </div>
       {brandsToShow.map(brand => (
         <BrandCard
           animate={animate}
           brand={brand}
+          interests={interests}
           key={brand.id}
+          removeInterest={removeInterest}
           setIsBrandModalOpen={setIsBrandModalOpen}
           setSelectedBrand={setSelectedBrand}
         />
@@ -40,4 +50,4 @@ const AvailableBrands = ({ animate, brands, isLoading, title, titleRef, setIsBra
   )
 }
 
-export default AvailableBrands
+export default BrandsComingSoon

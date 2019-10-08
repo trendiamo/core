@@ -2,7 +2,7 @@ import Actions from './actions'
 import ImageAndDescription from './image-and-description'
 import mixpanel from 'ext/mixpanel'
 import omit from 'lodash.omit'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 
@@ -34,6 +34,8 @@ const BrandCard = ({
   setIsCustomLinkModalOpen,
   setIsBrandModalOpen,
   setSelectedBrand,
+  interests,
+  removeInterest,
 }) => {
   const onClickCustomLink = useCallback(
     () => {
@@ -69,6 +71,11 @@ const BrandCard = ({
     [affiliation, brand.id, brand.name, openBrandModal]
   )
 
+  const interest = useMemo(() => interests && interests.find(interest => interest.brand.id === brand.id), [
+    brand.id,
+    interests,
+  ])
+
   return (
     <StyledSection animate={animate} key={brand.id}>
       <MainContainer>
@@ -76,8 +83,10 @@ const BrandCard = ({
         <Actions
           affiliation={affiliation}
           brand={brand}
+          interest={interest}
           onClickCustomLink={onClickCustomLink}
           openBrandModal={openBrandModal}
+          removeInterest={removeInterest}
         />
       </MainContainer>
     </StyledSection>

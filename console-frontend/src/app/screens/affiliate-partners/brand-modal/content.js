@@ -1,6 +1,6 @@
 import Footer from './footer'
 import Header from './header'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 
@@ -42,7 +42,17 @@ const TermsAndConditions = styled(({ brand, className, termsRef }) => (
   margin-top: 4rem;
 `
 
-const Content = ({ brand, removeAffiliation, createAffiliation, handleClose, selectedAffiliation, isLoading }) => {
+const Content = ({
+  brand,
+  removeAffiliation,
+  createInterest,
+  createAffiliation,
+  handleClose,
+  selectedAffiliation,
+  isLoading,
+  interests,
+  removeInterest,
+}) => {
   const contentRef = useRef(null)
   const termsRef = useRef(null)
   const headerRef = useRef(null)
@@ -52,21 +62,29 @@ const Content = ({ brand, removeAffiliation, createAffiliation, handleClose, sel
     contentRef.current.scrollTo(0, termsRef.current.offsetTop + headerRef.current.clientHeight + 55)
   }, [])
 
+  const interest = useMemo(() => interests && brand && interests.find(interest => interest.brand.id === brand.id), [
+    brand,
+    interests,
+  ])
+
   return (
     <MainContainer>
       <ContentScrollContainer ref={contentRef}>
         <Header brand={brand} headerRef={headerRef} />
         <ContentContainer>
           <BrandDescription dangerouslySetInnerHTML={{ __html: brand.fullDescription }} />
-          <TermsAndConditions brand={brand} termsRef={termsRef} />
+          {!brand.isPreview && <TermsAndConditions brand={brand} termsRef={termsRef} />}
         </ContentContainer>
       </ContentScrollContainer>
       <Footer
         brand={brand}
         createAffiliation={createAffiliation}
+        createInterest={createInterest}
         handleClose={handleClose}
+        interest={interest}
         isLoading={isLoading}
         removeAffiliation={removeAffiliation}
+        removeInterest={removeInterest}
         scrollToTermsAndConditions={scrollToTermsAndConditions}
         selectedAffiliation={selectedAffiliation}
       />

@@ -73,6 +73,8 @@ Rails.application.routes.draw do
         resources :affiliations, only: %i[index create destroy]
         resources :affiliate_links, only: %i[create]
 
+        resources :interests, only: %i[index create destroy]
+
         resources :orders, only: %i[index]
 
         get "/events", to: "mixpanel_events#index"

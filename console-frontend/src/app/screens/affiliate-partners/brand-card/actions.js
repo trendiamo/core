@@ -60,7 +60,7 @@ const WebsiteButton = ({ affiliation, brand }) => {
   )
 }
 
-const Actions = ({ affiliation, brand, onClickCustomLink, openBrandModal }) => {
+const Actions = ({ affiliation, brand, onClickCustomLink, removeInterest, openBrandModal, interest }) => {
   const onCopyAffiliateLink = useCallback(
     text => {
       mixpanel.track('Copied Affiliate Link', {
@@ -85,11 +85,46 @@ const Actions = ({ affiliation, brand, onClickCustomLink, openBrandModal }) => {
     [brand.id, brand.name, openBrandModal]
   )
 
+  const onClickNotifyMe = useCallback(
+    () => {
+      mixpanel.track('Clicked Notify Me', {
+        hostname: window.location.hostname,
+        brandId: brand.id,
+        brand: brand.name,
+      })
+      openBrandModal()
+    },
+    [brand.id, brand.name, openBrandModal]
+  )
+
+  const onClickRemoveNotification = useCallback(
+    () => {
+      mixpanel.track('Clicked Remove Notification', {
+        hostname: window.location.hostname,
+        brand: brand.name,
+        brandId: brand.id,
+      })
+      removeInterest(interest)
+    },
+    [brand.id, brand.name, interest, removeInterest]
+  )
+
   return (
     <Container>
       <ButtonContainer>
         <WebsiteButton affiliation={affiliation} brand={brand} />
-        {affiliation ? (
+        {brand.isPreview ? (
+          <Button
+            color={interest ? 'white' : 'primaryGradient'}
+            flex
+            fullWidthOnMobile
+            inline
+            onClick={interest ? onClickRemoveNotification : onClickNotifyMe}
+            size="large"
+          >
+            {interest ? 'Remove notification' : 'Notify me'}
+          </Button>
+        ) : affiliation ? (
           <StyledClipboardInput
             backgroundColor="#e7ecef"
             onCopy={onCopyAffiliateLink}
