@@ -29,6 +29,7 @@ const ContentScrollContainer = styled.div`
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 `
 
 const TermsAndConditionsContent = styled.div``
