@@ -3,7 +3,6 @@ import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   apiAffiliationCreate,
-  apiAffiliationDestroy,
   apiAffiliationsList,
   apiBrandsList,
   apiInterestCreate,
@@ -114,30 +113,6 @@ const AffiliatePartners = () => {
     [affiliations, selectedBrand]
   )
 
-  const removeAffiliation = useCallback(
-    () => {
-      return (async () => {
-        if (!selectedAffiliation || !selectedBrand) return
-        setIsLoading(true)
-        const { json, errors, requestError } = await apiRequest(apiAffiliationDestroy, [selectedAffiliation.id])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!errors && !requestError) {
-          mixpanel.track('Removed Affiliation', {
-            hostname: window.location.hostname,
-            brandId: selectedAffiliation.brand.id,
-            brand: selectedAffiliation.brand.name,
-          })
-          enqueueSnackbar(`Successfully removed affiliation with ${selectedBrand.name}`, { variant: 'success' })
-        }
-        setIsLoading(false)
-        await fetchData()
-        return json
-      })()
-    },
-    [enqueueSnackbar, fetchData, selectedAffiliation, selectedBrand]
-  )
-
   const removeInterest = useCallback(
     interest => {
       return (async () => {
@@ -168,7 +143,6 @@ const AffiliatePartners = () => {
       createInterest={createInterest}
       interests={interests}
       isLoading={isLoading}
-      removeAffiliation={removeAffiliation}
       removeInterest={removeInterest}
       selectedAffiliation={selectedAffiliation}
       selectedBrand={selectedBrand}

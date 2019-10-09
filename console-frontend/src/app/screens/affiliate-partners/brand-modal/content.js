@@ -45,12 +45,10 @@ const TermsAndConditions = styled(({ brand, className, termsRef }) => (
 
 const Content = ({
   brand,
-  removeAffiliation,
   createInterest,
   createAffiliation,
   handleClose,
   selectedAffiliation,
-  isLoading,
   interests,
   removeInterest,
 }) => {
@@ -83,8 +81,6 @@ const Content = ({
         createInterest={createInterest}
         handleClose={handleClose}
         interest={interest}
-        isLoading={isLoading}
-        removeAffiliation={removeAffiliation}
         removeInterest={removeInterest}
         scrollToTermsAndConditions={scrollToTermsAndConditions}
         selectedAffiliation={selectedAffiliation}

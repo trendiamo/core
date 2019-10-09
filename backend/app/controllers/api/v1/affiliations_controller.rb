@@ -18,20 +18,6 @@ module Api
         end
       end
 
-      def destroy
-        @affiliation = policy_scope(Affiliation).find(params[:id])
-        if @affiliation.account.orders.length.positive?
-          return render json: { error: "This affiliation has revenues" }, status: :unprocessable_entity
-        end
-
-        authorize @affiliation
-        if @affiliation.destroy
-          render json: { message: "Successfully removed affiliation" }
-        else
-          render_error
-        end
-      end
-
       private
 
       def render_error

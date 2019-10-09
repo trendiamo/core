@@ -14,8 +14,7 @@ class Affiliation < ApplicationRecord
 
   def as_json(_options = {})
     attributes.slice("id", "token")
-              .merge(brand: account.brand, has_revenues: account.orders.length.positive?,
-                     default_affiliate_link: affiliate_links.find_by(default_link: true).url)
+              .merge(brand: account.brand, default_affiliate_link: affiliate_links.find_by(default_link: true).url)
   end
 
   private
