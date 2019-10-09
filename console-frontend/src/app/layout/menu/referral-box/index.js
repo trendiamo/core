@@ -12,7 +12,6 @@ const Container = styled.div`
   margin: 20px 14px;
   background: #fff;
   overflow: hidden;
-  border-radius: 10px;
   height: 175px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 }

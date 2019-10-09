@@ -7,10 +7,10 @@ const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 70px;
+  height: 120px;
   flex-shrink: 0;
   cursor: pointer;
-  margin: 38px 0 50px;
+  margin: 0 0 20px 0;
   @media (min-width: 960px) {
     width: 150px;
     height: 100%;
