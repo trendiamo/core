@@ -362,11 +362,11 @@ class Populate # rubocop:disable Metrics/ClassLength
         header_image_url: Faker::LoremPixel.image("960x300", false, "abstract", Faker::Number.between(1, 10)),
         logo_url: Faker::Company.logo,
         commission_rate: Faker::Number.between(1, 20).to_f / 100,
-        commission_description: "Commission on Cart",
+        commission_description: "per Purchase",
         instagram_url: "https://instagram.com/#{account.slug}",
         facebook_url: "https://facebook.com/#{account.slug}",
         twitter_url: "https://twitter.com/#{account.slug}",
-        tags: %w[europe usa uk de nl].sample(rand(1..3)).join(", "),
+        tags: ["🇪🇺 europe", "🇺🇸 usa", "🇬🇧 uk", "🇩🇪 de", "🇳🇱 nl"].sample(rand(1..3)).join(", "),
         is_preview: false,
       }
       Brand.create!(brand_attrs)

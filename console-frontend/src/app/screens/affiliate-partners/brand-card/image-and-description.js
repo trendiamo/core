@@ -80,7 +80,7 @@ const Description = ({ brand }) => (
     </Typography>
     <Typography variant="body2">{brand.description}</Typography>
     <TagsContainer>
-      <ShippingTo variant="subtitle1">{'Shipping to:'}</ShippingTo>
+      <ShippingTo variant="subtitle1">{'Available in:'}</ShippingTo>
       <Tags>
         {brand.tags.split(',').map(tag => (
           <Tag key={tag} label={tag} size="small" />
