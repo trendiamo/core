@@ -7,37 +7,28 @@ import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
   background: #e7ecef;
-  padding: 12px 24px 12px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 0;
-  @media (min-height: 960px) {
+  padding: 20px 24px 20px;
+  @media (min-width: 960px) {
     padding: 20px 60px 20px;
   }
 `
 
-const CommissionRate = styled.div`
+const CommissionRate = styled.span`
   color: #0f7173;
-  font-size: 32px;
   font-weight: 700;
-  line-height: 1;
 `
 
-const CommissionDescription = styled.div`
-  margin-left: 10px;
+const CommissionDescription = styled.span`
   color: #0f7173;
 `
 
 const StyledClipboardInput = styled(ClipboardInput)`
   max-width: 450px;
   margin: 20px auto 19px;
-`
-
-const AffiliateTerms = styled.div`
-  display: flex;
-  align-items: baseline;
-  margin-top: 6px;
 `
 
 const SuccessScreen = ({ brand, selectedAffiliation }) => {
@@ -135,15 +126,13 @@ const Footer = ({
   return (
     <Container>
       {!brand.isPreview && (
-        <>
-          <Typography variant="overline">{'Affiliate terms: '}</Typography>
-          <AffiliateTerms>
-            <CommissionRate>
-              {Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })}
-            </CommissionRate>
-            <CommissionDescription>{brand.commissionDescription}</CommissionDescription>
-          </AffiliateTerms>
-        </>
+        <div>
+          <span>{'Affiliate terms: '}</span>
+          <CommissionRate>
+            {Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })}
+          </CommissionRate>
+          <CommissionDescription> {brand.commissionDescription}</CommissionDescription>
+        </div>
       )}
       <Actions
         brand={brand}
