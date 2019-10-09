@@ -19,7 +19,10 @@ const IconButton = styled(MuiIconButton)`
   ${showUpToUsBranding()
     ? `
     border-radius: 0;
-    :hover { background: #e7ecef; }`
+    background: #e7ecef;
+    color: #0f7173;
+    :hover { background: #e7ecef; }
+    `
     : ''}
 
   ${({ size }) =>
