@@ -9,12 +9,11 @@ const BlankStateContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 300px;
   user-select: none;
 `
 
 const StyledSeedingIcon = styled(props => <SeedingIcon {...omit(props, ['animate'])} />)`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   transition: all 1.6s;
   ${({ animate }) =>
     !animate &&
