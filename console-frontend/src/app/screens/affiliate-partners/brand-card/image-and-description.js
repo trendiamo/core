@@ -48,8 +48,8 @@ const Container = styled.div`
 `
 
 const ShippingTo = styled(Typography)`
-  margin-top: 8px;
   margin-right: 8px;
+  line-height: 32px;
 `
 
 const Tag = styled(Chip)`
@@ -71,6 +71,10 @@ const Tag = styled(Chip)`
 const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-top: 13px;
+  @media (min-width: 960px) {
+    margin-top: 8px;
+  }
 `
 
 const Description = ({ brand }) => (

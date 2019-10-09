@@ -13,7 +13,7 @@ const Container = styled.div`
   justify-content: space-between;
   width: 100%;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 18px;
   @media (min-width: 960px) {
     width: auto;
     flex-direction: row;
