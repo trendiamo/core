@@ -1,3 +1,4 @@
+import LanguageIcon from '@material-ui/icons/Language'
 import React from 'react'
 import styled from 'styled-components'
 import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg'
@@ -61,21 +62,6 @@ const HeaderImageContainer = styled.div`
   }
 `
 
-const SocialLinkContainer = styled.a`
-  font-size: 0;
-  svg {
-    width: 22px;
-    height: 22px;
-  }
-  padding: 10px;
-  @media (min-width: 960px) {
-    svg {
-      width: auto;
-      height: auto;
-    }
-  }
-`
-
 const SocialLinksContainer = styled.div`
   position: absolute;
   left: 130px;
@@ -84,8 +70,24 @@ const SocialLinksContainer = styled.div`
   display: flex;
 `
 
-const SocialLink = ({ brand, type, Icon }) => (
-  <SocialLinkContainer href={brand[`${type}Url`]} rel="noopener noreferrer" target="_blank">
+const SocialLinkContainer = styled.a`
+  padding: 10px;
+  font-size: 0;
+  svg {
+    fill: black;
+    width: 22px;
+    height: 22px;
+  }
+  @media (min-width: 960px) {
+    svg {
+      width: 26px;
+      height: 26px;
+    }
+  }
+`
+
+const SocialLink = ({ href, Icon }) => (
+  <SocialLinkContainer href={href} rel="noopener noreferrer" target="_blank">
     <Icon />
   </SocialLinkContainer>
 )
@@ -93,9 +95,10 @@ const SocialLink = ({ brand, type, Icon }) => (
 const BrandSocialLinks = ({ brand }) => {
   return (
     <SocialLinksContainer>
-      {brand.instagramUrl && <SocialLink brand={brand} Icon={InstagramIcon} type="instagram" />}
-      {brand.facebookUrl && <SocialLink brand={brand} Icon={FacebookIcon} type="facebook" />}
-      {brand.twitterUrl && <SocialLink brand={brand} Icon={TwitterIcon} type="twitter" />}
+      <SocialLink href={`https://${brand.websiteHostname}`} Icon={LanguageIcon} />
+      {brand.instagramUrl && <SocialLink href={brand.instagramUrl} Icon={InstagramIcon} />}
+      {brand.facebookUrl && <SocialLink href={brand.facebookUrl} Icon={FacebookIcon} />}
+      {brand.twitterUrl && <SocialLink href={brand.twitterUrl} Icon={TwitterIcon} />}
     </SocialLinksContainer>
   )
 }
