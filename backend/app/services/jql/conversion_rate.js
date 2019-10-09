@@ -9,7 +9,7 @@ function main() {
   return Events(params.dates)
     .filter(event => event.properties.hostname === params.hostname)
     .filter(event =>
-      ["Toggled Plugin", "Proceed To Checkout", "Visited Page"].includes(
+      ["Toggled Plugin", "Proceed To Checkout", "Purchase Success"].includes(
         event.name
       )
     )
@@ -28,39 +28,7 @@ function main() {
           if (!acc.time) acc.time = events[i].time;
         } else if (events[i].name === "Proceed To Checkout") {
           acc.proceedToCheckout = true;
-        } else if (
-          /* TODO: use Purchase Success event instead when it's available */
-          events[i].name === "Visited Page" &&
-          (([
-            "www.pierre-cardin.de",
-            "www.impressorajato.com.br",
-            "www.baldessarini.com"
-          ].includes(events[i].properties.hostname) &&
-            events[i].properties.$current_url.includes(
-              "/checkout/onepage/success/"
-            )) ||
-            (["pampling.com", "www.pampling.com"].includes(
-              events[i].properties.hostname
-            ) &&
-              events[i].properties.$current_url.includes(
-                "pedido-finalizado"
-              )) ||
-            (["www.pionier-workwear.com"].includes(
-              events[i].properties.hostname
-            ) &&
-              events[i].properties.$current_url.includes(
-                "formonline.shop.shoppingcart.checkout.overview"
-              )) ||
-            (["www.buttwrap.com"].includes(events[i].properties.hostname) &&
-              events[i].properties.$current_url.includes("/thank_you")) ||
-            (["tontonetfils.fr"].includes(events[i].properties.hostname) &&
-              events[i].properties.$current_url.includes("9662595172")) ||
-            (["timeblock-europe.com"].includes(events[i].properties.hostname) &&
-              events[i].properties.$current_url.includes("order-received")) ||
-            (["www.shopinfo.com.br"].includes(events[i].properties.hostname) &&
-              events[i].properties.$current_url.includes("orderPlaced")))
-          /* end TODO */
-        ) {
+        } else if (events[i].name === "Purchase Success") {
           if (acc.toggledPlugin && acc.proceedToCheckout) {
             acc.conversions += 1;
             acc.toggledPlugin = false;

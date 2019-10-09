@@ -22,7 +22,7 @@ const TitleMargined = styled.h3`
 const computeMinDate = () => {
   const startOfMonth = dateFns.startOfMonth(Date.now())
   const dateMinLimit = dateFns.max([
-    new Date('2019-07-01'),
+    new Date('2019-08-01'),
     dateFns.startOfMonth(dateFns.addMonths(new Date(auth.getAccount().createdAt), 1)),
   ])
   if (dateFns.differenceInMonths(startOfMonth, dateMinLimit) >= 4) {
