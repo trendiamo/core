@@ -1,8 +1,7 @@
 import Actions from './actions'
-import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 
@@ -35,40 +34,13 @@ const StyledClipboardInput = styled(ClipboardInput)`
   margin: 20px auto 19px;
 `
 
-const RemoveButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const WarningMessage = styled(Typography)`
-  max-width: 300px;
-`
-
 const AffiliateTerms = styled.div`
   display: flex;
   align-items: baseline;
   margin-top: 6px;
 `
 
-const SuccessScreen = ({ brand, selectedAffiliation, removeAffiliation, isLoading }) => {
-  const [showRemoveConfirmationAlert, setShowRemoveConfirmationAlert] = useState(false)
-  const removeWarningTimeoutRef = useRef(null)
-
-  const onRemoveButtonClick = useCallback(
-    () => {
-      if (showRemoveConfirmationAlert) {
-        removeAffiliation()
-        return
-      }
-      setShowRemoveConfirmationAlert(true)
-      removeWarningTimeoutRef.current = setTimeout(() => {
-        setShowRemoveConfirmationAlert(false)
-      }, 3000)
-    },
-    [removeAffiliation, showRemoveConfirmationAlert]
-  )
-
+const SuccessScreen = ({ brand, selectedAffiliation }) => {
   const onCopyAffiliateLink = useCallback(
     text => {
       mixpanel.track('Copied Affiliate Link', {
@@ -81,33 +53,12 @@ const SuccessScreen = ({ brand, selectedAffiliation, removeAffiliation, isLoadin
     [brand.id, brand.name]
   )
 
-  useEffect(() => () => clearTimeout(removeWarningTimeoutRef.current), [])
-
   return (
     <Container>
       <Typography align="center" variant="overline">
         {'Your affiliate link'}
       </Typography>
       <StyledClipboardInput onCopy={onCopyAffiliateLink} size="large" text={selectedAffiliation.defaultAffiliateLink} />
-      <RemoveButtonContainer>
-        {showRemoveConfirmationAlert && (
-          <>
-            <WarningMessage variant="body2">
-              {'Your link will not be recoverable after the removal of the affiliation! Are you sure?'}
-            </WarningMessage>
-          </>
-        )}
-        <Button
-          color={showRemoveConfirmationAlert ? 'error' : 'primaryGradient'}
-          disabled={isLoading || selectedAffiliation.hasRevenues}
-          flex
-          isFormSubmitting={isLoading}
-          onClick={onRemoveButtonClick}
-          size="small"
-        >
-          {showRemoveConfirmationAlert ? "I'm sure!" : 'Remove affiliation'}
-        </Button>
-      </RemoveButtonContainer>
     </Container>
   )
 }
