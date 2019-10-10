@@ -1,8 +1,9 @@
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Footer from './footer'
 import Header from './header'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Typography } from '@material-ui/core'
+import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography } from '@material-ui/core'
 
 const BrandDescription = styled.div`
   color: #272932;
@@ -34,13 +35,20 @@ const MainContainer = styled.div`
 
 const TermsAndConditionsContent = styled.div``
 
-const TermsAndConditions = styled(({ brand, className, termsRef }) => (
+const TermsAndConditions = styled(({ brand, className, expanded, onChange, termsRef }) => (
   <div className={className} ref={termsRef}>
-    <Typography variant="h5">{'Terms and Conditions'}</Typography>
-    <TermsAndConditionsContent dangerouslySetInnerHTML={{ __html: brand.termsAndConditions }} />
+    <ExpansionPanel expanded={expanded} onChange={onChange}>
+      <ExpansionPanelSummary aria-controls="panel1a-content" expandIcon={<ExpandMoreIcon />} id="panel1a-header">
+        <Typography variant="h5">{'Terms and Conditions'}</Typography>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        <TermsAndConditionsContent dangerouslySetInnerHTML={{ __html: brand.termsAndConditions }} />
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
   </div>
 ))`
-  margin-top: 4rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 `
 
 const Content = ({
@@ -55,11 +63,28 @@ const Content = ({
   const contentRef = useRef(null)
   const termsRef = useRef(null)
   const headerRef = useRef(null)
+  const timeoutRef = useRef(null)
 
-  const scrollToTermsAndConditions = useCallback(() => {
-    if (!contentRef.current || !termsRef.current || !headerRef.current) return
-    contentRef.current.scrollTo(0, termsRef.current.offsetTop + headerRef.current.clientHeight + 55)
-  }, [])
+  const [tcExpanded, setTcExpanded] = useState(false)
+  const onTCEPchange = useCallback((_el, value) => setTcExpanded(value), [])
+
+  const scrollToTermsAndConditions = useCallback(
+    () => {
+      if (!contentRef.current || !termsRef.current || !headerRef.current) return
+      onTCEPchange(null, true)
+      timeoutRef.current = setTimeout(
+        () =>
+          contentRef.current.scrollTo({
+            top: termsRef.current.offsetTop + headerRef.current.clientHeight + 55,
+            behaviour: 'smooth',
+          }),
+        300
+      )
+    },
+    [onTCEPchange]
+  )
+
+  useEffect(() => () => clearTimeout(timeoutRef.current), [])
 
   const interest = useMemo(() => interests && brand && interests.find(interest => interest.brand.id === brand.id), [
     brand,
@@ -72,7 +97,9 @@ const Content = ({
         <Header brand={brand} headerRef={headerRef} />
         <ContentContainer>
           <BrandDescription dangerouslySetInnerHTML={{ __html: brand.fullDescription }} />
-          {!brand.isPreview && <TermsAndConditions brand={brand} termsRef={termsRef} />}
+          {!brand.isPreview && (
+            <TermsAndConditions brand={brand} expanded={tcExpanded} onChange={onTCEPchange} termsRef={termsRef} />
+          )}
         </ContentContainer>
       </ContentScrollContainer>
       <Footer
