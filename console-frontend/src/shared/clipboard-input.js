@@ -1,5 +1,6 @@
 import Button from 'shared/button'
 import copy from 'clipboard-copy'
+import CopyIcon from '@material-ui/icons/FileCopy'
 import DoneIcon from '@material-ui/icons/Done'
 import omit from 'lodash.omit'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -37,7 +38,7 @@ const TextInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteabl
 
 const CopyButton = styled(props => <Button {...omit(props, ['pasteable'])} />)`
   height: 100%;
-  width: ${({ pasteable }) => (pasteable ? '120px' : '90px')};
+  ${({ pasteable }) => (pasteable ? 'width: 120px;' : '')}
   box-shadow: none;
   border-radius: 0;
 `
@@ -133,7 +134,7 @@ const ClipboardInput = ({
             type="submit"
             variant="contained"
           >
-            {isCopied ? <DoneIcon /> : pasteable && !wasCopied ? 'Get Link' : 'Copy'}
+            {isCopied ? <DoneIcon /> : pasteable && !wasCopied ? 'Get Link' : <CopyIcon />}
           </CopyButton>
         </CopyButtonContainer>
       </Tooltip>

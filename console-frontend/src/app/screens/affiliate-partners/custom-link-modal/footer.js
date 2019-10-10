@@ -1,3 +1,4 @@
+import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useState } from 'react'
@@ -21,14 +22,35 @@ const Container = styled.div`
 
 const ClipboardContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
+  > :first-child {
+    margin-bottom: 1rem;
+  }
+`
+
+const StyledClipboardInput = styled(ClipboardInput)`
+  width: 100%;
+  > div:first-child {
+    padding-left: 0;
+    background-color: white;
+  }
+  input {
+    padding: 6px;
+  }
+  > div,
+  > div > div {
+    height: 48px;
+  }
 `
 
 const Footer = ({ affiliation }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const [isLoading, setIsLoading] = useState(false)
+  const [isCustomLink, setIsCustomLink] = useState(false)
 
   const createAffiliateLink = useCallback(
     async text => {
@@ -70,18 +92,35 @@ const Footer = ({ affiliation }) => {
     [createAffiliateLink]
   )
 
+  const onCancelClick = useCallback(() => setIsCustomLink(false), [])
+  const onCustomClick = useCallback(() => setIsCustomLink(true), [])
+
   return (
     <Container>
       <ClipboardContainer>
-        <ClipboardInput
-          inputProps={urlInputProps}
-          isLoading={isLoading}
-          mixFunction={mixFunction}
-          onCopy={onCopyCustomLink}
-          pasteable
-          placeholder="Paste link here..."
-          size="large"
-        />
+        {isCustomLink ? (
+          <>
+            <ClipboardInput
+              inputProps={urlInputProps}
+              isLoading={isLoading}
+              mixFunction={mixFunction}
+              onCopy={onCopyCustomLink}
+              pasteable
+              placeholder="Paste link here..."
+              size="large"
+            />
+            <Button color="whiteBg" onClick={onCancelClick} size="small">
+              {'Get default link'}
+            </Button>
+          </>
+        ) : (
+          <>
+            <StyledClipboardInput backgroundColor="#e7ecef" size="large" text={affiliation.defaultAffiliateLink} />
+            <Button color="whiteBg" onClick={onCustomClick} size="small">
+              {'Get custom link'}
+            </Button>
+          </>
+        )}
       </ClipboardContainer>
     </Container>
   )

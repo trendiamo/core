@@ -1,6 +1,5 @@
 import Button from 'shared/button'
 import ButtonContainer from 'shared/button-container'
-import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
@@ -12,8 +11,13 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  flex-direction: column;
   margin-top: 18px;
+  > div:first-child {
+    width: auto;
+  }
+  > div:last-child {
+    flex: 1;
+  }
   @media (min-width: 960px) {
     width: auto;
     flex-direction: row;
@@ -24,14 +28,6 @@ const Container = styled.div`
 const StyledNewTabIcon = styled(NewTabIcon)`
   height: 30px;
   width: 30px;
-`
-
-const StyledClipboardInput = styled(ClipboardInput)`
-  margin-left: 12px;
-  @media (min-width: 960px) {
-    margin-left: 10px;
-    min-width: 320px;
-  }
 `
 
 const WebsiteButton = ({ affiliation, brand }) => {
@@ -61,18 +57,6 @@ const WebsiteButton = ({ affiliation, brand }) => {
 }
 
 const Actions = ({ affiliation, brand, onClickCustomLink, removeInterest, openBrandModal, interest }) => {
-  const onCopyAffiliateLink = useCallback(
-    text => {
-      mixpanel.track('Copied Affiliate Link', {
-        hostname: window.location.hostname,
-        text,
-        brandId: brand.id,
-        brand: brand.name,
-      })
-    },
-    [brand.id, brand.name]
-  )
-
   const onClickPromoteNow = useCallback(
     () => {
       mixpanel.track('Clicked Promote Now', {
@@ -124,22 +108,15 @@ const Actions = ({ affiliation, brand, onClickCustomLink, removeInterest, openBr
           >
             {interest ? 'Remove notification' : 'Notify me'}
           </Button>
-        ) : affiliation ? (
-          <StyledClipboardInput
-            backgroundColor="#e7ecef"
-            onCopy={onCopyAffiliateLink}
-            size="large"
-            text={affiliation.defaultAffiliateLink}
-          />
-        ) : (
+        ) : !affiliation ? (
           <Button color="primaryGradient" flex fullWidthOnMobile inline onClick={onClickPromoteNow} size="large">
             {'Promote now'}
           </Button>
-        )}
+        ) : null}
       </ButtonContainer>
       {affiliation && (
-        <Button color="white" flex fullWidthOnMobile inlineOnDesktop onClick={onClickCustomLink} size="large">
-          {'Custom link'}
+        <Button color="primaryGradient" flex inline inlineOnDesktop onClick={onClickCustomLink} size="large">
+          {'Get link'}
         </Button>
       )}
     </Container>
