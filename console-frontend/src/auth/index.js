@@ -71,6 +71,12 @@ const auth = {
     this.listeners.forEach(fn => fn(user))
     localStorage.setItem('authUser', JSON.stringify(user))
     localStorage.setItem('loggedIn', true)
+    if (window.zE) {
+      window.zE('webWidget', 'prefill', {
+        name: { value: `${user.firstName} ${user.lastName}` },
+        email: { value: user.email },
+      })
+    }
   },
   user: null,
 }
