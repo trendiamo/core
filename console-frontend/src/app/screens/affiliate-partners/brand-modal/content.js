@@ -7,6 +7,7 @@ import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typograph
 
 const BrandDescription = styled.div`
   color: #272932;
+  margin-bottom: 2rem;
   h2 {
     font-size: 20px;
   }
