@@ -1,8 +1,6 @@
-import auth from 'auth'
 import CheckCircle from 'shared/check-circle'
-import Link from 'shared/link'
 import React, { useMemo } from 'react'
-import StripeButton from './stripe-button'
+import StripeButton from 'shared/stripe-button'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import * as dateFns from 'date-fns'
@@ -74,27 +72,16 @@ const MonthlyRevenue = ({ dates, orders, hasStripeAccount }) => {
               {`Was paid out on ${dateFns.format(paymentDate, 'MMM do')}`}
             </PreviousPaymentMessage>
           ) : (
-            <NextPaymentMessage variant="h6">{`Will be paid out on ${dateFns.format(
-              paymentDate,
-              'MMM do'
-            )}`}</NextPaymentMessage>
+            <NextPaymentMessage variant="h6">
+              {`Will be paid out on ${dateFns.format(paymentDate, 'MMM do')}`}
+            </NextPaymentMessage>
           )
         ) : null}
       </RevenueContainer>
       <StripeNote>{'Revenues and prices displayed may slightly vary based on currency exchange rates'}</StripeNote>
-      {hasStripeAccount ? (
-        <Link
-          href={`https://dashboard.stripe.com/${auth.getUser().stripeUserId}`}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {'Check your Stripe account'}
-        </Link>
-      ) : (
-        <>
-          <StripeButton />
-          <StripeNote variant="body2">{'To receive your payouts connect your Stripe account!'}</StripeNote>
-        </>
+      <StripeButton color={hasStripeAccount ? 'whiteBg' : 'primaryGradient'} hasStripeAccount={hasStripeAccount} />
+      {!hasStripeAccount && (
+        <StripeNote variant="body2">{'To receive your payouts connect your Stripe account!'}</StripeNote>
       )}
     </Container>
   )

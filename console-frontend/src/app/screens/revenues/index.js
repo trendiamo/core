@@ -175,7 +175,13 @@ const Revenues = ({ history }) => {
   if (isLoading) return <CircularProgress />
 
   if (minDate > maxDate || hasErrors || affiliations.length < 1 || orders.length < 1) {
-    return <BlankState hasAffiliations={affiliations.length > 0} hasErrors={minDate > maxDate || hasErrors} />
+    return (
+      <BlankState
+        hasAffiliations={affiliations.length > 0}
+        hasErrors={minDate > maxDate || hasErrors}
+        hasStripeAccount={hasStripeAccount}
+      />
+    )
   }
 
   return (
