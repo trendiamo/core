@@ -60,10 +60,19 @@ const TextButton = styled.button`
   color: #00e;
 `
 
+const StyledExpansionPanel = styled(ExpansionPanel)`
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  &,
+  &:first-child,
+  &:last-child {
+    border-radius: 0;
+  }
+`
+
 /* eslint-disable react/jsx-max-depth */
 const SampleProductInstructions = () => (
   <div>
-    <ExpansionPanel>
+    <StyledExpansionPanel>
       <ExpansionPanelSummary aria-controls="panel-spi-content" expandIcon={<ExpandMoreIcon />} id="panel-spi-header">
         <Typography variant="h5">{'Sample Product Requests'}</Typography>
       </ExpansionPanelSummary>
@@ -90,21 +99,21 @@ const SampleProductInstructions = () => (
           <p>{'Applications that miss any information mentioned above will be declined.'}</p>
         </ExpansionPanelContent>
       </ExpansionPanelDetails>
-    </ExpansionPanel>
+    </StyledExpansionPanel>
   </div>
 )
 /* eslint-enable react/jsx-max-depth */
 
 const TermsAndConditions = styled(({ brand, className, expanded, onChange, termsRef }) => (
   <div className={className} ref={termsRef}>
-    <ExpansionPanel expanded={expanded} onChange={onChange}>
+    <StyledExpansionPanel expanded={expanded} onChange={onChange}>
       <ExpansionPanelSummary aria-controls="panel-tc-content" expandIcon={<ExpandMoreIcon />} id="panel-tc-header">
         <Typography variant="h5">{'Terms and Conditions'}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <ExpansionPanelContent dangerouslySetInnerHTML={{ __html: brand.termsAndConditions }} />
       </ExpansionPanelDetails>
-    </ExpansionPanel>
+    </StyledExpansionPanel>
   </div>
 ))`
   margin-top: 2rem;
