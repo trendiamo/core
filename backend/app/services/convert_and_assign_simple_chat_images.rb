@@ -16,10 +16,19 @@ class ConvertAndAssignSimpleChatImages
         unless img_url.nil?
           return if img_url.empty?
 
-          simple_chat_message_attributes[:img_id] = Image.find_or_create_by!(url: img_url).id
-          simple_chat_message_attributes.delete(:img_url)
+          image = Image.find_by(url: img_url)
+
+          return unless assign_image(simple_chat_message_attributes, image)
         end
       end
     end
+  end
+
+  def assign_image(simple_chat_message_attributes, image)
+    return unless image
+
+    simple_chat_message_attributes[:img_id] = image.id
+    simple_chat_message_attributes.delete(:img_url)
+    simple_chat_message_attributes
   end
 end
