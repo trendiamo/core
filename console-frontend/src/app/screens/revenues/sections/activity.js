@@ -36,7 +36,6 @@ const options = {
         gridLines: { color: '#272932', drawOnChartArea: false, drawTicks: false, lineWidth: 2 },
         ticks: {
           fontColor: '#272932',
-          fontStyle: 'bold',
           padding: 10,
         },
       },
@@ -81,7 +80,7 @@ const Activity = ({ dates, orders }) => {
       const emptyOrders = getEmptyRevenuesInRange(startDate, endDate)
       return [...orders, ...emptyOrders]
         .reduce((revenues, order) => {
-          const date = format(new Date(order.capturedAt), 'MMM d').toUpperCase()
+          const date = format(new Date(order.capturedAt), 'MMM d')
           const revenue = revenues.find(revenue => revenue.date === date)
           if (revenue) {
             revenue.value += +order.sellerAmount

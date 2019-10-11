@@ -5,7 +5,6 @@ import React, { useMemo } from 'react'
 import StripeButton from './stripe-button'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import { FormHelperText } from 'shared/form-elements'
 import * as dateFns from 'date-fns'
 
 const Container = styled.div`
@@ -43,10 +42,6 @@ const NextPaymentMessage = styled(Typography)`
 
 const StripeNote = styled(Typography)`
   margin-top: 0.8rem;
-`
-
-const StyledFormHelperText = styled(FormHelperText)`
-  text-align: center;
   margin-bottom: 0.8rem;
 `
 
@@ -86,9 +81,7 @@ const MonthlyRevenue = ({ dates, orders, hasStripeAccount }) => {
           )
         ) : null}
       </RevenueContainer>
-      <StyledFormHelperText>
-        {'Revenues and prices displayed may slightly vary based on currency exchange rates'}
-      </StyledFormHelperText>
+      <StripeNote>{'Revenues and prices displayed may slightly vary based on currency exchange rates'}</StripeNote>
       {hasStripeAccount ? (
         <Link
           href={`https://dashboard.stripe.com/${auth.getUser().stripeUserId}`}

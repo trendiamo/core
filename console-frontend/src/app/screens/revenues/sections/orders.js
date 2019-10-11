@@ -7,15 +7,15 @@ import * as dateFns from 'date-fns'
 const Orders = ({ orders, width }) => {
   const columns = isWidthUp('sm', width)
     ? [
-        { id: 'logoUrl', label: 'brand', type: 'image', width: '10%' },
-        { id: 'products', label: 'products', width: '40%' },
-        { id: 'time', label: 'date', width: '35%', align: 'center' },
-        { id: 'revenue', label: 'revenue', width: '15%', align: 'right', font: 'bold' },
+        { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
+        { id: 'products', label: 'Products', width: '40%' },
+        { id: 'time', label: 'Date', width: '35%', align: 'center' },
+        { id: 'revenue', label: 'Revenue', width: '15%', align: 'right', font: 'bold' },
       ]
     : [
-        { id: 'logoUrl', label: 'brand', type: 'image', width: '10%' },
-        { id: 'time', label: 'date', width: '55%', align: 'center' },
-        { id: 'revenue', label: 'revenue', width: '25%', align: 'right', font: 'bold' },
+        { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
+        { id: 'time', label: 'Date', width: '55%', align: 'center' },
+        { id: 'revenue', label: 'Revenue', width: '25%', align: 'right', font: 'bold' },
       ]
 
   const filteredOrders = useMemo(

@@ -91,7 +91,7 @@ const SimpleList = ({ columns, records, sticky, ...props }) => {
             <TableRowHead>
               {columns.map(column => (
                 <StyledTableCell key={column.id} {...column}>
-                  <Typography variant="subtitle1">{column.label.toUpperCase()}</Typography>
+                  <Typography variant="subtitle1">{column.label}</Typography>
                 </StyledTableCell>
               ))}
             </TableRowHead>

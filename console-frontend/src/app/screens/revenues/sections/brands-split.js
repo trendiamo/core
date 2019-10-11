@@ -3,10 +3,10 @@ import React, { useMemo } from 'react'
 import { SimpleList } from 'shared/table-elements'
 
 const columns = [
-  { id: 'logoUrl', label: 'brand', type: 'image', width: '10%' },
+  { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
   { id: 'name', label: '', width: '60%' },
-  { id: 'orders', label: 'items', width: '15%', align: 'center' },
-  { id: 'revenue', label: 'revenue', width: '15%', align: 'right', font: 'bold' },
+  { id: 'orders', label: 'Items', width: '15%', align: 'center' },
+  { id: 'revenue', label: 'Revenue', width: '15%', align: 'right', font: 'bold' },
 ]
 
 const BrandsSplit = ({ orders }) => {
