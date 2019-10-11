@@ -59,7 +59,7 @@ module Api
         %i[img animated_img].each do |img|
           seller_params = params.require(:seller)
           img_url = seller_params[img][:url]
-          seller_params["#{img}_id"] = img_url.present? ? Image.find_or_create_by!(url: img_url).id : nil
+          seller_params["#{img}_id"] = img_url.present? ? Image.find_by(url: img_url)&.id : nil
           seller_params.delete(img)
         end
       end

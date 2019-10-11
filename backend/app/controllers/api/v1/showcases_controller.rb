@@ -11,7 +11,7 @@ module Api
       end
 
       def create
-        return render_image_error unless convert_and_assign_images
+        return render_image_error unless ConvertAndAssignShowcaseImages.new(params).perform
 
         @showcase = policy_scope(Showcase).new(showcase_params)
         authorize @showcase
@@ -32,7 +32,7 @@ module Api
       def update
         @showcase = policy_scope(Showcase).find(params[:id])
         authorize @showcase
-        return render_image_error unless convert_and_assign_images
+        return render_image_error unless ConvertAndAssignShowcaseImages.new(params).perform
 
         if @showcase.update(showcase_params)
           render json: @showcase
@@ -77,18 +77,6 @@ module Api
           ]
         )
         add_order_fields(result)
-      end
-
-      def convert_and_assign_images
-        params[:showcase][:spotlights_attributes]&.each do |spotlight_attributes|
-          spotlight_attributes[:product_picks_attributes]&.each do |product_pick_attributes|
-            img_url = (product_pick_attributes[:img] && product_pick_attributes[:img][:url])
-            return if img_url.empty?
-
-            product_pick_attributes[:img_id] = Image.find_or_create_by!(url: img_url).id
-            product_pick_attributes.delete(:img_url)
-          end
-        end
       end
 
       # add order fields to showcase_attributes' spotlights and product_picks, based on received order
