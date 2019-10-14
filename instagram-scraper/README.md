@@ -12,6 +12,20 @@ You'll need to create your `.env` file and specify a `PROXIES_URL` to scrape pro
 bundle
 ```
 
+## Ruby
+
+Import the scraper in your Ruby file. You will have access to the methods `scrape_brand_info(brand)` and `scrape_brand_posts(brand, options)`:
+
+```ruby
+brand_info = scrape_brand_info("nike") # => {:id=>"13460080", :name=>"nike", :username=>"nike", :url=>"https://www.instagram.com/nike"}
+
+options = {
+  min_likes: 10_000,
+  keywords: "fashion,influencer,blogger",
+}
+posts = scrape_brand_posts("nike", options) # => array of posts
+```
+
 ## CLI
 
 ### Run locally

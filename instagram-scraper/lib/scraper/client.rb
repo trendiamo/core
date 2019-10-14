@@ -74,16 +74,14 @@ module InstagramScraper
       }
     end
 
-    def scrape_brand_posts(brand_id, end_cursor = "", posts = []) # rubocop:disable Metrics/MethodLength
+    def scrape_brand_posts(brand_id, end_cursor = "", posts = [])
       while end_cursor
-        posts_url = build_posts_url(brand_id, end_cursor)
-        response = JSON.parse(@http_proxy.open(posts_url).read)
-        posts_data, end_cursor = parse_response(response)
+        posts_data, end_cursor = scrape_posts(brand_id, end_cursor)
         break unless posts_data
 
         posts_data.each do |post_data|
           post = parse_post_data(post_data["node"])
-          next posts unless post
+          next unless post
 
           posts << post
         end
@@ -92,6 +90,12 @@ module InstagramScraper
     end
 
     private
+
+    def scrape_posts(brand_id, end_cursor)
+      posts_url = build_posts_url(brand_id, end_cursor)
+      response = JSON.parse(@http_proxy.open(posts_url).read)
+      parse_response(response)
+    end
 
     def build_posts_url(brand_id, end_cursor)
       query_params = build_query_params(brand_id, end_cursor)
@@ -131,7 +135,9 @@ module InstagramScraper
       caption = post_data["edge_media_to_caption"]["edges"]&.first&.[]("node")&.[]("text")&.gsub(/\n/, " ")
       country_code = scrape_country_code(post_url)
       return if likes < @min_likes || !timestamp.between?(@start_date.to_time.to_i, @end_date.to_time.to_i)
-      return unless @keywords.empty? || caption && @keywords.map.any? { |word| caption.downcase.include?(word) }
+      unless @keywords.empty? || caption && @keywords.map(&:downcase).any? { |word| caption.downcase.include?(word) }
+        return
+      end
 
       {
         publisher: publisher,

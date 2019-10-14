@@ -18,7 +18,7 @@ module InstagramScraper
       private
 
       def write_posts_in_csv(csv, posts)
-        csv << posts.first.keys.map { |key| key.to_s.tr("_", " ").capitalize }
+        csv << posts.first.keys.map { |key| key.to_s.tr("_", " ").capitalize } if csv.count.zero?
         posts.each { |post| csv << post.values }
       end
     end

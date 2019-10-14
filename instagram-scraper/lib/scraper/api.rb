@@ -1,4 +1,3 @@
-require "dotenv/load"
 require "json"
 require "sinatra/base"
 require_relative "client"
@@ -33,7 +32,10 @@ module InstagramScraper
         brand_info = @client.scrape_brand_info(brand)
         next posts unless brand_info
 
-        posts + @client.scrape_brand_posts(brand_info[:id])
+        brand_posts = @client.scrape_brand_posts(brand_info[:id])
+        next posts unless brand_posts
+
+        posts + brand_posts
       end
     end
 
