@@ -9,13 +9,13 @@ const Orders = ({ orders, width }) => {
     ? [
         { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
         { id: 'products', label: 'Products', width: '40%' },
-        { id: 'time', label: 'Date', width: '35%', align: 'center' },
+        { id: 'time', label: 'Date', width: '35%', align: 'right' },
         { id: 'revenue', label: 'Revenue', width: '15%', align: 'right', font: 'bold' },
       ]
     : [
         { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
-        { id: 'time', label: 'Date', width: '55%', align: 'center' },
-        { id: 'revenue', label: 'Revenue', width: '25%', align: 'right', font: 'bold' },
+        { id: 'time', label: 'Date', width: '40%', align: 'right' },
+        { id: 'revenue', label: 'Revenue', width: '50%', align: 'right', font: 'bold' },
       ]
 
   const filteredOrders = useMemo(
