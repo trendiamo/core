@@ -14,8 +14,8 @@ const Orders = ({ orders, width }) => {
       ]
     : [
         { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
-        { id: 'time', label: 'Date', width: '40%', align: 'right' },
-        { id: 'revenue', label: 'Revenue', width: '50%', align: 'right', font: 'bold' },
+        { id: 'time', label: 'Date', width: '50%', align: 'right' },
+        { id: 'revenue', label: 'Revenue', width: '40%', align: 'right', font: 'bold' },
       ]
 
   const filteredOrders = useMemo(

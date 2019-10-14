@@ -13,8 +13,8 @@ const BrandsSplit = ({ orders, width }) => {
       ]
     : [
         { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%', align: 'left' },
-        { id: 'orders', label: 'Orders', width: '40%', align: 'right' },
-        { id: 'revenue', label: 'Revenue', width: '50%', align: 'right', font: 'bold' },
+        { id: 'orders', label: 'Orders', width: '50%', align: 'right' },
+        { id: 'revenue', label: 'Revenue', width: '40%', align: 'right', font: 'bold' },
       ]
 
   const brandsSplit = useMemo(
