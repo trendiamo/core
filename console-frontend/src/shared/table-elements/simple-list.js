@@ -13,13 +13,11 @@ const Wrapper = styled.div`
 const StyledTable = styled(props => <Table {...omit(props, ['sticky'])} />)`
   height: ${({ sticky }) => (sticky ? 'calc(100% - 56px)' : '100%')};
   width: 100%;
-  display: flex;
   flex-direction: column;
   flex: 1;
 `
 
 const StyledTableHead = styled(TableHead)`
-  display: table;
   width: 100%;
 `
 
@@ -37,7 +35,6 @@ const StyledTableCell = styled(TableCell)`
 
 const StyledTableRow = styled(TableRow)`
   width: 100%;
-  display: table;
 `
 
 const TableRowHead = styled(StyledTableRow)`
