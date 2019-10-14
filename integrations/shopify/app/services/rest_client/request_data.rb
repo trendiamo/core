@@ -36,7 +36,7 @@ class RestClient::RequestData
     order.attributes.except(:email, :customer, :client_details, :note, :user_id, :location_id, :device_id, :phone,
                             :customer_locale, :note_attributes, :payment_gateway_names, :processing_method,
                             :contact_email, :shipping_lines, :billing_address, :shipping_address, :fulfillments,
-                            :origin_location)
+                            :origin_location, :payment_details)
   end
 
   def convert_order(order)
