@@ -2,6 +2,7 @@ module Api
   module V1
     class RestAdminController < RestController
       before_action :current_tenant
+      before_action :ensure_terms
       protect_from_forgery with: :exception, prepend: true
 
       private
@@ -9,6 +10,12 @@ module Api
       def current_tenant
         session_account = Account.find_by(slug: request.headers["X-Session-Account"])
         set_current_tenant(session_account)
+      end
+
+      def ensure_terms
+        return unless current_user
+
+        render status: :forbidden unless current_user.not_affiliate? || current_user.accepted_terms_and_conditions_at
       end
 
       def current_user_is_seller?

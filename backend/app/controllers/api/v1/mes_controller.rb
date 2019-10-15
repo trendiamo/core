@@ -2,6 +2,7 @@ module Api
   module V1
     class MesController < RestAdminController
       before_action :authenticate_user!
+      skip_before_action :ensure_terms, only: %i[update]
 
       def show
         render json: current_user
