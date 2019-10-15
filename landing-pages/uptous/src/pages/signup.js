@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 
 import Button from '../components/button'
 import Layout from '../layout'
@@ -26,8 +26,8 @@ const onBrandClick = () => {
   })
 }
 
-const SignupPage = styled(({ className }) => (
-  <Layout light>
+const SignupPage = styled(({ className, data }) => (
+  <Layout data={{ legalNotice: data.legalNotice.text, privacyPolicy: data.privacyPolicy.text }} light>
     <Seo title="Uptous - Signup" />
     <FlexDiv className={className}>
       <MainContainer>
@@ -144,6 +144,29 @@ const SignupPage = styled(({ className }) => (
         }
         @media (min-width: 1000px) {
           font-size: calc(20px + 4vw);
+        }
+      }
+    }
+  }
+`
+
+export const query = graphql`
+  query SignupPage {
+    hero: contentfulHomepage(name: { eq: "Homepage" }) {
+      heroHeading
+      heroSubheading
+    }
+    legalNotice: contentfulModalText(name: { eq: "Legal Notice" }) {
+      text {
+        childContentfulRichText {
+          html
+        }
+      }
+    }
+    privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
+      text {
+        childContentfulRichText {
+          html
         }
       }
     }
