@@ -169,8 +169,9 @@ module InstagramScraper
       end
     end
 
-    def initialize(args, defaults = DEFAULT_OPTIONS)
+    def initialize(args, proxies, defaults = DEFAULT_OPTIONS)
       @args = args
+      @proxies = proxies
       @defaults = defaults
       @logger = Logger.new
       @posts_count = 0
@@ -178,7 +179,7 @@ module InstagramScraper
 
     def run
       @options = parse_options
-      @client = Client.new(@options)
+      @client = Client.new(@options, @proxies)
       run_client
       log_final_message
     end

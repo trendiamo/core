@@ -1,5 +1,4 @@
 require "date"
-require "dotenv/load"
 require "json"
 require "net/http"
 require "open-uri"
@@ -19,8 +18,8 @@ NETWORK_ERRORS = [
 module InstagramScraper
   class Client
     class HTTPProxy
-      def initialize
-        @proxies = URI.open(ENV["PROXIES_API_URL"]).read.split(/\r\n/).map { |proxy| "http://#{proxy}" }
+      def initialize(proxies)
+        @proxies = proxies
         @proxy_index = -1
       end
 
@@ -54,12 +53,12 @@ module InstagramScraper
       end
     end
 
-    def initialize(options = {})
+    def initialize(options, proxies)
       @keywords = options[:keywords] || []
       @min_likes = options[:min_likes] || 500
       @start_date = options[:start_date] || Date.new(2018, 1, 1)
       @end_date = options[:end_date] || Date.today
-      @http_proxy = HTTPProxy.new
+      @http_proxy = HTTPProxy.new(proxies)
     end
 
     def scrape_brand_info(brand)

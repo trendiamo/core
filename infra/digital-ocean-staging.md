@@ -46,6 +46,15 @@ dokku run console-backend rails db:schema:load # fails before first deploy, firs
 # from your local machine, do the first deploy:
 bin/rails deploy-staging
 
+# To setup the instagram-scraper:
+
+dokku apps:create instagram-scraper
+dokku config:set instagram-scraper API_KEY=... PROXIES_API_URL=...
+dokku domains:add instagram-scraper scraper.uptous.co
+dokku ps:scale instagram-scraper web=1
+# from your local machine, deploy with:
+bin/deploy
+
 # To setup .env files
 
 mkdir -p /var/dotenv/admin
@@ -57,7 +66,7 @@ vi the .env files inside each folder
 # To install certificates
 
 service nginx stop
-certbot certonly --standalone --preferred-challenges http -d api.pimppls.com -d api-staging.uptous.co -d admin.pimppls.com -d pimppls.com -d www.pimppls.com -d app-staging.uptous.co
+certbot certonly --standalone --preferred-challenges http -d api.pimppls.com -d api-staging.uptous.co -d admin.pimppls.com -d pimppls.com -d www.pimppls.com -d app-staging.uptous.co -d scraper.uptous.co
 service nginx start
 
 mkdir keycert
@@ -65,6 +74,7 @@ cp /etc/letsencrypt/live/api.pimppls.com/fullchain.pem keycert/certificate.crt
 cp /etc/letsencrypt/live/api.pimppls.com/privkey.pem keycert/key.key
 tar -cvf keycert.tar keycert
 cat keycert.tar | dokku certs:add console-backend
+cat keycert.tar | dokku certs:add instagram-scraper
 rm keycert.tar keycert/certificate.crt keycert/key.key
 rmdir keycert
 
