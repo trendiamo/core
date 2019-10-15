@@ -2,7 +2,7 @@
 
 This is our Instagram scraper, a simple Ruby application built using the `open-uri` module and a set of proxies, necessary to bypass Instagram's rate limit.
 
-The scraper can be used with a CLI and a web API, built with [Sinatra](http://sinatrarb.com/).
+The scraper can be used with a CLI or a [Sinatra](http://sinatrarb.com/)-based API.
 
 ## Setup
 
@@ -10,20 +10,6 @@ You'll need to create your `.env` file and specify a `PROXIES_URL` to scrape pro
 
 ```sh
 bundle
-```
-
-## Ruby
-
-Import the scraper in your Ruby file. You will have access to the methods `scrape_brand_info(brand)` and `scrape_brand_posts(brand, options)`:
-
-```ruby
-brand_info = scrape_brand_info("nike") # => {:id=>"13460080", :name=>"nike", :username=>"nike", :url=>"https://www.instagram.com/nike"}
-
-options = {
-  min_likes: 10_000,
-  keywords: "fashion,influencer,blogger",
-}
-posts = scrape_brand_posts("nike", options) # => array of posts
 ```
 
 ## CLI
@@ -36,7 +22,7 @@ bin/instagram-scraper [options]
 
 ### Usage
 
-Print the usage message in your terminal with
+Print the usage message in your terminal with:
 
 ```sh
 bin/instagram-scraper -h
@@ -44,12 +30,28 @@ bin/instagram-scraper -h
 
 ## API
 
+The API is available at `scraper.uptous.co`.
+
 ### Run locally
 
-Start a server with
+Start a server with:
 
 ```sh
-rackup config.ru
+foreman start
+```
+
+### Deploy
+
+To be able to deploy run:
+
+```sh
+git remote add dokku-scraper dokku@167.71.50.172:instagram-scraper
+```
+
+Deploy with:
+
+```
+bin/deploy
 ```
 
 ### Endpoints

@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
+require "dotenv/load"
+require "open-uri"
 require_relative "../lib/scraper"
 
-scraper = InstagramScraper::CLI.new(ARGV)
+proxies = URI.open(ENV["PROXIES_API_URL"]).read.split(/\r\n/).map { |proxy| "http://#{proxy}" }
+scraper = InstagramScraper::CLI.new(ARGV, proxies)
 scraper.run

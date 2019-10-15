@@ -1,4 +1,5 @@
 require "json"
+require "open-uri"
 require "sinatra/base"
 require_relative "client"
 require_relative "csv_util"
@@ -9,10 +10,14 @@ module InstagramScraper
       set :show_exceptions, false
     end
 
+    configure :development do
+      require "dotenv/load"
+    end
+
     get "/" do
       @errors = []
       @options = parse_params(params)
-      @client = Client.new(@options)
+      initialize_scraper
       validate_options
       return render_errors unless @errors.empty?
 
@@ -26,6 +31,11 @@ module InstagramScraper
     end
 
     private
+
+    def initialize_scraper
+      proxies = URI.open(ENV["PROXIES_API_URL"]).read.split(/\r\n/).map { |proxy| "http://#{proxy}" }
+      @client = Client.new(@options, proxies)
+    end
 
     def scrape_posts
       @options[:brands].reduce([]) do |posts, brand|
@@ -59,7 +69,8 @@ module InstagramScraper
     end
 
     def validate_options
-      add_error("Invalid API key") unless request.env["HTTP_AUTHORIZATION"] == ENV["API_KEY"]
+      return add_error("Invalid API key") unless request.env["HTTP_AUTHORIZATION"] == ENV["API_KEY"]
+
       add_error("You must specify at least one brand") unless @options[:brands]&.any?
       return unless @options[:start_date] && @options[:end_date] && @options[:start_date] > @options[:end_date]
 
