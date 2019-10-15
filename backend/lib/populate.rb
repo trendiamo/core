@@ -207,7 +207,7 @@ class PopulateUsers
     ]
   end
 
-  def user_format(team_member) # rubocop:disable Metrics/MethodLength
+  def user_format(team_member) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     {
       email: "#{team_member[:email]}@trendiamo.com",
       first_name: team_member[:name].split(" ")[0],
@@ -219,6 +219,7 @@ class PopulateUsers
       bio: team_member[:bio],
       img_url: team_member[:img_url],
       created_at: Date.new(2019, 1, 1),
+      accepted_terms_and_conditions_at: team_member[:affiliate_role] && Time.now.utc,
     }
   end
 

@@ -19,7 +19,9 @@ module Api
       end
 
       def update
-        if current_user.update(user_params)
+        update_params = user_params
+        filter_update_params(update_params)
+        if current_user.update(update_params)
           render json: current_user
         else
           errors = current_user.errors.full_messages.map { |string| { title: string } }
@@ -28,7 +30,9 @@ module Api
       end
 
       def update_details
-        if current_user.update(user_params)
+        update_params = user_params
+        filter_update_params(update_params)
+        if current_user.update(update_params)
           render json: current_user, details: true
         else
           errors = current_user.errors.full_messages.map { |string| { title: string } }
@@ -59,7 +63,20 @@ module Api
       def user_params
         params.require(:user).permit(:first_name, :last_name, :currency, :social_media_url, :bio, :img_url,
                                      :shipping_first_name, :shipping_last_name, :address_line1, :address_line2,
-                                     :zip_code, :city, :country, img_rect: %i[x y width height])
+                                     :accepts_terms_and_conditions, :zip_code, :city, :referred_by_code,
+                                     :country, img_rect: %i[x y width height])
+      end
+
+      def filter_update_params(params)
+        if current_user.accepted_terms_and_conditions_at || current_user.referred_by_code
+          params.delete(:referred_by_code)
+        end
+        return unless params[:accepts_terms_and_conditions]
+
+        params.delete(:accepts_terms_and_conditions)
+        return if current_user.not_affiliate? || current_user.accepted_terms_and_conditions_at
+
+        params[:accepted_terms_and_conditions_at] = Time.now.utc
       end
     end
   end
