@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
-import { Checkbox, Field, Fieldset } from 'shared/form-elements'
+import { Field, Fieldset } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const StyledDoneIcon = styled(DoneIcon)`
@@ -43,7 +43,6 @@ const AffiliateSignup = () => {
         email: '',
         password: '',
         passwordConfirmation: '',
-        acceptsTermsAndConditions: false,
       },
       isFormSubmitting: false,
       isFormSubmitted: false,
@@ -66,13 +65,6 @@ const AffiliateSignup = () => {
       }
     },
     [setFieldValue, state.form.password, state.form.passwordConfirmation]
-  )
-
-  const toggleAcceptsTermsAndConditions = useCallback(
-    value => {
-      mergeForm({ acceptsTermsAndConditions: value })
-    },
-    [mergeForm]
   )
 
   const onSubmit = useCallback(
@@ -112,12 +104,6 @@ const AffiliateSignup = () => {
             />
             <Field label="Last Name" name="lastName" onChange={setFieldValue} required value={state.form.lastName} />
             <Field
-              label="Referral Code (optional)"
-              name="referredByCode"
-              onChange={setFieldValue}
-              value={state.form.referredByCode}
-            />
-            <Field
               autoComplete="email"
               label="E-mail"
               name="email"
@@ -143,28 +129,6 @@ const AffiliateSignup = () => {
               type="password"
               value={state.form.passwordConfirmation}
             />
-            <Checkbox
-              label={
-                <p>
-                  {'I accept the '}
-                  <Link href={routes.termsAndConditions()} rel="noopener noreferrer" target="_blank">
-                    {'Terms and Conditions'}
-                  </Link>
-                  {', '}
-                  <Link href={routes.privacyPolicy()} rel="noopener noreferrer" target="_blank">
-                    {'Privacy Policy'}
-                  </Link>
-                  {' and the '}
-                  <Link href={routes.cookiePolicy()} rel="noopener noreferrer" target="_blank">
-                    {'Cookie Policy'}
-                  </Link>
-                  {'.'}
-                </p>
-              }
-              onChange={toggleAcceptsTermsAndConditions}
-              required
-              value={state.form.acceptsTermsAndConditions}
-            />
             <AuthFormFooter>
               <Button
                 color="primaryGradient"
@@ -173,7 +137,7 @@ const AffiliateSignup = () => {
                 type="submit"
                 variant="contained"
               >
-                {'Signup'}
+                {'Next'}
               </Button>
               <p>
                 {'Already have an account? '}

@@ -99,9 +99,7 @@ module Api
           if params[:user][:affiliate_role]
             return {
               affiliate_role: "promoter",
-              referred_by_code: params[:user][:referred_by_code],
               social_media_url: params[:user][:social_media_url],
-              accepted_terms_and_conditions_at: params[:user][:accepts_terms_and_conditions] && Time.now.utc,
             }
           end
 
