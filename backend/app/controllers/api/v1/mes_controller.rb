@@ -19,9 +19,7 @@ module Api
       end
 
       def update
-        update_params = user_params
-        filter_update_params(update_params)
-        if current_user.update(update_params)
+        if current_user.update(user_params)
           render json: current_user
         else
           errors = current_user.errors.full_messages.map { |string| { title: string } }
@@ -30,9 +28,7 @@ module Api
       end
 
       def update_details
-        update_params = user_params
-        filter_update_params(update_params)
-        if current_user.update(update_params)
+        if current_user.update(user_params)
           render json: current_user, details: true
         else
           errors = current_user.errors.full_messages.map { |string| { title: string } }
@@ -60,23 +56,20 @@ module Api
 
       private
 
-      def user_params
-        params.require(:user).permit(:first_name, :last_name, :currency, :social_media_url, :bio, :img_url,
-                                     :shipping_first_name, :shipping_last_name, :address_line1, :address_line2,
-                                     :accepts_terms_and_conditions, :zip_code, :city, :referred_by_code,
-                                     :country, img_rect: %i[x y width height])
-      end
+      def user_params # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        result = params.require(:user)
+                       .permit(:first_name, :last_name, :currency, :social_media_url, :bio, :img_url,
+                               :shipping_first_name, :shipping_last_name, :address_line1, :address_line2,
+                               :referred_by_code, :zip_code, :city, :country, img_rect: %i[x y width height])
 
-      def filter_update_params(params)
-        if current_user.accepted_terms_and_conditions_at || current_user.referred_by_code
-          params.delete(:referred_by_code)
+        if params[:user][:accepts_terms_and_conditions] && !current_user.not_affiliate? &&
+           !current_user.accepted_terms_and_conditions_at
+          result[:accepted_terms_and_conditions_at] = Time.now.utc
         end
-        return unless params[:accepts_terms_and_conditions]
-
-        params.delete(:accepts_terms_and_conditions)
-        return if current_user.not_affiliate? || current_user.accepted_terms_and_conditions_at
-
-        params[:accepted_terms_and_conditions_at] = Time.now.utc
+        if current_user.accepted_terms_and_conditions_at || current_user.referred_by_code
+          result.delete(:referred_by_code)
+        end
+        result
       end
     end
   end
