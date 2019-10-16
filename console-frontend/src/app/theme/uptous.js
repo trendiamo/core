@@ -134,6 +134,20 @@ const buttons = {
       boxShadow: 'none',
     },
   },
+  oAuthPrimary: {
+    background: '#fff',
+    color: '#272932',
+    borderRadius: 0,
+    border: '2px solid #c3c3c3',
+    boxShadow: 'none',
+    hover: {
+      background: '#fff',
+      color: '#272932',
+      borderRadius: 0,
+      border: '2px solid #c3c3c3',
+      boxShadow: 'none',
+    },
+  },
   white: {
     background: '#e7ecef',
     color: '#0f7173',
