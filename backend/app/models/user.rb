@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :validatable, :omniauthable,
+         omniauth_providers: [:google_oauth2]
 
   enum affiliate_role: %i[not_affiliate promoter seller]
 
@@ -81,5 +82,16 @@ class User < ApplicationRecord
   def self.generate_readable_random_code(size = 9)
     charset = %w[2 3 4 6 7 9 A C D E F G H J K M N P Q R T V W X Y Z]
     (0...size).map { charset.to_a[SecureRandom.random_number(charset.length)] }.join
+  end
+
+  def self.from_omniauth(auth) # rubocop:disable Metrics/AbcSize
+    where(email: auth.info.email).first_or_create! do |user|
+      user.password = Devise.friendly_token[0, 20]
+      user.confirmed_at = Time.now.utc
+      user.first_name = auth.info.first_name
+      user.last_name = auth.info.last_name
+      user.img_url = auth.info.image
+      user.affiliate_role = 1
+    end
   end
 end

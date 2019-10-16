@@ -33,6 +33,14 @@ const buttons = {
       color: '#fff',
     },
   },
+  oAuthPrimary: {
+    background: '#fff',
+    color: '#3a3a3a',
+    hover: {
+      background: '#fff',
+      color: '#3a3a3a',
+    },
+  },
   white: {
     background: '#fff',
     hover: {

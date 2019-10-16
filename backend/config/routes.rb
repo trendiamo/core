@@ -3,7 +3,8 @@ require "resque/server"
 Rails.application.routes.draw do
   mount Resque::Server, at: "/jobs" if Rails.env.development?
 
-  devise_for :users, only: []
+  devise_for :users, only: %i[omniauth_callbacks],
+  controllers: { omniauth_callbacks: 'api/v1/users/omniauth_callbacks' }, path: "api/v1/users"
   post "/graphql", to: "graphql#execute"
 
   defaults format: :json do

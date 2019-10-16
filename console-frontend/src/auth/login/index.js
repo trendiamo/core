@@ -2,14 +2,20 @@ import auth from 'auth'
 import AuthFormFooter from 'auth/form-footer'
 import AuthLayout from 'auth/layout'
 import Button from 'shared/button'
+import GoogleAuthButton from 'shared/google/auth-button'
 import Link from 'shared/link'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useEffect, useState } from 'react'
 import routes from 'app/routes'
+import styled from 'styled-components'
 import { apiRequest, apiSignIn, showUpToUsBranding } from 'utils'
-import { Field, Fieldset } from 'shared/form-elements'
+import { Divider, Field, Fieldset } from 'shared/form-elements'
 import { Typography } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
+
+const StyledDivider = styled(Divider)`
+  margin: 30px 0 12px;
+`
 
 const Footer = ({ isSubmitting }) => (
   <AuthFormFooter>
@@ -42,6 +48,8 @@ const Footer = ({ isSubmitting }) => (
 
 const Login = ({ isSubmitting, loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout title={!showUpToUsBranding() && "Let's log you in!"}>
+    <GoogleAuthButton text="Sign in with Google" />
+    <StyledDivider color="dark" text="or" />
     <form onSubmit={loginSubmit}>
       <Fieldset disabled={isSubmitting}>
         <Field
