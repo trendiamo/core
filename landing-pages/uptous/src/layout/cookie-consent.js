@@ -53,8 +53,7 @@ const buttonStyle = {
 }
 
 const cookieConsentStyle = {
-  borderTop: 'solid 1px rgba(255, 255, 255, 0.2)',
-  background: '#272a32',
+  background: '#1d1f25',
   color: 'white',
 }
 
