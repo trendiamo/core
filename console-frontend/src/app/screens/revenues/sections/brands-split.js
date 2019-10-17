@@ -1,20 +1,20 @@
 import omit from 'lodash.omit'
 import React, { useMemo } from 'react'
+import SimpleList from 'shared/table-elements/simple-list'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
-import { SimpleList } from 'shared/table-elements'
 
 const BrandsSplit = ({ orders, width }) => {
   const columns = isWidthUp('sm', width)
     ? [
-        { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
+        { id: 'logoUrl', label: 'Brand', width: '10%', variant: 'image' },
         { id: 'name', label: '', width: '60%' },
         { id: 'orders', label: 'Orders', width: '15%', align: 'right' },
-        { id: 'revenue', label: 'Revenue', width: '15%', align: 'right', font: 'bold' },
+        { id: 'revenue', label: 'Revenue', width: '15%', align: 'right', variant: 'h6' },
       ]
     : [
-        { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%', align: 'left' },
+        { id: 'logoUrl', label: 'Brand', width: '10%', align: 'left', variant: 'image' },
         { id: 'orders', label: 'Orders', width: '50%', align: 'right' },
-        { id: 'revenue', label: 'Revenue', width: '40%', align: 'right', font: 'bold' },
+        { id: 'revenue', label: 'Revenue', width: '40%', align: 'right', variant: 'h6' },
       ]
 
   const brandsSplit = useMemo(
@@ -44,7 +44,14 @@ const BrandsSplit = ({ orders, width }) => {
     [orders]
   )
 
-  return <SimpleList columns={columns} records={brandsSplit} />
+  return (
+    <SimpleList
+      columns={columns}
+      records={brandsSplit}
+      stickyHeader={isWidthUp('md', width)}
+      withPagination={isWidthUp('md', width)}
+    />
+  )
 }
 
 export default withWidth()(BrandsSplit)

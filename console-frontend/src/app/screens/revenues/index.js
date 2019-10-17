@@ -35,21 +35,17 @@ const GridContainer = styled(props => <Grid container {...props} />)`
 `
 
 const GridItem = styled(props => <Grid item {...props} />)`
-  min-height: 260px;
+  @media (min-width: 960px) and (min-height: 600px) {
+    height: 50%;
+
+    @media (min-height: 800px) {
+      height: ${({ md }) => (md === 6 ? '60' : '40')}%;
+    }
+  }
 `
 
-const Section = styled(({ children, ...props }) => (
-  <SectionBase {...props}>
-    <SectionInner>{children}</SectionInner>
-  </SectionBase>
-))`
-  min-height: 100%;
-`
-
-const SectionInner = styled.div`
-  flex-grow: 1;
-  height: inherit;
-  flex: 1;
+const Section = styled(SectionBase)`
+  height: 100%;
 `
 
 const calculateSellerAmount = (amount, rate) => ((amount * rate) / 100).toFixed(2)

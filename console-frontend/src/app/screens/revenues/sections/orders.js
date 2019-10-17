@@ -1,21 +1,21 @@
 import omit from 'lodash.omit'
 import React, { useMemo } from 'react'
+import SimpleList from 'shared/table-elements/simple-list'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
-import { SimpleList } from 'shared/table-elements'
 import * as dateFns from 'date-fns'
 
 const Orders = ({ orders, width }) => {
   const columns = isWidthUp('sm', width)
     ? [
-        { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
+        { id: 'logoUrl', label: 'Brand', width: '10%', variant: 'image' },
         { id: 'products', label: 'Products', width: '40%' },
         { id: 'time', label: 'Date', width: '35%', align: 'right' },
-        { id: 'revenue', label: 'Revenue', width: '15%', align: 'right', font: 'bold' },
+        { id: 'revenue', label: 'Revenue', width: '15%', align: 'right', variant: 'h6' },
       ]
     : [
-        { id: 'logoUrl', label: 'Brand', type: 'image', width: '10%' },
+        { id: 'logoUrl', label: 'Brand', width: '10%', variant: 'image' },
         { id: 'time', label: 'Date', width: '50%', align: 'right' },
-        { id: 'revenue', label: 'Revenue', width: '40%', align: 'right', font: 'bold' },
+        { id: 'revenue', label: 'Revenue', width: '40%', align: 'right', variant: 'h6' },
       ]
 
   const filteredOrders = useMemo(
@@ -38,7 +38,14 @@ const Orders = ({ orders, width }) => {
     [orders]
   )
 
-  return <SimpleList columns={columns} records={filteredOrders} sticky />
+  return (
+    <SimpleList
+      columns={columns}
+      records={filteredOrders}
+      stickyHeader={isWidthUp('md', width)}
+      withPagination={isWidthUp('md', width)}
+    />
+  )
 }
 
 export default withWidth()(Orders)
