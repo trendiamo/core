@@ -1,12 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import styled from 'styled-components'
 import { addDays, format, isPast } from 'date-fns'
 import { Line } from 'react-chartjs-2'
-
-const ChartContainer = styled.div`
-  height: 110%;
-  padding-top: 0.5rem;
-`
 
 const createChartGradient = ctx => {
   const gradient = ctx.createLinearGradient(150, 0, 150, 300)
@@ -105,11 +99,7 @@ const Activity = ({ dates, orders }) => {
     [orders, revenues]
   )
 
-  return (
-    <ChartContainer>
-      <Line data={chartData} options={options} ref={chartRef} />
-    </ChartContainer>
-  )
+  return <Line data={chartData} options={options} ref={chartRef} />
 }
 
 export default Activity

@@ -7,16 +7,11 @@ import * as dateFns from 'date-fns'
 
 const Container = styled.div`
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-`
-
-const RevenueContainer = styled.div`
-  flex-grow: 1;
+  padding: 0.5rem 0.5rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
 `
 
 const Revenue = styled.h1`
@@ -31,7 +26,6 @@ const PreviousPaymentMessage = styled(Typography)`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 12px;
 `
 
 const NextPaymentMessage = styled(Typography)`
@@ -39,6 +33,7 @@ const NextPaymentMessage = styled(Typography)`
 `
 
 const StripeNote = styled(Typography)`
+  font-size: 14px;
   margin-top: 0.8rem;
   margin-bottom: 0.8rem;
 `
@@ -63,25 +58,29 @@ const MonthlyRevenue = ({ dates, orders, hasStripeAccount }) => {
 
   return (
     <Container>
-      <RevenueContainer>
-        <Revenue>{revenue}</Revenue>
-        {hasStripeAccount ? (
-          dateFns.isPast(paymentDate) ? (
+      <Revenue>{revenue}</Revenue>
+      {hasStripeAccount ? (
+        <>
+          {dateFns.isPast(paymentDate) ? (
             <PreviousPaymentMessage variant="h6">
-              <StyledCheckCircle />
+              <StyledCheckCircle height="16" width="16" />
               {`Was paid out on ${dateFns.format(paymentDate, 'MMM do')}`}
             </PreviousPaymentMessage>
           ) : (
             <NextPaymentMessage variant="h6">
               {`Will be paid out on ${dateFns.format(paymentDate, 'MMM do')}`}
             </NextPaymentMessage>
-          )
-        ) : null}
-      </RevenueContainer>
-      <StripeNote>{'Revenues and prices displayed may slightly vary based on currency exchange rates'}</StripeNote>
-      <StripeButton color={hasStripeAccount ? 'whiteBg' : 'primaryGradient'} hasStripeAccount={hasStripeAccount} />
-      {!hasStripeAccount && (
-        <StripeNote variant="body2">{'To receive your payouts connect your Stripe account!'}</StripeNote>
+          )}
+          <StripeNote variant="caption">
+            {'Revenues and prices displayed may slightly vary based on currency exchange rates'}
+          </StripeNote>
+          <StripeButton color="whiteBg" hasStripeAccount />
+        </>
+      ) : (
+        <>
+          <StripeNote variant="caption">{'To receive your payouts connect your Stripe account!'}</StripeNote>
+          <StripeButton color="primaryGradient" hasStripeAccount={hasStripeAccount} />
+        </>
       )}
     </Container>
   )
