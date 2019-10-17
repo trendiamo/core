@@ -24,7 +24,11 @@ const SideContent = () => (
 )
 
 const WelcomePage = () => {
-  const [form, setForm] = useState({ socialMediaUrl: '', referredByCode: '', acceptsTermsAndConditions: false })
+  const [form, setForm] = useState({
+    socialMediaUrl: '',
+    referredByCode: window.localStorage.getItem('signup-aftk') || '',
+    acceptsTermsAndConditions: false,
+  })
   const [isFormSubmitting, setIsFormSubmitting] = useState(false)
 
   const { enqueueSnackbar } = useSnackbar()

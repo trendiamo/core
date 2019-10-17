@@ -9,6 +9,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
 import { Field, Fieldset } from 'shared/form-elements'
+import { parse } from 'query-string'
 import { useSnackbar } from 'notistack'
 
 const StyledDoneIcon = styled(DoneIcon)`
@@ -54,6 +55,11 @@ const AffiliateSignup = () => {
   const setFormSubmitted = useCallback(value => dispatch({ type: 'setFormSubmitted', value }), [dispatch])
 
   const setFieldValue = useCallback(event => mergeForm({ [event.target.name]: event.target.value }), [mergeForm])
+
+  useEffect(() => {
+    const { aftk } = parse(window.location.search)
+    if (aftk) window.localStorage.setItem('signup-aftk', aftk)
+  }, [])
 
   useEffect(
     () => {
