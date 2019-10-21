@@ -70,7 +70,11 @@ const processPreviewOpt = () => {
 }
 
 const maybeTrackVisitedPage = () => {
-  if (location.hostname === 'villadonatello.com' || location.hostname === 'grafik-werkstatt.de') {
+  if (
+    location.hostname === 'villadonatello.com' ||
+    location.hostname === 'grafik-werkstatt.de' ||
+    location.hostname === 'www.lcw.com'
+  ) {
     return
   } else if (location.hostname === 'www.mymuesli.com') {
     if (Object.keys(mymuesliUrls).indexOf(location.pathname) === -1) {
