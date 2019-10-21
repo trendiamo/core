@@ -20,14 +20,14 @@ const Main = styled.main`
   flex-direction: column;
 `
 
-const Layout = ({ children, data, light }) => (
+const Layout = ({ children, data, light, whiteLogo }) => (
   <Main>
     <Seo />
     <Helmet>
       <link href={favicon} rel="shortcut icon" type="image/png" />
       <meta name="hbspt-locale" value="en" />
     </Helmet>
-    {!light && <Header />}
+    {!light && <Header headerLinks={[{ target: '/pledge', text: 'Pledge' }]} whiteLogo={whiteLogo} />}
     {children}
     {!light && <Footer />}
     {data && <ModalContents data={data} />}

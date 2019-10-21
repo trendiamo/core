@@ -6,8 +6,6 @@ import Container from '../components/container'
 import Header from '../components/header'
 import Section from '../components/section'
 
-import 'aos/dist/aos.css'
-
 const HeaderContainer = styled.div``
 const Goals = styled.div``
 const Goal = styled.div``
