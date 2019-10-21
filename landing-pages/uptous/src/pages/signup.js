@@ -26,12 +26,18 @@ const onBrandClick = () => {
   })
 }
 
+const StyledLink = styled(Link)`
+  display: block;
+  margin-bottom: 1rem;
+`
+
 const SignupPage = styled(({ className, data }) => (
   <Layout data={{ legalNotice: data.legalNotice.text, privacyPolicy: data.privacyPolicy.text }} light>
     <Seo title="Uptous - Signup" />
     <FlexDiv className={className}>
       <MainContainer>
         <MainInnerContainer>
+          <StyledLink to="/">{'Home'}</StyledLink>
           <LogoLink to="/">
             <LogoBlack alt="Uptous - We help you spread your impact" />
           </LogoLink>
