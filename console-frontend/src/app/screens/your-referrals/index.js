@@ -3,6 +3,7 @@ import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
 import Paper from 'shared/paper'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import SharingButtons from './sharing-buttons'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import UserAvatar from 'shared/user-avatar'
@@ -127,6 +128,7 @@ const YourReferrals = () => {
               {'Your referral code'}
             </CalloutTitle>
             <StyledClipboardInput onCopy={onCopyReferralCode} text={referralCode} type="golden" />
+            <SharingButtons referralCode={referralCode} />
           </Callout>
         </MainCard>
       </Grid>
