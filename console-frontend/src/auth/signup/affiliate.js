@@ -9,7 +9,7 @@ import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { apiRequest, apiSignUp } from 'utils'
-import { Divider, Field, Fieldset } from 'shared/form-elements'
+import { Field, Fieldset } from 'shared/form-elements'
 import { parse } from 'query-string'
 import { useSnackbar } from 'notistack'
 
@@ -17,10 +17,6 @@ const StyledDoneIcon = styled(DoneIcon)`
   color: #15c29d;
   width: 100%;
   height: 8rem;
-`
-
-const StyledDivider = styled(Divider)`
-  margin: 30px 0 12px;
 `
 
 const AffiliateSignup = () => {
@@ -105,7 +101,6 @@ const AffiliateSignup = () => {
       ) : (
         <>
           <GoogleAuthButton text="Sign up with Google" />
-          <StyledDivider color="dark" text="or" />
           <form onSubmit={onSubmit}>
             <Fieldset disabled={state.isFormSubmitting}>
               <Field
