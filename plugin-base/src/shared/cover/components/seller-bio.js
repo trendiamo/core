@@ -26,8 +26,8 @@ const SellerBio = ({ text, typingText }) => {
 
   return (
     <SellerBioContainer>
-      <SellerBioHelper>{text}</SellerBioHelper>
-      <SellerBioTyping theme={theme}>{typingText}</SellerBioTyping>
+      <SellerBioHelper dangerouslySetInnerHTML={{ __html: text }} />
+      <SellerBioTyping dangerouslySetInnerHTML={{ __html: typingText }} theme={theme} />
     </SellerBioContainer>
   )
 }
