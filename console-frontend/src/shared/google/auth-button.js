@@ -4,6 +4,7 @@ import Link from 'shared/link'
 import React from 'react'
 import styled from 'styled-components'
 import { BASE_API_URL } from 'utils/shared'
+import { Divider } from 'shared/form-elements'
 import { showUpToUsBranding } from 'utils'
 
 const oAuthUrl = `${BASE_API_URL}/users/auth/google_oauth2`
@@ -18,16 +19,25 @@ const Container = styled.div`
   justify-content: center;
 `
 
+const StyledDivider = styled(Divider)`
+  margin: 30px 0 12px;
+`
+
 const GoogleAuthButton = ({ text }) => {
+  if (window.location.hostname === 'app.uptous.co') return null
+
   return (
-    <Container>
-      <Link href={oAuthUrl}>
-        <Button color="oAuthPrimary" size="medium" variant="contained">
-          <GoogleLogo src={googleLogoImage} />
-          {text}
-        </Button>
-      </Link>
-    </Container>
+    <>
+      <Container>
+        <Link href={oAuthUrl}>
+          <Button color="oAuthPrimary" size="medium" variant="contained">
+            <GoogleLogo src={googleLogoImage} />
+            {text}
+          </Button>
+        </Link>
+      </Container>
+      <StyledDivider color="dark" text="or" />
+    </>
   )
 }
 
