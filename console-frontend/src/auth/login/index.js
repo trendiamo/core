@@ -43,7 +43,7 @@ const Footer = ({ isSubmitting }) => (
 
 const Login = ({ isSubmitting, loginForm, loginSubmit, setLoginValue }) => (
   <AuthLayout title={!showUpToUsBranding() && "Let's log you in!"}>
-    <GoogleAuthButton text="Sign in with Google" />
+    {showUpToUsBranding() && <GoogleAuthButton text="Sign in with Google" />}
     <form onSubmit={loginSubmit}>
       <Fieldset disabled={isSubmitting}>
         <Field
