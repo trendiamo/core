@@ -7,6 +7,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import { apiMeUpdate, apiRequest } from 'utils'
+import { BASE_API_URL } from 'utils/shared'
 import { Checkbox, Field, Form } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
@@ -22,6 +23,8 @@ const SideContent = () => (
     <p>{'Provide information about your social media accounts so we can connect you with brands that fit you best.'}</p>
   </>
 )
+
+const oAuthUrl = `${BASE_API_URL}/users/auth/google_oauth2?youtube=true`
 
 const WelcomePage = () => {
   const [form, setForm] = useState({
@@ -74,6 +77,11 @@ const WelcomePage = () => {
           required
           value={form.socialMediaUrl}
         />
+        <Link href={oAuthUrl}>
+          <Button color="oAuthPrimary" size="medium" variant="contained">
+            {'YOUTUBE'}
+          </Button>
+        </Link>
         <Field
           label="Referral Code (optional)"
           name="referredByCode"
