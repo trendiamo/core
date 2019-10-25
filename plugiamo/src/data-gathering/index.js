@@ -1,6 +1,7 @@
 import baldessariniDataGathering from './baldessarini'
 import buttwrapDataGathering from './buttwrap'
 import impressorajatoDataGathering from './impressorajato'
+import lcwaikikiDataGathering from './lcwaikiki'
 import mymuesliDataGathering from './mymuesli'
 import pamplingDataGathering from './pampling'
 import pierrecardinDataGathering from './pierre-cardin'
@@ -21,6 +22,7 @@ const dataGatheringFactory = {
   'timeblock-europe.com': timeBlockDataGathering, // woocommerce
   'tontonetfils.fr': tontonetfilsDataGathering, // shopify
   'www.mymuesli.com': mymuesliDataGathering, // custom?
+  'www.lcw.com': lcwaikikiDataGathering, // hybris
 }
 
 const dataGathering = dataGatheringFactory[window.location.hostname]
