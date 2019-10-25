@@ -17,37 +17,32 @@ const Text = styled.div``
 
 const goals = [
   {
-    index: '01',
+    index: '03',
     title: 'Our values',
     text:
       'We believe in a world in which everyone feels empowered to drive positive change and where sharing improves results exponentially. We are working for a world where the United Nations Sustainable Development Goals are achieved together, so that we can look forward to a bright future.',
   },
   {
-    index: '02',
     title: 'Transparency',
     text:
       'No green washing. We believe that being transparent about how products are produced and businesses are run is the key for trustworthy collaborations and customer relationships.',
   },
   {
-    index: '03',
     title: 'Authenticity',
     text:
       'We believe authentic and relevant content created with passion and trust is the best way to get across the messages and stories of sustainable businesses.',
   },
   {
-    index: '04',
     title: 'Progress through teamwork',
     text:
       'We believe that making sustainable businesses the leading businesses of tomorrow is only achievable through the combined power of individuals supporting it together.',
   },
   {
-    index: '05',
     title: 'Inclusiveness',
     text:
       'We believe in open conversations, exchange of knowledge and the discussion of topics between reflective individuals and other parties without excluding anyone.',
   },
   {
-    index: '06',
     title: 'Positivity',
     text:
       'We believe in a positive mindset and learning from each other to discuss how we can progress together every day, step by step. There are no barriers, anyone can participate no matter of the individual level of knowledge and sustainability.',
@@ -71,7 +66,7 @@ const Values = styled(({ className }) => {
               data-aos-easing="ease-in-out"
               data-aos-mirror="true"
               data-aos-once="false"
-              key={goal.index}
+              key={goal.title}
             >
               <IndexAndTitle>
                 {goal.index && <Index>{goal.index}</Index>}
