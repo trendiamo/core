@@ -15,7 +15,7 @@ const Podcast = styled(({ className }) => (
           'An inclusive platform giving sustainable businesses the spotlight they need. Everyone has access. Everyone can participate. Together we achieve the United Nations Sustainable Development Goals through a fair and more sustainable way of doing business.'
         }
       </p>
-      <Button big color="#272a32" onClick={onDiscoverClick}>
+      <Button big color="#272a32" onClick={onDiscoverClick} wrap>
         {'Discover our podcast'}
       </Button>
       <iframe
@@ -35,11 +35,13 @@ const Podcast = styled(({ className }) => (
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
   }
   ${Button} {
     display: flex;
     max-width: 20rem;
     margin-bottom: 1rem;
+    align-items: center;
     span {
       padding-left: 12px;
       padding-right: 12px;
