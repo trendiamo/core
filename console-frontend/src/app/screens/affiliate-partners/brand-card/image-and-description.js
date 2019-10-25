@@ -86,7 +86,7 @@ const Description = ({ brand }) => (
     <TagsContainer>
       <ShippingTo variant="subtitle1">{'Available in:'}</ShippingTo>
       <Tags>
-        {brand.tags.split(',').map(tag => (
+        {brand.availableLocations.split(',').map(tag => (
           <Tag key={tag} label={tag} size="small" />
         ))}
       </Tags>
