@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import { graphql, Link } from 'gatsby'
-
 import Button from '../components/button'
 import Layout from '../layout'
+import LeftArrowIcon from '../images/left-arrow.svg'
 import LogoBlack from '../images/logo-black.svg'
+import React, { useEffect } from 'react'
 import Seo from '../layout/seo'
+import styled from 'styled-components'
+import { graphql, Link } from 'gatsby'
 
 const FlexDiv = styled.div``
 const MainContainer = styled.div``
@@ -29,36 +29,63 @@ const onBrandClick = () => {
 const StyledLink = styled(Link)`
   display: block;
   margin-bottom: 1rem;
+  text-decoration: none;
+  color: #333;
+  font-size: 26px;
+  span {
+    vertical-align: middle;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  svg {
+    width: 26px;
+    height: 26px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  margin-bottom: 50px;
 `
 
-const SignupPage = styled(({ className, data }) => (
-  <Layout data={{ legalNotice: data.legalNotice.text, privacyPolicy: data.privacyPolicy.text }} light>
-    <Seo title="Uptous - Signup" />
-    <FlexDiv className={className}>
-      <MainContainer>
-        <MainInnerContainer>
-          <StyledLink to="/">{'Home'}</StyledLink>
+const SignupPage = styled(({ className, data }) => {
+  useEffect(() => {
+    if (window.location.hash !== '#brand') return
+    onBrandClick()
+  }, [])
+
+  return (
+    <Layout data={{ legalNotice: data.legalNotice.text, privacyPolicy: data.privacyPolicy.text }} light>
+      <Seo title="Uptous - Signup" />
+      <FlexDiv className={className}>
+        <MainContainer>
+          <MainInnerContainer>
+            <StyledLink to="/">
+              <LeftArrowIcon />
+              <span>{'Home'}</span>
+            </StyledLink>
+            <LogoLink to="/">
+              <LogoBlack alt="Uptous - We help you spread your impact" />
+            </LogoLink>
+            <div className="js-hide-on-brand-signup-form">
+              <h1>{'Start spreading your positive impact!'}</h1>
+              <Button onClick={onBrandClick}>{'I am a brand'}</Button>
+              <Button onClick={onInfluencerClick}>{'I am an influencer'}</Button>
+            </div>
+            <div className="brand-signup-form" />
+          </MainInnerContainer>
+        </MainContainer>
+        <SideContainer>
           <LogoLink to="/">
             <LogoBlack alt="Uptous - We help you spread your impact" />
           </LogoLink>
-          <div className="js-hide-on-brand-signup-form">
-            <h1>{'Start spreading your positive impact!'}</h1>
-            <Button onClick={onBrandClick}>{'I am a brand'}</Button>
-            <Button onClick={onInfluencerClick}>{'I am an influencer'}</Button>
-          </div>
-          <div className="brand-signup-form" />
-        </MainInnerContainer>
-      </MainContainer>
-      <SideContainer>
-        <LogoLink to="/">
-          <LogoBlack alt="Uptous - We help you spread your impact" />
-        </LogoLink>
-        <h2>{'We spread positive impact'}</h2>
-        <p>{'Join the network that connects brands and impacters to create positive impact on a performance-basis.'}</p>
-      </SideContainer>
-    </FlexDiv>
-  </Layout>
-))`
+          <h2>{'We spread positive impact'}</h2>
+          <p>
+            {'Join the network that connects brands and impacters to create positive impact on a performance-basis.'}
+          </p>
+        </SideContainer>
+      </FlexDiv>
+    </Layout>
+  )
+})`
   display: flex;
   flex-direction: column-reverse;
   height: 100vh;

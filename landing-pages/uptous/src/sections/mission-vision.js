@@ -63,9 +63,8 @@ const OurGoals = styled(({ className }) => {
     </Section>
   )
 })`
-  min-height: 100vh;
-  padding-top: 0;
   flex-direction: column;
+  padding: 0 20px;
 
   ${Header} {
     margin-bottom: 0;
@@ -80,12 +79,9 @@ const OurGoals = styled(({ className }) => {
     flex-direction: column;
     justify-content: center;
   }
-  ${Goals} {
-    margin-top: 40px;
-  }
   ${Goal} {
-    margin-top: 6rem;
-    margin-bottom: 6rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
   }
   ${IndexAndTitle} {
     display: flex;

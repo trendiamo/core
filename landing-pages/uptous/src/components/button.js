@@ -16,8 +16,8 @@ const Button = styled(({ children, className, onClick }) => (
   outline: none;
   overflow: hidden;
   text-transform: uppercase;
-  white-space: nowrap;
-  height: 38px;
+  white-space: ${({ wrap }) => (wrap ? 'wrap' : 'nowrap')};
+  height: ${({ wrap }) => (wrap ? 'auto' : '38px')};
 
   /* keep it vertically centered */
   span {
