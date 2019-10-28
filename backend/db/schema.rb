@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191025143001) do
+ActiveRecord::Schema.define(version: 20191028152114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -311,6 +311,24 @@ ActiveRecord::Schema.define(version: 20191025143001) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.bigint "user_id"
+    t.bigint "brand_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_taggings_on_brand_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["user_id"], name: "index_taggings_on_user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "tag_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "triggers", force: :cascade do |t|
     t.integer "order"
     t.string "url_matchers", null: false, array: true
@@ -436,6 +454,9 @@ ActiveRecord::Schema.define(version: 20191025143001) do
   add_foreign_key "spotlights", "accounts"
   add_foreign_key "spotlights", "sellers"
   add_foreign_key "spotlights", "showcases"
+  add_foreign_key "taggings", "brands"
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "taggings", "users"
   add_foreign_key "triggers", "accounts"
   add_foreign_key "website_settings", "accounts"
   add_foreign_key "website_settings", "websites"

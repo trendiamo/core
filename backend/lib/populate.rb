@@ -263,6 +263,8 @@ class Populate # rubocop:disable Metrics/ClassLength
     create_accounts
     create_brands
     PopulateUsers.process
+    create_tags
+    create_taggings
     create_websites
     ActsAsTenant.default_tenant = Account.find_by(name: "Test Account")
     create_sellers
@@ -411,6 +413,37 @@ class Populate # rubocop:disable Metrics/ClassLength
   def create_orders
     Affiliation.all.map do |affiliation|
       20.times { Order.create!(order_params(affiliation)) }
+    end
+  end
+
+  def create_tags
+    product_categories = %w[automotive kids beauty fashion accessoires technology food health home cooking creativity
+                            work diy entertainment crafting outdoors sports yoga pet media travel finance organisations
+                            nutrition].freeze
+
+    positive_impact_areas = ["vegan", "cruelty free", "zero waste", "plastic free", "social equality", "no poverty",
+                             "mental health", "education", "environment", "community", "clean energy", "fair trade",
+                             "ocean", "recycling", "climate", "circular economy", "politics", "sexuality",
+                             "well-being",].freeze
+
+    product_categories.each { |category| Tag.create!(tag_type: "product_category", name: category) }
+    positive_impact_areas.each { |area| Tag.create!(tag_type: "positive_impact_area", name: area) }
+  end
+
+  def create_taggings # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    User.all.map do |user|
+      positive_impact_area_tags = Tag.where(tag_type: "positive_impact_area").sample(rand(1..3))
+      product_category_tags = Tag.where(tag_type: "product_category").sample(rand(1..3))
+      positive_impact_area_tags.concat(product_category_tags).each do |tag|
+        Tagging.create!(tag_id: tag.id, user_id: user.id)
+      end
+    end
+    Brand.all.map do |brand|
+      positive_impact_area_tags = Tag.where(tag_type: "positive_impact_area").sample(rand(1..3))
+      product_category_tags = Tag.where(tag_type: "product_category").sample(rand(1..3))
+      positive_impact_area_tags.concat(product_category_tags).each do |tag|
+        Tagging.create!(tag_id: tag.id, brand_id: brand.id)
+      end
     end
   end
 end
