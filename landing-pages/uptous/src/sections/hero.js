@@ -59,7 +59,7 @@ const Hero = styled(({ className, data }) => {
     text-transform: uppercase;
     position: absolute;
     top: -1.4em;
-    text-shadow: 0 0 20px #000;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     max-width: 420px;
   }
   ${Subheading} {
@@ -107,7 +107,6 @@ const Hero = styled(({ className, data }) => {
       padding-top: 160px;
     }
     ${Heading} {
-      text-shadow: none;
       top: unset;
       left: -1.88em;
       font-size: calc(20px + 4vw);
