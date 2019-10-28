@@ -12,6 +12,9 @@ class User < ApplicationRecord
   has_many :showcases, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
   has_many :simple_chats, dependent: :destroy, foreign_key: "owner_id", inverse_of: "owner"
 
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+
   has_many :memberships, dependent: :destroy
   has_many :accounts, through: :memberships
 
@@ -41,9 +44,14 @@ class User < ApplicationRecord
                         .slice("id", "email", "first_name", "last_name", "onboarding_stage", "admin", "img_rect",
                                "affiliate_role", "referral_code", "requested_upgrade_to_seller_at", "currency",
                                "social_media_url", "bio", "stripe_user_id", "created_at", "updated_at")
-                        .merge(name: name, img: { url: img_url })
+                        .merge(name: name, img: { url: img_url }, product_category_list: tag_list("product_category"),
+                               positive_impact_area_list: tag_list("positive_impact_area"))
     attributes_with_roles = admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
     options[:details] ? attributes_with_roles.merge(details_attributes) : attributes_with_roles
+  end
+
+  def tag_list(tag_type)
+    tags.where(tag_type: tag_type).map(&:name)
   end
 
   def memberships_empty_when_admin
