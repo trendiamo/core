@@ -6,6 +6,7 @@ import eoticaConfig from './eotica'
 import frekklsDemoConfig from './frekkls-demo'
 import grafikWerkstatt from './grafik-werkstatt'
 import impressoraJatoConfig from './impressora-jato'
+import lcwaikiki from './lcwaikiki'
 import mymuesli from './mymuesli'
 import pampling from './pampling'
 import pierreCardinConfig from './pierre-cardin'
@@ -59,6 +60,7 @@ const getFrekklsConfig = () => {
   if (location.hostname === 'timeblock-europe.com') return timeblock
   if (location.hostname === 'app.uptous.co') return uptousapp
   if (location.hostname === 'grafik-werkstatt.de') return grafikWerkstatt
+  if (location.hostname === 'www.lcw.com') return lcwaikiki
   return {}
 }
 
