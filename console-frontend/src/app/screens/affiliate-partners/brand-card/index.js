@@ -37,7 +37,7 @@ const Image = styled.img`
 `
 
 const MainContainer = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
