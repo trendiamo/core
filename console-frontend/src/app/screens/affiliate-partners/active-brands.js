@@ -2,6 +2,7 @@ import BrandCard from './brand-card'
 import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
+import VerticalGrid from './vertical-grid'
 import { ReactComponent as SeedingIcon } from 'assets/icons/seeding.svg'
 
 const BlankStateContainer = styled.div`
@@ -57,17 +58,21 @@ const ActiveBrands = ({
 
   if (affiliations.length === 0) return <BlankState animate={animate} />
 
-  return affiliations.map(affiliation => (
-    <BrandCard
-      affiliation={affiliation}
-      animate={animate}
-      brand={affiliation.brand}
-      key={affiliation.id}
-      setIsBrandModalOpen={setIsBrandModalOpen}
-      setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
-      setSelectedBrand={setSelectedBrand}
-    />
-  ))
+  return (
+    <VerticalGrid>
+      {affiliations.map(affiliation => (
+        <BrandCard
+          affiliation={affiliation}
+          animate={animate}
+          brand={affiliation.brand}
+          key={affiliation.id}
+          setIsBrandModalOpen={setIsBrandModalOpen}
+          setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
+          setSelectedBrand={setSelectedBrand}
+        />
+      ))}
+    </VerticalGrid>
+  )
 }
 
 export default ActiveBrands

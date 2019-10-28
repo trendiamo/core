@@ -51,21 +51,24 @@ const Section = ({
   return (
     <Paper className={className} elevation={4} foldable={foldable} {...props}>
       <Container>
-        {title && (
-          <>
-            <SectionTitle
-              actions={actions}
-              dragHandle={dragHandle}
-              ellipsize={ellipsizeTitle}
-              foldable={foldable}
-              folded={folded}
-              hideDragHandle={hideDragHandle}
-              title={title}
-              toggleFolded={toggleFolded}
-            />
-            {showDivider && <Divider folded={folded} />}
-          </>
-        )}
+        {title &&
+          (typeof title === 'string' ? (
+            <>
+              <SectionTitle
+                actions={actions}
+                dragHandle={dragHandle}
+                ellipsize={ellipsizeTitle}
+                foldable={foldable}
+                folded={folded}
+                hideDragHandle={hideDragHandle}
+                title={title}
+                toggleFolded={toggleFolded}
+              />
+              {showDivider && <Divider folded={folded} />}
+            </>
+          ) : (
+            title
+          ))}
         {foldable ? (
           <Collapse in={!folded} timeout="auto">
             <SectionContent foldable={foldable}>{children}</SectionContent>

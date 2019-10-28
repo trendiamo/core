@@ -3,7 +3,10 @@ import AvailableBrands from './available-brands'
 import BrandModal from './brand-modal'
 import BrandsComingSoon from './brands-coming-soon'
 import CustomLinkModal from './custom-link-modal'
-import React, { useEffect, useRef, useState } from 'react'
+import omit from 'lodash.omit'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import styled from 'styled-components'
+import Title from 'shared/main-title'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 
 const sectionTitles = {
@@ -11,6 +14,17 @@ const sectionTitles = {
   availableBrands: 'Brands you can work with',
   brandsComingSoon: 'Coming soon',
 }
+
+const StyledTitle = styled(props => <Title {...omit(props, ['animate', 'ref'])} />)`
+  margin: 20px 0;
+  transition: all 1s 0.1s;
+  ${({ animate }) =>
+    !animate &&
+    `
+    opacity: 0;
+    transform: translateY(10px);
+  `}
+`
 
 const appBarContent = ({ section }) => ({ title: sectionTitles[section] })
 
@@ -67,6 +81,8 @@ const List = ({
     [titleRefs]
   )
 
+  const brandsToShow = useMemo(() => brandsList.filter(brand => !brand.isPreview), [brandsList])
+
   return (
     <>
       <ActiveBrands
@@ -77,15 +93,22 @@ const List = ({
         setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
         setSelectedBrand={setSelectedBrand}
       />
+      {brandsToShow.length > 0 && (
+        <div ref={titleRefs.availableBrands}>
+          <StyledTitle animate={animate}>{sectionTitles.availableBrands}</StyledTitle>
+        </div>
+      )}
       <AvailableBrands
         animate={animate}
         brands={brandsList}
+        brandsToShow={brandsToShow}
         isLoading={isLoading}
         setIsBrandModalOpen={setIsBrandModalOpen}
         setSelectedBrand={setSelectedBrand}
-        title={sectionTitles.availableBrands}
-        titleRef={titleRefs.availableBrands}
       />
+      <div ref={titleRefs.brandsComingSoon}>
+        <StyledTitle animate={animate}>{sectionTitles.brandsComingSoon}</StyledTitle>
+      </div>
       <BrandsComingSoon
         animate={animate}
         brands={brandsList}
@@ -94,8 +117,6 @@ const List = ({
         removeInterest={removeInterest}
         setIsBrandModalOpen={setIsBrandModalOpen}
         setSelectedBrand={setSelectedBrand}
-        title={sectionTitles.brandsComingSoon}
-        titleRef={titleRefs.brandsComingSoon}
       />
       <CustomLinkModal
         affiliation={selectedAffiliation}

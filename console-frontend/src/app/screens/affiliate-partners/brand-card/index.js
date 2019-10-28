@@ -1,10 +1,12 @@
-import Actions from './actions'
-import ImageAndDescription from './image-and-description'
+import Description from './description'
+import Footer from './footer'
 import mixpanel from 'ext/mixpanel'
 import omit from 'lodash.omit'
 import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
+import { ReactComponent as NewTabIcon } from 'assets/icons/new-tab.svg'
+import { Typography } from '@material-ui/core'
 
 const StyledSection = styled(props => <Section {...omit(props, ['animate'])} />)`
   transition: all 1s 0.2s;
@@ -16,16 +18,111 @@ const StyledSection = styled(props => <Section {...omit(props, ['animate'])} />)
   `}
 `
 
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 180px;
+  flex-shrink: 0;
+  cursor: pointer;
+  overflow: hidden;
+`
+
+const Image = styled.img`
+  object-fit: cover;
+  user-select: none;
+  width: 100%;
+  height: 100%;
+`
+
 const MainContainer = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  @media (min-width: 960px) {
-    flex-direction: row;
-    min-height: 140px;
-  }
+  margin-top: 54px;
+  position: relative;
 `
+
+const LogoContainer = styled.div`
+  border: 2px solid #e7ecef;
+  width: 110px;
+  height: 110px;
+  background: #fff;
+  position: absolute;
+  top: -125px;
+  left: 0;
+`
+
+const LogoImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+`
+
+const SubheaderContainer = styled.div``
+
+const Subheader = styled.div`
+  position: absolute;
+  top: -60px;
+  left: 132px;
+`
+
+const Logo = ({ brand }) => (
+  <LogoContainer>
+    <LogoImage src={brand.logoUrl} />
+  </LogoContainer>
+)
+
+const StyledNewTabIcon = styled(NewTabIcon)`
+  height: 20px;
+  width: 20px;
+`
+
+const IconLink = styled.a`
+  font-size: 0;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 10px;
+`
+
+const WebsiteButton = ({ affiliation, brand }) => {
+  const url = affiliation
+    ? `https://${brand.websiteHostname}/?aftk=${affiliation.token}`
+    : `https://${brand.websiteHostname}`
+
+  const onClick = useCallback(
+    () => {
+      mixpanel.track('Visited Brand Website', {
+        hostname: window.location.hostname,
+        url,
+        brandId: brand.id,
+        brand: brand.name,
+      })
+    },
+    [brand.id, brand.name, url]
+  )
+
+  return (
+    <IconLink href={url} onClick={onClick} rel="noopener noreferrer" target="_blank">
+      <StyledNewTabIcon />
+    </IconLink>
+  )
+}
+
+const SubheaderElement = ({ brand, affiliation }) => (
+  <SubheaderContainer>
+    <Logo brand={brand} />
+    <Subheader>
+      <Typography variant="h5">
+        {brand.name}
+        <WebsiteButton affiliation={affiliation} brand={brand} />
+      </Typography>
+    </Subheader>
+  </SubheaderContainer>
+)
 
 const BrandCard = ({
   affiliation,
@@ -77,10 +174,19 @@ const BrandCard = ({
   ])
 
   return (
-    <StyledSection animate={animate} key={brand.id}>
+    <StyledSection
+      animate={animate}
+      key={brand.id}
+      title={
+        <ImageContainer onClick={onClickBrandLogo}>
+          <Image src={brand.headerImageUrl} />
+        </ImageContainer>
+      }
+    >
       <MainContainer>
-        <ImageAndDescription brand={brand} onClickBrandLogo={onClickBrandLogo} />
-        <Actions
+        <SubheaderElement affiliation={affiliation} brand={brand} />
+        <Description brand={brand} />
+        <Footer
           affiliation={affiliation}
           brand={brand}
           interest={interest}
