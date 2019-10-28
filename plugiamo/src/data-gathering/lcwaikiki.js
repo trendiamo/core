@@ -45,7 +45,10 @@ export default {
           window
             .$('input.cartItem', item)
             .val()
-            .replace(/'/g, '"')
+            .replace(/\{'/g, '{"')
+            .replace(/':\s*'/g, '": "')
+            .replace(/',\s*'/g, '", "')
+            .replace(/'\}/g, '"}')
         )
         return {
           id: json.id,
