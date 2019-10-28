@@ -63,7 +63,7 @@ export default {
       hostname: location.hostname,
       withPlugin: !!window.$('iframe[title="Frekkls Launcher"]')[0],
       products,
-      subTotalInCents: convertToDigits(window.$('.grand-total').text()),
+      subTotalInCents: products.reduce((result, product) => result + Number(product.price) * product.quantity, 0),
       currency,
     })
   },
