@@ -41,7 +41,6 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin-top: 54px;
   position: relative;
 `
 
@@ -51,8 +50,11 @@ const LogoContainer = styled.div`
   height: 110px;
   background: #fff;
   position: absolute;
-  top: -125px;
+  top: -68px;
   left: 0;
+  @media (min-width: 960px) {
+    top: -70px;
+  }
 `
 
 const LogoImage = styled.img`
@@ -62,12 +64,17 @@ const LogoImage = styled.img`
   user-select: none;
 `
 
-const SubheaderContainer = styled.div``
-
 const Subheader = styled.div`
-  position: absolute;
-  top: -60px;
-  left: 132px;
+  padding-left: 124px;
+  min-height: 52px;
+  @media (min-width: 960px) {
+    padding-left: 126px;
+    min-height: 56px;
+  }
+`
+
+const BrandName = styled(Typography)`
+  margin: 0;
 `
 
 const Logo = ({ brand }) => (
@@ -111,18 +118,6 @@ const WebsiteButton = ({ affiliation, brand }) => {
     </IconLink>
   )
 }
-
-const SubheaderElement = ({ brand, affiliation }) => (
-  <SubheaderContainer>
-    <Logo brand={brand} />
-    <Subheader>
-      <Typography variant="h5">
-        {brand.name}
-        <WebsiteButton affiliation={affiliation} brand={brand} />
-      </Typography>
-    </Subheader>
-  </SubheaderContainer>
-)
 
 const BrandCard = ({
   affiliation,
@@ -184,7 +179,13 @@ const BrandCard = ({
       }
     >
       <MainContainer>
-        <SubheaderElement affiliation={affiliation} brand={brand} />
+        <Logo brand={brand} />
+        <Subheader>
+          <BrandName variant="h5">
+            {brand.name}
+            <WebsiteButton affiliation={affiliation} brand={brand} />
+          </BrandName>
+        </Subheader>
         <Description brand={brand} />
         <Footer
           affiliation={affiliation}
