@@ -51,7 +51,7 @@ const SocialLinks = () => (
       >
         <Header>{'Podcast'}</Header>
       </a>
-      <a href="https://www.facebook.com/uptousagency" rel="noopener noreferrer" target="_blank">
+      <a href="https://www.facebook.com/uptouspositiveimpact" rel="noopener noreferrer" target="_blank">
         <Header>{'Facebook'}</Header>
       </a>
       <a href="https://www.linkedin.com/company/20135745" rel="noopener noreferrer" target="_blank">
