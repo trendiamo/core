@@ -71,6 +71,8 @@ Rails.application.routes.draw do
         delete "/users", to: "users#destroy"
         resources :flows, only: %i[index]
 
+        resources :tags, only: %i[index]
+
         resources :affiliations, only: %i[index create]
         resources :affiliate_links, only: %i[create]
 

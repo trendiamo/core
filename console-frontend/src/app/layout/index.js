@@ -6,6 +6,7 @@ import routes from 'app/routes'
 import Sidebar from './sidebar'
 import styled from 'styled-components'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+import { shouldShowWelcomeScreen } from 'app/app-router/router-helpers'
 import { useOnboarding } from 'ext/hooks/use-onboarding'
 import { withRouter } from 'react-router'
 
@@ -110,7 +111,7 @@ const FilledLayout = ({ children, location, width }) => {
 const Layout = ({ children, location, width }) => {
   const isEmptyLayout =
     (!(auth.isLoggedIn() && auth.isAffiliate()) && !auth.getAccount()) ||
-    (auth.isAffiliate() && !auth.getUser().socialMediaUrl)
+    (auth.isAffiliate() && shouldShowWelcomeScreen())
 
   if (isEmptyLayout) return <EmptyLayout>{children}</EmptyLayout>
 

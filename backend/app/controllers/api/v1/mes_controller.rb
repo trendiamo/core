@@ -61,7 +61,8 @@ module Api
         result = params.require(:user)
                        .permit(:first_name, :last_name, :currency, :social_media_url, :bio, :img_url,
                                :shipping_first_name, :shipping_last_name, :address_line1, :address_line2,
-                               :referred_by_code, :zip_code, :city, :country, img_rect: %i[x y width height])
+                               :referred_by_code, :zip_code, :city,
+                               :country, img_rect: %i[x y width height], tag_ids: [])
 
         if params[:user][:accepts_terms_and_conditions] && !current_user.not_affiliate? &&
            !current_user.accepted_terms_and_conditions_at
