@@ -127,6 +127,9 @@ const routes = {
   cookiePolicy() {
     return '/cookie-policy'
   },
+  affiliateProgrammeTermsAndConditions() {
+    return '/affiliate-programme-terms-and-conditions'
+  },
 }
 
 export default routes
