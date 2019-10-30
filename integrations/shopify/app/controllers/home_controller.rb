@@ -1,4 +1,4 @@
-class HomeController < ShopifyApp::AuthenticatedController
+class HomeController < BaseAuthenticatedController
   layout "application"
 
   def index; end

@@ -6,12 +6,12 @@
     <% application_name = ShopifyApp.configuration.application_name %>
     <title><%= application_name %></title>
     <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag "application", "data-turbolinks-track": true %>
     <%= csrf_meta_tags %>
+    <%= javascript_include_tag "application", "data-turbolinks-track": true %>
+    <%= javascript_pack_tag 'home', id: 'shop-data', data: @shop_session.to_json %>
   </head>
 
   <body>
-    <%= render "layouts/navbar" %>
     <%= render "layouts/flash_messages" %>
     <div class="app-wrapper">
       <div class="app-content">
@@ -27,7 +27,7 @@
         apiKey: "<%= ShopifyApp.configuration.api_key %>",
         shopOrigin: "<%= "https://#{ @shop_session.url }" if @shop_session %>",
         debug: <%= Rails.env.development? ? 'true' : 'false' %>,
-        forceRedirect: false
+        forceRedirect: true
       });
     </script>
 
