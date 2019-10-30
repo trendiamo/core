@@ -130,6 +130,12 @@ const routes = {
   affiliateProgrammeTermsAndConditions() {
     return '/affiliate-programme-terms-and-conditions'
   },
+  affiliateTrackerTermsAndConditions() {
+    return '/affiliate-tracker-terms-and-conditions'
+  },
+  affiliateTrackerPrivacyPolicy() {
+    return '/affiliate-tracker-privacy-policy'
+  },
 }
 
 export default routes

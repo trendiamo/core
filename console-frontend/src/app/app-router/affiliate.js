@@ -1,5 +1,7 @@
 import AffiliatePartners from 'app/screens/affiliate-partners'
 import AffiliateProgrammeTermsAndConditions from 'app/screens/affiliate-programme-terms-and-conditions'
+import affiliateTrackerPrivacyPolicy from 'app/screens/affiliate-tracker-privacy-policy'
+import affiliateTrackerTermsAndConditions from 'app/screens/affiliate-tracker-terms-and-conditions'
 import ContentCreation from 'app/screens/content-creation'
 import CookiePolicy from 'app/screens/cookie-policy'
 import ForgotPassword from 'auth/forgot-password'
@@ -96,6 +98,8 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         exact
         path={routes.affiliateProgrammeTermsAndConditions()}
       />
+      <Route component={affiliateTrackerTermsAndConditions} exact path={routes.affiliateTrackerTermsAndConditions()} />
+      <Route component={affiliateTrackerPrivacyPolicy} exact path={routes.affiliateTrackerPrivacyPolicy()} />
       <Route component={RootRedirect} exact path={routes.root()} />
       <Route component={NotFound} />
     </Switch>
