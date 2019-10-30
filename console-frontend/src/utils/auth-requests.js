@@ -28,6 +28,7 @@ const INTERESTS_URL = `${BASE_API_URL}/interests`
 const AFFILIATIONS_URL = `${BASE_API_URL}/affiliations`
 const ORDERS_URL = `${BASE_API_URL}/orders`
 const STRIPE_URL = `${BASE_API_URL}/stripe`
+const TAGS_URL = `${BASE_API_URL}/tags`
 const AFFILIATE_LINKS_URL = `${BASE_API_URL}/affiliate_links`
 
 const filterBody = body => omitDeep(body, key => key.startsWith('__'))
@@ -202,6 +203,8 @@ export const apiAccountDestroy = slug => apiDestroyRequest(`${ACCOUNTS_URL}/${sl
 export const apiUserList = query => apiListRequest(`${USERS_URL}/?${stringify(query)}`)
 export const apiUserDestroy = body => apiDestroyMultipleRequest(USERS_URL, body)
 export const apiUserInvite = body => apiCreateRequest(`${USERS_URL}/invites`, body)
+
+export const apiTagsList = () => apiListRequest(`${TAGS_URL}`)
 
 export const apiAffiliationsList = query => apiListRequest(`${AFFILIATIONS_URL}/?${stringify(query)}`)
 export const apiAffiliationCreate = body => apiCreateRequest(AFFILIATIONS_URL, body)

@@ -6,6 +6,15 @@ import { apiAccountsShow, apiMe, apiRequest, isLocalStorageAccurate } from 'util
 import { Redirect, Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 
+export const shouldShowWelcomeScreen = () => {
+  const user = auth.getUser()
+  return (
+    !user.socialMediaUrl ||
+    (!user.productCategoryList || user.productCategoryList.length === 0) ||
+    (!user.positiveImpactAreaList || user.positiveImpactAreaList.length === 0)
+  )
+}
+
 const PrivateRouteRender = ({
   component,
   fetchedAccount,
@@ -34,7 +43,7 @@ const PrivateRouteRender = ({
 
   if (!auth.isLoggedIn()) return <Redirect to={routes.login()} />
 
-  if (auth.isAffiliate() && !auth.getUser().socialMediaUrl && path !== routes.welcome()) {
+  if (auth.isAffiliate() && shouldShowWelcomeScreen() && path !== routes.welcome()) {
     return <Redirect to={routes.welcome()} />
   }
 
@@ -44,7 +53,7 @@ const PrivateRouteRender = ({
     (isAdminScoped && !auth.isAdmin()) ||
     (isSellerScoped && !auth.isSeller()) ||
     (path === routes.dataDashboard() && !auth.getAccount().websitesAttributes[0].isECommerce) ||
-    (path === routes.welcome() && auth.isAffiliate() && auth.getUser().socialMediaUrl)
+    (path === routes.welcome() && auth.isAffiliate() && !shouldShowWelcomeScreen())
 
   if (notFound) return React.createElement(NotFound, { match })
 
