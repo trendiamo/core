@@ -2,7 +2,7 @@ class OrdersPaidJob < ApplicationJob
   def perform(shop_domain:, webhook:)
     shop = Shop.find_by(shopify_domain: shop_domain)
 
-    return unless shop.tracking_orders
+    return unless shop.tracking_orders && shop.accepted_terms_and_conditions_at
 
     shop.with_shopify_session do
       RestClient::OrderWebhookRequest.new(shop_domain, webhook).create_order

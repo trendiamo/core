@@ -13,9 +13,6 @@ ShopifyApp.configure do |config|
 
   config.session_repository = Shop
 
-  config.scripttags = [
-    { event: 'onload', src: 'https://js.frekkls.com/tracker.js', display_scope: "all" },
-  ]
   config.webhooks = [
     {topic: 'app/uninstalled', address: "#{ENV["BASE_API_URL"]}/webhooks/app_uninstalled", format: 'json'},
     # {topic: 'products/delete', address: "#{ENV["BASE_API_URL"]}/webhooks/products_delete", format: 'json'},
