@@ -75,7 +75,7 @@ const FooterLinks = () => (
     </FooterLinksSection>
     <FooterLinksSection>
       <Header>{'Info'}</Header>
-      <a href="mailto:hello@uptous.co">{'Contact Us'}</a>
+      <a href="mailto:hello@uptous.co">{'Contact us'}</a>
       <a href="#legal-notice" onClick={onLegalNoticeClick}>
         {'Legal Notice'}
       </a>

@@ -20,6 +20,8 @@ const Main = styled.main`
   flex-direction: column;
 `
 
+const headerLinks = [{ target: '/for-impacters', text: 'Why uptous' }, { target: '/pledge', text: 'Pledge' }]
+
 const Layout = ({ children, data, light, whiteLogo }) => (
   <Main>
     <Seo />
@@ -27,7 +29,7 @@ const Layout = ({ children, data, light, whiteLogo }) => (
       <link href={favicon} rel="shortcut icon" type="image/png" />
       <meta name="hbspt-locale" value="en" />
     </Helmet>
-    {!light && <Header headerLinks={[{ target: '/pledge', text: 'Pledge' }]} whiteLogo={whiteLogo} />}
+    {!light && <Header headerLinks={headerLinks} whiteLogo={whiteLogo} />}
     {children}
     {!light && <Footer />}
     {data && <ModalContents data={data} />}
