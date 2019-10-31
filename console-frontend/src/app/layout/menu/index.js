@@ -5,6 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import omit from 'lodash.omit'
 import React, { memo, useMemo } from 'react'
 import ReferralBox from './referral-box'
+import ImpactPoints from './impact-points'
 import routes from 'app/routes'
 import styled, { keyframes } from 'styled-components'
 import UserMenu from './user-menu'
@@ -172,6 +173,7 @@ const BaseMenu = withRouter(
           ))}
           {auth.isAffiliate() && <ReferralBox sidebarOpen={sidebarOpen} />}
         </div>
+        {auth.isAffiliate() && <ImpactPoints sidebarOpen={sidebarOpen} />}
         <UserMenu sidebarOpen={sidebarOpen} />
       </Container>
     )

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191028152114) do
+ActiveRecord::Schema.define(version: 20191031105450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,17 @@ ActiveRecord::Schema.define(version: 20191028152114) do
     t.bigint "user_id"
     t.index ["account_id"], name: "index_images_on_account_id"
     t.index ["user_id"], name: "index_images_on_user_id"
+  end
+
+  create_table "impact_points_transactions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "transaction_type", null: false
+    t.integer "amount_in_cents", null: false
+    t.integer "old_balance_in_cents", null: false
+    t.integer "new_balance_in_cents", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_impact_points_transactions_on_user_id"
   end
 
   create_table "interests", force: :cascade do |t|
@@ -385,6 +396,7 @@ ActiveRecord::Schema.define(version: 20191028152114) do
     t.string "country"
     t.datetime "accepted_terms_and_conditions_at"
     t.string "stripe_user_id"
+    t.integer "impact_points_balance_in_cents", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -421,6 +433,7 @@ ActiveRecord::Schema.define(version: 20191028152114) do
   add_foreign_key "generated_urls", "users"
   add_foreign_key "images", "accounts"
   add_foreign_key "images", "users"
+  add_foreign_key "impact_points_transactions", "users"
   add_foreign_key "interests", "accounts"
   add_foreign_key "interests", "users"
   add_foreign_key "invites", "accounts"
