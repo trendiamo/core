@@ -25,6 +25,8 @@ class User < ApplicationRecord
   has_many :invites, dependent: :destroy, class_name: "Invite", foreign_key: "recipient_id", inverse_of: "recipient"
   has_many :sent_invites, dependent: :destroy, class_name: "Invite", foreign_key: "sender_id", inverse_of: "sender"
 
+  has_many :impact_points_transactions, dependent: :destroy
+
   has_one :image, dependent: :destroy
 
   accepts_nested_attributes_for :memberships
@@ -38,12 +40,14 @@ class User < ApplicationRecord
   validates :bio, :img_url, presence: true, if: :seller?
   validates :referral_code, presence: true, uniqueness: true
   validates :currency, presence: true, inclusion: { in: %w[eur gbp chf usd] }
+  validates :impact_points_balance_in_cents, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def as_json(options = {})
     sliced_attributes = attributes
                         .slice("id", "email", "first_name", "last_name", "onboarding_stage", "admin", "img_rect",
                                "affiliate_role", "referral_code", "requested_upgrade_to_seller_at", "currency",
-                               "social_media_url", "bio", "stripe_user_id", "created_at", "updated_at")
+                               "social_media_url", "bio", "impact_points_balance_in_cents", "stripe_user_id",
+                               "created_at", "updated_at")
                         .merge(name: name, img: { url: img_url }, product_category_list: tag_list("product_category"),
                                positive_impact_area_list: tag_list("positive_impact_area"))
     attributes_with_roles = admin? ? sliced_attributes : sliced_attributes.merge(roles: mapped_roles)
@@ -100,6 +104,24 @@ class User < ApplicationRecord
       user.last_name = auth.info.last_name
       user.img_url = auth.info.image
       user.affiliate_role = 1
+    end
+  end
+
+  def withdraw_impact_points_in_cents(amount_in_cents)
+    ActiveRecord::Base.transaction do
+      ImpactPointsTransaction.create!(user_id: id, transaction_type: "withdrawal", amount_in_cents: -amount_in_cents,
+                                      old_balance_in_cents: impact_points_balance_in_cents,
+                                      new_balance_in_cents: impact_points_balance_in_cents - amount_in_cents)
+      update!(impact_points_balance_in_cents: impact_points_balance_in_cents - amount_in_cents)
+    end
+  end
+
+  def deposit_impact_points_in_cents(amount_in_cents)
+    ActiveRecord::Base.transaction do
+      ImpactPointsTransaction.create!(user_id: id, transaction_type: "deposit", amount_in_cents: amount_in_cents,
+                                      old_balance_in_cents: impact_points_balance_in_cents,
+                                      new_balance_in_cents: impact_points_balance_in_cents + amount_in_cents)
+      update!(impact_points_balance_in_cents: impact_points_balance_in_cents + amount_in_cents)
     end
   end
 end
