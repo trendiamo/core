@@ -24,8 +24,6 @@ const StyledDivider = styled(Divider)`
 `
 
 const GoogleAuthButton = ({ text }) => {
-  if (window.location.hostname === 'app.uptous.co') return null
-
   return (
     <>
       <Container>
