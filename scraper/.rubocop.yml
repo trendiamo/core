@@ -4,11 +4,20 @@ AllCops:
     - "**/*.rb"
   TargetRubyVersion: 2.6
 
-Metrics/LineLength:
-  Max: 120
+Lint/HandleExceptions:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
 
 Metrics/BlockLength:
   Max: 100
+
+Metrics/ClassLength:
+  Max: 120
+
+Metrics/LineLength:
+  Max: 120
 
 Style/ClassAndModuleChildren:
   Enabled: false
@@ -16,14 +25,17 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
-Style/SpecialGlobalVars:
-  Enabled: false
-
 Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/Lambda:
   EnforcedStyle: literal
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Style/SpecialGlobalVars:
+  Enabled: false
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
