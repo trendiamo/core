@@ -13,8 +13,7 @@ module URI
     }.freeze
 
     def initialize(options = DEFAULTS)
-      @options = options
-      @proxies = scrape_and_parse_proxies
+      @proxies = scrape_and_parse_proxies(options)
       @proxy_index = 0
     end
 
@@ -26,8 +25,8 @@ module URI
 
     private
 
-    def scrape_and_parse_proxies
-      URI.open("#{PROXIES_API_URL}?request=getproxies&#{URI.encode_www_form(@options)}").read.split(/\r\n/)
+    def scrape_and_parse_proxies(options)
+      URI.open("#{PROXIES_API_URL}?request=getproxies&#{URI.encode_www_form(options)}").read.split(/\r\n/)
     end
 
     def open_with_proxy(uri)
@@ -36,7 +35,8 @@ module URI
         @proxy_index = 0
         self.open(uri)
       end
-      Timeout.timeout(@options[:timeout] / 200) { URI.open(uri, proxy: "http://#{proxy}") }
+
+      URI.open(uri, proxy: "http://#{proxy}")
     rescue StandardError => e
       handle_network_error(uri, e)
     end
