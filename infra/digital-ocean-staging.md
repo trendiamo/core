@@ -46,12 +46,16 @@ dokku run console-backend rails db:schema:load # fails before first deploy, firs
 # from your local machine, do the first deploy:
 bin/rails deploy-staging
 
-# To setup the instagram-scraper:
+# To setup the scraper:
 
-dokku apps:create instagram-scraper
-dokku config:set instagram-scraper API_KEY=... PROXIES_API_URL=...
-dokku domains:add instagram-scraper scraper.uptous.co
-dokku ps:scale instagram-scraper web=1
+dokku apps:create scraper
+dokku config:set scraper API_KEY=... USER_QUERY_HASH=... HASHTAG_QUERY_HASH=...
+dokku domains:add scraper scraper.uptous.co
+dokku ps:scale scraper web=1
+# change the default nginx timeout to allow requests taking more than 1 minute
+cp -p /etc/nginx/nginx.conf /etc/nginx/nginx.conf.back # backup old config
+vi /etc/nginx/nginx.conf # add config from scraper.nginx.conf
+service nginx restart
 # from your local machine, deploy with:
 bin/deploy
 
@@ -74,7 +78,7 @@ cp /etc/letsencrypt/live/api.pimppls.com/fullchain.pem keycert/certificate.crt
 cp /etc/letsencrypt/live/api.pimppls.com/privkey.pem keycert/key.key
 tar -cvf keycert.tar keycert
 cat keycert.tar | dokku certs:add console-backend
-cat keycert.tar | dokku certs:add instagram-scraper
+cat keycert.tar | dokku certs:add scraper
 rm keycert.tar keycert/certificate.crt keycert/key.key
 rmdir keycert
 

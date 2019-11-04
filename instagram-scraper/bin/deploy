@@ -1,6 +1,0 @@
-#!/bin/sh
-
-cd ..; git subtree push --prefix instagram-scraper dokku-scraper master; cd -
-
-# forced deploy (from root directory):
-# git push dokku-scraper `git subtree split --prefix instagram-scraper master`:master --force
