@@ -38,6 +38,7 @@ const FirstStep = ({ setWelcomeStep }) => {
     async event => {
       event.preventDefault()
       setIsFormSubmitting(true)
+      window.localStorage.removeItem('signup-aftk')
       const { json, errors, requestError } = await apiRequest(apiMeUpdate, [{ user: form }])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
