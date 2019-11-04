@@ -1,5 +1,6 @@
 import baldessariniDataGathering from './baldessarini'
 import buttwrapDataGathering from './buttwrap'
+import grafikwerkstattDataGathering from './grafik-werkstatt'
 import impressorajatoDataGathering from './impressorajato'
 import lcwaikikiDataGathering from './lcwaikiki'
 import mymuesliDataGathering from './mymuesli'
@@ -23,6 +24,7 @@ const dataGatheringFactory = {
   'tontonetfils.fr': tontonetfilsDataGathering, // shopify
   'www.mymuesli.com': mymuesliDataGathering, // custom?
   'www.lcw.com': lcwaikikiDataGathering, // hybris
+  'grafik-werkstatt.de': grafikwerkstattDataGathering, // magento 2
 }
 
 const dataGathering = dataGatheringFactory[window.location.hostname]
