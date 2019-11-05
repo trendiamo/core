@@ -55,6 +55,11 @@ module Api
         render json: current_user
       end
 
+      def request_sample
+        SparkpostMailer.request_sample(current_user, params[:me][:product_message]).deliver_now
+        render json: current_user
+      end
+
       private
 
       def user_params # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

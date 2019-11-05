@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         put '/me/details', to: "mes#update_details"
         get "/me/referrals", to: "mes#referrals"
         post "/me/request_upgrade", to: "mes#request_upgrade"
+        post "/me/request_sample", to: "mes#request_sample"
         resources :generated_urls, only: %i[index create]
         get "s3/sign", to: "s3#sign"
         get "/cors_proxy(/*url)", to: "cors_proxy#download", format: false

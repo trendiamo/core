@@ -55,7 +55,13 @@ const affiliateResourceGroups = () => {
     modules: {
       name: 'Main',
       showTitle: false,
-      resources: [resources.revenues, resources.affiliatePartners, resources.yourReferrals, resources.contentCreation],
+      resources: [
+        resources.revenues,
+        resources.affiliatePartners,
+        resources.yourReferrals,
+        resources.contentCreation,
+        resources.requestSamples,
+      ],
     },
   }
 }

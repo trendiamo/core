@@ -10,6 +10,7 @@ import NotFound from 'app/screens/not-found'
 import PrivacyPolicy from 'app/screens/privacy-policy'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
+import RequestSamples from 'app/screens/request-samples'
 import Revenues from 'app/screens/revenues'
 import routes from 'app/routes'
 import SignupConfirmPage from 'auth/signup/confirm'
@@ -57,6 +58,13 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         exact
         fetchedAccount={fetchedAccount}
         path={routes.contentCreation()}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={RequestSamples}
+        exact
+        fetchedAccount={fetchedAccount}
+        path={routes.requestSamples()}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute
