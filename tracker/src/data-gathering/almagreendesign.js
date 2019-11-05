@@ -70,7 +70,7 @@ export default {
         this.tryTimeout = null
         this.numberOfTries = 0
         mixpanel.track('Visited Page', { hostname: location.hostname })
-        if (location.pathname.match(/TODO-purchase-success-TODO/)) {
+        if (location.pathname.match(/order\/success/)) {
           this.triggerPurchaseSuccess()
         } else if (location.pathname.match(/\/checkout\//)) {
           this.tryProceedToCheckout()
