@@ -80,10 +80,16 @@ const apiListRequest = async url =>
     method: 'get',
   })
 
-const apiPostRequest = async url =>
-  await authFetch(url, {
-    method: 'post',
-  })
+const apiPostRequest = async (url, body) =>
+  await authFetch(
+    url,
+    body
+      ? {
+          body: JSON.stringify(filterBody(body)),
+          method: 'post',
+        }
+      : { method: 'post' }
+  )
 
 const apiPutRequest = async url =>
   await authFetch(url, {
@@ -135,6 +141,7 @@ export const apiMeDetails = () => apiGetRequest(`${ME_URL}/details`)
 export const apiMeUpdateDetails = body => apiUpdateRequest(`${ME_URL}/details`, body)
 export const apiMeReferrals = () => apiGetRequest(`${ME_URL}/referrals`)
 export const apiMeRequestUpgrade = () => apiPostRequest(`${ME_URL}/request_upgrade`)
+export const apiMeRequestSample = body => apiPostRequest(`${ME_URL}/request_sample`, body)
 export const apiOnboardingSet = body => apiUpdateRequest(ONBOARDING_URL, body)
 
 export const apiSellerList = query => apiListRequest(`${SELLERS_URL}/?${stringify(query)}`)

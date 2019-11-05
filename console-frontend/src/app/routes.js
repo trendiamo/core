@@ -136,6 +136,9 @@ const routes = {
   affiliateTrackerPrivacyPolicy() {
     return '/affiliate-tracker-privacy-policy'
   },
+  requestSamples() {
+    return '/request-samples'
+  },
 }
 
 export default routes

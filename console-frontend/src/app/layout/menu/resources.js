@@ -11,6 +11,7 @@ import {
   SmsOutlined,
   TuneOutlined,
 } from '@material-ui/icons'
+import { ReactComponent as DeliveryPackageIcon } from 'assets/icons/delivery-package-opened.svg'
 import { ReactComponent as HandshakeIcon } from 'assets/icons/handshake.svg'
 import { ReactComponent as PlayButtonIcon } from 'assets/icons/play-button.svg'
 import { ReactComponent as StarIcon } from 'assets/icons/star.svg'
@@ -94,6 +95,12 @@ const resources = {
     label: 'Content Creation',
     class: 'contentCreation',
     route: () => routes.contentCreation(),
+  },
+  requestSamples: {
+    icon: DeliveryPackageIcon,
+    label: 'Request Samples',
+    class: 'requestSamples',
+    route: () => routes.requestSamples(),
   },
   revenues: {
     icon: Ticket,

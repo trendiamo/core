@@ -18,6 +18,19 @@ class SparkpostMailer < ApplicationMailer
     mail(to: ENV["PROMOTER_UPGRADE_EMAIL"], sparkpost_data: sparkpost_data)
   end
 
+  def request_sample(user, message)
+    sparkpost_data = {
+      substitution_data: {
+        user_name: "#{user.first_name} #{user.last_name}",
+        user_email: user.email,
+        user_impact_points: (user.impact_points_balance_in_cents / 100).to_s,
+        message: message,
+      },
+      template_id: "uptous-request-sample-notification",
+    }
+    mail(to: ENV["PROMOTER_UPGRADE_EMAIL"], sparkpost_data: sparkpost_data)
+  end
+
   private
 
   # url needs to be passed separately, see
