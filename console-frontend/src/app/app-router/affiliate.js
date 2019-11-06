@@ -1,3 +1,4 @@
+import AffiliatePartnerDetails from 'app/screens/affiliate-partners/details'
 import AffiliatePartners from 'app/screens/affiliate-partners'
 import AffiliateProgrammeTermsAndConditions from 'app/screens/affiliate-programme-terms-and-conditions'
 import affiliateTrackerPrivacyPolicy from 'app/screens/affiliate-tracker-privacy-policy'
@@ -44,6 +45,13 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         exact
         fetchedAccount={fetchedAccount}
         path={routes.affiliatePartners()}
+        setFetchedAccount={setFetchedAccount}
+      />
+      <PrivateRoute
+        component={AffiliatePartnerDetails}
+        exact
+        fetchedAccount={fetchedAccount}
+        path={routes.affiliatePartner(':brandId')}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute

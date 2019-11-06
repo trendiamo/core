@@ -259,9 +259,10 @@ class Populate # rubocop:disable Metrics/ClassLength
     new.process
   end
 
-  def process # rubocop:disable Metrics/MethodLength
+  def process # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     create_accounts
     create_brands
+    create_impact_rewards
     PopulateUsers.process
     create_tags
     create_taggings
@@ -376,6 +377,20 @@ class Populate # rubocop:disable Metrics/ClassLength
     end
     Account.last(3).each do |account|
       account.brand.update!(is_preview: true)
+    end
+  end
+
+  def create_impact_rewards # rubocop:disable Metrics/MethodLength
+    Brand.all.each do |brand|
+      rand(1..2).times do
+        impact_reward_attributes = {
+          brand_id: brand.id,
+          impact_points_in_cents: rand(5...15) * 1000,
+          target_revenue_in_cents: rand(3...20) * 100_00,
+          target_revenue_currency: "eur",
+        }
+        ImpactReward.create!(impact_reward_attributes)
+      end
     end
   end
 

@@ -1,4 +1,6 @@
+import ImpactPoint from './impact-point'
 import Paper from 'shared/paper'
+import React from 'react'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 
@@ -36,3 +38,26 @@ export const CalloutTitle = styled(Typography)`
     margin-bottom: 20px;
   }
 `
+
+const BrandLogoContainer = styled.div`
+  border-radius: 8px;
+  border: 2px solid #e7ecef;
+  width: 110px;
+  height: 110px;
+  background: #fff;
+`
+
+const Logo = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+`
+
+export const BrandLogo = ({ brand, ...props }) => (
+  <BrandLogoContainer {...props}>
+    <Logo src={brand.logoUrl} />
+  </BrandLogoContainer>
+)
+
+export { ImpactPoint }

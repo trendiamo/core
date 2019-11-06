@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { Actions, Activity, BrandsSplit, MonthlyRevenue, Orders } from './sections'
 import { apiAffiliationsList, apiConnectStripe, apiOrdersList, apiRequest } from 'utils'
+import { CURRENCY_SYMBOLS } from 'utils/shared'
 import { Hidden } from '@material-ui/core'
 import { parse } from 'query-string'
 import { useSnackbar } from 'notistack'
@@ -16,13 +17,6 @@ import { withRouter } from 'react-router'
 import * as dateFns from 'date-fns'
 
 const EXCHANGE_RATES_API_URL = 'https://api.exchangerate-api.com/v4/latest'
-
-const CURRENCY_SYMBOLS = {
-  EUR: '€',
-  GBP: '£',
-  CHF: 'CHF',
-  USD: '$',
-}
 
 const computeMinDate = () => {
   const userCreationDate = new Date(auth.getUser().createdAt)

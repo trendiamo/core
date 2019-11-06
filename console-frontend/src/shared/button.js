@@ -42,6 +42,7 @@ ${({ fullWidthOnMobile, width }) =>
         }
       `
     : `width: ${({ width }) => width || 'auto'};`}
+    max-width: 100%;
 
 `
 
@@ -72,11 +73,10 @@ const uptousButtonSizes = {
   },
 }
 
-const StyledMuiButton = styled(props => <MuiButton {...omit(props, ['flex'])} />)`
-  white-space: nowrap;
+const StyledMuiButton = styled(props => <MuiButton {...omit(props, ['flex', 'wrapText'])} />)`
+  ${({ wrapText }) => !wrapText && 'white-space: nowrap;'}
   ${({ flex }) => flex && 'width: 100%;'}
-  ${({ size }) =>
-    showUpToUsBranding() && uptousButtonSizes['mobile'][size || 'medium']}
+  ${({ size }) => showUpToUsBranding() && uptousButtonSizes['mobile'][size || 'medium']}
   @media (min-width: 960px) {
     ${({ size }) => showUpToUsBranding() && uptousButtonSizes['desktop'][size || 'medium']}
   }
@@ -112,6 +112,7 @@ const Button = ({
   fullWidthOnMobile,
   inlineOnDesktop,
   flex,
+  wrapText,
   ...props
 }) => {
   const [styleObject, setStyleObject] = useState({})
@@ -181,6 +182,7 @@ const Button = ({
             onMouseEnter={onButtonHoverStart}
             onMouseLeave={onButtonHoverEnd}
             style={disabled ? buttonStyles['disabled'] : styleObject}
+            wrapText={wrapText}
           >
             <ButtonContents>
               {isFormSubmitting && <StyledCircularProgress />}

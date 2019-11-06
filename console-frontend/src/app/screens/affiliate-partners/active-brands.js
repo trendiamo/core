@@ -46,14 +46,7 @@ const BlankState = ({ animate }) => (
   </BlankStateContainer>
 )
 
-const ActiveBrands = ({
-  affiliations,
-  setIsBrandModalOpen,
-  animate,
-  isLoading,
-  setIsCustomLinkModalOpen,
-  setSelectedBrand,
-}) => {
+const ActiveBrands = ({ affiliations, animate, goToBrandPage, isLoading }) => {
   if (isLoading) return <div />
 
   if (affiliations.length === 0) return <BlankState animate={animate} />
@@ -65,10 +58,8 @@ const ActiveBrands = ({
           affiliation={affiliation}
           animate={animate}
           brand={affiliation.brand}
+          goToBrandPage={goToBrandPage}
           key={affiliation.id}
-          setIsBrandModalOpen={setIsBrandModalOpen}
-          setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
-          setSelectedBrand={setSelectedBrand}
         />
       ))}
     </VerticalGrid>

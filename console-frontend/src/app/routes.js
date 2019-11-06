@@ -106,6 +106,9 @@ const routes = {
   affiliatePartners() {
     return '/affiliate-partners'
   },
+  affiliatePartner(brandId) {
+    return `/affiliate-partners/${brandId}`
+  },
   yourReferrals() {
     return '/your-referrals'
   },
