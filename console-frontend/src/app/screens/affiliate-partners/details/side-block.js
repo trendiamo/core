@@ -216,7 +216,7 @@ const Description = ({
                 width="100%"
                 wrapText
               >
-                {affiliation ? 'Custom Link' : 'Create Affiliate Link'}
+                {affiliation ? 'Custom Link' : 'Promote Now'}
               </Button>
             </ButtonContainer>
             {!affiliation && (
