@@ -82,6 +82,18 @@ const Footer = ({ affiliation }) => {
     [affiliation.brand.id, affiliation.brand.name]
   )
 
+  const onCopyDefaultLink = useCallback(
+    text => {
+      mixpanel.track('Copied Default Link', {
+        hostname: window.location.hostname,
+        text,
+        brandId: affiliation.brand.id,
+        brand: affiliation.brand.name,
+      })
+    },
+    [affiliation.brand.id, affiliation.brand.name]
+  )
+
   const mixFunction = useCallback(
     async text => {
       setIsLoading(true)
@@ -115,7 +127,12 @@ const Footer = ({ affiliation }) => {
           </>
         ) : (
           <>
-            <StyledClipboardInput backgroundColor="#e7ecef" size="large" text={affiliation.defaultAffiliateLink} />
+            <StyledClipboardInput
+              backgroundColor="#e7ecef"
+              onCopy={onCopyDefaultLink}
+              size="large"
+              text={affiliation.defaultAffiliateLink}
+            />
             <Button color="whiteBg" onClick={onCustomClick} size="small">
               {'Get custom link'}
             </Button>

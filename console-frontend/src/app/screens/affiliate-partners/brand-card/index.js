@@ -66,6 +66,9 @@ const Subheader = styled.div`
 
 const BrandName = styled(Typography)`
   margin: 0;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
 `
 
 const StyledNewTabIcon = styled(NewTabIcon)`
@@ -105,29 +108,32 @@ const WebsiteButton = ({ affiliation, brand }) => {
 }
 
 const BrandCard = ({ affiliation, animate, brand, goToBrandPage, interests }) => {
-  const onClickCustomLink = useCallback(
-    () => {
-      mixpanel.track('Clicked Custom Link', {
-        hostname: window.location.hostname,
-        brandId: brand.id,
-        brand: brand.name,
-      })
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage]
-  )
-
-  const onClickBrandLogo = useCallback(
-    () => {
-      mixpanel.track('Clicked Brand Logo', {
+  const trackToMixpanel = useCallback(
+    eventName => {
+      mixpanel.track(eventName, {
         hostname: window.location.hostname,
         brandId: brand.id,
         brand: brand.name,
         token: affiliation && affiliation.token,
       })
+    },
+    [affiliation, brand.id, brand.name]
+  )
+
+  const onClickCustomLink = useCallback(
+    () => {
+      trackToMixpanel('Clicked Custom Link')
       goToBrandPage(brand)
     },
-    [affiliation, brand, goToBrandPage]
+    [brand, goToBrandPage, trackToMixpanel]
+  )
+
+  const onClickBrandHeaderImage = useCallback(
+    () => {
+      trackToMixpanel('Clicked Brand Header Image')
+      goToBrandPage(brand)
+    },
+    [brand, goToBrandPage, trackToMixpanel]
   )
 
   const interest = useMemo(() => interests && interests.find(interest => interest.brand.id === brand.id), [
@@ -135,23 +141,39 @@ const BrandCard = ({ affiliation, animate, brand, goToBrandPage, interests }) =>
     interests,
   ])
 
+  const onLogoClick = useCallback(
+    () => {
+      trackToMixpanel('Clicked Brand Logo')
+      goToBrandPage(brand)
+    },
+    [brand, goToBrandPage, trackToMixpanel]
+  )
+
+  const onBrandNameClick = useCallback(
+    () => {
+      trackToMixpanel('Clicked Brand Name')
+      goToBrandPage(brand)
+    },
+    [brand, goToBrandPage, trackToMixpanel]
+  )
+
   return (
     <StyledSection
       animate={animate}
       key={brand.id}
       title={
-        <ImageContainer onClick={onClickBrandLogo}>
+        <ImageContainer onClick={onClickBrandHeaderImage}>
           <Image src={brand.headerImageUrl} />
         </ImageContainer>
       }
     >
       <MainContainer>
-        <StyledBrandLogo brand={brand} onClick={goToBrandPage} />
+        <StyledBrandLogo brand={brand} onClick={onLogoClick} />
         <Subheader>
-          <BrandName variant="h5">
+          <BrandName onClick={onBrandNameClick} variant="h5">
             {brand.name}
-            <WebsiteButton affiliation={affiliation} brand={brand} />
           </BrandName>
+          <WebsiteButton affiliation={affiliation} brand={brand} />
         </Subheader>
         <Description brand={brand} />
         <Footer

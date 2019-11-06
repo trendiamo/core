@@ -213,9 +213,18 @@ const BrandPage = ({ match }) => {
     [brand, removeInterest]
   )
 
-  const onCustomLinkClick = useCallback(() => {
-    setIsCustomLinkModalOpen(true)
-  }, [])
+  const onCustomLinkClick = useCallback(
+    () => {
+      if (!brand) return
+      setIsCustomLinkModalOpen(true)
+      mixpanel.track('Clicked Custom Link', {
+        hostname: window.location.hostname,
+        brand: brand.name,
+        brandId: brand.id,
+      })
+    },
+    [brand]
+  )
 
   if (isLoading) return <CircularProgress />
 
