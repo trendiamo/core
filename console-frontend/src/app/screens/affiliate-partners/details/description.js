@@ -1,6 +1,7 @@
 import DescriptionExtra from './description-extra'
 import LanguageIcon from '@material-ui/icons/Language'
-import React, { useMemo } from 'react'
+import mixpanel from 'ext/mixpanel'
+import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import Tag from 'shared/form-elements/tag'
@@ -86,19 +87,36 @@ const Tags = styled.div`
   flex-wrap: wrap;
 `
 
-const SocialLink = ({ href, Icon }) => (
-  <SocialLinkContainer href={href} rel="noopener noreferrer" target="_blank">
-    <Icon />
-  </SocialLinkContainer>
-)
+const SocialLink = ({ href, Icon, type, brand }) => {
+  const onClick = useCallback(
+    () => {
+      mixpanel.track(type === 'web' ? 'Visited Brand Website' : 'Visited Brand Social Media', {
+        hostname: window.location.hostname,
+        brand: brand.name,
+        brandId: brand.id,
+        linkType: type,
+        url: href,
+      })
+    },
+    [brand.id, brand.name, href, type]
+  )
+
+  return (
+    <SocialLinkContainer href={href} onClick={onClick} rel="noopener noreferrer" target="_blank">
+      <Icon />
+    </SocialLinkContainer>
+  )
+}
 
 const SocialLinks = ({ brand }) => {
   return (
     <SocialLinksContainer>
-      <SocialLink href={`https://${brand.websiteHostname}`} Icon={LanguageIcon} />
-      {brand.instagramUrl && <SocialLink href={brand.instagramUrl} Icon={InstagramIcon} />}
-      {brand.facebookUrl && <SocialLink href={brand.facebookUrl} Icon={FacebookIcon} />}
-      {brand.twitterUrl && <SocialLink href={brand.twitterUrl} Icon={TwitterIcon} />}
+      <SocialLink brand={brand} href={`https://${brand.websiteHostname}`} Icon={LanguageIcon} type="web" />
+      {brand.instagramUrl && (
+        <SocialLink brand={brand} href={brand.instagramUrl} Icon={InstagramIcon} type="instagram" />
+      )}
+      {brand.facebookUrl && <SocialLink brand={brand} href={brand.facebookUrl} Icon={FacebookIcon} type="facebook" />}
+      {brand.twitterUrl && <SocialLink brand={brand} href={brand.twitterUrl} Icon={TwitterIcon} type="twitter" />}
     </SocialLinksContainer>
   )
 }
