@@ -14,7 +14,6 @@ const Container = styled.div`
   overflow: hidden;
   height: 175px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-}
 `
 
 const ContentContainer = styled.div`

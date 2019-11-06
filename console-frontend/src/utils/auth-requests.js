@@ -187,6 +187,7 @@ export const apiFlowsList = () => apiGetRequest(FLOWS_URL)
 export const apiFlowsAutocomplete = query => apiGetRequest(`${FLOWS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiBrandsList = query => apiGetRequest(`${BRANDS_URL}/?${stringify(query)}`)
+export const apiBrandShow = id => apiGetRequest(`${BRANDS_URL}/${id}`)
 export const apiBrandsAutocomplete = query => apiGetRequest(`${BRANDS_URL}/autocomplete/?${stringify(query)}`)
 
 export const apiInterestCreate = body => apiCreateRequest(INTERESTS_URL, body)

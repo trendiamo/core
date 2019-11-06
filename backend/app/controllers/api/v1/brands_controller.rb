@@ -8,6 +8,12 @@ module Api
         authorize @brands
         render json: @brands
       end
+
+      def show
+        @brand = policy_scope(Brand).find(params[:id])
+        authorize @brand
+        render json: @brand
+      end
     end
   end
 end

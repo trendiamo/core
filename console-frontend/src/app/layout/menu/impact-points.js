@@ -1,23 +1,8 @@
 import auth from 'auth'
 import React from 'react'
 import styled from 'styled-components'
-import ThumbUpIcon from '@material-ui/icons/ThumbUp'
+import { ImpactPoint } from 'shared/uptous'
 import { Typography } from '@material-ui/core'
-
-const ThumbUpContainer = styled.div`
-  border: solid 3px #ffb652;
-  border-radius: 50%;
-  background-color: #cb7e3d;
-  text-align: center;
-  height: 30px;
-  width: 30px;
-`
-
-const Coin = () => (
-  <ThumbUpContainer>
-    <ThumbUpIcon style={{ verticalAlign: 'middle', color: '#ffb652', padding: '3px' }} />
-  </ThumbUpContainer>
-)
 
 const Container = styled.div`
   position: relative;
@@ -26,7 +11,6 @@ const Container = styled.div`
   overflow: hidden;
   height: 57px;
   border-radius: 10px;
-}
 `
 
 const ContentContainer = styled.div`
@@ -64,7 +48,7 @@ const impactPointsBalance = Math.floor(Number(auth.getUser().impactPointsBalance
 const Content = () => {
   return (
     <ContentContainer>
-      <Coin />
+      <ImpactPoint />
       <Balance variant="subtitle1">{impactPointsBalance}</Balance>
       <Description variant="subtitle1">{'Impact Points'}</Description>
     </ContentContainer>

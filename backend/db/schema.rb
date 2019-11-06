@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191031105450) do
+ActiveRecord::Schema.define(version: 20191031175117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,16 @@ ActiveRecord::Schema.define(version: 20191031105450) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_impact_points_transactions_on_user_id"
+  end
+
+  create_table "impact_rewards", force: :cascade do |t|
+    t.bigint "brand_id"
+    t.string "target_revenue_currency", null: false
+    t.integer "target_revenue_in_cents", default: 0, null: false
+    t.integer "impact_points_in_cents", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_impact_rewards_on_brand_id"
   end
 
   create_table "interests", force: :cascade do |t|
@@ -434,6 +444,7 @@ ActiveRecord::Schema.define(version: 20191031105450) do
   add_foreign_key "images", "accounts"
   add_foreign_key "images", "users"
   add_foreign_key "impact_points_transactions", "users"
+  add_foreign_key "impact_rewards", "brands"
   add_foreign_key "interests", "accounts"
   add_foreign_key "interests", "users"
   add_foreign_key "invites", "accounts"

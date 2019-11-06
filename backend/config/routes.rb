@@ -40,7 +40,7 @@ Rails.application.routes.draw do
         resources :websites, only: %i[show update]
         resources :website_settings, only: %i[update]
         get "/website_settings", to: "website_settings#show"
-        resources :brands, only: %i[index]
+        resources :brands, only: %i[index show]
 
         get "/sellers/autocomplete", to: "autocompletes#sellers_autocomplete"
         get "/flows/autocomplete", to: "autocompletes#flows_autocomplete"

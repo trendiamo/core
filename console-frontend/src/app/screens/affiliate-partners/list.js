@@ -1,13 +1,13 @@
 import ActiveBrands from './active-brands'
 import AvailableBrands from './available-brands'
-import BrandModal from './brand-modal'
 import BrandsComingSoon from './brands-coming-soon'
-import CustomLinkModal from './custom-link-modal'
 import omit from 'lodash.omit'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import routes from 'app/routes'
 import styled from 'styled-components'
 import Title from 'shared/main-title'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
+import { withRouter } from 'react-router'
 
 const sectionTitles = {
   activeBrands: 'Brands you work with',
@@ -28,22 +28,7 @@ const StyledTitle = styled(props => <Title {...omit(props, ['animate', 'ref'])} 
 
 const appBarContent = ({ section }) => ({ title: sectionTitles[section] })
 
-const List = ({
-  affiliations,
-  animate,
-  interests,
-  brandsList,
-  createAffiliation,
-  createInterest,
-  isLoading,
-  removeAffiliation,
-  removeInterest,
-  selectedAffiliation,
-  setSelectedBrand,
-  selectedBrand,
-}) => {
-  const [isCustomLinkModalOpen, setIsCustomLinkModalOpen] = useState(false)
-  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false)
+const List = ({ affiliations, animate, interests, brandsList, isLoading, history }) => {
   const [titleKey, setTitleKey] = useState('activeBrands')
   const [sectionAppBarContent, setSectionAppBarContent] = useState(appBarContent({ section: titleKey }))
 
@@ -62,10 +47,15 @@ const List = ({
   // in order to optimize the performance of scroll event listener. If we don't do it the components will re-render
   // multiple times during scrolling of the page because of consistent state updates.
   const currentTitleKeyRef = useRef(false)
+  const didCancel = useRef(false)
 
   useEffect(
     () => {
-      document.addEventListener('scroll', () => {
+      if (window.affiliatePartnersScrollListener) {
+        document.removeEventListener('scroll', window.affiliatePartnersScrollListener)
+      }
+      window.affiliatePartnersScrollListener = () => {
+        if (didCancel.current) return
         let currentTitleKey = 'activeBrands'
         Object.keys(titleRefs).forEach(key => {
           if (!titleRefs[key].current) return
@@ -76,23 +66,30 @@ const List = ({
         if (currentTitleKey === currentTitleKeyRef.current) return
         currentTitleKeyRef.current = currentTitleKey
         setTitleKey(currentTitleKey)
-      })
+      }
+      document.addEventListener('scroll', window.affiliatePartnersScrollListener)
     },
     [titleRefs]
+  )
+
+  useEffect(() => {
+    return () => {
+      didCancel.current = true
+    }
+  }, [])
+
+  const goToBrandPage = useCallback(
+    brand => {
+      history.push(routes.affiliatePartner(brand.id))
+    },
+    [history]
   )
 
   const brandsToShow = useMemo(() => brandsList.filter(brand => !brand.isPreview), [brandsList])
 
   return (
     <>
-      <ActiveBrands
-        affiliations={affiliations}
-        animate={animate}
-        isLoading={isLoading}
-        setIsBrandModalOpen={setIsBrandModalOpen}
-        setIsCustomLinkModalOpen={setIsCustomLinkModalOpen}
-        setSelectedBrand={setSelectedBrand}
-      />
+      <ActiveBrands affiliations={affiliations} animate={animate} goToBrandPage={goToBrandPage} isLoading={isLoading} />
       {brandsToShow.length > 0 && (
         <div ref={titleRefs.availableBrands}>
           <StyledTitle animate={animate}>{sectionTitles.availableBrands}</StyledTitle>
@@ -102,9 +99,8 @@ const List = ({
         animate={animate}
         brands={brandsList}
         brandsToShow={brandsToShow}
+        goToBrandPage={goToBrandPage}
         isLoading={isLoading}
-        setIsBrandModalOpen={setIsBrandModalOpen}
-        setSelectedBrand={setSelectedBrand}
       />
       <div ref={titleRefs.brandsComingSoon}>
         <StyledTitle animate={animate}>{sectionTitles.brandsComingSoon}</StyledTitle>
@@ -112,32 +108,12 @@ const List = ({
       <BrandsComingSoon
         animate={animate}
         brands={brandsList}
+        goToBrandPage={goToBrandPage}
         interests={interests}
         isLoading={isLoading}
-        removeInterest={removeInterest}
-        setIsBrandModalOpen={setIsBrandModalOpen}
-        setSelectedBrand={setSelectedBrand}
-      />
-      <CustomLinkModal
-        affiliation={selectedAffiliation}
-        open={isCustomLinkModalOpen}
-        setOpen={setIsCustomLinkModalOpen}
-      />
-      <BrandModal
-        affiliation={selectedAffiliation}
-        brand={selectedBrand}
-        createAffiliation={createAffiliation}
-        createInterest={createInterest}
-        interests={interests}
-        isLoading={isLoading}
-        open={isBrandModalOpen}
-        removeAffiliation={removeAffiliation}
-        removeInterest={removeInterest}
-        selectedAffiliation={selectedAffiliation}
-        setOpen={setIsBrandModalOpen}
       />
     </>
   )
 }
 
-export default List
+export default withRouter(List)

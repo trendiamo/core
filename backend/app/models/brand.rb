@@ -5,6 +5,7 @@ class Brand < ApplicationRecord
   has_many :simple_chats, dependent: :destroy
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
+  has_many :impact_rewards, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 
@@ -14,6 +15,7 @@ class Brand < ApplicationRecord
              "commission_description", "terms_and_conditions", "instagram_url", "facebook_url", "twitter_url",
              "available_locations", "is_preview", "created_at", "updated_at", "lock_version")
       .merge(account_id: account.id, website_hostname: account.websites.first.hostnames.first,
+             impact_rewards: impact_rewards.sort_by(&:target_revenue_in_cents),
              product_category_list: tag_list("product_category"),
              positive_impact_area_list: tag_list("positive_impact_area"))
   end

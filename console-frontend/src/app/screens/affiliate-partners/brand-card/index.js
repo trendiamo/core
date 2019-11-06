@@ -5,6 +5,7 @@ import omit from 'lodash.omit'
 import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
+import { BrandLogo } from 'shared/uptous'
 import { ReactComponent as NewTabIcon } from 'assets/icons/new-tab.svg'
 import { Typography } from '@material-ui/core'
 
@@ -44,24 +45,14 @@ const MainContainer = styled.div`
   position: relative;
 `
 
-const LogoContainer = styled.div`
-  border: 2px solid #e7ecef;
-  width: 110px;
-  height: 110px;
-  background: #fff;
+const StyledBrandLogo = styled(BrandLogo)`
   position: absolute;
   top: -68px;
   left: 0;
+  cursor: pointer;
   @media (min-width: 960px) {
     top: -70px;
   }
-`
-
-const LogoImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  user-select: none;
 `
 
 const Subheader = styled.div`
@@ -76,12 +67,6 @@ const Subheader = styled.div`
 const BrandName = styled(Typography)`
   margin: 0;
 `
-
-const Logo = ({ brand }) => (
-  <LogoContainer>
-    <LogoImage src={brand.logoUrl} />
-  </LogoContainer>
-)
 
 const StyledNewTabIcon = styled(NewTabIcon)`
   height: 20px;
@@ -119,16 +104,7 @@ const WebsiteButton = ({ affiliation, brand }) => {
   )
 }
 
-const BrandCard = ({
-  affiliation,
-  animate,
-  brand,
-  setIsCustomLinkModalOpen,
-  setIsBrandModalOpen,
-  setSelectedBrand,
-  interests,
-  removeInterest,
-}) => {
+const BrandCard = ({ affiliation, animate, brand, goToBrandPage, interests }) => {
   const onClickCustomLink = useCallback(
     () => {
       mixpanel.track('Clicked Custom Link', {
@@ -136,18 +112,9 @@ const BrandCard = ({
         brandId: brand.id,
         brand: brand.name,
       })
-      setIsCustomLinkModalOpen(true)
-      setSelectedBrand(brand)
+      goToBrandPage(brand)
     },
-    [brand, setIsCustomLinkModalOpen, setSelectedBrand]
-  )
-
-  const openBrandModal = useCallback(
-    () => {
-      setIsBrandModalOpen(true)
-      setSelectedBrand(brand)
-    },
-    [brand, setIsBrandModalOpen, setSelectedBrand]
+    [brand, goToBrandPage]
   )
 
   const onClickBrandLogo = useCallback(
@@ -158,9 +125,9 @@ const BrandCard = ({
         brand: brand.name,
         token: affiliation && affiliation.token,
       })
-      openBrandModal()
+      goToBrandPage(brand)
     },
-    [affiliation, brand.id, brand.name, openBrandModal]
+    [affiliation, brand, goToBrandPage]
   )
 
   const interest = useMemo(() => interests && interests.find(interest => interest.brand.id === brand.id), [
@@ -179,7 +146,7 @@ const BrandCard = ({
       }
     >
       <MainContainer>
-        <Logo brand={brand} />
+        <StyledBrandLogo brand={brand} onClick={goToBrandPage} />
         <Subheader>
           <BrandName variant="h5">
             {brand.name}
@@ -190,10 +157,9 @@ const BrandCard = ({
         <Footer
           affiliation={affiliation}
           brand={brand}
+          goToBrandPage={goToBrandPage}
           interest={interest}
           onClickCustomLink={onClickCustomLink}
-          openBrandModal={openBrandModal}
-          removeInterest={removeInterest}
         />
       </MainContainer>
     </StyledSection>

@@ -21,6 +21,7 @@ const Container = styled.div`
       justify-self: flex-end;
       width: auto;
       margin-top: 0;
+      flex-shrink: 0;
     }
   }
   margin-top: 12px;
@@ -47,41 +48,48 @@ const MainContainer = styled.div`
   }
 `
 
-const Footer = ({ affiliation, brand, onClickCustomLink, removeInterest, openBrandModal, interest }) => {
-  const onClickPromoteNow = useCallback(
-    () => {
-      mixpanel.track('Clicked Promote Now', {
+const Footer = ({ affiliation, brand, goToBrandPage, interest }) => {
+  const track = useCallback(
+    type => {
+      mixpanel.track(type, {
         hostname: window.location.hostname,
         brandId: brand.id,
         brand: brand.name,
       })
-      openBrandModal()
     },
-    [brand.id, brand.name, openBrandModal]
+    [brand.id, brand.name]
+  )
+
+  const onClickPromoteNow = useCallback(
+    () => {
+      track('Clicked Promote Now')
+      goToBrandPage(brand)
+    },
+    [brand, goToBrandPage, track]
   )
 
   const onClickNotifyMe = useCallback(
     () => {
-      mixpanel.track('Clicked Notify Me', {
-        hostname: window.location.hostname,
-        brandId: brand.id,
-        brand: brand.name,
-      })
-      openBrandModal()
+      track('Clicked Notify Me')
+      goToBrandPage(brand)
     },
-    [brand.id, brand.name, openBrandModal]
+    [brand, goToBrandPage, track]
   )
 
   const onClickRemoveNotification = useCallback(
     () => {
-      mixpanel.track('Clicked Remove Notification', {
-        hostname: window.location.hostname,
-        brand: brand.name,
-        brandId: brand.id,
-      })
-      removeInterest(interest)
+      track('Clicked Remove Notification')
+      goToBrandPage(brand)
     },
-    [brand.id, brand.name, interest, removeInterest]
+    [brand, goToBrandPage, track]
+  )
+
+  const onClickGetLink = useCallback(
+    () => {
+      track('Clicked Get Link')
+      goToBrandPage(brand)
+    },
+    [brand, goToBrandPage, track]
   )
 
   return (
@@ -111,7 +119,7 @@ const Footer = ({ affiliation, brand, onClickCustomLink, removeInterest, openBra
               {'Promote'}
             </Button>
           ) : (
-            <Button color="primaryGradient" flex fullWidthOnMobile inline onClick={onClickCustomLink} size="small">
+            <Button color="primaryGradient" flex fullWidthOnMobile inline onClick={onClickGetLink} size="small">
               {'Get link'}
             </Button>
           )}

@@ -4,6 +4,13 @@ const endpoint = window.location.hostname.match(/uptous\.co$/)
 
 export const BASE_API_URL = `${endpoint || ''}/api/v1`
 
+export const CURRENCY_SYMBOLS = {
+  EUR: '€',
+  GBP: '£',
+  CHF: 'CHF',
+  USD: '$',
+}
+
 const mapErrors = json => {
   return json.errors.map(error => error.title).join(', ')
 }

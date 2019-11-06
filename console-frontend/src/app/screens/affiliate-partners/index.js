@@ -1,15 +1,6 @@
 import List from './list'
-import mixpanel from 'ext/mixpanel'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import {
-  apiAffiliationCreate,
-  apiAffiliationsList,
-  apiBrandsList,
-  apiInterestCreate,
-  apiInterestDestroy,
-  apiInterestsList,
-  apiRequest,
-} from 'utils'
+import React, { useCallback, useEffect, useState } from 'react'
+import { apiAffiliationsList, apiBrandsList, apiInterestsList, apiRequest } from 'utils'
 import { useSnackbar } from 'notistack'
 
 const AffiliatePartners = () => {
@@ -18,7 +9,6 @@ const AffiliatePartners = () => {
   const [brandsList, setBrandsList] = useState([])
   const [interests, setInterests] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [selectedBrand, setSelectedBrand] = useState(null)
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -75,78 +65,13 @@ const AffiliatePartners = () => {
     [fetchData]
   )
 
-  const createAffiliation = useCallback(
-    brand => {
-      return (async () => {
-        const { json, errors, requestError } = await apiRequest(apiAffiliationCreate, [{ brandId: brand.id }])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!errors && !requestError) {
-          enqueueSnackbar(`Successfully created affiliation with ${brand.name}`, { variant: 'success' })
-        }
-        await fetchData()
-        return { json, errors, requestError }
-      })()
-    },
-    [enqueueSnackbar, fetchData]
-  )
-
-  const createInterest = useCallback(
-    brand => {
-      return (async () => {
-        const { json, errors, requestError } = await apiRequest(apiInterestCreate, [{ brandId: brand.id }])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!errors && !requestError) {
-          enqueueSnackbar(`You'll get notified for updates on ${brand.name}`, { variant: 'success' })
-        }
-        await fetchData()
-        return { json, errors, requestError }
-      })()
-    },
-    [enqueueSnackbar, fetchData]
-  )
-
-  const selectedAffiliation = useMemo(
-    () =>
-      affiliations.find(affiliation => selectedBrand && affiliation.brand && affiliation.brand.id === selectedBrand.id),
-    [affiliations, selectedBrand]
-  )
-
-  const removeInterest = useCallback(
-    interest => {
-      return (async () => {
-        const { json, errors, requestError } = await apiRequest(apiInterestDestroy, [interest.id])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!errors && !requestError) {
-          mixpanel.track('Removed Interest', {
-            hostname: window.location.hostname,
-            brandId: interest.brand.id,
-            brand: interest.brand.name,
-          })
-          enqueueSnackbar(`Removed notifications for ${interest.brand.name}`, { variant: 'success' })
-        }
-        await fetchData()
-        return json
-      })()
-    },
-    [enqueueSnackbar, fetchData]
-  )
-
   return (
     <List
       affiliations={affiliations}
       animate={animate}
       brandsList={brandsList}
-      createAffiliation={createAffiliation}
-      createInterest={createInterest}
       interests={interests}
       isLoading={isLoading}
-      removeInterest={removeInterest}
-      selectedAffiliation={selectedAffiliation}
-      selectedBrand={selectedBrand}
-      setSelectedBrand={setSelectedBrand}
     />
   )
 }
