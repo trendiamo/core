@@ -1,11 +1,12 @@
 import auth from 'auth'
 import Dialog from 'shared/dialog'
 import ProfileForm from './profile-form'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import SecurityForm from './security-form'
 import ShippingForm from './shipping-form'
 import styled from 'styled-components'
 import { Tab as MuiTab, Tabs } from '@material-ui/core'
+import { StoreContext } from 'ext/hooks/store'
 
 const tabs = auth.isAffiliate() ? ['Profile', 'Shipping', 'Security'] : ['Profile', 'Security']
 
@@ -59,6 +60,10 @@ const DialogContent = ({ handleClose, selectedTab }) => {
 }
 
 const UserSettings = ({ open, setOpen }) => {
+  const { setStore } = useContext(StoreContext)
+
+  useEffect(() => setStore({ setIsUserModalOpen: setOpen }), [setOpen, setStore])
+
   const handleClose = useCallback(() => setOpen(false), [setOpen])
 
   const [selectedTab, setSelectedTab] = useState(0)

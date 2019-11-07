@@ -6,12 +6,12 @@ import affiliateTrackerTermsAndConditions from 'app/screens/affiliate-tracker-te
 import ContentCreation from 'app/screens/content-creation'
 import CookiePolicy from 'app/screens/cookie-policy'
 import ForgotPassword from 'auth/forgot-password'
+import ImpactPointShop from 'app/screens/impact-point-shop'
 import LoginPage from 'auth/login'
 import NotFound from 'app/screens/not-found'
 import PrivacyPolicy from 'app/screens/privacy-policy'
 import React from 'react'
 import RequestPasswordReset from 'auth/forgot-password/request-password-reset'
-import RequestSamples from 'app/screens/request-samples'
 import Revenues from 'app/screens/revenues'
 import routes from 'app/routes'
 import SignupConfirmPage from 'auth/signup/confirm'
@@ -69,10 +69,10 @@ const AppRouter = ({ fetchedAccount, setFetchedAccount }) => {
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute
-        component={RequestSamples}
+        component={ImpactPointShop}
         exact
         fetchedAccount={fetchedAccount}
-        path={routes.requestSamples()}
+        path={routes.impactPointShop()}
         setFetchedAccount={setFetchedAccount}
       />
       <PrivateRoute

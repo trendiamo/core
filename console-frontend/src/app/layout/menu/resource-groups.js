@@ -60,7 +60,7 @@ const affiliateResourceGroups = () => {
         resources.affiliatePartners,
         resources.yourReferrals,
         resources.contentCreation,
-        resources.requestSamples,
+        resources.impactPointShop,
       ],
     },
   }
