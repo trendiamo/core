@@ -17,8 +17,14 @@ const StyledCallout = styled(props => <Callout bordered={false} {...props} />)`
   text-align: center;
 `
 
-const SuccessCard = ({ setShowSuccessCard }) => {
-  const onClick = useCallback(() => setShowSuccessCard(false), [setShowSuccessCard])
+const SuccessCard = ({ setShowSuccessCard, setProductMessage }) => {
+  const onClick = useCallback(
+    () => {
+      setProductMessage('')
+      setShowSuccessCard(false)
+    },
+    [setProductMessage, setShowSuccessCard]
+  )
 
   return (
     <MainCard>

@@ -96,11 +96,11 @@ const resources = {
     class: 'contentCreation',
     route: () => routes.contentCreation(),
   },
-  requestSamples: {
+  impactPointShop: {
     icon: DeliveryPackageIcon,
-    label: 'Request Samples',
-    class: 'requestSamples',
-    route: () => routes.requestSamples(),
+    label: 'Impact Point Shop',
+    class: 'impactPointShop',
+    route: () => routes.impactPointShop(),
   },
   revenues: {
     icon: Ticket,

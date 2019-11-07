@@ -139,8 +139,8 @@ const routes = {
   affiliateTrackerPrivacyPolicy() {
     return '/affiliate-tracker-privacy-policy'
   },
-  requestSamples() {
-    return '/request-samples'
+  impactPointShop() {
+    return '/impact-point-shop'
   },
 }
 
