@@ -34,10 +34,10 @@ module Scraper
 
     private
 
-    def validate_options(&block)
-      add_error("Invalid API key") unless request.env["HTTP_AUTHORIZATION"] == ENV["API_KEY"]
+    def validate_options
+      add_error("Invalid API key") unless settings.development? || request.env["HTTP_AUTHORIZATION"] == ENV["API_KEY"]
 
-      block.call if @errors.empty?
+      yield if block_given? && @errors.empty?
     end
 
     def add_error(error)
