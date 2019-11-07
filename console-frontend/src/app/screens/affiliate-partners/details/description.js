@@ -113,9 +113,11 @@ const SocialLink = ({ href, Icon, type, brand }) => {
   )
 }
 
-const Title = ({ brand }) => (
+const Title = ({ brand, titleRef }) => (
   <TitleContainer>
-    <Typography variant="h4">{brand.name}</Typography>
+    <Typography ref={titleRef} variant="h4">
+      {brand.name}
+    </Typography>
     <SocialLinksContainer>
       <SocialLink brand={brand} href={`https://${brand.websiteHostname}`} Icon={LanguageIcon} type="web" />
       {brand.instagramUrl && (
@@ -127,11 +129,18 @@ const Title = ({ brand }) => (
   </TitleContainer>
 )
 
-const Description = ({ brand }) => {
+const Description = ({
+  brand,
+  headerRef,
+  termsRef,
+  termsAndConditionsExpanded,
+  onTermsAndConditionsChange,
+  setTermsAndConditionsExpanded,
+}) => {
   const tags = useMemo(() => brand.positiveImpactAreaList.concat(brand.productCategoryList), [brand])
 
   return (
-    <StyledSection title={<Header imgSrc={brand.headerImageUrl} />}>
+    <StyledSection title={<Header imgSrc={brand.headerImageUrl} ref={headerRef} />}>
       <MainContainer>
         <SubheaderContainer>
           <BrandLogo brand={brand} />
@@ -146,7 +155,13 @@ const Description = ({ brand }) => {
         </SubheaderContainer>
         <ContentContainer>
           <DescriptionContent dangerouslySetInnerHTML={{ __html: brand.fullDescription }} />
-          <DescriptionExtra brand={brand} />
+          <DescriptionExtra
+            brand={brand}
+            onTermsAndConditionsChange={onTermsAndConditionsChange}
+            setTermsAndConditionsExpanded={setTermsAndConditionsExpanded}
+            termsAndConditionsExpanded={termsAndConditionsExpanded}
+            termsRef={termsRef}
+          />
         </ContentContainer>
       </MainContainer>
     </StyledSection>

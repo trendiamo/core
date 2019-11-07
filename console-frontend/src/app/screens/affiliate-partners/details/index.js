@@ -2,9 +2,9 @@ import CircularProgress from 'shared/circular-progress'
 import CustomLinkModal from 'app/screens/affiliate-partners/custom-link-modal'
 import Description from './description'
 import mixpanel from 'ext/mixpanel'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import routes from 'app/routes'
-import SideBlock from './side-block'
+import SideBlocks from './side-blocks'
 import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import {
@@ -40,6 +40,7 @@ const BrandPage = ({ match }) => {
   const [isCreateLinkClicked, setIsCreateLinkClicked] = useState(false)
   const [isNotificationButtonClicked, setIsNotificationButtonClicked] = useState(false)
   const [isCustomLinkModalOpen, setIsCustomLinkModalOpen] = useState(false)
+  const [termsAndConditionsExpanded, setTermsAndConditionsExpanded] = useState(false)
 
   const appBarContent = useMemo(() => ({ backRoute: routes.affiliatePartners(), title: 'Back' }), [])
   useAppBarContent(appBarContent)
@@ -220,16 +221,42 @@ const BrandPage = ({ match }) => {
     [brand]
   )
 
+  const onTermsAndConditionsChange = useCallback((_el, value) => setTermsAndConditionsExpanded(value), [])
+
+  const termsRef = useRef(null)
+  const headerRef = useRef(null)
+  const timeoutRef = useRef(null)
+
+  const scrollToTermsAndConditions = useCallback(
+    () => {
+      if (!termsRef.current || !headerRef.current) return
+      onTermsAndConditionsChange(null, true)
+      timeoutRef.current = setTimeout(() => {
+        document.scrollingElement.scrollTo({
+          top: termsRef.current.offsetTop + headerRef.current.clientHeight + 150,
+          behaviour: 'smooth',
+        })
+      }, 300)
+    },
+    [onTermsAndConditionsChange]
+  )
+
   if (isLoading) return <CircularProgress />
 
   return (
     <FlexGrid container>
       <Grid item lg={7} md={8} xl={6} xs={12}>
-        <Description brand={brand} />
+        <Description
+          brand={brand}
+          headerRef={headerRef}
+          onTermsAndConditionsChange={onTermsAndConditionsChange}
+          termsAndConditionsExpanded={termsAndConditionsExpanded}
+          termsRef={termsRef}
+        />
       </Grid>
       <Grid item lg={3} md={3} xl={2} xs={12}>
         <SideContainer>
-          <SideBlock
+          <SideBlocks
             affiliation={affiliation}
             brand={brand}
             interest={interest}
@@ -239,6 +266,7 @@ const BrandPage = ({ match }) => {
             onCustomLinkClick={onCustomLinkClick}
             onNotifyMeClick={onNotifyMeClick}
             onRemoveNotificationClick={onRemoveNotificationClick}
+            scrollToTermsAndConditions={scrollToTermsAndConditions}
           />
         </SideContainer>
       </Grid>
