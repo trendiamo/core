@@ -1,6 +1,7 @@
 import CloseIcon from '@material-ui/icons/Close'
 import MuiIconButton from '@material-ui/core/IconButton'
 import omit from 'lodash.omit'
+import Paper from 'shared/paper'
 import React from 'react'
 import styled from 'styled-components'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
@@ -38,6 +39,10 @@ const StyledDialogContent = styled(props => <DialogContent {...omit(props, ['has
   ${({ hasManualPadding }) => hasManualPadding && 'padding: 0;'}
   ${({ flexContent }) =>
     flexContent && 'display: flex;'}
+    width: 100%;
+  > div {
+    width: 100%;
+  }
 `
 
 const TitleContainer = styled.div`
@@ -50,6 +55,14 @@ const Title = ({ title }) => {
   }
   return title
 }
+
+const StyledPaper = styled(Paper)`
+  border-radius: 0;
+  align-items: normal;
+  @media (min-width: 960px) {
+    ${showUpToUsBranding() && 'border-radius: 6px;'}
+  }
+`
 
 const Dialog = ({
   open,
@@ -70,7 +83,7 @@ const Dialog = ({
     onClose={handleClose}
     onKeyUp={onKeyUp}
     open={open}
-    PaperProps={showUpToUsBranding() ? { style: { borderRadius: '6px' } } : {}}
+    PaperComponent={StyledPaper}
     {...props}
   >
     <StyledIconButton onClick={handleClose}>
