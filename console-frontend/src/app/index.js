@@ -6,6 +6,7 @@ import faviconUptous from 'assets/img/favicon-uptous.png'
 import JssProvider from 'react-jss/lib/JssProvider'
 import Layout from 'app/layout'
 import React, { useEffect, useState } from 'react'
+import SnackbarProvider from './snackbar-provider'
 import theme from 'app/theme'
 import { apiGetCsrfToken, apiRequest, changeFavicon, loadFonts, showUpToUsBranding } from 'utils'
 import { create } from 'jss'
@@ -14,7 +15,6 @@ import { createGlobalStyle } from 'styled-components'
 import { CssBaseline } from '@material-ui/core'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 import { Router } from 'react-router-dom'
-import { SnackbarProvider } from 'notistack'
 import { StoreProvider } from 'ext/hooks/store'
 import { useSnackbar } from 'notistack'
 
@@ -65,8 +65,6 @@ const AppBase = () => {
   )
 }
 
-const anchorOrigin = { vertical: 'bottom', horizontal: 'right' }
-
 /* eslint-disable react/jsx-max-depth */
 export const App = ({ history }) => (
   <StoreProvider>
@@ -74,7 +72,7 @@ export const App = ({ history }) => (
       <JssProvider generateClassName={generateClassName} jss={jss}>
         <MuiThemeProvider theme={theme}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <SnackbarProvider anchorOrigin={anchorOrigin} maxSnack={3}>
+            <SnackbarProvider>
               <AppBase />
             </SnackbarProvider>
           </MuiPickersUtilsProvider>
