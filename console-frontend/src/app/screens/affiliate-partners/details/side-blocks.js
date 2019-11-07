@@ -107,7 +107,7 @@ const TermsAcceptanceBox = ({
   )
 }
 
-const Description = ({
+const SideBlocks = ({
   brand,
   isNotificationButtonClicked,
   isCreateLinkClicked,
@@ -242,4 +242,4 @@ const Description = ({
   )
 }
 
-export default Description
+export default SideBlocks

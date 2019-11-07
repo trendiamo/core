@@ -1,5 +1,5 @@
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import React, { useCallback, useRef, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography } from '@material-ui/core'
 
@@ -23,12 +23,7 @@ const StyledExpansionPanel = styled(ExpansionPanel)`
 `
 
 /* eslint-enable react/jsx-max-depth */
-const TermsAndConditions = ({ brand }) => {
-  const termsRef = useRef(null)
-  const [expanded, setExpanded] = useState(false)
-
-  const onChange = useCallback((_el, value) => setExpanded(value), [])
-
+const TermsAndConditions = ({ brand, expanded, onChange, termsRef }) => {
   return (
     <TermsContainer ref={termsRef}>
       <StyledExpansionPanel expanded={expanded} onChange={onChange}>
@@ -43,10 +38,17 @@ const TermsAndConditions = ({ brand }) => {
   )
 }
 
-const DescriptionExtra = ({ brand }) => {
+const DescriptionExtra = ({ brand, termsAndConditionsExpanded, onTermsAndConditionsChange, termsRef }) => {
   if (brand.isPreview) return null
 
-  return <TermsAndConditions brand={brand} />
+  return (
+    <TermsAndConditions
+      brand={brand}
+      expanded={termsAndConditionsExpanded}
+      onChange={onTermsAndConditionsChange}
+      termsRef={termsRef}
+    />
+  )
 }
 
 export default DescriptionExtra
