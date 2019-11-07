@@ -13,6 +13,10 @@ const StyledCheckMarkIconIcon = styled(CheckMarkIcon)`
   }
 `
 
+const StyledCallout = styled(props => <Callout bordered={false} {...props} />)`
+  text-align: center;
+`
+
 const SuccessCard = ({ setShowSuccessCard }) => {
   const onClick = useCallback(() => setShowSuccessCard(false), [setShowSuccessCard])
 
@@ -27,11 +31,11 @@ const SuccessCard = ({ setShowSuccessCard }) => {
           }
         </Typography>
       </CardContent>
-      <Callout>
-        <Button color="primaryGradient" onClick={onClick}>
+      <StyledCallout>
+        <Button color="white" onClick={onClick}>
           {'Request Another Sample'}
         </Button>
-      </Callout>
+      </StyledCallout>
     </MainCard>
   )
 }

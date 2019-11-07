@@ -69,8 +69,8 @@ const Revenues = ({ history }) => {
       Actions: affiliations.length > 0 && (
         <Actions maxDate={maxDate} minDate={minDate} setDate={setDate} value={date} />
       ),
-      sticky: false,
       title: 'Your Revenues',
+      sticky: false,
     }),
     [affiliations, date, maxDate, minDate]
   )

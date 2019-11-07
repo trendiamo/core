@@ -1,5 +1,6 @@
 import Button from 'shared/button'
 import Canvas from './canvas'
+import Coin from 'shared/coin'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback } from 'react'
 import routes from 'app/routes'
@@ -14,6 +15,7 @@ const Container = styled.div`
   overflow: hidden;
   height: 175px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
 `
 
 const ContentContainer = styled.div`
@@ -30,19 +32,22 @@ const ContentContainer = styled.div`
   user-select: none;
 `
 
-const Description = styled(Typography)`
+const Description = styled(props => <Typography variant="subtitle1" {...props} />)`
   white-space: normal;
   text-align: center;
 `
 
-const Price = styled.div`
-  font-size: 26px;
-  color: #0f7173;
-  font-weight: 900;
-  font-family: Lato, 'Helvetica', 'Arial', sans-serif;
+const PriceContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
 `
 
-const priceForReferral = 10
+const Price = styled(props => <Typography variant="subtitle1" {...props} />)`
+  color: #ffb652;
+  font-size: 20px;
+  margin-left: 8px;
+`
 
 const Content = withRouter(({ history }) => {
   const onClick = useCallback(
@@ -55,9 +60,12 @@ const Content = withRouter(({ history }) => {
 
   return (
     <ContentContainer>
-      <Description variant="subtitle1">{'Refer a friend to become a promoter and earn'}</Description>
-      <Price>{`${priceForReferral}€`}</Price>
-      <Button color="golden" onClick={onClick} size="small">
+      <Description>{'Refer a friend to become a promoter and earn'}</Description>
+      <PriceContainer>
+        <Coin />
+        <Price>{50}</Price>
+      </PriceContainer>
+      <Button color="white" onClick={onClick} size="small">
         {'Get Started'}
       </Button>
     </ContentContainer>

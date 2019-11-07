@@ -15,21 +15,15 @@ const StyledIconButton = styled(MuiIconButton)`
   right: 4px;
   top: 4px;
   z-index: 1;
-  ${showUpToUsBranding() &&
-    `
-    background: #8799a4;
-    border-radius: 0px;
-    padding: 6px;
-    top: 0px;
-    right: 0px;
-    &:hover {
-      background: #8799a4;
-    }
-  `}
 `
 
-const CloseIconStyled = styled(CloseIcon)`
-  ${showUpToUsBranding() && 'fill: #fff; width: 30px; height: 30px;'}
+const StyledCloseIcon = styled(CloseIcon)`
+  ${showUpToUsBranding() &&
+    `
+    fill: #929398;
+    width: 30px;
+    height: 30px;
+  `}
 `
 
 const DialogSubtitle = styled.span`
@@ -76,11 +70,11 @@ const Dialog = ({
     onClose={handleClose}
     onKeyUp={onKeyUp}
     open={open}
-    PaperProps={showUpToUsBranding() ? { style: { borderRadius: '0px' } } : {}}
+    PaperProps={showUpToUsBranding() ? { style: { borderRadius: '6px' } } : {}}
     {...props}
   >
     <StyledIconButton onClick={handleClose}>
-      <CloseIconStyled />
+      <StyledCloseIcon />
     </StyledIconButton>
     <TitleContainer hasManualPadding={hasManualPadding}>{title && <Title title={title} />}</TitleContainer>
     {subtitle && <DialogSubtitle>{subtitle}</DialogSubtitle>}

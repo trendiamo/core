@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import TagElement from 'shared/form-elements/tag'
+import Tag from 'shared/tag'
 
 const Container = styled.div`
   border-radius: 8px;
@@ -11,12 +11,6 @@ const Container = styled.div`
   width: 100%;
   margin-top: 16px;
 `
-
-const Tag = ({ tag, onTagClick }) => {
-  const onClick = useCallback(() => onTagClick(tag), [onTagClick, tag])
-
-  return <TagElement color="primary" disabled={!tag.active} key={tag.id} label={tag.name} onClick={onClick} />
-}
 
 const TagSelector = ({ tags, setTags }) => {
   const onTagClick = useCallback(
@@ -32,7 +26,7 @@ const TagSelector = ({ tags, setTags }) => {
   return (
     <Container>
       {tags.map(tag => (
-        <Tag key={tag.id} onTagClick={onTagClick} setTags={setTags} tag={tag} />
+        <Tag active={tag.active} clickable key={tag.id} label={tag.name} onTagClick={onTagClick} tag={tag} />
       ))}
     </Container>
   )

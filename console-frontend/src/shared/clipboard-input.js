@@ -1,6 +1,6 @@
 import Button from 'shared/button'
 import copy from 'clipboard-copy'
-import CopyIcon from '@material-ui/icons/FileCopy'
+import CopyIcon from '@material-ui/icons/FileCopyOutlined'
 import DoneIcon from '@material-ui/icons/Done'
 import omit from 'lodash.omit'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -13,9 +13,9 @@ const Container = styled(props => <form {...omit(props, ['isCopied', 'background
   ${({ isCopied }) => !isCopied && 'background-clip: padding-box;'}
   border-color: ${({ isCopied }) =>
     isCopied ? theme.customPalette.success.main : showUpToUsBranding() ? 'transparent' : 'rgba(239, 239, 242)'};
-  border-radius: ${showUpToUsBranding() ? '0px' : '3px'};
+  border-radius: ${showUpToUsBranding() ? '6px' : '3px'};
   border-style: solid;
-  border-width: 1px;
+  border-width: 2px;
   display: flex;
   height: 100%;
   overflow: hidden;
@@ -26,24 +26,33 @@ const Container = styled(props => <form {...omit(props, ['isCopied', 'background
 
 const TextInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteable', 'backgroundColor'])} />)`
   padding-left: 0.8rem;
+  transition: margin 0.4s ease-in-out;
   background-color: ${({ backgroundColor }) => backgroundColor || '#fff'};
+  border-radius: ${({ pasteable }) => (pasteable ? '6px' : '6px 0 0 6px')};
+
+  ${showUpToUsBranding() && 'color: #272932;'}
   ${({ pasteable, wasCopied }) =>
     pasteable && !wasCopied && 'margin-right: 14px;'}
-  transition: margin 0.4s ease-in-out;
-  ${showUpToUsBranding() && 'color: #272932;'}
+
   input {
-    padding: 6px 0;
+    padding: 8px;
   }
 `
 
-const CopyButton = styled(props => <Button {...omit(props, ['pasteable'])} />)`
-  height: 100%;
-  ${({ pasteable }) => (pasteable ? 'width: 120px;' : '')}
-  box-shadow: none;
-  border-radius: 0;
+const CopyButtonContainer = styled.div`
+  position: relative;
+  background-color: ${({ isCopied }) =>
+    isCopied ? theme.customPalette.success.main : showUpToUsBranding() ? 'transparent' : 'rgba(239, 239, 242)'};
 `
 
-const CopyButtonContainer = styled.div``
+const CopyButton = styled(props => <Button {...omit(props, ['pasteable', 'wasCopied'])} />)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  box-shadow: none;
+  ${({ pasteable, wasCopied }) => pasteable && !wasCopied && 'width: 120px;'}
+`
 
 const ClipboardInput = ({
   backgroundColor,
@@ -123,7 +132,7 @@ const ClipboardInput = ({
         wasCopied={wasCopied}
       />
       <Tooltip title={wasCopied ? 'Copied!' : pasteable ? 'Get Link' : 'Copy to Clipboard'}>
-        <CopyButtonContainer>
+        <CopyButtonContainer isCopied={isCopied}>
           <CopyButton
             color={isCopied ? 'success' : type || 'primaryGradient'}
             disabled={isLoading}
@@ -133,8 +142,9 @@ const ClipboardInput = ({
             size={size}
             type="submit"
             variant="contained"
+            wasCopied={wasCopied}
           >
-            {isCopied ? <DoneIcon /> : pasteable && !wasCopied ? 'Get Link' : <CopyIcon />}
+            {isCopied ? <DoneIcon /> : pasteable && !wasCopied ? 'Create Link' : <CopyIcon />}
           </CopyButton>
         </CopyButtonContainer>
       </Tooltip>

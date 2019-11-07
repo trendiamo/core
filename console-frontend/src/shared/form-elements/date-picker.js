@@ -5,10 +5,16 @@ import { ArrowDropDown } from '@material-ui/icons'
 import { DatePicker as MuiDatePicker } from 'material-ui-pickers'
 import { showUpToUsBranding } from 'utils'
 
+const StyledButton = styled(Button)`
+  padding: 4px 16px;
+`
+
 const DatePickerValue = styled.div`
   ${!showUpToUsBranding() &&
-    `color: #ff6641;
-    padding-left: 5px;`}
+    `
+    color: #ff6641;
+    padding-left: 5px;
+  `}
 `
 
 const StyledArrowDropDown = styled(ArrowDropDown)`
@@ -18,15 +24,16 @@ const StyledArrowDropDown = styled(ArrowDropDown)`
     : 'fill:#ff6641; margin-right: -4px;'}
 `
 
-const DatePickerComponent = ({ onClick, value }) => (
-  <Button color={showUpToUsBranding() ? 'whiteBg' : 'white'} inline onClick={onClick} variant="contained">
+const DatePickerComponent = ({ color, onClick, value }) => (
+  <StyledButton color={color} inline onClick={onClick}>
     <DatePickerValue>{value}</DatePickerValue>
     <StyledArrowDropDown />
-  </Button>
+  </StyledButton>
 )
 
-const DatePicker = ({ value, maxDate, minDate, setDate }) => (
+const DatePicker = ({ color = 'whiteBg', maxDate, minDate, setDate, value }) => (
   <MuiDatePicker
+    color={color}
     format="MMMM"
     maxDate={maxDate}
     minDate={minDate}

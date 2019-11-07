@@ -1,4 +1,3 @@
-import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useState } from 'react'
@@ -10,60 +9,33 @@ const urlInputProps = { pattern: 'https?://.+' }
 
 const Container = styled.div`
   background: #e7ecef;
-  padding: 24px;
+  padding: 40px;
   display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  justify-content: center;
-  @media (min-height: 960px) {
-    padding: 20px 60px 20px;
-  }
-`
-
-const ClipboardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  > :first-child {
-    margin-bottom: 1rem;
+
+  @media (min-height: 960px) {
+    padding: 30px 80px;
   }
 `
 
 const StyledClipboardInput = styled(ClipboardInput)`
+  height: 52px;
   width: 100%;
-  > div:first-child {
-    padding-left: 0;
-    background-color: white;
-  }
-  input {
-    padding: 6px;
-  }
-  > div,
-  > div > div {
-    height: 48px;
-  }
 `
 
 const Footer = ({ affiliation }) => {
-  const { enqueueSnackbar } = useSnackbar()
-
   const [isLoading, setIsLoading] = useState(false)
-  const [isCustomLink, setIsCustomLink] = useState(false)
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const createAffiliateLink = useCallback(
     async text => {
       const { json, errors, requestError } = await apiRequest(apiAffiliateLinkCreate, [
         { affiliationId: affiliation.id, url: `${text}/?aftk=${affiliation.token}` },
       ])
-      if (requestError) {
-        enqueueSnackbar(requestError, { variant: 'error' })
-        return
-      }
-      if (errors) {
-        enqueueSnackbar(errors.message, { variant: 'error' })
-        return
+      if (requestError || errors) {
+        return enqueueSnackbar(requestError || errors.message, { variant: 'error' })
       }
       return json.url
     },
@@ -73,18 +45,6 @@ const Footer = ({ affiliation }) => {
   const onCopyCustomLink = useCallback(
     text => {
       mixpanel.track('Copied Custom Link', {
-        hostname: window.location.hostname,
-        text,
-        brandId: affiliation.brand.id,
-        brand: affiliation.brand.name,
-      })
-    },
-    [affiliation.brand.id, affiliation.brand.name]
-  )
-
-  const onCopyDefaultLink = useCallback(
-    text => {
-      mixpanel.track('Copied Default Link', {
         hostname: window.location.hostname,
         text,
         brandId: affiliation.brand.id,
@@ -104,41 +64,17 @@ const Footer = ({ affiliation }) => {
     [createAffiliateLink]
   )
 
-  const onCancelClick = useCallback(() => setIsCustomLink(false), [])
-  const onCustomClick = useCallback(() => setIsCustomLink(true), [])
-
   return (
     <Container>
-      <ClipboardContainer>
-        {isCustomLink ? (
-          <>
-            <ClipboardInput
-              inputProps={urlInputProps}
-              isLoading={isLoading}
-              mixFunction={mixFunction}
-              onCopy={onCopyCustomLink}
-              pasteable
-              placeholder="Paste link here..."
-              size="large"
-            />
-            <Button color="whiteBg" onClick={onCancelClick} size="small">
-              {'Get default link'}
-            </Button>
-          </>
-        ) : (
-          <>
-            <StyledClipboardInput
-              backgroundColor="#e7ecef"
-              onCopy={onCopyDefaultLink}
-              size="large"
-              text={affiliation.defaultAffiliateLink}
-            />
-            <Button color="whiteBg" onClick={onCustomClick} size="small">
-              {'Get custom link'}
-            </Button>
-          </>
-        )}
-      </ClipboardContainer>
+      <StyledClipboardInput
+        inputProps={urlInputProps}
+        isLoading={isLoading}
+        mixFunction={mixFunction}
+        onCopy={onCopyCustomLink}
+        pasteable
+        placeholder="Paste link here..."
+        size="large"
+      />
     </Container>
   )
 }

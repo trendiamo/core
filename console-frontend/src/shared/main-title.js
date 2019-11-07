@@ -25,6 +25,6 @@ const StyledTypography = styled(Typography)`
   }
 `
 
-const MainTitle = ({ titleRef, ...props }) => <StyledTypography ref={titleRef} variant="h4" {...props} />
+const MainTitle = ({ titleRef, ...props }) => <StyledTypography ref={titleRef} variant="h3" {...props} />
 
 export default MainTitle

@@ -42,7 +42,7 @@ const StyledTableBody = styled(TableBody)`
     background-color: #f5f5f5;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: ${showUpToUsBranding() ? '#ffb401' : '#ff6641'};
+    background-color: ${showUpToUsBranding() ? '#376996' : '#ff6641'};
   }
 `
 

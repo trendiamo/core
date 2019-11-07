@@ -17,7 +17,7 @@ const ContentBody = styled.div`
 const DialogContent = () => (
   <ContentContainer>
     <img alt="" src={emojiClapImage} />
-    <Typography variant="h4">{"Congrats, it's done!"}</Typography>
+    <Typography variant="h3">{"Congrats, it's done!"}</Typography>
     <Typography variant="h6">{"Your first seller is created. Let's keep going?"}</Typography>
     <ContentBody>
       <Typography variant="body1">{'You can now use this seller in your modules.'}</Typography>

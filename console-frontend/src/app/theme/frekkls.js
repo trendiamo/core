@@ -97,7 +97,7 @@ const typography = {
   caption: {
     letterSpacing: '0.4px',
   },
-  h4: {
+  h3: {
     color: '#3a3a3a',
     fontSize: '33.4px',
     letterSpacing: '0.3px',

@@ -18,12 +18,10 @@ const Container = styled.div`
 const SectionContent = styled(props => <div {...omit(props, ['foldable'])} />)`
   padding: ${({ foldable }) => (!foldable ? (showUpToUsBranding() ? '12px' : '16px 24px') : '0')};
   height: 100%;
-  @media (min-width: 960px) {
-    ${({ foldable }) => !foldable && showUpToUsBranding() && 'padding: 16px;'}
-  }
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: ${({ foldable }) => (!foldable ? (showUpToUsBranding() ? '16px' : '16px 24px') : '0')};
 `
 
 const Section = ({

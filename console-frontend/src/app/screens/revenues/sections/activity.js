@@ -4,8 +4,8 @@ import { Line } from 'react-chartjs-2'
 
 const createChartGradient = ctx => {
   const gradient = ctx.createLinearGradient(150, 0, 150, 300)
-  gradient.addColorStop(0, '#ffc842')
-  gradient.addColorStop(1, 'rgba(255, 200, 67, 0)')
+  gradient.addColorStop(0, '#0f7173')
+  gradient.addColorStop(1, 'rgba(15, 113, 115, 0.14)')
   return gradient
 }
 
@@ -13,9 +13,9 @@ const config = gradient => ({
   fill: true,
   lineTension: 0.1,
   backgroundColor: gradient,
-  borderColor: '#ffc842',
+  borderColor: '#0f7173',
   pointBorderColor: '#ffffff',
-  pointBackgroundColor: '#ffc842',
+  pointBackgroundColor: '#0f7173',
 })
 
 const options = {

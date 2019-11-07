@@ -16,14 +16,14 @@ const uptousButtonSizes = {
 }
 
 const IconButton = styled(MuiIconButton)`
-  ${showUpToUsBranding()
-    ? `
-    border-radius: 0;
+  ${showUpToUsBranding() &&
+    `
     background: #e7ecef;
     color: #0f7173;
-    :hover { background: #e7ecef; }
-    `
-    : ''}
+    &:hover {
+      background: #e7ecef;
+    }
+  `}
 
   ${({ size }) =>
     showUpToUsBranding() && uptousButtonSizes['mobile'][size || 'medium']}

@@ -26,6 +26,7 @@ const FlexGrid = styled(Grid)`
 const SideContainer = styled.div`
   margin-top: 12px;
   width: 100%;
+
   @media (min-width: 960px) {
     margin-top: 0;
   }
@@ -40,20 +41,12 @@ const BrandPage = ({ match }) => {
   const [isNotificationButtonClicked, setIsNotificationButtonClicked] = useState(false)
   const [isCustomLinkModalOpen, setIsCustomLinkModalOpen] = useState(false)
 
-  const appBarContent = useMemo(() => ({ backRoute: routes.affiliatePartners(), title: brand ? brand.name : '' }), [
-    brand,
-  ])
-
+  const appBarContent = useMemo(() => ({ backRoute: routes.affiliatePartners(), title: 'Back' }), [])
   useAppBarContent(appBarContent)
 
-  const brandId = useMemo(
-    () => {
-      return match.params.brandId
-    },
-    [match.params.brandId]
-  )
-
   const { enqueueSnackbar } = useSnackbar()
+
+  const brandId = useMemo(() => match.params.brandId, [match.params.brandId])
 
   const fetchBrand = useCallback(
     async () => {
@@ -96,6 +89,7 @@ const BrandPage = ({ match }) => {
     brand,
     interests,
   ])
+
   const affiliation = useMemo(
     () => affiliations && affiliations.find(affiliation => brand && affiliation.brand.id === brand.id),
     [affiliations, brand]

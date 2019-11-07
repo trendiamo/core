@@ -1,12 +1,12 @@
 import Button from 'shared/button'
 import ClipboardInput from 'shared/clipboard-input'
+import Coint from 'shared/coin'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import { Checkbox } from 'shared/form-elements'
 import { CURRENCY_SYMBOLS } from 'utils/shared'
-import { ImpactPoint } from 'shared/uptous'
 import { Typography } from '@material-ui/core'
 
 const CommissionRate = styled(Typography)`
@@ -16,6 +16,7 @@ const CommissionRate = styled(Typography)`
 `
 
 const StyledClipboardInput = styled(ClipboardInput)`
+  height: 52px;
   margin-bottom: 10px;
 `
 
@@ -38,7 +39,7 @@ const TextContainer = styled.div`
   }
 `
 
-const ImpactPointValue = styled(Typography)`
+const CoinValue = styled(Typography)`
   color: #ffb652;
   font-weight: 700;
   margin: 0 6px;
@@ -52,6 +53,11 @@ const TermsAcceptanceContainer = styled.div`
   display: flex;
   align-items: flex-start;
   margin-top: 10px;
+
+  label {
+    color: #272932;
+    font-size: 14px;
+  }
 `
 
 const ButtonContainer = styled.div`
@@ -61,6 +67,7 @@ const ButtonContainer = styled.div`
 `
 
 const LabelLink = styled.a`
+  color: #0f7173;
   text-decoration: underline;
 `
 
@@ -146,8 +153,8 @@ const Description = ({
           <ImpactRewardContainer>
             {brand.impactRewards.map(impactReward => (
               <TextContainer key={impactReward.id}>
-                <ImpactPoint />
-                <ImpactPointValue variant="body2">{impactReward.impactPointsInCents / 100}</ImpactPointValue>
+                <Coint />
+                <CoinValue variant="body2">{impactReward.impactPointsInCents / 100}</CoinValue>
                 <Typography variant="body2">{`after ${impactReward.targetRevenueInCents / 100 || 0}${
                   CURRENCY_SYMBOLS[impactReward.targetRevenueCurrency.toUpperCase()]
                 } revenue`}</Typography>

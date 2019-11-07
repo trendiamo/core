@@ -12,10 +12,16 @@ import { ReactComponent as WhatsAppIcon } from 'assets/icons/whatsapp.svg'
 const linkBase = `${window.location.origin}/signup`
 
 const StyledButton = styled(Button)`
+  min-width: 0;
+  padding: 6px 14px;
   margin: 5px;
+
   svg {
     width: 20px;
     height: 20px;
+    fill: #0f7173;
+  }
+  &:hover svg {
     fill: #fff;
   }
 `
@@ -37,7 +43,7 @@ const SharingButtonsContainer = styled.div`
 
 const SharingButton = ({ title, Icon, link }) => (
   <StyledLink aria-label={title} href={link}>
-    <StyledButton color="primaryGradient" fullWidth size="small">
+    <StyledButton color="whiteBg" fullWidth size="small">
       <Icon />
       {title}
     </StyledButton>
@@ -69,7 +75,7 @@ const SharingButtons = ({ referralCode }) => {
   return (
     <MainContainer>
       <Typography align="center" variant="h5">
-        {'Share on:'}
+        {'Share on'}
       </Typography>
       <SharingButtonsContainer>
         <SharingButton

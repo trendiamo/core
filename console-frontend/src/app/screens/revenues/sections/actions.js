@@ -32,7 +32,7 @@ const Actions = ({ maxDate, minDate, setDate, value, width, disabled }) => {
       </IconButton>
       <Menu anchorEl={anchorEl} id="actions-menu" keepMounted onClose={handleClose} open={!!anchorEl}>
         <MenuItem dense disableGutters onClick={handleClose}>
-          <DatePicker maxDate={maxDate} minDate={minDate} setDate={setDate} value={value} />
+          <DatePicker color="primaryText" maxDate={maxDate} minDate={minDate} setDate={setDate} value={value} />
         </MenuItem>
       </Menu>
     </>

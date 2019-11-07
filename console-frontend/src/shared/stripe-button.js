@@ -53,7 +53,6 @@ const StripeButton = ({ hasStripeAccount, ...props }) => {
           flex
           fullWidthOnMobile
           onClick={hasStripeAccount ? goToStripeDashboard : connectWithStripe}
-          size="large"
           {...props}
         >
           {hasStripeAccount ? 'Go to stripe' : 'Connect with stripe'}

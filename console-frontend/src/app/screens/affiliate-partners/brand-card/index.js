@@ -35,6 +35,7 @@ const Image = styled.img`
   user-select: none;
   width: 100%;
   height: 100%;
+  border-radius: 6px 6px 0 0;
 `
 
 const MainContainer = styled.div`
@@ -50,6 +51,7 @@ const StyledBrandLogo = styled(BrandLogo)`
   top: -68px;
   left: 0;
   cursor: pointer;
+  border-radius: 6px;
   @media (min-width: 960px) {
     top: -70px;
   }

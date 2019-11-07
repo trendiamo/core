@@ -6,17 +6,21 @@ import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
-  align-items: normal;
-  display: flex;
-  justify-content: space-between;
   width: 100%;
+  margin-top: 16px;
+  display: flex;
   flex-direction: column;
+  align-items: normal;
+  justify-content: space-between;
+
   > div:first-child {
     width: auto;
   }
+
   > div:last-child {
     width: 100%;
     margin-top: 10px;
+
     @media (min-width: 960px) {
       justify-self: flex-end;
       width: auto;
@@ -24,25 +28,26 @@ const Container = styled.div`
       flex-shrink: 0;
     }
   }
-  margin-top: 12px;
+
   @media (min-width: 960px) {
-    margin-top: 16px;
     align-items: center;
     flex-direction: row;
   }
 `
 
 const CommissionRate = styled(Typography)`
+  margin-right: 4px;
+
   span {
-    margin-left: 8px;
-    color: #0f7173;
+    margin-left: 4px;
+    font-weight: 500;
   }
-  margin-right: 10px;
 `
 
 const MainContainer = styled.div`
   width: 100%;
   margin-top: 12px;
+
   @media (min-width: 960px) {
     margin-top: 16px;
   }
@@ -116,7 +121,7 @@ const Footer = ({ affiliation, brand, goToBrandPage, interest }) => {
             </Button>
           ) : !affiliation ? (
             <Button color="primaryGradient" flex fullWidthOnMobile inline onClick={onClickPromoteNow} size="small">
-              {'Promote'}
+              {'Promote now'}
             </Button>
           ) : (
             <Button color="primaryGradient" flex fullWidthOnMobile inline onClick={onClickGetLink} size="small">

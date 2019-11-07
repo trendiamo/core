@@ -26,7 +26,7 @@ const StyledButton = styled(Button)`
 const NotFound = ({ navigateToRootPage }) => (
   <>
     <BackgroundImage src={notFoundImage} />
-    <Typography gutterBottom variant="h4">
+    <Typography gutterBottom variant="h3">
       {'Oops! This page is not available'}
     </Typography>
     <Typography variant="body2">
