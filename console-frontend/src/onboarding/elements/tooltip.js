@@ -16,7 +16,7 @@ const Tooltip = ({ align, body, toStage1, create, title, smallHeader, nextRoute,
   return (
     <Container align={align || 'left'}>
       <SmallHeader variant="overline">{smallHeader || `Step ${index + 1}`}</SmallHeader>
-      <Header variant="h4">{title}</Header>
+      <Header variant="h3">{title}</Header>
       <Body variant="body2">{body}</Body>
       <Button buttonConfig={primaryProps} create={create} nextRoute={nextRoute} onboarding={onboarding} />
     </Container>

@@ -13,7 +13,10 @@ const StyledPaper = styled(props => <Paper {...omit(props, ['foldable'])} />)`
   }
   ${({ foldable }) => foldable && 'padding-top: 16px;'}
   ${showUpToUsBranding() &&
-    'border-radius: 0; box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.07);'}
+    `
+    border-radius: 6px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.07);
+  `}
 `
 
 export default StyledPaper

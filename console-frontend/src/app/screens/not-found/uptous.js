@@ -2,7 +2,7 @@ import Button from 'shared/button'
 import Link from 'shared/link'
 import React from 'react'
 import styled from 'styled-components'
-import { ReactComponent as MagnifierIcon } from 'assets/icons/magnifier.svg'
+import { ReactComponent as LevelCrossingIcon } from 'assets/icons/level-crossing.svg'
 import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
@@ -13,19 +13,19 @@ const Container = styled.div`
   flex-grow: 1;
   text-align: center;
   margin: auto;
+
   @media (min-width: 960px) {
     padding: 50px;
   }
 `
 
 const StyledIcon = styled(({ icon, ...props }) => React.createElement(icon, props))`
-  width: 65px;
-  height: 65px;
   margin-bottom: 30px;
 `
 
 const StyledButton = styled(Button)`
   margin-top: 14px;
+
   @media (min-width: 960px) {
     margin-top: 30px;
   }
@@ -33,7 +33,7 @@ const StyledButton = styled(Button)`
 
 const NotFound = ({ navigateToRootPage }) => (
   <Container>
-    <StyledIcon icon={MagnifierIcon} />
+    <StyledIcon icon={LevelCrossingIcon} />
     <Typography variant="caption">{"Oops, we couldn't find a page with that link!"}</Typography>
     <Typography variant="caption">
       {'You can report a problem if you suspect a bug, '}

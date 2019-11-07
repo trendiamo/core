@@ -5,7 +5,7 @@ import { Container, Description, Header, Image, StyledButton } from './component
 const BlankState = ({ title, imageSource, description, route, onClick, buttonText }) => (
   <Container>
     {imageSource && <Image alt="" src={imageSource} />}
-    {title && <Header variant="h4">{title}</Header>}
+    {title && <Header variant="h3">{title}</Header>}
     {description && <Description variant="body1">{description}</Description>}
     {route && (
       <Link to={route}>

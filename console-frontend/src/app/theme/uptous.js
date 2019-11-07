@@ -24,6 +24,7 @@ const typography = {
     lineHeight: 1.2,
   },
   button: {
+    borderRadius: '6px',
     color: 'rgba(255, 255, 255, 0.8)',
     fontWeight: '700',
     textTransform: 'uppercase',
@@ -34,10 +35,16 @@ const typography = {
     fontFamily: 'Lato, "Helvetica", "Arial", sans-serif',
     lineHeight: 1.2,
   },
-  h4: {
+  h3: {
     color: '#3a3a3a',
     fontSize: '33.4px',
     letterSpacing: '0.3px',
+  },
+  h4: {
+    color: '#3a3a3a',
+    fontSize: '24px',
+    fontWeight: 900,
+    margin: '6px 0px',
   },
   h5: {
     color: '#272932',
@@ -75,7 +82,7 @@ const palette = {
   },
   secondary: {
     contrastText: '#fff',
-    main: '#ffaa00', // weird color is temporary here: make sure we're not using this yet.
+    main: '#376996',
   },
   text: {
     disabled: '#999',
@@ -106,12 +113,10 @@ const buttons = {
   error: {
     backgroundColor: '#F05C5D',
     color: '#fff',
-    borderRadius: 0,
     boxShadow: 'none',
     hover: {
       backgroundColor: '#F05C5D',
       color: '#fff',
-      borderRadius: 0,
       boxShadow: 'none',
     },
   },
@@ -119,80 +124,58 @@ const buttons = {
     backgroundImage: 'none',
     backgroundColor: '#B7C2C9',
     color: '#fff',
-    borderRadius: 0,
   },
   primaryGradient: {
     backgroundColor: '#0f7173',
     color: '#fff',
-    borderRadius: 0,
     boxShadow: 'none',
     hover: {
       backgroundImage: 'none',
       backgroundColor: '#0f7173',
       color: '#fff',
-      borderRadius: 0,
       boxShadow: 'none',
     },
   },
   oAuthPrimary: {
     background: '#fff',
     color: '#272932',
-    borderRadius: 0,
     border: '2px solid #c3c3c3',
     boxShadow: 'none',
     hover: {
       background: '#fff',
       color: '#272932',
-      borderRadius: 0,
       border: '2px solid #c3c3c3',
       boxShadow: 'none',
     },
   },
   white: {
-    background: '#e7ecef',
+    backgroundColor: 'transparent',
+    border: '3px solid #0f7173',
+    boxShadow: 'none',
     color: '#0f7173',
-    borderRadius: 0,
-    boxShadow: 'none',
+    lineHeight: 1.4,
+    transition: 'all 0.2s ease-in-out',
     hover: {
-      color: '#0f7173',
-      background: '#e7ecef',
+      backgroundColor: '#0f7173',
+      border: '3px solid #0f7173',
       boxShadow: 'none',
-      borderRadius: 0,
-    },
-  },
-  whiteBg: {
-    background: '#fff',
-    color: '#0f7173',
-    borderRadius: 0,
-    boxShadow: 'none',
-    hover: {
-      color: '#0f7173',
-      background: '#fff',
-      boxShadow: 'none',
-      borderRadius: 0,
-    },
-  },
-  golden: {
-    color: '#fff',
-    background: '#ffb400',
-    borderRadius: 0,
-    boxShadow: 'none',
-    hover: {
       color: '#fff',
-      background: '#ffb400',
-      borderRadius: 0,
-      boxShadow: 'none',
+      lineHeight: 1.4,
     },
+  },
+  get whiteBg() {
+    return {
+      ...this.white,
+      backgroundColor: '#fff',
+    }
   },
   success: {
     background: customPalette.success.main,
     color: '#fff',
-    borderRadius: 0,
     boxShadow: 'none',
     hover: {
       color: '#fff',
       background: customPalette.success.main,
-      borderRadius: 0,
       boxShadow: 'none',
     },
   },
@@ -202,7 +185,7 @@ const buttons = {
   },
   primaryText: {
     hover: {
-      color: '#16e3b8',
+      color: '#0f7173',
     },
   },
   secondaryText: {

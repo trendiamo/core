@@ -11,15 +11,25 @@ import { useSnackbar } from 'notistack'
 const StyledPackageIcon = styled(PackageIcon)`
   align-self: center;
   margin-bottom: 20px;
+
   @media (min-width: 960px) {
     margin-bottom: 40px;
   }
+`
+
+const StyledCallout = styled(Callout)`
+  text-align: center;
 `
 
 const StyledTextField = styled(TextField)`
   align-self: center;
   width: 100%;
   margin-bottom: 20px;
+  background-color: #e7ecef;
+`
+
+const CalloutButton = styled(Button)`
+  margin: 0 auto;
 `
 
 const RequestSampleCard = ({ setShowSuccessCard }) => {
@@ -53,30 +63,33 @@ const RequestSampleCard = ({ setShowSuccessCard }) => {
     <MainCard>
       <CardContent>
         <StyledPackageIcon />
-        <Typography variant="h5">{'Receive free samples for Impact Points'}</Typography>
+        <Typography variant="h4">{'Receive free samples for Impact Points'}</Typography>
+        <Typography style={{ marginBottom: '20px' }} variant="body2">
+          {
+            'You can request samples by spending your Impact Points as payment. One Impact Point equals one Euro. Paste the link to the product you wish to receive below along with some additional information about sizes, colors etc. if needed.'
+          }
+        </Typography>
         <Typography variant="body2">
           {
-            'You can request samples by spending your Impact Points as payment. One Impact Point equals one Euro. Paste the link to the product you wish to receive below along with some additional information about sizes, colors etc. if needed. If you have enough Impact Points in your balance we’ll send you the product and the points will be deducted from your balance.'
+            'If you have enough Impact Points in your balance we’ll send you the product and the points will be deducted from your balance.'
           }
         </Typography>
       </CardContent>
-      <Callout>
-        <CalloutTitle align="center" variant="h6">
-          {'Paste product information here'}
-        </CalloutTitle>
+      <StyledCallout>
+        <CalloutTitle>{'Paste product information here'}</CalloutTitle>
         <StyledTextField
           id="filled-textarea"
           multiline
           onChange={setProductMessageValue}
-          placeholder={'https://example.com/products/example-product' + '\n' + 'Size: M ' + '\n' + 'Color: Pink…'}
+          placeholder={'https://example.com/products/example-product\nSize: M\nColor: Pink...'}
           rows="4"
           value={productMessage}
-          variant="filled"
+          variant="outlined"
         />
-        <Button color="primaryGradient" disabled={isButtonDisabled} onClick={requestSample}>
-          {'Request Sample'}
-        </Button>
-      </Callout>
+        <CalloutButton color="primaryGradient" disabled={isButtonDisabled} onClick={requestSample}>
+          {'Order sample'}
+        </CalloutButton>
+      </StyledCallout>
     </MainCard>
   )
 }

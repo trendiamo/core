@@ -15,7 +15,7 @@ const Container = styled.div`
 `
 
 const Revenue = styled.h1`
-  color: #ffc842;
+  color: #0f7173;
   font-size: 2.8rem;
   margin: 0;
 `
@@ -34,8 +34,8 @@ const NextPaymentMessage = styled(Typography)`
 
 const StripeNote = styled(Typography)`
   font-size: 14px;
-  margin-top: 0.8rem;
-  margin-bottom: 0.8rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 `
 
 const StyledCheckCircle = styled(CheckCircle)`
@@ -74,7 +74,7 @@ const MonthlyRevenue = ({ dates, orders, hasStripeAccount }) => {
           <StripeNote variant="caption">
             {'Revenues and prices displayed may slightly vary based on currency exchange rates'}
           </StripeNote>
-          <StripeButton color="whiteBg" hasStripeAccount />
+          <StripeButton color="white" hasStripeAccount />
         </>
       ) : (
         <>

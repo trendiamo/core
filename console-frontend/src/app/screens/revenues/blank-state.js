@@ -4,8 +4,7 @@ import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import StripeButton from 'shared/stripe-button'
 import styled from 'styled-components'
-import { ReactComponent as DashboardIcon } from 'assets/icons/dashboard.svg'
-import { ReactComponent as MagnifierIcon } from 'assets/icons/magnifier.svg'
+import { ReactComponent as GraphicIcon } from 'assets/icons/graphic.svg'
 import { Typography } from '@material-ui/core'
 import { withRouter } from 'react-router'
 
@@ -23,9 +22,8 @@ const Container = styled.div`
 `
 
 const StyledIcon = styled(({ icon, ...props }) => React.createElement(icon, props))`
-  width: 60px;
-  height: 60px;
-  margin-bottom: 30px;
+  width: 120px;
+  margin-bottom: 20px;
 `
 
 const ButtonsContainer = styled.div`
@@ -63,7 +61,7 @@ const BlankStateSection = withRouter(({ buttonText, description, hasStripeAccoun
           <StyledButton color="primaryGradient" onClick={goToAffiliatePartners} size="large" variant="contained">
             {buttonText}
           </StyledButton>
-          <StripeButton color="whiteBg" hasStripeAccount={hasStripeAccount} />
+          <StripeButton color="white" hasStripeAccount={hasStripeAccount} />
         </ButtonsContainer>
       )}
     </>
@@ -81,7 +79,7 @@ const BlankState = ({ hasAffiliations, hasErrors, hasStripeAccount }) => (
             {'.'}
           </>
         }
-        icon={MagnifierIcon}
+        icon={GraphicIcon}
         title="Oops, there was an error loading your revenues"
       />
     ) : hasAffiliations ? (
@@ -89,7 +87,7 @@ const BlankState = ({ hasAffiliations, hasErrors, hasStripeAccount }) => (
         buttonText="See other brands"
         description="Select another month or start working with other brands!"
         hasStripeAccount={hasStripeAccount}
-        icon={DashboardIcon}
+        icon={GraphicIcon}
         title="You don't have any revenue in this period."
       />
     ) : (
@@ -97,7 +95,7 @@ const BlankState = ({ hasAffiliations, hasErrors, hasStripeAccount }) => (
         buttonText="Start earning"
         description="Pick an affiliate partner and come back here to monitor your earnings!"
         hasStripeAccount={hasStripeAccount}
-        icon={DashboardIcon}
+        icon={GraphicIcon}
         title="You are not working with any brands yet."
       />
     )}

@@ -16,7 +16,7 @@ const sectionTitles = {
 }
 
 const StyledTitle = styled(props => <Title {...omit(props, ['animate', 'ref'])} />)`
-  margin: 20px 0;
+  margin: 30px 0;
   transition: all 1s 0.1s;
   ${({ animate }) =>
     !animate &&

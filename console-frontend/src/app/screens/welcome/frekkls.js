@@ -45,7 +45,7 @@ const WelcomePage = ({ history, width }) => {
     <Container>
       <div style={{ maxWidth: '500px', textAlign: 'center' }}>
         <Image alt="" src={welcomeImage} />
-        <Header variant="h4">{title}</Header>
+        <Header variant="h3">{title}</Header>
         <Description variant="body1">{description}</Description>
         <StyledButton centered color="primary" onClick={getStarted} variant="contained">
           {'Get Started'}

@@ -1,7 +1,7 @@
 import auth from 'auth'
+import Coin from 'shared/coin'
 import React from 'react'
 import styled from 'styled-components'
-import { ImpactPoint } from 'shared/uptous'
 import { Typography } from '@material-ui/core'
 
 const Container = styled.div`
@@ -40,7 +40,7 @@ const Description = styled(Typography)`
 const Balance = styled(Typography)`
   font-size: 20px;
   color: #ffb652;
-  margin-left: 10px;
+  margin-left: 8px;
 `
 
 const impactPointsBalance = Math.floor(Number(auth.getUser().impactPointsBalanceInCents / 100) || 0)
@@ -48,7 +48,7 @@ const impactPointsBalance = Math.floor(Number(auth.getUser().impactPointsBalance
 const Content = () => {
   return (
     <ContentContainer>
-      <ImpactPoint />
+      <Coin />
       <Balance variant="subtitle1">{impactPointsBalance}</Balance>
       <Description variant="subtitle1">{'Impact Points'}</Description>
     </ContentContainer>

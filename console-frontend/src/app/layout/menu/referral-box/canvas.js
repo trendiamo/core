@@ -11,12 +11,9 @@ const confettiXFrequency = 100
 const confettiAmplitude = 2
 
 const getRandomHSLColor = () => {
-  const isYellow = !!Math.round(Math.random())
-  const hue = isYellow ? Math.random() * 20 + 40 : Math.random() * 20 + 170
-  const saturation = 85
-  const lightness = 48
-  const alpha = Math.random() * 0.2 + 0.2
-  return `hsla(${hue},${saturation}%,${lightness}%,${alpha})`
+  const colors = ['hsla(181, 77%, 25%, 0.25)', 'hsla(46, 85%, 48%, 0.25)', 'hsla(360, 83%, 65%, 0.25)']
+  //               blue                         yellow                      red
+  return colors[Math.floor(Math.random() * colors.length)]
 }
 
 const runConfettiAnimation = ({ canvasElement }) => {

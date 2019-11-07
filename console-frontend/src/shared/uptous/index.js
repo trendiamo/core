@@ -1,4 +1,4 @@
-import ImpactPoint from './impact-point'
+import omit from 'lodash.omit'
 import Paper from 'shared/paper'
 import React from 'react'
 import styled from 'styled-components'
@@ -6,37 +6,57 @@ import { Typography } from '@material-ui/core'
 
 export const MainCard = styled(Paper)`
   align-self: center;
-  overflow: hidden;
   align-items: stretch;
+  overflow: hidden;
+
   @media (min-width: 960px) {
     margin-right: 14px;
   }
 `
 
 export const CardContent = styled.div`
-  padding: 40px 12px 40px;
+  padding: 40px 20px 30px;
   display: flex;
   flex-direction: column;
+
   @media (min-width: 960px) {
-    padding: 60px 50px 40px;
+    padding: 40px;
   }
 `
 
-export const Callout = styled.div`
-  background-color: #e7ecef;
+export const Callout = styled(({ children, ...props }) => (
+  <div {...omit(props, ['bordered'])}>
+    <div>{children}</div>
+  </div>
+))`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 12px 34px;
+  padding: 0 20px 40px;
+
   @media (min-width: 960px) {
-    padding: 2rem 3.75rem;
+    padding: 0 40px 40px;
   }
+
+  ${({ bordered = true }) =>
+    bordered &&
+    `
+    padding: 0 20px;
+
+    > div {
+      width: 100%;
+      padding: 30px 0 40px;
+      border-top: 3px solid #e7ecef;
+    }
+
+    @media (min-width: 960px) {
+      padding: 0 40px;
+    }
+  `}
 `
 
-export const CalloutTitle = styled(Typography)`
-  @media (min-width: 960px) {
-    margin-bottom: 20px;
-  }
+export const CalloutTitle = styled(props => <Typography align="center" variant="h6" {...props} />)`
+  margin-bottom: 20px;
 `
 
 const BrandLogoContainer = styled.div`
@@ -44,6 +64,7 @@ const BrandLogoContainer = styled.div`
   border: 2px solid #e7ecef;
   width: 110px;
   height: 110px;
+  flex-shrink: 0;
   background: #fff;
 `
 
@@ -59,5 +80,3 @@ export const BrandLogo = ({ brand, ...props }) => (
     <Logo src={brand.logoUrl} />
   </BrandLogoContainer>
 )
-
-export { ImpactPoint }
