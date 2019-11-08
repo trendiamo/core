@@ -432,7 +432,7 @@ class Populate # rubocop:disable Metrics/ClassLength
   end
 
   def create_tags
-    product_categories = %w[automotive kids beauty fashion accessoires technology food health home cooking creativity
+    product_categories = %w[automotive kids beauty fashion accessories technology food health home cooking creativity
                             work diy entertainment crafting outdoors sports yoga pet media travel finance organisations
                             nutrition].freeze
 
