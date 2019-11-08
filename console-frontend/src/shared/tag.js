@@ -9,7 +9,7 @@ const StyledChip = styled(props => <Chip {...omit(props, ['active'])} />)`
   font-family: Lato, 'Helvetica', 'Arial', sans-serif;
   height: 24px;
   margin: 2px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   transition: all 0.3s;
   ${({ active, clickable }) => !active && clickable && 'opacity: 0.5;'}
 
