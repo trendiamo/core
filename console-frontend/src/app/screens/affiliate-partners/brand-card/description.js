@@ -6,14 +6,16 @@ import { Typography } from '@material-ui/core'
 const Container = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
 `
 
-const Text = styled(props => <Typography variant="body2" {...props} />)``
+const Text = styled(Typography)`
+  margin-top: 10px;
+`
 
 const TagsContainer = styled.div`
-  margin: 15px 0 10px;
+  margin: 12px -2px 0;
   width: 100%;
 `
 
@@ -28,6 +30,7 @@ const Tags = ({ tags }) => (
 const AvailableLocationsContainer = styled.div`
   font-weight: 700;
   width: 100%;
+  margin-top: 10px;
 `
 
 const AvailableLocationText = styled(props => <Typography variant="subtitle1" {...props} />)`
@@ -53,17 +56,30 @@ const AvailableLocations = ({ locations }) => (
 )
 
 const Description = ({ brand }) => {
-  const tags = useMemo(() => brand.positiveImpactAreaList.concat(brand.productCategoryList), [
-    brand.positiveImpactAreaList,
-    brand.productCategoryList,
-  ])
-  const availableLocations = useMemo(() => brand.availableLocations.split(', '), [brand.availableLocations])
+  const tags = useMemo(
+    () => {
+      let result = []
+      if (brand.positiveImpactAreaList) result = result.concat(brand.positiveImpactAreaList)
+      if (brand.productCategoryList) result = result.concat(brand.productCategoryList)
+      return result.length !== 0 && result
+    },
+    [brand.positiveImpactAreaList, brand.productCategoryList]
+  )
+
+  const availableLocations = useMemo(
+    () => {
+      if (!brand.availableLocations) return
+      const result = brand.availableLocations.split(', ')
+      return result.length !== 0 && result
+    },
+    [brand.availableLocations]
+  )
 
   return (
     <Container>
-      <Text>{brand.description}</Text>
-      <Tags tags={tags} />
-      <AvailableLocations locations={availableLocations} />
+      <Text variant="body2">{brand.description}</Text>
+      {tags && tags.length !== 0 && <Tags tags={tags} />}
+      {availableLocations && <AvailableLocations locations={availableLocations} />}
     </Container>
   )
 }

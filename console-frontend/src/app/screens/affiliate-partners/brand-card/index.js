@@ -59,10 +59,10 @@ const StyledBrandLogo = styled(BrandLogo)`
 
 const Subheader = styled.div`
   padding-left: 124px;
-  min-height: 52px;
+  min-height: 42px;
   @media (min-width: 960px) {
     padding-left: 126px;
-    min-height: 56px;
+    min-height: 40px;
   }
 `
 
