@@ -106,7 +106,7 @@ const Onboarding = ({ history }) => {
 
   useEffect(
     () => {
-      document.body.style.overflow = isEnabled && 'hidden'
+      document.body.style.overflow = isEnabled ? 'hidden' : ''
     },
     [isEnabled]
   )
