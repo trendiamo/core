@@ -65,7 +65,7 @@ const Content = withRouter(({ history }) => {
         <Coin />
         <Price>{50}</Price>
       </PriceContainer>
-      <Button color="white" onClick={onClick} size="small">
+      <Button color="whiteBg" onClick={onClick} size="small">
         {'Get Started'}
       </Button>
     </ContentContainer>
