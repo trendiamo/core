@@ -36,14 +36,9 @@ const StyledDrawer = styled(Drawer)`
       white-space: nowrap;
       width: ${drawerWidth}px;
       z-index: 5000;
-      &:before {
-        content: '';
-        background: ${background};
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 10px;
+      background: ${background};
+      > div {
+        background: white;
       }
       `
         : `
