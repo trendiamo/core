@@ -63,6 +63,7 @@ const Background = styled.div`
 `
 
 const LogotypeContainer = styled.div`
+  ${showUpToUsBranding() && 'text-align: center;'}
   margin-bottom: 30px;
 `
 

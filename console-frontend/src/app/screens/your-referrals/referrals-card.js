@@ -21,7 +21,7 @@ const StyledChatIcon = styled(ChatIcon)`
 const ReferralsCardContent = () => (
   <CardContent>
     <StyledChatIcon />
-    <Typography variant="h4">{'Refer a friend and earn twice!'}</Typography>
+    <Typography variant="h4">{'Invite your friends to become #impacters!'}</Typography>
     <Typography variant="body2">
       {
         'Changing the world for the better is hard to do alone. The more people spreading the word about impactful brands, the better! You can contribute by inviting your friends to also sign up to UPTOUS! Whenever someone that signed up with your referral code creates revenue for the first time, you will receive '

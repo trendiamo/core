@@ -129,7 +129,7 @@ const MenuLogo = ({ toggleOpen, isFoldable }) => (
         display: 'flex',
         paddingLeft: '20px',
         paddingRight: '10px',
-        justifyContent: 'space-between',
+        justifyContent: showUpToUsBranding() ? 'center' : 'space-between',
         alignItems: 'center',
       }}
     >

@@ -60,7 +60,7 @@ const Content = withRouter(({ history }) => {
 
   return (
     <ContentContainer>
-      <Description>{'Refer a friend to become a promoter and earn'}</Description>
+      <Description>{'Refer a friend and earn extra Impact Points!'}</Description>
       <PriceContainer>
         <Coin />
         <Price>{50}</Price>
