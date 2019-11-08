@@ -31,7 +31,7 @@ const Container = styled.div`
 
   @media (min-width: 960px) {
     align-items: center;
-    flex-direction: row;
+    flex-direction: ${({ hideCommission }) => (hideCommission ? 'row-reverse' : 'row')};
   }
 `
 
@@ -100,13 +100,16 @@ const Footer = ({ affiliation, brand, goToBrandPage, interest }) => {
   return (
     <MainContainer>
       <Divider />
-      <Container>
-        <CommissionRate variant="subtitle1">
-          {'Commission:'}
-          <span>
-            {Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })} {brand.commissionDescription}
-          </span>
-        </CommissionRate>
+      <Container hideCommission={brand.isPreview}>
+        {!brand.isPreview && (
+          <CommissionRate variant="subtitle1">
+            {'Commission:'}
+            <span>
+              {Number(brand.commissionRate).toLocaleString(undefined, { style: 'percent' })}{' '}
+              {brand.commissionDescription}
+            </span>
+          </CommissionRate>
+        )}
         <div>
           {brand.isPreview ? (
             <Button
