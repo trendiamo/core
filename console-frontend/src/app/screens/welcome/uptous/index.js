@@ -7,18 +7,14 @@ import SecondStep from './second-step'
 const FirstSideContent = () => (
   <>
     <h2>{'Almost There'}</h2>
-    <p>{'Provide information about your social media accounts so we can connect you with brands that fit you best.'}</p>
+    <p>{'Your social media will help us match you with the brands that fit you best.'}</p>
   </>
 )
 
 const SecondSideContent = () => (
   <>
     <h2>{'Just One Last Step'}</h2>
-    <p>
-      {
-        'Provide information about what describes your interests and values best so we can match you with the brands that fit you best.'
-      }
-    </p>
+    <p>{'Your interests and values will help us match you with the brands that fit you best.'}</p>
   </>
 )
 

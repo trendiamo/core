@@ -54,7 +54,7 @@ const FirstStep = ({ setWelcomeStep }) => {
 
   return (
     <Form isFormPristine onSubmit={onFormSubmit}>
-      <Typography>{'Please provide information about the platform that you consider your main account:'}</Typography>
+      <Typography>{'Your email is now confirmed. Just a couple more steps to go!'}</Typography>
       <Field
         autoFocus
         disabled={isFormSubmitting}
