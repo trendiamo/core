@@ -23,6 +23,11 @@ const ButtonsContainer = styled.div`
 `
 
 const StyledHelp = styled(IconButton)`
+  ${showUpToUsBranding() &&
+    `background: transparent;
+     &:hover {
+       background: transparent;
+     }`}
   & + * {
     margin-left: 10px;
   }
@@ -75,7 +80,7 @@ const AppBarActions = ({ showOnboarding, Actions }) => {
 const AppBarContent = memo(({ Actions, backRoute, showOnboarding, title, backRouteTitle }) => (
   <>
     <AppBarTitle backRoute={backRoute} backRouteTitle={backRouteTitle} title={title} />
-    {Actions && <AppBarActions Actions={Actions} showOnboarding={showOnboarding} />}
+    <AppBarActions Actions={Actions} showOnboarding={showOnboarding} />
   </>
 ))
 

@@ -171,6 +171,19 @@ const buttons = {
       backgroundColor: '#fff',
     }
   },
+  onboardingWhite: {
+    backgroundColor: 'transparent',
+    border: '3px solid #fff',
+    boxShadow: 'none',
+    color: '#fff',
+    transition: 'all 0.2s ease-in-out',
+    hover: {
+      backgroundColor: 'transparent',
+      border: '3px solid #fff',
+      boxShadow: 'none',
+      color: '#fff',
+    },
+  },
   success: {
     background: customPalette.success.main,
     color: '#fff',

@@ -1,9 +1,13 @@
+import auth from 'auth'
 import Joyride from 'react-joyride'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import routes from 'app/routes'
 import SkipButton from './elements/skip-button'
 import { Hidden, Portal } from '@material-ui/core'
+import { showUpToUsBranding } from 'utils'
 import { stages, stagesArray } from './stages'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
+import { withRouter } from 'react-router'
 
 const floaterProps = {
   hideArrow: true,
@@ -11,14 +15,17 @@ const floaterProps = {
 
 const styles = {
   options: {
-    overlayColor: 'rgba(37, 42, 54, 1)',
+    overlayColor: showUpToUsBranding() ? 'rgba(39, 41, 50, 0.9)' : 'rgba(37, 42, 54, 1)',
   },
   overlay: {
-    background: 'rgba(37, 42, 54, 0.7)',
+    background: showUpToUsBranding() ? 'rgba(39, 41, 50, 0.9)' : 'rgba(37, 42, 54, 0.7)',
     transition: '1s all',
+    mixBlendMode: showUpToUsBranding() ? 'multiply' : 'hard-light',
   },
   spotlight: {
-    borderRadius: '10px',
+    borderRadius: showUpToUsBranding() ? '6px' : '10px',
+    backgroundColor: showUpToUsBranding() ? '#fff' : 'grey',
+    transform: 'scale(0.9, 0.75)',
   },
 }
 
@@ -48,8 +55,9 @@ const setStyleToPortal = () => {
   }
 }
 
-const Onboarding = () => {
+const Onboarding = ({ history }) => {
   const { onboarding, setOnboarding, setOnboardingHelp } = useOnboardingConsumer()
+  const [wasLaunchedInU2U, setWasLaunchedInU2U] = useState(false)
 
   const handleClose = useCallback(
     event => {
@@ -77,7 +85,33 @@ const Onboarding = () => {
     [handleClose]
   )
 
-  if ((!onboarding.run || !stagesArray[onboarding.stageIndex]) && !onboarding.help.run) return null
+  useEffect(
+    () => {
+      if (wasLaunchedInU2U) return
+      if (!auth.isAffiliate() || auth.getUser().onboardingStage !== 0) return
+      setTimeout(() => {
+        setWasLaunchedInU2U(true)
+        setOnboarding({ ...onboarding, run: true })
+        history.push(routes.affiliatePartners())
+      }, 1000)
+    },
+    [history, onboarding, setOnboarding, setOnboardingHelp, wasLaunchedInU2U]
+  )
+
+  const isEnabled = useMemo(() => (onboarding.run && stagesArray[onboarding.stageIndex]) || onboarding.help.run, [
+    onboarding.help.run,
+    onboarding.run,
+    onboarding.stageIndex,
+  ])
+
+  useEffect(
+    () => {
+      document.body.style.overflow = isEnabled && 'hidden'
+    },
+    [isEnabled]
+  )
+
+  if (!isEnabled) return null
 
   return (
     <Hidden smDown>
@@ -100,4 +134,4 @@ const Onboarding = () => {
   )
 }
 
-export default Onboarding
+export default withRouter(Onboarding)

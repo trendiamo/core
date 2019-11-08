@@ -7,6 +7,7 @@ import SuccessCard from './success-card'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiMeRequestSample, apiRequest } from 'utils'
 import { Grid } from '@material-ui/core'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
 
 const FlexGrid = styled(props => <Grid container {...props} />)`
@@ -18,6 +19,13 @@ const FlexGrid = styled(props => <Grid container {...props} />)`
 const ImpactPointShop = () => {
   const { enqueueSnackbar } = useSnackbar()
   const appBarContent = useMemo(() => ({ title: 'Exchange Impact points for free samples!' }), [])
+
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'impactPointShop', stageName: 'uptous', pathname: window.location.pathname }),
+    []
+  )
+  useOnboardingHelp(onboardingHelp)
+
   useAppBarContent(appBarContent)
 
   const [showAddressConfirmationModal, setShowAddressConfirmationModal] = useState(false)

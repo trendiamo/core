@@ -256,7 +256,7 @@ export const showUpToUsBranding = () => {
 export const loadFonts = () => {
   const documentHead = document.head || (document.head = document.getElementsByTagName('head')[0])
   const fontsUrl = showUpToUsBranding()
-    ? 'https://fonts.googleapis.com/css?family=Lato:400,700|Nunito+Sans:300,400,900&display=swap'
+    ? 'https://fonts.googleapis.com/css?family=Lato:400,700,900|Nunito+Sans:300,400,900&display=swap'
     : 'https://fonts.googleapis.com/css?family=Roboto:300,500,700'
 
   const defaultFont = showUpToUsBranding() ? 'Nunito Sans' : 'Roboto'

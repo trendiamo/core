@@ -34,6 +34,15 @@ const SortableStyle = createGlobalStyle`
   .sortable-element {
     z-index: 1;
   }
+  [id^="react-joyride"] {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    overflow-y: auto;
+  }
 `
 
 const AppBase = () => {

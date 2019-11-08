@@ -63,9 +63,7 @@ const FilledLayout = ({ children, location, width }) => {
   const [sidebarOpen, setSidebarOpen] = useState(isWidthUp('md', width))
 
   const isWelcomePage = useMemo(() => location.pathname === routes.welcome(), [location.pathname])
-  const showOnboarding = useMemo(() => !auth.isAffiliate() && location.pathname !== routes.accounts(), [
-    location.pathname,
-  ])
+  const showOnboarding = useMemo(() => location.pathname !== routes.accounts(), [location.pathname])
 
   const onWindowScroll = useCallback(() => setHasScrolled(window.scrollY > 2), [setHasScrolled])
   const toggleOpen = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen])
