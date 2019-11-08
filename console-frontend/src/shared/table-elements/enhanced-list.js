@@ -1,3 +1,4 @@
+import auth from 'auth'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CircularProgress from 'app/layout/loading'
 import isEmpty from 'lodash.isempty'
@@ -32,7 +33,12 @@ const EnhancedList = ({
   title,
 }) => {
   const onboardingHelp = useMemo(
-    () => ({ single: true, stepName: helpStep, stageName: 'initial', pathname: location.pathname }),
+    () => ({
+      single: true,
+      stepName: !auth.isAffiliate() && helpStep,
+      stageName: 'initial',
+      pathname: location.pathname,
+    }),
     [helpStep, location.pathname]
   )
   useOnboardingHelp(onboardingHelp)

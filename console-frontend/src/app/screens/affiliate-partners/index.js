@@ -1,6 +1,7 @@
 import List from './list'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { apiAffiliationsList, apiBrandsList, apiInterestsList, apiRequest } from 'utils'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
 
 const AffiliatePartners = () => {
@@ -11,6 +12,12 @@ const AffiliatePartners = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const { enqueueSnackbar } = useSnackbar()
+
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'affiliatePartners', stageName: 'uptous', pathname: window.location.pathname }),
+    []
+  )
+  useOnboardingHelp(onboardingHelp)
 
   const fetchAffiliations = useCallback(
     async () => {

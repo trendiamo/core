@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiMeReferrals, apiRequest } from 'utils'
 import { Grid } from '@material-ui/core'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
 
 const Container = styled.div`
@@ -31,6 +32,12 @@ const YourReferrals = () => {
   useAppBarContent(appBarContent)
 
   const { enqueueSnackbar } = useSnackbar()
+
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'referrals', stageName: 'uptous', pathname: window.location.pathname }),
+    []
+  )
+  useOnboardingHelp(onboardingHelp)
 
   useEffect(
     () => {

@@ -12,6 +12,7 @@ import { apiAffiliationsList, apiConnectStripe, apiOrdersList, apiRequest } from
 import { CURRENCY_SYMBOLS } from 'utils/shared'
 import { Hidden } from '@material-ui/core'
 import { parse } from 'query-string'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
 import { withRouter } from 'react-router'
 import * as dateFns from 'date-fns'
@@ -53,6 +54,12 @@ const Revenues = ({ history }) => {
   const [orders, setOrders] = useState([])
   const [hasErrors, setHasErrors] = useState(false)
   const [hasStripeAccount, setHasStripeAccount] = useState(!!auth.getUser().stripeUserId)
+
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'revenues', stageName: 'uptous', pathname: window.location.pathname }),
+    []
+  )
+  useOnboardingHelp(onboardingHelp)
 
   const { enqueueSnackbar } = useSnackbar()
 

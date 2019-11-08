@@ -17,6 +17,7 @@ import {
   apiRequest,
 } from 'utils'
 import { Grid } from '@material-ui/core'
+import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
 
 const FlexGrid = styled(Grid)`
@@ -46,6 +47,13 @@ const BrandPage = ({ match }) => {
     () => ({ backRoute: routes.affiliatePartners(), title: 'Back', backRouteTitle: true }),
     []
   )
+
+  const onboardingHelp = useMemo(
+    () => ({ single: true, stepName: 'affiliatePartners', stageName: 'uptous', pathname: window.location.pathname }),
+    []
+  )
+  useOnboardingHelp(onboardingHelp)
+
   useAppBarContent(appBarContent)
 
   const { enqueueSnackbar } = useSnackbar()
