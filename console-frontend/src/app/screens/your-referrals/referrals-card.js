@@ -26,7 +26,7 @@ const ReferralsCardContent = () => (
       {
         'Changing the world for the better is hard to do alone. The more people spreading the word about impactful brands, the better! You can contribute by inviting your friends to also sign up to UPTOUS! Whenever someone that signed up with your referral code creates revenue for the first time, you will receive '
       }
-      <strong>{'50 Impact Points!'}</strong>
+      <strong>{'25 Impact Points!'}</strong>
     </Typography>
   </CardContent>
 )

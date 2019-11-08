@@ -63,7 +63,7 @@ const Content = withRouter(({ history }) => {
       <Description>{'Refer a friend and earn extra Impact Points!'}</Description>
       <PriceContainer>
         <Coin />
-        <Price>{50}</Price>
+        <Price>{25}</Price>
       </PriceContainer>
       <Button color="whiteBg" onClick={onClick} size="small">
         {'Get Started'}
