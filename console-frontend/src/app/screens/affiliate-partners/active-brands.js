@@ -3,7 +3,7 @@ import omit from 'lodash.omit'
 import React from 'react'
 import styled from 'styled-components'
 import VerticalGrid from './vertical-grid'
-import { ReactComponent as SeedingIcon } from 'assets/icons/seeding.svg'
+import { ReactComponent as SproutIcon } from 'assets/icons/sprout.svg'
 
 const BlankStateContainer = styled.div`
   display: flex;
@@ -13,9 +13,10 @@ const BlankStateContainer = styled.div`
   user-select: none;
 `
 
-const StyledSeedingIcon = styled(props => <SeedingIcon {...omit(props, ['animate'])} />)`
+const StyledSproutIcon = styled(props => <SproutIcon {...omit(props, ['animate'])} />)`
   margin-bottom: 10px;
   transition: all 1.6s;
+  width: 80px;
   ${({ animate }) =>
     !animate &&
     `
@@ -38,10 +39,10 @@ const BlankStateDescription = styled.div`
 
 const BlankState = ({ animate }) => (
   <BlankStateContainer>
-    <StyledSeedingIcon animate={animate} />
+    <StyledSproutIcon animate={animate} />
     <BlankStateDescription animate={animate}>
-      <div>{'You are not working with any brands yet.'}</div>
-      <div>{'Pick partners from the list to start promoting and earning today!'}</div>
+      <div>{'You are not promoting any brands yet.'}</div>
+      <div>{'Pick one from the list below to start spreading their impact and earn today!'}</div>
     </BlankStateDescription>
   </BlankStateContainer>
 )
