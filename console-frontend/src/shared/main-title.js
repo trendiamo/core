@@ -4,6 +4,7 @@ import { showUpToUsBranding } from 'utils'
 import { Typography } from '@material-ui/core'
 
 const StyledTypography = styled(Typography)`
+  vertical-align: middle;
   display: inline-block;
   letter-spacing: 0.3px;
   ${showUpToUsBranding()

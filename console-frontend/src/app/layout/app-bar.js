@@ -49,20 +49,33 @@ const OnboardingButton = withRouter(({ location }) => {
   )
 })
 
-const AppBarContent = memo(({ Actions, backRoute, showOnboarding, title }) => (
-  <>
-    {backRoute && (
+const AppBarTitle = ({ backRoute, backRouteTitle, title }) => {
+  if (!backRoute) return <Title>{title}</Title>
+
+  return (
+    <>
       <Link to={backRoute}>
         <ArrowBack style={{ verticalAlign: 'middle', color: '#222', marginRight: '0.5rem' }} />
+        {backRouteTitle && <Title>{title}</Title>}
       </Link>
-    )}
-    <Title>{title}</Title>
-    {Actions && (
-      <ButtonsContainer>
-        {showOnboarding && <OnboardingButton />}
-        {Actions}
-      </ButtonsContainer>
-    )}
+      {!backRouteTitle && <Title>{title}</Title>}
+    </>
+  )
+}
+
+const AppBarActions = ({ showOnboarding, Actions }) => {
+  return (
+    <ButtonsContainer>
+      {showOnboarding && <OnboardingButton />}
+      {Actions}
+    </ButtonsContainer>
+  )
+}
+
+const AppBarContent = memo(({ Actions, backRoute, showOnboarding, title, backRouteTitle }) => (
+  <>
+    <AppBarTitle backRoute={backRoute} backRouteTitle={backRouteTitle} title={title} />
+    {Actions && <AppBarActions Actions={Actions} showOnboarding={showOnboarding} />}
   </>
 ))
 
@@ -109,7 +122,7 @@ const AppBar = ({ hasScrolled, showOnboarding, sidebarOpen, toggleOpen }) => {
   const { store } = useContext(StoreContext)
   if (!store.appBarContent) return null
 
-  const { Actions, backRoute, sticky, title } = store.appBarContent
+  const { Actions, backRoute, backRouteTitle, sticky, title } = store.appBarContent
 
   return (
     <StyledAppBar hasScrolled={hasScrolled} sidebarOpen={sidebarOpen} sticky={sticky}>
@@ -117,7 +130,13 @@ const AppBar = ({ hasScrolled, showOnboarding, sidebarOpen, toggleOpen }) => {
         <MenuButton aria-label="Open drawer" color="inherit" id="foofoo" onClick={toggleOpen}>
           <MenuIcon />
         </MenuButton>
-        <AppBarContent Actions={Actions} backRoute={backRoute} showOnboarding={showOnboarding} title={title} />
+        <AppBarContent
+          Actions={Actions}
+          backRoute={backRoute}
+          backRouteTitle={backRouteTitle}
+          showOnboarding={showOnboarding}
+          title={title}
+        />
       </TopToolbar>
     </StyledAppBar>
   )

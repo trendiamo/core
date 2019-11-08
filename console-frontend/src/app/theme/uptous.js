@@ -44,12 +44,14 @@ const typography = {
     color: '#3a3a3a',
     fontSize: '24px',
     fontWeight: 900,
+    fontFamily: 'Lato, "Helvetica", "Arial", sans-serif',
     margin: '6px 0px',
   },
   h5: {
     color: '#272932',
     fontWeight: 900,
     fontSize: '20px',
+    fontFamily: 'Lato, "Helvetica", "Arial", sans-serif',
     margin: '4px 0px',
   },
   h6: {

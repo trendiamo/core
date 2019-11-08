@@ -42,7 +42,10 @@ const BrandPage = ({ match }) => {
   const [isCustomLinkModalOpen, setIsCustomLinkModalOpen] = useState(false)
   const [termsAndConditionsExpanded, setTermsAndConditionsExpanded] = useState(false)
 
-  const appBarContent = useMemo(() => ({ backRoute: routes.affiliatePartners(), title: 'Back' }), [])
+  const appBarContent = useMemo(
+    () => ({ backRoute: routes.affiliatePartners(), title: 'Back', backRouteTitle: true }),
+    []
+  )
   useAppBarContent(appBarContent)
 
   const { enqueueSnackbar } = useSnackbar()
