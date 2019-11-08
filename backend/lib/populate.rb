@@ -356,6 +356,8 @@ class Populate # rubocop:disable Metrics/ClassLength
 
   def create_brands # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     Account.where(is_affiliate: true).each do |account|
+      has_free_sample = rand < 0.5
+      email = has_free_sample && "samples@#{account.slug}.com"
       brand_attrs = {
         name: account.name,
         account: account,
@@ -372,11 +374,13 @@ class Populate # rubocop:disable Metrics/ClassLength
         twitter_url: "https://twitter.com/#{account.slug}",
         available_locations: %w[europe usa uk de nl].sample(rand(1..3)).join(", "),
         is_preview: false,
+        has_free_sample: has_free_sample,
+        email: email,
       }
       Brand.create!(brand_attrs)
     end
     Account.last(3).each do |account|
-      account.brand.update!(is_preview: true)
+      account.brand.update!(is_preview: true, has_free_sample: false, email: nil)
     end
   end
 

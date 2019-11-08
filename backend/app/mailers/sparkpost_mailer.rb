@@ -18,12 +18,16 @@ class SparkpostMailer < ApplicationMailer
     mail(to: ENV["PROMOTER_UPGRADE_EMAIL"], sparkpost_data: sparkpost_data)
   end
 
-  def request_sample(user, message)
+  def request_sample(user, message, brand)
     sparkpost_data = {
-      substitution_data: sparkpost_data_request_sample(user, message),
+      substitution_data: sparkpost_data_request_sample(user, message, brand && brand[:name]),
       template_id: "uptous-request-sample-notification",
     }
-    mail(to: ENV["PROMOTER_UPGRADE_EMAIL"], sparkpost_data: sparkpost_data)
+    mail(
+      to: (brand && brand[:email]) || ENV["PROMOTER_UPGRADE_EMAIL"],
+      bcc: brand && brand[:email] ? ENV["PROMOTER_UPGRADE_EMAIL"] : "",
+      sparkpost_data: sparkpost_data
+    )
   end
 
   private
@@ -35,7 +39,7 @@ class SparkpostMailer < ApplicationMailer
     hash.except(:email, :url).merge(new_attrs)
   end
 
-  def sparkpost_data_request_sample(user, message) # rubocop:disable Metrics/MethodLength
+  def sparkpost_data_request_sample(user, message, brand_name) # rubocop:disable Metrics/MethodLength
     {
       user_name: "#{user.shipping_first_name} #{user.shipping_last_name}",
       user_email: user.email,
@@ -46,6 +50,7 @@ class SparkpostMailer < ApplicationMailer
       user_city: user.city,
       user_country: user.country,
       message: message,
+      brand: brand_name || "",
     }
   end
 
