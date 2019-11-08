@@ -121,27 +121,36 @@ const Item = withRouter(({ location, resource, sidebarOpen }) => {
   )
 })
 
+const MenuLogoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 85px;
+`
+
+const MenuLogoContentDiv = styled.div`
+  flex: 1;
+  display: flex;
+  padding-left: 20px;
+  justify-content: space-between;
+  padding-right: 10px;
+  align-items: center;
+  @media (min-width: 960px) {
+    justify-content: ${showUpToUsBranding() ? 'center' : 'space-between'};
+  }
+`
+
 const MenuLogo = ({ toggleOpen, isFoldable }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '85px' }}>
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        paddingLeft: '20px',
-        paddingRight: '10px',
-        justifyContent: showUpToUsBranding() ? 'center' : 'space-between',
-        alignItems: 'center',
-      }}
-    >
+  <MenuLogoContainer>
+    <MenuLogoContentDiv>
       {showUpToUsBranding() ? <StyledUpToUsLogo /> : <StyledFrekklsLogo />}
       {isFoldable && (
         <IconButton aria-label="Toggle drawer" color="inherit" onClick={toggleOpen}>
           <MenuIcon />
         </IconButton>
       )}
-    </div>
+    </MenuLogoContentDiv>
     <Divider color="#e3e3e3" />
-  </div>
+  </MenuLogoContainer>
 )
 
 const BaseMenu = withRouter(
