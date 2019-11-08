@@ -15,7 +15,7 @@ const Podcast = styled(({ className }) => (
           'An inclusive platform giving sustainable businesses the spotlight they need. Everyone has access. Everyone can participate. Together we achieve the United Nations Sustainable Development Goals through a fair and more sustainable way of doing business.'
         }
       </p>
-      <Button big color="#272a32" onClick={onDiscoverClick} wrap>
+      <Button color="#272a32" onClick={onDiscoverClick}>
         {'Discover our podcast'}
       </Button>
       <iframe

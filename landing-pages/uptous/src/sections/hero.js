@@ -68,6 +68,8 @@ const Hero = styled(({ className, data }) => {
     color: #fff;
   }
   ${Button} {
+    font-size: 1.25rem;
+    min-height: 50px;
     span {
       padding-left: 12px;
       padding-right: 12px;
@@ -76,6 +78,7 @@ const Hero = styled(({ className, data }) => {
       content: '';
 
       display: inline-block;
+      vertical-align: middle;
       width: 0;
       height: 0;
       border-style: solid;

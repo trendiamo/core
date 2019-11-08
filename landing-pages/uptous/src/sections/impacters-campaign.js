@@ -34,7 +34,7 @@ const ImpactersCampaign = styled(({ className }) => (
           'Jumping Pigs is using the positive impact sales force of UPTOUS to connect with impacters like Nour to promote their clothing.'
         }
       </p>
-      <Button color="#272a32" onClick={onCampaignClick} wrap>
+      <Button color="#272a32" onClick={onCampaignClick}>
         {'See her campaign'}
       </Button>
     </Container>
@@ -93,10 +93,11 @@ const ImpactersCampaign = styled(({ className }) => (
       content: '';
 
       display: inline-block;
+      vertical-align: middle;
       width: 0;
       height: 0;
       border-style: solid;
-      border-width: 19px 0 19px 32.9px;
+      border-width: 13px 0 13px 22px;
       border-color: transparent transparent transparent #f05d5d;
     }
   }
@@ -122,6 +123,9 @@ const ImpactersCampaign = styled(({ className }) => (
       margin-bottom: 6vw;
       min-height: 100px;
       font-size: 35px;
+      &:before {
+        border-width: 19px 0 19px 32.9px;
+      }
     }
   }
 `

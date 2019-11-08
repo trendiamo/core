@@ -61,10 +61,11 @@ const ImpactersHero = styled(({ className }) => (
       content: '';
 
       display: inline-block;
+      vertical-align: middle;
       width: 0;
       height: 0;
       border-style: solid;
-      border-width: 19px 0 19px 32.9px;
+      border-width: 13px 0 13px 22px;
       border-color: transparent transparent transparent #fff;
     }
   }
@@ -81,7 +82,11 @@ const ImpactersHero = styled(({ className }) => (
     }
     ${Button} {
       margin-left: -17vw;
+      min-height: 100px;
       font-size: 35px;
+      &:before {
+        border-width: 19px 0 19px 32.9px;
+      }
     }
   }
 `

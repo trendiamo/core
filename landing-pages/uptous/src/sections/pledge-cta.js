@@ -16,7 +16,7 @@ const PledgeCta = styled(({ className }) => (
           "Join our platform and movement to empower a new world in which creating sustainable business is not only the right business to run, but the best way, from all perspectives - it's up to us!"
         }
       </p>
-      <Button big color="#272a32" onClick={onGetStartedClick} wrap>
+      <Button color="#272a32" onClick={onGetStartedClick}>
         {'Get Started Today'}
       </Button>
     </Container>

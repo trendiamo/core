@@ -36,7 +36,7 @@ const ImpactersInstagram = styled(({ className }) => (
           'Living a zero waste and plant based lifestyle, slow traveler Nour is on the mission for sustainability and self-love, followed by 20k people.'
         }
       </p>
-      <Button color="#272a32" onClick={onInstagramClick} wrap>
+      <Button color="#272a32" onClick={onInstagramClick}>
         {'Meet her on instagram'}
       </Button>
     </Container>
@@ -94,10 +94,11 @@ const ImpactersInstagram = styled(({ className }) => (
       content: '';
 
       display: inline-block;
+      vertical-align: middle;
       width: 0;
       height: 0;
       border-style: solid;
-      border-width: 19px 0 19px 32.9px;
+      border-width: 13px 0 13px 22px;
       border-color: transparent transparent transparent #f05d5d;
     }
   }
@@ -123,6 +124,9 @@ const ImpactersInstagram = styled(({ className }) => (
       margin-bottom: 6vw;
       min-height: 100px;
       font-size: 35px;
+      &:before {
+        border-width: 19px 0 19px 32.9px;
+      }
     }
   }
 `

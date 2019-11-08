@@ -10,23 +10,27 @@ const Button = styled(({ children, className, onClick }) => (
   border: 0;
   padding: 0;
   margin: 0;
-  font-size: 1.25rem;
   cursor: pointer;
   font-weight: 900;
   outline: none;
   overflow: hidden;
   text-transform: uppercase;
-  white-space: ${({ wrap }) => (wrap ? 'wrap' : 'nowrap')};
-  height: ${({ wrap }) => (wrap ? 'auto' : '38px')};
+  white-space: nowrap;
+  height: 38px;
+  font-size: calc(15px + 1vw);
 
   /* keep it vertically centered */
   span {
-    vertical-align: top;
+    vertical-align: middle;
     line-height: 38px;
   }
 
   background: transparent;
   color: ${({ color }) => color || '#fff'};
+
+  @media (min-width: 1000px) {
+    font-size: 1.25rem;
+  }
 `
 
 export default Button
