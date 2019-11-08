@@ -27,7 +27,7 @@ const YourReferrals = () => {
   const referralCode = useMemo(() => auth.getUser().referralCode, [])
   const gridSizes = useMemo(() => (referrals.length > 0 ? { lg: 6, xl: 4 } : { lg: 8, xl: 6 }), [referrals.length])
 
-  const appBarContent = useMemo(() => ({ title: 'Invite others to join you!', sticky: false }), [])
+  const appBarContent = useMemo(() => ({ title: 'Invite others to join you!' }), [])
   useAppBarContent(appBarContent)
 
   const { enqueueSnackbar } = useSnackbar()

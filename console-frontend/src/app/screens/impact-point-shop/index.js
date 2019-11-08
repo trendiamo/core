@@ -9,8 +9,10 @@ import { apiMeRequestSample, apiRequest } from 'utils'
 import { Grid } from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 
-const FlexGrid = styled(Grid)`
+const FlexGrid = styled(props => <Grid container {...props} />)`
+  height: 100%;
   justify-content: center;
+  align-items: center;
 `
 
 const ImpactPointShop = () => {
@@ -40,8 +42,8 @@ const ImpactPointShop = () => {
 
   return (
     <>
-      <FlexGrid container>
-        <Grid item lg={8} md={8} xl={4} xs={12}>
+      <FlexGrid>
+        <Grid item lg={8} md={9} xl={6} xs={12}>
           {showSuccessCard ? (
             <SuccessCard setProductMessage={setProductMessage} setShowSuccessCard={setShowSuccessCard} />
           ) : (

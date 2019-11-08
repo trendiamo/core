@@ -1,10 +1,10 @@
-import DescriptionExtra from './description-extra'
 import LanguageIcon from '@material-ui/icons/Language'
 import mixpanel from 'ext/mixpanel'
 import React, { useCallback, useMemo } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import Tag from 'shared/tag'
+import TermsAndConditions from './terms-and-conditions'
 import { BrandLogo } from 'shared/uptous'
 import { ReactComponent as FacebookIcon } from 'assets/icons/facebook.svg'
 import { ReactComponent as InstagramIcon } from 'assets/icons/instagram.svg'
@@ -155,7 +155,7 @@ const Description = ({
         </SubheaderContainer>
         <ContentContainer>
           <DescriptionContent dangerouslySetInnerHTML={{ __html: brand.fullDescription }} />
-          <DescriptionExtra
+          <TermsAndConditions
             brand={brand}
             onTermsAndConditionsChange={onTermsAndConditionsChange}
             setTermsAndConditionsExpanded={setTermsAndConditionsExpanded}

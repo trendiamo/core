@@ -56,7 +56,7 @@ module Api
       end
 
       def request_sample
-        SparkpostMailer.request_sample(current_user, params[:me][:product_message]).deliver_now
+        SparkpostMailer.request_sample(current_user, params[:product_message], params[:brand]).deliver_now
         render json: current_user
       end
 

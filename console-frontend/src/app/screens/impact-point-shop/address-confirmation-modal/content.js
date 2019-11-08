@@ -14,11 +14,11 @@ const MainContainer = styled.div`
 
 const ContentContainer = styled.div`
   overflow-x: hidden;
-  padding: 40px 24px 16px;
+  padding: 40px 24px 22px;
   position: relative;
 
   @media (min-width: 960px) {
-    padding: 40px 40px 16px;
+    padding: 40px 40px 22px;
   }
 `
 
@@ -46,6 +46,14 @@ const Footer = styled.div`
 
 const StyledButton = styled(Button)`
   margin: 0 10px;
+`
+
+const StyledCircularProgress = styled(props => (
+  <div {...props}>
+    <CircularProgress />
+  </div>
+))`
+  padding: 40px 0;
 `
 
 const isValidAddress = shippingAddress => {
@@ -89,6 +97,29 @@ const ValidAddressContent = ({ shippingAddress }) => (
   </>
 )
 
+const Terms = styled(props => (
+  <div {...props}>
+    <div>
+      <Typography variant="body2">
+        {
+          'By clicking on „Confirm Order” you accept that your full name and your address will be shared with the brand to be able to send you the package.'
+        }
+      </Typography>
+    </div>
+  </div>
+))`
+  margin-top: 24px;
+
+  > div {
+    padding-top: 12px;
+    border-top: 3px solid #e7ecef;
+  }
+  p {
+    font-size: 14px;
+    text-align: left;
+  }
+`
+
 const Content = ({ orderSample, handleClose }) => {
   const { enqueueSnackbar } = useSnackbar()
   const [isLoading, setIsLoading] = useState(true)
@@ -128,7 +159,7 @@ const Content = ({ orderSample, handleClose }) => {
     [enqueueSnackbar]
   )
 
-  if (isLoading) return <CircularProgress />
+  if (isLoading) return <StyledCircularProgress />
 
   return (
     <MainContainer>
@@ -136,7 +167,10 @@ const Content = ({ orderSample, handleClose }) => {
         <ContentContainer>
           <Typography variant="h4">{'Confirm your address'}</Typography>
           {isValidAddress(shippingAddress) ? (
-            <ValidAddressContent shippingAddress={shippingAddress} />
+            <>
+              <ValidAddressContent shippingAddress={shippingAddress} />
+              <Terms />
+            </>
           ) : (
             <InvalidAddressContent />
           )}

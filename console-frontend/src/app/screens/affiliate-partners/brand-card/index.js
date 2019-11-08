@@ -20,6 +20,7 @@ const StyledSection = styled(props => <Section {...omit(props, ['animate'])} />)
 `
 
 const ImageContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,6 +37,19 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 6px 6px 0 0;
+`
+
+const FreeSampleBadge = styled(props => <div {...props}>{'Free Samples Available'}</div>)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #f05d5e;
+  color: white;
+  font-size: 15px;
+  font-family: Lato, 'Helvetica', 'Arial', sans-serif;
+  font-weight: 900;
+  border-radius: 0 6px;
+  padding: 10px 12px;
 `
 
 const MainContainer = styled.div`
@@ -166,6 +180,7 @@ const BrandCard = ({ affiliation, animate, brand, goToBrandPage, interests }) =>
       title={
         <ImageContainer onClick={onClickBrandHeaderImage}>
           <Image src={brand.headerImageUrl} />
+          {brand.hasFreeSample && <FreeSampleBadge />}
         </ImageContainer>
       }
     >

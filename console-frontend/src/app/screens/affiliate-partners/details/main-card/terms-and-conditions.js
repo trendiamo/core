@@ -15,6 +15,7 @@ const ExpansionPanelContent = styled.div`
 
 const StyledExpansionPanel = styled(ExpansionPanel)`
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
+
   &,
   &:first-child,
   &:last-child {
@@ -23,10 +24,12 @@ const StyledExpansionPanel = styled(ExpansionPanel)`
 `
 
 /* eslint-enable react/jsx-max-depth */
-const TermsAndConditions = ({ brand, expanded, onChange, termsRef }) => {
+const TermsAndConditions = ({ brand, onTermsAndConditionsChange, termsAndConditionsExpanded, termsRef }) => {
+  if (brand.isPreview) return null
+
   return (
     <TermsContainer ref={termsRef}>
-      <StyledExpansionPanel expanded={expanded} onChange={onChange}>
+      <StyledExpansionPanel expanded={termsAndConditionsExpanded} onChange={onTermsAndConditionsChange}>
         <ExpansionPanelSummary aria-controls="panel-tc-content" expandIcon={<ExpandMoreIcon />} id="panel-tc-header">
           <Typography variant="h6">{'Terms and Conditions'}</Typography>
         </ExpansionPanelSummary>
@@ -38,17 +41,4 @@ const TermsAndConditions = ({ brand, expanded, onChange, termsRef }) => {
   )
 }
 
-const DescriptionExtra = ({ brand, termsAndConditionsExpanded, onTermsAndConditionsChange, termsRef }) => {
-  if (brand.isPreview) return null
-
-  return (
-    <TermsAndConditions
-      brand={brand}
-      expanded={termsAndConditionsExpanded}
-      onChange={onTermsAndConditionsChange}
-      termsRef={termsRef}
-    />
-  )
-}
-
-export default DescriptionExtra
+export default TermsAndConditions
