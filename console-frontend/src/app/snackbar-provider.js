@@ -31,7 +31,7 @@ const SnackbarProvider = ({ width, children }) => {
 
   return (
     <NotistackSnackbarProvider
-      action={isMobile && CloseOnClickContainer}
+      action={(isMobile && CloseOnClickContainer) || undefined}
       anchorOrigin={anchorOrigins[isMobile ? 'mobile' : 'desktop']}
       autoHideDuration={(isMobile && 2600) || undefined}
       dense={isMobile}
