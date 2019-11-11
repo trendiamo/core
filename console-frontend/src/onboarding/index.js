@@ -3,7 +3,8 @@ import Joyride from 'react-joyride'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import SkipButton from './elements/skip-button'
-import { Hidden, Portal } from '@material-ui/core'
+import withWidth from '@material-ui/core/withWidth'
+import { Portal } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 import { stages, stagesArray } from './stages'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
@@ -55,7 +56,7 @@ const setStyleToPortal = () => {
   }
 }
 
-const Onboarding = ({ history }) => {
+const Onboarding = ({ history, width }) => {
   const { onboarding, setOnboarding, setOnboardingHelp } = useOnboardingConsumer()
   const [wasLaunchedInU2U, setWasLaunchedInU2U] = useState(false)
 
@@ -98,11 +99,10 @@ const Onboarding = ({ history }) => {
     [history, onboarding, setOnboarding, setOnboardingHelp, wasLaunchedInU2U]
   )
 
-  const isEnabled = useMemo(() => (onboarding.run && stagesArray[onboarding.stageIndex]) || onboarding.help.run, [
-    onboarding.help.run,
-    onboarding.run,
-    onboarding.stageIndex,
-  ])
+  const isEnabled = useMemo(
+    () => width >= 960 && ((onboarding.run && stagesArray[onboarding.stageIndex]) || onboarding.help.run),
+    [onboarding.help.run, onboarding.run, onboarding.stageIndex, width]
+  )
 
   useEffect(
     () => {
@@ -114,7 +114,7 @@ const Onboarding = ({ history }) => {
   if (!isEnabled) return null
 
   return (
-    <Hidden smDown>
+    <>
       <Joyride
         continuous
         disableCloseOnEsc
@@ -130,8 +130,8 @@ const Onboarding = ({ history }) => {
       <Portal>
         <SkipButton />
       </Portal>
-    </Hidden>
+    </>
   )
 }
 
-export default withRouter(Onboarding)
+export default withRouter(withWidth()(Onboarding))
