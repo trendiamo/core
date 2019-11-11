@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import TablePagination from '@material-ui/core/TablePagination'
 import { parse, stringify } from 'query-string'
-import { withRouter } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
 export const extractCountFromHeaders = headers =>
   parseInt(
@@ -16,7 +16,9 @@ const backIconButtonProps = {
   'aria-label': 'Previous Page',
 }
 
-const Pagination = ({ totalRecordsCount, history, page, setPage, rowsPerPage, onChangeRowsPerPage, isDispatched }) => {
+const Pagination = ({ totalRecordsCount, page, setPage, rowsPerPage, onChangeRowsPerPage, isDispatched }) => {
+  const history = useHistory()
+
   const handleChangePage = useCallback(
     (event, newPage) => {
       let currentSearch = parse(window.location.search)
@@ -49,4 +51,4 @@ const Pagination = ({ totalRecordsCount, history, page, setPage, rowsPerPage, on
   )
 }
 
-export default withRouter(Pagination)
+export default Pagination

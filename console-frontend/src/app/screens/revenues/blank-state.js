@@ -6,7 +6,7 @@ import StripeButton from 'shared/stripe-button'
 import styled from 'styled-components'
 import { ReactComponent as GraphicIcon } from 'assets/icons/graphic.svg'
 import { Typography } from '@material-ui/core'
-import { withRouter } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
 const Container = styled.div`
   display: flex;
@@ -43,7 +43,9 @@ const StyledButton = styled(Button)`
   }
 `
 
-const BlankStateSection = withRouter(({ buttonText, description, hasStripeAccount, history, icon, title }) => {
+const BlankStateSection = ({ buttonText, description, hasStripeAccount, icon, title }) => {
+  const history = useHistory()
+
   const goToAffiliatePartners = useCallback(() => {
     history.push(routes.affiliatePartners())
   }, [history])
@@ -63,7 +65,7 @@ const BlankStateSection = withRouter(({ buttonText, description, hasStripeAccoun
       )}
     </>
   )
-})
+}
 
 const BlankState = ({ hasAffiliations, hasErrors, hasStripeAccount }) => (
   <Container>

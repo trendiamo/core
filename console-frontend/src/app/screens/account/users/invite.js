@@ -6,8 +6,8 @@ import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions, Field, Form, Select } from 'shared/form-elements'
 import { apiRequest, apiUserInvite } from 'utils'
+import { useHistory } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
-import { withRouter } from 'react-router'
 
 const formObjectTransformer = json => {
   return {
@@ -25,7 +25,9 @@ const loadFormObject = () => {
 
 const roleOptions = ['Editor', 'Owner']
 
-const UserInvite = ({ history }) => {
+const UserInvite = () => {
+  const history = useHistory()
+
   const { enqueueSnackbar } = useSnackbar()
 
   const formRef = useRef()
@@ -112,4 +114,4 @@ const UserInvite = ({ history }) => {
   )
 }
 
-export default withRouter(UserInvite)
+export default UserInvite

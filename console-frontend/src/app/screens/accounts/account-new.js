@@ -8,8 +8,8 @@ import styled from 'styled-components'
 import useForm from 'ext/hooks/use-form'
 import { apiAccountCreate, apiRequest, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Field, Form } from 'shared/form-elements'
+import { useHistory } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
-import { withRouter } from 'react-router'
 
 const SaveButton = styled(Button)`
   margin-top: 1rem;
@@ -35,7 +35,9 @@ const formObjectTransformer = json => {
   }
 }
 
-const NewAccount = ({ history }) => {
+const NewAccount = () => {
+  const history = useHistory()
+
   const { enqueueSnackbar } = useSnackbar()
 
   const saveFormObject = useCallback(
@@ -148,4 +150,4 @@ const NewAccount = ({ history }) => {
   )
 }
 
-export default withRouter(NewAccount)
+export default NewAccount

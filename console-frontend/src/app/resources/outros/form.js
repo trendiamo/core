@@ -11,8 +11,8 @@ import { Actions, Field, Form, FormHelperText, PreviewModal } from 'shared/form-
 import { apiSellersAutocomplete, atLeastOneNonBlankCharInputProps } from 'utils'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Grid } from '@material-ui/core'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const formObjectTransformer = json => {
   return {
@@ -156,7 +156,10 @@ const BaseOutroForm = ({
   )
 }
 
-const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFormObject }) => {
+const OutroForm = ({ backRoute, title, loadFormObject, saveFormObject }) => {
+  const history = useHistory()
+  const location = useLocation()
+
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'outros', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
@@ -185,7 +188,7 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
       if (location.pathname !== routes.outroEdit(result.id)) history.push(routes.outroEdit(result.id))
       return result
     },
-    [formRef, history, location.pathname, onFormSubmit]
+    [history, location.pathname, onFormSubmit]
   )
 
   const appBarContent = useMemo(
@@ -237,4 +240,4 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
   )
 }
 
-export default withRouter(OutroForm)
+export default OutroForm

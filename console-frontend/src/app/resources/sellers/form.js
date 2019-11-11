@@ -6,8 +6,8 @@ import Section from 'shared/section'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import useForm from 'ext/hooks/use-form'
 import { Actions } from 'shared/form-elements'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useOnboardingConsumer, useOnboardingHelp } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const formObjectTransformer = json => {
   return {
@@ -22,7 +22,10 @@ const formObjectTransformer = json => {
   }
 }
 
-const SellerForm = ({ backRoute, history, loadFormObject, location, onboardingCreate, saveFormObject, title }) => {
+const SellerForm = ({ backRoute, loadFormObject, onboardingCreate, saveFormObject, title }) => {
+  const history = useHistory()
+  const location = useLocation()
+
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'sellers', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
@@ -99,4 +102,4 @@ const SellerForm = ({ backRoute, history, loadFormObject, location, onboardingCr
   )
 }
 
-export default withRouter(SellerForm)
+export default SellerForm

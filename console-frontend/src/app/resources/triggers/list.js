@@ -11,9 +11,9 @@ import { Actions } from 'shared/table-elements'
 import { apiRequest, apiTriggerDestroy, apiTriggerList, apiTriggerSort } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { matchUrl } from 'plugin-base'
+import { useLocation } from 'react-router-dom'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
-import { withRouter } from 'react-router'
 
 const BlankState = () => (
   <BlankStateTemplate
@@ -61,7 +61,9 @@ const matchTriggers = (triggers, referenceUrl, hostnames) => {
   return result
 }
 
-const TriggersList = ({ location }) => {
+const TriggersList = () => {
+  const location = useLocation()
+
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
@@ -170,4 +172,4 @@ const TriggersList = ({ location }) => {
   )
 }
 
-export default withRouter(TriggersList)
+export default TriggersList

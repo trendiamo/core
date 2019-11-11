@@ -7,8 +7,8 @@ import Sidebar from './sidebar'
 import styled from 'styled-components'
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { shouldShowWelcomeScreen } from 'app/app-router/router-helpers'
+import { useLocation } from 'react-router-dom'
 import { useOnboarding } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const Root = styled.div`
   display: flex;
@@ -56,7 +56,9 @@ const ContentWithSidebar = styled.main`
   min-height: calc(100vh - 84px);
 `
 
-const FilledLayout = ({ children, location, width }) => {
+const FilledLayout = ({ children, width }) => {
+  const location = useLocation()
+
   const onboardingReady = useOnboarding(location)
 
   const [hasScrolled, setHasScrolled] = useState(false)
@@ -100,7 +102,9 @@ const FilledLayout = ({ children, location, width }) => {
   )
 }
 
-const Layout = ({ children, location, width }) => {
+const Layout = ({ children, width }) => {
+  const location = useLocation()
+
   const isEmptyLayout =
     (!(auth.isLoggedIn() && auth.isAffiliate()) && !auth.getAccount()) ||
     (auth.isAffiliate() && shouldShowWelcomeScreen())
@@ -114,4 +118,4 @@ const Layout = ({ children, location, width }) => {
   )
 }
 
-export default withWidth({ noSSR: true })(withRouter(Layout))
+export default withWidth({ noSSR: true })(Layout)

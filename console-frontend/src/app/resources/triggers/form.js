@@ -10,8 +10,8 @@ import useForm from 'ext/hooks/use-form'
 import { Actions, AddItemButton, Cancel, Field, Form, FormHelperText } from 'shared/form-elements'
 import { apiFlowsAutocomplete, apiRequest, apiWebsiteShow, refreshRoute } from 'utils'
 import { Grid, InputAdornment, Typography } from '@material-ui/core'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const pathPattern = '/[^?#]*'
 const pathAndSearchPattern = '/[^#]*'
@@ -67,7 +67,10 @@ const formObjectTransformer = json => {
   }
 }
 
-const TriggerForm = ({ history, backRoute, location, title, loadFormObject, saveFormObject, enqueueSnackbar }) => {
+const TriggerForm = ({ backRoute, title, loadFormObject, saveFormObject, enqueueSnackbar }) => {
+  const history = useHistory()
+  const location = useLocation()
+
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'triggers', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
@@ -234,4 +237,4 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
   )
 }
 
-export default withRouter(TriggerForm)
+export default TriggerForm

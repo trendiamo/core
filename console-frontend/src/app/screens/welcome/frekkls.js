@@ -4,15 +4,16 @@ import routes from 'app/routes'
 import welcomeImage from 'assets/img/background/img-welcome.png'
 import { changeStage } from 'onboarding/scenario-actions'
 import { Container, Description, Header, Image, OutlinedButton, StyledButton } from 'shared/blank-state/components'
+import { useHistory } from 'react-router-dom'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 import { withWidth } from '@material-ui/core'
 
 const title = `Welcome${auth.getUser().firstName ? `, ${auth.getUser().firstName}` : ''}!`
 const description =
   "We're so happy that you're here! We're going to help you improve and engage with your customers, creating great experiences with your brand!"
 
-const WelcomePage = ({ history, width }) => {
+const WelcomePage = ({ width }) => {
+  const history = useHistory()
   const { onboarding, setOnboarding } = useOnboardingConsumer()
 
   const getStarted = useCallback(() => {
@@ -49,4 +50,4 @@ const WelcomePage = ({ history, width }) => {
   )
 }
 
-export default withRouter(withWidth({ noSSR: true })(WelcomePage))
+export default withWidth({ noSSR: true })(WelcomePage)

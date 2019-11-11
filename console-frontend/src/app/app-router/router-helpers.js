@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react'
 import routes from 'app/routes'
 import { apiAccountsShow, apiMe, apiRequest, isLocalStorageAccurate } from 'utils'
 import { Redirect, Route } from 'react-router-dom'
-import { withRouter } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
 export const shouldShowWelcomeScreen = () => {
   const user = auth.getUser()
@@ -128,7 +128,9 @@ const accountRedirect = () => {
   }
 }
 
-export const RootRedirect = withRouter(({ history }) => {
+export const RootRedirect = () => {
+  const history = useHistory()
+
   useEffect(() => {
     ;(async () => {
       if (window.location.hash === '#confirmed') {
@@ -145,7 +147,7 @@ export const RootRedirect = withRouter(({ history }) => {
   }, [history])
 
   return null
-})
+}
 
 export const AccountRedirect = () => {
   const destination = accountRedirect()

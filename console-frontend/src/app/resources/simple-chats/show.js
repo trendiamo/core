@@ -8,10 +8,14 @@ import { Actions } from 'shared/form-elements'
 import { apiRequest, apiSimpleChatReject, apiSimpleChatShow } from 'utils'
 import { canRejectResource } from './list'
 import { formObjectTransformer } from './form/data-utils'
+import { useHistory, useParams } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
-import { withRouter } from 'react-router'
 
-const ShowSimpleChatPreview = ({ history, match }) => {
+const ShowSimpleChatPreview = () => {
+  const { simpleChatId } = useParams()
+
+  const history = useHistory()
+
   const [showingContent, setShowingContent] = useState(true)
   const [isRejecting, setIsRejecting] = useState(false)
 
@@ -19,15 +23,14 @@ const ShowSimpleChatPreview = ({ history, match }) => {
 
   const loadFormObject = useCallback(() => {
     return (async () => {
-      const id = match.params.simpleChatId
-      const { json, requestError } = await apiRequest(apiSimpleChatShow, [id])
+      const { json, requestError } = await apiRequest(apiSimpleChatShow, [simpleChatId])
       if (requestError) {
         enqueueSnackbar(requestError, { variant: 'error' })
         history.push(routes.simpleChatsList())
       }
       return json
     })()
-  }, [enqueueSnackbar, history, match.params.simpleChatId])
+  }, [enqueueSnackbar, history, simpleChatId])
 
   const { form, isFormLoading } = useForm({ formObjectTransformer, loadFormObject })
 
@@ -40,8 +43,7 @@ const ShowSimpleChatPreview = ({ history, match }) => {
 
   const onRejectClick = useCallback(async () => {
     setIsRejecting(true)
-    const id = match.params.simpleChatId
-    const { json, errors, requestError } = await apiRequest(apiSimpleChatReject, [id])
+    const { json, errors, requestError } = await apiRequest(apiSimpleChatReject, [simpleChatId])
     if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
     if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
     if (!errors && !requestError) {
@@ -51,7 +53,7 @@ const ShowSimpleChatPreview = ({ history, match }) => {
       setIsRejecting(false)
     }
     return json
-  }, [enqueueSnackbar, history, match.params.simpleChatId])
+  }, [enqueueSnackbar, history, simpleChatId])
 
   const appBarContent = useMemo(
     () => ({
@@ -70,4 +72,4 @@ const ShowSimpleChatPreview = ({ history, match }) => {
   return <PluginPreview form={form} onToggleContent={onToggleContent} showingContent={showingContent} />
 }
 
-export default withRouter(ShowSimpleChatPreview)
+export default ShowSimpleChatPreview
