@@ -6,7 +6,7 @@ import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
-import { withRouter } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
 const Container = styled.div`
   position: relative;
@@ -49,7 +49,9 @@ const Price = styled(props => <Typography variant="subtitle1" {...props} />)`
   margin-left: 8px;
 `
 
-const Content = withRouter(({ history }) => {
+const Content = () => {
+  const history = useHistory()
+
   const onClick = useCallback(() => {
     mixpanel.track('Clicked Referrals Promo', { hostname: window.location.hostname })
     history.push(routes.yourReferrals())
@@ -67,7 +69,7 @@ const Content = withRouter(({ history }) => {
       </Button>
     </ContentContainer>
   )
-})
+}
 
 const ReferralBox = ({ sidebarOpen }) => {
   if (!sidebarOpen) return null

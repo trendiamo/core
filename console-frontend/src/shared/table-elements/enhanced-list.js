@@ -11,9 +11,9 @@ import { Actions, TableCell, TableHead, TableRow, TableToolbar } from 'shared/ta
 import { apiRequest } from 'utils'
 import { Checkbox, Table, TableBody } from '@material-ui/core'
 import { parse } from 'query-string'
+import { useLocation } from 'react-router-dom'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
-import { withRouter } from 'react-router'
 
 const EnhancedList = ({
   api,
@@ -27,11 +27,12 @@ const EnhancedList = ({
   helpStep,
   highlightInactive,
   isSubmittedResource,
-  location,
   ResourceRow,
   routes,
   title,
 }) => {
+  const location = useLocation()
+
   const onboardingHelp = useMemo(
     () => ({
       single: true,
@@ -259,4 +260,4 @@ const EnhancedList = ({
   )
 }
 
-export default withRouter(EnhancedList)
+export default EnhancedList

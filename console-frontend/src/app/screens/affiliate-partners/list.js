@@ -7,7 +7,7 @@ import routes from 'app/routes'
 import styled from 'styled-components'
 import Title from 'shared/main-title'
 import useAppBarContent from 'ext/hooks/use-app-bar-content'
-import { withRouter } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
 const sectionTitles = {
   activeBrands: 'Brands you work with',
@@ -28,7 +28,9 @@ const StyledTitle = styled(props => <Title {...omit(props, ['animate', 'ref'])} 
 
 const appBarContent = ({ section }) => ({ title: sectionTitles[section] })
 
-const List = ({ affiliations, animate, interests, brandsList, isLoading, history }) => {
+const List = ({ affiliations, animate, interests, brandsList, isLoading }) => {
+  const history = useHistory()
+
   const [titleKey, setTitleKey] = useState('activeBrands')
   const [sectionAppBarContent, setSectionAppBarContent] = useState(appBarContent({ section: titleKey }))
 
@@ -110,4 +112,4 @@ const List = ({ affiliations, animate, interests, brandsList, isLoading, history
   )
 }
 
-export default withRouter(List)
+export default List

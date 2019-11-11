@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import { Body, Header, SmallHeader } from './typography'
 import { changeStage } from 'onboarding/scenario-actions'
 import { showUpToUsBranding } from 'utils'
+import { useHistory } from 'react-router-dom'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const Container = styled.div`
   min-width: 300px;
@@ -26,7 +26,6 @@ const StopTourButton = styled(SharedButton)`
 
 const Tooltip = ({
   align,
-  history,
   body,
   toStage1,
   create,
@@ -38,6 +37,8 @@ const Tooltip = ({
   onboarding,
   isFinalStep,
 }) => {
+  const history = useHistory()
+
   useEffect(() => toStage1 && changeStage(1), [toStage1])
   const { setOnboarding } = useOnboardingConsumer()
 
@@ -87,4 +88,4 @@ const Tooltip = ({
   )
 }
 
-export default withRouter(Tooltip)
+export default Tooltip

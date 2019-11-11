@@ -2,32 +2,32 @@ import React, { useCallback } from 'react'
 import routes from 'app/routes'
 import SellerForm from './form'
 import { apiRequest, apiSellerShow, apiSellerUpdate } from 'utils'
+import { useParams } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 
-const EditSellerForm = ({ match }) => {
+const EditSellerForm = () => {
+  const { sellerId } = useParams()
   const { enqueueSnackbar } = useSnackbar()
 
   const loadFormObject = useCallback(() => {
     return (async () => {
-      const id = match.params.sellerId
-      const { json, requestError } = await apiRequest(apiSellerShow, [id])
+      const { json, requestError } = await apiRequest(apiSellerShow, [sellerId])
       if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
       return json
     })()
-  }, [enqueueSnackbar, match.params.sellerId])
+  }, [enqueueSnackbar, sellerId])
 
   const saveFormObject = useCallback(
     form => {
       return (async () => {
-        const id = match.params.sellerId
-        const { json, errors, requestError } = await apiRequest(apiSellerUpdate, [id, { seller: form }])
+        const { json, errors, requestError } = await apiRequest(apiSellerUpdate, [sellerId, { seller: form }])
         if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
         if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
         if (!errors && !requestError) enqueueSnackbar('Successfully updated seller', { variant: 'success' })
         return json
       })()
     },
-    [enqueueSnackbar, match.params.sellerId]
+    [enqueueSnackbar, sellerId]
   )
 
   return (
@@ -35,7 +35,6 @@ const EditSellerForm = ({ match }) => {
       backRoute={routes.sellersList()}
       enqueueSnackbar={enqueueSnackbar}
       loadFormObject={loadFormObject}
-      match={match}
       saveFormObject={saveFormObject}
       title="Edit Seller"
     />

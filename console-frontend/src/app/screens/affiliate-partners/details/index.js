@@ -10,6 +10,7 @@ import useAppBarContent from 'ext/hooks/use-app-bar-content'
 import { apiAffiliationsList, apiBrandShow, apiInterestsList, apiRequest } from 'utils'
 import { Grid } from '@material-ui/core'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
+import { useParams } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 
 const FlexGrid = styled(Grid)`
@@ -25,7 +26,9 @@ const SideContainer = styled.div`
   }
 `
 
-const BrandPage = ({ match }) => {
+const BrandPage = () => {
+  const { brandId } = useParams()
+
   const [brand, setBrand] = useState(null)
   const [affiliations, setAffiliations] = useState([])
   const [interests, setInterests] = useState([])
@@ -50,12 +53,11 @@ const BrandPage = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const fetchBrand = useCallback(async () => {
-    const brandId = match.params.brandId
     const { json, errors, requestError } = await apiRequest(apiBrandShow, [brandId])
     if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
     if (requestError || errors) return
     setBrand(json)
-  }, [enqueueSnackbar, match.params.brandId])
+  }, [brandId, enqueueSnackbar])
 
   const fetchAffiliations = useCallback(async () => {
     const { json, errors, requestError } = await apiRequest(apiAffiliationsList, [])

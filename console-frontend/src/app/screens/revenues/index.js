@@ -12,9 +12,9 @@ import { apiAffiliationsList, apiConnectStripe, apiOrdersList, apiRequest } from
 import { CURRENCY_SYMBOLS } from 'utils/shared'
 import { Hidden } from '@material-ui/core'
 import { parse } from 'query-string'
+import { useHistory } from 'react-router-dom'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
-import { withRouter } from 'react-router'
 import * as dateFns from 'date-fns'
 
 const EXCHANGE_RATES_API_URL = 'https://api.exchangerate-api.com/v4/latest'
@@ -45,7 +45,9 @@ const Section = styled(SectionBase)`
 
 const calculateSellerAmount = (amount, rate) => ((amount * rate) / 100).toFixed(2)
 
-const Revenues = ({ history }) => {
+const Revenues = () => {
+  const history = useHistory()
+
   const minDate = useMemo(() => computeMinDate(), [])
   const maxDate = useMemo(() => new Date(), [])
   const [date, setDate] = useState(maxDate)
@@ -200,4 +202,4 @@ const Revenues = ({ history }) => {
   )
 }
 
-export default withRouter(Revenues)
+export default Revenues

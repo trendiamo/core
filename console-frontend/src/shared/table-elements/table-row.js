@@ -13,8 +13,8 @@ import TableCell from './table-cell'
 import { apiRequest } from 'utils'
 import { Checkbox, TableRow as MuiTableRow } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
-import { withRouter } from 'react-router'
 
 const StyledTableRow = styled(props => <MuiTableRow {...omit(props, ['highlightInactive'])} />)`
   ${({ highlightInactive }) => highlightInactive && 'background: f7f7f7;'}
@@ -28,7 +28,6 @@ const TableRow = ({
   children,
   fetchRecords,
   highlightInactive,
-  history,
   isSubmittedResource,
   resource,
   resourceEditPath,
@@ -37,6 +36,8 @@ const TableRow = ({
   selectedIds,
   setSelectedIds,
 }) => {
+  const history = useHistory()
+
   const { enqueueSnackbar } = useSnackbar()
 
   const handleSelect = useCallback(
@@ -65,7 +66,7 @@ const TableRow = ({
     if (routes) {
       history.push(routes.edit(json.id))
     }
-  }, [api.duplicate, resource.id, history, routes, enqueueSnackbar])
+  }, [api.duplicate, resource.id, routes, enqueueSnackbar, history])
 
   const rejectResource = useCallback(async () => {
     const { json, errors, requestError } = await apiRequest(api.reject, [resource.id])
@@ -129,4 +130,4 @@ const TableRow = ({
   )
 }
 
-export default withRouter(TableRow)
+export default TableRow

@@ -10,14 +10,16 @@ import { arrayMove } from 'react-sortable-hoc'
 import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
 import { history as pluginHistory, routes as pluginRoutes } from 'plugin-base'
+import { useLocation } from 'react-router-dom'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const onProductClick = product => {
   window.open(product.url, '_blank')
 }
 
-const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormObject, title }) => {
+const ShowcaseForm = ({ backRoute, history, loadFormObject, saveFormObject, title }) => {
+  const location = useLocation()
+
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'showcases', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
@@ -233,4 +235,4 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
   )
 }
 
-export default withRouter(ShowcaseForm)
+export default ShowcaseForm

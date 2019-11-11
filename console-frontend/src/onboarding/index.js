@@ -7,8 +7,8 @@ import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { Portal } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 import { stages, stagesArray } from './stages'
+import { useHistory } from 'react-router-dom'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const floaterProps = {
   hideArrow: true,
@@ -56,7 +56,8 @@ const setStyleToPortal = () => {
   }
 }
 
-const Onboarding = ({ history, width }) => {
+const Onboarding = ({ width }) => {
+  const history = useHistory()
   const { onboarding, setOnboarding, setOnboardingHelp } = useOnboardingConsumer()
   const [wasLaunchedInU2U, setWasLaunchedInU2U] = useState(false)
 
@@ -125,4 +126,4 @@ const Onboarding = ({ history, width }) => {
   )
 }
 
-export default withRouter(withWidth()(Onboarding))
+export default withWidth()(Onboarding)

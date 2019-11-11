@@ -16,8 +16,8 @@ import { ReactComponent as FrekklsLogo } from 'assets/icons/frekkls-logo.svg'
 import { IconButton } from 'shared/form-elements'
 import { showUpToUsBranding } from 'utils'
 import { ReactComponent as UpToUsLogo } from 'assets/icons/uptous-logo-short.svg'
+import { useLocation } from 'react-router-dom'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const fade = keyframes`
   0%{
@@ -104,7 +104,8 @@ const StyledUpToUsLogo = styled(UpToUsLogo)`
   width: 140px;
 `
 
-const Item = withRouter(({ location, resource, sidebarOpen }) => {
+const Item = ({ resource, sidebarOpen }) => {
+  const location = useLocation()
   const isActive = useMemo(() => location.pathname.startsWith(resource.route()), [location.pathname, resource])
 
   return (
@@ -119,7 +120,7 @@ const Item = withRouter(({ location, resource, sidebarOpen }) => {
       </Link>
     </div>
   )
-})
+}
 
 const MenuLogoContainer = styled.div`
   display: flex;
@@ -153,15 +154,17 @@ const MenuLogo = ({ toggleOpen, isFoldable }) => (
   </MenuLogoContainer>
 )
 
-const BaseMenu = withRouter(({ location, menuLoaded, sidebarOpen, stageIndex, toggleOpen, isFoldable }) => {
-  if (!menuLoaded && stageIndex === 0 && location.pathname === routes.welcome()) {
-    return <DummyMenu />
-  }
+const BaseMenu = ({ menuLoaded, sidebarOpen, stageIndex, toggleOpen, isFoldable }) => {
+  const location = useLocation()
 
   const userRoleResourceGroups = useMemo(() => {
     if (auth.isAffiliate()) return affiliateResourceGroups()
     return auth.isAdmin() || auth.getAccountRole() !== 'editor' ? resourceGroups() : editorResourceGroups()
   }, [])
+
+  if (!menuLoaded && stageIndex === 0 && location.pathname === routes.welcome()) {
+    return <DummyMenu />
+  }
 
   return (
     <Container>
@@ -185,7 +188,7 @@ const BaseMenu = withRouter(({ location, menuLoaded, sidebarOpen, stageIndex, to
       <UserMenu sidebarOpen={sidebarOpen} />
     </Container>
   )
-})
+}
 
 const MemoedBaseMenu = memo(BaseMenu)
 

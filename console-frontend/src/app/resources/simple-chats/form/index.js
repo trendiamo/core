@@ -11,11 +11,14 @@ import { apiRequest, apiSimpleChatSubmit } from 'utils'
 import { arrayMove } from 'react-sortable-hoc'
 import { formObjectTransformer } from './data-utils'
 import { Grid } from '@material-ui/core'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useOnboardingHelp } from 'ext/hooks/use-onboarding'
 import { useSnackbar } from 'notistack'
-import { withRouter } from 'react-router'
 
-const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveFormObject, title }) => {
+const SimpleChatForm = ({ backRoute, loadFormObject, saveFormObject, title }) => {
+  const history = useHistory()
+  const location = useLocation()
+
   const onboardingHelp = useMemo(
     () => ({ single: true, stepName: 'simpleChats', stageName: 'initial', pathname: location.pathname }),
     [location.pathname]
@@ -212,4 +215,4 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
   )
 }
 
-export default withRouter(SimpleChatForm)
+export default SimpleChatForm

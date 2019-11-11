@@ -11,8 +11,8 @@ import { Hidden, AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
 import { IconButton } from 'shared/form-elements'
 import { showUpToUsBranding } from 'utils'
 import { StoreContext } from 'ext/hooks/store'
+import { useLocation } from 'react-router-dom'
 import { useOnboardingConsumer } from 'ext/hooks/use-onboarding'
-import { withRouter } from 'react-router'
 
 const ButtonsContainer = styled.div`
   flex: 1;
@@ -33,7 +33,9 @@ const StyledHelp = styled(IconButton)`
   }
 `
 
-const OnboardingButton = withRouter(({ location }) => {
+const OnboardingButton = () => {
+  const location = useLocation()
+
   const { onboarding, setOnboarding } = useOnboardingConsumer()
 
   const handleClick = useCallback(() => {
@@ -49,7 +51,7 @@ const OnboardingButton = withRouter(({ location }) => {
       </StyledHelp>
     </Hidden>
   )
-})
+}
 
 const AppBarTitle = ({ backRoute, backRouteTitle, title }) => {
   if (!backRoute) return <Title>{title}</Title>
