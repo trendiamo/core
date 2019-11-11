@@ -3,9 +3,9 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { ContentWrapper, Frame } from 'plugin-base'
 
-const StyledFrame = styled(
-  forwardRef((props, ref) => <Frame {...omit(props, ['isEntry', 'isUnmounting', 'pluginTheme'])} ref={ref} />)
-)`
+const FilteredFrame = (props, ref) => <Frame {...omit(props, ['isEntry', 'isUnmounting', 'pluginTheme'])} ref={ref} />
+
+const StyledFrame = styled(forwardRef(FilteredFrame))`
   border: 0;
   overflow: hidden;
   border-radius: ${({ pluginTheme }) => (pluginTheme.roundEdges ? '8px' : '0')};

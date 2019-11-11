@@ -19,14 +19,12 @@ const Account = () => {
 
   useAppBarContent(appBarContent)
 
+  if (auth.getAccountRole() === 'editor') return null
+
   return (
     <>
-      {auth.getAccountRole() !== 'editor' && (
-        <>
-          <EditWebsite />
-          <UsersList />
-        </>
-      )}
+      <EditWebsite />
+      <UsersList />
     </>
   )
 }

@@ -32,17 +32,14 @@ const BlankState = () => (
   />
 )
 
-const UrlListItems = ({ urlHistory, copyToClipboard }) => (
-  <>
-    {urlHistory.map(generatedUrl => (
-      <Tooltip key={generatedUrl.id} placement="top-end" title="Copy to Clipboard">
-        <ListItem button onClick={copyToClipboard}>
-          <ListItemText primary={generatedUrl.url} />
-        </ListItem>
-      </Tooltip>
-    ))}
-  </>
-)
+const UrlListItems = ({ urlHistory, copyToClipboard }) =>
+  urlHistory.map(generatedUrl => (
+    <Tooltip key={generatedUrl.id} placement="top-end" title="Copy to Clipboard">
+      <ListItem button onClick={copyToClipboard}>
+        <ListItemText primary={generatedUrl.url} />
+      </ListItem>
+    </Tooltip>
+  ))
 
 const UrlList = ({ urlHistory }) => {
   const copyToClipboard = useCallback(event => copy(event.target.textContent), [])

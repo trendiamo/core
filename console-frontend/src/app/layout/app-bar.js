@@ -74,12 +74,14 @@ const AppBarActions = ({ showOnboarding, Actions }) => {
   )
 }
 
-const AppBarContent = memo(({ Actions, backRoute, showOnboarding, title, backRouteTitle }) => (
+const AppBarContent = ({ Actions, backRoute, showOnboarding, title, backRouteTitle }) => (
   <>
     <AppBarTitle backRoute={backRoute} backRouteTitle={backRouteTitle} title={title} />
     <AppBarActions Actions={Actions} showOnboarding={showOnboarding} />
   </>
-))
+)
+
+const MemoedAppBarContent = memo(AppBarContent)
 
 const StyledAppBar = styled(props => <MuiAppBar {...omit(props, ['hasScrolled', 'sidebarOpen', 'sticky'])} />)`
   background-color: ${showUpToUsBranding() ? '#e7ecef' : '#f5f5f5'};
@@ -132,7 +134,7 @@ const AppBar = ({ hasScrolled, showOnboarding, sidebarOpen, toggleOpen }) => {
         <MenuButton aria-label="Open drawer" color="inherit" id="foofoo" onClick={toggleOpen}>
           <MenuIcon />
         </MenuButton>
-        <AppBarContent
+        <MemoedAppBarContent
           Actions={Actions}
           backRoute={backRoute}
           backRouteTitle={backRouteTitle}

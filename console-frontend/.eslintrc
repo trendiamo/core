@@ -62,7 +62,7 @@
     "react/jsx-filename-extension": 0,
     "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "ignore" }],
     "react/jsx-handler-names": 0,
-    "react/jsx-max-depth": [2, { "max": 4 }],
+    "react/jsx-max-depth": [2, { "max": 5 }],
     "react/jsx-no-bind": 2,
     "react/jsx-sort-props": [
       "error",

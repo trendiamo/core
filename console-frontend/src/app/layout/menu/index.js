@@ -153,47 +153,47 @@ const MenuLogo = ({ toggleOpen, isFoldable }) => (
   </MenuLogoContainer>
 )
 
-const BaseMenu = withRouter(
-  memo(({ location, menuLoaded, sidebarOpen, stageIndex, toggleOpen, isFoldable }) => {
-    if (!menuLoaded && stageIndex === 0 && location.pathname === routes.welcome()) {
-      return <DummyMenu />
-    }
+const BaseMenu = withRouter(({ location, menuLoaded, sidebarOpen, stageIndex, toggleOpen, isFoldable }) => {
+  if (!menuLoaded && stageIndex === 0 && location.pathname === routes.welcome()) {
+    return <DummyMenu />
+  }
 
-    const userRoleResourceGroups = useMemo(() => {
-      if (auth.isAffiliate()) return affiliateResourceGroups()
-      return auth.isAdmin() || auth.getAccountRole() !== 'editor' ? resourceGroups() : editorResourceGroups()
-    }, [])
+  const userRoleResourceGroups = useMemo(() => {
+    if (auth.isAffiliate()) return affiliateResourceGroups()
+    return auth.isAdmin() || auth.getAccountRole() !== 'editor' ? resourceGroups() : editorResourceGroups()
+  }, [])
 
-    return (
-      <Container>
-        <div style={{ flex: 1 }}>
-          <MenuLogo isFoldable={isFoldable} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
-          {Object.keys(userRoleResourceGroups).map(groupName => (
-            <div key={groupName}>
-              <MenuItemGroup showTitle={userRoleResourceGroups[groupName].showTitle}>
-                <GroupText>
-                  {userRoleResourceGroups[groupName].showTitle && userRoleResourceGroups[groupName].name}
-                </GroupText>
-              </MenuItemGroup>
-              {userRoleResourceGroups[groupName].resources.map(resource => (
-                <Item key={resource.route()} resource={resource} sidebarOpen={sidebarOpen} />
-              ))}
-            </div>
-          ))}
-          {auth.isAffiliate() && <ReferralBox sidebarOpen={sidebarOpen} />}
-        </div>
-        {auth.isAffiliate() && <ImpactPoints sidebarOpen={sidebarOpen} />}
-        <UserMenu sidebarOpen={sidebarOpen} />
-      </Container>
-    )
-  })
-)
+  return (
+    <Container>
+      <div style={{ flex: 1 }}>
+        <MenuLogo isFoldable={isFoldable} sidebarOpen={sidebarOpen} toggleOpen={toggleOpen} />
+        {Object.keys(userRoleResourceGroups).map(groupName => (
+          <div key={groupName}>
+            <MenuItemGroup showTitle={userRoleResourceGroups[groupName].showTitle}>
+              <GroupText>
+                {userRoleResourceGroups[groupName].showTitle && userRoleResourceGroups[groupName].name}
+              </GroupText>
+            </MenuItemGroup>
+            {userRoleResourceGroups[groupName].resources.map(resource => (
+              <Item key={resource.route()} resource={resource} sidebarOpen={sidebarOpen} />
+            ))}
+          </div>
+        ))}
+        {auth.isAffiliate() && <ReferralBox sidebarOpen={sidebarOpen} />}
+      </div>
+      {auth.isAffiliate() && <ImpactPoints sidebarOpen={sidebarOpen} />}
+      <UserMenu sidebarOpen={sidebarOpen} />
+    </Container>
+  )
+})
+
+const MemoedBaseMenu = memo(BaseMenu)
 
 const Menu = ({ menuLoaded, sidebarOpen, toggleOpen, isFoldable }) => {
   const { onboarding } = useOnboardingConsumer()
 
   return (
-    <BaseMenu
+    <MemoedBaseMenu
       isFoldable={isFoldable}
       menuLoaded={menuLoaded}
       sidebarOpen={sidebarOpen}

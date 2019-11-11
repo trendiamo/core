@@ -14,17 +14,15 @@ const CoinValue = styled(Text)`
 const ImpactRewards = ({ impactRewards }) => (
   <Section>
     <Title>{'Impact Rewards'}</Title>
-    <>
-      {impactRewards.map(impactReward => (
-        <TextContainer key={impactReward.id}>
-          <Coin />
-          <CoinValue>{impactReward.impactPointsInCents / 100}</CoinValue>
-          <Text>{`after ${impactReward.targetRevenueInCents / 100 || 0}${
-            CURRENCY_SYMBOLS[impactReward.targetRevenueCurrency.toUpperCase()]
-          } revenue`}</Text>
-        </TextContainer>
-      ))}
-    </>
+    {impactRewards.map(impactReward => (
+      <TextContainer key={impactReward.id}>
+        <Coin />
+        <CoinValue>{impactReward.impactPointsInCents / 100}</CoinValue>
+        <Text>{`after ${impactReward.targetRevenueInCents / 100 || 0}${
+          CURRENCY_SYMBOLS[impactReward.targetRevenueCurrency.toUpperCase()]
+        } revenue`}</Text>
+      </TextContainer>
+    ))}
   </Section>
 )
 
