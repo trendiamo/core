@@ -34,7 +34,7 @@ module TrendiamoBackend
     config.middleware.use JsonCamelCase
 
     config.middleware.use ActionDispatch::Cookies
-    config.cache_store = :redis_store, ENV['REDIS_URL']
+    config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
     Rails.application.config.middleware.use ActionDispatch::Session::CacheStore, key: 'SID', expire_after: 1.month
 
     config.active_job.queue_adapter = :resque

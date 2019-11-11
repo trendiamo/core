@@ -8,12 +8,12 @@ end
 
 gem "pg", "~> 0.18"
 gem "puma", "~> 3.7"
-gem "rails", "~> 5.1.4"
+gem "rails", "~> 6.0.1"
 
 gem "acts_as_tenant"
 gem "aws-sdk-s3"
 gem "brakeman"
-gem "deep_cloneable", "~> 2.4.0"
+gem "deep_cloneable", "~> 3.0.0"
 gem "devise"
 gem "down"
 gem "graphql"
@@ -22,7 +22,6 @@ gem "lograge"
 gem "omniauth-google-oauth2"
 gem "pundit"
 gem "rack-cors"
-gem "redis-rails", "~> 5"
 gem "resque"
 gem "resque-scheduler"
 gem "rest-client"
@@ -51,7 +50,7 @@ end
 
 group :test do
   gem "database_cleaner"
-  gem "minitest", "5.10.3" # https://stackoverflow.com/questions/48229515/rails-minitest-crashing-when-tests-fail
+  gem "minitest"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

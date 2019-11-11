@@ -6,7 +6,7 @@ FactoryBot.define do
       sequence(:url) { |i| "https://randomuser.me/api/portraits/men/#{i % 99}.jpg" }
     end
 
-    file_format "jpeg"
+    file_format { "jpeg" }
 
     after(:build) { |record| record.account = ActsAsTenant.default_tenant }
   end
