@@ -3,7 +3,7 @@ import Joyride from 'react-joyride'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import routes from 'app/routes'
 import SkipButton from './elements/skip-button'
-import withWidth from '@material-ui/core/withWidth'
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
 import { Portal } from '@material-ui/core'
 import { showUpToUsBranding } from 'utils'
 import { stages, stagesArray } from './stages'
@@ -100,7 +100,7 @@ const Onboarding = ({ history, width }) => {
   )
 
   const isEnabled = useMemo(
-    () => width >= 960 && ((onboarding.run && stagesArray[onboarding.stageIndex]) || onboarding.help.run),
+    () => isWidthUp('md', width) && ((onboarding.run && stagesArray[onboarding.stageIndex]) || onboarding.help.run),
     [onboarding.help.run, onboarding.run, onboarding.stageIndex, width]
   )
 
