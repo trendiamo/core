@@ -2,7 +2,6 @@ import Actions from './actions'
 import AddItemButton from './add-item-button'
 import AddItemContainer from './add-item-container'
 import Cancel from './cancel'
-import Checkbox from './checkbox'
 import Divider from './divider'
 import Field from './field'
 import Fieldset from './fieldset'
@@ -40,6 +39,5 @@ export {
   PreviewModal,
   Label,
   IconButton,
-  Checkbox,
   SubSection,
 }

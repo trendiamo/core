@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react'
 import Section from 'shared/section'
 import styled from 'styled-components'
 import { apiAffiliationCreate, apiRequest } from 'utils'
-import { Checkbox } from 'shared/form-elements'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { Title } from './shared'
 import { useSnackbar } from 'notistack'
 
@@ -37,24 +37,37 @@ const TermsAcceptanceBox = ({
 }) => {
   const clickLabelLink = useCallback(
     event => {
-      event.stopPropagation()
+      event.preventDefault()
       scrollToTermsAndConditions()
     },
     [scrollToTermsAndConditions]
   )
 
+  const toggleAcceptedTermsAndConditions = useCallback(
+    () => {
+      setAcceptedTermsAndConditions(!acceptedTermsAndConditions)
+    },
+    [setAcceptedTermsAndConditions, acceptedTermsAndConditions]
+  )
+
   return (
     <TermsAcceptanceContainer>
-      <Checkbox
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={acceptedTermsAndConditions}
+            color="primary"
+            onChange={toggleAcceptedTermsAndConditions}
+            required
+          />
+        }
         label={
-          <>
+          <p>
             {'I have read and accepted the '}
             <LabelLink onClick={clickLabelLink}>{'Terms & Conditions'}</LabelLink>
             {' for promoting this brand.'}
-          </>
+          </p>
         }
-        setValue={setAcceptedTermsAndConditions}
-        value={acceptedTermsAndConditions}
       />
     </TermsAcceptanceContainer>
   )

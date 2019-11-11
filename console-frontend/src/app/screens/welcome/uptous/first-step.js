@@ -4,10 +4,9 @@ import Link from 'shared/link'
 import React, { useCallback, useState } from 'react'
 import routes from 'app/routes'
 import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography'
 import { apiMeUpdate, apiRequest } from 'utils'
-import { Checkbox, Field } from 'shared/form-elements'
-import { Form } from 'shared/form-elements'
+import { Checkbox, FormControlLabel, Typography } from '@material-ui/core'
+import { Field, Form } from 'shared/form-elements'
 import { useSnackbar } from 'notistack'
 
 const FormFooter = styled.div`
@@ -28,8 +27,8 @@ const FirstStep = ({ setWelcomeStep }) => {
   const { enqueueSnackbar } = useSnackbar()
 
   const toggleAcceptsTermsAndConditions = useCallback(
-    value => {
-      setForm({ ...form, acceptsTermsAndConditions: value })
+    () => {
+      setForm({ ...form, acceptsTermsAndConditions: !form.acceptsTermsAndConditions })
     },
     [form]
   )
@@ -73,7 +72,15 @@ const FirstStep = ({ setWelcomeStep }) => {
         onChange={setFormValue}
         value={form.referredByCode}
       />
-      <Checkbox
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={form.acceptsTermsAndConditions}
+            color="primary"
+            onChange={toggleAcceptsTermsAndConditions}
+            required
+          />
+        }
         label={
           <p>
             {'I accept the '}
@@ -91,9 +98,6 @@ const FirstStep = ({ setWelcomeStep }) => {
             {'.'}
           </p>
         }
-        onChange={toggleAcceptsTermsAndConditions}
-        required
-        value={form.acceptsTermsAndConditions}
       />
       <FormFooter>
         <Button
