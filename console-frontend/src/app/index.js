@@ -50,16 +50,13 @@ const AppBase = () => {
   const [loading, setLoading] = useState(true)
   const [fetchedAccount, setFetchedAccount] = useState(false)
 
-  useEffect(
-    () => {
-      apiRequest(apiGetCsrfToken, []).then(({ json, errors, requestError }) => {
-        setLoading(false)
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (!requestError && !errors) auth.setCsrfToken(json)
-      })
-    },
-    [enqueueSnackbar, setLoading]
-  )
+  useEffect(() => {
+    apiRequest(apiGetCsrfToken, []).then(({ json, errors, requestError }) => {
+      setLoading(false)
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (!requestError && !errors) auth.setCsrfToken(json)
+    })
+  }, [enqueueSnackbar, setLoading])
 
   if (loading) return null
 

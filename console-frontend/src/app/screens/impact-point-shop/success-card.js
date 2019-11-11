@@ -18,13 +18,10 @@ const StyledCallout = styled(props => <Callout bordered={false} {...props} />)`
 `
 
 const SuccessCard = ({ setShowSuccessCard, setProductMessage }) => {
-  const onClick = useCallback(
-    () => {
-      setProductMessage('')
-      setShowSuccessCard(false)
-    },
-    [setProductMessage, setShowSuccessCard]
-  )
+  const onClick = useCallback(() => {
+    setProductMessage('')
+    setShowSuccessCard(false)
+  }, [setProductMessage, setShowSuccessCard])
 
   return (
     <MainCard>

@@ -39,19 +39,16 @@ const YourReferrals = () => {
   )
   useOnboardingHelp(onboardingHelp)
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const { json, requestError } = await apiRequest(apiMeReferrals, [])
-        if (requestError) {
-          enqueueSnackbar(requestError, { variant: 'error' })
-          return {}
-        }
-        setReferrals(json)
-      })()
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const { json, requestError } = await apiRequest(apiMeReferrals, [])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+        return {}
+      }
+      setReferrals(json)
+    })()
+  }, [enqueueSnackbar])
 
   return (
     <Container>

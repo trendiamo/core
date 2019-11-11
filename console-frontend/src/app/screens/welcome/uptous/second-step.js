@@ -30,20 +30,17 @@ const SecondStep = () => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const { json, errors, requestError } = await apiRequest(apiTagsList, [])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-        if (!requestError && !errors) {
-          setProductCategoryTags(json.filter(tag => tag.tagType === 'product_category'))
-          setPositiveImpactAreaTags(json.filter(tag => tag.tagType === 'positive_impact_area'))
-        }
-      })()
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const { json, errors, requestError } = await apiRequest(apiTagsList, [])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+      if (!requestError && !errors) {
+        setProductCategoryTags(json.filter(tag => tag.tagType === 'product_category'))
+        setPositiveImpactAreaTags(json.filter(tag => tag.tagType === 'positive_impact_area'))
+      }
+    })()
+  }, [enqueueSnackbar])
 
   const positiveImpactAreaList = useMemo(() => positiveImpactAreaTags.filter(tag => tag.active).map(tag => tag.id), [
     positiveImpactAreaTags,
@@ -52,12 +49,9 @@ const SecondStep = () => {
     productCategoryTags,
   ])
 
-  const selectedTagIds = useMemo(
-    () => {
-      return positiveImpactAreaList.concat(productCategoryList)
-    },
-    [positiveImpactAreaList, productCategoryList]
-  )
+  const selectedTagIds = useMemo(() => {
+    return positiveImpactAreaList.concat(productCategoryList)
+  }, [positiveImpactAreaList, productCategoryList])
 
   const onFormSubmit = useCallback(
     async event => {

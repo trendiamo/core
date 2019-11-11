@@ -65,39 +65,33 @@ const Activity = ({ dates, orders }) => {
   const chartRef = useRef(null)
   const [chartData, setChartData] = useState({})
 
-  const revenues = useMemo(
-    () => {
-      const [startDate, endDate] = [
-        new Date(dates.from_date),
-        (isPast(new Date(dates.to_date)) && new Date(dates.to_date)) || new Date(),
-      ]
-      const emptyOrders = getEmptyRevenuesInRange(startDate, endDate)
-      return [...orders, ...emptyOrders]
-        .reduce((revenues, order) => {
-          const date = format(new Date(order.capturedAt), 'MMM d')
-          const revenue = revenues.find(revenue => revenue.date === date)
-          if (revenue) {
-            revenue.value += +order.sellerAmount
-          } else {
-            revenues.push({ date, value: +order.sellerAmount })
-          }
-          return revenues
-        }, [])
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-    },
-    [dates, orders]
-  )
+  const revenues = useMemo(() => {
+    const [startDate, endDate] = [
+      new Date(dates.from_date),
+      (isPast(new Date(dates.to_date)) && new Date(dates.to_date)) || new Date(),
+    ]
+    const emptyOrders = getEmptyRevenuesInRange(startDate, endDate)
+    return [...orders, ...emptyOrders]
+      .reduce((revenues, order) => {
+        const date = format(new Date(order.capturedAt), 'MMM d')
+        const revenue = revenues.find(revenue => revenue.date === date)
+        if (revenue) {
+          revenue.value += +order.sellerAmount
+        } else {
+          revenues.push({ date, value: +order.sellerAmount })
+        }
+        return revenues
+      }, [])
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
+  }, [dates, orders])
 
-  useEffect(
-    () => {
-      config.currency = orders[0].currency
-      const data = revenues.map(revenue => revenue.value.toFixed(2))
-      const labels = revenues.map(revenue => revenue.date)
-      const gradient = createChartGradient(chartRef.current.chartInstance.ctx)
-      setChartData({ labels, datasets: [{ data, ...config(gradient) }] })
-    },
-    [orders, revenues]
-  )
+  useEffect(() => {
+    config.currency = orders[0].currency
+    const data = revenues.map(revenue => revenue.value.toFixed(2))
+    const labels = revenues.map(revenue => revenue.date)
+    const gradient = createChartGradient(chartRef.current.chartInstance.ctx)
+    setChartData({ labels, datasets: [{ data, ...config(gradient) }] })
+  }, [orders, revenues])
 
   return <Line data={chartData} options={options} ref={chartRef} />
 }

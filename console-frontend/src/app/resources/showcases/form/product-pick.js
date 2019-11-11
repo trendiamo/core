@@ -33,12 +33,9 @@ const ProductPick = ({
     [onChange]
   )
 
-  const deleteProductPick = useCallback(
-    () => {
-      onChange(() => ({ _destroy: true }))
-    },
-    [onChange]
-  )
+  const deleteProductPick = useCallback(() => {
+    onChange(() => ({ _destroy: true }))
+  }, [onChange])
 
   const setImg = useCallback(
     img => {

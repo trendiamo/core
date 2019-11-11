@@ -45,19 +45,13 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     form.spotlightsAttributes ? form.spotlightsAttributes.length : 0
   )
 
-  useEffect(
-    () => {
-      pluginHistory.replace(pluginRoutes.showcase(form.id))
-    },
-    [form.id]
-  )
+  useEffect(() => {
+    pluginHistory.replace(pluginRoutes.showcase(form.id))
+  }, [form.id])
 
-  const onPreviewClick = useCallback(
-    () => {
-      setIsPreviewModalOpened(!isPreviewModalOpened)
-    },
-    [isPreviewModalOpened]
-  )
+  const onPreviewClick = useCallback(() => {
+    setIsPreviewModalOpened(!isPreviewModalOpened)
+  }, [isPreviewModalOpened])
 
   const newOnFormSubmit = useCallback(
     async event => {
@@ -71,33 +65,30 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     [history, location.pathname, onFormSubmit]
   )
 
-  const addSpotlight = useCallback(
-    () => {
-      mergeFormCallback(form => ({
-        spotlightsAttributes: [
-          ...form.spotlightsAttributes,
-          {
-            sellerId: '',
-            useSellerAnimation: false,
-            productPicksAttributes: [
-              {
-                url: '',
-                name: '',
-                description: '',
-                displayPrice: '',
-                img: { url: '' },
-                imgRect: {},
-                __key: 'new-0',
-              },
-            ],
-            __key: `new-${spotlightsCounter + 1}`,
-          },
-        ],
-      }))
-      setSpotlightsCounter(spotlightsCounter + 1)
-    },
-    [mergeFormCallback, spotlightsCounter]
-  )
+  const addSpotlight = useCallback(() => {
+    mergeFormCallback(form => ({
+      spotlightsAttributes: [
+        ...form.spotlightsAttributes,
+        {
+          sellerId: '',
+          useSellerAnimation: false,
+          productPicksAttributes: [
+            {
+              url: '',
+              name: '',
+              description: '',
+              displayPrice: '',
+              img: { url: '' },
+              imgRect: {},
+              __key: 'new-0',
+            },
+          ],
+          __key: `new-${spotlightsCounter + 1}`,
+        },
+      ],
+    }))
+    setSpotlightsCounter(spotlightsCounter + 1)
+  }, [mergeFormCallback, spotlightsCounter])
 
   const setSpotlightForm = useCallback(
     (mergeSpotlightCallback, index) => {
@@ -139,13 +130,10 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
     [showingContent]
   )
 
-  const onBackClick = useCallback(
-    () => {
-      onToggleContent(true)
-      pluginHistory.replace(pluginRoutes.showcase(form.id))
-    },
-    [form.id, onToggleContent]
-  )
+  const onBackClick = useCallback(() => {
+    onToggleContent(true)
+    pluginHistory.replace(pluginRoutes.showcase(form.id))
+  }, [form.id, onToggleContent])
 
   const onSpotlightClick = useCallback(
     ({ id }) => {
@@ -197,13 +185,10 @@ const ShowcaseForm = ({ backRoute, history, loadFormObject, location, saveFormOb
 
   const module = useMemo(() => ({ id: form.id, type: 'showcase', triggerIds: form.triggerIds }), [form])
 
-  useEffect(
-    () => {
-      if (isFormLoading) return
-      if (form.spotlightsAttributes && spotlightsCounter === 0) setSpotlightsCounter(form.spotlightsAttributes.length)
-    },
-    [form.spotlightsAttributes, isFormLoading, spotlightsCounter]
-  )
+  useEffect(() => {
+    if (isFormLoading) return
+    if (form.spotlightsAttributes && spotlightsCounter === 0) setSpotlightsCounter(form.spotlightsAttributes.length)
+  }, [form.spotlightsAttributes, isFormLoading, spotlightsCounter])
 
   if (isFormLoading) return <CircularProgress />
 

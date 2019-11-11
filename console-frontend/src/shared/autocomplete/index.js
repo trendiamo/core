@@ -49,23 +49,17 @@ const AutocompleteInput = ({
   const inputRef = useRef(null)
   const [hasFocused, setHasFocused] = useState(false)
 
-  useEffect(
-    () => {
-      if (!autoFocus || hasFocused || disabled) return
-      setHasFocused(true)
-      inputRef.current.focus()
-    },
-    [autoFocus, disabled, hasFocused]
-  )
+  useEffect(() => {
+    if (!autoFocus || hasFocused || disabled) return
+    setHasFocused(true)
+    inputRef.current.focus()
+  }, [autoFocus, disabled, hasFocused])
 
-  const onDropdownClick = useCallback(
-    () => {
-      loadAllOptions()
-      const ref = inputRef.current
-      if (ref) ref.focus()
-    },
-    [loadAllOptions]
-  )
+  const onDropdownClick = useCallback(() => {
+    loadAllOptions()
+    const ref = inputRef.current
+    if (ref) ref.focus()
+  }, [loadAllOptions])
 
   const onAddSellerClick = useCallback(() => setIsModalOpen(true), [setIsModalOpen])
 
@@ -144,17 +138,14 @@ const Autocomplete = ({
   const [suggestions, setSuggestions] = useState([])
   const [prevSelected, setPrevSelected] = useState(null)
 
-  const loadAllOptions = useCallback(
-    async () => {
-      const { json } = await apiRequest(autocomplete, [''])
-      const suggestions = json.map(option => {
-        return { value: option, label: option.name }
-      })
-      setIsMenuOpen(!isMenuOpen)
-      setSuggestions(suggestions)
-    },
-    [autocomplete, isMenuOpen]
-  )
+  const loadAllOptions = useCallback(async () => {
+    const { json } = await apiRequest(autocomplete, [''])
+    const suggestions = json.map(option => {
+      return { value: option, label: option.name }
+    })
+    setIsMenuOpen(!isMenuOpen)
+    setSuggestions(suggestions)
+  }, [autocomplete, isMenuOpen])
 
   const handleSelect = useCallback(() => setIsMenuOpen(false), [setIsMenuOpen])
   const handleOuterClick = useCallback(() => setIsMenuOpen(false), [setIsMenuOpen])
@@ -181,12 +172,9 @@ const Autocomplete = ({
     [debouncedAutocomplete, initialValueFormatMismatch, prevSelected]
   )
 
-  useEffect(
-    () => {
-      setPrevSelected(initialSelectedItem)
-    },
-    [setPrevSelected, initialSelectedItem]
-  )
+  useEffect(() => {
+    setPrevSelected(initialSelectedItem)
+  }, [setPrevSelected, initialSelectedItem])
 
   return (
     <Downshift

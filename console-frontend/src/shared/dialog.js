@@ -37,8 +37,7 @@ const DialogSubtitle = styled.span`
 const StyledDialogContent = styled(props => <DialogContent {...omit(props, ['hasManualPadding', 'flexContent'])} />)`
   padding-bottom: 0;
   ${({ hasManualPadding }) => hasManualPadding && 'padding: 0;'}
-  ${({ flexContent }) =>
-    flexContent && 'display: flex;'}
+  ${({ flexContent }) => flexContent && 'display: flex;'}
     width: 100%;
   > div {
     width: 100%;

@@ -11,18 +11,15 @@ const StyledText = styled(Text)`
 `
 
 const RequestSample = ({ brand, setIsRequestSampleModalOpen }) => {
-  const onRequestSampleClick = useCallback(
-    () => {
-      if (!brand) return
-      setIsRequestSampleModalOpen(true)
-      mixpanel.track('Clicked Request Sample', {
-        hostname: window.location.hostname,
-        brand: brand.name,
-        brandId: brand.id,
-      })
-    },
-    [brand, setIsRequestSampleModalOpen]
-  )
+  const onRequestSampleClick = useCallback(() => {
+    if (!brand) return
+    setIsRequestSampleModalOpen(true)
+    mixpanel.track('Clicked Request Sample', {
+      hostname: window.location.hostname,
+      brand: brand.name,
+      brandId: brand.id,
+    })
+  }, [brand, setIsRequestSampleModalOpen])
 
   return (
     <Section>

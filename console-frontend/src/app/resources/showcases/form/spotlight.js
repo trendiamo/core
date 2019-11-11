@@ -72,33 +72,27 @@ const Spotlight = ({
     [onChange, useSellerAnimation]
   )
 
-  const addProductPick = useCallback(
-    () => {
-      onChange(spotlight => ({
-        productPicksAttributes: [
-          ...spotlight.productPicksAttributes,
-          {
-            url: '',
-            name: '',
-            description: '',
-            displayPrice: '',
-            img: { url: '' },
-            imgRect: {},
-            __key: `new-${productPicksCounter + 1}`,
-          },
-        ],
-      }))
-      setProductPicksCounter(productPicksCounter + 1)
-    },
-    [onChange, productPicksCounter]
-  )
+  const addProductPick = useCallback(() => {
+    onChange(spotlight => ({
+      productPicksAttributes: [
+        ...spotlight.productPicksAttributes,
+        {
+          url: '',
+          name: '',
+          description: '',
+          displayPrice: '',
+          img: { url: '' },
+          imgRect: {},
+          __key: `new-${productPicksCounter + 1}`,
+        },
+      ],
+    }))
+    setProductPicksCounter(productPicksCounter + 1)
+  }, [onChange, productPicksCounter])
 
-  const deleteSpotlight = useCallback(
-    () => {
-      onChange(() => ({ _destroy: true }))
-    },
-    [onChange]
-  )
+  const deleteSpotlight = useCallback(() => {
+    onChange(() => ({ _destroy: true }))
+  }, [onChange])
 
   const setProductPickForm = useCallback(
     (productPickCb, productPickIndex) => {
@@ -131,21 +125,15 @@ const Spotlight = ({
     [spotlight.__seller]
   )
 
-  const onFocus = useCallback(
-    () => {
-      onSpotlightClick({ id: spotlight.id || `new-${index}` })
-    },
-    [index, onSpotlightClick, spotlight.id]
-  )
+  const onFocus = useCallback(() => {
+    onSpotlightClick({ id: spotlight.id || `new-${index}` })
+  }, [index, onSpotlightClick, spotlight.id])
 
-  const onToggleSellerAnimation = useCallback(
-    () => {
-      onChange(() => ({ useSellerAnimation: !useSellerAnimation }))
-      setUseSellerAnimation(!useSellerAnimation)
-      onFocus()
-    },
-    [onChange, onFocus, useSellerAnimation]
-  )
+  const onToggleSellerAnimation = useCallback(() => {
+    onChange(() => ({ useSellerAnimation: !useSellerAnimation }))
+    setUseSellerAnimation(!useSellerAnimation)
+    onFocus()
+  }, [onChange, onFocus, useSellerAnimation])
 
   return (
     <Section

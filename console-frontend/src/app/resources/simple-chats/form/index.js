@@ -46,12 +46,9 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     form.simpleChatSectionsAttributes ? form.simpleChatSectionsAttributes.length : 0
   )
 
-  const onPreviewClick = useCallback(
-    () => {
-      setIsPreviewModalOpened(!isPreviewModalOpened)
-    },
-    [isPreviewModalOpened]
-  )
+  const onPreviewClick = useCallback(() => {
+    setIsPreviewModalOpened(!isPreviewModalOpened)
+  }, [isPreviewModalOpened])
 
   const newOnFormSubmit = useCallback(
     async event => {
@@ -64,42 +61,36 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
     [history, location.pathname, onFormSubmit]
   )
 
-  const onSubmitClick = useCallback(
-    async () => {
-      setIsSubmitting(true)
-      const { json, errors, requestError } = await apiRequest(apiSimpleChatSubmit, [form.id, { simpleChat: form }])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!errors && !requestError) {
-        history.push(routes.simpleChatsList())
-        enqueueSnackbar(`Simple chat successfully submitted to ${form.__brand.name}`, { variant: 'success' })
-      } else {
-        setIsSubmitting(false)
-      }
-      return json
-    },
-    [enqueueSnackbar, form, history]
-  )
+  const onSubmitClick = useCallback(async () => {
+    setIsSubmitting(true)
+    const { json, errors, requestError } = await apiRequest(apiSimpleChatSubmit, [form.id, { simpleChat: form }])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+    if (!errors && !requestError) {
+      history.push(routes.simpleChatsList())
+      enqueueSnackbar(`Simple chat successfully submitted to ${form.__brand.name}`, { variant: 'success' })
+    } else {
+      setIsSubmitting(false)
+    }
+    return json
+  }, [enqueueSnackbar, form, history])
 
-  const addSimpleChatSection = useCallback(
-    () => {
-      mergeFormCallback(form => {
-        return {
-          ...form,
-          simpleChatSectionsAttributes: [
-            ...form.simpleChatSectionsAttributes,
-            {
-              key: '',
-              __key: `new-${simpleChatSectionsCounter + 1}`,
-              simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', html: '', __key: 'new-0' }],
-            },
-          ],
-        }
-      })
-      setSimpleChatSectionsCounter(simpleChatSectionsCounter + 1)
-    },
-    [mergeFormCallback, simpleChatSectionsCounter]
-  )
+  const addSimpleChatSection = useCallback(() => {
+    mergeFormCallback(form => {
+      return {
+        ...form,
+        simpleChatSectionsAttributes: [
+          ...form.simpleChatSectionsAttributes,
+          {
+            key: '',
+            __key: `new-${simpleChatSectionsCounter + 1}`,
+            simpleChatMessagesAttributes: [{ type: 'SimpleChatTextMessage', html: '', __key: 'new-0' }],
+          },
+        ],
+      }
+    })
+    setSimpleChatSectionsCounter(simpleChatSectionsCounter + 1)
+  }, [mergeFormCallback, simpleChatSectionsCounter])
 
   const setSimpleChatSectionsForm = useCallback(
     (simpleChatSection, simpleChatSectionIndex) => {
@@ -179,14 +170,11 @@ const SimpleChatForm = ({ backRoute, history, location, loadFormObject, saveForm
 
   const module = useMemo(() => ({ id: form.id, type: 'simple-chat', triggerIds: form.triggerIds }), [form])
 
-  useEffect(
-    () => {
-      if (isFormLoading) return
-      if (form.simpleChatSectionsAttributes && simpleChatSectionsCounter === 0)
-        setSimpleChatSectionsCounter(form.simpleChatSectionsAttributes.length)
-    },
-    [form.simpleChatSectionsAttributes, isFormLoading, simpleChatSectionsCounter]
-  )
+  useEffect(() => {
+    if (isFormLoading) return
+    if (form.simpleChatSectionsAttributes && simpleChatSectionsCounter === 0)
+      setSimpleChatSectionsCounter(form.simpleChatSectionsAttributes.length)
+  }, [form.simpleChatSectionsAttributes, isFormLoading, simpleChatSectionsCounter])
 
   if (isFormLoading) return <CircularProgress />
 

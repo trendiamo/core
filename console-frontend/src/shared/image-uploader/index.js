@@ -97,24 +97,18 @@ const ImageUploader = ({
   const [rect, setRect] = useState(null)
   const previewImage = useMemo(() => (value && value.url ? value.url : image ? image : ''), [image, value])
 
-  useEffect(
-    () => {
-      setIsLoading(progress || (!doneCropping && !image))
-    },
-    [doneCropping, image, progress, setIsLoading]
-  )
+  useEffect(() => {
+    setIsLoading(progress || (!doneCropping && !image))
+  }, [doneCropping, image, progress, setIsLoading])
 
-  const onCancelClick = useCallback(
-    () => {
-      setDoneCropping(true)
-      onChange(previousValue)
-      setImage(null)
-      setModalOpen(false)
-      setCrop({})
-      URL.revokeObjectURL(image.preview)
-    },
-    [onChange, image, previousValue]
-  )
+  const onCancelClick = useCallback(() => {
+    setDoneCropping(true)
+    onChange(previousValue)
+    setImage(null)
+    setModalOpen(false)
+    setCrop({})
+    URL.revokeObjectURL(image.preview)
+  }, [onChange, image, previousValue])
 
   const onDropzoneClick = useCallback(() => {
     setModalOpen(true)
@@ -137,16 +131,13 @@ const ImageUploader = ({
     [aspectRatio, onChange, value]
   )
 
-  const onCropDoneClick = useCallback(
-    async () => {
-      setDoneCropping(true)
-      setModalOpen(false)
-      setCrop({})
-      if (!image) return
-      onChange({ url: image, imgRect: rect })
-    },
-    [onChange, image, rect]
-  )
+  const onCropDoneClick = useCallback(async () => {
+    setDoneCropping(true)
+    setModalOpen(false)
+    setCrop({})
+    if (!image) return
+    onChange({ url: image, imgRect: rect })
+  }, [onChange, image, rect])
 
   const onGalleryDoneClick = useCallback(
     image => {
@@ -227,20 +218,14 @@ const ImageUploader = ({
     [aspectRatio, onChange, value]
   )
 
-  const onRemoveImage = useCallback(
-    () => {
-      setImage(null)
-      onChange({ url: '', imgRect: {} })
-    },
-    [onChange]
-  )
+  const onRemoveImage = useCallback(() => {
+    setImage(null)
+    onChange({ url: '', imgRect: {} })
+  }, [onChange])
 
-  useEffect(
-    () => {
-      if (setDisabled) setDisabled(!doneCropping)
-    },
-    [doneCropping, setDisabled]
-  )
+  useEffect(() => {
+    if (setDisabled) setDisabled(!doneCropping)
+  }, [doneCropping, setDisabled])
 
   return (
     <BaseImageUploader

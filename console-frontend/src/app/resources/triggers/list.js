@@ -107,19 +107,16 @@ const TriggersList = ({ location }) => {
 
   const setSelectedIds = useCallback(selectedIds => dispatch({ type: 'setSelectedIds', selectedIds }), [])
 
-  const deleteTriggers = useCallback(
-    async () => {
-      const { requestError } = await apiRequest(apiTriggerDestroy, [{ ids: state.selectedIds }])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      const { json, errors, requestError: requestError2 } = await apiRequest(apiTriggerList, [])
-      if (requestError2) enqueueSnackbar(requestError2, { variant: 'error' })
-      setIsLoading(false)
-      setSelectedIds([])
-      if (errors) return
-      setTriggers(json)
-    },
-    [enqueueSnackbar, setSelectedIds, state.selectedIds]
-  )
+  const deleteTriggers = useCallback(async () => {
+    const { requestError } = await apiRequest(apiTriggerDestroy, [{ ids: state.selectedIds }])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    const { json, errors, requestError: requestError2 } = await apiRequest(apiTriggerList, [])
+    if (requestError2) enqueueSnackbar(requestError2, { variant: 'error' })
+    setIsLoading(false)
+    setSelectedIds([])
+    if (errors) return
+    setTriggers(json)
+  }, [enqueueSnackbar, setSelectedIds, state.selectedIds])
 
   const onSortEnd = useCallback(
     async ({ oldIndex, newIndex }) => {
@@ -133,32 +130,26 @@ const TriggersList = ({ location }) => {
     [enqueueSnackbar, triggers]
   )
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const { json, errors, requestError } = await apiRequest(apiTriggerList, [])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        if (requestError || errors) return
-        setTriggers(json)
-        setIsLoading(false)
-      })()
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const { json, errors, requestError } = await apiRequest(apiTriggerList, [])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      if (requestError || errors) return
+      setTriggers(json)
+      setIsLoading(false)
+    })()
+  }, [enqueueSnackbar])
 
   const hostnames = useMemo(() => auth.getAccount().websitesAttributes[0].hostnames, [])
 
-  useEffect(
-    () => {
-      if (testerUrl.value) {
-        const matchesUrl = matchTriggers(triggers, testerUrl.value, hostnames)
-        if (!isEqual(testerUrl.matches, matchesUrl)) {
-          setTesterUrl({ ...testerUrl, matches: matchesUrl })
-        }
+  useEffect(() => {
+    if (testerUrl.value) {
+      const matchesUrl = matchTriggers(triggers, testerUrl.value, hostnames)
+      if (!isEqual(testerUrl.matches, matchesUrl)) {
+        setTesterUrl({ ...testerUrl, matches: matchesUrl })
       }
-    },
-    [hostnames, testerUrl, triggers]
-  )
+    }
+  }, [hostnames, testerUrl, triggers])
 
   if (isLoading) return <CircularProgress />
   if (triggers.length === 0) return <BlankState />

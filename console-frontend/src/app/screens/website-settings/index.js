@@ -41,18 +41,15 @@ const WebsiteSettings = () => {
     [enqueueSnackbar, websiteSettingsId]
   )
 
-  const loadFormObject = useCallback(
-    async () => {
-      const { json, requestError } = await apiRequest(apiWebsiteSettingsShow, [])
-      if (requestError) {
-        enqueueSnackbar(requestError, { variant: 'error' })
-        return {}
-      }
-      setWebsiteSettingsId(json.id)
-      return json
-    },
-    [enqueueSnackbar]
-  )
+  const loadFormObject = useCallback(async () => {
+    const { json, requestError } = await apiRequest(apiWebsiteSettingsShow, [])
+    if (requestError) {
+      enqueueSnackbar(requestError, { variant: 'error' })
+      return {}
+    }
+    setWebsiteSettingsId(json.id)
+    return json
+  }, [enqueueSnackbar])
 
   const { form, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, setFieldValue } = useForm({
     formObjectTransformer,

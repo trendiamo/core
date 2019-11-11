@@ -67,38 +67,28 @@ const steps = () => ({
     content: (
       <Tooltip
         body={
-          <>
-            <Body variant="body2">
-              {
-                'Here you can gain insights about your combined Affiliates Sales, manage your payment information and see when your next payout is.'
-              }
-              <br />
-              <br />
-              {"Before you can receive your first payout you'll need to setup a Stripe Connect account."}
-              <br />
-              <br />
-              {'You can learn more about that here: '}
-              <Link
-                href="https://help.uptous.co/set-up-stripe-connect-account"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {'https://help.uptous.co/set-up-stripe-connect-account'}
-              </Link>
-              <br />
-              <br />
-              {
-                'You can already get started with creating revenues right away though and only add your Stripe Connect account later. Until then this article helps you to get an overview over this page: '
-              }
-              <Link
-                href="https://help.uptous.co/how-revenues-and-payouts-work"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {'https://help.uptous.co/how-revenues-and-payouts-work'}
-              </Link>
-            </Body>
-          </>
+          <Body variant="body2">
+            {
+              'Here you can gain insights about your combined Affiliates Sales, manage your payment information and see when your next payout is.'
+            }
+            <br />
+            <br />
+            {"Before you can receive your first payout you'll need to setup a Stripe Connect account."}
+            <br />
+            <br />
+            {'You can learn more about that here: '}
+            <Link href="https://help.uptous.co/set-up-stripe-connect-account" rel="noopener noreferrer" target="_blank">
+              {'https://help.uptous.co/set-up-stripe-connect-account'}
+            </Link>
+            <br />
+            <br />
+            {
+              'You can already get started with creating revenues right away though and only add your Stripe Connect account later. Until then this article helps you to get an overview over this page: '
+            }
+            <Link href="https://help.uptous.co/how-revenues-and-payouts-work" rel="noopener noreferrer" target="_blank">
+              {'https://help.uptous.co/how-revenues-and-payouts-work'}
+            </Link>
+          </Body>
         }
         isFinalStep
       />

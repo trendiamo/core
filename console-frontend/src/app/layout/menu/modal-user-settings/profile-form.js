@@ -47,18 +47,15 @@ const ProfileForm = () => {
     [enqueueSnackbar]
   )
 
-  const loadFormObject = useCallback(
-    async () => {
-      const { json, requestError } = await apiRequest(apiMe, [])
-      if (requestError) {
-        enqueueSnackbar(requestError, { variant: 'error' })
-        return {}
-      }
-      auth.setUser(json)
-      return json
-    },
-    [enqueueSnackbar]
-  )
+  const loadFormObject = useCallback(async () => {
+    const { json, requestError } = await apiRequest(apiMe, [])
+    if (requestError) {
+      enqueueSnackbar(requestError, { variant: 'error' })
+      return {}
+    }
+    auth.setUser(json)
+    return json
+  }, [enqueueSnackbar])
 
   const { form, isFormLoading, isFormPristine, isFormSubmitting, mergeForm, onFormSubmit, setFieldValue } = useForm({
     formObjectTransformer,

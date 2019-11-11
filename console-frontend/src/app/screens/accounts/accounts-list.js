@@ -33,15 +33,12 @@ const AccountsList = () => {
     []
   )
 
-  const fetchAccounts = useCallback(
-    async () => {
-      const { json, requestError, response } = await apiRequest(apiAccountList, [{ ...query, searchQuery }])
-      requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(json)
-      setTotalAccountsCount(extractCountFromHeaders(response.headers))
-      setFetched(true)
-    },
-    [enqueueSnackbar, query, searchQuery]
-  )
+  const fetchAccounts = useCallback(async () => {
+    const { json, requestError, response } = await apiRequest(apiAccountList, [{ ...query, searchQuery }])
+    requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setAccounts(json)
+    setTotalAccountsCount(extractCountFromHeaders(response.headers))
+    setFetched(true)
+  }, [enqueueSnackbar, query, searchQuery])
 
   const onChangeSearchField = useCallback(
     async event => {
@@ -52,14 +49,11 @@ const AccountsList = () => {
     [debouncedAutocomplete, setSearchValue, setPage]
   )
 
-  useEffect(
-    () => {
-      ;(async () => {
-        fetchAccounts()
-      })()
-    },
-    [fetchAccounts]
-  )
+  useEffect(() => {
+    ;(async () => {
+      fetchAccounts()
+    })()
+  }, [fetchAccounts])
 
   if (!fetched) return <CircularProgress />
 

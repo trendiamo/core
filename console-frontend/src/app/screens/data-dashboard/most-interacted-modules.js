@@ -114,13 +114,10 @@ const MainTable = ({ data, handleRequestSort, sorting }) => {
   const [showConversionBar, setShowConversionBar] = useState(false)
   const [showLoadedCountBar, setShowLoadedCountBar] = useState(false)
 
-  const widthReference = useMemo(
-    () => {
-      const record = data.reduce((max, data) => (max.loadedCount > data.loadedCount ? max : data), {})
-      return record.loadedCount
-    },
-    [data]
-  )
+  const widthReference = useMemo(() => {
+    const record = data.reduce((max, data) => (max.loadedCount > data.loadedCount ? max : data), {})
+    return record.loadedCount
+  }, [data])
 
   useEffect(() => {
     let didCancel = false
@@ -190,27 +187,24 @@ const MostInteractedModules = ({ dates }) => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  useEffect(
-    () => {
-      setIsLoading(true)
-      ;(async () => {
-        const { json, requestError } = await apiRequest(apiEventList, [
-          { dates: JSON.stringify(dates), sort: sorting, chart: 'most_interacted_modules' },
-        ])
-        if (requestError) {
-          enqueueSnackbar(requestError, { variant: 'error' })
-          setHasErrors(true)
-        } else if (json.length === 0) {
-          setHasErrors(true)
-        } else {
-          setData(json)
-          setHasErrors(false)
-        }
-        setIsLoading(false)
-      })()
-    },
-    [dates, sorting, enqueueSnackbar]
-  )
+  useEffect(() => {
+    setIsLoading(true)
+    ;(async () => {
+      const { json, requestError } = await apiRequest(apiEventList, [
+        { dates: JSON.stringify(dates), sort: sorting, chart: 'most_interacted_modules' },
+      ])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+        setHasErrors(true)
+      } else if (json.length === 0) {
+        setHasErrors(true)
+      } else {
+        setData(json)
+        setHasErrors(false)
+      }
+      setIsLoading(false)
+    })()
+  }, [dates, sorting, enqueueSnackbar])
 
   const handleRequestSort = useCallback(({ optionName }) => {
     setSorting(optionName)

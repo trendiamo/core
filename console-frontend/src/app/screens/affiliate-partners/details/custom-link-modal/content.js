@@ -59,9 +59,7 @@ const Content = ({ affiliation }) => (
       <ContentContainer>
         <ContentTitle>{'Create custom affiliate links'}</ContentTitle>
         <ContentText>
-          {`You can create customized affiliate links to be able to link to any page of ${
-            affiliation.brand.name
-          }’s website. This can be helpful if you want to directly link to a specific product page or category.`}
+          {`You can create customized affiliate links to be able to link to any page of ${affiliation.brand.name}’s website. This can be helpful if you want to directly link to a specific product page or category.`}
         </ContentText>
         <ContentText>
           {'To create your customized links simply paste a link from the website below and click the button. '}

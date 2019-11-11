@@ -43,14 +43,11 @@ const StyledCheckCircle = styled(CheckCircle)`
 `
 
 const MonthlyRevenue = ({ dates, orders, hasStripeAccount }) => {
-  const revenue = useMemo(
-    () => {
-      const amount = orders.reduce((revenue, order) => (revenue += +order.sellerAmount), 0).toFixed(2)
-      const currency = orders[0].currency
-      return `${amount}${currency}`
-    },
-    [orders]
-  )
+  const revenue = useMemo(() => {
+    const amount = orders.reduce((revenue, order) => (revenue += +order.sellerAmount), 0).toFixed(2)
+    const currency = orders[0].currency
+    return `${amount}${currency}`
+  }, [orders])
 
   const paymentDate = useMemo(() => dateFns.startOfMonth(dateFns.addMonths(new Date(dates.to_date), 1)), [
     dates.to_date,

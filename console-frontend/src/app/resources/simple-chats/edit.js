@@ -7,17 +7,14 @@ import { useSnackbar } from 'notistack'
 const EditSimpleChatForm = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
-  const loadFormObject = useCallback(
-    () => {
-      return (async () => {
-        const id = match.params.simpleChatId
-        const { json, requestError } = await apiRequest(apiSimpleChatShow, [id])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        return json
-      })()
-    },
-    [enqueueSnackbar, match.params.simpleChatId]
-  )
+  const loadFormObject = useCallback(() => {
+    return (async () => {
+      const id = match.params.simpleChatId
+      const { json, requestError } = await apiRequest(apiSimpleChatShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      return json
+    })()
+  }, [enqueueSnackbar, match.params.simpleChatId])
 
   const saveFormObject = useCallback(
     form => {

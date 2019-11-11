@@ -16,12 +16,9 @@ const Actions = ({ maxDate, minDate, setDate, value, width, disabled }) => {
     [setAnchorEl]
   )
 
-  const handleClose = useCallback(
-    () => {
-      setAnchorEl(null)
-    },
-    [setAnchorEl]
-  )
+  const handleClose = useCallback(() => {
+    setAnchorEl(null)
+  }, [setAnchorEl])
 
   if (isWidthUp('sm', width)) return <DatePicker maxDate={maxDate} minDate={minDate} setDate={setDate} value={value} />
 

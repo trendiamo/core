@@ -36,17 +36,14 @@ const ProfileForm = () => {
     [enqueueSnackbar]
   )
 
-  const loadFormObject = useCallback(
-    async () => {
-      const { json, requestError } = await apiRequest(apiMeDetails, [])
-      if (requestError) {
-        enqueueSnackbar(requestError, { variant: 'error' })
-        return {}
-      }
-      return json
-    },
-    [enqueueSnackbar]
-  )
+  const loadFormObject = useCallback(async () => {
+    const { json, requestError } = await apiRequest(apiMeDetails, [])
+    if (requestError) {
+      enqueueSnackbar(requestError, { variant: 'error' })
+      return {}
+    }
+    return json
+  }, [enqueueSnackbar])
 
   const { form, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, setFieldValue } = useForm({
     formObjectTransformer,

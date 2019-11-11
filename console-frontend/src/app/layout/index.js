@@ -68,20 +68,14 @@ const FilledLayout = ({ children, location, width }) => {
   const onWindowScroll = useCallback(() => setHasScrolled(window.scrollY > 2), [setHasScrolled])
   const toggleOpen = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen])
 
-  useEffect(
-    () => {
-      setSidebarOpen(isWidthUp('md', width))
-    },
-    [width]
-  )
+  useEffect(() => {
+    setSidebarOpen(isWidthUp('md', width))
+  }, [width])
 
-  useEffect(
-    () => {
-      window.addEventListener('scroll', onWindowScroll)
-      return () => window.removeEventListener('scroll', onWindowScroll)
-    },
-    [onWindowScroll]
-  )
+  useEffect(() => {
+    window.addEventListener('scroll', onWindowScroll)
+    return () => window.removeEventListener('scroll', onWindowScroll)
+  }, [onWindowScroll])
 
   if (!onboardingReady) return null
 

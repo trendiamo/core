@@ -46,29 +46,26 @@ const ConversionRate = ({ dates }) => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  useEffect(
-    () => {
-      setIsLoading(true)
-      ;(async () => {
-        const { json, requestError } = await apiRequest(apiEventList, [
-          { dates: JSON.stringify(dates), chart: 'conversion_rate' },
-        ])
-        if (requestError) {
-          enqueueSnackbar(requestError, { variant: 'error' })
-          setHasErrors(true)
-        } else if (json.length === 0) {
-          setHasErrors(true)
-        } else {
-          const labels = json.map(record => format(new Date(record.date), 'MMM d'))
-          const data = json.map(record => parseFloat(record.conversionRate * 100).toFixed(2))
-          setChartData({ labels, datasets: [{ data, ...config }] })
-          setHasErrors(false)
-        }
-        setIsLoading(false)
-      })()
-    },
-    [dates, enqueueSnackbar]
-  )
+  useEffect(() => {
+    setIsLoading(true)
+    ;(async () => {
+      const { json, requestError } = await apiRequest(apiEventList, [
+        { dates: JSON.stringify(dates), chart: 'conversion_rate' },
+      ])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+        setHasErrors(true)
+      } else if (json.length === 0) {
+        setHasErrors(true)
+      } else {
+        const labels = json.map(record => format(new Date(record.date), 'MMM d'))
+        const data = json.map(record => parseFloat(record.conversionRate * 100).toFixed(2))
+        setChartData({ labels, datasets: [{ data, ...config }] })
+        setHasErrors(false)
+      }
+      setIsLoading(false)
+    })()
+  }, [dates, enqueueSnackbar])
 
   if (isLoading) return <CircularProgress />
 

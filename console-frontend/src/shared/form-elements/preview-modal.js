@@ -76,17 +76,14 @@ const PreviewUrlBox = ({ module }) => {
     setIsValidUrl(validHostnames().includes(hostname) && isProtocolValid)
   }, [])
 
-  useEffect(
-    () => {
-      if (module.triggerIds.length > 0) {
-        fetchTrigger(module)
-      } else {
-        setIsLoading(false)
-        setUrl(`https://${validHostnames()[0]}`)
-      }
-    },
-    [module, module.triggerIds]
-  )
+  useEffect(() => {
+    if (module.triggerIds.length > 0) {
+      fetchTrigger(module)
+    } else {
+      setIsLoading(false)
+      setUrl(`https://${validHostnames()[0]}`)
+    }
+  }, [module, module.triggerIds])
 
   return (
     <UrlDiv>

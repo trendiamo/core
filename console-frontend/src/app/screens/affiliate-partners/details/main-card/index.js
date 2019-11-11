@@ -93,18 +93,15 @@ const Tags = styled.div`
 `
 
 const SocialLink = ({ href, Icon, type, brand }) => {
-  const onClick = useCallback(
-    () => {
-      mixpanel.track(type === 'web' ? 'Visited Brand Website' : 'Visited Brand Social Media', {
-        hostname: window.location.hostname,
-        brand: brand.name,
-        brandId: brand.id,
-        linkType: type,
-        url: href,
-      })
-    },
-    [brand.id, brand.name, href, type]
-  )
+  const onClick = useCallback(() => {
+    mixpanel.track(type === 'web' ? 'Visited Brand Website' : 'Visited Brand Social Media', {
+      hostname: window.location.hostname,
+      brand: brand.name,
+      brandId: brand.id,
+      linkType: type,
+      url: href,
+    })
+  }, [brand.id, brand.name, href, type])
 
   return (
     <SocialLinkContainer href={href} onClick={onClick} rel="noopener noreferrer" target="_blank">

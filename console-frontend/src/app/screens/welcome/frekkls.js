@@ -15,31 +15,22 @@ const description =
 const WelcomePage = ({ history, width }) => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
 
-  const getStarted = useCallback(
-    () => {
-      setOnboarding({ ...onboarding, run: true })
+  const getStarted = useCallback(() => {
+    setOnboarding({ ...onboarding, run: true })
+    history.push(routes.triggersList())
+  }, [history, onboarding, setOnboarding])
+
+  const skipOnboarding = useCallback(() => {
+    changeStage(1)
+    setOnboarding({ ...onboarding, run: false, stageIndex: 1 })
+    history.push(routes.accountRoot())
+  }, [history, onboarding, setOnboarding])
+
+  useEffect(() => {
+    if (width === 'xs' || width === 'sm') {
       history.push(routes.triggersList())
-    },
-    [history, onboarding, setOnboarding]
-  )
-
-  const skipOnboarding = useCallback(
-    () => {
-      changeStage(1)
-      setOnboarding({ ...onboarding, run: false, stageIndex: 1 })
-      history.push(routes.accountRoot())
-    },
-    [history, onboarding, setOnboarding]
-  )
-
-  useEffect(
-    () => {
-      if (width === 'xs' || width === 'sm') {
-        history.push(routes.triggersList())
-      }
-    },
-    [history, width]
-  )
+    }
+  }, [history, width])
 
   return (
     <Container>

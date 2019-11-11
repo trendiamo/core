@@ -18,12 +18,9 @@ const Actions = ({ buttonText, createRoute, width }) => {
     [setAnchorEl]
   )
 
-  const handleClose = useCallback(
-    () => {
-      setAnchorEl(null)
-    },
-    [setAnchorEl]
-  )
+  const handleClose = useCallback(() => {
+    setAnchorEl(null)
+  }, [setAnchorEl])
 
   if (!createRoute) return null
 

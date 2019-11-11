@@ -104,17 +104,14 @@ const WebsiteButton = ({ affiliation, brand }) => {
     ? `https://${brand.websiteHostname}/?aftk=${affiliation.token}`
     : `https://${brand.websiteHostname}`
 
-  const onClick = useCallback(
-    () => {
-      mixpanel.track('Visited Brand Website', {
-        hostname: window.location.hostname,
-        url,
-        brandId: brand.id,
-        brand: brand.name,
-      })
-    },
-    [brand.id, brand.name, url]
-  )
+  const onClick = useCallback(() => {
+    mixpanel.track('Visited Brand Website', {
+      hostname: window.location.hostname,
+      url,
+      brandId: brand.id,
+      brand: brand.name,
+    })
+  }, [brand.id, brand.name, url])
 
   return (
     <IconLink href={url} onClick={onClick} rel="noopener noreferrer" target="_blank">
@@ -136,42 +133,30 @@ const BrandCard = ({ affiliation, animate, brand, goToBrandPage, interests }) =>
     [affiliation, brand.id, brand.name]
   )
 
-  const onClickCustomLink = useCallback(
-    () => {
-      trackToMixpanel('Clicked Custom Link')
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage, trackToMixpanel]
-  )
+  const onClickCustomLink = useCallback(() => {
+    trackToMixpanel('Clicked Custom Link')
+    goToBrandPage(brand)
+  }, [brand, goToBrandPage, trackToMixpanel])
 
-  const onClickBrandHeaderImage = useCallback(
-    () => {
-      trackToMixpanel('Clicked Brand Header Image')
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage, trackToMixpanel]
-  )
+  const onClickBrandHeaderImage = useCallback(() => {
+    trackToMixpanel('Clicked Brand Header Image')
+    goToBrandPage(brand)
+  }, [brand, goToBrandPage, trackToMixpanel])
 
   const interest = useMemo(() => interests && interests.find(interest => interest.brand.id === brand.id), [
     brand.id,
     interests,
   ])
 
-  const onLogoClick = useCallback(
-    () => {
-      trackToMixpanel('Clicked Brand Logo')
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage, trackToMixpanel]
-  )
+  const onLogoClick = useCallback(() => {
+    trackToMixpanel('Clicked Brand Logo')
+    goToBrandPage(brand)
+  }, [brand, goToBrandPage, trackToMixpanel])
 
-  const onBrandNameClick = useCallback(
-    () => {
-      trackToMixpanel('Clicked Brand Name')
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage, trackToMixpanel]
-  )
+  const onBrandNameClick = useCallback(() => {
+    trackToMixpanel('Clicked Brand Name')
+    goToBrandPage(brand)
+  }, [brand, goToBrandPage, trackToMixpanel])
 
   return (
     <StyledSection

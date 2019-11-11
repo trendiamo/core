@@ -55,19 +55,13 @@ const DialogContentGallery = ({ activeImage, onImageClick, images }) => (
 const DialogActionsGallery = ({ activeImage, onGalleryDoneClick, onFileUpload, onUrlUploadClick }) => {
   const [isDoneButtonDisabled, setIsDoneButtonDisabled] = useState(() => !!activeImage)
 
-  const newOnDoneButtonClick = useCallback(
-    () => {
-      onGalleryDoneClick(activeImage)
-    },
-    [onGalleryDoneClick, activeImage]
-  )
+  const newOnDoneButtonClick = useCallback(() => {
+    onGalleryDoneClick(activeImage)
+  }, [onGalleryDoneClick, activeImage])
 
-  useEffect(
-    () => {
-      setIsDoneButtonDisabled(!activeImage)
-    },
-    [activeImage]
-  )
+  useEffect(() => {
+    setIsDoneButtonDisabled(!activeImage)
+  }, [activeImage])
 
   return (
     <DialogActionsContainer style={{ justifyContent: 'space-between' }}>

@@ -43,12 +43,9 @@ const TermsAcceptanceBox = ({
     [scrollToTermsAndConditions]
   )
 
-  const toggleAcceptedTermsAndConditions = useCallback(
-    () => {
-      setAcceptedTermsAndConditions(!acceptedTermsAndConditions)
-    },
-    [setAcceptedTermsAndConditions, acceptedTermsAndConditions]
-  )
+  const toggleAcceptedTermsAndConditions = useCallback(() => {
+    setAcceptedTermsAndConditions(!acceptedTermsAndConditions)
+  }, [setAcceptedTermsAndConditions, acceptedTermsAndConditions])
 
   return (
     <TermsAcceptanceContainer>
@@ -101,21 +98,18 @@ const YourAffiliateLinks = ({
     [enqueueSnackbar, fetchAffiliations]
   )
 
-  const onCreateLinkClick = useCallback(
-    async () => {
-      setIsCreateLinkClicked(true)
-      const { errors, requestError } = await createAffiliation(brand)
-      if (!errors && !requestError) {
-        setIsCreateLinkClicked(false)
-        mixpanel.track('Created Affiliate Link', {
-          hostname: window.location.hostname,
-          brandId: brand.id,
-          brand: brand.name,
-        })
-      }
-    },
-    [brand, createAffiliation]
-  )
+  const onCreateLinkClick = useCallback(async () => {
+    setIsCreateLinkClicked(true)
+    const { errors, requestError } = await createAffiliation(brand)
+    if (!errors && !requestError) {
+      setIsCreateLinkClicked(false)
+      mixpanel.track('Created Affiliate Link', {
+        hostname: window.location.hostname,
+        brandId: brand.id,
+        brand: brand.name,
+      })
+    }
+  }, [brand, createAffiliation])
 
   const onCopyAffiliateLink = useCallback(
     text => {
@@ -129,18 +123,15 @@ const YourAffiliateLinks = ({
     [brand.id, brand.name]
   )
 
-  const onCustomLinkClick = useCallback(
-    () => {
-      if (!brand) return
-      setIsCustomLinkModalOpen(true)
-      mixpanel.track('Clicked Custom Link', {
-        hostname: window.location.hostname,
-        brand: brand.name,
-        brandId: brand.id,
-      })
-    },
-    [brand, setIsCustomLinkModalOpen]
-  )
+  const onCustomLinkClick = useCallback(() => {
+    if (!brand) return
+    setIsCustomLinkModalOpen(true)
+    mixpanel.track('Clicked Custom Link', {
+      hostname: window.location.hostname,
+      brand: brand.name,
+      brandId: brand.id,
+    })
+  }, [brand, setIsCustomLinkModalOpen])
 
   return (
     <Section>

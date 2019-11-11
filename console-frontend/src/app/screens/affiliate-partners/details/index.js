@@ -49,56 +49,44 @@ const BrandPage = ({ match }) => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const fetchBrand = useCallback(
-    async () => {
-      const brandId = match.params.brandId
-      const { json, errors, requestError } = await apiRequest(apiBrandShow, [brandId])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (requestError || errors) return
-      setBrand(json)
-    },
-    [enqueueSnackbar, match.params.brandId]
-  )
+  const fetchBrand = useCallback(async () => {
+    const brandId = match.params.brandId
+    const { json, errors, requestError } = await apiRequest(apiBrandShow, [brandId])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (requestError || errors) return
+    setBrand(json)
+  }, [enqueueSnackbar, match.params.brandId])
 
-  const fetchAffiliations = useCallback(
-    async () => {
-      const { json, errors, requestError } = await apiRequest(apiAffiliationsList, [])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (requestError || errors) return
-      setAffiliations(json)
-    },
-    [enqueueSnackbar]
-  )
+  const fetchAffiliations = useCallback(async () => {
+    const { json, errors, requestError } = await apiRequest(apiAffiliationsList, [])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (requestError || errors) return
+    setAffiliations(json)
+  }, [enqueueSnackbar])
   const affiliation = useMemo(
     () => affiliations && affiliations.find(affiliation => brand && affiliation.brand.id === brand.id),
     [affiliations, brand]
   )
 
-  const fetchInterests = useCallback(
-    async () => {
-      const { json, errors, requestError } = await apiRequest(apiInterestsList, [])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (requestError || errors) return
-      setInterests(json)
-    },
-    [enqueueSnackbar]
-  )
+  const fetchInterests = useCallback(async () => {
+    const { json, errors, requestError } = await apiRequest(apiInterestsList, [])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (requestError || errors) return
+    setInterests(json)
+  }, [enqueueSnackbar])
   const interest = useMemo(() => interests && interests.find(interest => brand && interest.brand.id === brand.id), [
     brand,
     interests,
   ])
 
-  useEffect(
-    () => {
-      ;(async () => {
-        setIsLoading(true)
-        await Promise.all([fetchAffiliations(), fetchInterests()])
-        await fetchBrand()
-        setIsLoading(false)
-      })()
-    },
-    [fetchBrand, fetchAffiliations, fetchInterests]
-  )
+  useEffect(() => {
+    ;(async () => {
+      setIsLoading(true)
+      await Promise.all([fetchAffiliations(), fetchInterests()])
+      await fetchBrand()
+      setIsLoading(false)
+    })()
+  }, [fetchBrand, fetchAffiliations, fetchInterests])
 
   const onTermsAndConditionsChange = useCallback((_el, value) => setTermsAndConditionsExpanded(value), [])
 
@@ -106,19 +94,16 @@ const BrandPage = ({ match }) => {
   const headerRef = useRef(null)
   const timeoutRef = useRef(null)
 
-  const scrollToTermsAndConditions = useCallback(
-    () => {
-      if (!termsRef.current || !headerRef.current) return
-      onTermsAndConditionsChange(null, true)
-      timeoutRef.current = setTimeout(() => {
-        document.scrollingElement.scrollTo({
-          top: termsRef.current.offsetTop + headerRef.current.clientHeight + 150,
-          behaviour: 'smooth',
-        })
-      }, 300)
-    },
-    [onTermsAndConditionsChange]
-  )
+  const scrollToTermsAndConditions = useCallback(() => {
+    if (!termsRef.current || !headerRef.current) return
+    onTermsAndConditionsChange(null, true)
+    timeoutRef.current = setTimeout(() => {
+      document.scrollingElement.scrollTo({
+        top: termsRef.current.offsetTop + headerRef.current.clientHeight + 150,
+        behaviour: 'smooth',
+      })
+    }, 300)
+  }, [onTermsAndConditionsChange])
 
   if (isLoading) return <CircularProgress />
 

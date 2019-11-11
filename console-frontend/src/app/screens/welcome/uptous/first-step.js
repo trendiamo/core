@@ -26,12 +26,9 @@ const FirstStep = ({ setWelcomeStep }) => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const toggleAcceptsTermsAndConditions = useCallback(
-    () => {
-      setForm({ ...form, acceptsTermsAndConditions: !form.acceptsTermsAndConditions })
-    },
-    [form]
-  )
+  const toggleAcceptsTermsAndConditions = useCallback(() => {
+    setForm({ ...form, acceptsTermsAndConditions: !form.acceptsTermsAndConditions })
+  }, [form])
 
   const onFormSubmit = useCallback(
     async event => {

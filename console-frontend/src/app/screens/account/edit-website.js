@@ -42,14 +42,11 @@ const EditWebsite = () => {
     return auth.getAccount().websitesAttributes[0].id
   }, [])
 
-  const loadFormObject = useCallback(
-    async () => {
-      const { json, requestError } = await apiRequest(apiWebsiteShow, [websiteId])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      return json
-    },
-    [enqueueSnackbar, websiteId]
-  )
+  const loadFormObject = useCallback(async () => {
+    const { json, requestError } = await apiRequest(apiWebsiteShow, [websiteId])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    return json
+  }, [enqueueSnackbar, websiteId])
 
   const saveFormObject = useCallback(
     async form => {
@@ -70,12 +67,9 @@ const EditWebsite = () => {
     }
   )
 
-  const addHostnameSelect = useCallback(
-    () => {
-      mergeFormCallback(form => ({ hostnames: [...form.hostnames, ''] }))
-    },
-    [mergeFormCallback]
-  )
+  const addHostnameSelect = useCallback(() => {
+    mergeFormCallback(form => ({ hostnames: [...form.hostnames, ''] }))
+  }, [mergeFormCallback])
 
   const deleteHostname = useCallback(
     index => {

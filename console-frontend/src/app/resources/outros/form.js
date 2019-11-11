@@ -173,12 +173,9 @@ const OutroForm = ({ backRoute, title, location, history, loadFormObject, saveFo
     saveFormObject,
   })
 
-  const onPreviewClick = useCallback(
-    () => {
-      setIsPreviewModalOpened(!isPreviewModalOpened)
-    },
-    [isPreviewModalOpened]
-  )
+  const onPreviewClick = useCallback(() => {
+    setIsPreviewModalOpened(!isPreviewModalOpened)
+  }, [isPreviewModalOpened])
 
   const newOnFormSubmit = useCallback(
     async event => {

@@ -127,47 +127,38 @@ const Revenues = ({ history }) => {
     [fetchExchangeRates]
   )
 
-  const fetchOrders = useCallback(
-    async () => {
-      const { json, errors, requestError } = await apiRequest(apiOrdersList, [dates])
-      if (requestError || errors) return setHasErrors(true)
-      const orders = await convertOrdersAmount(json)
-      setOrders(orders)
-    },
-    [convertOrdersAmount, dates]
-  )
+  const fetchOrders = useCallback(async () => {
+    const { json, errors, requestError } = await apiRequest(apiOrdersList, [dates])
+    if (requestError || errors) return setHasErrors(true)
+    const orders = await convertOrdersAmount(json)
+    setOrders(orders)
+  }, [convertOrdersAmount, dates])
 
-  useEffect(
-    () => {
-      ;(async () => {
+  useEffect(() => {
+    ;(async () => {
+      setIsLoading(true)
+      await Promise.all([fetchAffiliations(), fetchOrders()])
+      setIsLoading(false)
+    })()
+  }, [fetchAffiliations, fetchOrders])
+
+  useEffect(() => {
+    ;(async () => {
+      if (window.location.search.includes('code') && window.document.referrer === 'https://connect.stripe.com/') {
+        const stripeActivationCode = parse(window.location.search).code
+        history.push(window.location.pathname)
         setIsLoading(true)
-        await Promise.all([fetchAffiliations(), fetchOrders()])
+        const { json, requestError } = await apiRequest(apiConnectStripe, [{ code: stripeActivationCode }])
         setIsLoading(false)
-      })()
-    },
-    [fetchAffiliations, fetchOrders]
-  )
-
-  useEffect(
-    () => {
-      ;(async () => {
-        if (window.location.search.includes('code') && window.document.referrer === 'https://connect.stripe.com/') {
-          const stripeActivationCode = parse(window.location.search).code
-          history.push(window.location.pathname)
-          setIsLoading(true)
-          const { json, requestError } = await apiRequest(apiConnectStripe, [{ code: stripeActivationCode }])
-          setIsLoading(false)
-          if (requestError) {
-            enqueueSnackbar(requestError, { variant: 'error' })
-          } else {
-            setHasStripeAccount(!!json.stripeUserId)
-            auth.setUser(json)
-          }
+        if (requestError) {
+          enqueueSnackbar(requestError, { variant: 'error' })
+        } else {
+          setHasStripeAccount(!!json.stripeUserId)
+          auth.setUser(json)
         }
-      })()
-    },
-    [enqueueSnackbar, history]
-  )
+      }
+    })()
+  }, [enqueueSnackbar, history])
 
   if (isLoading) return <CircularProgress />
 

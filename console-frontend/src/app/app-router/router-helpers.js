@@ -10,8 +10,10 @@ export const shouldShowWelcomeScreen = () => {
   const user = auth.getUser()
   return (
     !user.socialMediaUrl ||
-    (!user.productCategoryList || user.productCategoryList.length === 0) ||
-    (!user.positiveImpactAreaList || user.positiveImpactAreaList.length === 0)
+    !user.productCategoryList ||
+    user.productCategoryList.length === 0 ||
+    !user.positiveImpactAreaList ||
+    user.positiveImpactAreaList.length === 0
   )
 }
 
@@ -25,21 +27,18 @@ const PrivateRouteRender = ({
   path,
   setFetchedAccount,
 }) => {
-  useEffect(
-    () => {
-      ;(async () => {
-        let account = auth.getAccount()
-        if (match.path.startsWith('/a/') && !account) {
-          setFetchedAccount(false)
-          const { json } = await apiRequest(apiAccountsShow, [auth.getSlug()])
-          auth.setAccount(json)
-          if (!isLocalStorageAccurate()) return
-          setFetchedAccount(true)
-        }
-      })()
-    },
-    [match.path, setFetchedAccount]
-  )
+  useEffect(() => {
+    ;(async () => {
+      let account = auth.getAccount()
+      if (match.path.startsWith('/a/') && !account) {
+        setFetchedAccount(false)
+        const { json } = await apiRequest(apiAccountsShow, [auth.getSlug()])
+        auth.setAccount(json)
+        if (!isLocalStorageAccurate()) return
+        setFetchedAccount(true)
+      }
+    })()
+  }, [match.path, setFetchedAccount])
 
   if (!auth.isLoggedIn()) return <Redirect to={routes.login()} />
 
@@ -130,23 +129,20 @@ const accountRedirect = () => {
 }
 
 export const RootRedirect = withRouter(({ history }) => {
-  useEffect(
-    () => {
-      ;(async () => {
-        if (window.location.hash === '#confirmed') {
-          const { json, requestError } = await apiRequest(apiMe, [])
-          if (requestError) {
-            auth.clear({ isError: true })
-            return // auth.clear does the redirect already
-          } else {
-            auth.setUser(json)
-          }
+  useEffect(() => {
+    ;(async () => {
+      if (window.location.hash === '#confirmed') {
+        const { json, requestError } = await apiRequest(apiMe, [])
+        if (requestError) {
+          auth.clear({ isError: true })
+          return // auth.clear does the redirect already
+        } else {
+          auth.setUser(json)
         }
-        history.replace(rootRedirect())
-      })()
-    },
-    [history]
-  )
+      }
+      history.replace(rootRedirect())
+    })()
+  }, [history])
 
   return null
 })

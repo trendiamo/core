@@ -23,16 +23,13 @@ const PluginPreview = ({ form }) => {
 
   const [pluginTheme, setPluginTheme] = useState(null)
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const { json, requestError } = await apiRequest(apiWebsiteSettingsShow, [])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        setPluginTheme(json)
-      })()
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const { json, requestError } = await apiRequest(apiWebsiteSettingsShow, [])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      setPluginTheme(json)
+    })()
+  }, [enqueueSnackbar])
 
   if (!pluginTheme) return null
 

@@ -33,24 +33,21 @@ const ContentCreation = () => {
     setIsBioAndPicModalOpen(false)
   }, [])
 
-  const sendUpgradeRequest = useCallback(
-    async () => {
-      setIsFormSubmitting(true)
-      const { json, requestError } = await apiRequest(apiMeRequestUpgrade, [])
-      if (requestError) {
-        enqueueSnackbar(requestError, { variant: 'error' })
-        setIsFormSubmitting(false)
-        return
-      }
-      if (json && json.requestedUpgradeToSellerAt) {
-        mixpanel.track('Requested Upgrade to Seller', { hostname: window.location.hostname })
-        setWasSubmitted(true)
-        auth.setUser(json)
-        setIsFormSubmitting(false)
-      }
-    },
-    [enqueueSnackbar]
-  )
+  const sendUpgradeRequest = useCallback(async () => {
+    setIsFormSubmitting(true)
+    const { json, requestError } = await apiRequest(apiMeRequestUpgrade, [])
+    if (requestError) {
+      enqueueSnackbar(requestError, { variant: 'error' })
+      setIsFormSubmitting(false)
+      return
+    }
+    if (json && json.requestedUpgradeToSellerAt) {
+      mixpanel.track('Requested Upgrade to Seller', { hostname: window.location.hostname })
+      setWasSubmitted(true)
+      auth.setUser(json)
+      setIsFormSubmitting(false)
+    }
+  }, [enqueueSnackbar])
 
   return (
     <FlexGrid>

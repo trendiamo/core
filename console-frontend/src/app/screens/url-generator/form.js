@@ -95,15 +95,12 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
     if (option === 'seller') setShowSeller(true)
   }, [])
 
-  const resetUrl = useCallback(
-    () => {
-      setForm({
-        ...form,
-        url: '',
-      })
-    },
-    [form]
-  )
+  const resetUrl = useCallback(() => {
+    setForm({
+      ...form,
+      url: '',
+    })
+  }, [form])
 
   const selectSeller = useCallback(
     selected => {
@@ -127,12 +124,9 @@ const UrlGeneratorForm = ({ setGeneratedUrl, setIsModalOpened, setUrlHistory, ur
     [form]
   )
 
-  const toggleAutoOpen = useCallback(
-    () => {
-      setForm({ ...form, autoOpen: !form.autoOpen })
-    },
-    [form]
-  )
+  const toggleAutoOpen = useCallback(() => {
+    setForm({ ...form, autoOpen: !form.autoOpen })
+  }, [form])
 
   const setFieldValue = useCallback(
     event => {

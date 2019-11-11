@@ -62,17 +62,14 @@ const AffiliateSignup = () => {
     if (aftk) window.localStorage.setItem('signup-aftk', aftk)
   }, [])
 
-  useEffect(
-    () => {
-      if (!passwordRef.current) return
-      if (state.form.password !== state.form.passwordConfirmation) {
-        passwordRef.current.setCustomValidity('Passwords do not match')
-      } else {
-        passwordRef.current.setCustomValidity('')
-      }
-    },
-    [setFieldValue, state.form.password, state.form.passwordConfirmation]
-  )
+  useEffect(() => {
+    if (!passwordRef.current) return
+    if (state.form.password !== state.form.passwordConfirmation) {
+      passwordRef.current.setCustomValidity('Passwords do not match')
+    } else {
+      passwordRef.current.setCustomValidity('')
+    }
+  }, [setFieldValue, state.form.password, state.form.passwordConfirmation])
 
   const onSubmit = useCallback(
     async event => {

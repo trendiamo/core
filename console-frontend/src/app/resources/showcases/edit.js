@@ -7,17 +7,14 @@ import { useSnackbar } from 'notistack'
 const EditShowcaseForm = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
-  const loadFormObject = useCallback(
-    () => {
-      return (async () => {
-        const id = match.params.showcaseId
-        const { json, requestError } = await apiRequest(apiShowcaseShow, [id])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        return json
-      })()
-    },
-    [enqueueSnackbar, match.params.showcaseId]
-  )
+  const loadFormObject = useCallback(() => {
+    return (async () => {
+      const id = match.params.showcaseId
+      const { json, requestError } = await apiRequest(apiShowcaseShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      return json
+    })()
+  }, [enqueueSnackbar, match.params.showcaseId])
 
   const saveFormObject = useCallback(
     form => {

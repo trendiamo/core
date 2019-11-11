@@ -25,13 +25,11 @@ const ListItem = styled(MUIListItem)`
 `
 
 const BlankState = () => (
-  <>
-    <BlankStateTemplate
-      buttonText="Create new"
-      description="No URLs were generated yet."
-      imageSource={inactiveBoxImage}
-    />
-  </>
+  <BlankStateTemplate
+    buttonText="Create new"
+    description="No URLs were generated yet."
+    imageSource={inactiveBoxImage}
+  />
 )
 
 const UrlListItems = ({ urlHistory, copyToClipboard }) => (

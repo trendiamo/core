@@ -25,8 +25,7 @@ const IconButton = styled(MuiIconButton)`
     }
   `}
 
-  ${({ size }) =>
-    showUpToUsBranding() && uptousButtonSizes['mobile'][size || 'medium']}
+  ${({ size }) => showUpToUsBranding() && uptousButtonSizes['mobile'][size || 'medium']}
   @media (min-width: 960px) {
     ${({ size }) => showUpToUsBranding() && uptousButtonSizes['desktop'][size || 'medium']}
   }

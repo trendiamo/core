@@ -240,12 +240,9 @@ const TextMessageFields = ({
     textEditorRef.current.editor.theme.tooltip.textbox.dataset.link = 'https://frekkls.com'
   }, [])
 
-  useEffect(
-    () => {
-      autoFocus && textEditorRef.current.focus()
-    },
-    [autoFocus]
-  )
+  useEffect(() => {
+    autoFocus && textEditorRef.current.focus()
+  }, [autoFocus])
 
   const onValueChange = useCallback(
     value => {
@@ -256,14 +253,11 @@ const TextMessageFields = ({
     [onChange, simpleChatMessage, simpleChatMessageIndex]
   )
 
-  const toggleSource = useCallback(
-    async () => {
-      !isHTMLMode && setValue(beautifyHTML(value))
-      await setIsHTMLMode(!isHTMLMode)
-      isHTMLMode && textEditorRef.current.focus()
-    },
-    [isHTMLMode, value]
-  )
+  const toggleSource = useCallback(async () => {
+    !isHTMLMode && setValue(beautifyHTML(value))
+    await setIsHTMLMode(!isHTMLMode)
+    isHTMLMode && textEditorRef.current.focus()
+  }, [isHTMLMode, value])
 
   const onFocusChange = useCallback(focused => focused && onFocus(), [onFocus])
 

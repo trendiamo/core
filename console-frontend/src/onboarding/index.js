@@ -70,46 +70,37 @@ const Onboarding = ({ history, width }) => {
     [setOnboarding, setOnboardingHelp]
   )
 
-  useEffect(
-    () => {
-      // Act after the JoyRide's scroll timeout of 100ms. (Joyride src: src/components/Overlay.js line 76)
-      const t = setTimeout(() => {
-        document.addEventListener('keydown', handleClose)
-        setStyleToPortal()
-      }, 200)
+  useEffect(() => {
+    // Act after the JoyRide's scroll timeout of 100ms. (Joyride src: src/components/Overlay.js line 76)
+    const t = setTimeout(() => {
+      document.addEventListener('keydown', handleClose)
+      setStyleToPortal()
+    }, 200)
 
-      return () => {
-        clearTimeout(t)
-        document.removeEventListener('keydown', handleClose)
-      }
-    },
-    [handleClose]
-  )
+    return () => {
+      clearTimeout(t)
+      document.removeEventListener('keydown', handleClose)
+    }
+  }, [handleClose])
 
-  useEffect(
-    () => {
-      if (wasLaunchedInU2U) return
-      if (!auth.isAffiliate() || auth.getUser().onboardingStage !== 0) return
-      setTimeout(() => {
-        setWasLaunchedInU2U(true)
-        setOnboarding({ ...onboarding, run: true })
-        history.push(routes.affiliatePartners())
-      }, 1000)
-    },
-    [history, onboarding, setOnboarding, setOnboardingHelp, wasLaunchedInU2U]
-  )
+  useEffect(() => {
+    if (wasLaunchedInU2U) return
+    if (!auth.isAffiliate() || auth.getUser().onboardingStage !== 0) return
+    setTimeout(() => {
+      setWasLaunchedInU2U(true)
+      setOnboarding({ ...onboarding, run: true })
+      history.push(routes.affiliatePartners())
+    }, 1000)
+  }, [history, onboarding, setOnboarding, setOnboardingHelp, wasLaunchedInU2U])
 
   const isEnabled = useMemo(
     () => isWidthUp('md', width) && ((onboarding.run && stagesArray[onboarding.stageIndex]) || onboarding.help.run),
     [onboarding.help.run, onboarding.run, onboarding.stageIndex, width]
   )
 
-  useEffect(
-    () => {
-      document.body.style.overflow = isEnabled ? 'hidden' : ''
-    },
-    [isEnabled]
-  )
+  useEffect(() => {
+    document.body.style.overflow = isEnabled ? 'hidden' : ''
+  }, [isEnabled])
 
   if (!isEnabled) return null
 

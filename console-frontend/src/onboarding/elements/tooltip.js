@@ -41,21 +41,15 @@ const Tooltip = ({
   useEffect(() => toStage1 && changeStage(1), [toStage1])
   const { setOnboarding } = useOnboardingConsumer()
 
-  const onNextClick = useCallback(
-    () => {
-      history.push(nextRoute)
-      setOnboarding({ ...onboarding, stepIndex: onboarding.stepIndex + 1 })
-    },
-    [history, nextRoute, onboarding, setOnboarding]
-  )
+  const onNextClick = useCallback(() => {
+    history.push(nextRoute)
+    setOnboarding({ ...onboarding, stepIndex: onboarding.stepIndex + 1 })
+  }, [history, nextRoute, onboarding, setOnboarding])
 
-  const onFinishTourClick = useCallback(
-    () => {
-      setOnboarding({ ...onboarding, run: false, help: { ...onboarding.help, run: false } })
-      changeStage(1)
-    },
-    [onboarding, setOnboarding]
-  )
+  const onFinishTourClick = useCallback(() => {
+    setOnboarding({ ...onboarding, run: false, help: { ...onboarding.help, run: false } })
+    changeStage(1)
+  }, [onboarding, setOnboarding])
 
   const isSingle = useMemo(() => onboarding.help.run && onboarding.help.single, [onboarding])
 

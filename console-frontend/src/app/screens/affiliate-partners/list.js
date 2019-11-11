@@ -34,12 +34,9 @@ const List = ({ affiliations, animate, interests, brandsList, isLoading, history
 
   useAppBarContent(sectionAppBarContent)
 
-  useEffect(
-    () => {
-      setSectionAppBarContent(appBarContent({ section: titleKey }))
-    },
-    [titleKey]
-  )
+  useEffect(() => {
+    setSectionAppBarContent(appBarContent({ section: titleKey }))
+  }, [titleKey])
 
   const titleRefs = { availableBrands: useRef(null), brandsComingSoon: useRef(null) }
 
@@ -49,28 +46,25 @@ const List = ({ affiliations, animate, interests, brandsList, isLoading, history
   const currentTitleKeyRef = useRef(false)
   const didCancel = useRef(false)
 
-  useEffect(
-    () => {
-      if (window.affiliatePartnersScrollListener) {
-        document.removeEventListener('scroll', window.affiliatePartnersScrollListener)
-      }
-      window.affiliatePartnersScrollListener = () => {
-        if (didCancel.current) return
-        let currentTitleKey = 'activeBrands'
-        Object.keys(titleRefs).forEach(key => {
-          if (!titleRefs[key].current) return
-          if (document.scrollingElement.scrollTop >= titleRefs[key].current.offsetTop + 30) {
-            currentTitleKey = key
-          }
-        })
-        if (currentTitleKey === currentTitleKeyRef.current) return
-        currentTitleKeyRef.current = currentTitleKey
-        setTitleKey(currentTitleKey)
-      }
-      document.addEventListener('scroll', window.affiliatePartnersScrollListener)
-    },
-    [titleRefs]
-  )
+  useEffect(() => {
+    if (window.affiliatePartnersScrollListener) {
+      document.removeEventListener('scroll', window.affiliatePartnersScrollListener)
+    }
+    window.affiliatePartnersScrollListener = () => {
+      if (didCancel.current) return
+      let currentTitleKey = 'activeBrands'
+      Object.keys(titleRefs).forEach(key => {
+        if (!titleRefs[key].current) return
+        if (document.scrollingElement.scrollTop >= titleRefs[key].current.offsetTop + 30) {
+          currentTitleKey = key
+        }
+      })
+      if (currentTitleKey === currentTitleKeyRef.current) return
+      currentTitleKeyRef.current = currentTitleKey
+      setTitleKey(currentTitleKey)
+    }
+    document.addEventListener('scroll', window.affiliatePartnersScrollListener)
+  }, [titleRefs])
 
   useEffect(() => {
     return () => {

@@ -16,9 +16,4 @@ const history = createHistory()
 history.listen(() => mixpanel.track('Visited Page', { hostname: window.location.hostname }))
 mixpanel.track('Visited Page', { hostname: window.location.hostname })
 
-ReactDOM.render(
-  <>
-    <App history={history} />
-  </>,
-  document.getElementById('root')
-)
+ReactDOM.render(<App history={history} />, document.getElementById('root'))

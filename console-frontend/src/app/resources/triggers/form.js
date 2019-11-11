@@ -77,16 +77,19 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
   const formRef = useRef()
   const [hostnames, setHostnames] = useState([])
 
-  const { form, isFormLoading, isFormPristine, isFormSubmitting, onFormSubmit, mergeForm, mergeFormCallback } = useForm(
-    { formObjectTransformer, loadFormObject, saveFormObject }
-  )
+  const {
+    form,
+    isFormLoading,
+    isFormPristine,
+    isFormSubmitting,
+    onFormSubmit,
+    mergeForm,
+    mergeFormCallback,
+  } = useForm({ formObjectTransformer, loadFormObject, saveFormObject })
 
-  const addUrlSelect = useCallback(
-    () => {
-      mergeFormCallback(form => ({ urlMatchers: [...form.urlMatchers, ''] }))
-    },
-    [mergeFormCallback]
-  )
+  const addUrlSelect = useCallback(() => {
+    mergeFormCallback(form => ({ urlMatchers: [...form.urlMatchers, ''] }))
+  }, [mergeFormCallback])
 
   const editUrlValue = useCallback(
     (index, newValue) => {
@@ -170,16 +173,13 @@ const TriggerForm = ({ history, backRoute, location, title, loadFormObject, save
     [form.flowId, form.flowLabel, form.flowType]
   )
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const { json, requestError } = await apiRequest(apiWebsiteShow, [auth.getAccount().websitesAttributes[0].id])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        setHostnames(json.hostnames)
-      })()
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const { json, requestError } = await apiRequest(apiWebsiteShow, [auth.getAccount().websitesAttributes[0].id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      setHostnames(json.hostnames)
+    })()
+  }, [enqueueSnackbar])
 
   if (isFormLoading) return <CircularProgress />
 

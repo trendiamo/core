@@ -128,36 +128,27 @@ const Content = ({ orderSample, handleClose }) => {
   const { store } = useContext(StoreContext)
   const { setIsUserModalOpen } = store
 
-  const onGoToSettingsClick = useCallback(
-    () => {
-      handleClose()
-      setIsUserModalOpen(true)
-    },
-    [handleClose, setIsUserModalOpen]
-  )
+  const onGoToSettingsClick = useCallback(() => {
+    handleClose()
+    setIsUserModalOpen(true)
+  }, [handleClose, setIsUserModalOpen])
 
-  const onConfirmOrderClick = useCallback(
-    () => {
-      handleClose()
-      orderSample()
-    },
-    [handleClose, orderSample]
-  )
+  const onConfirmOrderClick = useCallback(() => {
+    handleClose()
+    orderSample()
+  }, [handleClose, orderSample])
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const { json, requestError } = await apiRequest(apiMeDetails, [])
-        if (requestError) {
-          enqueueSnackbar(requestError, { variant: 'error' })
-        }
-        const { addressLine1, addressLine2, city, country, shippingFirstName, shippingLastName, zipCode } = json
-        setShippingAddress({ addressLine1, addressLine2, city, country, shippingFirstName, shippingLastName, zipCode })
-        setIsLoading(false)
-      })()
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const { json, requestError } = await apiRequest(apiMeDetails, [])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+      }
+      const { addressLine1, addressLine2, city, country, shippingFirstName, shippingLastName, zipCode } = json
+      setShippingAddress({ addressLine1, addressLine2, city, country, shippingFirstName, shippingLastName, zipCode })
+      setIsLoading(false)
+    })()
+  }, [enqueueSnackbar])
 
   if (isLoading) return <StyledCircularProgress />
 
