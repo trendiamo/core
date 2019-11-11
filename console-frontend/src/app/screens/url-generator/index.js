@@ -19,15 +19,12 @@ const UrlGenerator = () => {
   const [isModalOpened, setIsModalOpened] = useState(false)
   const [urlHistory, setUrlHistory] = useState([])
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const { json, requestError } = await apiRequest(apiGeneratedUrlList, [])
-        requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setUrlHistory(json)
-      })()
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const { json, requestError } = await apiRequest(apiGeneratedUrlList, [])
+      requestError ? enqueueSnackbar(requestError, { variant: 'error' }) : setUrlHistory(json)
+    })()
+  }, [enqueueSnackbar])
 
   return (
     <>

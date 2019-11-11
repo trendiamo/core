@@ -32,56 +32,47 @@ const NotifyMe = ({ brand, fetchInterests, interest }) => {
     [enqueueSnackbar, fetchInterests]
   )
 
-  const removeInterest = useCallback(
-    async () => {
-      if (!brand || !interest) return
-      const { json, errors, requestError } = await apiRequest(apiInterestDestroy, [interest.id])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!errors && !requestError) {
-        mixpanel.track('Removed Interest', {
-          hostname: window.location.hostname,
-          brandId: brand.id,
-          brand: brand.name,
-        })
-        enqueueSnackbar(`Removed notifications for ${brand.name}`, { variant: 'success' })
-      }
-      await fetchInterests()
-      return json
-    },
-    [brand, enqueueSnackbar, fetchInterests, interest]
-  )
-
-  const onNotifyMeClick = useCallback(
-    async () => {
-      setIsNotificationButtonClicked(true)
-      const { errors, requestError } = await createInterest(brand)
-      if (!errors && !requestError) {
-        mixpanel.track('Clicked Notify Me', {
-          hostname: window.location.hostname,
-          brandId: brand.id,
-          brand: brand.name,
-        })
-      }
-      setIsNotificationButtonClicked(false)
-    },
-    [brand, createInterest]
-  )
-
-  const onRemoveNotificationClick = useCallback(
-    async () => {
-      if (!brand) return
-      setIsNotificationButtonClicked(true)
-      mixpanel.track('Clicked Remove Notification', {
+  const removeInterest = useCallback(async () => {
+    if (!brand || !interest) return
+    const { json, errors, requestError } = await apiRequest(apiInterestDestroy, [interest.id])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+    if (!errors && !requestError) {
+      mixpanel.track('Removed Interest', {
         hostname: window.location.hostname,
-        brand: brand.name,
         brandId: brand.id,
+        brand: brand.name,
       })
-      await removeInterest()
-      setIsNotificationButtonClicked()
-    },
-    [brand, removeInterest]
-  )
+      enqueueSnackbar(`Removed notifications for ${brand.name}`, { variant: 'success' })
+    }
+    await fetchInterests()
+    return json
+  }, [brand, enqueueSnackbar, fetchInterests, interest])
+
+  const onNotifyMeClick = useCallback(async () => {
+    setIsNotificationButtonClicked(true)
+    const { errors, requestError } = await createInterest(brand)
+    if (!errors && !requestError) {
+      mixpanel.track('Clicked Notify Me', {
+        hostname: window.location.hostname,
+        brandId: brand.id,
+        brand: brand.name,
+      })
+    }
+    setIsNotificationButtonClicked(false)
+  }, [brand, createInterest])
+
+  const onRemoveNotificationClick = useCallback(async () => {
+    if (!brand) return
+    setIsNotificationButtonClicked(true)
+    mixpanel.track('Clicked Remove Notification', {
+      hostname: window.location.hostname,
+      brand: brand.name,
+      brandId: brand.id,
+    })
+    await removeInterest()
+    setIsNotificationButtonClicked()
+  }, [brand, removeInterest])
 
   return (
     <Section>

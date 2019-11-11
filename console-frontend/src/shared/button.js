@@ -120,28 +120,19 @@ const Button = ({
 
   const buttonStyles = useMemo(() => theme.buttons, [])
 
-  const onButtonHoverStart = useCallback(
-    () => {
-      setTooltipOpen(true)
-      setStyleObject(buttonStyles[color] && buttonStyles[color].hover)
-    },
-    [buttonStyles, color]
-  )
+  const onButtonHoverStart = useCallback(() => {
+    setTooltipOpen(true)
+    setStyleObject(buttonStyles[color] && buttonStyles[color].hover)
+  }, [buttonStyles, color])
 
-  const onButtonHoverEnd = useCallback(
-    () => {
-      setTooltipOpen(false)
-      setStyleObject(omit(buttonStyles[color], ['hover']))
-    },
-    [buttonStyles, color]
-  )
+  const onButtonHoverEnd = useCallback(() => {
+    setTooltipOpen(false)
+    setStyleObject(omit(buttonStyles[color], ['hover']))
+  }, [buttonStyles, color])
 
-  useEffect(
-    () => {
-      setStyleObject(omit(buttonStyles[color], ['hover']))
-    },
-    [buttonStyles, color]
-  )
+  useEffect(() => {
+    setStyleObject(omit(buttonStyles[color], ['hover']))
+  }, [buttonStyles, color])
 
   const wrap = useCallback(
     children => (

@@ -51,20 +51,17 @@ const Content = ({ brand, handleClose }) => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const { json, requestError } = await apiRequest(apiMeDetails, [])
-        if (requestError) {
-          enqueueSnackbar(requestError, { variant: 'error' })
-        }
-        const { addressLine1, addressLine2, city, country, shippingFirstName, shippingLastName, zipCode } = json
-        setAddress({ addressLine1, addressLine2, city, country, shippingFirstName, shippingLastName, zipCode })
-        setIsLoading(false)
-      })()
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const { json, requestError } = await apiRequest(apiMeDetails, [])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+      }
+      const { addressLine1, addressLine2, city, country, shippingFirstName, shippingLastName, zipCode } = json
+      setAddress({ addressLine1, addressLine2, city, country, shippingFirstName, shippingLastName, zipCode })
+      setIsLoading(false)
+    })()
+  }, [enqueueSnackbar])
 
   const isValidAddress = useMemo(
     () =>
@@ -82,30 +79,24 @@ const Content = ({ brand, handleClose }) => {
   const { store } = useContext(StoreContext)
   const { setIsUserModalOpen } = store
 
-  const onGoToSettingsClick = useCallback(
-    () => {
-      handleClose()
-      setIsUserModalOpen(true)
-    },
-    [handleClose, setIsUserModalOpen]
-  )
+  const onGoToSettingsClick = useCallback(() => {
+    handleClose()
+    setIsUserModalOpen(true)
+  }, [handleClose, setIsUserModalOpen])
 
-  const orderSample = useCallback(
-    async () => {
-      setIsLoading(true)
-      const { requestError } = await apiRequest(apiMeRequestSample, [
-        { productMessage, brand: { name: brand.name, email: brand.email } },
-      ])
-      if (requestError) {
-        enqueueSnackbar(requestError, { variant: 'error' })
-      } else {
-        mixpanel.track('Requested Sample Product', { hostname: window.location.hostname })
-        setShowSuccessMessage(true)
-      }
-      setIsLoading(false)
-    },
-    [brand.email, brand.name, enqueueSnackbar, productMessage]
-  )
+  const orderSample = useCallback(async () => {
+    setIsLoading(true)
+    const { requestError } = await apiRequest(apiMeRequestSample, [
+      { productMessage, brand: { name: brand.name, email: brand.email } },
+    ])
+    if (requestError) {
+      enqueueSnackbar(requestError, { variant: 'error' })
+    } else {
+      mixpanel.track('Requested Sample Product', { hostname: window.location.hostname })
+      setShowSuccessMessage(true)
+    }
+    setIsLoading(false)
+  }, [brand.email, brand.name, enqueueSnackbar, productMessage])
 
   if (isLoading) return <StyledCircularProgress />
 

@@ -54,35 +54,29 @@ const TableRow = ({
 
   const [isWorking, setIsWorking] = useState(false)
 
-  const duplicateResource = useCallback(
-    async () => {
-      setIsWorking(true)
-      const { json, requestError } = await apiRequest(api.duplicate, [resource.id])
-      if (requestError) {
-        enqueueSnackbar(requestError, { variant: 'error' })
-        setIsWorking(false)
-        return
-      }
-      if (routes) {
-        history.push(routes.edit(json.id))
-      }
-    },
-    [api.duplicate, resource.id, history, routes, enqueueSnackbar]
-  )
+  const duplicateResource = useCallback(async () => {
+    setIsWorking(true)
+    const { json, requestError } = await apiRequest(api.duplicate, [resource.id])
+    if (requestError) {
+      enqueueSnackbar(requestError, { variant: 'error' })
+      setIsWorking(false)
+      return
+    }
+    if (routes) {
+      history.push(routes.edit(json.id))
+    }
+  }, [api.duplicate, resource.id, history, routes, enqueueSnackbar])
 
-  const rejectResource = useCallback(
-    async () => {
-      const { json, errors, requestError } = await apiRequest(api.reject, [resource.id])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!errors && !requestError) {
-        enqueueSnackbar(`${startCase(resource.type)} successfully rejected`, { variant: 'success' })
-        fetchRecords()
-      }
-      return json
-    },
-    [api.reject, enqueueSnackbar, fetchRecords, resource]
-  )
+  const rejectResource = useCallback(async () => {
+    const { json, errors, requestError } = await apiRequest(api.reject, [resource.id])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+    if (!errors && !requestError) {
+      enqueueSnackbar(`${startCase(resource.type)} successfully rejected`, { variant: 'success' })
+      fetchRecords()
+    }
+    return json
+  }, [api.reject, enqueueSnackbar, fetchRecords, resource])
 
   return (
     <StyledTableRow highlightInactive={highlightInactive} hover role="checkbox" tabIndex={-1}>

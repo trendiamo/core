@@ -7,17 +7,14 @@ import { useSnackbar } from 'notistack'
 const EditOutroForm = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
-  const loadFormObject = useCallback(
-    () => {
-      return (async () => {
-        const id = match.params.outroId
-        const { json, requestError } = await apiRequest(apiOutroShow, [id])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        return json
-      })()
-    },
-    [enqueueSnackbar, match.params.outroId]
-  )
+  const loadFormObject = useCallback(() => {
+    return (async () => {
+      const id = match.params.outroId
+      const { json, requestError } = await apiRequest(apiOutroShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      return json
+    })()
+  }, [enqueueSnackbar, match.params.outroId])
 
   const saveFormObject = useCallback(
     form => {

@@ -31,12 +31,9 @@ const FormSection = ({
 }) => {
   const [folded, setFolded] = useState(defaultFolded)
 
-  const toggleFolded = useCallback(
-    () => {
-      setFolded(!folded)
-    },
-    [folded]
-  )
+  const toggleFolded = useCallback(() => {
+    setFolded(!folded)
+  }, [folded])
 
   return (
     <SectionContainer backgroundColor={backgroundColor}>

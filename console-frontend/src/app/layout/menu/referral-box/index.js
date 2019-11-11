@@ -50,13 +50,10 @@ const Price = styled(props => <Typography variant="subtitle1" {...props} />)`
 `
 
 const Content = withRouter(({ history }) => {
-  const onClick = useCallback(
-    () => {
-      mixpanel.track('Clicked Referrals Promo', { hostname: window.location.hostname })
-      history.push(routes.yourReferrals())
-    },
-    [history]
-  )
+  const onClick = useCallback(() => {
+    mixpanel.track('Clicked Referrals Promo', { hostname: window.location.hostname })
+    history.push(routes.yourReferrals())
+  }, [history])
 
   return (
     <ContentContainer>

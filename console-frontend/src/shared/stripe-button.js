@@ -46,19 +46,17 @@ const StripeButton = ({ hasStripeAccount, ...props }) => {
   )
 
   return (
-    <>
-      <Container>
-        <Button
-          centered
-          flex
-          fullWidthOnMobile
-          onClick={hasStripeAccount ? goToStripeDashboard : connectWithStripe}
-          {...props}
-        >
-          {hasStripeAccount ? 'Go to stripe' : 'Connect with stripe'}
-        </Button>
-      </Container>
-    </>
+    <Container>
+      <Button
+        centered
+        flex
+        fullWidthOnMobile
+        onClick={hasStripeAccount ? goToStripeDashboard : connectWithStripe}
+        {...props}
+      >
+        {hasStripeAccount ? 'Go to stripe' : 'Connect with stripe'}
+      </Button>
+    </Container>
   )
 }
 

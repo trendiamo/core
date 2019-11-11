@@ -116,15 +116,12 @@ const Dropzone = ({
 
   const onImageLoad = useCallback(() => setIsImageLoading(false), [setIsImageLoading])
 
-  useEffect(
-    () => {
-      // Prevents safari bug when <img /> onload fails to fire
-      setTimeout(() => {
-        setImgSrc(previewImage)
-      }, 0)
-    },
-    [previewImage]
-  )
+  useEffect(() => {
+    // Prevents safari bug when <img /> onload fails to fire
+    setTimeout(() => {
+      setImgSrc(previewImage)
+    }, 0)
+  }, [previewImage])
 
   return (
     <StyledDropzone

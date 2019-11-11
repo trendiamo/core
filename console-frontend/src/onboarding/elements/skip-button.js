@@ -19,17 +19,14 @@ const StyledButton = styled(Button)`
 const SkipButton = () => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
 
-  const handleClick = useCallback(
-    () => {
-      if (onboarding.help.run) {
-        setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
-        return false
-      }
-      setOnboarding({ ...onboarding, stageIndex: 1, stepIndex: 0, run: false })
-      changeStage(1)
-    },
-    [onboarding, setOnboarding]
-  )
+  const handleClick = useCallback(() => {
+    if (onboarding.help.run) {
+      setOnboarding({ ...onboarding, help: { ...onboarding.help, run: false } })
+      return false
+    }
+    setOnboarding({ ...onboarding, stageIndex: 1, stepIndex: 0, run: false })
+    changeStage(1)
+  }, [onboarding, setOnboarding])
 
   return (
     <StyledButton color="primary" onClick={handleClick} variant="contained">

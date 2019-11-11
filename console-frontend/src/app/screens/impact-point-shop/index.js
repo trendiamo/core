@@ -33,20 +33,17 @@ const ImpactPointShop = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [productMessage, setProductMessage] = useState('')
 
-  const orderSample = useCallback(
-    async () => {
-      setIsLoading(true)
-      const { requestError } = await apiRequest(apiMeRequestSample, [{ productMessage }])
-      if (requestError) {
-        enqueueSnackbar(requestError, { variant: 'error' })
-      } else {
-        mixpanel.track('Requested Sample Product', { hostname: window.location.hostname })
-        setShowSuccessCard(true)
-      }
-      setIsLoading(false)
-    },
-    [enqueueSnackbar, productMessage, setShowSuccessCard]
-  )
+  const orderSample = useCallback(async () => {
+    setIsLoading(true)
+    const { requestError } = await apiRequest(apiMeRequestSample, [{ productMessage }])
+    if (requestError) {
+      enqueueSnackbar(requestError, { variant: 'error' })
+    } else {
+      mixpanel.track('Requested Sample Product', { hostname: window.location.hostname })
+      setShowSuccessCard(true)
+    }
+    setIsLoading(false)
+  }, [enqueueSnackbar, productMessage, setShowSuccessCard])
 
   return (
     <>

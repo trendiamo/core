@@ -74,9 +74,10 @@ const TriggerRow = ({ trigger, selectedIds, setSelectedIds, highlightEnabled, hi
       </TableCell>
       <TableCell>{trigger.id}</TableCell>
       <TableCell style={{ whiteSpace: 'nowrap' }} width="50%">
-        <InlineTypography highlight={highlightEnabled} variant="subtitle2">{`${trigger.flowType}: '${
-          trigger.flow.name
-        }'`}</InlineTypography>
+        <InlineTypography
+          highlight={highlightEnabled}
+          variant="subtitle2"
+        >{`${trigger.flowType}: '${trigger.flow.name}'`}</InlineTypography>
         <Button
           component={Link}
           size="small"
@@ -162,12 +163,9 @@ const UrlTester = ({ testerUrl, setTesterUrl }) => {
     [setTesterUrl]
   )
 
-  const resetUrl = useCallback(
-    () => {
-      setTesterUrl({ value: '', matches: false })
-    },
-    [setTesterUrl]
-  )
+  const resetUrl = useCallback(() => {
+    setTesterUrl({ value: '', matches: false })
+  }, [setTesterUrl])
 
   return (
     <Field

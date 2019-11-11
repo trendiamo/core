@@ -44,17 +44,14 @@ const SignupConfirm = () => {
 
   const setFieldValue = useCallback(event => mergeForm({ [event.target.name]: event.target.value }), [mergeForm])
 
-  useEffect(
-    () => {
-      if (!passwordRef.current) return
-      if (state.form.password !== state.form.passwordConfirmation) {
-        passwordRef.current.setCustomValidity('Passwords do not match')
-      } else {
-        passwordRef.current.setCustomValidity('')
-      }
-    },
-    [passwordRef, setFieldValue, state.form.password, state.form.passwordConfirmation]
-  )
+  useEffect(() => {
+    if (!passwordRef.current) return
+    if (state.form.password !== state.form.passwordConfirmation) {
+      passwordRef.current.setCustomValidity('Passwords do not match')
+    } else {
+      passwordRef.current.setCustomValidity('')
+    }
+  }, [passwordRef, setFieldValue, state.form.password, state.form.passwordConfirmation])
 
   const onSubmit = useCallback(
     async event => {

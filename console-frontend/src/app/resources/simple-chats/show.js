@@ -17,20 +17,17 @@ const ShowSimpleChatPreview = ({ history, match }) => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const loadFormObject = useCallback(
-    () => {
-      return (async () => {
-        const id = match.params.simpleChatId
-        const { json, requestError } = await apiRequest(apiSimpleChatShow, [id])
-        if (requestError) {
-          enqueueSnackbar(requestError, { variant: 'error' })
-          history.push(routes.simpleChatsList())
-        }
-        return json
-      })()
-    },
-    [enqueueSnackbar, history, match.params.simpleChatId]
-  )
+  const loadFormObject = useCallback(() => {
+    return (async () => {
+      const id = match.params.simpleChatId
+      const { json, requestError } = await apiRequest(apiSimpleChatShow, [id])
+      if (requestError) {
+        enqueueSnackbar(requestError, { variant: 'error' })
+        history.push(routes.simpleChatsList())
+      }
+      return json
+    })()
+  }, [enqueueSnackbar, history, match.params.simpleChatId])
 
   const { form, isFormLoading } = useForm({ formObjectTransformer, loadFormObject })
 
@@ -41,23 +38,20 @@ const ShowSimpleChatPreview = ({ history, match }) => {
     [showingContent]
   )
 
-  const onRejectClick = useCallback(
-    async () => {
-      setIsRejecting(true)
-      const id = match.params.simpleChatId
-      const { json, errors, requestError } = await apiRequest(apiSimpleChatReject, [id])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (!errors && !requestError) {
-        history.push(routes.simpleChatsList())
-        enqueueSnackbar('Simple Chat successfully rejected', { variant: 'success' })
-      } else {
-        setIsRejecting(false)
-      }
-      return json
-    },
-    [enqueueSnackbar, history, match.params.simpleChatId]
-  )
+  const onRejectClick = useCallback(async () => {
+    setIsRejecting(true)
+    const id = match.params.simpleChatId
+    const { json, errors, requestError } = await apiRequest(apiSimpleChatReject, [id])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+    if (!errors && !requestError) {
+      history.push(routes.simpleChatsList())
+      enqueueSnackbar('Simple Chat successfully rejected', { variant: 'success' })
+    } else {
+      setIsRejecting(false)
+    }
+    return json
+  }, [enqueueSnackbar, history, match.params.simpleChatId])
 
   const appBarContent = useMemo(
     () => ({

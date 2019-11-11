@@ -33,21 +33,15 @@ const MenuItem = ({ onClick, option }) => {
 const TableSortLabel = ({ onColumnClick, column, orderBy, ...props }) => {
   const onClick = useCallback(event => onColumnClick({ column, event }), [onColumnClick, column])
 
-  const sortingOption = useMemo(
-    () => {
-      if (!column.sortingOptions || !(orderBy && orderBy.optionName)) return
-      return column.sortingOptions.find(option => option.name === orderBy.optionName)
-    },
-    [column.sortingOptions, orderBy]
-  )
+  const sortingOption = useMemo(() => {
+    if (!column.sortingOptions || !(orderBy && orderBy.optionName)) return
+    return column.sortingOptions.find(option => option.name === orderBy.optionName)
+  }, [column.sortingOptions, orderBy])
 
-  const label = useMemo(
-    () => {
-      if (!column.labelIsShowingSorting || !sortingOption) return column.label
-      return `${column.label || 'Sorted'}: ${sortingOption.title}`
-    },
-    [column.label, column.labelIsShowingSorting, sortingOption]
-  )
+  const label = useMemo(() => {
+    if (!column.labelIsShowingSorting || !sortingOption) return column.label
+    return `${column.label || 'Sorted'}: ${sortingOption.title}`
+  }, [column.label, column.labelIsShowingSorting, sortingOption])
 
   const active = useMemo(() => orderBy && (orderBy.columnName || orderBy) === column.name, [column.name, orderBy])
 

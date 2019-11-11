@@ -58,17 +58,14 @@ const AccountSignup = () => {
 
   const setFieldValue = useCallback(event => mergeForm({ [event.target.name]: event.target.value }), [mergeForm])
 
-  useEffect(
-    () => {
-      if (!passwordRef.current) return
-      if (state.form.password !== state.form.passwordConfirmation) {
-        passwordRef.current.setCustomValidity('Passwords do not match')
-      } else {
-        passwordRef.current.setCustomValidity('')
-      }
-    },
-    [setFieldValue, state.form.password, state.form.passwordConfirmation]
-  )
+  useEffect(() => {
+    if (!passwordRef.current) return
+    if (state.form.password !== state.form.passwordConfirmation) {
+      passwordRef.current.setCustomValidity('Passwords do not match')
+    } else {
+      passwordRef.current.setCustomValidity('')
+    }
+  }, [setFieldValue, state.form.password, state.form.passwordConfirmation])
 
   const onSubmit = useCallback(
     async event => {
@@ -86,12 +83,9 @@ const AccountSignup = () => {
     [enqueueSnackbar, setFormSubmitted, setFormSubmitting, state.form]
   )
 
-  const addHostnameSelect = useCallback(
-    () => {
-      mergeFormCallback(form => ({ hostnames: [...form.hostnames, ''] }))
-    },
-    [mergeFormCallback]
-  )
+  const addHostnameSelect = useCallback(() => {
+    mergeFormCallback(form => ({ hostnames: [...form.hostnames, ''] }))
+  }, [mergeFormCallback])
 
   const deleteHostname = useCallback(
     index => {

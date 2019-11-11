@@ -53,25 +53,19 @@ const useForm = ({ formObjectTransformer, loadFormObject, saveFormObject }) => {
     [mergeForm]
   )
 
-  useEffect(
-    () => {
-      ;(async () => {
-        const json = await loadFormObject()
-        const formObject = formObjectTransformer(json)
-        setInitialForm(formObject)
-        setForm(formObject)
-        setIsFormLoading(false)
-      })()
-    },
-    [formObjectTransformer, loadFormObject, setInitialForm, setForm, setIsFormLoading]
-  )
+  useEffect(() => {
+    ;(async () => {
+      const json = await loadFormObject()
+      const formObject = formObjectTransformer(json)
+      setInitialForm(formObject)
+      setForm(formObject)
+      setIsFormLoading(false)
+    })()
+  }, [formObjectTransformer, loadFormObject, setInitialForm, setForm, setIsFormLoading])
 
-  useEffect(
-    () => {
-      setIsFormSubmitting(false)
-    },
-    [state.initialForm, setIsFormSubmitting]
-  )
+  useEffect(() => {
+    setIsFormSubmitting(false)
+  }, [state.initialForm, setIsFormSubmitting])
 
   return {
     form: state.form,

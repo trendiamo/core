@@ -56,24 +56,18 @@ const AvailableLocations = ({ locations }) => (
 )
 
 const Description = ({ brand }) => {
-  const tags = useMemo(
-    () => {
-      let result = []
-      if (brand.positiveImpactAreaList) result = result.concat(brand.positiveImpactAreaList)
-      if (brand.productCategoryList) result = result.concat(brand.productCategoryList)
-      return result.length !== 0 && result
-    },
-    [brand.positiveImpactAreaList, brand.productCategoryList]
-  )
+  const tags = useMemo(() => {
+    let result = []
+    if (brand.positiveImpactAreaList) result = result.concat(brand.positiveImpactAreaList)
+    if (brand.productCategoryList) result = result.concat(brand.productCategoryList)
+    return result.length !== 0 && result
+  }, [brand.positiveImpactAreaList, brand.productCategoryList])
 
-  const availableLocations = useMemo(
-    () => {
-      if (!brand.availableLocations) return
-      const result = brand.availableLocations.split(', ')
-      return result.length !== 0 && result
-    },
-    [brand.availableLocations]
-  )
+  const availableLocations = useMemo(() => {
+    if (!brand.availableLocations) return
+    const result = brand.availableLocations.split(', ')
+    return result.length !== 0 && result
+  }, [brand.availableLocations])
 
   return (
     <Container>

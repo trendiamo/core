@@ -7,17 +7,14 @@ import { useSnackbar } from 'notistack'
 const EditSellerForm = ({ match }) => {
   const { enqueueSnackbar } = useSnackbar()
 
-  const loadFormObject = useCallback(
-    () => {
-      return (async () => {
-        const id = match.params.sellerId
-        const { json, requestError } = await apiRequest(apiSellerShow, [id])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        return json
-      })()
-    },
-    [enqueueSnackbar, match.params.sellerId]
-  )
+  const loadFormObject = useCallback(() => {
+    return (async () => {
+      const id = match.params.sellerId
+      const { json, requestError } = await apiRequest(apiSellerShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      return json
+    })()
+  }, [enqueueSnackbar, match.params.sellerId])
 
   const saveFormObject = useCallback(
     form => {

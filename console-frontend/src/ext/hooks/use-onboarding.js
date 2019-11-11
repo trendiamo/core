@@ -24,12 +24,9 @@ export const useOnboarding = () => {
   const setOnboarding = useCallback(value => dispatch({ type: 'merge', value }), [dispatch])
   const setOnboardingHelp = useCallback(value => dispatch({ type: 'mergeHelp', value }), [dispatch])
 
-  useEffect(
-    () => {
-      setStore({ onboarding, setOnboarding, setOnboardingHelp })
-    },
-    [onboarding, setOnboarding, setOnboardingHelp, setStore]
-  )
+  useEffect(() => {
+    setStore({ onboarding, setOnboarding, setOnboardingHelp })
+  }, [onboarding, setOnboarding, setOnboardingHelp, setStore])
 
   return !!store.onboarding
 }
@@ -51,10 +48,7 @@ export const useOnboardingConsumer = () => {
 
 export const useOnboardingHelp = help => {
   const { setOnboardingHelp } = useOnboardingConsumer()
-  useEffect(
-    () => {
-      setOnboardingHelp && setOnboardingHelp(help)
-    },
-    [help, setOnboardingHelp]
-  )
+  useEffect(() => {
+    setOnboardingHelp && setOnboardingHelp(help)
+  }, [help, setOnboardingHelp])
 }

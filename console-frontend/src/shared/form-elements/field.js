@@ -58,13 +58,10 @@ const Field = ({
     [max, onChange]
   )
 
-  const handleFocus = useCallback(
-    () => {
-      setFocused(true)
-      onFocus && onFocus()
-    },
-    [onFocus]
-  )
+  const handleFocus = useCallback(() => {
+    setFocused(true)
+    onFocus && onFocus()
+  }, [onFocus])
 
   const handleBlur = useCallback(
     event => {
@@ -74,24 +71,18 @@ const Field = ({
     [onBlur]
   )
 
-  useEffect(
-    () => {
-      if (!autoFocus || hasFocused || disabled) return
-      setHasFocused(true)
-      inputRef.current.focus()
-    },
-    [autoFocus, disabled, hasFocused]
-  )
+  useEffect(() => {
+    if (!autoFocus || hasFocused || disabled) return
+    setHasFocused(true)
+    inputRef.current.focus()
+  }, [autoFocus, disabled, hasFocused])
 
-  useEffect(
-    () => {
-      if (value.length !== textLength) {
-        setTextLength(value.length)
-        setIsOutsideLimits(value.length > max)
-      }
-    },
-    [max, textLength, value.length]
-  )
+  useEffect(() => {
+    if (value.length !== textLength) {
+      setTextLength(value.length)
+      setIsOutsideLimits(value.length > max)
+    }
+  }, [max, textLength, value.length])
 
   return (
     <Container>

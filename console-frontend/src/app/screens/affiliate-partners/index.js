@@ -19,58 +19,43 @@ const AffiliatePartners = () => {
   )
   useOnboardingHelp(onboardingHelp)
 
-  const fetchAffiliations = useCallback(
-    async () => {
-      const { json, errors, requestError } = await apiRequest(apiAffiliationsList, [])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (requestError || errors) return
-      setAffiliations(json)
-    },
-    [enqueueSnackbar]
-  )
+  const fetchAffiliations = useCallback(async () => {
+    const { json, errors, requestError } = await apiRequest(apiAffiliationsList, [])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (requestError || errors) return
+    setAffiliations(json)
+  }, [enqueueSnackbar])
 
-  const fetchAvailableBrands = useCallback(
-    async () => {
-      const { json, errors, requestError } = await apiRequest(apiBrandsList, [])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (requestError || errors) return
-      setBrandsList(json)
-    },
-    [enqueueSnackbar]
-  )
+  const fetchAvailableBrands = useCallback(async () => {
+    const { json, errors, requestError } = await apiRequest(apiBrandsList, [])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (requestError || errors) return
+    setBrandsList(json)
+  }, [enqueueSnackbar])
 
-  const fetchInterests = useCallback(
-    async () => {
-      const { json, errors, requestError } = await apiRequest(apiInterestsList, [])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (requestError || errors) return
-      setInterests(json)
-    },
-    [enqueueSnackbar]
-  )
+  const fetchInterests = useCallback(async () => {
+    const { json, errors, requestError } = await apiRequest(apiInterestsList, [])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (requestError || errors) return
+    setInterests(json)
+  }, [enqueueSnackbar])
 
-  const fetchData = useCallback(
-    async () => {
-      setIsLoading(true)
-      await Promise.all([fetchAffiliations(), fetchAvailableBrands(), fetchInterests()])
-      setIsLoading(false)
-    },
-    [fetchAffiliations, fetchAvailableBrands, fetchInterests]
-  )
+  const fetchData = useCallback(async () => {
+    setIsLoading(true)
+    await Promise.all([fetchAffiliations(), fetchAvailableBrands(), fetchInterests()])
+    setIsLoading(false)
+  }, [fetchAffiliations, fetchAvailableBrands, fetchInterests])
 
-  useEffect(
-    () => {
-      let didCancel = false
-      ;(async () => {
-        await fetchData()
-        setTimeout(() => {
-          didCancel || setAnimate(true)
-        }, 0)
-      })()
-      return () => (didCancel = true)
-    },
-    [fetchData]
-  )
+  useEffect(() => {
+    let didCancel = false
+    ;(async () => {
+      await fetchData()
+      setTimeout(() => {
+        didCancel || setAnimate(true)
+      }, 0)
+    })()
+    return () => (didCancel = true)
+  }, [fetchData])
 
   return (
     <List

@@ -42,121 +42,97 @@ const ImagesModal = ({
   const [imageUrl, setImageUrl] = useState('')
   const [urlUploadState, setUrlUploadState] = useState(false)
 
-  useEffect(
-    () => {
-      if (hasNewUpload) {
-        setImages([])
-        setEmptyState(false)
-        setHasNewUpload(false)
-        setUrlUploadState(false)
-      }
-    },
-    [hasNewUpload, setHasNewUpload]
-  )
+  useEffect(() => {
+    if (hasNewUpload) {
+      setImages([])
+      setEmptyState(false)
+      setHasNewUpload(false)
+      setUrlUploadState(false)
+    }
+  }, [hasNewUpload, setHasNewUpload])
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const fetchRemoteImage = useCallback(
-    async () => {
-      let splitUrl
-      try {
-        const url = new URL(imageUrl)
-        if (!['http:', 'https:'].includes(url.protocol)) {
-          throw TypeError('Invalid protocol')
-        }
-        splitUrl = url.pathname.split('/')
-      } catch (e) {
-        return enqueueSnackbar('Please enter a valid URL', { variant: 'error' })
+  const fetchRemoteImage = useCallback(async () => {
+    let splitUrl
+    try {
+      const url = new URL(imageUrl)
+      if (!['http:', 'https:'].includes(url.protocol)) {
+        throw TypeError('Invalid protocol')
       }
-      const filename = splitUrl[splitUrl.length - 1]
-      const { json: blob, requestError, errors, response, ...rest } = await apiRequest(apiGetRemoteImage, [imageUrl])
-      if (errors || requestError) {
-        enqueueSnackbar(errors.message || requestError, { variant: 'error' })
+      splitUrl = url.pathname.split('/')
+    } catch (e) {
+      return enqueueSnackbar('Please enter a valid URL', { variant: 'error' })
+    }
+    const filename = splitUrl[splitUrl.length - 1]
+    const { json: blob, requestError, errors, response, ...rest } = await apiRequest(apiGetRemoteImage, [imageUrl])
+    if (errors || requestError) {
+      enqueueSnackbar(errors.message || requestError, { variant: 'error' })
+    } else {
+      onFileUpload([blob], [filename])
+    }
+    return { blob, response, errors, requestError, ...rest }
+  }, [enqueueSnackbar, onFileUpload, imageUrl])
+
+  const handleClose = useCallback(() => {
+    setUrlUploadState(false)
+    setOpen(false)
+    onCropDoneClick()
+  }, [onCropDoneClick, setOpen])
+
+  const fetchImages = useCallback(async () => {
+    if (isUserProfileImage) {
+      const userImgUrl = auth.getUser().img.url
+      if (userImgUrl && userImgUrl !== '') {
+        setImages([{ id: 'user-img', url: activeImage || auth.getUser().img.url }])
+        setActiveImage({ id: 'user-img', url: activeImage || auth.getUser().img.url })
       } else {
-        onFileUpload([blob], [filename])
-      }
-      return { blob, response, errors, requestError, ...rest }
-    },
-    [enqueueSnackbar, onFileUpload, imageUrl]
-  )
-
-  const handleClose = useCallback(
-    () => {
-      setUrlUploadState(false)
-      setOpen(false)
-      onCropDoneClick()
-    },
-    [onCropDoneClick, setOpen]
-  )
-
-  const fetchImages = useCallback(
-    async () => {
-      if (isUserProfileImage) {
-        const userImgUrl = auth.getUser().img.url
-        if (userImgUrl && userImgUrl !== '') {
-          setImages([{ id: 'user-img', url: activeImage || auth.getUser().img.url }])
-          setActiveImage({ id: 'user-img', url: activeImage || auth.getUser().img.url })
-        } else {
-          setEmptyState(true)
-          setImages([])
-          setActiveImage(null)
-        }
-        return
-      }
-      const { json, response, errors, requestError, ...rest } = await apiRequest(apiImageList, '')
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (requestError || errors) {
+        setEmptyState(true)
         setImages([])
-        handleClose()
-      } else {
-        const animations = json.filter(image => image.url.split('.').pop() === 'gif')
-        const images = json.filter(image => !animations.includes(image))
-        if (type === 'animationsModal') {
-          if (isEmpty(animations)) return setEmptyState(true)
-          setImages(animations)
-        } else {
-          if (isEmpty(images)) return setEmptyState(true)
-          setImages(images)
-        }
-        const activeImage = json.find(image => image.url === previewImage)
-        if (activeImage) setActiveImage(activeImage)
+        setActiveImage(null)
       }
-      return { json, response, errors, requestError, ...rest }
-    },
-    [activeImage, enqueueSnackbar, handleClose, isUserProfileImage, previewImage, type]
-  )
+      return
+    }
+    const { json, response, errors, requestError, ...rest } = await apiRequest(apiImageList, '')
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (requestError || errors) {
+      setImages([])
+      handleClose()
+    } else {
+      const animations = json.filter(image => image.url.split('.').pop() === 'gif')
+      const images = json.filter(image => !animations.includes(image))
+      if (type === 'animationsModal') {
+        if (isEmpty(animations)) return setEmptyState(true)
+        setImages(animations)
+      } else {
+        if (isEmpty(images)) return setEmptyState(true)
+        setImages(images)
+      }
+      const activeImage = json.find(image => image.url === previewImage)
+      if (activeImage) setActiveImage(activeImage)
+    }
+    return { json, response, errors, requestError, ...rest }
+  }, [activeImage, enqueueSnackbar, handleClose, isUserProfileImage, previewImage, type])
 
-  const onCancelCropping = useCallback(
-    () => {
-      onCancelClick()
-      setUrlUploadState(false)
-      setActiveImage(null)
-    },
-    [onCancelClick]
-  )
+  const onCancelCropping = useCallback(() => {
+    onCancelClick()
+    setUrlUploadState(false)
+    setActiveImage(null)
+  }, [onCancelClick])
 
-  const onCancelUrlUpload = useCallback(
-    () => {
-      setUrlUploadState(false)
-    },
-    [setUrlUploadState]
-  )
+  const onCancelUrlUpload = useCallback(() => {
+    setUrlUploadState(false)
+  }, [setUrlUploadState])
 
-  const onDialogClose = useCallback(
-    () => {
-      onModalClose(activeImage ? activeImage.url : null)
-    },
-    [activeImage, onModalClose]
-  )
+  const onDialogClose = useCallback(() => {
+    onModalClose(activeImage ? activeImage.url : null)
+  }, [activeImage, onModalClose])
 
-  const onDoneCropping = useCallback(
-    () => {
-      onCropDoneClick()
-      setUrlUploadState(false)
-      setActiveImage(image)
-    },
-    [image, onCropDoneClick]
-  )
+  const onDoneCropping = useCallback(() => {
+    onCropDoneClick()
+    setUrlUploadState(false)
+    setActiveImage(image)
+  }, [image, onCropDoneClick])
 
   const newOnFileUpload = useCallback(
     ({ target: { files } }) => {
@@ -172,13 +148,10 @@ const ImagesModal = ({
     [setActiveImage]
   )
 
-  const onUrlUploadClick = useCallback(
-    () => {
-      setImageUrl('')
-      setUrlUploadState(true)
-    },
-    [setUrlUploadState]
-  )
+  const onUrlUploadClick = useCallback(() => {
+    setImageUrl('')
+    setUrlUploadState(true)
+  }, [setUrlUploadState])
 
   const onCropKeyup = useCallback(
     ({ keyCode }) => {
@@ -187,12 +160,9 @@ const ImagesModal = ({
     [onDoneCropping]
   )
 
-  const onDoneUrlUpload = useCallback(
-    async () => {
-      await fetchRemoteImage()
-    },
-    [fetchRemoteImage]
-  )
+  const onDoneUrlUpload = useCallback(async () => {
+    await fetchRemoteImage()
+  }, [fetchRemoteImage])
 
   const onGalleryKeyup = useCallback(
     ({ keyCode }) => {
@@ -201,20 +171,15 @@ const ImagesModal = ({
     [activeImage, onGalleryDoneClick]
   )
 
-  const onDialogEntering = useCallback(
-    async () => {
-      if (!emptyState && isEmpty(images)) {
-        setIsLoading(true)
-        await fetchImages()
-        setIsLoading(false)
-      } else {
-        isUserProfileImage
-          ? setActiveImage(images[0])
-          : setActiveImage(images.find(image => image.url === previewImage))
-      }
-    },
-    [emptyState, fetchImages, images, isUserProfileImage, previewImage, setIsLoading]
-  )
+  const onDialogEntering = useCallback(async () => {
+    if (!emptyState && isEmpty(images)) {
+      setIsLoading(true)
+      await fetchImages()
+      setIsLoading(false)
+    } else {
+      isUserProfileImage ? setActiveImage(images[0]) : setActiveImage(images.find(image => image.url === previewImage))
+    }
+  }, [emptyState, fetchImages, images, isUserProfileImage, previewImage, setIsLoading])
 
   const onUrlUploadKeyup = useCallback(
     ({ keyCode }) => {

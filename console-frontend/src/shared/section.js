@@ -37,12 +37,9 @@ const Section = ({
 }) => {
   const [folded, setFolded] = useState(false)
 
-  const toggleFolded = useCallback(
-    () => {
-      setFolded(!folded)
-    },
-    [folded]
-  )
+  const toggleFolded = useCallback(() => {
+    setFolded(!folded)
+  }, [folded])
 
   const showDivider = useMemo(() => !showUpToUsBranding() || foldable, [foldable])
 

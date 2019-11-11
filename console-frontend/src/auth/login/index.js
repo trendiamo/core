@@ -74,21 +74,18 @@ const Login = ({ isSubmitting, loginForm, loginSubmit, setLoginValue }) => (
 const Login1 = () => {
   const { enqueueSnackbar } = useSnackbar()
 
-  useEffect(
-    () => {
-      if (window.location.hash === '#confirmed')
-        enqueueSnackbar('Your e-mail was successfully verified!', { variant: 'success' })
-      if (window.location.hash === '#error')
-        enqueueSnackbar('There was a problem with your email verification', { variant: 'error' })
-      if (window.location.hash === '#invite-accepted')
-        enqueueSnackbar('You accepted the invitation, please login to see your new account!', { variant: 'success' })
-      if (window.location.hash === '#invalid-invite')
-        enqueueSnackbar('The invitation is no longer available', { variant: 'error' })
-      if (window.location.hash === '#invite-error')
-        enqueueSnackbar('There was a problem with your invitation', { variant: 'error' })
-    },
-    [enqueueSnackbar]
-  )
+  useEffect(() => {
+    if (window.location.hash === '#confirmed')
+      enqueueSnackbar('Your e-mail was successfully verified!', { variant: 'success' })
+    if (window.location.hash === '#error')
+      enqueueSnackbar('There was a problem with your email verification', { variant: 'error' })
+    if (window.location.hash === '#invite-accepted')
+      enqueueSnackbar('You accepted the invitation, please login to see your new account!', { variant: 'success' })
+    if (window.location.hash === '#invalid-invite')
+      enqueueSnackbar('The invitation is no longer available', { variant: 'error' })
+    if (window.location.hash === '#invite-error')
+      enqueueSnackbar('There was a problem with your invitation', { variant: 'error' })
+  }, [enqueueSnackbar])
 
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)

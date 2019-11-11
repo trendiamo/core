@@ -8,17 +8,14 @@ import { withRouter } from 'react-router'
 const TriggerForm = ({ match, ...props }) => {
   const { enqueueSnackbar } = useSnackbar()
 
-  const loadFormObject = useCallback(
-    () => {
-      return (async () => {
-        const id = match.params.triggerId
-        const { json, requestError } = await apiRequest(apiTriggerShow, [id])
-        if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-        return json
-      })()
-    },
-    [enqueueSnackbar, match.params.triggerId]
-  )
+  const loadFormObject = useCallback(() => {
+    return (async () => {
+      const id = match.params.triggerId
+      const { json, requestError } = await apiRequest(apiTriggerShow, [id])
+      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+      return json
+    })()
+  }, [enqueueSnackbar, match.params.triggerId])
 
   const saveFormObject = useCallback(
     form => {

@@ -128,18 +128,15 @@ const SimpleChatMessage = ({
     [onChange, simpleChatMessageIndex]
   )
 
-  const deleteSimpleChatMessage = useCallback(
-    () => {
-      onChange(
-        {
-          id: simpleChatMessage.id,
-          _destroy: true,
-        },
-        simpleChatMessageIndex
-      )
-    },
-    [onChange, simpleChatMessage.id, simpleChatMessageIndex]
-  )
+  const deleteSimpleChatMessage = useCallback(() => {
+    onChange(
+      {
+        id: simpleChatMessage.id,
+        _destroy: true,
+      },
+      simpleChatMessageIndex
+    )
+  }, [onChange, simpleChatMessage.id, simpleChatMessageIndex])
 
   const actions = useMemo(
     () =>

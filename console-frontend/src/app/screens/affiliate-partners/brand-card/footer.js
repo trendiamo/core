@@ -65,37 +65,25 @@ const Footer = ({ affiliation, brand, goToBrandPage, interest }) => {
     [brand.id, brand.name]
   )
 
-  const onClickPromoteNow = useCallback(
-    () => {
-      track('Clicked Promote Now')
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage, track]
-  )
+  const onClickPromoteNow = useCallback(() => {
+    track('Clicked Promote Now')
+    goToBrandPage(brand)
+  }, [brand, goToBrandPage, track])
 
-  const onClickNotifyMe = useCallback(
-    () => {
-      track('Clicked Notify Me')
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage, track]
-  )
+  const onClickNotifyMe = useCallback(() => {
+    track('Clicked Notify Me')
+    goToBrandPage(brand)
+  }, [brand, goToBrandPage, track])
 
-  const onClickRemoveNotification = useCallback(
-    () => {
-      track('Clicked Remove Notification')
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage, track]
-  )
+  const onClickRemoveNotification = useCallback(() => {
+    track('Clicked Remove Notification')
+    goToBrandPage(brand)
+  }, [brand, goToBrandPage, track])
 
-  const onClickGetLink = useCallback(
-    () => {
-      track('Clicked Get Link')
-      goToBrandPage(brand)
-    },
-    [brand, goToBrandPage, track]
-  )
+  const onClickGetLink = useCallback(() => {
+    track('Clicked Get Link')
+    goToBrandPage(brand)
+  }, [brand, goToBrandPage, track])
 
   return (
     <MainContainer>

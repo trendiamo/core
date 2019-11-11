@@ -87,12 +87,9 @@ const NewAccount = ({ history }) => {
     [history, onFormSubmit]
   )
 
-  const addHostnameSelect = useCallback(
-    () => {
-      mergeFormCallback(form => ({ hostnames: [...form.hostnames, ''] }))
-    },
-    [mergeFormCallback]
-  )
+  const addHostnameSelect = useCallback(() => {
+    mergeFormCallback(form => ({ hostnames: [...form.hostnames, ''] }))
+  }, [mergeFormCallback])
 
   const deleteHostname = useCallback(
     index => {

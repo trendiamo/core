@@ -65,12 +65,9 @@ ${linkBase}?aftk=${referralCode}`,
 })
 
 const SharingButtons = ({ referralCode }) => {
-  const data = useMemo(
-    () => {
-      return dataFactory({ referralCode })
-    },
-    [referralCode]
-  )
+  const data = useMemo(() => {
+    return dataFactory({ referralCode })
+  }, [referralCode])
 
   return (
     <MainContainer>

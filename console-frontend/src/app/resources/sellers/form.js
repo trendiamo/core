@@ -48,7 +48,7 @@ const SellerForm = ({ backRoute, history, loadFormObject, location, onboardingCr
         const result = await onFormSubmit(event)
         if (!result || result.error || result.errors) return
         setTimeout(() => {
-          if (onboardingCreate && (onboarding.stageIndex < 2 && !onboarding.run)) {
+          if (onboardingCreate && onboarding.stageIndex < 2 && !onboarding.run) {
             setOnboarding({ ...onboarding, stageIndex: 1, run: true })
           }
         }, 0)

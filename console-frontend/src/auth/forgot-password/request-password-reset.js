@@ -11,12 +11,9 @@ import { withRouter } from 'react-router'
 
 const PasswordReset = withRouter(
   ({ isSubmitting, history, passwordForm, passwordChangeSubmit, setPasswordFormValue }) => {
-    const onLoginClick = useCallback(
-      () => {
-        history.push(routes.login())
-      },
-      [history]
-    )
+    const onLoginClick = useCallback(() => {
+      history.push(routes.login())
+    }, [history])
 
     return (
       <AuthLayout title="Reset Password">

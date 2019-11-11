@@ -44,12 +44,9 @@ const StyledButton = styled(Button)`
 `
 
 const BlankStateSection = withRouter(({ buttonText, description, hasStripeAccount, history, icon, title }) => {
-  const goToAffiliatePartners = useCallback(
-    () => {
-      history.push(routes.affiliatePartners())
-    },
-    [history]
-  )
+  const goToAffiliatePartners = useCallback(() => {
+    history.push(routes.affiliatePartners())
+  }, [history])
 
   return (
     <>

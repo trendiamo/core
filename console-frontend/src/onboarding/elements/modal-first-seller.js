@@ -35,13 +35,10 @@ const ModalFirstSeller = () => {
   const { onboarding, setOnboarding } = useOnboardingConsumer()
   const [open, setOpen] = useState(true)
 
-  const handleClose = useCallback(
-    () => {
-      setOnboarding({ ...onboarding, stageIndex: 2, run: false })
-      setOpen(false)
-    },
-    [onboarding, setOnboarding]
-  )
+  const handleClose = useCallback(() => {
+    setOnboarding({ ...onboarding, stageIndex: 2, run: false })
+    setOpen(false)
+  }, [onboarding, setOnboarding])
 
   useEffect(() => {
     changeStage(2)

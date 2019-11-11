@@ -31,8 +31,7 @@ const TextInput = styled(props => <Input {...omit(props, ['wasCopied', 'pasteabl
   border-radius: ${({ pasteable }) => (pasteable ? '6px' : '6px 0 0 6px')};
 
   ${showUpToUsBranding() && 'color: #272932;'}
-  ${({ pasteable, wasCopied }) =>
-    pasteable && !wasCopied && 'margin-right: 14px;'}
+  ${({ pasteable, wasCopied }) => pasteable && !wasCopied && 'margin-right: 14px;'}
 
   input {
     padding: 8px;

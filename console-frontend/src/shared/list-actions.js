@@ -18,13 +18,10 @@ export const BulkActions = ({ deleteBulk, selectedIds }) => {
 
   const handleClose = useCallback(() => setShowDialog(false), [])
   const handleOpen = useCallback(() => setShowDialog(true), [])
-  const handleDelete = useCallback(
-    () => {
-      deleteBulk()
-      setShowDialog(false)
-    },
-    [deleteBulk]
-  )
+  const handleDelete = useCallback(() => {
+    deleteBulk()
+    setShowDialog(false)
+  }, [deleteBulk])
 
   return (
     <>

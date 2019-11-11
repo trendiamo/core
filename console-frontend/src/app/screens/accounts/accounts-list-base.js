@@ -79,17 +79,14 @@ const Account = ({ account, fetchAccounts }) => {
     setDialogOpen(true)
   }, [])
 
-  const handleDialogConfirmation = useCallback(
-    async () => {
-      setDialogOpen(false)
-      const { errors, requestError, json } = await apiRequest(apiAccountDestroy, [account.slug])
-      if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
-      if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
-      if (json) enqueueSnackbar(json.message, { variant: 'success' })
-      fetchAccounts()
-    },
-    [account.slug, enqueueSnackbar, fetchAccounts]
-  )
+  const handleDialogConfirmation = useCallback(async () => {
+    setDialogOpen(false)
+    const { errors, requestError, json } = await apiRequest(apiAccountDestroy, [account.slug])
+    if (requestError) enqueueSnackbar(requestError, { variant: 'error' })
+    if (errors) enqueueSnackbar(errors.message, { variant: 'error' })
+    if (json) enqueueSnackbar(json.message, { variant: 'success' })
+    fetchAccounts()
+  }, [account.slug, enqueueSnackbar, fetchAccounts])
 
   const handleDialogButtonClose = useCallback(() => {
     setDialogOpen(false)

@@ -13,21 +13,15 @@ const StyledSelect = styled(MuiSelect)`
 const Select = ({ fullWidth, label, margin, onChange, onClose, onOpen, options, required, value, ...props }) => {
   const [open, setOpen] = useState(false)
 
-  const handleOpen = useCallback(
-    () => {
-      setOpen(true)
-      onOpen && onOpen()
-    },
-    [onOpen]
-  )
+  const handleOpen = useCallback(() => {
+    setOpen(true)
+    onOpen && onOpen()
+  }, [onOpen])
 
-  const handleClose = useCallback(
-    () => {
-      setOpen(false)
-      onClose && onClose()
-    },
-    [onClose]
-  )
+  const handleClose = useCallback(() => {
+    setOpen(false)
+    onClose && onClose()
+  }, [onClose])
 
   return (
     <FormControl fullWidth={fullWidth} margin={margin} required={required}>
