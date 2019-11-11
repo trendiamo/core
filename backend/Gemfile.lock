@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/dsgh/sparkpost_rails.git
-  revision: 0d3b5699c6a6672363676267a99cc4f1cdd2f5aa
-  branch: custom-api-endpoint
-  specs:
-    sparkpost_rails (1.5.1)
-      rails (>= 4.0, < 5.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -290,6 +282,8 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.4)
       tilt (~> 2.0)
+    sparkpost_rails (1.5.2)
+      rails (>= 4.0, < 6.1)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -356,7 +350,7 @@ DEPENDENCIES
   rest-client
   rollbar
   rubocop
-  sparkpost_rails!
+  sparkpost_rails (~> 1.5.2)
   spring
   spring-watcher-listen (~> 2.0.0)
   stripe

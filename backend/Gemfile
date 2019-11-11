@@ -28,8 +28,7 @@ gem "resque-scheduler"
 gem "rest-client"
 gem "rollbar"
 gem "rubocop"
-# changed to support the EU endpoint. https://github.com/the-refinery/sparkpost_rails/pull/58
-gem "sparkpost_rails", github: "dsgh/sparkpost_rails", branch: "custom-api-endpoint"
+gem "sparkpost_rails", "~> 1.5.2"
 gem "stripe"
 
 group :development, :test do
