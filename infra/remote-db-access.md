@@ -16,7 +16,7 @@ GRANT USAGE ON SCHEMA public TO readonly;
 GRANT SELECT ON TABLE "affiliate_links", "affiliations", "brands", "generated_urls", "images", "memberships",
                       "orders", "outros", "product_picks", "products", "sellers", "showcases", "simple_chat_messages", "login_events",
                       "simple_chat_sections", "simple_chats", "spotlights",
-                      "tagged_products_clients", "triggers", "website_settings", "websites" TO readonly;
+                      "tagged_products_clients", "taggings", "tags", "triggers", "website_settings", "websites" TO readonly;
 GRANT SELECT ("id", "username", "email", "first_name", "last_name", "customer_ref", "reset_password_sent_at",
               "remember_created_at", "sign_in_count", "current_sign_in_at", "last_sign_in_at", "current_sign_in_ip",
               "last_sign_in_ip", "created_at", "updated_at", "img_url", "confirmed_at", "confirmation_sent_at",
