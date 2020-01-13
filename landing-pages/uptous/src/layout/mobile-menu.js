@@ -114,17 +114,6 @@ const removeMobileMenu = () => {
 }
 
 const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
-  const onClick = useCallback(
-    event => {
-      event.preventDefault()
-      toggleMobileMenu()
-      const element = document.querySelector(event.target.getAttribute('href'))
-      if (!element) return
-      element.scrollIntoView({ behavior: 'smooth' })
-    },
-    [toggleMobileMenu]
-  )
-
   return (
     <Container>
       <StyledLink onClick={removeMobileMenu} to="/">
@@ -142,7 +131,7 @@ const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
               {headerLink.text}
             </Link>
           ) : (
-            <a href={headerLink.target} key={headerLink.target} onClick={onClick}>
+            <a href={headerLink.target} key={headerLink.target}>
               {headerLink.text}
             </a>
           )
