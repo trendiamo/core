@@ -1,19 +1,35 @@
+import LogoBlack from '../images/logo.svg'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import { Link, navigate } from 'gatsby'
+import { Link } from 'gatsby'
 
-import Button from '../components/button'
-import CloseIcon from '../images/close-icon.svg'
-import LogoFullImg from '../images/logo-full'
+const LogoFullContainer = styled.div`
+  width: 100%;
+  padding: 45px 80px;
+`
 
-const LogoFullContainer = styled.div``
+const LogoWhite = styled(LogoBlack)`
+  filter: invert();
+`
+
 const CloseIconContainer = styled.div`
-  background-color: #262831;
-  padding: 20px;
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  text-align: center;
+  line-height: 32px;
+  opacity: 0.7;
+  transition: all 0.3s cubic-bezier(0.32, 0.74, 0.57, 1);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  cursor: pointer;
+  top: 5px;
+  right: 5px;
+  bottom: auto;
+  left: auto;
+  z-index: 100;
 `
 
 const Container = styled.div`
@@ -21,26 +37,18 @@ const Container = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
-  right: 0;
-  background: #262831;
-  z-index: 1;
+  width: 300px;
+  background: #111;
+  z-index: 9900;
 
   display: none;
+  align-items: center;
+
   @media (max-width: 999px) {
     body.mobile-menu-open & {
       display: flex;
       flex-direction: column;
     }
-  }
-  align-items: center;
-
-  .mobile-menu-link {
-    text-decoration: none;
-    color: rgba(0, 0, 0, 0.9);
-    font-size: 32px;
-    display: block;
-    text-align: center;
-    padding: 10px;
   }
 
   > a {
@@ -54,38 +62,56 @@ const Container = styled.div`
   }
 `
 
-const StyledCloseIcon = styled(CloseIcon)`
-  height: 30px;
-  width: 30px;
-  fill: #fff;
+const StyledCloseIcon = styled.i`
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    margin-top: -1px;
+    margin-left: -10px;
+    width: 20px;
+    height: 1px;
+    background-color: #fff;
+  }
+  &:before {
+    transform: rotate(-45deg);
+  }
+  &:after {
+    transform: rotate(45deg);
+  }
 `
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   flex: 1;
-  width: 100vw;
-  justify-content: center;
+  width: 100%;
+  padding: 10px 0 0 40px;
 
   a {
     text-decoration: none;
-    font-weight: 900;
-    font-size: 1.25rem;
-    line-height: 2;
+    font-size: 20px;
     color: #fff;
-    text-transform: uppercase;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin: 14px 0;
   }
+`
+
+const StyledLink = styled(Link)`
+  width: 100%;
+  display: block;
 `
 
 const removeMobileMenu = () => {
   document.body.classList.remove('mobile-menu-open')
 }
-
-const onSignupClick = () => navigate('/signup')
 
 const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
   const onClick = useCallback(
@@ -99,18 +125,13 @@ const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
     [toggleMobileMenu]
   )
 
-  const onCtaButtonClick = useCallback(() => {
-    toggleMobileMenu()
-    onSignupClick()
-  }, [toggleMobileMenu])
-
   return (
-    <Container className="mobile-menu">
-      <Link onClick={removeMobileMenu} to="/">
+    <Container>
+      <StyledLink onClick={removeMobileMenu} to="/">
         <LogoFullContainer>
-          <LogoFullImg alt={siteTitle} />
+          <LogoWhite alt={siteTitle} />
         </LogoFullContainer>
-      </Link>
+      </StyledLink>
       <CloseIconContainer onClick={toggleMobileMenu}>
         <StyledCloseIcon />
       </CloseIconContainer>
@@ -126,9 +147,6 @@ const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
             </a>
           )
         )}
-        <Button color="#f05d5e" onClick={onCtaButtonClick}>
-          {'Get Started'}
-        </Button>
       </Content>
     </Container>
   )

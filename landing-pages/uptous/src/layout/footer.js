@@ -1,129 +1,223 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import IconInstagram from '../images/instagram.svg'
-import IconYouTube from '../images/youtube.svg'
+import IconInstagram from '../images/icon-instagram.svg'
+import IconLinkedin from '../images/icon-linkedin.svg'
 import Section from '../components/section'
-import { openModal } from '../utils'
 
 const Header = styled.div`
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: 'Avenir', sans-serif;
   text-transform: uppercase;
   font-size: 1.25rem;
   font-weight: 900;
   white-space: nowrap;
   color: ${({ red }) => (red ? '#FF3955' : '#333')};
 `
-const SocialLinksContainer = styled.div``
+
+const NewsletterBannerContainer = styled.div``
+
 const LegalText = styled.div``
-const FooterLinksContainer = styled.div``
+
+const FooterLinksContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 50px;
+
+  @media (min-width: 1000px) {
+    justify-content: center;
+  }
+`
+
 const FooterLinksSection = styled.div``
+
 const DarkSection = styled.div``
-const StyledIconYouTube = styled(IconYouTube)``
-const StyledIconInstagram = styled(IconInstagram)``
 
-const onLegalNoticeClick = event => {
-  event.preventDefault()
-  openModal('.legal-notice-modal-content')
-}
+const GreySection = styled.div`
+  background: #f5f5f5;
+`
 
-const onPrivacyPolicyClick = event => {
-  event.preventDefault()
-  openModal('.privacy-policy-modal-content')
-}
+const Link = styled.a`
+  font-size: 16px;
 
-const SocialLinks = () => (
-  <SocialLinksContainer>
-    <div>
-      <Header red>{'Join Us'}</Header>
+  padding: 0 5px;
+
+  @media (min-width: 1000px) {
+    padding: 0 26px;
+    font-size: 20px;
+
+    & + & {
+      border-left: 2px solid #fff;
+    }
+  }
+`
+
+const SocialLink = styled.a`
+  display: block;
+  & + & {
+    margin-left: 30px;
+  }
+`
+
+const BannerButton = styled.input`
+  appearance: none;
+  border: 1px solid #111;
+  outline: none;
+  background: #111;
+  color: #fff;
+  font-size: 18px;
+  padding: 8px 90px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 3px;
+  width: 100%;
+
+  @media (min-width: 1000px) {
+    width: auto;
+  }
+`
+
+const BannerInput = styled.input`
+  appearance: none;
+  border: 1px solid #111;
+  width: 100%;
+  font-size: 18px;
+  outline: none;
+  padding: 10px;
+  margin-top: 5px;
+`
+
+const BannerButtonContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+`
+
+const BannerFooterText = styled.div`
+  font-size: 12px;
+  text-align: center;
+  margin-top: 20px;
+
+  a {
+    padding: 0 5px;
+    color: #111;
+    font-weight: 900;
+  }
+`
+
+const StayTunedText = styled.div`
+  color: #111;
+  margin-bottom: 15px;
+`
+
+const MailchimpForm = () => (
+  <form
+    action="https://uptous.us4.list-manage.com/subscribe/post?u=45912ce59aa8ef47e7126f2fa&amp;id=33d3cabba0"
+    method="post"
+    name="mc-embedded-subscribe-form"
+    noValidate
+    target="_blank"
+  >
+    <BannerInput name="EMAIL" placeholder="Email address" required type="email" />
+    <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
+      <input defaultValue="" name="b_45912ce59aa8ef47e7126f2fa_33d3cabba0" tabIndex="-1" type="text" />
     </div>
-    <div>
-      <a href="https://www.instagram.com/_uptous/" rel="noopener noreferrer" target="_blank">
-        <Header>{'Instagram'}</Header>
-      </a>
-      <a href="https://www.youtube.com/channel/UCnEQGnoZb_jEjMtgNsvLMVQ" rel="noopener noreferrer" target="_blank">
-        <Header>{'Youtube'}</Header>
-      </a>
-      <a
-        href="https://open.spotify.com/show/6I35XQLBa4sSVXcEOBFlOf?si=nkX4hKc3RWi5nK7J1rrnEQ"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <Header>{'Podcast'}</Header>
-      </a>
-      <a href="https://www.facebook.com/uptouspositiveimpact" rel="noopener noreferrer" target="_blank">
-        <Header>{'Facebook'}</Header>
-      </a>
-      <a href="https://www.linkedin.com/company/20135745" rel="noopener noreferrer" target="_blank">
-        <Header>{'Linkedin'}</Header>
-      </a>
-    </div>
-  </SocialLinksContainer>
+    <BannerButtonContainer>
+      <BannerButton name="subscribe" type="submit" value="Sign me up" />
+    </BannerButtonContainer>
+    <BannerFooterText>
+      {'By clicking this button you subscribe to our newsletter and agree to our'}
+      <a href="/terms-and-conditions">{'Terms and Conditions'}</a>
+    </BannerFooterText>
+  </form>
+)
+
+const NewsletterBanner = () => (
+  <NewsletterBannerContainer>
+    <StayTunedText>{'Stay tuned and be the first to join by signing up to our newsletter!'}</StayTunedText>
+    <MailchimpForm />
+  </NewsletterBannerContainer>
 )
 
 const FooterLinks = () => (
   <FooterLinksContainer>
-    <FooterLinksSection>
-      <Header>{'About'}</Header>
-      <a href="/pledge">{'Our Pledge'}</a>
-      <a href="https://app.uptous.co">{'Our Product'}</a>
-    </FooterLinksSection>
-    <FooterLinksSection>
-      <Header>{'Join'}</Header>
-      <a href="https://app.uptous.co/signup">{'As Impacter'}</a>
-      <a href="/signup#brand">{'As Brand'}</a>
-    </FooterLinksSection>
-    <FooterLinksSection>
-      <Header>{'Info'}</Header>
-      <a href="mailto:hello@uptous.co">{'Contact us'}</a>
-      <a href="#legal-notice" onClick={onLegalNoticeClick}>
-        {'Legal Notice'}
-      </a>
-      <a href="#privacy-policy" onClick={onPrivacyPolicyClick}>
-        {'Privacy & Cookies'}
-      </a>
-    </FooterLinksSection>
+    <Link href="/magazine">{'Magazine'}</Link>
+    <Link href="/terms-and-conditions">{'Terms & Conditions'}</Link>
+    <Link href="/privacy-policy">{'Privacy Policy'}</Link>
   </FooterLinksContainer>
+)
+
+const SocialContainer = styled.div`
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 1000px) {
+    margin: 0;
+    position: absolute;
+    right: 10px;
+  }
+`
+
+const DarkSectionFlex = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 10px;
+
+  @media (min-width: 1000px) {
+    justify-content: center;
+    display: flex;
+    max-width: 1160px;
+    margin-bottom: 50px;
+  }
+`
+
+const Social = () => (
+  <SocialContainer>
+    <SocialLink
+      href="https://www.linkedin.com/company/uptous-positive-influence/"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <IconLinkedin />
+    </SocialLink>
+    <SocialLink href="https://www.instagram.com/_uptous/" rel="noopener noreferrer" target="_blank">
+      <IconInstagram />
+    </SocialLink>
+  </SocialContainer>
 )
 
 const Footer = styled(({ className }) => {
   return (
     <footer className={className}>
-      <Section>
-        <SocialLinks />
-      </Section>
-      <DarkSection>
-        <FooterLinks />
-        <LegalText>
-          <b>{'UPTOUS'}</b>
-          {' © Copyright 2019 uptous.co All rights reserved.'}
-        </LegalText>
+      <GreySection>
+        <Section fullWidth>
+          <NewsletterBanner />
+        </Section>
+      </GreySection>
+      <DarkSection fullWidth>
+        <DarkSectionFlex>
+          <FooterLinks />
+          <Social />
+        </DarkSectionFlex>
+        <LegalText>{'© 2020 uptous.co - All rights reserved.'}</LegalText>
       </DarkSection>
     </footer>
   )
 })`
-  ${Section} {
-    background-color: #e7ecef;
-    color: #272a32;
-    padding-left: 0;
-    padding-right: 0;
-    padding: 5px 20px;
-    display: block;
-  }
-  a {
-    text-decoration: none;
-  }
-  ${SocialLinksContainer} {
+  margin-top: 60px;
+  ${NewsletterBannerContainer} {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    margin: 40px 0;
-    @media (min-width: 1200px) {
-      flex-direction: row;
-    }
+    padding: 80px 20px;
     @media (min-width: 1000px) {
+      padding: 80px 0;
       ${Header} {
         margin: 0;
       }
@@ -139,7 +233,7 @@ const Footer = styled(({ className }) => {
         margin-top: 30px;
         flex-direction: row;
       }
-      @media (min-width: 1200px) {
+      @media (min-width: 1000px) {
         margin-left: 50px;
         margin-top: 0;
       }
@@ -153,57 +247,42 @@ const Footer = styled(({ className }) => {
     }
   }
   ${DarkSection} {
-    background: #282732;
-    padding: 50px;
+    background: #0a0a0a;
+    padding: 35px 20px 20px;
+    position: relative;
+
+    @media (min-width: 1000px) {
+      padding: 50px;
+    }
+
     ${Header} {
       color: #fff;
     }
     a {
       display: block;
-      font-size: 0.75rem;
       line-height: 1.8;
       color: #272a32;
       text-decoration: none;
       color: #fff;
     }
   }
-  ${FooterLinksContainer} {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-bottom: 0px;
-  }
   ${FooterLinksSection} {
     margin-bottom: 30px;
   }
   @media (min-width: 1000px) {
-    ${FooterLinksContainer} {
-      flex-direction: row;
-      justify-content: normal;
-      margin-bottom: 40px;
-    }
     ${FooterLinksSection} {
       margin-right: 130px;
       margin-bottom: 0;
     }
   }
   ${LegalText} {
-    font-size: 0.58rem;
+    font-size: 13px;
     color: #fff;
     text-align: center;
-  }
 
-  ${StyledIconYouTube} {
-    float: right;
-    width: 60px;
-    height: 60px;
-    margin-left: 20px;
-  }
-
-  ${StyledIconInstagram} {
-    float: right;
-    width: 60px;
-    height: 60px;
+    @media (min-width: 1000px) {
+      font-size: 14px;
+    }
   }
 
   @media (min-width: 1000px) {

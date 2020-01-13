@@ -1,23 +1,27 @@
+import Layout from '../layout'
 import React from 'react'
+import Section from '../components/section'
+import styled from 'styled-components'
 import { graphql } from 'gatsby'
 
-import BottomHeadline from '../sections/bottom-headline'
-import Hero from '../sections/hero'
-import Layout from '../layout'
-import OpeningCounter from '../sections/opening-counter'
-import OurGoals from '../sections/our-goals'
+const Header = styled.div`
+  font-size: 32px;
+  text-align: center;
+  font-weight: 900;
+  margin-top: 80px;
+`
 
 const IndexPage = ({ data }) => (
   <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
-    <Hero data={data.hero} />
-    <OpeningCounter />
-    <OurGoals />
-    <BottomHeadline />
+    <Header>{'Terms and Conditions'}</Header>
+    <Section>
+      <div dangerouslySetInnerHTML={{ __html: data.termsAndConditions.text.childContentfulRichText.html }}></div>
+    </Section>
   </Layout>
 )
 
 export const query = graphql`
-  query HomePage {
+  query TermsAndConditionsPage {
     hero: contentfulHomepage(name: { eq: "Homepage" }) {
       heroHeading
       heroSubheading

@@ -1,23 +1,29 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import BottomHeadline from '../sections/bottom-headline'
-import Hero from '../sections/hero'
+import Hero from '../sections/about-us/hero'
+import Interested from '../sections/about-us/interested'
 import Layout from '../layout'
-import OpeningCounter from '../sections/opening-counter'
-import OurGoals from '../sections/our-goals'
+import MainImages from '../sections/about-us/main-images'
+import MeetTheBand from '../sections/about-us/meet-the-band'
+import MiddleImage from '../sections/about-us/middle-image'
+import OurValues from '../sections/about-us/our-values'
+import StrongVision from '../sections/about-us/strong-vision'
 
 const IndexPage = ({ data }) => (
   <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
-    <Hero data={data.hero} />
-    <OpeningCounter />
-    <OurGoals />
-    <BottomHeadline />
+    <Hero />
+    <MainImages />
+    <StrongVision />
+    <MiddleImage />
+    <MeetTheBand />
+    <OurValues />
+    <Interested />
   </Layout>
 )
 
 export const query = graphql`
-  query HomePage {
+  query AboutUsPage {
     hero: contentfulHomepage(name: { eq: "Homepage" }) {
       heroHeading
       heroSubheading

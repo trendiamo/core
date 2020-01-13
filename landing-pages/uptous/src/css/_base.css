@@ -1,6 +1,12 @@
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/AvenirLTStd-Roman.otf');
+  font-weight: 400 700 900;
+}
+
 html {
   color: #272a32;
-  font-family: Lato, sans-serif;
+  font-family: 'Avenir', sans-serif;
   font-size: 24px;
 }
 
@@ -14,7 +20,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: 'Avenir', sans-serif;
 }
 
 p {
@@ -28,7 +34,7 @@ strong {
 }
 
 button {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: 'Avenir', sans-serif;
 }
 
 *[hidden] {

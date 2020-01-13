@@ -11,7 +11,7 @@ import Seo from '../layout/seo'
 const Content = styled.div``
 
 const NotFoundPage = styled(({ className, data }) => (
-  <Layout data={{ legalNotice: data.legalNotice.text, privacyPolicy: data.privacyPolicy.text }}>
+  <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
     <Seo title="Uptous - 404 Not Found" />
     <Section className={className}>
       <Container>
@@ -57,7 +57,7 @@ const NotFoundPage = styled(({ className, data }) => (
 
 export const query = graphql`
   query NotFoundPage {
-    legalNotice: contentfulModalText(name: { eq: "Legal Notice" }) {
+    termsAndConditions: contentfulModalText(name: { eq: "Terms and Conditions" }) {
       text {
         childContentfulRichText {
           html

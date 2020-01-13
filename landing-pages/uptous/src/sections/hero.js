@@ -1,137 +1,226 @@
-import React, { useRef } from 'react'
-import styled from 'styled-components'
-import { navigate } from 'gatsby'
-
-import Button from '../components/button'
-import Container from '../components/container'
-import HeroImg from '../images/hero'
+import gridImage01 from '../images/u2u-fashion-01.jpeg'
+import gridImage02 from '../images/u2u-fashion-02.jpeg'
+import gridImage03 from '../images/u2u-fashion-03.jpg'
+import gridImage04 from '../images/u2u-fashion-04.jpg'
+import React from 'react'
 import Section from '../components/section'
-import { useParallax } from '../hooks'
+import styled from 'styled-components'
 
-const onGetStartedClick = () => navigate('/signup')
-
-const Heading = styled.h1``
-const Subheading = styled.div``
-const StyledHeroImg = styled(HeroImg)``
-
-const Hero = styled(({ className, data }) => {
-  const ref = useRef(null)
-  useParallax({ ref })
-
-  return (
-    <Section className={className}>
-      <StyledHeroImg alt="" ref={ref} />
-      <Container>
-        <div>
-          <Heading>{data.heroHeading}</Heading>
-          <Subheading>{data.heroSubheading}</Subheading>
-        </div>
-        <Button onClick={onGetStartedClick}>{'Get Started'}</Button>
-      </Container>
-    </Section>
-  )
-})`
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-  min-height: 666px;
-  background-color: #107173;
+const HeroImagesContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  ${StyledHeroImg} {
-    flex: 2;
-    transform-origin: bottom;
-    max-height: 70vh;
-  }
-  ${Container} {
-    flex: 1;
-    padding: 90px 20px 30px 20px;
-    max-width: 800px;
-    position: relative;
-  }
-  ${Heading} {
-    color: #fff;
-    font-weight: 900;
-    font-size: 13.34vw;
-    line-height: 0.9;
-    text-transform: uppercase;
-    position: absolute;
-    top: -1.4em;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    max-width: 420px;
-  }
-  ${Subheading} {
-    line-height: 1.225;
-    margin-bottom: 1.8rem;
-    color: #fff;
-  }
-  ${Button} {
-    font-size: 1.25rem;
-    min-height: 50px;
-    span {
-      padding-left: 12px;
-      padding-right: 12px;
-    }
-    &:before {
-      content: '';
-
-      display: inline-block;
-      vertical-align: middle;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 19px 0 19px 32.9px;
-      border-color: transparent transparent transparent #f05d5d;
-    }
-  }
-
-  @media (min-width: 375px) {
-    ${Heading} {
-      font-size: 50px;
-    }
-  }
+  height: 580px;
+  font-size: 0;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
 
   @media (min-width: 1000px) {
-    min-height: 100vh;
-    flex-direction: row;
-    ${StyledHeroImg} {
-      flex: 15;
-      max-height: unset;
-    }
-    ${Container} {
-      flex: 7;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 90px;
-      padding-top: 160px;
-    }
-    ${Heading} {
-      top: unset;
-      left: -1.88em;
-      font-size: calc(20px + 4vw);
-      max-width: 600px;
-    }
-    ${Subheading} {
-      margin-top: calc(1em + 16vw);
-      font-size: calc(0.8rem + 1.2vw);
-    }
-    ${Button} {
-      margin-left: -17vw;
-      margin-bottom: 6vw;
-      min-height: 100px;
-      font-size: calc(8px + 2.5vw);
-      span {
-        line-height: 100px;
-      }
-      &:before {
-        border-width: 50px 0 50px 77px;
-      }
-    }
+    margin: 0 -5px;
   }
 `
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+`
+
+const ImageContainer = styled.div`
+  display: none;
+
+  @media (min-width: 1000px) {
+    width: 33%;
+    height: 100%;
+    margin: 0 5px;
+    display: block;
+  }
+`
+
+const ImageHalfHeightContainer = styled.div`
+  height: 50%;
+  flex: 1;
+  & + & {
+    padding: 10px 0 0;
+  }
+`
+
+const BannerContainer = styled.div`
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 100px;
+
+  background: #fff;
+  padding: 20px;
+
+  @media (min-width: 1000px) {
+    height: 310px;
+    max-width: 585px;
+    margin: 0;
+    top: 215px;
+    left: 50%;
+    width: 100%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+`
+
+const BannerHeader = styled.div`
+  text-align: center;
+  font-size: 20px;
+  color: #111;
+  font-weight: 700;
+  margin-top: 10px;
+  white-space: wrap;
+
+  @media (min-width: 1000px) {
+    letter-spacing: 1.8px;
+    font-size: 36px;
+    white-space: nowrap;
+  }
+`
+
+const BannerDescription = styled.div`
+  color: #111;
+  margin-top: 15px;
+  line-height: 1.2;
+  font-size: 16px;
+`
+
+const BannerButton = styled.input`
+  appearance: none;
+  border: 1px solid #111;
+  outline: none;
+  background: #111;
+  color: #fff;
+  font-size: 18px;
+  padding: 8px 90px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 3px;
+  width: 100%;
+
+  @media (min-width: 1000px) {
+    width: auto;
+  }
+`
+
+const BannerInput = styled.input`
+  appearance: none;
+  border: 1px solid #111;
+  width: 100%;
+  font-size: 18px;
+  outline: none;
+  padding: 10px;
+  margin-top: 20px;
+`
+
+const BannerButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`
+
+const BannerFooterText = styled.div`
+  font-size: 12px;
+  text-align: center;
+  margin-top: 20px;
+
+  a {
+    padding: 0 5px;
+    color: #111;
+    font-weight: 900;
+  }
+`
+
+const MailchimpForm = () => (
+  <form
+    action="https://uptous.us4.list-manage.com/subscribe/post?u=45912ce59aa8ef47e7126f2fa&amp;id=33d3cabba0"
+    method="post"
+    name="mc-embedded-subscribe-form"
+    noValidate
+    target="_blank"
+  >
+    <BannerInput name="EMAIL" placeholder="Email address" required type="email" />
+    <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
+      <input defaultValue="" name="b_45912ce59aa8ef47e7126f2fa_33d3cabba0" tabIndex="-1" type="text" />
+    </div>
+    <BannerButtonContainer>
+      <BannerButton name="subscribe" type="submit" value="Sign me up" />
+    </BannerButtonContainer>
+    <BannerFooterText>
+      {'By clicking this button you subscribe to our newsletter and agree to our'}
+      <a href="/terms-and-conditions">{'Terms and Conditions'}</a>
+    </BannerFooterText>
+  </form>
+)
+
+const Banner = () => (
+  <BannerContainer>
+    <BannerHeader>{"Don't miss out on a revolution"}</BannerHeader>
+    <BannerDescription>
+      {'Be the first to discover and shop fashion sustainably with up to '}
+      <b>{'-30%'}</b>{' '}
+      {
+        'discounts. Join the worlds first impact driven shopping club and enjoy highly tailored offers while helping to create a better future, together.'
+      }
+    </BannerDescription>
+    <MailchimpForm />
+  </BannerContainer>
+)
+
+const MobileImagesContainer = styled.div`
+  position: relative;
+  width: 100%;
+
+  display: block;
+  @media (min-width: 1000px) {
+    display: none;
+  }
+`
+
+const MobileImage = styled.img`
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+`
+
+const MobileImages = () => (
+  <MobileImagesContainer>
+    <MobileImage src={gridImage04} />
+  </MobileImagesContainer>
+)
+
+const Hero = () => (
+  <Section fullWidth>
+    <HeroImagesContainer>
+      <MobileImages />
+      <ImageContainer>
+        <Image src={gridImage01} />
+      </ImageContainer>
+      <ImageContainer>
+        <Image src={gridImage02} />
+      </ImageContainer>
+      <ImageContainer>
+        <ImageHalfHeightContainer>
+          <Image src={gridImage03} />
+        </ImageHalfHeightContainer>
+        <ImageHalfHeightContainer>
+          <Image src={gridImage04} />
+        </ImageHalfHeightContainer>
+      </ImageContainer>
+      <Banner />
+    </HeroImagesContainer>
+  </Section>
+)
 
 export default Hero

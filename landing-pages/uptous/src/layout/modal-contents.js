@@ -1,7 +1,10 @@
 import React from 'react'
 
 const LegalNoticeModalContent = ({ content }) => (
-  <div className="legal-notice-modal-content contentful-content" dangerouslySetInnerHTML={{ __html: content }} />
+  <div
+    className="terms-and-conditions-modal-content contentful-content"
+    dangerouslySetInnerHTML={{ __html: content }}
+  />
 )
 
 const PrivacyPolicyModalContent = ({ content }) => (
@@ -16,7 +19,7 @@ const GetStartedModalContent = () => (
 
 const ModalContents = ({ data }) => (
   <div hidden>
-    <LegalNoticeModalContent content={data.legalNotice.childContentfulRichText.html} />
+    <LegalNoticeModalContent content={data.termsAndConditions.childContentfulRichText.html} />
     <PrivacyPolicyModalContent content={data.privacyPolicy.childContentfulRichText.html} />
     <GetStartedModalContent />
   </div>
