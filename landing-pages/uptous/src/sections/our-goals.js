@@ -30,7 +30,7 @@ const secondSection = [
     index: '01',
     title: 'Pre-orders and no returns',
     text:
-      'We are the new channel for positive impact brands that removes the margin loss classic retailers provoke. We collect bulk orders after a … days sales period and focus on on-demand quality to unlock better prices and margins for everyone involved.',
+      'We are the new channel for positive impact brands that removes the margin loss classic retailers provoke. We collect bulk orders after a time limited sales period and focus on on-demand quality to unlock better prices and margins for everyone involved.',
   },
   {
     index: '02',
