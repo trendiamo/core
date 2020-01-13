@@ -3,8 +3,6 @@ import ReactCookieConsent from 'react-cookie-consent'
 import styled from 'styled-components'
 import { oneLine, stripIndent } from 'common-tags'
 
-import { openModal } from '../utils'
-
 const generateGTM = ({ id }) => stripIndent`
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -34,36 +32,34 @@ const onAcceptClick = () => {
   addNoScript(oneLine`${generateGTMIframe({ id })}`)
 }
 
-const onPrivacyPolicyClick = event => {
-  event.preventDefault()
-  openModal('.privacy-policy-modal-content')
-}
-
 const PrivacyPolicyLink = styled.a`
   color: white;
 `
 
 const buttonStyle = {
-  background: 'white',
-  color: '#272a32',
-  fontSize: '20px',
-  fontWeight: '900',
-  padding: '5px 1rem',
+  background: 'rgba(255,255,255,0.3)',
+  color: '#fff',
+  fontSize: '14px',
+  padding: '6px 1rem 3px',
+  borderRadius: '2px',
+  margin: '0 10px 10px',
   textTransform: 'uppercase',
+  lineHeight: 1,
 }
 
 const cookieConsentStyle = {
-  background: '#1d1f25',
-  color: 'white',
+  background: '#111',
+  color: '#fff',
+  fontSize: '14px',
+  justifyContent: 'center',
+  lineHeight: '1.3',
 }
 
 const CookieConsent = () => (
-  <ReactCookieConsent buttonStyle={buttonStyle} buttonText="Agree" onAccept={onAcceptClick} style={cookieConsentStyle}>
-    {'This website uses cookies to enhance the user experience ('}
-    <PrivacyPolicyLink href="#privacy-policy" onClick={onPrivacyPolicyClick}>
-      {'learn more'}
-    </PrivacyPolicyLink>
-    {')'}
+  <ReactCookieConsent buttonStyle={buttonStyle} buttonText="Accept" onAccept={onAcceptClick} style={cookieConsentStyle}>
+    {'Our website uses cookies to enhance your experience. Learn more about our '}
+    <PrivacyPolicyLink href="/privacy-policy">{'cookie policy'}</PrivacyPolicyLink>
+    {''}
   </ReactCookieConsent>
 )
 

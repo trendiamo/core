@@ -1,27 +1,126 @@
 import React, { useCallback } from 'react'
+import Section from '../components/section'
 import styled from 'styled-components'
-import { Link, navigate } from 'gatsby'
+import { Link } from 'gatsby'
 
-import Button from '../components/button'
-import LogoBlack from '../images/logo-black.svg'
-import MenuIcon from '../images/menu-icon.svg'
+import LogoBlack from '../images/logo.svg'
 import MobileMenu from './mobile-menu'
 
-const StyledLogo = styled(({ className }) => <LogoBlack className={className} />)`
-  ${({ whiteLogo }) => whiteLogo && 'filter: invert(1);'}
+const HamburgerMenu = styled.div`
+  cursor: pointer;
+  height: 100%;
+  width: 40px;
+  position: absolute;
+  top: 0;
+  left: 15px;
+
+  @media (min-width: 1000px) {
+    display: none;
+  }
 `
 
-const StyledMenuIcon = styled(MenuIcon)``
-const MenuIconContainer = styled.div``
-const LogoFullContainer = styled.div``
+const HamburgerTicks = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #111;
+  font-size: 0;
+  transition: background-color 0.3s cubic-bezier(0.32, 0.74, 0.57, 1);
+  user-select: none;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 75%;
+    height: 100%;
+    background-color: #111;
+    transition: transform 0.35s, width 0.2s cubic-bezier(0.32, 0.74, 0.57, 1);
+  }
+  &:before {
+    transform: translateY(7px);
+  }
+  &:after {
+    transform: translateY(-7px);
+  }
+`
+
+const LogoFullContainer = styled.div`
+  min-width: 100px;
+  width: 100%;
+  max-width: 180px;
+`
 
 const toggleMobileMenu = () => {
   document.body.classList.toggle('mobile-menu-open')
 }
 
-const onSignupClick = () => navigate('/signup')
+const StyledSection = styled(Section)`
+  padding: 0;
+  width: 100vw;
+  z-index: 2;
 
-const Header = ({ className, headerLinks = [], siteTitle, whiteLogo }, ref) => {
+  display: flex;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  @media (min-width: 1000px) {
+    padding: 33px 0 0px;
+    justify-content: space-between;
+    height: 82px;
+  }
+`
+
+const HeaderLink = styled(Link)`
+  display: none;
+  font-size: 20px;
+  color: #111;
+  text-decoration: none;
+  padding: 10px 0;
+  & + & {
+    margin-left: 20px;
+  }
+  white-space: nowrap;
+  @media (min-width: 1000px) {
+    display: block;
+  }
+`
+
+const HeaderLinkA = styled.a`
+  display: none;
+  font-size: 20px;
+  color: #111;
+  text-decoration: none;
+  padding: 10px 0;
+  & + & {
+    margin-left: 20px;
+  }
+  white-space: nowrap;
+`
+
+const Nav = styled.nav`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`
+
+const LogoLink = styled(Link)`
+  margin: 0 auto;
+  font-size: 0;
+  width: 140px;
+  @media (min-width: 1000px) {
+    margin: 0;
+    width: 180px;
+  }
+`
+
+const Header = ({ headerLinks = [], siteTitle }) => {
   const onClick = useCallback(event => {
     event.preventDefault()
     const element = document.querySelector(event.target.getAttribute('href'))
@@ -29,120 +128,34 @@ const Header = ({ className, headerLinks = [], siteTitle, whiteLogo }, ref) => {
     element.scrollIntoView({ behavior: 'smooth' })
   }, [])
 
-  const onCtaButtonClick = useCallback(() => {
-    onSignupClick()
-  }, [])
-
   return (
-    <header className={className} ref={ref}>
-      <Link className="logo-link" to="/">
+    <StyledSection>
+      {headerLinks.length > 0 && (
+        <HamburgerMenu onClick={toggleMobileMenu}>
+          <HamburgerTicks />
+        </HamburgerMenu>
+      )}
+      <LogoLink className="logo-link" to="/">
         <LogoFullContainer>
-          <StyledLogo alt={siteTitle} whiteLogo={whiteLogo} />
+          <LogoBlack alt={siteTitle} />
         </LogoFullContainer>
-      </Link>
-      <nav>
+      </LogoLink>
+      <Nav>
         {headerLinks.map(headerLink =>
           headerLink.target.charAt(0) === '/' ? (
-            <Link className="header-link" key={headerLink.target} to={headerLink.target}>
+            <HeaderLink key={headerLink.target} to={headerLink.target}>
               {headerLink.text}
-            </Link>
+            </HeaderLink>
           ) : (
-            <a className="header-link" href={headerLink.target} key={headerLink.target} onClick={onClick}>
+            <HeaderLinkA href={headerLink.target} key={headerLink.target} onClick={onClick}>
               {headerLink.text}
-            </a>
+            </HeaderLinkA>
           )
         )}
-        <Button color={whiteLogo ? '#fff' : '#f05d5e'} onClick={onCtaButtonClick}>
-          {'Sign up'}
-        </Button>
-        {headerLinks.length > 0 && (
-          <MenuIconContainer onClick={toggleMobileMenu}>
-            <StyledMenuIcon />
-          </MenuIconContainer>
-        )}
-      </nav>
+      </Nav>
       <MobileMenu headerLinks={headerLinks} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
-    </header>
+    </StyledSection>
   )
 }
 
-const StyledHeader = styled(React.forwardRef(Header))`
-  padding: 20px;
-  position: absolute;
-  width: 100vw;
-  z-index: 1;
-  align-items: flex-start;
-
-  ${MenuIconContainer} {
-    background-color: #262831;
-    padding: 20px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-  }
-
-  ${StyledMenuIcon} {
-    width: 30px;
-  }
-
-  ${LogoFullContainer} {
-    min-width: 100px;
-    width: 25vw;
-    max-width: 270px;
-  }
-
-  nav {
-    align-items: center;
-  }
-
-  nav,
-  & {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .header-link {
-    display: none;
-  }
-  .logo-link {
-    align-self: flex-end;
-  }
-
-  .logo-link img {
-    width: 100px;
-  }
-
-  .header-link {
-    font-size: calc(1rem + 0.25vw);
-    font-weight: 900;
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    margin-right: 2vw;
-    white-space: nowrap;
-  }
-
-  nav > ${Button} {
-    display: none;
-  }
-  @media (min-width: 1000px) {
-    padding: 30px 36px;
-    ${MenuIconContainer} {
-      display: none;
-    }
-    nav > ${Button} {
-      display: block;
-      font-size: calc(1rem + 0.25vw);
-      font-family: Lato, sans-serif;
-    }
-    .header-link {
-      display: block;
-    }
-    .logo-link img {
-      width: 11vw;
-    }
-  }
-`
-
-export default StyledHeader
+export default Header
