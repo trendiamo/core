@@ -22,9 +22,9 @@ const Main = styled.main`
 `
 
 const headerLinks = [
-  { target: '/magazine/newsletter-signup/', text: 'Join Community' },
+  { target: 'https://magazine.uptous.co/newsletter-signup/', text: 'Join Community' },
   { target: '/about-us', text: 'About us' },
-  { target: '/magazine', text: 'Magazine' },
+  { target: 'https://magazine.uptous.co', text: 'Magazine' },
 ]
 
 const Layout = ({ children, data, light }) => {

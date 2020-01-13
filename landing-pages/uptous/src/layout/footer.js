@@ -143,7 +143,7 @@ const NewsletterBanner = () => (
 
 const FooterLinks = () => (
   <FooterLinksContainer>
-    <Link href="/magazine">{'Magazine'}</Link>
+    <Link href="https://magazine.uptous.co">{'Magazine'}</Link>
     <Link href="/terms-and-conditions">{'Terms & Conditions'}</Link>
     <Link href="/privacy-policy">{'Privacy Policy'}</Link>
   </FooterLinksContainer>

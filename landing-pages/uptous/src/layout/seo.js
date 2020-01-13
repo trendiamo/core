@@ -1,6 +1,6 @@
 import Helmet from 'react-helmet'
 import React from 'react'
-import TitleImage from '../images/opengraph.jpg'
+import TitleImage from '../images/metaimg.jpg'
 import { graphql, useStaticQuery } from 'gatsby'
 
 const seoQuery = graphql`

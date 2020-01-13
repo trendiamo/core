@@ -1,10 +1,9 @@
-import React, { useCallback } from 'react'
+import LogoBlack from '../images/logo.svg'
+import MobileMenu from './mobile-menu'
+import React from 'react'
 import Section from '../components/section'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
-
-import LogoBlack from '../images/logo.svg'
-import MobileMenu from './mobile-menu'
 
 const HamburgerMenu = styled.div`
   cursor: pointer;
@@ -83,7 +82,7 @@ const HeaderLink = styled(Link)`
   color: #111;
   text-decoration: none;
   padding: 10px 0;
-  & + & {
+  & + * {
     margin-left: 20px;
   }
   white-space: nowrap;
@@ -98,10 +97,13 @@ const HeaderLinkA = styled.a`
   color: #111;
   text-decoration: none;
   padding: 10px 0;
-  & + & {
+  & + * {
     margin-left: 20px;
   }
   white-space: nowrap;
+  @media (min-width: 1000px) {
+    display: block;
+  }
 `
 
 const Nav = styled.nav`
@@ -121,13 +123,6 @@ const LogoLink = styled(Link)`
 `
 
 const Header = ({ headerLinks = [], siteTitle }) => {
-  const onClick = useCallback(event => {
-    event.preventDefault()
-    const element = document.querySelector(event.target.getAttribute('href'))
-    if (!element) return
-    element.scrollIntoView({ behavior: 'smooth' })
-  }, [])
-
   return (
     <StyledSection>
       {headerLinks.length > 0 && (
@@ -147,7 +142,7 @@ const Header = ({ headerLinks = [], siteTitle }) => {
               {headerLink.text}
             </HeaderLink>
           ) : (
-            <HeaderLinkA href={headerLink.target} key={headerLink.target} onClick={onClick}>
+            <HeaderLinkA href={headerLink.target} key={headerLink.target}>
               {headerLink.text}
             </HeaderLinkA>
           )
