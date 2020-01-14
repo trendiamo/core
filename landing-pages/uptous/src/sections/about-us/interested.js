@@ -48,8 +48,10 @@ const Button = styled.button`
   }
 `
 
-const Link = styled.div`
+const Link = styled.a`
+  appearance: none;
   margin-top: 20px;
+  text-decoration: none;
   @media (min-width: 1000px) {
     margin-top: 0px;
   }
@@ -60,10 +62,10 @@ const AboutUsHero = () => (
     <Container>
       <HeaderText>{'Interested in working with us?'}</HeaderText>
       <ButtonContainer>
-        <Link href="/">
+        <Link href="mailto:hello@uptous.co">
           <Button>{'I want to become a member'}</Button>
         </Link>
-        <Link href="mailto:hello@uptous.com">
+        <Link href="mailto:hello@uptous.co">
           <Button>{'I want to join the team'}</Button>
         </Link>
       </ButtonContainer>
