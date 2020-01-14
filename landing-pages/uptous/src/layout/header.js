@@ -116,6 +116,12 @@ const LogoLink = styled(Link)`
   margin: 0 auto;
   font-size: 0;
   width: 140px;
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
   @media (min-width: 1000px) {
     margin: 0;
     width: 180px;

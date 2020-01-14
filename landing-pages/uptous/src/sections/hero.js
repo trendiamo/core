@@ -125,6 +125,7 @@ const BannerInput = styled.input`
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  border-radius: 0px;
 
   @media (min-width: 1000px) {
     width: 90%;
