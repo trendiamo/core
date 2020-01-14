@@ -1,18 +1,16 @@
-import '../css/index.css'
-import 'typeface-lato'
-import 'typeface-nunito-sans'
-
-import Helmet from 'react-helmet'
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
-
 import CookieConsent from './cookie-consent'
 import favicon from '../images/favicon.png'
 import Footer from './footer'
 import Header from './header'
+import Helmet from 'react-helmet'
 import ModalContents from './modal-contents'
+import React, { useEffect } from 'react'
 import Seo from './seo'
+import styled from 'styled-components'
 import { addGTM } from '../utils'
+import '../css/index.css'
+import 'typeface-lato'
+import 'typeface-nunito-sans'
 
 const Main = styled.main`
   /* make it so footer is always at bottom */
@@ -27,7 +25,7 @@ const headerLinks = [
   { target: 'https://magazine.uptous.co', text: 'Magazine' },
 ]
 
-const Layout = ({ children, data, light }) => {
+const Layout = ({ children, data, light, hideNewsletter }) => {
   useEffect(() => {
     addGTM()
   }, [])
@@ -41,7 +39,7 @@ const Layout = ({ children, data, light }) => {
       </Helmet>
       {!light && <Header headerLinks={headerLinks} />}
       {children}
-      {!light && <Footer />}
+      {!light && <Footer hideNewsletter={hideNewsletter} />}
       {data && <ModalContents data={data} />}
       <CookieConsent />
     </Main>

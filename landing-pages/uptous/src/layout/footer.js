@@ -1,9 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-
 import IconInstagram from '../images/icon-instagram.svg'
 import IconLinkedin from '../images/icon-linkedin.svg'
+import React from 'react'
 import Section from '../components/section'
+import styled from 'styled-components'
 
 const Header = styled.div`
   font-family: 'Avenir', sans-serif;
@@ -190,14 +189,16 @@ const Social = () => (
   </SocialContainer>
 )
 
-const Footer = styled(({ className }) => {
+const Footer = styled(({ className, hideNewsletter }) => {
   return (
     <footer className={className}>
-      <GreySection>
-        <Section fullWidth>
-          <NewsletterBanner />
-        </Section>
-      </GreySection>
+      {!hideNewsletter && (
+        <GreySection>
+          <Section fullWidth>
+            <NewsletterBanner />
+          </Section>
+        </GreySection>
+      )}
       <DarkSection fullWidth>
         <DarkSectionFlex>
           <FooterLinks />

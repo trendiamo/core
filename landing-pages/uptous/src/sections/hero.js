@@ -95,7 +95,7 @@ const BannerButton = styled.input`
   background: #111;
   color: #fff;
   font-size: 18px;
-  padding: 8px 90px;
+  padding: 8px;
   font-weight: 700;
   cursor: pointer;
   border-radius: 3px;
@@ -103,6 +103,7 @@ const BannerButton = styled.input`
 
   @media (min-width: 1000px) {
     width: auto;
+    padding: 8px 90px;
   }
 `
 
