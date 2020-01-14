@@ -53,8 +53,20 @@ const BannerHeader = styled.div`
   white-space: wrap;
 
   @media (min-width: 1000px) {
-    letter-spacing: 1.8px;
     font-size: 36px;
+    white-space: nowrap;
+  }
+`
+
+const BannerSubHeader = styled.div`
+  text-align: center;
+  font-size: 14px;
+  color: green;
+  white-space: wrap;
+  margin-top: 10px;
+
+  @media (min-width: 1000px) {
+    font-size: 20px;
     white-space: nowrap;
   }
 `
@@ -64,6 +76,11 @@ const BannerDescription = styled.div`
   margin-top: 20px;
   line-height: 1.2;
   font-size: 16px;
+  line-height: 22px;
+
+  @media (min-width: 1000px) {
+    text-align: center;
+  }
 `
 
 const BannerButtonContainer = styled.div`
@@ -101,6 +118,7 @@ const StyledLink = styled(Link)`
 const Banner = () => (
   <BannerContainer>
     <BannerHeader>{'Welcome to the revolution!'}</BannerHeader>
+    <BannerSubHeader>{'You successfully subscribed to our newsletter'}</BannerSubHeader>
     <BannerDescription>
       {'We’ll keep you closely in the loop for our launch on 2nd of March!'}
       <br />
