@@ -55,7 +55,7 @@ const BannerContainer = styled.div`
   padding: 20px;
 
   @media (min-width: 1000px) {
-    height: 310px;
+    height: 320px;
     max-width: 585px;
     margin: 0;
     top: 215px;
@@ -75,7 +75,6 @@ const BannerHeader = styled.div`
   white-space: wrap;
 
   @media (min-width: 1000px) {
-    letter-spacing: 1.8px;
     font-size: 36px;
     white-space: nowrap;
   }
@@ -86,6 +85,12 @@ const BannerDescription = styled.div`
   margin-top: 15px;
   line-height: 1.2;
   font-size: 16px;
+  line-height: 22px;
+
+  @media (min-width: 1000px) {
+    width: 100%;
+    text-align: center;
+  }
 `
 
 const BannerButton = styled.input`
@@ -108,13 +113,22 @@ const BannerButton = styled.input`
 `
 
 const BannerInput = styled.input`
+  font-family: 'Avenir', sans-serif;
   appearance: none;
   border: 1px solid #111;
   width: 100%;
   font-size: 18px;
   outline: none;
   padding: 10px;
+  padding-top: 12px;
+  margin: 0 auto;
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 1000px) {
+    width: 90%;
+  }
 `
 
 const BannerButtonContainer = styled.div`
