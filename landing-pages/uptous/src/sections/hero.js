@@ -177,9 +177,9 @@ const Banner = () => (
     <BannerHeader>{"Don't miss out on a revolution"}</BannerHeader>
     <BannerDescription>
       {'Be the first to discover and shop fashion sustainably with up to '}
-      <b>{'-30%'}</b>{' '}
+      <b>{'30% discounts.'}</b>{' '}
       {
-        'discounts. Join the worlds first impact driven shopping club and enjoy highly tailored offers while helping to create a better future, together.'
+        'Join the worlds first impact driven shopping club and enjoy highly tailored offers while helping to create a better future, together.'
       }
     </BannerDescription>
     <MailchimpForm />

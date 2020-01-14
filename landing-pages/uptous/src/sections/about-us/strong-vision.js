@@ -41,7 +41,7 @@ const StrongVision = () => (
       <HeaderText>{'That’s why we believe in our strong vision'}</HeaderText>
       <MainDescription>
         {
-          'Where we team-up together and overcome the shortcomings of a political and, old world economy‘ that is ignoring social injustices and the environmental crisis.'
+          'Where we team-up together and overcome the shortcomings of a political and old world economy‘ that is ignoring social injustices and the environmental crisis.'
         }
       </MainDescription>
     </Container>
