@@ -79,13 +79,22 @@ const BannerButton = styled.input`
 `
 
 const BannerInput = styled.input`
+  font-family: 'Avenir', sans-serif;
   appearance: none;
   border: 1px solid #111;
   width: 100%;
   font-size: 18px;
   outline: none;
   padding: 10px;
-  margin-top: 5px;
+  padding-top: 12px;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 1000px) {
+    width: 90%;
+  }
 `
 
 const BannerButtonContainer = styled.div`
