@@ -11,7 +11,10 @@ import OurValues from '../sections/about-us/our-values'
 import StrongVision from '../sections/about-us/strong-vision'
 
 const IndexPage = ({ data }) => (
-  <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
+  <Layout
+    data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}
+    highlightUrl="/about-us"
+  >
     <Hero />
     <MainImages />
     <StrongVision />

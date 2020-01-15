@@ -25,7 +25,7 @@ const headerLinks = [
   { target: 'https://uptous.co/magazine', text: 'Magazine' },
 ]
 
-const Layout = ({ children, data, light, hideNewsletter }) => {
+const Layout = ({ children, data, light, hideNewsletter, highlightUrl }) => {
   useEffect(() => {
     addGTM()
   }, [])
@@ -37,7 +37,7 @@ const Layout = ({ children, data, light, hideNewsletter }) => {
         <link href={favicon} rel="shortcut icon" type="image/png" />
         <meta name="hbspt-locale" value="en" />
       </Helmet>
-      {!light && <Header headerLinks={headerLinks} />}
+      {!light && <Header headerLinks={headerLinks} highlightUrl={highlightUrl} />}
       {children}
       {!light && <Footer hideNewsletter={hideNewsletter} />}
       {data && <ModalContents data={data} />}

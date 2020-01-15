@@ -70,9 +70,9 @@ const StyledSection = styled(Section)`
   position: relative;
 
   @media (min-width: 1000px) {
-    padding: 33px 0 0px;
+    padding: 0;
     justify-content: space-between;
-    height: 82px;
+    height: 112px;
   }
 `
 
@@ -81,13 +81,17 @@ const HeaderLink = styled(Link)`
   font-size: 20px;
   color: #111;
   text-decoration: none;
-  padding: 10px 0;
-  & + * {
-    margin-left: 20px;
-  }
   white-space: nowrap;
+  letter-spacing: 0.4px;
+  height: 100%;
+
+  & + * {
+    padding-left: 20px;
+  }
+
   @media (min-width: 1000px) {
-    display: block;
+    display: flex;
+    align-items: center;
   }
 `
 
@@ -96,13 +100,17 @@ const HeaderLinkA = styled.a`
   font-size: 20px;
   color: #111;
   text-decoration: none;
-  padding: 10px 0;
-  & + * {
-    margin-left: 20px;
-  }
   white-space: nowrap;
+  letter-spacing: 0.4px;
+  height: 100%;
+
+  & + * {
+    padding-left: 20px;
+  }
+
   @media (min-width: 1000px) {
-    display: block;
+    display: flex;
+    align-items: center;
   }
 `
 
@@ -110,6 +118,8 @@ const Nav = styled.nav`
   align-items: center;
   display: flex;
   justify-content: space-between;
+  margin-right: 15px;
+  height: 100%;
 `
 
 const LogoLink = styled(Link)`
@@ -128,7 +138,17 @@ const LogoLink = styled(Link)`
   }
 `
 
-const Header = ({ headerLinks = [], siteTitle }) => {
+const LinkText = styled.span`
+  ${({ highlight }) =>
+    highlight &&
+    `
+    border-bottom: 2px solid #111;
+    padding-top: 10px;
+    padding-bottom: 8px;
+  `}
+`
+
+const Header = ({ headerLinks = [], siteTitle, highlightUrl }) => {
   return (
     <StyledSection>
       {headerLinks.length > 0 && (
@@ -145,11 +165,11 @@ const Header = ({ headerLinks = [], siteTitle }) => {
         {headerLinks.map(headerLink =>
           headerLink.target.charAt(0) === '/' ? (
             <HeaderLink key={headerLink.target} to={headerLink.target}>
-              {headerLink.text}
+              <LinkText highlight={highlightUrl === headerLink.target}>{headerLink.text}</LinkText>
             </HeaderLink>
           ) : (
             <HeaderLinkA href={headerLink.target} key={headerLink.target}>
-              {headerLink.text}
+              <LinkText highlight={highlightUrl === headerLink.target}>{headerLink.text}</LinkText>
             </HeaderLinkA>
           )
         )}
