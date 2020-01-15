@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import Section from '../../components/section'
 import styled from 'styled-components'
 
@@ -57,20 +57,27 @@ const Link = styled.a`
   }
 `
 
-const AboutUsHero = () => (
-  <Section>
-    <Container>
-      <HeaderText>{'Interested in working with us?'}</HeaderText>
-      <ButtonContainer>
-        <Link href="mailto:hello@uptous.co" onClick={() => ga('send', 'event', 'CTAs', 'Button Click', 'I want to become a member', 'Value')}>
-          <Button>{'I want to become a member'}</Button>
-        </Link>
-        <Link href="mailto:hello@uptous.co">
-          <Button>{'I want to join the team'}</Button>
-        </Link>
-      </ButtonContainer>
-    </Container>
-  </Section>
-)
+const AboutUsHero = () => {
+  const onClick = useCallback(() => {
+    if (!window.ga) return
+    window.ga('send', 'event', 'CTAs', 'Button Click', 'I want to become a member', 'Value')
+  }, [])
+
+  return (
+    <Section>
+      <Container>
+        <HeaderText>{'Interested in working with us?'}</HeaderText>
+        <ButtonContainer>
+          <Link href="mailto:hello@uptous.co" onClick={onClick}>
+            <Button>{'I want to become a member'}</Button>
+          </Link>
+          <Link href="mailto:hello@uptous.co">
+            <Button>{'I want to join the team'}</Button>
+          </Link>
+        </ButtonContainer>
+      </Container>
+    </Section>
+  )
+}
 
 export default AboutUsHero
