@@ -62,7 +62,7 @@ const AboutUsHero = () => (
     <Container>
       <HeaderText>{'Interested in working with us?'}</HeaderText>
       <ButtonContainer>
-        <Link href="mailto:hello@uptous.co">
+        <Link href="mailto:hello@uptous.co" onClick={() => ga('send', 'event', 'CTAs', 'Button Click', 'I want to become a member', 'Value')}>
           <Button>{'I want to become a member'}</Button>
         </Link>
         <Link href="mailto:hello@uptous.co">
