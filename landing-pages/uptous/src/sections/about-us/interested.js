@@ -59,9 +59,13 @@ const Link = styled.a`
 
 const AboutUsHero = () => {
   const onClick = useCallback(() => {
-    if (!window.ga) return
-    const tracker = window.ga.getAll()[0]
-    tracker && tracker.send('event', 'CTAs', 'Button Click', 'I want to become a member', 'Value')
+    if (!window.dataLayer) return
+    window.dataLayer.push({
+      event: 'buttonClick',
+      eventCategory: 'CTAs',
+      eventAction: 'Button Click',
+      eventLabel: 'I want to become a member',
+    })
   }, [])
 
   return (
