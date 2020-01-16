@@ -60,7 +60,8 @@ const Link = styled.a`
 const AboutUsHero = () => {
   const onClick = useCallback(() => {
     if (!window.ga) return
-    window.ga('send', 'event', 'CTAs', 'Button Click', 'I want to become a member', 'Value')
+    const tracker = window.ga.getAll()[0]
+    tracker && tracker.send('event', 'CTAs', 'Button Click', 'I want to become a member', 'Value')
   }, [])
 
   return (
