@@ -127,7 +127,7 @@ const Banner = () => (
       }
     </BannerDescription>
     <BannerButtonContainer>
-      <StyledLink to="https://uptous.co/magazine">
+      <StyledLink to="/magazine">
         <BannerButton type="submit" value="Continue to Magazine" />
       </StyledLink>
     </BannerButtonContainer>
