@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import ReactCookieConsent from 'react-cookie-consent'
 import styled from 'styled-components'
 
@@ -25,12 +25,22 @@ const cookieConsentStyle = {
   lineHeight: '1.3',
 }
 
-const CookieConsent = () => (
-  <ReactCookieConsent buttonStyle={buttonStyle} buttonText="Accept" style={cookieConsentStyle}>
-    {'Our website uses cookies to enhance your experience. Learn more about our '}
-    <PrivacyPolicyLink href="/privacy-policy">{'cookie policy'}</PrivacyPolicyLink>
-    {''}
-  </ReactCookieConsent>
-)
+const CookieConsent = () => {
+  const onAccept = useCallback(() => {
+    // It's here because we want to accept cookie consent on our magazine website.
+    // Don't remove it unless you have a strong reason to do so (i.e: the magazine doesn't exist anymore, or other).
+    const expirationDays = 30
+    const cookieExpireDate = new Date(new Date().getTime() + 60 * 60 * 1000 * 24 * expirationDays).toGMTString()
+    document.cookie = `ruby_cookie_popup=1; expires=${cookieExpireDate}; path=/;`
+  }, [])
+
+  return (
+    <ReactCookieConsent buttonStyle={buttonStyle} buttonText="Accept" onAccept={onAccept} style={cookieConsentStyle}>
+      {'Our website uses cookies to enhance your experience. Learn more about our '}
+      <PrivacyPolicyLink href="/privacy-policy">{'cookie policy'}</PrivacyPolicyLink>
+      {''}
+    </ReactCookieConsent>
+  )
+}
 
 export default CookieConsent
