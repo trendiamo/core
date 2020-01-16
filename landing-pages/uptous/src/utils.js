@@ -39,4 +39,14 @@ const addGTM = () => {
   addNoScript(oneLine`${generateGTMIframe({ id })}`)
 }
 
-export { openModal, addGTM }
+const pushToGA = object => {
+  if (process.env.NODE_ENV !== 'production') {
+    // It's important to be aware of how GA events are being fired in development environment.
+    console.log('%cTracking to GA', 'color: #06b;', object)
+    return
+  }
+  if (!window.dataLayer) return
+  return window.dataLayer.push(object)
+}
+
+export { openModal, addGTM, pushToGA }

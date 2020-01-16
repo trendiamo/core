@@ -1,8 +1,9 @@
 import IconInstagram from '../images/icon-instagram.svg'
 import IconLinkedin from '../images/icon-linkedin.svg'
-import React from 'react'
+import React, { useCallback } from 'react'
 import Section from '../components/section'
 import styled from 'styled-components'
+import { pushToGA } from '../utils'
 
 const Header = styled.div`
   font-family: 'Avenir', sans-serif;
@@ -121,27 +122,38 @@ const StayTunedText = styled.div`
   margin-bottom: 15px;
 `
 
-const MailchimpForm = () => (
-  <form
-    action="https://uptous.us4.list-manage.com/subscribe/post?u=45912ce59aa8ef47e7126f2fa&amp;id=33d3cabba0"
-    method="post"
-    name="mc-embedded-subscribe-form"
-    noValidate
-    target="_blank"
-  >
-    <BannerInput name="EMAIL" placeholder="Email address" required type="email" />
-    <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
-      <input defaultValue="" name="b_45912ce59aa8ef47e7126f2fa_33d3cabba0" tabIndex="-1" type="text" />
-    </div>
-    <BannerButtonContainer>
-      <BannerButton name="subscribe" type="submit" value="Sign me up" />
-    </BannerButtonContainer>
-    <BannerFooterText>
-      {'By clicking this button you subscribe to our newsletter and agree to our'}
-      <a href="/terms-and-conditions">{'Terms and Conditions'}</a>
-    </BannerFooterText>
-  </form>
-)
+const MailchimpForm = () => {
+  const onSubscribeClick = useCallback(() => {
+    pushToGA({
+      event: 'buttonClick',
+      eventCategory: 'CTAs',
+      eventAction: 'Button Click',
+      eventLabel: 'Footer Sign me up',
+    })
+  }, [])
+
+  return (
+    <form
+      action="https://uptous.us4.list-manage.com/subscribe/post?u=45912ce59aa8ef47e7126f2fa&amp;id=33d3cabba0"
+      method="post"
+      name="mc-embedded-subscribe-form"
+      noValidate
+      target="_blank"
+    >
+      <BannerInput name="EMAIL" placeholder="Email address" required type="email" />
+      <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
+        <input defaultValue="" name="b_45912ce59aa8ef47e7126f2fa_33d3cabba0" tabIndex="-1" type="text" />
+      </div>
+      <BannerButtonContainer>
+        <BannerButton name="subscribe" onClick={onSubscribeClick} type="submit" value="Sign me up" />
+      </BannerButtonContainer>
+      <BannerFooterText>
+        {'By clicking this button you subscribe to our newsletter and agree to our'}
+        <a href="/terms-and-conditions">{'Terms and Conditions'}</a>
+      </BannerFooterText>
+    </form>
+  )
+}
 
 const NewsletterBanner = () => (
   <NewsletterBannerContainer>

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import Section from '../../components/section'
 import styled from 'styled-components'
+import { pushToGA } from '../../utils'
 
 const HeaderText = styled.div`
   color: #111;
@@ -58,13 +59,21 @@ const Link = styled.a`
 `
 
 const AboutUsHero = () => {
-  const onClick = useCallback(() => {
-    if (!window.dataLayer) return
-    window.dataLayer.push({
+  const onMemberClick = useCallback(() => {
+    pushToGA({
       event: 'buttonClick',
       eventCategory: 'CTAs',
       eventAction: 'Button Click',
       eventLabel: 'I want to become a member',
+    })
+  }, [])
+
+  const onJoinTeamClick = useCallback(() => {
+    pushToGA({
+      event: 'buttonClick',
+      eventCategory: 'CTAs',
+      eventAction: 'Button Click',
+      eventLabel: 'I want to join the team',
     })
   }, [])
 
@@ -73,10 +82,10 @@ const AboutUsHero = () => {
       <Container>
         <HeaderText>{'Interested in working with us?'}</HeaderText>
         <ButtonContainer>
-          <Link href="mailto:hello@uptous.co" onClick={onClick}>
+          <Link href="mailto:hello@uptous.co" onClick={onMemberClick}>
             <Button>{'I want to become a member'}</Button>
           </Link>
-          <Link href="mailto:hello@uptous.co">
+          <Link href="mailto:hello@uptous.co" onClick={onJoinTeamClick}>
             <Button>{'I want to join the team'}</Button>
           </Link>
         </ButtonContainer>
