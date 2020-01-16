@@ -1,12 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import { graphql, Link } from 'gatsby'
-
 import Container from '../components/container'
-import Layout from '../layout'
 import image404 from '../images/404.png'
+import Layout from '../layout'
+import React from 'react'
 import Section from '../components/section'
 import Seo from '../layout/seo'
+import styled from 'styled-components'
+import { graphql, Link } from 'gatsby'
 
 const Content = styled.div``
 
@@ -18,7 +17,7 @@ const NotFoundPage = styled(({ className, data }) => (
         <Image src={image404} />
         <Content>
           <h1>{'Nothing seems to be at this URL'}</h1>
-          <p>{"Sorry, the URL you entered doesn’t have any results on this website!"}</p>
+          <p>{"Sorry, the URL you entered doesn't have any results on this website!"}</p>
           <Link to="/">{'Go to Homepage'}</Link>
         </Content>
       </Container>

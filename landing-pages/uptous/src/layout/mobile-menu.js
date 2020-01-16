@@ -1,5 +1,5 @@
 import LogoBlack from '../images/logo.svg'
-import React, { useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
 
