@@ -118,8 +118,11 @@ const Nav = styled.nav`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-right: 15px;
   height: 100%;
+
+  @media (min-width: 1000px) {
+    margin-right: 15px;
+  }
 `
 
 const LogoLink = styled(Link)`

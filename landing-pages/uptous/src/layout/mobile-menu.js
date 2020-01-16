@@ -1,5 +1,5 @@
 import LogoBlack from '../images/logo.svg'
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
 
@@ -40,14 +40,17 @@ const Container = styled.div`
   width: 300px;
   background: #111;
   z-index: 9900;
-
-  display: none;
+  visibility: hidden;
   align-items: center;
+  transform: translateX(-310px);
+  transition: all 0.3s cubic-bezier(0.32, 0.74, 0.57, 1);
 
   @media (max-width: 999px) {
     body.mobile-menu-open & {
+      visibility: visible;
       display: flex;
       flex-direction: column;
+      transform: translateX(0px);
     }
   }
 
@@ -104,6 +107,26 @@ const Content = styled.div`
   }
 `
 
+const Overlay = styled.div`
+  position: fixed;
+  display: none;
+  top: -200%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0);
+  transition: background 0.4s cubic-bezier(0.32, 0.74, 0.57, 1), visibility 0.4s cubic-bezier(0.32, 0.74, 0.57, 1);
+  @media (max-width: 999px) {
+    display: block;
+    body.mobile-menu-open & {
+      top: 0;
+      visibility: visible;
+      background: rgba(255, 255, 255, 0.9);
+      pointer-events: auto;
+    }
+  }
+`
+
 const StyledLink = styled(Link)`
   width: 100%;
   display: block;
@@ -114,30 +137,37 @@ const removeMobileMenu = () => {
 }
 
 const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
+  const onOverlayClick = useCallback(() => {
+    removeMobileMenu()
+  }, [])
+
   return (
-    <Container>
-      <StyledLink onClick={removeMobileMenu} to="/">
-        <LogoFullContainer>
-          <LogoWhite alt={siteTitle} />
-        </LogoFullContainer>
-      </StyledLink>
-      <CloseIconContainer onClick={toggleMobileMenu}>
-        <StyledCloseIcon />
-      </CloseIconContainer>
-      <Content>
-        {(headerLinks || []).map(headerLink =>
-          headerLink.target.charAt(0) === '/' ? (
-            <Link key={headerLink.target} onClick={removeMobileMenu} to={headerLink.target}>
-              {headerLink.text}
-            </Link>
-          ) : (
-            <a href={headerLink.target} key={headerLink.target}>
-              {headerLink.text}
-            </a>
-          )
-        )}
-      </Content>
-    </Container>
+    <>
+      <Overlay onClick={onOverlayClick} />
+      <Container>
+        <StyledLink onClick={removeMobileMenu} to="/">
+          <LogoFullContainer>
+            <LogoWhite alt={siteTitle} />
+          </LogoFullContainer>
+        </StyledLink>
+        <CloseIconContainer onClick={toggleMobileMenu}>
+          <StyledCloseIcon />
+        </CloseIconContainer>
+        <Content>
+          {(headerLinks || []).map(headerLink =>
+            headerLink.target.charAt(0) === '/' ? (
+              <Link key={headerLink.target} onClick={removeMobileMenu} to={headerLink.target}>
+                {headerLink.text}
+              </Link>
+            ) : (
+              <a href={headerLink.target} key={headerLink.target}>
+                {headerLink.text}
+              </a>
+            )
+          )}
+        </Content>
+      </Container>
+    </>
   )
 }
 

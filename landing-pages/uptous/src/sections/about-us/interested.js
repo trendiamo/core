@@ -50,9 +50,11 @@ const Button = styled.button`
 `
 
 const Link = styled.a`
+  display: block;
   appearance: none;
   margin-top: 20px;
   text-decoration: none;
+  outline: none;
   @media (min-width: 1000px) {
     margin-top: 0px;
   }
