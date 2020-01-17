@@ -10,7 +10,7 @@ import MiddleImage from '../sections/about-us/middle-image'
 import OurValues from '../sections/about-us/our-values'
 import StrongVision from '../sections/about-us/strong-vision'
 
-const IndexPage = ({ data }) => (
+const AboutUs = ({ data }) => (
   <Layout
     data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}
     highlightUrl="/about-us"
@@ -48,4 +48,4 @@ export const query = graphql`
   }
 `
 
-export default IndexPage
+export default AboutUs

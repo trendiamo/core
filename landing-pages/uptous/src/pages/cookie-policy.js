@@ -11,7 +11,7 @@ const Header = styled.div`
   margin-top: 80px;
 `
 
-const PrivacyPolicy = ({ data }) => {
+const CookiePolicy = ({ data }) => {
   useEffect(() => {
     var loader = function() {
       var s = document.createElement('script'),
@@ -24,14 +24,14 @@ const PrivacyPolicy = ({ data }) => {
 
   return (
     <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
-      <Header>{'Privacy Policy'}</Header>
+      <Header>{'Cookie Policy'}</Header>
       <Section fullWidth>
         <a
           className="iubenda-white no-brand iubenda-embed iub-body-embed"
-          href="https://www.iubenda.com/privacy-policy/88077835"
-          title="Privacy Policy"
+          href="https://www.iubenda.com/privacy-policy/88077835/cookie-policy"
+          title="Cookie Policy"
         >
-          {'Privacy Policy'}
+          {'Cookie Policy'}
         </a>
       </Section>
     </Layout>
@@ -39,7 +39,7 @@ const PrivacyPolicy = ({ data }) => {
 }
 
 export const query = graphql`
-  query PrivacyPolicyPage {
+  query CookiePolicyPage {
     hero: contentfulHomepage(name: { eq: "Homepage" }) {
       heroHeading
       heroSubheading
@@ -61,4 +61,4 @@ export const query = graphql`
   }
 `
 
-export default PrivacyPolicy
+export default CookiePolicy

@@ -11,7 +11,7 @@ const Header = styled.div`
   margin-top: 80px;
 `
 
-const IndexPage = ({ data }) => (
+const TermsAndConditions = ({ data }) => (
   <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
     <Header>{'Terms and Conditions'}</Header>
     <Section>
@@ -43,4 +43,4 @@ export const query = graphql`
   }
 `
 
-export default IndexPage
+export default TermsAndConditions
