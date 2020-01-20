@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import ReactCookieConsent from 'react-cookie-consent'
 import styled from 'styled-components'
+import { addGTM } from '../utils'
 
 const PrivacyPolicyLink = styled.a`
   color: white;
@@ -28,10 +29,11 @@ const cookieConsentStyle = {
 const CookieConsent = () => {
   const onAccept = useCallback(() => {
     // It's here because we want to accept cookie consent on our magazine website.
-    // Don't remove it unless you have a strong reason to do so (i.e: the magazine doesn't exist anymore, or other).
+    // Don't remove it unless you have a strong reason to do so (i.e: if the magazine doesn't exist anymore, or other).
     const expirationDays = 30
     const cookieExpireDate = new Date(new Date().getTime() + 60 * 60 * 1000 * 24 * expirationDays).toGMTString()
     document.cookie = `ruby_cookie_popup=1; expires=${cookieExpireDate}; path=/;`
+    setTimeout(addGTM, 100)
   }, [])
 
   return (

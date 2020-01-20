@@ -54,10 +54,6 @@ const LogoFullContainer = styled.div`
   max-width: 180px;
 `
 
-const toggleMobileMenu = () => {
-  document.body.classList.toggle('mobile-menu-open')
-}
-
 const StyledSection = styled(Section)`
   padding: 0;
   width: 100vw;
@@ -150,6 +146,10 @@ const LinkText = styled.span`
     padding-bottom: 8px;
   `}
 `
+
+const toggleMobileMenu = () => {
+  document.body.classList.toggle('mobile-menu-open')
+}
 
 const Header = ({ headerLinks = [], siteTitle, highlightUrl }) => {
   return (

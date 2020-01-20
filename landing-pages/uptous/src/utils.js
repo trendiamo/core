@@ -20,23 +20,32 @@ const generateGTM = ({ id }) => stripIndent`
 const generateGTMIframe = ({ id }) =>
   `<iframe src="https://www.googletagmanager.com/ns.html?id=${id}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
 
-const addScript = content => {
-  const script = document.createElement('script')
+const addGTMSnippet = (content, type, place) => {
+  const script = document.createElement(type)
   script.innerHTML = content
-  document.head.appendChild(script)
+  document[place].appendChild(script)
 }
 
-const addNoScript = content => {
-  const noscript = document.createElement('noscript')
-  noscript.innerHTML = content
-  document.body.appendChild(noscript)
+const getCookie = name => {
+  let cookie = {}
+  document.cookie.split(';').forEach(function(el) {
+    let [k, v] = el.split('=')
+    cookie[k.trim()] = v
+  })
+  return cookie[name]
 }
 
 const addGTM = () => {
   if (process.env.NODE_ENV !== 'production') return
+
+  if (!getCookie('CookieConsent')) {
+    return
+  }
+  if (window.ga) return
+
   const id = 'GTM-NP2FFN5'
-  addScript(oneLine`${generateGTM({ id })}`)
-  addNoScript(oneLine`${generateGTMIframe({ id })}`)
+  addGTMSnippet(oneLine`${generateGTM({ id })}`, 'script', 'head')
+  addGTMSnippet(oneLine`${generateGTMIframe({ id })}`, 'noscript', 'body')
 }
 
 const pushToGA = object => {
