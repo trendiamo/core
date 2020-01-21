@@ -173,9 +173,10 @@ const NewsletterBanner = ({ data }) => (
   </NewsletterBannerContainer>
 )
 
+// The HTTP Links should stay this way because magazine is currently a separate server!
 const FooterLinks = ({ data }) => (
   <FooterLinksContainer>
-    <Link href="/magazine">{data.layout.value.footer.magazine}</Link>
+    <Link href="https://uptous.co/magazine">{data.layout.value.footer.magazine}</Link>
     <Link href="/terms-and-conditions">{data.layout.value.footer.termsAndConditions}</Link>
     <Link href="/privacy-policy">{data.layout.value.legalPageNames.privacyPolicy}</Link>
     <Link href="/cookie-policy">{data.layout.value.legalPageNames.cookiePolicy}</Link>

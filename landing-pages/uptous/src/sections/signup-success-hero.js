@@ -2,7 +2,6 @@ import React from 'react'
 import Section from '../components/section'
 import styled from 'styled-components'
 import wallImage from '../images/wall.jpg'
-import { Link } from 'gatsby'
 
 const HeroImagesContainer = styled.div`
   display: flex;
@@ -108,13 +107,14 @@ const BannerButton = styled.input`
   }
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.a`
   width: 100%;
   display: flex;
   justify-content: center;
   text-decoration: none;
 `
 
+// The HTTP Links should stay this way because magazine is currently a separate server!
 const Banner = ({ data }) => (
   <BannerContainer>
     <BannerHeader>{data.successPage.value.heading}</BannerHeader>
@@ -125,7 +125,7 @@ const Banner = ({ data }) => (
       {data.successPage.value.subHeading2}
     </BannerDescription>
     <BannerButtonContainer>
-      <StyledLink to="/magazine">
+      <StyledLink href="https://uptous.co/magazine">
         <BannerButton type="submit" value={data.layout.value.buttons.continueToMagazine} />
       </StyledLink>
     </BannerButtonContainer>

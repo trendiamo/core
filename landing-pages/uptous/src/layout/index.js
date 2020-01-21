@@ -19,9 +19,10 @@ const Main = styled.main`
 `
 
 const headerLinks = [
-  { target: '/magazine/newsletter-signup/', name: 'joinCommunity' },
+  // The HTTP Links should stay this way because magazine is currently a separate server!
+  { target: 'https://uptous.co/magazine/newsletter-signup/', name: 'joinCommunity' },
   { target: '/about-us', name: 'aboutUs' },
-  { target: '/magazine', name: 'magazine' },
+  { target: 'https://uptous.co/magazine', name: 'magazine' },
 ]
 
 const Layout = ({ children, light, hideNewsletter, highlightUrl, data }) => {
