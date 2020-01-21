@@ -115,30 +115,28 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `
 
-const Banner = () => (
+const Banner = ({ data }) => (
   <BannerContainer>
-    <BannerHeader>{'Welcome to the revolution!'}</BannerHeader>
-    <BannerSubHeader>{'You successfully subscribed to our newsletter'}</BannerSubHeader>
+    <BannerHeader>{data.successPage.value.heading}</BannerHeader>
+    <BannerSubHeader>{data.successPage.value.indicator}</BannerSubHeader>
     <BannerDescription>
-      {'We’ll keep you closely in the loop for our launch on 2nd of March!'}
+      {data.successPage.value.subHeading1}
       <br />
-      {
-        'Soon you will receive interesting articles from our magazine about sustainable fashion as well as offers tailored just for you, to help creating a better future together.'
-      }
+      {data.successPage.value.subHeading2}
     </BannerDescription>
     <BannerButtonContainer>
       <StyledLink to="/magazine">
-        <BannerButton type="submit" value="Continue to Magazine" />
+        <BannerButton type="submit" value={data.layout.value.buttons.continueToMagazine} />
       </StyledLink>
     </BannerButtonContainer>
   </BannerContainer>
 )
 
-const EmailConfirmationHero = () => (
+const EmailConfirmationHero = ({ data }) => (
   <Section fullWidth>
     <HeroImagesContainer>
       <Image src={wallImage} />
-      <Banner />
+      <Banner data={data} />
     </HeroImagesContainer>
   </Section>
 )

@@ -95,14 +95,10 @@ const BannerDescription = styled.div`
   }
 `
 
-const Banner = () => (
+const Banner = ({ data }) => (
   <BannerContainer>
-    <BannerHeader>{'We are on a mission'}</BannerHeader>
-    <BannerDescription>
-      {'Because the united buying power of all of us consumers, will change how businesses'}
-      <br />
-      {'have to act - it’s up to us.'}
-    </BannerDescription>
+    <BannerHeader>{data.aboutUs.mainBannerHeading}</BannerHeader>
+    <BannerDescription>{data.aboutUs.mainBannerSubHeading}</BannerDescription>
   </BannerContainer>
 )
 
@@ -140,7 +136,7 @@ const MobileImages = () => (
   </MobileImagesContainer>
 )
 
-const MainImages = () => (
+const MainImages = ({ data }) => (
   <StyledSection fullWidth>
     <Container>
       <MobileImages />
@@ -163,7 +159,7 @@ const MainImages = () => (
           <Image src={coffee}></Image>
         </ImageHalfHeightContainer>
       </ImageContainer>
-      <Banner />
+      <Banner data={data} />
     </Container>
   </StyledSection>
 )

@@ -3,7 +3,6 @@ import favicon from '../images/favicon.png'
 import Footer from './footer'
 import Header from './header'
 import Helmet from 'react-helmet'
-import ModalContents from './modal-contents'
 import React, { useEffect } from 'react'
 import Seo from './seo'
 import styled from 'styled-components'
@@ -20,12 +19,12 @@ const Main = styled.main`
 `
 
 const headerLinks = [
-  { target: 'https://uptous.co/magazine/newsletter-signup/', text: 'Join Community' },
-  { target: '/about-us', text: 'About us' },
-  { target: 'https://uptous.co/magazine', text: 'Magazine' },
+  { target: '/magazine/newsletter-signup/', name: 'joinCommunity' },
+  { target: '/about-us', name: 'aboutUs' },
+  { target: '/magazine', name: 'magazine' },
 ]
 
-const Layout = ({ children, data, light, hideNewsletter, highlightUrl }) => {
+const Layout = ({ children, light, hideNewsletter, highlightUrl, data }) => {
   useEffect(() => {
     addGTM()
   }, [])
@@ -37,11 +36,10 @@ const Layout = ({ children, data, light, hideNewsletter, highlightUrl }) => {
         <link href={favicon} rel="shortcut icon" type="image/png" />
         <meta name="hbspt-locale" value="en" />
       </Helmet>
-      {!light && <Header headerLinks={headerLinks} highlightUrl={highlightUrl} />}
+      {!light && <Header data={data} headerLinks={headerLinks} highlightUrl={highlightUrl} />}
       {children}
-      {!light && <Footer hideNewsletter={hideNewsletter} />}
-      {data && <ModalContents data={data} />}
-      <CookieConsent />
+      {!light && <Footer data={data} hideNewsletter={hideNewsletter} />}
+      <CookieConsent data={data} />
     </Main>
   )
 }

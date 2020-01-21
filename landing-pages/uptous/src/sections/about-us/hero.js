@@ -36,13 +36,11 @@ const Container = styled.div`
   }
 `
 
-const AboutUsHero = () => (
+const AboutUsHero = ({ data }) => (
   <Section>
     <Container>
-      <HeaderText>{'Changing how we consume for the better, forever.'}</HeaderText>
-      <MainDescription>
-        {'We pledge ourselves to creating business that is positive for everyone - including our planet. '}
-      </MainDescription>
+      <HeaderText>{data.aboutUs.heroHeading}</HeaderText>
+      <MainDescription>{data.aboutUs.heroSubHeading}</MainDescription>
     </Container>
   </Section>
 )

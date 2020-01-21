@@ -5,8 +5,8 @@ import { graphql, useStaticQuery } from 'gatsby'
 
 const seoQuery = graphql`
   query SEOQuery {
-    site {
-      siteMetadata {
+    site: contentfulObject(name: { eq: "Meta Data" }) {
+      value {
         title
         description
         author
@@ -31,22 +31,17 @@ const computeMeta = ({ author, description, image, keywords, title }) =>
 
 const Seo = ({ description, imageSrc, keywords, title }) => {
   const data = useStaticQuery(seoQuery)
-  const htmlAttributes = { lang: data.site.siteMetadata.lang }
+  const htmlAttributes = { lang: data.site.value.lang }
   const meta = computeMeta({
-    author: data.site.siteMetadata.author,
-    description: description || data.site.siteMetadata.description,
+    author: data.site.value.author,
+    description: description || data.site.value.description,
     image: imageSrc || TitleImage,
     keywords: keywords || [],
-    title: title || data.site.siteMetadata.title,
+    title: title || data.site.value.title,
   })
 
   return (
-    <Helmet
-      htmlAttributes={htmlAttributes}
-      keywords={keywords}
-      meta={meta}
-      title={title || data.site.siteMetadata.title}
-    />
+    <Helmet htmlAttributes={htmlAttributes} keywords={keywords} meta={meta} title={title || data.site.value.title} />
   )
 }
 

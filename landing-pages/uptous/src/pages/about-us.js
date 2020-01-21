@@ -1,6 +1,3 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-
 import Hero from '../sections/about-us/hero'
 import Interested from '../sections/about-us/interested'
 import Layout from '../layout'
@@ -8,40 +5,111 @@ import MainImages from '../sections/about-us/main-images'
 import MeetTheBand from '../sections/about-us/meet-the-band'
 import MiddleImage from '../sections/about-us/middle-image'
 import OurValues from '../sections/about-us/our-values'
+import React from 'react'
 import StrongVision from '../sections/about-us/strong-vision'
+import { graphql } from 'gatsby'
 
 const AboutUs = ({ data }) => (
-  <Layout
-    data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}
-    highlightUrl="/about-us"
-  >
-    <Hero />
-    <MainImages />
-    <StrongVision />
-    <MiddleImage />
-    <MeetTheBand />
-    <OurValues />
-    <Interested />
+  <Layout data={data} highlightUrl="/about-us">
+    <Hero data={data} />
+    <MainImages data={data} />
+    <StrongVision data={data} />
+    <MiddleImage data={data} />
+    <MeetTheBand data={data} />
+    <OurValues data={data} />
+    <Interested data={data} />
   </Layout>
 )
 
 export const query = graphql`
   query AboutUsPage {
-    hero: contentfulHomepage(name: { eq: "Homepage" }) {
+    aboutUs: contentfulAboutUsPage(name: { eq: "About Us" }) {
       heroHeading
-      heroSubheading
-    }
-    termsAndConditions: contentfulModalText(name: { eq: "Terms and Conditions" }) {
-      text {
-        childContentfulRichText {
+      heroSubHeading
+      mainBannerHeading
+      mainBannerSubHeading
+      middleHeading
+      middleSubHeading
+      middleBannerHeading
+      middleBannerSubHeading
+      theBandSubHeading {
+        childMarkdownRemark {
           html
         }
       }
+      theBandHeading
+      theBandMembers {
+        max {
+          description
+        }
+        wolf {
+          description
+        }
+        bruno {
+          description
+        }
+        diana {
+          description
+        }
+        daniel {
+          description
+        }
+        patrick {
+          description
+        }
+        tommaso {
+          description
+        }
+      }
+      ourValues {
+        heading
+        subHeading
+        items {
+          index
+          title
+          text
+        }
+      }
+      bottomHeading
     }
-    privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
-      text {
-        childContentfulRichText {
-          html
+    layout: contentfulObject(name: { eq: "Layout" }) {
+      value {
+        buttons {
+          becomeMember
+          signMeUp
+          joinTeam
+          cookieBannerAccept
+          continueToMagazine
+          goToHomepage
+        }
+        footer {
+          magazine
+          termsAndConditions
+          copyright
+        }
+        menu {
+          magazine
+          aboutUs
+          joinCommunity
+        }
+        timer {
+          heading
+          days
+          hours
+          minutes
+        }
+        texts {
+          stayTuned
+          byClickingThisButton
+          emailInputPlaceholder
+        }
+        cookieBanner {
+          text
+        }
+        legalPageNames {
+          privacyPolicy
+          cookiePolicy
+          termsAndConditions
         }
       }
     }

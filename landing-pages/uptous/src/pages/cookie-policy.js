@@ -23,15 +23,15 @@ const CookiePolicy = ({ data }) => {
   }, [])
 
   return (
-    <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
-      <Header>{'Cookie Policy'}</Header>
+    <Layout data={data}>
+      <Header>{data.layout.value.legalPageNames.cookiePolicy}</Header>
       <Section fullWidth>
         <a
           className="iubenda-white no-brand iubenda-embed iub-body-embed"
           href="https://www.iubenda.com/privacy-policy/88077835/cookie-policy"
-          title="Cookie Policy"
+          title={data.layout.value.legalPageNames.cookiePolicy}
         >
-          {'Cookie Policy'}
+          {data.layout.value.legalPageNames.cookiePolicy}
         </a>
       </Section>
     </Layout>
@@ -40,21 +40,44 @@ const CookiePolicy = ({ data }) => {
 
 export const query = graphql`
   query CookiePolicyPage {
-    hero: contentfulHomepage(name: { eq: "Homepage" }) {
-      heroHeading
-      heroSubheading
-    }
-    termsAndConditions: contentfulModalText(name: { eq: "Terms and Conditions" }) {
-      text {
-        childContentfulRichText {
-          html
+    layout: contentfulObject(name: { eq: "Layout" }) {
+      value {
+        buttons {
+          becomeMember
+          signMeUp
+          joinTeam
+          cookieBannerAccept
+          continueToMagazine
+          goToHomepage
         }
-      }
-    }
-    privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
-      text {
-        childContentfulRichText {
-          html
+        footer {
+          magazine
+          termsAndConditions
+          copyright
+        }
+        menu {
+          magazine
+          aboutUs
+          joinCommunity
+        }
+        timer {
+          heading
+          days
+          hours
+          minutes
+        }
+        texts {
+          stayTuned
+          byClickingThisButton
+          emailInputPlaceholder
+        }
+        cookieBanner {
+          text
+        }
+        legalPageNames {
+          privacyPolicy
+          cookiePolicy
+          termsAndConditions
         }
       }
     }

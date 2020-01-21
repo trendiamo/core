@@ -1,11 +1,7 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import ReactCookieConsent from 'react-cookie-consent'
 import styled from 'styled-components'
 import { addGTM } from '../utils'
-
-const PrivacyPolicyLink = styled.a`
-  color: white;
-`
 
 const buttonStyle = {
   background: 'rgba(255,255,255,0.3)',
@@ -18,6 +14,12 @@ const buttonStyle = {
   lineHeight: 1,
 }
 
+const Text = styled.div`
+  a {
+    color: #fff;
+  }
+`
+
 const cookieConsentStyle = {
   background: '#111',
   color: '#fff',
@@ -26,7 +28,7 @@ const cookieConsentStyle = {
   lineHeight: '1.3',
 }
 
-const CookieConsent = () => {
+const CookieConsent = ({ data }) => {
   const onAccept = useCallback(() => {
     // It's here because we want to accept cookie consent on our magazine website.
     // Don't remove it unless you have a strong reason to do so (i.e: if the magazine doesn't exist anymore, or other).
@@ -36,11 +38,23 @@ const CookieConsent = () => {
     setTimeout(addGTM, 100)
   }, [])
 
+  const consentContent = useMemo(
+    () =>
+      data.layout.value.cookieBanner.text.replace(
+        '[:cookiePolicy]',
+        `<a href="/cookie-policy">${data.layout.value.legalPageNames.cookiePolicy}</a>`
+      ),
+    [data.layout.value.cookieBanner.text, data.layout.value.legalPageNames.cookiePolicy]
+  )
+
   return (
-    <ReactCookieConsent buttonStyle={buttonStyle} buttonText="Accept" onAccept={onAccept} style={cookieConsentStyle}>
-      {'Our website uses cookies to enhance your experience. Learn more about our '}
-      <PrivacyPolicyLink href="/privacy-policy">{'cookie policy'}</PrivacyPolicyLink>
-      {''}
+    <ReactCookieConsent
+      buttonStyle={buttonStyle}
+      buttonText={data.layout.value.buttons.cookieBannerAccept}
+      onAccept={onAccept}
+      style={cookieConsentStyle}
+    >
+      <Text dangerouslySetInnerHTML={{ __html: consentContent }}></Text>
     </ReactCookieConsent>
   )
 }

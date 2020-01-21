@@ -151,7 +151,7 @@ const toggleMobileMenu = () => {
   document.body.classList.toggle('mobile-menu-open')
 }
 
-const Header = ({ headerLinks = [], siteTitle, highlightUrl }) => {
+const Header = ({ headerLinks = [], siteTitle, highlightUrl, data }) => {
   return (
     <StyledSection>
       {headerLinks.length > 0 && (
@@ -168,16 +168,20 @@ const Header = ({ headerLinks = [], siteTitle, highlightUrl }) => {
         {headerLinks.map(headerLink =>
           headerLink.target.charAt(0) === '/' ? (
             <HeaderLink key={headerLink.target} to={headerLink.target}>
-              <LinkText highlight={highlightUrl === headerLink.target}>{headerLink.text}</LinkText>
+              <LinkText highlight={highlightUrl === headerLink.target}>
+                {data.layout.value.menu[headerLink.name]}
+              </LinkText>
             </HeaderLink>
           ) : (
             <HeaderLinkA href={headerLink.target} key={headerLink.target}>
-              <LinkText highlight={highlightUrl === headerLink.target}>{headerLink.text}</LinkText>
+              <LinkText highlight={highlightUrl === headerLink.target}>
+                {data.layout.value.menu[headerLink.name]}
+              </LinkText>
             </HeaderLinkA>
           )
         )}
       </Nav>
-      <MobileMenu headerLinks={headerLinks} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
+      <MobileMenu data={data} headerLinks={headerLinks} siteTitle={siteTitle} toggleMobileMenu={toggleMobileMenu} />
     </StyledSection>
   )
 }

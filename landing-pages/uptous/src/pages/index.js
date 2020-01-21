@@ -1,38 +1,83 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-
 import BottomHeadline from '../sections/bottom-headline'
 import Hero from '../sections/hero'
 import Layout from '../layout'
 import OpeningCounter from '../sections/opening-counter'
 import OurGoals from '../sections/our-goals'
+import React from 'react'
+import { graphql } from 'gatsby'
 
 const IndexPage = ({ data }) => (
-  <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
-    <Hero data={data.hero} />
-    <OpeningCounter />
-    <OurGoals />
-    <BottomHeadline />
+  <Layout data={data}>
+    <Hero data={data} />
+    <OpeningCounter data={data} />
+    <OurGoals data={data} />
+    <BottomHeadline data={data} />
   </Layout>
 )
 
 export const query = graphql`
   query HomePage {
-    hero: contentfulHomepage(name: { eq: "Homepage" }) {
+    home: contentfulHomepage(name: { eq: "Homepage" }) {
       heroHeading
       heroSubheading
-    }
-    termsAndConditions: contentfulModalText(name: { eq: "Terms and Conditions" }) {
-      text {
-        childContentfulRichText {
-          html
+      firstColumn {
+        items {
+          title
+          index
+          text
         }
+        heading
+        subHeading
       }
+      secondColumn {
+        items {
+          title
+          index
+          text
+        }
+        heading
+        subHeading
+      }
+      lastPart
     }
-    privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
-      text {
-        childContentfulRichText {
-          html
+    layout: contentfulObject(name: { eq: "Layout" }) {
+      value {
+        buttons {
+          becomeMember
+          signMeUp
+          joinTeam
+          cookieBannerAccept
+          continueToMagazine
+          goToHomepage
+        }
+        footer {
+          magazine
+          termsAndConditions
+          copyright
+        }
+        menu {
+          magazine
+          aboutUs
+          joinCommunity
+        }
+        timer {
+          heading
+          days
+          hours
+          minutes
+        }
+        texts {
+          stayTuned
+          byClickingThisButton
+          emailInputPlaceholder
+        }
+        cookieBanner {
+          text
+        }
+        legalPageNames {
+          privacyPolicy
+          cookiePolicy
+          termsAndConditions
         }
       }
     }

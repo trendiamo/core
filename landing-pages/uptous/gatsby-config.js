@@ -12,13 +12,6 @@ if (!spaceId || !accessToken) {
 }
 
 module.exports = {
-  siteMetadata: {
-    title: 'Uptous - The sustainable fashion club',
-    description:
-      'Join the worlds first impact driven shopping club and enjoy highly tailored offers while helping to create a better future, together.',
-    author: '@trendiamo',
-    lang: 'en',
-  },
   plugins: [
     {
       resolve: 'gatsby-plugin-react-svg',

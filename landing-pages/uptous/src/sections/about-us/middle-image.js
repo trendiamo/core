@@ -74,14 +74,10 @@ const BannerDescription = styled.div`
   }
 `
 
-const Banner = () => (
+const Banner = ({ data }) => (
   <BannerContainer>
-    <BannerHeader>{'Shaping a new way to shop'}</BannerHeader>
-    <BannerDescription>
-      {
-        'As member of our shopping community or part of our startup team in Lisbon, you can be the change you want to see in the world.'
-      }
-    </BannerDescription>
+    <BannerHeader>{data.aboutUs.middleBannerHeading}</BannerHeader>
+    <BannerDescription>{data.aboutUs.middleBannerSubHeading}</BannerDescription>
   </BannerContainer>
 )
 
@@ -89,11 +85,11 @@ const StyledSection = styled(Section)`
   flex-direction: column;
 `
 
-const MainImages = () => (
+const MainImages = ({ data }) => (
   <StyledSection fullWidth>
     <Container>
       <Image src={peopleHands}></Image>
-      <Banner />
+      <Banner data={data} />
     </Container>
   </StyledSection>
 )

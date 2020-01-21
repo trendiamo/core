@@ -69,7 +69,7 @@ const addZero = digit => ('0' + digit).slice(-2)
 
 const date = '2020-03-01'
 
-const OpeningCounter = () => {
+const OpeningCounter = ({ data }) => {
   const [remainingTime, setRemainingTime] = useState(null)
 
   const updateTimer = useCallback(() => {
@@ -99,20 +99,20 @@ const OpeningCounter = () => {
   return (
     <Section>
       <Container>
-        <Text>{'We open our sustainable lifestyle shopping club doors in'}</Text>
+        <Text>{data.layout.value.timer.heading}</Text>
         {remainingTime && (
           <CounterContainer>
             <Indicator>
               <Digit>{remainingTime.days}</Digit>
-              <Description>{'days'}</Description>
+              <Description>{data.layout.value.timer.days}</Description>
             </Indicator>
             <Indicator>
               <Digit>{remainingTime.hours}</Digit>
-              <Description>{'hours'}</Description>
+              <Description>{data.layout.value.timer.hours}</Description>
             </Indicator>
             <Indicator>
               <Digit>{remainingTime.minutes}</Digit>
-              <Description>{'minutes'}</Description>
+              <Description>{data.layout.value.timer.minutes}</Description>
             </Indicator>
           </CounterContainer>
         )}

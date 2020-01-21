@@ -2,7 +2,7 @@ import gridImage01 from '../images/u2u-fashion-01.jpeg'
 import gridImage02 from '../images/u2u-fashion-02.jpeg'
 import gridImage03 from '../images/u2u-fashion-03.jpg'
 import gridImage04 from '../images/u2u-fashion-04.jpg'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Section from '../components/section'
 import styled from 'styled-components'
 import { pushToGA } from '../utils'
@@ -151,7 +151,7 @@ const BannerFooterText = styled.div`
   }
 `
 
-const MailchimpForm = () => {
+const MailchimpForm = ({ data }) => {
   const onSubscribeClick = useCallback(() => {
     pushToGA({
       event: 'buttonClick',
@@ -161,6 +161,15 @@ const MailchimpForm = () => {
     })
   }, [])
 
+  const termsAndConditionsText = useMemo(
+    () =>
+      data.layout.value.texts.byClickingThisButton.replace(
+        '[:termsAndConditions]',
+        `<a href="/terms-and-conditions" >${data.layout.value.legalPageNames.termsAndConditions}</a>`
+      ),
+    [data.layout.value.legalPageNames.termsAndConditions, data.layout.value.texts.byClickingThisButton]
+  )
+
   return (
     <form
       action="https://uptous.us4.list-manage.com/subscribe/post?u=45912ce59aa8ef47e7126f2fa&amp;id=33d3cabba0"
@@ -169,32 +178,28 @@ const MailchimpForm = () => {
       noValidate
       target="_blank"
     >
-      <BannerInput name="EMAIL" placeholder="Email address" required type="email" />
+      <BannerInput name="EMAIL" placeholder={data.layout.value.texts.emailInputPlaceholder} required type="email" />
       <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
         <input defaultValue="" name="b_45912ce59aa8ef47e7126f2fa_33d3cabba0" tabIndex="-1" type="text" />
       </div>
       <BannerButtonContainer>
-        <BannerButton name="subscribe" onClick={onSubscribeClick} type="submit" value="Sign me up" />
+        <BannerButton
+          name="subscribe"
+          onClick={onSubscribeClick}
+          type="submit"
+          value={data.layout.value.buttons.signMeUp}
+        />
       </BannerButtonContainer>
-      <BannerFooterText>
-        {'By clicking this button you subscribe to our newsletter and agree to our'}
-        <a href="/terms-and-conditions">{'Terms and Conditions'}</a>
-      </BannerFooterText>
+      <BannerFooterText dangerouslySetInnerHTML={{ __html: termsAndConditionsText }}></BannerFooterText>
     </form>
   )
 }
 
-const Banner = () => (
+const Banner = ({ data }) => (
   <BannerContainer>
-    <BannerHeader>{"Don't miss out on a revolution"}</BannerHeader>
-    <BannerDescription>
-      {'Be the first to discover and shop fashion sustainably with up to '}
-      <b>{'30% discounts.'}</b>{' '}
-      {
-        'Join the worlds first impact driven shopping club and enjoy highly tailored offers while helping to create a better future, together.'
-      }
-    </BannerDescription>
-    <MailchimpForm />
+    <BannerHeader>{data.home.heroHeading}</BannerHeader>
+    <BannerDescription dangerouslySetInnerHTML={{ __html: data.home.heroSubheading }} />
+    <MailchimpForm data={data} />
   </BannerContainer>
 )
 
@@ -228,7 +233,7 @@ const MobileImages = () => (
   </MobileImagesContainer>
 )
 
-const Hero = () => (
+const Hero = ({ data }) => (
   <Section fullWidth>
     <HeroImagesContainer>
       <MobileImages />
@@ -246,7 +251,7 @@ const Hero = () => (
           <Image src={gridImage04} />
         </ImageHalfHeightContainer>
       </ImageContainer>
-      <Banner />
+      <Banner data={data} />
     </HeroImagesContainer>
   </Section>
 )

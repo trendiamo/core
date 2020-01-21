@@ -17,9 +17,9 @@ const Text = styled.div`
   }
 `
 
-const BottomHeadline = () => (
+const BottomHeadline = ({ data }) => (
   <Section>
-    <Text>{'Join our community and shape a new, world changing way to shop with us.'}</Text>
+    <Text>{data.home.lastPart}</Text>
   </Section>
 )
 

@@ -115,40 +115,7 @@ const Title = styled.div`
   }
 `
 
-const values = [
-  {
-    index: '01',
-    title: 'Transparency',
-    text:
-      'No green washing. We believe that being transparent about how products are produced and businesses are run is the key for trustworthy collaborations and customer relationships.',
-  },
-  {
-    index: '02',
-    title: 'Authenticity',
-    text:
-      'We believe authentic and relevant content created with passion and trust is the best way to get across the messages and stories of sustainable businesses.',
-  },
-  {
-    index: '03',
-    title: 'Progress through teamwork',
-    text:
-      'We believe that making sustainable businesses the leading businesses of tomorrow is only achievable through the combined power of individuals supporting it together.',
-  },
-  {
-    index: '04',
-    title: 'Inclusiveness',
-    text:
-      'We believe in open conversations, exchange of knowledge and the discussion of topics between reflective individuals and other parties without excluding anyone.',
-  },
-  {
-    index: '05',
-    title: 'Positivity',
-    text:
-      'We believe in a positive mindset and learning from each other to discuss how we can progress together every day, step by step. There are no barriers, anyone can participate no matter of the individual level of knowledge and sustainability.',
-  },
-]
-
-const OurValues = () => {
+const OurValues = ({ data }) => {
   useEffect(() => {
     Aos.init({})
   }, [])
@@ -157,14 +124,12 @@ const OurValues = () => {
     <Section>
       <Container>
         <HeaderContainer>
-          <HeaderText>{'Our Values'}</HeaderText>
-          <MainDescription>
-            {'We believe in a world in which everyone feels empowered to drive positive change.'}
-          </MainDescription>
+          <HeaderText>{data.aboutUs.ourValues.heading}</HeaderText>
+          <MainDescription>{data.aboutUs.ourValues.subHeading}</MainDescription>
         </HeaderContainer>
         <ValuesContainer>
           <Values>
-            {values.map(value => (
+            {data.aboutUs.ourValues.items.map(value => (
               <Value
                 data-aos="fade-up"
                 data-aos-easing="ease-in-out"

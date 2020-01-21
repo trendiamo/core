@@ -136,7 +136,7 @@ const removeMobileMenu = () => {
   document.body.classList.remove('mobile-menu-open')
 }
 
-const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
+const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu, data }) => {
   const onOverlayClick = useCallback(() => {
     removeMobileMenu()
   }, [])
@@ -157,11 +157,11 @@ const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu }) => {
           {(headerLinks || []).map(headerLink =>
             headerLink.target.charAt(0) === '/' ? (
               <Link key={headerLink.target} onClick={removeMobileMenu} to={headerLink.target}>
-                {headerLink.text}
+                {data.layout.value.menu[headerLink.name]}
               </Link>
             ) : (
               <a href={headerLink.target} key={headerLink.target}>
-                {headerLink.text}
+                {data.layout.value.menu[headerLink.name]}
               </a>
             )
           )}

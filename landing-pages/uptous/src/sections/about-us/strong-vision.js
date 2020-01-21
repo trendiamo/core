@@ -35,15 +35,11 @@ const MainDescription = styled.div`
   }
 `
 
-const StrongVision = () => (
+const StrongVision = ({ data }) => (
   <Section>
     <Container>
-      <HeaderText>{'That’s why we believe in our strong vision'}</HeaderText>
-      <MainDescription>
-        {
-          'Where we team-up together and overcome the shortcomings of a political and old world economy‘ that is ignoring social injustices and the environmental crisis.'
-        }
-      </MainDescription>
+      <HeaderText>{data.aboutUs.middleHeading}</HeaderText>
+      <MainDescription>{data.aboutUs.middleSubHeading}</MainDescription>
     </Container>
   </Section>
 )

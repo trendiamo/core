@@ -32,17 +32,21 @@ const HeaderText = styled.div`
 `
 
 const MainDescription = styled.div`
-  color: #111;
-  line-height: 1.2;
-  width: 100%;
-  font-size: 20px;
-  margin: 20px auto 0;
-  text-align: left;
+  p {
+    color: #111;
+    line-height: 1.2;
+    width: 100%;
+    font-size: 20px;
+    margin: 20px auto 0;
+    text-align: left;
+  }
 
   @media (min-width: 1000px) {
-    font-size: 28px;
-    text-align: center;
-    width: 1040px;
+    p {
+      font-size: 28px;
+      text-align: center;
+      width: 1040px;
+    }
   }
 `
 
@@ -125,47 +129,63 @@ const Face = ({ src, name, description }) => (
   </FaceContainer>
 )
 
-const FacesOfDaBand = () => (
+const FacesOfDaBand = ({ data }) => (
   <FacesContainer>
     <FaceCells>
-      <Face description="Co-Founder & CEO" name="Wolfgang Schmidt-Ulm dos Santos" src={wolfFace}></Face>
-      <Face description="Tech" name="Max Chuchmai" src={maxFace}></Face>
+      <Face
+        description={data.aboutUs.theBandMembers.wolf.description}
+        name="Wolfgang Schmidt-Ulm dos Santos"
+        src={wolfFace}
+      ></Face>
+      <Face description={data.aboutUs.theBandMembers.max.description} name="Max Chuchmai" src={maxFace}></Face>
     </FaceCells>
     <FaceCells>
-      <Face description="Co-Founder & Product" name="Daniel Welzel" src={danielFace}></Face>
-      <Face description="Growth & Marketing" name="Tommaso Di Stefano" src={tommasoFace}></Face>
-      <Face description="Influencer & Brand Mgmt." name="Diana Machado" src={dianaFace}></Face>
+      <Face description={data.aboutUs.theBandMembers.daniel.description} name="Daniel Welzel" src={danielFace}></Face>
+      <Face
+        description={data.aboutUs.theBandMembers.tommaso.description}
+        name="Tommaso Di Stefano"
+        src={tommasoFace}
+      ></Face>
+      <Face description={data.aboutUs.theBandMembers.diana.description} name="Diana Machado" src={dianaFace}></Face>
     </FaceCells>
     <FaceCells>
-      <Face description="Marketing" name="Patrick Burkert" src={patrickFace}></Face>
-      <Face description="Operations" name="Bruno Santos" src={brunoFace}></Face>
+      <Face
+        description={data.aboutUs.theBandMembers.patrick.description}
+        name="Patrick Burkert"
+        src={patrickFace}
+      ></Face>
+      <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
     </FaceCells>
   </FacesContainer>
 )
 
-const FacesOfDaMobile = () => (
+const FacesOfDaMobile = ({ data }) => (
   <FacesContainerMobile>
-    <Face description="Co-Founder & CEO" name="Wolfgang Schmidt-Ulm dos Santos" src={wolfFace}></Face>
-    <Face description="Tech" name="Max Chuchmai" src={maxFace}></Face>
-    <Face description="Co-Founder & Product" name="Daniel Welzel" src={danielFace}></Face>
-    <Face description="Growth & Marketing" name="Tommaso Di Stefano" src={tommasoFace}></Face>
-    <Face description="Influencer & Brand Mgmt." name="Diana Machado" src={dianaFace}></Face>
-    <Face description="Marketing" name="Patrick Burkert" src={patrickFace}></Face>
-    <Face description="Operations" name="Bruno Santos" src={brunoFace}></Face>
+    <Face
+      description={data.aboutUs.theBandMembers.wolf.description}
+      name="Wolfgang Schmidt-Ulm dos Santos"
+      src={wolfFace}
+    ></Face>
+    <Face description={data.aboutUs.theBandMembers.max.description} name="Max Chuchmai" src={maxFace}></Face>
+    <Face description={data.aboutUs.theBandMembers.daniel.description} name="Daniel Welzel" src={danielFace}></Face>
+    <Face
+      description={data.aboutUs.theBandMembers.tommaso.description}
+      name="Tommaso Di Stefano"
+      src={tommasoFace}
+    ></Face>
+    <Face description={data.aboutUs.theBandMembers.diana.description} name="Diana Machado" src={dianaFace}></Face>
+    <Face description={data.aboutUs.theBandMembers.patrick.description} name="Patrick Burkert" src={patrickFace}></Face>
+    <Face description={data.aboutUs.theBandMembers.bruno.description} name="Bruno Santos" src={brunoFace}></Face>
   </FacesContainerMobile>
 )
 
-const MeetTheBand = () => (
+const MeetTheBand = ({ data }) => (
   <Section>
     <Container>
-      <HeaderText>{'Meet the band behind the music'}</HeaderText>
-      <MainDescription>
-        {
-          'Our founders and leading talents come from some of the biggest names in the retail and startup industry such as Outfittery, Uniplaces and GoPopUp. We are dedicated to our mission, vision and values and work together to change the way how we consume for the better, forever.'
-        }
-      </MainDescription>
-      <FacesOfDaBand />
-      <FacesOfDaMobile />
+      <HeaderText>{data.aboutUs.theBandHeading}</HeaderText>
+      <MainDescription dangerouslySetInnerHTML={{ __html: data.aboutUs.theBandSubHeading.childMarkdownRemark.html }} />
+      <FacesOfDaBand data={data} />
+      <FacesOfDaMobile data={data} />
     </Container>
   </Section>
 )

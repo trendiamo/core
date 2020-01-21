@@ -1,6 +1,6 @@
 import IconInstagram from '../images/icon-instagram.svg'
 import IconLinkedin from '../images/icon-linkedin.svg'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Section from '../components/section'
 import styled from 'styled-components'
 import { pushToGA } from '../utils'
@@ -16,7 +16,7 @@ const Header = styled.div`
 
 const NewsletterBannerContainer = styled.div``
 
-const LegalText = styled.div``
+const CopyrightText = styled.div``
 
 const FooterLinksContainer = styled.div`
   display: flex;
@@ -122,7 +122,7 @@ const StayTunedText = styled.div`
   margin-bottom: 15px;
 `
 
-const MailchimpForm = () => {
+const MailchimpForm = ({ data }) => {
   const onSubscribeClick = useCallback(() => {
     pushToGA({
       event: 'buttonClick',
@@ -132,6 +132,15 @@ const MailchimpForm = () => {
     })
   }, [])
 
+  const termsAndConditionsText = useMemo(
+    () =>
+      data.layout.value.texts.byClickingThisButton.replace(
+        '[:termsAndConditions]',
+        `<a href="/terms-and-conditions" >${data.layout.value.legalPageNames.termsAndConditions}</a>`
+      ),
+    [data.layout.value.legalPageNames.termsAndConditions, data.layout.value.texts.byClickingThisButton]
+  )
+
   return (
     <form
       action="https://uptous.us4.list-manage.com/subscribe/post?u=45912ce59aa8ef47e7126f2fa&amp;id=33d3cabba0"
@@ -140,34 +149,36 @@ const MailchimpForm = () => {
       noValidate
       target="_blank"
     >
-      <BannerInput name="EMAIL" placeholder="Email address" required type="email" />
+      <BannerInput name="EMAIL" placeholder={data.layout.value.texts.emailInputPlaceholder} required type="email" />
       <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
         <input defaultValue="" name="b_45912ce59aa8ef47e7126f2fa_33d3cabba0" tabIndex="-1" type="text" />
       </div>
       <BannerButtonContainer>
-        <BannerButton name="subscribe" onClick={onSubscribeClick} type="submit" value="Sign me up" />
+        <BannerButton
+          name="subscribe"
+          onClick={onSubscribeClick}
+          type="submit"
+          value={data.layout.value.buttons.signMeUp}
+        />
       </BannerButtonContainer>
-      <BannerFooterText>
-        {'By clicking this button you subscribe to our newsletter and agree to our'}
-        <a href="/terms-and-conditions">{'Terms and Conditions'}</a>
-      </BannerFooterText>
+      <BannerFooterText dangerouslySetInnerHTML={{ __html: termsAndConditionsText }}></BannerFooterText>
     </form>
   )
 }
 
-const NewsletterBanner = () => (
+const NewsletterBanner = ({ data }) => (
   <NewsletterBannerContainer>
-    <StayTunedText>{'Stay tuned and be the first to join by signing up to our newsletter!'}</StayTunedText>
-    <MailchimpForm />
+    <StayTunedText>{data.layout.value.texts.stayTuned}</StayTunedText>
+    <MailchimpForm data={data} />
   </NewsletterBannerContainer>
 )
 
-const FooterLinks = () => (
+const FooterLinks = ({ data }) => (
   <FooterLinksContainer>
-    <Link href="https://uptous.co/magazine">{'Magazine'}</Link>
-    <Link href="/terms-and-conditions">{'Terms & Conditions'}</Link>
-    <Link href="/privacy-policy">{'Privacy Policy'}</Link>
-    <Link href="/cookie-policy">{'Cookie Policy'}</Link>
+    <Link href="/magazine">{data.layout.value.footer.magazine}</Link>
+    <Link href="/terms-and-conditions">{data.layout.value.footer.termsAndConditions}</Link>
+    <Link href="/privacy-policy">{data.layout.value.legalPageNames.privacyPolicy}</Link>
+    <Link href="/cookie-policy">{data.layout.value.legalPageNames.cookiePolicy}</Link>
   </FooterLinksContainer>
 )
 
@@ -212,22 +223,26 @@ const Social = () => (
   </SocialContainer>
 )
 
-const Footer = styled(({ className, hideNewsletter }) => {
+const Footer = styled(({ className, hideNewsletter, data }) => {
+  const copyrightText = useMemo(() => data.layout.value.footer.copyright.replace('[:date]', new Date().getFullYear()), [
+    data.layout.value.footer.copyright,
+  ])
+
   return (
     <footer className={className}>
       {!hideNewsletter && (
         <GreySection>
           <Section fullWidth>
-            <NewsletterBanner />
+            <NewsletterBanner data={data} />
           </Section>
         </GreySection>
       )}
       <DarkSection fullWidth>
         <DarkSectionFlex>
-          <FooterLinks />
+          <FooterLinks data={data} />
           <Social />
         </DarkSectionFlex>
-        <LegalText>{'© 2020 uptous.co - All rights reserved.'}</LegalText>
+        <CopyrightText>{copyrightText}</CopyrightText>
       </DarkSection>
     </footer>
   )
@@ -299,7 +314,7 @@ const Footer = styled(({ className, hideNewsletter }) => {
       margin-bottom: 0;
     }
   }
-  ${LegalText} {
+  ${CopyrightText} {
     font-size: 13px;
     color: #fff;
     text-align: center;

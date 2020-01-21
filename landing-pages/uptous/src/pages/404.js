@@ -10,15 +10,15 @@ import { graphql, Link } from 'gatsby'
 const Content = styled.div``
 
 const NotFoundPage = styled(({ className, data }) => (
-  <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
-    <Seo title="Uptous - 404 Not Found" />
+  <Layout data={data}>
+    <Seo />
     <Section className={className}>
       <Container>
         <Image src={image404} />
         <Content>
-          <h1>{'Nothing seems to be at this URL'}</h1>
-          <p>{"Sorry, the URL you entered doesn't have any results on this website!"}</p>
-          <Link to="/">{'Go to Homepage'}</Link>
+          <h1>{data.notFoundPage.value.heading}</h1>
+          <p>{data.notFoundPage.value.subHeading}</p>
+          <Link to="/">{data.layout.value.buttons.goToHomepage}</Link>
         </Content>
       </Container>
     </Section>
@@ -90,17 +90,50 @@ const Image = styled.img`
 
 export const query = graphql`
   query NotFoundPage {
-    termsAndConditions: contentfulModalText(name: { eq: "Terms and Conditions" }) {
-      text {
-        childContentfulRichText {
-          html
-        }
+    notFoundPage: contentfulObject(name: { eq: "Not Found Page" }) {
+      value {
+        heading
+        subHeading
       }
     }
-    privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
-      text {
-        childContentfulRichText {
-          html
+    layout: contentfulObject(name: { eq: "Layout" }) {
+      value {
+        buttons {
+          becomeMember
+          signMeUp
+          joinTeam
+          cookieBannerAccept
+          continueToMagazine
+          goToHomepage
+        }
+        footer {
+          magazine
+          termsAndConditions
+          copyright
+        }
+        menu {
+          magazine
+          aboutUs
+          joinCommunity
+        }
+        timer {
+          heading
+          days
+          hours
+          minutes
+        }
+        texts {
+          stayTuned
+          byClickingThisButton
+          emailInputPlaceholder
+        }
+        cookieBanner {
+          text
+        }
+        legalPageNames {
+          privacyPolicy
+          cookiePolicy
+          termsAndConditions
         }
       }
     }

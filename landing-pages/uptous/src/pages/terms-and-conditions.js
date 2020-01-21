@@ -12,8 +12,8 @@ const Header = styled.div`
 `
 
 const TermsAndConditions = ({ data }) => (
-  <Layout data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}>
-    <Header>{'Terms and Conditions'}</Header>
+  <Layout data={data}>
+    <Header>{data.layout.value.legalPageNames.termsAndConditions}</Header>
     <Section>
       <div dangerouslySetInnerHTML={{ __html: data.termsAndConditions.text.childContentfulRichText.html }}></div>
     </Section>
@@ -22,21 +22,51 @@ const TermsAndConditions = ({ data }) => (
 
 export const query = graphql`
   query TermsAndConditionsPage {
-    hero: contentfulHomepage(name: { eq: "Homepage" }) {
-      heroHeading
-      heroSubheading
-    }
-    termsAndConditions: contentfulModalText(name: { eq: "Terms and Conditions" }) {
+    termsAndConditions: contentfulLegalPage(name: { eq: "Terms and Conditions" }) {
       text {
         childContentfulRichText {
           html
         }
       }
     }
-    privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
-      text {
-        childContentfulRichText {
-          html
+    layout: contentfulObject(name: { eq: "Layout" }) {
+      value {
+        buttons {
+          becomeMember
+          signMeUp
+          joinTeam
+          cookieBannerAccept
+          continueToMagazine
+          goToHomepage
+        }
+        footer {
+          magazine
+          termsAndConditions
+          copyright
+        }
+        menu {
+          magazine
+          aboutUs
+          joinCommunity
+        }
+        timer {
+          heading
+          days
+          hours
+          minutes
+        }
+        texts {
+          stayTuned
+          byClickingThisButton
+          emailInputPlaceholder
+        }
+        cookieBanner {
+          text
+        }
+        legalPageNames {
+          privacyPolicy
+          cookiePolicy
+          termsAndConditions
         }
       }
     }

@@ -60,7 +60,7 @@ const Link = styled.a`
   }
 `
 
-const AboutUsHero = () => {
+const AboutUsHero = ({ data }) => {
   const onMemberClick = useCallback(() => {
     pushToGA({
       event: 'buttonClick',
@@ -82,13 +82,13 @@ const AboutUsHero = () => {
   return (
     <Section>
       <Container>
-        <HeaderText>{'Interested in working with us?'}</HeaderText>
+        <HeaderText>{data.aboutUs.bottomHeading}</HeaderText>
         <ButtonContainer>
           <Link href="mailto:hello@uptous.co" onClick={onMemberClick}>
-            <Button>{'I want to become a member'}</Button>
+            <Button>{data.layout.value.buttons.becomeMember}</Button>
           </Link>
           <Link href="mailto:hello@uptous.co" onClick={onJoinTeamClick}>
-            <Button>{'I want to join the team'}</Button>
+            <Button>{data.layout.value.buttons.joinTeam}</Button>
           </Link>
         </ButtonContainer>
       </Container>

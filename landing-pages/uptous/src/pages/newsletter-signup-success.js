@@ -5,32 +5,60 @@ import SignupSuccessHero from '../sections/signup-success-hero'
 import { graphql } from 'gatsby'
 
 const NewsletterSignupSuccess = ({ data }) => (
-  <Layout
-    data={{ termsAndConditions: data.termsAndConditions.text, privacyPolicy: data.privacyPolicy.text }}
-    hideNewsletter
-  >
-    <SignupSuccessHero />
-    <OpeningCounter />
+  <Layout data={data} hideNewsletter>
+    <SignupSuccessHero data={data} />
+    <OpeningCounter data={data} />
   </Layout>
 )
 
 export const query = graphql`
   query NewsletterSignupSuccess {
-    hero: contentfulHomepage(name: { eq: "Homepage" }) {
-      heroHeading
-      heroSubheading
-    }
-    termsAndConditions: contentfulModalText(name: { eq: "Terms and Conditions" }) {
-      text {
-        childContentfulRichText {
-          html
-        }
+    successPage: contentfulObject(name: { eq: "Sign Up Success Page" }) {
+      value {
+        heading
+        indicator
+        subHeading1
+        subHeading2
       }
     }
-    privacyPolicy: contentfulModalText(name: { eq: "Privacy Policy" }) {
-      text {
-        childContentfulRichText {
-          html
+    layout: contentfulObject(name: { eq: "Layout" }) {
+      value {
+        buttons {
+          becomeMember
+          signMeUp
+          joinTeam
+          cookieBannerAccept
+          continueToMagazine
+          goToHomepage
+        }
+        footer {
+          magazine
+          termsAndConditions
+          copyright
+        }
+        menu {
+          magazine
+          aboutUs
+          joinCommunity
+        }
+        timer {
+          heading
+          days
+          hours
+          minutes
+        }
+        texts {
+          stayTuned
+          byClickingThisButton
+          emailInputPlaceholder
+        }
+        cookieBanner {
+          text
+        }
+        legalPageNames {
+          privacyPolicy
+          cookiePolicy
+          termsAndConditions
         }
       }
     }
