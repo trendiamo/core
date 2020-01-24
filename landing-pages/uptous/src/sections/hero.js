@@ -9,7 +9,7 @@ import { pushToGA } from '../utils'
 
 const HeroImagesContainer = styled.div`
   display: flex;
-  height: 580px;
+  height: 540px;
   font-size: 0;
   justify-content: space-between;
   position: relative;
@@ -59,7 +59,7 @@ const BannerContainer = styled.div`
     height: 320px;
     max-width: 585px;
     margin: 0;
-    top: 215px;
+    top: 160px;
     left: 50%;
     width: 100%;
     right: auto;
@@ -76,7 +76,7 @@ const BannerHeader = styled.div`
   white-space: wrap;
 
   @media (min-width: 1000px) {
-    font-size: 36px;
+    font-size: 32px;
     white-space: nowrap;
   }
 `
@@ -85,7 +85,7 @@ const BannerDescription = styled.div`
   color: #111;
   margin-top: 15px;
   line-height: 1.2;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 22px;
 
   @media (min-width: 1000px) {
@@ -233,8 +233,15 @@ const MobileImages = () => (
   </MobileImagesContainer>
 )
 
+const StyledSection = styled(Section)`
+  padding-top: 0;
+  @media (min-width: 1000px) {
+    padding-top: 0;
+  }
+`
+
 const Hero = ({ data }) => (
-  <Section fullWidth>
+  <StyledSection fullWidth>
     <HeroImagesContainer>
       <MobileImages />
       <ImageContainer>
@@ -253,7 +260,7 @@ const Hero = ({ data }) => (
       </ImageContainer>
       <Banner data={data} />
     </HeroImagesContainer>
-  </Section>
+  </StyledSection>
 )
 
 export default Hero

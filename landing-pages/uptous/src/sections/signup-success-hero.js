@@ -1,11 +1,11 @@
 import React from 'react'
 import Section from '../components/section'
 import styled from 'styled-components'
-import wallImage from '../images/wall.jpg'
+import waterImage from '../images/about-us/water.jpg'
 
 const HeroImagesContainer = styled.div`
   display: flex;
-  height: 550px;
+  height: 400px;
   font-size: 0;
   justify-content: space-between;
   position: relative;
@@ -13,7 +13,7 @@ const HeroImagesContainer = styled.div`
 
   @media (min-width: 1000px) {
     margin: 0 -5px;
-    height: 700px;
+    height: 500px;
   }
 `
 
@@ -36,7 +36,7 @@ const BannerContainer = styled.div`
   @media (min-width: 1000px) {
     max-width: 585px;
     margin: 0;
-    top: 215px;
+    top: 90px;
     left: 50%;
     width: 100%;
     right: auto;
@@ -114,6 +114,13 @@ const StyledLink = styled.a`
   text-decoration: none;
 `
 
+const StyledSection = styled(Section)`
+  padding-top: 0;
+  @media (min-width: 1000px) {
+    padding-top: 0;
+  }
+`
+
 // The HTTP Links should stay this way because magazine is currently a separate server!
 const Banner = ({ data }) => (
   <BannerContainer>
@@ -133,12 +140,12 @@ const Banner = ({ data }) => (
 )
 
 const EmailConfirmationHero = ({ data }) => (
-  <Section fullWidth>
+  <StyledSection fullWidth>
     <HeroImagesContainer>
-      <Image src={wallImage} />
+      <Image src={waterImage} />
       <Banner data={data} />
     </HeroImagesContainer>
-  </Section>
+  </StyledSection>
 )
 
 export default EmailConfirmationHero

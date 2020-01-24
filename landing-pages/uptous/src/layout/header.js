@@ -51,7 +51,7 @@ const HamburgerTicks = styled.div`
 const LogoFullContainer = styled.div`
   min-width: 100px;
   width: 100%;
-  max-width: 180px;
+  max-width: 140px;
 `
 
 const StyledSection = styled(Section)`
@@ -66,9 +66,8 @@ const StyledSection = styled(Section)`
   position: relative;
 
   @media (min-width: 1000px) {
-    padding: 0;
     justify-content: space-between;
-    height: 112px;
+    height: 80px;
   }
 `
 

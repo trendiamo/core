@@ -6,12 +6,12 @@ const Text = styled.div`
   color: #111;
   font-weight: 700;
   font-size: 22px;
-  text-align: center;
   line-height: 1.2;
+  text-align: left;
 
   @media (min-width: 1000px) {
+    text-align: center;
     font-size: 28px;
-    text-align: left;
   }
 `
 
@@ -61,8 +61,25 @@ const Description = styled.div`
 const Container = styled.div`
   padding: 40px 0;
   @media (min-width: 1000px) {
-    padding: 90px 0 80px;
+    padding: 60px 0 60px;
   }
+`
+
+const SubHeading = styled.div`
+  color: #333;
+  line-height: 1.2;
+  font-size: 16px;
+  max-width: 600px;
+  text-align: left;
+  margin: 35px auto 40px;
+
+  @media (min-width: 1000px) {
+    text-align: center;
+  }
+`
+
+const TextContainer = styled.div`
+  text-align: center;
 `
 
 const addZero = digit => ('0' + digit).slice(-2)
@@ -99,7 +116,10 @@ const OpeningCounter = ({ data }) => {
   return (
     <Section>
       <Container>
-        <Text>{data.layout.value.timer.heading}</Text>
+        <TextContainer>
+          <Text>{data.layout.value.timer.heading}</Text>
+          <SubHeading dangerouslySetInnerHTML={{ __html: data.layout.value.timer.subHeading }} />
+        </TextContainer>
         {remainingTime && (
           <CounterContainer>
             <Indicator>

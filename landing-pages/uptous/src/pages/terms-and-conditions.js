@@ -54,6 +54,7 @@ export const query = graphql`
           days
           hours
           minutes
+          subHeading
         }
         texts {
           stayTuned
