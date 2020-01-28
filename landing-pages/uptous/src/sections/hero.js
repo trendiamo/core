@@ -8,15 +8,10 @@ import styled from 'styled-components'
 import { pushToGA } from '../utils'
 
 const HeroImagesContainer = styled.div`
-  display: flex;
-  height: 540px;
-  font-size: 0;
-  justify-content: space-between;
-  position: relative;
   width: 100%;
-
   @media (min-width: 1000px) {
     margin: 0 -5px;
+    width: auto;
   }
 `
 
@@ -227,6 +222,15 @@ const MobileImage = styled.img`
   object-fit: cover;
 `
 
+const MarginContainer = styled.div`
+  display: flex;
+  height: 540px;
+  font-size: 0;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+`
+
 const MobileImages = () => (
   <MobileImagesContainer>
     <MobileImage src={gridImage04} />
@@ -243,22 +247,24 @@ const StyledSection = styled(Section)`
 const Hero = ({ data }) => (
   <StyledSection fullWidth>
     <HeroImagesContainer>
-      <MobileImages />
-      <ImageContainer>
-        <Image src={gridImage01} />
-      </ImageContainer>
-      <ImageContainer>
-        <Image src={gridImage02} />
-      </ImageContainer>
-      <ImageContainer>
-        <ImageHalfHeightContainer>
-          <Image src={gridImage03} />
-        </ImageHalfHeightContainer>
-        <ImageHalfHeightContainer>
-          <Image src={gridImage04} />
-        </ImageHalfHeightContainer>
-      </ImageContainer>
-      <Banner data={data} />
+      <MarginContainer>
+        <MobileImages />
+        <ImageContainer>
+          <Image src={gridImage01} />
+        </ImageContainer>
+        <ImageContainer>
+          <Image src={gridImage02} />
+        </ImageContainer>
+        <ImageContainer>
+          <ImageHalfHeightContainer>
+            <Image src={gridImage03} />
+          </ImageHalfHeightContainer>
+          <ImageHalfHeightContainer>
+            <Image src={gridImage04} />
+          </ImageHalfHeightContainer>
+        </ImageContainer>
+        <Banner data={data} />
+      </MarginContainer>
     </HeroImagesContainer>
   </StyledSection>
 )
