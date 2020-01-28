@@ -13,7 +13,7 @@ const Header = styled.div`
 
 const TermsAndConditions = ({ data }) => (
   <Layout data={data}>
-    <Header>{data.layout.value.legalPageNames.termsAndConditions}</Header>
+    <Header>{data.layout5.value.legalPageNames.termsAndConditions}</Header>
     <Section>
       <div dangerouslySetInnerHTML={{ __html: data.termsAndConditions.text.childContentfulRichText.html }}></div>
     </Section>
@@ -29,7 +29,7 @@ export const query = graphql`
         }
       }
     }
-    layout: contentfulObject(name: { eq: "Layout" }) {
+    layout5: contentfulObject(name: { eq: "Layout" }) {
       value {
         buttons {
           becomeMember

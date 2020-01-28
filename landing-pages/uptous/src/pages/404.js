@@ -18,7 +18,7 @@ const NotFoundPage = styled(({ className, data }) => (
         <Content>
           <h1>{data.notFoundPage.value.heading}</h1>
           <p>{data.notFoundPage.value.subHeading}</p>
-          <Link to="/">{data.layout.value.buttons.goToHomepage}</Link>
+          <Link to="/">{data.layout5.value.buttons.goToHomepage}</Link>
         </Content>
       </Container>
     </Section>
@@ -96,7 +96,7 @@ export const query = graphql`
         subHeading
       }
     }
-    layout: contentfulObject(name: { eq: "Layout" }) {
+    layout5: contentfulObject(name: { eq: "Layout" }) {
       value {
         buttons {
           becomeMember

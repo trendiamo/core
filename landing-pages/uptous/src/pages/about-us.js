@@ -72,7 +72,7 @@ export const query = graphql`
       }
       bottomHeading
     }
-    layout: contentfulObject(name: { eq: "Layout" }) {
+    layout5: contentfulObject(name: { eq: "Layout" }) {
       value {
         buttons {
           becomeMember

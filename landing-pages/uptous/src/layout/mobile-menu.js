@@ -157,11 +157,11 @@ const MobileMenu = ({ headerLinks, siteTitle, toggleMobileMenu, data }) => {
           {(headerLinks || []).map(headerLink =>
             headerLink.target.charAt(0) === '/' ? (
               <Link key={headerLink.target} onClick={removeMobileMenu} to={headerLink.target}>
-                {data.layout.value.menu[headerLink.name]}
+                {data.layout5.value.menu[headerLink.name]}
               </Link>
             ) : (
               <a href={headerLink.target} key={headerLink.target}>
-                {data.layout.value.menu[headerLink.name]}
+                {data.layout5.value.menu[headerLink.name]}
               </a>
             )
           )}

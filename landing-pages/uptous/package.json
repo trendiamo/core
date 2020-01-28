@@ -44,6 +44,7 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "deploy": "rm -rf public/* .cache/* && yarn build && rsync -azh -e ssh --delete-after --ignore-errors public/ root@139.59.128.112:/var/www/uptous.co/html",
+    "deploy2": "rm -rf public/* .cache/* && yarn build && rsync -azh -e ssh --delete-after --ignore-errors public/ root@104.248.26.69:/var/www/test1.uptous.co/html",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },

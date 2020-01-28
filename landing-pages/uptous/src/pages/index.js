@@ -40,7 +40,7 @@ export const query = graphql`
       }
       lastPart
     }
-    layout: contentfulObject(name: { eq: "Layout" }) {
+    layout5: contentfulObject(name: { eq: "Layout" }) {
       value {
         buttons {
           becomeMember

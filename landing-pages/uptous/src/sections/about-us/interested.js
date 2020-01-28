@@ -85,10 +85,10 @@ const AboutUsHero = ({ data }) => {
         <HeaderText>{data.aboutUs.bottomHeading}</HeaderText>
         <ButtonContainer>
           <Link href="https://uptous.co/magazine/newsletter-signup" onClick={onMemberClick}>
-            <Button>{data.layout.value.buttons.becomeMember}</Button>
+            <Button>{data.layout5.value.buttons.becomeMember}</Button>
           </Link>
           <Link href="mailto:hello@uptous.co" onClick={onJoinTeamClick}>
-            <Button>{data.layout.value.buttons.joinTeam}</Button>
+            <Button>{data.layout5.value.buttons.joinTeam}</Button>
           </Link>
         </ButtonContainer>
       </Container>

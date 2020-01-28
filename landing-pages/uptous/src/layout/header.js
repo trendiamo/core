@@ -168,13 +168,13 @@ const Header = ({ headerLinks = [], siteTitle, highlightUrl, data }) => {
           headerLink.target.charAt(0) === '/' ? (
             <HeaderLink key={headerLink.target} to={headerLink.target}>
               <LinkText highlight={highlightUrl === headerLink.target}>
-                {data.layout.value.menu[headerLink.name]}
+                {data.layout5.value.menu[headerLink.name]}
               </LinkText>
             </HeaderLink>
           ) : (
             <HeaderLinkA href={headerLink.target} key={headerLink.target}>
               <LinkText highlight={highlightUrl === headerLink.target}>
-                {data.layout.value.menu[headerLink.name]}
+                {data.layout5.value.menu[headerLink.name]}
               </LinkText>
             </HeaderLinkA>
           )

@@ -21,7 +21,7 @@ export const query = graphql`
         subHeading2
       }
     }
-    layout: contentfulObject(name: { eq: "Layout" }) {
+    layout5: contentfulObject(name: { eq: "Layout" }) {
       value {
         buttons {
           becomeMember

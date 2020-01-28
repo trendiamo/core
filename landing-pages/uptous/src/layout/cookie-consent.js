@@ -40,17 +40,17 @@ const CookieConsent = ({ data }) => {
 
   const consentContent = useMemo(
     () =>
-      data.layout.value.cookieBanner.text.replace(
+      data.layout5.value.cookieBanner.text.replace(
         '[:cookiePolicy]',
-        `<a href="/cookie-policy">${data.layout.value.legalPageNames.cookiePolicy}</a>`
+        `<a href="/cookie-policy">${data.layout5.value.legalPageNames.cookiePolicy}</a>`
       ),
-    [data.layout.value.cookieBanner.text, data.layout.value.legalPageNames.cookiePolicy]
+    [data.layout5.value.cookieBanner.text, data.layout5.value.legalPageNames.cookiePolicy]
   )
 
   return (
     <ReactCookieConsent
       buttonStyle={buttonStyle}
-      buttonText={data.layout.value.buttons.cookieBannerAccept}
+      buttonText={data.layout5.value.buttons.cookieBannerAccept}
       onAccept={onAccept}
       style={cookieConsentStyle}
     >

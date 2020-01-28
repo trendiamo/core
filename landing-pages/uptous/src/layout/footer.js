@@ -134,11 +134,11 @@ const MailchimpForm = ({ data }) => {
 
   const termsAndConditionsText = useMemo(
     () =>
-      data.layout.value.texts.byClickingThisButton.replace(
+      data.layout5.value.texts.byClickingThisButton.replace(
         '[:termsAndConditions]',
-        `<a href="/terms-and-conditions" >${data.layout.value.legalPageNames.termsAndConditions}</a>`
+        `<a href="/terms-and-conditions" >${data.layout5.value.legalPageNames.termsAndConditions}</a>`
       ),
-    [data.layout.value.legalPageNames.termsAndConditions, data.layout.value.texts.byClickingThisButton]
+    [data.layout5.value.legalPageNames.termsAndConditions, data.layout5.value.texts.byClickingThisButton]
   )
 
   return (
@@ -149,7 +149,7 @@ const MailchimpForm = ({ data }) => {
       noValidate
       target="_blank"
     >
-      <BannerInput name="EMAIL" placeholder={data.layout.value.texts.emailInputPlaceholder} required type="email" />
+      <BannerInput name="EMAIL" placeholder={data.layout5.value.texts.emailInputPlaceholder} required type="email" />
       <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
         <input defaultValue="" name="b_45912ce59aa8ef47e7126f2fa_33d3cabba0" tabIndex="-1" type="text" />
       </div>
@@ -158,7 +158,7 @@ const MailchimpForm = ({ data }) => {
           name="subscribe"
           onClick={onSubscribeClick}
           type="submit"
-          value={data.layout.value.buttons.signMeUp}
+          value={data.layout5.value.buttons.signMeUp}
         />
       </BannerButtonContainer>
       <BannerFooterText dangerouslySetInnerHTML={{ __html: termsAndConditionsText }}></BannerFooterText>
@@ -168,7 +168,7 @@ const MailchimpForm = ({ data }) => {
 
 const NewsletterBanner = ({ data }) => (
   <NewsletterBannerContainer>
-    <StayTunedText>{data.layout.value.texts.stayTuned}</StayTunedText>
+    <StayTunedText>{data.layout5.value.texts.stayTuned}</StayTunedText>
     <MailchimpForm data={data} />
   </NewsletterBannerContainer>
 )
@@ -176,10 +176,10 @@ const NewsletterBanner = ({ data }) => (
 // The HTTP Links should stay this way because magazine is currently a separate server!
 const FooterLinks = ({ data }) => (
   <FooterLinksContainer>
-    <Link href="https://uptous.co/magazine">{data.layout.value.footer.magazine}</Link>
-    <Link href="/terms-and-conditions">{data.layout.value.footer.termsAndConditions}</Link>
-    <Link href="/privacy-policy">{data.layout.value.legalPageNames.privacyPolicy}</Link>
-    <Link href="/cookie-policy">{data.layout.value.legalPageNames.cookiePolicy}</Link>
+    <Link href="https://uptous.co/magazine">{data.layout5.value.footer.magazine}</Link>
+    <Link href="/terms-and-conditions">{data.layout5.value.footer.termsAndConditions}</Link>
+    <Link href="/privacy-policy">{data.layout5.value.legalPageNames.privacyPolicy}</Link>
+    <Link href="/cookie-policy">{data.layout5.value.legalPageNames.cookiePolicy}</Link>
   </FooterLinksContainer>
 )
 
@@ -225,8 +225,8 @@ const Social = () => (
 )
 
 const Footer = styled(({ className, hideNewsletter, data }) => {
-  const copyrightText = useMemo(() => data.layout.value.footer.copyright.replace('[:date]', new Date().getFullYear()), [
-    data.layout.value.footer.copyright,
+  const copyrightText = useMemo(() => data.layout5.value.footer.copyright.replace('[:date]', new Date().getFullYear()), [
+    data.layout5.value.footer.copyright,
   ])
 
   return (

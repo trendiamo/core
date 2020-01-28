@@ -24,14 +24,14 @@ const CookiePolicy = ({ data }) => {
 
   return (
     <Layout data={data}>
-      <Header>{data.layout.value.legalPageNames.cookiePolicy}</Header>
+      <Header>{data.layout5.value.legalPageNames.cookiePolicy}</Header>
       <Section fullWidth>
         <a
           className="iubenda-white no-brand iubenda-embed iub-body-embed"
           href="https://www.iubenda.com/privacy-policy/88077835/cookie-policy"
-          title={data.layout.value.legalPageNames.cookiePolicy}
+          title={data.layout5.value.legalPageNames.cookiePolicy}
         >
-          {data.layout.value.legalPageNames.cookiePolicy}
+          {data.layout5.value.legalPageNames.cookiePolicy}
         </a>
       </Section>
     </Layout>
@@ -40,7 +40,7 @@ const CookiePolicy = ({ data }) => {
 
 export const query = graphql`
   query CookiePolicyPage {
-    layout: contentfulObject(name: { eq: "Layout" }) {
+    layout5: contentfulObject(name: { eq: "Layout" }) {
       value {
         buttons {
           becomeMember

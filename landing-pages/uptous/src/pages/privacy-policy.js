@@ -24,14 +24,14 @@ const PrivacyPolicy = ({ data }) => {
 
   return (
     <Layout data={data}>
-      <Header>{data.layout.value.legalPageNames.privacyPolicy}</Header>
+      <Header>{data.layout5.value.legalPageNames.privacyPolicy}</Header>
       <Section fullWidth>
         <a
           className="iubenda-white no-brand iubenda-embed iub-body-embed"
           href="https://www.iubenda.com/privacy-policy/88077835"
-          title={data.layout.value.legalPageNames.privacyPolicy}
+          title={data.layout5.value.legalPageNames.privacyPolicy}
         >
-          {data.layout.value.legalPageNames.privacyPolicy}
+          {data.layout5.value.legalPageNames.privacyPolicy}
         </a>
       </Section>
     </Layout>
@@ -40,7 +40,7 @@ const PrivacyPolicy = ({ data }) => {
 
 export const query = graphql`
   query PrivacyPolicyPage {
-    layout: contentfulObject(name: { eq: "Layout" }) {
+    layout5: contentfulObject(name: { eq: "Layout" }) {
       value {
         buttons {
           becomeMember

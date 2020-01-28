@@ -113,22 +113,22 @@ const OpeningCounter = ({ data }) => {
     <Section>
       <Container>
         <TextContainer>
-          <Text>{data.layout.value.timer.heading}</Text>
-          <SubHeading dangerouslySetInnerHTML={{ __html: data.layout.value.timer.subHeading }} />
+          <Text>{data.layout5.value.timer.heading}</Text>
+          <SubHeading dangerouslySetInnerHTML={{ __html: data.layout5.value.timer.subHeading }} />
         </TextContainer>
         {remainingTime && (
           <CounterContainer>
             <Indicator>
               <Digit>{remainingTime.days}</Digit>
-              <Description>{data.layout.value.timer.days}</Description>
+              <Description>{data.layout5.value.timer.days}</Description>
             </Indicator>
             <Indicator>
               <Digit>{remainingTime.hours}</Digit>
-              <Description>{data.layout.value.timer.hours}</Description>
+              <Description>{data.layout5.value.timer.hours}</Description>
             </Indicator>
             <Indicator>
               <Digit>{remainingTime.minutes}</Digit>
-              <Description>{data.layout.value.timer.minutes}</Description>
+              <Description>{data.layout5.value.timer.minutes}</Description>
             </Indicator>
           </CounterContainer>
         )}

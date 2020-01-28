@@ -133,7 +133,7 @@ const Banner = ({ data }) => (
     </BannerDescription>
     <BannerButtonContainer>
       <StyledLink href="https://uptous.co/magazine">
-        <BannerButton type="submit" value={data.layout.value.buttons.continueToMagazine} />
+        <BannerButton type="submit" value={data.layout5.value.buttons.continueToMagazine} />
       </StyledLink>
     </BannerButtonContainer>
   </BannerContainer>

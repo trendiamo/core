@@ -158,11 +158,11 @@ const MailchimpForm = ({ data }) => {
 
   const termsAndConditionsText = useMemo(
     () =>
-      data.layout.value.texts.byClickingThisButton.replace(
+      data.layout5.value.texts.byClickingThisButton.replace(
         '[:termsAndConditions]',
-        `<a href="/terms-and-conditions" >${data.layout.value.legalPageNames.termsAndConditions}</a>`
+        `<a href="/terms-and-conditions" >${data.layout5.value.legalPageNames.termsAndConditions}</a>`
       ),
-    [data.layout.value.legalPageNames.termsAndConditions, data.layout.value.texts.byClickingThisButton]
+    [data.layout5.value.legalPageNames.termsAndConditions, data.layout5.value.texts.byClickingThisButton]
   )
 
   return (
@@ -173,7 +173,7 @@ const MailchimpForm = ({ data }) => {
       noValidate
       target="_blank"
     >
-      <BannerInput name="EMAIL" placeholder={data.layout.value.texts.emailInputPlaceholder} required type="email" />
+      <BannerInput name="EMAIL" placeholder={data.layout5.value.texts.emailInputPlaceholder} required type="email" />
       <div aria-hidden="true" style={{ position: 'absolute', left: '-5000px' }}>
         <input defaultValue="" name="b_45912ce59aa8ef47e7126f2fa_33d3cabba0" tabIndex="-1" type="text" />
       </div>
@@ -182,7 +182,7 @@ const MailchimpForm = ({ data }) => {
           name="subscribe"
           onClick={onSubscribeClick}
           type="submit"
-          value={data.layout.value.buttons.signMeUp}
+          value={data.layout5.value.buttons.signMeUp}
         />
       </BannerButtonContainer>
       <BannerFooterText dangerouslySetInnerHTML={{ __html: termsAndConditionsText }}></BannerFooterText>
