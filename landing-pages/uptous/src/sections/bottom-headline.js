@@ -11,7 +11,6 @@ const Text = styled.div`
   line-height: 1.2;
 
   @media (min-width: 1000px) {
-    text-align: left;
     font-size: 26px;
     margin: 40px 0 20px;
   }

@@ -8,9 +8,9 @@ const Text = styled.div`
   font-size: 22px;
   line-height: 1.2;
   text-align: left;
+  text-align: center;
 
   @media (min-width: 1000px) {
-    text-align: center;
     font-size: 28px;
   }
 `
@@ -70,12 +70,8 @@ const SubHeading = styled.div`
   line-height: 1.2;
   font-size: 16px;
   max-width: 600px;
-  text-align: left;
   margin: 35px auto 40px;
-
-  @media (min-width: 1000px) {
-    text-align: center;
-  }
+  text-align: center;
 `
 
 const TextContainer = styled.div`

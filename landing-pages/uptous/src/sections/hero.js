@@ -87,10 +87,10 @@ const BannerDescription = styled.div`
   line-height: 1.2;
   font-size: 20px;
   line-height: 22px;
+  text-align: center;
 
   @media (min-width: 1000px) {
     width: 100%;
-    text-align: center;
   }
 `
 
