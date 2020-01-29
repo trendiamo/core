@@ -178,6 +178,7 @@ const FooterLinks = ({ data }) => (
   <FooterLinksContainer>
     <Link href="https://uptous.co/magazine">{data.layout.value.footer.magazine}</Link>
     <Link href="/terms-and-conditions">{data.layout.value.footer.termsAndConditions}</Link>
+    <Link href="/jobs">{data.layout.value.footer.jobs}</Link>
     <Link href="/privacy-policy">{data.layout.value.legalPageNames.privacyPolicy}</Link>
     <Link href="/cookie-policy">{data.layout.value.legalPageNames.cookiePolicy}</Link>
   </FooterLinksContainer>

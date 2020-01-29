@@ -8,6 +8,7 @@ html {
   color: #272a32;
   font-family: 'Avenir', sans-serif;
   font-size: 24px;
+  scroll-behavior: smooth;
 }
 
 body {

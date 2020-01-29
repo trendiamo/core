@@ -84,6 +84,7 @@ export const query = graphql`
         }
         footer {
           magazine
+          jobs
           termsAndConditions
           copyright
         }
