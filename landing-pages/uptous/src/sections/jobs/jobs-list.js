@@ -74,7 +74,7 @@ const CollapsibleJob = ({ data, job }) => {
   }, [job.name])
 
   useEffect(() => {
-    if (job.id === 'c1' || `#job-${job.id}` === window.location.hash) {
+    if (`#job-${job.id}` === window.location.hash) {
       setTimeout(() => setOpenByDefault(true), 100)
     }
   }, [job, job.id])
