@@ -1,6 +1,6 @@
 import Button from '../../components/button'
 import Collapsible from '../../components/collapsible'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Section from '../../components/section'
 import styled from 'styled-components'
 import { pushToGA } from '../../utils'
@@ -62,6 +62,8 @@ const Link = styled.a`
 `
 
 const CollapsibleJob = ({ data, job }) => {
+  const [openByDefault, setOpenByDefault] = useState(false)
+
   const onJoinTeamClick = useCallback(() => {
     pushToGA({
       event: 'buttonClick',
@@ -71,7 +73,11 @@ const CollapsibleJob = ({ data, job }) => {
     })
   }, [job.name])
 
-  const openByDefault = useMemo(() => job.id === 'c1' || `#job-${job.id}` === window.location.hash, [job.id])
+  useEffect(() => {
+    if (job.id === 'c1' || `#job-${job.id}` === window.location.hash) {
+      setTimeout(() => setOpenByDefault(true), 100)
+    }
+  }, [job, job.id])
 
   return (
     <Collapsible heading={job.name} headingHook={`job-${job.id}`} key={job.id} openByDefault={openByDefault}>
@@ -88,9 +94,11 @@ const CollapsibleJob = ({ data, job }) => {
 
 const StrongVision = ({ data }) => {
   useEffect(() => {
-    const hash = window.location.hash
-    window.location.hash = ''
-    window.location.hash = hash
+    setTimeout(() => {
+      const hash = window.location.hash
+      window.location.hash = ''
+      window.location.hash = hash
+    }, 150)
   }, [])
 
   return (

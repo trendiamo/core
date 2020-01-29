@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -87,7 +87,7 @@ const HeaderElement = ({ heading, headingHook, toggleCollapsed, collapsed }) => 
 )
 
 const Collapsible = ({ headingHook, heading, children, openByDefault }) => {
-  const [collapsed, setCollapsed] = useState(!openByDefault)
+  const [collapsed, setCollapsed] = useState(false)
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(!collapsed)
@@ -95,6 +95,10 @@ const Collapsible = ({ headingHook, heading, children, openByDefault }) => {
     window.location.hash = ''
     window.location.hash = `#${headingHook}`
   }, [collapsed, headingHook])
+
+  useEffect(() => {
+    setCollapsed(!openByDefault)
+  }, [openByDefault])
 
   return (
     <Container>

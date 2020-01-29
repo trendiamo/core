@@ -52,6 +52,7 @@ const BannerContainer = styled.div`
 
   @media (min-width: 1000px) {
     max-width: 570px;
+    padding: 25px 20px;
     margin: 0;
     top: 160px;
     left: 50%;
