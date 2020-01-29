@@ -1,39 +1,23 @@
-import React from 'react'
 import styled from 'styled-components'
 
-const StyledButton = styled.button`
-  appearance: none;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  font-weight: 900;
+const Button = styled.button`
+  border: 1px solid #111;
   outline: none;
-  overflow: hidden;
-  text-transform: uppercase;
-  white-space: nowrap;
-  height: 38px;
-  font-size: calc(15px + 1vw);
+  background: #111;
+  color: #fff;
+  font-size: ${({ size }) => (size === 'small' ? '18px' : '20px')};
+  font-weight: ${({ size }) => (size === 'small' ? 700 : 400)};
+  cursor: pointer;
+  border-radius: ${({ size }) => (size === 'small' ? '3px' : '0')};
 
-  background: transparent;
-  color: ${({ color }) => color || '#fff'};
+  width: 100%;
+  padding: ${({ size }) => (size === 'small' ? '8px 0' : '14px 0')};
+  ${({ size }) => size === 'big' && 'text-transform: uppercase;'}
 
   @media (min-width: 1000px) {
-    font-size: 1.25rem;
+    padding: ${({ size }) => (size === 'small' ? '8px 40px' : '14px 70px')};
+    width: auto;
   }
 `
-
-const VerticallyCenteredSpan = styled.span`
-  /* keep it vertically centered */
-
-  vertical-align: middle;
-  line-height: 38px;
-`
-
-const Button = ({ children, className, onClick }) => (
-  <StyledButton className={className} onClick={onClick} type="button">
-    <VerticallyCenteredSpan>{children}</VerticallyCenteredSpan>
-  </StyledButton>
-)
 
 export default Button

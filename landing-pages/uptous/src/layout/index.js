@@ -25,14 +25,14 @@ const headerLinks = [
   { target: 'https://uptous.co/magazine', name: 'magazine' },
 ]
 
-const Layout = ({ children, light, hideNewsletter, highlightUrl, data }) => {
+const Layout = ({ children, light, hideNewsletter, highlightUrl, data, dataSeo }) => {
   useEffect(() => {
     addGTM()
   }, [])
 
   return (
     <Main>
-      <Seo />
+      <Seo dataSeo={dataSeo} />
       <Helmet>
         <link href={favicon} rel="shortcut icon" type="image/png" />
         <meta name="hbspt-locale" value="en" />

@@ -1,24 +1,40 @@
+import Hero from '../sections/jobs/hero'
+import JobsList from '../sections/jobs/jobs-list'
 import Layout from '../layout'
-import OpeningCounter from '../sections/opening-counter'
+import MainContent from '../sections/jobs/main-content'
 import React from 'react'
-import SignupSuccessHero from '../sections/signup-success-hero'
+import SeoImageSrc from '../images/jobs/og.jpg'
 import { graphql } from 'gatsby'
 
-const NewsletterSignupSuccess = ({ data }) => (
-  <Layout data={data} hideNewsletter>
-    <SignupSuccessHero data={data} />
-    <OpeningCounter data={data} />
+const JobsPage = ({ data }) => (
+  <Layout data={data} dataSeo={data.jobs.value.seo} seoImageSrc={SeoImageSrc}>
+    <Hero data={data} />
+    <MainContent data={data} />
+    <JobsList data={data} />
   </Layout>
 )
 
 export const query = graphql`
-  query NewsletterSignupSuccess {
-    successPage: contentfulObject(name: { eq: "Sign Up Success Page" }) {
+  query JobsPage {
+    jobs: contentfulObject(name: { eq: "Jobs Page" }) {
       value {
-        heading
-        indicator
-        subHeading1
-        subHeading2
+        heroHeading
+        heroSubheading
+        middleHeading
+        middleDescription
+        middleHeading2
+        jobs {
+          id
+          name
+          description
+          jobTypes
+        }
+        jobTypes
+        applyForThisJob
+        seo {
+          title
+          description
+        }
       }
     }
     layout: contentfulObject(name: { eq: "Layout" }) {
@@ -67,4 +83,4 @@ export const query = graphql`
   }
 `
 
-export default NewsletterSignupSuccess
+export default JobsPage
