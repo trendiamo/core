@@ -59,6 +59,10 @@ const Link = styled.a`
   text-decoration: none;
   outline: none;
   width: 100%;
+
+  @media (min-width: 1000px) {
+    width: auto;
+  }
 `
 
 const CollapsibleJob = ({ data, job }) => {
