@@ -1,3 +1,4 @@
+import IconFacebook from '../images/icon-facebook.svg'
 import IconInstagram from '../images/icon-instagram.svg'
 import IconLinkedin from '../images/icon-linkedin.svg'
 import React, { useCallback, useMemo } from 'react'
@@ -56,6 +57,7 @@ const Link = styled.a`
 
 const SocialLink = styled.a`
   display: block;
+  font-size: 0;
   & + & {
     margin-left: 30px;
   }
@@ -185,15 +187,9 @@ const FooterLinks = ({ data }) => (
 )
 
 const SocialContainer = styled.div`
-  margin-top: 10px;
+  margin: 20px 0 25px;
   display: flex;
   justify-content: center;
-
-  @media (min-width: 1000px) {
-    margin: 0;
-    position: absolute;
-    right: 10px;
-  }
 `
 
 const DarkSectionFlex = styled.div`
@@ -201,17 +197,13 @@ const DarkSectionFlex = styled.div`
   margin: 0 auto;
   position: relative;
   margin-bottom: 10px;
-
-  @media (min-width: 1000px) {
-    justify-content: center;
-    display: flex;
-    max-width: 1160px;
-    margin-bottom: 50px;
-  }
 `
 
 const Social = () => (
   <SocialContainer>
+    <SocialLink href="https://www.facebook.com/UptousClub" rel="noopener noreferrer" target="_blank">
+      <IconFacebook />
+    </SocialLink>
     <SocialLink
       href="https://www.linkedin.com/company/uptous-positive-influence/"
       rel="noopener noreferrer"
