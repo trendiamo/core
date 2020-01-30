@@ -12,7 +12,7 @@ const HeaderText = styled.div`
   color: #111;
   font-weight: 900;
   font-size: 26px;
-  text-align: left;
+  text-align: center;
 
   @media (min-width: 1000px) {
     font-size: 36px;
@@ -22,16 +22,16 @@ const HeaderText = styled.div`
 
 const MainDescription = styled.div`
   color: #111;
-  line-height: 1.2;
+  line-height: 1.36;
   width: 100%;
   font-size: 20px;
-  margin: 20px auto 0;
-  text-align: left;
+  text-align: center;
+  margin: 30px auto;
 
   @media (min-width: 1000px) {
-    font-size: 28px;
+    font-size: 22px;
+    width: 1000px;
     text-align: center;
-    width: 1100px;
   }
 `
 

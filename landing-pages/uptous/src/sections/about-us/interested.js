@@ -1,3 +1,4 @@
+import Button from '../../components/button'
 import React, { useCallback } from 'react'
 import Section from '../../components/section'
 import styled from 'styled-components'
@@ -24,28 +25,12 @@ const ButtonContainer = styled.div`
   display: block;
 
   @media (min-width: 1000px) {
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
-    justify-content: space-around;
-  }
-`
-
-const Button = styled.button`
-  border: 1px solid #111;
-  outline: none;
-  background: #111;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  border-radius: 3px;
-
-  width: 100%;
-  padding: 8px 0;
-
-  @media (min-width: 1000px) {
-    padding: 8px 40px;
-    width: auto;
+    justify-content: space-evenly;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
   }
 `
 
@@ -55,6 +40,7 @@ const Link = styled.a`
   margin-top: 20px;
   text-decoration: none;
   outline: none;
+
   @media (min-width: 1000px) {
     margin-top: 0px;
   }
@@ -85,10 +71,10 @@ const AboutUsHero = ({ data }) => {
         <HeaderText>{data.aboutUs.bottomHeading}</HeaderText>
         <ButtonContainer>
           <Link href="https://uptous.co/magazine/newsletter-signup" onClick={onMemberClick}>
-            <Button>{data.layout.value.buttons.becomeMember}</Button>
+            <Button size="big">{data.layout.value.buttons.becomeMember}</Button>
           </Link>
           <Link href="/jobs" onClick={onJoinTeamClick}>
-            <Button>{data.layout.value.buttons.joinTeam}</Button>
+            <Button size="big">{data.layout.value.buttons.joinTeam}</Button>
           </Link>
         </ButtonContainer>
       </Container>

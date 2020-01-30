@@ -23,7 +23,7 @@ const HeaderText = styled.div`
   color: #111;
   font-weight: 900;
   font-size: 26px;
-  text-align: left;
+  text-align: center;
 
   @media (min-width: 1000px) {
     font-size: 36px;
@@ -34,18 +34,18 @@ const HeaderText = styled.div`
 const MainDescription = styled.div`
   p {
     color: #111;
-    line-height: 1.2;
+    line-height: 1.36;
     width: 100%;
-    font-size: 20px;
-    margin: 20px auto 0;
+    font-size: 22px;
+    margin: 35px auto 0;
     text-align: left;
   }
 
   @media (min-width: 1000px) {
     p {
-      font-size: 28px;
+      font-size: 22px;
       text-align: center;
-      width: 1040px;
+      width: 1020px;
     }
   }
 `
@@ -92,6 +92,7 @@ const FaceContainer = styled.div`
 const FaceText = styled.div`
   font-size: 16px;
   text-align: left;
+  line-height: 1.4;
   & + & {
     margin-top: 15px;
   }

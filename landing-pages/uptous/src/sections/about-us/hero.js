@@ -2,7 +2,7 @@ import React from 'react'
 import Section from '../../components/section'
 import styled from 'styled-components'
 
-const HeaderText = styled.div`
+const HeaderText = styled.h2`
   color: #111;
   font-weight: 900;
   font-size: 26px;
@@ -17,13 +17,13 @@ const HeaderText = styled.div`
 const MainDescription = styled.div`
   color: #111;
   margin-top: 32px;
-  line-height: 1.2;
+  line-height: 1.36;
   width: 100%;
   font-size: 20px;
 
   @media (min-width: 1000px) {
-    font-size: 28px;
-    width: 600px;
+    font-size: 22px;
+    width: 564px;
   }
 `
 

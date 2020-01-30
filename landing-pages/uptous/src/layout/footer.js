@@ -122,6 +122,7 @@ const BannerFooterText = styled.div`
 const StayTunedText = styled.div`
   color: #111;
   margin-bottom: 15px;
+  font-size: 22px;
 `
 
 const MailchimpForm = ({ data }) => {

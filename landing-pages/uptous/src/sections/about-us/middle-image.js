@@ -30,47 +30,41 @@ const BannerContainer = styled.div`
   top: 100px;
 
   background: #fff;
-  padding: 20px;
+  padding: 10px;
 
   @media (min-width: 1000px) {
-    height: 330px;
+    padding: 45px 45px 50px;
     max-width: 560px;
     margin: 0;
-    top: 180px;
+    top: 50%;
     left: 50%;
     width: 100%;
     right: auto;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
   }
 `
 
 const BannerHeader = styled.div`
-  text-align: center;
-  font-size: 28px;
   color: #111;
-  font-weight: 700;
-  margin-top: 10px;
-  white-space: wrap;
+  font-weight: 900;
+  font-size: 26px;
+  text-align: center;
 
   @media (min-width: 1000px) {
-    margin-top: 30px;
-    letter-spacing: 1.8px;
     font-size: 36px;
-    white-space: nowrap;
+    text-align: center;
   }
 `
 
 const BannerDescription = styled.div`
   color: #111;
   font-size: 22px;
-  line-height: 1.2;
+  line-height: 1.36;
   text-align: center;
-  margin: 24px auto 0;
+  margin: 50px auto 0;
 
   @media (min-width: 1000px) {
-    margin: 38px auto 0;
-    font-size: 28px;
-    width: 466px;
+    font-size: 22px;
   }
 `
 

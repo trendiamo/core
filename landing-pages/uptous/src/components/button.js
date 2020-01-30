@@ -5,7 +5,7 @@ const Button = styled.button`
   outline: none;
   background: #111;
   color: #fff;
-  font-size: ${({ size }) => (size === 'small' ? '18px' : '20px')};
+  font-size: ${({ size }) => (size === 'small' ? '16px' : '20px')};
   font-weight: ${({ size }) => (size === 'small' ? 700 : 400)};
   cursor: pointer;
   border-radius: ${({ size }) => (size === 'small' ? '3px' : '0')};

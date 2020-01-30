@@ -16,7 +16,7 @@ const Container = styled.div`
   width: 100%;
 
   @media (min-width: 1000px) {
-    height: 580px;
+    height: 570px;
     margin: 0 -5px;
   }
 `
@@ -54,11 +54,11 @@ const BannerContainer = styled.div`
   top: 100px;
 
   background: #fff;
-  padding: 20px;
+  padding: 10px;
 
   @media (min-width: 1000px) {
-    height: 230px;
-    max-width: 550px;
+    padding: 40px 50px 60px;
+    max-width: 560px;
     margin: 0;
     top: 180px;
     left: 50%;
@@ -69,29 +69,26 @@ const BannerContainer = styled.div`
 `
 
 const BannerHeader = styled.div`
-  text-align: center;
-  font-size: 28px;
   color: #111;
-  font-weight: 700;
-  margin-top: 10px;
-  white-space: wrap;
+  font-weight: 900;
+  font-size: 26px;
+  text-align: center;
 
   @media (min-width: 1000px) {
-    letter-spacing: 1.8px;
     font-size: 36px;
-    white-space: nowrap;
+    text-align: center;
   }
 `
 
 const BannerDescription = styled.div`
   color: #111;
   font-size: 22px;
-  line-height: 1.2;
+  line-height: 1.36;
   text-align: center;
-  margin: 24px auto 0;
+  margin: 40px auto 0;
 
   @media (min-width: 1000px) {
-    font-size: 26px;
+    font-size: 22px;
   }
 `
 

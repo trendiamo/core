@@ -22,6 +22,7 @@ const Container = styled.div`
 `
 
 const HeaderText = styled.div`
+  font-weight: 900;
   color: #111;
   font-weight: 900;
   font-size: 26px;
@@ -35,52 +36,36 @@ const HeaderText = styled.div`
 
 const MainDescription = styled.div`
   color: #111;
-  line-height: 1.2;
+  line-height: 1.36;
   width: 100%;
   font-size: 20px;
-  margin: 20px auto 0;
-  text-align: left;
+  text-align: center;
+  margin: 34px auto;
 
   @media (min-width: 1000px) {
-    font-size: 28px;
+    font-size: 22px;
+    width: 1000px;
     text-align: center;
-    width: 1100px;
   }
 `
 
 const Values = styled.div`
-  margin-top: 26px;
+  margin-top: 0;
 
   @media (min-width: 1000px) {
-    padding: 0 50px;
+    padding: 0 245px 0 240px;
   }
 `
 
 const Value = styled.div`
   margin-top: 40px;
-`
-
-const IndexAndTitle = styled.div`
   display: flex;
-  margin-bottom: 0.5rem;
-  margin-left: 0;
-
-  @media (min-width: 1000px) {
-    margin-left: 230px;
-  }
 `
 
-const Text = styled.div`
-  font-size: 0.75rem;
-  margin-top: 20px;
-  width: 100%;
-
-  @media (min-width: 1000px) {
-    width: 600px;
-    margin-left: 330px;
-    font-size: 20px;
-    line-height: 1.4;
-  }
+const ValueColumn = styled.div`
+  display: flex;
+  margin-left: 0;
+  flex-direction: column;
 `
 
 const Index = styled.div`
@@ -92,7 +77,6 @@ const Index = styled.div`
   }
   @media (min-width: 1000px) {
     font-size: 28px;
-    margin-right: 0;
     &:after {
       content: '';
     }
@@ -101,17 +85,26 @@ const Index = styled.div`
 
 const ValuesContainer = styled.div`
   text-align: left;
-  margin-top: 70px;
+  margin-top: 40px;
 `
 
 const Title = styled.div`
-  font-size: 20px;
   font-weight: 700;
 
-  margin-left: 10px;
+  @media (min-width: 1000px) {
+    font-size: 28px;
+    margin-left: 60px;
+  }
+`
+
+const Text = styled.div`
+  font-size: 0.75rem;
 
   @media (min-width: 1000px) {
-    margin-left: 70px;
+    font-size: 22px;
+    line-height: 1.4;
+    margin-left: 60px;
+    margin-top: 20px;
   }
 `
 
@@ -137,11 +130,13 @@ const OurValues = ({ data }) => {
                 data-aos-once="false"
                 key={value.index}
               >
-                <IndexAndTitle>
+                <ValueColumn>
                   <Index>{value.index}</Index>
+                </ValueColumn>
+                <ValueColumn>
                   <Title>{value.title}</Title>
-                </IndexAndTitle>
-                <Text>{value.text}</Text>
+                  <Text>{value.text}</Text>
+                </ValueColumn>
               </Value>
             ))}
           </Values>
