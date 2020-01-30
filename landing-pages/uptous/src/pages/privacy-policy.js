@@ -59,6 +59,7 @@ export const query = graphql`
         menu {
           magazine
           aboutUs
+          jobs
           joinCommunity
         }
         timer {

@@ -7,7 +7,7 @@ import SeoImageSrc from '../images/jobs/og.jpg'
 import { graphql } from 'gatsby'
 
 const JobsPage = ({ data }) => (
-  <Layout data={data} dataSeo={data.jobs.value.seo} seoImageSrc={SeoImageSrc}>
+  <Layout data={data} dataSeo={data.jobs.value.seo} highlightUrl="/jobs" seoImageSrc={SeoImageSrc}>
     <Hero data={data} />
     <MainContent data={data} />
     <JobsList data={data} />
@@ -56,6 +56,7 @@ export const query = graphql`
         menu {
           magazine
           aboutUs
+          jobs
           joinCommunity
         }
         timer {
