@@ -3,9 +3,9 @@ require "resque/server"
 Rails.application.routes.draw do
   mount Resque::Server, at: "/jobs" if Rails.env.development?
 
-  devise_for :users, only: %i[omniauth_callbacks],
-  controllers: { omniauth_callbacks: 'api/v1/users/omniauth_callbacks' }, path: "api/v1/users"
   post "/graphql", to: "graphql#execute"
+
+  devise_for :users, only: %i[]
 
   defaults format: :json do
     namespace :api do
@@ -35,6 +35,7 @@ Rails.application.routes.draw do
           put "/users/onboarding", to: "mes#update_onboarding"
           get "/users/invites", to: "users/invites#edit"
           post "/users/invites", to: "users/invites#create"
+          get "/users/auth/google_oauth2", to: "users/omniauth_callbacks#google_oauth2"
         end
 
         resources :accounts, only: %i[index show create destroy], param: :slug
@@ -89,6 +90,18 @@ Rails.application.routes.draw do
       namespace :v1 do
         resources :products, only: %i[index show create update destroy]
         resources :orders, only: %i[create]
+      end
+    end
+
+    namespace :shopify_store_api do
+      namespace :v1 do
+        resources :shopify_customers, only: %i[create]
+        post "/toggle_returns", to: "returns#toggle"
+        post "/user_order", to: "user_order#create"
+        devise_scope :user do
+          get "/oauth/callback", to: "omniauth_callbacks#google"
+          get "/oauth/facebook/callback", to: "omniauth_callbacks#facebook"
+        end
       end
     end
 

@@ -1,6 +1,5 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :validatable, :omniauthable,
-         omniauth_providers: [:google_oauth2]
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :trackable, :validatable
 
   enum affiliate_role: %i[not_affiliate promoter seller]
 

@@ -106,6 +106,9 @@ GEM
     hashie (3.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
+    httparty (0.17.3)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
@@ -166,6 +169,8 @@ GEM
     omniauth (1.9.0)
       hashie (>= 3.4.6, < 3.7.0)
       rack (>= 1.6.2, < 3)
+    omniauth-facebook (4.0.0)
+      omniauth-oauth2 (~> 1.2)
     omniauth-google-oauth2 (0.8.0)
       jwt (>= 2.0)
       omniauth (>= 1.1.1)
@@ -331,11 +336,13 @@ DEPENDENCIES
   factory_bot_rails
   faker
   graphql
+  httparty
   kaminari
   letter_opener
   listen (>= 3.0.5, < 3.2)
   lograge
   minitest (= 5.10.3)
+  omniauth-facebook
   omniauth-google-oauth2
   pg (~> 0.18)
   pry

@@ -1,0 +1,20 @@
+// put your styles here
+.helloworld{
+  color: #f00;
+}
+
+.modal_50{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  background: #fff;
+  &.open{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}

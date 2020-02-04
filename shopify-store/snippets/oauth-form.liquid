@@ -1,0 +1,29 @@
+<form method="POST" accept-charset="UTF-8" action="https://hellodude23.myshopify.com/account/login" id="oauth-form" >
+  <input type="hidden" name="form_type" value="customer_login" />
+  <input type="hidden" name="utf8" value="✓" />
+  <input type="hidden" name="return_to" value="" />
+  <input type="hidden" name="customer[email]" />
+  <input type="hidden" name="customer[password]" />
+  <input type="hidden" name="form_type" value="customer_login" />
+  <input type="submit" style="visibility: hidden;" />
+</form>
+<script type="application/javascript" >
+  var oAuthLogin = function(){
+    var urlParams = new URLSearchParams(window.location.search);
+    var email = urlParams.get('email');
+    var password = urlParams.get('password');
+
+
+    if (!email || !password){
+      window.location.href = "https://google.com";
+      return
+    }
+
+    document.getElementsByName('customer[email]')[0].value = email;
+    document.getElementsByName('customer[password]')[0].value = password;
+
+    document.getElementById('oauth-form').submit();
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){oAuthLogin();});
+</script>

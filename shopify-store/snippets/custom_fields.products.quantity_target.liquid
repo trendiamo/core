@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hellodude23.myshopify.com/products/configure/125066/edit
+{% endcomment %}
+{% if product.metafields.custom_fields["quantity_target"] != blank %}
+  <div class="custom-field custom-field__quantity-target custom-field__type--integer">
+    <h3 class="custom-field--title">Quantity Target</h3>
+    <div class="custom-field--value">
+      {{ product.metafields.custom_fields["quantity_target"] }}
+    </div>
+  </div>
+{% endif %}

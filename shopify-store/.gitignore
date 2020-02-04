@@ -1,0 +1,5 @@
+config.yml
+config/settings_data.json
+app/node_modules
+app/yarn-error.log
+assets/app.js
