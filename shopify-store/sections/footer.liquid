@@ -18,13 +18,11 @@
 
 {%- case section.blocks.size -%}
   {%- when 1 -%}
-    {%- assign footer_item = 'site-footer__item--full-width' -%}
-    {%- assign inline_list = true -%}
-  {%- when 2 -%}
     {%- assign footer_item = 'site-footer__item--one-half' -%}
-    {%- assign inline_list = true -%}
-  {%- when 3 -%}
+  {%- when 2 -%}
     {%- assign footer_item = 'site-footer__item--one-third' -%}
+  {%- when 3 -%}
+    {%- assign footer_item = 'site-footer__item--one-quarter' -%}
     {%- for block in section.blocks -%}
       {%- if block.type == 'newsletter' -%}
         {%- assign footer_item = 'site-footer__item--one-quarter' -%}
@@ -80,6 +78,8 @@
   }
 </style>
 
+{%- assign socials = "Facebook Twitter LinkedIn Pinterest Instagram Tumblr Snapchat YouTube Vimeo" | split: ' ' -%}
+
 <footer class="site-footer" role="contentinfo">
   <div class="page-width">
     <div class="site-footer__content">
@@ -97,50 +97,6 @@
             {%- endif -%}
 
             {%- case block.type -%}
-              {%- when 'newsletter' -%}
-                <div class="site-footer__newsletter
-                          {% if section.blocks.size == 1 %} site-footer__single-block--centered{% endif %}">
-                  {%- assign formId = 'ContactFooter' -%}
-                  {% form 'customer', id: formId, novalidate: 'novalidate' %}
-                    {%- if form.posted_successfully? -%}
-                      <p class="form-message form-message--success" tabindex="-1" data-form-status>
-                        {{ 'general.newsletter_form.confirmation' | t }}
-                      </p>
-                    {%- endif -%}
-                    <input type="hidden" name="contact[tags]" value="newsletter">
-                    <div class="input-group {% if form.errors %} input-group--error{% endif %}">
-                      <input type="email"
-                        name="contact[email]"
-                        id="{{ formId }}-email"
-                        class="input-group__field newsletter__input{% if form.errors %} input--error{% endif %}"
-                        value="{{ form.email }}"
-                        placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
-                        aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}"
-                        aria-required="true"
-                        required
-                        autocorrect="off"
-                        autocapitalize="off"
-                        {% if form.errors %}
-                          aria-invalid="true"
-                          aria-describedby="{{ formId }}-email-error"
-                          data-form-status
-                        {% endif %}>
-                      <span class="input-group__btn">
-                        <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe">
-                          <span class="newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
-                        </button>
-                      </span>
-                    </div>
-                    {% if form.errors contains 'email' %}
-                      <span id="{{ formId }}-email-error" class="input-error-message">
-                        <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
-                        {% include 'icon-error' %}
-                        <span class="site-footer__newsletter-error">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
-                      </span>
-                    {% endif %}
-                  {% endform %}
-                </div>
-
               {%- when 'text' -%}
                 {%- if block.settings.text != blank -%}
                   <div class="site-footer__rte
@@ -169,48 +125,35 @@
           </div>
         </div>
       {%- endfor -%}
+
+      <div class="site-footer__item
+                  {{ footer_item }}"
+          >
+        <div class="site-footer__item-inner site-footer__item-inner--link_list">
+
+          <p class="h4">Follow us</p>
+            <ul class="site-footer__linklist list--inline footer-social ">
+              {%- for social in socials -%}
+                {%- assign social_link = social | prepend: 'social_' | append: '_link' | downcase -%}
+                {%- assign icon_link = social | prepend: 'icon-' | downcase -%}
+                {%- if settings[social_link] != blank -%}
+                  <li>
+                    <a class="social-icons__link" href="{{ settings[social_link] | escape }}" aria-describedby="a11y-external-message">
+                      {%- include icon_link -%}
+                      <span class="icon__fallback-text">{{social}}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <hr class="site-footer__hr">
-
-  {%- assign socials = "Facebook Twitter Pinterest Instagram Tumblr Snapchat YouTube Vimeo" | split: ' ' -%}
-
   <div class="page-width">
     <div class="grid grid--no-gutters small--text-center">
-      <div class="grid__item one-half small--one-whole">
-        {%- if social_icons -%}
-          <ul class="list--inline site-footer__social-icons social-icons site-footer__icon-list">
-            {%- for social in socials -%}
-              {%- assign social_link = social | prepend: 'social_' | append: '_link' | downcase -%}
-              {%- assign icon_link = social | prepend: 'icon-' | downcase -%}
-              {%- if settings[social_link] != blank -%}
-                <li>
-                  <a class="social-icons__link" href="{{ settings[social_link] | escape }}" aria-describedby="a11y-external-message">
-                    {%- include icon_link -%}
-                    <span class="icon__fallback-text">{{social}}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-            {%- endfor -%}
-
-            {%- if request.page_type == 'blog' or request.page_type == 'article' -%}
-              <li>
-                <a class="social-icons__link" href="{{ shop.url }}{{ blog.url }}.atom">
-                  {% include 'icon-rss' %}
-                  <span class="icon__fallback-text">RSS</span>
-                </a>
-              </li>
-            {%- endif -%}
-          </ul>
-        {%- else -%}
-          <div class="small--hide">
-            <small class="site-footer__copyright-content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}</small>
-            <small class="site-footer__copyright-content site-footer__copyright-content-powered-by">{{ powered_by_link }}</small>
-          </div>
-        {%- endif -%}
-      </div>
-
       <div class="grid__item one-half small--one-whole">
         {% if section.settings.show_payment_icons %}
           <div class="grid__item site-footer__payment-icons">
@@ -228,8 +171,9 @@
         {% endif %}
       </div>
       <div class="grid__item{% unless social_icons %} medium-up--hide{% endunless %}">
-        <small class="site-footer__copyright-content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}</small>
-        <small class="site-footer__copyright-content site-footer__copyright-content--powered-by">{{ powered_by_link }}</small>
+        <p class="site-footer__copyright-content site-footer__copyright-content--powered-by">
+          &copy; {{ 'now' | date: "%Y" }} uptous.co - All rights reserved.
+        </p>
       </div>
     </div>
   </div>
