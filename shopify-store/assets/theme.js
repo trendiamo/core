@@ -1214,22 +1214,31 @@ theme.MobileNav = (function() {
     cache.$mobileNavToggle.on('click', toggleMobileNav);
     cache.$subNavToggleBtn.on('click.subNav', toggleSubNav);
 
+    $('.mobile-nav-overlay').on('click', toggleMobileNav);
+    $('.mobile-nav-close-container').on('click', toggleMobileNav);
+
     // Close mobile nav when unmatching mobile breakpoint
     enquire.register(mediaQuerySmall, {
       unmatch: function() {
         if (cache.$mobileNavContainer.hasClass(classes.navOpen)) {
-          closeMobileNav();
+          toggleMobileNav();
         }
       }
     });
   }
 
   function toggleMobileNav() {
-    if (cache.$mobileNavToggle.hasClass(classes.mobileNavCloseIcon)) {
-      closeMobileNav();
-    } else {
-      openMobileNav();
+    $('body').toggleClass('mobile-menu-open');
+
+    if ($('body').hasClass('mobile-menu-open')){
+      $(window).on('keyup.mobileNav', function(evt) {
+        if (evt.which === 27) {
+          $('body').toggleClass('mobile-menu-open');
+        }
+      });
+      return false;
     }
+    $(window).off('keyup.mobileNav');
   }
 
   function cacheSelectors() {
@@ -1242,74 +1251,6 @@ theme.MobileNav = (function() {
       $sectionHeader: $('#shopify-section-header'),
       $subNavToggleBtn: $('.' + classes.subNavToggleBtn)
     };
-  }
-
-  function openMobileNav() {
-    var translateHeaderHeight = cache.$siteHeader.outerHeight();
-
-    cache.$mobileNavContainer.prepareTransition().addClass(classes.navOpen);
-
-    cache.$mobileNavContainer.css({
-      transform: 'translateY(' + translateHeaderHeight + 'px)'
-    });
-
-    cache.$pageContainer.css({
-      transform:
-        'translate3d(0, ' + cache.$mobileNavContainer[0].scrollHeight + 'px, 0)'
-    });
-
-    slate.a11y.trapFocus({
-      $container: cache.$sectionHeader,
-      $elementToFocus: cache.$mobileNavToggle,
-      namespace: 'navFocus'
-    });
-
-    cache.$mobileNavToggle
-      .addClass(classes.mobileNavCloseIcon)
-      .removeClass(classes.mobileNavOpenIcon)
-      .attr('aria-expanded', true);
-
-    // close on escape
-    $(window).on('keyup.mobileNav', function(evt) {
-      if (evt.which === 27) {
-        closeMobileNav();
-      }
-    });
-  }
-
-  function closeMobileNav() {
-    cache.$mobileNavContainer.prepareTransition().removeClass(classes.navOpen);
-
-    cache.$mobileNavContainer.css({
-      transform: 'translateY(-100%)'
-    });
-
-    cache.$pageContainer.removeAttr('style');
-
-    slate.a11y.trapFocus({
-      $container: $('html'),
-      $elementToFocus: $('body')
-    });
-
-    cache.$mobileNavContainer.one(
-      'TransitionEnd.navToggle webkitTransitionEnd.navToggle transitionend.navToggle oTransitionEnd.navToggle',
-      function() {
-        slate.a11y.removeTrapFocus({
-          $container: cache.$mobileNav,
-          namespace: 'navFocus'
-        });
-      }
-    );
-
-    cache.$mobileNavToggle
-      .addClass(classes.mobileNavOpenIcon)
-      .removeClass(classes.mobileNavCloseIcon)
-      .attr('aria-expanded', false)
-      .focus();
-
-    $(window).off('keyup.mobileNav');
-
-    scrollTo(0, 0);
   }
 
   function toggleSubNav(evt) {
@@ -1404,7 +1345,7 @@ theme.MobileNav = (function() {
 
   return {
     init: init,
-    closeMobileNav: closeMobileNav
+    toggleMobileNav: toggleMobileNav
   };
 })(jQuery);
 
@@ -1499,7 +1440,7 @@ theme.Search = (function() {
     searchFocus($(selectors.searchDrawerInput));
 
     if ($(selectors.mobileNavWrapper).hasClass(classes.mobileNavIsOpen)) {
-      theme.MobileNav.closeMobileNav();
+      theme.MobileNav.toggleMobileNav();
     }
   }
 

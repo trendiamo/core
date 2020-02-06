@@ -89,4 +89,40 @@
       </li>
     {% endif %}
   {% endfor %}
+
+  {% if customer %}
+    {% if shop.customer_accounts_enabled %}
+      <li {% if link.active %} class="site-nav--active"{% endif %}>
+        <a href="{{ routes.account_url }}" class="site-header__icon site-header__account">
+          {% include 'icon-login' %}
+          <span class="icon__fallback-text">{{ 'layout.customer.account' | t }}</span>
+        </a>
+      </li>
+    {% endif %}
+
+    <li {% if link.active %} class="site-nav--active"{% endif %}>
+      <a href="{{ routes.cart_url }}" class="site-header__icon site-header__cart">
+        {% include 'icon-cart' %}
+        <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+        <div id="CartCount" class="site-header__cart-count{% if cart.item_count == 0 %} hide{% endif %}" data-cart-count-bubble>
+          <span data-cart-count>{{ cart.item_count }}</span>
+          <span class="icon__fallback-text medium-up--hide">{{ 'layout.cart.items_count' | t: count: cart.item_count }}</span>
+        </div>
+      </a>
+    </li>
+
+    {% if shop.enabled_currencies.size > 1 %}
+      {% form 'currency', class: "currency-selector small--hide" %}
+        <label for="CurrencySelector" class="visually-hidden">{{ 'general.currency.dropdown_label' | t }}</label>
+        <div class="currency-selector__input-wrapper select-group">
+          <select name="currency" id="CurrencySelector" class="currency-selector__dropdown" aria-describedby="a11y-refresh-page-message a11y-selection-message" data-currency-selector>
+            {% for currency in shop.enabled_currencies %}
+              <option value="{{currency.iso_code}}"{% if currency == cart.currency %} selected="true"{% endif %}>{{currency.iso_code}}</option>
+            {% endfor %}
+          </select>
+          {% include 'icon-chevron-down' %}
+        </div>
+      {% endform %}
+    {% endif %}
+  {% endif %}
 </ul>
